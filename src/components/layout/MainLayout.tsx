@@ -1,11 +1,20 @@
+import { AttributeForge } from '../creation/AttributeForge'
+import { PsychicGate } from '../creation/PsychicGate'
 import { useCharacter } from '../../context/CharacterContext'
 import { SkillList } from '../SkillList'
 
 export function MainLayout() {
-  const { character, activeForm, activeFormState: form, isMDC, toggleForm } =
-    useCharacter()
+  const {
+    character,
+    activeForm,
+    activeFormState: form,
+    activeStats,
+    getVitalityType,
+    toggleForm,
+  } = useCharacter()
 
   const morphusActive = activeForm === 'morphus'
+  const vitalityType = getVitalityType()
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -75,22 +84,22 @@ export function MainLayout() {
           backgroundColor: morphusActive ? '#1e1b4b' : '#eff6ff',
         }}
         aria-label="Vitality: hit points, structural damage, and mental pools"
-        data-mdc={isMDC ? 'true' : 'false'}
+        data-vitality-type={vitalityType}
       >
         <div className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <VitalityStat
             label="HP"
-            current={form.hitPoints.current}
-            max={form.hitPoints.maximum}
-            scaling={form.hitPoints.scaling}
+            current={activeStats.hitPoints.current}
+            max={activeStats.hitPoints.maximum}
+            scaling={activeStats.hitPoints.scaling}
             morphus={morphusActive}
             accent="hp"
           />
           <VitalityStat
             label="SDC"
-            current={form.structuralDamageCapacity.current}
-            max={form.structuralDamageCapacity.maximum}
-            scaling={form.structuralDamageCapacity.scaling}
+            current={activeStats.structuralDamageCapacity.current}
+            max={activeStats.structuralDamageCapacity.maximum}
+            scaling={activeStats.structuralDamageCapacity.scaling}
             morphus={morphusActive}
             accent="sdc"
           />
@@ -154,6 +163,10 @@ export function MainLayout() {
           </h2>
           <SkillList skills={form.skills} morphusActive={morphusActive} />
         </section>
+
+        <AttributeForge />
+
+        <PsychicGate />
       </main>
     </div>
   )

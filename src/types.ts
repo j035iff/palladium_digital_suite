@@ -6,6 +6,9 @@
 /** Facade vs Morphus toggle drives which FormState is authoritative for mechanical values. */
 export type ActiveForm = 'facade' | 'morphus'
 
+/** Psychic Gate tier (psychic_gate.md). */
+export type PsychicTier = 'none' | 'minor' | 'major' | 'master'
+
 /**
  * Damage / durability scaling tier (docs/combat_logic.md §1).
  * Drives UI treatment: S.D.C./H.P. vs M.D.C. (100× rule, invulnerability flags at runtime).
@@ -87,6 +90,14 @@ export type Character = {
   xp: number
   /** Shared — does not swap with form (docs/srs.md §1). */
   ppe: { current: number; maximum: number }
+  /**
+   * Creation placeholder: Psychic-class O.C.C. locks the Psychic Gate to Master (psychic_gate.md §1).
+   */
+  occCategory?: 'psychic' | 'standard'
+  /**
+   * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).
+   */
+  psychicGateBypassed?: boolean
   facade: FormState
   morphus: FormState
 }
