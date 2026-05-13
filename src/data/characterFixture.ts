@@ -1,0 +1,78 @@
+import type { Character } from '../types'
+
+/**
+ * Demo sheet — structure must satisfy {@link Character}.
+ */
+export const characterFixture: Character = {
+  name: 'Alex Mercer',
+  level: 3,
+  xp: 4200,
+  ppe: { current: 28, maximum: 32 },
+  facade: {
+    alignment: 'Scrupulous',
+    hitPoints: { current: 12, maximum: 18, scaling: 'sdc_hp' },
+    structuralDamageCapacity: {
+      current: 10,
+      maximum: 12,
+      scaling: 'sdc_hp',
+    },
+    isp: { current: 0, maximum: 0 },
+    attributes: {
+      iq: 12,
+      me: 10,
+      ma: 11,
+      ps: { score: 10, tier: 'standard' },
+      pp: 12,
+      pe: 11,
+      pb: 14,
+      spd: 10,
+    },
+    skills: [
+      { id: 'literacy', name: 'Literacy: American', restricted: false },
+      {
+        id: 'mech_eng',
+        name: 'Mechanical Engineering',
+        restricted: true,
+        restrictionReason:
+          'AND gate unmet (skill_selection.md): requires Literacy AND Electronics. Add Electronics to unlock.',
+      },
+      {
+        id: 'occ_only',
+        name: 'Cybernetic Surgery (O.C.C. only)',
+        restricted: true,
+        restrictionReason:
+          'Tagged O.C.C. only — not valid as a secondary for this build (skill_selection.md §1).',
+      },
+    ],
+  },
+  morphus: {
+    alignment: 'Miscreant',
+    hitPoints: { current: 45, maximum: 80, scaling: 'mdc' },
+    structuralDamageCapacity: {
+      current: 120,
+      maximum: 200,
+      scaling: 'mdc',
+    },
+    isp: { current: 8, maximum: 44 },
+    attributes: {
+      iq: 14,
+      me: 16,
+      ma: 8,
+      ps: { score: 24, tier: 'supernatural' },
+      pp: 18,
+      pe: 20,
+      pb: 6,
+      spd: 22,
+    },
+    skills: [
+      { id: 'climb', name: 'Climbing', restricted: false },
+      {
+        id: 'mech_eng',
+        name: 'Mechanical Engineering',
+        restricted: true,
+        restrictionReason:
+          'OR gate unmet (skill_selection.md): needs Math: Basic OR Math: Advanced before engineering skills apply.',
+      },
+    ],
+  },
+}
