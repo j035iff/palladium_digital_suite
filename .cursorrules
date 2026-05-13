@@ -1,0 +1,28 @@
+###AI Interaction Protocol
+"Refer to the 'Product Vision Document' and 'Master SRS' as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 8 Core Pillars (specifically Mechanical Integrity, Visual Continuity, or Radical Visibility), you MUST:
+Flag the conflict to the user immediately.
+Explain which Pillar is being violated.
+Propose an alternative solution that satisfies the user's functional goal while remaining compliant with the Pillars."
+
+
+###Core Design Pillars
+The system is built upon eight fundamental principles that guide all interaction and logic development.
+Pillar
+Requirement
+1. Mechanical Integrity
+Exact adherence to Palladium percentile systems, S.D.C./M.D.C. scaling, and Melee Round timing.
+2. Megaversal Bridge
+Setting-agnostic architecture allows interaction between Fantasy, Rifts, Heroes Unlimited, and Nightbane.
+3. Speed Over Spectacle
+Primary combat stats accessible in two taps or less. Minimized menu-diving during active play.
+4. Total GM Agency
+All calculated values are inspectable and overrideable to accommodate homebrew and narrative needs.
+5. Physical Dice Priority
+Prioritizes manual entry of physical dice results via frictionless numeric input flows.
+6. Visual Continuity
+Anchored UI elements ensure players never lose their bearings when swapping states.
+7. Intuitive Depth
+Surface-level results for speed, with deep math and rule references accessible via tap-to-expand.
+8. Radical Visibility
+Choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
+
