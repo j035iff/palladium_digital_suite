@@ -61,6 +61,10 @@ export function Inventory() {
         </div>
       ) : null}
 
+      <p className={`mb-3 text-[11px] font-semibold ${muted}`}>
+        Carried load — drop items here. Equip armor and ready weapons in <strong>Equipment</strong> above.
+      </p>
+
       {overEncumbered ? (
         <div
           className="mb-3 rounded-lg border-2 border-red-600 bg-red-950/50 px-3 py-2 text-xs font-bold text-red-100"
@@ -89,7 +93,10 @@ export function Inventory() {
       <ul className="space-y-2">
         {inventoryItems.map((row) => {
           const isArmor = row.itemType === 'armor'
+          const isWeapon = row.itemType === 'weapon'
           const equipped = equippedArmorId === row.id
+          const armorRuined =
+            isArmor && (row.destroyed === true || row.currentSDC <= 0)
           return (
             <li
               key={row.id}
@@ -106,9 +113,14 @@ export function Inventory() {
               <div className="min-w-0 flex-1">
                 <p className={`truncate text-sm font-bold ${th}`}>
                   {row.name}
-                  {equipped ? (
+                  {equipped && isArmor ? (
                     <span className="ml-2 text-[10px] font-black uppercase text-amber-300">
                       Equipped
+                    </span>
+                  ) : null}
+                  {isArmor && armorRuined ? (
+                    <span className="ml-2 text-[10px] font-black uppercase text-red-400">
+                      Destroyed
                     </span>
                   ) : null}
                 </p>
@@ -120,22 +132,30 @@ export function Inventory() {
                       · A.R. {row.ar} · Armor S.D.C. {row.currentSDC}/{row.maxSDC}
                     </>
                   ) : null}
+                  {isWeapon ? (
+                    <>
+                      {' '}
+                      · {row.category} · strike +{row.strikeBonus} · {row.damageDice} · {row.ammoOrPayload}
+                    </>
+                  ) : null}
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap gap-1.5">
-                <button
-                  type="button"
-                  className={btnEquip}
-                  disabled={!isArmor}
-                  title={
-                    isArmor
-                      ? 'Equip this armor (replaces current suit)'
-                      : 'Only armor can occupy the body armor slot'
-                  }
-                  onClick={() => equipArmor(row.id)}
-                >
-                  Equip
-                </button>
+                {isArmor ? (
+                  <button
+                    type="button"
+                    className={btnEquip}
+                    disabled={armorRuined}
+                    title={
+                      armorRuined
+                        ? 'Armor has no integrity — replace before wearing'
+                        : 'Wear this armor (or use Equipment above)'
+                    }
+                    onClick={() => equipArmor(row.id)}
+                  >
+                    Equip
+                  </button>
+                ) : null}
                 <button type="button" className={btnDrop} onClick={() => dropItem(row.id)}>
                   Drop
                 </button>

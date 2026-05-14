@@ -87,11 +87,31 @@ export type FormState = {
   isp: { current: number; maximum: number }
 }
 
+/** Psychic vs standard cumulative XP curve (src/data/xpTables.ts). */
+export type XpTableKind = 'standard' | 'psychic'
+
+/** Logged XP award for Identity header history (Pillar 6). */
+export type XpGainEvent = {
+  id: string
+  amount: number
+  label: string
+  atMs: number
+}
+
 export type Character = {
   name: string
+  /**
+   * Character tier (1..15). Sheet level; ritual modal advances this when XP thresholds are met
+   * (master_flow.md progression).
+   */
   level: number
-  /** Shared — does not swap with form (docs/srs.md §1). */
+  /**
+   * Lifetime cumulative experience points. Governs earned tier vs {@link level} until level-up
+   * rituals are resolved (xpTables.ts).
+   */
   xp: number
+  /** Which cumulative XP curve applies (standard vs psychic O.C.C.). */
+  xpTableKind?: XpTableKind
   /** Shared — does not swap with form (docs/srs.md §1). */
   ppe: { current: number; maximum: number }
   /**
@@ -151,12 +171,13 @@ export interface Item {
   id: string
   name: string
   weightLbs: number
-  itemType: 'gear' | 'armor'
+  itemType: 'gear' | 'armor' | 'weapon'
 }
 
 /**
- * Body armor with A.R. and armor S.D.C. track (inventory + combat HUD).
+ * Body armor with A.R. and armor S.D.C. track (Armory + combat HUD A.R. gate).
  * {@link morphusCompatible}: when false, Morphus bulk exceeds Facade-fit gear (Total Reconfiguration sizing).
+ * {@link destroyed}: armor shell ruined at 0 S.D.C. — HUD bar hidden; replace to regain A.R.
  */
 export interface Armor extends Item {
   itemType: 'armor'
@@ -164,13 +185,30 @@ export interface Armor extends Item {
   currentSDC: number
   maxSDC: number
   morphusCompatible: boolean
+  destroyed?: boolean
+}
+
+export type WeaponCategory = 'melee' | 'ranged' | 'heavy' | 'other'
+
+/**
+ * Armory weapon row (master_flow.md / combat_logic.md — strike + damage presentation).
+ */
+export interface Weapon extends Item {
+  itemType: 'weapon'
+  category: WeaponCategory
+  /** O.C.C. / weapon intrinsic strike bonus on d20. */
+  strikeBonus: number
+  /** Shown on sheet (e.g. "2d4", "3d6+2"). */
+  damageDice: string
+  /** Magazine, payload, or "—" for melee. */
+  ammoOrPayload: string
 }
 
 export interface GearItem extends Item {
   itemType: 'gear'
 }
 
-export type InventoryItem = GearItem | Armor
+export type InventoryItem = GearItem | Armor | Weapon
 
 /** Pillar 6 — vitality header pulse. */
 export type VitalityFlashKind = 'none' | 'damage' | 'heal'

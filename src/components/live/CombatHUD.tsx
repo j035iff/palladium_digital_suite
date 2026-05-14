@@ -1,10 +1,13 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
+import { computeWeaponStrikeBreakdown } from '../../lib/combatWeaponStrike'
 import {
   computeQuickActionTotals,
   formatBonus,
 } from '../../lib/combatQuickBonuses'
+import { rollD20 } from '../../lib/meleeDice'
+import type { Weapon } from '../../types'
 
 function barPct(current: number, max: number): number {
   if (max <= 0) return 0
@@ -184,6 +187,7 @@ export function CombatHUD() {
     applySdcPriorityVitality,
     durationCheckPulse,
     equippedArmor,
+    readyWeapons,
     overEncumbered,
     encumbranceSpdNote,
     currentWeightLbs,
@@ -196,6 +200,16 @@ export function CombatHUD() {
   const [useAttackRollRoute, setUseAttackRollRoute] = useState(false)
   const [attackRollStr, setAttackRollStr] = useState('12')
   const [hudMinimized, setHudMinimized] = useState(false)
+  const [strikeRollByWeaponId, setStrikeRollByWeaponId] = useState<
+    Record<string, { d20: number; total: number }>
+  >({})
+
+  const hudArmor = useMemo(() => {
+    const a = equippedArmor
+    if (!a) return null
+    if (a.currentSDC <= 0 || a.destroyed === true) return null
+    return a
+  }, [equippedArmor])
 
   const totals = useMemo(
     () => computeQuickActionTotals(character, activeForm),
@@ -239,13 +253,13 @@ export function CombatHUD() {
     const rollN = Number(trimmedRoll)
     const useRoll =
       mode === 'damage' &&
-      Boolean(equippedArmor) &&
+      Boolean(hudArmor) &&
       useAttackRollRoute &&
       trimmedRoll.length > 0 &&
       Number.isFinite(rollN)
     if (
       mode === 'damage' &&
-      equippedArmor &&
+      hudArmor &&
       useAttackRollRoute &&
       !(trimmedRoll.length > 0 && Number.isFinite(rollN))
     ) {
@@ -263,9 +277,14 @@ export function CombatHUD() {
   const strikeRollParsed = Number(trimmedStrike)
   const strikeRouteInvalid =
     mode === 'damage' &&
-    Boolean(equippedArmor) &&
+    Boolean(hudArmor) &&
     useAttackRollRoute &&
     !(trimmedStrike.length > 0 && Number.isFinite(strikeRollParsed))
+
+  const readyWeaponList = useMemo(
+    () => readyWeapons.filter((w): w is Weapon => w != null),
+    [readyWeapons],
+  )
 
   const armorMorphusMismatch =
     morphus && equippedArmor && equippedArmor.morphusCompatible === false
@@ -385,11 +404,11 @@ export function CombatHUD() {
               Over carry: {currentWeightLbs}/{carryLimitLbs} lbs. {encumbranceSpdNote}
             </div>
           ) : null}
-          {equippedArmor ? (
+          {hudArmor ? (
             <VitalityTrack
-              label={`Armor S.D.C. (${equippedArmor.name})`}
-              current={equippedArmor.currentSDC}
-              max={equippedArmor.maxSDC}
+              label={`Armor S.D.C. (${hudArmor.name})`}
+              current={hudArmor.currentSDC}
+              max={hudArmor.maxSDC}
               morphus={morphus}
               variant="armor"
             />
@@ -534,6 +553,79 @@ export function CombatHUD() {
           </div>
         </div>
 
+        <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
+          <h3
+            className={`mb-2 text-[10px] font-black uppercase tracking-wider ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            Ready weapons — strike (d20 + bonus)
+          </h3>
+          <p
+            className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
+          >
+            Total strike bonus = weapon + P.P. natural melee + skill strike slice. Roll uses physical
+            d20 (Pillar 5).
+          </p>
+          {readyWeaponList.length === 0 ? (
+            <p className={`text-[11px] font-semibold ${morphus ? 'text-violet-400' : 'text-slate-600'}`}>
+              No ready weapons — assign up to two in Equipment (main column).
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {readyWeaponList.map((w) => {
+                const bd = computeWeaponStrikeBreakdown(character, activeForm, w)
+                const last = strikeRollByWeaponId[w.id]
+                return (
+                  <li
+                    key={w.id}
+                    className={`rounded-md border px-2 py-2 ${
+                      morphus ? 'border-violet-500/70 bg-slate-950/70' : 'border-blue-200 bg-white/90'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p
+                          className={`text-xs font-bold ${morphus ? 'text-violet-100' : 'text-slate-900'}`}
+                        >
+                          {w.name}
+                        </p>
+                        <p className={`font-mono text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-600'}`}>
+                          Wpn {formatBonus(w.strikeBonus)} + P.P. {formatBonus(bd.ppBonus)} + skill{' '}
+                          {formatBonus(bd.skillBonus)} →{' '}
+                          <strong className={morphus ? 'text-amber-300' : 'text-blue-800'}>
+                            {formatBonus(bd.total)} total
+                          </strong>
+                          {' · '}
+                          {w.damageDice} ({w.ammoOrPayload})
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className={`shrink-0 rounded-md px-2.5 py-1.5 text-[10px] font-black uppercase ${btn}`}
+                        onClick={() => {
+                          const d = rollD20()
+                          const t = d + bd.total
+                          setStrikeRollByWeaponId((prev) => ({ ...prev, [w.id]: { d20: d, total: t } }))
+                        }}
+                      >
+                        Roll strike
+                      </button>
+                    </div>
+                    {last ? (
+                      <p
+                        className={`mt-1.5 font-mono text-[11px] font-bold ${morphus ? 'text-amber-200' : 'text-blue-900'}`}
+                      >
+                        d20 {last.d20} + {bd.total} = <strong>{last.total}</strong>
+                      </p>
+                    ) : null}
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+
         <div className={`rounded-lg border-2 p-3 ${sub}`}>
           <h3
             className={`mb-2 text-[10px] font-black uppercase tracking-wider ${
@@ -543,11 +635,11 @@ export function CombatHUD() {
             Apply damage / heal
           </h3>
           <p className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-            Body: S.D.C. then H.P. (damage); S.D.C. to max then H.P. (heal). Optional strike total vs armor
-            A.R. routes damage (roll strictly below A.R. hits armor S.D.C. first; roll at or above A.R. bypasses
-            to body S.D.C.).
+            Body: S.D.C. then H.P. (damage); S.D.C. to max then H.P. (heal). Optional enemy attack roll vs
+            armor A.R.: roll strictly below A.R. applies damage to armor S.D.C. first; roll at or above A.R.
+            bypasses to body S.D.C.
           </p>
-          {mode === 'damage' && equippedArmor ? (
+          {mode === 'damage' && hudArmor ? (
             <div
               className={`mb-2 space-y-2 rounded-md border-2 border-dashed px-2 py-2 text-[11px] font-semibold leading-snug ${
                 morphus
@@ -563,7 +655,7 @@ export function CombatHUD() {
                   onChange={(e) => setUseAttackRollRoute(e.target.checked)}
                 />
                 <span>
-                  Use attack / strike roll vs armor A.R. ({equippedArmor.ar})
+                  A.R. gate — use enemy attack roll vs armor A.R. ({hudArmor.ar})
                 </span>
               </label>
               {useAttackRollRoute ? (
@@ -573,7 +665,7 @@ export function CombatHUD() {
                       morphus ? 'text-violet-200' : 'text-blue-900'
                     }`}
                   >
-                    Attack roll result
+                    Enemy attack roll
                   </label>
                   <input
                     type="number"
@@ -586,7 +678,9 @@ export function CombatHUD() {
                     }`}
                   />
                   {strikeRouteInvalid ? (
-                    <p className="mt-1 text-[10px] font-bold text-red-600">Enter a numeric strike total.</p>
+                    <p className="mt-1 text-[10px] font-bold text-red-600">
+                      Enter the enemy&apos;s attack roll as a number.
+                    </p>
                   ) : null}
                 </div>
               ) : null}

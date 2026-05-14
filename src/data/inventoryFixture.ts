@@ -1,7 +1,7 @@
 import type { InventoryItem } from '../types'
 
 /**
- * Demo inventory — armor + encumbrance sample (attribute_and_stat.md §4 carry).
+ * Demo inventory — armor, weapons, gear (attribute_and_stat.md §4 carry).
  */
 export const initialInventoryItems: InventoryItem[] = [
   {
@@ -23,6 +23,26 @@ export const initialInventoryItems: InventoryItem[] = [
     currentSDC: 20,
     maxSDC: 20,
     morphusCompatible: true,
+  },
+  {
+    id: 'vibro_knife',
+    itemType: 'weapon',
+    name: 'Vibro-knife',
+    weightLbs: 2,
+    category: 'melee',
+    strikeBonus: 1,
+    damageDice: '2d4',
+    ammoOrPayload: '—',
+  },
+  {
+    id: 'ion_pistol',
+    itemType: 'weapon',
+    name: 'Ion pistol',
+    weightLbs: 3,
+    category: 'ranged',
+    strikeBonus: 0,
+    damageDice: '4d6',
+    ammoOrPayload: '12 shots',
   },
   {
     id: 'field_kit',

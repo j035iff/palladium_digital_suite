@@ -41,6 +41,13 @@ import { computeMaxApm } from '../lib/meleeCombat'
 import { computeCarryCapacityLbs } from '../lib/carryCapacity'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
 import { applyInventoryAwareSdcVitality } from '../lib/inventoryVitalityApply'
+import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
+import {
+  LEVEL_CAP,
+  newlyCrossedLevels,
+  outstandingLevelUpTargets,
+  xpProgressTowardNext,
+} from '../data/xpTables'
 import type {
   ActiveForm,
   ActiveMeleeDuration,
@@ -52,6 +59,8 @@ import type {
   InventoryItem,
   PsychicTier,
   VitalityFlashKind,
+  Weapon,
+  XpGainEvent,
 } from '../types'
 import { getFormState } from '../types'
 
@@ -129,6 +138,11 @@ type CharacterContextValue = {
   encumbranceSpdNote: string
   equipArmor: (id: string) => void
   dropItem: (id: string) => void
+  /** Up to two carried weapons flagged ready for the combat HUD strike row. */
+  readyWeaponIds: readonly [string | null, string | null]
+  /** Resolved weapon rows for {@link readyWeaponIds} (null if missing or not a weapon). */
+  readyWeapons: readonly [Weapon | null, Weapon | null]
+  setReadyWeapon: (slot: 0 | 1, weaponId: string | null) => void
   /**
    * S.D.C.-priority sheet: damage S.D.C. then H.P.; heal S.D.C. to max then H.P.
    * Optional strike total vs equipped armor A.R. routes damage to armor S.D.C. first when roll is below A.R.
@@ -143,6 +157,23 @@ type CharacterContextValue = {
   durationCheckPulse: boolean
   /** Pillar 6 — vitality header pulse after pool change. */
   vitalityFlash: VitalityFlashKind
+  /** Progress toward next level from cumulative XP (xpTables.ts). */
+  xpProgress: {
+    pct: number
+    floorXp: number
+    nextThresholdXp: number | null
+    cap: number
+  }
+  /** Recent XP awards (newest appended). */
+  xpHistory: XpGainEvent[]
+  /** Levels waiting for level-up ritual (FIFO). */
+  levelUpQueue: readonly number[]
+  /** First pending ritual target level, or null. */
+  pendingLevelUpTarget: number | null
+  /** Add lifetime XP; may enqueue level-up rituals when thresholds are crossed. */
+  grantXp: (amount: number, label?: string) => void
+  /** Apply H.P. die result and advance to the next queued level. */
+  resolveLevelUpRitual: (hpRoll: number) => void
 }
 
 const CharacterContext = createContext<CharacterContextValue | null>(null)
@@ -204,9 +235,36 @@ function nextCharacterIfAddAbility(
   return { ...prev, selectedAbilities: [...selected, id] }
 }
 
+function bumpAllHitPoints(prev: Character, roll: number): Character {
+  const bump = (branch: FormState) => ({
+    ...branch,
+    hitPoints: {
+      ...branch.hitPoints,
+      maximum: branch.hitPoints.maximum + roll,
+      current: branch.hitPoints.current + roll,
+    },
+  })
+  return {
+    ...prev,
+    facade: bump(prev.facade),
+    morphus: bump(prev.morphus),
+  }
+}
+
+function mergeLevelQueues(existing: number[], crossed: number[]): number[] {
+  const s = new Set([...existing, ...crossed])
+  return [...s].sort((a, b) => a - b)
+}
+
 export function CharacterProvider({ children }: { children: ReactNode }) {
   const [character, setCharacter] = useState<Character>(() =>
     hydrateCharacterFromStorage(characterFixture),
+  )
+  const [levelUpQueue, setLevelUpQueue] = useState<number[]>(() =>
+    outstandingLevelUpTargets(hydrateCharacterFromStorage(characterFixture)),
+  )
+  const [xpHistory, setXpHistory] = useState<XpGainEvent[]>(() =>
+    loadXpHistory(hydrateCharacterFromStorage(characterFixture).name),
   )
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
@@ -216,6 +274,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const occPsychicLocked = character.occCategory === 'psychic'
   const gateBypassed = character.psychicGateBypassed === true
   const psychicSeedRef = useRef(false)
+  const wasFinalizedRef = useRef(false)
 
   useEffect(() => {
     savePersistedAbilityIds(
@@ -237,6 +296,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   ])
 
   useEffect(() => {
+    saveXpHistory(character.name, xpHistory)
+  }, [character.name, xpHistory])
+
+  useEffect(() => {
+    const finalized = character.isFinalized === true
+    if (finalized && !wasFinalizedRef.current) {
+      setLevelUpQueue(outstandingLevelUpTargets(character))
+    }
+    wasFinalizedRef.current = finalized
+  }, [character])
+
+  useEffect(() => {
     if (!occPsychicLocked || psychicSeedRef.current) return
     psychicSeedRef.current = true
     setPsychicTierState('master')
@@ -255,6 +326,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [equippedArmorId, setEquippedArmorId] = useState<string | null>(
     'synth_weave',
   )
+  const [readyWeaponIds, setReadyWeaponIds] = useState<
+    [string | null, string | null]
+  >(['vibro_knife', 'ion_pistol'])
 
   const activeFormState = useMemo(
     () => getFormState(character, activeForm),
@@ -266,6 +340,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     const row = inventoryItems.find((i) => i.id === equippedArmorId)
     return row?.itemType === 'armor' ? row : null
   }, [inventoryItems, equippedArmorId])
+
+  const readyWeapons = useMemo((): [Weapon | null, Weapon | null] => {
+    const resolve = (id: string | null): Weapon | null => {
+      if (!id) return null
+      const row = inventoryItems.find((i) => i.id === id)
+      return row?.itemType === 'weapon' ? row : null
+    }
+    return [resolve(readyWeaponIds[0]), resolve(readyWeaponIds[1])]
+  }, [inventoryItems, readyWeaponIds])
 
   const currentWeightLbs = useMemo(
     () => inventoryItems.reduce((s, i) => s + i.weightLbs, 0),
@@ -403,7 +486,25 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     (id: string) => {
       const row = inventoryItems.find((i) => i.id === id)
       if (!row || row.itemType !== 'armor') return
+      if (row.currentSDC <= 0 || row.destroyed === true) return
       setEquippedArmorId(id)
+    },
+    [inventoryItems],
+  )
+
+  const setReadyWeapon = useCallback(
+    (slot: 0 | 1, weaponId: string | null) => {
+      setReadyWeaponIds(([a, b]) => {
+        if (weaponId === null) {
+          return slot === 0 ? [null, b] : [a, null]
+        }
+        const row = inventoryItems.find((i) => i.id === weaponId)
+        if (!row || row.itemType !== 'weapon') return [a, b]
+        if (slot === 0) {
+          return [weaponId, b === weaponId ? null : b]
+        }
+        return [a === weaponId ? null : a, weaponId]
+      })
     },
     [inventoryItems],
   )
@@ -411,6 +512,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const dropItem = useCallback((id: string) => {
     setInventoryItems((prev) => prev.filter((x) => x.id !== id))
     setEquippedArmorId((eq) => (eq === id ? null : eq))
+    setReadyWeaponIds(([a, b]) => [
+      a === id ? null : a,
+      b === id ? null : b,
+    ])
   }, [])
 
   const applySdcPriorityVitality = useCallback(
@@ -619,6 +724,53 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [character.ppe, activeFormState.isp, activeForm],
   )
 
+  const xpProgress = useMemo(() => {
+    const kind = character.xpTableKind ?? 'standard'
+    const seg = xpProgressTowardNext(character.level, character.xp, kind)
+    return { ...seg, cap: LEVEL_CAP }
+  }, [character.level, character.xp, character.xpTableKind])
+
+  const pendingLevelUpTarget = useMemo(
+    () => levelUpQueue[0] ?? null,
+    [levelUpQueue],
+  )
+
+  const grantXp = useCallback((amount: number, label = 'XP award') => {
+    if (!Number.isFinite(amount) || amount <= 0) return
+    const id = `xp-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+    setCharacter((prev) => {
+      const kind = prev.xpTableKind ?? 'standard'
+      const prevXp = prev.xp
+      const newXp = prevXp + amount
+      const crossed = newlyCrossedLevels(prev.level, prevXp, newXp, kind)
+      if (crossed.length > 0) {
+        setLevelUpQueue((q) => mergeLevelQueues(q, crossed))
+      }
+      return { ...prev, xp: newXp }
+    })
+    setXpHistory((h) => [...h, { id, amount, label, atMs: Date.now() }].slice(-30))
+  }, [])
+
+  const resolveLevelUpRitual = useCallback(
+    (hpRoll: number) => {
+      const r = Math.round(hpRoll)
+      if (!Number.isFinite(r) || r < 1 || r > 6) return
+      setLevelUpQueue((q) => {
+        const target = q[0]
+        if (!target) return q
+        setCharacter((prev) => ({
+          ...bumpAllHitPoints(prev, r),
+          level: target,
+        }))
+        setTimeout(() => {
+          triggerVitalityFlash('heal')
+        }, 0)
+        return q.slice(1)
+      })
+    },
+    [triggerVitalityFlash],
+  )
+
   const value = useMemo<CharacterContextValue>(
     () => ({
       character,
@@ -656,8 +808,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       encumbranceSpdNote,
       equipArmor,
       dropItem,
+      readyWeaponIds,
+      readyWeapons,
+      setReadyWeapon,
       vitalityFlash,
       durationCheckPulse,
+      xpProgress,
+      xpHistory,
+      levelUpQueue,
+      pendingLevelUpTarget,
+      grantXp,
+      resolveLevelUpRitual,
     }),
     [
       character,
@@ -695,8 +856,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       encumbranceSpdNote,
       equipArmor,
       dropItem,
+      readyWeaponIds,
+      readyWeapons,
+      setReadyWeapon,
       vitalityFlash,
       durationCheckPulse,
+      xpProgress,
+      xpHistory,
+      levelUpQueue,
+      pendingLevelUpTarget,
+      grantXp,
+      resolveLevelUpRitual,
     ],
   )
 

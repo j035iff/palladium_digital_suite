@@ -30,7 +30,11 @@ function patchArmorSdc(
   return items.map((it) => {
     if (it.itemType !== 'armor' || it.id !== armorId) return it
     const clamped = Math.max(0, Math.min(it.maxSDC, Math.round(nextCurrent)))
-    return { ...it, currentSDC: clamped }
+    return {
+      ...it,
+      currentSDC: clamped,
+      destroyed: clamped <= 0,
+    }
   })
 }
 
@@ -41,6 +45,11 @@ function getEquippedArmor(
   if (!equippedArmorId) return null
   const found = items.find((i) => i.id === equippedArmorId)
   return found && found.itemType === 'armor' ? found : null
+}
+
+/** A.R. gate applies only while the suit still has S.D.C. integrity. */
+function armorAcceptsArGate(armor: Armor): boolean {
+  return armor.currentSDC > 0 && armor.destroyed !== true
 }
 
 /**
@@ -71,20 +80,25 @@ export function applyInventoryAwareSdcVitality(
   }
 
   const armor = getEquippedArmor(inventory, equippedArmorId)
+  const armorForGate = armor && armorAcceptsArGate(armor) ? armor : null
   const useRoll =
-    Boolean(armor) &&
+    Boolean(armorForGate) &&
     opts.useAttackRollVsArmor === true &&
     typeof opts.attackRoll === 'number' &&
     Number.isFinite(opts.attackRoll)
 
-  if (useRoll && armor) {
+  if (useRoll && armorForGate) {
     const roll = opts.attackRoll as number
-    if (roll < armor.ar) {
-      const absorb = Math.min(amount, armor.currentSDC)
+    if (roll < armorForGate.ar) {
+      const absorb = Math.min(amount, armorForGate.currentSDC)
       const overflow = amount - absorb
       let nextInv = inventory
       if (absorb > 0) {
-        nextInv = patchArmorSdc(inventory, armor.id, armor.currentSDC - absorb)
+        nextInv = patchArmorSdc(
+          inventory,
+          armorForGate.id,
+          armorForGate.currentSDC - absorb,
+        )
       }
       if (overflow <= 0) {
         return {

@@ -4,8 +4,11 @@ import { PsychicGate } from '../creation/PsychicGate'
 import { AbilitySelection } from '../creation/AbilitySelection'
 import { SkillEngine } from '../creation/SkillEngine'
 import { CharacterSpawn } from '../creation/CharacterSpawn'
+import { Armory } from '../live/Armory'
 import { CombatHUD } from '../live/CombatHUD'
+import { IdentityXpBar } from '../live/IdentityXpBar'
 import { Inventory } from '../live/Inventory'
+import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
 import { SkillList } from '../SkillList'
 
@@ -23,6 +26,8 @@ export function MainLayout() {
     activeStats,
     toggleForm,
     vitalityFlash,
+    levelUpQueue,
+    resolveLevelUpRitual,
   } = useCharacter()
 
   const morphusActive = activeForm === 'morphus'
@@ -133,11 +138,8 @@ export function MainLayout() {
               style={{ color: morphusActive ? '#a78bfa' : '#334155' }}
             >
               Level {character.level}
-              <span className="mx-2 opacity-50" aria-hidden="true">
-                ·
-              </span>
-              <span className="tabular-nums">XP {character.xp.toLocaleString()}</span>
             </p>
+            <IdentityXpBar />
           </div>
 
           <button
@@ -163,6 +165,17 @@ export function MainLayout() {
           </button>
         </div>
       </header>
+
+      {character.isFinalized && levelUpQueue.length > 0 ? (
+        <LevelUpModal
+          key={levelUpQueue[0]}
+          open
+          morphus={morphusActive}
+          character={character}
+          targetLevel={levelUpQueue[0]}
+          onConfirm={resolveLevelUpRitual}
+        />
+      ) : null}
 
       <section
         className={`border-b-2 px-4 py-3 transition-[box-shadow,background-color] duration-300 ${
@@ -294,6 +307,7 @@ export function MainLayout() {
               Character record is finalized — creation tools are hidden. Use the header and
               pools for play.
             </p>
+            <Armory />
             <Inventory />
           </>
         )}
