@@ -44,7 +44,7 @@ export const characterFixture: Character = {
       spd: 10,
     },
     skills: [
-      { id: 'literacy', name: 'Literacy: American', restricted: false },
+      { id: 'literacy', name: 'Literacy: American', restricted: false, basePercent: 30 },
       {
         id: 'mech_eng',
         name: 'Mechanical Engineering',
@@ -81,7 +81,7 @@ export const characterFixture: Character = {
       spd: 22,
     },
     skills: [
-      { id: 'climb', name: 'Climbing', restricted: false },
+      { id: 'climb', name: 'Climbing', restricted: false, basePercent: 26 },
       {
         id: 'mech_eng',
         name: 'Mechanical Engineering',

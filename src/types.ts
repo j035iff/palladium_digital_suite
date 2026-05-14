@@ -67,6 +67,10 @@ export type SheetSkill = {
   restricted: boolean
   /** Shown in UI / tooltip — cite gating from docs/skill_selection.md */
   restrictionReason?: string
+  /**
+   * O.C.C. / picked skill base % on d100 (skill engine). When omitted, Quick Roll uses a neutral sheet default.
+   */
+  basePercent?: number
 }
 
 /**
@@ -129,6 +133,54 @@ export type Character = {
   creationRelatedSkillIds?: string[]
   facade: FormState
   morphus: FormState
+}
+
+/** Live combat — active melee-duration powers (combat_logic.md §3). */
+export type ActiveMeleeDuration = {
+  abilityId: string
+  roundsRemaining: number
+}
+
+export type AttacksPerMeleeState = {
+  current: number
+  max: number
+}
+
+/** Carried object — weight drives encumbrance (attribute_and_stat.md §4). */
+export interface Item {
+  id: string
+  name: string
+  weightLbs: number
+  itemType: 'gear' | 'armor'
+}
+
+/**
+ * Body armor with A.R. and armor S.D.C. track (inventory + combat HUD).
+ * {@link morphusCompatible}: when false, Morphus bulk exceeds Facade-fit gear (Total Reconfiguration sizing).
+ */
+export interface Armor extends Item {
+  itemType: 'armor'
+  ar: number
+  currentSDC: number
+  maxSDC: number
+  morphusCompatible: boolean
+}
+
+export interface GearItem extends Item {
+  itemType: 'gear'
+}
+
+export type InventoryItem = GearItem | Armor
+
+/** Pillar 6 — vitality header pulse. */
+export type VitalityFlashKind = 'none' | 'damage' | 'heal'
+
+export type CombatVitalityChange = {
+  pool: 'hitPoints' | 'structuralDamageCapacity'
+  amount: number
+  mode: 'damage' | 'heal'
+  /** For damage only — Mega-Damage tag vs S.D.C. scaling (combat_logic.md §1). */
+  damageScale: 'sdc' | 'md'
 }
 
 export function getFormState(

@@ -10,7 +10,10 @@ function App() {
       : 'min-h-svh bg-gradient-to-b from-slate-50 via-blue-50 to-white text-slate-900'
 
   return (
-    <div className={themeClass} data-active-form={activeForm}>
+    <div
+      className={`flex min-h-svh flex-col ${themeClass}`}
+      data-active-form={activeForm}
+    >
       <MainLayout />
     </div>
   )

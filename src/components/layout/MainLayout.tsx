@@ -1,29 +1,92 @@
-import { useState } from 'react'
+import { useEffect, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
 import { AttributeForge } from '../creation/AttributeForge'
 import { PsychicGate } from '../creation/PsychicGate'
 import { AbilitySelection } from '../creation/AbilitySelection'
 import { SkillEngine } from '../creation/SkillEngine'
 import { CharacterSpawn } from '../creation/CharacterSpawn'
+import { CombatHUD } from '../live/CombatHUD'
+import { Inventory } from '../live/Inventory'
 import { useCharacter } from '../../context/CharacterContext'
 import { SkillList } from '../SkillList'
 
+const DEFAULT_COMBAT_SIDEBAR_PX = 350
+const MIN_COMBAT_SIDEBAR_PX = 300
+
 export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
+  const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_COMBAT_SIDEBAR_PX)
+  const [isResizing, setIsResizing] = useState(false)
   const {
     character,
     activeForm,
     activeFormState: form,
     activeStats,
-    getVitalityType,
     toggleForm,
+    vitalityFlash,
   } = useCharacter()
 
   const morphusActive = activeForm === 'morphus'
-  const vitalityType = getVitalityType()
   const showCreation = character.isFinalized !== true
 
+  /** Split + fixed-width sidebar only at md+; drives inline width (Tailwind var alone was unreliable). */
+  const [splitLayout, setSplitLayout] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const apply = () => setSplitLayout(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  useEffect(() => {
+    const clamp = () => {
+      const maxW = Math.floor(window.innerWidth * 0.5)
+      setSidebarWidth((w) =>
+        Math.max(MIN_COMBAT_SIDEBAR_PX, Math.min(maxW, w)),
+      )
+    }
+    window.addEventListener('resize', clamp)
+    return () => window.removeEventListener('resize', clamp)
+  }, [])
+
+  const onSidebarResizeStart = (e: ReactMouseEvent) => {
+    if (!character.isFinalized) return
+    if (e.button !== 0) return
+    e.preventDefault()
+    const startX = e.clientX
+    const startW = sidebarWidth
+    setIsResizing(true)
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+
+    const maxSidebarPx = () => Math.floor(window.innerWidth * 0.5)
+
+    const onMove = (ev: MouseEvent) => {
+      const dx = ev.clientX - startX
+      const next = startW - dx
+      setSidebarWidth(
+        Math.max(
+          MIN_COMBAT_SIDEBAR_PX,
+          Math.min(maxSidebarPx(), Math.round(next)),
+        ),
+      )
+    }
+
+    const onUp = () => {
+      setIsResizing(false)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+    }
+
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }
+
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col">
       {spawnSplash ? (
         <div
           className="pds-spawn-splash fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/85 px-6 text-center"
@@ -51,7 +114,7 @@ export function MainLayout() {
             : 'rgba(255, 255, 255, 0.92)',
         }}
       >
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3">
           <div className="text-left">
             <p
               className="text-xs font-semibold uppercase tracking-wider"
@@ -102,15 +165,21 @@ export function MainLayout() {
       </header>
 
       <section
-        className="border-b-2 px-4 py-3"
+        className={`border-b-2 px-4 py-3 transition-[box-shadow,background-color] duration-300 ${
+          vitalityFlash === 'damage'
+            ? 'pds-vitality-flash-damage'
+            : vitalityFlash === 'heal'
+              ? 'pds-vitality-flash-heal'
+              : ''
+        }`}
         style={{
           borderColor: morphusActive ? '#6d28d9' : '#2563eb',
           backgroundColor: morphusActive ? '#1e1b4b' : '#eff6ff',
         }}
         aria-label="Vitality: hit points, structural damage, and mental pools"
-        data-vitality-type={vitalityType}
+        data-vitality-presentation="sdc"
       >
-        <div className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <VitalityStat
             label="HP"
             current={activeStats.hitPoints.current}
@@ -118,6 +187,7 @@ export function MainLayout() {
             scaling={activeStats.hitPoints.scaling}
             morphus={morphusActive}
             accent="hp"
+            sdcPresentation
           />
           <VitalityStat
             label="SDC"
@@ -126,6 +196,7 @@ export function MainLayout() {
             scaling={activeStats.structuralDamageCapacity.scaling}
             morphus={morphusActive}
             accent="sdc"
+            sdcPresentation
           />
           <VitalityStat
             label="PPE"
@@ -146,7 +217,8 @@ export function MainLayout() {
         </div>
       </section>
 
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-4 py-6 text-left">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col md:h-full md:min-h-0 md:flex-row">
+        <main className="mx-auto flex min-h-0 w-full min-w-0 max-w-6xl flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 text-left md:mx-0 md:max-w-none md:pr-2">
         <section aria-labelledby="attrs-heading">
           <h2
             id="attrs-heading"
@@ -185,7 +257,12 @@ export function MainLayout() {
           >
             Skills
           </h2>
-          <SkillList skills={form.skills} morphusActive={morphusActive} />
+          <SkillList
+            skills={form.skills}
+            morphusActive={morphusActive}
+            characterLevel={character.level}
+            iq={form.attributes.iq}
+          />
         </section>
 
         {showCreation ? (
@@ -209,15 +286,74 @@ export function MainLayout() {
             />
           </>
         ) : (
-          <p
-            className="rounded-lg border border-emerald-600/40 bg-emerald-950/20 px-4 py-3 text-sm"
-            style={{ color: morphusActive ? '#a7f3d0' : '#065f46' }}
-          >
-            Character record is finalized — creation tools are hidden. Use the header and
-            pools for play.
-          </p>
+          <>
+            <p
+              className="rounded-lg border border-emerald-600/40 bg-emerald-950/20 px-4 py-3 text-sm"
+              style={{ color: morphusActive ? '#a7f3d0' : '#065f46' }}
+            >
+              Character record is finalized — creation tools are hidden. Use the header and
+              pools for play.
+            </p>
+            <Inventory />
+          </>
         )}
-      </main>
+        </main>
+
+        {character.isFinalized ? (
+          <>
+            <div
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Resize combat HUD sidebar"
+              title="Drag left or right to resize panels"
+              aria-valuemin={MIN_COMBAT_SIDEBAR_PX}
+              aria-valuetext={`${Math.round(sidebarWidth)} pixels wide (min ${MIN_COMBAT_SIDEBAR_PX}, max half of viewport)`}
+              aria-valuenow={Math.round(sidebarWidth)}
+              className={`group relative z-[60] hidden h-full min-h-0 w-3 shrink-0 cursor-col-resize flex-col items-center justify-center border-x border-slate-400/70 bg-slate-200/90 shadow-inner select-none touch-none dark:border-slate-500 dark:bg-slate-700/85 md:flex md:w-4 md:self-stretch ${
+                isResizing
+                  ? morphusActive
+                    ? 'border-violet-400/90 bg-violet-900/40 ring-2 ring-violet-400/60'
+                    : 'border-blue-500/90 bg-blue-100/90 ring-2 ring-blue-500/50 dark:bg-blue-950/50'
+                  : ''
+              }`}
+              onMouseDown={onSidebarResizeStart}
+            >
+              <span
+                className="pointer-events-none select-none px-0.5 font-mono text-sm font-bold leading-none text-slate-600 tabular-nums dark:text-slate-200"
+                aria-hidden
+              >
+                ⋮
+              </span>
+              <div
+                className={`pointer-events-none mt-1 h-px w-2/3 max-w-[14px] shrink-0 rounded-full transition-[background-color,box-shadow] duration-150 ${
+                  morphusActive
+                    ? isResizing
+                      ? 'bg-violet-300 shadow-[0_0_10px_rgba(167,139,250,0.9)]'
+                      : 'bg-violet-500/70 group-hover:bg-violet-300'
+                    : isResizing
+                      ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.75)]'
+                      : 'bg-blue-600/70 group-hover:bg-blue-500'
+                }`}
+              />
+            </div>
+            <div
+              className="flex w-full shrink-0 flex-col md:h-full md:min-h-0 md:max-w-[50vw] md:flex-none md:overflow-hidden md:self-stretch"
+              style={
+                (splitLayout
+                  ? {
+                      width: sidebarWidth,
+                      minWidth: MIN_COMBAT_SIDEBAR_PX,
+                      maxWidth: '50vw',
+                      flexShrink: 0,
+                    }
+                  : { width: '100%' }) as CSSProperties
+              }
+            >
+              <CombatHUD />
+            </div>
+          </>
+        ) : null}
+      </div>
     </div>
   )
 }
@@ -229,6 +365,7 @@ function VitalityStat({
   scaling,
   morphus,
   accent,
+  sdcPresentation,
 }: {
   label: string
   current: number
@@ -236,9 +373,11 @@ function VitalityStat({
   scaling: 'sdc_hp' | 'mdc'
   morphus: boolean
   accent: 'hp' | 'sdc' | 'ppe' | 'isp'
+  /** When true, hide Mega-Damage chrome — default S.D.C.-first app shell. */
+  sdcPresentation?: boolean
 }) {
   const pct = max > 0 ? Math.min(100, (current / max) * 100) : 0
-  const isMdc = scaling === 'mdc'
+  const isMdc = sdcPresentation ? false : scaling === 'mdc'
   const barBg = morphus ? 'rgba(30,27,75,0.8)' : 'rgba(219,234,254,0.9)'
   const fill =
     isMdc && accent !== 'ppe' && accent !== 'isp'

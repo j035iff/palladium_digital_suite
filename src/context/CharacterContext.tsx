@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from 'react'
 import { characterFixture } from '../data/characterFixture'
+import { initialInventoryItems } from '../data/inventoryFixture'
 import { getAbilityById } from '../data/abilityLibrary'
 import {
   loadPersistedAbilityIds,
@@ -36,7 +37,22 @@ import {
   rollD100,
 } from '../lib/psychicGate'
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
-import type { ActiveForm, Character, FormState, PsychicTier } from '../types'
+import { computeMaxApm } from '../lib/meleeCombat'
+import { computeCarryCapacityLbs } from '../lib/carryCapacity'
+import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
+import { applyInventoryAwareSdcVitality } from '../lib/inventoryVitalityApply'
+import type {
+  ActiveForm,
+  ActiveMeleeDuration,
+  Armor,
+  AttacksPerMeleeState,
+  Character,
+  CombatVitalityChange,
+  FormState,
+  InventoryItem,
+  PsychicTier,
+  VitalityFlashKind,
+} from '../types'
 import { getFormState } from '../types'
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
@@ -89,6 +105,44 @@ type CharacterContextValue = {
   commitSpawnVitalityRolls: (rolls: SpawnVitalityRolls) => void
   /** Locks the sheet and hides creation UI (character_creation.md §5). */
   finalizeCharacter: () => void
+  /** Live combat — A.P.M. tracker (combat_logic.md §3). */
+  attacksPerMelee: AttacksPerMeleeState
+  spendCombatAction: () => void
+  resetMeleeRound: () => void
+  activeMeleeDurations: ActiveMeleeDuration[]
+  registerActiveMeleeDuration: (abilityId: string, rounds: number) => void
+  /** Apply damage or healing to H.P. or S.D.C. on the active form; drives vitality flash. */
+  applyCombatVitalityChange: (change: CombatVitalityChange) => void
+  /** Carried gear + armor rows (inventory engine). */
+  inventoryItems: InventoryItem[]
+  /** Equipped body armor id, or null. */
+  equippedArmorId: string | null
+  /** Resolved armor row when {@link equippedArmorId} matches an armor entry. */
+  equippedArmor: Armor | null
+  /** Sum of carried weights (lbs). */
+  currentWeightLbs: number
+  /** Carry limit from active form P.S. score × tier multiple (attribute_and_stat.md §4, combat_logic.md §2). */
+  carryLimitLbs: number
+  /** True when {@link currentWeightLbs} exceeds {@link carryLimitLbs}. */
+  overEncumbered: boolean
+  /** Placeholder copy for future Spd penalty when over carry (attribute_and_stat.md §4). */
+  encumbranceSpdNote: string
+  equipArmor: (id: string) => void
+  dropItem: (id: string) => void
+  /**
+   * S.D.C.-priority sheet: damage S.D.C. then H.P.; heal S.D.C. to max then H.P.
+   * Optional strike total vs equipped armor A.R. routes damage to armor S.D.C. first when roll is below A.R.
+   */
+  applySdcPriorityVitality: (opts: {
+    mode: 'damage' | 'heal'
+    amount: number
+    useAttackRollVsArmor?: boolean
+    attackRoll?: number
+  }) => void
+  /** Pillar 5 — true briefly after a new melee round to nudge duration checks. */
+  durationCheckPulse: boolean
+  /** Pillar 6 — vitality header pulse after pool change. */
+  vitalityFlash: VitalityFlashKind
 }
 
 const CharacterContext = createContext<CharacterContextValue | null>(null)
@@ -195,10 +249,39 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     })
   }, [occPsychicLocked, activeForm])
 
+  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(
+    () => [...initialInventoryItems],
+  )
+  const [equippedArmorId, setEquippedArmorId] = useState<string | null>(
+    'synth_weave',
+  )
+
   const activeFormState = useMemo(
     () => getFormState(character, activeForm),
     [character, activeForm],
   )
+
+  const equippedArmor = useMemo((): Armor | null => {
+    if (!equippedArmorId) return null
+    const row = inventoryItems.find((i) => i.id === equippedArmorId)
+    return row?.itemType === 'armor' ? row : null
+  }, [inventoryItems, equippedArmorId])
+
+  const currentWeightLbs = useMemo(
+    () => inventoryItems.reduce((s, i) => s + i.weightLbs, 0),
+    [inventoryItems],
+  )
+
+  const carryLimitLbs = useMemo(
+    () => computeCarryCapacityLbs(activeFormState.attributes.ps),
+    [activeFormState.attributes.ps],
+  )
+
+  const overEncumbered = currentWeightLbs > carryLimitLbs
+
+  const encumbranceSpdNote = overEncumbered
+    ? 'Spd penalty pending rules pass — load exceeds P.S.-based carry limit.'
+    : ''
 
   const liveBonuses = useMemo(
     () => computeLiveBonuses(activeFormState.attributes),
@@ -231,6 +314,148 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const saveVsPsionicsTarget = useMemo(
     () => saveVsPsionicsForTier(psychicTier),
     [psychicTier],
+  )
+
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const durationPulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [vitalityFlash, setVitalityFlash] = useState<VitalityFlashKind>('none')
+  const [durationCheckPulse, setDurationCheckPulse] = useState(false)
+  const [apmCurrentRaw, setApmCurrentRaw] = useState(() =>
+    computeMaxApm(characterFixture.facade.attributes, characterFixture.level),
+  )
+  const [activeMeleeDurations, setActiveMeleeDurations] = useState<
+    ActiveMeleeDuration[]
+  >([])
+
+  const maxApm = useMemo(
+    () => computeMaxApm(activeFormState.attributes, character.level),
+    [activeFormState.attributes, character.level],
+  )
+
+  const attacksPerMelee = useMemo<AttacksPerMeleeState>(
+    () => ({
+      max: maxApm,
+      current: Math.min(apmCurrentRaw, maxApm),
+    }),
+    [apmCurrentRaw, maxApm],
+  )
+
+  useEffect(() => {
+    return () => {
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
+      if (durationPulseTimerRef.current) {
+        clearTimeout(durationPulseTimerRef.current)
+      }
+    }
+  }, [])
+
+  const triggerVitalityFlash = useCallback((kind: VitalityFlashKind) => {
+    if (kind === 'none') return
+    if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
+    setVitalityFlash(kind)
+    flashTimerRef.current = setTimeout(() => {
+      setVitalityFlash('none')
+      flashTimerRef.current = null
+    }, 700)
+  }, [])
+
+  const spendCombatAction = useCallback(() => {
+    setApmCurrentRaw((c) => {
+      const cur = Math.min(c, maxApm)
+      return cur > 0 ? cur - 1 : 0
+    })
+  }, [maxApm])
+
+  const resetMeleeRound = useCallback(() => {
+    setApmCurrentRaw(maxApm)
+    setActiveMeleeDurations((prev) =>
+      prev
+        .map((d) => ({
+          ...d,
+          roundsRemaining: d.roundsRemaining - 1,
+        }))
+        .filter((d) => d.roundsRemaining > 0),
+    )
+    if (durationPulseTimerRef.current) {
+      clearTimeout(durationPulseTimerRef.current)
+    }
+    setDurationCheckPulse(true)
+    durationPulseTimerRef.current = setTimeout(() => {
+      setDurationCheckPulse(false)
+      durationPulseTimerRef.current = null
+    }, 5200)
+  }, [maxApm])
+
+  const registerActiveMeleeDuration = useCallback(
+    (abilityId: string, rounds: number) => {
+      setActiveMeleeDurations((prev) => {
+        const rest = prev.filter((d) => d.abilityId !== abilityId)
+        return [
+          ...rest,
+          { abilityId, roundsRemaining: Math.max(1, Math.round(rounds)) },
+        ]
+      })
+    },
+    [],
+  )
+
+  const equipArmor = useCallback(
+    (id: string) => {
+      const row = inventoryItems.find((i) => i.id === id)
+      if (!row || row.itemType !== 'armor') return
+      setEquippedArmorId(id)
+    },
+    [inventoryItems],
+  )
+
+  const dropItem = useCallback((id: string) => {
+    setInventoryItems((prev) => prev.filter((x) => x.id !== id))
+    setEquippedArmorId((eq) => (eq === id ? null : eq))
+  }, [])
+
+  const applySdcPriorityVitality = useCallback(
+    (opts: {
+      mode: 'damage' | 'heal'
+      amount: number
+      useAttackRollVsArmor?: boolean
+      attackRoll?: number
+    }) => {
+      if (!Number.isFinite(opts.amount) || opts.amount <= 0) return
+      const r = applyInventoryAwareSdcVitality(
+        character,
+        activeForm,
+        inventoryItems,
+        equippedArmorId,
+        opts,
+      )
+      if (!r) return
+      setCharacter(r.nextCharacter)
+      setInventoryItems(r.nextInventory)
+      setTimeout(() => {
+        triggerVitalityFlash(r.flashKind)
+      }, 0)
+    },
+    [
+      character,
+      activeForm,
+      inventoryItems,
+      equippedArmorId,
+      triggerVitalityFlash,
+    ],
+  )
+
+  const applyCombatVitalityChange = useCallback(
+    (change: CombatVitalityChange) => {
+      setCharacter((prev) => {
+        const r = computeCombatVitalityDelta(prev, activeForm, change)
+        if (!r) return prev
+        setTimeout(() => {
+          triggerVitalityFlash(r.flashKind)
+        }, 0)
+        return r.next
+      })
+    },
+    [activeForm, triggerVitalityFlash],
   )
 
   const getVitalityType = useCallback(
@@ -415,6 +640,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationSkillPicks,
       commitSpawnVitalityRolls,
       finalizeCharacter,
+      attacksPerMelee,
+      spendCombatAction,
+      resetMeleeRound,
+      activeMeleeDurations,
+      registerActiveMeleeDuration,
+      applyCombatVitalityChange,
+      applySdcPriorityVitality,
+      inventoryItems,
+      equippedArmorId,
+      equippedArmor,
+      currentWeightLbs,
+      carryLimitLbs,
+      overEncumbered,
+      encumbranceSpdNote,
+      equipArmor,
+      dropItem,
+      vitalityFlash,
+      durationCheckPulse,
     }),
     [
       character,
@@ -436,6 +679,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationSkillPicks,
       commitSpawnVitalityRolls,
       finalizeCharacter,
+      attacksPerMelee,
+      spendCombatAction,
+      resetMeleeRound,
+      activeMeleeDurations,
+      registerActiveMeleeDuration,
+      applyCombatVitalityChange,
+      applySdcPriorityVitality,
+      inventoryItems,
+      equippedArmorId,
+      equippedArmor,
+      currentWeightLbs,
+      carryLimitLbs,
+      overEncumbered,
+      encumbranceSpdNote,
+      equipArmor,
+      dropItem,
+      vitalityFlash,
+      durationCheckPulse,
     ],
   )
 

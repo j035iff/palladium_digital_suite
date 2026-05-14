@@ -1,0 +1,651 @@
+import { useMemo, useState } from 'react'
+import { useCharacter } from '../../context/CharacterContext'
+import { getAbilityById } from '../../data/abilityLibrary'
+import {
+  computeQuickActionTotals,
+  formatBonus,
+} from '../../lib/combatQuickBonuses'
+
+function barPct(current: number, max: number): number {
+  if (max <= 0) return 0
+  return Math.min(100, Math.round((current / max) * 100))
+}
+
+function VitalityTrack({
+  label,
+  current,
+  max: maxVal,
+  morphus,
+  variant,
+}: {
+  label: string
+  current: number
+  max: number
+  morphus: boolean
+  variant: 'sdc' | 'hp' | 'armor'
+}) {
+  const pct = barPct(current, maxVal)
+  const track = morphus ? 'bg-slate-950' : 'bg-slate-200/90'
+  const fill =
+    variant === 'armor'
+      ? morphus
+        ? 'linear-gradient(90deg,#2dd4bf,#0f766e)'
+        : 'linear-gradient(90deg,#14b8a6,#047857)'
+      : morphus && variant === 'sdc'
+        ? 'linear-gradient(90deg,#a78bfa,#7c3aed)'
+        : morphus && variant === 'hp'
+          ? 'linear-gradient(90deg,#f472b6,#be185d)'
+          : !morphus && variant === 'sdc'
+            ? 'linear-gradient(90deg,#38bdf8,#1d4ed8)'
+            : 'linear-gradient(90deg,#60a5fa,#dc2626)'
+
+  return (
+    <div>
+      <div className="mb-1 flex items-baseline justify-between gap-2">
+        <span
+          className={`text-xs font-black uppercase tracking-wide ${
+            morphus ? 'text-violet-200' : 'text-slate-800'
+          }`}
+        >
+          {label}
+        </span>
+        <span
+          className={`font-mono text-sm font-bold tabular-nums ${
+            morphus ? 'text-violet-100' : 'text-slate-900'
+          }`}
+        >
+          {current}
+          <span className="opacity-55"> / </span>
+          {maxVal}
+        </span>
+      </div>
+      <div
+        className={`h-3.5 w-full overflow-hidden rounded-full ${track}`}
+        role="progressbar"
+        aria-valuenow={current}
+        aria-valuemin={0}
+        aria-valuemax={maxVal}
+        aria-label={`${label} pool`}
+      >
+        <div
+          className="h-full rounded-full transition-[width] duration-300"
+          style={{ width: `${pct}%`, background: fill }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function MiniPool({
+  label,
+  current,
+  max: maxVal,
+  morphus,
+  variant,
+}: {
+  label: string
+  current: number
+  max: number
+  morphus: boolean
+  variant: 'hp' | 'sdc'
+}) {
+  const pct = barPct(current, maxVal)
+  const track = morphus ? 'bg-slate-950' : 'bg-slate-200/90'
+  const fill =
+    variant === 'hp'
+      ? morphus
+        ? '#f472b6'
+        : '#2563eb'
+      : morphus
+        ? '#a78bfa'
+        : '#0284c7'
+
+  return (
+    <div className="min-w-[5.5rem] flex-1">
+      <div className="mb-0.5 flex items-baseline justify-between gap-1">
+        <span
+          className={`text-[9px] font-black uppercase tracking-wide ${
+            morphus ? 'text-violet-200' : 'text-slate-700'
+          }`}
+        >
+          {label}
+        </span>
+        <span
+          className={`font-mono text-[10px] font-bold tabular-nums ${
+            morphus ? 'text-violet-100' : 'text-slate-900'
+          }`}
+        >
+          {current}/{maxVal}
+        </span>
+      </div>
+      <div className={`h-2 w-full overflow-hidden rounded-full ${track}`}>
+        <div
+          className="h-full rounded-full transition-[width] duration-300"
+          style={{ width: `${pct}%`, background: fill }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function CompactApmPips({
+  morphus,
+  maxApm,
+  actionsUsed,
+}: {
+  morphus: boolean
+  maxApm: number
+  actionsUsed: number
+}) {
+  if (maxApm <= 0) return null
+  return (
+    <div className="flex flex-wrap items-center gap-0.5" aria-hidden>
+      {Array.from({ length: maxApm }, (_, i) => {
+        const spent = i < actionsUsed
+        const facadeActive =
+          'inline-flex h-6 w-6 items-center justify-center rounded-full border border-blue-800 bg-blue-600 text-[10px] font-bold text-white'
+        const facadeSpent =
+          'inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-400/80 bg-slate-200/90 text-[10px] font-bold text-slate-600 opacity-25'
+        const morphActive =
+          'inline-flex h-6 w-6 items-center justify-center rounded-full border border-violet-200 bg-violet-600 text-[10px] font-bold text-white'
+        const morphSpent =
+          'inline-flex h-6 w-6 items-center justify-center rounded-full border border-violet-900/80 bg-slate-900 text-[10px] font-bold text-violet-400 opacity-25'
+        const cls = morphus
+          ? spent
+            ? morphSpent
+            : morphActive
+          : spent
+            ? facadeSpent
+            : facadeActive
+        return (
+          <span key={i} className={cls}>
+            {spent ? '○' : '⚔'}
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
+/**
+ * Persistent S.D.C.-first tactical HUD (master_flow.md, combat_logic.md, attribute_and_stat.md).
+ * Max A.P.M. comes from {@link CharacterContext} (`attacksPerMelee.max`).
+ */
+export function CombatHUD() {
+  const {
+    character,
+    activeForm,
+    activeStats,
+    attacksPerMelee,
+    spendCombatAction,
+    resetMeleeRound,
+    activeMeleeDurations,
+    registerActiveMeleeDuration,
+    applySdcPriorityVitality,
+    durationCheckPulse,
+    equippedArmor,
+    overEncumbered,
+    encumbranceSpdNote,
+    currentWeightLbs,
+    carryLimitLbs,
+  } = useCharacter()
+
+  const morphus = activeForm === 'morphus'
+  const [amount, setAmount] = useState('4')
+  const [mode, setMode] = useState<'damage' | 'heal'>('damage')
+  const [useAttackRollRoute, setUseAttackRollRoute] = useState(false)
+  const [attackRollStr, setAttackRollStr] = useState('12')
+  const [hudMinimized, setHudMinimized] = useState(false)
+
+  const totals = useMemo(
+    () => computeQuickActionTotals(character, activeForm),
+    [character, activeForm],
+  )
+
+  const hp = activeStats.hitPoints
+  const sdc = activeStats.structuralDamageCapacity
+
+  const shell = morphus
+    ? 'border-t-2 border-violet-400 bg-slate-950/96 text-violet-50 max-md:shadow-[0_-10px_40px_rgba(0,0,0,0.55)] md:border-t-0 md:border-l-2 md:border-violet-400 md:shadow-none'
+    : 'border-t-2 border-blue-500 bg-white/96 text-slate-900 max-md:shadow-[0_-6px_24px_rgba(30,64,175,0.14)] md:border-t-0 md:border-l-2 md:border-blue-500 md:shadow-none'
+
+  const sub = morphus
+    ? 'border border-violet-500/70 bg-violet-950/40'
+    : 'border border-blue-200 bg-blue-50/80'
+
+  const btnCompact = morphus
+    ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
+    : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
+
+  const btn = morphus
+    ? 'border-2 border-violet-300 bg-violet-800 text-white hover:bg-violet-700'
+    : 'border-2 border-blue-600 bg-blue-600 text-white hover:bg-blue-500'
+
+  const bonusTiles = [
+    { label: 'Strike', value: totals.strike, hint: 'P.P. natural + skills (attribute_and_stat.md)' },
+    { label: 'Parry', value: totals.parry, hint: 'P.P. natural + skills' },
+    { label: 'Dodge', value: totals.dodge, hint: 'P.P. natural + skills' },
+    {
+      label: 'Roll w/ Impact',
+      value: totals.rollWithImpact,
+      hint: 'Dodge total + P.E. (attribute_and_stat.md)',
+    },
+  ]
+
+  const applyVitality = () => {
+    const n = Number(amount)
+    if (!Number.isFinite(n) || n <= 0) return
+    const trimmedRoll = attackRollStr.trim()
+    const rollN = Number(trimmedRoll)
+    const useRoll =
+      mode === 'damage' &&
+      Boolean(equippedArmor) &&
+      useAttackRollRoute &&
+      trimmedRoll.length > 0 &&
+      Number.isFinite(rollN)
+    if (
+      mode === 'damage' &&
+      equippedArmor &&
+      useAttackRollRoute &&
+      !(trimmedRoll.length > 0 && Number.isFinite(rollN))
+    ) {
+      return
+    }
+    applySdcPriorityVitality({
+      mode,
+      amount: n,
+      useAttackRollVsArmor: useRoll,
+      attackRoll: useRoll ? rollN : undefined,
+    })
+  }
+
+  const trimmedStrike = attackRollStr.trim()
+  const strikeRollParsed = Number(trimmedStrike)
+  const strikeRouteInvalid =
+    mode === 'damage' &&
+    Boolean(equippedArmor) &&
+    useAttackRollRoute &&
+    !(trimmedStrike.length > 0 && Number.isFinite(strikeRollParsed))
+
+  const armorMorphusMismatch =
+    morphus && equippedArmor && equippedArmor.morphusCompatible === false
+
+  const maxApm = attacksPerMelee.max
+  const curApm = attacksPerMelee.current
+  /** Remaining actions = curApm; pips are consumed visually left → right. */
+  const actionsUsed = Math.max(0, maxApm - curApm)
+
+  return (
+    <aside
+      className={`max-md:sticky max-md:bottom-0 max-md:z-40 md:relative md:z-0 md:flex md:h-full md:min-h-0 md:flex-col md:overflow-y-auto shrink-0 backdrop-blur-md ${shell} ${
+        durationCheckPulse ? 'pds-hud-duration-pulse' : ''
+      }`}
+      aria-label="S.D.C. combat tactical HUD"
+    >
+      <div className="mx-auto flex w-full max-w-4xl flex-col px-3 py-3 md:mx-0 md:max-w-none md:flex-1">
+        {durationCheckPulse ? (
+          <div
+            className={`mb-3 rounded-md border-2 px-3 py-2 text-center text-xs font-bold uppercase tracking-wide ${
+              morphus
+                ? 'border-amber-400 bg-violet-950 text-amber-100'
+                : 'border-amber-500 bg-amber-50 text-amber-950'
+            }`}
+            role="status"
+          >
+            New melee round — review active spell and ability durations (melee step).
+          </div>
+        ) : null}
+
+        <header className="mb-3 flex flex-wrap items-end justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <h2
+              className={`text-xs font-black uppercase tracking-[0.2em] ${
+                morphus ? 'text-violet-200' : 'text-blue-900'
+              }`}
+            >
+              Tactical — S.D.C. combat
+            </h2>
+            <p className={`text-[11px] font-medium ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+              Damage depletes <strong>S.D.C.</strong> then <strong>H.P.</strong>; M.D.C. scaling stays in
+              engine only (combat_logic.md). Max A.P.M. {maxApm}.
+            </p>
+          </div>
+          <button
+            type="button"
+            className={btnCompact}
+            aria-expanded={!hudMinimized}
+            onClick={() => setHudMinimized((v) => !v)}
+          >
+            {hudMinimized ? 'Expand' : 'Minimize'}
+          </button>
+        </header>
+
+        {hudMinimized ? (
+          <div
+            className={`flex flex-wrap items-center gap-2 rounded-lg border-2 p-2 ${sub}`}
+            aria-label="Condensed combat vitality"
+          >
+            <MiniPool label="HP" current={hp.current} max={hp.maximum} morphus={morphus} variant="hp" />
+            <MiniPool label="SDC" current={sdc.current} max={sdc.maximum} morphus={morphus} variant="sdc" />
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+              <span
+                className={`text-[9px] font-black uppercase tracking-wide ${
+                  morphus ? 'text-violet-200' : 'text-blue-900'
+                }`}
+              >
+                APM
+              </span>
+              <CompactApmPips morphus={morphus} maxApm={maxApm} actionsUsed={actionsUsed} />
+            </div>
+            <button
+              type="button"
+              title="Spend one attack per melee"
+              onClick={spendCombatAction}
+              disabled={curApm <= 0}
+              className={`shrink-0 rounded px-2 py-1 text-[10px] font-black uppercase disabled:opacity-35 ${btnCompact}`}
+            >
+              −1
+            </button>
+            <button
+              type="button"
+              title="New melee round"
+              onClick={resetMeleeRound}
+              className={`shrink-0 rounded px-2 py-1 text-[10px] font-black uppercase ${btnCompact}`}
+            >
+              ↻
+            </button>
+          </div>
+        ) : (
+          <>
+        <div className={`mb-3 space-y-3 rounded-lg border-2 p-3 ${sub}`}>
+          <p
+            className={`text-[10px] font-bold uppercase tracking-wider ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            Vitality (S.D.C. first)
+          </p>
+          {armorMorphusMismatch ? (
+            <div
+              className={`rounded-md border-2 px-2 py-1.5 text-[10px] font-bold leading-snug ${
+                morphus
+                  ? 'border-amber-400 bg-violet-950 text-amber-100'
+                  : 'border-amber-600 bg-amber-50 text-amber-950'
+              }`}
+              role="status"
+            >
+              Total Reconfiguration: equipped armor is Facade-sized — not rated for Morphus bulk.
+            </div>
+          ) : null}
+          {overEncumbered ? (
+            <div
+              className="rounded-md border-2 border-red-600 bg-red-950/40 px-2 py-1.5 text-[10px] font-bold leading-snug text-red-100"
+              role="alert"
+            >
+              Over carry: {currentWeightLbs}/{carryLimitLbs} lbs. {encumbranceSpdNote}
+            </div>
+          ) : null}
+          {equippedArmor ? (
+            <VitalityTrack
+              label={`Armor S.D.C. (${equippedArmor.name})`}
+              current={equippedArmor.currentSDC}
+              max={equippedArmor.maxSDC}
+              morphus={morphus}
+              variant="armor"
+            />
+          ) : null}
+          <VitalityTrack
+            label="Body S.D.C."
+            current={sdc.current}
+            max={sdc.maximum}
+            morphus={morphus}
+            variant="sdc"
+          />
+          <VitalityTrack
+            label="H.P."
+            current={hp.current}
+            max={hp.maximum}
+            morphus={morphus}
+            variant="hp"
+          />
+        </div>
+
+        <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <h3
+              className={`text-[10px] font-black uppercase tracking-wider ${
+                morphus ? 'text-violet-200' : 'text-blue-900'
+              }`}
+            >
+              Melee — A.P.M. ({curApm} / {maxApm})
+            </h3>
+          </div>
+          <div
+            className="mb-3 flex flex-wrap items-center gap-2"
+            role="group"
+            aria-label={`Attacks per melee, ${curApm} of ${maxApm} remaining; ${actionsUsed} spent from the left`}
+          >
+            {maxApm > 0
+              ? Array.from({ length: maxApm }, (_, i) => {
+                  const spent = i < actionsUsed
+                  const facadeActive =
+                    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-blue-800 bg-blue-600 text-lg font-bold text-white shadow-md'
+                  const facadeSpent =
+                    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-400/80 bg-slate-200/90 text-lg font-bold text-slate-600 opacity-20'
+                  const morphActive =
+                    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-violet-200 bg-violet-600 text-lg font-bold text-white shadow-md'
+                  const morphSpent =
+                    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-violet-900/80 bg-slate-900 text-lg font-bold text-violet-400 opacity-20'
+                  const cls = morphus
+                    ? spent
+                      ? morphSpent
+                      : morphActive
+                    : spent
+                      ? facadeSpent
+                      : facadeActive
+                  return (
+                    <span
+                      key={i}
+                      title={
+                        spent
+                          ? 'Spent this melee (left to right)'
+                          : 'Remaining action this melee'
+                      }
+                      className={cls}
+                      aria-hidden
+                    >
+                      {spent ? '○' : '⚔'}
+                    </span>
+                  )
+                })
+              : null}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={spendCombatAction}
+              disabled={curApm <= 0}
+              className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide disabled:opacity-40 ${btn}`}
+            >
+              Spend action
+            </button>
+            <button
+              type="button"
+              onClick={resetMeleeRound}
+              className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
+            >
+              New melee round
+            </button>
+          </div>
+          {activeMeleeDurations.length > 0 ? (
+            <ul className="mt-2 space-y-1 text-[11px]">
+              {activeMeleeDurations.map((d) => (
+                <li key={d.abilityId} className="font-mono opacity-90">
+                  {getAbilityById(d.abilityId)?.name ?? d.abilityId}:{' '}
+                  <strong>{d.roundsRemaining}</strong> melee
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <button
+            type="button"
+            className={`mt-2 text-[10px] font-semibold underline ${morphus ? 'text-violet-300' : 'text-blue-800'}`}
+            onClick={() => registerActiveMeleeDuration('armor_ithan', 3)}
+          >
+            Demo: Armor of Ithan (3 melees)
+          </button>
+        </div>
+
+        <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
+          <h3
+            className={`mb-2 text-[10px] font-black uppercase tracking-wider ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            Active bonuses
+          </h3>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {bonusTiles.map((b) => (
+              <div
+                key={b.label}
+                title={b.hint}
+                className={`rounded-md border px-1.5 py-2 text-center ${
+                  morphus
+                    ? 'border-violet-400/80 bg-slate-950/80'
+                    : 'border-blue-200 bg-white'
+                }`}
+              >
+                <p
+                  className={`text-[9px] font-bold uppercase leading-tight opacity-80 ${
+                    morphus ? 'text-violet-200' : 'text-slate-700'
+                  }`}
+                >
+                  {b.label}
+                </p>
+                <p
+                  className={`font-mono text-base font-black leading-tight ${
+                    morphus ? 'text-amber-300' : 'text-blue-800'
+                  }`}
+                >
+                  {formatBonus(b.value)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={`rounded-lg border-2 p-3 ${sub}`}>
+          <h3
+            className={`mb-2 text-[10px] font-black uppercase tracking-wider ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            Apply damage / heal
+          </h3>
+          <p className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+            Body: S.D.C. then H.P. (damage); S.D.C. to max then H.P. (heal). Optional strike total vs armor
+            A.R. routes damage (roll strictly below A.R. hits armor S.D.C. first; roll at or above A.R. bypasses
+            to body S.D.C.).
+          </p>
+          {mode === 'damage' && equippedArmor ? (
+            <div
+              className={`mb-2 space-y-2 rounded-md border-2 border-dashed px-2 py-2 text-[11px] font-semibold leading-snug ${
+                morphus
+                  ? 'border-violet-500/80 bg-slate-950/50 text-violet-100'
+                  : 'border-blue-400/90 bg-white/80 text-slate-800'
+              }`}
+            >
+              <label className={`flex cursor-pointer items-start gap-2 ${morphus ? 'text-violet-100' : 'text-slate-800'}`}>
+                <input
+                  type="checkbox"
+                  className="mt-0.5"
+                  checked={useAttackRollRoute}
+                  onChange={(e) => setUseAttackRollRoute(e.target.checked)}
+                />
+                <span>
+                  Use attack / strike roll vs armor A.R. ({equippedArmor.ar})
+                </span>
+              </label>
+              {useAttackRollRoute ? (
+                <div>
+                  <label
+                    className={`mb-1 block text-[10px] font-bold uppercase ${
+                      morphus ? 'text-violet-200' : 'text-blue-900'
+                    }`}
+                  >
+                    Attack roll result
+                  </label>
+                  <input
+                    type="number"
+                    value={attackRollStr}
+                    onChange={(e) => setAttackRollStr(e.target.value)}
+                    className={`w-full rounded-md border-2 px-2 py-1.5 font-mono text-sm ${
+                      morphus
+                        ? 'border-violet-500 bg-slate-950 text-violet-50'
+                        : 'border-blue-400 bg-white text-slate-900'
+                    }`}
+                  />
+                  {strikeRouteInvalid ? (
+                    <p className="mt-1 text-[10px] font-bold text-red-600">Enter a numeric strike total.</p>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          <div className="mb-2 flex flex-wrap gap-3 text-xs font-semibold">
+            <label className="flex cursor-pointer items-center gap-1.5">
+              <input
+                type="radio"
+                name="combat-mode"
+                checked={mode === 'damage'}
+                onChange={() => setMode('damage')}
+              />
+              Damage
+            </label>
+            <label className="flex cursor-pointer items-center gap-1.5">
+              <input
+                type="radio"
+                name="combat-mode"
+                checked={mode === 'heal'}
+                onChange={() => setMode('heal')}
+              />
+              Heal
+            </label>
+          </div>
+          <label
+            className={`mb-1 block text-[10px] font-bold uppercase ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            Amount
+          </label>
+          <input
+            type="number"
+            min={1}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className={`mb-2 w-full rounded-md border-2 px-2 py-2 font-mono text-sm ${
+              morphus
+                ? 'border-violet-500 bg-slate-950 text-violet-50'
+                : 'border-blue-400 bg-white text-slate-900'
+            }`}
+          />
+          <button
+            type="button"
+            onClick={applyVitality}
+            disabled={strikeRouteInvalid}
+            className={`w-full rounded-md py-2.5 text-sm font-black uppercase tracking-wide disabled:cursor-not-allowed disabled:opacity-40 ${
+              morphus
+                ? 'bg-violet-600 text-white hover:bg-violet-500'
+                : 'bg-blue-700 text-white hover:bg-blue-600'
+            }`}
+          >
+            {mode === 'heal' ? 'Apply heal' : 'Apply damage'}
+          </button>
+        </div>
+          </>
+        )}
+      </div>
+    </aside>
+  )
+}
