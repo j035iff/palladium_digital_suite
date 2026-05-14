@@ -1,0 +1,433 @@
+import { useMemo, useState } from 'react'
+import { useCharacter } from '../../context/CharacterContext'
+import type { EngineSkillDef, SkillCategory } from '../../data/skillLibrary'
+import { SKILL_LIBRARY, getSkillById } from '../../data/skillLibrary'
+import {
+  calculateSkillPercent,
+  maPbScaledBonuses,
+  type SkillEquationSkill,
+} from '../../lib/skillEquation'
+import {
+  missingPrerequisiteMessage,
+  prerequisiteSatisfied,
+} from '../../lib/skillPrerequisites'
+import { computeLiveBonuses } from '../../lib/characterDerived'
+
+const CATEGORIES: Array<SkillCategory | 'All'> = [
+  'All',
+  'Technical',
+  'Physical',
+  'Pilot',
+  'Espionage',
+  'Weapon',
+  'Misc',
+]
+
+const EMPTY_SKILL_IDS: string[] = []
+
+function buildEquationInput(
+  def: EngineSkillDef,
+  selectedIds: ReadonlySet<string>,
+): SkillEquationSkill {
+  let synergy = def.synergyBonuses ?? 0
+  if (def.id === 'astronomy' && selectedIds.has('math_advanced')) {
+    synergy += 10
+  }
+  return {
+    basePercent: def.basePercent,
+    perLevel: def.perLevel,
+    acquisitionLevel: def.acquisitionLevel,
+    occBonus: def.occBonus,
+    synergyBonuses: synergy,
+    scaledAttBonuses: def.scaledAttBonuses,
+    statusModifiers: def.statusModifiers,
+  }
+}
+
+function aggregatePhysicalStaging(ids: ReadonlySet<string>): {
+  sdc: number
+  ps: number
+  pp: number
+  pe: number
+  spd: number
+} {
+  const out = { sdc: 0, ps: 0, pp: 0, pe: 0, spd: 0 }
+  for (const id of ids) {
+    const s = getSkillById(id)
+    if (!s?.isPhysical || !s.physicalStaging) continue
+    const p = s.physicalStaging
+    out.sdc += p.sdc ?? 0
+    out.ps += p.ps ?? 0
+    out.pp += p.pp ?? 0
+    out.pe += p.pe ?? 0
+    out.spd += p.spd ?? 0
+  }
+  return out
+}
+
+export function SkillEngine() {
+  const {
+    character,
+    activeForm,
+    activeFormState,
+    skillSlotMultiplier,
+    setCreationSkillPicks,
+  } = useCharacter()
+
+  const morphus = activeForm === 'morphus'
+  const [search, setSearch] = useState('')
+  const [category, setCategory] = useState<SkillCategory | 'All'>('All')
+
+  const occSelected = character.creationOccSkillIds ?? EMPTY_SKILL_IDS
+  const relatedSelected = character.creationRelatedSkillIds ?? EMPTY_SKILL_IDS
+
+  const setOccSelected = (next: string[]) => {
+    setCreationSkillPicks(next, relatedSelected)
+  }
+  const setRelatedSelected = (next: string[]) => {
+    setCreationSkillPicks(occSelected, next)
+  }
+
+  const occBudget = character.occSkillSlotBudget ?? 8
+  const relatedBase = character.occRelatedSkillSlotBudget ?? 10
+  const relatedCap = Math.floor(relatedBase * skillSlotMultiplier)
+
+  const allSelected = useMemo(
+    () => new Set([...occSelected, ...relatedSelected]),
+    [occSelected, relatedSelected],
+  )
+
+  const attrs = activeFormState.attributes
+  const iqBonus = useMemo(
+    () => computeLiveBonuses(attrs).iqOccSkillPercent,
+    [attrs],
+  )
+  const maPbBonus = useMemo(() => maPbScaledBonuses(attrs.ma, attrs.pb), [attrs])
+
+  const pendingPhysical = useMemo(
+    () => aggregatePhysicalStaging(allSelected),
+    [allSelected],
+  )
+
+  const filteredLibrary = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    return SKILL_LIBRARY.filter((s) => {
+      const catOk = category === 'All' || s.category === category
+      const nameOk =
+        q === '' ||
+        s.name.toLowerCase().includes(q) ||
+        s.id.toLowerCase().includes(q)
+      return catOk && nameOk
+    })
+  }, [search, category])
+
+  const panelStyle = morphus
+    ? 'border-violet-700 bg-slate-950/80 text-violet-50'
+    : 'border-blue-200 bg-white text-slate-900'
+  const subStyle = morphus
+    ? 'border-violet-800 bg-slate-900'
+    : 'border-slate-200 bg-slate-50'
+
+  function addOcc(id: string) {
+    const def = getSkillById(id)
+    if (!def || def.slotKind !== 'occ') return
+    if (occSelected.includes(id)) return
+    if (occSelected.length >= occBudget) return
+    setOccSelected([...occSelected, id])
+  }
+
+  function addRelated(id: string) {
+    const def = getSkillById(id)
+    if (!def || def.slotKind !== 'occ_related') return
+    if (relatedSelected.includes(id)) return
+    if (relatedSelected.length >= relatedCap) return
+    setRelatedSelected([...relatedSelected, id])
+  }
+
+  function removeOcc(id: string) {
+    setOccSelected(occSelected.filter((s) => s !== id))
+  }
+
+  function removeRelated(id: string) {
+    setRelatedSelected(relatedSelected.filter((s) => s !== id))
+  }
+
+  return (
+    <section
+      className="mt-8 w-full border-t-2 border-dashed pt-8"
+      aria-labelledby="skill-engine-heading"
+    >
+      <h2
+        id="skill-engine-heading"
+        className="mb-1 text-sm font-semibold uppercase tracking-wide"
+        style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
+      >
+        Step 3: Skill Engine
+      </h2>
+      <p
+        className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
+        style={{ color: morphus ? '#a5b4fc' : '#475569' }}
+      >
+        Master Skill Equation, slot budgets, and dependency gates (skill_selection.md). Major
+        psychics apply <strong>skillSlotMultiplier</strong> to O.C.C. related capacity (floor;
+        psychic_gate.md §2).
+      </p>
+
+      <div
+        className={`mb-4 grid gap-3 rounded-lg border p-4 sm:grid-cols-2 ${panelStyle}`}
+        aria-label="Skill slot tracker"
+      >
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide opacity-70">
+            O.C.C. skills
+          </p>
+          <p className="mt-1 font-mono text-2xl font-bold tabular-nums">
+            {occSelected.length} / {occBudget}
+          </p>
+          <p className="text-xs opacity-75">Standard progression unless O.C.C. dictates otherwise.</p>
+        </div>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide opacity-70">
+            O.C.C. related skills
+          </p>
+          <p className="mt-1 font-mono text-2xl font-bold tabular-nums">
+            {relatedSelected.length} / {relatedCap}
+          </p>
+          <p className="text-xs opacity-75">
+            Base budget {relatedBase} × multiplier <strong>{skillSlotMultiplier}</strong>
+            {skillSlotMultiplier < 1 ? ' (Major psychic tax)' : ''} → floor to integer slots.
+          </p>
+        </div>
+      </div>
+
+      <div className="mb-4 flex flex-wrap gap-3">
+        <input
+          type="search"
+          placeholder="Search skills…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={`min-w-[200px] flex-1 rounded-md border px-3 py-2 text-sm ${
+            morphus
+              ? 'border-violet-700 bg-slate-900 text-violet-50'
+              : 'border-slate-300 bg-white text-slate-900'
+          }`}
+          aria-label="Filter skills by name"
+        />
+        <label className="flex items-center gap-2 text-sm">
+          <span className="opacity-70">Category</span>
+          <select
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value as SkillCategory | 'All')
+            }
+            className={`rounded-md border px-2 py-2 text-sm ${
+              morphus
+                ? 'border-violet-700 bg-slate-900 text-violet-50'
+                : 'border-slate-300 bg-white'
+            }`}
+          >
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className={`space-y-2 rounded-lg border p-3 lg:col-span-1 ${panelStyle}`}>
+          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+            Library
+          </h3>
+          <ul className="max-h-[420px] space-y-2 overflow-y-auto text-sm">
+            {filteredLibrary.map((s) => {
+              const inOcc = occSelected.includes(s.id)
+              const inRel = relatedSelected.includes(s.id)
+              const inAny = inOcc || inRel
+              const prereqOk = prerequisiteSatisfied(s.prerequisite, allSelected)
+              const warn = inAny && !prereqOk
+              const occFull = occSelected.length >= occBudget
+              const relFull = relatedSelected.length >= relatedCap
+
+              return (
+                <li
+                  key={s.id}
+                  className={`rounded-md border p-2 ${subStyle} ${
+                    warn ? 'border-amber-500/70 ring-1 ring-amber-500/40' : ''
+                  }`}
+                >
+                  <div className="font-medium">{s.name}</div>
+                  <div className="text-xs opacity-60">{s.category}</div>
+                  {warn ? (
+                    <p
+                      className="mt-1 text-xs font-semibold text-amber-500"
+                      title={missingPrerequisiteMessage(s.prerequisite, allSelected) ?? ''}
+                    >
+                      Missing Prerequisite — still visible (Pillar 8).
+                    </p>
+                  ) : null}
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {s.slotKind === 'occ' ? (
+                      <button
+                        type="button"
+                        disabled={inOcc || occFull}
+                        className="rounded bg-blue-600 px-2 py-1 text-xs font-semibold text-white disabled:opacity-40"
+                        onClick={() => addOcc(s.id)}
+                      >
+                        + O.C.C.
+                      </button>
+                    ) : null}
+                    {s.slotKind === 'occ_related' ? (
+                      <button
+                        type="button"
+                        disabled={inRel || relFull}
+                        className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:opacity-40"
+                        onClick={() => addRelated(s.id)}
+                      >
+                        + Related
+                      </button>
+                    ) : null}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+
+        <div className={`space-y-3 rounded-lg border p-3 lg:col-span-1 ${panelStyle}`}>
+          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+            Selected
+          </h3>
+          <div>
+            <p className="mb-1 text-xs opacity-70">O.C.C.</p>
+            <ul className="space-y-1">
+              {occSelected.map((id) => (
+                <li
+                  key={id}
+                  className={`flex items-center justify-between rounded border px-2 py-1 text-sm ${subStyle}`}
+                >
+                  {getSkillById(id)?.name ?? id}
+                  <button
+                    type="button"
+                    className="text-xs text-rose-400 hover:underline"
+                    onClick={() => removeOcc(id)}
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="mb-1 text-xs opacity-70">O.C.C. related</p>
+            <ul className="space-y-1">
+              {relatedSelected.map((id) => {
+                const def = getSkillById(id)
+                const bad =
+                  def && !prerequisiteSatisfied(def.prerequisite, allSelected)
+                return (
+                  <li
+                    key={id}
+                    className={`flex items-center justify-between rounded border px-2 py-1 text-sm ${subStyle} ${
+                      bad ? 'border-amber-500/60' : ''
+                    }`}
+                  >
+                    <span>
+                      {def?.name ?? id}
+                      {bad ? (
+                        <span
+                          className="ml-1 text-amber-500"
+                          title={
+                            missingPrerequisiteMessage(
+                              def?.prerequisite,
+                              allSelected,
+                            ) ?? ''
+                          }
+                        >
+                          ⚠
+                        </span>
+                      ) : null}
+                    </span>
+                    <button
+                      type="button"
+                      className="text-xs text-rose-400 hover:underline"
+                      onClick={() => removeRelated(id)}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+
+        <aside className={`h-fit space-y-4 rounded-lg border p-4 ${panelStyle}`}>
+          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+            Mirror — equation & staging
+          </h3>
+          <p className="text-xs opacity-75">
+            Physical bonuses from Boxing / Wrestling / etc. stay <strong>Pending</strong> until
+            Spawn commit (skill_selection.md §4).
+          </p>
+
+          <div className={`rounded-md border p-3 text-sm ${subStyle}`}>
+            <p className="text-xs font-bold uppercase opacity-70">Pending physical</p>
+            <ul className="mt-2 space-y-1 font-mono text-xs">
+              <li>S.D.C. +{pendingPhysical.sdc}</li>
+              <li>P.S. +{pendingPhysical.ps}</li>
+              <li>P.P. +{pendingPhysical.pp}</li>
+              <li>P.E. +{pendingPhysical.pe}</li>
+              <li>Spd +{pendingPhysical.spd}</li>
+            </ul>
+            <p className="mt-2 text-xs opacity-60">Not applied to the live sheet yet.</p>
+          </div>
+
+          <div className={`rounded-md border p-3 text-sm ${subStyle}`}>
+            <p className="text-xs font-bold uppercase opacity-70">
+              Skill % (Master Equation)
+            </p>
+            <p className="mt-1 text-xs opacity-70">
+              I.Q. bonus to sheet skills:{' '}
+              <span className="font-mono font-semibold">
+                {iqBonus >= 0 ? '+' : ''}
+                {iqBonus}%
+              </span>
+              {' · '}
+              M.A./P.B. scaled:{' '}
+              <span className="font-mono font-semibold">
+                {maPbBonus >= 0 ? '+' : ''}
+                {maPbBonus}%
+              </span>
+            </p>
+            <ul className="mt-2 max-h-48 space-y-2 overflow-y-auto text-xs">
+              {[...occSelected, ...relatedSelected].map((id) => {
+                const def = getSkillById(id)
+                if (!def) return null
+                const input = buildEquationInput(def, allSelected)
+                const inputWithScaled = {
+                  ...input,
+                  scaledAttBonuses: (input.scaledAttBonuses ?? 0) + maPbBonus,
+                }
+                const pct = calculateSkillPercent(
+                  inputWithScaled,
+                  character.level,
+                  iqBonus,
+                )
+                return (
+                  <li key={id} className="border-b border-white/10 pb-2 last:border-0">
+                    <div className="font-semibold">{def.name}</div>
+                    <div className="font-mono tabular-nums opacity-90">
+                      Final % ≈ <strong>{pct}%</strong>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  )
+}

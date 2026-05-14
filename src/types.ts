@@ -98,6 +98,35 @@ export type Character = {
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).
    */
   psychicGateBypassed?: boolean
+  /** O.C.C. skill pick budget (creation; skill_selection.md). */
+  occSkillSlotBudget?: number
+  /** O.C.C. related skill pick budget before psychic tax (psychic_gate.md §2). */
+  occRelatedSkillSlotBudget?: number
+  /**
+   * Creation / Step 4: picked supernatural ability ids (sn_abilities_selection.md).
+   * Persisted via localStorage for refresh survival.
+   */
+  selectedAbilities?: string[]
+  /**
+   * O.C.C. supernatural pick budgets for creation (e.g. spells known cap).
+   */
+  creationAbilityBudget?: {
+    spellSlots: number
+    psionicSlots: number
+    talentSlots: number
+  }
+  /** Starting spell level ceiling (Pillar 8 — higher spell levels locked/hidden). */
+  startingSpellLevelCap?: number
+  /** Nightbane lineage drives Talent cost UI (P.P.E. + activation). */
+  lineage?: 'nightbane' | 'megaversal'
+  /** After Spawn — creation chrome hidden; persisted (character_creation.md §5). */
+  isFinalized?: boolean
+  /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
+  creationVitalityCommitted?: boolean
+  /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */
+  creationOccSkillIds?: string[]
+  /** Step 3 — O.C.C. related skill ids. */
+  creationRelatedSkillIds?: string[]
   facade: FormState
   morphus: FormState
 }

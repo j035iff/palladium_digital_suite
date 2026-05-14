@@ -1,9 +1,14 @@
+import { useState } from 'react'
 import { AttributeForge } from '../creation/AttributeForge'
 import { PsychicGate } from '../creation/PsychicGate'
+import { AbilitySelection } from '../creation/AbilitySelection'
+import { SkillEngine } from '../creation/SkillEngine'
+import { CharacterSpawn } from '../creation/CharacterSpawn'
 import { useCharacter } from '../../context/CharacterContext'
 import { SkillList } from '../SkillList'
 
 export function MainLayout() {
+  const [spawnSplash, setSpawnSplash] = useState(false)
   const {
     character,
     activeForm,
@@ -15,9 +20,28 @@ export function MainLayout() {
 
   const morphusActive = activeForm === 'morphus'
   const vitalityType = getVitalityType()
+  const showCreation = character.isFinalized !== true
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
+      {spawnSplash ? (
+        <div
+          className="pds-spawn-splash fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/85 px-6 text-center"
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="spawn-splash-title"
+        >
+          <p
+            id="spawn-splash-title"
+            className="text-3xl font-black tracking-tight text-amber-200 drop-shadow-lg sm:text-4xl"
+          >
+            Character Spawned!
+          </p>
+          <p className="mt-4 max-w-md text-sm text-slate-200">
+            Record locked — loading live sheet.
+          </p>
+        </div>
+      ) : null}
       <header
         className="sticky top-0 z-20 border-b-2 px-4 py-3 backdrop-blur-sm"
         style={{
@@ -164,9 +188,35 @@ export function MainLayout() {
           <SkillList skills={form.skills} morphusActive={morphusActive} />
         </section>
 
-        <AttributeForge />
+        {showCreation ? (
+          <>
+            <AttributeForge />
 
-        <PsychicGate />
+            <PsychicGate />
+
+            <SkillEngine />
+
+            <AbilitySelection />
+
+            <CharacterSpawn
+              runFinalize={(finalize) => {
+                setSpawnSplash(true)
+                window.setTimeout(() => {
+                  finalize()
+                  setSpawnSplash(false)
+                }, 1500)
+              }}
+            />
+          </>
+        ) : (
+          <p
+            className="rounded-lg border border-emerald-600/40 bg-emerald-950/20 px-4 py-3 text-sm"
+            style={{ color: morphusActive ? '#a7f3d0' : '#065f46' }}
+          >
+            Character record is finalized — creation tools are hidden. Use the header and
+            pools for play.
+          </p>
+        )}
       </main>
     </div>
   )

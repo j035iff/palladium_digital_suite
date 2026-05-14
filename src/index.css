@@ -106,3 +106,18 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+@keyframes pds-spawn-splash {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pds-spawn-splash {
+  animation: pds-spawn-splash 0.55s ease-out forwards;
+}

@@ -8,6 +8,22 @@ export const characterFixture: Character = {
   level: 3,
   xp: 4200,
   ppe: { current: 28, maximum: 32 },
+  occSkillSlotBudget: 8,
+  occRelatedSkillSlotBudget: 10,
+  /** Demo Nightbane lineage — Talent cost strip + Morphus-gated picks (sn_abilities_selection.md). */
+  lineage: 'nightbane',
+  psychicGateBypassed: true,
+  isFinalized: false,
+  creationVitalityCommitted: false,
+  creationOccSkillIds: ['literacy'],
+  creationRelatedSkillIds: ['electronics'],
+  selectedAbilities: ['energy_bolt'],
+  creationAbilityBudget: {
+    spellSlots: 8,
+    psionicSlots: 6,
+    talentSlots: 4,
+  },
+  startingSpellLevelCap: 4,
   facade: {
     alignment: 'Scrupulous',
     hitPoints: { current: 12, maximum: 18, scaling: 'sdc_hp' },
