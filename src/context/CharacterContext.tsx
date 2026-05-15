@@ -10,7 +10,11 @@ import {
 } from 'react'
 import { characterFixture } from '../data/characterFixture'
 import { initialInventoryItems } from '../data/inventoryFixture'
-import { getAbilityById } from '../data/abilityLibrary'
+import { getFeatureById } from '../data/library/registry'
+import { getLibraryOccById } from '../data/occDefinitions'
+import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
+import { effectiveStructuralPool } from '../lib/effectiveVitality'
+import { resolveSkillSlotMultiplier } from '../data/library/types'
 import {
   loadPersistedAbilityIds,
   savePersistedAbilityIds,
@@ -40,6 +44,14 @@ import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
 import { computeMaxApm } from '../lib/meleeCombat'
 import { computeCarryCapacityLbs } from '../lib/carryCapacity'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
+import {
+  computeDisplayScalars,
+  computeSheetCombatDerived,
+  type SheetCombatDerived,
+} from '../lib/sheetBonuses'
+import type { WeaponProfileBonuses } from '../lib/weaponBonuses'
+import { getWeaponBonuses as lookupWeaponBonuses } from '../lib/weaponBonuses'
+import { computeSaveProfile, type SaveProfileDerived } from '../lib/saveProfile'
 import { applyInventoryAwareSdcVitality } from '../lib/inventoryVitalityApply'
 import { syncArmorAndWeaponFlags } from '../lib/inventoryArmorSync'
 import {
@@ -67,6 +79,7 @@ import type {
   InventoryItem,
   CombatHudDamagePulse,
   CombatNarrativeEntry,
+  FeatureModifiers,
   PsychicTier,
   VitalityFlashKind,
   Weapon,
@@ -78,8 +91,12 @@ import { getFormState } from '../types'
 type ActiveStats = {
   hitPoints: FormState['hitPoints']
   structuralDamageCapacity: FormState['structuralDamageCapacity']
+  featureSdcBonus: number
   bonuses: LiveBonuses
 }
+
+/** Passive modifier totals + displayed attributes after features/skills that bump sheet stats (active form). */
+type SheetScalars = ReturnType<typeof computeDisplayScalars>
 
 type CharacterContextValue = {
   character: Character
@@ -87,6 +104,14 @@ type CharacterContextValue = {
   activeFormState: FormState
   /** Memoized H.P., S.D.C. pools, and natural bonuses for the active form. */
   activeStats: ActiveStats
+  /** Sheet-first melee totals + line-by-line attribution (skills, traits, morphus modifiers). */
+  sheetCombatDerived: SheetCombatDerived
+  /** Attributes with passive deltas from modifiers (e.g. Boxing P.P., trait bumps). */
+  sheetDisplayScalars: SheetScalars
+  /** Convenience: merged passive modifier record for the active form. */
+  sheetPassiveModifiers: FeatureModifiers
+  /** Sheet-first saving throw targets + Horror Factor for the active form. */
+  saveProfileDerived: SaveProfileDerived
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
   /** Psychic Gate tier (psychic_gate.md); drives save target & skill tax. */
@@ -173,6 +198,8 @@ type CharacterContextValue = {
   ammoReserves: AmmoReservesState
   /** Refill magazine from category reserve; returns false if insufficient ammo. */
   reloadWeapon: (weaponId: string) => boolean
+  /** Aggregated Strike / Parry / Throw bonuses for one inventory weapon (sheet-first). */
+  getWeaponBonuses: (weaponId: string) => WeaponProfileBonuses | null
   /** Add spare rounds to a category reserve (Armory — Ammo management). */
   addAmmoToReserve: (category: string, rounds: number) => void
   /** Tactical narrative log (Pillar 6). */
@@ -239,43 +266,33 @@ function hydrateCharacterFromStorage(base: Character): Character {
 }
 
 /** Returns updated character if the pick is legal; otherwise null. */
-function nextCharacterIfAddAbility(
-  prev: Character,
-  id: string,
-  form: ActiveForm,
-): Character | null {
-  const def = getAbilityById(id)
+function nextCharacterIfAddAbility(prev: Character, id: string): Character | null {
+  const def = getFeatureById(id)
   if (!def) return null
   const selected = prev.selectedAbilities ?? []
   if (selected.includes(id)) return null
-  if (def.morphusOnly && form !== 'morphus') return null
 
   const spellCap = prev.startingSpellLevelCap ?? 4
-  if (
-    def.category === 'Spell' &&
-    def.spellLevel != null &&
-    def.spellLevel > spellCap
-  ) {
-    return null
-  }
+  const spellLevel =
+    typeof def.metadata?.level === 'number' ? def.metadata.level : undefined
+  const cat = featureBudgetCategory(def)
+  if (cat === 'Spell' && spellLevel != null && spellLevel > spellCap) return null
 
   const b = prev.creationAbilityBudget ?? {
     spellSlots: 8,
     psionicSlots: 6,
     talentSlots: 4,
   }
-  const countCat = (cat: 'Spell' | 'Psionic' | 'Talent') =>
-    selected.filter((x) => getAbilityById(x)?.category === cat).length
+  const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
+    selected.filter((x) => {
+      const f = getFeatureById(x)
+      return f != null && featureBudgetCategory(f) === c
+    }).length
 
-  if (def.category === 'Spell' && countCat('Spell') >= b.spellSlots) {
-    return null
-  }
-  if (def.category === 'Psionic' && countCat('Psionic') >= b.psionicSlots) {
-    return null
-  }
-  if (def.category === 'Talent' && countCat('Talent') >= b.talentSlots) {
-    return null
-  }
+  if (cat === 'Spell' && countCat('Spell') >= b.spellSlots) return null
+  if (cat === 'Psionic' && countCat('Psionic') >= b.psionicSlots) return null
+  if (cat === 'Talent' && countCat('Talent') >= b.talentSlots) return null
+  if (!cat) return null
 
   return { ...prev, selectedAbilities: [...selected, id] }
 }
@@ -428,17 +445,39 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [activeFormState.attributes],
   )
 
-  const activeStats = useMemo<ActiveStats>(
-    () => ({
-      hitPoints: activeFormState.hitPoints,
-      structuralDamageCapacity: activeFormState.structuralDamageCapacity,
-      bonuses: liveBonuses,
-    }),
-    [
-      activeFormState.hitPoints,
+  const activeStats = useMemo<ActiveStats>(() => {
+    const sdc = effectiveStructuralPool(
+      character,
+      activeForm,
       activeFormState.structuralDamageCapacity,
-      liveBonuses,
-    ],
+    )
+    return {
+      hitPoints: activeFormState.hitPoints,
+      structuralDamageCapacity: sdc,
+      featureSdcBonus: sdc.modifierBonus,
+      bonuses: liveBonuses,
+    }
+  }, [
+    character,
+    activeForm,
+    activeFormState.hitPoints,
+    activeFormState.structuralDamageCapacity,
+    liveBonuses,
+  ])
+
+  const sheetPassiveModifiers = useMemo(
+    () => aggregateAllPassiveModifiers(character, activeForm),
+    [character, activeForm],
+  )
+
+  const sheetDisplayScalars = useMemo(
+    () => computeDisplayScalars(character, activeForm, sheetPassiveModifiers),
+    [character, activeForm, sheetPassiveModifiers],
+  )
+
+  const sheetCombatDerived = useMemo(
+    () => computeSheetCombatDerived(character, activeForm),
+    [character, activeForm],
   )
 
   const isMDC = useMemo(
@@ -446,14 +485,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [activeFormState],
   )
 
-  const skillSlotMultiplier = useMemo(
-    () => skillSlotMultiplierForTier(psychicTier),
-    [psychicTier],
-  )
+  const skillSlotMultiplier = useMemo(() => {
+    const lib = getLibraryOccById(character.occ.id)
+    if (lib) return resolveSkillSlotMultiplier(lib.skillSlotPolicy, psychicTier)
+    return skillSlotMultiplierForTier(psychicTier)
+  }, [character.occ.id, psychicTier])
 
   const saveVsPsionicsTarget = useMemo(
     () => saveVsPsionicsForTier(psychicTier),
     [psychicTier],
+  )
+
+  const saveProfileDerived = useMemo(
+    () => computeSaveProfile(character, activeForm, saveVsPsionicsTarget),
+    [character, activeForm, saveVsPsionicsTarget],
   )
 
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -713,6 +758,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     ],
   )
 
+  const getWeaponBonuses = useCallback(
+    (weaponId: string) => lookupWeaponBonuses(character, activeForm, inventoryItems, weaponId),
+    [character, activeForm, inventoryItems],
+  )
+
   const addAmmoToReserve = useCallback(
     (category: string, rounds: number) => {
       const n = Math.round(rounds)
@@ -895,19 +945,28 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setSelectedOcc = useCallback(
     (occId: string) => {
       const def = getOccById(occId)
-      if (!def) return
+      const lib = getLibraryOccById(occId)
+      if (!def || !lib) return
       const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
       setPsychicTierState(tier)
       setCharacter((prev) => {
         const branch = getFormState(prev, activeForm)
         const nextBranch =
-          prev.psychicGateBypassed === true
+          prev.psychicGateBypassed === true || lib.psychicGateBypassed
             ? branch
             : applyPsychicTierToFormState(branch, tier)
         return {
           ...prev,
           [activeForm]: nextBranch,
           occ: snapshotOccForCharacter(def),
+          psychicGateBypassed: lib.psychicGateBypassed ?? prev.psychicGateBypassed,
+          occSkillSlotBudget: lib.occSkillSlotBudget ?? prev.occSkillSlotBudget,
+          occRelatedSkillSlotBudget:
+            lib.occRelatedSkillSlotBudget ?? prev.occRelatedSkillSlotBudget,
+          creationAbilityBudget:
+            lib.creationAbilityBudget ?? prev.creationAbilityBudget,
+          startingSpellLevelCap:
+            lib.startingSpellLevelCap ?? prev.startingSpellLevelCap,
           creationOccSkillIds: [...def.startingOccSkillIds],
           creationRelatedSkillIds: [...def.startingRelatedSkillIds],
         }
@@ -950,10 +1009,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const addSelectedAbility = useCallback(
     (id: string) => {
       setCharacter(
-        (prev) => nextCharacterIfAddAbility(prev, id, activeForm) ?? prev,
+        (prev) => nextCharacterIfAddAbility(prev, id) ?? prev,
       )
     },
-    [activeForm],
+    [],
   )
 
   const removeSelectedAbility = useCallback((id: string) => {
@@ -1067,6 +1126,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeForm,
       activeFormState,
       activeStats,
+      sheetCombatDerived,
+      sheetDisplayScalars,
+      sheetPassiveModifiers,
+      saveProfileDerived,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -1107,6 +1170,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       spendWeaponRangedShot,
       ammoReserves,
       reloadWeapon,
+      getWeaponBonuses,
       addAmmoToReserve,
       combatNarrativeLog,
       appendCombatNarrative,
@@ -1126,6 +1190,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeForm,
       activeFormState,
       activeStats,
+      sheetCombatDerived,
+      sheetDisplayScalars,
+      sheetPassiveModifiers,
+      saveProfileDerived,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -1166,6 +1234,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       spendWeaponRangedShot,
       ammoReserves,
       reloadWeapon,
+      getWeaponBonuses,
       addAmmoToReserve,
       combatNarrativeLog,
       appendCombatNarrative,

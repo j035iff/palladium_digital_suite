@@ -3,7 +3,7 @@ import { getFormState } from '../types'
 import { computeCombatMirrorBonuses } from './characterDerived'
 
 /** Sheet skills that grant melee combat modifiers (until full H2H module). */
-const SKILL_MELEE: Record<
+export const SKILL_MELEE: Record<
   string,
   { strike?: number; parry?: number; dodge?: number }
 > = {

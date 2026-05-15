@@ -28,9 +28,31 @@ export type EngineSkillDef = SkillEquationSkill & {
     pe?: number
     spd?: number
   }
+  /** Passive stat bumps when skill is selected (universal schema modifiers block). */
+  modifiers?: Record<string, number>
 }
 
-export const SKILL_LIBRARY: EngineSkillDef[] = [
+function stagingToModifiers(
+  staging?: EngineSkillDef['physicalStaging'],
+): Record<string, number> | undefined {
+  if (!staging) return undefined
+  const m: Record<string, number> = {}
+  if (staging.sdc) m.sdc = staging.sdc
+  if (staging.ps) m.ps = staging.ps
+  if (staging.pp) m.pp = staging.pp
+  if (staging.pe) m.pe = staging.pe
+  if (staging.spd) m.spd = staging.spd
+  return Object.keys(m).length ? m : undefined
+}
+
+function withModifiers(def: EngineSkillDef): EngineSkillDef {
+  return {
+    ...def,
+    modifiers: def.modifiers ?? stagingToModifiers(def.physicalStaging),
+  }
+}
+
+const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
   {
     id: 'literacy',
     name: 'Literacy: American',
@@ -196,6 +218,39 @@ export const SKILL_LIBRARY: EngineSkillDef[] = [
     occBonus: 5,
   },
 ]
+
+export const SKILL_LIBRARY: EngineSkillDef[] = SKILL_LIBRARY_RAW.map(withModifiers)
+
+function normalizeWpCategoryKey(raw: string): string {
+  return raw.toLowerCase().replace(/[^a-z0-9]+/g, '')
+}
+
+const WP_LOOKUP_ALIASES: Record<string, string> = (() => {
+  const aliases: Record<string, string> = {}
+  for (const def of SKILL_LIBRARY) {
+    if (def.category !== 'Weapon') continue
+    aliases[normalizeWpCategoryKey(def.id)] = def.id
+    aliases[normalizeWpCategoryKey(def.name)] = def.id
+  }
+  return aliases
+})()
+
+/** Map `wpCategory` (e.g. "W.P. Sword") plus optional `linkedWpSkillId` to a Weapon skill row id. */
+export function resolveWeaponProficiencySkillId(
+  wpCategory?: string | null,
+  linkedWpSkillId?: string | null,
+): string | undefined {
+  if (linkedWpSkillId?.trim()) {
+    const sid = linkedWpSkillId.trim()
+    if (getSkillById(sid)?.category === 'Weapon') return sid
+  }
+  if (!wpCategory?.trim()) return undefined
+  const raw = wpCategory.trim()
+  const direct = getSkillById(raw)
+  if (direct?.category === 'Weapon') return raw
+  const key = normalizeWpCategoryKey(raw)
+  return WP_LOOKUP_ALIASES[key]
+}
 
 export function getSkillById(id: string): EngineSkillDef | undefined {
   return SKILL_LIBRARY.find((s) => s.id === id)

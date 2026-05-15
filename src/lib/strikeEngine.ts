@@ -4,6 +4,10 @@ import { computeCombatMirrorBonuses, computeLiveBonuses } from './characterDeriv
 import { calculateSkillPercent } from './skillEquation'
 import { getSkillById } from '../data/skillLibrary'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import {
+  computeWeaponProfileBonuses,
+  weaponProfileToStrikeBreakdown,
+} from './weaponBonuses'
 
 /** Map W.P. / H2H skill % to a d20 strike bonus (demo curve; scales with level). */
 export function wpStrikeBonusFromSkillPercent(skillTotalPercent: number): number {
@@ -13,7 +17,10 @@ export function wpStrikeBonusFromSkillPercent(skillTotalPercent: number): number
 
 export type StrikeBreakdown = {
   ppBonus: number
+  /** Hand-to-Hand (melee firearms excluded in {@link computeWeaponStrikeBreakdown}). */
+  hthBonus: number
   wpBonus: number
+  /** Intrinsic strike + weapon-specific modifiers (strike / trait keys). */
   weaponBonus: number
   total: number
   /** W.P. or H2H skill name for UI; null if none applied. */
@@ -26,40 +33,16 @@ function iqBonusForSkills(character: Character, activeForm: 'facade' | 'morphus'
 }
 
 /**
- * Total strike on d20: **P.P. natural + W.P. (or H2H) skill bonus + weapon intrinsic bonus**
- * (combat_logic.md, master_flow.md).
+ * Total strike on d20: **display P.P. natural + HtH (melee) + W.P. + weapon intrinsic & traits**
  */
 export function computeWeaponStrikeBreakdown(
   character: Character,
   activeForm: 'facade' | 'morphus',
   weapon: Weapon,
 ): StrikeBreakdown {
-  const attrs = getFormState(character, activeForm).attributes
-  const mirror = computeCombatMirrorBonuses(attrs)
-  const ppBonus = mirror.strike
-  const weaponBonus = weapon.strikeBonus
-  const iq = iqBonusForSkills(character, activeForm)
-  const unlocked = collectUnlockedSkillIds(character, activeForm)
-
-  let wpBonus = 0
-  let skillSourceLabel: string | null = null
-  const wpId = weapon.linkedWpSkillId
-  if (wpId && unlocked.has(wpId)) {
-    const def = getSkillById(wpId)
-    if (def) {
-      const pct = calculateSkillPercent(def, character.level, iq)
-      wpBonus = wpStrikeBonusFromSkillPercent(pct)
-      skillSourceLabel = def.name
-    }
-  }
-
-  return {
-    ppBonus,
-    wpBonus,
-    weaponBonus,
-    total: ppBonus + wpBonus + weaponBonus,
-    skillSourceLabel,
-  }
+  return weaponProfileToStrikeBreakdown(
+    computeWeaponProfileBonuses(character, activeForm, weapon),
+  )
 }
 
 const HAND_TO_HAND_SKILL_ID = 'hand_to_hand_basic'
@@ -76,21 +59,22 @@ export function computeUnarmedStrikeBreakdown(
   const ppBonus = mirror.strike
   const iq = iqBonusForSkills(character, activeForm)
   const unlocked = collectUnlockedSkillIds(character, activeForm)
-  let wpBonus = 0
+  let hthBonus = 0
   let skillSourceLabel: string | null = null
   if (unlocked.has(HAND_TO_HAND_SKILL_ID)) {
     const def = getSkillById(HAND_TO_HAND_SKILL_ID)
     if (def) {
       const pct = calculateSkillPercent(def, character.level, iq)
-      wpBonus = wpStrikeBonusFromSkillPercent(pct)
+      hthBonus = wpStrikeBonusFromSkillPercent(pct)
       skillSourceLabel = def.name
     }
   }
   return {
     ppBonus,
-    wpBonus,
+    hthBonus,
+    wpBonus: 0,
     weaponBonus: 0,
-    total: ppBonus + wpBonus,
+    total: ppBonus + hthBonus,
     skillSourceLabel,
   }
 }

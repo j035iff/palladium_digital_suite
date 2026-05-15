@@ -12,6 +12,7 @@ import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
 import { SkillList } from '../SkillList'
+import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
 
 const DEFAULT_COMBAT_SIDEBAR_PX = 350
 const MIN_COMBAT_SIDEBAR_PX = 300
@@ -269,6 +270,8 @@ export function MainLayout() {
             Alignment: <strong>{form.alignment}</strong>
           </p>
         </section>
+
+        <SavingThrowsPanel />
 
         <section aria-labelledby="skills-heading">
           <h2

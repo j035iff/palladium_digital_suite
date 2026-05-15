@@ -60,6 +60,47 @@ export type VitalityPool = {
   scaling: DamageScalingMode
 }
 
+/** Universal Feature system — composition schema (skills are separate library rows; reference by id elsewhere). */
+export type FeatureSystem = 'magic' | 'psionic' | 'trait' | 'skill'
+
+export type FeatureRequirement = {
+  /** Modifiers apply only while this form is active. */
+  form: ActiveForm
+}
+
+export type FeatureIdentity = {
+  id: string
+  name: string
+  description: string
+  descriptionMorphus?: string
+  system: FeatureSystem
+}
+
+export type FeatureActivationCost = {
+  type: 'ppe' | 'isp' | 'action' | 'other'
+  value: number | string
+}
+
+export type FeatureActivation = {
+  cost?: FeatureActivationCost
+  range?: string
+  duration?: string
+  save?: string
+}
+
+export type FeatureModifiers = Record<string, number>
+
+export type FeatureMetadata = Record<string, unknown>
+
+export type Feature = {
+  identity: FeatureIdentity
+  activation?: FeatureActivation
+  modifiers?: FeatureModifiers
+  metadata?: FeatureMetadata
+  /** When set, passive {@link modifiers} apply only while {@link FeatureRequirement.form} is active. */
+  requirement?: FeatureRequirement
+}
+
 export type SheetSkill = {
   id: string
   name: string
@@ -130,6 +171,8 @@ export type Character = {
   ppe: { current: number; maximum: number }
   /** O.C.C. / R.C.C. package: display name, psychic lock, and fixed XP thresholds. */
   occ: CharacterOcc
+  /** Library race id (`src/data/library/races`). */
+  raceId?: string
   /**
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).
    */
@@ -224,6 +267,13 @@ export interface Weapon extends Item {
   itemType: 'weapon'
   /** e.g. "Handguns", "Swords", "Heavy" */
   category: string
+  /** Sheet label for the matching weapon proficiency (e.g. "WP Sword", "W.P. Energy Pistol"). */
+  wpCategory?: string
+  /**
+   * Per-item combat tweaks (balanced hilt +1 strike, enchanted guard +1 parry, etc.).
+   * Known keys strike, parry, throw; other keys add to melee strike totals with a titled line.
+   */
+  weaponSpecificModifiers?: Record<string, number>
   /** Intrinsic weapon strike modifier on d20. */
   strikeBonus: number
   /** Damage dice string (e.g. "2d6", "1d4+2"). */

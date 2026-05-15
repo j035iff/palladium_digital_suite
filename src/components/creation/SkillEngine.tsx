@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import type { EngineSkillDef, SkillCategory } from '../../data/skillLibrary'
-import { SKILL_LIBRARY, getSkillById } from '../../data/skillLibrary'
+import type { EngineSkillDef, SkillCategory } from '../../data/library/skills'
+import { SKILL_LIBRARY, getSkillById } from '../../data/library/skills'
+import { aggregateSkillModifiers } from '../../lib/skillModifiers'
 import {
   calculateSkillPercent,
   maPbScaledBonuses,
@@ -44,25 +45,15 @@ function buildEquationInput(
   }
 }
 
-function aggregatePhysicalStaging(ids: ReadonlySet<string>): {
-  sdc: number
-  ps: number
-  pp: number
-  pe: number
-  spd: number
-} {
-  const out = { sdc: 0, ps: 0, pp: 0, pe: 0, spd: 0 }
-  for (const id of ids) {
-    const s = getSkillById(id)
-    if (!s?.isPhysical || !s.physicalStaging) continue
-    const p = s.physicalStaging
-    out.sdc += p.sdc ?? 0
-    out.ps += p.ps ?? 0
-    out.pp += p.pp ?? 0
-    out.pe += p.pe ?? 0
-    out.spd += p.spd ?? 0
+function pendingPhysicalFromModifiers(ids: ReadonlySet<string>) {
+  const mods = aggregateSkillModifiers([...ids])
+  return {
+    sdc: mods.sdc ?? 0,
+    ps: mods.ps ?? 0,
+    pp: mods.pp ?? 0,
+    pe: mods.pe ?? 0,
+    spd: mods.spd ?? 0,
   }
-  return out
 }
 
 export function SkillEngine() {
@@ -105,7 +96,7 @@ export function SkillEngine() {
   const maPbBonus = useMemo(() => maPbScaledBonuses(attrs.ma, attrs.pb), [attrs])
 
   const pendingPhysical = useMemo(
-    () => aggregatePhysicalStaging(allSelected),
+    () => pendingPhysicalFromModifiers(allSelected),
     [allSelected],
   )
 
@@ -368,8 +359,8 @@ export function SkillEngine() {
             Mirror — equation & staging
           </h3>
           <p className="text-xs opacity-75">
-            Physical bonuses from Boxing / Wrestling / etc. stay <strong>Pending</strong> until
-            Spawn commit (skill_selection.md §4).
+            Physical skill <strong>modifiers</strong> blocks (Boxing, Wrestling, etc.) stay{' '}
+            <strong>Pending</strong> until Spawn commit (skill_selection.md §4).
           </p>
 
           <div className={`rounded-md border p-3 text-sm ${subStyle}`}>

@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import { getAbilityById } from '../../data/abilityLibrary'
+import { getFeatureById } from '../../data/library/registry'
+import { featureAppliesToForm } from '../../lib/featureEngine'
 import {
   computeUnarmedStrikeBreakdown,
   unarmedDamageLabel,
 } from '../../lib/strikeEngine'
-import {
-  computeQuickActionTotals,
-  formatBonus,
-} from '../../lib/combatQuickBonuses'
-import { rollD20 } from '../../lib/meleeDice'
+import { formatBonus } from '../../lib/combatQuickBonuses'
+import { ManualRollField } from '../combat/ManualRollField'
 import { defaultFireModeId } from '../../lib/fireModes'
 import type { Weapon } from '../../types'
+import type { SheetCombatStatDetails } from '../../lib/sheetBonuses'
+import { formatSheetBonusEquation } from '../../lib/sheetBonuses'
 import { CombatNarrativeLog } from './CombatNarrativeLog'
 import { WeaponStrikeCard, type StrikeBannerState } from './WeaponStrikeCard'
 
@@ -189,6 +189,56 @@ function CompactApmPips({
 }
 
 /**
+ * Character sheet combat totals (P.P. natural, skills, morphus traits) with hover math.
+ */
+function SheetCombatStatTile({
+  label,
+  detail,
+  morphus,
+}: {
+  label: string
+  detail: SheetCombatStatDetails
+  morphus: boolean
+}) {
+  const tip = formatSheetBonusEquation(detail, formatBonus)
+  return (
+    <div
+      className={`group relative min-h-[5.5rem] rounded-md border px-2 py-2 text-center max-sm:pb-10 sm:pb-12 ${
+        morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-blue-200 bg-white'
+      }`}
+    >
+      <p
+        className={`mb-2 text-[9px] font-bold uppercase leading-tight opacity-80 ${
+          morphus ? 'text-violet-200' : 'text-slate-700'
+        }`}
+      >
+        {label}
+      </p>
+      <p
+        className={`font-mono text-3xl font-black tabular-nums leading-none md:text-[2.65rem] ${
+          morphus ? 'text-amber-300' : 'text-blue-800'
+        }`}
+      >
+        {formatBonus(detail.total)}
+      </p>
+      <div
+        role="tooltip"
+        className={`pointer-events-none invisible absolute bottom-full left-1/2 z-20 mb-1 w-[min(100vw-2rem,22rem)] -translate-x-1/2 rounded-md border-2 px-2 py-1.5 text-left text-[10px] font-semibold leading-snug opacity-0 shadow-lg transition-opacity group-hover:pointer-events-none group-hover:visible group-hover:opacity-100 md:bottom-auto md:top-full md:mb-0 md:mt-1 ${
+          morphus
+            ? 'border-violet-400/90 bg-black/92 text-violet-50'
+            : 'border-blue-400 bg-white text-slate-900'
+        }`}
+      >
+        {tip}
+      </div>
+      <span className={`mt-2 block text-[8px] font-semibold italic opacity-65 max-sm:hidden`}>
+        Hover for math
+      </span>
+    </div>
+  )
+}
+
+/**
  * Persistent S.D.C.-first tactical HUD (master_flow.md, combat_logic.md, attribute_and_stat.md).
  * Max A.P.M. comes from {@link CharacterContext} (`attacksPerMelee.max`).
  */
@@ -197,6 +247,7 @@ export function CombatHUD() {
     character,
     activeForm,
     activeStats,
+    sheetCombatDerived,
     attacksPerMelee,
     spendCombatAction,
     resetMeleeRound,
@@ -219,7 +270,11 @@ export function CombatHUD() {
   const morphus = activeForm === 'morphus'
   const [amount, setAmount] = useState('4')
   const [mode, setMode] = useState<'damage' | 'heal'>('damage')
-  const [attackRollStr, setAttackRollStr] = useState('')
+  const [resolveOpen, setResolveOpen] = useState(false)
+  const [resolveDamage, setResolveDamage] = useState('4')
+  const [resolveAttackRollStr, setResolveAttackRollStr] = useState('')
+  const [unarmedStrikeManual, setUnarmedStrikeManual] = useState('')
+  const [unarmedDamageManual, setUnarmedDamageManual] = useState('')
   const [hudMinimized, setHudMinimized] = useState(false)
   const [strikeBanner, setStrikeBanner] = useState<StrikeBannerState>(null)
   const [fireModeByWeaponId, setFireModeByWeaponId] = useState<Record<string, string>>(
@@ -228,6 +283,15 @@ export function CombatHUD() {
   const [reloadShakeByWeaponId, setReloadShakeByWeaponId] = useState<
     Record<string, number>
   >({})
+
+  useEffect(() => {
+    if (!resolveOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setResolveOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [resolveOpen])
 
   useEffect(() => {
     if (!strikeBanner) return
@@ -242,13 +306,17 @@ export function CombatHUD() {
     return a
   }, [equippedArmor])
 
-  const totals = useMemo(
-    () => computeQuickActionTotals(character, activeForm),
-    [character, activeForm],
-  )
-
   const hp = activeStats.hitPoints
   const sdc = activeStats.structuralDamageCapacity
+  const featureSdcBonus = activeStats.featureSdcBonus
+
+  const activeFeatures = useMemo(() => {
+    const ids = character.selectedAbilities ?? []
+    return ids
+      .map((id) => getFeatureById(id))
+      .filter((f): f is NonNullable<typeof f> => f != null)
+      .filter((f) => featureAppliesToForm(f, activeForm))
+  }, [character.selectedAbilities, activeForm])
 
   const shell = morphus
     ? 'border-t-2 border-violet-400 bg-slate-950/96 text-violet-50 max-md:shadow-[0_-10px_40px_rgba(0,0,0,0.55)] md:border-t-0 md:border-l-2 md:border-violet-400 md:shadow-none'
@@ -266,54 +334,43 @@ export function CombatHUD() {
     ? 'border-2 border-violet-300 bg-violet-800 text-white hover:bg-violet-700'
     : 'border-2 border-blue-600 bg-blue-600 text-white hover:bg-blue-500'
 
-  const actionStrikeBtn = morphus
-    ? 'rounded-lg border-2 border-amber-400 bg-gradient-to-br from-violet-700 via-violet-900 to-rose-950 px-3 py-2.5 text-xs font-black uppercase tracking-wide text-amber-100 shadow-[0_0_24px_rgba(251,191,36,0.35)] hover:brightness-110'
-    : 'rounded-lg border-2 border-orange-600 bg-gradient-to-br from-amber-500 to-orange-700 px-3 py-2.5 text-xs font-black uppercase tracking-wide text-white shadow-[0_0_20px_rgba(234,88,12,0.35)] hover:brightness-105'
+  const openResolveCombat = () => {
+    setResolveDamage(amount)
+    setResolveAttackRollStr('')
+    setResolveOpen(true)
+  }
 
-  const bonusTiles = [
-    { label: 'Strike', value: totals.strike, hint: 'P.P. natural + skills (attribute_and_stat.md)' },
-    { label: 'Parry', value: totals.parry, hint: 'P.P. natural + skills' },
-    { label: 'Dodge', value: totals.dodge, hint: 'P.P. natural + skills' },
-    {
-      label: 'Roll w/ Impact',
-      value: totals.rollWithImpact,
-      hint: 'Dodge total + P.E. (attribute_and_stat.md)',
-    },
-  ]
+  const trimmedResolveRoll = resolveAttackRollStr.trim()
+  const resolveRollParsed = Number(trimmedResolveRoll)
+  const resolveAttackRollInvalid =
+    Boolean(hudArmor) &&
+    trimmedResolveRoll.length > 0 &&
+    !Number.isFinite(resolveRollParsed)
 
   const applyVitality = () => {
     const n = Number(amount)
     if (!Number.isFinite(n) || n <= 0) return
-    const trimmedRoll = attackRollStr.trim()
-    const rollN = Number(trimmedRoll)
-    const useRoll =
-      mode === 'damage' &&
-      Boolean(hudArmor) &&
-      trimmedRoll.length > 0 &&
-      Number.isFinite(rollN)
-    if (
-      mode === 'damage' &&
-      hudArmor &&
-      trimmedRoll.length > 0 &&
-      !Number.isFinite(rollN)
-    ) {
-      return
-    }
     applySdcPriorityVitality({
       mode,
       amount: n,
-      useAttackRollVsArmor: useRoll,
-      attackRoll: useRoll ? rollN : undefined,
+      useAttackRollVsArmor: false,
     })
   }
 
-  const trimmedStrike = attackRollStr.trim()
-  const strikeRollParsed = Number(trimmedStrike)
-  const attackRollInvalid =
-    mode === 'damage' &&
-    Boolean(hudArmor) &&
-    trimmedStrike.length > 0 &&
-    !Number.isFinite(strikeRollParsed)
+  const applyResolvedDamage = () => {
+    const n = Number(resolveDamage)
+    if (!Number.isFinite(n) || n <= 0) return
+    if (resolveAttackRollInvalid) return
+    const useRoll =
+      Boolean(hudArmor) && trimmedResolveRoll.length > 0 && Number.isFinite(resolveRollParsed)
+    applySdcPriorityVitality({
+      mode: 'damage',
+      amount: n,
+      useAttackRollVsArmor: useRoll,
+      attackRoll: useRoll ? resolveRollParsed : undefined,
+    })
+    setResolveOpen(false)
+  }
 
   const readyWeaponList = useMemo(
     () => readyWeapons.filter((w): w is Weapon => w != null),
@@ -460,7 +517,11 @@ export function CombatHUD() {
             />
           ) : null}
           <VitalityTrack
-            label="Body S.D.C."
+            label={
+              featureSdcBonus > 0
+                ? `Body S.D.C. (+${featureSdcBonus} trait)`
+                : 'Body S.D.C.'
+            }
             current={sdc.current}
             max={sdc.maximum}
             morphus={morphus}
@@ -476,6 +537,13 @@ export function CombatHUD() {
             morphus={morphus}
             variant="hp"
           />
+          {activeFeatures.length > 0 ? (
+            <p className={`text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-600'}`}>
+              Active features ({activeForm}):{' '}
+              {activeFeatures.map((f) => f.identity.name).join(', ')}
+              {featureSdcBonus > 0 ? ` · +${featureSdcBonus} S.D.C. from traits` : ''}
+            </p>
+          ) : null}
         </div>
 
         <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
@@ -549,7 +617,7 @@ export function CombatHUD() {
             <ul className="mt-2 space-y-1 text-[11px]">
               {activeMeleeDurations.map((d) => (
                 <li key={d.abilityId} className="font-mono opacity-90">
-                  {getAbilityById(d.abilityId)?.name ?? d.abilityId}:{' '}
+                  {getFeatureById(d.abilityId)?.identity.name ?? d.abilityId}:{' '}
                   <strong>{d.roundsRemaining}</strong> melee
                 </li>
               ))}
@@ -570,35 +638,26 @@ export function CombatHUD() {
               morphus ? 'text-violet-200' : 'text-blue-900'
             }`}
           >
-            Active bonuses
+            Combat sheet — total bonuses
           </h3>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {bonusTiles.map((b) => (
-              <div
-                key={b.label}
-                title={b.hint}
-                className={`rounded-md border px-1.5 py-2 text-center ${
-                  morphus
-                    ? 'border-violet-400/80 bg-slate-950/80'
-                    : 'border-blue-200 bg-white'
-                }`}
-              >
-                <p
-                  className={`text-[9px] font-bold uppercase leading-tight opacity-80 ${
-                    morphus ? 'text-violet-200' : 'text-slate-700'
-                  }`}
-                >
-                  {b.label}
-                </p>
-                <p
-                  className={`font-mono text-base font-black leading-tight ${
-                    morphus ? 'text-amber-300' : 'text-blue-800'
-                  }`}
-                >
-                  {formatBonus(b.value)}
-                </p>
-              </div>
-            ))}
+          <p className={`mb-3 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+            Static numbers as on a paper sheet. Hover a tile for the full breakdown (P.P. natural, skills,
+            traits). W.P. bonuses for a specific weapon appear in the strike row below.
+          </p>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+            <SheetCombatStatTile label="Strike" detail={sheetCombatDerived.strike} morphus={morphus} />
+            <SheetCombatStatTile label="Parry" detail={sheetCombatDerived.parry} morphus={morphus} />
+            <SheetCombatStatTile label="Dodge" detail={sheetCombatDerived.dodge} morphus={morphus} />
+            <SheetCombatStatTile
+              label="Roll w/ Impact"
+              detail={sheetCombatDerived.rollWithImpact}
+              morphus={morphus}
+            />
+            <SheetCombatStatTile
+              label="Initiative"
+              detail={sheetCombatDerived.initiative}
+              morphus={morphus}
+            />
           </div>
         </div>
 
@@ -608,13 +667,14 @@ export function CombatHUD() {
               morphus ? 'text-violet-200' : 'text-blue-900'
             }`}
           >
-            Equipped weapons — strike engine
+            Equipped weapons — profiles
           </h3>
           <p
             className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
           >
-            <strong>Total strike</strong> = 1d20 + P.P. + W.P./H2H + weapon bonus + fire mode modifier.
-            Ranged: pick Single, Burst, or Wild — ammo cost comes from the active mode (Wild empties the mag).
+            Each card shows <strong>final Strike / Parry / Throw</strong> from P.P., Hand-to-Hand, W.P., and this
+            weapon’s bonuses — hover a value for the full equation. Pillar 5: enter physical dice below; use{' '}
+            <strong>Resolve combat</strong> in Apply damage for the A.R. drawer.
           </p>
           {strikeBanner ? (
             <div
@@ -666,7 +726,6 @@ export function CombatHUD() {
                     [w.id]: (prev[w.id] ?? 0) + 1,
                   }))
                 }
-                actionStrikeBtn={actionStrikeBtn}
               />
             ))}
             {showUnarmed ? (
@@ -677,42 +736,37 @@ export function CombatHUD() {
                     : 'border-orange-400/80 bg-orange-50/80'
                 }`}
               >
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className={`text-sm font-black ${morphus ? 'text-amber-100' : 'text-orange-950'}`}>
-                      Unarmed
-                    </p>
-                    <p className={`mt-1 font-mono text-[10px] leading-relaxed ${morphus ? 'text-violet-200' : 'text-slate-700'}`}>
-                      P.P. {formatBonus(unarmedBd.ppBonus)}
-                      {' · '}
-                      H2H {formatBonus(unarmedBd.wpBonus)}
-                      {unarmedBd.skillSourceLabel ? ` (${unarmedBd.skillSourceLabel})` : ' (add Hand-to-Hand on sheet)'}
-                      {' · '}
-                      Weapon {formatBonus(unarmedBd.weaponBonus)} →{' '}
-                      <strong className={morphus ? 'text-amber-300' : 'text-orange-700'}>
-                        {formatBonus(unarmedBd.total)} total
-                      </strong>
-                    </p>
-                    <p className={`mt-1 font-mono text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-600'}`}>
-                      Damage {unarmedDamageLabel(character, activeForm)}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className={actionStrikeBtn}
-                    onClick={() => {
-                      const d = rollD20()
+                <p className={`mb-2 text-sm font-black ${morphus ? 'text-amber-100' : 'text-orange-950'}`}>
+                  Unarmed
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <ManualRollField
+                    label="Strike (d20)"
+                    morphus={morphus}
+                    manualValue={unarmedStrikeManual}
+                    onManualValueChange={setUnarmedStrikeManual}
+                    calculatedBonus={unarmedBd.total}
+                    onRecord={() => {
+                      const d = Number(unarmedStrikeManual.trim())
+                      if (!Number.isFinite(d)) return
                       const t = d + unarmedBd.total
                       setStrikeBanner({
                         key: 'unarmed',
                         title: 'Unarmed strike',
-                        detail: `1d20 (${d}) + total bonus (${unarmedBd.total}) = ${t}`,
+                        detail: `Manual (${d}) + bonus (${unarmedBd.total}) = ${t}`,
                         total: t,
                       })
                     }}
-                  >
-                    Roll strike
-                  </button>
+                    recordLabel="Record strike"
+                  />
+                  <ManualRollField
+                    label="Damage"
+                    morphus={morphus}
+                    manualValue={unarmedDamageManual}
+                    onManualValueChange={setUnarmedDamageManual}
+                    calculatedBonus={0}
+                    hint={unarmedDamageLabel(character, activeForm)}
+                  />
                 </div>
               </li>
             ) : null}
@@ -728,10 +782,8 @@ export function CombatHUD() {
             Apply damage / heal
           </h3>
           <p className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-            Body: S.D.C. then H.P. (damage); S.D.C. to max then H.P. (heal). With armor equipped, enter an
-            optional <strong>attack roll</strong> vs A.R.: strictly below A.R. applies damage to armor S.D.C.
-            first; at or above A.R. bypasses to body S.D.C. Leave the roll blank to apply damage directly to
-            the body (no A.R. gate).
+            <strong>Pillar 5:</strong> quick apply from the sheet — no automation. Use{' '}
+            <strong>Resolve combat</strong> when you need attack roll vs armor (A.R.) routing.
           </p>
           <div className="mb-2 flex flex-wrap gap-3 text-xs font-semibold">
             <label className="flex cursor-pointer items-center gap-1.5">
@@ -753,62 +805,34 @@ export function CombatHUD() {
               Heal
             </label>
           </div>
-          <label
-            className={`mb-1 block text-[10px] font-bold uppercase ${
-              morphus ? 'text-violet-200' : 'text-blue-900'
-            }`}
-          >
-            Amount
-          </label>
-          <input
-            type="number"
-            min={1}
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className={`mb-2 w-full rounded-md border-2 px-2 py-2 font-mono text-sm ${
-              morphus
-                ? 'border-violet-500 bg-slate-950 text-violet-50'
-                : 'border-blue-400 bg-white text-slate-900'
-            }`}
-          />
-          {mode === 'damage' && hudArmor ? (
-            <div
-              className={`mb-2 space-y-2 rounded-md border-2 border-dashed px-2 py-2 text-[11px] font-semibold leading-snug ${
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={openResolveCombat}
+              className={`rounded-md px-3 py-2 text-[10px] font-black uppercase tracking-wide ${
                 morphus
-                  ? 'border-violet-500/80 bg-slate-950/50 text-violet-100'
-                  : 'border-blue-400/90 bg-white/80 text-slate-800'
+                  ? 'border-2 border-violet-400 bg-violet-950 text-violet-100 hover:bg-violet-900'
+                  : 'border-2 border-slate-400 bg-slate-100 text-slate-800 hover:bg-slate-200'
               }`}
             >
-              <label
-                className={`mb-1 block text-[10px] font-bold uppercase ${
-                  morphus ? 'text-violet-200' : 'text-blue-900'
-                }`}
-              >
-                Attack roll (optional vs A.R. {hudArmor.ar})
-              </label>
-              <input
-                type="number"
-                value={attackRollStr}
-                onChange={(e) => setAttackRollStr(e.target.value)}
-                placeholder="Leave empty = no A.R. routing"
-                className={`w-full rounded-md border-2 px-2 py-1.5 font-mono text-sm ${
-                  morphus
-                    ? 'border-violet-500 bg-slate-950 text-violet-50 placeholder:text-violet-600'
-                    : 'border-blue-400 bg-white text-slate-900 placeholder:text-slate-400'
-                }`}
-              />
-              {attackRollInvalid ? (
-                <p className="mt-1 text-[10px] font-bold text-red-600">
-                  Enter a numeric attack roll, or clear the field.
-                </p>
-              ) : null}
-            </div>
-          ) : null}
+              Resolve combat
+            </button>
+            <span className={`text-[10px] ${morphus ? 'text-violet-400/90' : 'text-slate-500'}`}>
+              Opens drawer: physical die vs A.R., then apply routed damage.
+            </span>
+          </div>
+          <ManualRollField
+            label={mode === 'heal' ? 'Heal amount' : 'Damage amount'}
+            morphus={morphus}
+            manualValue={amount}
+            onManualValueChange={setAmount}
+            calculatedBonus={0}
+            hint="Total points to apply (physical dice first). Skips A.R. — use Resolve combat for armor routing."
+          />
           <button
             type="button"
             onClick={applyVitality}
-            disabled={attackRollInvalid}
-            className={`w-full rounded-md py-2.5 text-sm font-black uppercase tracking-wide disabled:cursor-not-allowed disabled:opacity-40 ${
+            className={`mt-3 w-full rounded-md py-2.5 text-sm font-black uppercase tracking-wide ${
               morphus
                 ? 'bg-violet-600 text-white hover:bg-violet-500'
                 : 'bg-blue-700 text-white hover:bg-blue-600'
@@ -817,6 +841,99 @@ export function CombatHUD() {
             {mode === 'heal' ? 'Apply heal' : 'Apply damage'}
           </button>
         </div>
+
+        {resolveOpen ? (
+          <div
+            className="fixed inset-0 z-[60] flex justify-end bg-black/45 p-2 backdrop-blur-[1px]"
+            role="presentation"
+            onClick={() => setResolveOpen(false)}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Resolve combat"
+              className={`mt-auto h-[min(92vh,560px)] w-full max-w-md overflow-y-auto rounded-t-2xl border-2 shadow-2xl md:mt-0 md:h-auto md:self-center md:rounded-2xl ${
+                morphus
+                  ? 'border-violet-400 bg-slate-950 text-violet-50'
+                  : 'border-blue-500 bg-white text-slate-900'
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                className={`flex items-center justify-between border-b-2 px-4 py-3 ${
+                  morphus ? 'border-violet-700' : 'border-blue-200'
+                }`}
+              >
+                <div>
+                  <h3 className={`text-xs font-black uppercase tracking-wide ${morphus ? 'text-violet-200' : 'text-blue-900'}`}>
+                    Resolve combat
+                  </h3>
+                  <p className={`mt-0.5 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+                    Enter your physical attack roll and damage. A.R. compares to equipped armor when present.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={`shrink-0 rounded-md px-2 py-1 text-[10px] font-bold uppercase ${
+                    morphus ? 'text-violet-200 hover:bg-violet-900' : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                  onClick={() => setResolveOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+              <div className="space-y-4 p-4">
+                {hudArmor ? (
+                  <p className={`rounded-md border px-2 py-1.5 text-[10px] font-semibold ${morphus ? 'border-teal-700/80 bg-violet-950/60 text-teal-100' : 'border-teal-200 bg-teal-50 text-teal-950'}`}>
+                    A.R. gate: equipped <strong>{hudArmor.name}</strong> A.R. {hudArmor.ar}. Roll{' '}
+                    <strong>≥ A.R.</strong> to hit the body directly; below applies to armor S.D.C. first (per
+                    routing rules).
+                  </p>
+                ) : (
+                  <p className={`text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-600'}`}>
+                    No operational armor — attack roll is recorded for your notes only; damage routes to body
+                    S.D.C. / H.P.
+                  </p>
+                )}
+                <ManualRollField
+                  label="Physical die — attack / strike total"
+                  morphus={morphus}
+                  manualValue={resolveAttackRollStr}
+                  onManualValueChange={setResolveAttackRollStr}
+                  calculatedBonus={0}
+                  hint={
+                    hudArmor
+                      ? `Compare to A.R. ${hudArmor.ar} (optional; leave empty to skip A.R. routing).`
+                      : 'Optional scratch field for the die you rolled.'
+                  }
+                />
+                {resolveAttackRollInvalid ? (
+                  <p className="text-[10px] font-bold text-red-600">Enter a numeric roll, or clear the field.</p>
+                ) : null}
+                <ManualRollField
+                  label="Damage to apply"
+                  morphus={morphus}
+                  manualValue={resolveDamage}
+                  onManualValueChange={setResolveDamage}
+                  calculatedBonus={0}
+                  hint="Physical damage from the hit (dice on the table, not auto-rolled)."
+                />
+                <button
+                  type="button"
+                  disabled={resolveAttackRollInvalid}
+                  onClick={applyResolvedDamage}
+                  className={`w-full rounded-md py-2.5 text-sm font-black uppercase tracking-wide disabled:cursor-not-allowed disabled:opacity-40 ${
+                    morphus
+                      ? 'bg-violet-600 text-white hover:bg-violet-500'
+                      : 'bg-blue-700 text-white hover:bg-blue-600'
+                  }`}
+                >
+                  Apply routed damage
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
           </>
         )}
       </div>

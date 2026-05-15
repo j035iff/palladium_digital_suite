@@ -1,5 +1,5 @@
 import { useCharacter } from '../../context/CharacterContext'
-import { OCC_DEFINITIONS } from '../../data/occDefinitions'
+import { OCC_REGISTRY } from '../../data/library/registry'
 
 /**
  * Step 0 — O.C.C. package: name (class), fixed XP table, psychic category, and starting skill ids.
@@ -32,8 +32,18 @@ export function OccSelection() {
         Matrix.
       </p>
       <div className={`grid gap-3 sm:grid-cols-3 ${panel} rounded-lg border-2 p-4`}>
-        {OCC_DEFINITIONS.map((def) => {
+        {OCC_REGISTRY.map((def) => {
           const selected = character.occ.id === def.id
+          const xpLabel =
+            def.xpTableId === 'borg'
+              ? 'Borg (+8%)'
+              : def.xpTableId === 'psychic'
+                ? 'Psychic (+12%)'
+                : 'Standard'
+          const slotNote =
+            def.skillSlotPolicy.kind === 'psychic_tier'
+              ? `Related slots × ${def.skillSlotPolicy.majorMultiplier} on Major psychic`
+              : null
           return (
             <button
               key={def.id}
@@ -63,7 +73,8 @@ export function OccSelection() {
                 {def.baseStats.ispDice ? ` · ISP ${def.baseStats.ispDice}` : ''}
               </p>
               <p className="mt-2 text-[11px] leading-snug opacity-80">
-                XP curve: {def.id === 'borg' ? 'Borg (+8%)' : def.id === 'mind_melter' ? 'Psychic (+12%)' : 'Standard'}
+                XP table: {xpLabel}
+                {slotNote ? ` · ${slotNote}` : ''}
               </p>
             </button>
           )
