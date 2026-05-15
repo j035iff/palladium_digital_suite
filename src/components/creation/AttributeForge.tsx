@@ -64,8 +64,8 @@ function attrUpdatePath(attr: ForgeAttrKey): string {
 }
 
 export function AttributeForge() {
-  const { activeForm, activeFormState, updateAttribute } = useCharacter()
-  const morphus = activeForm === 'morphus'
+  const { activeForm, activeFormState, updateAttribute, supportsDualForm } = useCharacter()
+  const morphus = supportsDualForm && activeForm === 'morphus'
 
   const [rolls, setRolls] = useState<ForgeRoll[]>(initialRolls)
   const [assignments, setAssignments] =
@@ -191,7 +191,16 @@ export function AttributeForge() {
               Roll Stats (8× 3d6)
             </button>
             <span className="text-xs opacity-80">
-              Active form: <strong className="capitalize">{activeForm}</strong>
+              {supportsDualForm ? (
+                <>
+                  Active form: <strong className="capitalize">{activeForm}</strong>
+                </>
+              ) : (
+                <>
+                  Assignments apply to your <strong>character sheet</strong> (single form for
+                  this race).
+                </>
+              )}
             </span>
           </div>
 

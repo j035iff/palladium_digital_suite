@@ -26,13 +26,14 @@ export function MainLayout() {
     activeForm,
     activeFormState: form,
     activeStats,
+    supportsDualForm,
     toggleForm,
     vitalityFlash,
     levelUpQueue,
     resolveLevelUpRitual,
   } = useCharacter()
 
-  const morphusActive = activeForm === 'morphus'
+  const morphusActive = supportsDualForm && activeForm === 'morphus'
   const showCreation = character.isFinalized !== true
 
   /** Split + fixed-width sidebar only at md+; drives inline width (Tailwind var alone was unreliable). */
@@ -151,27 +152,29 @@ export function MainLayout() {
             <IdentityXpBar />
           </div>
 
-          <button
-            type="button"
-            onClick={toggleForm}
-            className="shrink-0 rounded-lg border-4 px-4 py-2 text-sm font-bold uppercase tracking-wide shadow-lg outline-none ring-offset-2 focus-visible:ring-4"
-            style={{
-              borderColor: morphusActive ? '#fbbf24' : '#0f172a',
-              backgroundColor: morphusActive ? '#4c1d95' : '#eff6ff',
-              color: morphusActive ? '#fef9c3' : '#0f172a',
-              ...(morphusActive
-                ? { boxShadow: '0 0 0 2px #7c3aed' }
-                : { boxShadow: '0 0 0 2px #3b82f6' }),
-            }}
-            aria-pressed={morphusActive}
-            aria-label={
-              morphusActive
-                ? 'Become Facade: switch to human presentation'
-                : 'Become Morphus: switch to morphus form'
-            }
-          >
-            Become {morphusActive ? 'Facade' : 'Morphus'}
-          </button>
+          {supportsDualForm ? (
+            <button
+              type="button"
+              onClick={toggleForm}
+              className="shrink-0 rounded-lg border-4 px-4 py-2 text-sm font-bold uppercase tracking-wide shadow-lg outline-none ring-offset-2 focus-visible:ring-4"
+              style={{
+                borderColor: morphusActive ? '#fbbf24' : '#0f172a',
+                backgroundColor: morphusActive ? '#4c1d95' : '#eff6ff',
+                color: morphusActive ? '#fef9c3' : '#0f172a',
+                ...(morphusActive
+                  ? { boxShadow: '0 0 0 2px #7c3aed' }
+                  : { boxShadow: '0 0 0 2px #3b82f6' }),
+              }}
+              aria-pressed={morphusActive}
+              aria-label={
+                morphusActive
+                  ? 'Become Facade: switch to human presentation'
+                  : 'Become Morphus: switch to morphus form'
+              }
+            >
+              Become {morphusActive ? 'Facade' : 'Morphus'}
+            </button>
+          ) : null}
         </div>
       </header>
 
@@ -247,7 +250,7 @@ export function MainLayout() {
             className="mb-2 text-sm font-semibold uppercase tracking-wide"
             style={{ color: morphusActive ? '#c4b5fd' : '#1e40af' }}
           >
-            Active form — attributes
+            {supportsDualForm ? 'Active form — attributes' : 'Attributes'}
           </h2>
           <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             <Attr label="I.Q." value={form.attributes.iq} morphus={morphusActive} />

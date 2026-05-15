@@ -4,7 +4,6 @@ import {
   resolveOccXpTable,
   snapshotLibraryOcc,
 } from '../library'
-import { NIGHTBANE_RACE } from '../library/races/nightbane'
 
 const sorcererOcc = getLibraryOccById('nightbane_sorcerer')!
 
@@ -15,7 +14,7 @@ export const nightbaneSorcererMock: Character = {
   xp: 4200,
   ppe: { current: 42, maximum: 48 },
   occ: snapshotLibraryOcc(sorcererOcc, resolveOccXpTable(sorcererOcc)),
-  raceId: NIGHTBANE_RACE.id,
+  raceId: 'nightbane',
   lineage: 'nightbane',
   psychicGateBypassed: true,
   occSkillSlotBudget: sorcererOcc.occSkillSlotBudget,

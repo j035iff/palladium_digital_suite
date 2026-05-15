@@ -246,6 +246,7 @@ export function CombatHUD() {
   const {
     character,
     activeForm,
+    supportsDualForm,
     activeStats,
     sheetCombatDerived,
     attacksPerMelee,
@@ -267,7 +268,7 @@ export function CombatHUD() {
     ammoReserves,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const [amount, setAmount] = useState('4')
   const [mode, setMode] = useState<'damage' | 'heal'>('damage')
   const [resolveOpen, setResolveOpen] = useState(false)

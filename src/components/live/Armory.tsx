@@ -65,6 +65,7 @@ export function Armory() {
     addArmorToInventory,
     dropItem,
     activeForm,
+    supportsDualForm,
     readyWeaponIds,
     setReadyWeapon,
     reloadWeapon,
@@ -72,7 +73,7 @@ export function Armory() {
     addAmmoToReserve,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const [customName, setCustomName] = useState('')
   const [customAr, setCustomAr] = useState('10')
   const [customMaxSdc, setCustomMaxSdc] = useState('35')

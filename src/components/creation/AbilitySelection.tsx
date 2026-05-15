@@ -30,11 +30,12 @@ export function AbilitySelection() {
   const {
     character,
     activeForm,
+    supportsDualForm,
     addSelectedAbility,
     removeSelectedAbility,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const isNightbane = character.lineage === 'nightbane'
   const [search, setSearch] = useState('')
   const [libraryFilter, setLibraryFilter] = useState<

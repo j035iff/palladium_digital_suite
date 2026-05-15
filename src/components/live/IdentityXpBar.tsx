@@ -9,12 +9,13 @@ export function IdentityXpBar() {
   const {
     character,
     activeForm,
+    supportsDualForm,
     xpProgress,
     xpHistory,
     grantXp,
     pendingLevelUpTarget,
   } = useCharacter()
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
 

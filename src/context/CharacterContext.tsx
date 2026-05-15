@@ -10,7 +10,7 @@ import {
 } from 'react'
 import { characterFixture } from '../data/characterFixture'
 import { initialInventoryItems } from '../data/inventoryFixture'
-import { getFeatureById } from '../data/library/registry'
+import { getFeatureById, getRaceById } from '../data/library/registry'
 import { getLibraryOccById } from '../data/occDefinitions'
 import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
 import { effectiveStructuralPool } from '../lib/effectiveVitality'
@@ -41,6 +41,7 @@ import {
   rollD100,
 } from '../lib/psychicGate'
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
+import { rollFacadeSdcMaximum } from '../lib/spawnFinalVitality'
 import { computeMaxApm } from '../lib/meleeCombat'
 import { computeCarryCapacityLbs } from '../lib/carryCapacity'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
@@ -86,6 +87,31 @@ import type {
   XpGainEvent,
 } from '../types'
 import { getFormState } from '../types'
+import {
+  characterHasDualForms,
+  DEFAULT_RACE_ID,
+} from '../lib/raceFormPolicy'
+
+/** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
+function syncRaceOccFacadeSdc(prev: Character): Character {
+  if (prev.creationVitalityCommitted) return prev
+  const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+  const lib = getLibraryOccById(prev.occ.id)
+  if (!race || !lib || race.vitals?.sdc == null) return prev
+  const max = rollFacadeSdcMaximum(prev.facade.attributes, { race, occ: lib })
+  const cur = Math.min(prev.facade.structuralDamageCapacity.current, max)
+  return {
+    ...prev,
+    facade: {
+      ...prev.facade,
+      structuralDamageCapacity: {
+        ...prev.facade.structuralDamageCapacity,
+        maximum: max,
+        current: cur,
+      },
+    },
+  }
+}
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
 type ActiveStats = {
@@ -101,6 +127,8 @@ type SheetScalars = ReturnType<typeof computeDisplayScalars>
 type CharacterContextValue = {
   character: Character
   activeForm: ActiveForm
+  /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
+  supportsDualForm: boolean
   activeFormState: FormState
   /** Memoized H.P., S.D.C. pools, and natural bonuses for the active form. */
   activeStats: ActiveStats
@@ -144,6 +172,8 @@ type CharacterContextValue = {
   setCreationSkillPicks: (occ: string[], related: string[]) => void
   /** Step 0 — O.C.C. package: fixed XP table, psychic category, and starting skill ids. */
   setSelectedOcc: (occId: string) => void
+  /** Library race id (`races.json`); drives conditional base S.D.C. with O.C.C. tags. */
+  setRaceId: (raceId: string | null) => void
   /**
    * Step 5 — apply rolled H.P./S.D.C./P.P.E./I.S.P. in one atomic update (Spawn).
    * Sets creationVitalityCommitted.
@@ -265,6 +295,14 @@ function hydrateCharacterFromStorage(base: Character): Character {
   })
 }
 
+/** Single cold-load snapshot: shared by character, level-up queue, and XP history initializers. */
+const INITIAL_CHARACTER_SNAPSHOT: Character = (() => {
+  const hydrated = hydrateCharacterFromStorage(characterFixture)
+  return hydrated.creationVitalityCommitted === true
+    ? hydrated
+    : syncRaceOccFacadeSdc(hydrated)
+})()
+
 /** Returns updated character if the pick is legal; otherwise null. */
 function nextCharacterIfAddAbility(prev: Character, id: string): Character | null {
   const def = getFeatureById(id)
@@ -319,14 +357,12 @@ function mergeLevelQueues(existing: number[], crossed: number[]): number[] {
 }
 
 export function CharacterProvider({ children }: { children: ReactNode }) {
-  const [character, setCharacter] = useState<Character>(() =>
-    hydrateCharacterFromStorage(characterFixture),
-  )
+  const [character, setCharacter] = useState<Character>(() => INITIAL_CHARACTER_SNAPSHOT)
   const [levelUpQueue, setLevelUpQueue] = useState<number[]>(() =>
-    outstandingLevelUpTargets(hydrateCharacterFromStorage(characterFixture)),
+    outstandingLevelUpTargets(INITIAL_CHARACTER_SNAPSHOT),
   )
   const [xpHistory, setXpHistory] = useState<XpGainEvent[]>(() =>
-    loadXpHistory(hydrateCharacterFromStorage(characterFixture).name),
+    loadXpHistory(INITIAL_CHARACTER_SNAPSHOT.name),
   )
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
@@ -376,13 +412,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     psychicSeedRef.current = true
     setPsychicTierState('master')
     setCharacter((prev) => {
-      const branch = getFormState(prev, activeForm)
+      const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+      const branch = getFormState(prev, form)
       return {
         ...prev,
-        [activeForm]: applyPsychicTierToFormState(branch, 'master'),
+        [form]: applyPsychicTierToFormState(branch, 'master'),
       }
     })
-  }, [occPsychicLocked, activeForm])
+  }, [occPsychicLocked, activeForm, character.raceId])
 
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() =>
     syncArmorAndWeaponFlags(
@@ -404,9 +441,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     CombatNarrativeEntry[]
   >([])
 
+  const supportsDualForm = useMemo(
+    () => characterHasDualForms(character),
+    [character],
+  )
+
+  const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'facade'
+
   const activeFormState = useMemo(
-    () => getFormState(character, activeForm),
-    [character, activeForm],
+    () => getFormState(character, sheetActiveForm),
+    [character, sheetActiveForm],
   )
 
   const equippedArmor = useMemo((): Armor | null => {
@@ -448,7 +492,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const activeStats = useMemo<ActiveStats>(() => {
     const sdc = effectiveStructuralPool(
       character,
-      activeForm,
+      sheetActiveForm,
       activeFormState.structuralDamageCapacity,
     )
     return {
@@ -459,25 +503,25 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }
   }, [
     character,
-    activeForm,
+    sheetActiveForm,
     activeFormState.hitPoints,
     activeFormState.structuralDamageCapacity,
     liveBonuses,
   ])
 
   const sheetPassiveModifiers = useMemo(
-    () => aggregateAllPassiveModifiers(character, activeForm),
-    [character, activeForm],
+    () => aggregateAllPassiveModifiers(character, sheetActiveForm),
+    [character, sheetActiveForm],
   )
 
   const sheetDisplayScalars = useMemo(
-    () => computeDisplayScalars(character, activeForm, sheetPassiveModifiers),
-    [character, activeForm, sheetPassiveModifiers],
+    () => computeDisplayScalars(character, sheetActiveForm, sheetPassiveModifiers),
+    [character, sheetActiveForm, sheetPassiveModifiers],
   )
 
   const sheetCombatDerived = useMemo(
-    () => computeSheetCombatDerived(character, activeForm),
-    [character, activeForm],
+    () => computeSheetCombatDerived(character, sheetActiveForm),
+    [character, sheetActiveForm],
   )
 
   const isMDC = useMemo(
@@ -497,8 +541,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const saveProfileDerived = useMemo(
-    () => computeSaveProfile(character, activeForm, saveVsPsionicsTarget),
-    [character, activeForm, saveVsPsionicsTarget],
+    () => computeSaveProfile(character, sheetActiveForm, saveVsPsionicsTarget),
+    [character, sheetActiveForm, saveVsPsionicsTarget],
   )
 
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -759,8 +803,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const getWeaponBonuses = useCallback(
-    (weaponId: string) => lookupWeaponBonuses(character, activeForm, inventoryItems, weaponId),
-    [character, activeForm, inventoryItems],
+    (weaponId: string) => lookupWeaponBonuses(character, sheetActiveForm, inventoryItems, weaponId),
+    [character, sheetActiveForm, inventoryItems],
   )
 
   const addAmmoToReserve = useCallback(
@@ -810,7 +854,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (!Number.isFinite(opts.amount) || opts.amount <= 0) return
       const r = applyInventoryAwareSdcVitality(
         character,
-        activeForm,
+        sheetActiveForm,
         inventoryItems,
         equippedArmorId,
         opts,
@@ -837,7 +881,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     },
     [
       character,
-      activeForm,
+      sheetActiveForm,
       inventoryItems,
       equippedArmorId,
       readyWeaponIds,
@@ -849,7 +893,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const applyCombatVitalityChange = useCallback(
     (change: CombatVitalityChange) => {
       setCharacter((prev) => {
-        const r = computeCombatVitalityDelta(prev, activeForm, change)
+        const r = computeCombatVitalityDelta(prev, sheetActiveForm, change)
         if (!r) return prev
         setTimeout(() => {
           triggerVitalityFlash(r.flashKind)
@@ -857,7 +901,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         return r.next
       })
     },
-    [activeForm, triggerVitalityFlash],
+    [sheetActiveForm, triggerVitalityFlash],
   )
 
   const getVitalityType = useCallback(
@@ -866,8 +910,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const toggleForm = useCallback(() => {
+    if (!characterHasDualForms(character)) return
     setActiveForm((f) => (f === 'facade' ? 'morphus' : 'facade'))
-  }, [])
+  }, [character])
 
   const setPsychicTier = useCallback(
     (tier: PsychicTier) => {
@@ -876,10 +921,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
       setPsychicTierState(tier)
       setCharacter((prev) => {
-        const branch = getFormState(prev, activeForm)
+        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+        const branch = getFormState(prev, form)
         return {
           ...prev,
-          [activeForm]: applyPsychicTierToFormState(branch, tier),
+          [form]: applyPsychicTierToFormState(branch, tier),
         }
       })
     },
@@ -893,10 +939,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     const tier = tierFromTestPotential(roll)
     setPsychicTierState(tier)
     setCharacter((prev) => {
-      const branch = getFormState(prev, activeForm)
+      const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+      const branch = getFormState(prev, form)
       return {
         ...prev,
-        [activeForm]: applyPsychicTierToFormState(branch, tier),
+        [form]: applyPsychicTierToFormState(branch, tier),
       }
     })
     return roll
@@ -909,7 +956,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           return tryApplyNumericSheetPath(prev, path, value) ?? prev
         }
 
-        const parsed = parseAttributePath(path, activeForm)
+        const parsed = parseAttributePath(path, sheetActiveForm)
         if (!parsed) return prev
 
         const { formKey, tail } = parsed
@@ -928,7 +975,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         }
       })
     },
-    [activeForm],
+    [sheetActiveForm],
   )
 
   const setCreationSkillPicks = useCallback(
@@ -950,14 +997,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
       setPsychicTierState(tier)
       setCharacter((prev) => {
-        const branch = getFormState(prev, activeForm)
+        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+        const branch = getFormState(prev, form)
         const nextBranch =
           prev.psychicGateBypassed === true || lib.psychicGateBypassed
             ? branch
             : applyPsychicTierToFormState(branch, tier)
-        return {
+        return syncRaceOccFacadeSdc({
           ...prev,
-          [activeForm]: nextBranch,
+          [form]: nextBranch,
           occ: snapshotOccForCharacter(def),
           psychicGateBypassed: lib.psychicGateBypassed ?? prev.psychicGateBypassed,
           occSkillSlotBudget: lib.occSkillSlotBudget ?? prev.occSkillSlotBudget,
@@ -969,11 +1017,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             lib.startingSpellLevelCap ?? prev.startingSpellLevelCap,
           creationOccSkillIds: [...def.startingOccSkillIds],
           creationRelatedSkillIds: [...def.startingRelatedSkillIds],
-        }
+        })
       })
     },
     [activeForm],
   )
+
+  const setRaceId = useCallback((raceId: string | null) => {
+    const id = raceId ?? DEFAULT_RACE_ID
+    const race = getRaceById(id)
+    const lineage: Character['lineage'] =
+      race?.lineage === 'nightbane' ? 'nightbane' : 'megaversal'
+    setActiveForm('facade')
+    setCharacter((prev) =>
+      syncRaceOccFacadeSdc({
+        ...prev,
+        raceId: id,
+        lineage,
+      }),
+    )
+  }, [])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setCharacter((prev) => {
@@ -1039,11 +1102,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             ppe: { ...prev.ppe, current: prev.ppe.current - amount },
           }
         }
-        const branch = getFormState(prev, activeForm)
+        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+        const branch = getFormState(prev, form)
         if (branch.isp.current < amount) return prev
         return {
           ...prev,
-          [activeForm]: {
+          [form]: {
             ...branch,
             isp: { ...branch.isp, current: branch.isp.current - amount },
           },
@@ -1123,7 +1187,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CharacterContextValue>(
     () => ({
       character,
-      activeForm,
+      activeForm: sheetActiveForm,
+      supportsDualForm,
       activeFormState,
       activeStats,
       sheetCombatDerived,
@@ -1144,6 +1209,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeSelectedAbility,
       setCreationSkillPicks,
       setSelectedOcc,
+      setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,
       attacksPerMelee,
@@ -1187,7 +1253,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }),
     [
       character,
-      activeForm,
+      sheetActiveForm,
+      supportsDualForm,
       activeFormState,
       activeStats,
       sheetCombatDerived,
@@ -1208,6 +1275,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeSelectedAbility,
       setCreationSkillPicks,
       setSelectedOcc,
+      setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,
       attacksPerMelee,

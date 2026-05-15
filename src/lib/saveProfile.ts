@@ -1,16 +1,21 @@
 import type { ActiveForm, Character } from '../types'
 import { aggregateAllPassiveModifiers, listApplyingFeatures } from './featureEngine'
-import { computeDisplayScalars, meleeNaturalBonusFromDisplayedPp } from './sheetBonuses'
+import { computeDisplayScalars } from './sheetBonuses'
 import { getSkillById } from '../data/skillLibrary'
 import { DEFAULT_HORROR_FACTOR_BY_FORM, SAVING_THROW_REGISTRY } from '../data/constants'
+import { getMeBonuses, getPeBonuses } from './attributeBonuses'
 
 const MIN_EFFECTIVE_SAVE_TARGET = 4
 
 /**
- * Natural save bonus from displayed P.E. / M.E. (attribute_and_stat.md §2).
+ * Natural save bonus from displayed P.E. / M.E. (production attribute engine).
  */
 export function saveAttributeBonusFromDisplayedScore(score: number): number {
-  return meleeNaturalBonusFromDisplayedPp(score)
+  return getPeBonuses(score).saveMagic
+}
+
+export function saveMeBonusFromDisplayedScore(score: number): number {
+  return getMeBonuses(score).savePsionics
 }
 
 export type SaveDeductionLine = {
@@ -128,8 +133,9 @@ export function computeSaveProfile(
 ): SaveProfileDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
   const display = computeDisplayScalars(character, activeForm, passive)
-  const peSave = saveAttributeBonusFromDisplayedScore(display.pe)
-  const meSave = saveAttributeBonusFromDisplayedScore(display.me)
+  const peSave = getPeBonuses(display.pe).saveMagic
+  const meSavePsionics = getMeBonuses(display.me).savePsionics
+  const meSaveInsanity = getMeBonuses(display.me).saveInsanity
 
   const saves: SaveRollEntry[] = SAVING_THROW_REGISTRY.map((row) => {
     const base = row.usePsionicsTierBase ? psionicSaveTarget : row.baseTarget
@@ -138,8 +144,11 @@ export function computeSaveProfile(
     if (row.appliesPhysicalEnduranceBonus && peSave !== 0) {
       reductions.push({ label: 'P.E. bonus', amount: peSave })
     }
-    if (row.appliesMentalEnduranceBonus && meSave !== 0) {
-      reductions.push({ label: 'M.E. bonus', amount: meSave })
+    if (row.appliesMentalEnduranceBonus) {
+      const meAmt = row.id === 'insanity' ? meSaveInsanity : meSavePsionics
+      if (meAmt !== 0) {
+        reductions.push({ label: 'M.E. bonus', amount: meAmt })
+      }
     }
 
     const attrLines = attributionForKeys(row.featureModifierKeys, character, activeForm)

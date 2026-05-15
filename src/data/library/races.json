@@ -1,0 +1,45 @@
+{
+  "races": [
+    {
+      "id": "race_human",
+      "name": "Human",
+      "description": "Standard baseline humanity.",
+      "lineage": "megaversal",
+      "attributes": {
+        "iq": "3D6",
+        "me": "3D6",
+        "ma": "3D6",
+        "ps": "3D6",
+        "pp": "3D6",
+        "pe": "3D6",
+        "pb": "3D6",
+        "spd": "3D6"
+      },
+      "vitals": {
+        "basePpe": "2D6",
+        "baseIsp": 0,
+        "hpFormula": "PE + 1D6",
+        "sdc": {
+          "strategy": "conditional_by_occ_tags",
+          "defaultFormula": "3D6",
+          "conditionalOverrides": [
+            {
+              "tags": ["military", "police", "detective", "athletic"],
+              "formula": "1D4*10"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "nightbane",
+      "name": "Nightbane",
+      "description": "Dual-nature beings with Facade and Morphus forms; talents and morphus traits compose on the universal schema.",
+      "lineage": "nightbane",
+      "defaultTraitIds": [],
+      "vitals": {
+        "sdc": "2D6+8"
+      }
+    }
+  ]
+}

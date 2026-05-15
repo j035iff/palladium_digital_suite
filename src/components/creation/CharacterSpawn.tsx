@@ -1,8 +1,11 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
+import { getLibraryOccById } from '../../data/occDefinitions'
+import { getRaceById } from '../../data/library/registry'
 import { getSkillById } from '../../data/skillLibrary'
 import { assessCreationSpawnBlockers } from '../../lib/creationReadiness'
+import { DEFAULT_RACE_ID } from '../../lib/raceFormPolicy'
 import {
   rollFacadeHpMaximum,
   rollFacadeSdcMaximum,
@@ -49,9 +52,10 @@ export function CharacterSpawn({
     psychicTier,
     commitSpawnVitalityRolls,
     finalizeCharacter,
+    supportsDualForm,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const [rolls, setRolls] = useState<SpawnVitalityRolls | null>(null)
 
   const blockers = useMemo(
@@ -64,19 +68,39 @@ export function CharacterSpawn({
     const f = character.facade.attributes
     const m = character.morphus.attributes
     const ppe = rollPpeMaximum(f.me, f.pe)
-    const morphIsp =
+    const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+    const occLib = getLibraryOccById(character.occ.id)
+    const facadeHp = rollFacadeHpMaximum(f.pe)
+    const facadeSdc = rollFacadeSdcMaximum(f, { race, occ: occLib })
+
+    if (supportsDualForm) {
+      const morphIsp =
+        psychicTier !== 'none' || character.psychicGateBypassed === true
+          ? rollIspMaximum(m.me)
+          : 0
+      return {
+        facadeHp,
+        facadeSdc,
+        morphusHp: rollMorphusHpMaximum(m.pe),
+        morphusSdc: rollMorphusSdcMaximum(m.pe, m.ps.score),
+        ppeMax: ppe,
+        morphusIspMax: morphIsp,
+      }
+    }
+
+    const morphIspSingle =
       psychicTier !== 'none' || character.psychicGateBypassed === true
-        ? rollIspMaximum(m.me)
+        ? rollIspMaximum(f.me)
         : 0
     return {
-      facadeHp: rollFacadeHpMaximum(f.pe),
-      facadeSdc: rollFacadeSdcMaximum(f),
-      morphusHp: rollMorphusHpMaximum(m.pe),
-      morphusSdc: rollMorphusSdcMaximum(m.pe, m.ps.score),
+      facadeHp,
+      facadeSdc,
+      morphusHp: facadeHp,
+      morphusSdc: facadeSdc,
       ppeMax: ppe,
-      morphusIspMax: morphIsp,
+      morphusIspMax: morphIspSingle,
     }
-  }, [character, psychicTier])
+  }, [character, psychicTier, supportsDualForm])
 
   const panelStyle = morphus
     ? 'border-violet-700 bg-slate-950/80 text-violet-50'
@@ -141,20 +165,25 @@ export function CharacterSpawn({
           </div>
           <div>
             <dt className="text-xs font-semibold uppercase opacity-70">
-              Attributes — Facade
+              {supportsDualForm ? 'Attributes — Facade' : 'Attributes'}
             </dt>
             <dd className="mt-0.5 font-mono text-xs leading-relaxed">
-              {attrLine('Facade', character.facade.attributes)}
+              {attrLine(
+                supportsDualForm ? 'Facade' : 'Character',
+                character.facade.attributes,
+              )}
             </dd>
           </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase opacity-70">
-              Attributes — Morphus
-            </dt>
-            <dd className="mt-0.5 font-mono text-xs leading-relaxed">
-              {attrLine('Morphus', character.morphus.attributes)}
-            </dd>
-          </div>
+          {supportsDualForm ? (
+            <div>
+              <dt className="text-xs font-semibold uppercase opacity-70">
+                Attributes — Morphus
+              </dt>
+              <dd className="mt-0.5 font-mono text-xs leading-relaxed">
+                {attrLine('Morphus', character.morphus.attributes)}
+              </dd>
+            </div>
+          ) : null}
           <div>
             <dt className="text-xs font-semibold uppercase opacity-70">
               Skills (creation picks)
@@ -228,15 +257,24 @@ export function CharacterSpawn({
             Facade H.P.: P.E. + 1d6 (min 4) — attribute_and_stat.md (P.E. drives base H.P.).
           </li>
           <li>
-            Facade S.D.C.: derived structural baseline from attributes + 1d6 (derivedVitality +
-            variance).
+            Facade S.D.C.: race vitals from the library (conditional by O.C.C. tags for humans)
+            or legacy attribute baseline + 1d6 when the race omits an S.D.C. formula.
           </li>
-          <li>Morphus H.P. / S.D.C.: P.E. / P.S.-weighted dice (M.D.C. track).</li>
+          {supportsDualForm ? (
+            <>
+              <li>Morphus H.P. / S.D.C.: P.E. / P.S.-weighted dice (M.D.C. track).</li>
+              <li>
+                Morphus I.S.P.: M.E. + 1d6 when psionic tier applies or gate is bypassed; otherwise
+                0 (psychic_gate.md §3).
+              </li>
+            </>
+          ) : (
+            <li>
+              Single-form race: only Facade H.P. and S.D.C. are rolled for play; alternate-form
+              pools are reserved for Nightbane.
+            </li>
+          )}
           <li>P.P.E.: M.E. + P.E. + 2d6 (sheet placeholder pool).</li>
-          <li>
-            Morphus I.S.P.: M.E. + 1d6 when psionic tier applies or gate is bypassed; otherwise
-            0 (psychic_gate.md §3).
-          </li>
         </ul>
         <div className="mb-3 grid gap-2 font-mono text-xs sm:grid-cols-2">
           <div>
@@ -247,21 +285,27 @@ export function CharacterSpawn({
             Preview facade S.D.C. max:{' '}
             <strong>{rolls?.facadeSdc ?? '—'}</strong>
           </div>
-          <div>
-            Preview morphus H.P. max:{' '}
-            <strong>{rolls?.morphusHp ?? '—'}</strong>
-          </div>
-          <div>
-            Preview morphus S.D.C. max:{' '}
-            <strong>{rolls?.morphusSdc ?? '—'}</strong>
-          </div>
+          {supportsDualForm ? (
+            <>
+              <div>
+                Preview morphus H.P. max:{' '}
+                <strong>{rolls?.morphusHp ?? '—'}</strong>
+              </div>
+              <div>
+                Preview morphus S.D.C. max:{' '}
+                <strong>{rolls?.morphusSdc ?? '—'}</strong>
+              </div>
+            </>
+          ) : null}
           <div>
             Preview P.P.E. max: <strong>{rolls?.ppeMax ?? '—'}</strong>
           </div>
-          <div>
-            Preview morphus I.S.P. max:{' '}
-            <strong>{rolls?.morphusIspMax ?? '—'}</strong>
-          </div>
+          {supportsDualForm ? (
+            <div>
+              Preview morphus I.S.P. max:{' '}
+              <strong>{rolls?.morphusIspMax ?? '—'}</strong>
+            </div>
+          ) : null}
         </div>
         <div className="flex flex-wrap gap-2">
           <button

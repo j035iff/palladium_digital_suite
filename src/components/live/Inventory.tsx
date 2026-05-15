@@ -10,6 +10,7 @@ export function Inventory() {
     equipArmor,
     dropItem,
     activeForm,
+    supportsDualForm,
     equippedArmor,
     currentWeightLbs,
     carryLimitLbs,
@@ -17,7 +18,7 @@ export function Inventory() {
     encumbranceSpdNote,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const shell = morphus
     ? 'border-2 border-violet-500 bg-slate-950/90 text-violet-50'
     : 'border-2 border-blue-600 bg-white text-slate-900'

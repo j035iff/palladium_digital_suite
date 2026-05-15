@@ -1,7 +1,7 @@
 import type { Feature } from '../../types'
 import type { LibraryOCC, Race } from './types'
 import { POWER_FEATURES, TRAIT_FEATURES } from './features'
-import { NIGHTBANE_RACE } from './races/nightbane'
+import { loadRacesFromJson } from './racesLoader'
 import { NIGHTBANE_SORCERER_OCC } from './classes/nightbaneSorcerer'
 import { LEGACY_OCCS } from './classes/legacyOccs'
 import {
@@ -12,7 +12,7 @@ import {
 import type { XPTable } from '../../types'
 
 export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TRAIT_FEATURES]
-export const RACE_REGISTRY: Race[] = [NIGHTBANE_RACE]
+export const RACE_REGISTRY: Race[] = loadRacesFromJson()
 export const OCC_REGISTRY: LibraryOCC[] = [...LEGACY_OCCS, NIGHTBANE_SORCERER_OCC]
 
 const XP_BY_ID: Record<LibraryOCC['xpTableId'], XPTable> = {

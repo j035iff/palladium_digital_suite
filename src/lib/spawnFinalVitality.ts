@@ -1,5 +1,8 @@
 import type { CharacterAttributes } from '../types'
+import type { LibraryOCC, Race } from '../data/library/types'
 import { deriveSdcHpMaximums } from './derivedVitality'
+import { rollNdS, rollDiceNotation } from './diceNotation'
+import { calculateBaseSdc } from '../utils/vitalsCalculator'
 
 /** One-shot Spawn commit payload (vitalityPathUpdate + CharacterContext). */
 export type SpawnVitalityRolls = {
@@ -11,15 +14,6 @@ export type SpawnVitalityRolls = {
   morphusIspMax: number
 }
 
-/** Roll n dice of s sides (inclusive). */
-export function rollNdS(n: number, s: number): number {
-  let t = 0
-  for (let i = 0; i < n; i++) {
-    t += 1 + Math.floor(Math.random() * s)
-  }
-  return t
-}
-
 /**
  * Facade H.P. maximum at Spawn — P.E. anchors the body (attribute_and_stat.md §1, §4).
  * Formula: P.E. + 1d6, floor 4.
@@ -29,10 +23,16 @@ export function rollFacadeHpMaximum(pe: number): number {
 }
 
 /**
- * Facade S.D.C. maximum — structural baseline from attributes + small variance die
- * (derivedVitality placeholder + convergence roll).
+ * Facade S.D.C. maximum — race vitals + O.C.C. tags when defined; otherwise derived baseline + 1d6.
  */
-export function rollFacadeSdcMaximum(attrs: CharacterAttributes): number {
+export function rollFacadeSdcMaximum(
+  attrs: CharacterAttributes,
+  opts?: { race?: Race; occ?: LibraryOCC },
+): number {
+  if (opts?.race?.vitals?.sdc != null) {
+    const formula = calculateBaseSdc(opts.race, opts.occ)
+    return Math.max(4, rollDiceNotation(formula))
+  }
   const base = deriveSdcHpMaximums(attrs).sdcMaximum
   return Math.max(4, base + rollNdS(1, 6))
 }

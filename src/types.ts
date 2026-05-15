@@ -171,7 +171,7 @@ export type Character = {
   ppe: { current: number; maximum: number }
   /** O.C.C. / R.C.C. package: display name, psychic lock, and fixed XP thresholds. */
   occ: CharacterOcc
-  /** Library race id (`src/data/library/races`). */
+  /** Library race id — `src/data/library/races.json` and the race registry. */
   raceId?: string
   /**
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).
@@ -196,7 +196,7 @@ export type Character = {
   }
   /** Starting spell level ceiling (Pillar 8 — higher spell levels locked/hidden). */
   startingSpellLevelCap?: number
-  /** Nightbane lineage drives Talent cost UI (P.P.E. + activation). */
+  /** Nightbane-only: Talent costs and supernatural pick UX; mirrors `raceId` nightbane in the library. */
   lineage?: 'nightbane' | 'megaversal'
   /** After Spawn — creation chrome hidden; persisted (character_creation.md §5). */
   isFinalized?: boolean

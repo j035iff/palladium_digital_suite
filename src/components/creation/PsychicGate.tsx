@@ -22,6 +22,7 @@ export function PsychicGate() {
   const {
     activeForm,
     activeFormState,
+    supportsDualForm,
     character,
     psychicTier,
     saveVsPsionicsTarget,
@@ -30,7 +31,7 @@ export function PsychicGate() {
     testPsychicPotential,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const bypassed = character.psychicGateBypassed === true
   const occLocked = character.occ.category === 'psychic'
   const [lastTestRoll, setLastTestRoll] = useState<number | null>(null)

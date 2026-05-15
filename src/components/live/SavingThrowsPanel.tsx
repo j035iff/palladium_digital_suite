@@ -49,8 +49,8 @@ function SaveChip({
  * Sheet-first saving throw targets (manual d20) + Horror Factor block.
  */
 export function SavingThrowsPanel() {
-  const { saveProfileDerived: profile, activeForm } = useCharacter()
-  const morphus = activeForm === 'morphus'
+  const { saveProfileDerived: profile, activeForm, supportsDualForm } = useCharacter()
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const hf = profile.horrorFactor
 
   return (
@@ -83,7 +83,7 @@ export function SavingThrowsPanel() {
               morphus ? 'bg-amber-500/25 text-amber-200 ring-1 ring-amber-500/50' : 'bg-orange-200 text-orange-950'
             }`}
           >
-            {activeForm}
+            {supportsDualForm ? activeForm : 'character'}
           </span>
         </div>
         <div className="group relative">

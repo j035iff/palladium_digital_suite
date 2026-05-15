@@ -1,15 +1,10 @@
 import type { CharacterAttributes, FormState } from '../types'
+import { getPpBonuses, getPsBonuses } from './attributeBonuses'
 
 /** Vitality header scale per combat_logic.md §1 (M.D.C. vs S.D.C./H.P.). */
 export type VitalityCombatScale = 'MDC' | 'SDC'
 
-/** P.P. → Strike / Parry / Dodge (melee & ancient); null rule ≤15 → 0 (attribute_and_stat.md §1–2). */
-function ppMeleeNaturalBonus(pp: number): number {
-  if (pp <= 15) return 0
-  return Math.floor((pp - 14) / 2)
-}
-
-/** I.Q. → signed % to O.C.C. / O.C.C. related skills until full lookup tables land. */
+/** I.Q. → signed % to O.C.C. / O.C.C. related skills (sheet skill engine). */
 function iqOccSkillPercentModifier(iq: number): number {
   if (iq <= 15) return 0
   return Math.floor((iq - 14) / 2) * 5
@@ -23,15 +18,14 @@ export type LiveBonuses = {
 
 export function computeLiveBonuses(attrs: CharacterAttributes): LiveBonuses {
   return {
-    ppStrikeParryDodge: ppMeleeNaturalBonus(attrs.pp),
+    ppStrikeParryDodge: getPpBonuses(attrs.pp).strike,
     iqOccSkillPercent: iqOccSkillPercentModifier(attrs.iq),
   }
 }
 
-/** Hand-to-hand damage bonus from P.S. until the full megaversal table ships (attribute_and_stat.md §1). */
+/** Hand-to-hand damage bonus from P.S. (attribute engine). */
 export function computePsHandToHandDamageBonus(ps: number): number {
-  if (ps <= 15) return 0
-  return Math.floor((ps - 14) / 2)
+  return getPsBonuses(ps).damageBonus
 }
 
 export type CombatMirrorBonuses = {
@@ -44,9 +38,9 @@ export type CombatMirrorBonuses = {
 export function computeCombatMirrorBonuses(
   attrs: CharacterAttributes,
 ): CombatMirrorBonuses {
-  const m = ppMeleeNaturalBonus(attrs.pp)
-  const d = computePsHandToHandDamageBonus(attrs.ps.score)
-  return { strike: m, parry: m, dodge: m, handToHandDamage: d }
+  const pp = getPpBonuses(attrs.pp)
+  const d = getPsBonuses(attrs.ps.score).damageBonus
+  return { strike: pp.strike, parry: pp.parry, dodge: pp.dodge, handToHandDamage: d }
 }
 
 /**

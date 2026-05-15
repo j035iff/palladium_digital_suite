@@ -61,11 +61,12 @@ export function SkillEngine() {
     character,
     activeForm,
     activeFormState,
+    supportsDualForm,
     skillSlotMultiplier,
     setCreationSkillPicks,
   } = useCharacter()
 
-  const morphus = activeForm === 'morphus'
+  const morphus = supportsDualForm && activeForm === 'morphus'
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<SkillCategory | 'All'>('All')
 

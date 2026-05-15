@@ -9,6 +9,7 @@ import {
   collectUnlockedSkillIds,
 } from './combatQuickBonuses'
 import { getSkillById } from '../data/skillLibrary'
+import { getPpBonuses } from './attributeBonuses'
 
 export type SheetBonusLine = { label: string; amount: number }
 
@@ -40,8 +41,7 @@ function sumLines(lines: SheetBonusLine[]): number {
 
 /** P.P. → Strike/Parry melee natural; display P.P. includes passive bumps (sheet-first). */
 export function meleeNaturalBonusFromDisplayedPp(pp: number): number {
-  if (pp <= 15) return 0
-  return Math.floor((pp - 14) / 2)
+  return getPpBonuses(pp).strike
 }
 
 export function getPpMeleeNaturalForActiveForm(
