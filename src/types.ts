@@ -87,8 +87,24 @@ export type FormState = {
   isp: { current: number; maximum: number }
 }
 
-/** Psychic vs standard cumulative XP curve (src/data/xpTables.ts). */
-export type XpTableKind = 'standard' | 'psychic'
+/**
+ * Cumulative XP thresholds for sheet levels 1..LEVEL_CAP (see src/data/xpTables.ts).
+ * {@link floors}[i] is the minimum lifetime XP required to **be** level i + 1 (index 0 → level 1 at 0 XP).
+ */
+export type XPTable = {
+  readonly floors: readonly number[]
+}
+
+/**
+ * O.C.C. / R.C.C. package bound to the character — progression uses {@link xpTable} only (no separate xp kind).
+ */
+export type CharacterOcc = {
+  id: string
+  name: string
+  xpTable: XPTable
+  /** Psychic-class O.C.C.s lock the Psychic Gate (psychic_gate.md). */
+  category: 'psychic' | 'standard'
+}
 
 /** Logged XP award for Identity header history (Pillar 6). */
 export type XpGainEvent = {
@@ -110,14 +126,10 @@ export type Character = {
    * rituals are resolved (xpTables.ts).
    */
   xp: number
-  /** Which cumulative XP curve applies (standard vs psychic O.C.C.). */
-  xpTableKind?: XpTableKind
   /** Shared — does not swap with form (docs/srs.md §1). */
   ppe: { current: number; maximum: number }
-  /**
-   * Creation placeholder: Psychic-class O.C.C. locks the Psychic Gate to Master (psychic_gate.md §1).
-   */
-  occCategory?: 'psychic' | 'standard'
+  /** O.C.C. / R.C.C. package: display name, psychic lock, and fixed XP thresholds. */
+  occ: CharacterOcc
   /**
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).
    */
@@ -177,31 +189,43 @@ export interface Item {
 /**
  * Body armor with A.R. and armor S.D.C. track (Armory + combat HUD A.R. gate).
  * {@link morphusCompatible}: when false, Morphus bulk exceeds Facade-fit gear (Total Reconfiguration sizing).
- * {@link destroyed}: armor shell ruined at 0 S.D.C. — HUD bar hidden; replace to regain A.R.
+ * At {@link currentSdc} 0 the suit is **Ruined** — no A.R. gate; replace to regain protection (combat_logic.md).
  */
 export interface Armor extends Item {
   itemType: 'armor'
+  /** Armor Rating — attack totals below this route damage to {@link currentSdc} first. */
   ar: number
-  currentSDC: number
-  maxSDC: number
+  maxSdc: number
+  currentSdc: number
+  /** Exactly one carried armor may be true; mirrors equipped selection in {@link CharacterContext}. */
+  isEquipped: boolean
   morphusCompatible: boolean
-  destroyed?: boolean
+  /** Human / Facade silhouette — warn in Morphus (tight or restricted fit; Pillar 7). */
+  humanSized?: boolean
 }
 
-export type WeaponCategory = 'melee' | 'ranged' | 'heavy' | 'other'
-
 /**
- * Armory weapon row (master_flow.md / combat_logic.md — strike + damage presentation).
+ * Carried weapon — strike card + optional magazine (combat_logic.md, master_flow.md).
  */
 export interface Weapon extends Item {
   itemType: 'weapon'
-  category: WeaponCategory
-  /** O.C.C. / weapon intrinsic strike bonus on d20. */
+  /** e.g. "Handguns", "Swords", "Heavy" */
+  category: string
+  /** Intrinsic weapon strike modifier on d20. */
   strikeBonus: number
-  /** Shown on sheet (e.g. "2d4", "3d6+2"). */
-  damageDice: string
-  /** Magazine, payload, or "—" for melee. */
-  ammoOrPayload: string
+  /** Damage dice string (e.g. "2d6", "1d4+2"). */
+  damage: string
+  /** Magazine / battery — ranged only; melee weapons omit. */
+  payload?: { current: number; max: number }
+  /**
+   * Spare ammo category for reload (defaults to {@link category}).
+   * Maps to {@link CharacterContext} `ammoPools` (Handguns, Rifles, …).
+   */
+  ammoPoolKey?: string
+  /** If set and unlocked on the sheet, W.P. skill % feeds the strike engine. */
+  linkedWpSkillId?: string
+  /** True when assigned to primary or secondary combat slot. */
+  isEquipped: boolean
 }
 
 export interface GearItem extends Item {
@@ -210,8 +234,19 @@ export interface GearItem extends Item {
 
 export type InventoryItem = GearItem | Armor | Weapon
 
-/** Pillar 6 — vitality header pulse. */
+/** Pillar 6 — vitality header pulse; combat HUD uses {@link CombatHudDamagePulse} for armor vs body hits. */
 export type VitalityFlashKind = 'none' | 'damage' | 'heal'
+
+/** High-contrast pulse on Tactical HUD after S.D.C. damage routing (A.R. gate). */
+export type CombatHudDamagePulse = 'none' | 'armor' | 'body' | 'split'
+
+/** Pillar 6 — tactical narrative / console line (reload failures, etc.). */
+export type CombatNarrativeEntry = {
+  id: string
+  message: string
+  atMs: number
+  tone?: 'info' | 'failure' | 'success'
+}
 
 export type CombatVitalityChange = {
   pool: 'hitPoints' | 'structuralDamageCapacity'

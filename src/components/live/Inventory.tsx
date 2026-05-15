@@ -62,7 +62,7 @@ export function Inventory() {
       ) : null}
 
       <p className={`mb-3 text-[11px] font-semibold ${muted}`}>
-        Carried load — drop items here. Equip armor and ready weapons in <strong>Equipment</strong> above.
+        Carried load — drop items here. Equip armor and ready weapons in <strong>Armory</strong> above.
       </p>
 
       {overEncumbered ? (
@@ -95,8 +95,9 @@ export function Inventory() {
           const isArmor = row.itemType === 'armor'
           const isWeapon = row.itemType === 'weapon'
           const equipped = equippedArmorId === row.id
-          const armorRuined =
-            isArmor && (row.destroyed === true || row.currentSDC <= 0)
+          const armorRuined = isArmor && row.currentSdc <= 0
+          const humanWarn =
+            morphus && isArmor && row.humanSized === true
           return (
             <li
               key={row.id}
@@ -111,16 +112,26 @@ export function Inventory() {
               }`}
             >
               <div className="min-w-0 flex-1">
-                <p className={`truncate text-sm font-bold ${th}`}>
-                  {row.name}
+                <p className={`flex flex-wrap items-center gap-1.5 text-sm font-bold ${th}`}>
+                  <span className="min-w-0 truncate">{row.name}</span>
+                  {humanWarn ? (
+                    <span
+                      className="inline-flex shrink-0 items-center justify-center rounded border border-amber-400 bg-amber-950 px-1 text-[12px] font-bold text-amber-200"
+                      title="Human-sized armor — may be tight or restricted in Morphus (Pillar 7)."
+                      aria-label="Human-sized armor warning in Morphus"
+                      role="img"
+                    >
+                      ⚠
+                    </span>
+                  ) : null}
                   {equipped && isArmor ? (
-                    <span className="ml-2 text-[10px] font-black uppercase text-amber-300">
+                    <span className="shrink-0 text-[10px] font-black uppercase text-amber-300">
                       Equipped
                     </span>
                   ) : null}
                   {isArmor && armorRuined ? (
-                    <span className="ml-2 text-[10px] font-black uppercase text-red-400">
-                      Destroyed
+                    <span className="shrink-0 text-[10px] font-black uppercase text-red-400">
+                      Ruined
                     </span>
                   ) : null}
                 </p>
@@ -129,13 +140,19 @@ export function Inventory() {
                   {isArmor ? (
                     <>
                       {' '}
-                      · A.R. {row.ar} · Armor S.D.C. {row.currentSDC}/{row.maxSDC}
+                      · A.R. {row.ar} · Armor S.D.C. {row.currentSdc}/{row.maxSdc}
                     </>
                   ) : null}
                   {isWeapon ? (
                     <>
                       {' '}
-                      · {row.category} · strike +{row.strikeBonus} · {row.damageDice} · {row.ammoOrPayload}
+                      · {row.category} · strike +{row.strikeBonus} · {row.damage}
+                      {row.itemType === 'weapon' && row.payload ? (
+                        <>
+                          {' '}
+                          · payload {row.payload.current}/{row.payload.max}
+                        </>
+                      ) : null}
                     </>
                   ) : null}
                 </p>

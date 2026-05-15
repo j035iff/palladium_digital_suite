@@ -32,7 +32,7 @@ export function PsychicGate() {
 
   const morphus = activeForm === 'morphus'
   const bypassed = character.psychicGateBypassed === true
-  const occLocked = character.occCategory === 'psychic'
+  const occLocked = character.occ.category === 'psychic'
   const [lastTestRoll, setLastTestRoll] = useState<number | null>(null)
 
   const bandRows = useMemo(() => getStandardPsychicTestBandRows(), [])

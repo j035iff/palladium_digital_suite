@@ -29,6 +29,10 @@ function attrsPlausible(attrs: {
 export function assessCreationSpawnBlockers(character: Character): string[] {
   const blockers: string[] = []
 
+  if (!character.occ?.id || !character.occ?.xpTable?.floors?.length) {
+    blockers.push('Choose an O.C.C. (Step 0 — O.C.C. selection).')
+  }
+
   if (!attrsPlausible(character.facade.attributes)) {
     blockers.push(
       'Facade attributes look incomplete or invalid — finish the Attribute Forge (all stats ≥ 1).',

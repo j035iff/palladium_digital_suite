@@ -37,7 +37,10 @@ function skillMeleeBonusFromIds(ids: Iterable<string>): {
   return { strike, parry, dodge }
 }
 
-function collectUnlockedSkillIds(character: Character, activeForm: 'facade' | 'morphus'): Set<string> {
+export function collectUnlockedSkillIds(
+  character: Character,
+  activeForm: 'facade' | 'morphus',
+): Set<string> {
   const ids = new Set<string>()
   const branch = getFormState(character, activeForm)
   for (const s of branch.skills) {

@@ -1,4 +1,4 @@
-import type { Character, XpTableKind } from '../types'
+import type { Character, XPTable } from '../types'
 
 /**
  * Cumulative XP floors (master_flow.md — progression): {@link STANDARD_XP_FLOORS}[i] is the
@@ -29,13 +29,22 @@ export const PSYCHIC_XP_FLOORS: readonly number[] = STANDARD_XP_FLOORS.map((x, i
   i === 0 ? 0 : Math.round(x * 1.12),
 )
 
-export function getXpFloors(kind: XpTableKind): readonly number[] {
-  return kind === 'psychic' ? PSYCHIC_XP_FLOORS : STANDARD_XP_FLOORS
+/** Full-body conversion — demo curve ~8% steeper than standard (past level 1). */
+export const BORG_XP_FLOORS: readonly number[] = STANDARD_XP_FLOORS.map((x, i) =>
+  i === 0 ? 0 : Math.round(x * 1.08),
+)
+
+export const STANDARD_XP_TABLE: XPTable = { floors: STANDARD_XP_FLOORS }
+export const PSYCHIC_XP_TABLE: XPTable = { floors: PSYCHIC_XP_FLOORS }
+export const BORG_XP_TABLE: XPTable = { floors: BORG_XP_FLOORS }
+
+function floorsOf(table: XPTable): readonly number[] {
+  return table.floors
 }
 
 /** Highest level (1..LEVEL_CAP) the character has earned from total XP alone. */
-export function maxEarnedLevelFromXp(totalXp: number, kind: XpTableKind): number {
-  const floors = getXpFloors(kind)
+export function maxEarnedLevelFromXp(totalXp: number, table: XPTable): number {
+  const floors = floorsOf(table)
   let best = 1
   for (let L = 2; L <= LEVEL_CAP; L++) {
     if (totalXp >= floors[L - 1]) best = L
@@ -44,8 +53,8 @@ export function maxEarnedLevelFromXp(totalXp: number, kind: XpTableKind): number
 }
 
 /** Minimum total XP required to reach `nextLevel` (nextLevel in 2..LEVEL_CAP). */
-export function xpFloorForLevel(nextLevel: number, kind: XpTableKind): number {
-  const floors = getXpFloors(kind)
+export function xpFloorForLevel(nextLevel: number, table: XPTable): number {
+  const floors = floorsOf(table)
   if (nextLevel <= 1) return 0
   return floors[Math.min(LEVEL_CAP, nextLevel) - 1]
 }
@@ -53,10 +62,10 @@ export function xpFloorForLevel(nextLevel: number, kind: XpTableKind): number {
 /** XP total needed for the level after `currentLevel`, or null at cap. */
 export function nextLevelThresholdXp(
   currentLevel: number,
-  kind: XpTableKind,
+  table: XPTable,
 ): number | null {
   if (currentLevel >= LEVEL_CAP) return null
-  return xpFloorForLevel(currentLevel + 1, kind)
+  return xpFloorForLevel(currentLevel + 1, table)
 }
 
 /**
@@ -67,11 +76,11 @@ export function newlyCrossedLevels(
   recordedLevel: number,
   prevXp: number,
   newXp: number,
-  kind: XpTableKind,
+  table: XPTable,
 ): number[] {
   const out: number[] = []
   for (let target = recordedLevel + 1; target <= LEVEL_CAP; target++) {
-    const need = xpFloorForLevel(target, kind)
+    const need = xpFloorForLevel(target, table)
     if (newXp < need) break
     if (prevXp < need) out.push(target)
   }
@@ -88,7 +97,7 @@ export function supernaturalAlertsForLevel(
       'Pending selection: consult your O.C.C. chart for new spells or psionics granted at this level.',
     )
   }
-  if (character.occCategory === 'psychic' && [4, 8, 12].includes(targetLevel)) {
+  if (character.occ.category === 'psychic' && [4, 8, 12].includes(targetLevel)) {
     alerts.push(
       'Psychic O.C.C.: verify save vs. psionics tier and any new power slots (psychic_gate.md).',
     )
@@ -103,9 +112,9 @@ export function supernaturalAlertsForLevel(
 }
 
 /** Min XP to be at `level` (1..LEVEL_CAP). */
-export function xpFloorForCharacterLevel(level: number, kind: XpTableKind): number {
+export function xpFloorForCharacterLevel(level: number, table: XPTable): number {
   const L = Math.max(1, Math.min(LEVEL_CAP, Math.floor(level)))
-  return xpFloorForLevel(L, kind)
+  return xpFloorForLevel(L, table)
 }
 
 export type XpProgressSegment = {
@@ -118,13 +127,17 @@ export type XpProgressSegment = {
 export function xpProgressTowardNext(
   level: number,
   totalXp: number,
-  kind: XpTableKind,
+  table: XPTable,
 ): XpProgressSegment {
   if (level >= LEVEL_CAP) {
-    return { pct: 100, floorXp: xpFloorForCharacterLevel(LEVEL_CAP, kind), nextThresholdXp: null }
+    return {
+      pct: 100,
+      floorXp: xpFloorForCharacterLevel(LEVEL_CAP, table),
+      nextThresholdXp: null,
+    }
   }
-  const floorXp = xpFloorForCharacterLevel(level, kind)
-  const nextThresholdXp = nextLevelThresholdXp(level, kind)
+  const floorXp = xpFloorForCharacterLevel(level, table)
+  const nextThresholdXp = nextLevelThresholdXp(level, table)
   if (nextThresholdXp == null) {
     return { pct: 100, floorXp, nextThresholdXp: null }
   }
@@ -136,8 +149,8 @@ export function xpProgressTowardNext(
 
 /** Levels earned by XP but not yet applied on the sheet (ritual queue). */
 export function outstandingLevelUpTargets(c: Character): number[] {
-  const kind = c.xpTableKind ?? 'standard'
-  const earned = maxEarnedLevelFromXp(c.xp, kind)
+  if (!c.occ?.xpTable?.floors?.length) return []
+  const earned = maxEarnedLevelFromXp(c.xp, c.occ.xpTable)
   const out: number[] = []
   for (let L = c.level + 1; L <= earned; L++) out.push(L)
   return out

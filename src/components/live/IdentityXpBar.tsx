@@ -28,7 +28,8 @@ export function IdentityXpBar() {
     return () => document.removeEventListener('mousedown', onDoc)
   }, [open])
 
-  const next = nextLevelThresholdXp(character.level, character.xpTableKind ?? 'standard')
+  const next = nextLevelThresholdXp(character.level, character.occ.xpTable)
+  const progressionTitle = `Progression: ${character.occ.name} Table`
   const pendingRing = Boolean(pendingLevelUpTarget)
 
   const track = morphus ? 'bg-slate-900/90' : 'bg-slate-200'
@@ -51,6 +52,8 @@ export function IdentityXpBar() {
         }`}
         aria-expanded={open}
         aria-haspopup="dialog"
+        title={progressionTitle}
+        aria-label={`Experience and XP history — ${progressionTitle}`}
         onClick={() => setOpen((v) => !v)}
       >
         <div className="mb-1 flex items-baseline justify-between gap-2">
@@ -107,6 +110,13 @@ export function IdentityXpBar() {
           role="dialog"
           aria-label="XP history"
         >
+          <p
+            className={`mb-1 text-[10px] font-semibold uppercase tracking-wide ${
+              morphus ? 'text-violet-400' : 'text-slate-600'
+            }`}
+          >
+            {progressionTitle}
+          </p>
           <p
             className={`mb-2 text-[10px] font-black uppercase tracking-wide ${
               morphus ? 'text-violet-300' : 'text-blue-900'

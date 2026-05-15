@@ -41,7 +41,16 @@ import { computeMaxApm } from '../lib/meleeCombat'
 import { computeCarryCapacityLbs } from '../lib/carryCapacity'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
 import { applyInventoryAwareSdcVitality } from '../lib/inventoryVitalityApply'
+import { syncArmorAndWeaponFlags } from '../lib/inventoryArmorSync'
+import {
+  applyReloadFromPool,
+  ensureAmmoPoolEntry,
+  type AmmoPoolKey,
+  type AmmoPoolsState,
+} from '../lib/ammoPools'
+import { initialAmmoPools } from '../data/ammoFixture'
 import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
+import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
 import {
   LEVEL_CAP,
   newlyCrossedLevels,
@@ -57,6 +66,8 @@ import type {
   CombatVitalityChange,
   FormState,
   InventoryItem,
+  CombatHudDamagePulse,
+  CombatNarrativeEntry,
   PsychicTier,
   VitalityFlashKind,
   Weapon,
@@ -107,6 +118,8 @@ type CharacterContextValue = {
   removeSelectedAbility: (id: string) => void
   /** Step 3 — persist O.C.C. / related skill picks on the character record. */
   setCreationSkillPicks: (occ: string[], related: string[]) => void
+  /** Step 0 — O.C.C. package: fixed XP table, psychic category, and starting skill ids. */
+  setSelectedOcc: (occId: string) => void
   /**
    * Step 5 — apply rolled H.P./S.D.C./P.P.E./I.S.P. in one atomic update (Spawn).
    * Sets creationVitalityCommitted.
@@ -136,13 +149,35 @@ type CharacterContextValue = {
   overEncumbered: boolean
   /** Placeholder copy for future Spd penalty when over carry (attribute_and_stat.md §4). */
   encumbranceSpdNote: string
-  equipArmor: (id: string) => void
+  /** Wear body armor (`null` clears equipped suit). Ruined armor (0 S.D.C.) cannot be equipped. */
+  equipArmor: (id: string | null) => void
+  /** Add a new armor row to inventory (Armory). */
+  addArmorToInventory: (piece: {
+    name: string
+    ar: number
+    maxSdc: number
+    weightLbs: number
+    morphusCompatible?: boolean
+    humanSized?: boolean
+  }) => void
   dropItem: (id: string) => void
   /** Up to two carried weapons flagged ready for the combat HUD strike row. */
   readyWeaponIds: readonly [string | null, string | null]
   /** Resolved weapon rows for {@link readyWeaponIds} (null if missing or not a weapon). */
   readyWeapons: readonly [Weapon | null, Weapon | null]
   setReadyWeapon: (slot: 0 | 1, weaponId: string | null) => void
+  /** Ranged: spend one round from magazine after a strike roll. */
+  spendWeaponRangedShot: (weaponId: string) => void
+  /** Spare ammo pools by weapon category (Handguns, Rifles, …). */
+  ammoPools: AmmoPoolsState
+  /** Refill magazine from category pool; returns false if insufficient ammo. */
+  reloadWeapon: (weaponId: string) => boolean
+  /** Add spare rounds to a category pool (Armory — Ammo & Consumables). */
+  addAmmoToPool: (poolKey: AmmoPoolKey, rounds: number) => void
+  /** Tactical narrative log (Pillar 6). */
+  combatNarrativeLog: readonly CombatNarrativeEntry[]
+  appendCombatNarrative: (message: string, tone?: CombatNarrativeEntry['tone']) => void
+  clearCombatNarrative: () => void
   /**
    * S.D.C.-priority sheet: damage S.D.C. then H.P.; heal S.D.C. to max then H.P.
    * Optional strike total vs equipped armor A.R. routes damage to armor S.D.C. first when roll is below A.R.
@@ -157,6 +192,8 @@ type CharacterContextValue = {
   durationCheckPulse: boolean
   /** Pillar 6 — vitality header pulse after pool change. */
   vitalityFlash: VitalityFlashKind
+  /** Tactical HUD — which pool flashed after last S.D.C. damage (A.R. gate routing). */
+  combatHudDamagePulse: CombatHudDamagePulse
   /** Progress toward next level from cumulative XP (xpTables.ts). */
   xpProgress: {
     pct: number
@@ -178,11 +215,18 @@ type CharacterContextValue = {
 
 const CharacterContext = createContext<CharacterContextValue | null>(null)
 
+function ensureCharacterOcc(c: Character): Character {
+  if (c.occ?.xpTable?.floors?.length) return c
+  const def = getOccById('city_rat')
+  if (!def) return c
+  return { ...c, occ: snapshotOccForCharacter(def) }
+}
+
 function hydrateCharacterFromStorage(base: Character): Character {
   const persisted = loadPersistedAbilityIds(base.name)
   const fromFixture = base.selectedAbilities ?? []
   const meta = loadCharacterMeta(base.name)
-  return {
+  return ensureCharacterOcc({
     ...base,
     selectedAbilities: persisted ?? fromFixture,
     isFinalized: meta?.isFinalized ?? base.isFinalized ?? false,
@@ -190,7 +234,7 @@ function hydrateCharacterFromStorage(base: Character): Character {
       meta?.creationVitalityCommitted ??
       base.creationVitalityCommitted ??
       false,
-  }
+  })
 }
 
 /** Returns updated character if the pick is legal; otherwise null. */
@@ -268,10 +312,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
-    characterFixture.occCategory === 'psychic' ? 'master' : 'none',
+    ensureCharacterOcc(characterFixture).occ.category === 'psychic'
+      ? 'master'
+      : 'none',
   )
 
-  const occPsychicLocked = character.occCategory === 'psychic'
+  const occPsychicLocked = character.occ.category === 'psychic'
   const gateBypassed = character.psychicGateBypassed === true
   const psychicSeedRef = useRef(false)
   const wasFinalizedRef = useRef(false)
@@ -320,8 +366,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     })
   }, [occPsychicLocked, activeForm])
 
-  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(
-    () => [...initialInventoryItems],
+  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() =>
+    syncArmorAndWeaponFlags(
+      [...initialInventoryItems],
+      'synth_weave',
+      ['vibro_knife', 'ion_pistol'],
+    ),
   )
   const [equippedArmorId, setEquippedArmorId] = useState<string | null>(
     'synth_weave',
@@ -329,6 +379,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [readyWeaponIds, setReadyWeaponIds] = useState<
     [string | null, string | null]
   >(['vibro_knife', 'ion_pistol'])
+  const [ammoPools, setAmmoPools] = useState<AmmoPoolsState>(() => ({
+    ...initialAmmoPools,
+  }))
+  const [combatNarrativeLog, setCombatNarrativeLog] = useState<
+    CombatNarrativeEntry[]
+  >([])
 
   const activeFormState = useMemo(
     () => getFormState(character, activeForm),
@@ -400,8 +456,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const hudDamagePulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const durationPulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [vitalityFlash, setVitalityFlash] = useState<VitalityFlashKind>('none')
+  const [combatHudDamagePulse, setCombatHudDamagePulse] =
+    useState<CombatHudDamagePulse>('none')
   const [durationCheckPulse, setDurationCheckPulse] = useState(false)
   const [apmCurrentRaw, setApmCurrentRaw] = useState(() =>
     computeMaxApm(characterFixture.facade.attributes, characterFixture.level),
@@ -426,6 +485,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     return () => {
       if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
+      if (hudDamagePulseTimerRef.current) {
+        clearTimeout(hudDamagePulseTimerRef.current)
+      }
       if (durationPulseTimerRef.current) {
         clearTimeout(durationPulseTimerRef.current)
       }
@@ -440,6 +502,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setVitalityFlash('none')
       flashTimerRef.current = null
     }, 700)
+  }, [])
+
+  const triggerCombatHudDamagePulse = useCallback((pulse: CombatHudDamagePulse) => {
+    if (pulse === 'none') return
+    if (hudDamagePulseTimerRef.current) {
+      clearTimeout(hudDamagePulseTimerRef.current)
+    }
+    setCombatHudDamagePulse(pulse)
+    hudDamagePulseTimerRef.current = setTimeout(() => {
+      setCombatHudDamagePulse('none')
+      hudDamagePulseTimerRef.current = null
+    }, 750)
   }, [])
 
   const spendCombatAction = useCallback(() => {
@@ -483,40 +557,194 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const equipArmor = useCallback(
-    (id: string) => {
+    (id: string | null) => {
+      if (id === null) {
+        setEquippedArmorId(null)
+        setInventoryItems((prev) =>
+          syncArmorAndWeaponFlags(prev, null, readyWeaponIds),
+        )
+        return
+      }
       const row = inventoryItems.find((i) => i.id === id)
       if (!row || row.itemType !== 'armor') return
-      if (row.currentSDC <= 0 || row.destroyed === true) return
+      if (row.currentSdc <= 0) return
       setEquippedArmorId(id)
+      setInventoryItems((prev) =>
+        syncArmorAndWeaponFlags(prev, id, readyWeaponIds),
+      )
     },
-    [inventoryItems],
+    [inventoryItems, readyWeaponIds],
+  )
+
+  const addArmorToInventory = useCallback(
+    (piece: {
+      name: string
+      ar: number
+      maxSdc: number
+      weightLbs: number
+      morphusCompatible?: boolean
+      humanSized?: boolean
+    }) => {
+      const id = `armor_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`
+      const maxSdc = Math.max(1, Math.round(piece.maxSdc))
+      const row: Armor = {
+        id,
+        itemType: 'armor',
+        name: piece.name.trim() || 'Unnamed armor',
+        weightLbs: Math.max(0, piece.weightLbs),
+        ar: Math.max(0, Math.round(piece.ar)),
+        maxSdc,
+        currentSdc: maxSdc,
+        isEquipped: false,
+        morphusCompatible: piece.morphusCompatible !== false,
+        humanSized: piece.humanSized === true,
+      }
+      setInventoryItems((prev) =>
+        syncArmorAndWeaponFlags(
+          [...prev, row],
+          equippedArmorId,
+          readyWeaponIds,
+        ),
+      )
+    },
+    [equippedArmorId, readyWeaponIds],
   )
 
   const setReadyWeapon = useCallback(
     (slot: 0 | 1, weaponId: string | null) => {
       setReadyWeaponIds(([a, b]) => {
+        let next: [string | null, string | null]
         if (weaponId === null) {
-          return slot === 0 ? [null, b] : [a, null]
+          next = slot === 0 ? [null, b] : [a, null]
+        } else {
+          const row = inventoryItems.find((i) => i.id === weaponId)
+          if (!row || row.itemType !== 'weapon') return [a, b]
+          next =
+            slot === 0
+              ? [weaponId, b === weaponId ? null : b]
+              : [a === weaponId ? null : a, weaponId]
         }
-        const row = inventoryItems.find((i) => i.id === weaponId)
-        if (!row || row.itemType !== 'weapon') return [a, b]
-        if (slot === 0) {
-          return [weaponId, b === weaponId ? null : b]
-        }
-        return [a === weaponId ? null : a, weaponId]
+        setInventoryItems((inv) =>
+          syncArmorAndWeaponFlags(inv, equippedArmorId, next),
+        )
+        return next
       })
     },
-    [inventoryItems],
+    [inventoryItems, equippedArmorId],
   )
 
-  const dropItem = useCallback((id: string) => {
-    setInventoryItems((prev) => prev.filter((x) => x.id !== id))
-    setEquippedArmorId((eq) => (eq === id ? null : eq))
-    setReadyWeaponIds(([a, b]) => [
-      a === id ? null : a,
-      b === id ? null : b,
-    ])
+  const spendWeaponRangedShot = useCallback(
+    (weaponId: string) => {
+      setInventoryItems((prev) => {
+        const next = prev.map((it) => {
+          if (it.itemType !== 'weapon' || it.id !== weaponId) return it
+          const w = it as Weapon
+          if (!w.payload || w.payload.current <= 0) return it
+          return {
+            ...w,
+            payload: { ...w.payload, current: w.payload.current - 1 },
+          }
+        })
+        return syncArmorAndWeaponFlags(next, equippedArmorId, readyWeaponIds)
+      })
+    },
+    [equippedArmorId, readyWeaponIds],
+  )
+
+  const appendCombatNarrative = useCallback(
+    (message: string, tone: CombatNarrativeEntry['tone'] = 'info') => {
+      const id = `log-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+      setCombatNarrativeLog((prev) =>
+        [...prev, { id, message, atMs: Date.now(), tone }].slice(-40),
+      )
+    },
+    [],
+  )
+
+  const clearCombatNarrative = useCallback(() => {
+    setCombatNarrativeLog([])
   }, [])
+
+  const reloadWeapon = useCallback(
+    (weaponId: string): boolean => {
+      const row = inventoryItems.find((i) => i.id === weaponId)
+      if (!row || row.itemType !== 'weapon') return false
+      const w = row as Weapon
+      if (!w.payload) return false
+
+      const result = applyReloadFromPool(w, ammoPools)
+      if (!result) {
+        appendCombatNarrative(
+          `Click! No ammo remaining for ${w.name}.`,
+          'failure',
+        )
+        return false
+      }
+
+      setAmmoPools(result.pools)
+      setInventoryItems((prev) => {
+        const next = prev.map((it) =>
+          it.id === weaponId ? result.weapon : it,
+        )
+        return syncArmorAndWeaponFlags(next, equippedArmorId, readyWeaponIds)
+      })
+      appendCombatNarrative(
+        `Reloaded ${w.name} (${result.roundsUsed} round${result.roundsUsed === 1 ? '' : 's'} from ${w.ammoPoolKey ?? w.category} pool).`,
+        'success',
+      )
+      return true
+    },
+    [
+      inventoryItems,
+      ammoPools,
+      equippedArmorId,
+      readyWeaponIds,
+      appendCombatNarrative,
+    ],
+  )
+
+  const addAmmoToPool = useCallback(
+    (poolKey: AmmoPoolKey, rounds: number) => {
+      const n = Math.round(rounds)
+      if (!Number.isFinite(n) || n <= 0) return
+      setAmmoPools((prev) => {
+        const base = ensureAmmoPoolEntry(prev, poolKey)
+        const cur = base[poolKey]?.spareRounds ?? 0
+        return {
+          ...base,
+          [poolKey]: {
+            ...base[poolKey],
+            spareRounds: cur + n,
+          },
+        }
+      })
+      appendCombatNarrative(
+        `Added ${n} round${n === 1 ? '' : 's'} to ${poolKey} ammo reserve.`,
+        'success',
+      )
+    },
+    [appendCombatNarrative],
+  )
+
+  const dropItem = useCallback(
+    (id: string) => {
+      const nextEq = equippedArmorId === id ? null : equippedArmorId
+      const nextW: [string | null, string | null] = [
+        readyWeaponIds[0] === id ? null : readyWeaponIds[0],
+        readyWeaponIds[1] === id ? null : readyWeaponIds[1],
+      ]
+      setEquippedArmorId(nextEq)
+      setReadyWeaponIds(nextW)
+      setInventoryItems((prev) =>
+        syncArmorAndWeaponFlags(
+          prev.filter((x) => x.id !== id),
+          nextEq,
+          nextW,
+        ),
+      )
+    },
+    [equippedArmorId, readyWeaponIds],
+  )
 
   const applySdcPriorityVitality = useCallback(
     (opts: {
@@ -535,9 +763,22 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       )
       if (!r) return
       setCharacter(r.nextCharacter)
-      setInventoryItems(r.nextInventory)
+      let nextEq = equippedArmorId
+      if (nextEq) {
+        const arm = r.nextInventory.find(
+          (i) => i.id === nextEq && i.itemType === 'armor',
+        ) as Armor | undefined
+        if (arm && arm.currentSdc <= 0) nextEq = null
+      }
+      setEquippedArmorId(nextEq)
+      setInventoryItems(
+        syncArmorAndWeaponFlags(r.nextInventory, nextEq, readyWeaponIds),
+      )
       setTimeout(() => {
         triggerVitalityFlash(r.flashKind)
+        if (opts.mode === 'damage' && r.sdcDamageRouting) {
+          triggerCombatHudDamagePulse(r.sdcDamageRouting)
+        }
       }, 0)
     },
     [
@@ -545,7 +786,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeForm,
       inventoryItems,
       equippedArmorId,
+      readyWeaponIds,
       triggerVitalityFlash,
+      triggerCombatHudDamagePulse,
     ],
   )
 
@@ -645,6 +888,30 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [],
   )
 
+  const setSelectedOcc = useCallback(
+    (occId: string) => {
+      const def = getOccById(occId)
+      if (!def) return
+      const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
+      setPsychicTierState(tier)
+      setCharacter((prev) => {
+        const branch = getFormState(prev, activeForm)
+        const nextBranch =
+          prev.psychicGateBypassed === true
+            ? branch
+            : applyPsychicTierToFormState(branch, tier)
+        return {
+          ...prev,
+          [activeForm]: nextBranch,
+          occ: snapshotOccForCharacter(def),
+          creationOccSkillIds: [...def.startingOccSkillIds],
+          creationRelatedSkillIds: [...def.startingRelatedSkillIds],
+        }
+      })
+    },
+    [activeForm],
+  )
+
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setCharacter((prev) => {
       const pairs: [string, number][] = [
@@ -725,10 +992,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const xpProgress = useMemo(() => {
-    const kind = character.xpTableKind ?? 'standard'
-    const seg = xpProgressTowardNext(character.level, character.xp, kind)
+    if (!character.occ?.xpTable?.floors?.length) {
+      return {
+        pct: 0,
+        floorXp: 0,
+        nextThresholdXp: null as number | null,
+        cap: LEVEL_CAP,
+      }
+    }
+    const seg = xpProgressTowardNext(
+      character.level,
+      character.xp,
+      character.occ.xpTable,
+    )
     return { ...seg, cap: LEVEL_CAP }
-  }, [character.level, character.xp, character.xpTableKind])
+  }, [character.level, character.xp, character.occ])
 
   const pendingLevelUpTarget = useMemo(
     () => levelUpQueue[0] ?? null,
@@ -739,10 +1017,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     if (!Number.isFinite(amount) || amount <= 0) return
     const id = `xp-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
     setCharacter((prev) => {
-      const kind = prev.xpTableKind ?? 'standard'
+      if (!prev.occ?.xpTable?.floors?.length) return prev
       const prevXp = prev.xp
       const newXp = prevXp + amount
-      const crossed = newlyCrossedLevels(prev.level, prevXp, newXp, kind)
+      const crossed = newlyCrossedLevels(
+        prev.level,
+        prevXp,
+        newXp,
+        prev.occ.xpTable,
+      )
       if (crossed.length > 0) {
         setLevelUpQueue((q) => mergeLevelQueues(q, crossed))
       }
@@ -758,10 +1041,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setLevelUpQueue((q) => {
         const target = q[0]
         if (!target) return q
-        setCharacter((prev) => ({
-          ...bumpAllHitPoints(prev, r),
-          level: target,
-        }))
+        setCharacter((prev) => {
+          if (!prev.occ?.xpTable?.floors?.length) return prev
+          return {
+            ...bumpAllHitPoints(prev, r),
+            level: target,
+          }
+        })
         setTimeout(() => {
           triggerVitalityFlash('heal')
         }, 0)
@@ -790,6 +1076,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addSelectedAbility,
       removeSelectedAbility,
       setCreationSkillPicks,
+      setSelectedOcc,
       commitSpawnVitalityRolls,
       finalizeCharacter,
       attacksPerMelee,
@@ -807,11 +1094,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       overEncumbered,
       encumbranceSpdNote,
       equipArmor,
+      addArmorToInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,
       setReadyWeapon,
+      spendWeaponRangedShot,
+      ammoPools,
+      reloadWeapon,
+      addAmmoToPool,
+      combatNarrativeLog,
+      appendCombatNarrative,
+      clearCombatNarrative,
       vitalityFlash,
+      combatHudDamagePulse,
       durationCheckPulse,
       xpProgress,
       xpHistory,
@@ -838,6 +1134,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addSelectedAbility,
       removeSelectedAbility,
       setCreationSkillPicks,
+      setSelectedOcc,
       commitSpawnVitalityRolls,
       finalizeCharacter,
       attacksPerMelee,
@@ -855,11 +1152,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       overEncumbered,
       encumbranceSpdNote,
       equipArmor,
+      addArmorToInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,
       setReadyWeapon,
+      spendWeaponRangedShot,
+      ammoPools,
+      reloadWeapon,
+      addAmmoToPool,
+      combatNarrativeLog,
+      appendCombatNarrative,
+      clearCombatNarrative,
       vitalityFlash,
+      combatHudDamagePulse,
       durationCheckPulse,
       xpProgress,
       xpHistory,

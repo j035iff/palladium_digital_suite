@@ -4,6 +4,7 @@ import { PsychicGate } from '../creation/PsychicGate'
 import { AbilitySelection } from '../creation/AbilitySelection'
 import { SkillEngine } from '../creation/SkillEngine'
 import { CharacterSpawn } from '../creation/CharacterSpawn'
+import { OccSelection } from '../creation/OccSelection'
 import { Armory } from '../live/Armory'
 import { CombatHUD } from '../live/CombatHUD'
 import { IdentityXpBar } from '../live/IdentityXpBar'
@@ -134,8 +135,15 @@ export function MainLayout() {
               {character.name}
             </h1>
             <p
+              className="text-xs font-semibold uppercase tracking-wide"
+              style={{ color: morphusActive ? '#a78bfa' : '#475569' }}
+            >
+              O.C.C. {character.occ.name}
+            </p>
+            <p
               className="text-sm font-medium"
               style={{ color: morphusActive ? '#a78bfa' : '#334155' }}
+              title={`Progression: ${character.occ.name} Table`}
             >
               Level {character.level}
             </p>
@@ -166,7 +174,7 @@ export function MainLayout() {
         </div>
       </header>
 
-      {character.isFinalized && levelUpQueue.length > 0 ? (
+      {character.isFinalized && levelUpQueue.length > 0 && character.occ?.xpTable?.floors?.length ? (
         <LevelUpModal
           key={levelUpQueue[0]}
           open
@@ -280,6 +288,8 @@ export function MainLayout() {
 
         {showCreation ? (
           <>
+            <OccSelection />
+
             <AttributeForge />
 
             <PsychicGate />

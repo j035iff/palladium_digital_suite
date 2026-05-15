@@ -1,4 +1,7 @@
 import type { Character } from '../types'
+import { getOccById, snapshotOccForCharacter } from './occDefinitions'
+
+const demoOcc = snapshotOccForCharacter(getOccById('city_rat')!)
 
 /**
  * Demo sheet — structure must satisfy {@link Character}.
@@ -8,6 +11,7 @@ export const characterFixture: Character = {
   level: 3,
   xp: 4200,
   ppe: { current: 28, maximum: 32 },
+  occ: demoOcc,
   occSkillSlotBudget: 8,
   occRelatedSkillSlotBudget: 10,
   /** Demo Nightbane lineage — Talent cost strip + Morphus-gated picks (sn_abilities_selection.md). */
@@ -15,8 +19,8 @@ export const characterFixture: Character = {
   psychicGateBypassed: true,
   isFinalized: false,
   creationVitalityCommitted: false,
-  creationOccSkillIds: ['literacy'],
-  creationRelatedSkillIds: ['electronics'],
+  creationOccSkillIds: ['literacy', 'math_basic', 'hand_to_hand_basic'],
+  creationRelatedSkillIds: ['electronics', 'wp_pistol', 'wp_sword'],
   selectedAbilities: ['energy_bolt'],
   creationAbilityBudget: {
     spellSlots: 8,

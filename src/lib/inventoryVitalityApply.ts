@@ -20,6 +20,8 @@ export type InventoryVitalityApplyResult = {
   nextCharacter: Character
   nextInventory: InventoryItem[]
   flashKind: VitalityFlashKind
+  /** Which pool(s) received S.D.C. damage (drives HUD highlight). */
+  sdcDamageRouting?: 'armor' | 'body' | 'split'
 } | null
 
 function patchArmorSdc(
@@ -29,11 +31,11 @@ function patchArmorSdc(
 ): InventoryItem[] {
   return items.map((it) => {
     if (it.itemType !== 'armor' || it.id !== armorId) return it
-    const clamped = Math.max(0, Math.min(it.maxSDC, Math.round(nextCurrent)))
+    const a = it as Armor
+    const clamped = Math.max(0, Math.min(a.maxSdc, Math.round(nextCurrent)))
     return {
-      ...it,
-      currentSDC: clamped,
-      destroyed: clamped <= 0,
+      ...a,
+      currentSdc: clamped,
     }
   })
 }
@@ -49,7 +51,7 @@ function getEquippedArmor(
 
 /** A.R. gate applies only while the suit still has S.D.C. integrity. */
 function armorAcceptsArGate(armor: Armor): boolean {
-  return armor.currentSDC > 0 && armor.destroyed !== true
+  return armor.currentSdc > 0
 }
 
 /**
@@ -90,14 +92,14 @@ export function applyInventoryAwareSdcVitality(
   if (useRoll && armorForGate) {
     const roll = opts.attackRoll as number
     if (roll < armorForGate.ar) {
-      const absorb = Math.min(amount, armorForGate.currentSDC)
+      const absorb = Math.min(amount, armorForGate.currentSdc)
       const overflow = amount - absorb
       let nextInv = inventory
       if (absorb > 0) {
         nextInv = patchArmorSdc(
           inventory,
           armorForGate.id,
-          armorForGate.currentSDC - absorb,
+          armorForGate.currentSdc - absorb,
         )
       }
       if (overflow <= 0) {
@@ -105,6 +107,7 @@ export function applyInventoryAwareSdcVitality(
           nextCharacter: character,
           nextInventory: nextInv,
           flashKind: 'damage',
+          sdcDamageRouting: 'armor',
         }
       }
       const body = computeSdcPriorityCascadeDelta(character, activeForm, {
@@ -116,11 +119,13 @@ export function applyInventoryAwareSdcVitality(
             nextCharacter: body.next,
             nextInventory: nextInv,
             flashKind: 'damage',
+            sdcDamageRouting: 'split',
           }
         : {
             nextCharacter: character,
             nextInventory: nextInv,
             flashKind: 'damage',
+            sdcDamageRouting: 'armor',
           }
     }
   }
@@ -129,11 +134,22 @@ export function applyInventoryAwareSdcVitality(
     mode: 'damage',
     amount,
   })
-  return body
-    ? {
-        nextCharacter: body.next,
-        nextInventory: inventory,
-        flashKind: body.flashKind,
-      }
-    : null
+  if (!body) return null
+
+  let sdcDamageRouting: 'body' | undefined = undefined
+  if (
+    armorForGate &&
+    useRoll &&
+    typeof opts.attackRoll === 'number' &&
+    opts.attackRoll >= armorForGate.ar
+  ) {
+    sdcDamageRouting = 'body'
+  }
+
+  return {
+    nextCharacter: body.next,
+    nextInventory: inventory,
+    flashKind: body.flashKind,
+    ...(sdcDamageRouting ? { sdcDamageRouting } : {}),
+  }
 }
