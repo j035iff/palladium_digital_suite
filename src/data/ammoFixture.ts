@@ -1,8 +1,8 @@
-import type { AmmoPoolsState } from '../lib/ammoPools'
+import type { AmmoReservesState } from '../lib/ammoReserves'
 
-/** Demo spare ammo by weapon category (CharacterContext). */
-export const initialAmmoPools: AmmoPoolsState = {
-  Handguns: { label: 'Handgun cells / magazines', spareRounds: 24 },
-  Rifles: { label: 'Rifle rounds', spareRounds: 0 },
-  Swords: { label: '—', spareRounds: 0 },
+/** Demo shared reserves by caliber (CharacterContext). */
+export const initialAmmoReserves: AmmoReservesState = {
+  '9mm': 48,
+  '12 Gauge': 0,
+  'E-clip': 24,
 }

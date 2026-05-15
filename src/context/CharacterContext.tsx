@@ -43,12 +43,11 @@ import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
 import { applyInventoryAwareSdcVitality } from '../lib/inventoryVitalityApply'
 import { syncArmorAndWeaponFlags } from '../lib/inventoryArmorSync'
 import {
-  applyReloadFromPool,
-  ensureAmmoPoolEntry,
-  type AmmoPoolKey,
-  type AmmoPoolsState,
-} from '../lib/ammoPools'
-import { initialAmmoPools } from '../data/ammoFixture'
+  applyReloadFromReserves,
+  ensureReserveCategory,
+  type AmmoReservesState,
+} from '../lib/ammoReserves'
+import { initialAmmoReserves } from '../data/ammoFixture'
 import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
 import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
 import {
@@ -166,14 +165,16 @@ type CharacterContextValue = {
   /** Resolved weapon rows for {@link readyWeaponIds} (null if missing or not a weapon). */
   readyWeapons: readonly [Weapon | null, Weapon | null]
   setReadyWeapon: (slot: 0 | 1, weaponId: string | null) => void
-  /** Ranged: spend one round from magazine after a strike roll. */
+  /** Ranged: subtract rounds from magazine (fire mode cost). */
+  spendWeaponAmmo: (weaponId: string, rounds: number) => void
+  /** @deprecated Use {@link spendWeaponAmmo} with mode cost. */
   spendWeaponRangedShot: (weaponId: string) => void
-  /** Spare ammo pools by weapon category (Handguns, Rifles, …). */
-  ammoPools: AmmoPoolsState
-  /** Refill magazine from category pool; returns false if insufficient ammo. */
+  /** Shared spare rounds by {@link Weapon.ammoCategory} (e.g. "9mm"). */
+  ammoReserves: AmmoReservesState
+  /** Refill magazine from category reserve; returns false if insufficient ammo. */
   reloadWeapon: (weaponId: string) => boolean
-  /** Add spare rounds to a category pool (Armory — Ammo & Consumables). */
-  addAmmoToPool: (poolKey: AmmoPoolKey, rounds: number) => void
+  /** Add spare rounds to a category reserve (Armory — Ammo management). */
+  addAmmoToReserve: (category: string, rounds: number) => void
   /** Tactical narrative log (Pillar 6). */
   combatNarrativeLog: readonly CombatNarrativeEntry[]
   appendCombatNarrative: (message: string, tone?: CombatNarrativeEntry['tone']) => void
@@ -379,8 +380,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [readyWeaponIds, setReadyWeaponIds] = useState<
     [string | null, string | null]
   >(['vibro_knife', 'ion_pistol'])
-  const [ammoPools, setAmmoPools] = useState<AmmoPoolsState>(() => ({
-    ...initialAmmoPools,
+  const [ammoReserves, setAmmoReserves] = useState<AmmoReservesState>(() => ({
+    ...initialAmmoReserves,
   }))
   const [combatNarrativeLog, setCombatNarrativeLog] = useState<
     CombatNarrativeEntry[]
@@ -633,22 +634,30 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [inventoryItems, equippedArmorId],
   )
 
-  const spendWeaponRangedShot = useCallback(
-    (weaponId: string) => {
+  const spendWeaponAmmo = useCallback(
+    (weaponId: string, rounds: number) => {
+      const n = Math.max(0, Math.round(rounds))
+      if (n <= 0) return
       setInventoryItems((prev) => {
         const next = prev.map((it) => {
           if (it.itemType !== 'weapon' || it.id !== weaponId) return it
           const w = it as Weapon
           if (!w.payload || w.payload.current <= 0) return it
+          const spent = Math.min(n, w.payload.current)
           return {
             ...w,
-            payload: { ...w.payload, current: w.payload.current - 1 },
+            payload: { ...w.payload, current: w.payload.current - spent },
           }
         })
         return syncArmorAndWeaponFlags(next, equippedArmorId, readyWeaponIds)
       })
     },
     [equippedArmorId, readyWeaponIds],
+  )
+
+  const spendWeaponRangedShot = useCallback(
+    (weaponId: string) => spendWeaponAmmo(weaponId, 1),
+    [spendWeaponAmmo],
   )
 
   const appendCombatNarrative = useCallback(
@@ -672,16 +681,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const w = row as Weapon
       if (!w.payload) return false
 
-      const result = applyReloadFromPool(w, ammoPools)
+      const result = applyReloadFromReserves(w, ammoReserves)
       if (!result) {
+        const cat = w.ammoCategory ?? w.ammoPoolKey ?? w.category
         appendCombatNarrative(
-          `Click! No ammo remaining for ${w.name}.`,
+          `Click! No ${cat} ammo remaining for ${w.name}.`,
           'failure',
         )
         return false
       }
 
-      setAmmoPools(result.pools)
+      setAmmoReserves(result.reserves)
       setInventoryItems((prev) => {
         const next = prev.map((it) =>
           it.id === weaponId ? result.weapon : it,
@@ -689,37 +699,31 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         return syncArmorAndWeaponFlags(next, equippedArmorId, readyWeaponIds)
       })
       appendCombatNarrative(
-        `Reloaded ${w.name} (${result.roundsUsed} round${result.roundsUsed === 1 ? '' : 's'} from ${w.ammoPoolKey ?? w.category} pool).`,
+        `Reloaded ${w.name} (${result.roundsUsed} round${result.roundsUsed === 1 ? '' : 's'} from ${w.ammoCategory ?? w.ammoPoolKey ?? w.category} reserve).`,
         'success',
       )
       return true
     },
     [
       inventoryItems,
-      ammoPools,
+      ammoReserves,
       equippedArmorId,
       readyWeaponIds,
       appendCombatNarrative,
     ],
   )
 
-  const addAmmoToPool = useCallback(
-    (poolKey: AmmoPoolKey, rounds: number) => {
+  const addAmmoToReserve = useCallback(
+    (category: string, rounds: number) => {
       const n = Math.round(rounds)
-      if (!Number.isFinite(n) || n <= 0) return
-      setAmmoPools((prev) => {
-        const base = ensureAmmoPoolEntry(prev, poolKey)
-        const cur = base[poolKey]?.spareRounds ?? 0
-        return {
-          ...base,
-          [poolKey]: {
-            ...base[poolKey],
-            spareRounds: cur + n,
-          },
-        }
+      if (!Number.isFinite(n) || n <= 0 || !category.trim()) return
+      const key = category.trim()
+      setAmmoReserves((prev) => {
+        const base = ensureReserveCategory(prev, key)
+        return { ...base, [key]: (base[key] ?? 0) + n }
       })
       appendCombatNarrative(
-        `Added ${n} round${n === 1 ? '' : 's'} to ${poolKey} ammo reserve.`,
+        `Added ${n} round${n === 1 ? '' : 's'} to ${key} ammo reserve.`,
         'success',
       )
     },
@@ -1099,10 +1103,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       readyWeaponIds,
       readyWeapons,
       setReadyWeapon,
+      spendWeaponAmmo,
       spendWeaponRangedShot,
-      ammoPools,
+      ammoReserves,
       reloadWeapon,
-      addAmmoToPool,
+      addAmmoToReserve,
       combatNarrativeLog,
       appendCombatNarrative,
       clearCombatNarrative,
@@ -1157,10 +1162,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       readyWeaponIds,
       readyWeapons,
       setReadyWeapon,
+      spendWeaponAmmo,
       spendWeaponRangedShot,
-      ammoPools,
+      ammoReserves,
       reloadWeapon,
-      addAmmoToPool,
+      addAmmoToReserve,
       combatNarrativeLog,
       appendCombatNarrative,
       clearCombatNarrative,

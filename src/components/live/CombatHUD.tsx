@@ -3,7 +3,6 @@ import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
 import {
   computeUnarmedStrikeBreakdown,
-  computeWeaponStrikeBreakdown,
   unarmedDamageLabel,
 } from '../../lib/strikeEngine'
 import {
@@ -11,10 +10,10 @@ import {
   formatBonus,
 } from '../../lib/combatQuickBonuses'
 import { rollD20 } from '../../lib/meleeDice'
-import { canReloadWeapon, spareAmmoForWeapon } from '../../lib/ammoPools'
+import { defaultFireModeId } from '../../lib/fireModes'
 import type { Weapon } from '../../types'
 import { CombatNarrativeLog } from './CombatNarrativeLog'
-import { WeaponReloadControl } from './WeaponReloadControl'
+import { WeaponStrikeCard, type StrikeBannerState } from './WeaponStrikeCard'
 
 function barPct(current: number, max: number): number {
   if (max <= 0) return 0
@@ -212,9 +211,9 @@ export function CombatHUD() {
     currentWeightLbs,
     carryLimitLbs,
     combatHudDamagePulse,
-    spendWeaponRangedShot,
+    spendWeaponAmmo,
     reloadWeapon,
-    ammoPools,
+    ammoReserves,
   } = useCharacter()
 
   const morphus = activeForm === 'morphus'
@@ -222,12 +221,13 @@ export function CombatHUD() {
   const [mode, setMode] = useState<'damage' | 'heal'>('damage')
   const [attackRollStr, setAttackRollStr] = useState('')
   const [hudMinimized, setHudMinimized] = useState(false)
-  const [strikeBanner, setStrikeBanner] = useState<{
-    key: string
-    title: string
-    detail: string
-    total: number
-  } | null>(null)
+  const [strikeBanner, setStrikeBanner] = useState<StrikeBannerState>(null)
+  const [fireModeByWeaponId, setFireModeByWeaponId] = useState<Record<string, string>>(
+    {},
+  )
+  const [reloadShakeByWeaponId, setReloadShakeByWeaponId] = useState<
+    Record<string, number>
+  >({})
 
   useEffect(() => {
     if (!strikeBanner) return
@@ -613,8 +613,8 @@ export function CombatHUD() {
           <p
             className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
           >
-            <strong>Total strike</strong> = P.P. bonus + W.P. (or Hand-to-Hand) skill bonus + weapon intrinsic
-            bonus. Ranged: each strike spends one payload round; reload when you have spare ammo (Armory).
+            <strong>Total strike</strong> = 1d20 + P.P. + W.P./H2H + weapon bonus + fire mode modifier.
+            Ranged: pick Single, Burst, or Wild — ammo cost comes from the active mode (Wild empties the mag).
           </p>
           {strikeBanner ? (
             <div
@@ -643,86 +643,32 @@ export function CombatHUD() {
             </div>
           ) : null}
           <ul className="space-y-3">
-            {readyWeaponList.map((w) => {
-              const bd = computeWeaponStrikeBreakdown(character, activeForm, w)
-              const ranged = Boolean(w.payload)
-              const canStrike = !ranged || (w.payload?.current ?? 0) > 0
-              return (
-                <li
-                  key={w.id}
-                  className={`rounded-xl border-2 px-3 py-3 ${
-                    morphus
-                      ? 'border-violet-500/80 bg-slate-950/85 shadow-[inset_0_0_0_1px_rgba(167,139,250,0.25)]'
-                      : 'border-orange-400/90 bg-white shadow-[inset_0_0_0_1px_rgba(251,146,60,0.25)]'
-                  }`}
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className={`text-sm font-black ${morphus ? 'text-violet-50' : 'text-slate-900'}`}>
-                        {w.name}
-                      </p>
-                      <p className={`mt-1 font-mono text-[10px] leading-relaxed ${morphus ? 'text-violet-200' : 'text-slate-700'}`}>
-                        P.P. {formatBonus(bd.ppBonus)}
-                        {' · '}
-                        W.P./skill {formatBonus(bd.wpBonus)}
-                        {bd.skillSourceLabel ? ` (${bd.skillSourceLabel})` : ' (no W.P. link)'}
-                        {' · '}
-                        Weapon {formatBonus(bd.weaponBonus)} →{' '}
-                        <strong className={morphus ? 'text-amber-300' : 'text-orange-700'}>
-                          {formatBonus(bd.total)} total
-                        </strong>
-                      </p>
-                      <p className={`mt-1 font-mono text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-600'}`}>
-                        Damage {w.damage}
-                        {ranged && w.payload ? (
-                          <>
-                            {' '}
-                            · Payload {w.payload.current}/{w.payload.max}
-                            {' '}
-                            · Reserve {spareAmmoForWeapon(w, ammoPools)}
-                          </>
-                        ) : null}
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 flex-col gap-1.5">
-                      <button
-                        type="button"
-                        disabled={!canStrike}
-                        title={!canStrike ? 'Empty magazine — reload in Armory' : 'Roll d20 + total strike bonus'}
-                        className={actionStrikeBtn}
-                        onClick={() => {
-                          const d = rollD20()
-                          const t = d + bd.total
-                          setStrikeBanner({
-                            key: w.id,
-                            title: w.name,
-                            detail: `1d20 (${d}) + total bonus (${bd.total}) = ${t}`,
-                            total: t,
-                          })
-                          if (ranged) spendWeaponRangedShot(w.id)
-                        }}
-                      >
-                        Roll strike
-                      </button>
-                      {ranged ? (
-                        <WeaponReloadControl
-                          weapon={w}
-                          ammoPools={ammoPools}
-                          morphus={morphus}
-                          vibrant={canReloadWeapon(w, ammoPools)}
-                          onReload={() => {
-                            reloadWeapon(w.id)
-                          }}
-                          onReloadFailed={() => {
-                            reloadWeapon(w.id)
-                          }}
-                        />
-                      ) : null}
-                    </div>
-                  </div>
-                </li>
-              )
-            })}
+            {readyWeaponList.map((w) => (
+              <WeaponStrikeCard
+                key={w.id}
+                weapon={w}
+                character={character}
+                activeForm={activeForm}
+                morphus={morphus}
+                ammoReserves={ammoReserves}
+                fireModeId={fireModeByWeaponId[w.id] ?? defaultFireModeId(w)}
+                reloadShakeTrigger={reloadShakeByWeaponId[w.id] ?? 0}
+                onFireModeChange={(id) =>
+                  setFireModeByWeaponId((prev) => ({ ...prev, [w.id]: id }))
+                }
+                onStrikeResolved={setStrikeBanner}
+                onSpendAmmo={spendWeaponAmmo}
+                onReload={() => reloadWeapon(w.id)}
+                onReloadFailed={() => reloadWeapon(w.id)}
+                onRequestReloadShake={() =>
+                  setReloadShakeByWeaponId((prev) => ({
+                    ...prev,
+                    [w.id]: (prev[w.id] ?? 0) + 1,
+                  }))
+                }
+                actionStrikeBtn={actionStrikeBtn}
+              />
+            ))}
             {showUnarmed ? (
               <li
                 className={`rounded-xl border-2 border-dashed px-3 py-3 ${

@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import { canReloadWeapon, spareAmmoForWeapon } from '../../lib/ammoPools'
+import {
+  ammoCategoryForWeapon,
+  canReloadWeapon,
+  formatAmmoHudLine,
+} from '../../lib/ammoReserves'
 import { WeaponReloadControl } from './WeaponReloadControl'
 import type { Armor, InventoryItem, Weapon } from '../../types'
 
@@ -64,8 +68,8 @@ export function Armory() {
     readyWeaponIds,
     setReadyWeapon,
     reloadWeapon,
-    ammoPools,
-    addAmmoToPool,
+    ammoReserves,
+    addAmmoToReserve,
   } = useCharacter()
 
   const morphus = activeForm === 'morphus'
@@ -76,9 +80,7 @@ export function Armory() {
   const [customHumanSized, setCustomHumanSized] = useState(false)
   const [customMorphOk, setCustomMorphOk] = useState(true)
   const [ammoAddRounds, setAmmoAddRounds] = useState('12')
-  const [ammoPoolPick, setAmmoPoolPick] = useState('Handguns')
-
-  const ammoPoolRows = useMemo(() => Object.entries(ammoPools), [ammoPools])
+  const [ammoCategoryPick, setAmmoCategoryPick] = useState('9mm')
 
   const armors = useMemo(
     () => inventoryItems.filter(isArmor),
@@ -87,6 +89,20 @@ export function Armory() {
   const weapons = useMemo(
     () => inventoryItems.filter(isWeapon),
     [inventoryItems],
+  )
+
+  const activeAmmoCategories = useMemo(() => {
+    const keys = new Set<string>(Object.keys(ammoReserves))
+    for (const w of weapons) {
+      const cat = ammoCategoryForWeapon(w)
+      if (cat) keys.add(cat)
+    }
+    return [...keys].sort()
+  }, [ammoReserves, weapons])
+
+  const ammoReserveRows = useMemo(
+    () => activeAmmoCategories.map((cat) => [cat, ammoReserves[cat] ?? 0] as const),
+    [activeAmmoCategories, ammoReserves],
   )
 
   const shell = morphus
@@ -145,41 +161,38 @@ export function Armory() {
         }`}
       >
         <h3 className={`mb-2 text-[11px] font-black uppercase tracking-wider ${th}`}>
-          Ammo &amp; consumables
+          Ammo management
         </h3>
         <p className={`mb-3 text-[11px] leading-snug ${muted}`}>
-          Spare rounds are pooled by weapon category. Adding ammo here immediately enables reload on
-          the tactical HUD.
+          Shared reserves by caliber (e.g. 9mm). Adding rounds here refills the pool every ranged weapon
+          in that category uses when you reload on the tactical HUD.
         </p>
         <ul className="mb-3 space-y-2">
-          {ammoPoolRows.map(([key, pool]) => (
+          {ammoReserveRows.map(([cat, rounds]) => (
             <li
-              key={key}
+              key={cat}
               className={`flex flex-wrap items-center justify-between gap-2 rounded-md border px-2 py-1.5 ${
                 morphus ? 'border-violet-700 bg-slate-900/50' : 'border-blue-200 bg-white'
               }`}
             >
-              <div>
-                <p className={`text-xs font-bold ${th}`}>{key}</p>
-                <p className={`text-[10px] ${muted}`}>{pool.label}</p>
-              </div>
+              <p className={`text-xs font-bold ${th}`}>{cat}</p>
               <p className={`font-mono text-sm font-black tabular-nums ${th}`}>
-                {pool.spareRounds} rds
+                {rounds} rds
               </p>
             </li>
           ))}
         </ul>
         <div className="flex flex-wrap items-end gap-2">
           <label className={`block text-[10px] font-bold uppercase ${muted}`}>
-            Pool
+            Category
             <select
               className={`mt-0.5 min-w-[8rem] ${inputCls}`}
-              value={ammoPoolPick}
-              onChange={(e) => setAmmoPoolPick(e.target.value)}
+              value={ammoCategoryPick}
+              onChange={(e) => setAmmoCategoryPick(e.target.value)}
             >
-              {ammoPoolRows.map(([key]) => (
-                <option key={key} value={key}>
-                  {key}
+              {activeAmmoCategories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
                 </option>
               ))}
             </select>
@@ -196,18 +209,18 @@ export function Armory() {
           <button
             type="button"
             className={btn}
-            onClick={() => addAmmoToPool(ammoPoolPick, Number(ammoAddRounds))}
+            onClick={() => addAmmoToReserve(ammoCategoryPick, Number(ammoAddRounds))}
           >
             Add rounds
           </button>
-          {ammoPoolRows.map(([key]) => (
+          {ammoReserveRows.map(([cat]) => (
             <button
-              key={`mag-${key}`}
+              key={`quick-${cat}`}
               type="button"
               className={btnGhost}
-              onClick={() => addAmmoToPool(key, 12)}
+              onClick={() => addAmmoToReserve(cat, 12)}
             >
-              +1 mag ({key})
+              +12 ({cat})
             </button>
           ))}
         </div>
@@ -225,10 +238,16 @@ export function Armory() {
               key={t.label}
               type="button"
               className={btnGhost}
-              onClick={() => {
-                const { label: _l, ...rest } = t
-                addArmorToInventory(rest)
-              }}
+              onClick={() =>
+                addArmorToInventory({
+                  name: t.name,
+                  ar: t.ar,
+                  maxSdc: t.maxSdc,
+                  weightLbs: t.weightLbs,
+                  morphusCompatible: t.morphusCompatible,
+                  humanSized: t.humanSized,
+                })
+              }
             >
               + {t.label}
             </button>
@@ -432,8 +451,8 @@ export function Armory() {
                     </p>
                     {ranged && w.payload ? (
                       <p className={`mt-1 font-mono text-[11px] font-semibold ${muted}`}>
-                        Payload {w.payload.current} / {w.payload.max} · Reserve{' '}
-                        {spareAmmoForWeapon(w, ammoPools)}
+                        Mag {w.payload.current}/{w.payload.max} · {formatAmmoHudLine(w, ammoReserves)}
+                        {w.ammoCategory ? ` · ${w.ammoCategory}` : ''}
                       </p>
                     ) : null}
                   </div>
@@ -464,9 +483,9 @@ export function Armory() {
                   >
                     <WeaponReloadControl
                       weapon={w}
-                      ammoPools={ammoPools}
+                      ammoReserves={ammoReserves}
                       morphus={morphus}
-                      vibrant={canReloadWeapon(w, ammoPools)}
+                      vibrant={canReloadWeapon(w, ammoReserves)}
                       onReload={() => reloadWeapon(w.id)}
                       onReloadFailed={() => reloadWeapon(w.id)}
                     />

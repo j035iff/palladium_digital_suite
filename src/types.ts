@@ -205,6 +205,19 @@ export interface Armor extends Item {
 }
 
 /**
+ * Ranged fire mode — ammo cost, strike penalty, optional damage scale (combat_logic.md).
+ * {@link ammoCost} of -1 means empty the current magazine (Wild / full auto).
+ */
+export type FireMode = {
+  id: string
+  name: string
+  /** Rounds consumed from payload; -1 = entire current magazine. */
+  ammoCost: number
+  strikeModifier: number
+  damageMultiplier?: number
+}
+
+/**
  * Carried weapon — strike card + optional magazine (combat_logic.md, master_flow.md).
  */
 export interface Weapon extends Item {
@@ -217,10 +230,14 @@ export interface Weapon extends Item {
   damage: string
   /** Magazine / battery — ranged only; melee weapons omit. */
   payload?: { current: number; max: number }
+  /** Ranged firing modes; defaults applied in HUD when omitted. */
+  fireModes?: FireMode[]
   /**
-   * Spare ammo category for reload (defaults to {@link category}).
-   * Maps to {@link CharacterContext} `ammoPools` (Handguns, Rifles, …).
+   * Shared reserve pool key (e.g. "9mm", "12 Gauge", ".45 ACP").
+   * Maps to {@link CharacterContext} `ammoReserves`.
    */
+  ammoCategory?: string
+  /** @deprecated Use {@link ammoCategory}. */
   ammoPoolKey?: string
   /** If set and unlocked on the sheet, W.P. skill % feeds the strike engine. */
   linkedWpSkillId?: string
