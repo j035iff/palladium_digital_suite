@@ -1,6 +1,7 @@
 import type { Character } from '../../types'
 import {
   occPsychicGateBypassed,
+  occStartingOccSkillIds,
   occStartingRelatedSkillIds,
 } from '../../lib/occCatalogEngine'
 import {
@@ -23,7 +24,7 @@ export const nightbaneSorcererMock: Character = {
   psychicGateBypassed: occPsychicGateBypassed(sorcererOcc),
   occSkillSlotBudget: sorcererOcc.progression?.occSkillSlotBudget,
   occRelatedSkillSlotBudget: sorcererOcc.progression?.occRelatedSkillSlotBudget,
-  creationOccSkillIds: sorcererOcc.occSkillsCore.map((s) => s.skillId),
+  creationOccSkillIds: occStartingOccSkillIds(sorcererOcc),
   creationRelatedSkillIds: occStartingRelatedSkillIds(sorcererOcc),
   selectedAbilities: [
     'leathery_wings',

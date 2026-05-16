@@ -225,6 +225,17 @@ export type OccCoreSkillGrant = {
   basePercent?: number
 }
 
+/** Open-choice grant in the automatic core package (e.g. W.P. of choice, pick N from categories). */
+export type OccCoreSkillChoiceVoucher = {
+  choiceCount: number
+  bonusPercent: number
+  allowedCategories?: readonly string[]
+  allowedSkillIds?: readonly string[]
+  label?: string
+}
+
+export type OccCoreSkillEntry = OccCoreSkillGrant | OccCoreSkillChoiceVoucher
+
 export type OccCategoryAccessType = 'any' | 'none' | 'only' | 'except'
 
 export type OccCategoryAccessRule = {
@@ -232,6 +243,33 @@ export type OccCategoryAccessRule = {
   accessType: OccCategoryAccessType
   exceptions?: readonly string[]
   bonusPercent: number
+  /** Per-skill % that supersedes {@link OccCategoryAccessRule.bonusPercent} for listed ids. */
+  skillSpecificOverrides?: Readonly<Record<string, number>>
+}
+
+export type OccRelatedSkillsOverride = {
+  initialSlotsCount?: number
+  startingSkillIds?: readonly string[]
+  categoryRules?: readonly OccCategoryAccessRule[]
+}
+
+/** Flat additive bonus or dice/formula string (e.g. `4D6+25`, `1D4`). */
+export type OccStaticBonusValue = number | string
+
+export type OccNumericBonusMap = Readonly<Record<string, OccStaticBonusValue>>
+
+export type OccSpecialization = {
+  id: string
+  name: string
+  description: string
+  staticBonuses?: OccStaticBonuses
+  /** When set, replaces baseline {@link PalladiumOcc.startingEquipment} for this branch. */
+  startingEquipment?: OccStartingEquipment
+  /** Field-wise override of baseline {@link PalladiumOcc.finances}. */
+  finances?: OccFinances
+  /** When set, replaces baseline {@link PalladiumOcc.occSkillsCore} for this branch. */
+  occSkillsCore?: readonly OccCoreSkillEntry[]
+  occRelatedSkills?: OccRelatedSkillsOverride
 }
 
 export type OccRelatedSkills = {
@@ -262,7 +300,8 @@ export type OccHandToHandUpgradePath = {
 }
 
 export type OccHandToHandRules = {
-  defaultSkillId: string
+  /** Sheet/catalog hand-to-hand id, or null when no style is granted at creation. */
+  defaultSkillId: string | null
   upgradePaths: readonly OccHandToHandUpgradePath[]
 }
 
@@ -340,10 +379,10 @@ export type AccumulatedHandToHandBonuses = {
 }
 
 export type OccStaticBonuses = {
-  attributes?: Readonly<Record<string, number>>
-  vitals?: Readonly<Record<string, number>>
-  combat?: Readonly<Record<string, number>>
-  saves?: Readonly<Record<string, number>>
+  attributes?: OccNumericBonusMap
+  vitals?: OccNumericBonusMap
+  combat?: OccNumericBonusMap
+  saves?: OccNumericBonusMap
 }
 
 export type OccSupernaturalProgressionStep = {
@@ -434,12 +473,14 @@ export type PalladiumOcc = {
   attributeRequirements?: OccAttributeRequirements
   alignmentRestrictions?: OccAlignmentRestrictions
   raceRestrictions?: OccRaceRestrictions
-  occSkillsCore: readonly OccCoreSkillGrant[]
+  occSkillsCore: readonly OccCoreSkillEntry[]
   occRelatedSkills: OccRelatedSkills
   secondarySkills: OccSecondarySkills
   levelUpSkillChoices?: readonly OccLevelUpSkillChoice[]
   wpRules: OccWpRules
   handToHandRules: OccHandToHandRules
+  /** Sub-class branches; selection stored on {@link Character.occSpecializationId}. */
+  specializations?: readonly OccSpecialization[]
   staticBonuses?: OccStaticBonuses
   ppeEngine?: OccPpeEngine
   ispEngine?: OccIspEngine
@@ -533,6 +574,8 @@ export type Character = {
   occSkillSlotBudget?: number
   /** O.C.C. related skill pick budget before psychic tax (psychic_gate.md §2). */
   occRelatedSkillSlotBudget?: number
+  /** Selected {@link OccSpecialization.id} when the O.C.C. defines sub-class branches. */
+  occSpecializationId?: string | null
   /**
    * Creation / Step 4: picked supernatural ability ids (sn_abilities_selection.md).
    * Persisted via localStorage for refresh survival.

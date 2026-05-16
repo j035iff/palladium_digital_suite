@@ -9,6 +9,7 @@ import {
   accumulateHandToHandBonuses,
   createEmptyAccumulatedHandToHandBonuses,
 } from '../utils/combatCalculator'
+import { occGrantsDefaultHandToHand } from './occComposition'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import type { ActiveForm } from '../types'
 
@@ -57,7 +58,11 @@ export function resolveActiveHandToHandSkillId(
         return mapSheetSkillIdToHandToHandCatalogId(target)
       }
     }
-    if (unlocked.has(defaultSkillId) && hasCatalog(defaultSkillId)) {
+    if (
+      defaultSkillId != null &&
+      unlocked.has(defaultSkillId) &&
+      hasCatalog(defaultSkillId)
+    ) {
       return mapSheetSkillIdToHandToHandCatalogId(defaultSkillId)
     }
   }
@@ -85,6 +90,11 @@ export function resolveHandToHandCombatProfile(
     skillName: skill.name,
     accumulated: accumulateHandToHandBonuses(skill, character.level),
   }
+}
+
+export function occRequiresHandToHandPurchase(occ: PalladiumOcc | undefined): boolean {
+  if (!occ?.handToHandRules) return false
+  return !occGrantsDefaultHandToHand(occ)
 }
 
 export function getHandToHandSkillForCharacter(

@@ -14,6 +14,10 @@ import {
 } from '../../lib/skillPrerequisites'
 import { computeLiveBonuses } from '../../lib/characterDerived'
 import { isOccRelatedSkillAllowed } from '../../lib/occCreationDerivation'
+import {
+  formatOccCoreSkillEntry,
+  occGrantsDefaultHandToHand,
+} from '../../lib/occComposition'
 
 const CATEGORIES: Array<SkillCategory | 'All'> = [
   'All',
@@ -62,7 +66,7 @@ export function SkillEngine() {
     character,
     activeForm,
     activeFormState,
-    activeOcc,
+    effectiveOcc,
     occCreationDerived,
     supportsDualForm,
     skillSlotMultiplier,
@@ -140,7 +144,15 @@ export function SkillEngine() {
     if (!def || def.slotKind !== 'occ_related') return
     if (relatedSelected.includes(id)) return
     if (relatedSelected.length >= relatedCap) return
-    if (activeOcc && !isOccRelatedSkillAllowed(activeOcc, id, def.category)) {
+    if (
+      effectiveOcc &&
+      !isOccRelatedSkillAllowed(
+        effectiveOcc,
+        id,
+        def.category,
+        character.occSpecializationId,
+      )
+    ) {
       return
     }
     setRelatedSelected([...relatedSelected, id])
@@ -175,7 +187,7 @@ export function SkillEngine() {
         psychic_gate.md §2).
       </p>
 
-      {activeOcc?.occSkillsCore.length ? (
+      {effectiveOcc?.occSkillsCore.length ? (
         <div
           className={`mb-4 rounded-lg border px-3 py-2 text-xs ${
             morphus ? 'border-violet-800 bg-slate-900/60' : 'border-blue-200 bg-blue-50/80'
@@ -185,14 +197,27 @@ export function SkillEngine() {
             O.C.C. core skills (granted)
           </p>
           <p className="mt-1 font-mono opacity-90">
-            {activeOcc.occSkillsCore
-              .map((s) => `${s.skillId}${s.bonusPercent ? ` +${s.bonusPercent}%` : ''}`)
-              .join(' · ')}
+            {effectiveOcc.occSkillsCore.map((s) => formatOccCoreSkillEntry(s)).join(' · ')}
           </p>
         </div>
       ) : null}
 
-      {activeOcc?.occRelatedSkills.categoryRules.length ? (
+      {effectiveOcc && !occGrantsDefaultHandToHand(effectiveOcc) ? (
+        <div
+          className={`mb-4 rounded-lg border px-3 py-2 text-xs ${
+            morphus ? 'border-amber-700/80 bg-amber-950/40' : 'border-amber-400 bg-amber-50'
+          }`}
+        >
+          <p className="font-bold uppercase tracking-wide text-amber-700 dark:text-amber-300">
+            Hand-to-Hand required
+          </p>
+          <p className="mt-1 text-xs opacity-90">
+            No starting fighting style — buy hand-to-hand with related skill slots if desired.
+          </p>
+        </div>
+      ) : null}
+
+      {effectiveOcc?.occRelatedSkills.categoryRules.length ? (
         <div
           className={`mb-4 rounded-lg border px-3 py-2 text-[10px] ${
             morphus ? 'border-violet-800 text-violet-200' : 'border-slate-600'
@@ -202,9 +227,15 @@ export function SkillEngine() {
             Related skill category rules
           </p>
           <ul className="mt-1 list-inside list-disc space-y-0.5 font-mono">
-            {activeOcc.occRelatedSkills.categoryRules.map((r) => (
+            {effectiveOcc.occRelatedSkills.categoryRules.map((r) => (
               <li key={r.categoryName}>
-                {r.categoryName}: {r.accessType}
+                {r.categoryName}: {r.accessType} (+{r.bonusPercent}%)
+                {r.skillSpecificOverrides &&
+                Object.keys(r.skillSpecificOverrides).length > 0
+                  ? ` · overrides: ${Object.entries(r.skillSpecificOverrides)
+                      .map(([id, pct]) => `${id} +${pct}%`)
+                      .join(', ')}`
+                  : ''}
                 {r.exceptions?.length ? ` (exceptions: ${r.exceptions.join(', ')})` : ''}
               </li>
             ))}
@@ -290,8 +321,13 @@ export function SkillEngine() {
               const relFull = relatedSelected.length >= relatedCap
               const relatedBlocked =
                 s.slotKind === 'occ_related' &&
-                activeOcc != null &&
-                !isOccRelatedSkillAllowed(activeOcc, s.id, s.category)
+                effectiveOcc != null &&
+                !isOccRelatedSkillAllowed(
+                  effectiveOcc,
+                  s.id,
+                  s.category,
+                  character.occSpecializationId,
+                )
 
               return (
                 <li

@@ -3,6 +3,11 @@ import type {
   OccXpTableId,
   PalladiumOcc,
 } from '../types'
+import {
+  isOccCoreSkillGrant,
+  occCoreEntrySlotWeight,
+  resolveEffectivePalladiumOcc,
+} from './occComposition'
 
 const DEFAULT_WP_RULES = { coreWps: [] as string[], forbiddenWps: [] as string[] }
 const DEFAULT_H2H = { defaultSkillId: 'hand_to_hand_basic', upgradePaths: [] }
@@ -48,8 +53,18 @@ export function occSkillSlotPolicy(occ: PalladiumOcc): OccSkillSlotPolicy {
   return { kind: 'fixed', multiplier: 1 }
 }
 
-export function occStartingOccSkillIds(occ: PalladiumOcc): string[] {
-  return occ.occSkillsCore.map((s) => s.skillId)
+export function occStartingOccSkillIds(
+  occ: PalladiumOcc,
+  specializationId?: string | null,
+): string[] {
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  return effective.occSkillsCore
+    .filter(isOccCoreSkillGrant)
+    .map((s) => s.skillId)
+}
+
+export function occCoreSkillSlotWeight(occ: PalladiumOcc): number {
+  return occ.occSkillsCore.reduce((sum, entry) => sum + occCoreEntrySlotWeight(entry), 0)
 }
 
 export function occStartingRelatedSkillIds(occ: PalladiumOcc): string[] {

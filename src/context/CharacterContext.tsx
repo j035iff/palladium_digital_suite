@@ -115,6 +115,7 @@ import {
   applyOccStartingSkillPicks,
   patchCharacterCreationFromOcc,
 } from '../lib/occCreationDerivation'
+import { resolveEffectivePalladiumOcc } from '../lib/occComposition'
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 
@@ -202,7 +203,9 @@ type CharacterContextValue = {
   activeRace: Race | undefined
   /** Resolved O.C.C. catalog row (`palladiumOccs.json`). */
   activeOcc: PalladiumOcc | undefined
-  /** Creation budgets and restrictions derived from {@link activeOcc} engines. */
+  /** Baseline O.C.C. merged with {@link Character.occSpecializationId} when set. */
+  effectiveOcc: PalladiumOcc | undefined
+  /** Creation budgets and restrictions derived from {@link effectiveOcc} engines. */
   occCreationDerived: ReturnType<typeof deriveOccCreation> | null
   /**
    * Accumulated Hand-to-Hand progression for the active form (catalog + level ladder).
@@ -511,9 +514,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [character.occ.id],
   )
 
+  const effectiveOcc = useMemo(
+    () =>
+      activeOcc
+        ? resolveEffectivePalladiumOcc(activeOcc, character.occSpecializationId)
+        : undefined,
+    [activeOcc, character.occSpecializationId],
+  )
+
   const occCreationDerived = useMemo(
-    () => (activeOcc ? deriveOccCreation(activeOcc) : null),
-    [activeOcc],
+    () =>
+      activeOcc ? deriveOccCreation(activeOcc, character.occSpecializationId) : null,
+    [activeOcc, character.occSpecializationId],
   )
 
   const raceCanPickOcc = useMemo(
@@ -1314,6 +1326,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       supportsDualForm,
       activeRace,
       activeOcc,
+      effectiveOcc,
       occCreationDerived,
       handToHandCombatProfile,
       raceCanPickOcc,
@@ -1386,6 +1399,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       supportsDualForm,
       activeRace,
       activeOcc,
+      effectiveOcc,
       occCreationDerived,
       handToHandCombatProfile,
       raceCanPickOcc,

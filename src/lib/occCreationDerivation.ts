@@ -7,10 +7,12 @@ import type {
 import { featureBudgetCategory } from './featureEngine'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/registry'
 import {
+  occCoreSkillSlotWeight,
   occPsychicGateBypassed,
   occStartingOccSkillIds,
   occStartingRelatedSkillIds,
 } from './occCatalogEngine'
+import { resolveEffectivePalladiumOcc } from './occComposition'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -99,7 +101,7 @@ export function occStartingSpellLevelCap(occ: PalladiumOcc): number {
 export function occOccSkillSlotBudget(occ: PalladiumOcc): number {
   return (
     occ.progression?.occSkillSlotBudget ??
-    Math.max(occ.occSkillsCore.length + 4, 8)
+    Math.max(occCoreSkillSlotWeight(occ) + 4, 8)
   )
 }
 
@@ -154,7 +156,9 @@ export function isOccRelatedSkillAllowed(
   occ: PalladiumOcc,
   skillId: string,
   engineCategory?: string,
+  specializationId?: string | null,
 ): boolean {
+  occ = resolveEffectivePalladiumOcc(occ, specializationId)
   const rules = occ.occRelatedSkills.categoryRules
   if (!rules.length) return true
 
@@ -213,7 +217,11 @@ function buildSupernaturalSummary(occ: PalladiumOcc): string[] {
   return lines
 }
 
-export function deriveOccCreation(occ: PalladiumOcc): OccCreationDerived {
+export function deriveOccCreation(
+  occ: PalladiumOcc,
+  specializationId?: string | null,
+): OccCreationDerived {
+  occ = resolveEffectivePalladiumOcc(occ, specializationId)
   return {
     abilityBudget: occCreationAbilityBudget(occ),
     startingSpellLevelCap: occStartingSpellLevelCap(occ),
@@ -295,7 +303,7 @@ export function patchCharacterCreationFromOcc(
   prev: Character,
   occ: PalladiumOcc,
 ): Character {
-  const derived = deriveOccCreation(occ)
+  const derived = deriveOccCreation(occ, prev.occSpecializationId)
   return {
     ...prev,
     psychicGateBypassed: occPsychicGateBypassed(occ) || prev.psychicGateBypassed,
@@ -311,9 +319,11 @@ export function applyOccStartingSkillPicks(
   prev: Character,
   occ: PalladiumOcc,
 ): Character {
+  const specId = prev.occSpecializationId
+  const effective = resolveEffectivePalladiumOcc(occ, specId)
   return {
     ...prev,
-    creationOccSkillIds: occStartingOccSkillIds(occ),
-    creationRelatedSkillIds: occStartingRelatedSkillIds(occ),
+    creationOccSkillIds: occStartingOccSkillIds(occ, specId),
+    creationRelatedSkillIds: occStartingRelatedSkillIds(effective),
   }
 }

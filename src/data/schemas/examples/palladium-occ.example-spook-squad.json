@@ -1,0 +1,120 @@
+{
+  "$schema": "../palladium-occ.schema.json",
+  "id": "example_pandora_researcher_pattern",
+  "name": "Example: Pandora Project Researcher (Spook Squad patterns)",
+  "description": "Illustrates null defaultSkillId, core skill vouchers, category skillSpecificOverrides, and sub-class specializations.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Between the Shadows (example)",
+      "pageNumber": 34
+    }
+  ],
+  "occType": "scholar_civilian",
+  "tags": ["occult", "scientific"],
+  "occSkillsCore": [
+    { "skillId": "literacy", "bonusPercent": 0 },
+    {
+      "choiceCount": 2,
+      "bonusPercent": 20,
+      "allowedCategories": ["Medical", "Science", "Technical"],
+      "label": "Two Medical, Science, or Technical skills of choice"
+    }
+  ],
+  "occRelatedSkills": {
+    "initialSlotsCount": 8,
+    "categoryRules": [
+      {
+        "categoryName": "Technical",
+        "accessType": "any",
+        "bonusPercent": 5,
+        "skillSpecificOverrides": {
+          "language_american": 10,
+          "language_spanish": 10
+        }
+      },
+      {
+        "categoryName": "Medical",
+        "accessType": "only",
+        "exceptions": ["first_aid", "paramedic", "forensics"],
+        "bonusPercent": 0,
+        "skillSpecificOverrides": {
+          "first_aid": 5
+        }
+      }
+    ]
+  },
+  "secondarySkills": {
+    "initialSlotsCount": 4,
+    "forbiddenCategories": []
+  },
+  "wpRules": { "coreWps": [], "forbiddenWps": [] },
+  "handToHandRules": {
+    "defaultSkillId": null,
+    "upgradePaths": [
+      { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 }
+    ]
+  },
+  "specializations": [
+    {
+      "id": "team_epsilon",
+      "name": "Team Epsilon Trooper",
+      "description": "Branch with dice-based attribute and S.D.C. boosts.",
+      "staticBonuses": {
+        "attributes": { "ps": "1D4" },
+        "vitals": { "sdc": "4D6+25" }
+      },
+      "finances": {
+        "startingCashFormula": "3D6*200"
+      }
+    },
+    {
+      "id": "ada_assassination_specialist",
+      "name": "ADA Assassination Specialist",
+      "description": "Specialized rifle package and combat focus.",
+      "startingEquipment": {
+        "weapons": ["Sniper rifle package", "Silenced sidearm"],
+        "miscellaneous": ["Laser designator", "Monocular scope"]
+      },
+      "staticBonuses": {
+        "combat": { "strike": 2 },
+        "saves": { "save_poison": 1 }
+      }
+    },
+    {
+      "id": "ada_spy_specialist",
+      "name": "ADA Spy Specialist",
+      "description": "Replaces core package with spy combat training and covert gear.",
+      "startingEquipment": {
+        "miscellaneous": [
+          "Covert surveillance kit",
+          "Disguise materials",
+          "Encrypted communicator"
+        ]
+      },
+      "occSkillsCore": [
+        { "skillId": "hand_to_hand_basic", "bonusPercent": 0 },
+        { "skillId": "wp_pistol", "bonusPercent": 0 },
+        {
+          "choiceCount": 1,
+          "bonusPercent": 0,
+          "allowedSkillIds": ["wp_automatic_pistol", "wp_revolver", "wp_rifle"],
+          "label": "W.P. of choice"
+        }
+      ],
+      "staticBonuses": {
+        "combat": { "strike": 1, "parry": 1 },
+        "saves": { "save_poison": 2 }
+      }
+    }
+  ],
+  "progression": {
+    "xpTableId": "standard",
+    "characterOccCategory": "standard"
+  },
+  "baseStats": {
+    "hpDice": "1d6",
+    "sdcDice": "2d6"
+  }
+}

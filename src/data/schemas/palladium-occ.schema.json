@@ -74,11 +74,18 @@
     "raceRestrictions": {
       "$ref": "#/$defs/raceRestrictions"
     },
+    "specializations": {
+      "type": "array",
+      "description": "Optional sub-class branches (e.g. Team Epsilon vs Public Special Forces, ADA Spy vs Assassin). When the player selects one, engines merge override modules into the baseline row (see resolveEffectivePalladiumOcc in occComposition.ts).",
+      "items": {
+        "$ref": "#/$defs/occSpecialization"
+      }
+    },
     "occSkillsCore": {
       "type": "array",
-      "description": "O.C.C. skills granted automatically at creation.",
+      "description": "O.C.C. skills granted automatically at creation — fixed skillId grants and/or open-choice vouchers (W.P. of choice, pick N from categories).",
       "items": {
-        "$ref": "#/$defs/occCoreSkillGrant"
+        "$ref": "#/$defs/occCoreSkillEntry"
       }
     },
     "occRelatedSkills": {
@@ -231,6 +238,55 @@
         }
       }
     },
+    "occCoreSkillChoiceVoucher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["choiceCount", "bonusPercent"],
+      "properties": {
+        "choiceCount": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many skills the player must select from the allowed pool (counts toward O.C.C. core slot budget)."
+        },
+        "bonusPercent": {
+          "type": "integer",
+          "description": "Additive % applied to each skill resolved from this voucher."
+        },
+        "allowedCategories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Restrict picks to skills whose palladiumSkills categories[] includes any listed category."
+        },
+        "allowedSkillIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "description": "Restrict picks to an explicit allow-list (e.g. weapon proficiency ids for W.P. of choice)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing summary for creation UI (e.g. \"W.P. of choice\", \"Two Medical, Science, or Technical skills\")."
+        }
+      },
+      "anyOf": [
+        { "required": ["allowedCategories"] },
+        { "required": ["allowedSkillIds"] }
+      ]
+    },
+    "occCoreSkillEntry": {
+      "oneOf": [
+        { "$ref": "#/$defs/occCoreSkillGrant" },
+        { "$ref": "#/$defs/occCoreSkillChoiceVoucher" }
+      ],
+      "description": "Either a fixed catalog skill grant or an open-choice voucher in the automatic core package."
+    },
     "occCategoryAccessRule": {
       "type": "object",
       "additionalProperties": false,
@@ -258,6 +314,71 @@
         "bonusPercent": {
           "type": "integer",
           "description": "O.C.C. related-skill % bonus when picking from this category (if applicable)."
+        },
+        "skillSpecificOverrides": {
+          "type": "object",
+          "description": "Per-skill % bonuses that supersede bonusPercent for listed skill ids (e.g. Languages +10% inside Technical +5%).",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "occRelatedSkillsOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Partial related-skill block merged when a specialization is active.",
+      "properties": {
+        "initialSlotsCount": { "type": "integer", "minimum": 0 },
+        "startingSkillIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        },
+        "categoryRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occCategoryAccessRule" }
+        }
+      }
+    },
+    "occSpecialization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable branch slug (e.g. ada_spy_specialist, team_epsilon)."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "staticBonuses": {
+          "$ref": "#/$defs/staticBonuses",
+          "description": "Merged into baseline staticBonuses: numbers add per key; dice/formula strings on a key replace any prior value for that key."
+        },
+        "startingEquipment": {
+          "$ref": "#/$defs/startingEquipment",
+          "description": "When present, **replaces** baseline startingEquipment for this branch (e.g. ADA rifle package vs spy surveillance kit)."
+        },
+        "finances": {
+          "$ref": "#/$defs/finances",
+          "description": "Field-wise override of baseline finances (e.g. different starting cash formula per branch)."
+        },
+        "occSkillsCore": {
+          "type": "array",
+          "description": "When present, **replaces** baseline occSkillsCore for this branch (forced packages like ADA specialists).",
+          "items": { "$ref": "#/$defs/occCoreSkillEntry" }
+        },
+        "occRelatedSkills": {
+          "$ref": "#/$defs/occRelatedSkillsOverride",
+          "description": "Merged into baseline related skills (category rules override by categoryName)."
         }
       }
     },
@@ -368,8 +489,14 @@
       "required": ["defaultSkillId", "upgradePaths"],
       "properties": {
         "defaultSkillId": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$"
+          "description": "Starting hand-to-hand catalog/sheet skill id, or **null** when the O.C.C. grants no fighting style (player must buy via related/elective slots).",
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            { "type": "null" }
+          ]
         },
         "upgradePaths": {
           "type": "array",
@@ -379,11 +506,22 @@
         }
       }
     },
+    "staticBonusValue": {
+      "description": "Flat integer bonus or dice/formula string (e.g. 20, \"1D4\", \"4D6+25\") parsed at chargen.",
+      "oneOf": [
+        { "type": "number" },
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice notation or expression — not summed with other values; replaces the key when merging specializations."
+        }
+      ]
+    },
     "numericBonusMap": {
       "type": "object",
-      "description": "Open-ended numeric modifiers (attributes, vitals, combat, saves).",
+      "description": "Open-ended modifiers (attributes, vitals, combat, saves). Values are numbers (additive on merge) or formula strings (replace on merge).",
       "additionalProperties": {
-        "type": "number"
+        "$ref": "#/$defs/staticBonusValue"
       }
     },
     "staticBonuses": {
