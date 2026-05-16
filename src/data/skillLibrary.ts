@@ -14,8 +14,8 @@ export type SkillPrerequisite =
 
 /**
  * Sheet-facing skill row (skill equation + creation metadata). Narrow engine subset of the
- * Palladium skill JSON Schema in `schemas/palladium-skill.schema.json` (see
- * `src/lib/palladiumSchemaPaths.ts`). Full catalog data: `src/data/library/palladiumSkills.json`
+ * Palladium skill JSON Schema in `src/data/schemas/palladium-skill.schema.json` (see
+ * `src/lib/palladiumSchemaPaths.ts`). Full catalog: `src/data/content/palladiumSkills.json`
  * (`PALLADIUM_SKILL_CATALOG` / `getPalladiumSkillCatalogEntryById` in `src/data/library/registry.ts`).
  */
 export type EngineSkillDef = SkillEquationSkill & {
@@ -244,8 +244,8 @@ const WP_LOOKUP_ALIASES: Record<string, string> = (() => {
 /**
  * Map `wpCategory` (e.g. "W.P. Sword") plus optional `linkedWpSkillId` to a Weapon skill row id.
  * Full W.P. ladder / strike rules belong in JSON validated by
- * `schemas/palladium-weapon-proficiency.schema.json` (`PALLADIUM_WEAPON_PROFICIENCY_SCHEMA_ID`).
- * Shared modern ladders use `schemas/standard-modern-weapon-progression.schema.json`
+ * `src/data/schemas/palladium-weapon-proficiency.schema.json` (`PALLADIUM_WEAPON_PROFICIENCY_SCHEMA_ID`).
+ * Shared modern ladders use `src/data/schemas/standard-modern-weapon-progression.schema.json`
  * (`STANDARD_MODERN_WEAPON_PROGRESSION_SCHEMA_ID`) when `usesStandardModernProgression` is true.
  */
 export function resolveWeaponProficiencySkillId(

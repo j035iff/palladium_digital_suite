@@ -1,28 +1,31 @@
 import type { Feature } from '../../types'
-import type { LibraryOCC, Race } from './types'
+import type { PalladiumOcc, Race } from '../../types'
 import { POWER_FEATURES, TRAIT_FEATURES } from './features'
 import { loadRacesFromJson } from './racesLoader'
-import { NIGHTBANE_SORCERER_OCC } from './classes/nightbaneSorcerer'
-import { LEGACY_OCCS } from './classes/legacyOccs'
 import {
   BORG_XP_TABLE,
   PSYCHIC_XP_TABLE,
   STANDARD_XP_TABLE,
 } from '../xpTables'
 import type { XPTable } from '../../types'
+import { occXpTableId } from '../../lib/occCatalogEngine'
+import {
+  PALLADIUM_OCC_CATALOG,
+  getPalladiumOccById,
+} from './occCatalogLoader'
 
 export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TRAIT_FEATURES]
 export const RACE_REGISTRY: Race[] = loadRacesFromJson()
-export const OCC_REGISTRY: LibraryOCC[] = [...LEGACY_OCCS, NIGHTBANE_SORCERER_OCC]
+export const OCC_REGISTRY: readonly PalladiumOcc[] = PALLADIUM_OCC_CATALOG
 
-const XP_BY_ID: Record<LibraryOCC['xpTableId'], XPTable> = {
+const XP_BY_ID: Record<'standard' | 'psychic' | 'borg', XPTable> = {
   standard: STANDARD_XP_TABLE,
   psychic: PSYCHIC_XP_TABLE,
   borg: BORG_XP_TABLE,
 }
 
-export function resolveOccXpTable(def: LibraryOCC): XPTable {
-  return XP_BY_ID[def.xpTableId]
+export function resolveOccXpTable(def: PalladiumOcc): XPTable {
+  return XP_BY_ID[occXpTableId(def)]
 }
 
 export function getFeatureById(id: string): Feature | undefined {
@@ -33,8 +36,8 @@ export function getRaceById(id: string): Race | undefined {
   return RACE_REGISTRY.find((r) => r.id === id)
 }
 
-export function getLibraryOccById(id: string): LibraryOCC | undefined {
-  return OCC_REGISTRY.find((o) => o.id === id)
+export function getLibraryOccById(id: string): PalladiumOcc | undefined {
+  return getPalladiumOccById(id)
 }
 
 export type {
@@ -50,6 +53,13 @@ export {
   getPalladiumSkillCatalogEntryById,
   listPalladiumSkillsForGameSystem,
 } from './skillsCatalogLoader'
+
+export {
+  PALLADIUM_OCC_CATALOG,
+  getPalladiumOccById,
+  listPalladiumOccsByType,
+  listPalladiumOccsForGameSystem,
+} from './occCatalogLoader'
 
 export {
   WEAPON_PROFICIENCY_CATALOG,

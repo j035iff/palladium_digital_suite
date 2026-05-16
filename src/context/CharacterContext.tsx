@@ -91,6 +91,18 @@ import {
   characterHasDualForms,
   DEFAULT_RACE_ID,
 } from '../lib/raceFormPolicy'
+import {
+  isOccAllowedForRace,
+  mapRaceStrengthToPsTier,
+  raceCanPickOcc as raceAllowsOccPick,
+  raceLineageFromDefinition,
+  raceStrengthCategoryLabel,
+} from '../lib/raceEngine'
+import {
+  occPsychicGateBypassed,
+  occSkillSlotPolicy,
+} from '../lib/occCatalogEngine'
+import type { Race } from '../types'
 
 /** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
 function syncRaceOccFacadeSdc(prev: Character): Character {
@@ -172,7 +184,13 @@ type CharacterContextValue = {
   setCreationSkillPicks: (occ: string[], related: string[]) => void
   /** Step 0 — O.C.C. package: fixed XP table, psychic category, and starting skill ids. */
   setSelectedOcc: (occId: string) => void
-  /** Library race id (`races.json`); drives conditional base S.D.C. with O.C.C. tags. */
+  /** Resolved library race row for the active character. */
+  activeRace: Race | undefined
+  /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */
+  raceCanPickOcc: boolean
+  /** Display label for the race strength scale (sheet / Attribute Forge). */
+  raceStrengthLabel: string
+  /** Library race id; drives conditional base S.D.C. with O.C.C. tags. */
   setRaceId: (raceId: string | null) => void
   /**
    * Step 5 — apply rolled H.P./S.D.C./P.P.E./I.S.P. in one atomic update (Spawn).
@@ -446,6 +464,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [character],
   )
 
+  const activeRace = useMemo(
+    () => getRaceById(character.raceId ?? DEFAULT_RACE_ID),
+    [character.raceId],
+  )
+
+  const raceCanPickOcc = useMemo(
+    () => raceAllowsOccPick(activeRace),
+    [activeRace],
+  )
+
+  const raceStrengthLabel = useMemo(
+    () =>
+      activeRace
+        ? raceStrengthCategoryLabel(activeRace.strengthCategory)
+        : raceStrengthCategoryLabel('standard'),
+    [activeRace],
+  )
+
   const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'facade'
 
   const activeFormState = useMemo(
@@ -531,7 +567,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const skillSlotMultiplier = useMemo(() => {
     const lib = getLibraryOccById(character.occ.id)
-    if (lib) return resolveSkillSlotMultiplier(lib.skillSlotPolicy, psychicTier)
+    if (lib) return resolveSkillSlotMultiplier(occSkillSlotPolicy(lib), psychicTier)
     return skillSlotMultiplierForTier(psychicTier)
   }, [character.occ.id, psychicTier])
 
@@ -994,48 +1030,73 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const def = getOccById(occId)
       const lib = getLibraryOccById(occId)
       if (!def || !lib) return
+      const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+      if (!raceAllowsOccPick(race)) return
+      if (!isOccAllowedForRace(race, lib)) return
       const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
       setPsychicTierState(tier)
       setCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
         const branch = getFormState(prev, form)
         const nextBranch =
-          prev.psychicGateBypassed === true || lib.psychicGateBypassed
+          prev.psychicGateBypassed === true || occPsychicGateBypassed(lib)
             ? branch
             : applyPsychicTierToFormState(branch, tier)
         return syncRaceOccFacadeSdc({
           ...prev,
           [form]: nextBranch,
           occ: snapshotOccForCharacter(def),
-          psychicGateBypassed: lib.psychicGateBypassed ?? prev.psychicGateBypassed,
-          occSkillSlotBudget: lib.occSkillSlotBudget ?? prev.occSkillSlotBudget,
+          psychicGateBypassed:
+            occPsychicGateBypassed(lib) || (prev.psychicGateBypassed ?? false),
+          occSkillSlotBudget:
+            lib.progression?.occSkillSlotBudget ?? prev.occSkillSlotBudget,
           occRelatedSkillSlotBudget:
-            lib.occRelatedSkillSlotBudget ?? prev.occRelatedSkillSlotBudget,
+            lib.progression?.occRelatedSkillSlotBudget ??
+            prev.occRelatedSkillSlotBudget,
           creationAbilityBudget:
-            lib.creationAbilityBudget ?? prev.creationAbilityBudget,
+            lib.progression?.creationAbilityBudget ?? prev.creationAbilityBudget,
           startingSpellLevelCap:
-            lib.startingSpellLevelCap ?? prev.startingSpellLevelCap,
+            lib.progression?.startingSpellLevelCap ?? prev.startingSpellLevelCap,
           creationOccSkillIds: [...def.startingOccSkillIds],
           creationRelatedSkillIds: [...def.startingRelatedSkillIds],
         })
       })
     },
-    [activeForm],
+    [activeForm, character.raceId],
   )
 
   const setRaceId = useCallback((raceId: string | null) => {
     const id = raceId ?? DEFAULT_RACE_ID
     const race = getRaceById(id)
-    const lineage: Character['lineage'] =
-      race?.lineage === 'nightbane' ? 'nightbane' : 'megaversal'
+    const lineage = raceLineageFromDefinition(race)
+    const psTier = race ? mapRaceStrengthToPsTier(race.strengthCategory) : undefined
+    const psionicNone = race?.psionics.capabilityType === 'none'
     setActiveForm('facade')
-    setCharacter((prev) =>
-      syncRaceOccFacadeSdc({
+    setCharacter((prev) => {
+      const withRace = syncRaceOccFacadeSdc({
         ...prev,
         raceId: id,
         lineage,
-      }),
-    )
+        psychicGateBypassed:
+          psionicNone === true ? true : prev.psychicGateBypassed,
+      })
+      if (!psTier) return withRace
+      const applyTier = (attrs: Character['facade']['attributes']) => ({
+        ...attrs,
+        ps: { ...attrs.ps, tier: psTier },
+      })
+      return {
+        ...withRace,
+        facade: {
+          ...withRace.facade,
+          attributes: applyTier(withRace.facade.attributes),
+        },
+        morphus: {
+          ...withRace.morphus,
+          attributes: applyTier(withRace.morphus.attributes),
+        },
+      }
+    })
   }, [])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
@@ -1189,6 +1250,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       character,
       activeForm: sheetActiveForm,
       supportsDualForm,
+      activeRace,
+      raceCanPickOcc,
+      raceStrengthLabel,
       activeFormState,
       activeStats,
       sheetCombatDerived,
@@ -1255,6 +1319,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       character,
       sheetActiveForm,
       supportsDualForm,
+      activeRace,
+      raceCanPickOcc,
+      raceStrengthLabel,
       activeFormState,
       activeStats,
       sheetCombatDerived,

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "city_rat",
+    "name": "City Rat",
+    "description": "Streetwise survivor — electronics, locks, and urban grit.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 80 }
+    ],
+    "occType": "scholar_civilian",
+    "tags": ["civilian"],
+    "occSkillsCore": [
+      { "skillId": "literacy", "bonusPercent": 0 },
+      { "skillId": "math_basic", "bonusPercent": 0 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 6,
+      "startingSkillIds": ["electronics", "pick_locks"],
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 4,
+      "forbiddenCategories": []
+    },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": []
+    },
+    "progression": {
+      "xpTableId": "standard",
+      "characterOccCategory": "standard",
+      "relatedSkillSlotPolicy": { "kind": "fixed", "multiplier": 1 }
+    },
+    "baseStats": {
+      "hpDice": "1d6",
+      "sdcDice": "2d6",
+      "ppeDice": "—",
+      "ispDice": "—"
+    },
+    "finances": { "startingCashFormula": "3D6*100" }
+  },
+  {
+    "id": "borg",
+    "name": "Borg",
+    "description": "Cybernetically rebuilt soldier — military training and heavy systems.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 82 }
+    ],
+    "occType": "man_of_arms",
+    "tags": ["military"],
+    "occSkillsCore": [
+      { "skillId": "literacy", "bonusPercent": 0 },
+      { "skillId": "math_basic", "bonusPercent": 0 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 6,
+      "startingSkillIds": ["electronics", "mech_eng"],
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 3,
+      "forbiddenCategories": ["Magic"]
+    },
+    "wpRules": { "coreWps": ["wp_pistol"], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 }
+      ]
+    },
+    "progression": {
+      "xpTableId": "borg",
+      "characterOccCategory": "standard",
+      "relatedSkillSlotPolicy": { "kind": "fixed", "multiplier": 1 }
+    },
+    "baseStats": {
+      "hpDice": "1d6",
+      "sdcDice": "2d6",
+      "ppeDice": "—",
+      "ispDice": "—"
+    }
+  },
+  {
+    "id": "mind_melter",
+    "name": "Mind Melter",
+    "description": "Master psychic — I.S.P.-driven powers with taxed related skill picks on Major tier.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 90 }
+    ],
+    "occType": "psychic",
+    "tags": ["detective"],
+    "occSkillsCore": [{ "skillId": "literacy", "bonusPercent": 0 }],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "startingSkillIds": ["electronics"],
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 4,
+      "forbiddenCategories": []
+    },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": []
+    },
+    "ispEngine": {
+      "baseFormula": "1D6+ME",
+      "perLevelFormula": "1D6",
+      "savingThrowClass": "major",
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 4, "categoryRestrictions": [] },
+        { "level": 3, "selectionsGained": 2, "categoryRestrictions": ["Super Psionics Locked"] }
+      ]
+    },
+    "progression": {
+      "xpTableId": "psychic",
+      "characterOccCategory": "psychic",
+      "relatedSkillSlotPolicy": {
+        "kind": "psychic_tier",
+        "majorMultiplier": 0.5,
+        "defaultMultiplier": 1
+      }
+    },
+    "baseStats": {
+      "hpDice": "1d6",
+      "sdcDice": "2d6",
+      "ppeDice": "2D6+6",
+      "ispDice": "1D6+ME"
+    }
+  },
+  {
+    "id": "nightbane_sorcerer",
+    "name": "Nightbane Sorcerer",
+    "description": "Facade spellcaster — P.P.E. magic, talents, and morphus-adjacent picks.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+    ],
+    "occType": "magic_user",
+    "tags": ["occult"],
+    "occSkillsCore": [
+      { "skillId": "literacy", "bonusPercent": 0 },
+      { "skillId": "math_basic", "bonusPercent": 0 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "startingSkillIds": ["electronics", "hand_to_hand_basic"],
+      "categoryRules": [
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "exceptions": [],
+          "bonusPercent": 5
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 4,
+      "forbiddenCategories": []
+    },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": []
+    },
+    "ppeEngine": {
+      "baseFormula": "2D6+12",
+      "perLevelFormula": "2D6",
+      "spellStrengthProgression": { "1": 4, "2": 5, "3": 6, "4": 7 },
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 4,
+          "categoryRestrictions": ["Level 1 Spells Only"]
+        },
+        { "level": 2, "selectionsGained": 2, "categoryRestrictions": [] }
+      ]
+    },
+    "customAbilityEngines": [
+      {
+        "engineId": "nightbane_talents",
+        "label": "Nightbane Talents",
+        "progressionRoadmap": [
+          { "level": 1, "selectionsGained": 2, "categoryRestrictions": [] },
+          { "level": 3, "selectionsGained": 1, "categoryRestrictions": [] }
+        ]
+      }
+    ],
+    "progression": {
+      "xpTableId": "standard",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true,
+      "relatedSkillSlotPolicy": {
+        "kind": "psychic_tier",
+        "majorMultiplier": 0.5,
+        "defaultMultiplier": 1
+      },
+      "occSkillSlotBudget": 8,
+      "occRelatedSkillSlotBudget": 10,
+      "creationAbilityBudget": {
+        "spellSlots": 8,
+        "psionicSlots": 6,
+        "talentSlots": 4
+      },
+      "startingSpellLevelCap": 4
+    },
+    "baseStats": {
+      "hpDice": "2d6",
+      "sdcDice": "3d6",
+      "ppeDice": "2d6+12",
+      "ispDice": "1d6+ME"
+    }
+  }
+]

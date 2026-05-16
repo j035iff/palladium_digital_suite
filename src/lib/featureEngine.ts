@@ -1,5 +1,7 @@
 import type { ActiveForm, Character, Feature, FeatureModifiers } from '../types'
-import { getFeatureById } from '../data/library/registry'
+import { getFeatureById, getRaceById } from '../data/library/registry'
+import { DEFAULT_RACE_ID } from './raceFormPolicy'
+import { racePassiveModifiers } from './raceEngine'
 import { getSkillById } from '../data/skillLibrary'
 
 export function morphusRequired(feature: Feature): boolean {
@@ -51,7 +53,10 @@ export function aggregateAllPassiveModifiers(
 ): FeatureModifiers {
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
   const sk = aggregateCreationSkillModifiers(character)
-  const out: FeatureModifiers = { ...a }
+  const race = racePassiveModifiers(
+    getRaceById(character.raceId ?? DEFAULT_RACE_ID),
+  )
+  const out: FeatureModifiers = { ...a, ...race }
   for (const [k, v] of Object.entries(sk)) {
     out[k] = (out[k] ?? 0) + v
   }

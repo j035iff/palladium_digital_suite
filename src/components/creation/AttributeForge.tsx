@@ -64,7 +64,16 @@ function attrUpdatePath(attr: ForgeAttrKey): string {
 }
 
 export function AttributeForge() {
-  const { activeForm, activeFormState, updateAttribute, supportsDualForm } = useCharacter()
+  const {
+    activeForm,
+    activeFormState,
+    activeRace,
+    raceStrengthLabel,
+    updateAttribute,
+    supportsDualForm,
+  } = useCharacter()
+  const race = activeRace
+  const attrFormulas = race?.attributes
   const morphus = supportsDualForm && activeForm === 'morphus'
 
   const [rolls, setRolls] = useState<ForgeRoll[]>(initialRolls)
@@ -174,11 +183,23 @@ export function AttributeForge() {
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
-        Pool and assign eight 3d6 rolls (srs.md). Totals of 16–18 unlock an optional bonus
-        +1d6 (Pillar 7 — tap only when you want the extra die). Assignments sync to the
-        active form and recompute human-scale H.P./S.D.C. caps when P.E. or P.S. change
-        (attribute_and_stat.md).
+        Pool and assign eight rolls per your race template (srs.md). Totals of 16–18 unlock
+        an optional bonus +1d6 (Pillar 7). Assignments sync to the active form and recompute
+        H.P./S.D.C. caps when P.E. or P.S. change (attribute_and_stat.md).
       </p>
+      {race ? (
+        <p
+          className="mb-4 max-w-3xl font-mono text-xs leading-snug opacity-90"
+          style={{ color: morphus ? '#a5b4fc' : '#475569' }}
+        >
+          <span className="font-bold uppercase tracking-wide">Race dice — </span>
+          I.Q.{attrFormulas?.iq ?? '3D6'} M.E.{attrFormulas?.me ?? '3D6'} M.A.
+          {attrFormulas?.ma ?? '3D6'} P.S.{attrFormulas?.ps ?? '3D6'} P.P.
+          {attrFormulas?.pp ?? '3D6'} P.E.{attrFormulas?.pe ?? '3D6'} P.B.
+          {attrFormulas?.pb ?? '3D6'} Spd.{attrFormulas?.spd ?? '3D6'}
+          <span className="ml-2 font-sans font-semibold">· {raceStrengthLabel}</span>
+        </p>
+      ) : null}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className={`space-y-4 rounded-lg border p-4 lg:col-span-2 ${panelStyle}`}>

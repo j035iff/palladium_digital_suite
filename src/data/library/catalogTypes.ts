@@ -1,15 +1,12 @@
 /**
- * Structural types for JSON catalogs under `src/data/library/*.json`.
- * Authoring should conform to `schemas/palladium-skill.schema.json` and related schemas.
+ * Structural types for JSON catalogs under `src/data/content/*.json`.
+ * Authoring should conform to `src/data/schemas/*.schema.json`.
  */
 
-export type PalladiumSourceRef = {
-  gameSystem: string
-  reference: string
-  pageNumber: number
-}
+export type { PalladiumSourceRef } from '../../types'
+import type { PalladiumSourceRef } from '../../types'
 
-/** Row from `palladiumSkills.json` — see `schemas/palladium-skill.schema.json`. */
+/** Row from `content/palladiumSkills.json` — see `schemas/palladium-skill.schema.json`. */
 export type PalladiumSkillCatalogEntry = {
   id: string
   name: string
@@ -25,6 +22,9 @@ export type PalladiumSkillCatalogEntry = {
   allowedAsSecondarySkill?: boolean
   requiresSpecialization?: boolean
 }
+
+/** Row from `content/palladiumOccs.json` — see `schemas/palladium-occ.schema.json`. */
+export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 
 /** Row from `weapon_proficiencies.json` (ancient or modern W.P.). */
 export type WeaponProficiencyCatalogEntry = {

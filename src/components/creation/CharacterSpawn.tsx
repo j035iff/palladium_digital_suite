@@ -67,10 +67,10 @@ export function CharacterSpawn({
   const rollFresh = useCallback((): SpawnVitalityRolls => {
     const f = character.facade.attributes
     const m = character.morphus.attributes
-    const ppe = rollPpeMaximum(f.me, f.pe)
     const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
     const occLib = getLibraryOccById(character.occ.id)
-    const facadeHp = rollFacadeHpMaximum(f.pe)
+    const ppe = rollPpeMaximum(f.me, f.pe, race)
+    const facadeHp = rollFacadeHpMaximum(f.pe, race)
     const facadeSdc = rollFacadeSdcMaximum(f, { race, occ: occLib })
 
     if (supportsDualForm) {

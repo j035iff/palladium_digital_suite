@@ -1,5 +1,7 @@
 import type { CharacterAttributes } from '../types'
-import type { LibraryOCC, Race } from '../data/library/types'
+import type { PalladiumOcc } from '../types'
+import type { Race } from '../types'
+import { rollRaceHpMaximum, rollRaceStartingPpe, getRacePpeNotation } from './raceEngine'
 import { deriveSdcHpMaximums } from './derivedVitality'
 import { rollNdS, rollDiceNotation } from './diceNotation'
 import { calculateBaseSdc } from '../utils/vitalsCalculator'
@@ -18,8 +20,8 @@ export type SpawnVitalityRolls = {
  * Facade H.P. maximum at Spawn — P.E. anchors the body (attribute_and_stat.md §1, §4).
  * Formula: P.E. + 1d6, floor 4.
  */
-export function rollFacadeHpMaximum(pe: number): number {
-  return Math.max(4, pe + rollNdS(1, 6))
+export function rollFacadeHpMaximum(pe: number, race?: Race): number {
+  return rollRaceHpMaximum(pe, race?.vitals?.hpFormula)
 }
 
 /**
@@ -27,7 +29,7 @@ export function rollFacadeHpMaximum(pe: number): number {
  */
 export function rollFacadeSdcMaximum(
   attrs: CharacterAttributes,
-  opts?: { race?: Race; occ?: LibraryOCC },
+  opts?: { race?: Race; occ?: PalladiumOcc },
 ): number {
   if (opts?.race?.vitals?.sdc != null) {
     const formula = calculateBaseSdc(opts.race, opts.occ)
@@ -40,8 +42,8 @@ export function rollFacadeSdcMaximum(
 /**
  * P.P.E. pool maximum — mental + physical endurance blend (sheet placeholder until RCC tables).
  */
-export function rollPpeMaximum(me: number, pe: number): number {
-  return Math.max(8, me + pe + rollNdS(2, 6))
+export function rollPpeMaximum(me: number, pe: number, race?: Race): number {
+  return rollRaceStartingPpe(me, pe, getRacePpeNotation(race))
 }
 
 /**

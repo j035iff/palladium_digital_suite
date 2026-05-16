@@ -1,9 +1,7 @@
-import type { Race } from './types'
-import racesBundle from './races.json'
+import type { Race } from '../../types'
+import palladiumRaces from '../content/palladiumRaces.json'
 
-type RacesFile = { races: unknown[] }
-
+/** Race / R.C.C. catalog — top-level array in `src/data/content/palladiumRaces.json`. */
 export function loadRacesFromJson(): Race[] {
-  const data = racesBundle as RacesFile
-  return Array.isArray(data.races) ? (data.races as Race[]) : []
+  return Array.isArray(palladiumRaces) ? (palladiumRaces as Race[]) : []
 }

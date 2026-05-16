@@ -101,6 +101,285 @@ export type Feature = {
   requirement?: FeatureRequirement
 }
 
+/**
+ * Book + page citation for library catalog rows (skills, races, weapon proficiencies).
+ * Matches `sources[]` on palladium-skill.schema.json and palladium-race.schema.json.
+ */
+export type PalladiumSourceRef = {
+  gameSystem: string
+  reference: string
+  pageNumber: number
+}
+
+/** Physical power scale on a race / R.C.C. row (`palladium-race.schema.json`). */
+export type RaceStrengthCategory =
+  | 'standard'
+  | 'extraordinary'
+  | 'superhuman'
+  | 'supernatural'
+
+/** All eight attribute roll formulas at creation (e.g. "3D6"). */
+export type RaceAttributeFormulas = Record<
+  'iq' | 'me' | 'ma' | 'ps' | 'pp' | 'pe' | 'pb' | 'spd',
+  string
+>
+
+export type RaceSdcConditionalConfig = {
+  strategy: 'conditional_by_occ_tags'
+  defaultFormula: string
+  conditionalOverrides: readonly { tags: readonly string[]; formula: string }[]
+}
+
+/** Flat dice string or O.C.C.-tag conditional S.D.C. block. */
+export type RaceSdcDefinition = string | RaceSdcConditionalConfig
+
+export type RaceVitals = {
+  hpFormula: string
+  sdc?: RaceSdcDefinition
+  /** Starting racial P.P.E. (dice notation or fixed value). */
+  averageStandardPpe?: string | number
+  /** @deprecated Use {@link averageStandardPpe}. */
+  basePpe?: string | number
+}
+
+export type RacePsionicCapability = 'standard' | 'none' | 'innate'
+
+export type RacePsionics = {
+  capabilityType: RacePsionicCapability
+  naturalIspFormula?: string
+}
+
+export type RaceOccLimitations = {
+  forbiddenCategories?: readonly string[]
+  forbiddenOccIds?: readonly string[]
+  allowedOccIds?: readonly string[]
+}
+
+export type RaceInnateSkillGrant = {
+  skillId: string
+  basePercent?: number
+  bonusPercent?: number
+}
+
+export type RaceInnateBonuses = {
+  modifiers?: FeatureModifiers
+  activation?: FeatureActivation
+  metadata?: FeatureMetadata
+}
+
+export type RaceDemographicRange = {
+  min: number
+  max: number
+  unit: string
+}
+
+export type RaceDemographics = {
+  averageHeight?: string | RaceDemographicRange
+  averageWeight?: string | RaceDemographicRange
+  averageLifespan?: string
+  alignmentTendencies?: readonly string[]
+  excludedAlignments?: readonly string[]
+}
+
+/**
+ * Library race / R.C.C. row in `content/palladiumRaces.json` (palladium-race.schema.json).
+ */
+export type Race = {
+  id: string
+  name: string
+  description: string
+  gameSystems: readonly string[]
+  /** One or more book citations; use one entry per book when page numbers differ. */
+  sources: readonly PalladiumSourceRef[]
+  canPickOcc: boolean
+  lineage?: 'nightbane' | 'megaversal'
+  defaultTraitIds?: readonly string[]
+  attributes: RaceAttributeFormulas
+  strengthCategory: RaceStrengthCategory
+  vitals: RaceVitals
+  psionics: RacePsionics
+  occLimitations: RaceOccLimitations
+  innateSkills: readonly RaceInnateSkillGrant[]
+  innateBonuses: RaceInnateBonuses
+  demographics: RaceDemographics
+}
+
+/** Expandable O.C.C. grouping slug (`palladium-occ.schema.json` occType). */
+export type OccTypeSlug = string
+
+export type OccAttributeRequirements = Partial<Record<ScalarAttributeKey, number>>
+
+export type OccAlignmentRestrictions = {
+  allowed?: readonly string[]
+  forbidden?: readonly string[]
+}
+
+export type OccRaceRestrictions = {
+  allowed?: readonly string[]
+  forbidden?: readonly string[]
+}
+
+export type OccCoreSkillGrant = {
+  skillId: string
+  bonusPercent: number
+  basePercent?: number
+}
+
+export type OccCategoryAccessType = 'any' | 'none' | 'only' | 'except'
+
+export type OccCategoryAccessRule = {
+  categoryName: string
+  accessType: OccCategoryAccessType
+  exceptions?: readonly string[]
+  bonusPercent: number
+}
+
+export type OccRelatedSkills = {
+  initialSlotsCount: number
+  startingSkillIds?: readonly string[]
+  categoryRules: readonly OccCategoryAccessRule[]
+}
+
+export type OccSecondarySkills = {
+  initialSlotsCount: number
+  forbiddenCategories: readonly string[]
+}
+
+export type OccLevelUpSkillChoice = {
+  levelUnlocked: number
+  quantity: number
+  poolSource: 'related' | 'secondary'
+}
+
+export type OccWpRules = {
+  coreWps: readonly string[]
+  forbiddenWps: readonly string[]
+}
+
+export type OccHandToHandUpgradePath = {
+  targetSkillId: string
+  electiveSlotCost: number
+}
+
+export type OccHandToHandRules = {
+  defaultSkillId: string
+  upgradePaths: readonly OccHandToHandUpgradePath[]
+}
+
+export type OccStaticBonuses = {
+  attributes?: Readonly<Record<string, number>>
+  vitals?: Readonly<Record<string, number>>
+  combat?: Readonly<Record<string, number>>
+  saves?: Readonly<Record<string, number>>
+}
+
+export type OccSupernaturalProgressionStep = {
+  level: number
+  selectionsGained: number
+  categoryRestrictions?: readonly string[]
+}
+
+export type OccPpeEngine = {
+  baseFormula: string
+  perLevelFormula: string
+  spellStrengthProgression?: Readonly<Record<string, number>>
+  progressionRoadmap: readonly OccSupernaturalProgressionStep[]
+}
+
+export type OccIspSavingThrowClass = 'minor' | 'major' | 'master'
+
+export type OccIspEngine = {
+  baseFormula: string
+  perLevelFormula: string
+  savingThrowClass: OccIspSavingThrowClass
+  progressionRoadmap: readonly OccSupernaturalProgressionStep[]
+}
+
+export type OccCustomAbilityEngine = {
+  engineId: string
+  label: string
+  baseFormula?: string
+  perLevelFormula?: string
+  progressionRoadmap: readonly OccSupernaturalProgressionStep[]
+}
+
+export type OccStartingEquipment = {
+  weapons?: readonly string[]
+  armor?: readonly string[]
+  miscellaneous?: readonly string[]
+}
+
+export type OccFinances = {
+  startingCashFormula?: string
+  blackMarketAssets?: string
+}
+
+export type OccXpTableId = 'standard' | 'psychic' | 'borg'
+
+export type OccSkillSlotPolicy =
+  | { kind: 'fixed'; multiplier: number }
+  | {
+      kind: 'psychic_tier'
+      majorMultiplier: number
+      defaultMultiplier?: number
+    }
+
+export type OccProgressionHooks = {
+  xpTableId?: OccXpTableId
+  characterOccCategory?: 'psychic' | 'standard'
+  psychicGateBypassed?: boolean
+  relatedSkillSlotPolicy?: OccSkillSlotPolicy
+  occSkillSlotBudget?: number
+  occRelatedSkillSlotBudget?: number
+  creationAbilityBudget?: {
+    spellSlots: number
+    psionicSlots: number
+    talentSlots: number
+  }
+  startingSpellLevelCap?: number
+}
+
+export type OccBaseStatsDice = {
+  hpDice?: string
+  sdcDice?: string
+  ppeDice?: string
+  ispDice?: string
+}
+
+/**
+ * Library O.C.C. catalog row (`content/palladiumOccs.json`, palladium-occ.schema.json).
+ * Alias: {@link OCC}.
+ */
+export type PalladiumOcc = {
+  id: string
+  name: string
+  description: string
+  gameSystems: readonly string[]
+  sources: readonly PalladiumSourceRef[]
+  occType: OccTypeSlug
+  tags: readonly string[]
+  attributeRequirements?: OccAttributeRequirements
+  alignmentRestrictions?: OccAlignmentRestrictions
+  raceRestrictions?: OccRaceRestrictions
+  occSkillsCore: readonly OccCoreSkillGrant[]
+  occRelatedSkills: OccRelatedSkills
+  secondarySkills: OccSecondarySkills
+  levelUpSkillChoices?: readonly OccLevelUpSkillChoice[]
+  wpRules: OccWpRules
+  handToHandRules: OccHandToHandRules
+  staticBonuses?: OccStaticBonuses
+  ppeEngine?: OccPpeEngine
+  ispEngine?: OccIspEngine
+  customAbilityEngines?: readonly OccCustomAbilityEngine[]
+  startingEquipment?: OccStartingEquipment
+  finances?: OccFinances
+  progression?: OccProgressionHooks
+  baseStats?: OccBaseStatsDice
+}
+
+/** Alias for {@link PalladiumOcc} — full O.C.C. composition document. */
+export type OCC = PalladiumOcc
+
 export type SheetSkill = {
   id: string
   name: string
@@ -171,7 +450,7 @@ export type Character = {
   ppe: { current: number; maximum: number }
   /** O.C.C. / R.C.C. package: display name, psychic lock, and fixed XP thresholds. */
   occ: CharacterOcc
-  /** Library race id — `src/data/library/races.json` and the race registry. */
+  /** Library race id — `src/data/content/palladiumRaces.json` and the race registry. */
   raceId?: string
   /**
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).

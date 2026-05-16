@@ -1,5 +1,5 @@
 import type { PalladiumSkillCatalogEntry } from './catalogTypes'
-import skillsData from './palladiumSkills.json'
+import skillsData from '../content/palladiumSkills.json'
 
 const rows = skillsData as unknown
 

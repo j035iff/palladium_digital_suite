@@ -1,4 +1,7 @@
 import type { Character } from '../types'
+import { getRaceById } from '../data/library/registry'
+import { DEFAULT_RACE_ID } from './raceFormPolicy'
+import { raceCanPickOcc } from './raceEngine'
 
 function attrsPlausible(attrs: {
   iq: number
@@ -29,7 +32,10 @@ function attrsPlausible(attrs: {
 export function assessCreationSpawnBlockers(character: Character): string[] {
   const blockers: string[] = []
 
-  if (!character.occ?.id || !character.occ?.xpTable?.floors?.length) {
+  const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+  const picksOcc = raceCanPickOcc(race)
+
+  if (picksOcc && (!character.occ?.id || !character.occ?.xpTable?.floors?.length)) {
     blockers.push('Choose an O.C.C. (Step 0 — O.C.C. selection).')
   }
 
@@ -45,7 +51,7 @@ export function assessCreationSpawnBlockers(character: Character): string[] {
   }
 
   const occ = character.creationOccSkillIds ?? []
-  if (occ.length < 1) {
+  if (picksOcc && occ.length < 1) {
     blockers.push(
       'Select at least one O.C.C. skill (Step 3 — Skill Engine).',
     )

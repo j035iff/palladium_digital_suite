@@ -1,5 +1,9 @@
 import type { Character } from '../../types'
 import {
+  occPsychicGateBypassed,
+  occStartingRelatedSkillIds,
+} from '../../lib/occCatalogEngine'
+import {
   getLibraryOccById,
   resolveOccXpTable,
   snapshotLibraryOcc,
@@ -16,11 +20,11 @@ export const nightbaneSorcererMock: Character = {
   occ: snapshotLibraryOcc(sorcererOcc, resolveOccXpTable(sorcererOcc)),
   raceId: 'nightbane',
   lineage: 'nightbane',
-  psychicGateBypassed: true,
-  occSkillSlotBudget: sorcererOcc.occSkillSlotBudget,
-  occRelatedSkillSlotBudget: sorcererOcc.occRelatedSkillSlotBudget,
-  creationOccSkillIds: [...sorcererOcc.startingOccSkillIds],
-  creationRelatedSkillIds: [...sorcererOcc.startingRelatedSkillIds],
+  psychicGateBypassed: occPsychicGateBypassed(sorcererOcc),
+  occSkillSlotBudget: sorcererOcc.progression?.occSkillSlotBudget,
+  occRelatedSkillSlotBudget: sorcererOcc.progression?.occRelatedSkillSlotBudget,
+  creationOccSkillIds: sorcererOcc.occSkillsCore.map((s) => s.skillId),
+  creationRelatedSkillIds: occStartingRelatedSkillIds(sorcererOcc),
   selectedAbilities: [
     'leathery_wings',
     'razor_hide',
@@ -30,8 +34,8 @@ export const nightbaneSorcererMock: Character = {
     'mind_block',
     'telekinesis',
   ],
-  creationAbilityBudget: sorcererOcc.creationAbilityBudget,
-  startingSpellLevelCap: sorcererOcc.startingSpellLevelCap,
+  creationAbilityBudget: sorcererOcc.progression?.creationAbilityBudget,
+  startingSpellLevelCap: sorcererOcc.progression?.startingSpellLevelCap,
   isFinalized: true,
   creationVitalityCommitted: true,
   facade: {

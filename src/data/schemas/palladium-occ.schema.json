@@ -1,0 +1,627 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-occ.schema.json",
+  "title": "Palladium RPG O.C.C.",
+  "description": "Occupational Character Class — composition-first catalog row: identity, prerequisites, core/elective skills, combat paths, static bonuses, supernatural engines (P.P.E. / I.S.P. / custom), gear, and finances. Optional blocks are pluggable modules; omit what the book does not use.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "description",
+    "gameSystems",
+    "sources",
+    "occType",
+    "tags",
+    "occSkillsCore",
+    "occRelatedSkills",
+    "secondarySkills",
+    "wpRules",
+    "handToHandRules"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Pointer to this schema for editor validation."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Stable machine id (e.g. city_rat, nightbane_sorcerer)."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "sources": {
+      "$ref": "#/$defs/sources"
+    },
+    "occType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Book grouping slug (e.g. man_of_arms, law_enforcement, magic_user, psychic, scholar_civilian). Expandable — not a closed enum."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Background tags for race vitals conditionals and filters (e.g. military, police, detective).",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "attributeRequirements": {
+      "$ref": "#/$defs/attributeRequirements"
+    },
+    "alignmentRestrictions": {
+      "$ref": "#/$defs/alignmentRestrictions"
+    },
+    "raceRestrictions": {
+      "$ref": "#/$defs/raceRestrictions"
+    },
+    "occSkillsCore": {
+      "type": "array",
+      "description": "O.C.C. skills granted automatically at creation.",
+      "items": {
+        "$ref": "#/$defs/occCoreSkillGrant"
+      }
+    },
+    "occRelatedSkills": {
+      "$ref": "#/$defs/occRelatedSkills"
+    },
+    "secondarySkills": {
+      "$ref": "#/$defs/secondarySkills"
+    },
+    "levelUpSkillChoices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/levelUpSkillChoice"
+      }
+    },
+    "wpRules": {
+      "$ref": "#/$defs/wpRules"
+    },
+    "handToHandRules": {
+      "$ref": "#/$defs/handToHandRules"
+    },
+    "staticBonuses": {
+      "$ref": "#/$defs/staticBonuses"
+    },
+    "ppeEngine": {
+      "$ref": "#/$defs/ppeEngine"
+    },
+    "ispEngine": {
+      "$ref": "#/$defs/ispEngine"
+    },
+    "customAbilityEngines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/customAbilityEngine"
+      }
+    },
+    "startingEquipment": {
+      "$ref": "#/$defs/startingEquipment"
+    },
+    "finances": {
+      "$ref": "#/$defs/finances"
+    },
+    "progression": {
+      "$ref": "#/$defs/progressionHooks",
+      "description": "Optional engine hooks (XP table, psychic gate, slot budgets) until all flows read composition blocks directly."
+    },
+    "baseStats": {
+      "$ref": "#/$defs/baseStatsDice",
+      "description": "Optional chargen dice summary for UI (legacy display); prefer staticBonuses and supernatural engines when modeled."
+    }
+  },
+  "$defs": {
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gameSystem", "reference", "pageNumber"],
+        "properties": {
+          "gameSystem": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "attributeKey": {
+      "type": "string",
+      "enum": ["iq", "me", "ma", "ps", "pp", "pe", "pb", "spd"]
+    },
+    "attributeRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "iq": { "type": "integer" },
+        "me": { "type": "integer" },
+        "ma": { "type": "integer" },
+        "ps": { "type": "integer" },
+        "pp": { "type": "integer" },
+        "pe": { "type": "integer" },
+        "pb": { "type": "integer" },
+        "spd": { "type": "integer" }
+      }
+    },
+    "alignmentRestrictions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowed": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "forbidden": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "raceRestrictions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        },
+        "forbidden": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "occCoreSkillGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "bonusPercent"],
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "bonusPercent": {
+          "type": "integer",
+          "description": "Fixed additive % on top of normal O.C.C. skill base resolution."
+        },
+        "basePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Optional flat starting % when the book gives a fixed O.C.C. skill baseline."
+        }
+      }
+    },
+    "occCategoryAccessRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["categoryName", "accessType", "bonusPercent"],
+      "properties": {
+        "categoryName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Skill category label (matches palladiumSkills categories[])."
+        },
+        "accessType": {
+          "type": "string",
+          "enum": ["any", "none", "only", "except"],
+          "description": "Category-wide access; exceptions override per skillId."
+        },
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "description": "Skill ids that override accessType for this category row."
+        },
+        "bonusPercent": {
+          "type": "integer",
+          "description": "O.C.C. related-skill % bonus when picking from this category (if applicable)."
+        }
+      }
+    },
+    "occRelatedSkills": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initialSlotsCount", "categoryRules"],
+      "properties": {
+        "initialSlotsCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "startingSkillIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "description": "Optional pre-selected related skills at creation (bootstrap for Skill Engine)."
+        },
+        "categoryRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/occCategoryAccessRule"
+          }
+        }
+      }
+    },
+    "secondarySkills": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["initialSlotsCount", "forbiddenCategories"],
+      "properties": {
+        "initialSlotsCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "forbiddenCategories": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "levelUpSkillChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["levelUnlocked", "quantity", "poolSource"],
+      "properties": {
+        "levelUnlocked": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "poolSource": {
+          "type": "string",
+          "enum": ["related", "secondary"]
+        }
+      }
+    },
+    "wpRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coreWps", "forbiddenWps"],
+      "properties": {
+        "coreWps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "description": "Weapon proficiency ids granted at creation."
+        },
+        "forbiddenWps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "handToHandUpgradePath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetSkillId", "electiveSlotCost"],
+      "properties": {
+        "targetSkillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "electiveSlotCost": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Related or secondary slots spent to acquire this hand-to-hand tier."
+        }
+      }
+    },
+    "handToHandRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defaultSkillId", "upgradePaths"],
+      "properties": {
+        "defaultSkillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "upgradePaths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/handToHandUpgradePath"
+          }
+        }
+      }
+    },
+    "numericBonusMap": {
+      "type": "object",
+      "description": "Open-ended numeric modifiers (attributes, vitals, combat, saves).",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "staticBonuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "$ref": "#/$defs/numericBonusMap"
+        },
+        "vitals": {
+          "$ref": "#/$defs/numericBonusMap",
+          "description": "Flat H.P., S.D.C., P.P.E., I.S.P., etc."
+        },
+        "combat": {
+          "$ref": "#/$defs/numericBonusMap",
+          "description": "Strike, parry, dodge, initiative, perception, A.P.M., etc."
+        },
+        "saves": {
+          "$ref": "#/$defs/numericBonusMap",
+          "description": "save_poison, save_magic, save_psionics, etc."
+        }
+      }
+    },
+    "supernaturalProgressionStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "selectionsGained"],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selectionsGained": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "categoryRestrictions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "e.g. Level 1 Spells Only, Necromancy Only, Sensitive Only."
+        }
+      }
+    },
+    "spellStrengthProgression": {
+      "type": "object",
+      "description": "Maps character level (string key) to active Spell Strength.",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "propertyNames": {
+        "pattern": "^[0-9]+$"
+      }
+    },
+    "ppeEngine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseFormula", "perLevelFormula", "progressionRoadmap"],
+      "properties": {
+        "baseFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "e.g. 1D4*10 + PE"
+        },
+        "perLevelFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "e.g. 2D6 per level."
+        },
+        "spellStrengthProgression": {
+          "$ref": "#/$defs/spellStrengthProgression"
+        },
+        "progressionRoadmap": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supernaturalProgressionStep"
+          }
+        }
+      }
+    },
+    "ispEngine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseFormula", "perLevelFormula", "savingThrowClass", "progressionRoadmap"],
+      "properties": {
+        "baseFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "perLevelFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "savingThrowClass": {
+          "type": "string",
+          "enum": ["minor", "major", "master"],
+          "description": "Psychic save tier baseline for this O.C.C."
+        },
+        "progressionRoadmap": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supernaturalProgressionStep"
+          }
+        }
+      }
+    },
+    "customAbilityEngine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["engineId", "label", "progressionRoadmap"],
+      "properties": {
+        "engineId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable key (e.g. nightbane_talents, class_abilities)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "perLevelFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "progressionRoadmap": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supernaturalProgressionStep"
+          }
+        }
+      }
+    },
+    "startingEquipment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "weapons": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Item ids or narrative descriptors."
+        },
+        "armor": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "miscellaneous": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "finances": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "startingCashFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "e.g. 1D6*100"
+        },
+        "blackMarketAssets": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "progressionHooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "xpTableId": {
+          "type": "string",
+          "enum": ["standard", "psychic", "borg"]
+        },
+        "characterOccCategory": {
+          "type": "string",
+          "enum": ["psychic", "standard"],
+          "description": "Drives Psychic Gate lock and CharacterOcc.category on the sheet."
+        },
+        "psychicGateBypassed": { "type": "boolean" },
+        "relatedSkillSlotPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["fixed", "psychic_tier"]
+            },
+            "multiplier": { "type": "number", "minimum": 0 },
+            "majorMultiplier": { "type": "number", "minimum": 0 },
+            "defaultMultiplier": { "type": "number", "minimum": 0 }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": { "kind": { "const": "fixed" } },
+                "required": ["kind"]
+              },
+              "then": { "required": ["multiplier"] }
+            },
+            {
+              "if": {
+                "properties": { "kind": { "const": "psychic_tier" } },
+                "required": ["kind"]
+              },
+              "then": { "required": ["majorMultiplier"] }
+            }
+          ]
+        },
+        "occSkillSlotBudget": { "type": "integer", "minimum": 0 },
+        "occRelatedSkillSlotBudget": { "type": "integer", "minimum": 0 },
+        "creationAbilityBudget": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "spellSlots": { "type": "integer", "minimum": 0 },
+            "psionicSlots": { "type": "integer", "minimum": 0 },
+            "talentSlots": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "startingSpellLevelCap": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "baseStatsDice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hpDice": { "type": "string", "minLength": 1 },
+        "sdcDice": { "type": "string", "minLength": 1 },
+        "ppeDice": { "type": "string", "minLength": 1 },
+        "ispDice": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

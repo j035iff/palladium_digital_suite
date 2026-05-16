@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-race.schema.json",
+  "title": "Palladium RPG race / R.C.C.",
+  "description": "Playable race or Race Character Class (R.C.C.) definition: identity, O.C.C. relationship, attribute dice, strength scale, polymorphic vitals, psionics, class constraints, innate skills, and composable innate bonuses (modifiers, activation, metadata).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "description",
+    "gameSystems",
+    "sources",
+    "canPickOcc",
+    "attributes",
+    "strengthCategory",
+    "vitals",
+    "psionics",
+    "occLimitations",
+    "innateSkills",
+    "innateBonuses",
+    "demographics"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative or absolute pointer to this schema file for editor validation."
+    },
+    "id": {
+      "type": "string",
+      "description": "Stable machine id (e.g. race_human, nightbane).",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name as printed in the book."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Player-facing summary of the race or R.C.C."
+    },
+    "gameSystems": {
+      "type": "array",
+      "description": "Game lines or settings this race appears in (stable slugs).",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "sources": {
+      "$ref": "#/$defs/sources",
+      "description": "Book references keyed by gameSystem slug (same vocabulary as gameSystems)."
+    },
+    "canPickOcc": {
+      "type": "boolean",
+      "description": "When true, the character may select a separate O.C.C. after choosing this race (e.g. Humans). When false, the race is a self-contained R.C.C. with no secondary O.C.C. step (e.g. Guardians)."
+    },
+    "lineage": {
+      "type": "string",
+      "enum": ["nightbane", "megaversal"],
+      "description": "Optional engine hint for dual-form Nightbane UX and setting integrity. Prefer deriving from id when omitted."
+    },
+    "defaultTraitIds": {
+      "type": "array",
+      "description": "Optional morphus / racial trait feature ids granted at creation.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "uniqueItems": true
+    },
+    "attributes": {
+      "$ref": "#/$defs/raceAttributeFormulas",
+      "description": "Base dice notation for all eight Palladium attributes at character creation."
+    },
+    "strengthCategory": {
+      "type": "string",
+      "enum": ["standard", "extraordinary", "superhuman", "supernatural"],
+      "description": "Physical power scale for P.S. damage, carry, and M.D.C. interactions (combat_logic.md)."
+    },
+    "vitals": {
+      "$ref": "#/$defs/raceVitals",
+      "description": "Hit Points, S.D.C., and starting P.P.E. formulas."
+    },
+    "psionics": {
+      "$ref": "#/$defs/racePsionics",
+      "description": "Racial psionic capability and optional innate I.S.P. pool formula."
+    },
+    "occLimitations": {
+      "$ref": "#/$defs/raceOccLimitations",
+      "description": "Forbidden O.C.C. categories and explicit allow/deny lists by O.C.C. id."
+    },
+    "innateSkills": {
+      "type": "array",
+      "description": "Skills granted by biology or R.C.C. package (not purchased with O.C.C. slots).",
+      "items": {
+        "$ref": "#/$defs/raceInnateSkillGrant"
+      }
+    },
+    "innateBonuses": {
+      "$ref": "#/$defs/raceInnateBonuses",
+      "description": "Composable passive bonuses using modifiers / activation / metadata (mirrors Feature composition)."
+    },
+    "demographics": {
+      "$ref": "#/$defs/raceDemographics",
+      "description": "Average height, weight, lifespan, and alignment tendencies or exclusions."
+    }
+  },
+  "$defs": {
+    "sources": {
+      "type": "array",
+      "description": "Book references keyed by gameSystem slug. Use one entry per book when page numbers differ. Put only the book title (plus edition if useful) in reference, and the printed start page in pageNumber.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gameSystem", "reference", "pageNumber"],
+        "properties": {
+          "gameSystem": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1,
+            "description": "Slug identifying the game line (must align with gameSystems, e.g. nightbane, rifts)."
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Book title only (edition if relevant)—no page numbers in this string."
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Printed page where this race or R.C.C. entry begins for that book."
+          }
+        }
+      }
+    },
+    "diceNotationString": {
+      "type": "string",
+      "description": "Dice expression: optional count, D, die size, optional * multiplier or +flat modifier (e.g. 3D6, 1D4*10, 2D6+8).",
+      "pattern": "^(\\d+)?D\\d+(\\*\\d+)?(\\+\\d+)?$",
+      "minLength": 1
+    },
+    "attributeFormulaString": {
+      "type": "string",
+      "description": "Attribute roll at creation (typically NdX, e.g. 3D6).",
+      "pattern": "^(\\d+)?D\\d+(\\*\\d+)?(\\+\\d+)?$",
+      "minLength": 1
+    },
+    "hpFormulaString": {
+      "type": "string",
+      "description": "Hit Point maximum formula using PE anchor (e.g. PE + 1D6).",
+      "minLength": 1
+    },
+    "ppeNotation": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/diceNotationString"
+        },
+        {
+          "type": "number",
+          "description": "Fixed starting P.P.E. when the book gives a constant."
+        }
+      ]
+    },
+    "raceAttributeFormulas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["iq", "me", "ma", "ps", "pp", "pe", "pb", "spd"],
+      "properties": {
+        "iq": { "$ref": "#/$defs/attributeFormulaString" },
+        "me": { "$ref": "#/$defs/attributeFormulaString" },
+        "ma": { "$ref": "#/$defs/attributeFormulaString" },
+        "ps": { "$ref": "#/$defs/attributeFormulaString" },
+        "pp": { "$ref": "#/$defs/attributeFormulaString" },
+        "pe": { "$ref": "#/$defs/attributeFormulaString" },
+        "pb": { "$ref": "#/$defs/attributeFormulaString" },
+        "spd": { "$ref": "#/$defs/attributeFormulaString" }
+      }
+    },
+    "raceSdcConditional": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "defaultFormula", "conditionalOverrides"],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "const": "conditional_by_occ_tags",
+          "description": "Pick S.D.C. formula by matching O.C.C. background tags."
+        },
+        "defaultFormula": {
+          "$ref": "#/$defs/diceNotationString",
+          "description": "Fallback S.D.C. dice when no override tag matches."
+        },
+        "conditionalOverrides": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tags", "formula"],
+            "properties": {
+              "tags": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$",
+                  "minLength": 1
+                },
+                "uniqueItems": true,
+                "description": "O.C.C. tags; any match selects this formula."
+              },
+              "formula": {
+                "$ref": "#/$defs/diceNotationString"
+              }
+            }
+          }
+        }
+      }
+    },
+    "raceSdcDefinition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/diceNotationString",
+          "description": "Flat S.D.C. roll notation."
+        },
+        {
+          "$ref": "#/$defs/raceSdcConditional"
+        }
+      ]
+    },
+    "raceVitals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hpFormula"],
+      "properties": {
+        "hpFormula": {
+          "$ref": "#/$defs/hpFormulaString",
+          "description": "Facade (or single-form) H.P. maximum formula."
+        },
+        "sdc": {
+          "$ref": "#/$defs/raceSdcDefinition",
+          "description": "Structural S.D.C. — flat dice string or conditional-by-O.C.C.-tags object."
+        },
+        "averageStandardPpe": {
+          "$ref": "#/$defs/ppeNotation",
+          "description": "Starting racial P.P.E. reserve (dice or fixed). Legacy alias: basePpe."
+        },
+        "basePpe": {
+          "$ref": "#/$defs/ppeNotation",
+          "description": "Deprecated — use averageStandardPpe. Retained for migrated library rows."
+        }
+      }
+    },
+    "racePsionics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityType"],
+      "properties": {
+        "capabilityType": {
+          "type": "string",
+          "enum": ["standard", "none", "innate"],
+          "description": "standard = may use Psychic Gate / O.C.C. psionics; none = no psionic development; innate = racial psychic pool without gate."
+        },
+        "naturalIspFormula": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/diceNotationString"
+            },
+            {
+              "type": "string",
+              "const": "0",
+              "description": "Explicit zero I.S.P. pool."
+            }
+          ],
+          "description": "Innate I.S.P. when capabilityType is innate; optional for standard/none (often 0)."
+        }
+      }
+    },
+    "raceOccLimitations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "forbiddenCategories": {
+          "type": "array",
+          "description": "O.C.C. category labels barred for this race (e.g. Magic for Dwarves).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "default": []
+        },
+        "forbiddenOccIds": {
+          "type": "array",
+          "description": "Explicit O.C.C. ids this race may not take.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "default": []
+        },
+        "allowedOccIds": {
+          "type": "array",
+          "description": "When non-empty, only these O.C.C. ids are permitted (whitelist).",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "raceInnateSkillGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId"],
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Catalog skill id granted at creation."
+        },
+        "basePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Fixed starting % when the book gives a flat racial baseline."
+        },
+        "bonusPercent": {
+          "type": "integer",
+          "description": "Additive % adjustment on top of normal O.C.C. / related skill resolution."
+        }
+      }
+    },
+    "conditionalIntegerBonus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "condition"],
+      "properties": {
+        "value": { "type": "integer" },
+        "condition": { "type": "string", "minLength": 1 }
+      }
+    },
+    "integerOrConditionalIntegerBonus": {
+      "oneOf": [
+        { "type": "integer" },
+        { "$ref": "#/$defs/conditionalIntegerBonus" }
+      ]
+    },
+    "raceCombatModifiers": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Combat maneuvers, attributes, and saving throws — mirrors skill physicalSkillBonuses keys plus save_* keys.",
+      "properties": {
+        "strike": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "parry": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "dodge": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "rollWithImpact": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "pullPunch": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "disarmBonus": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "apm": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "ps": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "pe": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "pp": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "pb": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "spd": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "sdc": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_poison": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_poison_lethal": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_poison_nonlethal": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_magic": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_magic_spell": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_magic_ritual": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_psionics": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_insanity": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_coma_death": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_harmful_drugs": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "horrorFactor": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" }
+      }
+    },
+    "featureActivationCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ppe", "isp", "action", "other"]
+        },
+        "value": {
+          "oneOf": [{ "type": "number" }, { "type": "string", "minLength": 1 }]
+        }
+      }
+    },
+    "featureActivation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cost": { "$ref": "#/$defs/featureActivationCost" },
+        "range": { "type": "string", "minLength": 1 },
+        "duration": { "type": "string", "minLength": 1 },
+        "save": { "type": "string", "minLength": 1 }
+      }
+    },
+    "raceInnateBonuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "modifiers": {
+          "$ref": "#/$defs/raceCombatModifiers",
+          "description": "Passive numeric bonuses merged into sheet combat and saving throws."
+        },
+        "activation": {
+          "$ref": "#/$defs/featureActivation",
+          "description": "Optional activated racial ability costs (P.P.E., I.S.P., actions)."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Non-mechanical tags for UI, GM notes, or engine hints.",
+          "additionalProperties": true
+        }
+      }
+    },
+    "measurementRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max", "unit"],
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "raceDemographics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "averageHeight": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "$ref": "#/$defs/measurementRange" }
+          ],
+          "description": "Typical height (narrative string or structured range in inches)."
+        },
+        "averageWeight": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "$ref": "#/$defs/measurementRange" }
+          ],
+          "description": "Typical weight in lbs (string or range)."
+        },
+        "averageLifespan": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Typical lifespan (e.g. 70-90 years)."
+        },
+        "alignmentTendencies": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Common alignments (e.g. Any, Principled, Aberrant)."
+        },
+        "excludedAlignments": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Alignments structurally barred for this race."
+        }
+      }
+    }
+  }
+}
