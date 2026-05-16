@@ -13,6 +13,7 @@ import {
   prerequisiteSatisfied,
 } from '../../lib/skillPrerequisites'
 import { computeLiveBonuses } from '../../lib/characterDerived'
+import { isOccRelatedSkillAllowed } from '../../lib/occCreationDerivation'
 
 const CATEGORIES: Array<SkillCategory | 'All'> = [
   'All',
@@ -61,6 +62,8 @@ export function SkillEngine() {
     character,
     activeForm,
     activeFormState,
+    activeOcc,
+    occCreationDerived,
     supportsDualForm,
     skillSlotMultiplier,
     setCreationSkillPicks,
@@ -80,8 +83,12 @@ export function SkillEngine() {
     setCreationSkillPicks(occSelected, next)
   }
 
-  const occBudget = character.occSkillSlotBudget ?? 8
-  const relatedBase = character.occRelatedSkillSlotBudget ?? 10
+  const occBudget =
+    occCreationDerived?.occSkillSlotBudget ?? character.occSkillSlotBudget ?? 8
+  const relatedBase =
+    occCreationDerived?.occRelatedSkillSlotBudget ??
+    character.occRelatedSkillSlotBudget ??
+    10
   const relatedCap = Math.floor(relatedBase * skillSlotMultiplier)
 
   const allSelected = useMemo(
@@ -133,6 +140,9 @@ export function SkillEngine() {
     if (!def || def.slotKind !== 'occ_related') return
     if (relatedSelected.includes(id)) return
     if (relatedSelected.length >= relatedCap) return
+    if (activeOcc && !isOccRelatedSkillAllowed(activeOcc, id, def.category)) {
+      return
+    }
     setRelatedSelected([...relatedSelected, id])
   }
 
@@ -164,6 +174,43 @@ export function SkillEngine() {
         psychics apply <strong>skillSlotMultiplier</strong> to O.C.C. related capacity (floor;
         psychic_gate.md §2).
       </p>
+
+      {activeOcc?.occSkillsCore.length ? (
+        <div
+          className={`mb-4 rounded-lg border px-3 py-2 text-xs ${
+            morphus ? 'border-violet-800 bg-slate-900/60' : 'border-blue-200 bg-blue-50/80'
+          }`}
+        >
+          <p className="font-bold uppercase tracking-wide opacity-80">
+            O.C.C. core skills (granted)
+          </p>
+          <p className="mt-1 font-mono opacity-90">
+            {activeOcc.occSkillsCore
+              .map((s) => `${s.skillId}${s.bonusPercent ? ` +${s.bonusPercent}%` : ''}`)
+              .join(' · ')}
+          </p>
+        </div>
+      ) : null}
+
+      {activeOcc?.occRelatedSkills.categoryRules.length ? (
+        <div
+          className={`mb-4 rounded-lg border px-3 py-2 text-[10px] ${
+            morphus ? 'border-violet-800 text-violet-200' : 'border-slate-600'
+          }`}
+        >
+          <p className="font-bold uppercase tracking-wide opacity-80">
+            Related skill category rules
+          </p>
+          <ul className="mt-1 list-inside list-disc space-y-0.5 font-mono">
+            {activeOcc.occRelatedSkills.categoryRules.map((r) => (
+              <li key={r.categoryName}>
+                {r.categoryName}: {r.accessType}
+                {r.exceptions?.length ? ` (exceptions: ${r.exceptions.join(', ')})` : ''}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <div
         className={`mb-4 grid gap-3 rounded-lg border p-4 sm:grid-cols-2 ${panelStyle}`}
@@ -241,6 +288,10 @@ export function SkillEngine() {
               const warn = inAny && !prereqOk
               const occFull = occSelected.length >= occBudget
               const relFull = relatedSelected.length >= relatedCap
+              const relatedBlocked =
+                s.slotKind === 'occ_related' &&
+                activeOcc != null &&
+                !isOccRelatedSkillAllowed(activeOcc, s.id, s.category)
 
               return (
                 <li
@@ -271,14 +322,21 @@ export function SkillEngine() {
                       </button>
                     ) : null}
                     {s.slotKind === 'occ_related' ? (
-                      <button
-                        type="button"
-                        disabled={inRel || relFull}
-                        className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:opacity-40"
-                        onClick={() => addRelated(s.id)}
-                      >
-                        + Related
-                      </button>
+                      <>
+                        <button
+                          type="button"
+                          disabled={inRel || relFull || relatedBlocked}
+                          className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:opacity-40"
+                          onClick={() => addRelated(s.id)}
+                        >
+                          + Related
+                        </button>
+                        {relatedBlocked ? (
+                          <span className="text-[10px] text-rose-500">
+                            Blocked by O.C.C. category rules
+                          </span>
+                        ) : null}
+                      </>
                     ) : null}
                   </div>
                 </li>

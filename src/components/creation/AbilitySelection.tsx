@@ -5,7 +5,9 @@ import {
   abilityToLibraryCategory,
   getAbilityById,
 } from '../../data/abilityLibrary'
+import { getFeatureById } from '../../data/library/registry'
 import { useCharacter } from '../../context/CharacterContext'
+import { abilityPassesOccSupernaturalRules } from '../../lib/occCreationDerivation'
 
 const LIBRARY_FILTERS: Array<'all' | LibraryPowerCategory> = [
   'all',
@@ -30,6 +32,8 @@ export function AbilitySelection() {
   const {
     character,
     activeForm,
+    activeOcc,
+    occCreationDerived,
     supportsDualForm,
     addSelectedAbility,
     removeSelectedAbility,
@@ -42,12 +46,17 @@ export function AbilitySelection() {
     'all' | LibraryPowerCategory
   >('all')
 
-  const budget = character.creationAbilityBudget ?? {
-    spellSlots: 8,
-    psionicSlots: 6,
-    talentSlots: 4,
-  }
-  const spellCap = character.startingSpellLevelCap ?? 4
+  const budget =
+    occCreationDerived?.abilityBudget ??
+    character.creationAbilityBudget ?? {
+      spellSlots: 8,
+      psionicSlots: 6,
+      talentSlots: 4,
+    }
+  const spellCap =
+    occCreationDerived?.startingSpellLevelCap ??
+    character.startingSpellLevelCap ??
+    4
   const selectedIds = character.selectedAbilities
 
   const counts = useMemo(() => {
@@ -160,6 +169,23 @@ export function AbilitySelection() {
         </span>
       </div>
 
+      {occCreationDerived?.supernaturalSummary.length ? (
+        <div
+          className={`mb-4 rounded-lg border px-3 py-2 font-mono text-[10px] leading-relaxed ${
+            morphus ? 'border-violet-800 bg-slate-900/50 text-violet-200' : 'border-slate-200 bg-white text-slate-600'
+          }`}
+        >
+          <p className="mb-1 font-bold uppercase tracking-wide opacity-80">
+            O.C.C. supernatural engines
+          </p>
+          <ul className="list-inside list-disc space-y-0.5">
+            {occCreationDerived.supernaturalSummary.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
       <div className="grid gap-6 lg:grid-cols-2">
         <div className={`flex flex-col rounded-lg border ${panelStyle}`}>
           <div
@@ -220,10 +246,17 @@ export function AbilitySelection() {
             aria-label="Filtered abilities"
           >
             {filteredLibrary.map((a) => {
+              const feature = getFeatureById(a.id)
+              const occGate =
+                activeOcc && feature
+                  ? abilityPassesOccSupernaturalRules(activeOcc, feature, spellCap)
+                  : { allowed: true as const }
               const spellBlocked =
-                a.category === 'Spell' &&
-                a.spellLevel != null &&
-                a.spellLevel > spellCap
+                !occGate.allowed ||
+                (a.category === 'Spell' &&
+                  a.spellLevel != null &&
+                  a.spellLevel > spellCap &&
+                  !activeOcc)
               const selectedList = selectedIds ?? []
               const already = selectedList.includes(a.id)
               const atCap =
@@ -234,7 +267,9 @@ export function AbilitySelection() {
                   counts.talent >= budget.talentSlots)
               const canSelect = !spellBlocked && !already && !atCap
               const lockedReason = spellBlocked
-                ? `Locked: spell level ${a.spellLevel} exceeds starting cap (${spellCap}).`
+                ? (occGate.reason
+                    ? `Locked: ${occGate.reason}`
+                    : `Locked: spell level ${a.spellLevel} exceeds starting cap (${spellCap}).`)
                 : already
                   ? 'Already selected.'
                   : atCap

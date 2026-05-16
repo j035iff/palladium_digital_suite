@@ -157,6 +157,12 @@
       "description": "Hit Point maximum formula using PE anchor (e.g. PE + 1D6).",
       "minLength": 1
     },
+    "ispAttributeFormulaString": {
+      "type": "string",
+      "description": "Innate I.S.P. using a two-letter attribute anchor plus dice (e.g. ME + 2D6).",
+      "pattern": "^[A-Z]{2}\\s*\\+\\s*(\\d+)?D\\d+(\\*\\d+)?(\\+\\d+)?$",
+      "minLength": 1
+    },
     "ppeNotation": {
       "oneOf": [
         {
@@ -271,12 +277,15 @@
         "naturalIspFormula": {
           "oneOf": [
             {
-              "$ref": "#/$defs/diceNotationString"
-            },
-            {
               "type": "string",
               "const": "0",
               "description": "Explicit zero I.S.P. pool."
+            },
+            {
+              "$ref": "#/$defs/diceNotationString"
+            },
+            {
+              "$ref": "#/$defs/ispAttributeFormulaString"
             }
           ],
           "description": "Innate I.S.P. when capabilityType is innate; optional for standard/none (often 0)."

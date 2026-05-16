@@ -102,6 +102,15 @@ import {
   occPsychicGateBypassed,
   occSkillSlotPolicy,
 } from '../lib/occCatalogEngine'
+import {
+  abilityPassesOccSupernaturalRules,
+  deriveOccCreation,
+  occCreationAbilityBudget,
+  occStartingSpellLevelCap,
+  applyOccStartingSkillPicks,
+  patchCharacterCreationFromOcc,
+} from '../lib/occCreationDerivation'
+import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 
 /** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
@@ -186,6 +195,10 @@ type CharacterContextValue = {
   setSelectedOcc: (occId: string) => void
   /** Resolved library race row for the active character. */
   activeRace: Race | undefined
+  /** Resolved O.C.C. catalog row (`palladiumOccs.json`). */
+  activeOcc: PalladiumOcc | undefined
+  /** Creation budgets and restrictions derived from {@link activeOcc} engines. */
+  occCreationDerived: ReturnType<typeof deriveOccCreation> | null
   /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */
   raceCanPickOcc: boolean
   /** Display label for the race strength scale (sheet / Attribute Forge). */
@@ -302,7 +315,7 @@ function hydrateCharacterFromStorage(base: Character): Character {
   const persisted = loadPersistedAbilityIds(base.name)
   const fromFixture = base.selectedAbilities ?? []
   const meta = loadCharacterMeta(base.name)
-  return ensureCharacterOcc({
+  let next = ensureCharacterOcc({
     ...base,
     selectedAbilities: persisted ?? fromFixture,
     isFinalized: meta?.isFinalized ?? base.isFinalized ?? false,
@@ -311,6 +324,9 @@ function hydrateCharacterFromStorage(base: Character): Character {
       base.creationVitalityCommitted ??
       false,
   })
+  const occRow = getLibraryOccById(next.occ.id)
+  if (occRow) next = patchCharacterCreationFromOcc(next, occRow)
+  return next
 }
 
 /** Single cold-load snapshot: shared by character, level-up queue, and XP history initializers. */
@@ -328,17 +344,28 @@ function nextCharacterIfAddAbility(prev: Character, id: string): Character | nul
   const selected = prev.selectedAbilities ?? []
   if (selected.includes(id)) return null
 
-  const spellCap = prev.startingSpellLevelCap ?? 4
+  const occRow = getLibraryOccById(prev.occ.id)
+  const spellCap = occRow
+    ? occStartingSpellLevelCap(occRow)
+    : (prev.startingSpellLevelCap ?? 4)
+  const cat = featureBudgetCategory(def)
   const spellLevel =
     typeof def.metadata?.level === 'number' ? def.metadata.level : undefined
-  const cat = featureBudgetCategory(def)
-  if (cat === 'Spell' && spellLevel != null && spellLevel > spellCap) return null
 
-  const b = prev.creationAbilityBudget ?? {
-    spellSlots: 8,
-    psionicSlots: 6,
-    talentSlots: 4,
+  if (occRow) {
+    const gate = abilityPassesOccSupernaturalRules(occRow, def, spellCap)
+    if (!gate.allowed) return null
+  } else if (cat === 'Spell' && spellLevel != null && spellLevel > spellCap) {
+    return null
   }
+
+  const b = occRow
+    ? occCreationAbilityBudget(occRow)
+    : (prev.creationAbilityBudget ?? {
+        spellSlots: 8,
+        psionicSlots: 6,
+        talentSlots: 4,
+      })
   const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
     selected.filter((x) => {
       const f = getFeatureById(x)
@@ -467,6 +494,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const activeRace = useMemo(
     () => getRaceById(character.raceId ?? DEFAULT_RACE_ID),
     [character.raceId],
+  )
+
+  const activeOcc = useMemo(
+    () => getLibraryOccById(character.occ.id),
+    [character.occ.id],
+  )
+
+  const occCreationDerived = useMemo(
+    () => (activeOcc ? deriveOccCreation(activeOcc) : null),
+    [activeOcc],
   )
 
   const raceCanPickOcc = useMemo(
@@ -1042,24 +1079,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           prev.psychicGateBypassed === true || occPsychicGateBypassed(lib)
             ? branch
             : applyPsychicTierToFormState(branch, tier)
-        return syncRaceOccFacadeSdc({
-          ...prev,
-          [form]: nextBranch,
-          occ: snapshotOccForCharacter(def),
-          psychicGateBypassed:
-            occPsychicGateBypassed(lib) || (prev.psychicGateBypassed ?? false),
-          occSkillSlotBudget:
-            lib.progression?.occSkillSlotBudget ?? prev.occSkillSlotBudget,
-          occRelatedSkillSlotBudget:
-            lib.progression?.occRelatedSkillSlotBudget ??
-            prev.occRelatedSkillSlotBudget,
-          creationAbilityBudget:
-            lib.progression?.creationAbilityBudget ?? prev.creationAbilityBudget,
-          startingSpellLevelCap:
-            lib.progression?.startingSpellLevelCap ?? prev.startingSpellLevelCap,
-          creationOccSkillIds: [...def.startingOccSkillIds],
-          creationRelatedSkillIds: [...def.startingRelatedSkillIds],
-        })
+        const withOcc = applyOccStartingSkillPicks(
+          patchCharacterCreationFromOcc(
+            {
+              ...prev,
+              [form]: nextBranch,
+              occ: snapshotOccForCharacter(def),
+            },
+            lib,
+          ),
+          lib,
+        )
+        return syncRaceOccFacadeSdc(withOcc)
       })
     },
     [activeForm, character.raceId],
@@ -1251,6 +1282,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
+      activeOcc,
+      occCreationDerived,
       raceCanPickOcc,
       raceStrengthLabel,
       activeFormState,
@@ -1320,6 +1353,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetActiveForm,
       supportsDualForm,
       activeRace,
+      activeOcc,
+      occCreationDerived,
       raceCanPickOcc,
       raceStrengthLabel,
       activeFormState,
