@@ -28,7 +28,7 @@
     },
     "id": {
       "type": "string",
-      "description": "Stable machine id (e.g. race_human, nightbane).",
+      "description": "Stable machine id (e.g. race_human).",
       "pattern": "^[a-z][a-z0-9_]*$"
     },
     "name": {

@@ -115,7 +115,10 @@ import {
   applyOccStartingSkillPicks,
   patchCharacterCreationFromOcc,
 } from '../lib/occCreationDerivation'
-import { resolveEffectivePalladiumOcc } from '../lib/occComposition'
+import {
+  getOccSpecialization,
+  resolveEffectivePalladiumOcc,
+} from '../lib/occComposition'
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 
@@ -125,7 +128,8 @@ function syncRaceOccFacadeSdc(prev: Character): Character {
   const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
   const lib = getLibraryOccById(prev.occ.id)
   if (!race || !lib || race.vitals?.sdc == null) return prev
-  const max = rollFacadeSdcMaximum(prev.facade.attributes, { race, occ: lib })
+  const occ = resolveEffectivePalladiumOcc(lib, prev.occSpecializationId)
+  const max = rollFacadeSdcMaximum(prev.facade.attributes, { race, occ })
   const cur = Math.min(prev.facade.structuralDamageCapacity.current, max)
   return {
     ...prev,
@@ -199,6 +203,8 @@ type CharacterContextValue = {
   setCreationSkillPicks: (occ: string[], related: string[]) => void
   /** Step 0 — O.C.C. package: fixed XP table, psychic category, and starting skill ids. */
   setSelectedOcc: (occId: string) => void
+  /** Step 0 — sub-class branch when the O.C.C. defines {@link PalladiumOcc.specializations}. */
+  setOccSpecializationId: (specializationId: string) => void
   /** Resolved library race row for the active character. */
   activeRace: Race | undefined
   /** Resolved O.C.C. catalog row (`palladiumOccs.json`). */
@@ -227,7 +233,7 @@ type CharacterContextValue = {
   finalizeCharacter: () => void
   /** Live combat — A.P.M. tracker (combat_logic.md §3). */
   attacksPerMelee: AttacksPerMeleeState
-  spendCombatAction: () => void
+  spendCombatAction: (amount?: number) => void
   resetMeleeRound: () => void
   activeMeleeDurations: ActiveMeleeDuration[]
   registerActiveMeleeDuration: (abilityId: string, rounds: number) => void
@@ -319,7 +325,7 @@ const CharacterContext = createContext<CharacterContextValue | null>(null)
 
 function ensureCharacterOcc(c: Character): Character {
   if (c.occ?.xpTable?.floors?.length) return c
-  const def = getOccById('city_rat')
+  const def = getOccById('occ_ex_government_agent')
   if (!def) return c
   return { ...c, occ: snapshotOccForCharacter(def) }
 }
@@ -715,10 +721,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }, 750)
   }, [])
 
-  const spendCombatAction = useCallback(() => {
+  const spendCombatAction = useCallback((amount = 1) => {
+    const cost = Math.max(1, Math.floor(amount))
     setApmCurrentRaw((c) => {
       const cur = Math.min(c, maxApm)
-      return cur > 0 ? cur - 1 : 0
+      return cur >= cost ? cur - cost : 0
     })
   }, [maxApm])
 
@@ -1128,6 +1135,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
               ...prev,
               [form]: nextBranch,
               occ: snapshotOccForCharacter(def),
+              occSpecializationId: undefined,
             },
             lib,
           ),
@@ -1138,6 +1146,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     },
     [activeForm, character.raceId],
   )
+
+  const setOccSpecializationId = useCallback((specializationId: string) => {
+    setCharacter((prev) => {
+      const lib = getLibraryOccById(prev.occ.id)
+      if (!lib?.specializations?.length) return prev
+      if (!getOccSpecialization(lib, specializationId)) return prev
+      const withSpec: Character = {
+        ...prev,
+        occSpecializationId: specializationId,
+      }
+      return syncRaceOccFacadeSdc(
+        applyOccStartingSkillPicks(
+          patchCharacterCreationFromOcc(withSpec, lib),
+          lib,
+        ),
+      )
+    })
+  }, [])
 
   const setRaceId = useCallback((raceId: string | null) => {
     const id = raceId ?? DEFAULT_RACE_ID
@@ -1351,6 +1377,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeSelectedAbility,
       setCreationSkillPicks,
       setSelectedOcc,
+      setOccSpecializationId,
       setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,
@@ -1424,6 +1451,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeSelectedAbility,
       setCreationSkillPicks,
       setSelectedOcc,
+      setOccSpecializationId,
       setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,

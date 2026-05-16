@@ -27,7 +27,7 @@
     "id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$",
-      "description": "Stable machine id (e.g. city_rat, nightbane_sorcerer)."
+      "description": "Stable machine id (e.g. occ_ex_government_agent, occ_pab_psychic_agent)."
     },
     "name": {
       "type": "string",
@@ -379,6 +379,14 @@
         "occRelatedSkills": {
           "$ref": "#/$defs/occRelatedSkillsOverride",
           "description": "Merged into baseline related skills (category rules override by categoryName)."
+        },
+        "wpRules": {
+          "$ref": "#/$defs/wpRules",
+          "description": "Merged into baseline W.P. rules (coreWps union; forbiddenWps union)."
+        },
+        "handToHandRules": {
+          "$ref": "#/$defs/handToHandRules",
+          "description": "Overrides baseline hand-to-hand when present (e.g. ADA Spy → Martial Arts, Assassin → Assassin)."
         }
       }
     },
@@ -486,14 +494,15 @@
     "handToHandRules": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["defaultSkillId", "upgradePaths"],
+      "required": ["upgradePaths"],
       "properties": {
         "defaultSkillId": {
-          "description": "Starting hand-to-hand catalog/sheet skill id, or **null** when the O.C.C. grants no fighting style (player must buy via related/elective slots).",
+          "description": "Starting Hand-to-Hand combat catalog id. **Omit or use `hth_none`** for untrained baseline brawling (2 APM per attack). Use `hand_to_hand_*` sheet ids or `hth_*` catalog ids when the O.C.C. grants formal training. **null** when no style is granted at creation and the player must purchase a tier via `upgradePaths` / electives.",
           "oneOf": [
             {
               "type": "string",
-              "pattern": "^[a-z][a-z0-9_]*$"
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "default": "hth_none"
             },
             { "type": "null" }
           ]

@@ -10,7 +10,7 @@ import {
 } from './occComposition'
 
 const DEFAULT_WP_RULES = { coreWps: [] as string[], forbiddenWps: [] as string[] }
-const DEFAULT_H2H = { defaultSkillId: 'hand_to_hand_basic', upgradePaths: [] }
+const DEFAULT_H2H = { defaultSkillId: 'hth_none', upgradePaths: [] }
 const DEFAULT_SECONDARY = { initialSlotsCount: 0, forbiddenCategories: [] as string[] }
 const DEFAULT_RELATED = { initialSlotsCount: 0, categoryRules: [] }
 
@@ -99,6 +99,14 @@ export function normalizePalladiumOcc(row: PalladiumOcc): PalladiumOcc {
     occRelatedSkills: row.occRelatedSkills ?? DEFAULT_RELATED,
     secondarySkills: row.secondarySkills ?? DEFAULT_SECONDARY,
     wpRules: row.wpRules ?? DEFAULT_WP_RULES,
-    handToHandRules: row.handToHandRules ?? DEFAULT_H2H,
+    handToHandRules: {
+      ...DEFAULT_H2H,
+      ...row.handToHandRules,
+      defaultSkillId:
+        row.handToHandRules?.defaultSkillId !== undefined
+          ? row.handToHandRules.defaultSkillId
+          : DEFAULT_H2H.defaultSkillId,
+      upgradePaths: row.handToHandRules?.upgradePaths ?? DEFAULT_H2H.upgradePaths,
+    },
   }
 }

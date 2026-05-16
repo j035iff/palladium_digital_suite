@@ -24,6 +24,12 @@
       "minLength": 1,
       "description": "Book prose summary of the fighting style."
     },
+    "attackApmCost": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "The number of melee actions (APM) consumed when executing an attack maneuver using this combat style. Defaults to 1 for martial arts, but can be set higher (e.g. 2 for hth_none)."
+    },
     "gameSystems": {
       "type": "array",
       "items": {
@@ -138,7 +144,20 @@
         "knockoutStunWindow": { "$ref": "#/$defs/d20RollWindow" },
         "deathBlowWindow": { "$ref": "#/$defs/d20RollWindow" },
         "criticalStrikeFromBehind": { "type": "boolean" },
-        "knockoutFromBehind": { "type": "boolean" }
+        "knockoutFromBehind": { "type": "boolean" },
+        "jumpKick": {
+          "type": "boolean",
+          "description": "Unlocks the Jump Kick maneuver (automatic critical strike, uses all remaining attacks in the melee round)."
+        },
+        "leapAttack": {
+          "type": "boolean",
+          "description": "Unlocks the airborne Leap Attack maneuver (automatic critical strike, uses all remaining attacks in the melee round)."
+        },
+        "fromBehindDamageMultiplier": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The damage multiplier applied to attacks, critical strikes, or knockouts executed from behind. Defaults to 2 (double damage), but can scale higher (e.g., triple damage/3 for HtH: Expert level 13)."
+        }
       }
     },
     "progressionMatrix": {

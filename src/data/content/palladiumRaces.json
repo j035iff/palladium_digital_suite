@@ -3,7 +3,10 @@
     "id": "race_human",
     "name": "Human",
     "description": "Standard baseline humanity across the Megaverse.",
-    "gameSystems": ["nightbane", "rifts"],
+    "gameSystems": [
+      "nightbane",
+      "rifts"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -37,7 +40,13 @@
         "defaultFormula": "3D6",
         "conditionalOverrides": [
           {
-            "tags": ["military", "police", "detective", "athletic", "tactical"],
+            "tags": [
+              "military",
+              "police",
+              "detective",
+              "athletic",
+              "tactical"
+            ],
             "formula": "1D4*10"
           }
         ]
@@ -57,102 +66,9 @@
     },
     "demographics": {
       "averageLifespan": "70-90 years",
-      "alignmentTendencies": ["Any"]
-    }
-  },
-  {
-    "id": "nightbane",
-    "name": "Nightbane",
-    "description": "Dual-nature beings with Facade and Morphus forms; talents and morphus traits compose on the universal schema.",
-    "gameSystems": ["nightbane"],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 20
-      }
-    ],
-    "canPickOcc": true,
-    "lineage": "nightbane",
-    "defaultTraitIds": [],
-    "attributes": {
-      "iq": "3D6",
-      "me": "3D6",
-      "ma": "3D6",
-      "ps": "3D6",
-      "pp": "3D6",
-      "pe": "3D6",
-      "pb": "3D6",
-      "spd": "3D6"
-    },
-    "strengthCategory": "supernatural",
-    "vitals": {
-      "hpFormula": "PE + 1D6",
-      "averageStandardPpe": "2D6",
-      "sdc": "2D6+8"
-    },
-    "psionics": {
-      "capabilityType": "standard",
-      "naturalIspFormula": "0"
-    },
-    "occLimitations": {
-      "forbiddenCategories": [],
-      "forbiddenOccIds": []
-    },
-    "innateSkills": [],
-    "innateBonuses": {
-      "modifiers": {}
-    },
-    "demographics": {
-      "averageLifespan": "Immortal unless slain",
-      "alignmentTendencies": ["Any"]
-    }
-  },
-  {
-    "id": "rcc_guardian",
-    "name": "Guardian",
-    "description": "Self-contained R.C.C. — no separate O.C.C. selection. Minimal library stub for chargen flow testing.",
-    "gameSystems": ["nightbane"],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 200
-      }
-    ],
-    "canPickOcc": false,
-    "lineage": "megaversal",
-    "attributes": {
-      "iq": "3D6",
-      "me": "3D6",
-      "ma": "3D6",
-      "ps": "4D6",
-      "pp": "3D6",
-      "pe": "4D6",
-      "pb": "3D6",
-      "spd": "3D6"
-    },
-    "strengthCategory": "supernatural",
-    "vitals": {
-      "hpFormula": "PE + 2D6",
-      "averageStandardPpe": "3D6",
-      "sdc": "4D6+20"
-    },
-    "psionics": {
-      "capabilityType": "innate",
-      "naturalIspFormula": "ME + 2D6"
-    },
-    "occLimitations": {
-      "forbiddenCategories": [],
-      "forbiddenOccIds": []
-    },
-    "innateSkills": [],
-    "innateBonuses": {
-      "modifiers": {}
-    },
-    "demographics": {
-      "averageLifespan": "Centuries (varies)",
-      "alignmentTendencies": ["Principled", "Scrupulous", "Aberrant"]
+      "alignmentTendencies": [
+        "Any"
+      ]
     }
   }
 ]

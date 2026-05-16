@@ -35,6 +35,9 @@ export function createEmptyAccumulatedHandToHandBonuses(): AccumulatedHandToHand
     pairedWeapons: false,
     criticalStrikeFromBehind: false,
     knockoutFromBehind: false,
+    jumpKick: false,
+    leapAttack: false,
+    fromBehindDamageMultiplier: 2,
   }
 }
 
@@ -87,6 +90,11 @@ function applyLevelRow(
     acc.criticalStrikeFromBehind = row.criticalStrikeFromBehind
   }
   if (row.knockoutFromBehind != null) acc.knockoutFromBehind = row.knockoutFromBehind
+  if (row.jumpKick === true) acc.jumpKick = true
+  if (row.leapAttack === true) acc.leapAttack = true
+  if (row.fromBehindDamageMultiplier != null) {
+    acc.fromBehindDamageMultiplier = row.fromBehindDamageMultiplier
+  }
 }
 
 /**
@@ -112,4 +120,11 @@ export function accumulateHandToHandBonuses(
 /** Extra attacks per melee from accumulated Hand-to-Hand (attacks + apm aliases). */
 export function handToHandAttackBonus(acc: AccumulatedHandToHandBonuses): number {
   return acc.attacks
+}
+
+/** APM cost for one attack maneuver; defaults to 1 when the catalog row omits `attackApmCost`. */
+export function handToHandAttackApmCost(hthSkill: HandToHandSkill | undefined): number {
+  const raw = hthSkill?.attackApmCost
+  if (raw == null || !Number.isFinite(raw)) return 1
+  return Math.max(1, Math.floor(raw))
 }

@@ -1,7 +1,7 @@
 import type { Character } from '../types'
 import { getOccById, snapshotOccForCharacter } from './occDefinitions'
 
-const demoOcc = snapshotOccForCharacter(getOccById('city_rat')!)
+const demoOcc = snapshotOccForCharacter(getOccById('occ_ex_government_agent')!)
 
 /**
  * Demo sheet — structure must satisfy {@link Character}.
@@ -20,15 +20,21 @@ export const characterFixture: Character = {
   psychicGateBypassed: true,
   isFinalized: false,
   creationVitalityCommitted: false,
-  creationOccSkillIds: ['literacy', 'math_basic', 'hand_to_hand_basic'],
-  creationRelatedSkillIds: ['electronics', 'wp_pistol', 'wp_sword'],
+  creationOccSkillIds: [
+    'intelligence',
+    'surveillance_systems',
+    'prowl',
+    'computer_operation',
+    'radio_basic',
+    'cryptography',
+  ],
+  creationRelatedSkillIds: ['electronics', 'wp_handguns'],
   selectedAbilities: ['energy_bolt'],
   creationAbilityBudget: {
-    spellSlots: 8,
-    psionicSlots: 6,
-    talentSlots: 4,
+    spellSlots: 0,
+    psionicSlots: 0,
+    talentSlots: 0,
   },
-  startingSpellLevelCap: 4,
   facade: {
     alignment: 'Scrupulous',
     hitPoints: { current: 12, maximum: 18, scaling: 'sdc_hp' },

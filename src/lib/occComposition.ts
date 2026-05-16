@@ -4,8 +4,10 @@ import type {
   OccCoreSkillGrant,
   OccCoreSkillChoiceVoucher,
   OccFinances,
+  OccHandToHandRules,
   OccRelatedSkills,
   OccSpecialization,
+  OccWpRules,
   OccStartingEquipment,
   OccStaticBonusValue,
   OccStaticBonuses,
@@ -68,6 +70,36 @@ function mergeFinances(
   if (!patch) return base
   if (!base) return patch
   return { ...base, ...patch }
+}
+
+function mergeWpRules(
+  base: OccWpRules,
+  patch: OccWpRules | undefined,
+): OccWpRules {
+  if (!patch) return base
+  return {
+    coreWps: [
+      ...new Set([...(base.coreWps ?? []), ...(patch.coreWps ?? [])]),
+    ],
+    forbiddenWps: [
+      ...new Set([...(base.forbiddenWps ?? []), ...(patch.forbiddenWps ?? [])]),
+    ],
+  }
+}
+
+function mergeHandToHandRules(
+  base: OccHandToHandRules,
+  patch: OccHandToHandRules | undefined,
+): OccHandToHandRules {
+  if (!patch) return base
+  return {
+    defaultSkillId:
+      patch.defaultSkillId !== undefined ? patch.defaultSkillId : base.defaultSkillId,
+    upgradePaths:
+      patch.upgradePaths != null && patch.upgradePaths.length > 0
+        ? patch.upgradePaths
+        : base.upgradePaths,
+  }
 }
 
 function hasStartingEquipment(block: OccStartingEquipment | undefined): boolean {
@@ -151,6 +183,8 @@ export function resolveEffectivePalladiumOcc(
         ? spec.occSkillsCore
         : occ.occSkillsCore,
     occRelatedSkills: mergeRelatedSkills(occ.occRelatedSkills, spec.occRelatedSkills),
+    wpRules: mergeWpRules(occ.wpRules, spec.wpRules),
+    handToHandRules: mergeHandToHandRules(occ.handToHandRules, spec.handToHandRules),
   }
 }
 

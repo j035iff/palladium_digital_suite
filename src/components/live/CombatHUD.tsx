@@ -397,6 +397,7 @@ export function CombatHUD() {
   const curApm = attacksPerMelee.current
   /** Remaining actions = curApm; pips are consumed visually left → right. */
   const actionsUsed = Math.max(0, maxApm - curApm)
+  const attackApmCost = handToHandCombatProfile.attackApmCost
 
   return (
     <aside
@@ -464,12 +465,12 @@ export function CombatHUD() {
             </div>
             <button
               type="button"
-              title="Spend one attack per melee"
-              onClick={spendCombatAction}
-              disabled={curApm <= 0}
+              title={`Spend ${attackApmCost} melee action${attackApmCost === 1 ? '' : 's'} (attack)`}
+              onClick={() => spendCombatAction(attackApmCost)}
+              disabled={curApm < attackApmCost}
               className={`shrink-0 rounded px-2 py-1 text-[10px] font-black uppercase disabled:opacity-35 ${btnCompact}`}
             >
-              −1
+              −{attackApmCost}
             </button>
             <button
               type="button"
@@ -605,11 +606,11 @@ export function CombatHUD() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={spendCombatAction}
-              disabled={curApm <= 0}
+              onClick={() => spendCombatAction(attackApmCost)}
+              disabled={curApm < attackApmCost}
               className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide disabled:opacity-40 ${btn}`}
             >
-              Spend action
+              Spend attack ({attackApmCost})
             </button>
             <button
               type="button"

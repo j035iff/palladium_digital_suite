@@ -17,12 +17,15 @@ export function OccSelection() {
   const {
     character,
     activeForm,
+    activeOcc,
     activeRace,
     raceCanPickOcc,
     setSelectedOcc,
+    setOccSpecializationId,
     setRaceId,
     supportsDualForm,
   } = useCharacter()
+  const specializationBranches = activeOcc?.specializations ?? []
   const morphus = supportsDualForm && activeForm === 'morphus'
   const panel = morphus
     ? 'border-violet-600 bg-slate-950/90 text-violet-50'
@@ -176,6 +179,50 @@ export function OccSelection() {
           )
         })}
       </div>
+      ) : null}
+      {raceCanPickOcc && specializationBranches.length > 0 ? (
+        <div className={`mt-4 grid gap-2 sm:grid-cols-2 ${panel} rounded-lg border-2 p-4`}>
+          <p
+            className="sm:col-span-2 text-xs font-semibold uppercase tracking-wide opacity-80"
+            style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
+          >
+            {activeOcc?.name ?? 'O.C.C.'} — specialization
+          </p>
+          <p
+            className="sm:col-span-2 text-sm leading-snug opacity-90"
+            style={{ color: morphus ? '#a5b4fc' : '#475569' }}
+          >
+            Pick your sub-class branch. This sets core skills, weapon proficiencies, and
+            hand-to-hand defaults for the Skill Engine.
+          </p>
+          {specializationBranches.map((spec) => {
+            const selected = character.occSpecializationId === spec.id
+            return (
+              <button
+                key={spec.id}
+                type="button"
+                onClick={() => setOccSpecializationId(spec.id)}
+                className={`rounded-lg border-2 px-3 py-2 text-left transition-[box-shadow,transform] ${
+                  selected
+                    ? morphus
+                      ? 'border-amber-400 bg-violet-950/80 shadow-[0_0_0_2px_rgba(251,191,36,0.35)]'
+                      : 'border-blue-600 bg-blue-50 shadow-[0_0_0_2px_rgba(37,99,235,0.25)]'
+                    : morphus
+                      ? 'border-violet-800 bg-slate-900/60 hover:border-violet-500'
+                      : 'border-slate-200 bg-slate-50 hover:border-blue-400'
+                }`}
+                aria-pressed={selected}
+              >
+                <span className="text-sm font-semibold">{spec.name}</span>
+                {spec.description ? (
+                  <span className="mt-1 block text-[11px] leading-snug opacity-85">
+                    {spec.description}
+                  </span>
+                ) : null}
+              </button>
+            )
+          })}
+        </div>
       ) : null}
     </section>
   )

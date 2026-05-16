@@ -1,5 +1,5 @@
 import type { Character } from '../types'
-import { getRaceById } from '../data/library/registry'
+import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { raceCanPickOcc } from './raceEngine'
 
@@ -37,6 +37,15 @@ export function assessCreationSpawnBlockers(character: Character): string[] {
 
   if (picksOcc && (!character.occ?.id || !character.occ?.xpTable?.floors?.length)) {
     blockers.push('Choose an O.C.C. (Step 0 — O.C.C. selection).')
+  }
+
+  const occLib = picksOcc ? getLibraryOccById(character.occ.id) : undefined
+  if (
+    picksOcc &&
+    occLib?.specializations?.length &&
+    !character.occSpecializationId
+  ) {
+    blockers.push('Choose an O.C.C. specialization (Step 0 — sub-class branch).')
   }
 
   if (!attrsPlausible(character.facade.attributes)) {

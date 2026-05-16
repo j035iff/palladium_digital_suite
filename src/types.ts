@@ -270,6 +270,8 @@ export type OccSpecialization = {
   /** When set, replaces baseline {@link PalladiumOcc.occSkillsCore} for this branch. */
   occSkillsCore?: readonly OccCoreSkillEntry[]
   occRelatedSkills?: OccRelatedSkillsOverride
+  wpRules?: OccWpRules
+  handToHandRules?: OccHandToHandRules
 }
 
 export type OccRelatedSkills = {
@@ -300,7 +302,10 @@ export type OccHandToHandUpgradePath = {
 }
 
 export type OccHandToHandRules = {
-  /** Sheet/catalog hand-to-hand id, or null when no style is granted at creation. */
+  /**
+   * Hand-to-Hand catalog id (`hth_none`, `hth_basic`, …) or sheet skill (`hand_to_hand_basic`, …).
+   * Omitted in JSON → normalized to `hth_none`. **null** = no automatic style; player must buy a tier.
+   */
   defaultSkillId: string | null
   upgradePaths: readonly OccHandToHandUpgradePath[]
 }
@@ -339,6 +344,9 @@ export type HandToHandProgressionLevel = {
   deathBlowWindow?: readonly number[]
   criticalStrikeFromBehind?: boolean
   knockoutFromBehind?: boolean
+  jumpKick?: boolean
+  leapAttack?: boolean
+  fromBehindDamageMultiplier?: number
 }
 
 /** Authoring keys are level strings `"1"`…`"15"`; engines normalize to numeric levels. */
@@ -351,6 +359,8 @@ export type HandToHandSkill = {
   id: string
   name: string
   description: string
+  /** Melee actions spent per attack maneuver; omitted styles default to 1 in engines. */
+  attackApmCost?: number
   gameSystems?: readonly string[]
   sources?: readonly PalladiumSourceRef[]
   progression: HandToHandProgressionMap
@@ -376,6 +386,10 @@ export type AccumulatedHandToHandBonuses = {
   deathBlowWindow?: readonly number[]
   criticalStrikeFromBehind: boolean
   knockoutFromBehind: boolean
+  jumpKick: boolean
+  leapAttack: boolean
+  /** From-behind damage multiplier; baseline 2 until a level row overrides (e.g. Expert 13 → 3). */
+  fromBehindDamageMultiplier: number
 }
 
 export type OccStaticBonuses = {

@@ -3,14 +3,6 @@
     "id": "hth_basic",
     "name": "Hand-to-Hand: Basic",
     "description": "Elementary fighting techniques and methods of attack and self-defense as taught in military basic training.",
-    "gameSystems": ["nightbane"],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane Core Rulebook",
-        "pageNumber": 65
-      }
-    ],
     "progression": {
       "1": { "attacks": 2, "pullPunch": 2, "rollWithPunch": 2 },
       "2": { "parry": 2, "dodge": 2 },
@@ -32,6 +24,117 @@
       "13": { "criticalStrikeFromBehind": true, "knockoutFromBehind": true },
       "14": { "damage": 2 },
       "15": { "attacks": 1 }
+    }
+  },
+  {
+    "id": "hth_expert",
+    "name": "Hand-to-Hand: Expert",
+    "description": "An advanced form of self-defense and unarmed combat usually taught to commandos and special agents.",
+    "progression": {
+      "1": { 
+        "attacks": 2, 
+        "pullPunch": 2, 
+        "rollWithPunch": 2,
+        "kickAttack": { "damageFormula": "1D6", "description": "Basic physical kick" }
+      },
+      "2": { "parry": 3, "dodge": 3 },
+      "3": { 
+        "strike": 2,
+        "bodyThrowFlip": {
+          "damageFormula": "1D6",
+          "effects": ["victim loses initiative", "victim loses one attack"]
+        }
+      },
+      "4": { "attacks": 1 },
+      "5": { "kickAttack": { "damageFormula": "1D8", "description": "Karate-style kick" } },
+      "6": { "criticalStrikeWindow": [18, 19, 20] },
+      "7": { "pairedWeapons": true },
+      "8": { "damage": 2 },
+      "9": { "attacks": 1 },
+      "10": { "parry": 1, "dodge": 1 },
+      "11": { "knockoutStunWindow": [18, 19, 20] },
+      "12": { "strike": 1 },
+      "13": { 
+        "criticalStrikeFromBehind": true, 
+        "knockoutFromBehind": true,
+        "fromBehindDamageMultiplier": 3
+      },
+      "14": { "damage": 2 },
+      "15": { "attacks": 1, "deathBlowWindow": [20] }
+    }
+  },
+  {
+    "id": "hth_martial_arts",
+    "name": "Hand-to-Hand: Martial Arts",
+    "description": "A highly refined and focused discipline of combat, granting exceptional speed, power, and specialized maneuvers.",
+    "progression": {
+      "1": { 
+        "attacks": 2, 
+        "pullPunch": 3, 
+        "rollWithPunch": 3,
+        "kickAttack": { "damageFormula": "1D8", "description": "Martial arts kick" }
+      },
+      "2": { "parry": 3, "dodge": 3, "strike": 2 },
+      "3": { 
+        "bodyThrowFlip": {
+          "damageFormula": "1D6",
+          "effects": ["victim loses initiative", "victim loses one attack"]
+        }
+      },
+      "4": { "attacks": 1 },
+      "5": { "jumpKick": true },
+      "6": { "criticalStrikeWindow": [18, 19, 20] },
+      "7": { "pairedWeapons": true },
+      "8": { "leapAttack": true },
+      "9": { "attacks": 1 },
+      "10": { "parry": 1, "dodge": 1 },
+      "11": { "knockoutStunWindow": [18, 19, 20] },
+      "12": { "strike": 1 },
+      "13": { 
+        "criticalStrikeFromBehind": true, 
+        "knockoutFromBehind": true,
+        "fromBehindDamageMultiplier": 3
+      },
+      "14": { "damage": 2 },
+      "15": { "attacks": 1, "deathBlowWindow": [20] }
+    }
+  },
+  {
+    "id": "hth_assassin",
+    "name": "Hand-to-Hand: Assassin",
+    "description": "A specialized fighting style focusing on swift, lethal strikes and incapacitation rather than defense.",
+    "progression": {
+      "1": { 
+        "attacks": 2, 
+        "strike": 2, 
+        "pairedWeapons": true 
+      },
+      "2": { "attacks": 1 },
+      "3": { "pullPunch": 3, "rollWithPunch": 3 },
+      "4": { "damage": 4 },
+      "5": { "attacks": 1 },
+      "6": { "parry": 3, "dodge": 3 },
+      "7": { "knockoutStunWindow": [17, 18, 19, 20] },
+      "8": { "attacks": 1 },
+      "9": { "kickAttack": { "damageFormula": "1D6", "description": "Basic physical kick" } },
+      "10": { "criticalStrikeWindow": [19, 20] },
+      "11": { "strike": 1 },
+      "12": { "deathBlowWindow": [19, 20] },
+      "13": { "attacks": 1 },
+      "14": { "damage": 2 },
+      "15": { "strike": 1 }
+    }
+  },
+  {
+    "id": "hth_none",
+    "name": "Hand-to-Hand: None",
+    "description": "Baseline combat capabilities for characters with no formal martial arts or combat training.",
+    "attackApmCost": 2,
+    "progression": {
+      "1": { "attacks": 3 },
+      "3": { "attacks": 2, "dodge": 1 },
+      "6": { "attacks": 2 },
+      "9": { "attacks": 2 }
     }
   }
 ]
