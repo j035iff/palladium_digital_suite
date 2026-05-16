@@ -2,7 +2,7 @@
  * Ensures bundled Palladium JSON Schemas (draft 2020-12) compile under Ajv.
  * Run: npm run validate:schemas
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
@@ -11,9 +11,18 @@ import addFormats from 'ajv-formats'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const schemasDir = join(root, 'src/data/schemas')
 const contentDir = join(root, 'src/data/content')
+const schemaExamplesDir = join(schemasDir, 'examples')
 
 function loadJson(absPath) {
   return JSON.parse(readFileSync(absPath, 'utf8'))
+}
+
+/** Example files may include `$schema` for editors; catalog schemas often forbid it on rows. */
+function stripSchemaPointer(doc) {
+  if (doc == null || typeof doc !== 'object' || Array.isArray(doc)) return doc
+  if (!Object.prototype.hasOwnProperty.call(doc, '$schema')) return doc
+  const { $schema: _s, ...rest } = doc
+  return rest
 }
 
 const skillSchema = loadJson(join(schemasDir, 'palladium-skill.schema.json'))
@@ -202,6 +211,58 @@ if (!Array.isArray(palladiumHandToHand)) {
     console.error(
       `ERR palladiumHandToHand.json — ${hthBad} row(s) failed schema validation`,
     )
+  }
+}
+
+const exampleValidators = [
+  { prefix: 'palladium-skill', compile: validateSkillRow },
+  { prefix: 'palladium-race', compile: validateRaceRow },
+  { prefix: 'palladium-occ', compile: validateOccRow },
+  { prefix: 'palladium-hth', compile: validateHandToHandRow },
+  {
+    prefix: 'palladium-weapon-proficiency',
+    compile: validateWeaponProficiencyRow,
+  },
+  {
+    prefix: 'standard-modern-weapon-progression',
+    compile: validateProgressionDoc,
+  },
+]
+
+let exampleFiles = []
+try {
+  exampleFiles = readdirSync(schemaExamplesDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR schemas/examples — directory missing')
+  failed = true
+}
+
+if (exampleFiles.length > 0) {
+  let exampleBad = 0
+  for (const file of exampleFiles) {
+    const doc = stripSchemaPointer(loadJson(join(schemaExamplesDir, file)))
+    const rule = exampleValidators.find((v) => file.startsWith(v.prefix))
+    if (!rule) {
+      exampleBad++
+      if (exampleBad <= 5) {
+        console.error(`ERR schemas/examples/${file} — no validator mapping for filename prefix`)
+      }
+      continue
+    }
+    if (!rule.compile(doc)) {
+      exampleBad++
+      if (exampleBad <= 5) {
+        console.error(`ERR schemas/examples/${file}:`, rule.compile.errors)
+      }
+    }
+  }
+  if (exampleBad === 0) {
+    console.log(`OK  schemas/examples — ${exampleFiles.length} example(s) validate`)
+  } else {
+    failed = true
+    console.error(`ERR schemas/examples — ${exampleBad} example(s) failed validation`)
   }
 }
 

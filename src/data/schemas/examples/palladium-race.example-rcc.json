@@ -1,0 +1,53 @@
+{
+  "$schema": "../palladium-race.schema.json",
+  "id": "example_rcc_guardian_pattern",
+  "name": "Example: Guardian R.C.C. (pattern)",
+  "description": "Illustrates canPickOcc: false, innate I.S.P. formula with attribute anchor, and flat S.D.C. dice.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 28
+    }
+  ],
+  "canPickOcc": false,
+  "lineage": "nightbane",
+  "attributes": {
+    "iq": "3D6",
+    "me": "3D6",
+    "ma": "3D6",
+    "ps": "4D6",
+    "pp": "4D6",
+    "pe": "4D6",
+    "pb": "3D6",
+    "spd": "3D6"
+  },
+  "strengthCategory": "supernatural",
+  "vitals": {
+    "hpFormula": "PE + 2D6",
+    "averageStandardPpe": "3D6",
+    "sdc": "4D6+20"
+  },
+  "psionics": {
+    "capabilityType": "innate",
+    "naturalIspFormula": "ME + 2D6"
+  },
+  "occLimitations": {
+    "forbiddenCategories": ["Magic", "Psychic"],
+    "forbiddenOccIds": []
+  },
+  "innateSkills": [
+    { "skillId": "literacy", "basePercent": 50 },
+    { "skillId": "math_basic" }
+  ],
+  "innateBonuses": {
+    "modifiers": {
+      "save_magic": 2
+    }
+  },
+  "demographics": {
+    "averageLifespan": "Centuries (varies)",
+    "alignmentTendencies": ["Principled", "Scrupulous", "Aberrant"]
+  }
+}

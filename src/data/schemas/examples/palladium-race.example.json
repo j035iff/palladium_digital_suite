@@ -1,0 +1,57 @@
+{
+  "$schema": "../palladium-race.schema.json",
+  "id": "example_race_human_pattern",
+  "name": "Example: Human (race pattern)",
+  "description": "Illustrates canPickOcc: true, conditional S.D.C. by O.C.C. tags, and standard psionics gate.",
+  "gameSystems": ["nightbane", "rifts"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 24
+    }
+  ],
+  "canPickOcc": true,
+  "lineage": "megaversal",
+  "attributes": {
+    "iq": "3D6",
+    "me": "3D6",
+    "ma": "3D6",
+    "ps": "3D6",
+    "pp": "3D6",
+    "pe": "3D6",
+    "pb": "3D6",
+    "spd": "3D6"
+  },
+  "strengthCategory": "standard",
+  "vitals": {
+    "hpFormula": "PE + 1D6",
+    "averageStandardPpe": "2D6",
+    "sdc": {
+      "strategy": "conditional_by_occ_tags",
+      "defaultFormula": "3D6",
+      "conditionalOverrides": [
+        {
+          "tags": ["military", "police", "detective"],
+          "formula": "1D4*10"
+        }
+      ]
+    }
+  },
+  "psionics": {
+    "capabilityType": "standard",
+    "naturalIspFormula": "0"
+  },
+  "occLimitations": {
+    "forbiddenCategories": [],
+    "forbiddenOccIds": []
+  },
+  "innateSkills": [],
+  "innateBonuses": {
+    "modifiers": {}
+  },
+  "demographics": {
+    "averageLifespan": "70-90 years",
+    "alignmentTendencies": ["Any"]
+  }
+}

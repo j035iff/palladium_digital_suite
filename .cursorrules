@@ -26,3 +26,5 @@ Surface-level results for speed, with deep math and rule references accessible v
 8. Radical Visibility
 Choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
 
+###Core guidelines
+If a content schema is updated, update the associated example json to account for the update.

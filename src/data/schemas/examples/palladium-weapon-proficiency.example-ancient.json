@@ -1,0 +1,28 @@
+{
+  "kind": "weapon_proficiency",
+  "weaponProficiencyCategory": "ancient",
+  "id": "example_wp_archery_pattern",
+  "name": "Example: W.P. Archery (ancient tiered pattern)",
+  "gameSystems": ["nightbane"],
+  "categories": ["Weapon Proficiencies", "Ancient"],
+  "description": "Illustrates ancient W.P. with cumulative levelTiers: strike/parry, rateOfFireDelta vs rateOfFireTotal, and rangeBonusPerLevelFeet.",
+  "stackingRule": "Strike and parry bonuses from each tier are cumulative. Rate of fire increases as indicated.",
+  "levelTiers": [
+    {
+      "atCharacterLevel": 1,
+      "parry": 1,
+      "rateOfFireTotal": 2,
+      "rangeBonusPerLevelFeet": 20
+    },
+    { "atCharacterLevel": 2, "strike": 1 },
+    { "atCharacterLevel": 3, "rateOfFireDelta": 2 },
+    { "atCharacterLevel": 4, "strike": 1 }
+  ],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 58
+    }
+  ]
+}

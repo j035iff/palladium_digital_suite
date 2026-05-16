@@ -1,0 +1,26 @@
+{
+  "id": "example_literacy_pattern",
+  "name": "Example: Literacy (specialization pattern)",
+  "gameSystems": ["nightbane"],
+  "categories": ["Technical"],
+  "requiresSpecialization": true,
+  "specialization": {
+    "kind": "literacy",
+    "prompt": "Which written language?",
+    "examples": ["English", "Spanish", "French"],
+    "allowsMultipleInstances": true,
+    "notes": "Each language is a separate skill selection."
+  },
+  "synergies": [],
+  "prerequisites": [],
+  "basePercent": 30,
+  "percentPerLevel": 5,
+  "description": "Illustrates topic-per-pick skills: requiresSpecialization + specialization object with allowsMultipleInstances.",
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 56
+    }
+  ]
+}

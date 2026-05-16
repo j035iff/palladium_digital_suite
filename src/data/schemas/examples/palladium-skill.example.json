@@ -1,0 +1,49 @@
+{
+  "id": "example_surveillance_pattern",
+  "name": "Example: Surveillance Systems (pattern)",
+  "gameSystems": ["nightbane"],
+  "categories": ["Communications", "Technical"],
+  "allowedAsSecondarySkill": true,
+  "basePercent": 30,
+  "percentPerLevel": 5,
+  "synergies": [
+    {
+      "skillId": "example_id_undercover",
+      "bonusPercent": 10,
+      "description": "Optional cross-skill % bonus when another skill is known."
+    }
+  ],
+  "prerequisites": [
+    {
+      "type": "skill_any_of",
+      "label": "Electronics: basic OR electrical engineering",
+      "skillIds": ["basic_electronics", "electrical_engineering"]
+    },
+    {
+      "type": "skill",
+      "skillId": "computer_operation",
+      "condition": "only for complex, high-tech systems"
+    }
+  ],
+  "description": "Illustrates percentile skills: basePercent + percentPerLevel, synergies, and structured prerequisites (skill_any_of + conditional skill).",
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 49
+    }
+  ],
+  "mechanicProgressions": [
+    {
+      "summary": "Optional non-percentile rule track: every N levels, apply integerDeltaPerStep to a labeled penalty or bonus.",
+      "everyNCharacterLevels": 3,
+      "integerDeltaPerStep": -1,
+      "targetKind": "penalty_modifier",
+      "targetLabel": "Example maneuver penalty",
+      "ruleId": "example_penalty_reduction"
+    }
+  ],
+  "physicalSkillBonuses": {
+    "dodge": 1
+  }
+}

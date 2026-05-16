@@ -1,0 +1,29 @@
+{
+  "kind": "weapon_proficiency",
+  "weaponProficiencyCategory": "ancient",
+  "id": "example_wp_paired_weapons_pattern",
+  "name": "Example: W.P. Paired Weapons (special rules pattern)",
+  "gameSystems": ["nightbane"],
+  "categories": ["Weapon Proficiencies", "Ancient"],
+  "description": "Illustrates ancient W.P. without a numeric tier ladder: pairedWeapons block plus specialManeuvers for machine-discoverable tactics.",
+  "pairedWeapons": {
+    "summary": "Paired weapon fighting style; see specialManeuvers for tactical options."
+  },
+  "specialManeuvers": [
+    {
+      "name": "Simultaneous Strike and Parry",
+      "description": "Strike and parry in one melee action; requires available attacks."
+    },
+    {
+      "name": "Twin Strike",
+      "description": "Two weapons vs one target; one strike roll, one melee action."
+    }
+  ],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane Survival Guide (example)",
+      "pageNumber": 59
+    }
+  ]
+}
