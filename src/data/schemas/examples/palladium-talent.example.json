@@ -1,0 +1,30 @@
+{
+  "$schema": "../palladium-talent.schema.json",
+  "id": "example_morphus_talent_pattern",
+  "name": "Example: Morphus Talent (pattern)",
+  "description": "Illustrates tier, morphus form lock, passive modifiers, and a level prerequisite.",
+  "descriptionMorphus": "Optional morphus-only flavor text for dual-form UI.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 112
+    }
+  ],
+  "tier": "common",
+  "tags": ["flight", "armor"],
+  "formRequirement": "morphus",
+  "modifiers": {
+    "sdc": 20,
+    "horror_factor": 2
+  },
+  "durationType": "narrative",
+  "prerequisites": [
+    {
+      "type": "level_minimum",
+      "level": 1,
+      "label": "Available at 1st level Nightbane creation."
+    }
+  ]
+}

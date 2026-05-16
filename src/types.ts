@@ -77,7 +77,7 @@ export type FeatureIdentity = {
 }
 
 export type FeatureActivationCost = {
-  type: 'ppe' | 'isp' | 'action' | 'other'
+  type: 'ppe' | 'isp' | 'action' | 'other' | 'none'
   value: number | string
 }
 
@@ -347,6 +347,96 @@ export type HandToHandProgressionLevel = {
   jumpKick?: boolean
   leapAttack?: boolean
   fromBehindDamageMultiplier?: number
+}
+
+export type TalentFormRequirement = 'morphus' | 'facade' | 'either'
+
+export type TalentTier =
+  | 'common'
+  | 'elite'
+  | 'uncommon'
+  | 'rare'
+  | 'very_rare'
+
+export type TalentUsableInNightbaneForm =
+  | 'morphus_only'
+  | 'facade_only'
+  | 'either_form'
+  | 'both_forms_note_special'
+
+export type TalentPpeEconomy = {
+  permanentBurnToAcquire?: number | string
+  baseActivation?: number | string | Record<string, unknown>
+  notes?: string
+  enhancement?: Record<string, unknown>
+  activationTiers?: readonly Record<string, unknown>[]
+}
+
+export type TalentLimitations = {
+  usableInNightbaneForm?: TalentUsableInNightbaneForm
+  minimumCharacterLevelToAcquire?: number
+  cannotAffect?: readonly string[]
+  otherLimitations?: string
+}
+
+export type TalentRangeEntry = {
+  summary: string
+  kind?: string
+  distanceValue?: number | string
+  distanceUnit?: string
+  distancePerLevel?: number
+  lineOfSightRequired?: boolean
+}
+
+export type TalentDurationBlock = {
+  summary?: string
+  kind?: string
+  durationValue?: number | string
+  value?: number | string
+}
+
+export type TalentPrerequisite = {
+  type: 'talent' | 'attribute_minimum' | 'level_minimum' | 'other_talent_any_of'
+  talentId?: string
+  talentIds?: readonly string[]
+  attribute?: keyof CharacterAttributes
+  minimum?: number
+  level?: number
+  label?: string
+}
+
+export type MorphusTablePrerequisites = {
+  morphusTableIds?: readonly string[]
+}
+
+/**
+ * Nightbane talent catalog row (`content/palladiumTalents.json`, palladium-talent.schema.json).
+ */
+export type PalladiumTalent = {
+  id: string
+  name: string
+  description: string
+  descriptionMorphus?: string
+  gameSystems: readonly string[]
+  sources: readonly PalladiumSourceRef[]
+  talentTier?: TalentTier
+  /** Slim-authoring alias for {@link talentTier}. */
+  tier?: TalentTier
+  tags?: readonly string[]
+  formRequirement?: TalentFormRequirement
+  ppe?: TalentPpeEconomy
+  limitations?: TalentLimitations
+  ranges?: readonly TalentRangeEntry[]
+  duration?: TalentDurationBlock
+  damage?: string | Record<string, unknown>
+  areaOfEffect?: Record<string, unknown>
+  prerequisites?: MorphusTablePrerequisites | readonly TalentPrerequisite[]
+  incompatibleTalentIds?: readonly string[]
+  notes?: string
+  modifiers?: FeatureModifiers
+  activation?: FeatureActivation
+  save?: unknown
+  [key: string]: unknown
 }
 
 /** Authoring keys are level strings `"1"`…`"15"`; engines normalize to numeric levels. */

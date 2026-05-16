@@ -1,6 +1,7 @@
 import type { Feature } from '../../types'
 import type { PalladiumOcc, Race } from '../../types'
-import { POWER_FEATURES, TRAIT_FEATURES } from './features'
+import { POWER_FEATURES } from './features'
+import { TALENT_FEATURES } from './talentCatalogLoader'
 import { loadRacesFromJson } from './racesLoader'
 import {
   BORG_XP_TABLE,
@@ -14,7 +15,7 @@ import {
   getPalladiumOccById,
 } from './occCatalogLoader'
 
-export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TRAIT_FEATURES]
+export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TALENT_FEATURES]
 export const RACE_REGISTRY: Race[] = loadRacesFromJson()
 export const OCC_REGISTRY: readonly PalladiumOcc[] = PALLADIUM_OCC_CATALOG
 
@@ -80,3 +81,12 @@ export {
   listHandToHandSkillIds,
   listHandToHandSkillsForGameSystem,
 } from './handToHandCatalogLoader'
+
+export {
+  PALLADIUM_TALENT_CATALOG,
+  TALENT_FEATURES,
+  getPalladiumTalentById,
+  getTalentFeatureById,
+  listPalladiumTalentsForGameSystem,
+  palladiumTalentToFeature,
+} from './talentCatalogLoader'

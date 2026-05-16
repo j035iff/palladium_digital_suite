@@ -35,6 +35,7 @@ const standardModernWeaponProgressionSchema = loadJson(
   join(schemasDir, 'standard-modern-weapon-progression.schema.json'),
 )
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
+const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
 
 const ajv = new Ajv2020({
   allErrors: true,
@@ -51,6 +52,7 @@ for (const [label, schema] of [
   ['standard-modern-weapon-progression.schema.json', standardModernWeaponProgressionSchema],
   ['palladium-occ.schema.json', occSchema],
   ['palladium-hth.schema.json', handToHandSchema],
+  ['palladium-talent.schema.json', talentSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -67,6 +69,7 @@ const validateProgressionDoc = ajv.compile(standardModernWeaponProgressionSchema
 const validateRaceRow = ajv.compile(raceSchema)
 const validateOccRow = ajv.compile(occSchema)
 const validateHandToHandRow = ajv.compile(handToHandSchema)
+const validateTalentRow = ajv.compile(talentSchema)
 
 const palladiumSkills = loadJson(join(contentDir, 'palladiumSkills.json'))
 if (!Array.isArray(palladiumSkills)) {
@@ -214,11 +217,41 @@ if (!Array.isArray(palladiumHandToHand)) {
   }
 }
 
+const palladiumTalents = loadJson(join(contentDir, 'palladiumTalents.json'))
+if (!Array.isArray(palladiumTalents)) {
+  failed = true
+  console.error('ERR palladiumTalents.json — expected top-level array')
+} else {
+  let talentBad = 0
+  for (const row of palladiumTalents) {
+    if (!validateTalentRow(row)) {
+      talentBad++
+      if (talentBad <= 5) {
+        console.error(
+          `ERR palladiumTalents.json id=${row?.id ?? '?'}:`,
+          validateTalentRow.errors,
+        )
+      }
+    }
+  }
+  if (talentBad === 0) {
+    console.log(
+      `OK  palladiumTalents.json — ${palladiumTalents.length} rows validate`,
+    )
+  } else {
+    failed = true
+    console.error(
+      `ERR palladiumTalents.json — ${talentBad} row(s) failed schema validation`,
+    )
+  }
+}
+
 const exampleValidators = [
   { prefix: 'palladium-skill', compile: validateSkillRow },
   { prefix: 'palladium-race', compile: validateRaceRow },
   { prefix: 'palladium-occ', compile: validateOccRow },
   { prefix: 'palladium-hth', compile: validateHandToHandRow },
+  { prefix: 'palladium-talent', compile: validateTalentRow },
   {
     prefix: 'palladium-weapon-proficiency',
     compile: validateWeaponProficiencyRow,

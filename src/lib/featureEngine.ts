@@ -88,12 +88,9 @@ export function featureSystemLabel(system: Feature['identity']['system']): strin
 
 /** Supernatural picker tabs (Nightbane Talents keyed off metadata.pickBucket === 'talent'). */
 export function featureLibraryFilterCategory(feature: Feature): 'Magic' | 'Psionics' | 'NightbaneTalents' | null {
+  if (feature.metadata?.pickBucket === 'talent') return 'NightbaneTalents'
   if (feature.identity.system === 'psionic') return 'Psionics'
-  if (feature.identity.system === 'magic') {
-    return feature.metadata?.pickBucket === 'talent'
-      ? 'NightbaneTalents'
-      : 'Magic'
-  }
+  if (feature.identity.system === 'magic') return 'Magic'
   return null
 }
 
@@ -105,5 +102,8 @@ export function featureBudgetCategory(feature: Feature): 'Spell' | 'Psionic' | '
   if (raw === 'talent') return 'Talent'
   if (feature.identity.system === 'psionic') return 'Psionic'
   if (feature.identity.system === 'magic') return 'Spell'
+  if (feature.identity.system === 'trait' && feature.metadata?.pickBucket === 'talent') {
+    return 'Talent'
+  }
   return null
 }

@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-talent.schema.json",
+  "title": "Palladium Nightbane talent",
+  "description": "Nightbane **Talent** catalog row (Dark Designs / Survival Guide pattern). Documents P.P.E. economy, form limitations, structured range/duration/damage, and book-specific mechanical extension blocks. Runtime importers map rows to the universal **Feature** composer (`metadata.pickBucket`: `talent`).",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "name", "description", "gameSystems", "sources"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "minLength": 1
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "descriptionMorphus": { "type": "string", "minLength": 1 },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceRef" }
+    },
+    "talentTier": {
+      "type": "string",
+      "enum": ["common", "elite", "uncommon", "rare", "very_rare"],
+      "description": "Dark Designs rarity band (common / elite morphus-table talents, etc.)."
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "elite"],
+      "description": "Alias for talentTier in slim authoring rows."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "ppe": { "$ref": "#/$defs/talentPpeEconomy" },
+    "limitations": { "$ref": "#/$defs/talentLimitations" },
+    "ranges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/talentRangeEntry" }
+    },
+    "range": { "$ref": "#/$defs/proseBlock" },
+    "duration": { "$ref": "#/$defs/talentDuration" },
+    "areaOfEffect": { "$ref": "#/$defs/proseBlock" },
+    "damage": {
+      "oneOf": [
+        { "$ref": "#/$defs/talentDamage" },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "save": {
+      "oneOf": [
+        { "$ref": "#/$defs/talentSaveEntry" },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/talentSaveEntry" }
+        },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "combat": { "type": "object", "additionalProperties": true },
+    "prerequisites": {
+      "description": "Morphus-table gates or structured chargen prerequisites.",
+      "oneOf": [
+        { "$ref": "#/$defs/morphusTablePrerequisites" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/talentPrerequisite" }
+        }
+      ]
+    },
+    "incompatibleTalentIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+      "uniqueItems": true
+    },
+    "notes": { "type": "string", "minLength": 1 },
+    "modifiers": { "$ref": "#/$defs/passiveModifiers" },
+    "formRequirement": {
+      "type": "string",
+      "enum": ["morphus", "facade", "either"]
+    },
+    "activation": { "$ref": "#/$defs/talentActivation" },
+    "durationType": {
+      "type": "string",
+      "enum": ["instant", "melee", "narrative"]
+    },
+    "pumpable": { "$ref": "#/$defs/pumpRule" }
+  },
+  "$defs": {
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameSystem", "reference", "pageNumber"],
+      "properties": {
+        "gameSystem": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1
+        },
+        "reference": { "type": "string", "minLength": 1 },
+        "pageNumber": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "proseBlock": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentPpeEconomy": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "permanentBurnToAcquire": {
+          "description": "P.P.E. permanently spent when the talent is first acquired.",
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "baseActivation": {
+          "description": "P.P.E. spent each time the talent is activated (fixed integer, prose, or structured relative cost).",
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "minLength": 1 },
+            { "type": "object", "additionalProperties": true }
+          ]
+        },
+        "notes": { "type": "string", "minLength": 1 },
+        "enhancement": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "summary": { "type": "string", "minLength": 1 },
+            "costPerStep": { "type": "integer", "minimum": 0 },
+            "stepDefinition": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "talentLimitations": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "usableInNightbaneForm": {
+          "type": "string",
+          "enum": [
+            "morphus_only",
+            "facade_only",
+            "either_form",
+            "both_forms_note_special"
+          ]
+        },
+        "minimumCharacterLevelToAcquire": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 15
+        },
+        "cannotAffect": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "otherLimitations": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentRangeEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["summary"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "touch",
+            "distance",
+            "self",
+            "radius",
+            "line_of_sight",
+            "special"
+          ]
+        },
+        "distanceValue": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "distanceUnit": {
+          "type": "string",
+          "enum": ["foot", "feet", "mile", "miles", "meter", "meters"]
+        },
+        "distancePerLevel": { "type": "number", "minimum": 0 }
+      }
+    },
+    "talentDuration": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["instant", "melee_round", "minute", "hour", "special"]
+        },
+        "durationValue": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        }
+      }
+    },
+    "talentSaveEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "saveKind": { "type": "string", "minLength": 1 },
+        "targetNumber": { "type": "integer", "minimum": 1 },
+        "effectsOnFailedSave": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentDamage": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "primaryTargetDamage": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "morphusTablePrerequisites": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "morphusTableIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "passiveModifiers": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    },
+    "talentActivation": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "cost": { "$ref": "#/$defs/activationCost" },
+        "range": { "type": "string", "minLength": 1 },
+        "duration": { "type": "string", "minLength": 1 },
+        "save": { "type": "string", "minLength": 1 }
+      }
+    },
+    "activationCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ppe", "isp", "action", "other", "none"]
+        },
+        "value": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        }
+      }
+    },
+    "pumpRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capPerLevel", "energyPerDice", "diceSides"],
+      "properties": {
+        "capPerLevel": { "type": "integer", "minimum": 0 },
+        "energyPerDice": { "type": "integer", "minimum": 1 },
+        "diceSides": { "type": "integer", "minimum": 2 }
+      }
+    },
+    "talentPrerequisite": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "talent",
+            "attribute_minimum",
+            "level_minimum",
+            "other_talent_any_of"
+          ]
+        },
+        "talentId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "talentIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+          "uniqueItems": true
+        },
+        "attribute": {
+          "type": "string",
+          "enum": ["iq", "me", "ma", "ps", "pp", "pe", "pb", "spd"]
+        },
+        "minimum": { "type": "integer", "minimum": 1 },
+        "level": { "type": "integer", "minimum": 1, "maximum": 15 },
+        "label": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
