@@ -1,0 +1,4691 @@
+[
+  {
+    "id": "cryptography",
+    "name": "Cryptography",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Skill in recognizing, designing, and cracking secret codes and messages.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "laser",
+    "name": "Laser",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Familiarity with laser communication systems and their operation.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "optic_systems",
+    "name": "Optic Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [
+      {
+        "skillId": "tv_video",
+        "description": "Special one time bonus of +5% to T.V./video skill if both are selected.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "description": "Training in the use of special optical equipment, ranging from night vision goggles to advanced targeting sensors.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "radio_basic",
+    "name": "Radio: Basic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Basic familiarity with the operation and maintenance of field radios and communication networks.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "radio_scramblers",
+    "name": "Radio: Scramblers",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Knowledge of electronic scrambling and descrambling equipment used in secure communications.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "surveillance_systems",
+    "name": "Surveillance Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill_any_of",
+        "label": "Electronics: basic OR electrical engineering",
+        "skillIds": [
+          "basic_electronics",
+          "electrical_engineering"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "computer_operation",
+        "condition": "only for complex, high-tech systems"
+      }
+    ],
+    "description": "The study and operation of surveillance systems, listening devices, and security cameras.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "tv_video",
+    "name": "T.V./Video",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Familiarity with operating television broadcasting and video recording equipment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "cook",
+    "name": "Cook",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Skill in selecting, planning, and preparing meals.",
+    "failureResults": "The cooked food is not properly prepared. It is edible but tastes bad (greasy, too spicy, sour, burnt, leaves a bad after-taste in mouth, etc.).",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "dance",
+    "name": "Dance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A practiced skill in the art of dancing. The character is especially smooth and graceful, a joy to dance with.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "Can learn new dance steps/moves much more quickly than somebody who can not dance."
+      }
+    ],
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "fishing",
+    "name": "Fishing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The fundamental methods and enjoyment of the relaxing sport of fishing. Areas of knowledge include the use of lures, bait, poles, hooks, lines, and the cleaning and preparation of fish for eating. Also includes a basic knowledge of freshwater fish, their habits and taste.",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "play_musical_instrument",
+    "name": "Play Musical Instrument",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The individual has learned to play a particular musical instrument with a fair amount of skill. The sound is generally pleasant (except when a bad roll is made). Note that each specific instrument requires the selection of this skill.",
+    "specialization": {
+      "kind": "instrument",
+      "prompt": "Which instrument?",
+      "examples": [
+        "Guitar",
+        "Violin",
+        "Harmonica"
+      ],
+      "allowsMultipleInstances": true
+    },
+    "repeatSelection": {
+      "summary": "Grants the Domestic category professional quality bonus to the specific instrument chosen when selected twice.",
+      "trackScope": "specialization_instance",
+      "categoryTrackInteraction": {
+        "mode": "append",
+        "summary": "Applies the inherited +10% category professional quality bonus to the specific parameterized instrument instance."
+      }
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "sewing",
+    "name": "Sewing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practiced skill with the needle and thread to mend clothing, do minor alterations, and layout, cut and sew simple patterns. This is not a tailoring ability, but can become tailoring if the player selects this skill twice.",
+    "repeatSelection": {
+      "summary": "Selecting this skill twice makes it tailoring.",
+      "categoryTrackInteraction": {
+        "mode": "append",
+        "summary": "Inherits the +10% professional quality from the Domestic category and also upgrades the classification to tailoring."
+      },
+      "ranks": [
+        {
+          "selectionNumber": 2,
+          "label": "Tailoring",
+          "effect": "Becomes tailoring quality."
+        }
+      ]
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "sing",
+    "name": "Sing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The simple ability to read music and carry a pleasant tune.",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "detect_ambush",
+    "name": "Detect Ambush",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training which develops an eye for spotting location and terrain suitable for ambushes and being ambushed. It also provides a rudimentary knowledge of guerrilla tactics used by the enemy.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "detect_concealment",
+    "name": "Detect Concealment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a skill which enables the individual to spot and recognize camouflage, concealed structures/building and vehicles, as well as the ability to construct unobtrusive shelters, use camouflage and blend into the environment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "disguise",
+    "name": "Disguise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows how to apply make-up, wigs, skin putty, dies, and other special effects in order to alter his appearance or that of somebody else.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "escape_artist",
+    "name": "Escape Artist",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The methods, principles, and tricks of escape artists. Includes muscle control (tensing and relaxing muscles), flexing and popping joints, knowledge of knots, and the ability to conceal small objects on the person. The character can try slipping out of handcuffs, ropes, straitjacket, etc. Note: Picking locks is a separate and distinct skill.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "forgery",
+    "name": "Forgery",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "situationalModifiers": [
+      {
+        "task": "Recognize other counterfeits",
+        "percentModifier": -10,
+        "appliesTo": "self"
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The techniques of making false copies of official documents, signatures, passports, I.D.s, and other printed material. The forger must have an original or photocopy to work from in order to make an accurate copy.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "intelligence",
+    "name": "Intelligence",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 32,
+    "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is the specific training in the practices and principles of recognizing and analyzing sources of information about the enemy, observation techniques, counterintelligence measures and proper procedure. This includes the practical assessment of sights and sounds, estimation of ranges, what to report, handling prisoners of war, and handling captured documents and equipment. Further intelligence training includes a working knowledge of indigenous guerrilla warfare, enemy practices, appearance, and current activities. Another area of training made available to intelligence is the identification of enemy troops, officers, and foreign advisors.",
+    "failureResults": "A failed roll in any of the areas of intelligence means that evidence is inconclusive, or that the character has incorrectly assessed the information/situation and is uncertain. A failed roll involving individual clues may mean the person has dismissed it entirely as being meaningless.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "interrogation_techniques",
+    "name": "Interrogation Techniques",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill is learned by policemen, intelligence officers, etc. The character knows the techniques to get information from (typically unwilling) subjects. This includes such old methods as \"good cop/bad cop\" (one interrogator is threatening and intimidating, the other is sympathetic and friendly), deceiving and misleading the subject into giving away information, and similar methods. The character can also judge if the subject is lying. This skill also includes some basic knowledge on methods of torture, from basic tactics like depriving the subject of sleep, to the old \"medieval\" instruments and new, sophisticated techniques like sensory deprivation, partial electrocution, and drugs.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "pick_locks",
+    "name": "Pick Locks",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows the methods and tools for picking/opening key and basic tumbler type locks. This does not include sophisticated computer or electronic locks. It takes 1D6 melee rounds for each attempt to pick a lock.",
+    "failureResults": "The lock holds; try again.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage)",
+        "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Rogue)",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "pick_pockets",
+    "name": "Pick Pockets",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Rogue"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "An ability to remove items from a person without their being aware of it.",
+    "failureResults": {
+      "summary": "If a pick pocket attempt fails, the item has NOT been removed.",
+      "secondaryCheck": {
+        "percentChance": 67,
+        "appliesWhen": "After a failed pick pocket attempt.",
+        "subject": "intended_victim",
+        "resolutionNote": "67% likelihood of the intended victim recognizing the intent of the action.",
+        "ifTriggers": "The victim recognizes the intent of the action.",
+        "ifNotTriggers": "The victim does not recognize the intent."
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage)",
+        "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Rogue)",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "sniper",
+    "name": "Sniper",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": null,
+    "percentPerLevel": null,
+    "physicalSkillBonuses": {
+      "strike": {
+        "value": 2,
+        "condition": "On an aimed shot. Only rifles that can be made to fire a single round or blast can be used for sniping (no automatic/multi-firing rifles)."
+      }
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill represents special training in long-range rifle firing and marksmanship.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "tracking",
+    "name": "Tracking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "situationalModifiers": [
+      {
+        "task": "Follow the trail of this character when they are deliberately using Counter-Tracking",
+        "percentModifier": -25,
+        "appliesTo": "opposing_roll",
+        "target": "enemy tracker",
+        "condition": "When the character is deliberately trying to conceal their trail using Counter-Tracking techniques. The character's rate of travel is reduced by half while doing so."
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Visual tracking is the identification of tracks, and following the path of men or animals by the signs they leave on the ground and vegetation. Tracking is a precise art, requiring much practice. The skill includes the evaluation of tracks, indicating whether the person being tracked is loaded down with equipment, running, moving slowly (by measuring the space between steps), and so on. By this means, the tracker can estimate the person's rate of movement, apparent direction, the number of persons in the party, and whether the person knows he is being followed. Other methods of tracking require recognizing other telltale signs, such as blood and other stains, broken and displaced vegetation, overturned rocks, litter, and even odors carried by the wind. Tracking also includes the recognizing of dangerous animals by their tracks, habits and feces. Likewise, tire tracks of vehicles can reveal much, such as size and type of the vehicle, the weight of its load, etc. Counter-Tracking techniques are also known, such as covering one's trail, misdirection, parallel trails, avoiding obvious pitfalls like littering and others. Roll once every 40 yards/meters when following a trail.",
+    "failureResults": "A failed roll means that the signs are inconclusive, vague or misleading. Additional signs must be found to verify or clarify (roll again). Three consecutive failed rolls means the tracker has completely lost the trail.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "wilderness_survival",
+    "name": "Wilderness Survival",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Techniques for getting water, food, shelter, and help when stranded in wild forests, deserts, or mountains. Characters without this skill will not be able to stay healthy for more than a few days in the wilderness once their supplies run out.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "criminal_sciences_and_forensics",
+    "name": "Criminal Sciences & Forensics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "chemistry_analytical"
+      },
+      {
+        "type": "skill",
+        "skillId": "mathematics_advanced"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "Basic knowledge of police skills, including basic criminal law, fingerprinting, ballistics (matching bullets to weapons and angles of impact), and general investigative techniques. Forensic medicine is the method and techniques which enables the character to find evidence regarding the cause of death, time of death, and other details when examining a corpse.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "first_aid",
+    "name": "First Aid",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "Rudimentary medical treatment which includes how to bandage wounds, stop bleeding, administer CPR/artificial respiration, and use antiseptics and common anti-inflammatory drugs and painkillers.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "holistic_medicine",
+    "name": "Holistic Medicine",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "Heal wounds faster (twice as quick as normal)."
+      }
+    ],
+    "description": "Training in the recognition, preparation, and application of natural medicines usually made from plants and their parts (roots, leaves, fruit). The holistic doctor is basically a natural pharmacist and naturalist who creates drugs from vegetation and studies common ailments. He can find and use plants to create salves, balms, ointments, and lotions to soothe burns, boils, rashes, and insect bites, reduce swelling, as well as create local anesthetics, and to heal wounds faster (twice as quick as normal). Potions and tonics are created to settle upset stomachs, induce drowsiness, or hallucinations. The individual can also make alcohol and poison (hemlock and mandrake, for example). The student of herbology also has a good knowledge of plant lore and when and where to find healing plants, edible fruit, berries, roots, and bark, as well as how to use and/or avoid dangerous flora. The character can also preserve foods and knows how to set and mend bones, bandage cuts, and suture cuts.",
+    "failureResults": "The treatment or concoction did not work.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "paramedic",
+    "name": "Paramedic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "resolutionLogic": [
+      {
+        "type": "best_of_x",
+        "count": 3,
+        "requiredSuccesses": 2,
+        "condition": "Applied to serious injury or coma"
+      }
+    ],
+    "description": "An advanced form of emergency medical treatment which includes all first aid techniques, the setting of broken bones, suturing of wounds, use of oxygen and emergency medical equipment, administering of drugs, knowledge of how to move a critically injured person, and other life saving techniques.",
+    "failureResults": "The patient has not responded to treatment or that the treatment has been improperly administered. For serious injury or coma, failure means the patient's condition is unchanged. Another character can immediately attempt to apply medical aid or the same player can try again, but only after the character has spent six minutes for reexamining and/or concentration on the problem.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "medical_doctor",
+    "name": "Medical Doctor",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": {
+      "splitBase": {
+        "diagnosis": 60,
+        "treatment": 50
+      }
+    },
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "pathology"
+      },
+      {
+        "type": "skill",
+        "skillId": "chemistry"
+      },
+      {
+        "type": "skill_any_of",
+        "label": "Basic or Advanced Mathematics",
+        "skillIds": [
+          "mathematics_basic",
+          "mathematics_advanced"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "The medical doctor is a trained surgeon and has a doctorate in the medical sciences. Areas of training include: clinical skills, medical discipline, code of ethics, physiology (muscle, respiratory, blood, body fluids), pathology (diseases, their structure and function), rudimentary pharmacology (use, reaction, and interaction of drugs), laboratory skills, and techniques and methods of data collection.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "pathology",
+    "name": "Pathology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "This branch of medicine deals with the nature of diseases, their cause, and symptoms, and the functional and structural changes caused by disease. Training includes anatomy, physiology, cell biology, manifestation of disease, tissue injury and repair, abnormal cell structure, metabolism, diagnosis of human disease, tissue culture methods and applications, analysis of drugs in biological samples and laboratory research, investigative methods, and use of instruments, tools and equipment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "toxicology",
+    "name": "Toxicology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "This is a specialty in medicine that deals with poisons, venoms and toxins, their manufacture, composition and antidotes. This skill is useful for both healers and assassins. A successful skill roll will help determine if poisons have been used on somebody and even the general type of poison/toxin used (a definite answer may require an autopsy and the forensics skill).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "demolitions",
+    "name": "Demolitions",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 60,
+    "percentPerLevel": 3,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "Increase the character's awareness of suspicious rope, string, and wire."
+      }
+    ],
+    "description": "Demolitions provides the person with an advanced knowledge in the use and workings of explosives and detonation devices for the purpose of blowing up bridges, buildings, and sabotage. This includes all types of explosives, such as mines, dynamite, plastics, nitro, blasting caps, etc. It also includes a basic understanding of the strategic placement of mines and booby traps.",
+    "failureResults": "A failed roll means a dud; no explosion.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "demolitions_disposal",
+    "name": "Demolitions Disposal",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 60,
+    "percentPerLevel": 3,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "This skill enables the character to safely defuse unexploded mines, bombs, explosive booby traps, dud artillery rounds, dud explosive charges, or any other explosive device.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "military_etiquette",
+    "name": "Military Etiquette",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "This skill grants a basic understanding of the way the military works. It includes basic rules of behavior (when to salute, how to address superiors/subalterns, etc.) as well as how to deal with military bureaucracy, who to contact to get things done, and other useful information. A character with this skill will have a good idea of how matters are handled in military bases and facilities, from the setting of watches to where to get live ammo (actually getting the ammo is a different matter altogether, of course).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "strategy_tactics",
+    "name": "Strategy/Tactics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "A successful strategy/tactics roll will reveal some hints as to the best way to approach a potential combat or military situation, like recognizing potential attack/retreat areas, getting good fields of fire, recognizing a good location for a crossfire or booby trap, etc."
+      }
+    ],
+    "description": "This is part of the training given to combat soldiers and officers, and includes a basic understanding of the \"military doctrine\" of the army in question, including preferred methods of fighting (on both a small scale engagement or a full battle), \"do's and don'ts,\" guerilla warfare, and other basic military methods.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "acrobatics",
+    "name": "Acrobatics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Aerial feats of agility and strength, such as walking a tightrope, high wire, trapeze, and stunts performed above ground. Other physical abilities include rolls, somersaults, leaps, and falls.",
+    "physicalSkillBonuses": {
+      "ps": 1,
+      "pp": 1,
+      "pe": 1,
+      "sdc": "1D6",
+      "rollWithImpact": 2
+    },
+    "specialAttacks": [
+      {
+        "name": "Kick attack",
+        "damage": "1D8",
+        "notes": "Automatic at first level."
+      }
+    ],
+    "subTasks": [
+      {
+        "name": "Sense of balance",
+        "basePercent": 60,
+        "percentPerLevel": 5
+      },
+      {
+        "name": "Walk tightrope or high wire",
+        "basePercent": 60,
+        "percentPerLevel": 3
+      },
+      {
+        "name": "Climb rope",
+        "basePercent": 80,
+        "percentPerLevel": 2
+      },
+      {
+        "name": "Back flip",
+        "basePercent": 60,
+        "percentPerLevel": 5
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "climbing",
+        "summary": "40% base climb ability or adds a +15% to climb skill.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 15
+        },
+        "grantIfMissing": {
+          "startingPercent": 40
+        }
+      },
+      {
+        "skillId": "prowl",
+        "summary": "30% base prowl ability or adds a +5% to prowl skill.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 5
+        },
+        "grantIfMissing": {
+          "startingPercent": 30
+        }
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      }
+    ]
+  },
+  {
+    "id": "athletics_general",
+    "name": "Athletics (general)",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training in, and enjoyment of, vigorous exertion for competitive sports, exercises, and contests of strength, endurance, and agility.",
+    "physicalSkillBonuses": {
+      "ps": 1,
+      "spd": "1D6",
+      "sdc": "1D8",
+      "parry": 1,
+      "dodge": 1,
+      "rollWithImpact": 1
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      }
+    ]
+  },
+  {
+    "id": "body_building_weight_lifting",
+    "name": "Body Building & Weight Lifting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The building of muscle tone and body strength through weight lifting and exercise.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "sdc": 10
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      }
+    ]
+  },
+  {
+    "id": "boxing",
+    "name": "Boxing",
+    "gameSystems": [
+      "nightbane",
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "allowedAsSecondarySkill": false,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Classic art of fighting with fists. Training helps build the body and reflexes.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "sdc": "3D6",
+      "apm": 1,
+      "parry": 2,
+      "dodge": 2,
+      "rollWithImpact": 1
+    },
+    "naturalRollOutcomes": [
+      {
+        "naturalRolls": [
+          20
+        ],
+        "effect": "Automatic knockout for 1D6 melees; no announcement required before striking.",
+        "appliesTo": "Successful boxing strikes"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      },
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows — Skills Note (not eligible as a secondary skill)",
+        "pageNumber": 1
+      }
+    ]
+  },
+  {
+    "id": "climbing",
+    "name": "Climbing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "Knowledge of the tools and techniques for climbing up sheer surfaces. Players should roll once for every 20 feet (6 m) of a vertical climb.",
+    "failureResults": "Falling.",
+    "resolutionLogic": {
+      "type": "reroll_on_failure",
+      "maxRerolls": 1,
+      "condition": "Roll once for every 20 feet (6 m) of a vertical climb. If the roll fails, it means he is losing his grip.",
+      "summary": "Every 'skilled' climber gets a chance to regain his grip, roll again. Two consecutive failed rolls means the character falls."
+    },
+    "subSkills": [
+      {
+        "id": "rappelling",
+        "name": "Rappelling",
+        "basePercent": 30,
+        "percentPerLevel": 5,
+        "description": "Specialized, rope climbing skill used in descending from helicopters, scaling walls and cliff facings. Includes ascending and descending climbs for game purposes."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      }
+    ]
+  },
+  {
+    "id": "gymnastics",
+    "name": "Gymnastics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Learning to do falls, rolls, tumbles, cartwheels, somersaults and to work the parallel bars and rings. Builds great upper body strength, grace, and balance.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "pp": 1,
+      "pe": 2,
+      "sdc": "2D6",
+      "rollWithImpact": 2
+    },
+    "specialAttacks": [
+      {
+        "name": "Kick attack",
+        "damage": "2D4",
+        "notes": "Automatic at first level."
+      }
+    ],
+    "subTasks": [
+      {
+        "name": "Sense of balance",
+        "basePercent": 50,
+        "percentPerLevel": 5
+      },
+      {
+        "name": "Work parallel bars & rings",
+        "basePercent": 60,
+        "percentPerLevel": 3
+      },
+      {
+        "name": "Climb rope",
+        "basePercent": 70,
+        "percentPerLevel": 2
+      },
+      {
+        "name": "Back flip",
+        "basePercent": 70,
+        "percentPerLevel": 5
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "climbing",
+        "summary": "25% base climb ability or adds a +7% to climb skill.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 7
+        },
+        "grantIfMissing": {
+          "startingPercent": 25
+        }
+      },
+      {
+        "skillId": "prowl",
+        "summary": "30% base prowl ability or adds a +5% to prowl skill.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 5
+        },
+        "grantIfMissing": {
+          "startingPercent": 30
+        }
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 53
+      }
+    ]
+  },
+  {
+    "id": "prowl",
+    "name": "Prowl",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Physical",
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Helps the character to move with stealth; quietly, slowly, and carefully. Techniques include balance and footing, short steps and pacing, rifle positioning, prone positions for low visibility, and crawling. A successful roll allows a sneak attack.",
+    "failureResults": "The character has been seen or heard.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Physical)",
+        "pageNumber": 54
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage & Rogue)",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "running",
+    "name": "Running",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A routine of running and exercise to build speed and endurance.",
+    "physicalSkillBonuses": {
+      "pe": 1,
+      "spd": "4D4",
+      "sdc": "1D6"
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "swimming",
+    "name": "Swimming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "The rudimentary skill of keeping afloat, dives, swimming and lifesaving techniques.",
+    "performanceFormulas": [
+      {
+        "stat": "distance",
+        "formula": "3x P.S.",
+        "unit": "yards/meters per melee",
+        "metricKey": "swim_distance",
+        "cappedByMetricKey": "swim_duration",
+        "capRule": "custom",
+        "linkSummary": "A character can swim a distance equal to 3x his P.S. in yards/meters per melee. This pace can be maintained for a total of minutes equal to his P.E./endurance."
+      },
+      {
+        "stat": "duration",
+        "formula": "P.E.",
+        "unit": "minutes",
+        "metricKey": "swim_duration"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "scuba",
+    "name": "S.C.U.B.A.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "swimming"
+      }
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "Self-Contained Underwater Breathing Apparatus. Individuals learn the methods and equipment needed for skin diving and underwater swimming. The maximum safe depth without getting the bends is about 120 feet (36.5 m).",
+    "performanceFormulas": [
+      {
+        "stat": "distance",
+        "formula": "2x P.S.",
+        "unit": "yards/meters per melee",
+        "metricKey": "scuba_distance",
+        "cappedByMetricKey": "scuba_duration",
+        "capRule": "custom",
+        "linkSummary": "A character can swim a distance equal to 2x his P.S. in yards/meters per melee. This pace can be maintained for a total of minutes equal to his P.E./Endurance."
+      },
+      {
+        "stat": "duration",
+        "formula": "P.E.",
+        "unit": "minutes",
+        "metricKey": "scuba_duration"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "wrestling",
+    "name": "Wrestling",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "As taught in old high schools and colleges, wrestling is more of a sport than a combat skill, but it does provide some useful combat moves.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "pe": 1,
+      "sdc": "4D6",
+      "rollWithImpact": 1
+    },
+    "naturalRollOutcomes": [
+      {
+        "naturalRange": {
+          "min": 18,
+          "max": 20
+        },
+        "effect": "Pin/incapacitate",
+        "appliesTo": "Successful wrestling strike/hold"
+      }
+    ],
+    "specialAttacks": [
+      {
+        "name": "Body block/tackle",
+        "damage": "1D4",
+        "notes": "The opponent must dodge or parry to avoid being knocked down.",
+        "statusEffects": [
+          "knockdown",
+          "lose_one_melee_attack"
+        ],
+        "saveRequired": {
+          "summary": "Target must dodge or parry to avoid being knocked down and losing one melee attack.",
+          "saveKind": "dodge_or_parry",
+          "appliesTo": "defender"
+        }
+      },
+      {
+        "name": "Crush/squeeze",
+        "damage": "1D4",
+        "notes": "Does 1D4 damage per squeeze attack."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "airplane",
+    "name": "Pilot: Airplane",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "read_sensory_equipment"
+      }
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 4,
+    "description": "Includes old propeller, single and twin engine types.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "automobile",
+    "name": "Pilot: Automobile",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 2,
+    "description": "Manual and automatic transmissions; includes dune buggies, jeeps, and small trucks.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "boat_sail_type",
+    "name": "Pilot: Boat: Sail Type",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 5,
+    "description": "Small sailing and medium sized sailing yachts, and fishing boats.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "boat_motor_and_hydrofoils",
+    "name": "Pilot: Boat: Motor and Hydrofoils",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 55,
+    "percentPerLevel": 5,
+    "description": "These include all types of small motor driven boats and yachts.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "boat_ships",
+    "name": "Pilot: Boat: Ships",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": {
+      "splitBase": {
+        "sailing": 45,
+        "motor": 44
+      }
+    },
+    "percentPerLevel": null,
+    "splitPercentPerLevel": {
+      "sailing": 5,
+      "motor": 4
+    },
+    "description": "This includes all large sailing and motor driven seafaring vessels.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "helicopter",
+    "name": "Pilot: Helicopter",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "read_sensory_equipment"
+      },
+      {
+        "type": "skill",
+        "skillId": "weapon_systems",
+        "condition": "Required to operate weapons on a combat helicopter."
+      }
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "The specialized skill required in flying all types of helicopters, including combat 'copters.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "horsemanship",
+    "name": "Horsemanship",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "specialization": {
+      "kind": "mount",
+      "prompt": "Mount type",
+      "examples": [
+        "Horse",
+        "Supernatural animal/monster"
+      ],
+      "allowsMultipleInstances": false,
+      "notes": "Riding supernatural animals/monsters (not applicable to intelligent creatures) has a base skill of 24% + 4% per level."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "The skill includes the basic principles of riding, the care and feeding of the animal, recognizing breed and quality, charging, and jumps. The percentile number is used whenever the character tries to determine breed and quality, and for special jumps or maneuvers.",
+    "physicalSkillBonuses": {
+      "parry": {
+        "value": 1,
+        "condition": "When charging on horseback"
+      },
+      "dodge": {
+        "value": 1,
+        "condition": "When charging on horseback"
+      },
+      "chargingDamage": {
+        "value": 4,
+        "condition": "When charging on horseback"
+      }
+    },
+    "situationalRuleOverrides": [
+      {
+        "summary": "Aimed shots are impossible on a moving animal.",
+        "domain": "mount_combat",
+        "whenContext": "Firing a projectile weapon from a moving animal.",
+        "constraint": "prohibited",
+        "targets": [
+          "aimed_shot"
+        ]
+      },
+      {
+        "summary": "At full gallop, the shooter can fire only as wild.",
+        "domain": "ranged_combat",
+        "whenContext": "Firing from a horse at a full gallop.",
+        "constraint": "forced_outcome",
+        "targets": [
+          "burst_fire",
+          "automatic_fire"
+        ],
+        "outcomeHint": "wild_burst"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "hover_craft_ground",
+    "name": "Pilot: Hover Craft (ground)",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "The knowledge needed in piloting hover cycles and other hover vehicles used for ground transport. These vehicles utilize several air jets and directional thrusters that pushes the craft along, above the ground, on a cushion of air.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "jet_aircraft",
+    "name": "Pilot: Jet Aircraft",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "read_sensory_equipment"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "Includes large and small commercial transport jets.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "jet_fighters",
+    "name": "Pilot: Jet Fighters",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "read_sensory_equipment"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "Training includes flying, maneuvering, aerial combat strategies, and typical fighter jet weapon systems.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "jet_packs",
+    "name": "Pilot: Jet Packs",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 42,
+    "percentPerLevel": 4,
+    "description": "The piloting skill of backpack like units that strap to the back of an individual to carry him airborne. The typical jet pack is a one person unit capable of hovering above the ground and flying at an average altitude of 300 feet (91.5 m).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "motorcycle",
+    "name": "Pilot: Motorcycle",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 4,
+    "description": "This skill includes the piloting of all two and three wheeled vehicles such as motorcycles of all types, dirt bikes, and mopeds.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "truck",
+    "name": "Pilot: Truck",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "This piloting skill specifically applies to large cargo and transport vehicles like eight to sixteen wheeled commercial trucks and multi-ton transports.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "tanks_and_apcs",
+    "name": "Pilot: Tanks and APCs",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "description": "Piloting for many ton, armored, combat vehicles such as tanks and armored personnel carriers (APC) which have unconventional controls and handle differently than conventional vehicles.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "navigation",
+    "name": "Navigation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "mathematics_basic"
+      },
+      {
+        "type": "skill",
+        "skillId": "read_sensory_equipment"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "Training in map reading, star charts, course computation, following landmarks, and use of navigational equipment. Includes land, air, and water navigation, as well as piloting by instruments alone.",
+    "failureResults": "A failed roll means the pilot is off course. Roll to determine how many miles/kilometers they are off course. Roll for every hour that one is off course.",
+    "failureFormulas": [
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D6x100",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_aircraft",
+        "linkSummary": "Distance off course for most aircraft.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "aircraft"
+        }
+      },
+      {
+        "consequence": "distance_off_course",
+        "formula": "4D6x100",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_jet",
+        "linkSummary": "Distance off course for jets.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "jet_aircraft"
+        }
+      },
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D6x10",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_ground",
+        "linkSummary": "Distance off course for ground vehicles.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "ground_vehicle"
+        }
+      }
+    ],
+    "resolutionLogic": {
+      "type": "standard",
+      "recurrence": {
+        "summary": "Roll for every hour that one is off course.",
+        "intervalValue": 1,
+        "intervalUnit": "hour"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "read_sensory_equipment",
+    "name": "Read Sensory Equipment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Individuals with this training can operate, maintain, understand, and \"read\" or interpret sensory data from all types of conventional sensor devices. These devices include radar, sonar, motion detectors, surveillance equipment, optical enhancements, instrument panels, and so on.",
+    "categoryAccessLockouts": [
+      {
+        "targetCategories": [
+          "Pilot"
+        ],
+        "constraint": "prohibited",
+        "summary": "Characters without this skill cannot understand nor operate aircraft, radar, or detection/surveillance equipment.",
+        "scope": "Aircraft, radar, or detection/surveillance equipment"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "weapon_systems",
+    "name": "Weapon Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "This is the complete understanding of weapon units and systems incorporated in military vehicles. It includes machineguns, missile and grenade launchers, cannons, and other heavy weapons systems.",
+    "physicalSkillBonuses": {
+      "strike": {
+        "value": 1,
+        "condition": "When using weapon units and systems incorporated in military vehicles; this does not include hand-held weapons."
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "computer_hacking",
+    "name": "Computer Hacking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [
+      {
+        "skillId": "cryptography",
+        "description": "Grants a one time bonus of +5% to the cryptography skill if the character is a hacker.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "surveillance_systems",
+        "description": "Grants a one time bonus of +5% to the surveillance systems skill if the character is a hacker.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "locksmith",
+        "description": "Grants a one time bonus of +5% to the locksmith skill if the character is a hacker.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      },
+      {
+        "type": "skill",
+        "skillId": "computer_operation"
+      },
+      {
+        "type": "skill",
+        "skillId": "computer_programming"
+      },
+      {
+        "type": "skill",
+        "skillId": "mathematics_basic"
+      }
+    ],
+    "basePercent": 15,
+    "percentPerLevel": 5,
+    "description": "This is a computer skill similar to computer programming, however, the emphasis of the skill is breaking computer access codes to gain illegal access to other computer systems and steal or sabotage its data. The character is an expert in tracing computer data, bypassing defense systems, and breaking ('hacking') codes.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "concealment",
+    "name": "Concealment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "description": "The practiced ability to hide small items on one's body or in hand, usually by continually moving it around from hand to hand or place to place unnoticed. Larger items such as a book, scroll, club, statue, or similarly large or heavy object are more difficult to conceal on one's person for obvious reasons.",
+    "physicalConstraints": {
+      "summary": "Objects must be no larger than 14 inches in height and length, and six inches in width. The weight must also be 10 pounds or less (4.5 kg).",
+      "maxWeightLbs": 10,
+      "maxHeightInches": 14,
+      "maxWidthInches": 6,
+      "maxLengthInches": 14,
+      "maxWeightKg": 4.5
+    },
+    "situationalModifiers": [
+      {
+        "task": "Concealing a smaller and lighter object, such as a knife, gem, key, credit card, etc.",
+        "percentModifier": 5,
+        "appliesTo": "self"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "palming",
+    "name": "Palming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [
+      {
+        "skillId": "pick_pockets",
+        "description": "Adds a bonus of +5% to the pick pocket skill.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "Simply the ability to pick up and seemingly make a small object, such as a coin, key or credit card, disappear by concealing it in one's hand.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "streetwise",
+    "name": "Streetwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "description": "This skill instills an understanding of the darker side of city life and the scoundrels who roam those streets. The streetwise character will be able to recognize gang members by their actions and philosophies, gang colors, gang symbols and mannerisms, and dangerous locations and gangland haunts. The individual will also recognize a potential brawl situation, assess a gang member's rank/power in the organization, and know some of the hangouts, modes of operation, rituals, ethics, and perhaps even notorious gang leaders of the more infamous street gangs. This skill also includes the ability to recognize and locate black market dealers/organizations, illegal clinics, drugs and arms dealers, and similar criminal outfits.",
+    "subSkills": [
+      {
+        "id": "drugs",
+        "name": "Drugs",
+        "basePercent": 20,
+        "percentPerLevel": 4,
+        "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability). Uses the base Streetwise proficiency when included as part of the regular streetwise skill."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "streetwise_drugs",
+    "name": "Streetwise - Drugs (special)",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability).",
+    "optionalStandaloneStatus": {
+      "summary": "G.M.'s choice whether this is included as part of the regular streetwise skill or used as an additional rogue skill. If used as a separate skill, the Base Skill proficiency is 25%+5% per level.",
+      "nestedPlacement": {
+        "parentSkillId": "streetwise",
+        "subSkillId": "drugs"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "anthropology",
+    "name": "Anthropology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This is the behavioral study of man and other intelligent life forms and their environments. Studies include societies, customs and beliefs, religions, political structure, as well as rudimentary history and archaeological background. The skill can be used in the examination of items/artifacts and ruins to identify the probable people/race, purpose, and technological level, as well as identifying the period in which the item was used.",
+    "situationalRuleOverrides": [
+      {
+        "summary": "The character is not skilled enough to tell whether an item is an authentic artifact or a forgery.",
+        "domain": "skill_roll",
+        "whenContext": "Examining items, artifacts, or ruins.",
+        "constraint": "prohibited"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "archaeology",
+    "name": "Archaeology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This is the scientific study of relics of ancient civilizations by excavation and analysis of artifacts. Studies include proper excavation (digs) techniques, preservation, restoration, and dating methods (including carbon dating).",
+    "narrativeAdvantages": [
+      {
+        "summary": "Provides a rudimentary history and anthropology background."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "astronomy",
+    "name": "Astronomy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [
+      {
+        "skillId": "navigation",
+        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+      },
+      {
+        "skillId": "land_navigation",
+        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The study of the stars and other celestial bodies, their movements, positions, cycles, alignments, and interrelations with the earth and each other. This knowledge can also be used to determine direction, approximate distances, identify seasons, and tell the time of day.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "biology",
+    "name": "Biology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Basic understanding of cells, anatomy, physiology, evolution, and genetics. The character will know how to use a microscope, cultivate bacteria, and how to classify new organisms.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "botany",
+    "name": "Botany",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Plants, their categories and functions, are studied extensively. Characters will know the basics of cross-fertilization and germinating, as well as growing experimental plants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "chemistry",
+    "name": "Chemistry",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "The basic understanding of chemical principles and formulae. Characters know enough chemical laboratory procedures for analyzing and synthesizing chemical compounds in order to be competent assistants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "chemistry_analytical",
+    "name": "Chemistry Analytical",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [
+      {
+        "skillId": "computer_operation",
+        "description": "Computer operation is highly suggested but not required."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "mathematics_advanced"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Training in chemical engineering theories useful in the analysis of compounds and their practical applications. Characters will be highly skilled in the use of laboratory equipment and can analyze and synthesize chemicals.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "mathematics_basic",
+    "name": "Mathematics: Basic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "description": "Knowledge of basic math, including the ability to count, addition, subtraction, multiplication, division, and fractions.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "mathematics_advanced",
+    "name": "Mathematics: Advanced",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "description": "Knowledge of all basic and advanced mathematics, including algebra, geometry, trigonometry, calculus, and techniques for advanced mathematical formulae.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "art",
+    "name": "Art",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "The ability to draw or paint or sculpt or do craft-work.",
+    "acquisitionEffects": [
+      {
+        "origin": "primary_scholastic",
+        "summary": "Scholastic art training indicates a professional quality.",
+        "outputQuality": "professional"
+      },
+      {
+        "origin": "secondary_skill",
+        "summary": "A secondary skill indicates a talented amateur.",
+        "outputQuality": "amateur"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "computer_operation",
+    "name": "Computer Operation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "A knowledge of how computers work, along with the skills to operate peripherals like keyboards, printers, and modems. Characters can follow computer directions, enter and retrieve information, and similar basic computer operations. However, this does NOT include programming or hacking.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "computer_programming",
+    "name": "Computer Programming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "computer_operation"
+      },
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Advance computer knowledge that includes designing, programming, debugging, and testing computer programs and software. Hacking is possible, but at a severe penalty unless the character is a trained hacker.",
+    "situationalModifiers": [
+      {
+        "task": "Hacking",
+        "percentModifier": -40,
+        "appliesTo": "self",
+        "condition": "Applies when attempting to hack, unless the character also has the Computer Hacking (Rogue) skill."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "language",
+    "name": "Language",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "specialization": {
+      "kind": "language",
+      "prompt": "Which language?",
+      "examples": [
+        "Spanish",
+        "French",
+        "Japanese"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Each selection gives the character knowledge of a different language and costs one skill selection each time."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "Characters with a language skill can understand and speak in a language other than his own native tongue.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "literacy",
+    "name": "Literacy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "specialization": {
+      "kind": "literacy",
+      "prompt": "Which written language?",
+      "examples": [
+        "English",
+        "Spanish",
+        "French"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "The character may be able to read and write several different languages, but each language counts as a separate skill selection."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Characters must pick up literacy as a skill to determine that they can read beyond the most basic levels. Like the language skill, it must be selected specifically for each language.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "lore_demons_and_monsters",
+    "name": "Lore: Demons and Monsters",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "This is a study of demonic entities and monster lore throughout the ages and around the world. It includes ancient and primitive cultures' belief in demons, possession, reputed demon places of habitation, appearances, habits, weaknesses, strengths and similar data. This knowledge also includes unusual creatures or monsters, past and present. As a skill, it can help the character to recognize what may be a particular type of demon or monster by description, drawings, photos, footprints, legends, ritual, or action.",
+    "situationalModifiers": [
+      {
+        "task": "Dealing with Nightbane",
+        "modifierType": "multiply",
+        "operand": 0.5,
+        "appliesTo": "self",
+        "condition": "When dealing with Nightbane, halve the effective skill level.",
+        "roundingNote": "Round fractions down."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "lore_geomancy",
+    "name": "Lore: Geomancy or Lines of Power",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "A study of ley lines, burial mounds, places of power, megaliths, and geomancy beliefs, past and present. The study includes 'known' locations of such places, such as Stonehenge and the Bermuda Triangle, as well as the many theories behind them and the legacy of legends, mysteries, disappearances and dangers linked to each. The skill will provide the character with insight about the areas and enable him/her to recognize specific, known places of power, as well as recognize unknown megalithic markers of these revered or feared places.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "lore_nightbane",
+    "name": "Lore: Nightbane",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "This is a comprehensive study of the Nightbane species, their powers, limitations, and the myths and beliefs associated with them. Very few non-Nightbane have the crucial pieces of evidence that would allow them to have this skill, and those fortunate few usually gained the knowledge from a Nightbane who was willing (or forced) to pass the knowledge on.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "lore_nightlands",
+    "name": "Lore: Nightlands",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The study of the shadowy parallel dimension ruled by the Ba'al. This skill includes knowledge about the inhabitants of the Nightlands, including the Nightlords, Dopplegangers, Hunters and Hounds, and others. This skill is most often found in the hands of mystics and psychics who have seen the Nightlands with their own eyes.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "lore_religion",
+    "name": "Lore: Religion",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "A comprehensive study of the world's religions, past and present, their beliefs, rituals, holy places, pantheons of deities and supernatural creatures (demons, spirits, angels), stories of creation, myths and legends. The skill will help the character recognize specific rituals, their purpose, the deity(s), icons, and similar information.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "lore_vampires",
+    "name": "Lore: Vampires",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "The study of the undead, their habits, origins, powers and weaknesses. The skill will help a character determine if a person is under the sway or control of a vampire, or whether or not a victim has been killed by the undead. It will also aid in differentiating fact from superstition regarding the vampire's vulnerabilities and strength, the few ways to truly destroy them, and basic vampire-hunting tactics.",
+    "narrativeAdvantages": [
+      {
+        "summary": "At the higher levels of knowledge (65%+), the character may have some idea about vampire intelligences, the Wampyr sub-race, and other detailed information.",
+        "appliesWhen": "When effective skill is 65% or higher."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "photography",
+    "name": "Photography",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "Training in the art of still photography, the use of lighting, cameras, lenses, filters, and other camera equipment, as well as storage, development, enlargement, and duplication of film/photos.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "research",
+    "name": "Research",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "Training in the use of methods, techniques, and locations, for finding information, including public records, libraries, federal information services, data bureaus, interviews, surveys, demographics, trade journals, clipping services, computer services, and legal searches.",
+    "narrativeAdvantages": [
+      {
+        "summary": "The research skill reduces the amount of time required by half compared to an untrained person.",
+        "appliesWhen": "Always when researching."
+      },
+      {
+        "summary": "The character is trained to notice relevant data that an untrained character is liable to overlook.",
+        "appliesWhen": "Always when researching."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "writing",
+    "name": "Writing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      }
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The ability to write prose (stories), poems, or journalistically (article, reports, news). Note that the written word can be a powerful tool in helping others understand the threats they are facing.",
+    "failureResults": "An awkward and poorly written work that is boring and difficult to understand. Try again.",
+    "acquisitionEffects": [
+      {
+        "origin": "primary_scholastic",
+        "summary": "Scholastic training indicates a professional quality.",
+        "outputQuality": "professional"
+      },
+      {
+        "origin": "secondary_skill",
+        "summary": "A secondary skill indicates a talented amateur.",
+        "outputQuality": "amateur"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "boat_building",
+    "name": "Boat Building",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "This skill enables the character to build a variety of rafts, small rowboats, large flatbed boats, and canoes. Construction times: A small raft (two man) can be made within 1D6+1 hours if materials are available; large raft 4D6 hours; canoe 2D6 days; rowboat 4D4 days; large flatbed 1D4x10 days. Time is doubled or tripled if trees must be cut down and wood prepared. Time can be reduced with extra help.",
+    "failureResults": "A failed skill roll means the boat has leaks. Trying to patch it will require 4D4 hours.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "carpentry",
+    "name": "Carpentry",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "boat_building",
+        "description": "Adds +5% bonus to the boat building skill if taken.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "A fundamental knowledge of working with wood. The character knows how to prepare, treat, and preserve wood, recognize quality craftsmanship, can repair damaged wood and wood items, and build (chests, chairs, tables, cabinets, houses, etc.).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "hunting",
+    "name": "Hunting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "prowl",
+        "description": "Provides a +2% bonus to prowl.",
+        "bonusPercent": 2
+      },
+      {
+        "skillId": "track_animals",
+        "description": "Provides a +5% bonus to track animals.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skin_and_prepare_animal_hides",
+        "description": "Provides a +5% bonus to skin animals.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "wilderness_survival",
+        "description": "Provides a +5% bonus to wilderness survival.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "cook",
+        "description": "Provides a +5% to cook the catch only.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "description": "The skill of killing and preparing an animal for food. This skill has no base percent, but provides distinct bonuses to related hunting and survival skills.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "identify_plants_and_fruits",
+    "name": "Identify Plants & Fruits",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Training in the recognition of the many different types of plants and vegetation and where they grow. The emphasis is placed on edible, herbal, and poisonous plants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "land_navigation",
+    "name": "Land Navigation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "description": "This skill enables the person to stay on course while traveling over land by means of observation. It includes mentally marking/recognizing geographic landmarks, estimating distance and movement, recognizing sounds, night travel, and other navigational tricks.",
+    "failureResults": "The character is drifting off course. Consecutive failed rolls means the individual does not realize that he's off course and continues in the wrong direction.",
+    "failureFormulas": [
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D10x100",
+        "unit": "yards/meters",
+        "metricKey": "land_nav_drift",
+        "linkSummary": "Distance drifted off course per failed navigation check."
+      }
+    ],
+    "resolutionLogic": {
+      "type": "standard",
+      "recurrence": {
+        "summary": "Roll once for approximately every three miles (4.8 km) traveled.",
+        "intervalValue": 3,
+        "intervalUnit": "custom"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "preserve_food",
+    "name": "Preserve Food",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Knowledge in the preparation of foods for storage and later consumption. Includes canning fresh fruit and vegetables, making jams and honey, drying fruit, vegetables, and herbs, drying meat and fish, plus various smoking, salting, and pickling methods.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "skin_and_prepare_animal_hides",
+    "name": "Skin and Prepare Animal Hides",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "sewing",
+        "description": "Adds a +5% bonus to the sewing skill.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Training in the methods and techniques in skinning, tanning, stretching, and preserving animal hides as fur or leather.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "track_animals",
+    "name": "Track Animals",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This skill enables the character to identify an animal by its tracks, scent, droppings, and habits. The individual can also follow the animal's tracks and other signs. This means he can also estimate how fresh the tracks are, what direction they are heading, whether the animal is hurt or sick, and guess its age. The habits and habitats of animals and animal behavior are also learned.",
+    "situationalModifiers": [
+      {
+        "task": "Tracking humans",
+        "percentModifier": -20,
+        "appliesTo": "self",
+        "target": "Human tracks"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "fieldcraft",
+    "name": "Fieldcraft",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill covers the common \"tricks\" spies use to exchange information covertly. Some fieldcraft methods include \"dead drops\" (the information is placed in a hiding place such as taped under a park bench, behind a brick, and so on; the other agent then comes by and picks it up, avoiding ever seeing his \"contact\"), ways to notice and avoid being shadowed (use this skill in conjunction with the Perception rules), selecting code words and passwords to recognize other agents, and similar techniques.",
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "lore_astral",
+    "name": "Lore: Astral",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "description": "An in depth knowledge about the Astral Plane, Outer Plane, Inner Plane, Void, and major kingdoms, as well as a general knowledge about astral travel, methods of travel and navigation, astral beings, domains and dangers.",
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Can only be learned from the few individuals and organizations who regularly venture into the Astral Plane."
+      }
+    ],
+    "externalMechanicsBonuses": [
+      {
+        "targetKind": "psionic_power",
+        "targetName": "Astral Navigation",
+        "targetId": "astral_navigation",
+        "bonusPercentPerLevel": 2,
+        "summary": "Having this skill adds an additional +2% per level to the Astral Navigation power."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "lore_dreamstream",
+    "name": "Lore: Dreamstream",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill is helpful in understanding and identifying the \"landscape,\" dangers and inhabitants of the Dreamstream. Skill rolls are necessary to identify creatures and events/transformations of the Dreamstream.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Even a beginner will automatically know of such things as Dream Pools and other major concepts regarding the dream lands."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "lore_psychic",
+    "name": "Lore: Psychic",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "description": "Characters with this skill have knowledge in the way psychic abilities are believed to work, and what types of psionic abilities exist. This knowledge includes a good idea of the limitations of most psychics and psychic abilities, major known types of P.C.C.s, famous psychics, and similar data. The character does not have to be a psychic himself.",
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Must believe that such powers exist. Most commonly known by people who are psychic themselves, or involved in the PAB, Pandora Project, or similar organizations that study paranormal phenomena."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "principles_of_magic",
+    "name": "Principles of Magic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "occProgressionOverrides": [
+      {
+        "when": {
+          "summary": "Practitioners of Magic",
+          "practicesMagic": true
+        },
+        "basePercent": 60,
+        "percentPerLevel": 5
+      }
+    ],
+    "synergies": [
+      {
+        "targetAbility": "Spell Strength",
+        "modifier": {
+          "summary": "Gated spell-strength tiers based on skill proficiency."
+        },
+        "thresholdRewards": [
+          {
+            "requiresSkillPercent": {
+              "skillId": "principles_of_magic",
+              "minimumPercent": 60
+            },
+            "summary": "+1 spell strength at character levels 3, 6, 9, 12, and 15 only when Principles of Magic is 60% or higher.",
+            "spellStrengthBonus": 1,
+            "atCharacterLevels": [
+              3,
+              6,
+              9,
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    ],
+    "prerequisites": [],
+    "description": "The foundational theory of magical energy, including identifying types of magic and understanding P.P.E. flow.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 9
+      }
+    ]
+  },
+  {
+    "id": "divination",
+    "name": "Divination",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "specialization": {
+      "kind": "other",
+      "prompt": "Which divination method?",
+      "examples": [
+        "Tarot cards",
+        "Crystal ball"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Player must choose a specific method (e.g., Tarot cards)."
+    },
+    "repeatSelection": {
+      "summary": "Taking the skill a second time for the same method grants a +15% bonus to represent professional mastery.",
+      "maxSelections": 2,
+      "trackScope": "specialization_instance",
+      "ranks": [
+        {
+          "selectionNumber": 1,
+          "label": "Standard",
+          "effect": "Competent use of the chosen divination method."
+        },
+        {
+          "selectionNumber": 2,
+          "label": "Professional quality",
+          "effect": "Professional mastery of the chosen divination method.",
+          "skillPercentBonus": 15
+        }
+      ]
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practice of foretelling the future or gaining hidden knowledge through specific conduits.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 10
+      }
+    ]
+  },
+  {
+    "id": "locate_librarian",
+    "name": "Locate Librarian",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue",
+      "Espionage"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "lore_faction",
+        "name": "Lore: Faction (Nocturnes)",
+        "prerequisiteBypassConditions": [
+          "Has Collector skill package"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "streetwise",
+        "prerequisiteBypassConditions": [
+          "Has Collector skill package"
+        ]
+      }
+    ],
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Home city",
+        "percentModifier": 20,
+        "ruleId": "locate_librarian_home"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Cities visited regularly",
+        "percentModifier": 0,
+        "ruleId": "locate_librarian_regular"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Cities visited at least once",
+        "percentModifier": -15,
+        "ruleId": "locate_librarian_once"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Never visited",
+        "percentModifier": -40,
+        "ruleId": "locate_librarian_never"
+      }
+    ],
+    "sequentialChecks": [
+      {
+        "skillId": "streetwise",
+        "summary": "In a city never visited, the character must succeed on Streetwise before attempting Locate Librarian at the \"never visited\" penalty row.",
+        "gatesSituationalModifierRuleIds": [
+          "locate_librarian_never"
+        ]
+      }
+    ],
+    "initializationBonuses": [
+      {
+        "requirement": "Possesses the Collector skill package.",
+        "bonusPercent": 5,
+        "origin": "skill_package",
+        "ruleId": "locate_librarian_collector_bonus"
+      }
+    ],
+    "description": "Represents the ability to locate the Nocturne Librarian of a given city. Characters can use this skill as a means of guiding Nocturne characters to the proper contacts, who then can drop names and locations, or a string of clues. Finding a librarian in cities never before visited requires a great deal of leg work, a successful Streetwise roll, and then a Locate Librarian roll at a significant penalty."
+  },
+  {
+    "id": "lore_faction",
+    "name": "Lore: Faction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "initializationBonuses": [
+      {
+        "requirement": "Skill is added as an R.C.C. or O.C.C. skill for a character starting the game as a member of a faction, only for the faction to which the character belongs.",
+        "bonusPercent": 15,
+        "origin": "occ_rcc_skill_slot",
+        "ruleId": "lore_faction_occ_rcc_bonus"
+      }
+    ],
+    "description": "Provides intimate knowledge of the inner workings, mythology, and legends surrounding a specific faction. Such information as the history of the faction, known leaders, mythical figureheads, methods of operation, bases of operation and safe houses, etc., are all available through the use of this skill. This skill must be taken separately for each individual faction the character has knowledge about."
+  },
+  {
+    "id": "lore_secret_societies",
+    "name": "Lore: Secret Societies",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Provides knowledge of the myths, rumors, and background of the most notorious secret societies, their historical roots and precedents, if any, and some idea how these societies operate. This skill applies to cults, secret religions, brotherhoods, and full-blown societies. Knowledge gleaned from this skill applies to myth and legends (and rumors) surrounding a given society, not necessarily facts or details about current day operations or members."
+  },
+  {
+    "id": "gardening",
+    "name": "Gardening",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill offers a basic understanding of plant care and aesthetic garden design as well as the ability to grow garden crops, and the skill to create beautiful, decorative gardens with flowers, plants, shrubs, trees, and decorative rocks that create a feeling of tranquility and harmony with nature. This skill can be practiced by anyone, but selecting it twice provides a +12% bonus and the skill is that of a professional groundskeeper."
+  },
+  {
+    "id": "housekeeping",
+    "name": "Housekeeping",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively."
+  },
+  {
+    "id": "wardrobe_and_grooming",
+    "name": "Wardrobe & Grooming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "disguise",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      },
+      {
+        "skillId": "undercover_ops",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      },
+      {
+        "skillId": "seduction",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      }
+    ],
+    "prerequisites": [],
+    "description": "This skill represents a knowledge of clothing, make-up, hair style, perfume, walking, talking and how one carries his or herself to create a particular 'look' or style. In short, this is how to dress to kill or make the right impression. Keeps an eye on fashion and trends.",
+    "physicalSkillBonuses": {
+      "pb": {
+        "value": 1,
+        "condition": "when dressed to impress"
+      }
+    }
+  },
+  {
+    "id": "undercover_ops",
+    "name": "Undercover Ops",
+    "replaces": "fieldcraft",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training in undercover operations in which the character learns the methods and techniques of blending smoothly into the background and appearing as if he belongs there (just another unmemorable face in the crowd or one of the guys), as well as assuming a false identity and playing a 'role' to track, spy upon, or gather information or evidence. Also includes methods for the covert exchange of information, necessary for keeping in touch with the individual's 'handler'."
+  },
+  {
+    "id": "vehicle_armorer",
+    "name": "Vehicle Armorer",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Mechanical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "automotive_mechanics",
+        "description": "Taking this skill in conjunction with Automotive Mechanics provides a +10% bonus to the automotive skill."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A specialized skill in which the character can do more than just tinker with the mechanics of a vehicle. Extra Armor: Add more S.D.C. to armor at 25 S.D.C. per level of experience to military/combat vehicles, full-sized vans and large trucks; 10 S.D.C. per level on commercial (non-combat) vehicles. Increase the A.R. of pre-existing or added vehicle armor by 1 point per 3 levels of experience. Includes custom body modifications, ram prows, replacing components, and adding weapon mounts.",
+    "grantsSkills": [
+      {
+        "skillId": "basic_mechanics",
+        "summary": "Automatically gets the Basic Mechanics skill at +20% as part of this skill.",
+        "ruleId": "vehicle_armorer_grants_basic_mechanics"
+      }
+    ]
+  },
+  {
+    "id": "camouflage",
+    "name": "Camouflage",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The skill of concealing a fixed base position, vehicle, equipment or individual, using natural and/or artificial materials. A fair amount of time is involved in the preparation of a larger position. Large cargo nets, cut branches or underbrush are used most often in camouflage. This skill is also used to conceal traps."
+  },
+  {
+    "id": "demolitions_underwater",
+    "name": "Demolitions: Underwater",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 56,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound wave damage, different types of explosives, as well as arming, disarming and repairing torpedoes and depth charges."
+  },
+  {
+    "id": "field_armorer_and_munitions_expert",
+    "name": "Field Armorer & Munitions Expert",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a fundamental knowledge of infantry weapons, ammo and body armor. The character can maintain, unjam, fix, modify, mount, reload ammunition, and figure out most small arms. As an armorer, the character can repair such weapons, fix minor damage to body armor, adjust targeting sights, use and repair optical enhancements, reload missiles and ammo drums, install/mount machine-guns and rocket launchers on a vehicle, as well as sharpen blades, make arrows and arrowheads, make horseshoes and basic metal items.",
+    "grantsSkills": [
+      {
+        "skillId": "basic_mechanics",
+        "startingPercent": 30,
+        "summary": "Automatically gets the Basic Mechanics skill at 30% +5% per level as part of this package.",
+        "ruleId": "field_armorer_grants_basic_mechanics"
+      }
+    ]
+  },
+  {
+    "id": "recognize_weapon_quality",
+    "name": "Recognize Weapon Quality",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to accurately determine a weapon's durability, reliability, and quality by physically examining it. This includes knowing which manufacturers are reputed to make the best weapons, the ability to recognize damage or signs of wear or misuse, modifications/customization, whether the weapon can be made as good as new with a little repair work and/or cleaning, whether it is a cheap knock-off, and so on."
+  },
+  {
+    "id": "aerobic_athletics",
+    "name": "Aerobic Athletics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A type of aerobic exercise to build the body, develop reflexes and grace, and learn a few very basic self-defense moves.",
+    "physicalSkillBonuses": {
+      "disarmBonus": 1,
+      "pullPunch": 1,
+      "bonusKickDamage": 2,
+      "sdc": "2D4"
+    },
+    "subSkills": [
+      {
+        "id": "sense_of_balance",
+        "name": "Sense of Balance",
+        "basePercent": 30,
+        "percentPerLevel": 5,
+        "description": "Balance conditioning developed through aerobic practices."
+      }
+    ]
+  },
+  {
+    "id": "kick_boxing",
+    "name": "Kick Boxing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Kick Boxing is a form of martial arts self-defense. The character who takes Kick Boxing has done maybe a few months or a year of casual training as a supplement to his usual Hand to Hand Combat skill.",
+    "physicalSkillBonuses": {
+      "ps": 1,
+      "pe": 1,
+      "sdc": "1D10"
+    },
+    "specialAttacks": [
+      {
+        "name": "Roundhouse Kick",
+        "damage": "3D6"
+      },
+      {
+        "name": "Axe Kick",
+        "damage": "2D8"
+      },
+      {
+        "name": "Knee Strike",
+        "damage": "1D8"
+      },
+      {
+        "name": "Leap Kick",
+        "damage": "3D8",
+        "notes": "Counts as two melee attacks."
+      }
+    ]
+  },
+  {
+    "id": "outdoorsmanship",
+    "name": "Outdoorsmanship",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "identify_plants_and_fruit",
+        "description": "+5% bonus to Identify Plants and Fruit."
+      },
+      {
+        "skillId": "land_navigation",
+        "description": "+5% bonus to Land Navigation."
+      },
+      {
+        "skillId": "wilderness_survival",
+        "description": "+5% bonus to Wilderness Survival."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "wilderness_survival"
+      }
+    ],
+    "description": "Being an avid outdoorsman and survivalist, this character has spent a significant portion of his/her life living off the land or in the wild. As a result, the character is hardened to the rigors of outdoor life.",
+    "physicalSkillBonuses": {
+      "pe": 1,
+      "sdc": "2D6"
+    }
+  },
+  {
+    "id": "physical_labor",
+    "name": "Physical Labor",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Physical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Not all strength and conditioning comes from deliberate training or sports, some comes from old-fashioned hard work. This skill represents the strength and endurance gained from hard physical labor either due to a physical occupation (such as construction, ditch digging, warehouse work) or really demanding chores at home.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "pe": 1,
+      "sdc": "2D8"
+    }
+  },
+  {
+    "id": "bicycling",
+    "name": "Pilot: Bicycling",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 44,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows how to ride bicycles and can ride over rough terrain, reach two times normal running speed, travel cross-country at normal running speed, and perform tricks and jumps on a bike."
+  },
+  {
+    "id": "boats_paddle_types",
+    "name": "Pilot: Boats: Paddle Types/Canoe/Kayak",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes paddled boats and canoes, rowboats and knee boards, as well as the Kayak. Speed in still water is usually equal to the character's P.S. attribute and can be maintained for P.E. x5 in minutes without pause. The skill also includes basic principles behind using currents, maintenance, and 'tricks'."
+  },
+  {
+    "id": "combat_driving",
+    "name": "Combat Driving",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill supplements other driving skills by helping to make the character a master of the roads when driving automobiles, jeeps, trucks, motorcycles and other ground vehicles. It helps to turn the character into an aggressive road hog and cool-headed 'chicken' player. Tricks, dangerous maneuvers, and high-speed car chases are no sweat for this character.",
+    "physicalSkillBonuses": {
+      "dodge": 2,
+      "rollWithImpact": 2
+    },
+    "mechanicProgressions": [
+      {
+        "summary": "Baseline (Survival Guide): penalties for tricks, vehicular attacks (ram, sideswipe, etc.), and evasive maneuvers are halved when this character is driving. Progression: penalties are reduced by one additional point per three levels of the driver's experience (e.g. at levels 3, 6, 9…). Also at the wheel: fire from a moving vehicle at −2; aimed/called shots at −2 while moving; may act while driving without the usual penalty.",
+        "everyNCharacterLevels": 3,
+        "integerDeltaPerStep": -1,
+        "targetKind": "penalty_modifier",
+        "targetLabel": "Tricks, vehicular attacks, and evasive maneuver penalties (after halving)",
+        "ruleId": "combat_driving_penalty_reduction"
+      }
+    ]
+  },
+  {
+    "id": "tracked_and_construction_vehicles",
+    "name": "Pilot: Tracked & Construction Vehicles",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes landcrawlers, half-tracks, light tanks, and big-wheeled heavy construction vehicles and Earthmovers like bulldozers, steam shovels/excavators, scrapers, graders, tractors, loaders, backhoes, dump trucks, haulers, etc."
+  },
+  {
+    "id": "find_contraband",
+    "name": "Find Contraband",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "id_undercover_agent",
+        "bonusPercent": 10,
+        "description": "+10% bonus to I.D. Undercover Agents."
+      }
+    ],
+    "prerequisites": [],
+    "description": "The character with this skill knows where to find illegal arms dealers, the Black Market, smugglers, thieves, forgers (mainly fake I.D.s), fences, pawn shops, blind pigs (illegal gambling establishments), exotic animal dealers (illegal wild animals, endangered species, and the bizarre), automobile chop-shops, slavers, prostitutes, drug dealers, illegal medical treatment, stolen antiquities, and other people and places that traffic in illegal goods and services."
+  },
+  {
+    "id": "id_undercover_agent",
+    "name": "I.D. Undercover Agent",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill_any_of",
+        "alternatives": [
+          {
+            "skillId": "undercover_ops"
+          },
+          {
+            "skillId": "intelligence"
+          },
+          {
+            "skillId": "streetwise"
+          }
+        ]
+      }
+    ],
+    "description": "A combination skill, good eye, and knack for identifying undercover agents; typically members of law enforcement, but may also include NSB agents, private detectives, spies, bounty hunters, and anybody snooping around."
+  },
+  {
+    "id": "netwise",
+    "name": "Netwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "research",
+        "bonusPercent": 10,
+        "description": "+10% bonus to Research."
+      },
+      {
+        "skillId": "computer_hacking",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Computer Hacking."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "computer_operation"
+      }
+    ],
+    "description": "Similar to the Streetwise skill, the character is familiar with the ins and outs of the World Wide Web. This includes navigating the Internet, using search engines and social networks, and all the usual with a focus on finding obscure sites and information, locating and accessing hidden boards and chat rooms such as the Shadowboard, finding and using backdoors into various databases, a knowledge of what sites are frequented by hackers, Nightbane, factions, NSB agents, and other special interest groups."
+  },
+  {
+    "id": "roadwise",
+    "name": "Roadwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A regional skill in which the character knows the streets, alleys, back roads, shortcuts, fastest routes, construction zones, speed traps, highways, police stations and posts in his city and state (or province) like the back of his hand. Also knows all the local junkyards, the best mechanic garages (including a few who don't ask questions), and the best places to hide a vehicle or lay low for a few hours or a few days."
+  },
+  {
+    "id": "safe_cracking",
+    "name": "Safe-Cracking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "pick_locks",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Pick Locks."
+      },
+      {
+        "skillId": "demolitions",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Demolitions."
+      }
+    ],
+    "prerequisites": [],
+    "skillPercentAttributeModifiers": {
+      "summary": "Characters with M.E. of 14 or lower suffer −10% to this skill.",
+      "rules": [
+        {
+          "kind": "penaltyWhenBelow",
+          "attribute": "me",
+          "below": 15,
+          "skillPercentPenalty": -10
+        }
+      ]
+    },
+    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms."
+  },
+  {
+    "id": "seduction",
+    "name": "Seduction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 3,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "pick_pockets",
+        "bonusPercent": 5,
+        "description": "+5% to Pick Pockets against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "palming",
+        "bonusPercent": 5,
+        "description": "+5% to Palming against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "con_artistry",
+        "bonusPercent": 10,
+        "description": "+10% to Con Artistry against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "fast_talk",
+        "bonusPercent": 10,
+        "description": "+10% to Fast Talk against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      }
+    ],
+    "prerequisites": [],
+    "skillPercentAttributeModifiers": {
+      "summary": "+1% to Seduction per point of M.A. above 20, and +1% per 2 full points of P.B. above 17 (stacks per book).",
+      "rules": [
+        {
+          "kind": "bonusPerPointAbove",
+          "attribute": "ma",
+          "threshold": 20,
+          "percentPerPoint": 1
+        },
+        {
+          "kind": "bonusPerPointAbove",
+          "attribute": "pb",
+          "threshold": 17,
+          "perNPoints": 2,
+          "percentPerPoint": 1
+        }
+      ]
+    },
+    "description": "This is the ability to make the opposite sex melt with desire. This skill is somewhat similar to the Interrogation skill in that the seducer knows how to ask the right questions to get information without being obvious."
+  },
+  {
+    "id": "tailing",
+    "name": "Tailing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practiced ability to follow someone without their knowledge. Includes basic stake-out procedures. A failed Tailing roll indicates that the character being tailed has noticed that he is being followed and may take evasive action."
+  },
+  {
+    "id": "barter",
+    "name": "Barter",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "mathematics_basic",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Barter when the character has Mathematics: Basic."
+      },
+      {
+        "skillId": "literacy",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Barter when the character has Literacy."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A skill at bargaining with merchants, businessmen, thieves, traders, smugglers, street persons, and other characters to get a fair price or fair exchange of trade goods or services. Depending on the character's point of view and effort at bartering, he can raise the amount he gets or lower the price he pays by 3D6+2%."
+  },
+  {
+    "id": "begging",
+    "name": "Begging",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 3,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "disguise",
+        "bonusPercent": 5,
+        "description": "+5% to Begging when using Disguise to pose as a beggar or refugee.",
+        "applicability": {
+          "summary": "When posing as a beggar or refugee",
+          "appliesWhen": "Character is using disguise to appear destitute.",
+          "contextTags": [
+            "disguise_destitute"
+          ]
+        }
+      }
+    ],
+    "prerequisites": [],
+    "description": "Though usually learned out of necessity in the school of hard knocks and poverty, this skill can be particularly useful to collect food, money and clothing when down on one's luck, especially in large cities."
+  },
+  {
+    "id": "business_and_finance",
+    "name": "Business & Finance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "literacy"
+      },
+      {
+        "type": "skill",
+        "skillId": "mathematics_basic"
+      }
+    ],
+    "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor."
+  },
+  {
+    "id": "construction",
+    "name": "Construction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing."
+  },
+  {
+    "id": "excavation",
+    "name": "Excavation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves."
+  },
+  {
+    "id": "firefighting",
+    "name": "Firefighting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear."
+  },
+  {
+    "id": "general_repair_and_maintenance",
+    "name": "General Repair & Maintenance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Not everyone can be a mechanic, blacksmith or carpenter, but many are good with their hands and capable of doing satisfactory repairs on simple mechanisms, gears, pulleys, wheels, and so on. The General Repair/Maintenance skill includes: sharpening blades, minor repairs on weapons, packing their own common bullets, sewing tears in clothes, changing a tire, shoeing a horse, repairing furniture, painting, varnishing, nailing and assisting in basic woodworking."
+  },
+  {
+    "id": "history",
+    "name": "History",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": {
+      "splitBaseTracks": [
+        {
+          "trackId": "general",
+          "label": "General historical knowledge",
+          "basePercent": 60
+        },
+        {
+          "trackId": "specific",
+          "label": "Specific / specialist topic",
+          "basePercent": 40
+        }
+      ]
+    },
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects."
+  },
+  {
+    "id": "jury_rig",
+    "name": "Jury-Rig",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "basic_mechanics"
+      },
+      {
+        "type": "skill",
+        "skillId": "basic_electronics"
+      }
+    ],
+    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long (4D6 hours or 2D4 days, whichever is most appropriate), or will even work in the way intended."
+  },
+  {
+    "id": "law",
+    "name": "Law",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement."
+  },
+  {
+    "id": "lore_factions",
+    "name": "Lore: Factions",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions."
+  },
+  {
+    "id": "lore_magic",
+    "name": "Lore: Magic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "subSkills": [
+      {
+        "id": "recognize_magic_symbols",
+        "name": "Recognize Magic Symbols, Runes and Circles",
+        "basePercent": 15,
+        "percentPerLevel": 5,
+        "description": "Although the character may recognize whether the symbol, ward, or rune is real, and if it is meant to be a warning, used for protection, or is a component of magic, he cannot read or use magic."
+      },
+      {
+        "id": "recognize_enchantment",
+        "name": "Recognize Enchantment",
+        "basePercent": 5,
+        "percentPerLevel": 5,
+        "description": "May be able to tell if a person is under the influence of magic charms, possession, curses, mind control, and similar."
+      },
+      {
+        "id": "identify_magic_artifact",
+        "name": "Identify Magic Artifact",
+        "basePercent": 10,
+        "percentPerLevel": 5,
+        "description": "Identify Magic Artifact (+10% if the item is famous or he's seen pictures or drawings, but -15% to identify an unknown or alien magic item.)"
+      }
+    ],
+    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners."
+  },
+  {
+    "id": "mythology",
+    "name": "Mythology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "lore_magic",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Lore: Magic."
+      },
+      {
+        "skillId": "lore_demons_and_monsters",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Lore: Demons & Monsters."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic."
+  },
+  {
+    "id": "philosophy",
+    "name": "Philosophy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "public_speaking",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Public Speaking."
+      },
+      {
+        "skillId": "creative_writing",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Creative Writing."
+      }
+    ],
+    "prerequisites": [],
+    "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness."
+  },
+  {
+    "id": "rope_works",
+    "name": "Rope Works",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope. A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained. Characters bound/tied by this character are -10% to escape/slip knots."
+  },
+  {
+    "id": "salvage",
+    "name": "Salvage",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts."
+  }
+]

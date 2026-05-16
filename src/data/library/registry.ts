@@ -36,3 +36,29 @@ export function getRaceById(id: string): Race | undefined {
 export function getLibraryOccById(id: string): LibraryOCC | undefined {
   return OCC_REGISTRY.find((o) => o.id === id)
 }
+
+export type {
+  PalladiumSkillCatalogEntry,
+  PalladiumSourceRef,
+  StandardModernProgressionBundle,
+  StandardModernWeaponProgressionDoc,
+  WeaponProficiencyCatalogEntry,
+} from './catalogTypes'
+
+export {
+  PALLADIUM_SKILL_CATALOG,
+  getPalladiumSkillCatalogEntryById,
+  listPalladiumSkillsForGameSystem,
+} from './skillsCatalogLoader'
+
+export {
+  WEAPON_PROFICIENCY_CATALOG,
+  getWeaponProficiencyCatalogEntryById,
+  listWeaponProficienciesForGameSystem,
+} from './weaponProficienciesCatalogLoader'
+
+export {
+  STANDARD_MODERN_WEAPON_PROGRESSION,
+  getStandardModernProgressionBundle,
+  defaultStandardModernProgressionKey,
+} from './standardModernWeaponProgressionLoader'

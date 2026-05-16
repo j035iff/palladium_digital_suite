@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/standard-modern-weapon-progression.schema.json",
+  "title": "Bundled standard modern weapon progression",
+  "description": "Canonical ladders and shared mechanics for **`usesStandardModernProgression`** on **`palladium-weapon-proficiency.schema.json`**. Engines select **`bundles[key]`** using **`standardModernProgressionKey`** (or default from **`gameSystems`**). **Adjust tier numbers** to match each printing; values here mirror the Nightbane-style pattern (aimed milestones **1, 3, 6, 9, 12, 15**; burst **4, 7, 10, 13**; Recognize Weapon Quality **30% + 6%/level**).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bundles"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Document format version."
+    },
+    "bundles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/progressionBundle"
+      }
+    }
+  },
+  "$defs": {
+    "progressionBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stackingRule", "levelTiers", "skillPercentage", "untrainedPenalties"],
+      "properties": {
+        "gameSystems": {
+          "type": "array",
+          "description": "Game lines this bundle is intended for (should align with catalog **`gameSystems`**).",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "stackingRule": {
+          "type": "string",
+          "minLength": 1,
+          "description": "How **`levelTiers`** rows combine (e.g. cumulative aimed and cumulative burst)."
+        },
+        "levelTiers": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Full shared ladder; catalog rows may supply a **tier-1-only** override.",
+          "items": {
+            "$ref": "https://megaverse-companion.local/schemas/palladium-weapon-proficiency.schema.json#/$defs/levelTier"
+          }
+        },
+        "skillPercentage": {
+          "allOf": [
+            {
+              "$ref": "https://megaverse-companion.local/schemas/palladium-weapon-proficiency.schema.json#/$defs/skillPercentageRoll"
+            }
+          ],
+          "description": "Typically **`recognize_weapon_quality`** with book **base** and **per-level** increments."
+        },
+        "untrainedPenalties": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Strike / RoF / malfunction or other penalties when firing without the W.P."
+        },
+        "weaponTypeOverrides": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Optional exceptions keyed by weapon-type slug (for example **`revolver`**) so one bundle can define a universal ladder while specific weapon groups override selected values.",
+          "additionalProperties": {
+            "$ref": "#/$defs/weaponTypeOverride"
+          }
+        },
+        "combatNotes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "System-wide combat caveats for this bundle (for example, whether modern W.P. strike bonuses stack with hand-to-hand bonuses)."
+        },
+        "systemConstraints": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Engine-facing constraints and stacking rules that apply to every weapon using this bundle."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printing-specific caveats."
+        }
+      }
+    },
+    "weaponTypeOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["levelTiers"],
+      "properties": {
+        "matchesWeaponProficiencyIds": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Optional explicit catalog ids this override applies to (for example **`wp_revolver`**).",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "levelTiers": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Tier rows that override or augment the bundle ladder for matching weapons. Typical use: replace the level-1 aimed bonus for one weapon type.",
+          "items": {
+            "$ref": "https://megaverse-companion.local/schemas/palladium-weapon-proficiency.schema.json#/$defs/levelTier"
+          }
+        },
+        "stackingRule": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Override-specific merge rule when these tier rows differ from the bundle default."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book citation guidance for this specific override."
+        }
+      }
+    }
+  }
+}

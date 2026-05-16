@@ -1,0 +1,567 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-weapon-proficiency.schema.json",
+  "title": "Palladium weapon proficiency (W.P.)",
+  "description": "Weapon proficiency documents are either ancient (blades, bows, nets, etc.) or modern (firearms and similar), discriminated with weaponProficiencyCategory. Most ancient entries use levelTiers for per-level combat bonuses; exceptions such as W.P. Paired Weapons use pairedWeapons (special attack/parry rules, no numeric tier ladder). Modern entries usually have no level ladder (you have the W.P. or you do not), but some printings add strike or other bonuses by character level—in that case include the same levelTiers shape as ancient W.P. Each entry includes sources (book + page references per game line), matching palladium-skill.schema.json. Use palladium-skill.schema.json for non-W.P. skills. Put weapon hardware stats (damage payload/range variants) in **`schemas/palladium-weapon-item.schema.json`**. Use **`specialManeuvers`** for machine-discoverable tactical rule entries with explicit name + description.\n\n**levelTiers — range:** Use **`rangeBonusFeet`** for a numeric **feet** bonus unlocked **at that tier** (e.g. W.P. Archery and Targeting). Use **`rangeBonusPerLevelFeet`** when the book gives a **flat feet increase per character level** (e.g. +20 ft per level) instead of milestone tiers. Combine per parent **`stackingRule`** (cumulative sum vs highest tier only). Keep **`range`** (string) for % increases, distance bands, or prose.\n\n**levelTiers — rate of fire:** Use **`rateOfFireDelta`** when the book gives **extra attacks/shots per melee added** at that tier (cumulative per **`stackingRule`**). Use **`rateOfFireTotal`** when the book states the **absolute RoF** granted by this W.P. **at that character level** (usually do **not** sum with lower tiers—say so in **`stackingRule`** or tier **`notes`**). Use **`rateOfFireNote`** for non-numeric cadence (burst rules, aimed-only, etc.). Legacy **`rateOfFire`** (integer or string) remains for existing data; prefer the explicit fields for new authoring. Do **not** set both **`rateOfFireDelta`** and **`rateOfFireTotal`** on the same tier.\n\n**levelTiers — damage:** Use **`damageBonusFlat`** for a **plain integer** damage bonus at the tier (e.g. W.P. Whip). Use **`damageBonus`** with **`damageBonusNotation`**: a compact **`NdM±k`** or signed integer token (no spaces), or legacy free-form prose that does not match that pattern. If both **`damageBonusFlat`** and **`damageBonus`** are set, engines may apply flat + parsed dice per book—document stacking in **`notes`** or **`stackingRule`**.\n\n**Aimed vs burst strike:** Use root **`aimedStrikeBonus`** / **`burstStrikeBonus`** when bonuses do **not** vary by character level. On **`levelTiers`**, **`atCharacterLevel`: 1** may set the **starting** aimed/burst values (e.g. W.P. Revolver **+4** aimed vs **+3** for other standard modern W.P.); later tiers continue the ladder. Root vs tier: prefer **tier 1** when the book gives a different base for one weapon type.\n\n**Percentile sub-rolls:** **`skillPercentage`** holds **`basePercent`** + **`percentPerLevel`** (and optional **`kind`**, e.g. **`recognize_weapon_quality`**)—either on the **root** for one formula for the whole W.P., or on a **tier** for milestone-based wording.\n\n**Shared modern ladder (`usesStandardModernProgression`):** When **true**, the engine **does not** duplicate the full ladder in each catalog row. It **MUST** load **`data/standard_modern_weapon_progression.json`** (or the app’s configured equivalent), select **`bundles[standardModernProgressionKey]`**, defaulting **`standardModernProgressionKey`** to a line-specific key derived from **`gameSystems[0]`** when omitted (e.g. **`nightbane`**). That bundle **MUST** define: **`stackingRule`**; **`levelTiers`** (full ladder—typically **cumulative +1 `aimedStrikeBonus`** at character levels **1, 3, 6, 9, 12, 15** when that matches the printing, plus **cumulative +1 `burstStrikeBonus`** at **4, 7, 10, 13** when the book separates burst progression); **`skillPercentage`** with **`kind`**: **`recognize_weapon_quality`**, **`basePercent` 30**, **`percentPerLevel` 6** when that line bundles Recognize Weapon Quality with standard modern W.P.; and **`untrainedPenalties`** (prose for shooting untrained). Schema: **`schemas/standard-modern-weapon-progression.schema.json`**. **Optional:** a catalog row may include **`levelTiers`** with **exactly one** object, **`atCharacterLevel` 1** only, to **override** merged values at first level (e.g. **`aimedStrikeBonus` 4** instead of the bundle’s **3**). Merge rule: for tier **1**, field-wise **catalog overrides bundle** for keys present on the catalog tier; all other levels come **only** from the bundle. Omit catalog **`levelTiers`** entirely when the bundle defaults are correct. Catalog **`stackingRule`** is **forbidden** when this flag is true (use the bundle’s **`stackingRule`**).",
+  "oneOf": [
+    { "$ref": "#/$defs/ancientWeaponProficiency" },
+    { "$ref": "#/$defs/modernWeaponProficiency" }
+  ],
+  "$defs": {
+    "specialManeuver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Maneuver name (for example **Double Barrel Blast**)."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structured maneuver rule text (for example simultaneous firing for double damage)."
+        }
+      }
+    },
+    "skillPercentageRoll": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Percentile roll packaged with this W.P. or tier—same numeric vocabulary as **palladium-skill** (`basePercent` / `percentPerLevel`). Use **`kind`** to distinguish rolls when multiple systems exist.",
+      "required": ["basePercent", "percentPerLevel"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["recognize_weapon_quality"],
+          "description": "Optional discriminator—e.g. **recognize_weapon_quality** for the Nightbane-style identify-quality roll."
+        },
+        "basePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Starting percentage for this sub-roll (before per-level growth)."
+        },
+        "percentPerLevel": {
+          "type": "integer",
+          "description": "Percentage points added per character level (e.g. 6 for +6% per level after base)."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When the book uses a nonstandard floor/ceiling or special stacking—otherwise omit."
+        }
+      }
+    },
+    "damageBonusNotation": {
+      "description": "**damageBonus** may be a compact machine-friendly token or legacy free text. Prefer the canonical branch when the book gives only a modifier (engines can parse it deterministically).",
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(\\+|-)?(\\d+[Dd]\\d+((\\+|-)\\d+)?|\\d+)$",
+          "description": "Canonical token: optional leading sign; either **NdM** / **Ndm** with optional **±integer** suffix (e.g. `+1D6`, `2d4+1`, `-1D6+2`), or a **decimal integer** string (e.g. `2`, `+3`). No spaces—put explanations in **`notes`**."
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "^(\\+|-)?(\\d+[Dd]\\d+((\\+|-)\\d+)?|\\d+)$"
+          },
+          "description": "Legacy / prose: parentheticals, book quotes, or multi-clause text that does not fit the canonical token."
+        }
+      ]
+    },
+    "levelTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["atCharacterLevel"],
+      "description": "One row of a W.P. level ladder. At minimum set **atCharacterLevel** plus at least one bonus/effect field (see **anyOf**). **`atCharacterLevel`: 1** may carry only **`aimedStrikeBonus`** / **`burstStrikeBonus`** (and **`notes`**) to set weapon-specific **base** aimed or burst bonuses before higher-level tiers add cumulative bonuses.",
+      "properties": {
+        "atCharacterLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Character experience level at which this tier’s bonuses apply."
+        },
+        "strike": {
+          "type": "integer",
+          "description": "Strike bonus in melee with this weapon at this tier."
+        },
+        "parry": {
+          "type": "integer",
+          "description": "Parry bonus with this weapon at this tier."
+        },
+        "strikeWhenThrown": {
+          "type": "integer",
+          "description": "Strike bonus when throwing this weapon (distinct from melee strike if the book separates them)."
+        },
+        "damageBonus": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/damageBonusNotation"
+            }
+          ],
+          "description": "Dice or signed-integer damage at this tier. See **`#/$defs/damageBonusNotation`**: compact **`NdM±k`** / integer string vs free-form prose. For a **pure integer** bonus, prefer **`damageBonusFlat`**."
+        },
+        "damageBonusFlat": {
+          "type": "integer",
+          "description": "Flat additive damage (integer) at this tier—use for rules like W.P. Whip that grant +1, +2, etc. at listed levels. Pair with **`damageBonus`** only when the book also specifies dice at the same tier."
+        },
+        "entangle": {
+          "type": "integer",
+          "description": "Bonus to entangle / net-type attacks when the weapon supports entangling."
+        },
+        "rateOfFire": {
+          "description": "**Legacy:** extra shots per melee or RoF as a single integer or free-form string. Prefer **`rateOfFireDelta`**, **`rateOfFireTotal`**, or **`rateOfFireNote`** for new data.",
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Ambiguous: may have been authored as increment or total—prefer **`rateOfFireDelta`** or **`rateOfFireTotal`**."
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "Non-numeric RoF text (burst, cadence)—prefer **`rateOfFireNote`** when that is the only effect."
+            }
+          ]
+        },
+        "rateOfFireDelta": {
+          "type": "integer",
+          "description": "**Increment:** attacks or shots per melee **added** when this tier is reached (cumulative when **`stackingRule`** says tiers stack). Example: Archery adds +1 shot per melee at this level."
+        },
+        "rateOfFireTotal": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "**Absolute:** total attacks per melee from this W.P. **at this character level** when the book states a fixed RoF for that tier. Do **not** combine with **`rateOfFireDelta`** on the same row. Non-cumulative ladders should say so in **`stackingRule`** or **`notes`**."
+        },
+        "rateOfFireNote": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Prose for burst rules, aimed cadence, or other RoF that is not a single integer."
+        },
+        "range": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Effective range change in **prose or %** (short/medium/long, +10% throw distance, etc.). For **integer feet** per tier, prefer **`rangeBonusFeet`**."
+        },
+        "rangeBonusFeet": {
+          "type": "integer",
+          "description": "**Feet** added to effective weapon range **at this tier** (e.g. Archery and Targeting). Apply **`stackingRule`** on the parent W.P. to sum vs take-highest. Pair **`range`** if the book also gives a qualitative or % line."
+        },
+        "rangeBonusPerLevelFeet": {
+          "type": "integer",
+          "description": "**Feet per character level** added to effective range when the book gives a linear progression (e.g. +20 feet per level). May appear on root or a tier row for source-text fidelity."
+        },
+        "aimedStrikeBonus": {
+          "type": "integer",
+          "description": "**Ranged / firearm:** strike bonus when using an **aimed** shot at this tier (Nightbane-style conditional strikes). On **`atCharacterLevel`: 1**, this is the **tier-1** aimed value (or increment per **`stackingRule`** / bundle docs)—use to distinguish e.g. **+4** (revolver) vs **+3** (other standard modern W.P.). Omit if the book only lists a single combined **`strike`** column."
+        },
+        "burstStrikeBonus": {
+          "type": "integer",
+          "description": "**Ranged / firearm:** strike bonus when using **burst** / wild fire at this tier. Set on **`atCharacterLevel`: 1** when the book gives a different **starting** burst column than aimed; later burst milestones use their own tier rows."
+        },
+        "skillPercentage": {
+          "allOf": [{ "$ref": "#/$defs/skillPercentageRoll" }],
+          "description": "Percentile mechanic tied to this tier (e.g. a milestone that changes quality recognition)—see **`#/$defs/skillPercentageRoll`**. For a **single formula** across all levels, prefer root **`skillPercentage`** on the parent W.P."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Other tier effects or clarifications."
+        }
+      },
+      "anyOf": [
+        { "required": ["strike"] },
+        { "required": ["parry"] },
+        { "required": ["strikeWhenThrown"] },
+        { "required": ["damageBonus"] },
+        { "required": ["damageBonusFlat"] },
+        { "required": ["entangle"] },
+        { "required": ["rateOfFire"] },
+        { "required": ["rateOfFireDelta"] },
+        { "required": ["rateOfFireTotal"] },
+        { "required": ["rateOfFireNote"] },
+        { "required": ["range"] },
+        { "required": ["rangeBonusFeet"] },
+        { "required": ["rangeBonusPerLevelFeet"] },
+        { "required": ["aimedStrikeBonus"] },
+        { "required": ["burstStrikeBonus"] },
+        { "required": ["skillPercentage"] },
+        { "required": ["notes"] }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": ["rateOfFireDelta"]
+          },
+          "then": {
+            "not": {
+              "required": ["rateOfFireTotal"]
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["rateOfFireTotal"]
+          },
+          "then": {
+            "not": {
+              "required": ["rateOfFireDelta"]
+            }
+          }
+        }
+      ]
+    },
+    "levelTiersArray": {
+      "type": "array",
+      "description": "Combat bonuses gained when the character reaches each atCharacterLevel. Required for standard ancient W.P.; omit when ancient pairedWeapons is used instead. Optional for modern W.P. when the book gives per-level strike, RoF, range, damage, or other modifiers.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/levelTier"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Book references keyed by gameSystem slug (same vocabulary as gameSystems). Use one entry per book when page numbers differ. **reference** is title-only; **pageNumber** is the printed page where the W.P. entry begins.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gameSystem", "reference", "pageNumber"],
+        "properties": {
+          "gameSystem": {
+            "type": "string",
+            "description": "Slug identifying the game line (must match gameSystems naming, e.g. nightbane, palladium_fantasy).",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "reference": {
+            "type": "string",
+            "description": "Book title only (edition if relevant)—no page numbers in this string.",
+            "minLength": 1
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Printed page where this proficiency begins for that book."
+          }
+        }
+      }
+    },
+    "ancientWeaponProficiency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "name",
+        "gameSystems",
+        "categories",
+        "weaponProficiencyCategory",
+        "description",
+        "sources"
+      ],
+      "properties": {
+        "kind": {
+          "const": "weapon_proficiency",
+          "description": "Discriminator so bundles may mix JSON types safely."
+        },
+        "weaponProficiencyCategory": {
+          "const": "ancient",
+          "description": "Swords, polearms, bows, nets, thrown weapons, etc. Normal ancient W.P. uses levelTiers for bonuses at character levels. W.P. Paired Weapons and similar styles use pairedWeapons (special dual-wield rules) instead of levelTiers. Often pair categories with labels like \"Ancient\" for UI filters."
+        },
+        "id": {
+          "type": "string",
+          "description": "Stable id (e.g. wp_sword, wp_long_bow).",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Book name (e.g. W.P. Sword).",
+          "minLength": 1
+        },
+        "gameSystems": {
+          "type": "array",
+          "description": "Same slug vocabulary as palladium-skill (nightbane, rifts, palladium_fantasy, …).",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "categories": {
+          "type": "array",
+          "description": "Include \"Weapon Proficiencies\" and often \"Ancient\" (or your book’s equivalent) for filtering.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "levelTiers": {
+          "$ref": "#/$defs/levelTiersArray"
+        },
+        "pairedWeapons": {
+          "$ref": "#/$defs/pairedWeaponsRules",
+          "description": "Use for W.P. Paired Weapons (etc.): special attack/parry rules for two one-handed ancient weapons, instead of a numeric level tier table. Mutually exclusive with levelTiers."
+        },
+        "stackingRule": {
+          "type": "string",
+          "description": "How tiers combine (e.g. cumulative strike bonuses vs highest tier only). Only used when levelTiers is present. Spell out whether **rangeBonusFeet**, **rateOfFireDelta**, and **damageBonusFlat** sum across reached tiers or use only the highest applicable tier."
+        },
+        "aimedStrikeBonus": {
+          "type": "integer",
+          "description": "Flat aimed-shot strike bonus for this W.P. when the book does **not** list it per level (often modern firearms)."
+        },
+        "rangeBonusPerLevelFeet": {
+          "type": "integer",
+          "description": "Flat range increase in feet gained per character level (e.g. +20 ft per level) when the book defines linear growth rather than milestone tiers."
+        },
+        "burstStrikeBonus": {
+          "type": "integer",
+          "description": "Flat burst / spray strike bonus when not listed per level."
+        },
+        "skillPercentage": {
+          "allOf": [{ "$ref": "#/$defs/skillPercentageRoll" }],
+          "description": "Percentile roll bundled with this proficiency (e.g. Recognize Weapon Quality 30% + 6%/level)."
+        },
+        "maneuvers": {
+          "type": "array",
+          "description": "Structured maneuver labels granted by this proficiency (for example **Double Barrel Blast**, **Twin Strike**). Use **`description`** or **`notes`** for full rule text.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "specialManeuvers": {
+          "type": "array",
+          "description": "Structured tactical maneuvers with explicit rule text so systems can discover/use them without parsing prose notes.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/specialManeuver"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "What weapons this W.P. covers, handedness, size class, and combat role.",
+          "minLength": 1
+        },
+        "failureResults": {
+          "type": "string",
+          "description": "Optional fumbles, dropped weapon, wrong reach—if the book defines them."
+        },
+        "sources": {
+          "$ref": "#/$defs/sources"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["pairedWeapons"]
+          },
+          "then": {
+            "required": ["pairedWeapons"],
+            "properties": {
+              "levelTiers": false
+            }
+          },
+          "else": {
+            "required": ["levelTiers"],
+            "properties": {
+              "pairedWeapons": false
+            }
+          }
+        }
+      ]
+    },
+    "pairedWeaponsRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Complete special rules: extra attacks, paired strike/parry, off-hand penalties removed, weapon combinations allowed—paste or paraphrase the book."
+        },
+        "requiresWpEachWeapon": {
+          "type": "boolean",
+          "description": "If true, each weapon typically needs its own qualifying ancient W.P. (e.g. W.P. Sword in each hand); if false or omitted, follow summary/book."
+        },
+        "weaponCoverage": {
+          "type": "array",
+          "description": "Short labels for what counts (e.g. \"any one-handed ancient melee\", \"not pole arms\").",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "description": "Edge cases, stacking with other W.P., or GM reminders."
+        }
+      }
+    },
+    "modernWeaponProficiency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "name",
+        "gameSystems",
+        "categories",
+        "weaponProficiencyCategory",
+        "description",
+        "sources"
+      ],
+      "properties": {
+        "kind": {
+          "const": "weapon_proficiency",
+          "description": "Discriminator so bundles may mix JSON types safely."
+        },
+        "weaponProficiencyCategory": {
+          "const": "modern",
+          "description": "Firearms and similar. Typically binary (have W.P. vs untrained) with no level ladder—omit levelTiers. When your printing gives cumulative strike (or other) bonuses by character level, include levelTiers (same structure as ancient W.P.) and stackingRule. Often pair categories with \"Modern\" for UI filters."
+        },
+        "id": {
+          "type": "string",
+          "description": "Stable id (e.g. wp_revolver, wp_assault_rifle).",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Book name (e.g. W.P. Revolver).",
+          "minLength": 1
+        },
+        "gameSystems": {
+          "type": "array",
+          "description": "Same slug vocabulary as palladium-skill.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "categories": {
+          "type": "array",
+          "description": "Include \"Weapon Proficiencies\" and often \"Modern\" for filtering.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "levelTiers": {
+          "$ref": "#/$defs/levelTiersArray",
+          "description": "Per-level bonuses for this W.P. **Either** a full ladder (no **`usesStandardModernProgression`**), **or** with **`usesStandardModernProgression`: true** at most **one** tier: **`atCharacterLevel` 1** only, to override bundled aimed/burst (etc.) at first level—see root **`description`**."
+        },
+        "stackingRule": {
+          "type": "string",
+          "description": "How tiers combine when **`levelTiers`** holds a **full** ladder. **Forbidden** when **`usesStandardModernProgression`** is true (use the bundle’s **`stackingRule`**)."
+        },
+        "usesStandardModernProgression": {
+          "type": "boolean",
+          "description": "Inherit the shared ladder, Recognize Weapon Quality %, and untrained penalties from **`data/standard_modern_weapon_progression.json`** — see root **`description`** for the engine contract and required bundle fields."
+        },
+        "standardModernProgressionKey": {
+          "type": "string",
+          "description": "Key under **`bundles`** in **`standard_modern_weapon_progression.json`** (e.g. **`nightbane`**). Omit → engine defaults from **`gameSystems[0]`**.",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1
+        },
+        "aimedStrikeBonus": {
+          "type": "integer",
+          "description": "Flat aimed-shot strike bonus when the book gives one value for all levels (Nightbane-style)."
+        },
+        "rangeBonusPerLevelFeet": {
+          "type": "integer",
+          "description": "Flat range increase in feet gained per character level (e.g. +20 ft per level) when the book defines linear growth rather than milestone tiers."
+        },
+        "burstStrikeBonus": {
+          "type": "integer",
+          "description": "Flat burst / wild-fire strike bonus when not tiered."
+        },
+        "skillPercentage": {
+          "allOf": [{ "$ref": "#/$defs/skillPercentageRoll" }],
+          "description": "Percentile roll for this W.P. (e.g. **`kind`**: **`recognize_weapon_quality`**, 30% base, +6% per level)."
+        },
+        "maneuvers": {
+          "type": "array",
+          "description": "Structured maneuver labels granted by this proficiency (for example **Double Barrel Blast**, **Twin Strike**). Use **`description`** or **`notes`** for full rule text.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "specialManeuvers": {
+          "type": "array",
+          "description": "Structured tactical maneuvers with explicit rule text so systems can discover/use them without parsing prose notes.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/specialManeuver"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "What weapon types this W.P. covers (caliber class, action type, etc.) and any rules that apply simply by having the proficiency (and any level-based bonuses if levelTiers is set).",
+          "minLength": 1
+        },
+        "failureResults": {
+          "type": "string",
+          "description": "Optional jam, misfeed, safety—if the book ties them to lacking training."
+        },
+        "sources": {
+          "$ref": "#/$defs/sources"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "usesStandardModernProgression": { "const": true }
+            },
+            "required": ["usesStandardModernProgression"]
+          },
+          "then": {
+            "properties": {
+              "stackingRule": false
+            },
+            "oneOf": [
+              {
+                "not": { "required": ["levelTiers"] }
+              },
+              {
+                "properties": {
+                  "levelTiers": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                      "allOf": [
+                        { "$ref": "#/$defs/levelTier" },
+                        {
+                          "properties": {
+                            "atCharacterLevel": { "const": 1 }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": ["levelTiers"]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

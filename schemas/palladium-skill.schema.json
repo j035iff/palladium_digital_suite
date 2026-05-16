@@ -1,0 +1,3020 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-skill.schema.json",
+  "title": "Palladium RPG skill",
+  "description": "A learnable skill with categories, optional **skill id replacement** (`replaces`) for migrations, **percentile** and/or **non-percentile mechanic** progression (`mechanicProgressions`), optional O.C.C.-dependent base % (`occProgressionOverrides`), **split-base** starting % (`basePercent` as `{ splitBase }`, shorthand **named tracks** object, or **`splitBaseTracks`** list), optional **initialization** percentile bonuses (`initializationBonuses`), optional **automatic skill grants** (`grantsSkills`), **`requiresSpecialization`** when the catalog row is a **topic template**, synergies (including **conditional applicability**, **ability threshold rewards**), **`interdependentKnowledge`** (non-mechanical cross-skill notes for UI), external mechanics bonuses, prerequisites (**`skill_any_of`**, **`logical_group`**, **`prerequisiteBypassConditions`**), **`sequentialChecks`**, situational % modifiers, optional non-numeric requirements, **`allowedAsSecondarySkill`**, natural-roll outcomes, physical bonuses, **tool-scoped combat bonuses** (`combatToolBonuses`), **attribute-based percentile adjustments** (`skillPercentAttributeModifiers`, **`thresholdCheck`**, **`rules`** aggregation), **`successOutcomes`** (mirror **`failureResults`**, optional **`yields`**), special attacks, optional standalone vs nested placement, structured failure outcomes, object size/weight limits, and description.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "gameSystems",
+    "categories",
+    "synergies",
+    "prerequisites",
+    "description"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable machine id for references (synergies, prerequisites, imports).",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name as printed in the book.",
+      "minLength": 1
+    },
+    "replaces": {
+      "type": "string",
+      "description": "If this skill **supersedes** a legacy catalog id (same book rule, renamed or merged—e.g. **Undercover Ops** replaces **Fieldcraft**), set that prior skill’s **`id`** here. Engines use this for character migration, deduplication in builders, and hiding obsolete rows. The replaced skill may remain in data for old sheets until migrated.",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "gameSystems": {
+      "type": "array",
+      "description": "Game lines or settings this skill appears in. Use stable slugs (e.g. nightbane, palladium_fantasy, rifts, heroes_unlimited, robotech, after_the_bomb). Empty array means treat as generic Palladium core / unspecified.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "categories": {
+      "type": "array",
+      "description": "Skill categories from the book listing. Use two or more entries when a skill is filed under multiple categories (e.g. Rogue + Technical). Order can match book order or your preferred sort.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "allowedAsSecondarySkill": {
+      "type": "boolean",
+      "description": "**Per-skill secondary-skill eligibility.** If **`false`**, the character **cannot** spend **secondary skill** picks on this skill (O.C.C.-only, scholastic-only, or “not offered as secondary” in the book). If **`true`** or **omitted**, treat as **eligible** for secondary picks unless a table or edition overrides. This is the **canonical** flag for that rule—no duplicate `is_secondary_eligible` field. App-wide ban lists, if any, are separate configuration layered on top of this."
+    },
+    "specialization": {
+      "type": "object",
+      "description": "When present, the player must choose a concrete type for this skill at selection time (e.g. which language, which instrument). Omit for skills that are not parameterized. Character sheets store the chosen value separately from this definition. For **topic-per-pick** skills (**Lore: Factions**, **History**, etc.), set root **`requiresSpecialization`** and typically **`allowsMultipleInstances`**: **true** here.",
+      "additionalProperties": false,
+      "required": ["kind", "prompt"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "What category of choice the player is making. Use `mount` for Horsemanship-style steed or mount categories when bases differ by choice (see playbook: splitBase vs specialization).",
+          "enum": ["language", "literacy", "instrument", "mount", "other"]
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Short label for UI/forms, e.g. \"Which language?\", \"Instrument\".",
+          "minLength": 1
+        },
+        "examples": {
+          "type": "array",
+          "description": "Optional suggestions or book examples (not exhaustive).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowsMultipleInstances": {
+          "type": "boolean",
+          "description": "If true, the skill may be taken more than once with different specialization choices (typical for Language / Literacy / Instrument). Not used for same-name tier upgrades—use repeatSelection for skills like Cook taken twice for professional quality."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional rule reminders (e.g. literacy tied to a written script, GM-defined dialects)."
+        }
+      }
+    },
+    "requiresSpecialization": {
+      "type": "boolean",
+      "description": "If **`true`**, this catalog entry is a **template**: each character pick **must** define a concrete subject or topic on the sheet (e.g. **Lore: Factions — The Resistance**, **History — Ancient Rome**) even when **`specialization`** is omitted or underspecified in data. Pair with **`specialization`** (`prompt`, `examples`, **`allowsMultipleInstances`**) when the book explicitly treats each topic as a separate selection. **Omit** or **`false`** when one unnamed row is sufficient."
+    },
+    "repeatSelection": {
+      "type": "object",
+      "description": "When the character may spend multiple skill selections on the same skill to unlock higher tiers. By default this is skill-wide (e.g. Cook twice). Set trackScope to specialization_instance when the skill can have multiple specialized instances and each instance may be upgraded independently (e.g. Guitar can become professional without affecting Violin).",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "Rule in plain language for players and GMs.",
+          "minLength": 1
+        },
+        "maxSelections": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "How many times this skill can be taken on one character for this upgrade track. Omit if unlimited or defined only in the book text."
+        },
+        "trackScope": {
+          "type": "string",
+          "enum": ["skill", "specialization_instance"],
+          "description": "Scope of this repeat-selection track. skill = one shared track for the skill id. specialization_instance = each chosen specialization value has its own independent track."
+        },
+        "categoryTrackInteraction": {
+          "type": "object",
+          "description": "How this skill-specific repeat-selection track interacts with any category-level default repeat-tier behavior (for example, Domestic second-pick +10%). Omit when no category-wide behavior exists or when this track stands alone.",
+          "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["append", "override", "replace"],
+              "description": "append = keep category behavior and add this skill-specific behavior. override = keep category baseline but this track takes precedence where rules collide. replace = ignore category-level behavior and use only this track."
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Player/GM-facing explanation of how the combination is resolved for this skill."
+            }
+          }
+        },
+        "ranks": {
+          "type": "array",
+          "description": "Optional per-selection breakdown (1st pick vs 2nd pick vs …).",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["selectionNumber", "effect"],
+            "properties": {
+              "selectionNumber": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "1 = first time this skill is chosen, 2 = second selection of the same skill, etc."
+              },
+              "label": {
+                "type": "string",
+                "description": "Short tier name for UI (e.g. Standard, Professional quality)."
+              },
+              "effect": {
+                "type": "string",
+                "description": "What improves at this tier (quality band, extra abilities, GM perks).",
+                "minLength": 1
+              },
+              "skillPercentBonus": {
+                "type": "number",
+                "description": "Added to the character's effective skill percentage when this tier applies—e.g. +10 for professional-quality after taking the skill twice. Omit when the tier has no extra percentile modifier."
+              }
+            }
+          }
+        }
+      }
+    },
+    "categoryMechanicsInheritance": {
+      "type": "object",
+      "description": "Declares mechanics inherited from category-level policy definitions so repeated skill-level boilerplate does not need to be duplicated on every skill. Use this when category defaults are authored in a shared catalog/config and applied at runtime. Supports repeat-selection defaults and **category-wide prerequisites** (e.g. all Pilot aircraft skills require Read Sensory Equipment)—see `prerequisites` here and playbook.",
+      "additionalProperties": false,
+      "properties": {
+        "prerequisites": {
+          "type": "object",
+          "description": "How this skill consumes **category-level prerequisite policy** (AND rules that apply to every skill in a category unless opted out). Typical pattern: a catalog entry keyed by `categoryRuleIds` lists mandatory skills (e.g. read_sensory_equipment for Pilot aircraft). **Engines:** merge resolved category prerequisites with this skill's root `prerequisites` array per `mode` (same merge semantics as `repeatSelection`). Root `prerequisites` holds only skill-specific extras; omit duplication of category-wide requirements when `inherit` or `append` is used.",
+          "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["inherit", "append", "override", "replace", "disable"],
+              "description": "inherit = apply category prerequisite policy as defined in the catalog. append = category policy AND this skill's root prerequisites. override = category baseline but root prerequisites win on collision (rare). replace = ignore category prerequisite policy; use only root prerequisites. disable = opt out of category-wide prerequisites for this skill (document why in summary)."
+            },
+            "fromCategories": {
+              "type": "array",
+              "description": "Category names whose prerequisite policy applies. If omitted, use this skill's `categories` list.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "categoryRuleIds": {
+              "type": "array",
+              "description": "Stable ids for category prerequisite bundles in an external category-rules catalog (e.g. pilot_aircraft_requires_read_sensory_equipment).",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "uniqueItems": true
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Player/GM-facing note on inherited prerequisite rules."
+            }
+          }
+        },
+        "repeatSelection": {
+          "type": "object",
+          "description": "How this skill consumes category-level repeat-selection defaults (for example, Domestic professional-quality second pick).",
+          "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["inherit", "append", "override", "replace", "disable"],
+              "description": "inherit = use category defaults as-is. append = keep category defaults and add local repeatSelection behavior. override = keep baseline but local repeatSelection wins on collisions. replace = ignore category defaults and use only local repeatSelection. disable = explicitly opt out of category repeat-selection defaults."
+            },
+            "fromCategories": {
+              "type": "array",
+              "description": "Optional explicit category names to source defaults from. If omitted, inherit from this skill's categories list.",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "categoryRuleIds": {
+              "type": "array",
+              "description": "Optional stable ids for category policy records in an external category-rules catalog.",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "uniqueItems": true
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Player/GM-facing explanation of inherited behavior."
+            }
+          }
+        }
+      }
+    },
+    "narrativeAdvantages": {
+      "type": "array",
+      "description": "Distinct non-quantified advantages or abstract mechanical guidance (e.g. 'learns dance routines much faster') that should be presented as feature bullets rather than buried in the main description.",
+      "items": {
+        "$ref": "#/$defs/narrativeAdvantage"
+      }
+    },
+    "unquantifiedMechanics": {
+      "type": "array",
+      "description": "Alias for narrativeAdvantages. Use for abstract mechanics that are meaningful but intentionally not modeled as numeric modifiers.",
+      "items": {
+        "$ref": "#/$defs/narrativeAdvantage"
+      }
+    },
+    "interdependentKnowledge": {
+      "type": "array",
+      "description": "**Non-mechanical** relationships to other skills or domains—e.g. Salvage or Construction noting that **Mechanical** / **Electronics** grants **understanding** without a listed **%** bonus. For **tooltips and GM-facing notes only**; engines must **not** apply automatic percentile or combat modifiers from this array (use **`synergies`**, **`conditionalRelatedSkills`**, or **`skillPercentAttributeModifiers`** when the book gives a number).",
+      "items": {
+        "$ref": "#/$defs/interdependentKnowledgeEntry"
+      }
+    },
+    "acquisitionEffects": {
+      "type": "array",
+      "description": "Per **acquisition path** differences: how the skill behaves when taken with **primary scholastic** points vs **secondary skill** (or other) slots—e.g. Art / Writing **professional vs amateur** output, sale value, or GM-facing quality tier. Engines merge this with character sheet metadata about how the skill was purchased.",
+      "items": {
+        "$ref": "#/$defs/acquisitionEffect"
+      }
+    },
+    "initializationBonuses": {
+      "type": "array",
+      "description": "One-time **starting** percentile bonuses when the character first gains the skill under a listed circumstance—e.g. **+15%** if the skill is assigned as an **O.C.C. / R.C.C.** skill at creation, or membership in a **faction**. Applies to **initial** effective % only unless the book says it stacks every level (then also describe in **`summary`** on the row). Complements **`acquisitionEffects`** (quality tiers) and normal **`basePercent`**.",
+      "items": {
+        "$ref": "#/$defs/initializationBonus"
+      }
+    },
+    "physicalSkillBonuses": {
+      "$ref": "#/$defs/physicalSkillBonuses"
+    },
+    "combatToolBonuses": {
+      "type": "array",
+      "description": "Combat or attribute modifiers that apply **only** in listed **tool or improvised-weapon** contexts (e.g. Excavation: +1 strike when fighting with a shovel, pick, or crowbar). Each item repeats the **`physicalSkillBonuses`** key set under **`modifiers`** and must identify the context with **`targetWeapon`**, **`condition`**, and/or **`summary`**. Use root **`physicalSkillBonuses`** only for bonuses that are **not** tied to a specific tool. Omit this array when unused.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/combatToolBonusEntry"
+      }
+    },
+    "naturalRollOutcomes": {
+      "type": "array",
+      "description": "Effects tied to the unmodified d20 (or book-specified die) for this skill—e.g. pin on 18–20, knockout on natural 20. Use naturalRolls for explicit values or naturalRange for a span.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["naturalRolls", "effect"],
+            "properties": {
+              "naturalRolls": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "description": "Exact face values (e.g. 20 for knockout on a natural 20).",
+                "uniqueItems": true
+              },
+              "effect": {
+                "type": "string",
+                "description": "What happens when one of these naturals is rolled (e.g. KO, stun, hold).",
+                "minLength": 1
+              },
+              "appliesTo": {
+                "type": "string",
+                "description": "Optional scope: e.g. strike with this skill, clinch, all successful hits—if the book limits when the rule applies."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["naturalRange", "effect"],
+            "properties": {
+              "naturalRange": {
+                "type": "object",
+                "description": "Inclusive range on the same die (usually d20).",
+                "additionalProperties": false,
+                "required": ["min", "max"],
+                "properties": {
+                  "min": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20
+                  },
+                  "max": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20
+                  }
+                }
+              },
+              "effect": {
+                "type": "string",
+                "minLength": 1
+              },
+              "appliesTo": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "specialAttacks": {
+      "type": "array",
+      "description": "Extra attack forms from this skill with their own damage (crush/squeeze, head butt, power punch, body block, etc.), often in addition to normal unarmed or weapon rules. Use statusEffects and saveRequired when the attack imposes knockdown, lost actions, or a defensive roll before full consequences apply.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "damage"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Book name for the attack (e.g. Crush / squeeze).",
+            "minLength": 1
+          },
+          "damage": {
+            "description": "Damage expression: non-negative **integer** when the book gives a fixed amount (e.g. 0, 4), or a **string** for dice/book notation (e.g. 1D4, 2D6, 1D8).",
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "description": "When it can be used, A.P.M. cost, repeat in a melee, target restrictions, etc."
+          },
+          "statusEffects": {
+            "type": "array",
+            "description": "Non-damage outcomes from this attack (e.g. knockdown, lose one melee attack, stunned)—stable slugs or short labels for UI/rules engines.",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "saveRequired": {
+            "description": "Whether the target (or attacker) gets a save or secondary roll that can negate or reduce this attack's effects.",
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "description": "Book-style save description in one line."
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["summary"],
+                "properties": {
+                  "summary": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "What to roll and what happens on success vs failure."
+                  },
+                  "saveKind": {
+                    "type": "string",
+                    "description": "Optional category (e.g. dodge, parry, roll_with_impact, pp, pe, death_blow_save)."
+                  },
+                  "appliesTo": {
+                    "type": "string",
+                    "description": "Who rolls (e.g. defender, attacker)."
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "basePercent": {
+      "description": "Starting skill percentage for a new character with the skill (before bonuses), or **split bases** when one entry tracks **multiple simultaneous percentile columns** (e.g. History general vs specific topics; Medical Doctor diagnosis vs treatment). **Forms:** scalar **number**; **`{ splitBase: { trackId: 0–98, … } }`**; **shorthand** — same map as `splitBase` but placed **directly** on `basePercent` as a **`namedPercentTracks`** object (at least two slug keys); or **`{ splitBaseTracks: [ { trackId, basePercent }, … ] }`** (ordered rows, optional **`label`** per track). When the book gives **different defaults by O.C.C.**, keep the usual row here and use **`occProgressionOverrides`**. **Not** for exclusive pick-one categories (e.g. mount type): prefer **`specialization`** or separate skill ids. See playbook: splitBase vs specialization.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/skillBasePercentValue"
+        }
+      ]
+    },
+    "percentPerLevel": {
+      "type": ["number", "null"],
+      "description": "Additional percentage gained per character level when **one** increment applies to the whole skill (including all `splitBase` tracks equally—e.g. +5% to both diagnosis and treatment). When named tracks gain **different** increments per level (e.g. sailing +5%, motor +4%), omit this or set null and use **`splitPercentPerLevel`** instead. Omit or null when progression is defined only on subTasks, when the skill uses only **`mechanicProgressions`** (integer bonuses on a schedule—e.g. Combat Driving), or the skill has no percentile advancement. For **O.C.C.-specific** per-level growth that differs from this default, set the alternate value on a matching **`occProgressionOverrides`** entry.",
+      "minimum": 0
+    },
+    "splitPercentPerLevel": {
+      "$ref": "#/$defs/namedPerLevelGrowthTracks"
+    },
+    "mechanicProgressions": {
+      "type": "array",
+      "description": "When the skill **does not** (or does not only) advance as a **percentile** skill: **fixed integer** bonuses or penalties to **other mechanics** (control saves, maneuver penalties, combat stats) on a **non-standard level schedule**—e.g. +1 every **3 character levels**. Use **`everyNCharacterLevels`** + **`integerDeltaPerStep`**; state exact tier math (levels 1 vs 3 vs 6…) in **`summary`** if the book is ambiguous. Separate rows for separate mechanics.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/mechanicProgression"
+      }
+    },
+    "occProgressionOverrides": {
+      "type": "array",
+      "description": "When **starting %**, **per-level growth**, and/or **split per-track growth** depend on the character’s **O.C.C.** (or magic-practitioner flag in your O.C.C. catalog), list overrides here. Root **`basePercent`**, **`percentPerLevel`**, and **`splitPercentPerLevel`** describe the **default** character (often non-magic O.C.C.s or the book’s “everyone else” line). Each entry **`when`** describes who matches; include at least one of **`basePercent`**, **`percentPerLevel`**, or **`splitPercentPerLevel`** on that entry—only listed fields replace the default for matching characters. **Engines:** evaluate in **array order**; use the **first** matching override, or merge per campaign rules if the book allows stacking (rare).",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/occProgressionOverride"
+      }
+    },
+    "subTasks": {
+      "type": "array",
+      "description": "Distinct sub-activities under one skill name, each with its own base % and per-level growth (e.g. Back Flip vs Tightrope under Acrobatics/Gymnastics). When present, root basePercent may be omitted if the book only defines per-task percentages.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/subTask"
+      }
+    },
+    "performanceFormulas": {
+      "type": "array",
+      "description": "Attribute-based performance expressions (e.g. swim distance as a multiple of P.S.) for display and optional engine evaluation. Use metricKey and cappedByMetricKey to link metrics (e.g. distance capped by a duration-derived limit).",
+      "items": {
+        "$ref": "#/$defs/performanceFormula"
+      }
+    },
+    "physicalConstraints": {
+      "$ref": "#/$defs/physicalConstraints"
+    },
+    "situationalModifiers": {
+      "type": "array",
+      "description": "Task-specific adjustments to effective skill % or opposed rolls. Use **`situationalModifierAdditive`** (`task` + **`percentModifier`**) or **`situationalModifierConditionRow`** (**`condition`** + **`percentModifier`**) for machine-readable **familiarity / context tables** (e.g. Home City vs Never Visited). Use **`modifierType`** **`multiply`** or **`divide`** with **`operand`** when the book **scales** the skill. Optional **`ruleId`** on a row can be referenced from **`sequentialChecks`**. For non-percentile **hard rules**, use `situationalRuleOverrides`.",
+      "items": {
+        "$ref": "#/$defs/situationalModifier"
+      }
+    },
+    "sequentialChecks": {
+      "type": "array",
+      "description": "Ordered **prerequisite rolls**: another skill must succeed (or meet a floor) **before** the character attempts this skill—or before specific **`situationalModifiers`** rows—e.g. successful **Streetwise** as a gate for certain **Locate Librarian** uses. Engines show these in the roll UI as pre-checks. If **`gatesSituationalModifierRuleIds`** is omitted, interpret scope from **`summary`** / **`condition`**.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/sequentialSkillCheck"
+      }
+    },
+    "situationalRuleOverrides": {
+      "type": "array",
+      "description": "Contextual **rule overrides** that are not expressed as a percentile adjustment—e.g. Horsemanship: aimed shots impossible from a moving mount, automatic/burst fire always wild. For engines, apply these as hard constraints or forced outcomes alongside (not instead of) `situationalModifiers` when both exist.",
+      "items": {
+        "$ref": "#/$defs/situationalRuleOverride"
+      }
+    },
+    "resolutionLogic": {
+      "description": "Optional non-standard roll resolution for this skill: best-of-X (e.g. paramedic), reroll-on-failure (second chance before final failure), save-vs-consequence (e.g. save vs. fall on climbing before applying full failureResults). Add **`recurrence`** on any entry when the book requires **repeated** checks (e.g. once per hour while navigating). Use a single object or an array when multiple rules apply.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/resolutionLogic"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/resolutionLogic"
+          }
+        }
+      ]
+    },
+    "skillPercentAttributeModifiers": {
+      "type": "object",
+      "description": "Modifiers to this skill's effective percentage based on the character's attributes—applied after base + level + selections unless the book says otherwise. **`rules`** holds **scaling** rows (**`bonusPerPointAbove`**, **`bonusPerStepAbove`**, **`penaltyWhenBelow`** when attribute is strictly less than **`below`**). Optional **`thresholdCheck`** applies a **flat** **`percentModifier`** when an attribute passes a **binary comparison** (e.g. Safe-Cracking M.E. **≤ 14** → **−10%**)—orthogonal to step scaling; engines typically **add** it to contributions from **`rules`** unless **`summary`** says otherwise. **`multiAttributeAggregation`** applies only to **`rules`** array rows.",
+      "additionalProperties": false,
+      "required": ["rules"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM-facing description (e.g. Seduction: M.A. and P.B. both modify %—stacked per **`multiAttributeAggregation`**)."
+        },
+        "multiAttributeAggregation": {
+          "type": "string",
+          "description": "How to combine **signed** contributions computed from **`rules`** when **more than one** rule applies (multiple attributes or stacked clauses). **`sum_all_applicable_rules`** (default when omitted): **add** all contributions (bonuses and penalties). **`take_largest_contribution_only`**: use only the **single** rule with the **largest** contribution after each rule is evaluated (ties: GM/engine policy—document in **`summary`**). **`custom`**: non-standard merge—spell out in **`summary`**.",
+          "enum": ["sum_all_applicable_rules", "take_largest_contribution_only", "custom"]
+        },
+        "thresholdCheck": {
+          "$ref": "#/$defs/skillPercentAttributeThresholdCheck"
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Modifier rules evaluated **in order** for authoring clarity; combination is governed by **`multiAttributeAggregation`** (default additive across rules). Each rule targets one **`attribute`**.",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/skillPercentModifierBonusPerPointAbove"
+              },
+              {
+                "$ref": "#/$defs/skillPercentModifierBonusPerStepAbove"
+              },
+              {
+                "$ref": "#/$defs/skillPercentModifierPenaltyWhenBelow"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "synergies": {
+      "type": "array",
+      "description": "Interactions with **other skills** or **non-skill abilities** (psionics, powers, etc.). Each item is either a **skill link** (`skillId` + `description`) or an **ability link** (`targetAbility` + `modifier`). Use **`targetContext`** when the bonus applies only to a **specific relationship or encounter state** (e.g. victim of seduction)—UI can prompt during play. Combine with **`condition`** / **`applicability`** when needed. **`synergyToAbility`** may include **`thresholdRewards`**. For grant-if-missing / bonus-if-have between **skills**, use **`conditionalRelatedSkills`**. For **`targetKind`** / **`targetId`**, **`externalMechanicsBonuses`** may use **`thresholdRewards`**.",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/synergyToSkill"
+          },
+          {
+            "$ref": "#/$defs/synergyToAbility"
+          }
+        ]
+      }
+    },
+    "externalMechanicsBonuses": {
+      "type": "array",
+      "description": "Bonuses to **typed** external entities when you want **`targetKind`** / **`targetId`** (powers catalog). Optional **`thresholdRewards`** gates all or part of the bonus on another skill’s **minimum effective %** (see **`$defs/thresholdReward`**). For the same math expressed in **`synergies`**, use **`synergyToAbility`** (`targetAbility` + **`modifier`**) instead or in addition—avoid duplicating the same bonus in both arrays.",
+      "items": {
+        "$ref": "#/$defs/externalMechanicsBonus"
+      }
+    },
+    "conditionalRelatedSkills": {
+      "type": "array",
+      "description": "Target skill receives either a percentile bonus when the character already has it, or is granted at fixed starting value(s) when they do not—common on physical skills (e.g. Acrobatics with Prowl or Climbing). An entry may include both `bonusIfAlreadyHave` and `grantIfMissing`; engines apply **one** branch depending on whether the character already has `skillId` when this rule fires. **Bonus path:** adds to the character's existing effective % for that skill (does not replace base). **Grant path:** see `grantIfMissing`—use `startingPercent` or `startingSplitBase` to set initial %; both ignore the target's book base(s) for that initial state while per-level growth still comes from the target definition unless overridden there.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["skillId", "summary"],
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "description": "Id of the affected skill (must match another skill definition's id).",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Book-style rule in one place for players/GMs (e.g. +5% if you have Prowl, else gain Prowl at 30%).",
+            "minLength": 1
+          },
+          "bonusIfAlreadyHave": {
+            "type": "object",
+            "description": "Applied when the character already possesses the target skill. Adds `skillPercentBonus` to that skill's effective percentage (stacking per book/GM); does **not** replace or ignore the target's `basePercent`/`percentPerLevel`—those still define the skill's normal progression baseline.",
+            "additionalProperties": false,
+            "required": ["skillPercentBonus"],
+            "properties": {
+              "skillPercentBonus": {
+                "type": "number",
+                "description": "Bonus to rolls or effective percentage with that skill (e.g. +5)."
+              }
+            }
+          },
+          "grantIfMissing": {
+            "description": "Applied when the character does not already have the target skill—typically grants it without spending another selection. **UI / logic engines:** use exactly one of `startingPercent` (single-track targets) or `startingSplitBase` (targets whose `basePercent` uses `splitBase`). In both cases, granted values are **fixed starting points** that **replace** the target's book base(s) for the **initial** state only—not offsets. **Per-level growth** still uses the target skill's `percentPerLevel` unless `grantIfMissing.percentPerLevel` overrides it. Example (single-track): grant Climbing at 40% while its definition says 30%. Example (split-base): grant Medical Doctor with diagnosis 55 / treatment 45 while the definition says 60 / 50.",
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["startingPercent"],
+                "properties": {
+                  "startingPercent": {
+                    "type": "number",
+                    "description": "Fixed starting percentage for the granted instance of `skillId`. Replaces that skill's normal scalar `basePercent` for initial % only.",
+                    "minimum": 0,
+                    "maximum": 98
+                  },
+                  "percentPerLevel": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "If present, **overrides** per-level growth for this granted instance. If **omitted**, inherit the target skill's `percentPerLevel` when advancing the granted skill."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["startingSplitBase"],
+                "properties": {
+                  "startingSplitBase": {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/namedPercentTracks"
+                      }
+                    ],
+                    "description": "Fixed starting % per named track for the granted skill. Keys should match the target's `basePercent.splitBase` keys; each value ignores that track's book base for the initial state only."
+                  },
+                  "percentPerLevel": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "If present, **overrides** per-level growth for this granted instance (applies how your engine applies one `percentPerLevel` to multiple tracks—often the same increment to each). If **omitted**, inherit the target's `percentPerLevel`."
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "anyOf": [
+          { "required": ["bonusIfAlreadyHave"] },
+          { "required": ["grantIfMissing"] }
+        ]
+      }
+    },
+    "grantsSkills": {
+      "type": "array",
+      "description": "Skills **automatically granted** when the character gains this skill (no extra selection)—e.g. **Vehicle Armorer** includes **Basic Mechanics**. Unlike **`conditionalRelatedSkills`**, these are **unconditional** package grants. Engines add **`skillId`** to the sheet and apply optional **`startingPercent`** / **`skillPercentBonus`** per row.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/grantedSkill"
+      }
+    },
+    "prerequisiteBypassConditions": {
+      "type": "array",
+      "description": "When matched against the character (skill packages, O.C.C. flags, etc.), **waive** part or all of the **`prerequisites`** array for **learning / selecting** this skill. Does not automatically waive **`sequentialChecks`** (those are use-time gates). Each entry’s **`when`** is AND of supplied keys; see **`$defs/prerequisiteBypassWhen`**.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/prerequisiteBypassCondition"
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "description": "Requirements before the skill can be taken or used. Use an empty array if none. **Top-level array entries are AND-combined** unless **`prerequisiteBypassConditions`** waives them. **Simple OR among skills:** **`type`: skill_any_of** (`skillIds` or **`alternatives`**). **Nested OR/AND (e.g. I.D. Undercover Agent):** **`type`: logical_group** with **`operator`** **`any_of`** / **`all_of`** and **`items`**—each child matches **`$defs/prerequisiteEntry`**. Use **`narrative_gate`** / **`attribute`** / **`other`** as needed. When **`categoryMechanicsInheritance.prerequisites`** is present, merge category policy with this array per **`mode`**.",
+      "items": {
+        "$ref": "#/$defs/prerequisiteEntry"
+      }
+    },
+    "requirements": {
+      "$ref": "#/$defs/skillRequirements"
+    },
+    "description": {
+      "type": "string",
+      "description": "What the skill covers, typical uses, and any special rules.",
+      "minLength": 1
+    },
+    "failureResults": {
+      "description": "Consequences when the skill roll fails. Use a **string** for plain narrative, or an **object** with optional **`summary`** plus **`secondaryCheck`** for follow-up percent chances (e.g. Pick Pockets: 67% the victim notices). For **computed** failure magnitudes keyed to context, also use **`failureFormulas`**.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/failureResultsStructured"
+        }
+      ]
+    },
+    "successOutcomes": {
+      "description": "Mechanical or narrative results when the skill roll **succeeds**—mirror **`failureResults`** (`string` or structured object). Structured rows may include **`yields`** for dice harvests, loot bands, or resource quantities (e.g. Salvage). Optional **`secondaryCheck`** reuses the same shape as failure follow-ups when the book chains a percent after success.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/successResultsStructured"
+        }
+      ]
+    },
+    "failureFormulas": {
+      "type": "array",
+      "description": "Structured expressions for **how bad** a failure is when the book ties it to variables (e.g. Navigation: miles off-course from vehicle class and speed). Use **multiple rows** with optional **`contextMatch`** when the **same consequence** uses **different formulas** by vehicle type, environment, or other context (aircraft vs jet vs ground). Parallel to `performanceFormulas` but describes failure **consequences**. Engines evaluate or display using `formula`, `unit`, optional metric linking, `contextMatch` selection, and `contextVariables` hints.",
+      "items": {
+        "$ref": "#/$defs/failureFormula"
+      }
+    },
+    "categoryAccessLockouts": {
+      "type": "array",
+      "description": "**Global category constraints** from this skill’s **absence**: if the character does **not** possess this skill, the listed skill **categories** are treated per `constraint` (e.g. Read Sensory Equipment absent → Pilot aircraft operation **prohibited**). Complements `categoryMechanicsInheritance.prerequisites` on gated skills (same rule from two directions).",
+      "items": {
+        "$ref": "#/$defs/categoryAccessLockout"
+      }
+    },
+    "subSkills": {
+      "type": "array",
+      "description": "Techniques bundled under one book skill entry but rolled separately—each has its own base %, per-level growth, description, and optional failure text (e.g. Climbing with Rappelling). These are not standalone entries in the skill list unless **`optionalStandaloneStatus`** on another skill points here via **`nestedPlacement.subSkillId`**.",
+      "items": {
+        "$ref": "#/$defs/subSkill"
+      }
+    },
+    "optionalStandaloneStatus": {
+      "$ref": "#/$defs/optionalStandaloneStatus"
+    },
+    "sources": {
+      "type": "array",
+      "description": "Book references keyed by gameSystem slug (same vocabulary as gameSystems). Use one entry per book when page numbers differ. Put **only** the book title (plus edition if useful) in **reference**, and the printed **start** page in **pageNumber**—never merge ranges into reference.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gameSystem", "reference", "pageNumber"],
+        "properties": {
+          "gameSystem": {
+            "type": "string",
+            "description": "Slug identifying the game line (must match gameSystems naming, e.g. nightbane, palladium_fantasy).",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "reference": {
+            "type": "string",
+            "description": "Book title only (edition if relevant)—no page numbers in this string.",
+            "minLength": 1
+          },
+          "pageNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Printed page where this skill entry begins for that book."
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "repeatSelection": {
+            "type": "object",
+            "properties": {
+              "trackScope": {
+                "const": "specialization_instance"
+              }
+            },
+            "required": ["trackScope"]
+          }
+        },
+        "required": ["repeatSelection"]
+      },
+      "then": {
+        "required": ["specialization"],
+        "properties": {
+          "specialization": {
+            "type": "object",
+            "properties": {
+              "allowsMultipleInstances": {
+                "const": true
+              }
+            },
+            "required": ["allowsMultipleInstances"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "physicalSkillBonuses": {
+      "type": "object",
+      "description": "Direct attribute or combat bonuses granted by this physical (or similar) skill, when the rules award fixed bonuses rather than percentile-only progression. Includes strike/parry/dodge and **flat or conditional damage** on specific maneuvers (e.g. `chargingDamage` +4 when charging from horseback). Use integers or `{ value, condition }` for book rules that give a numeric damage bonus—not only dice on S.D.C./kicks. Omit entirely if the skill grants none. Stacking is per book/GM. Also embedded under **`combatToolBonuses[].modifiers`** for tool-scoped bonuses.",
+      "additionalProperties": false,
+      "properties": {
+        "ps": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "P.S. (Physical Strength) bonus."
+        },
+        "pe": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "P.E. (Physical Endurance) bonus."
+        },
+        "pp": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "P.P. (Physical Prowess) bonus."
+        },
+        "pb": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "P.B. (Physical Beauty) bonus when the skill explicitly improves appearance, poise, or presence (e.g. dance, modeling-adjacent training—per book)."
+        },
+        "sdc": {
+          "description": "S.D.C. bonus: a flat integer or NdX dice notation (e.g. 1D6, 3D6, 2D4+1).",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+              "description": "Flat S.D.C. bonus."
+            },
+            {
+              "$ref": "#/$defs/stringOrConditionalStringBonus",
+              "description": "Dice expression for S.D.C. (e.g. 1D6)."
+            }
+          ]
+        },
+        "spd": {
+          "description": "Spd (Speed) bonus: flat points or NdX dice per book.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+              "description": "Flat Spd bonus."
+            },
+            {
+              "$ref": "#/$defs/stringOrConditionalStringBonus",
+              "description": "Dice expression for Spd (e.g. 4D4)."
+            }
+          ]
+        },
+        "strike": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Strike bonus."
+        },
+        "parry": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Parry bonus."
+        },
+        "dodge": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Dodge bonus."
+        },
+        "rollWithImpact": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Roll with impact / fall bonus."
+        },
+        "pullPunch": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Pull punch bonus (inflicting reduced damage on purpose—strike modifier when pulling punches per your book)."
+        },
+        "apm": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Attacks per melee (A.P.M.) bonus."
+        },
+        "bonusKickDamage": {
+          "description": "Extra S.D.C. or damage on kick attacks from this skill. Use an integer for a flat bonus or dice notation matching NdX(+modifier) (e.g. 1D6, 2D4+1).",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+              "description": "Flat damage bonus to kicks (S.D.C. or as your book defines)."
+            },
+            {
+              "$ref": "#/$defs/stringOrConditionalStringBonus",
+              "description": "Dice or mixed notation (e.g. 1D6, +1D6) when the book does not reduce to a single integer."
+            }
+          ]
+        },
+        "chargingDamage": {
+          "description": "Extra damage (typically S.D.C.) on **charge** or **ramming** attacks from this skill—flat integer, conditional integer (e.g. +4 only when charging per Horsemanship), or dice when the book uses NdX.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+              "description": "Flat or conditional numeric bonus (e.g. 4 or { value: 4, condition: \"charging attack\" })."
+            },
+            {
+              "$ref": "#/$defs/stringOrConditionalStringBonus",
+              "description": "Dice notation when the charge bonus is rolled rather than a fixed integer."
+            }
+          ]
+        },
+        "disarmBonus": {
+          "$ref": "#/$defs/integerOrConditionalIntegerBonus",
+          "description": "Bonus to disarm attempts (strike or skill roll, per your book) when this skill applies."
+        }
+      }
+    },
+    "combatToolBonusEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modifiers"],
+      "description": "One tool- or context-scoped combat/stat bundle. **`modifiers`** uses the same optional keys as root **`physicalSkillBonuses`**.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text for when this row applies."
+        },
+        "targetWeapon": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Tool or improvised weapon (e.g. shovel, pick, crowbar); may summarize multiple implements in one string."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structured or narrative condition (e.g. only when wielding listed tools **as weapons**)."
+        },
+        "modifiers": {
+          "description": "Combat/attribute deltas for this context only.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/physicalSkillBonuses"
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["targetWeapon"]
+        },
+        {
+          "required": ["condition"]
+        },
+        {
+          "required": ["summary"]
+        }
+      ]
+    },
+    "diceNotationString": {
+      "type": "string",
+      "description": "Dice expression: optional count, D, die size, optional +flat modifier (e.g. D6, 3D6, 2D4+1).",
+      "pattern": "^(\\d+)?D\\d+(\\+\\d+)?$"
+    },
+    "subTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "basePercent", "percentPerLevel"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book or UI label for this sub-activity (e.g. Back Flip, Tightrope Walking)."
+        },
+        "basePercent": {
+          "description": "Starting skill percentage for this sub-task only.",
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 98
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentPerLevel": {
+          "description": "Per-level percentage growth for this sub-task.",
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "failureFormula": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consequence", "formula", "unit"],
+      "properties": {
+        "consequence": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the failed roll produces in measurable terms (e.g. distance_off_course, time_delay_hours, supply_wastage_percent)."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book or normalized expression using context variables (e.g. 1D4 × vehicle_speed_category miles; reference vehicle table in linkSummary)."
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unit for the consequence (e.g. miles, km, hours, percent)."
+        },
+        "metricKey": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable id for this failure metric within the skill (for cross-linking or UI)."
+        },
+        "cappedByMetricKey": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional reference to another failureFormula.metricKey or performance metric cap."
+        },
+        "capRule": {
+          "type": "string",
+          "enum": ["lesser_of", "greater_of", "custom"],
+          "description": "How cappedByMetricKey combines with this consequence (same semantics as performance formulas)."
+        },
+        "linkSummary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text tying formula to vehicle tables, terrain, or book charts."
+        },
+        "contextVariables": {
+          "type": "array",
+          "description": "Named inputs engines or GMs resolve (e.g. vehicle_type, speed_band, weather_severity)—not a full expression language; documents intent.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "contextMatch": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "When present, this formula row applies only when **all** named context variables equal these string values (AND). Keys are slugs matching `contextVariables[]` or book-defined inputs (e.g. `vehicle_type: \"ground_vehicle\"`). Omit on a row to mean default/fallback when no more specific row matches—engines should define tie-breaking (e.g. longest contextMatch wins).",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this failure formula applies (e.g. only over open ocean, only if no GPS)."
+        }
+      }
+    },
+    "categoryAccessLockout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetCategories", "constraint", "summary"],
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id (e.g. pilot_aircraft_requires_read_sensory_equipment)."
+        },
+        "targetCategories": {
+          "type": "array",
+          "description": "Skill category labels affected when this skill is absent. Use the same strings as skill `categories[]` where possible; **composite book labels** are allowed (e.g. `Pilot: Aircraft`, `Pilot: Jet Aircraft`) when the source groups skills that way.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "constraint": {
+          "type": "string",
+          "enum": ["prohibited", "not_applicable", "blocked_skill_selection", "other"],
+          "description": "prohibited = cannot perform category activity. not_applicable = treat rolls/uses as N/A. blocked_skill_selection = cannot take skills in category at chargen/advancement. other = explain in summary."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book rule in plain language (e.g. cannot understand or operate aircraft without this skill)."
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional narrowing when the category is broad (e.g. 'Pilot: fixed-wing aircraft only')."
+        }
+      }
+    },
+    "failureSecondaryCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["percentChance", "ifTriggers", "ifNotTriggers"],
+      "description": "A **follow-up chance** after the main skill result (usually a failed primary roll). **`percentChance`** is the book’s d100 weight (e.g. 67 = 67% of range per your table’s convention).",
+      "properties": {
+        "percentChance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Likelihood the secondary event occurs (e.g. victim notices a botched pick pocket)."
+        },
+        "appliesWhen": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When to roll or apply this check (e.g. after a failed pick pocket attempt)."
+        },
+        "subject": {
+          "type": "string",
+          "enum": ["intended_victim", "observer", "actor", "other"],
+          "description": "Who the secondary chance concerns."
+        },
+        "subjectSummary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Free-text subject when `other` or more detail is needed."
+        },
+        "resolutionNote": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Non-standard resolution (e.g. 'Roll d100: 01-67 victim recognizes intent'). Omit if percentChance uses the default d100-under convention for your engine."
+        },
+        "ifTriggers": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Outcome when the secondary chance **does** occur (e.g. victim recognizes intent)."
+        },
+        "ifNotTriggers": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Outcome when the secondary chance **does not** occur."
+        }
+      }
+    },
+    "failureResultsStructured": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Structured primary failure text plus optional machine-readable follow-up (Pick Pockets victim awareness, etc.).",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Narrative consequence of failing the skill roll; may repeat or complement `secondaryCheck`."
+        },
+        "secondaryCheck": {
+          "$ref": "#/$defs/failureSecondaryCheck"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["summary"]
+        },
+        {
+          "required": ["secondaryCheck"]
+        }
+      ]
+    },
+    "successYieldEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "description": "One success outcome line: loot band, harvest quantity, or procedural yield (e.g. Salvage).",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What applies on success—may reference a table or next roll."
+        },
+        "dice": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice notation when the book rolls quantity or value (e.g. 2D6×100)."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Non-dice expression when clearer than **`dice`**."
+        },
+        "quantityUnit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "credits, lbs, usable_parts, percent_of_list, etc."
+        },
+        "resourceKind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional catalog slug for harvested resources."
+        },
+        "contextMatch": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Scope when multiple yield rows exist (environment, vehicle class, tier)."
+        }
+      }
+    },
+    "successResultsStructured": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Structured **`successOutcomes`**: narrative **`summary`**, optional chained **`secondaryCheck`**, and/or **`yields`** rows.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Primary consequence of succeeding the roll."
+        },
+        "secondaryCheck": {
+          "$ref": "#/$defs/failureSecondaryCheck"
+        },
+        "yields": {
+          "type": "array",
+          "description": "Mechanical yields or harvest steps—often dice-backed.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/successYieldEntry"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["summary"]
+        },
+        {
+          "required": ["secondaryCheck"]
+        },
+        {
+          "required": ["yields"]
+        }
+      ]
+    },
+    "optionalStandaloneStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "description": "Documents **G.M. choice** between bundling this ability under a parent’s **`subSkills[]`** vs using **this document** as a standalone skill. Root **`basePercent`** / **`percentPerLevel`** describe the standalone listing; the parent’s matching **`subSkills[]`** row describes the nested listing.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book rule: when the nested vs standalone stat block applies."
+        },
+        "nestedPlacement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parentSkillId", "subSkillId"],
+          "properties": {
+            "parentSkillId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "description": "Top-level skill id that owns the alternate **`subSkills[]`** entry."
+            },
+            "subSkillId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "description": "Slug equal to **`parent.subSkills[].id`** for the nested representation."
+            }
+          }
+        }
+      }
+    },
+    "physicalConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Numeric **bulk limits** from the book (Concealment, Palming-sized objects, etc.). Prefer imperial fields when the book uses lbs/inches; use metric fields when the printing is metric.",
+      "minProperties": 1,
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Prose for conditional limits, awkward shapes, or GM discretion."
+        },
+        "maxWeightLbs": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum weight in pounds the skill applies to as printed."
+        },
+        "maxHeightInches": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum height dimension in inches (single-axis or primary height per book)."
+        },
+        "maxWidthInches": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum width in inches."
+        },
+        "maxLengthInches": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum length in inches."
+        },
+        "maxGirthInches": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Circumference or combined girth when the book states it that way."
+        },
+        "maxWeightKg": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum mass in kilograms when the printing uses SI."
+        },
+        "maxDimensionCm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "A single representative linear cap in centimeters when only one combined dimension is given."
+        }
+      }
+    },
+    "performanceFormula": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stat", "formula", "unit"],
+      "properties": {
+        "stat": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What is being measured (e.g. distance, duration, carrying capacity)."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book or normalized expression (e.g. 3x P.S., P.E. minutes)."
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unit for the stat (e.g. yards/melee, minutes, lbs)."
+        },
+        "metricKey": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable id for this metric within the skill so other formulas can reference it (e.g. swim_distance, swim_stamina_cap)."
+        },
+        "cappedByMetricKey": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "References performanceFormulas[].metricKey; this metric's effective value is limited by the referenced metric (see capRule)."
+        },
+        "capRule": {
+          "type": "string",
+          "enum": ["lesser_of", "greater_of", "custom"],
+          "description": "How cappedByMetricKey combines with this metric: lesser_of = take the minimum of the two computed values; greater_of = maximum; custom = explain in linkSummary."
+        },
+        "linkSummary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text for linked or custom cap rules (e.g. 'Distance is 3×P.S. yards/melee but cannot exceed what stamina allows for P.E. minutes')."
+        }
+      }
+    },
+    "splitBaseTrackListForm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["splitBaseTracks"],
+      "description": "Alternate **authoring** shape for split bases: ordered rows with explicit **`trackId`** (same ids as keys in **`namedPercentTracks`** / **`splitBase`**). Engines may normalize to `splitBase` for internal use.",
+      "properties": {
+        "splitBaseTracks": {
+          "type": "array",
+          "minItems": 2,
+          "description": "At least two tracks; **`trackId`** values should be unique within the array.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["trackId", "basePercent"],
+            "properties": {
+              "trackId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "description": "Stable id; align with **`splitPercentPerLevel`** keys and **`grantIfMissing.startingSplitBase`**."
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Optional display name from the book (e.g. General history, Specific topic)."
+              },
+              "basePercent": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 98
+              }
+            }
+          }
+        }
+      }
+    },
+    "namedPercentTracks": {
+      "type": "object",
+      "description": "Named percentile tracks (0–98 per key), e.g. diagnosis/treatment or history general/specific. May appear **directly** on root **`basePercent`** (shorthand) as an object with at least two slug keys, under **`basePercent.splitBase`**, under **`grantIfMissing.startingSplitBase`**, and in **`occProgressionOverrides[].basePercent`** when using the same shapes as root.",
+      "minProperties": 2,
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98
+        }
+      },
+      "additionalProperties": false
+    },
+    "namedPerLevelGrowthTracks": {
+      "type": "object",
+      "description": "Optional on a skill: per-level percentage **increments** per named track, keyed like `basePercent.splitBase`. Use for **asymmetric** split progression (e.g. Boat: Ships—sailing +5%, motor +4% per level). When present, engines apply these per track and should not apply scalar `percentPerLevel` to those tracks (typically set `percentPerLevel` to null).",
+      "minProperties": 2,
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "splitBasePercent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["splitBase"],
+      "properties": {
+        "splitBase": {
+          "$ref": "#/$defs/namedPercentTracks"
+        }
+      }
+    },
+    "skillBasePercentValue": {
+      "description": "Scalar starting %, explicit no root percentile column (`null`), **`{ splitBase: named tracks }`**, **shorthand named tracks** (object with ≥2 slug keys only—same shape as **`namedPercentTracks`**), or **`{ splitBaseTracks: [...] }`**. Shared by root **`basePercent`** and **`occProgressionOverrides[].basePercent**.",
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 98
+        },
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/splitBasePercent"
+        },
+        {
+          "$ref": "#/$defs/namedPercentTracks"
+        },
+        {
+          "$ref": "#/$defs/splitBaseTrackListForm"
+        }
+      ]
+    },
+    "occProgressionWhen": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Match criteria for an **`occProgressionOverrides`** row. **All** supplied keys combine with logical **AND**. Provide at least one key so the row is not vacuous.",
+      "minProperties": 1,
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text for the match (e.g. “Practitioner of Magic O.C.C.s and similar”). Use when machine **`occIds`** are incomplete or setting-specific."
+        },
+        "occIds": {
+          "type": "array",
+          "description": "Character matches if their O.C.C. **id** (from your O.C.C. catalog) is in this list.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "practicesMagic": {
+          "type": "boolean",
+          "description": "If **true**, match characters whose O.C.C. is flagged as a **Practitioner of Magic** (or equivalent) in your catalog. If **false**, match characters who are **not**."
+        }
+      }
+    },
+    "occProgressionOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["when"],
+      "properties": {
+        "when": {
+          "$ref": "#/$defs/occProgressionWhen"
+        },
+        "basePercent": {
+          "description": "If present, replaces root **`basePercent`** for matching characters.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/skillBasePercentValue"
+            }
+          ]
+        },
+        "percentPerLevel": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "If present, replaces root **`percentPerLevel`** for matching characters (same semantics as root: one increment for the whole skill unless `splitPercentPerLevel` applies)."
+        },
+        "splitPercentPerLevel": {
+          "description": "If present, replaces root **`splitPercentPerLevel`** for matching characters.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/namedPerLevelGrowthTracks"
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["basePercent"]
+        },
+        {
+          "required": ["percentPerLevel"]
+        },
+        {
+          "required": ["splitPercentPerLevel"]
+        }
+      ]
+    },
+    "resolutionLogic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["standard", "best_of_x", "reroll_on_failure", "save_vs_consequence"],
+          "description": "standard = one roll vs skill %; best_of_x = multiple rolls and count successes; reroll_on_failure = failed roll may be retried before applying full failure outcome; save_vs_consequence = failed (or marginal) check allows a follow-up save to avoid the worst outcome (e.g. save vs. fall)."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of checks rolled for multi-check resolution methods."
+        },
+        "requiredSuccesses": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many successful checks are needed."
+        },
+        "maxRerolls": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "For reroll_on_failure: extra attempts allowed after the first failure (0 = one reroll total, or interpret as book specifies)."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this special resolution logic applies."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Plain-language rule for players/GMs (especially for reroll and save paths)."
+        },
+        "saveKind": {
+          "type": "string",
+          "minLength": 1,
+          "description": "For save_vs_consequence: what kind of save (e.g. P.P., dodge, roll with impact, death blow)—free text or slug."
+        },
+        "onSaveSuccess": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Outcome if the save succeeds (e.g. catch self, no fall damage)."
+        },
+        "onSaveFailure": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Outcome if the save fails (often matches failureResults or a lighter tier)."
+        },
+        "recurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Optional **ongoing / periodic** check timing (e.g. Navigation: skill roll every hour of travel). Any `type` may include this when the book requires repeated resolution, not only a single attempt.",
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Player/GM-facing cadence (e.g. 'Roll once per hour while navigating under instrument or dead-reckoning conditions')."
+            },
+            "intervalValue": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Numeric period when machine-readable (e.g. 1 with intervalUnit hour = every hour)."
+            },
+            "intervalUnit": {
+              "type": "string",
+              "enum": [
+                "melee_round",
+                "minute",
+                "hour",
+                "watch",
+                "day",
+                "leg_of_journey",
+                "scene",
+                "custom"
+              ],
+              "description": "Unit for intervalValue; use custom when summary alone carries the rule."
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": { "const": "best_of_x" }
+            },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["count", "requiredSuccesses", "condition"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": { "const": "reroll_on_failure" }
+            },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["condition"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": { "const": "save_vs_consequence" }
+            },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["condition"]
+          }
+        },
+        {
+          "if": {
+            "required": ["recurrence"]
+          },
+          "then": {
+            "properties": {
+              "recurrence": {
+                "type": "object",
+                "anyOf": [
+                  { "required": ["summary"] },
+                  { "required": ["intervalUnit"] }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "conditionalIntegerBonus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "condition"],
+      "properties": {
+        "value": {
+          "type": "integer",
+          "description": "Numeric modifier value applied when condition is true."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this modifier applies (e.g. aimed shots with single-fire rifles)."
+        },
+        "appliesTo": {
+          "type": "string",
+          "description": "Optional scope/target detail for the bonus (e.g. strike rolls, called shots, disarm attempts)."
+        }
+      }
+    },
+    "integerOrConditionalIntegerBonus": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "$ref": "#/$defs/conditionalIntegerBonus"
+        }
+      ]
+    },
+    "conditionalStringBonus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "condition"],
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/diceNotationString",
+          "description": "Dice notation for the bonus when condition is true."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this modifier applies."
+        },
+        "appliesTo": {
+          "type": "string",
+          "description": "Optional scope/target detail for the bonus."
+        }
+      }
+    },
+    "stringOrConditionalStringBonus": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/diceNotationString"
+        },
+        {
+          "$ref": "#/$defs/conditionalStringBonus"
+        }
+      ]
+    },
+    "situationalRuleOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for combat/UI engines (e.g. mounted_ranged_no_aimed)."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book rule in plain language (e.g. 'Aimed shots are impossible when firing from a moving animal')."
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["ranged_combat", "melee_combat", "mount_combat", "skill_roll", "general"],
+          "description": "Broad area this override affects—helps UIs route the rule."
+        },
+        "whenContext": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When the override applies (e.g. firing from a moving mount, specific weapon classes per book)."
+        },
+        "constraint": {
+          "type": "string",
+          "enum": ["prohibited", "not_applicable", "forced_outcome", "requires_action", "other"],
+          "description": "prohibited = action/rule cannot be used. not_applicable = treat as N/A. forced_outcome = a specific result always applies (see outcomeHint). requires_action = must do something else first. other = explain in summary."
+        },
+        "targets": {
+          "type": "array",
+          "description": "Optional machine-facing slugs for what is constrained (e.g. aimed_shot, called_shot, burst_fire, automatic_fire).",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "outcomeHint": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When constraint is forced_outcome, optional slug or label (e.g. wild_burst, suppress_aim_bonus)."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional labels for filtering (e.g. mounted_combat, horsemanship).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "situationalModifier": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/situationalModifierAdditive"
+        },
+        {
+          "$ref": "#/$defs/situationalModifierConditionRow"
+        },
+        {
+          "$ref": "#/$defs/situationalModifierScaling"
+        }
+      ]
+    },
+    "situationalModifierAdditive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "percentModifier"],
+      "description": "Flat ±% adjustment to skill or opposed percentile (legacy shape).",
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Specific task/application this modifier applies to."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable identifier for deterministic downstream mapping and rules-engine references."
+        },
+        "percentModifier": {
+          "type": "integer",
+          "description": "Percentile modifier applied for the task (negative for penalties)."
+        },
+        "appliesTo": {
+          "type": "string",
+          "enum": ["self", "opposing_roll", "target", "ally", "other"],
+          "description": "Who receives this modifier."
+        },
+        "target": {
+          "type": "string",
+          "description": "Optional free-text target detail (e.g. enemy tracker, counterfeit detector)."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional additional trigger/context for this modifier."
+        }
+      }
+    },
+    "situationalModifierScaling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "modifierType", "operand"],
+      "description": "Multiplicative or divisive scaling of effective skill % for a task (e.g. half skill = multiply by 0.5 or divide by 2). Apply after additive bonuses unless the book says otherwise—document in condition.",
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Specific task/application this scaling applies to."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable identifier for rules engines."
+        },
+        "modifierType": {
+          "type": "string",
+          "enum": ["multiply", "divide"],
+          "description": "multiply: effective % × operand (e.g. 0.5 halves). divide: effective % ÷ operand (e.g. 2 halves)."
+        },
+        "operand": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Positive factor. Examples: multiply 0.5 or divide 2 for “half skill”; multiply 1.5 for 150% effective skill."
+        },
+        "appliesTo": {
+          "type": "string",
+          "enum": ["self", "opposing_roll", "target", "ally", "other"],
+          "description": "Usually self for skill % scaling; use opposing_roll only if the book scales an opponent’s effective value."
+        },
+        "target": {
+          "type": "string",
+          "description": "Optional free-text target detail."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this scaling applies (e.g. identifying demons without proper training)."
+        },
+        "roundingNote": {
+          "type": "string",
+          "minLength": 1,
+          "description": "How to round fractional percentages if the book specifies (e.g. round down, round to nearest)."
+        }
+      }
+    },
+    "situationalModifierConditionRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rowKind", "condition", "percentModifier"],
+      "description": "Machine-readable **table row**: a context **`condition`** (e.g. locale familiarity band) and an integer **`percentModifier`** for UI and roll resolution. **`rowKind`** must be **`condition_table`** so rows with both **`task`** and **`condition`** remain unambiguous vs **`situationalModifierAdditive`**. Optional **`task`** narrows the book task label.",
+      "properties": {
+        "rowKind": {
+          "type": "string",
+          "const": "condition_table",
+          "description": "Discriminator: always **`condition_table`** for this shape."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this row applies—e.g. “Home city / well known”, “Never visited”."
+        },
+        "percentModifier": {
+          "type": "integer",
+          "description": "Additive % to effective skill for this condition (negative for penalties)."
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional task label if different from the parent skill default (UI column)."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional id for **`sequentialChecks.gatesSituationalModifierRuleIds`** or rules engines."
+        },
+        "appliesTo": {
+          "type": "string",
+          "enum": ["self", "opposing_roll", "target", "ally", "other"],
+          "description": "Who receives this modifier (usually **self**)."
+        },
+        "target": {
+          "type": "string",
+          "description": "Optional free-text target detail."
+        }
+      }
+    },
+    "prerequisiteBypassWhen": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Character facts that satisfy a **`prerequisiteBypassCondition`**. **All** supplied keys combine with AND.",
+      "minProperties": 1,
+      "properties": {
+        "skillPackageIds": {
+          "type": "array",
+          "description": "Character has one of these **skill package** / training-bundle ids from your catalog (e.g. nocturne_collector).",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "occIds": {
+          "type": "array",
+          "description": "Character’s O.C.C. id is in this list.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "practicesMagic": {
+          "type": "boolean",
+          "description": "Match magic-practitioner catalog flag when true; non-practitioners when false."
+        }
+      }
+    },
+    "prerequisiteBypassCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "when"],
+      "description": "Waive **`prerequisites`** when **`when`** matches the character. Use **`waivesAllPrerequisites`: true** for package-wide exemptions; otherwise list **`waivesPrerequisiteSkillIds`** to drop only specific skill gates.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text (e.g. “Nocturne Collector package: ignore standard prerequisites”)."
+        },
+        "when": {
+          "$ref": "#/$defs/prerequisiteBypassWhen"
+        },
+        "waivesAllPrerequisites": {
+          "type": "boolean",
+          "description": "If **true**, the entire **`prerequisites`** array is ignored for eligibility when **`when`** matches."
+        },
+        "waivesPrerequisiteSkillIds": {
+          "type": "array",
+          "description": "When **`waivesAllPrerequisites`** is not used, only these prerequisite **skill ids** are waived (must appear in a **`type`: skill**, **`skill_any_of`**, or inside **`logical_group`**—engines flatten nested **`items`** to match ids).",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for rules engines."
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "waivesAllPrerequisites": {
+              "const": true
+            }
+          },
+          "required": ["waivesAllPrerequisites"]
+        },
+        {
+          "required": ["waivesPrerequisiteSkillIds"]
+        }
+      ]
+    },
+    "prerequisiteEntry": {
+      "description": "One prerequisite row: leaf (**skill**, **skill_any_of**, **attribute**, **narrative_gate**, **other**) or nested **`logical_group`**. **`logical_group`** may recurse—use **`any_of`** for OR and **`all_of`** for AND among **`items`**.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "skillId"],
+          "properties": {
+            "type": {
+              "const": "skill"
+            },
+            "skillId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "minimumPercent": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 98,
+              "description": "Optional floor on the prerequisite skill."
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this skill prerequisite is enforced (e.g. only when attempting to bypass high-tech surveillance). Omit if always required."
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Optional display label when **`skillId`** alone is ambiguous (e.g. parameterized Lore rows)."
+            },
+            "prerequisiteBypassConditions": {
+              "type": "array",
+              "description": "Human-readable circumstances that waive this prerequisite (e.g. O.C.C. packages).",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "const": "skill_any_of"
+            },
+            "label": {
+              "type": "string",
+              "description": "Optional short UI copy (e.g. \"Math: Basic or Advanced\")."
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this OR-group must be satisfied for the parent skill (e.g. only for a specific application). Omit if unconditional."
+            },
+            "alternatives": {
+              "type": "array",
+              "description": "Satisfy this prerequisite if the character meets any one alternative (OR). Prefer skillIds when branches differ only by skill id.",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["skillId"],
+                "properties": {
+                  "skillId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  },
+                  "minimumPercent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 98,
+                    "description": "Optional floor for this branch of the OR."
+                  },
+                  "condition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "When this branch counts toward satisfying the OR (rare; usually set condition on the parent skill_any_of item instead)."
+                  }
+                }
+              }
+            },
+            "skillIds": {
+              "type": "array",
+              "description": "OR among these skill ids: satisfying any one is enough (same as alternatives with skillId-only entries).",
+              "minItems": 2,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "description": "Prerequisite skill id."
+              },
+              "uniqueItems": true
+            }
+          },
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "required": ["alternatives"]
+                },
+                {
+                  "not": {
+                    "required": ["skillIds"]
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "required": ["skillIds"]
+                },
+                {
+                  "not": {
+                    "required": ["alternatives"]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "attribute", "minimum"],
+          "properties": {
+            "type": {
+              "const": "attribute"
+            },
+            "attribute": {
+              "type": "string",
+              "description": "Attribute abbreviation or full name (e.g. I.Q., P.P.).",
+              "minLength": 1
+            },
+            "minimum": {
+              "type": "number",
+              "description": "Minimum attribute value required."
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this attribute requirement applies. Omit if always required."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "const": "narrative_gate"
+            },
+            "narrativeRequirement": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Flavor or belief gate (e.g. must believe such powers exist)."
+            },
+            "restrictedTo": {
+              "type": "array",
+              "description": "Factions, projects, or training organizations that may teach or sanction this skill (book abbreviations or full names, e.g. PAB, Pandora Project).",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this narrative/faction gate applies. Omit if unconditional."
+            }
+          },
+          "anyOf": [
+            {
+              "required": ["narrativeRequirement"]
+            },
+            {
+              "required": ["restrictedTo"]
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "description"],
+          "properties": {
+            "type": {
+              "const": "other"
+            },
+            "description": {
+              "type": "string",
+              "description": "Free-text prerequisite (O.C.C., race, equipment, GM ruling, etc.).",
+              "minLength": 1
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this free-text prerequisite applies. Omit if unconditional."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "operator", "items"],
+          "properties": {
+            "type": {
+              "const": "logical_group"
+            },
+            "operator": {
+              "type": "string",
+              "enum": ["any_of", "all_of"],
+              "description": "**any_of** = at least one **`items`** child satisfied (**OR**). **all_of** = every **`items`** child satisfied (**AND**). Nest further **`logical_group`** rows inside **`items`** for mixed logic (e.g. (Skill A OR Skill B) AND Literacy)."
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Optional heading for builders/UI."
+            },
+            "condition": {
+              "type": "string",
+              "minLength": 1,
+              "description": "When this whole group is enforced."
+            },
+            "items": {
+              "type": "array",
+              "description": "Child prerequisites—same shapes as root **`prerequisites`** rows.",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/prerequisiteEntry"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sequentialSkillCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "summary"],
+      "description": "A **prior** skill check that must succeed (or meet **`minimumPercent`**) before the primary use. Link to specific **`situationalModifiers`** rows via matching **`ruleId`** in **`gatesSituationalModifierRuleIds`**.",
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Prerequisite skill to roll first (e.g. streetwise)."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What must happen on the prior roll and what it gates."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this sequential rule applies (e.g. only in hostile territory)."
+        },
+        "minimumPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Optional **floor** on the gate skill’s **listed/effective %** the character must have before attempting the gated use (book-specific). Omit if the book only requires a successful **roll** regardless of listed %."
+        },
+        "mustSucceed": {
+          "type": "boolean",
+          "description": "If **false**, the book only requires an attempt or a marginal outcome—state in **`summary`**. Default expectation is **true** (successful roll) when omitted."
+        },
+        "gatesSituationalModifierRuleIds": {
+          "type": "array",
+          "description": "**`ruleId`** values on **`situationalModifiers`** rows that require this prior check; omit if the gate applies to all uses described in **`summary`**.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional id for this sequential rule."
+        }
+      }
+    },
+    "initializationBonus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement", "bonusPercent"],
+      "description": "Starting % bonus when the character meets **`requirement`** at **skill acquisition** (character creation or first grant).",
+      "properties": {
+        "requirement": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable and/or book quote—e.g. “Assigned as O.C.C. / R.C.C. skill at creation”, “Member of the faction”."
+        },
+        "bonusPercent": {
+          "type": "number",
+          "description": "Percent points added to **initial** effective skill (e.g. 15 for +15%)."
+        },
+        "origin": {
+          "type": "string",
+          "enum": ["occ_rcc_skill_slot", "faction_membership", "skill_package", "other"],
+          "description": "Optional machine hint for catalogs; **`requirement`** remains authoritative prose."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id."
+        }
+      }
+    },
+    "mechanicProgression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "everyNCharacterLevels", "integerDeltaPerStep", "targetKind"],
+      "description": "Non-percentile progression: a **fixed integer** change to **`targetKind`** each time the character completes another block of **`everyNCharacterLevels`** (see **`summary`** for whether tiers are 3/6/9… vs 4/7/10…). Use **negative** `integerDeltaPerStep` when the book reduces a penalty magnitude.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book-accurate tier math, caps, and what the integer modifies (e.g. “−1 to control roll penalties per 3 levels”)."
+        },
+        "everyNCharacterLevels": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Schedule stride in **character levels** (e.g. **3** for every-third-level bumps)."
+        },
+        "integerDeltaPerStep": {
+          "type": "integer",
+          "description": "Integer change **per completed stride** (e.g. +1 bonus or −1 penalty reduction)."
+        },
+        "targetKind": {
+          "type": "string",
+          "enum": [
+            "penalty_modifier",
+            "combat_stat",
+            "piloting",
+            "save_bonus",
+            "dodge_parry",
+            "initiative",
+            "other"
+          ],
+          "description": "Category of mechanic receiving the integer schedule; pair with **`targetLabel`** for UI."
+        },
+        "targetLabel": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display text for the affected rule (e.g. “Control roll penalty”, “Strike in vehicle combat”)."
+        },
+        "baseInteger": {
+          "type": "integer",
+          "description": "Optional **starting** value at level 1 before applying steps (if the book defines one)."
+        },
+        "progressesWith": {
+          "type": "string",
+          "enum": ["character_level", "skill_level", "other"],
+          "description": "What **`everyNCharacterLevels`** counts; default assumption is **character_level** when omitted."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id."
+        }
+      }
+    },
+    "grantedSkill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "summary"],
+      "description": "Another skill **bundled** with this one at acquisition (no extra pick).",
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Granted skill catalog id (e.g. basic_mechanics)."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Why it is included; stacking with normal grants per book."
+        },
+        "startingPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "If set, **initial** effective % for the granted skill **replaces** its normal book base for that acquisition only (same idea as **`grantIfMissing.startingPercent`**)."
+        },
+        "skillPercentBonus": {
+          "type": "number",
+          "description": "Optional extra **%** added to the granted skill’s effective value when acquired this way (on top of **`startingPercent`** or book base—document stacking in **`summary`**)."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id."
+        }
+      }
+    },
+    "acquisitionEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "summary"],
+      "description": "Narrative or quality outcome for one **way** the character might have acquired this skill (scholastic vs secondary, etc.).",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": [
+            "primary_scholastic",
+            "secondary_skill",
+            "occ_skill",
+            "elective",
+            "other"
+          ],
+          "description": "Purchase or grant track: primary scholastic allotment, secondary skill pick, O.C.C. package skill, elective, or other/setting-specific."
+        },
+        "originDetail": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Required nuance when `origin` is **other**, or optional label for a specific O.C.C. slot name."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What differs for this path (e.g. work counts as professional for commissions vs amateur hobby output)."
+        },
+        "outputQuality": {
+          "type": "string",
+          "enum": [
+            "professional",
+            "amateur",
+            "student",
+            "hobbyist",
+            "full_book_rules",
+            "reduced",
+            "other"
+          ],
+          "description": "Optional coarse tier for reputation, sales, or GM rulings tied to acquisition."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for cross-linking with character builders."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional labels (e.g. scholastic, secondary, reputation).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": { "const": "other" }
+            },
+            "required": ["origin"]
+          },
+          "then": {
+            "required": ["originDetail"]
+          }
+        }
+      ]
+    },
+    "synergyApplicabilityStructured": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Machine-oriented scope for when a synergy applies. Use instead of or alongside **`condition`** (string). At least one of **`summary`**, **`appliesWhen`**, or non-empty **`contextTags`** should be present.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM applicability text (when the bonus applies)."
+        },
+        "appliesWhen": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Trigger or situation (e.g. while maintaining a cover identity, when accessing networked systems)."
+        },
+        "contextTags": {
+          "type": "array",
+          "description": "Optional coarse slugs for rules engines (e.g. digital_network, undercover_operation).",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for linking to situational rules or UI."
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["summary"]
+        },
+        {
+          "required": ["appliesWhen"]
+        },
+        {
+          "required": ["contextTags"]
+        }
+      ]
+    },
+    "synergyModifier": {
+      "description": "Mechanical or prose modifier this skill grants to **`targetAbility`** (e.g. +2% per level).",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book wording or shorthand when not reduced to fields (e.g. \"+2% per level to Astral Navigation\")."
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "bonusPercentPerLevel": {
+              "type": "number",
+              "description": "Percent points added per level (e.g. 2 for +2%/level)."
+            },
+            "bonusPercent": {
+              "type": "number",
+              "description": "Flat one-time or static percentile bonus when not per-level."
+            },
+            "scalesWith": {
+              "type": "string",
+              "enum": ["character_level", "skill_level", "other"],
+              "description": "What “per level” means for bonusPercentPerLevel; omit to assume character level."
+            },
+            "summary": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Stacking, caps, or book exceptions."
+            }
+          }
+        }
+      ]
+    },
+    "synergyToSkill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "description"],
+      "description": "Synergy with another **skill** by id.",
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "description": "Id of the related skill (must match another skill's id).",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "description": {
+          "type": "string",
+          "description": "How the synergy works in play (mechanical or narrative).",
+          "minLength": 1
+        },
+        "bonusPercent": {
+          "type": "number",
+          "description": "Optional mechanical bonus to the related skill's percentile (e.g. +5). Use when the book grants a permanent or one-time percentage boost; pair with description for stacking rules and duration."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this synergy applies—omit for unconditional bonuses. Pair with **`bonusPercent`** or narrative **`description`** as appropriate."
+        },
+        "applicability": {
+          "description": "Structured applicability; use with or instead of **`condition`** for tooling.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/synergyApplicabilityStructured"
+            }
+          ]
+        },
+        "targetContext": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Narrow **who or what** the synergy applies to in play (e.g. **victim of seduction**, **current melee opponent**). For encounter UI: prompt whether this context is active before applying **`bonusPercent`**."
+        }
+      }
+    },
+    "synergyToAbility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetAbility", "modifier"],
+      "description": "Synergy with a **named ability, psionic, spell, or other non-skill** target (printed name + modifier). Optional **`condition`** / **`applicability`** scope situational bonuses (vs unconditional **`modifier`**). Optional **`thresholdRewards`** lists skill-% floors and extra bonuses or level milestones (e.g. Principles of Magic thresholds).",
+      "properties": {
+        "targetAbility": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book name of the recipient (e.g. Astral Navigation). JSON uses camelCase; importers may map from target_ability."
+        },
+        "modifier": {
+          "$ref": "#/$defs/synergyModifier"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional extra prose when modifier is structured."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for rules engines."
+        },
+        "thresholdRewards": {
+          "type": "array",
+          "description": "Structured **ability threshold rewards**: each row requires a minimum **effective %** in **`requiresSkillPercent`** and grants at least one measurable bonus (e.g. **`spellStrengthBonus`**) when the gate is met, optionally only at **`atCharacterLevels`**.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/thresholdReward"
+          }
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this synergy applies—omit for unconditional modifiers to **`targetAbility`**. Distinct from **`thresholdRewards`** (skill-% floors)."
+        },
+        "applicability": {
+          "description": "Structured applicability for situational ability synergies.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/synergyApplicabilityStructured"
+            }
+          ]
+        },
+        "targetContext": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Encounter or target relationship required before applying **`modifier`** (same intent as **`synergyToSkill.targetContext`**)."
+        }
+      }
+    },
+    "externalMechanicsBonus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetKind", "targetName", "bonusPercentPerLevel"],
+      "description": "A percentile bonus that scales with level and applies to a named power, spell, or other external mechanic. Optional **`thresholdRewards`** further restricts **additional** gated bonuses (spell strength, flat %, etc.) behind a skill-% floor; the root **`bonusPercentPerLevel`** remains the unconditional baseline unless your engine treats thresholds differently—document in **`summary`**.",
+      "properties": {
+        "targetKind": {
+          "type": "string",
+          "enum": [
+            "psionic_power",
+            "magic_spell",
+            "spell_invocation",
+            "ability",
+            "trait",
+            "other"
+          ],
+          "description": "Category of the recipient in your rules catalog (psionic vs spell vs generic ability)."
+        },
+        "targetName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed name from the book (e.g. Astral Navigation)."
+        },
+        "targetId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable slug if the power/spell exists in an app catalog."
+        },
+        "bonusPercentPerLevel": {
+          "type": "number",
+          "description": "Percent points added **per level** to the target’s effective value (e.g. 2 for +2% per level). Interpretation of “level” is the **scalesWith** field."
+        },
+        "scalesWith": {
+          "type": "string",
+          "enum": ["character_level", "skill_level", "other"],
+          "description": "What each +bonusPercentPerLevel step attaches to. **Omit** to assume **character level** (typical Palladium scholastic progression); set **skill_level** if the book ties the bonus to this skill’s own level only."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player/GM text restating stacking or limits."
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When this bonus applies (e.g. only while on an astral plane per book)."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional id for rules engines."
+        },
+        "thresholdRewards": {
+          "type": "array",
+          "description": "Same shape as **`synergyToAbility.thresholdRewards`**: extra rewards when listed skills meet minimum effective %.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/thresholdReward"
+          }
+        }
+      }
+    },
+    "requiresSkillPercent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "minimumPercent"],
+      "description": "Gate: character’s **effective** skill % in **`skillId`** must be ≥ **`minimumPercent`** (before situational modifiers to the roll, unless the book says otherwise—state exceptions in the parent **`summary`**).",
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Skill catalog id whose percentage is tested (e.g. principles_of_magic)."
+        },
+        "minimumPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Inclusive floor on effective skill % required for the reward."
+        }
+      }
+    },
+    "thresholdReward": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiresSkillPercent", "summary"],
+      "description": "A **skill-% threshold** and the **bonus(es)** it unlocks for the parent ability/synergy. Use **`atCharacterLevels`** when the book grants the bonus only at specific character levels (stacking tiers).",
+      "properties": {
+        "requiresSkillPercent": {
+          "$ref": "#/$defs/requiresSkillPercent"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book-accurate one-liner (stacking, exclusivity, what “effective %” means if non-standard)."
+        },
+        "atCharacterLevels": {
+          "type": "array",
+          "description": "If present, the **`spellStrengthBonus`** / **`bonusPercent`** (or both) apply only when the character’s **character level** is in this list (e.g. 3, 6, 9, 12, 15). Omit if the reward is continuous whenever the gate is met.",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "uniqueItems": true
+        },
+        "spellStrengthBonus": {
+          "type": "number",
+          "description": "Flat bonus to **spell strength** (or book-equivalent) when the gate (and optional level list) is satisfied—e.g. +1."
+        },
+        "bonusPercent": {
+          "type": "number",
+          "description": "Flat percentile bonus to the **target** ability or mechanic when the gate is satisfied."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id for rules engines."
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["spellStrengthBonus"]
+        },
+        {
+          "required": ["bonusPercent"]
+        }
+      ]
+    },
+    "skillRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "**Non-numeric** requirements that do not fit typed **`prerequisites`** (skills, attributes, **`narrative_gate`**, etc.): belief, setting fiction, and who may teach or learn the skill. Prefer **`prerequisites`** with **`type`: `narrative_gate`** when a gate should be AND-combined with skill/attribute rows.",
+      "properties": {
+        "narrative": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Mindset or story gates (e.g. character must believe such powers exist).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "availability": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Teaching sources, faction locks, rarity (e.g. restricted to specific organizations or mentors).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["narrative"]
+        },
+        {
+          "required": ["availability"]
+        }
+      ]
+    },
+    "narrativeAdvantage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short statement of the abstract advantage."
+        },
+        "appliesWhen": {
+          "type": "string",
+          "description": "Optional condition/scope for when this advantage applies."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional structured labels for UI grouping/filtering.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "interdependentKnowledgeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "description": "One **descriptive** link between this skill and others—**no** numeric synergy. Present as tooltip or lore only.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What related training implies (e.g. familiarity with mechanical systems aids salvage appraisal)."
+        },
+        "relatedSkillIds": {
+          "type": "array",
+          "description": "Related catalog skill ids when defined.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true
+        },
+        "relatedSkillLabels": {
+          "type": "array",
+          "description": "Printed skill names when ids are unknown or multiple editions differ.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "effectKind": {
+          "type": "string",
+          "enum": ["understanding", "implicit_knowledge", "procedure_quality", "context_only", "other"],
+          "description": "Optional coarse tag for UI grouping—**not** a mechanics trigger."
+        },
+        "ruleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Optional stable id."
+        }
+      }
+    },
+    "attributeSlug": {
+      "type": "string",
+      "description": "Eight Palladium attributes as stable lowercase keys (match character sheet fields).",
+      "enum": ["iq", "me", "ma", "ps", "pp", "pe", "pb", "spd"]
+    },
+    "skillPercentModifierBonusPerPointAbove": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "attribute", "threshold", "percentPerPoint"],
+      "properties": {
+        "kind": {
+          "const": "bonusPerPointAbove",
+          "description": "Bonus scaling on attribute **excess** above **threshold** (excess = max(0, attribute − threshold)). With **`perNPoints`** omitted or **1**: contribution = excess × **percentPerPoint**. With **`perNPoints`**: **N** > 1: contribution = floor(excess / N) × **percentPerPoint** (e.g. +1% per 2 P.B. over 17). Equivalent to **`bonusPerStepAbove`** when N = **attributePointsPerStep** and **percentPerPoint** = **percentPerStep**."
+        },
+        "attribute": {
+          "$ref": "#/$defs/attributeSlug"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "Baseline; only attribute **above** this value generates bonus (exclusive above per excess formula—see book for \"over 20\" vs \"20 and above\")."
+        },
+        "perNPoints": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Size of each attribute-point **block** counted toward the bonus. **1** or omit = every point above threshold counts separately; **2** = +**percentPerPoint** per **two** full excess points (Seduction-style P.B. steps)."
+        },
+        "percentPerPoint": {
+          "type": "number",
+          "description": "Skill % added **per counted unit**: per excess **point** when **perNPoints** is 1, or **per completed block** of **perNPoints** excess points when N > 1."
+        }
+      }
+    },
+    "skillPercentModifierBonusPerStepAbove": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "attribute", "threshold", "attributePointsPerStep", "percentPerStep"],
+      "properties": {
+        "kind": {
+          "const": "bonusPerStepAbove",
+          "description": "For each block of attributePointsPerStep in the excess above threshold, add percentPerStep (excess = max(0, attribute − threshold); steps = floor(excess / attributePointsPerStep))."
+        },
+        "attribute": {
+          "$ref": "#/$defs/attributeSlug"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "Baseline attribute value (e.g. 17 when the book measures \"every 2 points of P.B. over 17\")."
+        },
+        "attributePointsPerStep": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Size of each step in attribute points (e.g. 2 for \"every 2 points\")."
+        },
+        "percentPerStep": {
+          "type": "number",
+          "description": "Skill % added per completed step (e.g. 1 for +1% per step)."
+        }
+      }
+    },
+    "skillPercentModifierPenaltyWhenBelow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "attribute", "below", "skillPercentPenalty"],
+      "properties": {
+        "kind": {
+          "const": "penaltyWhenBelow",
+          "description": "Apply **skillPercentPenalty** when attribute is **strictly less than** **below** (e.g. Safe-Cracking: M.E. below book threshold). Use a **negative** **skillPercentPenalty** for −10% style modifiers."
+        },
+        "attribute": {
+          "$ref": "#/$defs/attributeSlug"
+        },
+        "below": {
+          "type": "number",
+          "description": "Penalty applies when attribute < below (not when equal)."
+        },
+        "skillPercentPenalty": {
+          "type": "number",
+          "description": "Change to skill % when attribute < **below**. Use **negative** values for penalties (e.g. **−10** for Safe-Cracking when M.E. is under the book threshold). Positive values are unusual—prefer **`bonusPerPointAbove`** when high attributes grant bonuses."
+        }
+      }
+    },
+    "skillPercentAttributeThresholdCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attribute", "comparison", "value", "percentModifier"],
+      "description": "Binary attribute comparison applied **once** (flat **`percentModifier`**)—not stepped like **`rules`** scaling. Example: M.E. **lte** **14** with **`percentModifier`**: **−10** for “14 or fewer.” Prefer **`penaltyWhenBelow`** in **`rules`** when the book uses strict **less than** only.",
+      "properties": {
+        "attribute": {
+          "$ref": "#/$defs/attributeSlug"
+        },
+        "comparison": {
+          "type": "string",
+          "enum": ["lte", "lt", "gte", "gt", "eq"],
+          "description": "**lte** / **lt** / **gte** / **gt** / **eq** vs **`value`**."
+        },
+        "value": {
+          "type": "number",
+          "description": "Numeric threshold from the book."
+        },
+        "percentModifier": {
+          "type": "number",
+          "description": "Flat skill % change when the comparison is **true**."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional prose for UI."
+        }
+      }
+    },
+    "subSkill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "basePercent", "percentPerLevel", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Slug unique within this parent skill (not a global top-level skill id).",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name for this technique (e.g. Rappelling).",
+          "minLength": 1
+        },
+        "basePercent": {
+          "type": "number",
+          "description": "Starting percentage for this sub-skill.",
+          "minimum": 0,
+          "maximum": 98
+        },
+        "percentPerLevel": {
+          "type": "number",
+          "description": "Additional percentage per level for this sub-skill.",
+          "minimum": 0
+        },
+        "description": {
+          "type": "string",
+          "description": "What this sub-skill covers and when to roll it.",
+          "minLength": 1
+        },
+        "failureResults": {
+          "description": "Same shape as root **`failureResults`**: string narrative or structured object with **`secondaryCheck`**.",
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "$ref": "#/$defs/failureResultsStructured"
+            }
+          ]
+        },
+        "successOutcomes": {
+          "description": "Same shape as root **`successOutcomes`**.",
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "$ref": "#/$defs/successResultsStructured"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+

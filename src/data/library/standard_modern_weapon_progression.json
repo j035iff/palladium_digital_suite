@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "bundles": {
+    "nightbane_standard_modern": {
+      "gameSystems": [
+        "nightbane"
+      ],
+      "stackingRule": "Strike bonuses from level tiers are cumulative. Do not add these strike bonuses to your character's hand to hand or combat skill bonuses to strike.",
+      "levelTiers": [
+        {
+          "atCharacterLevel": 1,
+          "aimedStrikeBonus": 3,
+          "burstStrikeBonus": 1
+        },
+        {
+          "atCharacterLevel": 4,
+          "aimedStrikeBonus": 1,
+          "burstStrikeBonus": 1
+        },
+        {
+          "atCharacterLevel": 7,
+          "aimedStrikeBonus": 1,
+          "burstStrikeBonus": 1
+        },
+        {
+          "atCharacterLevel": 10,
+          "aimedStrikeBonus": 1,
+          "burstStrikeBonus": 1
+        },
+        {
+          "atCharacterLevel": 13,
+          "aimedStrikeBonus": 1,
+          "burstStrikeBonus": 1
+        }
+      ],
+      "skillPercentage": {
+        "kind": "recognize_weapon_quality",
+        "basePercent": 30,
+        "percentPerLevel": 6
+      },
+      "untrainedPenalties": "Shoots wild. No strike bonus whatsoever.",
+      "weaponTypeOverrides": {
+        "revolver": {
+          "matchesWeaponProficiencyIds": [
+            "wp_revolver"
+          ],
+          "levelTiers": [
+            {
+              "atCharacterLevel": 1,
+              "aimedStrikeBonus": 4,
+              "burstStrikeBonus": 1
+            }
+          ],
+          "stackingRule": "Overrides the bundle's level 1 tier aimed strike bonus.",
+          "notes": "Revolvers receive a +4 to strike on an aimed shot instead of the standard +3."
+        }
+      },
+      "notes": "Source: Nightbane RPG, pages 59-60. Wild shooting provides no strike bonus whatsoever."
+    }
+  }
+}

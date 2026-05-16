@@ -1,0 +1,677 @@
+[
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_archery_and_targeting",
+    "name": "W.P. Archery and Targeting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Expertise with thrown and bow weapons. It includes throwing spears, forks, slings, short bow, long bow, cross bow, and modern bows. Notes: The character loses all bonuses and rate of fire is half when riding on horse back or a moving vehicle.",
+    "stackingRule": "Strike and parry bonuses from each tier are cumulative. Rate of fire increases as indicated.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "parry": 1,
+        "rateOfFireTotal": 2,
+        "rangeBonusPerLevelFeet": 20
+      },
+      {
+        "atCharacterLevel": 2,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 3,
+        "rateOfFireDelta": 2
+      },
+      {
+        "atCharacterLevel": 4,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 5,
+        "rateOfFireDelta": 1
+      },
+      {
+        "atCharacterLevel": 6,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 7,
+        "rateOfFireDelta": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 9,
+        "rateOfFireDelta": 1
+      },
+      {
+        "atCharacterLevel": 11,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 12,
+        "rateOfFireDelta": 1
+      },
+      {
+        "atCharacterLevel": 14,
+        "strike": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_battle_axe",
+    "name": "W.P. Battle Axe",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Training in all types of battle axes and picks.",
+    "stackingRule": "Strike, parry, and throw bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 2,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 3,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 4,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 5,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "strike": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 9,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 12,
+        "strike": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 13,
+        "parry": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_blunt",
+    "name": "W.P. Blunt",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Training with all types of blunt weapons, including maces, hammers, cudgels, pikes, staves, and clubs.",
+    "stackingRule": "Strike and parry bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 4,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 13,
+        "strike": 1,
+        "parry": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_chain",
+    "name": "W.P. Chain",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Training with all types of chain weapons, including ordinary lengths of chain, nunchaku, flail, and ball or mace and chain.",
+    "stackingRule": "Strike and parry bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 4,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 13,
+        "strike": 1,
+        "parry": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_knife",
+    "name": "W.P. Knife",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Training with all types of knives.",
+    "stackingRule": "Strike, parry, and throw bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 2,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 4,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 7,
+        "strike": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 11,
+        "strike": 1,
+        "parry": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 15,
+        "strike": 1,
+        "parry": 1,
+        "strikeWhenThrown": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_polearm",
+    "name": "W.P. Polearm",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Training with the large spear-like weapons known as the polearm. Also includes tridents.",
+    "stackingRule": "Strike, parry, and throw bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 2,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 3,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 5,
+        "strike": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 6,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 9,
+        "strike": 1,
+        "parry": 1,
+        "strikeWhenThrown": 1
+      },
+      {
+        "atCharacterLevel": 12,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 14,
+        "strike": 1,
+        "strikeWhenThrown": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_sword",
+    "name": "W.P. Sword",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Combat skills with large and small swords, including fencing type training. Includes rapiers, sabers, two handed, and short swords.",
+    "stackingRule": "Strike and parry bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 3,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 7,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 11,
+        "strike": 1,
+        "parry": 1
+      },
+      {
+        "atCharacterLevel": 14,
+        "strike": 1,
+        "parry": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_whip",
+    "name": "W.P. Whip",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Skill at whipping or snapping with long, flexible, light weapons. Notes: Grants +1 to entangle at 2nd, 6th, 8th, 10th, and 14th levels. A typical whip and Cat-o-Nine tails inflicts 1D6 damage, a bull whip 2D4 damage.",
+    "stackingRule": "Strike and damage bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 1,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 3,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 4,
+        "damageBonusFlat": 1
+      },
+      {
+        "atCharacterLevel": 5,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 7,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 8,
+        "damageBonusFlat": 1
+      },
+      {
+        "atCharacterLevel": 9,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 11,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 12,
+        "damageBonusFlat": 1
+      },
+      {
+        "atCharacterLevel": 13,
+        "strike": 1
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_revolver",
+    "name": "W.P. Revolver",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "All cylinder style hand guns; not automatic (trigger must be pulled each time the gun is fired).",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_automatic_pistol",
+    "name": "W.P. Automatic Pistol",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "All modern military automatic pistols (automatic means the weapon keeps firing while the trigger is depressed and until the trigger is released or the rounds are all expended).",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_bolt_action_rifle",
+    "name": "W.P. Bolt-Action Rifle",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Includes most hunting rifles; not an automatic firing weapon.",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_automatic_and_semiautomatic_rifles",
+    "name": "W.P. Automatic and Semi-automatic Rifles",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Includes all assault rifles like the M-16 and AK-47.",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_sub_machinegun",
+    "name": "W.P. Sub-Machinegun",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Includes all small automatic weapons like the Uzi.",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_heavy",
+    "name": "W.P. Heavy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "Includes machineguns, bazookas, LAWS, and mortars.",
+    "usesStandardModernProgression": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "ancient",
+    "id": "wp_paired_weapons",
+    "name": "W.P. Paired Weapons",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "A tactic in which a one-handed weapon is held in each hand (up to four) to be used in any combination of combat moves simultaneously. Negates the standard off-hand penalty for weapons in which the character is already proficient. Notes: Requires a W.P. in the specific weapons being used. Two-handed weapons or weapons that are too large/heavy negate this skill. Designed for melee weapons; when shooting two guns at once, there is a penalty of -2 to strike with the regular hand and -6 to strike with the off-hand. A character using both attacks simultaneously is vulnerable to attack from a second opponent. Four-armed characters only need to take this skill once.",
+    "pairedWeapons": {
+      "summary": "Paired weapon fighting style; see description and special maneuvers for detailed rules."
+    },
+    "specialManeuvers": [
+      {
+        "name": "Simultaneous Strike and Parry",
+        "description": "Strike and parry simultaneously. Performs two actions for every one melee action/attack. Requires available attacks to strike."
+      },
+      {
+        "name": "Twin Strike",
+        "description": "Twin, simultaneous strikes against the same target. Both weapons hit the same opponent at once, making it ONE melee attack/action (roll only once to strike with both weapons). The defender can only parry one unless they also use paired weapons/shield."
+      },
+      {
+        "name": "Strike Multiple Targets",
+        "description": "Strike two different targets (or strike one and parry another incoming attack), simultaneously; both must be within reach."
+      },
+      {
+        "name": "Simultaneous Parries",
+        "description": "Parry two different attackers, one with each hand."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Ancient"
+    ]
+  },
+  {
+    "kind": "weapon_proficiency",
+    "weaponProficiencyCategory": "modern",
+    "id": "wp_shotgun",
+    "name": "W.P. Shotgun",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "description": "A familiarity with the classic double-barrel shotgun and police and military versions of shotguns with ammo drums. Notes: Each single blast counts as one melee attack; police/military shotguns with ammo drums cannot fire two simultaneous blasts but feature rapid-fire and larger payloads.",
+    "usesStandardModernProgression": false,
+    "stackingRule": "Strike bonuses from each tier are cumulative.",
+    "levelTiers": [
+      {
+        "atCharacterLevel": 3,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 6,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 10,
+        "strike": 1
+      },
+      {
+        "atCharacterLevel": 14,
+        "strike": 1
+      }
+    ],
+    "specialManeuvers": [
+      {
+        "name": "Double Barrel Blast",
+        "description": "Double the damage if both barrels are fired simultaneously."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 60
+      }
+    ],
+    "categories": [
+      "Weapon Proficiencies",
+      "Modern"
+    ]
+  }
+]
