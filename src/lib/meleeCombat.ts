@@ -1,15 +1,20 @@
 import type { CharacterAttributes } from '../types'
 
 /**
- * Attacks Per Melee ceiling — lightweight stand-in until full H2H tables ship
- * (combat_logic.md §3).
+ * Attacks Per Melee ceiling (combat_logic.md §3).
+ * `hthAttackBonus` — extra attacks from accumulated Hand-to-Hand progression.
  */
-export function computeMaxApm(attrs: CharacterAttributes, level: number): number {
+export function computeMaxApm(
+  attrs: CharacterAttributes,
+  level: number,
+  hthAttackBonus = 0,
+): number {
   const spd = attrs.spd
   const pp = attrs.pp
   const base = 2 + Math.floor((spd + pp) / 18)
   const levelBump = Math.min(3, Math.floor(level / 4))
-  return Math.min(12, Math.max(2, base + levelBump))
+  const hth = Math.max(0, Math.round(hthAttackBonus))
+  return Math.min(12, Math.max(2, base + levelBump + hth))
 }
 
 export type ScaledDamageResult = {

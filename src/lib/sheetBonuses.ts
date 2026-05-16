@@ -10,6 +10,7 @@ import {
 } from './combatQuickBonuses'
 import { getSkillById } from '../data/skillLibrary'
 import { getPpBonuses } from './attributeBonuses'
+import type { AccumulatedHandToHandBonuses } from '../types'
 
 export type SheetBonusLine = { label: string; amount: number }
 
@@ -103,9 +104,29 @@ export function formatPassiveAttributeBonuses(passive: FeatureModifiers): string
   return pairs.join(' · ')
 }
 
+function appendHandToHandLines(
+  hth: AccumulatedHandToHandBonuses | undefined,
+  skillName: string | null,
+  strikeLines: SheetBonusLine[],
+  parryLines: SheetBonusLine[],
+  dodgeLines: SheetBonusLine[],
+  initiativeLines: SheetBonusLine[],
+): void {
+  if (!hth || !skillName) return
+  const label = `HtH (${skillName})`
+  if (hth.strike) strikeLines.push({ label, amount: hth.strike })
+  if (hth.parry) parryLines.push({ label, amount: hth.parry })
+  if (hth.dodge) dodgeLines.push({ label, amount: hth.dodge })
+  if (hth.initiative) initiativeLines.push({ label, amount: hth.initiative })
+}
+
 export function computeSheetCombatDerived(
   character: Character,
   activeForm: ActiveForm,
+  handToHand?: {
+    skillName: string | null
+    accumulated: AccumulatedHandToHandBonuses
+  },
 ): SheetCombatDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
   const unlocked = collectUnlockedSkillIds(character, activeForm)
@@ -149,18 +170,7 @@ export function computeSheetCombatDerived(
   if (orphanDodge)
     dodgeLines.push({ label: 'Skill / other modifiers', amount: orphanDodge })
 
-  const strikeTotal = sumLines(strikeLines)
-  const parryTotal = sumLines(parryLines)
-  const dodgeTotal = sumLines(dodgeLines)
-
   const peDiv = Math.floor(displayed.pe / 10)
-  const rollLines: SheetBonusLine[] = [
-    ...dodgeLines.map((l) => ({ ...l, label: `Dodge ← ${l.label}` })),
-    { label: 'P.E. (÷10)', amount: peDiv },
-  ]
-  /** Avoid double-count: roll is dodge total already + pe divisor */
-  const rollTotal = dodgeTotal + peDiv
-
   const spdDiv = Math.floor(displayed.spd / 10)
   const initExtra = passive.initiative ?? 0
   const initiativeLines: SheetBonusLine[] = [
@@ -168,7 +178,36 @@ export function computeSheetCombatDerived(
     { label: 'P.E. (÷10)', amount: peDiv },
   ]
   if (initExtra) initiativeLines.push({ label: 'Passive initiative', amount: initExtra })
-  const initiativeTotal = spdDiv + peDiv + initExtra
+
+  appendHandToHandLines(
+    handToHand?.accumulated,
+    handToHand?.skillName ?? null,
+    strikeLines,
+    parryLines,
+    dodgeLines,
+    initiativeLines,
+  )
+
+  const strikeTotal = sumLines(strikeLines)
+  const parryTotal = sumLines(parryLines)
+  const dodgeTotal = sumLines(dodgeLines)
+
+  const rollLines: SheetBonusLine[] = [
+    ...dodgeLines.map((l) => ({ ...l, label: `Dodge ← ${l.label}` })),
+    { label: 'P.E. (÷10)', amount: peDiv },
+  ]
+
+  const hth = handToHand?.accumulated
+  const rollHth = (hth?.rollWithPunch ?? 0) + (hth?.pullPunch ?? 0)
+  if (rollHth && handToHand?.skillName) {
+    rollLines.push({
+      label: `HtH (${handToHand.skillName}) pull / roll`,
+      amount: rollHth,
+    })
+  }
+
+  const initiativeTotal = sumLines(initiativeLines)
+  const rollTotal = sumLines(rollLines)
 
   return {
     strike: { total: strikeTotal, lines: strikeLines },

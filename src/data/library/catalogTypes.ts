@@ -26,6 +26,9 @@ export type PalladiumSkillCatalogEntry = {
 /** Row from `content/palladiumOccs.json` — see `schemas/palladium-occ.schema.json`. */
 export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 
+/** Row from `content/palladiumHandToHand.json` — see `schemas/palladium-hth.schema.json`. */
+export type PalladiumHandToHandCatalogEntry = import('../../types').HandToHandSkill
+
 /** Row from `weapon_proficiencies.json` (ancient or modern W.P.). */
 export type WeaponProficiencyCatalogEntry = {
   kind: 'weapon_proficiency'

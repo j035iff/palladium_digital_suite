@@ -43,6 +43,11 @@ import {
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
 import { rollFacadeSdcMaximum } from '../lib/spawnFinalVitality'
 import { computeMaxApm } from '../lib/meleeCombat'
+import {
+  resolveHandToHandCombatProfile,
+  type HandToHandCombatProfile,
+} from '../lib/handToHandPipeline'
+import { handToHandAttackBonus } from '../utils/combatCalculator'
 import { computeCarryCapacityLbs } from '../lib/carryCapacity'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
 import {
@@ -199,6 +204,11 @@ type CharacterContextValue = {
   activeOcc: PalladiumOcc | undefined
   /** Creation budgets and restrictions derived from {@link activeOcc} engines. */
   occCreationDerived: ReturnType<typeof deriveOccCreation> | null
+  /**
+   * Accumulated Hand-to-Hand progression for the active form (catalog + level ladder).
+   * Drives A.P.M. ceiling and sheet combat badge lines.
+   */
+  handToHandCombatProfile: HandToHandCombatProfile
   /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */
   raceCanPickOcc: boolean
   /** Display label for the race strength scale (sheet / Attribute Forge). */
@@ -521,6 +531,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'facade'
 
+  const handToHandCombatProfile = useMemo(
+    () => resolveHandToHandCombatProfile(character, sheetActiveForm, activeOcc),
+    [character, sheetActiveForm, activeOcc],
+  )
+
   const activeFormState = useMemo(
     () => getFormState(character, sheetActiveForm),
     [character, sheetActiveForm],
@@ -593,8 +608,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const sheetCombatDerived = useMemo(
-    () => computeSheetCombatDerived(character, sheetActiveForm),
-    [character, sheetActiveForm],
+    () =>
+      computeSheetCombatDerived(character, sheetActiveForm, {
+        skillName: handToHandCombatProfile.skillName,
+        accumulated: handToHandCombatProfile.accumulated,
+      }),
+    [character, sheetActiveForm, handToHandCombatProfile],
   )
 
   const isMDC = useMemo(
@@ -633,8 +652,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   >([])
 
   const maxApm = useMemo(
-    () => computeMaxApm(activeFormState.attributes, character.level),
-    [activeFormState.attributes, character.level],
+    () =>
+      computeMaxApm(
+        activeFormState.attributes,
+        character.level,
+        handToHandAttackBonus(handToHandCombatProfile.accumulated),
+      ),
+    [activeFormState.attributes, character.level, handToHandCombatProfile.accumulated],
   )
 
   const attacksPerMelee = useMemo<AttacksPerMeleeState>(
@@ -876,8 +900,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const getWeaponBonuses = useCallback(
-    (weaponId: string) => lookupWeaponBonuses(character, sheetActiveForm, inventoryItems, weaponId),
-    [character, sheetActiveForm, inventoryItems],
+    (weaponId: string) =>
+      lookupWeaponBonuses(
+        character,
+        sheetActiveForm,
+        inventoryItems,
+        weaponId,
+        handToHandCombatProfile.accumulated,
+      ),
+    [character, sheetActiveForm, inventoryItems, handToHandCombatProfile.accumulated],
   )
 
   const addAmmoToReserve = useCallback(
@@ -1284,6 +1315,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeRace,
       activeOcc,
       occCreationDerived,
+      handToHandCombatProfile,
       raceCanPickOcc,
       raceStrengthLabel,
       activeFormState,
@@ -1355,6 +1387,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeRace,
       activeOcc,
       occCreationDerived,
+      handToHandCombatProfile,
       raceCanPickOcc,
       raceStrengthLabel,
       activeFormState,

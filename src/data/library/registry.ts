@@ -41,6 +41,7 @@ export function getLibraryOccById(id: string): PalladiumOcc | undefined {
 }
 
 export type {
+  PalladiumHandToHandCatalogEntry,
   PalladiumSkillCatalogEntry,
   PalladiumSourceRef,
   StandardModernProgressionBundle,
@@ -72,3 +73,10 @@ export {
   getStandardModernProgressionBundle,
   defaultStandardModernProgressionKey,
 } from './standardModernWeaponProgressionLoader'
+
+export {
+  HAND_TO_HAND_CATALOG,
+  getHandToHandSkillById,
+  listHandToHandSkillIds,
+  listHandToHandSkillsForGameSystem,
+} from './handToHandCatalogLoader'

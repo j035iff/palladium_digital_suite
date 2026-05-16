@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-hth.schema.json",
+  "title": "Palladium hand-to-hand combat skill",
+  "description": "Level 1–15 martial progression table for any Hand-to-Hand style (Nightbane Core Rulebook p. 65 pattern). Numeric fields on each level row are **incremental** bonuses unlocked at that character level; engines sum levels 1…N for totals. Window arrays and capability objects **replace** prior tiers when a higher level defines them.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "progression"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "minLength": 1,
+      "description": "Stable slug (e.g. hth_basic, hth_expert)."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Printed skill name (e.g. Hand-to-Hand: Basic)."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Book prose summary of the fighting style."
+    },
+    "gameSystems": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Game lines that publish this table (e.g. nightbane)."
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceRef" },
+      "description": "Book + page citations for this progression table."
+    },
+    "progression": {
+      "$ref": "#/$defs/progressionMatrix",
+      "description": "Keys are character levels 1–15 (string digits). Values are optional incremental unlock rows."
+    }
+  },
+  "$defs": {
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameSystem", "reference", "pageNumber"],
+      "properties": {
+        "gameSystem": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1
+        },
+        "reference": { "type": "string", "minLength": 1 },
+        "pageNumber": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "diceNotationString": {
+      "type": "string",
+      "pattern": "^(\\d+)?D\\d+(\\*\\d+)?(\\+\\d+)?$",
+      "minLength": 1,
+      "description": "Compact dice token (e.g. 1D6, 2D4+2)."
+    },
+    "d20RollWindow": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20
+      },
+      "description": "Natural d20 results that trigger the maneuver (e.g. [19, 20] critical strike)."
+    },
+    "kickAttack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["damageFormula"],
+      "properties": {
+        "damageFormula": { "$ref": "#/$defs/diceNotationString" },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    },
+    "bodyThrowFlip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["damageFormula"],
+      "properties": {
+        "damageFormula": { "$ref": "#/$defs/diceNotationString" },
+        "effects": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "progressionLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "attacks": {
+          "type": "integer",
+          "description": "Extra attacks per melee from this Hand-to-Hand tier at this level."
+        },
+        "apm": {
+          "type": "integer",
+          "description": "Alias for attacks — extra actions per melee (same column on printed tables)."
+        },
+        "strike": { "type": "integer" },
+        "parry": { "type": "integer" },
+        "dodge": { "type": "integer" },
+        "initiative": { "type": "integer" },
+        "pullPunch": { "type": "integer" },
+        "rollWithPunch": {
+          "type": "integer",
+          "description": "Roll with punch, fall, or impact bonus."
+        },
+        "damage": {
+          "type": "integer",
+          "description": "Flat damage bonus to hand-to-hand damage rolls."
+        },
+        "entangle": { "type": "integer" },
+        "disarm": { "type": "integer" },
+        "pairedWeapons": {
+          "type": "boolean",
+          "description": "Unlocks simultaneous strike/parry paired-weapon configurations."
+        },
+        "kickAttack": { "$ref": "#/$defs/kickAttack" },
+        "bodyThrowFlip": { "$ref": "#/$defs/bodyThrowFlip" },
+        "criticalStrikeWindow": { "$ref": "#/$defs/d20RollWindow" },
+        "knockoutStunWindow": { "$ref": "#/$defs/d20RollWindow" },
+        "deathBlowWindow": { "$ref": "#/$defs/d20RollWindow" },
+        "criticalStrikeFromBehind": { "type": "boolean" },
+        "knockoutFromBehind": { "type": "boolean" }
+      }
+    },
+    "progressionMatrix": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(?:[1-9]|1[0-5])$"
+      },
+      "additionalProperties": { "$ref": "#/$defs/progressionLevel" },
+      "minProperties": 1,
+      "description": "Level keys 1–15 only; omit levels with no new unlocks."
+    }
+  }
+}

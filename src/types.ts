@@ -266,6 +266,79 @@ export type OccHandToHandRules = {
   upgradePaths: readonly OccHandToHandUpgradePath[]
 }
 
+/** Kick damage unlocked at a Hand-to-Hand level row (palladium-hth.schema.json). */
+export type HandToHandKickAttack = {
+  damageFormula: string
+  description?: string
+}
+
+/** Body throw / flip maneuver payload at a level row. */
+export type HandToHandBodyThrowFlip = {
+  damageFormula: string
+  effects?: readonly string[]
+}
+
+/** One incremental unlock row at a printed Hand-to-Hand level. */
+export type HandToHandProgressionLevel = {
+  attacks?: number
+  /** Extra actions per melee — alias for {@link HandToHandProgressionLevel.attacks}. */
+  apm?: number
+  strike?: number
+  parry?: number
+  dodge?: number
+  initiative?: number
+  pullPunch?: number
+  rollWithPunch?: number
+  damage?: number
+  entangle?: number
+  disarm?: number
+  pairedWeapons?: boolean
+  kickAttack?: HandToHandKickAttack
+  bodyThrowFlip?: HandToHandBodyThrowFlip
+  criticalStrikeWindow?: readonly number[]
+  knockoutStunWindow?: readonly number[]
+  deathBlowWindow?: readonly number[]
+  criticalStrikeFromBehind?: boolean
+  knockoutFromBehind?: boolean
+}
+
+/** Authoring keys are level strings `"1"`…`"15"`; engines normalize to numeric levels. */
+export type HandToHandProgressionMap = Record<string, HandToHandProgressionLevel>
+
+/**
+ * Hand-to-Hand combat skill catalog row (`content/palladiumHandToHand.json`, palladium-hth.schema.json).
+ */
+export type HandToHandSkill = {
+  id: string
+  name: string
+  description: string
+  gameSystems?: readonly string[]
+  sources?: readonly PalladiumSourceRef[]
+  progression: HandToHandProgressionMap
+}
+
+/** Absolute combat standing after summing Hand-to-Hand levels 1…character level. */
+export type AccumulatedHandToHandBonuses = {
+  attacks: number
+  strike: number
+  parry: number
+  dodge: number
+  initiative: number
+  pullPunch: number
+  rollWithPunch: number
+  damage: number
+  entangle: number
+  disarm: number
+  pairedWeapons: boolean
+  kickAttack?: HandToHandKickAttack
+  bodyThrowFlip?: HandToHandBodyThrowFlip
+  criticalStrikeWindow?: readonly number[]
+  knockoutStunWindow?: readonly number[]
+  deathBlowWindow?: readonly number[]
+  criticalStrikeFromBehind: boolean
+  knockoutFromBehind: boolean
+}
+
 export type OccStaticBonuses = {
   attributes?: Readonly<Record<string, number>>
   vitals?: Readonly<Record<string, number>>

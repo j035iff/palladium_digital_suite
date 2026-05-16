@@ -25,6 +25,7 @@ const weaponProficiencySchema = loadJson(
 const standardModernWeaponProgressionSchema = loadJson(
   join(schemasDir, 'standard-modern-weapon-progression.schema.json'),
 )
+const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 
 const ajv = new Ajv2020({
   allErrors: true,
@@ -40,6 +41,7 @@ for (const [label, schema] of [
   ['palladium-weapon-proficiency.schema.json', weaponProficiencySchema],
   ['standard-modern-weapon-progression.schema.json', standardModernWeaponProgressionSchema],
   ['palladium-occ.schema.json', occSchema],
+  ['palladium-hth.schema.json', handToHandSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -55,6 +57,7 @@ const validateWeaponProficiencyRow = ajv.compile(weaponProficiencySchema)
 const validateProgressionDoc = ajv.compile(standardModernWeaponProgressionSchema)
 const validateRaceRow = ajv.compile(raceSchema)
 const validateOccRow = ajv.compile(occSchema)
+const validateHandToHandRow = ajv.compile(handToHandSchema)
 
 const palladiumSkills = loadJson(join(contentDir, 'palladiumSkills.json'))
 if (!Array.isArray(palladiumSkills)) {
@@ -170,6 +173,35 @@ if (!Array.isArray(palladiumOccs)) {
   } else {
     failed = true
     console.error(`ERR palladiumOccs.json — ${occBad} row(s) failed schema validation`)
+  }
+}
+
+const palladiumHandToHand = loadJson(join(contentDir, 'palladiumHandToHand.json'))
+if (!Array.isArray(palladiumHandToHand)) {
+  failed = true
+  console.error('ERR palladiumHandToHand.json — expected top-level array')
+} else {
+  let hthBad = 0
+  for (const row of palladiumHandToHand) {
+    if (!validateHandToHandRow(row)) {
+      hthBad++
+      if (hthBad <= 5) {
+        console.error(
+          `ERR palladiumHandToHand.json id=${row?.id ?? '?'}:`,
+          validateHandToHandRow.errors,
+        )
+      }
+    }
+  }
+  if (hthBad === 0) {
+    console.log(
+      `OK  palladiumHandToHand.json — ${palladiumHandToHand.length} rows validate`,
+    )
+  } else {
+    failed = true
+    console.error(
+      `ERR palladiumHandToHand.json — ${hthBad} row(s) failed schema validation`,
+    )
   }
 }
 

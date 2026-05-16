@@ -1,18 +1,17 @@
 import type { ActiveForm, Character, InventoryItem, Weapon } from '../types'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import { computeLiveBonuses } from './characterDerived'
 import { getPpMeleeNaturalForActiveForm } from './sheetBonuses'
 import { calculateSkillPercent } from './skillEquation'
 import { getSkillById, resolveWeaponProficiencySkillId } from '../data/skillLibrary'
-import { computeLiveBonuses } from './characterDerived'
 import { getFormState } from '../types'
 import type { StrikeBreakdown } from './strikeEngine'
+import type { AccumulatedHandToHandBonuses } from '../types'
 
 function wpDiceBonusFromSkillPercent(skillTotalPercent: number): number {
   if (!Number.isFinite(skillTotalPercent) || skillTotalPercent <= 0) return 0
   return Math.min(10, Math.max(0, Math.floor(skillTotalPercent / 10) - 2))
 }
-
-const HAND_TO_HAND_SKILL_ID = 'hand_to_hand_basic'
 
 /** Human-readable modifier keys unique to {@link Weapon.weaponSpecificModifiers}. */
 export function prettyWeaponTraitKey(raw: string): string {
@@ -61,11 +60,11 @@ function wpPercentBonusForSkill(skillId: string, character: Character, activeFor
   return wpDiceBonusFromSkillPercent(pct)
 }
 
-function hthMeleeBonuses(character: Character, activeForm: ActiveForm): { strike: number; parry: number } {
-  const unlocked = collectUnlockedSkillIds(character, activeForm)
-  if (!unlocked.has(HAND_TO_HAND_SKILL_ID)) return { strike: 0, parry: 0 }
-  const b = wpPercentBonusForSkill(HAND_TO_HAND_SKILL_ID, character, activeForm)
-  return { strike: b, parry: b }
+function hthMeleeBonuses(
+  accumulated: AccumulatedHandToHandBonuses | undefined,
+): { strike: number; parry: number } {
+  if (!accumulated) return { strike: 0, parry: 0 }
+  return { strike: accumulated.strike, parry: accumulated.parry }
 }
 
 /** Ranged weapon: energy slug / ballistic. */
@@ -137,11 +136,12 @@ export function computeWeaponProfileBonuses(
   character: Character,
   activeForm: ActiveForm,
   weapon: Weapon,
+  handToHandAccumulated?: AccumulatedHandToHandBonuses,
 ): WeaponProfileBonuses {
   const ranged = isRangedWeapon(weapon)
   const ppNat = getPpMeleeNaturalForActiveForm(character, activeForm)
 
-  const hth = ranged ? { strike: 0, parry: 0 } : hthMeleeBonuses(character, activeForm)
+  const hth = ranged ? { strike: 0, parry: 0 } : hthMeleeBonuses(handToHandAccumulated)
 
   const wpSkillId = resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
   const unlocked = collectUnlockedSkillIds(character, activeForm)
@@ -221,10 +221,11 @@ export function getWeaponBonuses(
   activeForm: ActiveForm,
   inventoryItems: readonly InventoryItem[],
   weaponId: string,
+  handToHandAccumulated?: AccumulatedHandToHandBonuses,
 ): WeaponProfileBonuses | null {
   const row = inventoryItems.find((i) => i.id === weaponId)
   if (!row || row.itemType !== 'weapon') return null
-  return computeWeaponProfileBonuses(character, activeForm, row)
+  return computeWeaponProfileBonuses(character, activeForm, row, handToHandAccumulated)
 }
 
 /** Legacy breakdown for strike-only consumers (strike engine banner text). */

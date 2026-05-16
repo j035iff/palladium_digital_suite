@@ -249,6 +249,7 @@ export function CombatHUD() {
     supportsDualForm,
     activeStats,
     sheetCombatDerived,
+    handToHandCombatProfile,
     attacksPerMelee,
     spendCombatAction,
     resetMeleeRound,
@@ -381,8 +382,12 @@ export function CombatHUD() {
   const showUnarmed = readyWeaponList.length === 0
 
   const unarmedBd = useMemo(
-    () => computeUnarmedStrikeBreakdown(character, activeForm),
-    [character, activeForm],
+    () =>
+      computeUnarmedStrikeBreakdown(character, activeForm, {
+        skillName: handToHandCombatProfile.skillName,
+        accumulated: handToHandCombatProfile.accumulated,
+      }),
+    [character, activeForm, handToHandCombatProfile],
   )
 
   const armorMorphusMismatch =
@@ -766,7 +771,11 @@ export function CombatHUD() {
                     manualValue={unarmedDamageManual}
                     onManualValueChange={setUnarmedDamageManual}
                     calculatedBonus={0}
-                    hint={unarmedDamageLabel(character, activeForm)}
+                    hint={unarmedDamageLabel(
+                      character,
+                      activeForm,
+                      handToHandCombatProfile.accumulated.damage,
+                    )}
                   />
                 </div>
               </li>
