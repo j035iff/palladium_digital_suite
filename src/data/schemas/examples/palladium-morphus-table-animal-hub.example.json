@@ -6,7 +6,11 @@
   "description": "Master Animal Morphus hub.",
   "parentTable": null,
   "subtables": [
-    { "id": "animal_reptilian", "name": "Reptilian", "tableFile": "animal_reptilian.json" }
+    {
+      "id": "animal_reptilian",
+      "name": "Reptilian",
+      "tableFile": "animal_reptilian.json"
+    }
   ],
   "entries": []
 }

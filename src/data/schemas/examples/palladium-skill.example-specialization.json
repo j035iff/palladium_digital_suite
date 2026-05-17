@@ -1,13 +1,21 @@
 {
-  "id": "example_literacy_pattern",
+  "id": "skill_example_literacy_pattern",
   "name": "Example: Literacy (specialization pattern)",
-  "gameSystems": ["nightbane"],
-  "categories": ["Technical"],
+  "gameSystems": [
+    "nightbane"
+  ],
+  "categories": [
+    "Technical"
+  ],
   "requiresSpecialization": true,
   "specialization": {
     "kind": "literacy",
     "prompt": "Which written language?",
-    "examples": ["English", "Spanish", "French"],
+    "examples": [
+      "English",
+      "Spanish",
+      "French"
+    ],
     "allowsMultipleInstances": true,
     "notes": "Each language is a separate skill selection."
   },

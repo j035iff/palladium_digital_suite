@@ -39,7 +39,7 @@ export const initialInventoryItems: InventoryItem[] = [
     weaponSpecificModifiers: { balanced: 1 },
     damage: '2d4',
     isEquipped: false,
-    linkedWpSkillId: 'wp_sword',
+    linkedWpSkillId: 'skill_wp_sword',
   },
   {
     id: 'ion_pistol',
@@ -77,7 +77,7 @@ export const initialInventoryItems: InventoryItem[] = [
       },
     ],
     isEquipped: false,
-    linkedWpSkillId: 'wp_pistol',
+    linkedWpSkillId: 'skill_wp_pistol',
   },
   {
     id: 'field_kit',

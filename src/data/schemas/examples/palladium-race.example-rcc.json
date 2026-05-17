@@ -3,7 +3,9 @@
   "id": "example_rcc_guardian_pattern",
   "name": "Example: Guardian R.C.C. (pattern)",
   "description": "Illustrates canPickOcc: false, innate I.S.P. formula with attribute anchor, and flat S.D.C. dice.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -34,12 +36,20 @@
     "naturalIspFormula": "ME + 2D6"
   },
   "occLimitations": {
-    "forbiddenCategories": ["Magic", "Psychic"],
+    "forbiddenCategories": [
+      "Magic",
+      "Psychic"
+    ],
     "forbiddenOccIds": []
   },
   "innateSkills": [
-    { "skillId": "literacy", "basePercent": 50 },
-    { "skillId": "math_basic" }
+    {
+      "skillId": "skill_literacy",
+      "basePercent": 50
+    },
+    {
+      "skillId": "skill_math_basic"
+    }
   ],
   "innateBonuses": {
     "modifiers": {
@@ -48,6 +58,10 @@
   },
   "demographics": {
     "averageLifespan": "Centuries (varies)",
-    "alignmentTendencies": ["Principled", "Scrupulous", "Aberrant"]
+    "alignmentTendencies": [
+      "Principled",
+      "Scrupulous",
+      "Aberrant"
+    ]
   }
 }

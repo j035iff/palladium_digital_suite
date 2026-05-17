@@ -3,7 +3,9 @@
   "id": "example_hth_basic_pattern",
   "name": "Hand-to-Hand: Basic (example pattern)",
   "description": "Illustrates level-keyed progression: additive numeric modifiers, kick/body-throw objects, d20 windows, and behind-attack flags.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -12,25 +14,68 @@
     }
   ],
   "progression": {
-    "1": { "attacks": 2, "pullPunch": 2, "rollWithPunch": 2 },
-    "2": { "parry": 2, "dodge": 2 },
-    "3": { "kickAttack": { "damageFormula": "1D6", "description": "Basic physical kick" } },
-    "4": { "attacks": 1 },
-    "5": { "strike": 1 },
-    "6": { "criticalStrikeWindow": [19, 20] },
-    "7": { "damage": 2 },
+    "1": {
+      "attacks": 2,
+      "pullPunch": 2,
+      "rollWithPunch": 2
+    },
+    "2": {
+      "parry": 2,
+      "dodge": 2
+    },
+    "3": {
+      "kickAttack": {
+        "damageFormula": "1D6",
+        "description": "Basic physical kick"
+      }
+    },
+    "4": {
+      "attacks": 1
+    },
+    "5": {
+      "strike": 1
+    },
+    "6": {
+      "criticalStrikeWindow": [
+        19,
+        20
+      ]
+    },
+    "7": {
+      "damage": 2
+    },
     "8": {
       "bodyThrowFlip": {
         "damageFormula": "1D6",
-        "effects": ["victim loses initiative", "victim loses one attack"]
+        "effects": [
+          "victim loses initiative",
+          "victim loses one attack"
+        ]
       }
     },
-    "9": { "attacks": 1 },
-    "10": { "pullPunch": 2, "rollWithPunch": 2 },
-    "11": { "parry": 1, "dodge": 1 },
-    "12": { "strike": 1 },
-    "13": { "criticalStrikeFromBehind": true, "knockoutFromBehind": true },
-    "14": { "damage": 2 },
-    "15": { "attacks": 1 }
+    "9": {
+      "attacks": 1
+    },
+    "10": {
+      "pullPunch": 2,
+      "rollWithPunch": 2
+    },
+    "11": {
+      "parry": 1,
+      "dodge": 1
+    },
+    "12": {
+      "strike": 1
+    },
+    "13": {
+      "criticalStrikeFromBehind": true,
+      "knockoutFromBehind": true
+    },
+    "14": {
+      "damage": 2
+    },
+    "15": {
+      "attacks": 1
+    }
   }
 }

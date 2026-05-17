@@ -53,6 +53,7 @@ export type {
 export {
   PALLADIUM_SKILL_CATALOG,
   getPalladiumSkillCatalogEntryById,
+  normalizeCatalogSkillId,
   listPalladiumSkillsForGameSystem,
 } from './skillsCatalogLoader'
 
@@ -76,6 +77,15 @@ export {
 } from './standardModernWeaponProgressionLoader'
 
 export {
+  SKILL_TRAIT_REGISTRY,
+  getSkillTraitDefinition,
+  isKnownSkillTraitId,
+  getSkillTraitIds,
+  skillHasTrait,
+  type SkillTraitDefinition,
+} from './skillTraitRegistryLoader'
+
+export {
   HAND_TO_HAND_CATALOG,
   getHandToHandSkillById,
   listHandToHandSkillIds,
@@ -90,3 +100,13 @@ export {
   listPalladiumTalentsForGameSystem,
   palladiumTalentToFeature,
 } from './talentCatalogLoader'
+
+export {
+  MORPHUS_TABLE_CATALOG,
+  getMorphusTableById,
+  getMorphusCharacteristicById,
+  resolveMorphusCharacteristicsByIds,
+  listMorphusTableIds,
+  listMorphusCategoryHubs,
+  listMorphusTraitTables,
+} from './morphusTableCatalogLoader'

@@ -137,6 +137,11 @@
     }
   },
   "$defs": {
+    "catalogSkillId": {
+      "type": "string",
+      "pattern": "^skill_[a-z][a-z0-9_]*$",
+      "description": "Reference to a row in **palladiumSkills.json**."
+    },
     "sources": {
       "type": "array",
       "minItems": 1,
@@ -223,8 +228,7 @@
       "required": ["skillId", "bonusPercent"],
       "properties": {
         "skillId": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$"
+          "$ref": "#/$defs/catalogSkillId"
         },
         "bonusPercent": {
           "type": "integer",
@@ -336,8 +340,7 @@
         "startingSkillIds": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^[a-z][a-z0-9_]*$"
+            "$ref": "#/$defs/catalogSkillId"
           },
           "uniqueItems": true
         },
@@ -402,8 +405,7 @@
         "startingSkillIds": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^[a-z][a-z0-9_]*$"
+            "$ref": "#/$defs/catalogSkillId"
           },
           "uniqueItems": true,
           "description": "Optional pre-selected related skills at creation (bootstrap for Skill Engine)."

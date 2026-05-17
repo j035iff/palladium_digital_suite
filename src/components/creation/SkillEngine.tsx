@@ -3,11 +3,11 @@ import { useCharacter } from '../../context/CharacterContext'
 import type { EngineSkillDef, SkillCategory } from '../../data/library/skills'
 import { SKILL_LIBRARY, getSkillById } from '../../data/library/skills'
 import { aggregateSkillModifiers } from '../../lib/skillModifiers'
+import { maPbScaledBonuses, type SkillEquationSkill } from '../../lib/skillEquation'
 import {
-  calculateSkillPercent,
-  maPbScaledBonuses,
-  type SkillEquationSkill,
-} from '../../lib/skillEquation'
+  buildSkillPercentContext,
+  resolveSkillPercent,
+} from '../../lib/skillPercentResolution'
 import {
   missingPrerequisiteMessage,
   prerequisiteSatisfied,
@@ -36,7 +36,7 @@ function buildEquationInput(
   selectedIds: ReadonlySet<string>,
 ): SkillEquationSkill {
   let synergy = def.synergyBonuses ?? 0
-  if (def.id === 'astronomy' && selectedIds.has('math_advanced')) {
+  if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
     synergy += 10
   }
   return {
@@ -106,6 +106,11 @@ export function SkillEngine() {
     [attrs],
   )
   const maPbBonus = useMemo(() => maPbScaledBonuses(attrs.ma, attrs.pb), [attrs])
+
+  const skillPercentCtx = useMemo(
+    () => buildSkillPercentContext(character, activeForm, iqBonus, maPbBonus),
+    [character, activeForm, iqBonus, maPbBonus],
+  )
 
   const pendingPhysical = useMemo(
     () => pendingPhysicalFromModifiers(allSelected),
@@ -492,21 +497,26 @@ export function SkillEngine() {
                 const def = getSkillById(id)
                 if (!def) return null
                 const input = buildEquationInput(def, allSelected)
-                const inputWithScaled = {
-                  ...input,
-                  scaledAttBonuses: (input.scaledAttBonuses ?? 0) + maPbBonus,
-                }
-                const pct = calculateSkillPercent(
-                  inputWithScaled,
-                  character.level,
-                  iqBonus,
+                const resolved = resolveSkillPercent(
+                  { ...input, id: def.id },
+                  skillPercentCtx,
                 )
                 return (
                   <li key={id} className="border-b border-white/10 pb-2 last:border-0">
                     <div className="font-semibold">{def.name}</div>
                     <div className="font-mono tabular-nums opacity-90">
-                      Final % ≈ <strong>{pct}%</strong>
+                      Final % ≈ <strong>{resolved.total}%</strong>
                     </div>
+                    {resolved.lines.length > 0 ? (
+                      <ul className="mt-1 space-y-0.5 font-mono text-[10px] opacity-75">
+                        {resolved.lines.map((line) => (
+                          <li key={line.label}>
+                            {line.label}: {line.value >= 0 ? '+' : ''}
+                            {line.value}%
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 )
               })}

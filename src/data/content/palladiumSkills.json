@@ -1,6 +1,6 @@
 [
   {
-    "id": "cryptography",
+    "id": "skill_cryptography",
     "name": "Cryptography",
     "gameSystems": [
       "nightbane"
@@ -22,7 +22,7 @@
     ]
   },
   {
-    "id": "laser",
+    "id": "skill_laser",
     "name": "Laser",
     "gameSystems": [
       "nightbane"
@@ -44,7 +44,7 @@
     ]
   },
   {
-    "id": "optic_systems",
+    "id": "skill_optic_systems",
     "name": "Optic Systems",
     "gameSystems": [
       "nightbane"
@@ -56,7 +56,7 @@
     "percentPerLevel": 5,
     "synergies": [
       {
-        "skillId": "tv_video",
+        "skillId": "skill_tv_video",
         "description": "Special one time bonus of +5% to T.V./video skill if both are selected.",
         "bonusPercent": 5
       }
@@ -72,7 +72,7 @@
     ]
   },
   {
-    "id": "radio_basic",
+    "id": "skill_radio_basic",
     "name": "Radio: Basic",
     "gameSystems": [
       "nightbane"
@@ -91,10 +91,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "radio_scramblers",
+    "id": "skill_radio_scramblers",
     "name": "Radio: Scramblers",
     "gameSystems": [
       "nightbane"
@@ -116,7 +119,7 @@
     ]
   },
   {
-    "id": "surveillance_systems",
+    "id": "skill_surveillance_systems",
     "name": "Surveillance Systems",
     "gameSystems": [
       "nightbane"
@@ -132,13 +135,13 @@
         "type": "skill_any_of",
         "label": "Electronics: basic OR electrical engineering",
         "skillIds": [
-          "basic_electronics",
-          "electrical_engineering"
+          "skill_basic_electronics",
+          "skill_electrical_engineering"
         ]
       },
       {
         "type": "skill",
-        "skillId": "computer_operation",
+        "skillId": "skill_computer_operation",
         "condition": "only for complex, high-tech systems"
       }
     ],
@@ -152,7 +155,7 @@
     ]
   },
   {
-    "id": "tv_video",
+    "id": "skill_tv_video",
     "name": "T.V./Video",
     "gameSystems": [
       "nightbane"
@@ -174,7 +177,7 @@
     ]
   },
   {
-    "id": "cook",
+    "id": "skill_cook",
     "name": "Cook",
     "gameSystems": [
       "nightbane"
@@ -202,7 +205,7 @@
     ]
   },
   {
-    "id": "dance",
+    "id": "skill_dance",
     "name": "Dance",
     "gameSystems": [
       "nightbane"
@@ -234,7 +237,7 @@
     ]
   },
   {
-    "id": "fishing",
+    "id": "skill_fishing",
     "name": "Fishing",
     "gameSystems": [
       "nightbane"
@@ -261,7 +264,7 @@
     ]
   },
   {
-    "id": "play_musical_instrument",
+    "id": "skill_play_musical_instrument",
     "name": "Play Musical Instrument",
     "gameSystems": [
       "nightbane"
@@ -306,7 +309,7 @@
     ]
   },
   {
-    "id": "sewing",
+    "id": "skill_sewing",
     "name": "Sewing",
     "gameSystems": [
       "nightbane"
@@ -344,10 +347,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "sing",
+    "id": "skill_sing",
     "name": "Sing",
     "gameSystems": [
       "nightbane"
@@ -374,7 +380,7 @@
     ]
   },
   {
-    "id": "detect_ambush",
+    "id": "skill_detect_ambush",
     "name": "Detect Ambush",
     "gameSystems": [
       "nightbane"
@@ -396,7 +402,7 @@
     ]
   },
   {
-    "id": "detect_concealment",
+    "id": "skill_detect_concealment",
     "name": "Detect Concealment",
     "gameSystems": [
       "nightbane"
@@ -418,7 +424,7 @@
     ]
   },
   {
-    "id": "disguise",
+    "id": "skill_disguise",
     "name": "Disguise",
     "gameSystems": [
       "nightbane"
@@ -440,7 +446,7 @@
     ]
   },
   {
-    "id": "escape_artist",
+    "id": "skill_escape_artist",
     "name": "Escape Artist",
     "gameSystems": [
       "nightbane"
@@ -462,7 +468,7 @@
     ]
   },
   {
-    "id": "forgery",
+    "id": "skill_forgery",
     "name": "Forgery",
     "gameSystems": [
       "nightbane"
@@ -488,10 +494,14 @@
         "reference": "Nightbane RPG",
         "pageNumber": 50
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "intelligence",
+    "id": "skill_intelligence",
     "name": "Intelligence",
     "gameSystems": [
       "nightbane"
@@ -514,7 +524,7 @@
     ]
   },
   {
-    "id": "interrogation_techniques",
+    "id": "skill_interrogation_techniques",
     "name": "Interrogation Techniques",
     "gameSystems": [
       "nightbane"
@@ -536,7 +546,7 @@
     ]
   },
   {
-    "id": "pick_locks",
+    "id": "skill_pick_locks",
     "name": "Pick Locks",
     "gameSystems": [
       "nightbane"
@@ -562,10 +572,14 @@
         "reference": "Nightbane RPG, (Rogue)",
         "pageNumber": 55
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "pick_pockets",
+    "id": "skill_pick_pockets",
     "name": "Pick Pockets",
     "gameSystems": [
       "nightbane"
@@ -601,10 +615,14 @@
         "reference": "Nightbane RPG, (Rogue)",
         "pageNumber": 55
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "sniper",
+    "id": "skill_sniper",
     "name": "Sniper",
     "gameSystems": [
       "nightbane"
@@ -632,7 +650,7 @@
     ]
   },
   {
-    "id": "tracking",
+    "id": "skill_tracking",
     "name": "Tracking",
     "gameSystems": [
       "nightbane"
@@ -664,7 +682,7 @@
     ]
   },
   {
-    "id": "wilderness_survival",
+    "id": "skill_wilderness_survival",
     "name": "Wilderness Survival",
     "gameSystems": [
       "nightbane"
@@ -686,7 +704,7 @@
     ]
   },
   {
-    "id": "criminal_sciences_and_forensics",
+    "id": "skill_criminal_sciences_and_forensics",
     "name": "Criminal Sciences & Forensics",
     "gameSystems": [
       "nightbane"
@@ -699,23 +717,23 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "biology"
+        "skillId": "skill_biology"
       },
       {
         "type": "skill",
-        "skillId": "chemistry"
+        "skillId": "skill_chemistry"
       },
       {
         "type": "skill",
-        "skillId": "chemistry_analytical"
+        "skillId": "skill_chemistry_analytical"
       },
       {
         "type": "skill",
-        "skillId": "mathematics_advanced"
+        "skillId": "skill_mathematics_advanced"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "synergies": [],
@@ -729,7 +747,7 @@
     ]
   },
   {
-    "id": "first_aid",
+    "id": "skill_first_aid",
     "name": "First Aid",
     "gameSystems": [
       "nightbane"
@@ -748,10 +766,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 51
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "holistic_medicine",
+    "id": "skill_holistic_medicine",
     "name": "Holistic Medicine",
     "gameSystems": [
       "nightbane"
@@ -779,7 +800,7 @@
     ]
   },
   {
-    "id": "paramedic",
+    "id": "skill_paramedic",
     "name": "Paramedic",
     "gameSystems": [
       "nightbane"
@@ -807,10 +828,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 52
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "medical_doctor",
+    "id": "skill_medical_doctor",
     "name": "Medical Doctor",
     "gameSystems": [
       "nightbane"
@@ -828,27 +852,27 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "biology"
+        "skillId": "skill_biology"
       },
       {
         "type": "skill",
-        "skillId": "pathology"
+        "skillId": "skill_pathology"
       },
       {
         "type": "skill",
-        "skillId": "chemistry"
+        "skillId": "skill_chemistry"
       },
       {
         "type": "skill_any_of",
         "label": "Basic or Advanced Mathematics",
         "skillIds": [
-          "mathematics_basic",
-          "mathematics_advanced"
+          "skill_mathematics_basic",
+          "skill_mathematics_advanced"
         ]
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "synergies": [],
@@ -862,7 +886,7 @@
     ]
   },
   {
-    "id": "pathology",
+    "id": "skill_pathology",
     "name": "Pathology",
     "gameSystems": [
       "nightbane"
@@ -875,15 +899,15 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "biology"
+        "skillId": "skill_biology"
       },
       {
         "type": "skill",
-        "skillId": "chemistry"
+        "skillId": "skill_chemistry"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "synergies": [],
@@ -897,7 +921,7 @@
     ]
   },
   {
-    "id": "toxicology",
+    "id": "skill_toxicology",
     "name": "Toxicology",
     "gameSystems": [
       "nightbane"
@@ -910,15 +934,15 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "biology"
+        "skillId": "skill_biology"
       },
       {
         "type": "skill",
-        "skillId": "chemistry"
+        "skillId": "skill_chemistry"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "synergies": [],
@@ -932,7 +956,7 @@
     ]
   },
   {
-    "id": "demolitions",
+    "id": "skill_demolitions",
     "name": "Demolitions",
     "gameSystems": [
       "nightbane"
@@ -957,10 +981,14 @@
         "reference": "Nightbane RPG",
         "pageNumber": 52
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "demolitions_disposal",
+    "id": "skill_demolitions_disposal",
     "name": "Demolitions Disposal",
     "gameSystems": [
       "nightbane"
@@ -979,10 +1007,14 @@
         "reference": "Nightbane RPG",
         "pageNumber": 52
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "military_etiquette",
+    "id": "skill_military_etiquette",
     "name": "Military Etiquette",
     "gameSystems": [
       "nightbane"
@@ -1004,7 +1036,7 @@
     ]
   },
   {
-    "id": "strategy_tactics",
+    "id": "skill_strategy_tactics",
     "name": "Strategy/Tactics",
     "gameSystems": [
       "nightbane"
@@ -1031,7 +1063,7 @@
     ]
   },
   {
-    "id": "acrobatics",
+    "id": "skill_acrobatics",
     "name": "Acrobatics",
     "gameSystems": [
       "nightbane"
@@ -1080,7 +1112,7 @@
     ],
     "conditionalRelatedSkills": [
       {
-        "skillId": "climbing",
+        "skillId": "skill_climbing",
         "summary": "40% base climb ability or adds a +15% to climb skill.",
         "bonusIfAlreadyHave": {
           "skillPercentBonus": 15
@@ -1090,7 +1122,7 @@
         }
       },
       {
-        "skillId": "prowl",
+        "skillId": "skill_prowl",
         "summary": "30% base prowl ability or adds a +5% to prowl skill.",
         "bonusIfAlreadyHave": {
           "skillPercentBonus": 5
@@ -1109,7 +1141,7 @@
     ]
   },
   {
-    "id": "athletics_general",
+    "id": "skill_athletics_general",
     "name": "Athletics (general)",
     "gameSystems": [
       "nightbane"
@@ -1137,7 +1169,7 @@
     ]
   },
   {
-    "id": "body_building_weight_lifting",
+    "id": "skill_body_building_weight_lifting",
     "name": "Body Building & Weight Lifting",
     "gameSystems": [
       "nightbane"
@@ -1161,7 +1193,7 @@
     ]
   },
   {
-    "id": "boxing",
+    "id": "skill_boxing",
     "name": "Boxing",
     "gameSystems": [
       "nightbane",
@@ -1205,7 +1237,7 @@
     ]
   },
   {
-    "id": "climbing",
+    "id": "skill_climbing",
     "name": "Climbing",
     "gameSystems": [
       "nightbane"
@@ -1243,7 +1275,7 @@
     ]
   },
   {
-    "id": "gymnastics",
+    "id": "skill_gymnastics",
     "name": "Gymnastics",
     "gameSystems": [
       "nightbane"
@@ -1292,7 +1324,7 @@
     ],
     "conditionalRelatedSkills": [
       {
-        "skillId": "climbing",
+        "skillId": "skill_climbing",
         "summary": "25% base climb ability or adds a +7% to climb skill.",
         "bonusIfAlreadyHave": {
           "skillPercentBonus": 7
@@ -1302,7 +1334,7 @@
         }
       },
       {
-        "skillId": "prowl",
+        "skillId": "skill_prowl",
         "summary": "30% base prowl ability or adds a +5% to prowl skill.",
         "bonusIfAlreadyHave": {
           "skillPercentBonus": 5
@@ -1321,7 +1353,7 @@
     ]
   },
   {
-    "id": "prowl",
+    "id": "skill_prowl",
     "name": "Prowl",
     "gameSystems": [
       "nightbane"
@@ -1351,7 +1383,7 @@
     ]
   },
   {
-    "id": "running",
+    "id": "skill_running",
     "name": "Running",
     "gameSystems": [
       "nightbane"
@@ -1376,7 +1408,7 @@
     ]
   },
   {
-    "id": "swimming",
+    "id": "skill_swimming",
     "name": "Swimming",
     "gameSystems": [
       "nightbane"
@@ -1415,7 +1447,7 @@
     ]
   },
   {
-    "id": "scuba",
+    "id": "skill_scuba",
     "name": "S.C.U.B.A.",
     "gameSystems": [
       "nightbane"
@@ -1427,7 +1459,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "swimming"
+        "skillId": "skill_swimming"
       }
     ],
     "basePercent": 50,
@@ -1459,7 +1491,7 @@
     ]
   },
   {
-    "id": "wrestling",
+    "id": "skill_wrestling",
     "name": "Wrestling",
     "gameSystems": [
       "nightbane"
@@ -1516,7 +1548,7 @@
     ]
   },
   {
-    "id": "airplane",
+    "id": "skill_airplane",
     "name": "Pilot: Airplane",
     "gameSystems": [
       "nightbane"
@@ -1528,7 +1560,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "read_sensory_equipment"
+        "skillId": "skill_read_sensory_equipment"
       }
     ],
     "basePercent": 50,
@@ -1543,7 +1575,7 @@
     ]
   },
   {
-    "id": "automobile",
+    "id": "skill_automobile",
     "name": "Pilot: Automobile",
     "gameSystems": [
       "nightbane"
@@ -1565,7 +1597,7 @@
     ]
   },
   {
-    "id": "boat_sail_type",
+    "id": "skill_boat_sail_type",
     "name": "Pilot: Boat: Sail Type",
     "gameSystems": [
       "nightbane"
@@ -1587,7 +1619,7 @@
     ]
   },
   {
-    "id": "boat_motor_and_hydrofoils",
+    "id": "skill_boat_motor_and_hydrofoils",
     "name": "Pilot: Boat: Motor and Hydrofoils",
     "gameSystems": [
       "nightbane"
@@ -1609,7 +1641,7 @@
     ]
   },
   {
-    "id": "boat_ships",
+    "id": "skill_boat_ships",
     "name": "Pilot: Boat: Ships",
     "gameSystems": [
       "nightbane"
@@ -1640,7 +1672,7 @@
     ]
   },
   {
-    "id": "helicopter",
+    "id": "skill_helicopter",
     "name": "Pilot: Helicopter",
     "gameSystems": [
       "nightbane"
@@ -1652,11 +1684,11 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "read_sensory_equipment"
+        "skillId": "skill_read_sensory_equipment"
       },
       {
         "type": "skill",
-        "skillId": "weapon_systems",
+        "skillId": "skill_weapon_systems",
         "condition": "Required to operate weapons on a combat helicopter."
       }
     ],
@@ -1672,7 +1704,7 @@
     ]
   },
   {
-    "id": "horsemanship",
+    "id": "skill_horsemanship",
     "name": "Horsemanship",
     "gameSystems": [
       "nightbane"
@@ -1740,7 +1772,7 @@
     ]
   },
   {
-    "id": "hover_craft_ground",
+    "id": "skill_hover_craft_ground",
     "name": "Pilot: Hover Craft (ground)",
     "gameSystems": [
       "nightbane"
@@ -1762,7 +1794,7 @@
     ]
   },
   {
-    "id": "jet_aircraft",
+    "id": "skill_jet_aircraft",
     "name": "Pilot: Jet Aircraft",
     "gameSystems": [
       "nightbane"
@@ -1774,7 +1806,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "read_sensory_equipment"
+        "skillId": "skill_read_sensory_equipment"
       }
     ],
     "basePercent": 40,
@@ -1789,7 +1821,7 @@
     ]
   },
   {
-    "id": "jet_fighters",
+    "id": "skill_jet_fighters",
     "name": "Pilot: Jet Fighters",
     "gameSystems": [
       "nightbane"
@@ -1801,7 +1833,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "read_sensory_equipment"
+        "skillId": "skill_read_sensory_equipment"
       }
     ],
     "basePercent": 40,
@@ -1816,7 +1848,7 @@
     ]
   },
   {
-    "id": "jet_packs",
+    "id": "skill_jet_packs",
     "name": "Pilot: Jet Packs",
     "gameSystems": [
       "nightbane"
@@ -1838,7 +1870,7 @@
     ]
   },
   {
-    "id": "motorcycle",
+    "id": "skill_motorcycle",
     "name": "Pilot: Motorcycle",
     "gameSystems": [
       "nightbane"
@@ -1860,7 +1892,7 @@
     ]
   },
   {
-    "id": "truck",
+    "id": "skill_truck",
     "name": "Pilot: Truck",
     "gameSystems": [
       "nightbane"
@@ -1882,7 +1914,7 @@
     ]
   },
   {
-    "id": "tanks_and_apcs",
+    "id": "skill_tanks_and_apcs",
     "name": "Pilot: Tanks and APCs",
     "gameSystems": [
       "nightbane"
@@ -1904,7 +1936,7 @@
     ]
   },
   {
-    "id": "navigation",
+    "id": "skill_navigation",
     "name": "Navigation",
     "gameSystems": [
       "nightbane"
@@ -1916,15 +1948,15 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "mathematics_basic"
+        "skillId": "skill_mathematics_basic"
       },
       {
         "type": "skill",
-        "skillId": "read_sensory_equipment"
+        "skillId": "skill_read_sensory_equipment"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "basePercent": 40,
@@ -1989,7 +2021,7 @@
     ]
   },
   {
-    "id": "read_sensory_equipment",
+    "id": "skill_read_sensory_equipment",
     "name": "Read Sensory Equipment",
     "gameSystems": [
       "nightbane"
@@ -2021,7 +2053,7 @@
     ]
   },
   {
-    "id": "weapon_systems",
+    "id": "skill_weapon_systems",
     "name": "Weapon Systems",
     "gameSystems": [
       "nightbane"
@@ -2049,7 +2081,7 @@
     ]
   },
   {
-    "id": "computer_hacking",
+    "id": "skill_computer_hacking",
     "name": "Computer Hacking",
     "gameSystems": [
       "nightbane"
@@ -2059,17 +2091,17 @@
     ],
     "synergies": [
       {
-        "skillId": "cryptography",
+        "skillId": "skill_cryptography",
         "description": "Grants a one time bonus of +5% to the cryptography skill if the character is a hacker.",
         "bonusPercent": 5
       },
       {
-        "skillId": "surveillance_systems",
+        "skillId": "skill_surveillance_systems",
         "description": "Grants a one time bonus of +5% to the surveillance systems skill if the character is a hacker.",
         "bonusPercent": 5
       },
       {
-        "skillId": "locksmith",
+        "skillId": "skill_locksmith",
         "description": "Grants a one time bonus of +5% to the locksmith skill if the character is a hacker.",
         "bonusPercent": 5
       }
@@ -2077,19 +2109,19 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       },
       {
         "type": "skill",
-        "skillId": "computer_operation"
+        "skillId": "skill_computer_operation"
       },
       {
         "type": "skill",
-        "skillId": "computer_programming"
+        "skillId": "skill_computer_programming"
       },
       {
         "type": "skill",
-        "skillId": "mathematics_basic"
+        "skillId": "skill_mathematics_basic"
       }
     ],
     "basePercent": 15,
@@ -2101,10 +2133,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 55
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "concealment",
+    "id": "skill_concealment",
     "name": "Concealment",
     "gameSystems": [
       "nightbane"
@@ -2141,7 +2176,7 @@
     ]
   },
   {
-    "id": "palming",
+    "id": "skill_palming",
     "name": "Palming",
     "gameSystems": [
       "nightbane"
@@ -2151,7 +2186,7 @@
     ],
     "synergies": [
       {
-        "skillId": "pick_pockets",
+        "skillId": "skill_pick_pockets",
         "description": "Adds a bonus of +5% to the pick pocket skill.",
         "bonusPercent": 5
       }
@@ -2166,10 +2201,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 55
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "streetwise",
+    "id": "skill_streetwise",
     "name": "Streetwise",
     "gameSystems": [
       "nightbane"
@@ -2200,7 +2238,7 @@
     ]
   },
   {
-    "id": "streetwise_drugs",
+    "id": "skill_streetwise_drugs",
     "name": "Streetwise - Drugs (special)",
     "gameSystems": [
       "nightbane"
@@ -2229,7 +2267,7 @@
     ]
   },
   {
-    "id": "anthropology",
+    "id": "skill_anthropology",
     "name": "Anthropology",
     "gameSystems": [
       "nightbane"
@@ -2259,7 +2297,7 @@
     ]
   },
   {
-    "id": "archaeology",
+    "id": "skill_archaeology",
     "name": "Archaeology",
     "gameSystems": [
       "nightbane"
@@ -2286,7 +2324,7 @@
     ]
   },
   {
-    "id": "astronomy",
+    "id": "skill_astronomy",
     "name": "Astronomy",
     "gameSystems": [
       "nightbane"
@@ -2296,11 +2334,11 @@
     ],
     "synergies": [
       {
-        "skillId": "navigation",
+        "skillId": "skill_navigation",
         "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
       },
       {
-        "skillId": "land_navigation",
+        "skillId": "skill_land_navigation",
         "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
       }
     ],
@@ -2317,7 +2355,7 @@
     ]
   },
   {
-    "id": "biology",
+    "id": "skill_biology",
     "name": "Biology",
     "gameSystems": [
       "nightbane"
@@ -2339,7 +2377,7 @@
     ]
   },
   {
-    "id": "botany",
+    "id": "skill_botany",
     "name": "Botany",
     "gameSystems": [
       "nightbane"
@@ -2361,7 +2399,7 @@
     ]
   },
   {
-    "id": "chemistry",
+    "id": "skill_chemistry",
     "name": "Chemistry",
     "gameSystems": [
       "nightbane"
@@ -2383,7 +2421,7 @@
     ]
   },
   {
-    "id": "chemistry_analytical",
+    "id": "skill_chemistry_analytical",
     "name": "Chemistry Analytical",
     "gameSystems": [
       "nightbane"
@@ -2393,22 +2431,22 @@
     ],
     "synergies": [
       {
-        "skillId": "computer_operation",
+        "skillId": "skill_computer_operation",
         "description": "Computer operation is highly suggested but not required."
       }
     ],
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "chemistry"
+        "skillId": "skill_chemistry"
       },
       {
         "type": "skill",
-        "skillId": "mathematics_advanced"
+        "skillId": "skill_mathematics_advanced"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "basePercent": 25,
@@ -2423,7 +2461,7 @@
     ]
   },
   {
-    "id": "mathematics_basic",
+    "id": "skill_mathematics_basic",
     "name": "Mathematics: Basic",
     "gameSystems": [
       "nightbane"
@@ -2445,7 +2483,7 @@
     ]
   },
   {
-    "id": "mathematics_advanced",
+    "id": "skill_mathematics_advanced",
     "name": "Mathematics: Advanced",
     "gameSystems": [
       "nightbane"
@@ -2467,7 +2505,7 @@
     ]
   },
   {
-    "id": "art",
+    "id": "skill_art",
     "name": "Art",
     "gameSystems": [
       "nightbane"
@@ -2498,10 +2536,14 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
-    "id": "computer_operation",
+    "id": "skill_computer_operation",
     "name": "Computer Operation",
     "gameSystems": [
       "nightbane"
@@ -2513,7 +2555,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "basePercent": 40,
@@ -2525,10 +2567,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "computer_programming",
+    "id": "skill_computer_programming",
     "name": "Computer Programming",
     "gameSystems": [
       "nightbane"
@@ -2540,11 +2585,11 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "computer_operation"
+        "skillId": "skill_computer_operation"
       },
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "basePercent": 30,
@@ -2564,10 +2609,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "language",
+    "id": "skill_language",
     "name": "Language",
     "gameSystems": [
       "nightbane"
@@ -2600,7 +2648,7 @@
     ]
   },
   {
-    "id": "literacy",
+    "id": "skill_literacy",
     "name": "Literacy",
     "gameSystems": [
       "nightbane"
@@ -2633,7 +2681,7 @@
     ]
   },
   {
-    "id": "lore_demons_and_monsters",
+    "id": "skill_lore_demons_and_monsters",
     "name": "Lore: Demons and Monsters",
     "gameSystems": [
       "nightbane"
@@ -2665,7 +2713,7 @@
     ]
   },
   {
-    "id": "lore_geomancy",
+    "id": "skill_lore_geomancy",
     "name": "Lore: Geomancy or Lines of Power",
     "gameSystems": [
       "nightbane"
@@ -2687,7 +2735,7 @@
     ]
   },
   {
-    "id": "lore_nightbane",
+    "id": "skill_lore_nightbane",
     "name": "Lore: Nightbane",
     "gameSystems": [
       "nightbane"
@@ -2709,7 +2757,7 @@
     ]
   },
   {
-    "id": "lore_nightlands",
+    "id": "skill_lore_nightlands",
     "name": "Lore: Nightlands",
     "gameSystems": [
       "nightbane"
@@ -2731,7 +2779,7 @@
     ]
   },
   {
-    "id": "lore_religion",
+    "id": "skill_lore_religion",
     "name": "Lore: Religion",
     "gameSystems": [
       "nightbane"
@@ -2753,7 +2801,7 @@
     ]
   },
   {
-    "id": "lore_vampires",
+    "id": "skill_lore_vampires",
     "name": "Lore: Vampires",
     "gameSystems": [
       "nightbane"
@@ -2781,7 +2829,7 @@
     ]
   },
   {
-    "id": "photography",
+    "id": "skill_photography",
     "name": "Photography",
     "gameSystems": [
       "nightbane"
@@ -2803,7 +2851,7 @@
     ]
   },
   {
-    "id": "research",
+    "id": "skill_research",
     "name": "Research",
     "gameSystems": [
       "nightbane"
@@ -2835,7 +2883,7 @@
     ]
   },
   {
-    "id": "writing",
+    "id": "skill_writing",
     "name": "Writing",
     "gameSystems": [
       "nightbane"
@@ -2847,7 +2895,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       }
     ],
     "basePercent": 25,
@@ -2875,7 +2923,7 @@
     ]
   },
   {
-    "id": "boat_building",
+    "id": "skill_boat_building",
     "name": "Boat Building",
     "gameSystems": [
       "nightbane"
@@ -2895,10 +2943,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 58
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "carpentry",
+    "id": "skill_carpentry",
     "name": "Carpentry",
     "gameSystems": [
       "nightbane"
@@ -2908,7 +2959,7 @@
     ],
     "synergies": [
       {
-        "skillId": "boat_building",
+        "skillId": "skill_boat_building",
         "description": "Adds +5% bonus to the boat building skill if taken.",
         "bonusPercent": 5
       }
@@ -2923,10 +2974,13 @@
         "reference": "Nightbane RPG",
         "pageNumber": 58
       }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
     ]
   },
   {
-    "id": "hunting",
+    "id": "skill_hunting",
     "name": "Hunting",
     "gameSystems": [
       "nightbane"
@@ -2936,27 +2990,27 @@
     ],
     "synergies": [
       {
-        "skillId": "prowl",
+        "skillId": "skill_prowl",
         "description": "Provides a +2% bonus to prowl.",
         "bonusPercent": 2
       },
       {
-        "skillId": "track_animals",
+        "skillId": "skill_track_animals",
         "description": "Provides a +5% bonus to track animals.",
         "bonusPercent": 5
       },
       {
-        "skillId": "skin_and_prepare_animal_hides",
+        "skillId": "skill_skin_and_prepare_animal_hides",
         "description": "Provides a +5% bonus to skin animals.",
         "bonusPercent": 5
       },
       {
-        "skillId": "wilderness_survival",
+        "skillId": "skill_wilderness_survival",
         "description": "Provides a +5% bonus to wilderness survival.",
         "bonusPercent": 5
       },
       {
-        "skillId": "cook",
+        "skillId": "skill_cook",
         "description": "Provides a +5% to cook the catch only.",
         "bonusPercent": 5
       }
@@ -2972,7 +3026,7 @@
     ]
   },
   {
-    "id": "identify_plants_and_fruits",
+    "id": "skill_identify_plants_and_fruits",
     "name": "Identify Plants & Fruits",
     "gameSystems": [
       "nightbane"
@@ -2994,7 +3048,7 @@
     ]
   },
   {
-    "id": "land_navigation",
+    "id": "skill_land_navigation",
     "name": "Land Navigation",
     "gameSystems": [
       "nightbane"
@@ -3034,7 +3088,7 @@
     ]
   },
   {
-    "id": "preserve_food",
+    "id": "skill_preserve_food",
     "name": "Preserve Food",
     "gameSystems": [
       "nightbane"
@@ -3056,7 +3110,7 @@
     ]
   },
   {
-    "id": "skin_and_prepare_animal_hides",
+    "id": "skill_skin_and_prepare_animal_hides",
     "name": "Skin and Prepare Animal Hides",
     "gameSystems": [
       "nightbane"
@@ -3066,7 +3120,7 @@
     ],
     "synergies": [
       {
-        "skillId": "sewing",
+        "skillId": "skill_sewing",
         "description": "Adds a +5% bonus to the sewing skill.",
         "bonusPercent": 5
       }
@@ -3084,7 +3138,7 @@
     ]
   },
   {
-    "id": "track_animals",
+    "id": "skill_track_animals",
     "name": "Track Animals",
     "gameSystems": [
       "nightbane"
@@ -3114,7 +3168,7 @@
     ]
   },
   {
-    "id": "fieldcraft",
+    "id": "skill_fieldcraft",
     "name": "Fieldcraft",
     "gameSystems": [
       "between_the_shadows"
@@ -3137,7 +3191,7 @@
     ]
   },
   {
-    "id": "lore_astral",
+    "id": "skill_lore_astral",
     "name": "Lore: Astral",
     "gameSystems": [
       "between_the_shadows"
@@ -3174,7 +3228,7 @@
     ]
   },
   {
-    "id": "lore_dreamstream",
+    "id": "skill_lore_dreamstream",
     "name": "Lore: Dreamstream",
     "gameSystems": [
       "between_the_shadows"
@@ -3202,7 +3256,7 @@
     ]
   },
   {
-    "id": "lore_psychic",
+    "id": "skill_lore_psychic",
     "name": "Lore: Psychic",
     "gameSystems": [
       "between_the_shadows"
@@ -3230,7 +3284,7 @@
     ]
   },
   {
-    "id": "principles_of_magic",
+    "id": "skill_principles_of_magic",
     "name": "Principles of Magic",
     "gameSystems": [
       "nightbane"
@@ -3259,7 +3313,7 @@
         "thresholdRewards": [
           {
             "requiresSkillPercent": {
-              "skillId": "principles_of_magic",
+              "skillId": "skill_principles_of_magic",
               "minimumPercent": 60
             },
             "summary": "+1 spell strength at character levels 3, 6, 9, 12, and 15 only when Principles of Magic is 60% or higher.",
@@ -3286,7 +3340,7 @@
     ]
   },
   {
-    "id": "divination",
+    "id": "skill_divination",
     "name": "Divination",
     "gameSystems": [
       "nightbane"
@@ -3336,7 +3390,7 @@
     ]
   },
   {
-    "id": "locate_librarian",
+    "id": "skill_locate_librarian",
     "name": "Locate Librarian",
     "gameSystems": [
       "nightbane"
@@ -3358,7 +3412,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "lore_faction",
+        "skillId": "skill_lore_faction",
         "name": "Lore: Faction (Nocturnes)",
         "prerequisiteBypassConditions": [
           "Has Collector skill package"
@@ -3366,7 +3420,7 @@
       },
       {
         "type": "skill",
-        "skillId": "streetwise",
+        "skillId": "skill_streetwise",
         "prerequisiteBypassConditions": [
           "Has Collector skill package"
         ]
@@ -3400,7 +3454,7 @@
     ],
     "sequentialChecks": [
       {
-        "skillId": "streetwise",
+        "skillId": "skill_streetwise",
         "summary": "In a city never visited, the character must succeed on Streetwise before attempting Locate Librarian at the \"never visited\" penalty row.",
         "gatesSituationalModifierRuleIds": [
           "locate_librarian_never"
@@ -3418,7 +3472,7 @@
     "description": "Represents the ability to locate the Nocturne Librarian of a given city. Characters can use this skill as a means of guiding Nocturne characters to the proper contacts, who then can drop names and locations, or a string of clues. Finding a librarian in cities never before visited requires a great deal of leg work, a successful Streetwise roll, and then a Locate Librarian roll at a significant penalty."
   },
   {
-    "id": "lore_faction",
+    "id": "skill_lore_faction",
     "name": "Lore: Faction",
     "gameSystems": [
       "nightbane"
@@ -3448,7 +3502,7 @@
     "description": "Provides intimate knowledge of the inner workings, mythology, and legends surrounding a specific faction. Such information as the history of the faction, known leaders, mythical figureheads, methods of operation, bases of operation and safe houses, etc., are all available through the use of this skill. This skill must be taken separately for each individual faction the character has knowledge about."
   },
   {
-    "id": "lore_secret_societies",
+    "id": "skill_lore_secret_societies",
     "name": "Lore: Secret Societies",
     "gameSystems": [
       "nightbane"
@@ -3470,7 +3524,7 @@
     "description": "Provides knowledge of the myths, rumors, and background of the most notorious secret societies, their historical roots and precedents, if any, and some idea how these societies operate. This skill applies to cults, secret religions, brotherhoods, and full-blown societies. Knowledge gleaned from this skill applies to myth and legends (and rumors) surrounding a given society, not necessarily facts or details about current day operations or members."
   },
   {
-    "id": "gardening",
+    "id": "skill_gardening",
     "name": "Gardening",
     "gameSystems": [
       "nightbane"
@@ -3492,7 +3546,7 @@
     "description": "This skill offers a basic understanding of plant care and aesthetic garden design as well as the ability to grow garden crops, and the skill to create beautiful, decorative gardens with flowers, plants, shrubs, trees, and decorative rocks that create a feeling of tranquility and harmony with nature. This skill can be practiced by anyone, but selecting it twice provides a +12% bonus and the skill is that of a professional groundskeeper."
   },
   {
-    "id": "housekeeping",
+    "id": "skill_housekeeping",
     "name": "Housekeeping",
     "gameSystems": [
       "nightbane"
@@ -3514,7 +3568,7 @@
     "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively."
   },
   {
-    "id": "wardrobe_and_grooming",
+    "id": "skill_wardrobe_and_grooming",
     "name": "Wardrobe & Grooming",
     "gameSystems": [
       "nightbane"
@@ -3533,15 +3587,15 @@
     ],
     "synergies": [
       {
-        "skillId": "disguise",
+        "skillId": "skill_disguise",
         "description": "+2% bonus when using Wardrobe & Grooming."
       },
       {
-        "skillId": "undercover_ops",
+        "skillId": "skill_undercover_ops",
         "description": "+2% bonus when using Wardrobe & Grooming."
       },
       {
-        "skillId": "seduction",
+        "skillId": "skill_seduction",
         "description": "+2% bonus when using Wardrobe & Grooming."
       }
     ],
@@ -3555,9 +3609,9 @@
     }
   },
   {
-    "id": "undercover_ops",
+    "id": "skill_undercover_ops",
     "name": "Undercover Ops",
-    "replaces": "fieldcraft",
+    "replaces": "skill_fieldcraft",
     "gameSystems": [
       "nightbane"
     ],
@@ -3578,7 +3632,7 @@
     "description": "Training in undercover operations in which the character learns the methods and techniques of blending smoothly into the background and appearing as if he belongs there (just another unmemorable face in the crowd or one of the guys), as well as assuming a false identity and playing a 'role' to track, spy upon, or gather information or evidence. Also includes methods for the covert exchange of information, necessary for keeping in touch with the individual's 'handler'."
   },
   {
-    "id": "vehicle_armorer",
+    "id": "skill_vehicle_armorer",
     "name": "Vehicle Armorer",
     "gameSystems": [
       "nightbane"
@@ -3597,7 +3651,7 @@
     ],
     "synergies": [
       {
-        "skillId": "automotive_mechanics",
+        "skillId": "skill_automotive_mechanics",
         "description": "Taking this skill in conjunction with Automotive Mechanics provides a +10% bonus to the automotive skill."
       }
     ],
@@ -3605,14 +3659,14 @@
     "description": "A specialized skill in which the character can do more than just tinker with the mechanics of a vehicle. Extra Armor: Add more S.D.C. to armor at 25 S.D.C. per level of experience to military/combat vehicles, full-sized vans and large trucks; 10 S.D.C. per level on commercial (non-combat) vehicles. Increase the A.R. of pre-existing or added vehicle armor by 1 point per 3 levels of experience. Includes custom body modifications, ram prows, replacing components, and adding weapon mounts.",
     "grantsSkills": [
       {
-        "skillId": "basic_mechanics",
+        "skillId": "skill_basic_mechanics",
         "summary": "Automatically gets the Basic Mechanics skill at +20% as part of this skill.",
         "ruleId": "vehicle_armorer_grants_basic_mechanics"
       }
     ]
   },
   {
-    "id": "camouflage",
+    "id": "skill_camouflage",
     "name": "Camouflage",
     "gameSystems": [
       "nightbane"
@@ -3634,7 +3688,7 @@
     "description": "The skill of concealing a fixed base position, vehicle, equipment or individual, using natural and/or artificial materials. A fair amount of time is involved in the preparation of a larger position. Large cargo nets, cut branches or underbrush are used most often in camouflage. This skill is also used to conceal traps."
   },
   {
-    "id": "demolitions_underwater",
+    "id": "skill_demolitions_underwater",
     "name": "Demolitions: Underwater",
     "gameSystems": [
       "nightbane"
@@ -3653,10 +3707,14 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound wave damage, different types of explosives, as well as arming, disarming and repairing torpedoes and depth charges."
+    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound wave damage, different types of explosives, as well as arming, disarming and repairing torpedoes and depth charges.",
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
+    ]
   },
   {
-    "id": "field_armorer_and_munitions_expert",
+    "id": "skill_field_armorer_and_munitions_expert",
     "name": "Field Armorer & Munitions Expert",
     "gameSystems": [
       "nightbane"
@@ -3678,7 +3736,7 @@
     "description": "This is a fundamental knowledge of infantry weapons, ammo and body armor. The character can maintain, unjam, fix, modify, mount, reload ammunition, and figure out most small arms. As an armorer, the character can repair such weapons, fix minor damage to body armor, adjust targeting sights, use and repair optical enhancements, reload missiles and ammo drums, install/mount machine-guns and rocket launchers on a vehicle, as well as sharpen blades, make arrows and arrowheads, make horseshoes and basic metal items.",
     "grantsSkills": [
       {
-        "skillId": "basic_mechanics",
+        "skillId": "skill_basic_mechanics",
         "startingPercent": 30,
         "summary": "Automatically gets the Basic Mechanics skill at 30% +5% per level as part of this package.",
         "ruleId": "field_armorer_grants_basic_mechanics"
@@ -3686,7 +3744,7 @@
     ]
   },
   {
-    "id": "recognize_weapon_quality",
+    "id": "skill_recognize_weapon_quality",
     "name": "Recognize Weapon Quality",
     "gameSystems": [
       "nightbane"
@@ -3708,7 +3766,7 @@
     "description": "The ability to accurately determine a weapon's durability, reliability, and quality by physically examining it. This includes knowing which manufacturers are reputed to make the best weapons, the ability to recognize damage or signs of wear or misuse, modifications/customization, whether the weapon can be made as good as new with a little repair work and/or cleaning, whether it is a cheap knock-off, and so on."
   },
   {
-    "id": "aerobic_athletics",
+    "id": "skill_aerobic_athletics",
     "name": "Aerobic Athletics",
     "gameSystems": [
       "nightbane"
@@ -3743,7 +3801,7 @@
     ]
   },
   {
-    "id": "kick_boxing",
+    "id": "skill_kick_boxing",
     "name": "Kick Boxing",
     "gameSystems": [
       "nightbane"
@@ -3787,7 +3845,7 @@
     ]
   },
   {
-    "id": "outdoorsmanship",
+    "id": "skill_outdoorsmanship",
     "name": "Outdoorsmanship",
     "gameSystems": [
       "nightbane"
@@ -3804,22 +3862,22 @@
     ],
     "synergies": [
       {
-        "skillId": "identify_plants_and_fruit",
+        "skillId": "skill_identify_plants_and_fruit",
         "description": "+5% bonus to Identify Plants and Fruit."
       },
       {
-        "skillId": "land_navigation",
+        "skillId": "skill_land_navigation",
         "description": "+5% bonus to Land Navigation."
       },
       {
-        "skillId": "wilderness_survival",
+        "skillId": "skill_wilderness_survival",
         "description": "+5% bonus to Wilderness Survival."
       }
     ],
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "wilderness_survival"
+        "skillId": "skill_wilderness_survival"
       }
     ],
     "description": "Being an avid outdoorsman and survivalist, this character has spent a significant portion of his/her life living off the land or in the wild. As a result, the character is hardened to the rigors of outdoor life.",
@@ -3829,7 +3887,7 @@
     }
   },
   {
-    "id": "physical_labor",
+    "id": "skill_physical_labor",
     "name": "Physical Labor",
     "gameSystems": [
       "nightbane"
@@ -3854,7 +3912,7 @@
     }
   },
   {
-    "id": "bicycling",
+    "id": "skill_bicycling",
     "name": "Pilot: Bicycling",
     "gameSystems": [
       "nightbane"
@@ -3876,7 +3934,7 @@
     "description": "The character knows how to ride bicycles and can ride over rough terrain, reach two times normal running speed, travel cross-country at normal running speed, and perform tricks and jumps on a bike."
   },
   {
-    "id": "boats_paddle_types",
+    "id": "skill_boats_paddle_types",
     "name": "Pilot: Boats: Paddle Types/Canoe/Kayak",
     "gameSystems": [
       "nightbane"
@@ -3898,7 +3956,7 @@
     "description": "Includes paddled boats and canoes, rowboats and knee boards, as well as the Kayak. Speed in still water is usually equal to the character's P.S. attribute and can be maintained for P.E. x5 in minutes without pause. The skill also includes basic principles behind using currents, maintenance, and 'tricks'."
   },
   {
-    "id": "combat_driving",
+    "id": "skill_combat_driving",
     "name": "Combat Driving",
     "gameSystems": [
       "nightbane"
@@ -3932,7 +3990,7 @@
     ]
   },
   {
-    "id": "tracked_and_construction_vehicles",
+    "id": "skill_tracked_and_construction_vehicles",
     "name": "Pilot: Tracked & Construction Vehicles",
     "gameSystems": [
       "nightbane"
@@ -3954,7 +4012,7 @@
     "description": "Includes landcrawlers, half-tracks, light tanks, and big-wheeled heavy construction vehicles and Earthmovers like bulldozers, steam shovels/excavators, scrapers, graders, tractors, loaders, backhoes, dump trucks, haulers, etc."
   },
   {
-    "id": "find_contraband",
+    "id": "skill_find_contraband",
     "name": "Find Contraband",
     "gameSystems": [
       "nightbane"
@@ -3973,7 +4031,7 @@
     ],
     "synergies": [
       {
-        "skillId": "id_undercover_agent",
+        "skillId": "skill_id_undercover_agent",
         "bonusPercent": 10,
         "description": "+10% bonus to I.D. Undercover Agents."
       }
@@ -3982,7 +4040,7 @@
     "description": "The character with this skill knows where to find illegal arms dealers, the Black Market, smugglers, thieves, forgers (mainly fake I.D.s), fences, pawn shops, blind pigs (illegal gambling establishments), exotic animal dealers (illegal wild animals, endangered species, and the bizarre), automobile chop-shops, slavers, prostitutes, drug dealers, illegal medical treatment, stolen antiquities, and other people and places that traffic in illegal goods and services."
   },
   {
-    "id": "id_undercover_agent",
+    "id": "skill_id_undercover_agent",
     "name": "I.D. Undercover Agent",
     "gameSystems": [
       "nightbane"
@@ -4005,13 +4063,13 @@
         "type": "skill_any_of",
         "alternatives": [
           {
-            "skillId": "undercover_ops"
+            "skillId": "skill_undercover_ops"
           },
           {
-            "skillId": "intelligence"
+            "skillId": "skill_intelligence"
           },
           {
-            "skillId": "streetwise"
+            "skillId": "skill_streetwise"
           }
         ]
       }
@@ -4019,7 +4077,7 @@
     "description": "A combination skill, good eye, and knack for identifying undercover agents; typically members of law enforcement, but may also include NSB agents, private detectives, spies, bounty hunters, and anybody snooping around."
   },
   {
-    "id": "netwise",
+    "id": "skill_netwise",
     "name": "Netwise",
     "gameSystems": [
       "nightbane"
@@ -4038,12 +4096,12 @@
     ],
     "synergies": [
       {
-        "skillId": "research",
+        "skillId": "skill_research",
         "bonusPercent": 10,
         "description": "+10% bonus to Research."
       },
       {
-        "skillId": "computer_hacking",
+        "skillId": "skill_computer_hacking",
         "bonusPercent": 5,
         "description": "+5% bonus to Computer Hacking."
       }
@@ -4051,13 +4109,13 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "computer_operation"
+        "skillId": "skill_computer_operation"
       }
     ],
     "description": "Similar to the Streetwise skill, the character is familiar with the ins and outs of the World Wide Web. This includes navigating the Internet, using search engines and social networks, and all the usual with a focus on finding obscure sites and information, locating and accessing hidden boards and chat rooms such as the Shadowboard, finding and using backdoors into various databases, a knowledge of what sites are frequented by hackers, Nightbane, factions, NSB agents, and other special interest groups."
   },
   {
-    "id": "roadwise",
+    "id": "skill_roadwise",
     "name": "Roadwise",
     "gameSystems": [
       "nightbane"
@@ -4079,7 +4137,7 @@
     "description": "A regional skill in which the character knows the streets, alleys, back roads, shortcuts, fastest routes, construction zones, speed traps, highways, police stations and posts in his city and state (or province) like the back of his hand. Also knows all the local junkyards, the best mechanic garages (including a few who don't ask questions), and the best places to hide a vehicle or lay low for a few hours or a few days."
   },
   {
-    "id": "safe_cracking",
+    "id": "skill_safe_cracking",
     "name": "Safe-Cracking",
     "gameSystems": [
       "nightbane"
@@ -4098,12 +4156,12 @@
     ],
     "synergies": [
       {
-        "skillId": "pick_locks",
+        "skillId": "skill_pick_locks",
         "bonusPercent": 5,
         "description": "+5% bonus to Pick Locks."
       },
       {
-        "skillId": "demolitions",
+        "skillId": "skill_demolitions",
         "bonusPercent": 5,
         "description": "+5% bonus to Demolitions."
       }
@@ -4120,10 +4178,14 @@
         }
       ]
     },
-    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms."
+    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms.",
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
+    ]
   },
   {
-    "id": "seduction",
+    "id": "skill_seduction",
     "name": "Seduction",
     "gameSystems": [
       "nightbane"
@@ -4142,7 +4204,7 @@
     ],
     "synergies": [
       {
-        "skillId": "pick_pockets",
+        "skillId": "skill_pick_pockets",
         "bonusPercent": 5,
         "description": "+5% to Pick Pockets against the victim of seduction.",
         "applicability": {
@@ -4154,7 +4216,7 @@
         }
       },
       {
-        "skillId": "palming",
+        "skillId": "skill_palming",
         "bonusPercent": 5,
         "description": "+5% to Palming against the victim of seduction.",
         "applicability": {
@@ -4166,7 +4228,7 @@
         }
       },
       {
-        "skillId": "con_artistry",
+        "skillId": "skill_con_artistry",
         "bonusPercent": 10,
         "description": "+10% to Con Artistry against the victim of seduction.",
         "applicability": {
@@ -4178,7 +4240,7 @@
         }
       },
       {
-        "skillId": "fast_talk",
+        "skillId": "skill_fast_talk",
         "bonusPercent": 10,
         "description": "+10% to Fast Talk against the victim of seduction.",
         "applicability": {
@@ -4212,7 +4274,7 @@
     "description": "This is the ability to make the opposite sex melt with desire. This skill is somewhat similar to the Interrogation skill in that the seducer knows how to ask the right questions to get information without being obvious."
   },
   {
-    "id": "tailing",
+    "id": "skill_tailing",
     "name": "Tailing",
     "gameSystems": [
       "nightbane"
@@ -4234,7 +4296,7 @@
     "description": "The practiced ability to follow someone without their knowledge. Includes basic stake-out procedures. A failed Tailing roll indicates that the character being tailed has noticed that he is being followed and may take evasive action."
   },
   {
-    "id": "barter",
+    "id": "skill_barter",
     "name": "Barter",
     "gameSystems": [
       "nightbane"
@@ -4253,12 +4315,12 @@
     ],
     "synergies": [
       {
-        "skillId": "mathematics_basic",
+        "skillId": "skill_mathematics_basic",
         "bonusPercent": 2,
         "description": "+2% bonus to Barter when the character has Mathematics: Basic."
       },
       {
-        "skillId": "literacy",
+        "skillId": "skill_literacy",
         "bonusPercent": 2,
         "description": "+2% bonus to Barter when the character has Literacy."
       }
@@ -4267,7 +4329,7 @@
     "description": "A skill at bargaining with merchants, businessmen, thieves, traders, smugglers, street persons, and other characters to get a fair price or fair exchange of trade goods or services. Depending on the character's point of view and effort at bartering, he can raise the amount he gets or lower the price he pays by 3D6+2%."
   },
   {
-    "id": "begging",
+    "id": "skill_begging",
     "name": "Begging",
     "gameSystems": [
       "nightbane"
@@ -4286,7 +4348,7 @@
     ],
     "synergies": [
       {
-        "skillId": "disguise",
+        "skillId": "skill_disguise",
         "bonusPercent": 5,
         "description": "+5% to Begging when using Disguise to pose as a beggar or refugee.",
         "applicability": {
@@ -4302,7 +4364,7 @@
     "description": "Though usually learned out of necessity in the school of hard knocks and poverty, this skill can be particularly useful to collect food, money and clothing when down on one's luck, especially in large cities."
   },
   {
-    "id": "business_and_finance",
+    "id": "skill_business_and_finance",
     "name": "Business & Finance",
     "gameSystems": [
       "nightbane"
@@ -4323,17 +4385,17 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "literacy"
+        "skillId": "skill_literacy"
       },
       {
         "type": "skill",
-        "skillId": "mathematics_basic"
+        "skillId": "skill_mathematics_basic"
       }
     ],
     "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor."
   },
   {
-    "id": "construction",
+    "id": "skill_construction",
     "name": "Construction",
     "gameSystems": [
       "nightbane"
@@ -4352,10 +4414,13 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing."
+    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing.",
+    "skillTraits": [
+      "requires_dexterity"
+    ]
   },
   {
-    "id": "excavation",
+    "id": "skill_excavation",
     "name": "Excavation",
     "gameSystems": [
       "nightbane"
@@ -4377,7 +4442,7 @@
     "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves."
   },
   {
-    "id": "firefighting",
+    "id": "skill_firefighting",
     "name": "Firefighting",
     "gameSystems": [
       "nightbane"
@@ -4399,7 +4464,7 @@
     "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear."
   },
   {
-    "id": "general_repair_and_maintenance",
+    "id": "skill_general_repair_and_maintenance",
     "name": "General Repair & Maintenance",
     "gameSystems": [
       "nightbane"
@@ -4421,7 +4486,7 @@
     "description": "Not everyone can be a mechanic, blacksmith or carpenter, but many are good with their hands and capable of doing satisfactory repairs on simple mechanisms, gears, pulleys, wheels, and so on. The General Repair/Maintenance skill includes: sharpening blades, minor repairs on weapons, packing their own common bullets, sewing tears in clothes, changing a tire, shoeing a horse, repairing furniture, painting, varnishing, nailing and assisting in basic woodworking."
   },
   {
-    "id": "history",
+    "id": "skill_history",
     "name": "History",
     "gameSystems": [
       "nightbane"
@@ -4457,7 +4522,7 @@
     "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects."
   },
   {
-    "id": "jury_rig",
+    "id": "skill_jury_rig",
     "name": "Jury-Rig",
     "gameSystems": [
       "nightbane"
@@ -4478,17 +4543,20 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "basic_mechanics"
+        "skillId": "skill_basic_mechanics"
       },
       {
         "type": "skill",
-        "skillId": "basic_electronics"
+        "skillId": "skill_basic_electronics"
       }
     ],
-    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long (4D6 hours or 2D4 days, whichever is most appropriate), or will even work in the way intended."
+    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long (4D6 hours or 2D4 days, whichever is most appropriate), or will even work in the way intended.",
+    "skillTraits": [
+      "requires_dexterity"
+    ]
   },
   {
-    "id": "law",
+    "id": "skill_law",
     "name": "Law",
     "gameSystems": [
       "nightbane"
@@ -4511,7 +4579,7 @@
     "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement."
   },
   {
-    "id": "lore_factions",
+    "id": "skill_lore_factions",
     "name": "Lore: Factions",
     "gameSystems": [
       "nightbane"
@@ -4534,7 +4602,7 @@
     "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions."
   },
   {
-    "id": "lore_magic",
+    "id": "skill_lore_magic",
     "name": "Lore: Magic",
     "gameSystems": [
       "nightbane"
@@ -4577,7 +4645,7 @@
     "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners."
   },
   {
-    "id": "mythology",
+    "id": "skill_mythology",
     "name": "Mythology",
     "gameSystems": [
       "nightbane"
@@ -4597,12 +4665,12 @@
     ],
     "synergies": [
       {
-        "skillId": "lore_magic",
+        "skillId": "skill_lore_magic",
         "bonusPercent": 5,
         "description": "+5% bonus to Lore: Magic."
       },
       {
-        "skillId": "lore_demons_and_monsters",
+        "skillId": "skill_lore_demons_and_monsters",
         "bonusPercent": 5,
         "description": "+5% bonus to Lore: Demons & Monsters."
       }
@@ -4611,7 +4679,7 @@
     "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic."
   },
   {
-    "id": "philosophy",
+    "id": "skill_philosophy",
     "name": "Philosophy",
     "gameSystems": [
       "nightbane"
@@ -4631,12 +4699,12 @@
     ],
     "synergies": [
       {
-        "skillId": "public_speaking",
+        "skillId": "skill_public_speaking",
         "bonusPercent": 5,
         "description": "+5% bonus to Public Speaking."
       },
       {
-        "skillId": "creative_writing",
+        "skillId": "skill_creative_writing",
         "bonusPercent": 5,
         "description": "+5% bonus to Creative Writing."
       }
@@ -4645,7 +4713,7 @@
     "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness."
   },
   {
-    "id": "rope_works",
+    "id": "skill_rope_works",
     "name": "Rope Works",
     "gameSystems": [
       "nightbane"
@@ -4664,10 +4732,13 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope. A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained. Characters bound/tied by this character are -10% to escape/slip knots."
+    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope. A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained. Characters bound/tied by this character are -10% to escape/slip knots.",
+    "skillTraits": [
+      "requires_dexterity"
+    ]
   },
   {
-    "id": "salvage",
+    "id": "skill_salvage",
     "name": "Salvage",
     "gameSystems": [
       "nightbane"

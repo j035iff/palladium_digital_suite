@@ -22,19 +22,23 @@ const HTH_CATALOG_TIER_ORDER = [
   'hth_assassin',
 ] as const
 
-const HAND_TO_HAND_SKILL_PREFIX = 'hand_to_hand_'
+const HAND_TO_HAND_SKILL_PREFIX = 'skill_hand_to_hand_'
+const LEGACY_HAND_TO_HAND_SKILL_PREFIX = 'hand_to_hand_'
 
 /** Baseline combat table when the character has no formal Hand-to-Hand training. */
 export const HTH_NONE_CATALOG_ID = 'hth_none' as const
 
 /**
- * Sheet / O.C.C. skill ids (`hand_to_hand_expert`) → combat catalog slugs (`hth_expert`).
+ * Sheet / O.C.C. skill ids (`skill_hand_to_hand_expert`) → combat catalog slugs (`hth_expert`).
  * Catalog ids and unknown ids pass through unchanged.
  */
 export function mapSheetSkillIdToHandToHandCatalogId(skillId: string): string {
   if (skillId.startsWith('hth_')) return skillId
   if (skillId.startsWith(HAND_TO_HAND_SKILL_PREFIX)) {
     return `hth_${skillId.slice(HAND_TO_HAND_SKILL_PREFIX.length)}`
+  }
+  if (skillId.startsWith(LEGACY_HAND_TO_HAND_SKILL_PREFIX)) {
+    return `hth_${skillId.slice(LEGACY_HAND_TO_HAND_SKILL_PREFIX.length)}`
   }
   return skillId
 }

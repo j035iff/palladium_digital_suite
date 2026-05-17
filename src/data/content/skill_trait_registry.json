@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "traits": [
+    {
+      "id": "requires_dexterity",
+      "name": "Skills requiring dexterity",
+      "description": "High manual dexterity — used by Morphus characteristics and attribute penalties that target dexterity-dependent skills.",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "requires_light_touch",
+      "name": "Skills requiring a light touch",
+      "description": "Fine manipulation and careful handling — separate book list from dexterity skills.",
+      "gameSystems": ["nightbane", "megaversal"]
+    }
+  ],
+  "membershipNotes": {
+    "locksmith": "Listed in the dexterity source file but not yet present in palladiumSkills.json; add skillTraits when the catalog row exists.",
+    "facadePpPenalties": "Optional low facade P.P. penalties map to requires_dexterity / requires_light_touch via facadePpSkillTraitPenalties.ts (ported from v0 highManualDexterity / otherManualDexterity)."
+  }
+}

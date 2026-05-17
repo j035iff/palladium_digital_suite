@@ -3,8 +3,13 @@
   "weaponProficiencyCategory": "ancient",
   "id": "example_wp_paired_weapons_pattern",
   "name": "Example: W.P. Paired Weapons (special rules pattern)",
-  "gameSystems": ["nightbane"],
-  "categories": ["Weapon Proficiencies", "Ancient"],
+  "gameSystems": [
+    "nightbane"
+  ],
+  "categories": [
+    "Weapon Proficiencies",
+    "Ancient"
+  ],
   "description": "Illustrates ancient W.P. without a numeric tier ladder: pairedWeapons block plus specialManeuvers for machine-discoverable tactics.",
   "pairedWeapons": {
     "summary": "Paired weapon fighting style; see specialManeuvers for tactical options."

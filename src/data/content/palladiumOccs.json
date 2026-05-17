@@ -33,27 +33,27 @@
     },
     "occSkillsCore": [
       {
-        "skillId": "intelligence",
+        "skillId": "skill_intelligence",
         "bonusPercent": 12
       },
       {
-        "skillId": "surveillance_systems",
+        "skillId": "skill_surveillance_systems",
         "bonusPercent": 10
       },
       {
-        "skillId": "prowl",
+        "skillId": "skill_prowl",
         "bonusPercent": 10
       },
       {
-        "skillId": "computer_operation",
+        "skillId": "skill_computer_operation",
         "bonusPercent": 10
       },
       {
-        "skillId": "radio_basic",
+        "skillId": "skill_radio_basic",
         "bonusPercent": 10
       },
       {
-        "skillId": "cryptography",
+        "skillId": "skill_cryptography",
         "bonusPercent": 10
       },
       {
@@ -231,31 +231,31 @@
     ],
     "occSkillsCore": [
       {
-        "skillId": "radio_basic",
+        "skillId": "skill_radio_basic",
         "bonusPercent": 10
       },
       {
-        "skillId": "radio_scramblers",
+        "skillId": "skill_radio_scramblers",
         "bonusPercent": 10
       },
       {
-        "skillId": "read_sensory_equipment",
+        "skillId": "skill_read_sensory_equipment",
         "bonusPercent": 10
       },
       {
-        "skillId": "weapon_systems",
+        "skillId": "skill_weapon_systems",
         "bonusPercent": 10
       },
       {
-        "skillId": "pilot_automobile",
+        "skillId": "skill_pilot_automobile",
         "bonusPercent": 10
       },
       {
-        "skillId": "climbing",
+        "skillId": "skill_climbing",
         "bonusPercent": 10
       },
       {
-        "skillId": "running",
+        "skillId": "skill_running",
         "bonusPercent": 0
       }
     ],
@@ -510,27 +510,27 @@
         "description": "Focuses on infiltration, intelligence gathering, and remaining undetected.",
         "occSkillsCore": [
           {
-            "skillId": "intelligence",
+            "skillId": "skill_intelligence",
             "bonusPercent": 15
           },
           {
-            "skillId": "impersonation",
+            "skillId": "skill_impersonation",
             "bonusPercent": 15
           },
           {
-            "skillId": "disguise",
+            "skillId": "skill_disguise",
             "bonusPercent": 10
           },
           {
-            "skillId": "forgery",
+            "skillId": "skill_forgery",
             "bonusPercent": 10
           },
           {
-            "skillId": "prowl",
+            "skillId": "skill_prowl",
             "bonusPercent": 15
           },
           {
-            "skillId": "surveillance_systems",
+            "skillId": "skill_surveillance_systems",
             "bonusPercent": 10
           }
         ],
@@ -557,27 +557,27 @@
         "description": "Focuses on the swift, violent termination of supernatural targets.",
         "occSkillsCore": [
           {
-            "skillId": "sniper",
+            "skillId": "skill_sniper",
             "bonusPercent": 0
           },
           {
-            "skillId": "tracking",
+            "skillId": "skill_tracking",
             "bonusPercent": 15
           },
           {
-            "skillId": "prowl",
+            "skillId": "skill_prowl",
             "bonusPercent": 10
           },
           {
-            "skillId": "detect_ambush",
+            "skillId": "skill_detect_ambush",
             "bonusPercent": 15
           },
           {
-            "skillId": "demolitions",
+            "skillId": "skill_demolitions",
             "bonusPercent": 10
           },
           {
-            "skillId": "demolitions_disposal",
+            "skillId": "skill_demolitions_disposal",
             "bonusPercent": 10
           }
         ],
@@ -609,23 +609,23 @@
         "description": "A balanced operative possessing both espionage and termination skills.",
         "occSkillsCore": [
           {
-            "skillId": "intelligence",
+            "skillId": "skill_intelligence",
             "bonusPercent": 10
           },
           {
-            "skillId": "surveillance_systems",
+            "skillId": "skill_surveillance_systems",
             "bonusPercent": 10
           },
           {
-            "skillId": "tracking",
+            "skillId": "skill_tracking",
             "bonusPercent": 10
           },
           {
-            "skillId": "sniper",
+            "skillId": "skill_sniper",
             "bonusPercent": 0
           },
           {
-            "skillId": "prowl",
+            "skillId": "skill_prowl",
             "bonusPercent": 10
           },
           {
@@ -691,19 +691,19 @@
     },
     "occSkillsCore": [
       {
-        "skillId": "literacy",
+        "skillId": "skill_literacy",
         "bonusPercent": 20
       },
       {
-        "skillId": "computer_operation",
+        "skillId": "skill_computer_operation",
         "bonusPercent": 20
       },
       {
-        "skillId": "math_basic",
+        "skillId": "skill_math_basic",
         "bonusPercent": 20
       },
       {
-        "skillId": "math_advanced",
+        "skillId": "skill_math_advanced",
         "bonusPercent": 15
       },
       {
@@ -849,23 +849,23 @@
     },
     "occSkillsCore": [
       {
-        "skillId": "intelligence",
+        "skillId": "skill_intelligence",
         "bonusPercent": 10
       },
       {
-        "skillId": "prowl",
+        "skillId": "skill_prowl",
         "bonusPercent": 10
       },
       {
-        "skillId": "radio_basic",
+        "skillId": "skill_radio_basic",
         "bonusPercent": 10
       },
       {
-        "skillId": "pilot_automobile",
+        "skillId": "skill_pilot_automobile",
         "bonusPercent": 10
       },
       {
-        "skillId": "math_basic",
+        "skillId": "skill_math_basic",
         "bonusPercent": 10
       }
     ],

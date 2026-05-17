@@ -4,7 +4,9 @@
   "name": "Example: Morphus Talent (pattern)",
   "description": "Illustrates tier, morphus form lock, passive modifiers, and a level prerequisite.",
   "descriptionMorphus": "Optional morphus-only flavor text for dual-form UI.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -13,7 +15,10 @@
     }
   ],
   "tier": "common",
-  "tags": ["flight", "armor"],
+  "tags": [
+    "flight",
+    "armor"
+  ],
   "formRequirement": "morphus",
   "modifiers": {
     "sdc": 20,

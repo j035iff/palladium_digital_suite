@@ -5,29 +5,43 @@
   "tableCategory": "Animal",
   "description": "Schema example — not book data.",
   "statModifiers": {
-    "spd": { "percent": 20 },
-    "strike": { "flat": 2 },
-    "bonusHthDamage": { "dice": "2D6" }
+    "spd": {
+      "percent": 20
+    },
+    "strike": {
+      "flat": 2
+    },
+    "bonusHthDamage": {
+      "dice": "2D6"
+    }
   },
   "naturalAr": 10,
   "saveModifiers": {
     "poison": 2,
-    "comaDeath": { "percent": -10 }
+    "comaDeath": {
+      "percent": -10
+    }
   },
   "mobility": {
     "flightEngine": {
-      "flySpdAttribute": { "flat": 4 },
+      "flySpdAttribute": {
+        "flat": 4
+      },
       "maxSpeedMph": 120,
       "maxAltitudeFeet": 10000,
       "flightCombatBonuses": {
-        "dodge": { "flat": 1 }
+        "dodge": {
+          "flat": 1
+        }
       }
     }
   },
   "sensory": {
     "nightvisionRangeFlatBonus": 1000,
     "thermalVision": true,
-    "perceptionSpecialties": { "vision": 2 }
+    "perceptionSpecialties": {
+      "vision": 2
+    }
   },
   "skillModifiers": {
     "globalSkillModifier": -10,
@@ -44,7 +58,9 @@
     "cold": 2
   },
   "weaponClassBonuses": {
-    "melee": { "flat": 1 }
+    "melee": {
+      "flat": 1
+    }
   },
   "naturalWeapons": [
     {
@@ -61,10 +77,17 @@
       "sdc": 40
     }
   ],
-  "heightModifier": { "percent": 50 },
+  "heightModifier": {
+    "percent": 50
+  },
   "subTraitChoicesBudget": {
     "slotsAvailable": 2,
-    "allowedChoicesPool": ["theme_music", "mini_missiles"]
+    "allowedChoicesPool": [
+      "theme_music",
+      "mini_missiles"
+    ]
   },
-  "customOneOffs": ["Cannot fit through standard doorways without squeezing."]
+  "customOneOffs": [
+    "Cannot fit through standard doorways without squeezing."
+  ]
 }

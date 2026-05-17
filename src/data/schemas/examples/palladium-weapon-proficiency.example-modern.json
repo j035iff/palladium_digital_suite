@@ -3,8 +3,13 @@
   "weaponProficiencyCategory": "modern",
   "id": "example_wp_revolver_pattern",
   "name": "Example: W.P. Revolver (modern shared bundle pattern)",
-  "gameSystems": ["nightbane"],
-  "categories": ["Weapon Proficiencies", "Modern"],
+  "gameSystems": [
+    "nightbane"
+  ],
+  "categories": [
+    "Weapon Proficiencies",
+    "Modern"
+  ],
   "description": "Illustrates modern W.P. that delegates the level ladder to standard_modern_weapon_progression.json via usesStandardModernProgression (optional standardModernProgressionKey defaults from gameSystems).",
   "usesStandardModernProgression": true,
   "sources": [

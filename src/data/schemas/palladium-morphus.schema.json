@@ -263,7 +263,11 @@
           "type": "string",
           "enum": ["skill_id", "category", "skill_trait"]
         },
-        "targetValue": { "type": "string", "minLength": 1 },
+        "targetValue": {
+          "type": "string",
+          "minLength": 1,
+          "description": "When **targetType** is **skill_trait**, use a registry id (e.g. **requires_dexterity**, **requires_light_touch**) from **skill_trait_registry.json**."
+        },
         "modifierPercent": { "type": "integer" },
         "isNegated": { "type": "boolean" },
         "grantUnlearnedValue": { "type": "integer", "minimum": 0, "maximum": 98 }

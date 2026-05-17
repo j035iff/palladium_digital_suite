@@ -105,6 +105,31 @@ if (!Array.isArray(palladiumSkills)) {
     failed = true
     console.error(`ERR palladiumSkills.json — ${bad} row(s) failed schema validation`)
   }
+
+  const traitRegistry = loadJson(join(contentDir, 'skill_trait_registry.json'))
+  const knownTraits = new Set((traitRegistry.traits ?? []).map((t) => t.id))
+  let traitBad = 0
+  for (const row of palladiumSkills) {
+    for (const tid of row.skillTraits ?? []) {
+      if (!knownTraits.has(tid)) {
+        traitBad++
+        if (traitBad <= 5) {
+          console.error(
+            `ERR palladiumSkills.json id=${row.id}: unknown skillTraits "${tid}"`,
+          )
+        }
+      }
+    }
+  }
+  if (traitBad === 0) {
+    const tagged = palladiumSkills.filter((r) => r.skillTraits?.length).length
+    console.log(
+      `OK  skillTraits — ${tagged} skills tagged; ids match skill_trait_registry.json`,
+    )
+  } else {
+    failed = true
+    console.error(`ERR skillTraits — ${traitBad} unknown trait id(s)`)
+  }
 }
 
 const weaponProficiencies = loadJson(join(contentDir, 'weapon_proficiencies.json'))

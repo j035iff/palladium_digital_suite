@@ -959,6 +959,11 @@ export type Character = {
   creationOccSkillIds?: string[]
   /** Step 3 — O.C.C. related skill ids. */
   creationRelatedSkillIds?: string[]
+  /**
+   * Active Morphus characteristic ids (Nightbane) — drives Morphus skill % modifiers
+   * via `skillPercentResolution.ts`.
+   */
+  activeMorphusCharacteristicIds?: readonly string[]
   facade: FormState
   morphus: FormState
 }

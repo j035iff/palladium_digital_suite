@@ -16,9 +16,8 @@
   ],
   "properties": {
     "id": {
-      "type": "string",
-      "description": "Stable machine id for references (synergies, prerequisites, imports).",
-      "pattern": "^[a-z][a-z0-9_]*$"
+      "$ref": "#/$defs/catalogSkillId",
+      "description": "Stable machine id for references (synergies, prerequisites, imports). Must use the **`skill_`** prefix (e.g. **`skill_cryptography`**)."
     },
     "name": {
       "type": "string",
@@ -26,9 +25,8 @@
       "minLength": 1
     },
     "replaces": {
-      "type": "string",
-      "description": "If this skill **supersedes** a legacy catalog id (same book rule, renamed or merged—e.g. **Undercover Ops** replaces **Fieldcraft**), set that prior skill’s **`id`** here. Engines use this for character migration, deduplication in builders, and hiding obsolete rows. The replaced skill may remain in data for old sheets until migrated.",
-      "pattern": "^[a-z][a-z0-9_]*$"
+      "$ref": "#/$defs/catalogSkillId",
+      "description": "If this skill **supersedes** a legacy catalog id (same book rule, renamed or merged—e.g. **Undercover Ops** replaces **Fieldcraft**), set that prior skill’s **`id`** here. Engines use this for character migration, deduplication in builders, and hiding obsolete rows. The replaced skill may remain in data for old sheets until migrated."
     },
     "gameSystems": {
       "type": "array",
@@ -53,6 +51,15 @@
     "allowedAsSecondarySkill": {
       "type": "boolean",
       "description": "**Per-skill secondary-skill eligibility.** If **`false`**, the character **cannot** spend **secondary skill** picks on this skill (O.C.C.-only, scholastic-only, or “not offered as secondary” in the book). If **`true`** or **omitted**, treat as **eligible** for secondary picks unless a table or edition overrides. This is the **canonical** flag for that rule—no duplicate `is_secondary_eligible` field. App-wide ban lists, if any, are separate configuration layered on top of this."
+    },
+    "skillTraits": {
+      "type": "array",
+      "description": "Cross-cutting mechanical tags for Morphus **`skill_trait`** overrides and attribute penalties (e.g. **`requires_dexterity`**, **`requires_light_touch`**). Trait definitions live in **`skill_trait_registry.json`**.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "uniqueItems": true
     },
     "specialization": {
       "type": "object",
@@ -583,9 +590,8 @@
         "required": ["skillId", "summary"],
         "properties": {
           "skillId": {
-            "type": "string",
-            "description": "Id of the affected skill (must match another skill definition's id).",
-            "pattern": "^[a-z][a-z0-9_]*$"
+            "$ref": "#/$defs/catalogSkillId",
+            "description": "Id of the affected skill (must match another skill definition's id)."
           },
           "summary": {
             "type": "string",
@@ -794,6 +800,11 @@
     }
   ],
   "$defs": {
+    "catalogSkillId": {
+      "type": "string",
+      "pattern": "^skill_[a-z][a-z0-9_]*$",
+      "description": "Reference to a row in **palladiumSkills.json** (always prefixed with **`skill_`**)."
+    },
     "physicalSkillBonuses": {
       "type": "object",
       "description": "Direct attribute or combat bonuses granted by this physical (or similar) skill, when the rules award fixed bonuses rather than percentile-only progression. Includes strike/parry/dodge and **flat or conditional damage** on specific maneuvers (e.g. `chargingDamage` +4 when charging from horseback). Use integers or `{ value, condition }` for book rules that give a numeric damage bonus—not only dice on S.D.C./kicks. Omit entirely if the skill grants none. Stacking is per book/GM. Also embedded under **`combatToolBonuses[].modifiers`** for tool-scoped bonuses.",
@@ -1949,9 +1960,7 @@
           "description": "When **`waivesAllPrerequisites`** is not used, only these prerequisite **skill ids** are waived (must appear in a **`type`: skill**, **`skill_any_of`**, or inside **`logical_group`**—engines flatten nested **`items`** to match ids).",
           "minItems": 1,
           "items": {
-            "type": "string",
-            "pattern": "^[a-z][a-z0-9_]*$",
-            "minLength": 1
+            "$ref": "#/$defs/catalogSkillId"
           },
           "uniqueItems": true
         },
@@ -1987,8 +1996,7 @@
               "const": "skill"
             },
             "skillId": {
-              "type": "string",
-              "pattern": "^[a-z][a-z0-9_]*$"
+              "$ref": "#/$defs/catalogSkillId"
             },
             "minimumPercent": {
               "type": "number",
@@ -2044,8 +2052,7 @@
                 "required": ["skillId"],
                 "properties": {
                   "skillId": {
-                    "type": "string",
-                    "pattern": "^[a-z][a-z0-9_]*$"
+                    "$ref": "#/$defs/catalogSkillId"
                   },
                   "minimumPercent": {
                     "type": "number",
@@ -2066,8 +2073,7 @@
               "description": "OR among these skill ids: satisfying any one is enough (same as alternatives with skillId-only entries).",
               "minItems": 2,
               "items": {
-                "type": "string",
-                "pattern": "^[a-z][a-z0-9_]*$",
+                "$ref": "#/$defs/catalogSkillId",
                 "description": "Prerequisite skill id."
               },
               "uniqueItems": true
@@ -2224,9 +2230,8 @@
       "description": "A **prior** skill check that must succeed (or meet **`minimumPercent`**) before the primary use. Link to specific **`situationalModifiers`** rows via matching **`ruleId`** in **`gatesSituationalModifierRuleIds`**.",
       "properties": {
         "skillId": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$",
-          "description": "Prerequisite skill to roll first (e.g. streetwise)."
+          "$ref": "#/$defs/catalogSkillId",
+          "description": "Prerequisite skill to roll first (e.g. skill_streetwise)."
         },
         "summary": {
           "type": "string",
@@ -2353,9 +2358,8 @@
       "description": "Another skill **bundled** with this one at acquisition (no extra pick).",
       "properties": {
         "skillId": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$",
-          "description": "Granted skill catalog id (e.g. basic_mechanics)."
+          "$ref": "#/$defs/catalogSkillId",
+          "description": "Granted skill catalog id (e.g. skill_basic_mechanics)."
         },
         "summary": {
           "type": "string",
@@ -2534,9 +2538,8 @@
       "description": "Synergy with another **skill** by id.",
       "properties": {
         "skillId": {
-          "type": "string",
-          "description": "Id of the related skill (must match another skill's id).",
-          "pattern": "^[a-z][a-z0-9_]*$"
+          "$ref": "#/$defs/catalogSkillId",
+          "description": "Id of the related skill (must match another skill's id)."
         },
         "description": {
           "type": "string",
@@ -2688,9 +2691,8 @@
       "description": "Gate: character’s **effective** skill % in **`skillId`** must be ≥ **`minimumPercent`** (before situational modifiers to the roll, unless the book says otherwise—state exceptions in the parent **`summary`**).",
       "properties": {
         "skillId": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$",
-          "description": "Skill catalog id whose percentage is tested (e.g. principles_of_magic)."
+          "$ref": "#/$defs/catalogSkillId",
+          "description": "Skill catalog id whose percentage is tested (e.g. skill_principles_of_magic)."
         },
         "minimumPercent": {
           "type": "number",

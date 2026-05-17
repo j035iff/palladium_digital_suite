@@ -2,7 +2,8 @@ import type { ActiveForm, Character, InventoryItem, Weapon } from '../types'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import { computeLiveBonuses } from './characterDerived'
 import { getPpMeleeNaturalForActiveForm } from './sheetBonuses'
-import { calculateSkillPercent } from './skillEquation'
+import { maPbScaledBonuses } from './skillEquation'
+import { buildSkillPercentContext, resolveSkillPercent } from './skillPercentResolution'
 import { getSkillById, resolveWeaponProficiencySkillId } from '../data/skillLibrary'
 import { getFormState } from '../types'
 import type { StrikeBreakdown } from './strikeEngine'
@@ -55,9 +56,18 @@ function iqOccSkillBonus(character: Character, activeForm: ActiveForm): number {
 function wpPercentBonusForSkill(skillId: string, character: Character, activeForm: ActiveForm): number {
   const def = getSkillById(skillId)
   if (!def) return 0
+  const attrs = getFormState(character, activeForm).attributes
   const iq = iqOccSkillBonus(character, activeForm)
-  const pct = calculateSkillPercent(def, character.level, iq)
-  return wpDiceBonusFromSkillPercent(pct)
+  const resolved = resolveSkillPercent(
+    { ...def, id: def.id },
+    buildSkillPercentContext(
+      character,
+      activeForm,
+      iq,
+      maPbScaledBonuses(attrs.ma, attrs.pb),
+    ),
+  )
+  return wpDiceBonusFromSkillPercent(resolved.total)
 }
 
 function hthMeleeBonuses(

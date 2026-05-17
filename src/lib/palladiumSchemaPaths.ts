@@ -88,3 +88,6 @@ export const STANDARD_MODERN_WEAPON_PROGRESSION_JSON_PATH =
 /** One JSON file per Morphus table (hubs and trait tables). */
 export const PALLADIUM_MORPHUS_TABLES_DIR =
   `${PALLADIUM_CONTENT_DIR}/morphus/tables` as const
+
+export const SKILL_TRAIT_REGISTRY_JSON_PATH =
+  `${PALLADIUM_CONTENT_DIR}/skill_trait_registry.json` as const

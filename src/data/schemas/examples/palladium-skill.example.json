@@ -1,14 +1,19 @@
 {
-  "id": "example_surveillance_pattern",
+  "id": "skill_example_surveillance_pattern",
   "name": "Example: Surveillance Systems (pattern)",
-  "gameSystems": ["nightbane"],
-  "categories": ["Communications", "Technical"],
+  "gameSystems": [
+    "nightbane"
+  ],
+  "categories": [
+    "Communications",
+    "Technical"
+  ],
   "allowedAsSecondarySkill": true,
   "basePercent": 30,
   "percentPerLevel": 5,
   "synergies": [
     {
-      "skillId": "example_id_undercover",
+      "skillId": "skill_example_id_undercover",
       "bonusPercent": 10,
       "description": "Optional cross-skill % bonus when another skill is known."
     }
@@ -17,11 +22,14 @@
     {
       "type": "skill_any_of",
       "label": "Electronics: basic OR electrical engineering",
-      "skillIds": ["basic_electronics", "electrical_engineering"]
+      "skillIds": [
+        "skill_basic_electronics",
+        "skill_electrical_engineering"
+      ]
     },
     {
       "type": "skill",
-      "skillId": "computer_operation",
+      "skillId": "skill_computer_operation",
       "condition": "only for complex, high-tech systems"
     }
   ],

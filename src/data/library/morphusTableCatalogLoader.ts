@@ -1,4 +1,4 @@
-import type { PalladiumMorphusTable } from '../../types'
+import type { MorphusCharacteristic, PalladiumMorphusTable } from '../../types'
 
 const tableModules = import.meta.glob('../content/morphus/tables/*.json', {
   eager: true,
@@ -15,6 +15,13 @@ export const MORPHUS_TABLE_CATALOG: readonly PalladiumMorphusTable[] =
 
 const byId = new Map(MORPHUS_TABLE_CATALOG.map((t) => [t.id, t]))
 
+const characteristicById = new Map<string, MorphusCharacteristic>()
+for (const table of MORPHUS_TABLE_CATALOG) {
+  for (const entry of table.entries) {
+    characteristicById.set(entry.id, entry)
+  }
+}
+
 export function getMorphusTableById(id: string): PalladiumMorphusTable | undefined {
   return byId.get(id)
 }
@@ -29,4 +36,21 @@ export function listMorphusCategoryHubs(): readonly PalladiumMorphusTable[] {
 
 export function listMorphusTraitTables(): readonly PalladiumMorphusTable[] {
   return MORPHUS_TABLE_CATALOG.filter((t) => t.kind === 'morphus_trait_table')
+}
+
+export function getMorphusCharacteristicById(
+  id: string,
+): MorphusCharacteristic | undefined {
+  return characteristicById.get(id)
+}
+
+export function resolveMorphusCharacteristicsByIds(
+  ids: readonly string[],
+): MorphusCharacteristic[] {
+  const out: MorphusCharacteristic[] = []
+  for (const id of ids) {
+    const row = characteristicById.get(id)
+    if (row) out.push(row)
+  }
+  return out
 }

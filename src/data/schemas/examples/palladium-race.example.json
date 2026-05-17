@@ -3,7 +3,10 @@
   "id": "example_race_human_pattern",
   "name": "Example: Human (race pattern)",
   "description": "Illustrates canPickOcc: true, conditional S.D.C. by O.C.C. tags, and standard psionics gate.",
-  "gameSystems": ["nightbane", "rifts"],
+  "gameSystems": [
+    "nightbane",
+    "rifts"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -32,7 +35,11 @@
       "defaultFormula": "3D6",
       "conditionalOverrides": [
         {
-          "tags": ["military", "police", "detective"],
+          "tags": [
+            "military",
+            "police",
+            "detective"
+          ],
           "formula": "1D4*10"
         }
       ]
@@ -52,6 +59,8 @@
   },
   "demographics": {
     "averageLifespan": "70-90 years",
-    "alignmentTendencies": ["Any"]
+    "alignmentTendencies": [
+      "Any"
+    ]
   }
 }

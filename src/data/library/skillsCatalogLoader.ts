@@ -9,10 +9,20 @@ function loadSkills(): readonly PalladiumSkillCatalogEntry[] {
 
 export const PALLADIUM_SKILL_CATALOG: readonly PalladiumSkillCatalogEntry[] = loadSkills()
 
+export function normalizeCatalogSkillId(id: string): string {
+  return id.startsWith('skill_') ? id : `skill_${id}`
+}
+
 export function getPalladiumSkillCatalogEntryById(
   id: string,
 ): PalladiumSkillCatalogEntry | undefined {
-  return PALLADIUM_SKILL_CATALOG.find((s) => s.id === id)
+  const direct = PALLADIUM_SKILL_CATALOG.find((s) => s.id === id)
+  if (direct) return direct
+  const normalized = normalizeCatalogSkillId(id)
+  if (normalized !== id) {
+    return PALLADIUM_SKILL_CATALOG.find((s) => s.id === normalized)
+  }
+  return undefined
 }
 
 /** Skills whose `gameSystems` includes the slug (e.g. `nightbane`). */

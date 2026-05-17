@@ -60,7 +60,7 @@ function withModifiers(def: EngineSkillDef): EngineSkillDef {
 
 const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
   {
-    id: 'literacy',
+    id: 'skill_literacy',
     name: 'Literacy: American',
     category: 'Technical',
     slotKind: 'occ',
@@ -70,7 +70,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 5,
   },
   {
-    id: 'electronics',
+    id: 'skill_electronics',
     name: 'Electronics: Basic',
     category: 'Technical',
     slotKind: 'occ_related',
@@ -80,7 +80,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'mech_eng',
+    id: 'skill_mech_eng',
     name: 'Mechanical Engineering',
     category: 'Technical',
     slotKind: 'occ_related',
@@ -90,11 +90,11 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
     prerequisite: {
       gate: 'and',
-      skillIds: ['literacy', 'electronics'],
+      skillIds: ['skill_literacy', 'skill_electronics'],
     },
   },
   {
-    id: 'math_basic',
+    id: 'skill_math_basic',
     name: 'Math: Basic',
     category: 'Technical',
     slotKind: 'occ',
@@ -104,7 +104,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'math_advanced',
+    id: 'skill_math_advanced',
     name: 'Math: Advanced',
     category: 'Technical',
     slotKind: 'occ_related',
@@ -112,10 +112,10 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     perLevel: 5,
     acquisitionLevel: 1,
     occBonus: 0,
-    prerequisite: { gate: 'and', skillIds: ['math_basic'] },
+    prerequisite: { gate: 'and', skillIds: ['skill_math_basic'] },
   },
   {
-    id: 'astronomy',
+    id: 'skill_astronomy',
     name: 'Astronomy',
     category: 'Technical',
     slotKind: 'occ_related',
@@ -123,11 +123,11 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     perLevel: 4,
     acquisitionLevel: 1,
     occBonus: 0,
-    prerequisite: { gate: 'and', skillIds: ['math_advanced'] },
+    prerequisite: { gate: 'and', skillIds: ['skill_math_advanced'] },
     synergyBonuses: 0,
   },
   {
-    id: 'boxing',
+    id: 'skill_boxing',
     name: 'Boxing',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -139,7 +139,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     physicalStaging: { pp: 1, sdc: 10 },
   },
   {
-    id: 'wrestling',
+    id: 'skill_wrestling',
     name: 'Wrestling',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -151,7 +151,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     physicalStaging: { pe: 1, sdc: 8 },
   },
   {
-    id: 'acrobat',
+    id: 'skill_acrobat',
     name: 'Acrobatics',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -163,7 +163,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     physicalStaging: { pp: 1, sdc: 4 },
   },
   {
-    id: 'pilot_jet',
+    id: 'skill_pilot_jet',
     name: 'Pilot: Jet Aircraft',
     category: 'Pilot',
     slotKind: 'occ_related',
@@ -171,10 +171,10 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     perLevel: 4,
     acquisitionLevel: 1,
     occBonus: 0,
-    prerequisite: { gate: 'and', skillIds: ['math_basic'] },
+    prerequisite: { gate: 'and', skillIds: ['skill_math_basic'] },
   },
   {
-    id: 'pick_locks',
+    id: 'skill_pick_locks',
     name: 'Pick Locks',
     category: 'Espionage',
     slotKind: 'occ_related',
@@ -184,7 +184,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'wp_pistol',
+    id: 'skill_wp_pistol',
     name: 'W.P. Energy Pistol',
     category: 'Weapon',
     slotKind: 'occ_related',
@@ -194,7 +194,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'wp_sword',
+    id: 'skill_wp_sword',
     name: 'W.P. Sword',
     category: 'Weapon',
     slotKind: 'occ_related',
@@ -204,7 +204,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'hand_to_hand_basic',
+    id: 'skill_hand_to_hand_basic',
     name: 'Hand to Hand: Basic',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -214,7 +214,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'hand_to_hand_expert',
+    id: 'skill_hand_to_hand_expert',
     name: 'Hand to Hand: Expert',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -224,7 +224,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'hand_to_hand_martial_arts',
+    id: 'skill_hand_to_hand_martial_arts',
     name: 'Hand to Hand: Martial Arts',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -234,7 +234,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'hand_to_hand_assassin',
+    id: 'skill_hand_to_hand_assassin',
     name: 'Hand to Hand: Assassin',
     category: 'Physical',
     slotKind: 'occ_related',
@@ -244,7 +244,7 @@ const SKILL_LIBRARY_RAW: EngineSkillDef[] = [
     occBonus: 0,
   },
   {
-    id: 'first_aid',
+    id: 'skill_first_aid',
     name: 'First Aid',
     category: 'Misc',
     slotKind: 'occ',
@@ -295,7 +295,13 @@ export function resolveWeaponProficiencySkillId(
 }
 
 export function getSkillById(id: string): EngineSkillDef | undefined {
-  return SKILL_LIBRARY.find((s) => s.id === id)
+  const direct = SKILL_LIBRARY.find((s) => s.id === id)
+  if (direct) return direct
+  const prefixed = id.startsWith('skill_') ? id : `skill_${id}`
+  if (prefixed !== id) {
+    return SKILL_LIBRARY.find((s) => s.id === prefixed)
+  }
+  return undefined
 }
 
 export {

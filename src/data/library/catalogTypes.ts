@@ -21,6 +21,8 @@ export type PalladiumSkillCatalogEntry = {
   replaces?: string
   allowedAsSecondarySkill?: boolean
   requiresSpecialization?: boolean
+  /** Cross-cutting tags for Morphus / penalties (`skill_trait_registry.json`). */
+  skillTraits?: readonly string[]
 }
 
 /** Row from `content/palladiumOccs.json` — see `schemas/palladium-occ.schema.json`. */

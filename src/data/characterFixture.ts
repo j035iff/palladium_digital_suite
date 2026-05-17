@@ -21,14 +21,14 @@ export const characterFixture: Character = {
   isFinalized: false,
   creationVitalityCommitted: false,
   creationOccSkillIds: [
-    'intelligence',
-    'surveillance_systems',
-    'prowl',
-    'computer_operation',
-    'radio_basic',
-    'cryptography',
+    'skill_intelligence',
+    'skill_surveillance_systems',
+    'skill_prowl',
+    'skill_computer_operation',
+    'skill_radio_basic',
+    'skill_cryptography',
   ],
-  creationRelatedSkillIds: ['electronics', 'wp_handguns'],
+  creationRelatedSkillIds: ['skill_electronics', 'skill_wp_handguns'],
   selectedAbilities: ['energy_bolt'],
   creationAbilityBudget: {
     spellSlots: 0,
@@ -55,9 +55,9 @@ export const characterFixture: Character = {
       spd: 10,
     },
     skills: [
-      { id: 'literacy', name: 'Literacy: American', restricted: false, basePercent: 30 },
+      { id: 'skill_literacy', name: 'Literacy: American', restricted: false, basePercent: 30 },
       {
-        id: 'mech_eng',
+        id: 'skill_mech_eng',
         name: 'Mechanical Engineering',
         restricted: true,
         restrictionReason:
@@ -92,7 +92,7 @@ export const characterFixture: Character = {
       spd: 22,
     },
     skills: [
-      { id: 'climb', name: 'Climbing', restricted: false, basePercent: 26 },
+      { id: 'skill_climbing', name: 'Climbing', restricted: false, basePercent: 26 },
       {
         id: 'mech_eng',
         name: 'Mechanical Engineering',

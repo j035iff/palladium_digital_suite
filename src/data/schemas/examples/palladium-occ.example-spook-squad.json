@@ -3,7 +3,9 @@
   "id": "example_pandora_researcher_pattern",
   "name": "Example: Pandora Project Researcher (Spook Squad patterns)",
   "description": "Illustrates null defaultSkillId, core skill vouchers, category skillSpecificOverrides, and sub-class specializations.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -12,13 +14,23 @@
     }
   ],
   "occType": "scholar_civilian",
-  "tags": ["occult", "scientific"],
+  "tags": [
+    "occult",
+    "scientific"
+  ],
   "occSkillsCore": [
-    { "skillId": "literacy", "bonusPercent": 0 },
+    {
+      "skillId": "skill_literacy",
+      "bonusPercent": 0
+    },
     {
       "choiceCount": 2,
       "bonusPercent": 20,
-      "allowedCategories": ["Medical", "Science", "Technical"],
+      "allowedCategories": [
+        "Medical",
+        "Science",
+        "Technical"
+      ],
       "label": "Two Medical, Science, or Technical skills of choice"
     }
   ],
@@ -37,7 +49,11 @@
       {
         "categoryName": "Medical",
         "accessType": "only",
-        "exceptions": ["first_aid", "paramedic", "forensics"],
+        "exceptions": [
+          "first_aid",
+          "paramedic",
+          "forensics"
+        ],
         "bonusPercent": 0,
         "skillSpecificOverrides": {
           "first_aid": 5
@@ -49,11 +65,17 @@
     "initialSlotsCount": 4,
     "forbiddenCategories": []
   },
-  "wpRules": { "coreWps": [], "forbiddenWps": [] },
+  "wpRules": {
+    "coreWps": [],
+    "forbiddenWps": []
+  },
   "handToHandRules": {
     "defaultSkillId": null,
     "upgradePaths": [
-      { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 }
+      {
+        "targetSkillId": "hand_to_hand_basic",
+        "electiveSlotCost": 1
+      }
     ]
   },
   "specializations": [
@@ -62,8 +84,12 @@
       "name": "Team Epsilon Trooper",
       "description": "Branch with dice-based attribute and S.D.C. boosts.",
       "staticBonuses": {
-        "attributes": { "ps": "1D4" },
-        "vitals": { "sdc": "4D6+25" }
+        "attributes": {
+          "ps": "1D4"
+        },
+        "vitals": {
+          "sdc": "4D6+25"
+        }
       },
       "finances": {
         "startingCashFormula": "3D6*200"
@@ -74,12 +100,22 @@
       "name": "ADA Assassination Specialist",
       "description": "Specialized rifle package and combat focus.",
       "startingEquipment": {
-        "weapons": ["Sniper rifle package", "Silenced sidearm"],
-        "miscellaneous": ["Laser designator", "Monocular scope"]
+        "weapons": [
+          "Sniper rifle package",
+          "Silenced sidearm"
+        ],
+        "miscellaneous": [
+          "Laser designator",
+          "Monocular scope"
+        ]
       },
       "staticBonuses": {
-        "combat": { "strike": 2 },
-        "saves": { "save_poison": 1 }
+        "combat": {
+          "strike": 2
+        },
+        "saves": {
+          "save_poison": 1
+        }
       }
     },
     {
@@ -94,18 +130,33 @@
         ]
       },
       "occSkillsCore": [
-        { "skillId": "hand_to_hand_basic", "bonusPercent": 0 },
-        { "skillId": "wp_pistol", "bonusPercent": 0 },
+        {
+          "skillId": "skill_hand_to_hand_basic",
+          "bonusPercent": 0
+        },
+        {
+          "skillId": "skill_wp_pistol",
+          "bonusPercent": 0
+        },
         {
           "choiceCount": 1,
           "bonusPercent": 0,
-          "allowedSkillIds": ["wp_automatic_pistol", "wp_revolver", "wp_rifle"],
+          "allowedSkillIds": [
+            "wp_automatic_pistol",
+            "wp_revolver",
+            "wp_rifle"
+          ],
           "label": "W.P. of choice"
         }
       ],
       "staticBonuses": {
-        "combat": { "strike": 1, "parry": 1 },
-        "saves": { "save_poison": 2 }
+        "combat": {
+          "strike": 1,
+          "parry": 1
+        },
+        "saves": {
+          "save_poison": 2
+        }
       }
     }
   ],

@@ -3,7 +3,9 @@
   "id": "example_nightbane_sorcerer_pattern",
   "name": "Example: Nightbane Sorcerer (O.C.C. composition pattern)",
   "description": "Illustrates composition-first O.C.C.: core grants, related category rules, hand-to-hand, P.P.E. engine, custom talent engine, and progression hooks.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -12,14 +14,25 @@
     }
   ],
   "occType": "magic_user",
-  "tags": ["occult"],
+  "tags": [
+    "occult"
+  ],
   "occSkillsCore": [
-    { "skillId": "literacy", "bonusPercent": 0 },
-    { "skillId": "math_basic", "bonusPercent": 0 }
+    {
+      "skillId": "skill_literacy",
+      "bonusPercent": 0
+    },
+    {
+      "skillId": "skill_math_basic",
+      "bonusPercent": 0
+    }
   ],
   "occRelatedSkills": {
     "initialSlotsCount": 10,
-    "startingSkillIds": ["electronics", "hand_to_hand_basic"],
+    "startingSkillIds": [
+      "skill_electronics",
+      "skill_hand_to_hand_basic"
+    ],
     "categoryRules": [
       {
         "categoryName": "Technical",
@@ -40,20 +53,34 @@
   "handToHandRules": {
     "defaultSkillId": "hand_to_hand_basic",
     "upgradePaths": [
-      { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 }
+      {
+        "targetSkillId": "hand_to_hand_expert",
+        "electiveSlotCost": 1
+      }
     ]
   },
   "ppeEngine": {
     "baseFormula": "2D6+12",
     "perLevelFormula": "2D6",
-    "spellStrengthProgression": { "1": 4, "2": 5, "3": 6, "4": 7 },
+    "spellStrengthProgression": {
+      "1": 4,
+      "2": 5,
+      "3": 6,
+      "4": 7
+    },
     "progressionRoadmap": [
       {
         "level": 1,
         "selectionsGained": 4,
-        "categoryRestrictions": ["Level 1 Spells Only"]
+        "categoryRestrictions": [
+          "Level 1 Spells Only"
+        ]
       },
-      { "level": 2, "selectionsGained": 2, "categoryRestrictions": [] }
+      {
+        "level": 2,
+        "selectionsGained": 2,
+        "categoryRestrictions": []
+      }
     ]
   },
   "customAbilityEngines": [
@@ -61,8 +88,16 @@
       "engineId": "nightbane_talents",
       "label": "Nightbane Talents",
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 2, "categoryRestrictions": [] },
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": [] }
+        {
+          "level": 1,
+          "selectionsGained": 2,
+          "categoryRestrictions": []
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": []
+        }
       ]
     }
   ],
