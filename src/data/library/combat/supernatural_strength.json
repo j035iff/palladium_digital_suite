@@ -1,0 +1,26 @@
+{
+  "damageTable": [
+    { "minPs": 3, "maxPs": 15, "restrained": "1D4", "full": "1D6", "power": "2D6" },
+    { "minPs": 16, "maxPs": 20, "restrained": "1D6", "full": "2D6", "power": "4D6" },
+    { "minPs": 21, "maxPs": 25, "restrained": "2D4", "full": "3D6", "power": "6D6" },
+    { "minPs": 26, "maxPs": 30, "restrained": "2D6", "full": "4D6", "power": "1D4*10" },
+    { "minPs": 31, "maxPs": 35, "restrained": "2D6", "full": "5D6", "power": "1D6*10" },
+    { "minPs": 36, "maxPs": 40, "restrained": "2D6", "full": "6D6", "power": "2D4*10" },
+    { "minPs": 41, "maxPs": 50, "restrained": "2D6", "full": "1D6*10", "power": "2D6*10" },
+    { "minPs": 51, "maxPs": 60, "restrained": "2D6", "full": "2D4*10", "power": "3D6*10" },
+    { "minPs": 61, "maxPs": 70, "restrained": "2D6", "full": "2D6*10", "power": "4D6*10" },
+    { "minPs": 71, "maxPs": 80, "restrained": "2D6", "full": "4D4*10", "power": "5D6*10" },
+    { "minPs": 81, "maxPs": 90, "restrained": "2D6", "full": "3D6*10", "power": "6D6*10" },
+    { "minPs": 91, "maxPs": 100, "restrained": "2D6", "full": "4D6*10", "power": "8D6*10" },
+    { "minPs": 101, "restrained": "2D6", "full": "5D6*10", "power": "10D6*10" }
+  ],
+  "baseThrowRanges": {
+    "half_pound_object": { "standard": 50, "extraordinary": 100, "supernatural": 300 },
+    "dart": { "standard": 30, "extraordinary": 60, "supernatural": 100 },
+    "throwing_axe": { "standard": 80, "extraordinary": 150, "supernatural": 300 },
+    "javelin": { "standard": 100, "extraordinary": 200, "supernatural": 400 },
+    "spear": { "standard": 60, "extraordinary": 120, "supernatural": 220 },
+    "knife": { "standard": 50, "extraordinary": 100, "supernatural": 200 },
+    "sword": { "standard": 15, "extraordinary": 30, "supernatural": 60 }
+  }
+}

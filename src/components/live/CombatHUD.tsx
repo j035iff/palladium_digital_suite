@@ -263,6 +263,7 @@ export function CombatHUD() {
     encumbranceSpdNote,
     currentWeightLbs,
     carryLimitLbs,
+    strengthCapacities,
     combatHudDamagePulse,
     spendWeaponAmmo,
     reloadWeapon,
@@ -746,6 +747,41 @@ export function CombatHUD() {
                 <p className={`mb-2 text-sm font-black ${morphus ? 'text-amber-100' : 'text-orange-950'}`}>
                   Unarmed
                 </p>
+                {strengthCapacities.handToHandDamage.kind === 'supernatural' ? (
+                  <ul
+                    className={`mb-3 space-y-1 rounded-md border px-2 py-2 text-[11px] ${
+                      morphus
+                        ? 'border-violet-500/50 bg-black/30 text-violet-100'
+                        : 'border-orange-300 bg-white/80 text-slate-800'
+                    }`}
+                    aria-label="Supernatural punch damage"
+                  >
+                    <li>
+                      <span className="font-semibold">Restrained:</span>{' '}
+                      <span className="font-mono">
+                        {strengthCapacities.handToHandDamage.restrainedPunch}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="font-semibold">Full strength:</span>{' '}
+                      <span className="font-mono">
+                        {strengthCapacities.handToHandDamage.fullStrengthPunch}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="font-semibold">Power:</span>{' '}
+                      <span className="font-mono">
+                        {strengthCapacities.handToHandDamage.powerPunch}
+                      </span>
+                      <span
+                        className={`font-black ${morphus ? 'text-amber-300' : 'text-orange-700'}`}
+                      >
+                        {' '}
+                        — {strengthCapacities.handToHandDamage.powerPunchMeleeActions} APM
+                      </span>
+                    </li>
+                  </ul>
+                ) : null}
                 <div className="grid gap-3 sm:grid-cols-2">
                   <ManualRollField
                     label="Strike (d20)"

@@ -48,7 +48,8 @@ import {
   type HandToHandCombatProfile,
 } from '../lib/handToHandPipeline'
 import { handToHandAttackBonus } from '../utils/combatCalculator'
-import { computeCarryCapacityLbs } from '../lib/carryCapacity'
+import { evaluateStrengthFromPhysicalStat } from '../utils/strengthCalculator'
+import type { StrengthCapacities } from '../types'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
 import {
   computeDisplayScalars,
@@ -247,7 +248,9 @@ type CharacterContextValue = {
   equippedArmor: Armor | null
   /** Sum of carried weights (lbs). */
   currentWeightLbs: number
-  /** Carry limit from active form P.S. score × tier multiple (attribute_and_stat.md §4, combat_logic.md §2). */
+  /** P.S. carry, lift, throw, and H2H damage for the active form (Nightbane RPG pp. 34–35). */
+  strengthCapacities: StrengthCapacities
+  /** Carry limit from {@link strengthCapacities}.carryingCapacityLbs. */
   carryLimitLbs: number
   /** True when {@link currentWeightLbs} exceeds {@link carryLimitLbs}. */
   overEncumbered: boolean
@@ -579,10 +582,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [inventoryItems],
   )
 
-  const carryLimitLbs = useMemo(
-    () => computeCarryCapacityLbs(activeFormState.attributes.ps),
+  const strengthCapacities = useMemo(
+    () => evaluateStrengthFromPhysicalStat(activeFormState.attributes.ps),
     [activeFormState.attributes.ps],
   )
+
+  const carryLimitLbs = strengthCapacities.carryingCapacityLbs
 
   const overEncumbered = currentWeightLbs > carryLimitLbs
 
@@ -1392,6 +1397,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       equippedArmorId,
       equippedArmor,
       currentWeightLbs,
+      strengthCapacities,
       carryLimitLbs,
       overEncumbered,
       encumbranceSpdNote,
@@ -1466,6 +1472,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       equippedArmorId,
       equippedArmor,
       currentWeightLbs,
+      strengthCapacities,
       carryLimitLbs,
       overEncumbered,
       encumbranceSpdNote,

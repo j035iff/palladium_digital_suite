@@ -186,6 +186,9 @@
         }
       ]
     },
+    "progression": {
+      "xpTableId": "between_shadows_spook_squad"
+    },
     "levelUpSkillChoices": [
       {
         "levelUnlocked": 3,
@@ -389,7 +392,10 @@
           }
         }
       }
-    ]
+    ],
+    "progression": {
+      "xpTableId": "between_shadows_spook_squad"
+    }
   },
   {
     "id": "occ_ada_field_agent",
@@ -664,7 +670,10 @@
           }
         }
       }
-    ]
+    ],
+    "progression": {
+      "xpTableId": "between_shadows_spook_squad"
+    }
   },
   {
     "id": "occ_pandora_project_researcher",
@@ -822,6 +831,9 @@
           "electiveSlotCost": 2
         }
       ]
+    },
+    "progression": {
+      "xpTableId": "between_shadows_spook_squad"
     }
   },
   {
@@ -981,6 +993,10 @@
           "electiveSlotCost": 2
         }
       ]
+    },
+    "progression": {
+      "xpTableId": "between_shadows_arcane_detective",
+      "characterOccCategory": "psychic"
     },
     "ispEngine": {
       "baseFormula": "ME + 5D6",

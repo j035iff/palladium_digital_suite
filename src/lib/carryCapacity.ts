@@ -1,16 +1,11 @@
 import type { PhysicalStrengthStat } from '../types'
+import { calculateWeightCapacities, resolveStrengthCategory } from '../utils/strengthCalculator'
 
 /**
- * Carry capacity by P.S. tier (combat_logic.md §2; Facade baseline P.S.×10 in attribute_and_stat.md §4).
+ * Carry capacity (lbs) — Nightbane RPG pp. 34–35 via {@link calculateWeightCapacities}.
+ * @deprecated Prefer {@link evaluateStrengthFromPhysicalStat} for full P.S. mechanics.
  */
 export function computeCarryCapacityLbs(ps: PhysicalStrengthStat): number {
-  const mult =
-    ps.tier === 'supernatural'
-      ? 50
-      : ps.tier === 'robotic'
-        ? 25
-        : ps.tier === 'augmented'
-          ? 20
-          : 10
-  return Math.max(0, ps.score * mult)
+  const category = resolveStrengthCategory(ps.score, ps.tier)
+  return calculateWeightCapacities(ps.score, category).carryingCapacityLbs
 }

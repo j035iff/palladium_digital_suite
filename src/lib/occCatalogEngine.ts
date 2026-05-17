@@ -14,12 +14,19 @@ const DEFAULT_H2H = { defaultSkillId: 'hth_none', upgradePaths: [] }
 const DEFAULT_SECONDARY = { initialSlotsCount: 0, forbiddenCategories: [] as string[] }
 const DEFAULT_RELATED = { initialSlotsCount: 0, categoryRules: [] }
 
-/** Resolve XP table id from progression hooks or occType heuristics. */
+/** Resolve XP catalog id from progression hooks or occType heuristics. */
 export function occXpTableId(occ: PalladiumOcc): OccXpTableId {
   if (occ.progression?.xpTableId) return occ.progression.xpTableId
-  if (occ.id === 'borg') return 'borg'
-  if (occ.occType === 'psychic' || occ.ispEngine) return 'psychic'
-  return 'standard'
+  if (occ.tags?.includes('spook_squad')) {
+    if (occ.id === 'occ_pab_psychic_agent') return 'between_shadows_arcane_detective'
+    return 'between_shadows_spook_squad'
+  }
+  if (occ.occType === 'psychic' || occ.ispEngine) {
+    if (occ.tags?.includes('spook_squad')) return 'between_shadows_arcane_detective'
+    return 'nightbane_core_ashmedai_psychic_sorcerer'
+  }
+  if (occ.gameSystems?.includes('nightbane')) return 'nightbane_core_doppleganger'
+  return 'nightbane_core_doppleganger'
 }
 
 /** Sheet Psychic Gate / CharacterOcc.category. */

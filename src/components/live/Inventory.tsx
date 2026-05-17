@@ -14,6 +14,7 @@ export function Inventory() {
     equippedArmor,
     currentWeightLbs,
     carryLimitLbs,
+    strengthCapacities,
     overEncumbered,
     encumbranceSpdNote,
   } = useCharacter()
@@ -73,7 +74,8 @@ export function Inventory() {
         >
           <p className="uppercase tracking-wide">Over carry limit</p>
           <p className="mt-1 font-mono tabular-nums">
-            {currentWeightLbs} lbs carried / {carryLimitLbs} lbs limit (P.S. × tier).
+            {currentWeightLbs} lbs carried / {carryLimitLbs} lbs carry (lift{' '}
+            {strengthCapacities.liftingCapacityLbs} lbs).
           </p>
           <p className="mt-1 text-[11px] font-semibold normal-case opacity-95">
             {encumbranceSpdNote}
@@ -86,8 +88,9 @@ export function Inventory() {
             {currentWeightLbs}
           </span>{' '}
           /{' '}
-          <span className="font-mono tabular-nums">{carryLimitLbs}</span> lbs
-          carry.
+          <span className="font-mono tabular-nums">{carryLimitLbs}</span> lbs carry
+          (lift <span className="font-mono tabular-nums">{strengthCapacities.liftingCapacityLbs}</span>{' '}
+          lbs).
         </p>
       )}
 

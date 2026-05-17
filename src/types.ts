@@ -45,6 +45,71 @@ export type PhysicalStrengthStat = {
 }
 
 /**
+ * Nightbane Core Rulebook P.S. scale (pp. 34–35) — Facade human vs Morphus supernatural.
+ * Resolved from sheet {@link PhysicalStrengthStat.tier} and P.S. score at runtime.
+ */
+export type StrengthCategory = 'standard' | 'extraordinary' | 'supernatural'
+
+/** One row of the supernatural hand-to-hand damage grid (page 35). */
+export type SupernaturalDamageTableRow = {
+  minPs: number
+  /** Omitted on the final row — matches any P.S. at or above {@link minPs}. */
+  maxPs?: number
+  restrained: string
+  full: string
+  power: string
+}
+
+/** Catalog keys for {@link supernatural_strength.json} `baseThrowRanges`. */
+export type ThrowObjectKind =
+  | 'half_pound_object'
+  | 'dart'
+  | 'throwing_axe'
+  | 'javelin'
+  | 'spear'
+  | 'knife'
+  | 'sword'
+
+export type WeaponThrowRangeEntry = {
+  objectKind: ThrowObjectKind
+  label: string
+  rangeFeet: number
+}
+
+/** Standard / extraordinary: additive P.S. bonus on 1D3 unarmed. */
+export type StandardHandToHandDamageProfile = {
+  kind: 'standard'
+  attributeDamageBonus: number
+  unarmedDamageNotation: string
+}
+
+/** Supernatural: dice from damage table (power punch costs {@link powerPunchMeleeActions} APM). */
+export type SupernaturalHandToHandDamageProfile = {
+  kind: 'supernatural'
+  restrainedPunch: string
+  fullStrengthPunch: string
+  powerPunch: string
+  powerPunchMeleeActions: 2
+}
+
+export type HandToHandDamageProfile =
+  | StandardHandToHandDamageProfile
+  | SupernaturalHandToHandDamageProfile
+
+/**
+ * P.S.-derived capacities and throw ranges for the active form (Nightbane RPG pp. 34–35).
+ */
+export type StrengthCapacities = {
+  strengthCategory: StrengthCategory
+  carryingCapacityLbs: number
+  liftingCapacityLbs: number
+  /** Max distance (feet) a carried-weight object can be thrown. */
+  maxWeightThrowDistanceFeet: number
+  weaponThrowRanges: readonly WeaponThrowRangeEntry[]
+  handToHandDamage: HandToHandDamageProfile
+}
+
+/**
  * All eight attributes: seven scalars plus structured P.S.
  */
 export type CharacterAttributes = ScalarAttributes & {
@@ -784,7 +849,8 @@ export type OccFinances = {
   blackMarketAssets?: string
 }
 
-export type OccXpTableId = 'standard' | 'psychic' | 'borg'
+/** Catalog id under `content/progression/xp_tables/` (legacy: `standard` | `psychic` | `borg`). */
+export type OccXpTableId = string
 
 export type OccSkillSlotPolicy =
   | { kind: 'fixed'; multiplier: number }

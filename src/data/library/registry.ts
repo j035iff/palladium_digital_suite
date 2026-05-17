@@ -3,13 +3,12 @@ import type { PalladiumOcc, Race } from '../../types'
 import { POWER_FEATURES } from './features'
 import { TALENT_FEATURES } from './talentCatalogLoader'
 import { loadRacesFromJson } from './racesLoader'
-import {
-  BORG_XP_TABLE,
-  PSYCHIC_XP_TABLE,
-  STANDARD_XP_TABLE,
-} from '../xpTables'
 import type { XPTable } from '../../types'
 import { occXpTableId } from '../../lib/occCatalogEngine'
+import {
+  getXpTableById,
+  toXpTable,
+} from './progression/xpTableCatalogLoader'
 import {
   PALLADIUM_OCC_CATALOG,
   getPalladiumOccById,
@@ -19,14 +18,22 @@ export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TALENT_FEATURE
 export const RACE_REGISTRY: Race[] = loadRacesFromJson()
 export const OCC_REGISTRY: readonly PalladiumOcc[] = PALLADIUM_OCC_CATALOG
 
-const XP_BY_ID: Record<'standard' | 'psychic' | 'borg', XPTable> = {
-  standard: STANDARD_XP_TABLE,
-  psychic: PSYCHIC_XP_TABLE,
-  borg: BORG_XP_TABLE,
+export function resolveOccXpTable(def: PalladiumOcc): XPTable {
+  const id = occXpTableId(def)
+  const row = getXpTableById(id)
+  if (!row) {
+    const fallback = getXpTableById('nightbane_core_doppleganger')
+    if (!fallback) {
+      throw new Error(`Unknown XP table "${id}" and nightbane_core_doppleganger is missing from catalog`)
+    }
+    return toXpTable(fallback)
+  }
+  return toXpTable(row)
 }
 
-export function resolveOccXpTable(def: PalladiumOcc): XPTable {
-  return XP_BY_ID[occXpTableId(def)]
+export function getOccXpTableDisplayName(def: PalladiumOcc): string {
+  const row = getXpTableById(occXpTableId(def))
+  return row?.name ?? occXpTableId(def)
 }
 
 export function getFeatureById(id: string): Feature | undefined {

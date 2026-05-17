@@ -1,5 +1,9 @@
 import { useCharacter } from '../../context/CharacterContext'
-import { OCC_REGISTRY, RACE_REGISTRY } from '../../data/library/registry'
+import {
+  getOccXpTableDisplayName,
+  OCC_REGISTRY,
+  RACE_REGISTRY,
+} from '../../data/library/registry'
 import { DEFAULT_RACE_ID } from '../../lib/raceFormPolicy'
 import { isOccAllowedForRace } from '../../lib/raceEngine'
 import { formatPalladiumSources } from '../../lib/formatPalladiumSources'
@@ -7,7 +11,6 @@ import {
   occBaseStatsDice,
   occCharacterCategory,
   occSkillSlotPolicy,
-  occXpTableId,
 } from '../../lib/occCatalogEngine'
 
 /**
@@ -129,13 +132,7 @@ export function OccSelection() {
       <div className={`grid gap-3 sm:grid-cols-3 ${panel} rounded-lg border-2 p-4`}>
         {OCC_REGISTRY.filter((def) => isOccAllowedForRace(activeRace, def)).map((def) => {
           const selected = character.occ.id === def.id
-          const xpId = occXpTableId(def)
-          const xpLabel =
-            xpId === 'borg'
-              ? 'Borg (+8%)'
-              : xpId === 'psychic'
-                ? 'Psychic (+12%)'
-                : 'Standard'
+          const xpLabel = getOccXpTableDisplayName(def)
           const slotPolicy = occSkillSlotPolicy(def)
           const slotNote =
             slotPolicy.kind === 'psychic_tier'

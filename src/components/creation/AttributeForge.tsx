@@ -69,6 +69,7 @@ export function AttributeForge() {
     activeFormState,
     activeRace,
     raceStrengthLabel,
+    strengthCapacities,
     updateAttribute,
     supportsDualForm,
   } = useCharacter()
@@ -377,7 +378,13 @@ export function AttributeForge() {
                   morphus ? 'font-semibold text-amber-300' : 'font-semibold text-amber-700'
                 }
               >
-                +{combatMirror.handToHandDamage}
+                {strengthCapacities.handToHandDamage.kind === 'supernatural' ? (
+                  <span className="font-mono text-[11px]">
+                    {strengthCapacities.handToHandDamage.fullStrengthPunch}
+                  </span>
+                ) : (
+                  <>+{combatMirror.handToHandDamage}</>
+                )}
               </dd>
             </div>
           </dl>

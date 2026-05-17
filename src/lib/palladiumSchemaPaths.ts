@@ -91,3 +91,19 @@ export const PALLADIUM_MORPHUS_TABLES_DIR =
 
 export const SKILL_TRAIT_REGISTRY_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/skill_trait_registry.json` as const
+
+export const PALLADIUM_XP_TABLE_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-xp-table.schema.json` as const
+
+export const PALLADIUM_XP_TABLE_BOOK_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-xp-table-book.schema.json` as const
+
+export const PALLADIUM_XP_TABLE_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-xp-table.schema.json' as const
+
+export const PALLADIUM_XP_TABLE_BOOK_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-xp-table-book.schema.json' as const
+
+/** One JSON file per source book (`tables[]` bundles). */
+export const PALLADIUM_XP_TABLES_DIR =
+  `${PALLADIUM_CONTENT_DIR}/progression/xp_tables` as const

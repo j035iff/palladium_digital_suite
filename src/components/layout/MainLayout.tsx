@@ -11,6 +11,7 @@ import { IdentityXpBar } from '../live/IdentityXpBar'
 import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
+import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
 
@@ -27,6 +28,7 @@ export function MainLayout() {
     activeFormState: form,
     activeStats,
     supportsDualForm,
+    strengthCapacities,
     toggleForm,
     vitalityFlash,
     levelUpQueue,
@@ -272,6 +274,9 @@ export function MainLayout() {
           >
             Alignment: <strong>{form.alignment}</strong>
           </p>
+          <div className="mt-3">
+            <PsStrengthPanel capacities={strengthCapacities} morphus={morphusActive} />
+          </div>
         </section>
 
         <SavingThrowsPanel />

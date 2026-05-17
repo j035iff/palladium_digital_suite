@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-xp-table.schema.json",
+  "title": "Palladium XP progression table",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "gameSystems", "floors", "maxLevel", "occIds", "notes"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference"],
+        "properties": {
+          "gameSystem": { "type": "string" },
+          "reference": { "type": "string", "minLength": 1 },
+          "pageNumber": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "maxLevel": { "type": "integer", "minimum": 1, "maximum": 30 },
+    "floors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "integer", "minimum": 0 }
+    },
+    "occIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^occ_[a-z][a-z0-9_]*$"
+      },
+      "description": "O.C.C. catalog ids bound to this table via progression.xpTableId."
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Book table label and O.C.C. list; mention planned O.C.C.s here before they exist in occIds."
+    }
+  }
+}

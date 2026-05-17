@@ -1,0 +1,169 @@
+{
+  "id": "nightbane_core",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 233
+    }
+  ],
+  "tables": [
+    {
+      "id": "nightbane_core_nightbane_guardian",
+      "name": "Nightbane & Guardian",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2401, 4601, 9201, 18401, 28301, 48301, 78001, 110001, 150001, 200001, 250001, 310001,
+        380001, 470001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Nightbane R.C.C. & Guardian R.C.C. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_snakebird_mystic",
+      "name": "Snakebird & Mystic",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2051, 4101, 8251, 16501, 24601, 34701, 49801, 69901, 95001, 130101, 180201, 230301,
+        280401, 340501
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Snakebird & Mystic R.C.C.s. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_doppleganger",
+      "name": "Doppleganger",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 1901, 3801, 7301, 14601, 21001, 30001, 40001, 55001, 75001, 105001, 140001, 190001,
+        245001, 300001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Doppleganger R.C.C. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_nemtar_hollow_men",
+      "name": "Namtar / Hollow Men",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2001, 4001, 8501, 17001, 24501, 35601, 49701, 69801, 94901, 130001, 180001, 228101,
+        279201, 339301
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Namtar & Hollow Men R.C.C.s. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_sorcerer_mystic",
+      "name": "Nightbane Sorcerer & Nightbane Mystic",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2601, 5001, 10001, 20001, 30001, 50001, 80001, 120001, 170001, 230001, 300001, 380001,
+        470001, 600001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Nightbane Sorcerer & Nightbane Mystic O.C.C.s. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_wampyr",
+      "name": "Wampyr",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2701, 5401, 10801, 21601, 31601, 42801, 62001, 90001, 120001, 170001, 220001, 290001,
+        400001, 500001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Wampyr R.C.C. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_priest_of_night",
+      "name": "Priest of Night",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2141, 4301, 8601, 17201, 25501, 35601, 50701, 71501, 96601, 133701, 186801, 240901,
+        291001, 350001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Priest of Night O.C.C. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_hound_hunter",
+      "name": "Hound & Hunter",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2501, 5001, 10001, 20001, 35001, 55001, 85001, 130001, 180001, 235001, 285001, 350001,
+        425001, 550001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Hound & Hunter R.C.C.s. O.C.C.s: none in catalog yet."
+    },
+    {
+      "id": "nightbane_core_ashmedai_psychic_sorcerer",
+      "name": "Ashmedai, Psychic & Sorceror",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 2241, 4481, 8961, 17921, 25921, 35921, 50921, 70921, 95921, 135921, 185921, 225921, 275921,
+        335921
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Ashmedai, Psychic P.C.C., and Sorceror; first column (0–2,240)."
+    },
+    {
+      "id": "nightbane_core_night_prince_vampire",
+      "name": "Night Prince & Vampire",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 5001, 10001, 20001, 40001, 80001, 120001, 160001, 200001, 250001, 300001, 400001, 500001,
+        600001, 1000001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). Level 15 band tops at 2,000,000 XP."
+    },
+    {
+      "id": "nightbane_core_nightlord",
+      "name": "Nightlord",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 8001, 16001, 32001, 56001, 86001, 120001, 180001, 250001, 325001, 400001, 500001, 600001,
+        800001, 1200001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Nightlord; third column (0–8,000). Level 15 band tops at 2,400,000 XP."
+    },
+    {
+      "id": "nightbane_core_hound_master",
+      "name": "Hound Master",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "maxLevel": 15,
+      "floors": [
+        0, 3001, 6001, 12001, 24001, 50001, 80001, 120001, 170001, 220001, 290001, 375001, 450001,
+        550001, 750001
+      ],
+      "occIds": [],
+      "notes": "Nightbane RPG p.233 — Hound Master; fourth column (0–3,000). Level 15 band tops at 1,000,000 XP. Not the Hound & Hunter table."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-xp-table-book.schema.json",
+  "title": "Palladium XP table book bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "gameSystems", "sources", "tables"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference"],
+        "properties": {
+          "gameSystem": { "type": "string" },
+          "reference": { "type": "string", "minLength": 1 },
+          "pageNumber": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "tables": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "palladium-xp-table.schema.json" }
+    }
+  }
+}

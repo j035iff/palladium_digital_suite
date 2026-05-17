@@ -42,6 +42,8 @@ const morphusCharacteristicSchema = loadJson(
 const morphusTableSchema = loadJson(
   join(schemasDir, 'palladium-morphus-table.schema.json'),
 )
+const xpTableSchema = loadJson(join(schemasDir, 'palladium-xp-table.schema.json'))
+const xpTableBookSchema = loadJson(join(schemasDir, 'palladium-xp-table-book.schema.json'))
 
 const ajv = new Ajv2020({
   allErrors: true,
@@ -50,6 +52,7 @@ const ajv = new Ajv2020({
 })
 addFormats(ajv)
 ajv.addSchema(morphusCharacteristicSchema)
+ajv.addSchema(xpTableSchema)
 
 let failed = false
 for (const [label, schema] of [
@@ -62,6 +65,8 @@ for (const [label, schema] of [
   ['palladium-talent.schema.json', talentSchema],
   ['palladium-morphus.schema.json', morphusCharacteristicSchema],
   ['palladium-morphus-table.schema.json', morphusTableSchema],
+  ['palladium-xp-table.schema.json', xpTableSchema],
+  ['palladium-xp-table-book.schema.json', xpTableBookSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -81,6 +86,8 @@ const validateHandToHandRow = ajv.compile(handToHandSchema)
 const validateTalentRow = ajv.compile(talentSchema)
 const validateMorphusCharacteristic = ajv.compile(morphusCharacteristicSchema)
 const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
+const validateXpTableDoc = ajv.compile(xpTableSchema)
+const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
 
 const palladiumSkills = loadJson(join(contentDir, 'palladiumSkills.json'))
 if (!Array.isArray(palladiumSkills)) {
@@ -221,6 +228,150 @@ if (!Array.isArray(palladiumOccs)) {
   } else {
     failed = true
     console.error(`ERR palladiumOccs.json — ${occBad} row(s) failed schema validation`)
+  }
+}
+
+const xpTablesDir = join(contentDir, 'progression/xp_tables')
+const tableById = new Map()
+let xpTableFiles = []
+try {
+  xpTableFiles = readdirSync(xpTablesDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR progression/xp_tables — directory missing')
+  failed = true
+}
+
+function validateXpTableRow(table, label) {
+  if (!validateXpTableDoc(table)) {
+    failed = true
+    console.error(`ERR ${label} id=${table?.id ?? '?'}:`, validateXpTableDoc.errors)
+    return false
+  }
+  const floors = table.floors ?? []
+  if (floors[0] !== 0) {
+    failed = true
+    console.error(`ERR ${label} — floors[0] must be 0`)
+  }
+  for (let i = 1; i < floors.length; i++) {
+    if (floors[i] <= floors[i - 1]) {
+      failed = true
+      console.error(
+        `ERR ${label} — floors must be strictly increasing at index ${i}`,
+      )
+      break
+    }
+  }
+  if (floors.length !== table.maxLevel) {
+    failed = true
+    console.error(
+      `ERR ${label} — floors.length (${floors.length}) must equal maxLevel (${table.maxLevel})`,
+    )
+  }
+  if (tableById.has(table.id)) {
+    failed = true
+    console.error(`ERR duplicate XP table id "${table.id}"`)
+  } else {
+    tableById.set(table.id, table)
+  }
+  return true
+}
+
+if (xpTableFiles.length > 0) {
+  let xpBad = 0
+  let tableCount = 0
+  for (const file of xpTableFiles) {
+    const doc = loadJson(join(xpTablesDir, file))
+    if (doc?.tables && Array.isArray(doc.tables)) {
+      if (!validateXpTableBookDoc(doc)) {
+        xpBad++
+        if (xpBad <= 5) {
+          console.error(
+            `ERR progression/xp_tables/${file}:`,
+            validateXpTableBookDoc.errors,
+          )
+        }
+        continue
+      }
+      for (const table of doc.tables) {
+        tableCount++
+        if (!validateXpTableRow(table, `progression/xp_tables/${file} → ${table.id}`)) {
+          xpBad++
+        }
+      }
+    } else if (!validateXpTableRow(doc, `progression/xp_tables/${file}`)) {
+      xpBad++
+    } else {
+      tableCount++
+    }
+  }
+  if (xpBad === 0) {
+    console.log(
+      `OK  progression/xp_tables — ${xpTableFiles.length} book file(s), ${tableCount} table(s) validate`,
+    )
+  } else {
+    failed = true
+    console.error(`ERR progression/xp_tables — ${xpBad} validation error(s)`)
+  }
+}
+
+if (Array.isArray(palladiumOccs) && tableById.size > 0) {
+  const occById = new Map(palladiumOccs.map((o) => [o.id, o]))
+
+  let xrefBad = 0
+  for (const row of palladiumOccs) {
+    const tid = row?.progression?.xpTableId
+    if (tid && !tableById.has(tid)) {
+      xrefBad++
+      if (xrefBad <= 5) {
+        console.error(
+          `ERR palladiumOccs.json id=${row.id}: unknown progression.xpTableId "${tid}"`,
+        )
+      }
+    }
+  }
+
+  for (const [tableId, doc] of tableById) {
+    const occIds = doc.occIds ?? []
+    for (const occId of occIds) {
+      const occ = occById.get(occId)
+      if (!occ) {
+        xrefBad++
+        if (xrefBad <= 5) {
+          console.error(
+            `ERR progression/xp_tables id=${tableId}: occIds lists unknown O.C.C. "${occId}"`,
+          )
+        }
+        continue
+      }
+      if (occ.progression?.xpTableId !== tableId) {
+        xrefBad++
+        if (xrefBad <= 5) {
+          console.error(
+            `ERR ${occId}: progression.xpTableId is "${occ.progression?.xpTableId ?? '(none)'}" but listed on table "${tableId}"`,
+          )
+        }
+      }
+    }
+    for (const occ of palladiumOccs) {
+      if (occ.progression?.xpTableId !== tableId) continue
+      if (!occIds.includes(occ.id)) {
+        xrefBad++
+        if (xrefBad <= 5) {
+          console.error(
+            `ERR ${occ.id}: progression.xpTableId "${tableId}" but missing from that table's occIds`,
+          )
+        }
+      }
+    }
+  }
+
+  if (xrefBad === 0) {
+    console.log('OK  progression.xpTableId ↔ occIds — bidirectional catalog links')
+  } else {
+    failed = true
+    console.error(`ERR progression XP links — ${xrefBad} mismatch(es)`)
   }
 }
 

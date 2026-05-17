@@ -710,7 +710,8 @@
       "properties": {
         "xpTableId": {
           "type": "string",
-          "enum": ["standard", "psychic", "borg"]
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Catalog id in content/progression/xp_tables/ (e.g. between_shadows_arcane_detective)."
         },
         "characterOccCategory": {
           "type": "string",

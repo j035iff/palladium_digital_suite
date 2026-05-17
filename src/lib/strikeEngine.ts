@@ -1,5 +1,10 @@
 import type { Character, Weapon } from '../types'
 import { getFormState } from '../types'
+import {
+  formatUnarmedDamageHint,
+  getHandToHandDamageProfile,
+  resolveStrengthCategory,
+} from '../utils/strengthCalculator'
 import { computeCombatMirrorBonuses } from './characterDerived'
 import type { AccumulatedHandToHandBonuses } from '../types'
 import {
@@ -62,13 +67,14 @@ export function computeUnarmedStrikeBreakdown(
   }
 }
 
-/** Display string for default unarmed damage (P.S. hand-to-hand bonus). */
+/** Display string for unarmed damage (standard/extraordinary or supernatural punch grid). */
 export function unarmedDamageLabel(
   character: Character,
   activeForm: 'facade' | 'morphus',
   hthDamageBonus = 0,
 ): string {
-  const attrs = getFormState(character, activeForm).attributes
-  const d = computeCombatMirrorBonuses(attrs).handToHandDamage + Math.max(0, hthDamageBonus)
-  return d > 0 ? `1d3+${d}` : '1d3'
+  const ps = getFormState(character, activeForm).attributes.ps
+  const category = resolveStrengthCategory(ps.score, ps.tier)
+  const profile = getHandToHandDamageProfile(ps.score, category)
+  return formatUnarmedDamageHint(profile, hthDamageBonus)
 }

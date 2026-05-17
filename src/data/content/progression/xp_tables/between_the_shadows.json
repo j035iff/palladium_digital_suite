@@ -1,0 +1,208 @@
+{
+  "id": "between_the_shadows",
+  "gameSystems": ["nightbane", "between_the_shadows"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Between the Shadows",
+      "pageNumber": 145
+    }
+  ],
+  "tables": [
+    {
+      "id": "between_shadows_spook_squad",
+      "name": "Former Special Forces / Team Epsilon / A.D.A. / Pandora / Ex-Government",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 1901, 3801, 7301, 14301, 21001, 31001, 41001, 53001, 73001, 103001, 138001,
+        188001, 238001, 288001
+      ],
+      "occIds": [
+        "occ_ex_government_agent",
+        "occ_team_epsilon_trooper",
+        "occ_ada_field_agent",
+        "occ_pandora_project_researcher"
+      ],
+      "notes": "Spook Squad field O.C.C.s (not P.A.B. Psychic Agent). O.C.C.s: occ_ex_government_agent, occ_team_epsilon_trooper, occ_ada_field_agent, occ_pandora_project_researcher."
+    },
+    {
+      "id": "between_shadows_dream_astral",
+      "name": "Dream Maker / Dream Dancer / Astral Lord",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2501, 5001, 10001, 20001, 30001, 50001, 80001, 120001, 170001, 225001, 275001,
+        350001, 420001, 520001
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Dream Maker, Dream Dancer, Astral Lord)."
+    },
+    {
+      "id": "between_shadows_arcane_detective",
+      "name": "Arcane Detective / P.A.B. Psychic Agent",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2301, 4601, 9201, 18401, 26501, 36601, 51701, 71801, 96901, 137001, 188101,
+        229201, 289201, 355401
+      ],
+      "occIds": ["occ_pab_psychic_agent"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_pab_psychic_agent; occ_arcane_detective (planned)."
+    },
+    {
+      "id": "between_shadows_torturian_warrior",
+      "name": "Torturian / Turantuloid Warrior",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2051, 4101, 8251, 16501, 24601, 34701, 49801, 69901, 95001, 130101, 180201,
+        230301, 280401, 340501
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Torturian, Turantuloid Warrior)."
+    },
+    {
+      "id": "between_shadows_dream_ghoul_entity",
+      "name": "Dream Ghouls / Astral Entities",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2241, 4481, 8961, 17921, 25921, 35921, 50921, 70921, 95921, 135921, 185921,
+        225921, 275921, 335921
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Dream Ghouls, Astral Entities)."
+    },
+    {
+      "id": "between_shadows_kinetic_psi_mechanic",
+      "name": "Kinetic / Genius & Natural / Psi-Mechanic",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2121, 4241, 8481, 16961, 24961, 34961, 49961, 69961, 94961, 129961, 179961,
+        229961, 279961, 329961
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Kinetic, Genius & Natural, Psi-Mechanic)."
+    },
+    {
+      "id": "between_shadows_necrophim",
+      "name": "Necrophim",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2701, 5401, 10801, 21601, 31601, 42801, 62001, 90001, 120001, 170001, 220001,
+        280001, 370001, 480001
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Necrophim)."
+    },
+    {
+      "id": "between_shadows_millek_astral_mage",
+      "name": "Millek / Mind Master / Astral Mage",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2601, 5001, 10001, 20001, 30001, 50001, 80001, 130001, 180001, 230001, 290001,
+        370001, 480001, 575001
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Millek, Mind Master, Astral Mage)."
+    },
+    {
+      "id": "between_shadows_mountebank_mystic",
+      "name": "Mountebank / Turantuloid Mystic",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 2401, 4601, 9201, 18401, 28401, 48301, 78001, 110001, 150001, 200001, 250001,
+        310001, 380001, 470001
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Mountebank, Turantuloid Mystic)."
+    },
+    {
+      "id": "between_shadows_morpheomoth_nightmare",
+      "name": "Morpheomoth / Living Nightmare",
+      "gameSystems": ["nightbane", "between_the_shadows"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows",
+          "pageNumber": 145
+        }
+      ],
+      "maxLevel": 15,
+      "floors": [
+        0, 3001, 6001, 12001, 24001, 50001, 80001, 120001, 170001, 220001, 290001, 375001,
+        450001, 525001, 625001
+      ],
+      "occIds": [],
+      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Morpheomoth, Living Nightmare)."
+    }
+  ]
+}
