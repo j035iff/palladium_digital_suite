@@ -1,0 +1,8 @@
+{
+  "id": "animal_bat",
+  "kind": "morphus_trait_table",
+  "displayName": "Bat",
+  "parentTable": "animal",
+  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
+  "entries": []
+}

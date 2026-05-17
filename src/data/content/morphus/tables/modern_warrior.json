@@ -1,0 +1,8 @@
+{
+  "id": "modern_warrior",
+  "kind": "morphus_trait_table",
+  "displayName": "Modern Warrior",
+  "parentTable": null,
+  "description": "Modern Warrior Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

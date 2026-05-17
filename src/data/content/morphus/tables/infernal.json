@@ -1,0 +1,8 @@
+{
+  "id": "infernal",
+  "kind": "morphus_trait_table",
+  "displayName": "Infernal",
+  "parentTable": null,
+  "description": "Infernal Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

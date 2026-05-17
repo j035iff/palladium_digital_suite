@@ -1,0 +1,8 @@
+{
+  "id": "undead",
+  "kind": "morphus_trait_table",
+  "displayName": "Undead",
+  "parentTable": null,
+  "description": "Undead Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

@@ -1,0 +1,8 @@
+{
+  "id": "gear_head",
+  "kind": "morphus_trait_table",
+  "displayName": "Gear Head",
+  "parentTable": null,
+  "description": "Gear Head Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

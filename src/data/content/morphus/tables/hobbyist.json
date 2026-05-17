@@ -1,0 +1,8 @@
+{
+  "id": "hobbyist",
+  "kind": "morphus_trait_table",
+  "displayName": "Hobbyist",
+  "parentTable": null,
+  "description": "Hobbyist Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

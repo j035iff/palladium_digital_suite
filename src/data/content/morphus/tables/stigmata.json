@@ -1,0 +1,8 @@
+{
+  "id": "stigmata",
+  "kind": "morphus_trait_table",
+  "displayName": "Stigmata",
+  "parentTable": null,
+  "description": "Stigmata Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

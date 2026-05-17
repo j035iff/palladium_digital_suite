@@ -409,6 +409,260 @@ export type MorphusTablePrerequisites = {
   morphusTableIds?: readonly string[]
 }
 
+export type MorphusTableKind = 'category_hub' | 'morphus_trait_table'
+
+export type MorphusTableSubtableRef = {
+  id: string
+  name: string
+  tableFile: string
+}
+
+/** Flat, dice, or percent adjustment to any numeric metric. */
+export type MorphusPolymorphicModifier = {
+  flat?: number
+  dice?: string
+  percent?: number
+}
+
+export type MorphusNaturalWeaponLimbType =
+  | 'claws'
+  | 'pincers'
+  | 'talons'
+  | 'bite'
+  | 'tail'
+  | 'kick'
+  | 'stomp'
+  | 'head_butt'
+  | 'beak'
+  | 'misc_limbs'
+
+export type MorphusPoisonProfile = {
+  saveType: 'poison' | 'gas'
+  failDamageFormula: string
+  passDamageFormula: string
+}
+
+export type MorphusNaturalWeapon = {
+  limbType: MorphusNaturalWeaponLimbType
+  label?: string
+  damageFormula: string
+  isAdditiveToHth: boolean
+  poison?: MorphusPoisonProfile
+}
+
+export type MorphusLimbDurability = {
+  limbName: string
+  quantity: number
+  sdc: number
+  hp?: number
+}
+
+export type MorphusStatModifiers = {
+  iq?: MorphusPolymorphicModifier
+  me?: MorphusPolymorphicModifier
+  ma?: MorphusPolymorphicModifier
+  ps?: MorphusPolymorphicModifier
+  pp?: MorphusPolymorphicModifier
+  pe?: MorphusPolymorphicModifier
+  pb?: MorphusPolymorphicModifier
+  spd?: MorphusPolymorphicModifier
+  sdc?: MorphusPolymorphicModifier
+  hp?: MorphusPolymorphicModifier
+  ppe?: MorphusPolymorphicModifier
+  hf?: MorphusPolymorphicModifier
+  perception?: MorphusPolymorphicModifier
+  apm?: MorphusPolymorphicModifier
+  initiative?: MorphusPolymorphicModifier
+  strike?: MorphusPolymorphicModifier
+  parry?: MorphusPolymorphicModifier
+  dodge?: MorphusPolymorphicModifier
+  rollWithPunch?: MorphusPolymorphicModifier
+  pullPunch?: MorphusPolymorphicModifier
+  entangle?: MorphusPolymorphicModifier
+  disarm?: MorphusPolymorphicModifier
+  strikeWithGuns?: MorphusPolymorphicModifier
+  bonusHthDamage?: MorphusPolymorphicModifier
+}
+
+export type MorphusSaveModifiers = {
+  magic?: number
+  psionics?: number
+  insanity?: number
+  poison?: number
+  gas?: number
+  horrorFactor?: number
+  disease?: number
+  possession?: number
+  illusions?: number
+  nightlordMagic?: number
+  allSaves?: number
+  comaDeath?: MorphusPolymorphicModifier
+}
+
+export type MorphusJumpModifiers = {
+  standingHeight?: MorphusPolymorphicModifier
+  standingDistance?: MorphusPolymorphicModifier
+  runningHeight?: MorphusPolymorphicModifier
+  runningDistance?: MorphusPolymorphicModifier
+}
+
+export type MorphusWaterCombatModifiers = {
+  strike?: MorphusPolymorphicModifier
+  parry?: MorphusPolymorphicModifier
+  dodge?: MorphusPolymorphicModifier
+}
+
+export type MorphusAquaticBuoyancy = 'sink' | 'float' | 'neutral'
+
+export type MorphusAquaticTraits = {
+  holdBreathDuration?: MorphusPolymorphicModifier
+  canBreatheUnderwater?: boolean
+  noBreathingRequired?: boolean
+  depthToleranceFeet?: number
+  waterCombatModifiers?: MorphusWaterCombatModifiers
+  buoyancy?: MorphusAquaticBuoyancy
+}
+
+export type MorphusFlightCombatBonuses = {
+  strike?: MorphusPolymorphicModifier
+  parry?: MorphusPolymorphicModifier
+  dodge?: MorphusPolymorphicModifier
+  rollWithPunch?: MorphusPolymorphicModifier
+}
+
+export type MorphusFlightEngine = {
+  flySpdAttribute?: MorphusPolymorphicModifier
+  maxSpeedMph?: number
+  maxAltitudeFeet?: number
+  flightCombatBonuses?: MorphusFlightCombatBonuses
+}
+
+export type MorphusMobility = {
+  jumpModifiers?: MorphusJumpModifiers
+  swimSpeedBonus?: MorphusPolymorphicModifier
+  aquaticTraits?: MorphusAquaticTraits
+  flightEngine?: MorphusFlightEngine
+}
+
+export type MorphusPerceptionSpecialties = {
+  vision?: number
+  smell?: number
+  sound?: number
+}
+
+export type MorphusSensory = {
+  nightvisionRangeFlatBonus?: number
+  perceptionSpecialties?: MorphusPerceptionSpecialties
+  telescopicVision?: boolean
+  thermalVision?: boolean
+  seeInvisible?: boolean
+  sharpVision?: boolean
+  sonarHearing?: boolean
+  sharpHearing?: boolean
+  invisibleToThermalImaging?: boolean
+}
+
+export type MorphusSkillOverrideTargetType = 'skill_id' | 'category' | 'skill_trait'
+
+export type MorphusSkillOverride = {
+  targetType: MorphusSkillOverrideTargetType
+  targetValue: string
+  modifierPercent?: number
+  isNegated?: boolean
+  grantUnlearnedValue?: number
+}
+
+export type MorphusSkillModifiers = {
+  globalSkillModifier?: number
+  specificSkillOverrides?: readonly MorphusSkillOverride[]
+}
+
+/** Vulnerability tier multiplier (0 = none … 2 = double). */
+export type MorphusDamageAffinityMultiplier = 0 | 0.25 | 0.5 | 1 | 2
+
+export type MorphusDamageAffinityType =
+  | 'heat'
+  | 'fire'
+  | 'cold'
+  | 'ice'
+  | 'poison'
+  | 'airborneToxins'
+  | 'electricity'
+  | 'lasers'
+  | 'energy'
+  | 'kinetic'
+  | 'blunt'
+  | 'explosives'
+  | 'falling'
+  | 'fatigue'
+  | 'magic'
+  | 'nightlordMagic'
+  | 'water'
+  | 'wood'
+  | 'silver'
+  | 'holyWeapons'
+  | 'piercing'
+  | 'pain'
+  | 'light'
+  | 'darknessPowers'
+
+export type MorphusDamageAffinities = Partial<
+  Record<MorphusDamageAffinityType, MorphusDamageAffinityMultiplier>
+>
+
+export type MorphusWeaponClassBonuses = {
+  melee?: MorphusPolymorphicModifier
+  thrown?: MorphusPolymorphicModifier
+  bow?: MorphusPolymorphicModifier
+  guns?: MorphusPolymorphicModifier
+  requiring_hands?: MorphusPolymorphicModifier
+}
+
+export type MorphusSubTraitChoicesBudget = {
+  slotsAvailable: number
+  allowedChoicesPool: readonly string[]
+}
+
+/**
+ * Morphus characteristic row (`palladium-morphus.schema.json`).
+ * Aggregated at runtime — see `morphusCharacteristicAggregation.ts`.
+ */
+export type MorphusCharacteristic = {
+  id: string
+  name: string
+  tableCategory: string
+  description?: string
+  statModifiers?: MorphusStatModifiers
+  /** Absolute natural A.R. from this trait (not a polymorphic modifier). */
+  naturalAr?: number
+  saveModifiers?: MorphusSaveModifiers
+  mobility?: MorphusMobility
+  sensory?: MorphusSensory
+  skillModifiers?: MorphusSkillModifiers
+  damageAffinities?: MorphusDamageAffinities
+  weaponClassBonuses?: MorphusWeaponClassBonuses
+  heightModifier?: MorphusPolymorphicModifier
+  weightModifier?: MorphusPolymorphicModifier
+  naturalWeapons?: readonly MorphusNaturalWeapon[]
+  limbDurability?: readonly MorphusLimbDurability[]
+  subTraitChoicesBudget?: MorphusSubTraitChoicesBudget
+  customOneOffs?: readonly string[]
+}
+
+/**
+ * Morphus table document (`content/morphus/tables/*.json`, palladium-morphus-table.schema.json).
+ * `category_hub` tables route to leaf `morphus_trait_table` files via `subtables`.
+ */
+export type PalladiumMorphusTable = {
+  id: string
+  kind: MorphusTableKind
+  displayName: string
+  description?: string
+  parentTable: string | null
+  subtables?: readonly MorphusTableSubtableRef[]
+  entries: readonly MorphusCharacteristic[]
+}
+
 /**
  * Nightbane talent catalog row (`content/palladiumTalents.json`, palladium-talent.schema.json).
  */

@@ -1,0 +1,8 @@
+{
+  "id": "unusual_facial_features",
+  "kind": "morphus_trait_table",
+  "displayName": "Unusual Facial Features",
+  "parentTable": null,
+  "description": "Unusual Facial Features Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

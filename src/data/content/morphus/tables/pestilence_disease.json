@@ -1,0 +1,8 @@
+{
+  "id": "pestilence_disease",
+  "kind": "morphus_trait_table",
+  "displayName": "Pestilence Disease",
+  "parentTable": null,
+  "description": "Pestilence Disease Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

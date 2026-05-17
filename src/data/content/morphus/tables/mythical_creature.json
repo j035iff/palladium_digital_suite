@@ -1,0 +1,8 @@
+{
+  "id": "mythical_creature",
+  "kind": "morphus_trait_table",
+  "displayName": "Mythical Creature",
+  "parentTable": null,
+  "description": "Mythical Creature Morphus table (top-level, distinct from Fantasy). Add characteristic rows from the book.",
+  "entries": []
+}

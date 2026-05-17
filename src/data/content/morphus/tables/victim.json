@@ -1,0 +1,8 @@
+{
+  "id": "victim",
+  "kind": "morphus_trait_table",
+  "displayName": "Victim",
+  "parentTable": null,
+  "description": "Victim Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

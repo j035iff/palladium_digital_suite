@@ -1,0 +1,8 @@
+{
+  "id": "sci-fi",
+  "kind": "morphus_trait_table",
+  "displayName": "Sci-Fi",
+  "parentTable": null,
+  "description": "Sci-Fi Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

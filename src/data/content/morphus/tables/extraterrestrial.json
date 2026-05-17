@@ -1,0 +1,8 @@
+{
+  "id": "extraterrestrial",
+  "kind": "morphus_trait_table",
+  "displayName": "Extraterrestrial",
+  "parentTable": null,
+  "description": "Extraterrestrial Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

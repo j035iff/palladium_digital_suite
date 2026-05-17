@@ -1,0 +1,8 @@
+{
+  "id": "fantasy",
+  "kind": "morphus_trait_table",
+  "displayName": "Fantasy",
+  "parentTable": null,
+  "description": "Fantasy Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

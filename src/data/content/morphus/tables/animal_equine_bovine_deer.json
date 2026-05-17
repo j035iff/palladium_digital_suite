@@ -1,0 +1,8 @@
+{
+  "id": "animal_equine_bovine_deer",
+  "kind": "morphus_trait_table",
+  "displayName": "Equine/Bovine/Deer",
+  "parentTable": "animal",
+  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
+  "entries": []
+}

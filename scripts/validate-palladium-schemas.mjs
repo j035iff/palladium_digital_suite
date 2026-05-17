@@ -36,6 +36,12 @@ const standardModernWeaponProgressionSchema = loadJson(
 )
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
+const morphusCharacteristicSchema = loadJson(
+  join(schemasDir, 'palladium-morphus.schema.json'),
+)
+const morphusTableSchema = loadJson(
+  join(schemasDir, 'palladium-morphus-table.schema.json'),
+)
 
 const ajv = new Ajv2020({
   allErrors: true,
@@ -43,6 +49,7 @@ const ajv = new Ajv2020({
   validateSchema: false,
 })
 addFormats(ajv)
+ajv.addSchema(morphusCharacteristicSchema)
 
 let failed = false
 for (const [label, schema] of [
@@ -53,6 +60,8 @@ for (const [label, schema] of [
   ['palladium-occ.schema.json', occSchema],
   ['palladium-hth.schema.json', handToHandSchema],
   ['palladium-talent.schema.json', talentSchema],
+  ['palladium-morphus.schema.json', morphusCharacteristicSchema],
+  ['palladium-morphus-table.schema.json', morphusTableSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -70,6 +79,8 @@ const validateRaceRow = ajv.compile(raceSchema)
 const validateOccRow = ajv.compile(occSchema)
 const validateHandToHandRow = ajv.compile(handToHandSchema)
 const validateTalentRow = ajv.compile(talentSchema)
+const validateMorphusCharacteristic = ajv.compile(morphusCharacteristicSchema)
+const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
 
 const palladiumSkills = loadJson(join(contentDir, 'palladiumSkills.json'))
 if (!Array.isArray(palladiumSkills)) {
@@ -246,12 +257,54 @@ if (!Array.isArray(palladiumTalents)) {
   }
 }
 
+const morphusTablesDir = join(contentDir, 'morphus/tables')
+let morphusTableFiles = []
+try {
+  morphusTableFiles = readdirSync(morphusTablesDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR morphus/tables — directory missing')
+  failed = true
+}
+
+if (morphusTableFiles.length > 0) {
+  let morphusBad = 0
+  for (const file of morphusTableFiles) {
+    const doc = loadJson(join(morphusTablesDir, file))
+    if (!validateMorphusTableDoc(doc)) {
+      morphusBad++
+      if (morphusBad <= 5) {
+        console.error(
+          `ERR morphus/tables/${file} id=${doc?.id ?? '?'}:`,
+          validateMorphusTableDoc.errors,
+        )
+      }
+    }
+  }
+  if (morphusBad === 0) {
+    console.log(
+      `OK  morphus/tables — ${morphusTableFiles.length} table file(s) validate`,
+    )
+  } else {
+    failed = true
+    console.error(
+      `ERR morphus/tables — ${morphusBad} file(s) failed schema validation`,
+    )
+  }
+}
+
 const exampleValidators = [
   { prefix: 'palladium-skill', compile: validateSkillRow },
   { prefix: 'palladium-race', compile: validateRaceRow },
   { prefix: 'palladium-occ', compile: validateOccRow },
   { prefix: 'palladium-hth', compile: validateHandToHandRow },
   { prefix: 'palladium-talent', compile: validateTalentRow },
+  { prefix: 'palladium-morphus-table', compile: validateMorphusTableDoc },
+  {
+    prefix: 'palladium-morphus-characteristic',
+    compile: validateMorphusCharacteristic,
+  },
   {
     prefix: 'palladium-weapon-proficiency',
     compile: validateWeaponProficiencyRow,

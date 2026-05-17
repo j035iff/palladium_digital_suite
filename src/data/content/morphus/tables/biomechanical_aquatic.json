@@ -1,0 +1,8 @@
+{
+  "id": "biomechanical_aquatic",
+  "kind": "morphus_trait_table",
+  "displayName": "Biomechanical Aquatic",
+  "parentTable": null,
+  "description": "Biomechanical Aquatic Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

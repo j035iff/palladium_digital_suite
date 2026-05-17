@@ -1,0 +1,8 @@
+{
+  "id": "disproportion",
+  "kind": "morphus_trait_table",
+  "displayName": "Disproportion",
+  "parentTable": null,
+  "description": "Disproportion Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

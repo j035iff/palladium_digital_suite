@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-morphus-table.schema.json",
+  "title": "Palladium Morphus table",
+  "description": "One JSON file per Morphus category hub or trait table. Hubs list sub-table files; trait tables hold characteristic rows in entries.",
+  "oneOf": [
+    { "$ref": "#/$defs/categoryHub" },
+    { "$ref": "#/$defs/morphusTraitTable" }
+  ],
+  "$defs": {
+    "tableId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "minLength": 1,
+      "description": "Stable slug (e.g. infernal, sci-fi)."
+    },
+    "characteristicRow": {
+      "$ref": "https://megaverse-companion.local/schemas/palladium-morphus.schema.json"
+    },
+    "subtableRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "tableFile"],
+      "properties": {
+        "id": { "$ref": "#/$defs/tableId" },
+        "name": { "type": "string", "minLength": 1 },
+        "tableFile": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]+\\.json$",
+          "minLength": 1
+        }
+      }
+    },
+    "categoryHub": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "displayName", "parentTable", "subtables", "entries"],
+      "properties": {
+        "$schema": { "type": "string" },
+        "id": { "$ref": "#/$defs/tableId" },
+        "kind": { "const": "category_hub" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "parentTable": { "type": ["string", "null"] },
+        "subtables": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/subtableRef" }
+        },
+        "entries": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/characteristicRow" }
+        }
+      }
+    },
+    "morphusTraitTable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "displayName", "parentTable", "entries"],
+      "properties": {
+        "$schema": { "type": "string" },
+        "id": { "$ref": "#/$defs/tableId" },
+        "kind": { "const": "morphus_trait_table" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "parentTable": { "type": ["string", "null"] },
+        "entries": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/characteristicRow" }
+        }
+      }
+    }
+  }
+}

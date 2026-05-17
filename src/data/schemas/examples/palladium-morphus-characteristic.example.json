@@ -1,0 +1,70 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus.schema.json",
+  "id": "morphus_example_winged_predator",
+  "name": "Winged Predator (example)",
+  "tableCategory": "Animal",
+  "description": "Schema example — not book data.",
+  "statModifiers": {
+    "spd": { "percent": 20 },
+    "strike": { "flat": 2 },
+    "bonusHthDamage": { "dice": "2D6" }
+  },
+  "naturalAr": 10,
+  "saveModifiers": {
+    "poison": 2,
+    "comaDeath": { "percent": -10 }
+  },
+  "mobility": {
+    "flightEngine": {
+      "flySpdAttribute": { "flat": 4 },
+      "maxSpeedMph": 120,
+      "maxAltitudeFeet": 10000,
+      "flightCombatBonuses": {
+        "dodge": { "flat": 1 }
+      }
+    }
+  },
+  "sensory": {
+    "nightvisionRangeFlatBonus": 1000,
+    "thermalVision": true,
+    "perceptionSpecialties": { "vision": 2 }
+  },
+  "skillModifiers": {
+    "globalSkillModifier": -10,
+    "specificSkillOverrides": [
+      {
+        "targetType": "skill_id",
+        "targetValue": "prowl",
+        "modifierPercent": 15
+      }
+    ]
+  },
+  "damageAffinities": {
+    "fire": 0.5,
+    "cold": 2
+  },
+  "weaponClassBonuses": {
+    "melee": { "flat": 1 }
+  },
+  "naturalWeapons": [
+    {
+      "limbType": "talons",
+      "label": "Raptor Talons",
+      "damageFormula": "3D6",
+      "isAdditiveToHth": true
+    }
+  ],
+  "limbDurability": [
+    {
+      "limbName": "Wings",
+      "quantity": 2,
+      "sdc": 40
+    }
+  ],
+  "heightModifier": { "percent": 50 },
+  "subTraitChoicesBudget": {
+    "slotsAvailable": 2,
+    "allowedChoicesPool": ["theme_music", "mini_missiles"]
+  },
+  "customOneOffs": ["Cannot fit through standard doorways without squeezing."]
+}

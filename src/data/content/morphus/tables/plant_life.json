@@ -1,0 +1,8 @@
+{
+  "id": "plant_life",
+  "kind": "morphus_trait_table",
+  "displayName": "Plant Life",
+  "parentTable": null,
+  "description": "Plant Life Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

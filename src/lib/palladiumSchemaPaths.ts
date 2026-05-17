@@ -27,6 +27,12 @@ export const PALLADIUM_HAND_TO_HAND_SCHEMA_PATH =
 export const PALLADIUM_TALENT_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-talent.schema.json` as const
 
+export const PALLADIUM_MORPHUS_TABLE_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-morphus-table.schema.json` as const
+
+export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-morphus.schema.json` as const
+
 /** `$id` inside `palladium-skill.schema.json` — use for `$schema` pointers in skill JSON. */
 export const PALLADIUM_SKILL_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-skill.schema.json' as const
@@ -52,6 +58,12 @@ export const PALLADIUM_HAND_TO_HAND_SCHEMA_ID =
 export const PALLADIUM_TALENT_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-talent.schema.json' as const
 
+export const PALLADIUM_MORPHUS_TABLE_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-morphus-table.schema.json' as const
+
+export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-morphus.schema.json' as const
+
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumSkills.json` as const
 
@@ -72,3 +84,7 @@ export const WEAPON_PROFICIENCIES_CATALOG_JSON_PATH =
 
 export const STANDARD_MODERN_WEAPON_PROGRESSION_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/standard_modern_weapon_progression.json` as const
+
+/** One JSON file per Morphus table (hubs and trait tables). */
+export const PALLADIUM_MORPHUS_TABLES_DIR =
+  `${PALLADIUM_CONTENT_DIR}/morphus/tables` as const

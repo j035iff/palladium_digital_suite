@@ -1,0 +1,8 @@
+{
+  "id": "substance_abuse",
+  "kind": "morphus_trait_table",
+  "displayName": "Substance Abuse",
+  "parentTable": null,
+  "description": "Substance Abuse Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

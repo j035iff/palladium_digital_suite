@@ -1,0 +1,8 @@
+{
+  "id": "occupation",
+  "kind": "morphus_trait_table",
+  "displayName": "Occupation",
+  "parentTable": null,
+  "description": "Occupation Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

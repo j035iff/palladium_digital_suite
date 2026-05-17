@@ -1,0 +1,9 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-table.schema.json",
+  "id": "animal_reptilian",
+  "kind": "morphus_trait_table",
+  "displayName": "Reptilian",
+  "parentTable": "animal",
+  "description": "Animal sub-table traits.",
+  "entries": []
+}

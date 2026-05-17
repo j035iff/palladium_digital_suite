@@ -1,0 +1,36 @@
+{
+  "id": "animal",
+  "kind": "category_hub",
+  "displayName": "Animal",
+  "description": "Master Animal Morphus: pick or roll one sub-table, then roll or pick traits on that table for stat modifiers. Dinosaur and Mythical Creature use top-level tables `dinosaur.json` and `mythical_creature.json`.",
+  "parentTable": null,
+  "subtables": [
+    { "id": "animal_amphibian", "name": "Amphibian", "tableFile": "animal_amphibian.json" },
+    { "id": "animal_arachnid", "name": "Arachnid", "tableFile": "animal_arachnid.json" },
+    { "id": "animal_avian", "name": "Avian", "tableFile": "animal_avian.json" },
+    { "id": "animal_bat", "name": "Bat", "tableFile": "animal_bat.json" },
+    { "id": "animal_bear", "name": "Bear", "tableFile": "animal_bear.json" },
+    { "id": "animal_canine", "name": "Canine", "tableFile": "animal_canine.json" },
+    { "id": "animal_crustacean", "name": "Crustacean", "tableFile": "animal_crustacean.json" },
+    { "id": "animal_dolphin_whale", "name": "Dolphin/Whale", "tableFile": "animal_dolphin_whale.json" },
+    {
+      "id": "animal_equine_bovine_deer",
+      "name": "Equine/Bovine/Deer",
+      "tableFile": "animal_equine_bovine_deer.json"
+    },
+    { "id": "animal_feline", "name": "Feline", "tableFile": "animal_feline.json" },
+    { "id": "animal_fish", "name": "Fish", "tableFile": "animal_fish.json" },
+    { "id": "animal_insectoid", "name": "Insectoid", "tableFile": "animal_insectoid.json" },
+    {
+      "id": "animal_octopus_squid",
+      "name": "Octopus/Squid",
+      "tableFile": "animal_octopus_squid.json"
+    },
+    { "id": "animal_primate", "name": "Primate", "tableFile": "animal_primate.json" },
+    { "id": "animal_reptilian", "name": "Reptilian", "tableFile": "animal_reptilian.json" },
+    { "id": "animal_rodent", "name": "Rodent", "tableFile": "animal_rodent.json" },
+    { "id": "animal_shark", "name": "Shark", "tableFile": "animal_shark.json" },
+    { "id": "animal_snake", "name": "Snake", "tableFile": "animal_snake.json" }
+  ],
+  "entries": []
+}

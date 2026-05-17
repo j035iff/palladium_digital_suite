@@ -1,0 +1,8 @@
+{
+  "id": "clown_jester",
+  "kind": "morphus_trait_table",
+  "displayName": "Clown/Jester",
+  "parentTable": null,
+  "description": "Clown/Jester Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

@@ -1,0 +1,8 @@
+{
+  "id": "dinosaur",
+  "kind": "morphus_trait_table",
+  "displayName": "Dinosaur",
+  "parentTable": null,
+  "description": "Dinosaur Morphus table (top-level, not an Animal hub sub-table). Add characteristic rows from the book.",
+  "entries": []
+}

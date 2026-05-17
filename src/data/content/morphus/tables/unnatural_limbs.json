@@ -1,0 +1,8 @@
+{
+  "id": "unnatural_limbs",
+  "kind": "morphus_trait_table",
+  "displayName": "Unnatural Limbs",
+  "parentTable": null,
+  "description": "Unnatural Limbs Morphus table. Add characteristic rows from the book.",
+  "entries": []
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-table.schema.json",
+  "id": "animal",
+  "kind": "category_hub",
+  "displayName": "Animal",
+  "description": "Master Animal Morphus hub.",
+  "parentTable": null,
+  "subtables": [
+    { "id": "animal_reptilian", "name": "Reptilian", "tableFile": "animal_reptilian.json" }
+  ],
+  "entries": []
+}
