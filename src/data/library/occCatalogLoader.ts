@@ -1,14 +1,29 @@
 import type { PalladiumOcc } from '../../types'
 import { normalizePalladiumOcc } from '../../lib/occCatalogEngine'
-import palladiumOccs from '../content/palladiumOccs.json'
 
-function loadOccs(): readonly PalladiumOcc[] {
-  const rows = palladiumOccs as unknown
-  if (!Array.isArray(rows)) return []
-  return rows.map((row) => normalizePalladiumOcc(row as PalladiumOcc))
+const occModules = import.meta.glob('../content/occs/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, PalladiumOcc[]>
+
+function flattenOccCatalog(): PalladiumOcc[] {
+  const byId = new Map<string, PalladiumOcc>()
+  for (const [path, rows] of Object.entries(occModules)) {
+    if (!Array.isArray(rows)) continue
+    for (const row of rows) {
+      if (!row?.id) continue
+      if (byId.has(row.id)) {
+        throw new Error(
+          `Duplicate O.C.C. id "${row.id}" in occ catalog (e.g. ${path})`,
+        )
+      }
+      byId.set(row.id, normalizePalladiumOcc(row))
+    }
+  }
+  return [...byId.values()].sort((a, b) => a.id.localeCompare(b.id))
 }
 
-export const PALLADIUM_OCC_CATALOG: readonly PalladiumOcc[] = loadOccs()
+export const PALLADIUM_OCC_CATALOG: readonly PalladiumOcc[] = flattenOccCatalog()
 
 export function getPalladiumOccById(id: string): PalladiumOcc | undefined {
   return PALLADIUM_OCC_CATALOG.find((o) => o.id === id)

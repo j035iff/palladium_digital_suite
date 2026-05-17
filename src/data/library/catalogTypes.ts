@@ -25,7 +25,7 @@ export type PalladiumSkillCatalogEntry = {
   skillTraits?: readonly string[]
 }
 
-/** Row from `content/palladiumOccs.json` — see `schemas/palladium-occ.schema.json`. */
+/** Row from `content/occs/*.json` — see `schemas/palladium-occ.schema.json`. */
 export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 
 /** Row from `content/palladiumHandToHand.json` — see `schemas/palladium-hth.schema.json`. */

@@ -883,7 +883,7 @@ export type OccBaseStatsDice = {
 }
 
 /**
- * Library O.C.C. catalog row (`content/palladiumOccs.json`, palladium-occ.schema.json).
+ * Library O.C.C. catalog row (`content/occs/*.json`, palladium-occ.schema.json).
  * Alias: {@link OCC}.
  */
 export type PalladiumOcc = {

@@ -206,28 +206,60 @@ if (!Array.isArray(palladiumRaces)) {
   }
 }
 
-const palladiumOccs = loadJson(join(contentDir, 'palladiumOccs.json'))
-if (!Array.isArray(palladiumOccs)) {
+const occsDir = join(contentDir, 'occs')
+const palladiumOccs = []
+let occFiles = []
+try {
+  occFiles = readdirSync(occsDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR occs — directory missing')
   failed = true
-  console.error('ERR palladiumOccs.json — expected top-level array')
-} else {
+}
+
+if (occFiles.length > 0) {
+  const occIdsSeen = new Set()
   let occBad = 0
-  for (const row of palladiumOccs) {
-    if (!validateOccRow(row)) {
-      occBad++
-      if (occBad <= 5) {
-        console.error(
-          `ERR palladiumOccs.json id=${row?.id ?? '?'}:`,
-          validateOccRow.errors,
-        )
+  for (const file of occFiles) {
+    const label = `occs/${file}`
+    const rows = loadJson(join(occsDir, file))
+    if (!Array.isArray(rows)) {
+      failed = true
+      console.error(`ERR ${label} — expected top-level array`)
+      continue
+    }
+    for (const row of rows) {
+      if (row?.id) {
+        if (occIdsSeen.has(row.id)) {
+          occBad++
+          if (occBad <= 5) {
+            console.error(`ERR ${label} — duplicate O.C.C. id "${row.id}"`)
+          }
+        } else {
+          occIdsSeen.add(row.id)
+        }
+      }
+      if (!validateOccRow(row)) {
+        occBad++
+        if (occBad <= 5) {
+          console.error(
+            `ERR ${label} id=${row?.id ?? '?'}:`,
+            validateOccRow.errors,
+          )
+        }
+      } else {
+        palladiumOccs.push(row)
       }
     }
   }
   if (occBad === 0) {
-    console.log(`OK  palladiumOccs.json — ${palladiumOccs.length} rows validate`)
+    console.log(
+      `OK  occs — ${occFiles.length} book file(s), ${palladiumOccs.length} row(s) validate`,
+    )
   } else {
     failed = true
-    console.error(`ERR palladiumOccs.json — ${occBad} row(s) failed schema validation`)
+    console.error(`ERR occs — ${occBad} validation error(s)`)
   }
 }
 
@@ -326,7 +358,7 @@ if (Array.isArray(palladiumOccs) && tableById.size > 0) {
       xrefBad++
       if (xrefBad <= 5) {
         console.error(
-          `ERR palladiumOccs.json id=${row.id}: unknown progression.xpTableId "${tid}"`,
+          `ERR occs id=${row.id}: unknown progression.xpTableId "${tid}"`,
         )
       }
     }

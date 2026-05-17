@@ -70,8 +70,8 @@ export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
 export const PALLADIUM_RACE_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumRaces.json` as const
 
-export const PALLADIUM_OCC_CATALOG_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/palladiumOccs.json` as const
+/** One JSON array per source book (same slug as `progression/xp_tables/`). */
+export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const
 
 export const PALLADIUM_HAND_TO_HAND_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumHandToHand.json` as const

@@ -56,7 +56,8 @@ function migrateObject(obj) {
 
 const targets = [
   'src/data/content/palladiumSkills.json',
-  'src/data/content/palladiumOccs.json',
+  'src/data/content/occs/between_the_shadows.json',
+  'src/data/content/occs/nightbane_core.json',
 ]
 
 import { readdirSync } from 'node:fs'
