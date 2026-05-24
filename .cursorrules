@@ -24,7 +24,7 @@ Anchored UI elements ensure players never lose their bearings when swapping stat
 7. Intuitive Depth
 Surface-level results for speed, with deep math and rule references accessible via tap-to-expand.
 8. Radical Visibility
-Choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
+Unless explicitly directed, choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
 
 ###Core guidelines
 If a content schema is updated, update the associated example json to account for the update.
