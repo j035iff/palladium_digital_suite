@@ -1,4 +1,5 @@
 import type { PalladiumOcc } from '../../types'
+import { isWhitelistedForHostGenre } from '../../lib/genreGating'
 import { normalizePalladiumOcc } from '../../lib/occCatalogEngine'
 
 const occModules = import.meta.glob('../content/occs/*.json', {
@@ -36,6 +37,19 @@ export function listPalladiumOccsForGameSystem(
   return PALLADIUM_OCC_CATALOG.filter((o) =>
     o.gameSystems.some((x) => x.toLowerCase() === g),
   )
+}
+
+/** Flat pool for creation: book rows tied to creation genre, excluding non-host whitelist rows. */
+export function listPalladiumOccsForCreation(
+  creationGenreId: string,
+  hostGenreId: string,
+): readonly PalladiumOcc[] {
+  const creation = creationGenreId.toLowerCase()
+  return PALLADIUM_OCC_CATALOG.filter(
+    (o) =>
+      o.gameSystems.some((x) => x.toLowerCase() === creation) &&
+      isWhitelistedForHostGenre(o, hostGenreId),
+  ).sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export function listPalladiumOccsByType(

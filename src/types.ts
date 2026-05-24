@@ -253,6 +253,8 @@ export type Race = {
   id: string
   name: string
   description: string
+  /** Host-genre whitelist (falls back to {@link gameSystems} when omitted in JSON). */
+  genresAvailable?: readonly string[]
   gameSystems: readonly string[]
   /** One or more book citations; use one entry per book when page numbers differ. */
   sources: readonly PalladiumSourceRef[]
@@ -890,6 +892,8 @@ export type PalladiumOcc = {
   id: string
   name: string
   description: string
+  /** Host-genre whitelist (falls back to {@link gameSystems} when omitted in JSON). */
+  genresAvailable?: readonly string[]
   gameSystems: readonly string[]
   sources: readonly PalladiumSourceRef[]
   occType: OccTypeSlug
@@ -917,6 +921,11 @@ export type PalladiumOcc = {
 
 /** Alias for {@link PalladiumOcc} — full O.C.C. composition document. */
 export type OCC = PalladiumOcc
+
+/** Injected at runtime by genreTransformer when illegal for active hostGenreId. */
+export type HostGenreRuntimeFlags = {
+  isHostGenreLocked?: boolean
+}
 
 export type SheetSkill = {
   id: string
@@ -971,6 +980,33 @@ export type XpGainEvent = {
   label: string
   atMs: number
 }
+
+/**
+ * Persisted root record (docs/vision.md, master_flow.md).
+ * Immutable creation stamp + dynamic host pointer; nested pools mirror {@link Character}.
+ */
+export type CharacterRootState = {
+  id: string
+  /** Stamped at file creation — native rules origin. */
+  readonly creationGenreId: string
+  /** Active viewport / GM room host ecosystem. */
+  hostGenreId: string
+} & Character
+
+/** Sheet skill row after runtime genre middleware. */
+export type DerivedSheetSkill = SheetSkill & HostGenreRuntimeFlags
+
+export type DerivedFormState = Omit<FormState, 'skills'> & {
+  skills: DerivedSheetSkill[]
+}
+
+/** UI-facing payload emitted by genreTransformer (read-only for presentation). */
+export type DerivedActiveState = CharacterRootState & {
+  facade: DerivedFormState
+  morphus: DerivedFormState
+}
+
+export type DerivedInventoryItem = InventoryItem & HostGenreRuntimeFlags
 
 export type Character = {
   name: string
@@ -1051,6 +1087,8 @@ export interface Item {
   name: string
   weightLbs: number
   itemType: 'gear' | 'armor' | 'weapon'
+  /** Optional whitelist for cross-genre inventory lockout. */
+  genresAvailable?: readonly string[]
 }
 
 /**

@@ -75,13 +75,33 @@ import {
   outstandingLevelUpTargets,
   xpProgressTowardNext,
 } from '../data/xpTables'
+import type { GenreId } from '../data/genres'
+import {
+  listSavedCharacters,
+  loadCharacterSave,
+  saveCharacterToStorage,
+  type CharacterIndexEntry,
+} from '../lib/characterIndex'
+import { serializeCharacterRootForSave } from '../lib/characterSave'
+import {
+  createBlankCharacterForGenre,
+  ensureCharacterRoot,
+  retainCharacterRoot,
+} from '../lib/characterRoot'
+import {
+  deriveInventoryForHost,
+  transformCharacterToHostEnvironment,
+} from '../utils/genreTransformer'
 import type {
   ActiveForm,
   ActiveMeleeDuration,
   Armor,
   AttacksPerMeleeState,
   Character,
+  CharacterRootState,
   CombatVitalityChange,
+  DerivedActiveState,
+  DerivedInventoryItem,
   FormState,
   InventoryItem,
   CombatHudDamagePulse,
@@ -123,8 +143,10 @@ import {
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 
+export type AppViewport = 'launcher' | 'sheet'
+
 /** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
-function syncRaceOccFacadeSdc(prev: Character): Character {
+function syncRaceOccFacadeSdc(prev: CharacterRootState): CharacterRootState {
   if (prev.creationVitalityCommitted) return prev
   const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
   const lib = getLibraryOccById(prev.occ.id)
@@ -157,7 +179,21 @@ type ActiveStats = {
 type SheetScalars = ReturnType<typeof computeDisplayScalars>
 
 type CharacterContextValue = {
-  character: Character
+  viewport: AppViewport
+  /** Middleware-derived payload for UI (master_flow.md Step D). */
+  character: DerivedActiveState
+  /** Immutable save-shaped record (mutations write here). */
+  rawCharacter: CharacterRootState
+  readonly creationGenreId: string
+  hostGenreId: string
+  setHostGenreId: (genreId: string) => void
+  derivedInventoryItems: DerivedInventoryItem[]
+  saveCharacter: () => void
+  loadSavedCharacter: (id: string) => void
+  startCreation: (genreId: GenreId) => void
+  returnToLauncher: () => void
+  savedCharacterRows: CharacterIndexEntry[]
+  refreshSavedCharacterIndex: () => void
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
@@ -326,41 +362,49 @@ type CharacterContextValue = {
 
 const CharacterContext = createContext<CharacterContextValue | null>(null)
 
-function ensureCharacterOcc(c: Character): Character {
+function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
   if (c.occ?.xpTable?.floors?.length) return c
   const def = getOccById('occ_ex_government_agent')
   if (!def) return c
   return { ...c, occ: snapshotOccForCharacter(def) }
 }
 
-function hydrateCharacterFromStorage(base: Character): Character {
-  const persisted = loadPersistedAbilityIds(base.name)
-  const fromFixture = base.selectedAbilities ?? []
-  const meta = loadCharacterMeta(base.name)
+function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootState {
+  const rooted = ensureCharacterRoot(base, {
+    creationGenreId: base.creationGenreId,
+    hostGenreId: base.hostGenreId,
+  })
+  const persisted = loadPersistedAbilityIds(rooted.name)
+  const fromFixture = rooted.selectedAbilities ?? []
+  const meta = loadCharacterMeta(rooted.name)
   let next = ensureCharacterOcc({
-    ...base,
+    ...rooted,
     selectedAbilities: persisted ?? fromFixture,
-    isFinalized: meta?.isFinalized ?? base.isFinalized ?? false,
+    isFinalized: meta?.isFinalized ?? rooted.isFinalized ?? false,
     creationVitalityCommitted:
       meta?.creationVitalityCommitted ??
-      base.creationVitalityCommitted ??
+      rooted.creationVitalityCommitted ??
       false,
   })
   const occRow = getLibraryOccById(next.occ.id)
-  if (occRow) next = patchCharacterCreationFromOcc(next, occRow)
+  if (occRow) next = retainCharacterRoot(next, patchCharacterCreationFromOcc(next, occRow))
   return next
 }
 
-/** Single cold-load snapshot: shared by character, level-up queue, and XP history initializers. */
-const INITIAL_CHARACTER_SNAPSHOT: Character = (() => {
-  const hydrated = hydrateCharacterFromStorage(characterFixture)
+/** Placeholder root until launcher load/create (not shown while viewport is launcher). */
+const INITIAL_CHARACTER_SNAPSHOT: CharacterRootState = (() => {
+  const root = ensureCharacterRoot(characterFixture, {
+    creationGenreId: 'nightbane',
+    hostGenreId: 'nightbane',
+  })
+  const hydrated = hydrateCharacterFromStorage(root)
   return hydrated.creationVitalityCommitted === true
     ? hydrated
     : syncRaceOccFacadeSdc(hydrated)
 })()
 
 /** Returns updated character if the pick is legal; otherwise null. */
-function nextCharacterIfAddAbility(prev: Character, id: string): Character | null {
+function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): CharacterRootState | null {
   const def = getFeatureById(id)
   if (!def) return null
   const selected = prev.selectedAbilities ?? []
@@ -402,7 +446,7 @@ function nextCharacterIfAddAbility(prev: Character, id: string): Character | nul
   return { ...prev, selectedAbilities: [...selected, id] }
 }
 
-function bumpAllHitPoints(prev: Character, roll: number): Character {
+function bumpAllHitPoints(prev: CharacterRootState, roll: number): CharacterRootState {
   const bump = (branch: FormState) => ({
     ...branch,
     hitPoints: {
@@ -424,7 +468,13 @@ function mergeLevelQueues(existing: number[], crossed: number[]): number[] {
 }
 
 export function CharacterProvider({ children }: { children: ReactNode }) {
-  const [character, setCharacter] = useState<Character>(() => INITIAL_CHARACTER_SNAPSHOT)
+  const [viewport, setViewport] = useState<AppViewport>('launcher')
+  const [rawCharacter, setRawCharacter] = useState<CharacterRootState>(
+    () => INITIAL_CHARACTER_SNAPSHOT,
+  )
+  const [savedCharacterRows, setSavedCharacterRows] = useState<CharacterIndexEntry[]>(
+    () => listSavedCharacters(),
+  )
   const [levelUpQueue, setLevelUpQueue] = useState<number[]>(() =>
     outstandingLevelUpTargets(INITIAL_CHARACTER_SNAPSHOT),
   )
@@ -433,52 +483,52 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
-    ensureCharacterOcc(characterFixture).occ.category === 'psychic'
+    ensureCharacterOcc(INITIAL_CHARACTER_SNAPSHOT).occ.category === 'psychic'
       ? 'master'
       : 'none',
   )
 
-  const occPsychicLocked = character.occ.category === 'psychic'
-  const gateBypassed = character.psychicGateBypassed === true
+  const occPsychicLocked = rawCharacter.occ.category === 'psychic'
+  const gateBypassed = rawCharacter.psychicGateBypassed === true
   const psychicSeedRef = useRef(false)
   const wasFinalizedRef = useRef(false)
 
   useEffect(() => {
     savePersistedAbilityIds(
-      character.name,
-      character.selectedAbilities ?? [],
+      rawCharacter.name,
+      rawCharacter.selectedAbilities ?? [],
     )
-  }, [character.name, character.selectedAbilities])
+  }, [rawCharacter.name, rawCharacter.selectedAbilities])
 
   useEffect(() => {
-    saveCharacterMeta(character.name, {
-      isFinalized: character.isFinalized === true,
+    saveCharacterMeta(rawCharacter.name, {
+      isFinalized: rawCharacter.isFinalized === true,
       creationVitalityCommitted:
-        character.creationVitalityCommitted === true,
+        rawCharacter.creationVitalityCommitted === true,
     })
   }, [
-    character.name,
-    character.isFinalized,
-    character.creationVitalityCommitted,
+    rawCharacter.name,
+    rawCharacter.isFinalized,
+    rawCharacter.creationVitalityCommitted,
   ])
 
   useEffect(() => {
-    saveXpHistory(character.name, xpHistory)
-  }, [character.name, xpHistory])
+    saveXpHistory(rawCharacter.name, xpHistory)
+  }, [rawCharacter.name, xpHistory])
 
   useEffect(() => {
-    const finalized = character.isFinalized === true
+    const finalized = rawCharacter.isFinalized === true
     if (finalized && !wasFinalizedRef.current) {
-      setLevelUpQueue(outstandingLevelUpTargets(character))
+      setLevelUpQueue(outstandingLevelUpTargets(rawCharacter))
     }
     wasFinalizedRef.current = finalized
-  }, [character])
+  }, [rawCharacter])
 
   useEffect(() => {
     if (!occPsychicLocked || psychicSeedRef.current) return
     psychicSeedRef.current = true
     setPsychicTierState('master')
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
       const branch = getFormState(prev, form)
       return {
@@ -486,7 +536,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         [form]: applyPsychicTierToFormState(branch, 'master'),
       }
     })
-  }, [occPsychicLocked, activeForm, character.raceId])
+  }, [occPsychicLocked, activeForm, rawCharacter.raceId])
 
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() =>
     syncArmorAndWeaponFlags(
@@ -507,6 +557,69 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [combatNarrativeLog, setCombatNarrativeLog] = useState<
     CombatNarrativeEntry[]
   >([])
+
+  const creationGenreId = rawCharacter.creationGenreId
+  const hostGenreId = rawCharacter.hostGenreId
+
+  const character = useMemo(
+    () =>
+      transformCharacterToHostEnvironment(rawCharacter, hostGenreId, {
+        inventoryItems,
+      }),
+    [rawCharacter, hostGenreId, inventoryItems],
+  )
+
+  const derivedInventoryItems = useMemo(
+    () => deriveInventoryForHost(inventoryItems, hostGenreId),
+    [inventoryItems, hostGenreId],
+  )
+
+  const refreshSavedCharacterIndex = useCallback(() => {
+    setSavedCharacterRows(listSavedCharacters())
+  }, [])
+
+  const saveCharacter = useCallback(() => {
+    const pristine = serializeCharacterRootForSave(rawCharacter)
+    saveCharacterToStorage(pristine)
+    refreshSavedCharacterIndex()
+  }, [rawCharacter, refreshSavedCharacterIndex])
+
+  const loadSavedCharacter = useCallback((id: string) => {
+    const loaded = loadCharacterSave(id)
+    if (!loaded) return
+    const hydrated = hydrateCharacterFromStorage(
+      ensureCharacterRoot(loaded, {
+        creationGenreId: loaded.creationGenreId,
+        hostGenreId: loaded.hostGenreId,
+      }),
+    )
+    setRawCharacter(
+      hydrated.creationVitalityCommitted ? hydrated : syncRaceOccFacadeSdc(hydrated),
+    )
+    setViewport('sheet')
+    setActiveForm('facade')
+    setXpHistory(loadXpHistory(hydrated.name))
+    setLevelUpQueue(outstandingLevelUpTargets(hydrated))
+  }, [])
+
+  const startCreation = useCallback((genreId: GenreId) => {
+    const blank = createBlankCharacterForGenre(genreId)
+    setRawCharacter(syncRaceOccFacadeSdc(blank))
+    setViewport('sheet')
+    setActiveForm('facade')
+    setPsychicTierState('none')
+    setXpHistory([])
+    setLevelUpQueue([])
+  }, [])
+
+  const returnToLauncher = useCallback(() => {
+    setViewport('launcher')
+    refreshSavedCharacterIndex()
+  }, [refreshSavedCharacterIndex])
+
+  const setHostGenreId = useCallback((genreId: string) => {
+    setRawCharacter((prev) => ({ ...prev, hostGenreId: genreId }))
+  }, [])
 
   const supportsDualForm = useMemo(
     () => characterHasDualForms(character),
@@ -988,7 +1101,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         opts,
       )
       if (!r) return
-      setCharacter(r.nextCharacter)
+      setRawCharacter(retainCharacterRoot(rawCharacter, r.nextCharacter))
       let nextEq = equippedArmorId
       if (nextEq) {
         const arm = r.nextInventory.find(
@@ -1009,6 +1122,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     },
     [
       character,
+      rawCharacter,
       sheetActiveForm,
       inventoryItems,
       equippedArmorId,
@@ -1020,13 +1134,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const applyCombatVitalityChange = useCallback(
     (change: CombatVitalityChange) => {
-      setCharacter((prev) => {
+      setRawCharacter((prev) => {
         const r = computeCombatVitalityDelta(prev, sheetActiveForm, change)
         if (!r) return prev
         setTimeout(() => {
           triggerVitalityFlash(r.flashKind)
         }, 0)
-        return r.next
+        return retainCharacterRoot(prev, r.next)
       })
     },
     [sheetActiveForm, triggerVitalityFlash],
@@ -1048,7 +1162,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (occPsychicLocked && tier !== 'master') return
 
       setPsychicTierState(tier)
-      setCharacter((prev) => {
+      setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
         const branch = getFormState(prev, form)
         return {
@@ -1066,7 +1180,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     const roll = rollD100()
     const tier = tierFromTestPotential(roll)
     setPsychicTierState(tier)
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
       const branch = getFormState(prev, form)
       return {
@@ -1079,9 +1193,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const updateAttribute = useCallback(
     (path: string, value: number | string) => {
-      setCharacter((prev) => {
+      setRawCharacter((prev) => {
         if (typeof value === 'number' && isNumericSheetPath(path)) {
-          return tryApplyNumericSheetPath(prev, path, value) ?? prev
+          const applied = tryApplyNumericSheetPath(prev, path, value)
+          return applied ? retainCharacterRoot(prev, applied) : prev
         }
 
         const parsed = parseAttributePath(path, sheetActiveForm)
@@ -1108,7 +1223,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setCreationSkillPicks = useCallback(
     (occ: string[], related: string[]) => {
-      setCharacter((prev) => ({
+      setRawCharacter((prev) => ({
         ...prev,
         creationOccSkillIds: occ,
         creationRelatedSkillIds: related,
@@ -1127,7 +1242,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (!isOccAllowedForRace(race, lib)) return
       const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
       setPsychicTierState(tier)
-      setCharacter((prev) => {
+      setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
         const branch = getFormState(prev, form)
         const nextBranch =
@@ -1146,25 +1261,30 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           ),
           lib,
         )
-        return syncRaceOccFacadeSdc(withOcc)
+        return syncRaceOccFacadeSdc(
+          retainCharacterRoot(prev, withOcc),
+        )
       })
     },
-    [activeForm, character.raceId],
+    [activeForm, rawCharacter.raceId],
   )
 
   const setOccSpecializationId = useCallback((specializationId: string) => {
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       const lib = getLibraryOccById(prev.occ.id)
       if (!lib?.specializations?.length) return prev
       if (!getOccSpecialization(lib, specializationId)) return prev
-      const withSpec: Character = {
+      const withSpec: CharacterRootState = {
         ...prev,
         occSpecializationId: specializationId,
       }
       return syncRaceOccFacadeSdc(
-        applyOccStartingSkillPicks(
-          patchCharacterCreationFromOcc(withSpec, lib),
-          lib,
+        retainCharacterRoot(
+          prev,
+          applyOccStartingSkillPicks(
+            patchCharacterCreationFromOcc(withSpec, lib),
+            lib,
+          ),
         ),
       )
     })
@@ -1177,7 +1297,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     const psTier = race ? mapRaceStrengthToPsTier(race.strengthCategory) : undefined
     const psionicNone = race?.psionics.capabilityType === 'none'
     setActiveForm('facade')
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       const withRace = syncRaceOccFacadeSdc({
         ...prev,
         raceId: id,
@@ -1205,7 +1325,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       const pairs: [string, number][] = [
         ['facade.hitPoints.maximum', rolls.facadeHp],
         ['facade.hitPoints.current', rolls.facadeHp],
@@ -1220,9 +1340,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         ['morphus.isp.maximum', rolls.morphusIspMax],
         ['morphus.isp.current', rolls.morphusIspMax],
       ]
-      let next: Character = prev
+      let next: CharacterRootState = prev
       for (const [path, v] of pairs) {
-        next = tryApplyNumericSheetPath(next, path, v) ?? next
+        const applied = tryApplyNumericSheetPath(next, path, v)
+        next = applied ? retainCharacterRoot(prev, applied) : next
       }
       return {
         ...next,
@@ -1232,12 +1353,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const finalizeCharacter = useCallback(() => {
-    setCharacter((prev) => ({ ...prev, isFinalized: true }))
+    setRawCharacter((prev) => ({ ...prev, isFinalized: true }))
   }, [])
 
   const addSelectedAbility = useCallback(
     (id: string) => {
-      setCharacter(
+      setRawCharacter(
         (prev) => nextCharacterIfAddAbility(prev, id) ?? prev,
       )
     },
@@ -1245,7 +1366,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const removeSelectedAbility = useCallback((id: string) => {
-    setCharacter((prev) => ({
+    setRawCharacter((prev) => ({
       ...prev,
       selectedAbilities: (prev.selectedAbilities ?? []).filter((x) => x !== id),
     }))
@@ -1260,7 +1381,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         if (activeFormState.isp.current < amount) return false
       }
 
-      setCharacter((prev) => {
+      setRawCharacter((prev) => {
         if (source === 'ppe') {
           if (prev.ppe.current < amount) return prev
           return {
@@ -1309,7 +1430,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const grantXp = useCallback((amount: number, label = 'XP award') => {
     if (!Number.isFinite(amount) || amount <= 0) return
     const id = `xp-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-    setCharacter((prev) => {
+    setRawCharacter((prev) => {
       if (!prev.occ?.xpTable?.floors?.length) return prev
       const prevXp = prev.xp
       const newXp = prevXp + amount
@@ -1334,7 +1455,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setLevelUpQueue((q) => {
         const target = q[0]
         if (!target) return q
-        setCharacter((prev) => {
+        setRawCharacter((prev) => {
           if (!prev.occ?.xpTable?.floors?.length) return prev
           return {
             ...bumpAllHitPoints(prev, r),
@@ -1352,7 +1473,19 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CharacterContextValue>(
     () => ({
+      viewport,
       character,
+      rawCharacter,
+      creationGenreId,
+      hostGenreId,
+      setHostGenreId,
+      derivedInventoryItems,
+      saveCharacter,
+      loadSavedCharacter,
+      startCreation,
+      returnToLauncher,
+      savedCharacterRows,
+      refreshSavedCharacterIndex,
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
@@ -1427,7 +1560,19 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       resolveLevelUpRitual,
     }),
     [
+      viewport,
       character,
+      rawCharacter,
+      creationGenreId,
+      hostGenreId,
+      setHostGenreId,
+      derivedInventoryItems,
+      saveCharacter,
+      loadSavedCharacter,
+      startCreation,
+      returnToLauncher,
+      savedCharacterRows,
+      refreshSavedCharacterIndex,
       sheetActiveForm,
       supportsDualForm,
       activeRace,

@@ -1,3 +1,4 @@
+import { resolveGenresAvailable } from './genreGating'
 import type {
   OccSkillSlotPolicy,
   OccXpTableId,
@@ -99,8 +100,10 @@ export function occTags(occ: PalladiumOcc): readonly string[] {
 
 /** Safe defaults when optional composition blocks are omitted in sparse rows. */
 export function normalizePalladiumOcc(row: PalladiumOcc): PalladiumOcc {
+  const genresAvailable = resolveGenresAvailable(row)
   return {
     ...row,
+    genresAvailable: row.genresAvailable ?? genresAvailable,
     tags: row.tags ?? [],
     occSkillsCore: row.occSkillsCore ?? [],
     occRelatedSkills: row.occRelatedSkills ?? DEFAULT_RELATED,

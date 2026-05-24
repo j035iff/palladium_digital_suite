@@ -1,8 +1,13 @@
+import { AppLauncher } from './components/dashboard/AppLauncher'
 import { MainLayout } from './components/layout/MainLayout'
 import { useCharacter } from './context/CharacterContext'
 
 function App() {
-  const { activeForm, supportsDualForm } = useCharacter()
+  const { viewport, activeForm, supportsDualForm } = useCharacter()
+
+  if (viewport === 'launcher') {
+    return <AppLauncher />
+  }
 
   const themeClass =
     supportsDualForm && activeForm === 'morphus'

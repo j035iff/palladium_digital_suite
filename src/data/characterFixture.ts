@@ -8,6 +8,7 @@ const demoOcc = snapshotOccForCharacter(getOccById('occ_ex_government_agent')!)
  */
 export const characterFixture: Character = {
   name: 'Alex Mercer',
+  /** Demo defaults — launcher / saves supply authoritative genre stamps. */
   level: 3,
   xp: 4200,
   ppe: { current: 28, maximum: 32 },

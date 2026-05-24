@@ -4,7 +4,7 @@ import { PsychicGate } from '../creation/PsychicGate'
 import { AbilitySelection } from '../creation/AbilitySelection'
 import { SkillEngine } from '../creation/SkillEngine'
 import { CharacterSpawn } from '../creation/CharacterSpawn'
-import { OccSelection } from '../creation/OccSelection'
+import { OccSelector } from '../creation/OccSelector'
 import { Armory } from '../live/Armory'
 import { CombatHUD } from '../live/CombatHUD'
 import { IdentityXpBar } from '../live/IdentityXpBar'
@@ -24,6 +24,10 @@ export function MainLayout() {
   const [isResizing, setIsResizing] = useState(false)
   const {
     character,
+    creationGenreId,
+    hostGenreId,
+    saveCharacter,
+    returnToLauncher,
     activeForm,
     activeFormState: form,
     activeStats,
@@ -152,8 +156,37 @@ export function MainLayout() {
               Level {character.level}
             </p>
             <IdentityXpBar />
+            <p
+              className="mt-1 font-mono text-[10px] uppercase tracking-wide opacity-70"
+              style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
+            >
+              {creationGenreId} → host {hostGenreId}
+            </p>
           </div>
 
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={saveCharacter}
+              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                morphusActive
+                  ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
+                  : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
+              }`}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={returnToLauncher}
+              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                morphusActive
+                  ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+              }`}
+            >
+              Portal
+            </button>
           {supportsDualForm ? (
             <button
               type="button"
@@ -177,6 +210,7 @@ export function MainLayout() {
               Become {morphusActive ? 'Facade' : 'Morphus'}
             </button>
           ) : null}
+          </div>
         </div>
       </header>
 
@@ -299,7 +333,7 @@ export function MainLayout() {
 
         {showCreation ? (
           <>
-            <OccSelection />
+            <OccSelector />
 
             <AttributeForge />
 
