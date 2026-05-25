@@ -1,0 +1,164 @@
+{
+  "entries": [
+    {
+      "id": "ancient_warrior_biomechanical",
+      "name": "Biomechanical",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (91-00%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_body_armor",
+      "name": "Body Armor",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_camouflage",
+      "name": "Camouflage",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_dress_uniform",
+      "name": "Dress Uniform",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_field_radio",
+      "name": "Field Radio",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_gas_mask",
+      "name": "Gas Mask",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_heavy_firepower",
+      "name": "Heavy Firepower",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_medic_and_first_aid",
+      "name": "Medic and First Aid",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_night_hunter_nightvision_goggles",
+      "name": "Night Hunter/Nightvision Goggles",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "ancient_warrior_personal_weaponry",
+      "name": "Personal Weaponry",
+      "tableCategory": "Ancient Warrior",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\ancient_warrior\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    }
+  ]
+}

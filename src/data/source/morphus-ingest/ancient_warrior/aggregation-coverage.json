@@ -1,0 +1,91 @@
+{
+  "tableId": "ancient_warrior",
+  "entries": [
+    {
+      "id": "ancient_warrior_infantry",
+      "name": "Ancient Infantry/Foot Soldier",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_archer",
+      "name": "Archer",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_assassin",
+      "name": "Assassin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_cavalry",
+      "name": "Cavalry",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "companion blueprint",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_warchief",
+      "name": "War-Chief/Warlord",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_light_armor",
+      "name": "Light Armor",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_heavy_armor",
+      "name": "Heavy Armor",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "ancient_warrior_color_standard",
+      "name": "Color Standard",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

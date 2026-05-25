@@ -1,0 +1,19 @@
+{
+  "id": "ancient_warrior",
+  "displayName": "Ancient Warrior",
+  "tableCategory": "Ancient Warrior",
+  "tableHeading": "Ancient Warrior Table",
+  "targetJson": "src/data/content/morphus/tables/ancient_warrior.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "From Stone-Age hunters",
+      "authoritative": true
+    }
+  ]
+}

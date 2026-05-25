@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Ancient Warrior",
   "parentTable": null,
-  "description": "Ancient Warrior Morphus table. Add characteristic rows from the book.",
+  "description": "Ancient Warrior Morphus table (Dark Designs pp. 19–21). Stone-Age through samurai and ninja traditions; +1 save vs Horror Factor and +1 Perception for ambushes, booby-traps, and military ordnance when any Ancient Warrior feature is active (table intro).",
   "entries": [
     {
       "id": "ancient_warrior_infantry",
@@ -11,35 +11,16 @@
       "tableCategory": "Ancient Warrior",
       "description": "The backbone of almost any ancient military force was its infantry. Nightbane warriors are dressed in simple clothing or armor matching an ancient society and carry weapons that can never be broken or dulled.",
       "statModifiers": {
-        "ps": {
-          "dice": "1D4"
-        },
-        "pe": {
-          "dice": "1D4"
-        },
-        "spd": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "1D6x10"
-        },
-        "hf": {
-          "flat": 1
-        },
-        "me": {
-          "flat": -1
-        },
-        "ma": {
-          "flat": -1
-        },
-        "pb": {
-          "flat": -2
-        }
-      },
-      "weaponClassBonuses": {
-        "melee": {
-          "flat": 1
-        }
+        "ps": { "dice": "1D4" },
+        "pe": { "dice": "1D4" },
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "1D6x10" },
+        "hf": { "flat": 1 },
+        "strike": { "flat": 1 },
+        "parry": { "flat": 1 },
+        "me": { "flat": -1 },
+        "ma": { "flat": -1 },
+        "pb": { "flat": -2 }
       },
       "naturalWeapons": [
         {
@@ -64,7 +45,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 19
+          "pageNumber": 20
         }
       ]
     },
@@ -74,29 +55,14 @@
       "tableCategory": "Ancient Warrior",
       "description": "The snipers and marksmen of their day, archers were typically meant to rain death upon enemies from afar. Every Nightbane archer has a bow and a quiver of arrows or bolts that never runs out.",
       "statModifiers": {
-        "me": {
-          "flat": 1
-        },
-        "ps": {
-          "flat": 1
-        },
-        "pp": {
-          "flat": 1
-        },
-        "perception": {
-          "flat": 1
-        },
-        "pe": {
-          "flat": -1
-        },
-        "sdc": {
-          "dice": "-1D6"
-        }
-      },
-      "weaponClassBonuses": {
-        "bow": {
-          "flat": 2
-        }
+        "me": { "flat": 1 },
+        "ps": { "flat": 1 },
+        "pp": { "flat": 1 },
+        "perception": { "flat": 1 },
+        "apm": { "flat": 1 },
+        "pe": { "flat": -1 },
+        "sdc": { "dice": "-1D6" },
+        "strike": { "flat": 2 }
       },
       "naturalWeapons": [
         {
@@ -110,7 +76,8 @@
         }
       ],
       "customOneOffs": [
-        "+1 attack per melee round, but ONLY when using a bow and arrow or a crossbow.",
+        "+1 attack per melee round and +2 to strike only when using a bow or crossbow (strike bonus modeled above).",
+        "Quiver never runs out; bow/crossbow damage and range per weapon type (short bow 1D6/340 ft, longbow 2D6/640 ft, etc.).",
         "Tends to be uncomfortable in confined spaces."
       ],
       "gameSystems": [
@@ -120,7 +87,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 19
+          "pageNumber": 20
         }
       ]
     },
@@ -130,38 +97,14 @@
       "tableCategory": "Ancient Warrior",
       "description": "Clandestine warriors whose job it was to infiltrate enemy camps or cities and eliminate high-value targets. This Morphus is dressed in dark clothing that has numerous folds and pockets.",
       "statModifiers": {
-        "me": {
-          "flat": 1
-        },
-        "ps": {
-          "flat": 1
-        },
-        "pp": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "4D6"
-        },
-        "perception": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 1
-        },
-        "ma": {
-          "dice": "-1D4"
-        }
-      },
-      "weaponClassBonuses": {
-        "melee": {
-          "flat": 1
-        },
-        "bow": {
-          "flat": 1
-        },
-        "thrown": {
-          "flat": 1
-        }
+        "me": { "flat": 1 },
+        "ps": { "flat": 1 },
+        "pp": { "dice": "1D4" },
+        "sdc": { "dice": "4D6" },
+        "perception": { "flat": 1 },
+        "hf": { "flat": 1 },
+        "strike": { "flat": 1 },
+        "ma": { "dice": "-1D4" }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -203,7 +146,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 19
+          "pageNumber": 20
         }
       ]
     },
@@ -288,7 +231,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 19
+          "pageNumber": 20
         }
       ]
     },
@@ -298,37 +241,19 @@
       "tableCategory": "Ancient Warrior",
       "description": "The Nightbane looks like a nobleman, warlord, or chieftain outfitted for battle. Any garb worn is of the highest quality and an ornate headdress or helm denoting a commanding rank.",
       "statModifiers": {
-        "iq": {
-          "flat": 1
-        },
-        "ma": {
-          "flat": 2
-        },
-        "ps": {
-          "dice": "1D4"
-        },
-        "pp": {
-          "flat": 2
-        },
-        "pe": {
-          "flat": 2
-        },
-        "pb": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "1D4x10"
-        },
-        "hf": {
-          "flat": 1
-        }
+        "iq": { "flat": 1 },
+        "ma": { "flat": 2 },
+        "ps": { "dice": "1D4" },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "pb": { "dice": "1D4" },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "flat": 1 },
+        "strike": { "flat": 2 },
+        "parry": { "flat": 1 },
+        "disarm": { "flat": 1 }
       },
       "naturalAr": 9,
-      "weaponClassBonuses": {
-        "melee": {
-          "flat": 2
-        }
-      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
@@ -350,7 +275,6 @@
         }
       ],
       "customOneOffs": [
-        "+1 to parry and disarm with melee weapons.",
         "Any enemies are +2 on Perception Rolls to notice the actions of this character.",
         "Looking like a leader tends to make one a target in battle.",
         "If armor is a part of the Morphus via another feature, it will be richly decorated or gilded and adds 50% more S.D.C."
@@ -362,7 +286,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 20
+          "pageNumber": 21
         }
       ]
     },
@@ -417,7 +341,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 20
+          "pageNumber": 21
         }
       ]
     },
@@ -475,7 +399,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 20
+          "pageNumber": 21
         }
       ]
     },
@@ -506,12 +430,10 @@
         "spd": {
           "dice": "-1D4"
         },
-        "apm": {
-          "flat": -1
-        },
-        "dodge": {
-          "flat": -1
-        }
+        "apm": { "flat": -1 },
+        "dodge": { "flat": -1 },
+        "parry": { "flat": 1 },
+        "disarm": { "flat": 1 }
       },
       "naturalWeapons": [
         {
@@ -522,7 +444,7 @@
         }
       ],
       "customOneOffs": [
-        "+1 to parry and disarm if the standard is handheld."
+        "Parry and disarm bonuses apply when the standard is handheld (modeled in statModifiers)."
       ],
       "gameSystems": [
         "nightbane"
@@ -531,7 +453,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 20
+          "pageNumber": 21
         }
       ]
     }

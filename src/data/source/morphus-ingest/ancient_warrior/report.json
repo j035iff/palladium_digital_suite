@@ -1,0 +1,145 @@
+{
+  "tableId": "ancient_warrior",
+  "generatedAt": "2026-05-25T21:38:23.454Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "conditionalStanceModifiers",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 10,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "ancient_warrior_biomechanical",
+        "name": "Biomechanical",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_body_armor",
+        "name": "Body Armor",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_camouflage",
+        "name": "Camouflage",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_dress_uniform",
+        "name": "Dress Uniform",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_field_radio",
+        "name": "Field Radio",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_gas_mask",
+        "name": "Gas Mask",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_heavy_firepower",
+        "name": "Heavy Firepower",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_medic_and_first_aid",
+        "name": "Medic and First Aid",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_night_hunter_nightvision_goggles",
+        "name": "Night Hunter/Nightvision Goggles",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "ancient_warrior_personal_weaponry",
+        "name": "Personal Weaponry",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 8,
+    "ids": [
+      "ancient_warrior_infantry",
+      "ancient_warrior_archer",
+      "ancient_warrior_assassin",
+      "ancient_warrior_cavalry",
+      "ancient_warrior_warchief",
+      "ancient_warrior_light_armor",
+      "ancient_warrior_heavy_armor",
+      "ancient_warrior_color_standard"
+    ]
+  },
+  "bookIndex": {
+    "total": 10,
+    "included": 10,
+    "skippedOther": 0,
+    "names": [
+      "Biomechanical",
+      "Body Armor",
+      "Camouflage",
+      "Dress Uniform",
+      "Field Radio",
+      "Gas Mask",
+      "Heavy Firepower",
+      "Medic and First Aid",
+      "Night Hunter/Nightvision Goggles",
+      "Personal Weaponry"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: ancient_warrior_infantry, ancient_warrior_archer, ancient_warrior_assassin, ancient_warrior_cavalry, ancient_warrior_warchief, ancient_warrior_light_armor, ancient_warrior_heavy_armor, ancient_warrior_color_standard",
+    "Staging has ids not in target (merge pending): ancient_warrior_biomechanical, ancient_warrior_body_armor, ancient_warrior_camouflage, ancient_warrior_dress_uniform, ancient_warrior_field_radio, ancient_warrior_gas_mask, ancient_warrior_heavy_firepower, ancient_warrior_medic_and_first_aid, ancient_warrior_night_hunter_nightvision_goggles, ancient_warrior_personal_weaponry"
+  ]
+}

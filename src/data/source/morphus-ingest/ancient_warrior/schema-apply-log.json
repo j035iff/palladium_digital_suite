@@ -1,0 +1,28 @@
+{
+  "tableId": "ancient_warrior",
+  "generatedAt": "2026-05-25T21:38:17.102Z",
+  "patches": [
+    {
+      "kind": "top_level",
+      "path": "conditionalStanceModifiers",
+      "property": "conditionalStanceModifiers",
+      "schema": {
+        "type": "string"
+      },
+      "note": "Extend palladium-morphus.schema.json (+ types.ts); run schema-loop."
+    }
+  ],
+  "applied": [
+    {
+      "kind": "top_level",
+      "path": "conditionalStanceModifiers",
+      "property": "conditionalStanceModifiers",
+      "schema": {
+        "type": "string"
+      },
+      "note": "Extend palladium-morphus.schema.json (+ types.ts); run schema-loop."
+    }
+  ],
+  "manual": [],
+  "schemaChanged": true
+}
