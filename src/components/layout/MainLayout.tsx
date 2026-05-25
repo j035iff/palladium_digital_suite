@@ -28,6 +28,10 @@ export function MainLayout() {
     hostGenreId,
     saveCharacter,
     returnToLauncher,
+    morphusSurfaceType,
+    setMorphusSurfaceType,
+    morphusRelativeArShift,
+    morphusNaturalAr,
     activeForm,
     activeFormState: form,
     activeStats,
@@ -161,7 +165,31 @@ export function MainLayout() {
               style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
             >
               {creationGenreId} → host {hostGenreId}
+              {morphusActive && morphusRelativeArShift !== 0
+                ? ` · Morphus A.R. ${morphusRelativeArShift >= 0 ? '+' : ''}${morphusRelativeArShift}`
+                : ''}
+              {morphusActive && morphusNaturalAr != null
+                ? ` · natural A.R. ${morphusNaturalAr}`
+                : ''}
             </p>
+            {morphusActive ? (
+              <label className="mt-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
+                Surface
+                <select
+                  value={morphusSurfaceType}
+                  onChange={(e) =>
+                    setMorphusSurfaceType(
+                      e.target.value as 'hard_flat' | 'rough_uneven' | 'soft_fluid',
+                    )
+                  }
+                  className="rounded border border-violet-700 bg-slate-950 px-2 py-0.5 font-mono normal-case text-violet-100"
+                >
+                  <option value="hard_flat">Hard / flat</option>
+                  <option value="rough_uneven">Rough / uneven</option>
+                  <option value="soft_fluid">Soft / fluid</option>
+                </select>
+              </label>
+            ) : null}
           </div>
 
           <div className="flex shrink-0 flex-wrap items-center gap-2">

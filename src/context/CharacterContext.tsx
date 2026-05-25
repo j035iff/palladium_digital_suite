@@ -92,6 +92,12 @@ import {
   deriveInventoryForHost,
   transformCharacterToHostEnvironment,
 } from '../utils/genreTransformer'
+import { buildMorphusPassiveBundle } from '../lib/morphusPassiveBridge'
+import {
+  morphusBlocksTwoHandedWeapon,
+  stackNaturalArmorFromTraits,
+} from '../lib/morphusCharacteristicAggregation'
+import { resolveActiveMorphusTraits } from '../lib/morphusPassiveBridge'
 import type {
   ActiveForm,
   ActiveMeleeDuration,
@@ -108,6 +114,7 @@ import type {
   CombatNarrativeEntry,
   FeatureModifiers,
   PsychicTier,
+  MorphusSurfaceType,
   VitalityFlashKind,
   Weapon,
   XpGainEvent,
@@ -194,6 +201,16 @@ type CharacterContextValue = {
   returnToLauncher: () => void
   savedCharacterRows: CharacterIndexEntry[]
   refreshSavedCharacterIndex: () => void
+  /** Active terrain for Morphus mobility / surface-isolated skills (default hard_flat). */
+  morphusSurfaceType: MorphusSurfaceType
+  setMorphusSurfaceType: (surface: MorphusSurfaceType) => void
+  /** Stacked natural A.R. from Morphus traits (absolute `naturalAr` rows). */
+  morphusNaturalAr: number | undefined
+  /** Additive A.R. shift from statModifiers.ar (e.g. Athlete Streamlined −2). */
+  morphusRelativeArShift: number
+  /** Hand capacity from active Morphus gear traits. */
+  morphusHandCapacityOccupied: number
+  morphusBlocksTwoHandedWeapons: boolean
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
@@ -482,6 +499,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     loadXpHistory(INITIAL_CHARACTER_SNAPSHOT.name),
   )
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
+  const [morphusSurfaceType, setMorphusSurfaceType] =
+    useState<MorphusSurfaceType>('hard_flat')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
     ensureCharacterOcc(INITIAL_CHARACTER_SNAPSHOT).occ.category === 'psychic'
       ? 'master'
@@ -733,15 +752,56 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     liveBonuses,
   ])
 
-  const sheetPassiveModifiers = useMemo(
-    () => aggregateAllPassiveModifiers(character, sheetActiveForm),
-    [character, sheetActiveForm],
+  const morphusTraitRows = useMemo(
+    () => resolveActiveMorphusTraits(rawCharacter),
+    [rawCharacter.activeMorphusCharacteristicIds],
   )
 
-  const sheetDisplayScalars = useMemo(
-    () => computeDisplayScalars(character, sheetActiveForm, sheetPassiveModifiers),
-    [character, sheetActiveForm, sheetPassiveModifiers],
+  const morphusNaturalAr = useMemo(
+    () => stackNaturalArmorFromTraits(morphusTraitRows),
+    [morphusTraitRows],
   )
+
+  const morphusPassiveBundle = useMemo(
+    () =>
+      buildMorphusPassiveBundle(
+        rawCharacter,
+        sheetActiveForm,
+        morphusSurfaceType,
+      ),
+    [rawCharacter, sheetActiveForm, morphusSurfaceType],
+  )
+
+  const morphusRelativeArShift = morphusPassiveBundle?.relativeArShift ?? 0
+
+  const sheetPassiveModifiers = useMemo(
+    () =>
+      aggregateAllPassiveModifiers(
+        rawCharacter,
+        sheetActiveForm,
+        morphusSurfaceType,
+      ),
+    [rawCharacter, sheetActiveForm, morphusSurfaceType],
+  )
+
+  const sheetDisplayScalars = useMemo(() => {
+    const base = computeDisplayScalars(
+      character,
+      sheetActiveForm,
+      sheetPassiveModifiers,
+    )
+    const mult = morphusPassiveBundle?.terrainSpdMultiplier ?? 1
+    if (mult === 1) return base
+    return {
+      ...base,
+      spd: Math.max(0, Math.floor(base.spd * mult)),
+    }
+  }, [
+    character,
+    sheetActiveForm,
+    sheetPassiveModifiers,
+    morphusPassiveBundle?.terrainSpdMultiplier,
+  ])
 
   const sheetCombatDerived = useMemo(
     () =>
@@ -943,6 +1003,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         } else {
           const row = inventoryItems.find((i) => i.id === weaponId)
           if (!row || row.itemType !== 'weapon') return [a, b]
+          const w = row as Weapon
+          const bundle = buildMorphusPassiveBundle(
+            rawCharacter,
+            sheetActiveForm,
+            morphusSurfaceType,
+          )
+          if (
+            bundle &&
+            morphusBlocksTwoHandedWeapon(bundle.handCapacity, w.category)
+          ) {
+            return [a, b]
+          }
           next =
             slot === 0
               ? [weaponId, b === weaponId ? null : b]
@@ -954,7 +1026,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         return next
       })
     },
-    [inventoryItems, equippedArmorId],
+    [inventoryItems, equippedArmorId, rawCharacter, sheetActiveForm, morphusSurfaceType],
   )
 
   const spendWeaponAmmo = useCallback(
@@ -1486,6 +1558,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       returnToLauncher,
       savedCharacterRows,
       refreshSavedCharacterIndex,
+      morphusSurfaceType,
+      setMorphusSurfaceType,
+      morphusNaturalAr,
+      morphusRelativeArShift,
+      morphusHandCapacityOccupied:
+        morphusPassiveBundle?.handCapacity.occupiesHands ?? 0,
+      morphusBlocksTwoHandedWeapons:
+        morphusPassiveBundle?.handCapacity.blocksTwoHandedWeapons ?? false,
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
@@ -1573,6 +1653,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       returnToLauncher,
       savedCharacterRows,
       refreshSavedCharacterIndex,
+      morphusSurfaceType,
+      morphusPassiveBundle,
+      morphusNaturalAr,
+      morphusRelativeArShift,
       sheetActiveForm,
       supportsDualForm,
       activeRace,

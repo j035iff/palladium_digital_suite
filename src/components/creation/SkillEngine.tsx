@@ -70,6 +70,7 @@ export function SkillEngine() {
     occCreationDerived,
     supportsDualForm,
     skillSlotMultiplier,
+    morphusSurfaceType,
     setCreationSkillPicks,
   } = useCharacter()
 
@@ -108,8 +109,15 @@ export function SkillEngine() {
   const maPbBonus = useMemo(() => maPbScaledBonuses(attrs.ma, attrs.pb), [attrs])
 
   const skillPercentCtx = useMemo(
-    () => buildSkillPercentContext(character, activeForm, iqBonus, maPbBonus),
-    [character, activeForm, iqBonus, maPbBonus],
+    () =>
+      buildSkillPercentContext(
+        character,
+        activeForm,
+        iqBonus,
+        maPbBonus,
+        morphusSurfaceType,
+      ),
+    [character, activeForm, iqBonus, maPbBonus, morphusSurfaceType],
   )
 
   const pendingPhysical = useMemo(

@@ -8,6 +8,8 @@ import {
 } from './skillEquation'
 import { sumFacadePpTraitPenaltiesForSkill } from './facadePpSkillTraitPenalties'
 import { sumMorphusSkillPercentForCatalogSkill } from './morphusSkillModifierAggregation'
+import { collectMorphusSkillOverridesForSurface } from './morphusCharacteristicAggregation'
+import type { MorphusSurfaceType } from '../types'
 
 export type SkillPercentBreakdownLine = {
   label: string
@@ -29,6 +31,7 @@ export function buildSkillPercentContext(
   activeForm: ActiveForm,
   iqBonus: number,
   maPbBonus = 0,
+  morphusSurfaceType: MorphusSurfaceType = 'hard_flat',
 ): SkillPercentResolutionContext {
   return {
     characterLevel: character.level,
@@ -36,6 +39,7 @@ export function buildSkillPercentContext(
     maPbBonus,
     activeForm,
     facadePp: character.facade.attributes.pp,
+    morphusSurfaceType,
     activeMorphusCharacteristics: resolveMorphusCharacteristicsByIds(
       character.activeMorphusCharacteristicIds ?? [],
     ),
@@ -50,6 +54,8 @@ export type SkillPercentResolutionContext = {
   /** Facade P.P. for optional low-dexterity / light-touch penalties. */
   facadePp: number
   activeMorphusCharacteristics?: readonly MorphusCharacteristic[]
+  /** Terrain surface for Morphus mobility-isolated skill rows (default hard_flat). */
+  morphusSurfaceType?: MorphusSurfaceType
   /** Apply optional low-P.P. trait penalties (default true). */
   applyFacadePpTraitPenalties?: boolean
 }
@@ -110,15 +116,44 @@ export function resolveSkillPercent(
     ctx.activeMorphusCharacteristics?.length &&
     catalog
   ) {
+    const surface = ctx.morphusSurfaceType ?? 'hard_flat'
+    const terrainOverrides = collectMorphusSkillOverridesForSurface(
+      ctx.activeMorphusCharacteristics,
+      surface,
+    )
     const morphus = sumMorphusSkillPercentForCatalogSkill(
       catalog,
       ctx.activeMorphusCharacteristics,
+      {
+        characterLevel: ctx.characterLevel,
+        extraOverrides: terrainOverrides,
+      },
     )
     if (morphus.global !== 0) {
       lines.push({ label: 'Morphus (all skills)', value: morphus.global })
     }
     if (morphus.specific !== 0) {
       lines.push({ label: 'Morphus (this skill)', value: morphus.specific })
+    }
+    if (morphus.grantFloor != null) {
+      lines.push({
+        label: `Morphus grant floor (${morphus.grantFloor}% at level ${ctx.characterLevel})`,
+        value: 0,
+      })
+    }
+    const ppModifier = lines
+      .filter((l) => l.label.startsWith('Facade P.P.'))
+      .reduce((s, l) => s + l.value, 0)
+    const morphusLines = lines.filter((l) => !l.label.startsWith('Facade P.P.'))
+    return {
+      equationPercent,
+      lines: [
+        ...lines.filter((l) => l.label.startsWith('Facade P.P.')),
+        ...morphusLines,
+      ],
+      total: clampResolvedSkillPercent(
+        equationPercent + ppModifier + morphus.total,
+      ),
     }
   }
 

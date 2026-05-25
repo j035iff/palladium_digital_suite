@@ -48,6 +48,7 @@
       "items": { "$ref": "#/$defs/limbDurability" }
     },
     "subTraitChoicesBudget": { "$ref": "#/$defs/subTraitChoicesBudget" },
+    "handCapacityConstraints": { "$ref": "#/$defs/handCapacityConstraints" },
     "customOneOffs": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
@@ -68,6 +69,11 @@
         "percent": {
           "type": "integer",
           "description": "Percentage adjustment applied to the underlying metric."
+        },
+        "isOverride": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, the associated calculation overwrites the base value entirely instead of additive stacking (middleware engine)."
         }
       }
     },
@@ -145,7 +151,11 @@
         "entangle": { "$ref": "#/$defs/polymorphicModifier" },
         "disarm": { "$ref": "#/$defs/polymorphicModifier" },
         "strikeWithGuns": { "$ref": "#/$defs/polymorphicModifier" },
-        "bonusHthDamage": { "$ref": "#/$defs/polymorphicModifier" }
+        "bonusHthDamage": { "$ref": "#/$defs/polymorphicModifier" },
+        "ar": {
+          "$ref": "#/$defs/polymorphicModifier",
+          "description": "Relative Armor Rating shift (supports negative flat values, e.g. {\"flat\": -2})."
+        }
       }
     },
     "saveModifiers": {
@@ -220,6 +230,32 @@
         "flightCombatBonuses": { "$ref": "#/$defs/flightCombatBonuses" }
       }
     },
+    "conditionalTerrainModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surfaceTypes", "spdMultiplier"],
+      "properties": {
+        "surfaceTypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["hard_flat", "rough_uneven", "soft_fluid"]
+          },
+          "description": "Terrain surfaces this row applies to (Dark Designs Athlete / Skates, pp. 28–29)."
+        },
+        "spdMultiplier": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Spd acceleration scale on matching surfaces (e.g. 2.0 hard flat, 0.5 rough uneven)."
+        },
+        "skillModifiers": {
+          "$ref": "#/$defs/skillModifiers",
+          "description": "Surface-isolated skill penalties or bonuses (e.g. Skates −20% Prowl on hard floors)."
+        }
+      }
+    },
     "mobility": {
       "type": "object",
       "additionalProperties": false,
@@ -227,7 +263,12 @@
         "jumpModifiers": { "$ref": "#/$defs/jumpModifiers" },
         "swimSpeedBonus": { "$ref": "#/$defs/polymorphicModifier" },
         "aquaticTraits": { "$ref": "#/$defs/aquaticTraits" },
-        "flightEngine": { "$ref": "#/$defs/flightEngine" }
+        "flightEngine": { "$ref": "#/$defs/flightEngine" },
+        "conditionalTerrainModifiers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/conditionalTerrainModifier" },
+          "description": "Surface-dependent movement and skill adjustments."
+        }
       }
     },
     "perceptionSpecialties": {
@@ -270,7 +311,11 @@
         },
         "modifierPercent": { "type": "integer" },
         "isNegated": { "type": "boolean" },
-        "grantUnlearnedValue": { "type": "integer", "minimum": 0, "maximum": 98 }
+        "grantUnlearnedValue": { "type": "integer", "minimum": 0, "maximum": 98 },
+        "perLevelIncrement": {
+          "type": "integer",
+          "description": "Per-level increment stacked on modifierPercent or grantUnlearnedValue (e.g. Gymnast Build 68% base +4% per level)."
+        }
       }
     },
     "skillModifiers": {
@@ -342,6 +387,22 @@
         "allowedChoicesPool": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "handCapacityConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["occupiesHands", "blocksTwoHandedWeapons"],
+      "properties": {
+        "occupiesHands": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Physical hands/limbs locked while natively wielding or holding this morphus item."
+        },
+        "blocksTwoHandedWeapons": {
+          "type": "boolean",
+          "description": "When true, enforces inventory lockout for two-handed weapons if free hand slots are insufficient."
         }
       }
     }

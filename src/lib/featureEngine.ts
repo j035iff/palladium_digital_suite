@@ -3,6 +3,11 @@ import { getFeatureById, getRaceById } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { racePassiveModifiers } from './raceEngine'
 import { getSkillById } from '../data/skillLibrary'
+import {
+  buildMorphusPassiveBundle,
+  mergeMorphusIntoPassive,
+} from './morphusPassiveBridge'
+import type { MorphusSurfaceType } from '../types'
 
 export function morphusRequired(feature: Feature): boolean {
   return feature.requirement?.form === 'morphus' || feature.metadata?.morphusOnly === true
@@ -50,16 +55,23 @@ export function aggregateCreationSkillModifiers(character: Character): FeatureMo
 export function aggregateAllPassiveModifiers(
   character: Character,
   activeForm: ActiveForm,
+  morphusSurfaceType: MorphusSurfaceType = 'hard_flat',
 ): FeatureModifiers {
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
   const sk = aggregateCreationSkillModifiers(character)
   const race = racePassiveModifiers(
     getRaceById(character.raceId ?? DEFAULT_RACE_ID),
   )
-  const out: FeatureModifiers = { ...a, ...race }
+  let out: FeatureModifiers = { ...a, ...race }
   for (const [k, v] of Object.entries(sk)) {
     out[k] = (out[k] ?? 0) + v
   }
+  const morphus = buildMorphusPassiveBundle(
+    character,
+    activeForm,
+    morphusSurfaceType,
+  )
+  out = mergeMorphusIntoPassive(out, morphus)
   return out
 }
 

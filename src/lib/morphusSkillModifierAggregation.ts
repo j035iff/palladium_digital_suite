@@ -1,6 +1,9 @@
 import type { MorphusCharacteristic, MorphusSkillOverride } from '../types'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
-import { sumMorphusSkillModifierPercent } from './skillTraitResolution'
+import {
+  morphusGrantFloorForSkill,
+  sumMorphusSkillModifierPercent,
+} from './skillTraitResolution'
 
 /** Flatten `specificSkillOverrides` from all active Morphus characteristics. */
 export function collectMorphusSkillOverrides(
@@ -30,9 +33,24 @@ export function sumGlobalMorphusSkillModifier(
 export function sumMorphusSkillPercentForCatalogSkill(
   skill: Pick<PalladiumSkillCatalogEntry, 'id' | 'categories' | 'skillTraits'>,
   traits: readonly Pick<MorphusCharacteristic, 'skillModifiers'>[],
-): { global: number; specific: number; total: number } {
+  options?: {
+    characterLevel?: number
+    extraOverrides?: readonly MorphusSkillOverride[]
+  },
+): { global: number; specific: number; grantFloor: number | null; total: number } {
   const global = sumGlobalMorphusSkillModifier(traits)
-  const overrides = collectMorphusSkillOverrides(traits)
+  const overrides = [
+    ...collectMorphusSkillOverrides(traits),
+    ...(options?.extraOverrides ?? []),
+  ]
   const specific = sumMorphusSkillModifierPercent(skill, overrides)
-  return { global, specific, total: global + specific }
+  const grantFloor = morphusGrantFloorForSkill(
+    skill,
+    overrides,
+    options?.characterLevel ?? 1,
+  )
+  const additive = global + specific
+  const total =
+    grantFloor != null ? Math.max(additive, grantFloor) : additive
+  return { global, specific, grantFloor, total }
 }

@@ -8,6 +8,13 @@
     "spd": {
       "percent": 20
     },
+    "pp": {
+      "flat": 14,
+      "isOverride": true
+    },
+    "ar": {
+      "flat": -2
+    },
     "strike": {
       "flat": 2
     },
@@ -34,7 +41,26 @@
           "flat": 1
         }
       }
-    }
+    },
+    "conditionalTerrainModifiers": [
+      {
+        "surfaceTypes": ["hard_flat"],
+        "spdMultiplier": 2,
+        "skillModifiers": {
+          "specificSkillOverrides": [
+            {
+              "targetType": "skill_id",
+              "targetValue": "skill_prowl",
+              "modifierPercent": -20
+            }
+          ]
+        }
+      },
+      {
+        "surfaceTypes": ["rough_uneven"],
+        "spdMultiplier": 0.5
+      }
+    ]
   },
   "sensory": {
     "nightvisionRangeFlatBonus": 1000,
@@ -50,8 +76,18 @@
         "targetType": "skill_id",
         "targetValue": "prowl",
         "modifierPercent": 15
+      },
+      {
+        "targetType": "skill_id",
+        "targetValue": "skill_build",
+        "grantUnlearnedValue": 68,
+        "perLevelIncrement": 4
       }
     ]
+  },
+  "handCapacityConstraints": {
+    "occupiesHands": 0,
+    "blocksTwoHandedWeapons": false
   },
   "damageAffinities": {
     "fire": 0.5,

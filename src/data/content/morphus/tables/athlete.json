@@ -4,5 +4,403 @@
   "displayName": "Athlete",
   "parentTable": null,
   "description": "Athlete Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "entries": [
+    {
+      "id": "athlete_streamlined",
+      "name": "Streamlined",
+      "tableCategory": "Athlete",
+      "description": "Built for running, this Nightbane has a lean body with long, powerful limbs. Whether walking, jogging, running, or swimming, he or she seems to glide almost effortlessly across the ground or through the water.",
+      "statModifiers": {
+        "spd": {
+          "dice": "2D4x10+40",
+          "isOverride": true
+        },
+        "pp": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "-1D6"
+        },
+        "sdc": {
+          "percent": -10
+        },
+        "ar": {
+          "flat": -2
+        }
+      },
+      "heightModifier": {
+        "flat": 12
+      },
+      "weightModifier": {
+        "percent": -20
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Streamlined Kick",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Even running at maximum speed for hours at a time does NOT fatigue the Nightbane in any way."
+      ]
+    },
+    {
+      "id": "athlete_gymnasts_build",
+      "name": "Gymnast's Build",
+      "tableCategory": "Athlete",
+      "description": "Compact, lithe, and flexible, the build of this Morphus form is perfect for feats of physical agility and strength without compromising speed of movement.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "flat": -1
+        }
+      },
+      "saveModifiers": {
+        "poison": -2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "grantUnlearnedValue": 68,
+            "perLevelIncrement": 4
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "athlete_musclebound",
+      "name": "Musclebound",
+      "tableCategory": "Athlete",
+      "description": "The Morphus has musculature on par with an Olympic weightlifter or circus strongman, with a thick neck, broad shoulders and chest, and massive arms and legs.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D6+4"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D6"
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The character can lift and carry twice the standard amount for their strength attribute."
+      ]
+    },
+    {
+      "id": "athlete_team_jersey",
+      "name": "Team Jersey",
+      "tableCategory": "Athlete",
+      "description": "Wearing a team's colors provides a strong sense of identity and belonging that is reassuring, comforting, and a point of pride and inspiration.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D6"
+        }
+      },
+      "saveModifiers": {
+        "possession": 1,
+        "horrorFactor": 1
+      },
+      "customOneOffs": [
+        "+1 on Perception Rolls involving sports and sports teams (+2 on Perception Rolls involving the team represented on the jersey).",
+        "+1 to save vs mind control.",
+        "No substance like dirt, blood, or even paint soils the team logo on this jersey no matter how much covers the Nightbane."
+      ]
+    },
+    {
+      "id": "athlete_skates",
+      "name": "Skates",
+      "tableCategory": "Athlete",
+      "description": "Ice skates, inline roller skates, or some other type of skates are attached to the feet of the Morphus form. Moving on skates is second nature to this Nightbane.",
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Skate Kick",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "mobility": {
+        "conditionalTerrainModifiers": [
+          {
+            "surfaceTypes": [
+              "hard_flat"
+            ],
+            "spdMultiplier": 2
+          },
+          {
+            "surfaceTypes": [
+              "rough_uneven",
+              "soft_fluid"
+            ],
+            "spdMultiplier": 0.5
+          }
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "athlete_club_stick",
+      "name": "Club/Stick",
+      "tableCategory": "Athlete",
+      "description": "This Nightbane played or admired a sport utilizing a stick, club, mallet, or bat, so his Morphus includes the blunt item of that game.",
+      "statModifiers": {
+        "pullPunch": {
+          "flat": 2
+        }
+      },
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Sports Club/Stick",
+          "damageFormula": "1D6+3",
+          "isAdditiveToHth": true
+        }
+      ],
+      "handCapacityConstraints": {
+        "occupiesHands": 1,
+        "blocksTwoHandedWeapons": true
+      },
+      "customOneOffs": [
+        "+1 to strike and parry applies exclusively when using the club/stick.",
+        "The stick is large and unwieldy to carry, so other two-handed weapons cannot be used unless it can be slung over the back or the Nightbane has other appendages."
+      ]
+    },
+    {
+      "id": "athlete_protective_gear",
+      "name": "Protective Gear",
+      "tableCategory": "Athlete",
+      "description": "The Morphus wears the protective gear common to the Nightbane's chosen sport(s) like American football, hockey, and so on.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "ar": {
+          "flat": 1
+        },
+        "spd": {
+          "flat": -3
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_locks",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_pockets",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -15
+          }
+        ]
+      }
+    },
+    {
+      "id": "athlete_cleats",
+      "name": "Cleats",
+      "tableCategory": "Athlete",
+      "description": "Specialized footwear with small metal spikes built into the bottom. These shoes are meant to provide greater traction.",
+      "statModifiers": {
+        "spd": {
+          "dice": "1D4"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Cleat Kick",
+          "damageFormula": "3",
+          "isAdditiveToHth": true
+        }
+      ],
+      "mobility": {
+        "conditionalTerrainModifiers": [
+          {
+            "surfaceTypes": [
+              "hard_flat"
+            ],
+            "spdMultiplier": 1,
+            "skillModifiers": {
+              "specificSkillOverrides": [
+                {
+                  "targetType": "skill_id",
+                  "targetValue": "skill_prowl",
+                  "modifierPercent": -20
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Surfaces such as ice, mud, and even oil-slicked floors do not cause the Nightbane to lose his footing, slip or fall.",
+        "The Nightbane is easily tracked across soft and hard surfaces due to the tell-tale gouges and holes left in the ground (+20% bonus to track)."
+      ]
+    },
+    {
+      "id": "athlete_game_ball_projectile",
+      "name": "Game Ball/Projectile",
+      "tableCategory": "Athlete",
+      "description": "The Nightbane's Morphus has the stitching and patterns of the ball used in his sport of choice incorporated into his body. He also carries a ball, puck, Frisbee, or similar object.",
+      "statModifiers": {
+        "ppe": {
+          "flat": -3
+        },
+        "dodge": {
+          "flat": 1
+        }
+      },
+      "weaponClassBonuses": {
+        "thrown": {
+          "flat": 2
+        }
+      },
+      "handCapacityConstraints": {
+        "occupiesHands": 1,
+        "blocksTwoHandedWeapons": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The projectile can be thrown, kicked, or otherwise propelled up to 300 feet (91.5 m) away and automatically returns to the character after being thrown.",
+        "Bank-shots are possible (-2 to strike), with only the final surface struck taking damage.",
+        "The projectile deals damage equal to half the Nightbane's Supernatural P.S. punch damage +1D6.",
+        "Chance to knock targets flat (lose initiative and one attack): 25% against normal strength, 10% against Supernatural Strength or larger than 8 feet. Add +20% to these odds if the target is already off balance.",
+        "Nightbane may pass this projectile to another person up to 300 feet away, but once dropped or thrown by them, it immediately returns to the Nightbane.",
+        "+2 to catch balls or intercept thrown projectiles, and +1 to dodge incoming projectiles."
+      ]
+    }
+  ]
 }

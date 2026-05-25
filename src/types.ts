@@ -489,6 +489,8 @@ export type MorphusPolymorphicModifier = {
   flat?: number
   dice?: string
   percent?: number
+  /** When true, replaces base value instead of additive stacking (middleware). */
+  isOverride?: boolean
 }
 
 export type MorphusNaturalWeaponLimbType =
@@ -549,6 +551,8 @@ export type MorphusStatModifiers = {
   disarm?: MorphusPolymorphicModifier
   strikeWithGuns?: MorphusPolymorphicModifier
   bonusHthDamage?: MorphusPolymorphicModifier
+  /** Relative A.R. shift (negative flat supported). */
+  ar?: MorphusPolymorphicModifier
 }
 
 export type MorphusSaveModifiers = {
@@ -604,11 +608,20 @@ export type MorphusFlightEngine = {
   flightCombatBonuses?: MorphusFlightCombatBonuses
 }
 
+export type MorphusSurfaceType = 'hard_flat' | 'rough_uneven' | 'soft_fluid'
+
+export type MorphusConditionalTerrainModifier = {
+  surfaceTypes: readonly MorphusSurfaceType[]
+  spdMultiplier: number
+  skillModifiers?: MorphusSkillModifiers
+}
+
 export type MorphusMobility = {
   jumpModifiers?: MorphusJumpModifiers
   swimSpeedBonus?: MorphusPolymorphicModifier
   aquaticTraits?: MorphusAquaticTraits
   flightEngine?: MorphusFlightEngine
+  conditionalTerrainModifiers?: readonly MorphusConditionalTerrainModifier[]
 }
 
 export type MorphusPerceptionSpecialties = {
@@ -637,6 +650,8 @@ export type MorphusSkillOverride = {
   modifierPercent?: number
   isNegated?: boolean
   grantUnlearnedValue?: number
+  /** Per-level increment on base % (e.g. Gymnast Build +4%/level). */
+  perLevelIncrement?: number
 }
 
 export type MorphusSkillModifiers = {
@@ -690,6 +705,11 @@ export type MorphusSubTraitChoicesBudget = {
   allowedChoicesPool: readonly string[]
 }
 
+export type MorphusHandCapacityConstraints = {
+  occupiesHands: number
+  blocksTwoHandedWeapons: boolean
+}
+
 /**
  * Morphus characteristic row (`palladium-morphus.schema.json`).
  * Aggregated at runtime — see `morphusCharacteristicAggregation.ts`.
@@ -713,6 +733,7 @@ export type MorphusCharacteristic = {
   naturalWeapons?: readonly MorphusNaturalWeapon[]
   limbDurability?: readonly MorphusLimbDurability[]
   subTraitChoicesBudget?: MorphusSubTraitChoicesBudget
+  handCapacityConstraints?: MorphusHandCapacityConstraints
   customOneOffs?: readonly string[]
 }
 
