@@ -4,5 +4,517 @@
   "displayName": "Artisan",
   "parentTable": null,
   "description": "Artisan Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "entries": [
+    {
+      "id": "artisan_paint_palette",
+      "name": "Paint Palette",
+      "tableCategory": "Artisan",
+      "description": "A wide board containing daubs of different colored paints is attached to the forearm above the non-dominant hand. The paint never runs out and consistency can be altered by thought.",
+      "statModifiers": {
+        "perception": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 1
+        },
+        "ppe": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Enables the Nightbane to paint images that are startlingly realistic and work like optical illusions (Save vs illusions or Perception 14 to see through).",
+        "-1 to strike with the limb holding the palette."
+      ]
+    },
+    {
+      "id": "artisan_bellows_lungs",
+      "name": "Bellows Lungs",
+      "tableCategory": "Artisan",
+      "description": "Reflecting an interest in glassblowing or metalworking, the powerful lungs of the Nightbane are actually oversized bellows made of a dark, leathery, visibly ribbed material.",
+      "statModifiers": {
+        "me": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "pb": {
+          "flat": -2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_scuba",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "damageAffinities": {
+        "heat": 0.5,
+        "fire": 0.5
+      },
+      "customOneOffs": [
+        "The Nightbane can hold their breath for a number of minutes equal to their P.E. attribute."
+      ]
+    },
+    {
+      "id": "artisan_drawing_table",
+      "name": "Drawing Table",
+      "tableCategory": "Artisan",
+      "description": "The front of the torso folds down to reveal a flat, sturdy surface suitable for drawing. The chest cavity contains drawing implements and tools.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": -1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Gains the psionic power of Total Recall at no cost, but only for images/faces/designs, not words.",
+        "Recalled images can be duplicated as a detailed sketch with a successful Art skill roll in 2D4 minutes."
+      ]
+    },
+    {
+      "id": "artisan_chisel_fingers",
+      "name": "Chisel Fingers",
+      "tableCategory": "Artisan",
+      "description": "A sign of a sculptor or woodworker, the tips of each finger end in a variety of metal tools useful for chipping away at wood or stone.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_computer_operation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_medical_doctor",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_forgery",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_pockets",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Chisel Finger Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "mobility": {
+        "burrowingEngine": {
+          "feetPerMeleeRound": 3,
+          "allowedSubstrates": [
+            "soil_dirt",
+            "solid_rock"
+          ]
+        }
+      }
+    },
+    {
+      "id": "artisan_typewriter_keyboard",
+      "name": "Typewriter/Keyboard",
+      "tableCategory": "Artisan",
+      "description": "Whether carried or built into the body, the character's love of writing is represented as a computer keyboard or old-fashioned typewriter that never runs out of ink or paper.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "ma": {
+          "flat": -2
+        },
+        "ppe": {
+          "dice": "-1D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_writing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_writing",
+            "modifierPercent": 10
+          }
+        ],
+        "customSystemRolls": [
+          {
+            "rollName": "Spontaneous Insight",
+            "baseSuccessChance": 5,
+            "levelIntervalScaling": {
+              "levelInterval": 3,
+              "chanceBonus": 3
+            }
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Spontaneous insight requires journaling for 1D4 hours regarding a nagging question.",
+        "Nightbane with this feature often seem to be distracted by their own thoughts."
+      ]
+    },
+    {
+      "id": "artisan_costumes_cosplay",
+      "name": "Costumes/Outfits/Cosplay",
+      "tableCategory": "Artisan",
+      "description": "The Morphus manifests as one particular 'outfit' each time he switches. Inevitably, the Nightbane is likely to have 2-4 favorite default looks.",
+      "isPolymorphicTemplate": true,
+      "statModifiers": {
+        "ma": {
+          "dice": "1D4+1"
+        },
+        "strike": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
+        },
+        "dodge": {
+          "flat": -1
+        }
+      },
+      "sensory": {
+        "externalSensoryObfuscation": [
+          "digital_photo_blur",
+          "video_distortion"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "customOneOffs": [
+        "+5% to any other skill that might benefit from a specific outfit (e.g. dark clothes aiding Prowl).",
+        "Depending on the attire, contextually adds +1 to Horror Factor, +10% Intimidate, +10% Trust, OR +1D4 P.B.",
+        "The fake costume provides protective S.D.C. equal to the actual S.D.C. of the real costume (maximum cap of 30 points).",
+        "Can only manifest costumes/appearances that the character has actually worn in public for at least 2 hours."
+      ]
+    },
+    {
+      "id": "artisan_iron_works",
+      "name": "Iron Works",
+      "tableCategory": "Artisan",
+      "description": "The Morphus is a well-muscled body that seems to be made of smooth steel or iron, a welder's mask, heavy work gloves, and metalworking tools.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6x10+40"
+        },
+        "pb": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D6"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Acetylene Torch",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Small/Large Sledgehammer",
+          "damageFormula": "1D6 or 2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -10
+          }
+        ]
+      }
+    },
+    {
+      "id": "artisan_instrument_mic_stand",
+      "name": "Instrument/Mic Stand",
+      "tableCategory": "Artisan",
+      "description": "The Morphus appears with a chosen instrument or mic stand. The music produced can be heard up to a mile away without amplification.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 1
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "hf": {
+          "flat": -1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_play_musical_instrument",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_sing",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Instrument Blunt Weapon",
+          "damageFormula": "1D4 to 1D6+3",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Small instrument does 1D4 damage, medium does 1D6, large does 1D6+3."
+      ]
+    },
+    {
+      "id": "artisan_body_artist",
+      "name": "Body Artist (Tattoos & Piercings)",
+      "tableCategory": "Artisan",
+      "description": "The Morphus body is covered in tattoos, scarification, and/or piercings of all kinds. The fingers may also be adorned in heavy rings.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D4x10+10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Heavy Rings",
+          "damageFormula": "1D4",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "In combat, the tattoos or scar patterns seem to move, which is unnerving and makes opponents -1 to strike and parry."
+      ]
+    }
+  ]
 }

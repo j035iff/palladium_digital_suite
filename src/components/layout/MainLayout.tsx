@@ -581,12 +581,40 @@ const WEAPON_TRAIT_LABELS: Record<string, string> = {
   auto_returning: 'Auto-returning',
 }
 
+const SENSORY_OBFUSCATION_LABELS: Record<string, string> = {
+  digital_photo_blur: 'Digital photo blur',
+  video_distortion: 'Video distortion',
+  biometric_scrambling: 'Biometric scrambling',
+  scent_masking: 'Scent masking',
+}
+
+const BURROW_SUBSTRATE_LABELS: Record<string, string> = {
+  soil_dirt: 'Soil / dirt',
+  solid_rock: 'Solid rock',
+  concrete: 'Concrete',
+}
+
 function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) {
   const hasWeapons = derived.naturalWeapons.length > 0
   const hasCompanions = derived.companions.length > 0
   const hasNotes = derived.traitNotes.length > 0
   const hasTraits = derived.weaponTraits.length > 0
-  if (!hasWeapons && !hasCompanions && !hasNotes && !hasTraits) return null
+  const hasRolls = derived.customSystemRolls.length > 0
+  const hasBurrow = derived.burrowingEngine != null
+  const hasObfuscation = derived.externalSensoryObfuscation.length > 0
+  const hasPoly = derived.polymorphicTemplates.length > 0
+  if (
+    !hasWeapons &&
+    !hasCompanions &&
+    !hasNotes &&
+    !hasTraits &&
+    !hasRolls &&
+    !hasBurrow &&
+    !hasObfuscation &&
+    !hasPoly
+  ) {
+    return null
+  }
 
   return (
     <section
@@ -599,6 +627,40 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
       >
         Morphus traits (aggregated)
       </h2>
+      {hasPoly ? (
+        <p className="mb-2 text-xs font-semibold text-amber-200/95">
+          Polymorphic template:{' '}
+          {derived.polymorphicTemplates.map((p) => p.traitName).join(' · ')}
+        </p>
+      ) : null}
+      {hasBurrow && derived.burrowingEngine ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Burrow {derived.burrowingEngine.feetPerMeleeRound} ft/melee on{' '}
+          {derived.burrowingEngine.allowedSubstrates
+            .map((s) => BURROW_SUBSTRATE_LABELS[s] ?? s)
+            .join(', ')}
+        </p>
+      ) : null}
+      {hasObfuscation ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Identity shield:{' '}
+          {derived.externalSensoryObfuscation
+            .map((o) => SENSORY_OBFUSCATION_LABELS[o] ?? o)
+            .join(' · ')}
+        </p>
+      ) : null}
+      {hasRolls ? (
+        <ul className="mb-2 list-inside list-disc text-sm text-violet-100/95">
+          {derived.customSystemRolls.map((r, i) => (
+            <li key={`${r.sourceTraitId}-${r.rollName}-${i}`}>
+              <span className="font-medium">{r.rollName}</span>
+              {' — '}
+              {r.resolvedChance}% at level
+              <span className="text-violet-400/80"> ({r.sourceTraitName})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {hasTraits ? (
         <p className="mb-2 text-xs text-violet-200/90">
           Weapon flags:{' '}

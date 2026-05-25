@@ -3,6 +3,8 @@ import type {
   Character,
   FeatureModifiers,
   MorphusCharacteristic,
+  MorphusBurrowingEngine,
+  MorphusExternalSensoryObfuscation,
   MorphusStanceType,
   MorphusStatModifiers,
   MorphusSurfaceType,
@@ -17,9 +19,15 @@ import {
   collectMorphusSkillOverridesForSurface,
   collectMorphusStatModifierBlocks,
   collectMorphusTraitNotes,
+  collectPolymorphicTemplateTraits,
   flattenMorphusNaturalWeapons,
+  mergeMorphusBurrowingEngines,
   resolveMorphusCompanionSnapshots,
+  resolveMorphusCustomSystemRollSnapshots,
+  unionExternalSensoryObfuscation,
   unionMorphusWeaponTraits,
+  type MorphusDerivedCustomSystemRoll,
+  type MorphusPolymorphicTemplateFlag,
   type MorphusDerivedCompanion,
   type MorphusDerivedNaturalWeapon,
   type MorphusTraitNote,
@@ -70,6 +78,10 @@ export type MorphusPassiveBundle = {
   companions: readonly MorphusDerivedCompanion[]
   traitNotes: readonly MorphusTraitNote[]
   availableStanceTypes: readonly MorphusStanceType[]
+  customSystemRolls: readonly MorphusDerivedCustomSystemRoll[]
+  burrowingEngine?: MorphusBurrowingEngine
+  externalSensoryObfuscation: readonly MorphusExternalSensoryObfuscation[]
+  polymorphicTemplates: readonly MorphusPolymorphicTemplateFlag[]
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -80,6 +92,10 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'traitNotes'
   | 'availableStanceTypes'
   | 'stanceType'
+  | 'customSystemRolls'
+  | 'burrowingEngine'
+  | 'externalSensoryObfuscation'
+  | 'polymorphicTemplates'
 >
 
 export function resolveActiveMorphusTraits(
@@ -159,6 +175,14 @@ export function buildMorphusPassiveBundle(
     companions: resolveMorphusCompanionSnapshots(traits),
     traitNotes: collectMorphusTraitNotes(traits),
     availableStanceTypes,
+    customSystemRolls: resolveMorphusCustomSystemRollSnapshots(
+      traits,
+      character.level,
+      surfaceType,
+    ),
+    burrowingEngine: mergeMorphusBurrowingEngines(traits),
+    externalSensoryObfuscation: unionExternalSensoryObfuscation(traits),
+    polymorphicTemplates: collectPolymorphicTemplateTraits(traits),
   }
 }
 

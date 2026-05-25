@@ -647,6 +647,13 @@ export type MorphusCompanionBlueprint = {
   poolSharingRule: MorphusPoolSharingRule
 }
 
+export type MorphusBurrowSubstrate = 'soil_dirt' | 'solid_rock' | 'concrete'
+
+export type MorphusBurrowingEngine = {
+  feetPerMeleeRound: number
+  allowedSubstrates: readonly MorphusBurrowSubstrate[]
+}
+
 export type MorphusMobility = {
   jumpModifiers?: MorphusJumpModifiers
   swimSpeedBonus?: MorphusPolymorphicModifier
@@ -654,6 +661,7 @@ export type MorphusMobility = {
   flightEngine?: MorphusFlightEngine
   conditionalTerrainModifiers?: readonly MorphusConditionalTerrainModifier[]
   conditionalStanceModifiers?: readonly MorphusConditionalStanceModifier[]
+  burrowingEngine?: MorphusBurrowingEngine
 }
 
 export type MorphusPerceptionSpecialties = {
@@ -661,6 +669,12 @@ export type MorphusPerceptionSpecialties = {
   smell?: number
   sound?: number
 }
+
+export type MorphusExternalSensoryObfuscation =
+  | 'digital_photo_blur'
+  | 'video_distortion'
+  | 'biometric_scrambling'
+  | 'scent_masking'
 
 export type MorphusSensory = {
   nightvisionRangeFlatBonus?: number
@@ -672,6 +686,7 @@ export type MorphusSensory = {
   sonarHearing?: boolean
   sharpHearing?: boolean
   invisibleToThermalImaging?: boolean
+  externalSensoryObfuscation?: readonly MorphusExternalSensoryObfuscation[]
 }
 
 export type MorphusSkillOverrideTargetType = 'skill_id' | 'category' | 'skill_trait'
@@ -686,9 +701,21 @@ export type MorphusSkillOverride = {
   perLevelIncrement?: number
 }
 
+export type MorphusCustomSystemRollLevelIntervalScaling = {
+  levelInterval: number
+  chanceBonus: number
+}
+
+export type MorphusCustomSystemRoll = {
+  rollName: string
+  baseSuccessChance: number
+  levelIntervalScaling?: MorphusCustomSystemRollLevelIntervalScaling
+}
+
 export type MorphusSkillModifiers = {
   globalSkillModifier?: number
   specificSkillOverrides?: readonly MorphusSkillOverride[]
+  customSystemRolls?: readonly MorphusCustomSystemRoll[]
 }
 
 /** Vulnerability tier multiplier (0 = none … 2 = double). */
@@ -768,6 +795,10 @@ export type MorphusCharacteristic = {
   handCapacityConstraints?: MorphusHandCapacityConstraints
   /** Nested mount / companion entity (Ancient Warrior centaur, warhorse, etc.). */
   companionBlueprint?: MorphusCompanionBlueprint
+  /**
+   * Dynamic archetype wrapper — UI may swap visual skin and spawn ephemeral S.D.C. shields.
+   */
+  isPolymorphicTemplate?: boolean
   customOneOffs?: readonly string[]
 }
 

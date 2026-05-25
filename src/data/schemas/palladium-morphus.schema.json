@@ -50,6 +50,10 @@
     "subTraitChoicesBudget": { "$ref": "#/$defs/subTraitChoicesBudget" },
     "handCapacityConstraints": { "$ref": "#/$defs/handCapacityConstraints" },
     "companionBlueprint": { "$ref": "#/$defs/companionBlueprint" },
+    "isPolymorphicTemplate": {
+      "type": "boolean",
+      "description": "When true, tells the frontend presentation sheet that this morphus choice acts as a dynamic archetype wrapper capable of altering its visual skin and spawning minor temporary S.D.C. shields at execution time."
+    },
     "customOneOffs": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
@@ -344,6 +348,32 @@
           "type": "array",
           "items": { "$ref": "#/$defs/conditionalStanceModifier" },
           "description": "Stance-dependent stat modifier swaps (mounted, prone, etc.)."
+        },
+        "burrowingEngine": {
+          "$ref": "#/$defs/burrowingEngine",
+          "description": "Subterranean traversal rate and permitted substrates (Dark Designs Artisan, pp. 25–27)."
+        }
+      }
+    },
+    "burrowingEngine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feetPerMeleeRound", "allowedSubstrates"],
+      "properties": {
+        "feetPerMeleeRound": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Burrow distance per melee round (e.g. Chisel Fingers 3 ft)."
+        },
+        "allowedSubstrates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["soil_dirt", "solid_rock", "concrete"]
+          },
+          "description": "Ground types this burrow profile may traverse."
         }
       }
     },
@@ -368,7 +398,21 @@
         "sharpVision": { "type": "boolean" },
         "sonarHearing": { "type": "boolean" },
         "sharpHearing": { "type": "boolean" },
-        "invisibleToThermalImaging": { "type": "boolean" }
+        "invisibleToThermalImaging": { "type": "boolean" },
+        "externalSensoryObfuscation": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "digital_photo_blur",
+              "video_distortion",
+              "biometric_scrambling",
+              "scent_masking"
+            ]
+          },
+          "description": "Identity / recording defenses against external capture (Artisan table)."
+        }
       }
     },
     "skillOverride": {
@@ -394,6 +438,44 @@
         }
       }
     },
+    "customSystemRollLevelIntervalScaling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["levelInterval", "chanceBonus"],
+      "properties": {
+        "levelInterval": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Levels between each chance increase (e.g. every 3 levels)."
+        },
+        "chanceBonus": {
+          "type": "integer",
+          "description": "Percent added per interval (e.g. +3% every 3 levels)."
+        }
+      }
+    },
+    "customSystemRoll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rollName", "baseSuccessChance"],
+      "properties": {
+        "rollName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed narrative check label (e.g. Spontaneous Insight)."
+        },
+        "baseSuccessChance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Base success percent before level scaling."
+        },
+        "levelIntervalScaling": {
+          "$ref": "#/$defs/customSystemRollLevelIntervalScaling",
+          "description": "Optional per-interval success growth with character level."
+        }
+      }
+    },
     "skillModifiers": {
       "type": "object",
       "additionalProperties": false,
@@ -405,6 +487,11 @@
         "specificSkillOverrides": {
           "type": "array",
           "items": { "$ref": "#/$defs/skillOverride" }
+        },
+        "customSystemRolls": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/customSystemRoll" },
+          "description": "Narrative / psychic percentile checks not tied to the skill catalog (Artisan table)."
         }
       }
     },

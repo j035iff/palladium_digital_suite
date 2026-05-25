@@ -1,7 +1,11 @@
 import type {
   MorphusCharacteristic,
+  MorphusBurrowSubstrate,
+  MorphusBurrowingEngine,
   MorphusCompanionBlueprint,
+  MorphusCustomSystemRoll,
   MorphusDamageAffinityType,
+  MorphusExternalSensoryObfuscation,
   MorphusDamageAffinityMultiplier,
   MorphusHandCapacityConstraints,
   MorphusNaturalWeapon,
@@ -403,4 +407,122 @@ export function collectMorphusTraitNotes(
       traitName: t.name,
       lines: t.customOneOffs ?? [],
     }))
+}
+
+/** Flatten narrative percentile checks from trait skillModifiers (+ terrain-isolated rows). */
+export function collectMorphusCustomSystemRolls(
+  traits: readonly Pick<MorphusCharacteristic, 'skillModifiers' | 'mobility'>[],
+  surfaceType: MorphusSurfaceType,
+): MorphusCustomSystemRoll[] {
+  const out: MorphusCustomSystemRoll[] = []
+  for (const t of traits) {
+    const base = t.skillModifiers?.customSystemRolls
+    if (base?.length) out.push(...base)
+    const terrain = t.mobility?.conditionalTerrainModifiers
+    if (!terrain) continue
+    for (const row of terrain) {
+      if (!row.surfaceTypes.includes(surfaceType)) continue
+      const iso = row.skillModifiers?.customSystemRolls
+      if (iso?.length) out.push(...iso)
+    }
+  }
+  return out
+}
+
+export type MorphusDerivedCustomSystemRoll = MorphusCustomSystemRoll & {
+  sourceTraitId: string
+  sourceTraitName: string
+  resolvedChance: number
+}
+
+export function resolveCustomSystemRollChance(
+  roll: MorphusCustomSystemRoll,
+  characterLevel: number,
+): number {
+  const level = Math.max(1, Math.floor(characterLevel))
+  let chance = roll.baseSuccessChance
+  const scaling = roll.levelIntervalScaling
+  if (scaling && scaling.levelInterval > 0) {
+    const intervals = Math.floor((level - 1) / scaling.levelInterval)
+    chance += intervals * scaling.chanceBonus
+  }
+  return Math.min(98, Math.max(0, chance))
+}
+
+export function resolveMorphusCustomSystemRollSnapshots(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'skillModifiers' | 'mobility'
+  >[],
+  characterLevel: number,
+  surfaceType: MorphusSurfaceType = 'hard_flat',
+): MorphusDerivedCustomSystemRoll[] {
+  const out: MorphusDerivedCustomSystemRoll[] = []
+  for (const t of traits) {
+    const rolls: MorphusCustomSystemRoll[] = []
+    const base = t.skillModifiers?.customSystemRolls
+    if (base?.length) rolls.push(...base)
+    const terrain = t.mobility?.conditionalTerrainModifiers
+    if (terrain) {
+      for (const row of terrain) {
+        if (!row.surfaceTypes.includes(surfaceType)) continue
+        const iso = row.skillModifiers?.customSystemRolls
+        if (iso?.length) rolls.push(...iso)
+      }
+    }
+    for (const roll of rolls) {
+      out.push({
+        ...roll,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+        resolvedChance: resolveCustomSystemRollChance(roll, characterLevel),
+      })
+    }
+  }
+  return out
+}
+
+/** Merge burrow profiles: max speed, union of allowed substrates. */
+export function mergeMorphusBurrowingEngines(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): MorphusBurrowingEngine | undefined {
+  let feet = 0
+  const substrates = new Set<MorphusBurrowSubstrate>()
+  for (const t of traits) {
+    const b = t.mobility?.burrowingEngine
+    if (!b) continue
+    feet = Math.max(feet, b.feetPerMeleeRound)
+    for (const s of b.allowedSubstrates) substrates.add(s)
+  }
+  if (feet === 0 && substrates.size === 0) return undefined
+  return {
+    feetPerMeleeRound: feet,
+    allowedSubstrates: [...substrates],
+  }
+}
+
+export function unionExternalSensoryObfuscation(
+  traits: readonly Pick<MorphusCharacteristic, 'sensory'>[],
+): MorphusExternalSensoryObfuscation[] {
+  const set = new Set<MorphusExternalSensoryObfuscation>()
+  for (const t of traits) {
+    for (const o of t.sensory?.externalSensoryObfuscation ?? []) set.add(o)
+  }
+  return [...set]
+}
+
+export type MorphusPolymorphicTemplateFlag = {
+  traitId: string
+  traitName: string
+}
+
+export function collectPolymorphicTemplateTraits(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'isPolymorphicTemplate'
+  >[],
+): MorphusPolymorphicTemplateFlag[] {
+  return traits
+    .filter((t) => t.isPolymorphicTemplate === true)
+    .map((t) => ({ traitId: t.id, traitName: t.name }))
 }

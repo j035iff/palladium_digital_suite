@@ -81,17 +81,36 @@
           }
         }
       }
-    ]
+    ],
+    "burrowingEngine": {
+      "feetPerMeleeRound": 3,
+      "allowedSubstrates": ["soil_dirt", "solid_rock"]
+    }
   },
+  "isPolymorphicTemplate": true,
   "sensory": {
     "nightvisionRangeFlatBonus": 1000,
     "thermalVision": true,
     "perceptionSpecialties": {
       "vision": 2
-    }
+    },
+    "externalSensoryObfuscation": [
+      "digital_photo_blur",
+      "biometric_scrambling"
+    ]
   },
   "skillModifiers": {
     "globalSkillModifier": -10,
+    "customSystemRolls": [
+      {
+        "rollName": "Spontaneous Insight",
+        "baseSuccessChance": 32,
+        "levelIntervalScaling": {
+          "levelInterval": 3,
+          "chanceBonus": 3
+        }
+      }
+    ],
     "specificSkillOverrides": [
       {
         "targetType": "skill_id",

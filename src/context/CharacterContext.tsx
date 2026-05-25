@@ -795,6 +795,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       traitNotes: morphusPassiveBundle.traitNotes,
       availableStanceTypes: morphusPassiveBundle.availableStanceTypes,
       stanceType: morphusPassiveBundle.stanceType,
+      customSystemRolls: morphusPassiveBundle.customSystemRolls,
+      burrowingEngine: morphusPassiveBundle.burrowingEngine,
+      externalSensoryObfuscation: morphusPassiveBundle.externalSensoryObfuscation,
+      polymorphicTemplates: morphusPassiveBundle.polymorphicTemplates,
     }
   }, [morphusPassiveBundle])
 
