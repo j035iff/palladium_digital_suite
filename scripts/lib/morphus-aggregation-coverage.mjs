@@ -21,6 +21,7 @@ const HOOKS = [
   { path: 'companionBlueprint', label: 'companion blueprint' },
   { path: 'isPolymorphicTemplate', label: 'polymorphic template' },
   { path: 'gimmickInventory', label: 'gimmick inventory' },
+  { path: 'gimmickToySwitches', label: 'gimmick toy switches' },
   { path: 'disabledNaturalAttackTags', label: 'disabled natural attacks' },
   { path: 'activatedAbilities', label: 'activated abilities (burst)' },
   { path: 'specialCombatInterceptions', label: 'combat interceptions' },

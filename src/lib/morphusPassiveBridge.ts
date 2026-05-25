@@ -28,17 +28,22 @@ import {
   flattenMorphusActivatedAbilities,
   flattenMorphusCombatInterceptions,
   flattenMorphusLimbComponents,
-  stackNightvisionRangeFlatBonus,
   type MorphusDerivedActivatedAbility,
   type MorphusDerivedCombatInterception,
   type MorphusDerivedLimbComponent,
   flattenMorphusGimmickInventory,
+  flattenMorphusGimmickToySwitches,
   flattenMorphusNaturalWeapons,
+  collectActiveGimmickToyEffects,
+  applyGimmickToyFlatCombatBonuses,
+  resolveActiveGimmickSpdMultiplier,
+  stackNightvisionWithActiveGimmickSwitches,
   mergeMorphusBurrowingEngines,
   unionDisabledNaturalAttackTags,
   type MorphusAggregatedJumpBonuses,
   type MorphusDamageAffinityNote,
   type MorphusDerivedGimmickItem,
+  type MorphusDerivedGimmickSwitch,
   type MorphusVariableScaleNote,
   resolveMorphusCompanionSnapshots,
   resolveMorphusCustomSystemRollSnapshots,
@@ -111,6 +116,8 @@ export type MorphusPassiveBundle = {
   combatInterceptions: readonly MorphusDerivedCombatInterception[]
   nightvisionRangeFlatBonus: number
   activeBurstKeys: readonly string[]
+  gimmickToySwitches: readonly MorphusDerivedGimmickSwitch[]
+  activeGimmickSwitchKeys: readonly string[]
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -136,6 +143,8 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'combatInterceptions'
   | 'nightvisionRangeFlatBonus'
   | 'activeBurstKeys'
+  | 'gimmickToySwitches'
+  | 'activeGimmickSwitchKeys'
 >
 
 export type MorphusPassiveBuildOptions = {
@@ -143,6 +152,8 @@ export type MorphusPassiveBuildOptions = {
   stanceType?: MorphusStanceType
   /** Keys from morphusBurstAbilityKey — burst statModifiers merge when listed. */
   activeBurstKeys?: readonly string[]
+  /** Keys from morphusGimmickSwitchKey — switch effects merge when listed. */
+  activeGimmickSwitchKeys?: readonly string[]
 }
 
 export function resolveActiveMorphusTraits(
@@ -172,6 +183,8 @@ export function buildMorphusPassiveBundle(
       ? options.stanceType
       : undefined
   const burstSet = new Set(options.activeBurstKeys ?? [])
+  const gimmickSet = new Set(options.activeGimmickSwitchKeys ?? [])
+  const activeGimmickEffects = collectActiveGimmickToyEffects(traits, gimmickSet)
 
   const form = getFormState(character, activeForm)
   const attrs = form.attributes
@@ -185,6 +198,7 @@ export function buildMorphusPassiveBundle(
       key,
       effectiveStance,
       burstSet,
+      gimmickSet,
     )
     if (!blocks.length) continue
 
@@ -204,6 +218,13 @@ export function buildMorphusPassiveBundle(
       (modifiers[k as keyof FeatureModifiers] ?? 0) + v
   }
 
+  const gimmickCombat: Record<string, number> = {}
+  applyGimmickToyFlatCombatBonuses(gimmickCombat, activeGimmickEffects)
+  for (const [k, v] of Object.entries(gimmickCombat)) {
+    modifiers[k as keyof FeatureModifiers] =
+      (modifiers[k as keyof FeatureModifiers] ?? 0) + v
+  }
+
   for (const t of traits) {
     const wc = t.weaponClassBonuses
     if (!wc) continue
@@ -213,10 +234,14 @@ export function buildMorphusPassiveBundle(
     if (wc.guns?.flat) modifiers.strike = (modifiers.strike ?? 0) + wc.guns.flat
   }
 
+  const terrainSpd =
+    resolveMorphusTerrainSpdMultiplier(traits, surfaceType) *
+    resolveActiveGimmickSpdMultiplier(activeGimmickEffects)
+
   return {
     modifiers,
     relativeArShift: sumRelativeArShiftFromTraits(traits),
-    terrainSpdMultiplier: resolveMorphusTerrainSpdMultiplier(traits, surfaceType),
+    terrainSpdMultiplier: terrainSpd,
     terrainSkillOverrides: collectMorphusSkillOverridesForSurface(
       traits,
       surfaceType,
@@ -227,9 +252,11 @@ export function buildMorphusPassiveBundle(
     naturalWeapons: flattenMorphusNaturalWeapons(
       traits,
       unionDisabledNaturalAttackTags(traits),
+      gimmickSet,
     ),
     weaponTraits: unionMorphusWeaponTraits(traits),
     gimmickInventory: flattenMorphusGimmickInventory(traits),
+    gimmickToySwitches: flattenMorphusGimmickToySwitches(traits),
     companions: resolveMorphusCompanionSnapshots(traits),
     traitNotes: collectMorphusTraitNotes(traits),
     availableStanceTypes,
@@ -248,8 +275,12 @@ export function buildMorphusPassiveBundle(
     limbComponents: flattenMorphusLimbComponents(traits),
     activatedAbilities: flattenMorphusActivatedAbilities(traits),
     combatInterceptions: flattenMorphusCombatInterceptions(traits),
-    nightvisionRangeFlatBonus: stackNightvisionRangeFlatBonus(traits),
+    nightvisionRangeFlatBonus: stackNightvisionWithActiveGimmickSwitches(
+      traits,
+      gimmickSet,
+    ),
     activeBurstKeys: options.activeBurstKeys ?? [],
+    activeGimmickSwitchKeys: options.activeGimmickSwitchKeys ?? [],
   }
 }
 

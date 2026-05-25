@@ -95,6 +95,12 @@ const MECHANIC_PATTERNS = [
     severity: 'info',
   },
   {
+    id: 'gimmick_toy_switches',
+    re: /Gimmick Toy Switches|wind-up key|knobs, push buttons|presetEffectCatalog/i,
+    schemaPaths: ['gimmickToySwitches'],
+    severity: 'info',
+  },
+  {
     id: 'limb_component',
     re: /only be struck from behind|Called Shot|controller has \d+ S\.D\.C|much tougher than usual \(\d+ S\.D\.C/i,
     schemaPaths: ['limbDurability'],

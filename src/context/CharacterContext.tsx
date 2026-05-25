@@ -223,6 +223,9 @@ type CharacterContextValue = {
   /** Active Gear-Head / burst ability keys (`traitId::abilityName`). */
   morphusActiveBurstKeys: readonly string[]
   toggleMorphusBurst: (burstKey: string) => void
+  /** Active gimmick toy switch keys (`traitId::gimmick::ref`). */
+  morphusActiveGimmickSwitchKeys: readonly string[]
+  toggleMorphusGimmickSwitch: (switchKey: string) => void
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
@@ -518,6 +521,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [morphusActiveBurstKeys, setMorphusActiveBurstKeys] = useState<
     readonly string[]
   >([])
+  const [morphusActiveGimmickSwitchKeys, setMorphusActiveGimmickSwitchKeys] =
+    useState<readonly string[]>([])
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
     ensureCharacterOcc(INITIAL_CHARACTER_SNAPSHOT).occ.category === 'psychic'
       ? 'master'
@@ -785,6 +790,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         surfaceType: morphusSurfaceType,
         stanceType: morphusStanceType,
         activeBurstKeys: morphusActiveBurstKeys,
+        activeGimmickSwitchKeys: morphusActiveGimmickSwitchKeys,
       }),
     [
       rawCharacter,
@@ -792,6 +798,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusSurfaceType,
       morphusStanceType,
       morphusActiveBurstKeys,
+      morphusActiveGimmickSwitchKeys,
     ],
   )
 
@@ -800,6 +807,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       prev.includes(burstKey)
         ? prev.filter((k) => k !== burstKey)
         : [...prev, burstKey],
+    )
+  }, [])
+
+  const toggleMorphusGimmickSwitch = useCallback((switchKey: string) => {
+    setMorphusActiveGimmickSwitchKeys((prev) =>
+      prev.includes(switchKey)
+        ? prev.filter((k) => k !== switchKey)
+        : [...prev, switchKey],
     )
   }, [])
 
@@ -829,6 +844,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       combatInterceptions: morphusPassiveBundle.combatInterceptions,
       nightvisionRangeFlatBonus: morphusPassiveBundle.nightvisionRangeFlatBonus,
       activeBurstKeys: morphusPassiveBundle.activeBurstKeys,
+      gimmickToySwitches: morphusPassiveBundle.gimmickToySwitches,
+      activeGimmickSwitchKeys: morphusPassiveBundle.activeGimmickSwitchKeys,
     }
   }, [morphusPassiveBundle])
 
@@ -846,6 +863,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         surfaceType: morphusSurfaceType,
         stanceType: morphusStanceType,
         activeBurstKeys: morphusActiveBurstKeys,
+        activeGimmickSwitchKeys: morphusActiveGimmickSwitchKeys,
       }),
     [
       rawCharacter,
@@ -853,6 +871,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusSurfaceType,
       morphusStanceType,
       morphusActiveBurstKeys,
+      morphusActiveGimmickSwitchKeys,
     ],
   )
 
@@ -1080,6 +1099,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             surfaceType: morphusSurfaceType,
             stanceType: morphusStanceType,
             activeBurstKeys: morphusActiveBurstKeys,
+            activeGimmickSwitchKeys: morphusActiveGimmickSwitchKeys,
           })
           if (
             bundle &&
@@ -1106,6 +1126,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusSurfaceType,
       morphusStanceType,
       morphusActiveBurstKeys,
+      morphusActiveGimmickSwitchKeys,
     ],
   )
 
@@ -1651,6 +1672,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusDerived,
       morphusActiveBurstKeys,
       toggleMorphusBurst,
+      morphusActiveGimmickSwitchKeys,
+      toggleMorphusGimmickSwitch,
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
@@ -1746,6 +1769,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusDerived,
       morphusActiveBurstKeys,
       toggleMorphusBurst,
+      morphusActiveGimmickSwitchKeys,
+      toggleMorphusGimmickSwitch,
       sheetActiveForm,
       supportsDualForm,
       activeRace,

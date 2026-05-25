@@ -61,6 +61,7 @@ export type MorphusPassiveOptions = {
   surfaceType?: MorphusSurfaceType
   stanceType?: MorphusStanceType
   activeBurstKeys?: readonly string[]
+  activeGimmickSwitchKeys?: readonly string[]
 }
 
 export function aggregateAllPassiveModifiers(
@@ -81,6 +82,7 @@ export function aggregateAllPassiveModifiers(
     surfaceType: morphusOptions.surfaceType ?? 'hard_flat',
     stanceType: morphusOptions.stanceType,
     activeBurstKeys: morphusOptions.activeBurstKeys,
+    activeGimmickSwitchKeys: morphusOptions.activeGimmickSwitchKeys,
   })
   out = mergeMorphusIntoPassive(out, morphus)
   return out

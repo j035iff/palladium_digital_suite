@@ -36,6 +36,7 @@ const TS_TOP_LEVEL_FIELDS = {
   companionBlueprint: 'companionBlueprint?: MorphusCompanionBlueprint',
   isPolymorphicTemplate: 'isPolymorphicTemplate?: boolean',
   gimmickInventory: 'gimmickInventory?: readonly MorphusGimmickInventoryItem[]',
+  gimmickToySwitches: 'gimmickToySwitches?: MorphusGimmickToySwitchBoard',
   disabledNaturalAttackTags: 'disabledNaturalAttackTags?: readonly MorphusDisabledNaturalAttackTag[]',
   activatedAbilities: 'activatedAbilities?: readonly MorphusActivatedAbility[]',
   specialCombatInterceptions: 'specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]',

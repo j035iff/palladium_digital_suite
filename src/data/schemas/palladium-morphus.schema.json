@@ -74,6 +74,10 @@
       "items": { "$ref": "#/$defs/gimmickInventoryItem" },
       "description": "Spawned Morphus gadgets (Dark Designs Clown/Jester, pp. 29–33)."
     },
+    "gimmickToySwitches": {
+      "$ref": "#/$defs/gimmickToySwitchBoard",
+      "description": "Wind-up keys, knobs, and body switches with fixed toy-like effects (Survival Guide Biomechanical III, pp. 83–84)."
+    },
     "disabledNaturalAttackTags": {
       "type": "array",
       "uniqueItems": true,
@@ -778,6 +782,207 @@
         "blocksTwoHandedWeapons": {
           "type": "boolean",
           "description": "When true, enforces inventory lockout for two-handed weapons if free hand slots are insufficient."
+        }
+      }
+    },
+    "gimmickToySwitchControlType": {
+      "type": "string",
+      "enum": [
+        "wind_up_key",
+        "knob",
+        "push_button",
+        "pull_string",
+        "lever",
+        "switch"
+      ]
+    },
+    "gimmickToySwitchLocation": {
+      "type": "string",
+      "enum": [
+        "back_wind_up_key",
+        "chest",
+        "arm_left",
+        "arm_right",
+        "leg_left",
+        "leg_right",
+        "hand_back_left",
+        "hand_back_right",
+        "neck",
+        "head_side",
+        "head_back"
+      ],
+      "description": "Body area where the control is mounted; effect should relate to this region."
+    },
+    "gimmickToyEffectKind": {
+      "type": "string",
+      "enum": [
+        "theme_music",
+        "sings",
+        "whistles",
+        "loud_barking",
+        "angry_growl",
+        "loud_siren",
+        "voice_change",
+        "foreign_language",
+        "mechanical_voice",
+        "eyes_flashlight_yellow",
+        "eyes_nightvision_green",
+        "eyes_telescopic_white",
+        "eyes_thermal_orange",
+        "eyes_laser_red",
+        "torso_blinking_lights",
+        "quick_disguise_head_spin",
+        "secret_compartment",
+        "pop_apart_body",
+        "missile_firing",
+        "squirt_gun_finger",
+        "flying_fist",
+        "power_punch",
+        "karate_chop",
+        "karate_kick",
+        "retractable_claws",
+        "sword_arm",
+        "fire_fist",
+        "laser_fist",
+        "running_action",
+        "spinning_action",
+        "dancing_action",
+        "jumping_action",
+        "kung_fu_leaping",
+        "flying_action",
+        "roller_blade_feet",
+        "tank_tread_legs",
+        "motorcycle_legs",
+        "custom"
+      ],
+      "description": "Preset effect id from presetEffectCatalog, or custom with inline mechanics."
+    },
+    "gimmickToySwitchEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effectKind"],
+      "properties": {
+        "effectKind": { "$ref": "#/$defs/gimmickToyEffectKind" },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed label when effectKind is custom or overrides preset name."
+        },
+        "durationFormula": {
+          "type": "string",
+          "description": "Active duration (e.g. 30 seconds, 1D6x10+20 seconds, one_melee_round)."
+        },
+        "durationMeleeRounds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Melee rounds the effect lasts when not using durationFormula."
+        },
+        "damageFormula": { "type": "string", "minLength": 1 },
+        "strikeBonus": { "type": "integer" },
+        "parryBonus": { "type": "integer" },
+        "dodgeBonus": { "type": "integer" },
+        "disarmBonus": { "type": "integer" },
+        "rangeFeet": { "type": "number", "minimum": 0 },
+        "horrorFactor": { "type": "integer" },
+        "usesPerPeriod": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Limited uses per resetPeriod (e.g. four missiles)."
+        },
+        "resetPeriod": {
+          "type": "string",
+          "enum": ["per_use", "hourly", "daily", "per_encounter"],
+          "description": "When limited uses replenish."
+        },
+        "spdMultiplierWhileActive": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Spd scale while effect runs (e.g. 2.0 double speed, 0.3 after 70% reduction)."
+        },
+        "statModifiersWhileActive": {
+          "$ref": "#/$defs/statModifiers",
+          "description": "Combat/stat shifts only while the switch effect is active."
+        },
+        "sensoryWhileActive": { "$ref": "#/$defs/sensory" },
+        "mobilityWhileActive": { "$ref": "#/$defs/mobility" },
+        "naturalWeaponWhileActive": { "$ref": "#/$defs/naturalWeapon" },
+        "notes": {
+          "type": "string",
+          "description": "Narrative rules not yet modeled in structured fields."
+        }
+      }
+    },
+    "gimmickToySwitchLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "windUpKeyOnBack": {
+          "type": "boolean",
+          "description": "Large wind-up key protruding from the back."
+        },
+        "chestCountFormula": { "type": "string" },
+        "perArmCountFormula": { "type": "string" },
+        "perLegCountFormula": { "type": "string" },
+        "perHandBackCount": { "type": "integer", "minimum": 0 },
+        "neckOrHeadSideCount": { "type": "integer", "minimum": 0 },
+        "headBackCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "gimmickToyAssignedSwitch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bodyLocation"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Optional player label for this switch."
+        },
+        "bodyLocation": { "$ref": "#/$defs/gimmickToySwitchLocation" },
+        "controlType": { "$ref": "#/$defs/gimmickToySwitchControlType" },
+        "effect": { "$ref": "#/$defs/gimmickToySwitchEffect" },
+        "effectRef": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "References presetEffectCatalog[].id when effect is not inlined."
+        }
+      },
+      "anyOf": [{ "required": ["effect"] }, { "required": ["effectRef"] }]
+    },
+    "gimmickToyPresetEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "effect"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable slug referenced by assignedSwitches[].effectRef."
+        },
+        "effect": { "$ref": "#/$defs/gimmickToySwitchEffect" }
+      }
+    },
+    "gimmickToySwitchBoard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["switchLayout", "presetEffectCatalog"],
+      "properties": {
+        "switchLayout": { "$ref": "#/$defs/gimmickToySwitchLayout" },
+        "presetEffectCatalog": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/gimmickToyPresetEffect" },
+          "description": "All G.M.-approved preset effects; assign one fixed effect per physical switch at creation."
+        },
+        "assignedSwitches": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/gimmickToyAssignedSwitch" },
+          "description": "Fixed switch-to-effect mapping (filled at character creation)."
+        },
+        "disguiseImpossible": { "type": "boolean" },
+        "customClothingRequired": { "type": "boolean" },
+        "gmApprovalRequiredForCustom": {
+          "type": "boolean",
+          "description": "Player-suggested switch effects need G.M. approval."
         }
       }
     }

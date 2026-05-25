@@ -831,6 +831,127 @@ export type MorphusSubTraitChoicesBudget = {
   allowedChoicesPool: readonly string[]
 }
 
+export type MorphusGimmickToySwitchControlType =
+  | 'wind_up_key'
+  | 'knob'
+  | 'push_button'
+  | 'pull_string'
+  | 'lever'
+  | 'switch'
+
+export type MorphusGimmickToySwitchLocation =
+  | 'back_wind_up_key'
+  | 'chest'
+  | 'arm_left'
+  | 'arm_right'
+  | 'leg_left'
+  | 'leg_right'
+  | 'hand_back_left'
+  | 'hand_back_right'
+  | 'neck'
+  | 'head_side'
+  | 'head_back'
+
+export type MorphusGimmickToyEffectKind =
+  | 'theme_music'
+  | 'sings'
+  | 'whistles'
+  | 'loud_barking'
+  | 'angry_growl'
+  | 'loud_siren'
+  | 'voice_change'
+  | 'foreign_language'
+  | 'mechanical_voice'
+  | 'eyes_flashlight_yellow'
+  | 'eyes_nightvision_green'
+  | 'eyes_telescopic_white'
+  | 'eyes_thermal_orange'
+  | 'eyes_laser_red'
+  | 'torso_blinking_lights'
+  | 'quick_disguise_head_spin'
+  | 'secret_compartment'
+  | 'pop_apart_body'
+  | 'missile_firing'
+  | 'squirt_gun_finger'
+  | 'flying_fist'
+  | 'power_punch'
+  | 'karate_chop'
+  | 'karate_kick'
+  | 'retractable_claws'
+  | 'sword_arm'
+  | 'fire_fist'
+  | 'laser_fist'
+  | 'running_action'
+  | 'spinning_action'
+  | 'dancing_action'
+  | 'jumping_action'
+  | 'kung_fu_leaping'
+  | 'flying_action'
+  | 'roller_blade_feet'
+  | 'tank_tread_legs'
+  | 'motorcycle_legs'
+  | 'custom'
+
+export type MorphusGimmickToyEffectResetPeriod =
+  | 'per_use'
+  | 'hourly'
+  | 'daily'
+  | 'per_encounter'
+
+export type MorphusGimmickToySwitchEffect = {
+  effectKind: MorphusGimmickToyEffectKind
+  displayName?: string
+  durationFormula?: string
+  durationMeleeRounds?: number
+  damageFormula?: string
+  strikeBonus?: number
+  parryBonus?: number
+  dodgeBonus?: number
+  disarmBonus?: number
+  rangeFeet?: number
+  horrorFactor?: number
+  usesPerPeriod?: number
+  resetPeriod?: MorphusGimmickToyEffectResetPeriod
+  spdMultiplierWhileActive?: number
+  statModifiersWhileActive?: MorphusStatModifiers
+  sensoryWhileActive?: MorphusSensory
+  mobilityWhileActive?: MorphusMobility
+  naturalWeaponWhileActive?: MorphusNaturalWeapon
+  notes?: string
+}
+
+export type MorphusGimmickToySwitchLayout = {
+  windUpKeyOnBack?: boolean
+  chestCountFormula?: string
+  perArmCountFormula?: string
+  perLegCountFormula?: string
+  perHandBackCount?: number
+  neckOrHeadSideCount?: number
+  headBackCount?: number
+}
+
+export type MorphusGimmickToyAssignedSwitch = {
+  label?: string
+  bodyLocation: MorphusGimmickToySwitchLocation
+  controlType?: MorphusGimmickToySwitchControlType
+  effect?: MorphusGimmickToySwitchEffect
+  effectRef?: string
+}
+
+export type MorphusGimmickToyPresetEffect = {
+  id: string
+  effect: MorphusGimmickToySwitchEffect
+}
+
+export type MorphusGimmickToySwitchBoard = {
+  switchLayout: MorphusGimmickToySwitchLayout
+  presetEffectCatalog: readonly MorphusGimmickToyPresetEffect[]
+  assignedSwitches?: readonly MorphusGimmickToyAssignedSwitch[]
+  disguiseImpossible?: boolean
+  customClothingRequired?: boolean
+  gmApprovalRequiredForCustom?: boolean
+}
+
 export type MorphusHandCapacityConstraints = {
   occupiesHands: number
   blocksTwoHandedWeapons: boolean
@@ -871,6 +992,8 @@ export type MorphusCharacteristic = {
    */
   isPolymorphicTemplate?: boolean
   gimmickInventory?: readonly MorphusGimmickInventoryItem[]
+  /** Wind-up keys and body switches with fixed toy-like effects (Survival Guide Biomechanical III). */
+  gimmickToySwitches?: MorphusGimmickToySwitchBoard
   /** Natural limb attack types disabled while this trait is active. */
   disabledNaturalAttackTags?: readonly MorphusDisabledNaturalAttackTag[]
   activatedAbilities?: readonly MorphusActivatedAbility[]

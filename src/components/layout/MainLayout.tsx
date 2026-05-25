@@ -12,7 +12,10 @@ import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
 import type { MorphusDerivedSheetSlice } from '../../lib/morphusPassiveBridge'
-import { formatMorphusDamageAffinityMultiplier } from '../../lib/morphusCharacteristicAggregation'
+import {
+  formatMorphusDamageAffinityMultiplier,
+  GIMMICK_TOY_SWITCH_LOCATION_LABELS,
+} from '../../lib/morphusCharacteristicAggregation'
 import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
@@ -37,6 +40,8 @@ export function MainLayout() {
     morphusDerived,
     morphusActiveBurstKeys,
     toggleMorphusBurst,
+    morphusActiveGimmickSwitchKeys,
+    toggleMorphusGimmickSwitch,
     morphusRelativeArShift,
     morphusNaturalAr,
     activeForm,
@@ -375,6 +380,8 @@ export function MainLayout() {
             derived={morphusDerived}
             activeBurstKeys={morphusActiveBurstKeys}
             onToggleBurst={toggleMorphusBurst}
+            activeGimmickSwitchKeys={morphusActiveGimmickSwitchKeys}
+            onToggleGimmickSwitch={toggleMorphusGimmickSwitch}
           />
         ) : null}
 
@@ -618,10 +625,14 @@ function MorphusTraitsPanel({
   derived,
   activeBurstKeys,
   onToggleBurst,
+  activeGimmickSwitchKeys,
+  onToggleGimmickSwitch,
 }: {
   derived: MorphusDerivedSheetSlice
   activeBurstKeys: readonly string[]
   onToggleBurst: (burstKey: string) => void
+  activeGimmickSwitchKeys: readonly string[]
+  onToggleGimmickSwitch: (switchKey: string) => void
 }) {
   const hasWeapons = derived.naturalWeapons.length > 0
   const hasCompanions = derived.companions.length > 0
@@ -645,6 +656,7 @@ function MorphusTraitsPanel({
   const hasAffinity = derived.damageAffinityNotes.length > 0
   const hasLimbs = derived.limbComponents.length > 0
   const hasBursts = derived.activatedAbilities.length > 0
+  const hasGimmickSwitches = derived.gimmickToySwitches.length > 0
   const hasIntercepts = derived.combatInterceptions.length > 0
   const hasNv = derived.nightvisionRangeFlatBonus > 0
   if (
@@ -664,6 +676,7 @@ function MorphusTraitsPanel({
     !hasAffinity &&
     !hasLimbs &&
     !hasBursts &&
+    !hasGimmickSwitches &&
     !hasIntercepts &&
     !hasNv
   ) {
@@ -781,6 +794,75 @@ function MorphusTraitsPanel({
             </li>
           ))}
         </ul>
+      ) : null}
+      {hasGimmickSwitches ? (
+        <div className="mb-2 space-y-1">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
+            Gimmick toy switches
+          </p>
+          <p className="text-[10px] text-violet-300/70">
+            Toggle effects while active (one switch press). Preset rows are catalog
+            options until assigned at creation.
+          </p>
+          <ul className="max-h-48 space-y-1 overflow-y-auto text-sm text-violet-100/95">
+            {derived.gimmickToySwitches.map((sw) => {
+              const on = activeGimmickSwitchKeys.includes(sw.switchKey)
+              const loc =
+                sw.bodyLocation != null
+                  ? GIMMICK_TOY_SWITCH_LOCATION_LABELS[sw.bodyLocation]
+                  : null
+              const detail = [
+                sw.effect.durationFormula,
+                sw.effect.durationMeleeRounds != null
+                  ? `${sw.effect.durationMeleeRounds} melee round(s)`
+                  : null,
+                sw.effect.damageFormula
+                  ? `dmg ${sw.effect.damageFormula}`
+                  : null,
+                sw.effect.strikeBonus != null ? `strike +${sw.effect.strikeBonus}` : null,
+                sw.effect.dodgeBonus != null ? `dodge +${sw.effect.dodgeBonus}` : null,
+                sw.effect.rangeFeet != null ? `${sw.effect.rangeFeet} ft` : null,
+              ]
+                .filter(Boolean)
+                .join(' · ')
+              return (
+                <li
+                  key={sw.switchKey}
+                  className="flex flex-wrap items-center gap-2 rounded border border-violet-700/50 bg-slate-950/40 px-2 py-1"
+                >
+                  <label className="flex min-w-0 flex-1 cursor-pointer items-start gap-2">
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={() => onToggleGimmickSwitch(sw.switchKey)}
+                      className="mt-0.5 accent-violet-500"
+                    />
+                    <span className="min-w-0">
+                      <span className="font-medium">{sw.label}</span>
+                      {loc ? (
+                        <span className="text-violet-300/80"> — {loc}</span>
+                      ) : null}
+                      {sw.isPresetCatalog ? (
+                        <span className="text-amber-200/80 text-xs"> (preset)</span>
+                      ) : null}
+                      {detail ? (
+                        <span className="block text-xs text-violet-300/80">{detail}</span>
+                      ) : null}
+                      {sw.effect.notes ? (
+                        <span className="block text-xs text-violet-400/75">
+                          {sw.effect.notes}
+                        </span>
+                      ) : null}
+                    </span>
+                  </label>
+                  <span className="shrink-0 text-violet-400/80 text-xs">
+                    ({sw.sourceTraitName})
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       ) : null}
       {hasBursts ? (
         <div className="mb-2 space-y-1">

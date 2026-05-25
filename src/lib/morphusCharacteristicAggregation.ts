@@ -8,6 +8,11 @@ import type {
   MorphusDisabledNaturalAttackTag,
   MorphusActivatedAbility,
   MorphusGimmickInventoryItem,
+  MorphusGimmickToyAssignedSwitch,
+  MorphusGimmickToyEffectKind,
+  MorphusGimmickToySwitchBoard,
+  MorphusGimmickToySwitchEffect,
+  MorphusGimmickToySwitchLocation,
   MorphusJumpModifiers,
   MorphusLimbDurability,
   MorphusSpecialCombatInterception,
@@ -291,15 +296,16 @@ export function morphusBurstAbilityKey(
   return `${traitId}::${abilityName}`
 }
 
-/** Stat modifier blocks from traits + stance rows + active burst abilities. */
+/** Stat modifier blocks from traits + stance + bursts + active gimmick toy switches. */
 export function collectMorphusStatModifierBlocks(
   traits: readonly Pick<
     MorphusCharacteristic,
-    'id' | 'statModifiers' | 'mobility' | 'activatedAbilities'
+    'id' | 'name' | 'statModifiers' | 'mobility' | 'activatedAbilities' | 'gimmickToySwitches'
   >[],
   key: keyof MorphusStatModifiers,
   stanceType?: MorphusStanceType,
   activeBurstKeys?: ReadonlySet<string>,
+  activeGimmickSwitchKeys?: ReadonlySet<string>,
 ): MorphusPolymorphicModifier[] {
   const out: MorphusPolymorphicModifier[] = []
   for (const t of traits) {
@@ -315,13 +321,18 @@ export function collectMorphusStatModifierBlocks(
         }
       }
     }
-    if (!activeBurstKeys?.size) continue
-    for (const ab of t.activatedAbilities ?? []) {
-      const bk = morphusBurstAbilityKey(t.id, ab.abilityName)
-      if (!activeBurstKeys.has(bk)) continue
-      const burst = ab.statModifiers?.[key]
-      if (burst) out.push(burst)
+    if (activeBurstKeys?.size) {
+      for (const ab of t.activatedAbilities ?? []) {
+        const bk = morphusBurstAbilityKey(t.id, ab.abilityName)
+        if (!activeBurstKeys.has(bk)) continue
+        const burst = ab.statModifiers?.[key]
+        if (burst) out.push(burst)
+      }
     }
+  }
+  for (const row of collectActiveGimmickToyEffects(traits, activeGimmickSwitchKeys)) {
+    const whileActive = row.effect.statModifiersWhileActive?.[key]
+    if (whileActive) out.push(whileActive)
   }
   return out
 }
@@ -393,6 +404,200 @@ export function flattenMorphusGimmickInventory(
     }
   }
   return out
+}
+
+const GIMMICK_EFFECT_KIND_LABELS: Record<MorphusGimmickToyEffectKind, string> = {
+  theme_music: 'Theme music',
+  sings: 'Sings',
+  whistles: 'Whistles',
+  loud_barking: 'Loud barking',
+  angry_growl: 'Angry growl',
+  loud_siren: 'Loud siren',
+  voice_change: 'Voice change',
+  foreign_language: 'Foreign language',
+  mechanical_voice: 'Mechanical voice',
+  eyes_flashlight_yellow: 'Eyes: flashlight (yellow)',
+  eyes_nightvision_green: 'Eyes: nightvision (green)',
+  eyes_telescopic_white: 'Eyes: telescopic (white)',
+  eyes_thermal_orange: 'Eyes: thermal (orange)',
+  eyes_laser_red: 'Eyes: laser (red)',
+  torso_blinking_lights: 'Torso blinking lights',
+  quick_disguise_head_spin: 'Quick disguise (head spin)',
+  secret_compartment: 'Secret compartment',
+  pop_apart_body: 'Pop-apart body',
+  missile_firing: 'Missile firing',
+  squirt_gun_finger: 'Squirt gun finger',
+  flying_fist: 'Flying fist',
+  power_punch: 'Power punch',
+  karate_chop: 'Karate chop',
+  karate_kick: 'Karate kick',
+  retractable_claws: 'Retractable claws',
+  sword_arm: 'Sword arm',
+  fire_fist: 'Fire fist',
+  laser_fist: 'Laser fist',
+  running_action: 'Running action',
+  spinning_action: 'Spinning action',
+  dancing_action: 'Dancing action',
+  jumping_action: 'Jumping action',
+  kung_fu_leaping: 'Kung-fu leaping',
+  flying_action: 'Flying action',
+  roller_blade_feet: 'Roller-blade feet',
+  tank_tread_legs: 'Tank tread legs',
+  motorcycle_legs: 'Motorcycle legs',
+  custom: 'Custom switch',
+}
+
+export const GIMMICK_TOY_SWITCH_LOCATION_LABELS: Record<
+  MorphusGimmickToySwitchLocation,
+  string
+> = {
+  back_wind_up_key: 'Back (wind-up key)',
+  chest: 'Chest',
+  arm_left: 'Left arm',
+  arm_right: 'Right arm',
+  leg_left: 'Left leg',
+  leg_right: 'Right leg',
+  hand_back_left: 'Back of left hand',
+  hand_back_right: 'Back of right hand',
+  neck: 'Neck',
+  head_side: 'Side of head',
+  head_back: 'Back of head',
+}
+
+export function morphusGimmickSwitchKey(traitId: string, ref: string): string {
+  return `${traitId}::gimmick::${ref}`
+}
+
+export function resolveGimmickToySwitchEffect(
+  board: MorphusGimmickToySwitchBoard,
+  assigned: Pick<MorphusGimmickToyAssignedSwitch, 'effect' | 'effectRef'>,
+): MorphusGimmickToySwitchEffect {
+  if (assigned.effect) return assigned.effect
+  if (assigned.effectRef) {
+    const preset = board.presetEffectCatalog.find((p) => p.id === assigned.effectRef)
+    if (preset) return preset.effect
+  }
+  throw new Error(`Unresolved gimmick switch effectRef: ${assigned.effectRef ?? '(none)'}`)
+}
+
+export function formatGimmickToyEffectLabel(effect: MorphusGimmickToySwitchEffect): string {
+  if (effect.displayName?.trim()) return effect.displayName.trim()
+  return GIMMICK_EFFECT_KIND_LABELS[effect.effectKind] ?? effect.effectKind
+}
+
+export type MorphusDerivedGimmickSwitch = {
+  switchKey: string
+  sourceTraitId: string
+  sourceTraitName: string
+  label: string
+  bodyLocation?: MorphusGimmickToySwitchLocation
+  effect: MorphusGimmickToySwitchEffect
+  /** True when row comes from presetEffectCatalog (not a fixed assigned switch). */
+  isPresetCatalog: boolean
+}
+
+export function flattenMorphusGimmickToySwitches(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'gimmickToySwitches'
+  >[],
+): MorphusDerivedGimmickSwitch[] {
+  const out: MorphusDerivedGimmickSwitch[] = []
+  for (const t of traits) {
+    const board = t.gimmickToySwitches
+    if (!board) continue
+
+    const assigned = board.assignedSwitches ?? []
+    for (let i = 0; i < assigned.length; i++) {
+      const sw = assigned[i]!
+      const ref = sw.label?.trim() || `${sw.bodyLocation}:${i}`
+      const effect = resolveGimmickToySwitchEffect(board, sw)
+      out.push({
+        switchKey: morphusGimmickSwitchKey(t.id, ref),
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+        label: sw.label?.trim() || formatGimmickToyEffectLabel(effect),
+        bodyLocation: sw.bodyLocation,
+        effect,
+        isPresetCatalog: false,
+      })
+    }
+
+    if (assigned.length === 0) {
+      for (const preset of board.presetEffectCatalog) {
+        out.push({
+          switchKey: morphusGimmickSwitchKey(t.id, `preset:${preset.id}`),
+          sourceTraitId: t.id,
+          sourceTraitName: t.name,
+          label: formatGimmickToyEffectLabel(preset.effect),
+          effect: preset.effect,
+          isPresetCatalog: true,
+        })
+      }
+    }
+  }
+  return out
+}
+
+export type ActiveGimmickToyEffectRow = {
+  sourceTraitId: string
+  effect: MorphusGimmickToySwitchEffect
+}
+
+/** Effects for switches currently toggled on (assigned + preset catalog keys). */
+export function collectActiveGimmickToyEffects(
+  traits: readonly Pick<MorphusCharacteristic, 'id' | 'name' | 'gimmickToySwitches'>[],
+  activeGimmickSwitchKeys?: ReadonlySet<string>,
+): ActiveGimmickToyEffectRow[] {
+  if (!activeGimmickSwitchKeys?.size) return []
+  const switches = flattenMorphusGimmickToySwitches(traits)
+  const out: ActiveGimmickToyEffectRow[] = []
+  for (const sw of switches) {
+    if (!activeGimmickSwitchKeys.has(sw.switchKey)) continue
+    out.push({ sourceTraitId: sw.sourceTraitId, effect: sw.effect })
+  }
+  return out
+}
+
+export function stackNightvisionWithActiveGimmickSwitches(
+  traits: readonly Pick<MorphusCharacteristic, 'id' | 'name' | 'sensory' | 'gimmickToySwitches'>[],
+  activeGimmickSwitchKeys?: ReadonlySet<string>,
+): number {
+  const rows: Pick<MorphusCharacteristic, 'id' | 'sensory'>[] = [...traits]
+  for (const row of collectActiveGimmickToyEffects(traits, activeGimmickSwitchKeys)) {
+    const bonus = row.effect.sensoryWhileActive?.nightvisionRangeFlatBonus
+    if (typeof bonus === 'number' && bonus > 0) {
+      rows.push({
+        id: row.sourceTraitId,
+        sensory: { nightvisionRangeFlatBonus: bonus },
+      })
+    }
+  }
+  return stackNightvisionRangeFlatBonus(rows)
+}
+
+export function resolveActiveGimmickSpdMultiplier(
+  activeEffects: readonly ActiveGimmickToyEffectRow[],
+): number {
+  let product = 1
+  for (const row of activeEffects) {
+    const mult = row.effect.spdMultiplierWhileActive
+    if (typeof mult === 'number' && mult > 0) product *= mult
+  }
+  return product
+}
+
+export function applyGimmickToyFlatCombatBonuses(
+  modifiers: Record<string, number>,
+  activeEffects: readonly ActiveGimmickToyEffectRow[],
+): void {
+  for (const row of activeEffects) {
+    const e = row.effect
+    if (e.strikeBonus) modifiers.strike = (modifiers.strike ?? 0) + e.strikeBonus
+    if (e.parryBonus) modifiers.parry = (modifiers.parry ?? 0) + e.parryBonus
+    if (e.dodgeBonus) modifiers.dodge = (modifiers.dodge ?? 0) + e.dodgeBonus
+    if (e.disarmBonus) modifiers.disarm = (modifiers.disarm ?? 0) + e.disarmBonus
+  }
 }
 
 export type MorphusVariableScaleNote = {
@@ -603,11 +808,12 @@ export function collectMorphusDamageAffinityNotes(
 export function flattenMorphusNaturalWeapons(
   traits: readonly Pick<
     MorphusCharacteristic,
-    'id' | 'name' | 'naturalWeapons' | 'disabledNaturalAttackTags'
+    'id' | 'name' | 'naturalWeapons' | 'disabledNaturalAttackTags' | 'gimmickToySwitches'
   >[],
   disabledTags: readonly MorphusDisabledNaturalAttackTag[] = unionDisabledNaturalAttackTags(
     traits,
   ),
+  activeGimmickSwitchKeys?: ReadonlySet<string>,
 ): MorphusDerivedNaturalWeapon[] {
   const disabled = new Set(disabledTags)
   const out: MorphusDerivedNaturalWeapon[] = []
@@ -632,6 +838,22 @@ export function flattenMorphusNaturalWeapons(
         isLimbTypeDisabled: limbDisabled,
       })
     }
+  }
+  for (const row of collectActiveGimmickToyEffects(traits, activeGimmickSwitchKeys)) {
+    const w = row.effect.naturalWeaponWhileActive
+    if (!w) continue
+    const trait = traits.find((t) => t.id === row.sourceTraitId)
+    out.push({
+      ...w,
+      sourceTraitId: row.sourceTraitId,
+      sourceTraitName: trait?.name ?? row.sourceTraitId,
+      displayDamage: formatMorphusWeaponDamageDisplay(
+        w.damageFormula,
+        w.damageModifier,
+        w.activationCost,
+      ),
+      isLimbTypeDisabled: false,
+    })
   }
   return out
 }
@@ -681,15 +903,34 @@ export type MorphusTraitNote = {
 }
 
 export function collectMorphusTraitNotes(
-  traits: readonly Pick<MorphusCharacteristic, 'id' | 'name' | 'customOneOffs'>[],
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'customOneOffs' | 'gimmickToySwitches'
+  >[],
 ): MorphusTraitNote[] {
-  return traits
-    .filter((t) => (t.customOneOffs?.length ?? 0) > 0)
-    .map((t) => ({
-      traitId: t.id,
-      traitName: t.name,
-      lines: t.customOneOffs ?? [],
-    }))
+  const out: MorphusTraitNote[] = []
+  for (const t of traits) {
+    const lines: string[] = [...(t.customOneOffs ?? [])]
+    const board = t.gimmickToySwitches
+    if (board) {
+      if (board.disguiseImpossible) lines.push('Disguise impossible while this Morphus is active.')
+      if (board.customClothingRequired) {
+        lines.push('Custom Morphus clothing required.')
+      }
+      if (board.gmApprovalRequiredForCustom) {
+        lines.push('Player-suggested custom switch effects require G.M. approval.')
+      }
+      if ((board.assignedSwitches?.length ?? 0) === 0) {
+        lines.push(
+          'No switches assigned on this table row — toggle preset catalog effects below for play, or assign fixed switches at character creation.',
+        )
+      }
+    }
+    if (lines.length) {
+      out.push({ traitId: t.id, traitName: t.name, lines })
+    }
+  }
+  return out
 }
 
 /** Flatten narrative percentile checks from trait skillModifiers (+ terrain-isolated rows). */
