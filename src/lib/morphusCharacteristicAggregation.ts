@@ -6,8 +6,11 @@ import type {
   MorphusCustomSystemRoll,
   MorphusDamageAffinityType,
   MorphusDisabledNaturalAttackTag,
+  MorphusActivatedAbility,
   MorphusGimmickInventoryItem,
   MorphusJumpModifiers,
+  MorphusLimbDurability,
+  MorphusSpecialCombatInterception,
   MorphusExternalSensoryObfuscation,
   MorphusDamageAffinityMultiplier,
   MorphusHandCapacityConstraints,
@@ -136,7 +139,7 @@ export function resolveCompoundDamageAffinity(
 export function normalizeDamageAffinityMultiplier(
   value: number,
 ): MorphusDamageAffinityMultiplier {
-  const tiers: MorphusDamageAffinityMultiplier[] = [0, 0.25, 0.5, 1, 2]
+  const tiers: MorphusDamageAffinityMultiplier[] = [0, 0.25, 0.5, 1, 1.5, 2]
   let best: MorphusDamageAffinityMultiplier = 1
   let bestDelta = Number.POSITIVE_INFINITY
   for (const tier of tiers) {
@@ -281,23 +284,43 @@ export function collectAvailableMorphusStanceTypes(
   return [...set]
 }
 
-/** Stat modifier blocks from traits + matching stance rows for one axis. */
+export function morphusBurstAbilityKey(
+  traitId: string,
+  abilityName: string,
+): string {
+  return `${traitId}::${abilityName}`
+}
+
+/** Stat modifier blocks from traits + stance rows + active burst abilities. */
 export function collectMorphusStatModifierBlocks(
-  traits: readonly Pick<MorphusCharacteristic, 'statModifiers' | 'mobility'>[],
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'statModifiers' | 'mobility' | 'activatedAbilities'
+  >[],
   key: keyof MorphusStatModifiers,
   stanceType?: MorphusStanceType,
+  activeBurstKeys?: ReadonlySet<string>,
 ): MorphusPolymorphicModifier[] {
   const out: MorphusPolymorphicModifier[] = []
   for (const t of traits) {
     const base = t.statModifiers?.[key]
     if (base) out.push(base)
-    if (!stanceType) continue
-    const stanceRows = t.mobility?.conditionalStanceModifiers
-    if (!stanceRows?.length) continue
-    for (const row of stanceRows) {
-      if (row.stanceType !== stanceType) continue
-      const sm = row.statModifiers?.[key]
-      if (sm) out.push(sm)
+    if (stanceType) {
+      const stanceRows = t.mobility?.conditionalStanceModifiers
+      if (stanceRows?.length) {
+        for (const row of stanceRows) {
+          if (row.stanceType !== stanceType) continue
+          const sm = row.statModifiers?.[key]
+          if (sm) out.push(sm)
+        }
+      }
+    }
+    if (!activeBurstKeys?.size) continue
+    for (const ab of t.activatedAbilities ?? []) {
+      const bk = morphusBurstAbilityKey(t.id, ab.abilityName)
+      if (!activeBurstKeys.has(bk)) continue
+      const burst = ab.statModifiers?.[key]
+      if (burst) out.push(burst)
     }
   }
   return out
@@ -452,6 +475,106 @@ const DAMAGE_AFFINITY_LABELS: Partial<Record<MorphusDamageAffinityType, string>>
   falling: 'Falls',
   fire: 'Fire',
   heat: 'Heat',
+  cold: 'Cold',
+  ice: 'Ice',
+  electricity: 'Electricity',
+  lasers: 'Lasers',
+  light: 'Light',
+  kinetic: 'Kinetic',
+}
+
+export function formatMorphusDamageAffinityMultiplier(multiplier: number): string {
+  if (multiplier === 0) return 'immune'
+  if (multiplier === 0.25) return '¼ damage'
+  if (multiplier === 0.5) return '½ damage'
+  if (multiplier === 1.5) return '×1.5 damage'
+  if (multiplier === 2) return '×2 damage'
+  return `×${multiplier}`
+}
+
+export type MorphusDerivedLimbComponent = MorphusLimbDurability & {
+  sourceTraitId: string
+  sourceTraitName: string
+}
+
+export function flattenMorphusLimbComponents(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'limbDurability'
+  >[],
+): MorphusDerivedLimbComponent[] {
+  const out: MorphusDerivedLimbComponent[] = []
+  for (const t of traits) {
+    for (const limb of t.limbDurability ?? []) {
+      out.push({
+        ...limb,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+      })
+    }
+  }
+  return out
+}
+
+export type MorphusDerivedActivatedAbility = MorphusActivatedAbility & {
+  sourceTraitId: string
+  sourceTraitName: string
+  burstKey: string
+}
+
+export function flattenMorphusActivatedAbilities(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'activatedAbilities'
+  >[],
+): MorphusDerivedActivatedAbility[] {
+  const out: MorphusDerivedActivatedAbility[] = []
+  for (const t of traits) {
+    for (const ab of t.activatedAbilities ?? []) {
+      out.push({
+        ...ab,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+        burstKey: morphusBurstAbilityKey(t.id, ab.abilityName),
+      })
+    }
+  }
+  return out
+}
+
+const INTERCEPT_ACTION_LABELS: Record<
+  MorphusSpecialCombatInterception['interceptAction'],
+  string
+> = {
+  parry_shadow_darkness: 'Parry shadow / darkness',
+  parry_lasers_light: 'Parry lasers / light',
+  bare_handed_melee_parry: 'Bare-handed melee parry',
+}
+
+export type MorphusDerivedCombatInterception = MorphusSpecialCombatInterception & {
+  sourceTraitId: string
+  sourceTraitName: string
+  label: string
+}
+
+export function flattenMorphusCombatInterceptions(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'specialCombatInterceptions'
+  >[],
+): MorphusDerivedCombatInterception[] {
+  const out: MorphusDerivedCombatInterception[] = []
+  for (const t of traits) {
+    for (const row of t.specialCombatInterceptions ?? []) {
+      out.push({
+        ...row,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+        label: INTERCEPT_ACTION_LABELS[row.interceptAction] ?? row.interceptAction,
+      })
+    }
+  }
+  return out
 }
 
 export function collectMorphusDamageAffinityNotes(

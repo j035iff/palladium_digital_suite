@@ -56,6 +56,16 @@
       "customOneOffs": [
         "A single two-handed melee weapon or pair of one-handed weapons (which may include a shield) rounds out the warrior.",
         "The weapon cannot be separated from the Nightbane which means it either stays in the hand or is somehow secured to the character."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 19
+        }
       ]
     },
     {
@@ -102,6 +112,16 @@
       "customOneOffs": [
         "+1 attack per melee round, but ONLY when using a bow and arrow or a crossbow.",
         "Tends to be uncomfortable in confined spaces."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 19
+        }
       ]
     },
     {
@@ -175,6 +195,16 @@
       "customOneOffs": [
         "Weapons disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds).",
         "Their appearance makes others leery, making Invoke Trust impossible."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 19
+        }
       ]
     },
     {
@@ -250,6 +280,16 @@
         "The horse can pull 10 times the normal carrying weight and jump 10 feet high and 20 feet lengthwise.",
         "Though the rider can dismount, the two must remain in physical contact. Both portions heal 5 Hit Points/S.D.C. per melee round.",
         "When dismounted, the Nightbane has half the normal number of attacks and combat bonuses."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 19
+        }
       ]
     },
     {
@@ -314,6 +354,16 @@
         "Any enemies are +2 on Perception Rolls to notice the actions of this character.",
         "Looking like a leader tends to make one a target in battle.",
         "If armor is a part of the Morphus via another feature, it will be richly decorated or gilded and adds 50% more S.D.C."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 20
+        }
       ]
     },
     {
@@ -359,6 +409,16 @@
       },
       "customOneOffs": [
         "This armor cannot be removed. It is a part of the character."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 20
+        }
       ]
     },
     {
@@ -407,6 +467,16 @@
       },
       "customOneOffs": [
         "This armor cannot be removed like normal armor. It is a part of the Morphus."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 20
+        }
       ]
     },
     {
@@ -453,6 +523,16 @@
       ],
       "customOneOffs": [
         "+1 to parry and disarm if the standard is handheld."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 20
+        }
       ]
     }
   ]

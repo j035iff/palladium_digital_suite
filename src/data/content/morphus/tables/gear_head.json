@@ -1,8 +1,311 @@
 {
   "id": "gear_head",
   "kind": "morphus_trait_table",
-  "displayName": "Gear Head",
+  "displayName": "Gear-Head",
   "parentTable": null,
-  "description": "Gear Head Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Gear-Head Morphus table. Reflects a deep connection to automotive and vehicular machinery.",
+  "entries": [
+    {
+      "id": "gear_head_engine_block",
+      "name": "Engine Block",
+      "tableCategory": "Gear-Head",
+      "description": "The character's torso or chest is dominated by an exposed, roaring automotive engine block complete with belts, spark plugs, and pistons.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4+1"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D4x10+20"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
+      },
+      "damageAffinities": {
+        "electricity": 1.5,
+        "fire": 1.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Scalding Engine Block (Grapple/Contact)",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "The engine loudly revs when the character is angry or exerting themselves.",
+        "Electrical and fire attacks inflict 50% more damage."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ]
+    },
+    {
+      "id": "gear_head_coolant_tubes_radiator",
+      "name": "Coolant Tubes/Radiator",
+      "tableCategory": "Gear-Head",
+      "description": "Ribbed metal cooling tubes wrap around the limbs, feeding into a prominent, heavy-duty radiator grille grafted onto the chest or back.",
+      "statModifiers": {
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Radiator Component",
+          "quantity": 1,
+          "sdc": 40,
+          "hp": 0,
+          "ar": 9,
+          "calledShotPenalty": -3,
+          "destructionConditionOverrides": {
+            "statModifiers": {
+              "spd": {
+                "percent": -10
+              }
+            },
+            "damageAffinities": {
+              "fire": 2,
+              "cold": 2
+            }
+          }
+        }
+      ],
+      "customOneOffs": [
+        "Base S.D.C. for the Radiator Component is 1D4x10+20 (defaulted to 40 in standard calculations).",
+        "If the radiator is destroyed, the Morphus heals at half the normal rate.",
+        "Leaking antifreeze from a damaged radiator leaves a visible trail, granting pursuers a +20% bonus to Tracking."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ]
+    },
+    {
+      "id": "gear_head_nitrous_bottles",
+      "name": "Nitrous Bottles",
+      "tableCategory": "Gear-Head",
+      "description": "Pressurized canisters of nitrous oxide are bolted to the back, thighs, or forearms, piped directly into the character's internal biology for massive bursts of speed.",
+      "statModifiers": {
+        "spd": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": -1
+        }
+      },
+      "activatedAbilities": [
+        {
+          "abilityName": "Nitrous Oxide Injection Burn",
+          "chargesPerPeriod": 4,
+          "resetPeriod": "hourly",
+          "durationFormula": "1D6 minutes",
+          "statModifiers": {
+            "spd": {
+              "flat": 70
+            },
+            "initiative": {
+              "flat": 2
+            },
+            "dodge": {
+              "flat": 2
+            },
+            "rollWithPunch": {
+              "flat": 3
+            }
+          }
+        }
+      ],
+      "customOneOffs": [
+        "If a canister is targeted and ruptured (Requires a Called Shot at -4), it explodes for 3D6 damage to the Nightbane."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_searchlight_headlights",
+      "name": "Searchlight/Headlights",
+      "tableCategory": "Gear-Head",
+      "description": "A high-intensity vehicular searchlight or a pair of bright automotive headlights are built directly into the face, chest, or shoulders.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 300,
+        "seeInvisible": false
+      },
+      "specialCombatInterceptions": [
+        {
+          "interceptAction": "parry_shadow_darkness",
+          "modifierFlat": -3
+        }
+      ],
+      "customOneOffs": [
+        "Projects a beam of intense light up to 300 feet.",
+        "Can temporarily blind targets in close range (Save vs. Pain or lose 1 melee attack and suffer -4 to strike/parry/dodge for 1D4 rounds).",
+        "Allows the user to attempt to parry incoming Shadow or Darkness-based attacks."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_chrome_job",
+      "name": "Chrome Job",
+      "tableCategory": "Gear-Head",
+      "description": "The character's skin, or specific isolated body parts, are replaced with highly polished, reflective automotive chrome plating.",
+      "naturalAr": 12,
+      "statModifiers": {
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "ma": {
+          "flat": 1
+        }
+      },
+      "specialCombatInterceptions": [
+        {
+          "interceptAction": "bare_handed_melee_parry",
+          "modifierFlat": 0
+        },
+        {
+          "interceptAction": "parry_lasers_light",
+          "modifierFlat": -2
+        }
+      ],
+      "limbDurability": [
+        {
+          "limbName": "Chrome Head",
+          "quantity": 1,
+          "sdc": 20,
+          "hp": 0,
+          "ar": 14,
+          "calledShotPenalty": -2
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Chrome Plated Hands",
+          "damageFormula": "1D4",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Highly reflective; lasers and light-based attacks do half damage.",
+        "Can parry melee weapons (swords, axes) with bare hands without taking damage.",
+        "The chrome plating makes sneaking in bright areas very difficult (-20% to Prowl in daylight)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_exhaust_pipes",
+      "name": "Exhaust Pipes",
+      "tableCategory": "Gear-Head",
+      "description": "Thick metal exhaust pipes vent hot gases, flames, and thick smoke from the back, shoulders, or forearms.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "pb": {
+          "flat": -2
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "sensory": {
+        "externalSensoryObfuscation": [
+          "scent_masking"
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Exhaust Burn (Touch)",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "activatedAbilities": [
+        {
+          "abilityName": "Smokescreen Vent",
+          "chargesPerPeriod": 0,
+          "resetPeriod": "per_encounter",
+          "durationFormula": "1D4 melee rounds",
+          "statModifiers": {
+            "dodge": {
+              "flat": 2
+            }
+          }
+        }
+      ],
+      "customOneOffs": [
+        "Smokescreen Vent: Unlimited uses, but costs 1 melee action to activate. Fills a 20x20 foot area with thick black smoke, blinding those inside (-4 to strike/parry/dodge).",
+        "The overpowering smell of exhaust masks the character's natural scent, ruining tracking by smell."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ]
+    }
+  ]
 }

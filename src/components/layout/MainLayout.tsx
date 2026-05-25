@@ -12,6 +12,7 @@ import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
 import type { MorphusDerivedSheetSlice } from '../../lib/morphusPassiveBridge'
+import { formatMorphusDamageAffinityMultiplier } from '../../lib/morphusCharacteristicAggregation'
 import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
@@ -34,6 +35,8 @@ export function MainLayout() {
     morphusStanceType,
     setMorphusStanceType,
     morphusDerived,
+    morphusActiveBurstKeys,
+    toggleMorphusBurst,
     morphusRelativeArShift,
     morphusNaturalAr,
     activeForm,
@@ -368,7 +371,11 @@ export function MainLayout() {
         </section>
 
         {morphusActive && morphusDerived ? (
-          <MorphusTraitsPanel derived={morphusDerived} />
+          <MorphusTraitsPanel
+            derived={morphusDerived}
+            activeBurstKeys={morphusActiveBurstKeys}
+            onToggleBurst={toggleMorphusBurst}
+          />
         ) : null}
 
         <SavingThrowsPanel />
@@ -604,9 +611,18 @@ const REGEN_LABELS: Record<string, string> = {
   hourly: 'Hourly',
   daily: 'Daily',
   per_transformation: 'Per transformation',
+  per_encounter: 'Per encounter',
 }
 
-function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) {
+function MorphusTraitsPanel({
+  derived,
+  activeBurstKeys,
+  onToggleBurst,
+}: {
+  derived: MorphusDerivedSheetSlice
+  activeBurstKeys: readonly string[]
+  onToggleBurst: (burstKey: string) => void
+}) {
   const hasWeapons = derived.naturalWeapons.length > 0
   const hasCompanions = derived.companions.length > 0
   const hasNotes = derived.traitNotes.length > 0
@@ -627,6 +643,10 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
     jump.runningDistance > 0
   const hasSwim = derived.swimSpeedBonus !== 0
   const hasAffinity = derived.damageAffinityNotes.length > 0
+  const hasLimbs = derived.limbComponents.length > 0
+  const hasBursts = derived.activatedAbilities.length > 0
+  const hasIntercepts = derived.combatInterceptions.length > 0
+  const hasNv = derived.nightvisionRangeFlatBonus > 0
   if (
     !hasWeapons &&
     !hasCompanions &&
@@ -641,7 +661,11 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
     !hasVarScale &&
     !hasJump &&
     !hasSwim &&
-    !hasAffinity
+    !hasAffinity &&
+    !hasLimbs &&
+    !hasBursts &&
+    !hasIntercepts &&
+    !hasNv
   ) {
     return null
   }
@@ -720,14 +744,89 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
           Swim speed bonus: +{derived.swimSpeedBonus}
         </p>
       ) : null}
+      {hasNv ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Nightvision +{derived.nightvisionRangeFlatBonus} ft (Morphus)
+        </p>
+      ) : null}
       {hasAffinity ? (
         <p className="mb-2 text-xs text-violet-200/90">
-          Damage immunity:{' '}
+          Damage affinities:{' '}
           {derived.damageAffinityNotes
-            .map((a) =>
-              a.multiplier === 0
-                ? `${a.label} (none)`
-                : `${a.label} ×${a.multiplier}`,
+            .map((a) => `${a.label} (${formatMorphusDamageAffinityMultiplier(a.multiplier)})`)
+            .join(' · ')}
+        </p>
+      ) : null}
+      {hasLimbs ? (
+        <ul className="mb-2 space-y-1 text-sm text-violet-100/95">
+          {derived.limbComponents.map((limb, i) => (
+            <li
+              key={`${limb.sourceTraitId}-${limb.limbName}-${i}`}
+              className="rounded border border-violet-700/40 bg-slate-950/30 px-2 py-1"
+            >
+              <span className="font-medium">{limb.limbName}</span>
+              {' — '}
+              S.D.C. {limb.sdc}
+              {limb.ar != null ? ` · A.R. ${limb.ar}` : ''}
+              {limb.calledShotPenalty != null
+                ? ` · called shot ${limb.calledShotPenalty}`
+                : ''}
+              {limb.destructionConditionOverrides ? (
+                <span className="text-xs text-amber-200/80">
+                  {' '}
+                  · on destroy: spd/other overrides apply
+                </span>
+              ) : null}
+              <span className="text-violet-400/80"> ({limb.sourceTraitName})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {hasBursts ? (
+        <div className="mb-2 space-y-1">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
+            Activated abilities
+          </p>
+          <ul className="space-y-1 text-sm text-violet-100/95">
+            {derived.activatedAbilities.map((ab) => {
+              const on = activeBurstKeys.includes(ab.burstKey)
+              return (
+                <li
+                  key={ab.burstKey}
+                  className="flex flex-wrap items-center gap-2 rounded border border-violet-700/50 bg-slate-950/40 px-2 py-1"
+                >
+                  <label className="flex cursor-pointer items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={() => onToggleBurst(ab.burstKey)}
+                      className="accent-violet-500"
+                    />
+                    <span className="font-medium">{ab.abilityName}</span>
+                  </label>
+                  <span className="text-xs text-violet-300/80">
+                    {ab.chargesPerPeriod === 0
+                      ? 'Unlimited'
+                      : `${ab.chargesPerPeriod}/${REGEN_LABELS[ab.resetPeriod] ?? ab.resetPeriod}`}
+                    {' · '}
+                    {ab.durationFormula}
+                  </span>
+                  <span className="text-violet-400/80 text-xs">
+                    ({ab.sourceTraitName})
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ) : null}
+      {hasIntercepts ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Combat intercepts:{' '}
+          {derived.combatInterceptions
+            .map(
+              (r) =>
+                `${r.label} ${r.modifierFlat >= 0 ? '+' : ''}${r.modifierFlat}`,
             )
             .join(' · ')}
         </p>

@@ -60,6 +60,7 @@ export function aggregateCreationSkillModifiers(character: Character): FeatureMo
 export type MorphusPassiveOptions = {
   surfaceType?: MorphusSurfaceType
   stanceType?: MorphusStanceType
+  activeBurstKeys?: readonly string[]
 }
 
 export function aggregateAllPassiveModifiers(
@@ -76,12 +77,11 @@ export function aggregateAllPassiveModifiers(
   for (const [k, v] of Object.entries(sk)) {
     out[k] = (out[k] ?? 0) + v
   }
-  const morphus = buildMorphusPassiveBundle(
-    character,
-    activeForm,
-    morphusOptions.surfaceType ?? 'hard_flat',
-    morphusOptions.stanceType,
-  )
+  const morphus = buildMorphusPassiveBundle(character, activeForm, {
+    surfaceType: morphusOptions.surfaceType ?? 'hard_flat',
+    stanceType: morphusOptions.stanceType,
+    activeBurstKeys: morphusOptions.activeBurstKeys,
+  })
   out = mergeMorphusIntoPassive(out, morphus)
   return out
 }

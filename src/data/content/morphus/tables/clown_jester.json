@@ -48,6 +48,16 @@
         "+10% bonus to follow blood or chemical scents.",
         "If the character honks the nose while smiling or behaving in a silly manner, those who see him are temporarily unaffected by his Horror Factor.",
         "Grants a base Charm/Impress of 35% (or +10% if P.B. offers higher), doubling (+20%) when dealing with children under the age of thirteen."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
       ]
     },
     {
@@ -97,6 +107,16 @@
       },
       "customOneOffs": [
         "Mold Face (Special): Can morph face to look like another humanoid, monster, or specific person in 1D4 melee rounds, perfectly imitating their voice."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
       ]
     },
     {
@@ -177,6 +197,16 @@
       "customOneOffs": [
         "Nobody can remember the clown's face. They can describe his clothing, but his face is a blank and it is blurred out in photographs, video, and film.",
         "Skills like Seduction and Undercover Ops are impossible while in this Morphus."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
       ]
     },
     {
@@ -230,6 +260,16 @@
         "Impervious to damage from falls and impact from large objects (e.g. falling safe, car, boulder).",
         "Punches, bullets, and melee weapons do full damage.",
         "Cannot leap/jump."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
       ]
     },
     {
@@ -264,6 +304,16 @@
         "+2 to Horror Factor when the head is visibly detached.",
         "The head holds the brains and consciousness of the Nightbane, and it still controls the body even when detached.",
         "If the head or body is stolen and taken more than 120 feet away, forces the Nightbane to switch to Facade to reunite."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
       ]
     },
     {
@@ -307,6 +357,16 @@
         "As long as one balloon is attached, the Nightbane floats down from any height, taking only 1D6 damage (double damage from heights greater than 200 feet).",
         "When separated, each balloon acts as a supernatural decoy, registering to supernatural senses as the Nightbane for 1 hour.",
         "Tailing, Disguise, and Undercover Ops are impossible."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31
+        }
       ]
     },
     {
@@ -423,6 +483,16 @@
       ],
       "customOneOffs": [
         "-15% to Invoke Trust/Intimidate."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31
+        }
       ]
     },
     {
@@ -440,6 +510,16 @@
       },
       "customOneOffs": [
         "+5% to any single Espionage skill and any single Rogue skill (player choice)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
       ]
     },
     {
@@ -463,6 +543,16 @@
       "customOneOffs": [
         "+1 attack when using ONLY this item in combat for the entire melee round.",
         "+1 to strike in HTH or thrown, and +2 to parry and pull punch with the item."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
       ]
     },
     {
@@ -532,6 +622,16 @@
         "Surprise attack occurs on a Natural 19 or 20, inflicting double damage.",
         "Coil jumps propel the Nightbane 1.5 feet per point of P.S., permitting power strikes without using two attacks.",
         "Acrobatics, Prowl, Running, Tailing, Undercover Ops, and Driving are impossible."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
       ]
     }
   ]

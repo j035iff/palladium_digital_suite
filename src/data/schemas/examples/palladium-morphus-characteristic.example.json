@@ -3,6 +3,14 @@
   "id": "morphus_example_winged_predator",
   "name": "Winged Predator (example)",
   "tableCategory": "Animal",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane Core Rulebook",
+      "pageNumber": 85
+    }
+  ],
   "description": "Schema example — not book data.",
   "statModifiers": {
     "spd": {
@@ -183,7 +191,38 @@
     {
       "limbName": "Wings",
       "quantity": 2,
-      "sdc": 40
+      "sdc": 40,
+      "ar": 8,
+      "calledShotPenalty": -3,
+      "destructionConditionOverrides": {
+        "statModifiers": {
+          "spd": {
+            "percent": -25
+          }
+        },
+        "damageAffinities": {
+          "electricity": 1.5
+        }
+      }
+    }
+  ],
+  "activatedAbilities": [
+    {
+      "abilityName": "Nitrous Oxide Injection (example)",
+      "chargesPerPeriod": 3,
+      "resetPeriod": "per_encounter",
+      "durationFormula": "1D6 minutes",
+      "statModifiers": {
+        "spd": {
+          "percent": 50
+        }
+      }
+    }
+  ],
+  "specialCombatInterceptions": [
+    {
+      "interceptAction": "parry_lasers_light",
+      "modifierFlat": -3
     }
   ],
   "heightModifier": {

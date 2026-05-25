@@ -220,6 +220,9 @@ type CharacterContextValue = {
   setMorphusStanceType: (stance: MorphusStanceType) => void
   /** Natural weapons, companions, trait notes, and stance options from active Morphus traits. */
   morphusDerived: MorphusDerivedSheetSlice | null
+  /** Active Gear-Head / burst ability keys (`traitId::abilityName`). */
+  morphusActiveBurstKeys: readonly string[]
+  toggleMorphusBurst: (burstKey: string) => void
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
@@ -512,6 +515,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     useState<MorphusSurfaceType>('hard_flat')
   const [morphusStanceType, setMorphusStanceType] =
     useState<MorphusStanceType>('mounted')
+  const [morphusActiveBurstKeys, setMorphusActiveBurstKeys] = useState<
+    readonly string[]
+  >([])
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
     ensureCharacterOcc(INITIAL_CHARACTER_SNAPSHOT).occ.category === 'psychic'
       ? 'master'
@@ -775,14 +781,27 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const morphusPassiveBundle = useMemo(
     () =>
-      buildMorphusPassiveBundle(
-        rawCharacter,
-        sheetActiveForm,
-        morphusSurfaceType,
-        morphusStanceType,
-      ),
-    [rawCharacter, sheetActiveForm, morphusSurfaceType, morphusStanceType],
+      buildMorphusPassiveBundle(rawCharacter, sheetActiveForm, {
+        surfaceType: morphusSurfaceType,
+        stanceType: morphusStanceType,
+        activeBurstKeys: morphusActiveBurstKeys,
+      }),
+    [
+      rawCharacter,
+      sheetActiveForm,
+      morphusSurfaceType,
+      morphusStanceType,
+      morphusActiveBurstKeys,
+    ],
   )
+
+  const toggleMorphusBurst = useCallback((burstKey: string) => {
+    setMorphusActiveBurstKeys((prev) =>
+      prev.includes(burstKey)
+        ? prev.filter((k) => k !== burstKey)
+        : [...prev, burstKey],
+    )
+  }, [])
 
   const morphusRelativeArShift = morphusPassiveBundle?.relativeArShift ?? 0
 
@@ -805,6 +824,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       jumpBonuses: morphusPassiveBundle.jumpBonuses,
       swimSpeedBonus: morphusPassiveBundle.swimSpeedBonus,
       damageAffinityNotes: morphusPassiveBundle.damageAffinityNotes,
+      limbComponents: morphusPassiveBundle.limbComponents,
+      activatedAbilities: morphusPassiveBundle.activatedAbilities,
+      combatInterceptions: morphusPassiveBundle.combatInterceptions,
+      nightvisionRangeFlatBonus: morphusPassiveBundle.nightvisionRangeFlatBonus,
+      activeBurstKeys: morphusPassiveBundle.activeBurstKeys,
     }
   }, [morphusPassiveBundle])
 
@@ -821,8 +845,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       aggregateAllPassiveModifiers(rawCharacter, sheetActiveForm, {
         surfaceType: morphusSurfaceType,
         stanceType: morphusStanceType,
+        activeBurstKeys: morphusActiveBurstKeys,
       }),
-    [rawCharacter, sheetActiveForm, morphusSurfaceType, morphusStanceType],
+    [
+      rawCharacter,
+      sheetActiveForm,
+      morphusSurfaceType,
+      morphusStanceType,
+      morphusActiveBurstKeys,
+    ],
   )
 
   const sheetDisplayScalars = useMemo(() => {
@@ -1045,12 +1076,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           const row = inventoryItems.find((i) => i.id === weaponId)
           if (!row || row.itemType !== 'weapon') return [a, b]
           const w = row as Weapon
-          const bundle = buildMorphusPassiveBundle(
-            rawCharacter,
-            sheetActiveForm,
-            morphusSurfaceType,
-            morphusStanceType,
-          )
+          const bundle = buildMorphusPassiveBundle(rawCharacter, sheetActiveForm, {
+            surfaceType: morphusSurfaceType,
+            stanceType: morphusStanceType,
+            activeBurstKeys: morphusActiveBurstKeys,
+          })
           if (
             bundle &&
             morphusBlocksTwoHandedWeapon(bundle.handCapacity, w.category)
@@ -1075,6 +1105,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetActiveForm,
       morphusSurfaceType,
       morphusStanceType,
+      morphusActiveBurstKeys,
     ],
   )
 
@@ -1618,6 +1649,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusStanceType,
       setMorphusStanceType,
       morphusDerived,
+      morphusActiveBurstKeys,
+      toggleMorphusBurst,
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
@@ -1711,6 +1744,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusRelativeArShift,
       morphusStanceType,
       morphusDerived,
+      morphusActiveBurstKeys,
+      toggleMorphusBurst,
       sheetActiveForm,
       supportsDualForm,
       activeRace,

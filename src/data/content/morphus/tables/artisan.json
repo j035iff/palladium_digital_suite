@@ -53,6 +53,16 @@
       "customOneOffs": [
         "Enables the Nightbane to paint images that are startlingly realistic and work like optical illusions (Save vs illusions or Perception 14 to see through).",
         "-1 to strike with the limb holding the palette."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
       ]
     },
     {
@@ -99,6 +109,16 @@
       },
       "customOneOffs": [
         "The Nightbane can hold their breath for a number of minutes equal to their P.E. attribute."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
       ]
     },
     {
@@ -141,6 +161,16 @@
       "customOneOffs": [
         "Gains the psionic power of Total Recall at no cost, but only for images/faces/designs, not words.",
         "Recalled images can be duplicated as a detailed sketch with a successful Art skill roll in 2D4 minutes."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
       ]
     },
     {
@@ -214,7 +244,17 @@
             "solid_rock"
           ]
         }
-      }
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ]
     },
     {
       "id": "artisan_typewriter_keyboard",
@@ -262,6 +302,16 @@
       "customOneOffs": [
         "Spontaneous insight requires journaling for 1D4 hours regarding a nagging question.",
         "Nightbane with this feature often seem to be distracted by their own thoughts."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
       ]
     },
     {
@@ -334,6 +384,16 @@
         "Depending on the attire, contextually adds +1 to Horror Factor, +10% Intimidate, +10% Trust, OR +1D4 P.B.",
         "The fake costume provides protective S.D.C. equal to the actual S.D.C. of the real costume (maximum cap of 30 points).",
         "Can only manifest costumes/appearances that the character has actually worn in public for at least 2 hours."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
       ]
     },
     {
@@ -400,7 +460,17 @@
             "modifierPercent": -10
           }
         ]
-      }
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
+      ]
     },
     {
       "id": "artisan_instrument_mic_stand",
@@ -470,6 +540,16 @@
       ],
       "customOneOffs": [
         "Small instrument does 1D4 damage, medium does 1D6, large does 1D6+3."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
       ]
     },
     {
@@ -514,6 +594,16 @@
       ],
       "customOneOffs": [
         "In combat, the tattoos or scar patterns seem to move, which is unnerving and makes opponents -1 to strike and parry."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
       ]
     }
   ]

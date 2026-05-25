@@ -25,6 +25,13 @@ import {
   collectMorphusDamageAffinityNotes,
   collectMorphusVariableScaleNotes,
   collectPolymorphicTemplateTraits,
+  flattenMorphusActivatedAbilities,
+  flattenMorphusCombatInterceptions,
+  flattenMorphusLimbComponents,
+  stackNightvisionRangeFlatBonus,
+  type MorphusDerivedActivatedAbility,
+  type MorphusDerivedCombatInterception,
+  type MorphusDerivedLimbComponent,
   flattenMorphusGimmickInventory,
   flattenMorphusNaturalWeapons,
   mergeMorphusBurrowingEngines,
@@ -99,6 +106,11 @@ export type MorphusPassiveBundle = {
   jumpBonuses: MorphusAggregatedJumpBonuses
   swimSpeedBonus: number
   damageAffinityNotes: readonly MorphusDamageAffinityNote[]
+  limbComponents: readonly MorphusDerivedLimbComponent[]
+  activatedAbilities: readonly MorphusDerivedActivatedAbility[]
+  combatInterceptions: readonly MorphusDerivedCombatInterception[]
+  nightvisionRangeFlatBonus: number
+  activeBurstKeys: readonly string[]
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -119,7 +131,19 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'jumpBonuses'
   | 'swimSpeedBonus'
   | 'damageAffinityNotes'
+  | 'limbComponents'
+  | 'activatedAbilities'
+  | 'combatInterceptions'
+  | 'nightvisionRangeFlatBonus'
+  | 'activeBurstKeys'
 >
+
+export type MorphusPassiveBuildOptions = {
+  surfaceType?: MorphusSurfaceType
+  stanceType?: MorphusStanceType
+  /** Keys from morphusBurstAbilityKey — burst statModifiers merge when listed. */
+  activeBurstKeys?: readonly string[]
+}
 
 export function resolveActiveMorphusTraits(
   character: Pick<Character, 'activeMorphusCharacteristicIds'>,
@@ -135,18 +159,19 @@ export function resolveActiveMorphusTraits(
 export function buildMorphusPassiveBundle(
   character: Character,
   activeForm: ActiveForm,
-  surfaceType: MorphusSurfaceType = 'hard_flat',
-  stanceType?: MorphusStanceType,
+  options: MorphusPassiveBuildOptions = {},
 ): MorphusPassiveBundle | null {
   if (activeForm !== 'morphus') return null
   const traits = resolveActiveMorphusTraits(character)
   if (!traits.length) return null
 
+  const surfaceType = options.surfaceType ?? 'hard_flat'
   const availableStanceTypes = collectAvailableMorphusStanceTypes(traits)
   const effectiveStance =
-    stanceType && availableStanceTypes.includes(stanceType)
-      ? stanceType
+    options.stanceType && availableStanceTypes.includes(options.stanceType)
+      ? options.stanceType
       : undefined
+  const burstSet = new Set(options.activeBurstKeys ?? [])
 
   const form = getFormState(character, activeForm)
   const attrs = form.attributes
@@ -155,7 +180,12 @@ export function buildMorphusPassiveBundle(
   for (const [statKey, passiveKey] of Object.entries(STAT_TO_PASSIVE)) {
     const key = statKey as keyof MorphusStatModifiers
     const pk = passiveKey as keyof FeatureModifiers
-    const blocks = collectMorphusStatModifierBlocks(traits, key, effectiveStance)
+    const blocks = collectMorphusStatModifierBlocks(
+      traits,
+      key,
+      effectiveStance,
+      burstSet,
+    )
     if (!blocks.length) continue
 
     let base = 0
@@ -215,6 +245,11 @@ export function buildMorphusPassiveBundle(
     jumpBonuses: aggregateMorphusJumpBonuses(traits),
     swimSpeedBonus: aggregateMorphusSwimSpeedBonus(traits),
     damageAffinityNotes: collectMorphusDamageAffinityNotes(traits),
+    limbComponents: flattenMorphusLimbComponents(traits),
+    activatedAbilities: flattenMorphusActivatedAbilities(traits),
+    combatInterceptions: flattenMorphusCombatInterceptions(traits),
+    nightvisionRangeFlatBonus: stackNightvisionRangeFlatBonus(traits),
+    activeBurstKeys: options.activeBurstKeys ?? [],
   }
 }
 

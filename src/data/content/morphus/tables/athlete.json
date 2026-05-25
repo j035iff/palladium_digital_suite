@@ -44,6 +44,16 @@
       ],
       "customOneOffs": [
         "Even running at maximum speed for hours at a time does NOT fatigue the Nightbane in any way."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
       ]
     },
     {
@@ -93,7 +103,17 @@
             "modifierPercent": 10
           }
         ]
-      }
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ]
     },
     {
       "id": "athlete_musclebound",
@@ -154,6 +174,16 @@
       },
       "customOneOffs": [
         "The character can lift and carry twice the standard amount for their strength attribute."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
       ]
     },
     {
@@ -180,6 +210,16 @@
         "+1 on Perception Rolls involving sports and sports teams (+2 on Perception Rolls involving the team represented on the jersey).",
         "+1 to save vs mind control.",
         "No substance like dirt, blood, or even paint soils the team logo on this jersey no matter how much covers the Nightbane."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
       ]
     },
     {
@@ -220,7 +260,17 @@
             "modifierPercent": -20
           }
         ]
-      }
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ]
     },
     {
       "id": "athlete_club_stick",
@@ -252,6 +302,16 @@
       "customOneOffs": [
         "+1 to strike and parry applies exclusively when using the club/stick.",
         "The stick is large and unwieldy to carry, so other two-handed weapons cannot be used unless it can be slung over the back or the Nightbane has other appendages."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
       ]
     },
     {
@@ -313,7 +373,17 @@
             "modifierPercent": -15
           }
         ]
-      }
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
+      ]
     },
     {
       "id": "athlete_cleats",
@@ -355,6 +425,16 @@
       "customOneOffs": [
         "Surfaces such as ice, mud, and even oil-slicked floors do not cause the Nightbane to lose his footing, slip or fall.",
         "The Nightbane is easily tracked across soft and hard surfaces due to the tell-tale gouges and holes left in the ground (+20% bonus to track)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
       ]
     },
     {
@@ -400,6 +480,16 @@
         "Chance to knock targets flat (lose initiative and one attack): 25% against normal strength, 10% against Supernatural Strength or larger than 8 feet. Add +20% to these odds if the target is already off balance.",
         "Nightbane may pass this projectile to another person up to 300 feet away, but once dropped or thrown by them, it immediately returns to the Nightbane.",
         "+2 to catch balls or intercept thrown projectiles, and +1 to dodge incoming projectiles."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
       ]
     }
   ]

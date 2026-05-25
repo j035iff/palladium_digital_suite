@@ -168,7 +168,7 @@ export type Feature = {
 
 /**
  * Book + page citation for library catalog rows (skills, races, weapon proficiencies).
- * Matches `sources[]` on palladium-skill.schema.json and palladium-race.schema.json.
+ * Matches `sources[]` on palladium-skill, palladium-race, palladium-occ, and palladium-morphus schemas.
  */
 export type PalladiumSourceRef = {
   gameSystem: string
@@ -568,11 +568,42 @@ export type MorphusDisabledNaturalAttackTag =
   | 'tail'
   | 'claws'
 
+export type MorphusLimbDestructionConditionOverrides = {
+  statModifiers?: MorphusStatModifiers
+  damageAffinities?: MorphusDamageAffinities
+}
+
 export type MorphusLimbDurability = {
   limbName: string
   quantity: number
   sdc: number
   hp?: number
+  ar?: number
+  calledShotPenalty?: number
+  destructionConditionOverrides?: MorphusLimbDestructionConditionOverrides
+}
+
+export type MorphusActivatedAbilityResetPeriod =
+  | 'hourly'
+  | 'daily'
+  | 'per_encounter'
+
+export type MorphusActivatedAbility = {
+  abilityName: string
+  chargesPerPeriod: number
+  resetPeriod: MorphusActivatedAbilityResetPeriod
+  durationFormula: string
+  statModifiers?: MorphusStatModifiers
+}
+
+export type MorphusCombatInterceptAction =
+  | 'parry_shadow_darkness'
+  | 'parry_lasers_light'
+  | 'bare_handed_melee_parry'
+
+export type MorphusSpecialCombatInterception = {
+  interceptAction: MorphusCombatInterceptAction
+  modifierFlat: number
 }
 
 export type MorphusStatModifiers = {
@@ -754,8 +785,8 @@ export type MorphusSkillModifiers = {
   customSystemRolls?: readonly MorphusCustomSystemRoll[]
 }
 
-/** Vulnerability tier multiplier (0 = none … 2 = double). */
-export type MorphusDamageAffinityMultiplier = 0 | 0.25 | 0.5 | 1 | 2
+/** Vulnerability tier multiplier (0 = none … 2 = double; 1.5 = increased). */
+export type MorphusDamageAffinityMultiplier = 0 | 0.25 | 0.5 | 1 | 1.5 | 2
 
 export type MorphusDamageAffinityType =
   | 'heat'
@@ -813,6 +844,10 @@ export type MorphusCharacteristic = {
   id: string
   name: string
   tableCategory: string
+  /** Game lines this row applies to (must align with sources[].gameSystem). */
+  gameSystems?: readonly string[]
+  /** Book + page citation(s) for this characteristic. */
+  sources?: readonly PalladiumSourceRef[]
   description?: string
   statModifiers?: MorphusStatModifiers
   /** Absolute natural A.R. from this trait (not a polymorphic modifier). */
@@ -838,6 +873,8 @@ export type MorphusCharacteristic = {
   gimmickInventory?: readonly MorphusGimmickInventoryItem[]
   /** Natural limb attack types disabled while this trait is active. */
   disabledNaturalAttackTags?: readonly MorphusDisabledNaturalAttackTag[]
+  activatedAbilities?: readonly MorphusActivatedAbility[]
+  specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]
   customOneOffs?: readonly string[]
 }
 
