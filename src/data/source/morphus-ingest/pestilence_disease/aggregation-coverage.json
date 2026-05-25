@@ -93,7 +93,6 @@
       "name": "Malignant Growths",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T21:03:32.039Z",
+  "generatedAt": "2026-05-25T22:22:16.197Z",
   "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
   "schemaTopLevelKeys": [
     "id",
@@ -471,7 +471,202 @@
       ]
     }
   ],
-  "targetAudit": null,
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "pestilence_disease_typhoid_mary_patient_zero",
+        "name": "Typhoid Mary/Patient Zero",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_ebola_bleeding",
+        "name": "Ebola/Bleeding",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_anthrax",
+        "name": "Anthrax",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_creeping_crud",
+        "name": "Creeping Crud",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
+        "name": "Pestilence/Bugs/Parasite Infestation",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_life_support_coma_victim",
+        "name": "Life Support/Coma Victim",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_madness_mad_cow_brain_worm",
+        "name": "Madness/Mad Cow/Brain Worm",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_swelling_bloating",
+        "name": "Swelling/Bloating",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_malignant_growths",
+        "name": "Malignant Growths",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_oozing_rash",
+        "name": "Oozing Rash",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_infected_lesions",
+        "name": "Infected Lesions",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "pestilence_disease_buzzing_pests",
+        "name": "Buzzing Pests",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
   "edgeCases": [],
   "schemaActions": [
     {

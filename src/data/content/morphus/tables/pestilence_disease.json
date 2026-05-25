@@ -50,7 +50,6 @@
         "me": { "flat": 1 },
         "sdc": { "dice": "2D6" },
         "hf": { "flat": 2 },
-        "perception": { "flat": 3 },
         "ma": { "flat": -2 },
         "pb": { "flat": -2 },
         "spd": { "flat": -2 }
@@ -67,7 +66,7 @@
         ]
       },
       "customOneOffs": [
-        "+3 Perception regarding disease, blood loss, and vampires (partially in statModifiers).",
+        "+3 to Perception Rolls regarding disease, blood loss, and vampires.",
         "+1 to save vs mind control.",
         "Bloodbath Elite Talent at double range/duration without damage cost.",
         "Vampires and blood-scent creatures +25% to track; blood trail +15% Tracking (blood DNA differs from Facade).",
@@ -92,7 +91,6 @@
         "ps": { "flat": 1 },
         "sdc": { "dice": "3D6" },
         "hf": { "flat": 1 },
-        "perception": { "flat": 3 },
         "ma": { "flat": -2 },
         "pb": { "flat": -2 },
         "spd": { "flat": -2 }
@@ -102,16 +100,18 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -15 },
-          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -15 },
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -15 },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -15 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -15 }
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
         ],
         "globalSkillModifier": -5
       },
       "customOneOffs": [
+        "+3 to Perception Rolls to recognize disease.",
         "+2 to save vs fever (not a separate save type in schema).",
+        "-15% to Disguise, Impersonation, Performance, Prowl, Seduction, and Undercover Ops (-10% with global -5%); -5% to all other skills.",
         "-15% Performance (not separately cataloged)."
       ],
       "gameSystems": ["nightbane"],
@@ -340,16 +340,11 @@
         "pb": { "flat": -2 }
       },
       "skillModifiers": {
-        "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
-          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
-        ],
         "globalSkillModifier": -10
       },
       "customOneOffs": [
         "+1 Natural A.R. (modeled as statModifiers.ar flat +1).",
-        "-10% Physical skills (global modifier above)."
+        "-10% on Physical skills as well as Disguise, Impersonation, and Undercover Ops (global -10%)."
       ],
       "gameSystems": ["nightbane"],
       "sources": [
