@@ -1,0 +1,135 @@
+{
+  "tableId": "mythical_creature",
+  "generatedAt": "2026-05-25T20:47:26.592Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 9,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "mythical_creature_bigfoot_wendigo_yeti",
+        "name": "Bigfoot/Wendigo/Yeti",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_cyclops_giant",
+        "name": "Cyclops/Giant",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_djinn",
+        "name": "Djinn",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_dragon_wyvern_serpent",
+        "name": "Dragon/Wyvern/Serpent",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_fairy",
+        "name": "Fairy",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_gorgon",
+        "name": "Gorgon",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_griffin",
+        "name": "Griffin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_sphinx",
+        "name": "Sphinx",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "mythical_creature_unicorn",
+        "name": "Unicorn",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 9,
+    "ids": [
+      "mythical_creature_bigfoot_wendigo_yeti",
+      "mythical_creature_djinn",
+      "mythical_creature_dragon_wyvern_serpent",
+      "mythical_creature_gorgon",
+      "mythical_creature_griffin",
+      "mythical_creature_sphinx",
+      "mythical_creature_unicorn",
+      "mythical_creature_fairy",
+      "mythical_creature_cyclops_giant"
+    ]
+  },
+  "bookIndex": {
+    "total": 9,
+    "included": 9,
+    "skippedOther": 0,
+    "names": [
+      "Bigfoot/Wendigo/Yeti",
+      "Cyclops/Giant",
+      "Djinn",
+      "Dragon/Wyvern/Serpent",
+      "Fairy",
+      "Gorgon",
+      "Griffin",
+      "Sphinx",
+      "Unicorn"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

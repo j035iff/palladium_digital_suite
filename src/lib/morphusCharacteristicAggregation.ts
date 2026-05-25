@@ -669,6 +669,72 @@ export function aggregateMorphusSwimSpeedBonus(
   return total
 }
 
+export type MorphusAggregatedFlightEngine = {
+  maxSpeedMph: number
+  maxAltitudeFeet?: number
+  strikeBonus: number
+  parryBonus: number
+  dodgeBonus: number
+}
+
+/** Highest listed flight speed; highest altitude cap; flight combat bonuses sum. */
+export function aggregateMorphusFlightEngine(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): MorphusAggregatedFlightEngine | null {
+  let maxSpeedMph = 0
+  let maxAltitudeFeet: number | undefined
+  let strikeBonus = 0
+  let parryBonus = 0
+  let dodgeBonus = 0
+
+  for (const t of traits) {
+    const engine = t.mobility?.flightEngine
+    if (!engine) continue
+    if (engine.maxSpeedMph != null && engine.maxSpeedMph > maxSpeedMph) {
+      maxSpeedMph = engine.maxSpeedMph
+    }
+    if (engine.maxAltitudeFeet != null) {
+      maxAltitudeFeet = Math.max(maxAltitudeFeet ?? 0, engine.maxAltitudeFeet)
+    }
+    const fcb = engine.flightCombatBonuses
+    if (fcb?.strike) strikeBonus += polymorphicDeltaFromBase(0, [fcb.strike])
+    if (fcb?.parry) parryBonus += polymorphicDeltaFromBase(0, [fcb.parry])
+    if (fcb?.dodge) dodgeBonus += polymorphicDeltaFromBase(0, [fcb.dodge])
+  }
+
+  if (
+    maxSpeedMph === 0 &&
+    maxAltitudeFeet == null &&
+    strikeBonus === 0 &&
+    parryBonus === 0 &&
+    dodgeBonus === 0
+  ) {
+    return null
+  }
+
+  return {
+    maxSpeedMph,
+    maxAltitudeFeet,
+    strikeBonus,
+    parryBonus,
+    dodgeBonus,
+  }
+}
+
+export type MorphusAggregatedSensoryFlags = {
+  telescopicVision: boolean
+  seeInvisible: boolean
+}
+
+export function aggregateMorphusSensoryFlags(
+  traits: readonly Pick<MorphusCharacteristic, 'sensory'>[],
+): MorphusAggregatedSensoryFlags {
+  return {
+    telescopicVision: traits.some((t) => t.sensory?.telescopicVision === true),
+    seeInvisible: traits.some((t) => t.sensory?.seeInvisible === true),
+  }
+}
+
 export type MorphusDamageAffinityNote = {
   damageType: MorphusDamageAffinityType
   multiplier: number

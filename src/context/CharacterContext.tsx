@@ -843,6 +843,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activatedAbilities: morphusPassiveBundle.activatedAbilities,
       combatInterceptions: morphusPassiveBundle.combatInterceptions,
       nightvisionRangeFlatBonus: morphusPassiveBundle.nightvisionRangeFlatBonus,
+      sensoryFlags: morphusPassiveBundle.sensoryFlags,
+      flightEngine: morphusPassiveBundle.flightEngine,
       activeBurstKeys: morphusPassiveBundle.activeBurstKeys,
       gimmickToySwitches: morphusPassiveBundle.gimmickToySwitches,
       activeGimmickSwitchKeys: morphusPassiveBundle.activeGimmickSwitchKeys,

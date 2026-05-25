@@ -659,6 +659,16 @@ function MorphusTraitsPanel({
   const hasGimmickSwitches = derived.gimmickToySwitches.length > 0
   const hasIntercepts = derived.combatInterceptions.length > 0
   const hasNv = derived.nightvisionRangeFlatBonus > 0
+  const flight = derived.flightEngine
+  const hasFlight =
+    flight != null &&
+    (flight.maxSpeedMph > 0 ||
+      flight.maxAltitudeFeet != null ||
+      flight.strikeBonus !== 0 ||
+      flight.parryBonus !== 0 ||
+      flight.dodgeBonus !== 0)
+  const hasTelescopic = derived.sensoryFlags.telescopicVision
+  const hasSeeInvisible = derived.sensoryFlags.seeInvisible
   if (
     !hasWeapons &&
     !hasCompanions &&
@@ -678,7 +688,10 @@ function MorphusTraitsPanel({
     !hasBursts &&
     !hasGimmickSwitches &&
     !hasIntercepts &&
-    !hasNv
+    !hasNv &&
+    !hasFlight &&
+    !hasTelescopic &&
+    !hasSeeInvisible
   ) {
     return null
   }
@@ -760,6 +773,36 @@ function MorphusTraitsPanel({
       {hasNv ? (
         <p className="mb-2 text-xs text-violet-200/90">
           Nightvision +{derived.nightvisionRangeFlatBonus} ft (Morphus)
+        </p>
+      ) : null}
+      {hasTelescopic ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Telescopic vision (Morphus)
+        </p>
+      ) : null}
+      {hasSeeInvisible ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          See invisible (Morphus)
+        </p>
+      ) : null}
+      {hasFlight && flight ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Flight
+          {flight.maxSpeedMph > 0 ? ` up to ${flight.maxSpeedMph} mph` : ''}
+          {flight.maxAltitudeFeet != null
+            ? ` · max altitude ${flight.maxAltitudeFeet} ft`
+            : ''}
+          {flight.strikeBonus !== 0 ||
+          flight.parryBonus !== 0 ||
+          flight.dodgeBonus !== 0
+            ? ` · in-flight combat +${[
+                flight.strikeBonus ? `strike ${flight.strikeBonus}` : '',
+                flight.parryBonus ? `parry ${flight.parryBonus}` : '',
+                flight.dodgeBonus ? `dodge ${flight.dodgeBonus}` : '',
+              ]
+                .filter(Boolean)
+                .join(', ')}`
+            : ''}
         </p>
       ) : null}
       {hasAffinity ? (

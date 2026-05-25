@@ -1,0 +1,148 @@
+{
+  "entries": [
+    {
+      "id": "mythical_creature_bigfoot_wendigo_yeti",
+      "name": "Bigfoot/Wendigo/Yeti",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_cyclops_giant",
+      "name": "Cyclops/Giant",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 40
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_djinn",
+      "name": "Djinn",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_dragon_wyvern_serpent",
+      "name": "Dragon/Wyvern/Serpent",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_fairy",
+      "name": "Fairy",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 40
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_gorgon",
+      "name": "Gorgon",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 38
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_griffin",
+      "name": "Griffin",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_sphinx",
+      "name": "Sphinx",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "mythical_creature_unicorn",
+      "name": "Unicorn",
+      "tableCategory": "Mythical Creature",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    }
+  ]
+}

@@ -3,6 +3,516 @@
   "kind": "morphus_trait_table",
   "displayName": "Mythical Creature",
   "parentTable": null,
-  "description": "Mythical Creature Morphus table (top-level, distinct from Fantasy). Add characteristic rows from the book.",
-  "entries": []
+  "description": "Mythical Creature Morphus table (Dark Designs pp. 37–41). Forms inspired by legends and modern reimaginings of mythical beings; distinct from the Fantasy table.",
+  "entries": [
+    {
+      "id": "mythical_creature_bigfoot_wendigo_yeti",
+      "name": "Bigfoot/Wendigo/Yeti",
+      "tableCategory": "Mythical Creature",
+      "description": "Sasquatch-type Morphus: 7–8 ft (2.1–2.4 m) tall, shaggy fur, primate-like face, human-adapted legs. Often a nature lover or environmentalist.",
+      "statModifiers": {
+        "ps": { "dice": "1D6" },
+        "pe": { "dice": "1D6" },
+        "spd": { "dice": "2D6" },
+        "sdc": { "dice": "1D4x10" },
+        "iq": { "flat": -1 },
+        "ma": { "flat": -1 },
+        "pb": { "flat": -2 },
+        "perception": { "flat": 2 }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "seeInvisible": false
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_camouflage", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_wilderness_survival", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "+20% to Prowl, Camouflage, and Climbing in wooded environments (modeled as flat skill bonuses above).",
+        "+10% to all Wilderness skills (partially modeled via Wilderness Survival).",
+        "Automatically starts with the Leave No Trace Talent.",
+        "Custom clothing required; tends to eschew high-tech gadgets. Impersonation at -30% in this Morphus."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_djinn",
+      "name": "Djinn",
+      "tableCategory": "Mythical Creature",
+      "description": "Solid Morphus wreathed in swirling mist, smoke, or heat from the chest down; upper body and coal-bright eyes visible (eyes dim/brighten with mood).",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "pp": { "flat": 2 },
+        "spd": { "dice": "4D4" },
+        "initiative": { "flat": 1 },
+        "ma": { "flat": -2 },
+        "pe": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_tailing", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Additional -10% to Prowl while obscured by haze.",
+        "Impersonation at -30% in this Morphus."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_dragon_wyvern_serpent",
+      "name": "Dragon/Wyvern/Serpent",
+      "tableCategory": "Mythical Creature",
+      "description": "Miniature dragon 9–12 ft (2.7–3.7 m) snout-to-tail; wingspan often exceeds body length. Scaly hide, talons, crocodilian teeth; can fly. No breath weapon—may take Fire Breather Talent at half cost (Survival Guide p. 102).",
+      "naturalAr": 14,
+      "statModifiers": {
+        "ps": { "dice": "1D6+6" },
+        "pe": { "dice": "1D6" },
+        "hp": { "dice": "3D6+4" },
+        "sdc": { "dice": "1D6x10" },
+        "ppe": { "dice": "1D6x10+20" },
+        "hf": { "flat": 2 },
+        "dodge": { "flat": -2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Dragon Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 80
+        }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Wing (each)",
+          "quantity": 2,
+          "sdc": 60,
+          "calledShotPenalty": -3
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ],
+        "globalSkillModifier": -10
+      },
+      "customOneOffs": [
+        "+1 to Spell Strength if a spell caster.",
+        "Bite double damage to Nightlords and Nightlands denizens.",
+        "Fire Breather Talent (if taken) double damage vs Nightlords/Nightlands.",
+        "Flying speed 1D4x10+88 mph (70–90 mph); wings 1D6x10+60 S.D.C. each, regrow in one day if destroyed.",
+        "Too large for ordinary vehicles; -10% all skills in dragon Morphus.",
+        "Magic and enchanted weapons (incl. Dark Blades) ignore Natural A.R.; dragon-slaying weapons double damage.",
+        "Impersonation impossible."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_gorgon",
+      "name": "Gorgon",
+      "tableCategory": "Mythical Creature",
+      "description": "Scaled skin, serpent hair (2D6+10 three-foot snakes), forked tongue, fangs. Deadly warrior; may start with Gorgon's Touch Elite Talent (Survival Guide p. 104) or one extra Talent.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "6D6" },
+        "hf": { "flat": 2 },
+        "initiative": { "flat": 3 },
+        "parry": { "flat": 2 },
+        "dodge": { "flat": 2 },
+        "iq": { "flat": -1 },
+        "pb": { "dice": "-1D4" }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Gorgon Claws",
+          "damageFormula": "3",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Gorgon Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false,
+          "poison": {
+            "saveType": "poison",
+            "failDamageFormula": "0",
+            "passDamageFormula": "0"
+          }
+        }
+      ],
+      "limbDurability": [
+        {
+          "limbName": "Hair Serpent",
+          "quantity": 1,
+          "sdc": 12,
+          "calledShotPenalty": -3
+        }
+      ],
+      "customOneOffs": [
+        "2D6+10 hair serpents (2D6+12 S.D.C. each); regrow in one day if destroyed (called shot each).",
+        "Snake Attack: 1D4+1 snakes strike per target, 1D4 damage each, +5 attacks/melee within 3 ft; poison save 16+ or Spd/APM/skills halved for 2 melees per failed bite (double vs Nightlands denizens).",
+        "Surprise from behind nearly impossible unless snakes covered; snakes detect rear attacks.",
+        "Starts with Gorgon's Touch Elite Talent or one extra Talent.",
+        "-2 M.E., -2 M.A.; vain/jealous. Disguise, Impersonation, Undercover Ops impossible."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 38
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_griffin",
+      "name": "Griffin",
+      "tableCategory": "Mythical Creature",
+      "description": "Hawk/eagle head, eagle talon hands, lion mane/fur/tail, eagle wings. Humanoid (common) or quadruped (rare); can speak. ~1 ft taller than Facade, ~300 lb.",
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "pp": { "flat": 2 },
+        "spd": { "dice": "4D6" },
+        "sdc": { "dice": "1D4x10+20" },
+        "hf": { "flat": 2 },
+        "initiative": { "flat": 1 },
+        "dodge": { "flat": 2 },
+        "perception": { "flat": 3 }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1500,
+        "telescopicVision": true,
+        "seeInvisible": false
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 70
+        },
+        "jumpModifiers": {
+          "standingHeight": { "flat": 20 },
+          "standingDistance": { "flat": 20 },
+          "runningHeight": { "flat": 40 },
+          "runningDistance": { "flat": 40 }
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Griffin Talons",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 }
+        },
+        {
+          "limbType": "bite",
+          "label": "Griffin Beak",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "limbDurability": [
+        {
+          "limbName": "Wing (each)",
+          "quantity": 2,
+          "sdc": 40
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_strike", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "isNegated": true }
+        ],
+        "globalSkillModifier": -20
+      },
+      "customOneOffs": [
+        "Flying speed 1D4x10+70; wings 1D4x10+40 S.D.C. each, regrow in one day.",
+        "180° peripheral vision; head turns 180°.",
+        "Diving/swooping attacks double damage (two attacks); talon/beak double vs Nightlords/Nightlands.",
+        "Taloned hands: -3 strike/parry/disarm with tools/weapons.",
+        "Disguise, Impersonation, Swimming impossible. Often loyal/overprotective."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_sphinx",
+      "name": "Sphinx",
+      "tableCategory": "Mythical Creature",
+      "description": "Lion body with human head and feathered wings; upright or quadruped. Head differs from Facade. 9 ft tall/ long, 16–20 ft wingspan. Guardian of knowledge; normal speech.",
+      "statModifiers": {
+        "iq": { "dice": "1D4" },
+        "me": { "flat": 2 },
+        "ma": { "flat": 2 },
+        "ps": { "dice": "1D6" },
+        "spd": { "dice": "1D4x10" },
+        "hp": { "dice": "2D6" },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "flat": 2 },
+        "ppe": { "dice": "1D4x10" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 70
+        },
+        "jumpModifiers": {
+          "standingHeight": { "flat": 30 },
+          "standingDistance": { "flat": 30 },
+          "runningHeight": { "flat": 60 },
+          "runningDistance": { "flat": 60 }
+        }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Wing (each)",
+          "quantity": 2,
+          "sdc": 40
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Flying speed 1D6x10+70; wings 1D6x10+40 S.D.C. each, regrow in one day.",
+        "+1 Spell Strength if magic user.",
+        "Claw attacks +2D6 to S.D.C. damage; double vs Nightlords/Nightlands. Diving/swoop double damage (two attacks).",
+        "Cannot use tools/weapons; too large for most cars (needs van/truck). Hates confined spaces.",
+        "Hand-based skills impossible. Tends to hoard knowledge/secrets."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_unicorn",
+      "name": "Unicorn",
+      "tableCategory": "Mythical Creature",
+      "description": "Sleek horse (15 hands) with 1–2 ft ivory/marble/crystal horn; optional centaur-like upper body (+10 P.B.). Idealistic, protective of innocents.",
+      "statModifiers": {
+        "hp": { "dice": "2D6" },
+        "sdc": { "dice": "1D6x10+20" },
+        "ppe": { "dice": "4D6" },
+        "ma": { "dice": "1D6" },
+        "ps": { "dice": "1D6" },
+        "pp": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "pb": { "flat": 10 },
+        "hf": { "flat": 2 },
+        "spd": { "dice": "1D6x10+50" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "runningHeight": { "flat": 10 },
+          "runningDistance": { "flat": 20 }
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Front Hooves",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "kick",
+          "label": "Rear Hooves",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Horn (stab)",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 200 }
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Gains Auto-Dodge (R.C.C. + high P.P. bonuses only).",
+        "Horn slash 2D6; horn stab triple vs Nightlords, Night Princes, Nightlands, vampires, demons, creatures of darkness.",
+        "Too large for most vehicles (needs trailer/large transport). Dislikes riders except children/gentle innocents.",
+        "Hand skills impossible unless centaur form. Prime target for supernatural evil."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 39
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_fairy",
+      "name": "Fairy",
+      "tableCategory": "Mythical Creature",
+      "description": "Lithe, attractive humanoid 4–6 ft with dragonfly or butterfly gossamer wings; iridescent flight and hovering.",
+      "statModifiers": {
+        "ma": { "dice": "1D6" },
+        "pb": { "flat": 8 },
+        "spd": { "dice": "1D6" },
+        "ppe": { "dice": "3D6" },
+        "hp": { "dice": "1D6" },
+        "sdc": { "dice": "5D6" },
+        "perception": { "flat": 2 },
+        "dodge": { "flat": 2 },
+        "hf": { "flat": 1 }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "telescopicVision": true,
+        "seeInvisible": false
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 20
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_dance", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_sing", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_wilderness_survival", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "isNegated": true }
+        ],
+        "globalSkillModifier": -10
+      },
+      "customOneOffs": [
+        "Flying speed 1D4x10+20; normal hover 1D4 ft off ground.",
+        "Exceptional vision to 1 mile. -10% Espionage/Rogue and combat/destruction skills.",
+        "Wings too large for most vehicles. Playful, often naive about Nightlords."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 40
+        }
+      ]
+    },
+    {
+      "id": "mythical_creature_cyclops_giant",
+      "name": "Cyclops/Giant",
+      "tableCategory": "Mythical Creature",
+      "description": "Hulking 10–12 ft brute with central cyclopean eye (or prominent third eye); may see invisible and prevent rear surprise if eye is on back of head.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ps": { "flat": 6 },
+        "pe": { "flat": 2 },
+        "hp": { "dice": "2D6" },
+        "sdc": { "dice": "1D6x10+20" },
+        "hf": { "flat": 2 },
+        "dodge": { "flat": -2 },
+        "perception": { "flat": 3 },
+        "bonusHthDamage": { "dice": "1D6" }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "telescopicVision": true,
+        "seeInvisible": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ],
+        "globalSkillModifier": -25
+      },
+      "customOneOffs": [
+        "Exceptional vision to 1 mile.",
+        "Punches/kicks +1D6 damage (700 lb mass).",
+        "Modern weapons/cell phones difficult with large hands.",
+        "Disguise, Impersonation, Tailing impossible. Custom clothing; hates confined spaces.",
+        "May be gentle/timid despite monstrous appearance."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 40
+        }
+      ]
+    }
+  ]
 }

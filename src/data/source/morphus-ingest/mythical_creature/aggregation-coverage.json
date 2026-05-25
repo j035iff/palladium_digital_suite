@@ -1,0 +1,121 @@
+{
+  "tableId": "mythical_creature",
+  "entries": [
+    {
+      "id": "mythical_creature_bigfoot_wendigo_yeti",
+      "name": "Bigfoot/Wendigo/Yeti",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_djinn",
+      "name": "Djinn",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_dragon_wyvern_serpent",
+      "name": "Dragon/Wyvern/Serpent",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "flight engine",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_gorgon",
+      "name": "Gorgon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "natural weapons",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_griffin",
+      "name": "Griffin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "telescopic vision",
+        "flight engine",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_sphinx",
+      "name": "Sphinx",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "flight engine",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_unicorn",
+      "name": "Unicorn",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_fairy",
+      "name": "Fairy",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "nightvision bonus",
+        "telescopic vision",
+        "flight engine",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_cyclops_giant",
+      "name": "Cyclops/Giant",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "nightvision bonus",
+        "telescopic vision",
+        "see invisible",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

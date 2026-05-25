@@ -22,6 +22,10 @@ import {
   collectMorphusTraitNotes,
   aggregateMorphusJumpBonuses,
   aggregateMorphusSwimSpeedBonus,
+  aggregateMorphusFlightEngine,
+  aggregateMorphusSensoryFlags,
+  type MorphusAggregatedFlightEngine,
+  type MorphusAggregatedSensoryFlags,
   collectMorphusDamageAffinityNotes,
   collectMorphusVariableScaleNotes,
   collectPolymorphicTemplateTraits,
@@ -115,6 +119,8 @@ export type MorphusPassiveBundle = {
   activatedAbilities: readonly MorphusDerivedActivatedAbility[]
   combatInterceptions: readonly MorphusDerivedCombatInterception[]
   nightvisionRangeFlatBonus: number
+  sensoryFlags: MorphusAggregatedSensoryFlags
+  flightEngine: MorphusAggregatedFlightEngine | null
   activeBurstKeys: readonly string[]
   gimmickToySwitches: readonly MorphusDerivedGimmickSwitch[]
   activeGimmickSwitchKeys: readonly string[]
@@ -142,6 +148,8 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'activatedAbilities'
   | 'combatInterceptions'
   | 'nightvisionRangeFlatBonus'
+  | 'sensoryFlags'
+  | 'flightEngine'
   | 'activeBurstKeys'
   | 'gimmickToySwitches'
   | 'activeGimmickSwitchKeys'
@@ -279,6 +287,8 @@ export function buildMorphusPassiveBundle(
       traits,
       gimmickSet,
     ),
+    sensoryFlags: aggregateMorphusSensoryFlags(traits),
+    flightEngine: aggregateMorphusFlightEngine(traits),
     activeBurstKeys: options.activeBurstKeys ?? [],
     activeGimmickSwitchKeys: options.activeGimmickSwitchKeys ?? [],
   }
