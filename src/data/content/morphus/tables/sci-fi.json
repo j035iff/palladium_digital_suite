@@ -1,8 +1,388 @@
 {
   "id": "sci-fi",
   "kind": "morphus_trait_table",
-  "displayName": "Sci-Fi",
+  "displayName": "Science Fiction",
   "parentTable": null,
-  "description": "Sci-Fi Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Science Fiction Morphus table (Dark Designs pp. 50–53). Sci-fi fan or technophile features—armor, flight, energy weapons, sensors, and alien forms.",
+  "entries": [
+    {
+      "id": "sci_fi_light_sci_fi_armor",
+      "name": "Light Sci-Fi Armor",
+      "tableCategory": "Science Fiction",
+      "description": "Full high-tech environmental body armor or plated spacesuit with helmet; overlapping plates, mesh, or ceramic look.",
+      "naturalAr": 11,
+      "statModifiers": {
+        "sdc": { "dice": "2D4x10+40" },
+        "hf": { "flat": 1 },
+        "rollWithPunch": { "flat": 1 },
+        "pe": { "flat": -1 },
+        "perception": { "flat": -1 }
+      },
+      "saveModifiers": {
+        "magic": -1,
+        "nightlordMagic": -1
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "noBreathingRequired": true
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_pick_locks", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_pick_pockets", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_art", "modifierPercent": -5 }
+        ]
+      },
+      "customOneOffs": [
+        "Environmentally sealed: no air required; immune to airborne irritants, toxins, and poison gases.",
+        "-5% to delicate-touch/precision skills (partially modeled above)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 50
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_heavy_sci_fi_armor",
+      "name": "Heavy Sci-Fi Armor",
+      "tableCategory": "Science Fiction",
+      "description": "Bulky head-to-toe environmental combat armor—mechanical, resin, or bio-engineered appearance; augments strength.",
+      "naturalAr": 14,
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "sdc": { "dice": "2D6x10+120" },
+        "hf": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 },
+        "pe": { "flat": -2 },
+        "spd": { "flat": -2 },
+        "perception": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "magic": -3,
+        "nightlordMagic": -3
+      },
+      "damageAffinities": {
+        "kinetic": 0.5,
+        "blunt": 0.5
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "noBreathingRequired": true
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_pick_locks", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_pick_pockets", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_art", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "Kinetic punches and kicks half damage (modeled in damageAffinities).",
+        "Sealed suit: no air required; immune to airborne irritants, toxins, and gases.",
+        "-20% delicate-touch/precision skills (partially modeled above)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_flight_pack_thrusters",
+      "name": "Flight Pack/Thrusters",
+      "tableCategory": "Science Fiction",
+      "description": "Jet pack, anti-gravity nodes, or organic thruster tubes—high-speed wingless flight (no hover).",
+      "statModifiers": {
+        "pe": { "flat": -1 },
+        "pb": { "flat": -1 },
+        "spd": { "dice": "-2D6" },
+        "ppe": { "dice": "-2D6" },
+        "hf": { "flat": 1 },
+        "dodge": { "flat": 2 }
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 90,
+          "maxAltitudeFeet": 10000,
+          "flightCombatBonuses": {
+            "dodge": { "flat": 2 }
+          }
+        }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Flight Pack",
+          "quantity": 1,
+          "sdc": 100,
+          "calledShotPenalty": -3
+        }
+      ],
+      "customOneOffs": [
+        "Flight speed 1D6x10+72 mph (57–90 mph); cannot hover.",
+        "+2 dodge in flight; +4 dodge at 60+ mph; +2 damage per 20 mph of speed.",
+        "+1 Horror Factor when flying.",
+        "Pack regens with Nightbane; one full day if destroyed; inoperable while regenerating."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_energy_blaster",
+      "name": "Energy Blaster",
+      "tableCategory": "Science Fiction",
+      "description": "Handheld or body-mounted futuristic energy weapon fueled by P.P.E. (1D6 damage per P.P.E., max 10 P.P.E. per attack).",
+      "statModifiers": {
+        "ppe": { "dice": "-2D6" },
+        "hf": { "flat": 1 },
+        "strike": { "flat": 3 }
+      },
+      "customOneOffs": [
+        "Range 2,000 ft (610 m); damage NOT magical or supernatural.",
+        "Reduce starting Talents by one.",
+        "Blast damage 1D6 per P.P.E. spent (max 10 P.P.E. per attack)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_melee_weapons",
+      "name": "Sci-Fi Melee Weapon(s)",
+      "tableCategory": "Science Fiction",
+      "description": "Futuristic melee weapon(s)—crystal, resin, or glowing tech; energize with P.P.E. for doubled damage (triple vs Nightlords/minions).",
+      "statModifiers": {
+        "hp": { "dice": "-1D6" },
+        "ppe": { "dice": "-1D6" },
+        "hf": { "flat": 1 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Sci-Fi Melee Weapon",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false,
+          "weaponTraits": ["indestructible", "disarm_immune"]
+        }
+      ],
+      "customOneOffs": [
+        "Small weapon 1D6 / large 2D6 base; 3 P.P.E./melee (small) or 6 P.P.E./melee (large) doubles damage, triple vs Nightlords and demonic minions.",
+        "Appropriate W.P. granted in Morphus only; cannot be disarmed; others -6 strike/parry/disarm.",
+        "Do NOT add Supernatural P.S. or strength bonuses to energized damage.",
+        "+1 Horror Factor when energized."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_universal_translator",
+      "name": "Universal Translator",
+      "tableCategory": "Science Fiction",
+      "description": "Earpiece, mask, mini-computer, or neck implant—understand and speak all languages at 98% fluency (no gesture/color-based languages).",
+      "statModifiers": {
+        "iq": { "flat": 1 },
+        "ma": { "flat": 1 },
+        "pb": { "flat": -1 },
+        "ppe": { "dice": "-1D6" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_radio_basic", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_radio_scramblers", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_anthropology", "modifierPercent": 15 },
+          { "targetType": "skill_id", "targetValue": "skill_archaeology", "modifierPercent": 15 }
+        ]
+      },
+      "customOneOffs": [
+        "Understand and speak all languages at 98% (excluding non-lingual gesture/color components).",
+        "+5% Communications and Lore skills (partially modeled via radio skills)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_optics",
+      "name": "Sci-Fi Optics",
+      "tableCategory": "Science Fiction",
+      "description": "Helmet, goggles, visor, or cybernetic eyes—infrared/UV vision, light adjustment, combat targeting reticule.",
+      "statModifiers": {
+        "perception": { "flat": 2 },
+        "strike": { "flat": 1 },
+        "hf": { "flat": 1 },
+        "pb": { "flat": -1 },
+        "ppe": { "dice": "-1D6" }
+      },
+      "sensory": {
+        "telescopicVision": true,
+        "thermalVision": true,
+        "seeInvisible": false
+      },
+      "customOneOffs": [
+        "See heat signatures, engines, targets in smoke, thin walls, footprints <10 minutes old.",
+        "3 P.P.E.: see magically invisible 1 minute/level (1,000 ft range).",
+        "Polarized lenses vs glare; virtual targeting reticule (+1 strike ranged modeled in statModifiers)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_personal_scanner_sensors",
+      "name": "Personal Scanner/Sensors",
+      "tableCategory": "Science Fiction",
+      "description": "Handheld or cybernetic scanner (1D4+1 features chosen from Bio-Scanner, EM Field, Geiger, Radar, Motion, Molecular, Sense Magic).",
+      "statModifiers": {
+        "hf": { "flat": 1 },
+        "ma": { "flat": -1 }
+      },
+      "customOneOffs": [
+        "-1D4 permanent P.P.E. per scan feature selected.",
+        "Bio-Scanner: +10% Medical, Interrogation, Intelligence; biometrics to 10 ft.",
+        "EM Field Detector: +10% Electrical skills; 50 ft range.",
+        "Geiger Counter: radiation warning 50 ft.",
+        "Miniature Radar: track 20 objects to 30 miles; +1 initiative, +1 strike flying or +2 dodge incoming; half blindness/darkness penalties.",
+        "Motion Detector: 100 ft; half blindness penalties; +1 dodge; no surprise from behind/above.",
+        "Molecular Analyzer: +10% Crime Scene Investigation and Chemistry; 25 ft, 20 ppm.",
+        "Sense Magic: ley lines, nexus, magic items, beings with 70+ P.P.E.; 30 ft."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_hologram_projector",
+      "name": "Hologram Projector",
+      "tableCategory": "Science Fiction",
+      "description": "Body-mounted hologram projector—3D light images up to 10 ft cube, 50 ft range; fools even magic-immune illusion resistance.",
+      "statModifiers": {
+        "perception": { "flat": 1 },
+        "ppe": { "dice": "-(1D6+6)" },
+        "spd": { "percent": -10 }
+      },
+      "saveModifiers": {
+        "illusions": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "grantUnlearnedValue": 80,
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "grantUnlearnedValue": 80,
+            "modifierPercent": 20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Five minutes of operation per hour; recharges from bio-kinetic energy.",
+        "Does not fool hearing, smell, touch, Sense Evil/Magic/Aura, pressure plates, or thermal optics; normal cameras record holograms.",
+        "-2 attacks/actions per melee and -10% Spd while projector and image are active."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_force_field_array",
+      "name": "Force Field Array",
+      "tableCategory": "Science Fiction",
+      "description": "Energy nodes or suit patches project a form-fitting force field (1D6x10+200 S.D.C.); absorbs damage before personal S.D.C./H.P.",
+      "statModifiers": {
+        "hp": { "dice": "1D6" },
+        "ppe": { "dice": "-(2D6+3)" }
+      },
+      "customOneOffs": [
+        "Force field 1D6x10+200 S.D.C.; damage hits field first; regens with Nightbane healing; down 6 hours at 0 S.D.C.",
+        "Immune to gases, poison, and disease while field is up; protects kinetic and energy (incl. magical fireball/lightning).",
+        "Does NOT protect mesmerism, illusions, mind control, or possession.",
+        "Field must drop to cast spells/activate Talents (2D4 seconds vulnerable; no melee action to toggle).",
+        "Cannot develop Shadow Shield, Pipe Bomb, or similar magical protective-field Talents."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ]
+    },
+    {
+      "id": "sci_fi_bug_eyed_monster",
+      "name": "Bug-Eyed Monster",
+      "tableCategory": "Science Fiction",
+      "description": "Classic monstrous alien (Grey, Mars Attacks, xenomorph-style, Gorn, cantina alien, etc.)—often rolled from Alien Shape, Biomechanical, or Extraterrestrial tables.",
+      "customOneOffs": [
+        "Resemble a non-humanoid, monstrous sci-fi alien (oversized eyes, claws, antennae, etc.).",
+        "Player may roll or pick features from Alien Shape, Biomechanical, or Extraterrestrial Morphus tables for the specific look."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    }
+  ]
 }

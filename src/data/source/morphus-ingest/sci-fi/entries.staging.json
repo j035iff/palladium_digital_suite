@@ -1,0 +1,180 @@
+{
+  "entries": [
+    {
+      "id": "sci-fi_bug_eyed_monster",
+      "name": "Bug-Eyed Monster",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (95-00%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_energy_blaster",
+      "name": "Energy Blaster",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (29-37%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_flight_pack_thrusters",
+      "name": "Flight Pack/Thrusters",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (20-28%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_force_field_array",
+      "name": "Force Field Array",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (86-94%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_heavy_sci_fi_armor",
+      "name": "Heavy Sci-Fi Armor",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (11-19%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_hologram_projector",
+      "name": "Hologram Projector",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (77-85%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_light_sci_fi_armor",
+      "name": "Light Sci-Fi Armor",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 50
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_personal_scanner_sensors",
+      "name": "Personal Scanner/Sensors",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 52
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (67-76%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_sci_fi_melee_weapon_s",
+      "name": "Sci-Fi Melee Weapon(s)",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (38-46%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_sci_fi_optics",
+      "name": "Sci-Fi Optics",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (57-66%; authority=dark_designs)."
+    },
+    {
+      "id": "sci-fi_universal_translator",
+      "name": "Universal Translator",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 51
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (47-56%; authority=dark_designs)."
+    }
+  ]
+}

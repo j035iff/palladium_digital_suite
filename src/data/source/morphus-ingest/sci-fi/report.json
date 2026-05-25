@@ -1,0 +1,154 @@
+{
+  "tableId": "sci-fi",
+  "generatedAt": "2026-05-25T21:30:53.530Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 11,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "sci-fi_bug_eyed_monster",
+        "name": "Bug-Eyed Monster",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_energy_blaster",
+        "name": "Energy Blaster",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_flight_pack_thrusters",
+        "name": "Flight Pack/Thrusters",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_force_field_array",
+        "name": "Force Field Array",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_heavy_sci_fi_armor",
+        "name": "Heavy Sci-Fi Armor",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_hologram_projector",
+        "name": "Hologram Projector",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_light_sci_fi_armor",
+        "name": "Light Sci-Fi Armor",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_personal_scanner_sensors",
+        "name": "Personal Scanner/Sensors",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_sci_fi_melee_weapon_s",
+        "name": "Sci-Fi Melee Weapon(s)",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_sci_fi_optics",
+        "name": "Sci-Fi Optics",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "sci-fi_universal_translator",
+        "name": "Universal Translator",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 11,
+    "ids": [
+      "sci_fi_light_sci_fi_armor",
+      "sci_fi_heavy_sci_fi_armor",
+      "sci_fi_flight_pack_thrusters",
+      "sci_fi_energy_blaster",
+      "sci_fi_melee_weapons",
+      "sci_fi_universal_translator",
+      "sci_fi_optics",
+      "sci_fi_personal_scanner_sensors",
+      "sci_fi_hologram_projector",
+      "sci_fi_force_field_array",
+      "sci_fi_bug_eyed_monster"
+    ]
+  },
+  "bookIndex": {
+    "total": 11,
+    "included": 11,
+    "skippedOther": 0,
+    "names": [
+      "Bug-Eyed Monster",
+      "Energy Blaster",
+      "Flight Pack/Thrusters",
+      "Force Field Array",
+      "Heavy Sci-Fi Armor",
+      "Hologram Projector",
+      "Light Sci-Fi Armor",
+      "Personal Scanner/Sensors",
+      "Sci-Fi Melee Weapon(s)",
+      "Sci-Fi Optics",
+      "Universal Translator"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: sci_fi_light_sci_fi_armor, sci_fi_heavy_sci_fi_armor, sci_fi_flight_pack_thrusters, sci_fi_energy_blaster, sci_fi_melee_weapons, sci_fi_universal_translator, sci_fi_optics, sci_fi_personal_scanner_sensors, sci_fi_hologram_projector, sci_fi_force_field_array, sci_fi_bug_eyed_monster",
+    "Staging has ids not in target (merge pending): sci-fi_bug_eyed_monster, sci-fi_energy_blaster, sci-fi_flight_pack_thrusters, sci-fi_force_field_array, sci-fi_heavy_sci_fi_armor, sci-fi_hologram_projector, sci-fi_light_sci_fi_armor, sci-fi_personal_scanner_sensors, sci-fi_sci_fi_melee_weapon_s, sci-fi_sci_fi_optics, sci-fi_universal_translator"
+  ]
+}
