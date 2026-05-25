@@ -1,0 +1,164 @@
+{
+  "entries": [
+    {
+      "id": "occupation_a_suit_consummate_professional",
+      "name": "A Suit/Consummate Professional",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 43
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_communications",
+      "name": "Communications",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_electrician_electronic_devices",
+      "name": "Electrician/Electronic Devices",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (78-85%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_hazardous_duty",
+      "name": "Hazardous Duty",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_mechanic_mechanical",
+      "name": "Mechanic/Mechanical",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (71-77%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_time_clock_or_timepiece",
+      "name": "Time Clock or Timepiece",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_tools_of_the_trade",
+      "name": "Tools of the Trade",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_uniform_official",
+      "name": "Uniform/Official",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_water_cooler",
+      "name": "Water Cooler",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "occupation_workaholic",
+      "name": "Workaholic",
+      "tableCategory": "Occupation",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\occupation\\extracted-authoritative.txt (86-92%; authority=dark_designs)."
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "tableId": "occupation",
+  "entries": [
+    {
+      "id": "occupation_suit_consummate_professional",
+      "name": "A Suit/Consummate Professional",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_uniform_official",
+      "name": "Uniform/Official",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_hazardous_duty",
+      "name": "Hazardous Duty",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "save modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_communications",
+      "name": "Communications",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_tools_of_the_trade",
+      "name": "Tools of the Trade",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_time_clock_timepiece",
+      "name": "Time Clock or Timepiece",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_water_cooler",
+      "name": "Water Cooler",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_mechanic_mechanical",
+      "name": "Mechanic/Mechanical",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_electrician_electronic_devices",
+      "name": "Electrician/Electronic Devices",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_workaholic",
+      "name": "Workaholic",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

@@ -3,6 +3,327 @@
   "kind": "morphus_trait_table",
   "displayName": "Occupation",
   "parentTable": null,
-  "description": "Occupation Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Occupation Morphus table (Dark Designs pp. 43–45). Dream career or profession manifests as permanent Morphus features.",
+  "entries": [
+    {
+      "id": "occupation_suit_consummate_professional",
+      "name": "A Suit/Consummate Professional",
+      "tableCategory": "Occupation",
+      "description": "Business attire and executive bearing—power-player confidence suited to Wall Street or any cubicle farm.",
+      "statModifiers": {
+        "iq": { "flat": 1 },
+        "me": { "flat": 1 },
+        "ma": { "dice": "1D4" },
+        "pb": { "flat": 1 },
+        "sdc": { "dice": "2D6" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -5 }
+        ],
+        "globalSkillModifier": -5
+      },
+      "customOneOffs": [
+        "No Secondary Skills—career-focused only.",
+        "-5% to all skills except Communications, Math, and Technical skills (partially modeled via global -5% with listed exceptions at 0% offset)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 43
+        }
+      ]
+    },
+    {
+      "id": "occupation_uniform_official",
+      "name": "Uniform/Official",
+      "tableCategory": "Occupation",
+      "description": "Service-profession uniform (medic, firefighter, police, pilot, mechanic, etc.)—symbol of authority and pride, details may be accurate or invented.",
+      "statModifiers": {
+        "me": { "flat": 1 },
+        "ma": { "flat": 1 },
+        "pb": { "flat": 1 },
+        "sdc": { "dice": "2D6" },
+        "perception": { "flat": 2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 }
+        ],
+        "globalSkillModifier": -10
+      },
+      "customOneOffs": [
+        "+5% to Invoke Trust/Intimidate.",
+        "-10% to all Physical and Rogue skills (global modifier above; adjust individual skills at play).",
+        "Unlikely to be fully trusted by Warlords criminals."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_hazardous_duty",
+      "name": "Hazardous Duty",
+      "tableCategory": "Occupation",
+      "description": "Protective gear from hazardous jobs—vest, riot gear, hard hat, Hazmat, clean-room suit, heat suit, etc.; same bonuses regardless of appearance.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "4D6" },
+        "pp": { "dice": "-1D4" },
+        "spd": { "dice": "-1D6" },
+        "perception": { "flat": -1 }
+      },
+      "saveModifiers": {
+        "disease": 2,
+        "gas": 2,
+        "poison": 2
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_communications",
+      "name": "Communications",
+      "tableCategory": "Occupation",
+      "description": "Ear devices and built-in wireless comms (walkie-talkie, phone, CB, etc.); can reach any wireless network when frequency or number is known.",
+      "statModifiers": {
+        "ppe": { "dice": "-2D4" },
+        "perception": { "dice": "-1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_radio_basic", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_radio_scramblers", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_computer_operation", "modifierPercent": 10 }
+        ]
+      },
+      "customOneOffs": [
+        "+10% to all Communications skills (partially modeled via radio/computer overrides).",
+        "Communications untraceable by modern methods; no roaming charges.",
+        "Internet, GPS, and similar network access when the network is known.",
+        "Detected by Hounds and supernatural-sensitive beings at 50% greater range."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_tools_of_the_trade",
+      "name": "Tools of the Trade",
+      "tableCategory": "Occupation",
+      "description": "1D4+3 profession-critical tools on transformation (may be grafted); player and G.M. choose items together.",
+      "statModifiers": {
+        "iq": { "flat": 1 },
+        "sdc": { "dice": "2D6" },
+        "spd": { "flat": -2 },
+        "ppe": { "dice": "-1D6" }
+      },
+      "customOneOffs": [
+        "+5% to O.C.C. skills related to the tools and trade.",
+        "Each tool 3D6 S.D.C.; lost/destroyed tools vanish 24 hours.",
+        "Battery-powered tools never run low; ammo/supplies reload each hour.",
+        "Most tools 1D4–1D6 damage if used as weapons."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_time_clock_timepiece",
+      "name": "Time Clock or Timepiece",
+      "tableCategory": "Occupation",
+      "description": "Punch clock or electronic scanner built into the chest; displays exact time to the second.",
+      "statModifiers": {
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "2D4" },
+        "ma": { "flat": -2 },
+        "perception": { "flat": -1 },
+        "ppe": { "dice": "-1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_demolitions", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_dance", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_mathematics_basic", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_mathematics_advanced", "modifierPercent": 5 }
+        ]
+      },
+      "customOneOffs": [
+        "+2 Spd in bonuses and -2 Spd in penalties (net 0; not duplicated in statModifiers).",
+        "Accurate sense of time and passage of time in Morphus.",
+        "+5% to time/timing skills including Performance and time anomalies (partially modeled above).",
+        "Always on time; anxiety prone about punctuality."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_water_cooler",
+      "name": "Water Cooler",
+      "tableCategory": "Occupation",
+      "description": "Large back-mounted drink tank (water, coffee, etc.) with spigot; affable gossip in casual situations.",
+      "statModifiers": {
+        "ma": { "dice": "1D4+2" },
+        "pe": { "flat": 1 },
+        "pp": { "flat": -2 },
+        "spd": { "dice": "-1D4" },
+        "dodge": { "flat": -1 },
+        "rollWithPunch": { "flat": -2 }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Water Cooler Tank",
+          "quantity": 1,
+          "sdc": 40
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Water Blast",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "No hydration required in Morphus; never thirsty.",
+        "Water blast 2D6 to vampires; one attack per blast; endless payload; burst only (cannot fill a glass).",
+        "Tank ~25 lb (11 kg), always two-thirds full; sloshing weight causes skill penalties above."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 44
+        }
+      ]
+    },
+    {
+      "id": "occupation_mechanic_mechanical",
+      "name": "Mechanic/Mechanical",
+      "tableCategory": "Occupation",
+      "description": "Gears, springs, pulleys, and bolts built into or bolted onto the body—machine repair specialist.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "1D6x10+20" },
+        "pb": { "flat": -1 },
+        "spd": { "dice": "-1D4" },
+        "perception": { "flat": 2 }
+      },
+      "customOneOffs": [
+        "+2 Perception only for mechanical problems and repairs; -2 Perception when absorbed in machine work.",
+        "+10% to mechanics and mechanical repair skills.",
+        "Prefers working on machines over socializing."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ]
+    },
+    {
+      "id": "occupation_electrician_electronic_devices",
+      "name": "Electrician/Electronic Devices",
+      "tableCategory": "Occupation",
+      "description": "Wires, microchips, and circuit boards on or emerging from the body; eyes may appear as dim LEDs.",
+      "naturalAr": 9,
+      "statModifiers": {
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "4D6+6" },
+        "pe": { "flat": -1 },
+        "spd": { "dice": "-1D4" },
+        "perception": { "flat": 2 }
+      },
+      "damageAffinities": {
+        "electricity": 0.5
+      },
+      "customOneOffs": [
+        "+2 Perception for electronics/circuitry problems and repairs; -3 Perception when absorbed in electronics work.",
+        "+5% to electronics, electrical repair, and computer skills.",
+        "Electrical attacks and lightning half damage (modeled in damageAffinities).",
+        "Loses track of time when focused on devices."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ]
+    },
+    {
+      "id": "occupation_workaholic",
+      "name": "Workaholic",
+      "tableCategory": "Occupation",
+      "description": "Haggard, bloodshot, caffeine-fueled appearance—wrinkled clothes, five-o'clock shadow, built-in caffeine tubes optional.",
+      "statModifiers": {
+        "me": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 },
+        "perception": { "flat": -2 }
+      },
+      "customOneOffs": [
+        "Needs only half normal sleep.",
+        "-5% to Science, most Technical, Piloting, Demolitions, and similar focus skills.",
+        "Physical skills and quick tasks: no penalty.",
+        "01–50% chance of falling asleep on guard duty or as lookout."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 45
+        }
+      ]
+    }
+  ]
 }

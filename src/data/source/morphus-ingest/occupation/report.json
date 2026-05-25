@@ -1,0 +1,146 @@
+{
+  "tableId": "occupation",
+  "generatedAt": "2026-05-25T21:00:49.405Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 10,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "occupation_a_suit_consummate_professional",
+        "name": "A Suit/Consummate Professional",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_communications",
+        "name": "Communications",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_electrician_electronic_devices",
+        "name": "Electrician/Electronic Devices",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_hazardous_duty",
+        "name": "Hazardous Duty",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_mechanic_mechanical",
+        "name": "Mechanic/Mechanical",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_time_clock_or_timepiece",
+        "name": "Time Clock or Timepiece",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_tools_of_the_trade",
+        "name": "Tools of the Trade",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_uniform_official",
+        "name": "Uniform/Official",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_water_cooler",
+        "name": "Water Cooler",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "occupation_workaholic",
+        "name": "Workaholic",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 10,
+    "ids": [
+      "occupation_suit_consummate_professional",
+      "occupation_uniform_official",
+      "occupation_hazardous_duty",
+      "occupation_communications",
+      "occupation_tools_of_the_trade",
+      "occupation_time_clock_timepiece",
+      "occupation_water_cooler",
+      "occupation_mechanic_mechanical",
+      "occupation_electrician_electronic_devices",
+      "occupation_workaholic"
+    ]
+  },
+  "bookIndex": {
+    "total": 10,
+    "included": 10,
+    "skippedOther": 0,
+    "names": [
+      "A Suit/Consummate Professional",
+      "Communications",
+      "Electrician/Electronic Devices",
+      "Hazardous Duty",
+      "Mechanic/Mechanical",
+      "Time Clock or Timepiece",
+      "Tools of the Trade",
+      "Uniform/Official",
+      "Water Cooler",
+      "Workaholic"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: occupation_suit_consummate_professional, occupation_time_clock_timepiece",
+    "Staging has ids not in target (merge pending): occupation_a_suit_consummate_professional, occupation_time_clock_or_timepiece"
+  ]
+}

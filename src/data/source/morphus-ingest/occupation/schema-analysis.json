@@ -1,0 +1,333 @@
+{
+  "generatedAt": "2026-05-25T20:58:48.517Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs"
+  ],
+  "traitCount": 10,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "A Suit/Consummate Professional",
+      "pageNumber": 43,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "11-20%",
+      "name": "Uniform/Official",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Hazardous Duty",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Communications",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Tools of the Trade",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Time Clock or Timepiece",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Water Cooler",
+      "pageNumber": 44,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "71-77%",
+      "name": "Mechanic/Mechanical",
+      "pageNumber": 45,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "78-85%",
+      "name": "Electrician/Electronic Devices",
+      "pageNumber": 45,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "86-92%",
+      "name": "Workaholic",
+      "pageNumber": 45,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: mobility, sensory, weaponClassBonuses, heightModifier, weightModifier, naturalWeapons, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "occupation"
+}
