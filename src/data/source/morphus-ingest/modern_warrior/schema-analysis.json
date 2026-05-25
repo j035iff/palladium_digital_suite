@@ -1,0 +1,510 @@
+{
+  "generatedAt": "2026-05-25T22:46:02.156Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "conditionalStanceModifiers"
+  ],
+  "traitCount": 10,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Body Armor",
+      "pageNumber": 53,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "11-20%",
+      "name": "Camouflage",
+      "pageNumber": 53,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Dress Uniform",
+      "pageNumber": 53,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Gas Mask",
+      "pageNumber": 53,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Medic and First Aid",
+      "pageNumber": 54,
+      "patterns": [
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Night Hunter/Nightvision Goggles",
+      "pageNumber": 54,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities",
+        "sensory"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Field Radio",
+      "pageNumber": 54,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "71-80%",
+      "name": "Personal Weaponry",
+      "pageNumber": 54,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Heavy Firepower",
+      "pageNumber": 55,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "activatedAbilities",
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Biomechanical",
+      "pageNumber": 55,
+      "patterns": [
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "conditionalStanceModifiers"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "modern_warrior_body_armor",
+        "name": "Body Armor",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_camouflage",
+        "name": "Camouflage",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_dress_uniform",
+        "name": "Dress Uniform",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_gas_mask",
+        "name": "Gas Mask",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_medic_first_aid",
+        "name": "Medic and First Aid",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_night_hunter_nightvision_goggles",
+        "name": "Night Hunter/Nightvision Goggles",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sensory",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_field_radio",
+        "name": "Field Radio",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_personal_weaponry",
+        "name": "Personal Weaponry",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_heavy_firepower",
+        "name": "Heavy Firepower",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "modern_warrior_biomechanical",
+        "name": "Biomechanical",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: saveModifiers, mobility, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "modern_warrior"
+}

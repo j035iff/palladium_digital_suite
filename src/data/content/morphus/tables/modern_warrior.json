@@ -3,6 +3,332 @@
   "kind": "morphus_trait_table",
   "displayName": "Modern Warrior",
   "parentTable": null,
-  "description": "Modern Warrior Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Modern Soldier Morphus table (Dark Designs pp. 53–55). Military gear and tactics; weapons, helmets, and armor may be biomechanical. With any Modern Soldier feature: +1 to save vs Horror Factor and +1 to Perception Rolls to recognize ambushes, booby-traps, military weapons, and explosive devices.",
+  "entries": [
+    {
+      "id": "modern_warrior_body_armor",
+      "name": "Body Armor",
+      "tableCategory": "Modern Soldier",
+      "description": "Full combat body armor with helmet—matte black, grey, desert brown, or camo; integrated into the Morphus and cannot be removed.",
+      "statModifiers": {
+        "sdc": { "dice": "1D6x10+70" },
+        "pe": { "flat": -1 },
+        "spd": { "dice": "-1D4" }
+      },
+      "damageAffinities": {
+        "blunt": 0.5,
+        "explosives": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -5 }
+        ]
+      },
+      "customOneOffs": [
+        "Natural A.R. becomes 1D4+10.",
+        "No protection vs disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers (they ignore armor S.D.C.)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_camouflage",
+      "name": "Camouflage",
+      "tableCategory": "Modern Soldier",
+      "description": "Head-to-toe camouflage—digital fatigues, grease paint, ghillie suit, or biomechanical paint/netting that shifts each Morphus change to match environment and psyche.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "spd": { "dice": "-1D4" },
+        "initiative": { "flat": -1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_camouflage", "modifierPercent": 25 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_tailing", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -5 }
+        ]
+      },
+      "customOneOffs": [
+        "With 1D4 minutes and materials, personal hide Perception 1D4+13 to spot.",
+        "-20% to opponents’ Detect Concealment, Detect Ambush, Tailing, and Tracking vs this Nightbane alone.",
+        "Automatic first initiative when ambushing from hiding.",
+        "Initiative penalty applies when not ambushing."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_dress_uniform",
+      "name": "Dress Uniform",
+      "tableCategory": "Modern Soldier",
+      "description": "Formal military finery with patches and medals—any real or fictional service (e.g. Star Trek)—projecting authority and drawing attention.",
+      "statModifiers": {
+        "ma": { "flat": 2 },
+        "me": { "flat": 1 },
+        "sdc": { "dice": "3D6+10" },
+        "hf": { "flat": 2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "One Modern Weapon Proficiency of choice (Morphus only).",
+        "Disguise, Impersonation, and Undercover Ops allowed only when impersonating a military officer in full regalia."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_gas_mask",
+      "name": "Gas Mask",
+      "tableCategory": "Modern Soldier",
+      "description": "Permanent WWI-to-modern gas mask (often biomechanical/cybernetic)—shields from battlefield chemicals, fumes, tear gas, and airborne pathogens.",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 },
+        "perception": { "flat": -1 },
+        "ma": { "dice": "-1D4" },
+        "pb": { "dice": "-1D4" }
+      },
+      "saveModifiers": {
+        "gas": 4,
+        "magic": 4
+      },
+      "damageAffinities": {
+        "airborneToxins": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "category", "targetValue": "Communications", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -60 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -60 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -60 }
+        ]
+      },
+      "customOneOffs": [
+        "Immune to non-magical airborne chemicals, gas attacks, fumes, stench, and disease; +4 to save vs magical gas effects.",
+        "Nuclear radiation ineffective; personal equipment on person not irradiated.",
+        "Voice muffled."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_medic_first_aid",
+      "name": "Medic and First Aid",
+      "tableCategory": "Modern Soldier",
+      "description": "Combat medic Morphus—surgical gloves/mask and a field kit that conjures basic first-aid supplies (1 P.P.E. per item visualized).",
+      "statModifiers": {
+        "me": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "pullPunch": { "flat": 2 },
+        "disarm": { "flat": 2 },
+        "ppe": { "dice": "-(1D6+6)" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_first_aid", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_paramedic", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_medical_doctor", "modifierPercent": 20 }
+        ]
+      },
+      "customOneOffs": [
+        "Kit supplies conjured by thought (first aid only; no guns, phones, or EKG machines).",
+        "6 P.P.E. healing touch: stop bleed, heal open wounds, restart heart, restore 4D6 H.P. or S.D.C.",
+        "-4 damage from this character’s melee attacks.",
+        "Common stigmata: oozing bullet holes or bandaged head/face."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_night_hunter_nightvision_goggles",
+      "name": "Night Hunter/Nightvision Goggles",
+      "tableCategory": "Modern Soldier",
+      "description": "Permanent nightvision goggles extending natural night sight to 3,000 ft—including magical darkness at half range without a save.",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "perception": { "flat": 2 },
+        "ppe": { "dice": "-2D4" }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 3000
+      },
+      "customOneOffs": [
+        "Never afraid of the dark; impervious to magical blindness.",
+        "Punches, kicks, and handheld melee weapons do double damage vs Shadow creatures, Nightlords, and Nightlands denizens.",
+        "In daylight or well-lit areas: -3 Perception Rolls and -5% all skills."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_field_radio",
+      "name": "Field Radio",
+      "tableCategory": "Modern Soldier",
+      "description": "Military field radio, satellite phone, or cybernetic comms—50 mile (80 km) range, jammed only by magic (Anti-Magic Cloud, Sanctum, etc.).",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "ppe": { "dice": "-2D4" }
+      },
+      "damageAffinities": {
+        "electricity": 1.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_radio_basic", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_cryptography", "modifierPercent": 20 },
+          { "targetType": "category", "targetValue": "Communications", "modifierPercent": 10 }
+        ]
+      },
+      "customOneOffs": [
+        "Radio: Basic and Cryptography at 80% or +20% (whichever is higher) in Morphus.",
+        "Double Operator Talent range and halve its cost; double range in the Nightlands."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_personal_weaponry",
+      "name": "Personal Weaponry",
+      "tableCategory": "Modern Soldier",
+      "description": "Combat helmet and fatigues with one primary and one secondary weapon (always loaded; ammo replenishes every 24 hours).",
+      "statModifiers": {
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "6D6" },
+        "ppe": { "dice": "-(2D6+6)" }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -5
+      },
+      "customOneOffs": [
+        "Primary (pick one): light assault rifle 4D6/600 m, heavy assault 5D6/500 m, light MG 6D6/1000 m, sniper 5D6/1609 m, shotgun 4D6/61 m, SMG 3D6/200 m.",
+        "Secondary (pick one): light pistol 3D6, heavy pistol 4D6, machine-pistol 2D6, 3× grenades 1D6x10/4.6 m, survival knife 1D6, large melee 2D6.",
+        "+2 strike and +1 parry with weapons from this feature; +2D6 damage vs Nightlords, minions, and Nightlands denizens.",
+        "-5% all skills except W.P., Military, Physical, and Espionage categories."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_heavy_firepower",
+      "name": "Heavy Firepower",
+      "tableCategory": "Modern Soldier",
+      "description": "One-man portable heavy weapon—rocket pod, heavy machine-gun, Gatling gun, or mini artillery (1D6×10 per attack, 4,000 ft range, 3 shots/round ammo).",
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "flat": 1 },
+        "hp": { "dice": "-1D6" },
+        "ppe": { "dice": "-(3D6+10)" },
+        "spd": { "percent": -50 },
+        "dodge": { "flat": -3 },
+        "rollWithPunch": { "flat": -3 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Double Darkblast range and damage when channeled through this weapon.",
+        "+10 damage vs Nightlords, demonic minions, and Nightlands denizens."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ]
+    },
+    {
+      "id": "modern_warrior_biomechanical",
+      "name": "Biomechanical",
+      "tableCategory": "Modern Soldier",
+      "description": "Military biomechanical integration—tank treads, built-in machine-guns, or other gear as living Morphus parts.",
+      "customOneOffs": [
+        "Roll or select a feature from the Biomechanical tables (including Aquatic and Gear-Head), then relate it to modern military (e.g. Rocket Jets as fighter-pilot dream, tank treads as armor mechanic).",
+        "Weapons, helmets, armor, and gas masks on this table may also manifest as biomechanical body parts."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ]
+    }
+  ]
 }
