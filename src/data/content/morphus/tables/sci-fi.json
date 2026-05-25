@@ -114,8 +114,7 @@
         "pb": { "flat": -1 },
         "spd": { "dice": "-2D6" },
         "ppe": { "dice": "-2D6" },
-        "hf": { "flat": 1 },
-        "dodge": { "flat": 2 }
+        "hf": { "flat": 1 }
       },
       "mobility": {
         "flightEngine": {
@@ -156,10 +155,10 @@
       "description": "Handheld or body-mounted futuristic energy weapon fueled by P.P.E. (1D6 damage per P.P.E., max 10 P.P.E. per attack).",
       "statModifiers": {
         "ppe": { "dice": "-2D6" },
-        "hf": { "flat": 1 },
-        "strike": { "flat": 3 }
+        "hf": { "flat": 1 }
       },
       "customOneOffs": [
+        "+3 to strike with energy blast attacks.",
         "Range 2,000 ft (610 m); damage NOT magical or supernatural.",
         "Reduce starting Talents by one.",
         "Blast damage 1D6 per P.P.E. spent (max 10 P.P.E. per attack)."
@@ -222,8 +221,8 @@
         "specificSkillOverrides": [
           { "targetType": "skill_id", "targetValue": "skill_radio_basic", "modifierPercent": 5 },
           { "targetType": "skill_id", "targetValue": "skill_radio_scramblers", "modifierPercent": 5 },
-          { "targetType": "skill_id", "targetValue": "skill_anthropology", "modifierPercent": 15 },
-          { "targetType": "skill_id", "targetValue": "skill_archaeology", "modifierPercent": 15 }
+          { "targetType": "skill_id", "targetValue": "skill_anthropology", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_archaeology", "modifierPercent": 10 }
         ]
       },
       "customOneOffs": [
@@ -252,14 +251,13 @@
         "ppe": { "dice": "-1D6" }
       },
       "sensory": {
-        "telescopicVision": true,
-        "thermalVision": true,
-        "seeInvisible": false
+        "thermalVision": true
       },
       "customOneOffs": [
+        "Infrared and ultraviolet vision; automatic light adjustment and polarization vs glare.",
         "See heat signatures, engines, targets in smoke, thin walls, footprints <10 minutes old.",
         "3 P.P.E.: see magically invisible 1 minute/level (1,000 ft range).",
-        "Polarized lenses vs glare; virtual targeting reticule (+1 strike ranged modeled in statModifiers)."
+        "Virtual targeting reticule: +1 to strike with ranged weapons (strike bonus in statModifiers)."
       ],
       "gameSystems": ["nightbane"],
       "sources": [
@@ -316,18 +314,17 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "grantUnlearnedValue": 80,
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_camouflage",
-            "grantUnlearnedValue": 80,
             "modifierPercent": 20
           }
         ]
       },
       "customOneOffs": [
+        "Disguise and Camouflage at 80% or +20% (whichever is higher) when using the projector for concealment.",
         "Five minutes of operation per hour; recharges from bio-kinetic energy.",
         "Does not fool hearing, smell, touch, Sense Evil/Magic/Aura, pressure plates, or thermal optics; normal cameras record holograms.",
         "-2 attacks/actions per melee and -10% Spd while projector and image are active."

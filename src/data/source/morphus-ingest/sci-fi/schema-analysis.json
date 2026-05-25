@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T21:28:18.996Z",
+  "generatedAt": "2026-05-25T22:26:26.757Z",
   "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
   "schemaTopLevelKeys": [
     "id",
@@ -453,7 +453,180 @@
       "suggestedTopLevelKeys": []
     }
   ],
-  "targetAudit": null,
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "sci_fi_light_sci_fi_armor",
+        "name": "Light Sci-Fi Armor",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalAr",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_heavy_sci_fi_armor",
+        "name": "Heavy Sci-Fi Armor",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalAr",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_flight_pack_thrusters",
+        "name": "Flight Pack/Thrusters",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "limbDurability",
+          "mobility",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_energy_blaster",
+        "name": "Energy Blaster",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_melee_weapons",
+        "name": "Sci-Fi Melee Weapon(s)",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalWeapons",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_universal_translator",
+        "name": "Universal Translator",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_optics",
+        "name": "Sci-Fi Optics",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sensory",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_personal_scanner_sensors",
+        "name": "Personal Scanner/Sensors",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_hologram_projector",
+        "name": "Hologram Projector",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_force_field_array",
+        "name": "Force Field Array",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "sci_fi_bug_eyed_monster",
+        "name": "Bug-Eyed Monster",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
   "edgeCases": [],
   "schemaActions": [
     {

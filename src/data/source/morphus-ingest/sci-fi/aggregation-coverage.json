@@ -71,7 +71,6 @@
       "name": "Sci-Fi Optics",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "telescopic vision",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
