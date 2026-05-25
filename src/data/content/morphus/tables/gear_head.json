@@ -3,42 +3,60 @@
   "kind": "morphus_trait_table",
   "displayName": "Gear-Head",
   "parentTable": null,
-  "description": "Gear-Head Morphus table. Reflects a deep connection to automotive and vehicular machinery.",
+  "description": "Nightbane whose identity ties to automobiles, engines, and vehicular culture may manifest automotive machinery in Morphus form (WB6 pp. 33–35).",
   "entries": [
     {
       "id": "gear_head_engine_block",
       "name": "Engine Block",
       "tableCategory": "Gear-Head",
-      "description": "The character's torso or chest is dominated by an exposed, roaring automotive engine block complete with belts, spark plugs, and pistons.",
+      "description": "An entire engine block replaces or is built into the chest, idling at rest and revving under exertion.",
+      "naturalAr": 10,
       "statModifiers": {
         "ps": {
-          "dice": "1D4+1"
+          "flat": 3
         },
-        "pe": {
-          "flat": 2
+        "spd": {
+          "dice": "3D6+10"
         },
         "sdc": {
-          "dice": "1D4x10+20"
+          "dice": "2D6x10"
+        },
+        "pp": {
+          "flat": -3
         },
         "pb": {
-          "dice": "-1D4"
+          "flat": -3
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "damageAffinities": {
         "electricity": 1.5,
         "fire": 1.5
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Scalding Engine Block (Grapple/Contact)",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": true
-        }
-      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "Pilot",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -30
+          }
+        ]
+      },
       "customOneOffs": [
-        "The engine loudly revs when the character is angry or exerting themselves.",
-        "Electrical and fire attacks inflict 50% more damage."
+        "Drowns within 1D4+2 melee rounds if dropped into deep water in Morphus (cannot hold breath or swim).",
+        "Acrobatics, Disguise, Gymnastics, Prowl, and Undercover Ops are impossible in this Morphus."
       ],
       "gameSystems": [
         "nightbane"
@@ -55,20 +73,38 @@
       "id": "gear_head_coolant_tubes_radiator",
       "name": "Coolant Tubes/Radiator",
       "tableCategory": "Gear-Head",
-      "description": "Ribbed metal cooling tubes wrap around the limbs, feeding into a prominent, heavy-duty radiator grille grafted onto the chest or back.",
+      "description": "Transparent tubes filled with antifreeze and water connect to a central radiator jutting from the abdomen or back.",
       "statModifiers": {
         "pe": {
           "flat": 2
         },
         "sdc": {
-          "dice": "3D6"
+          "dice": "2D6+10"
+        },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "flat": -2
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "damageAffinities": {
+        "heat": 0.5,
+        "fire": 0.5,
+        "cold": 0.5,
+        "poison": 0
       },
       "limbDurability": [
         {
-          "limbName": "Radiator Component",
+          "limbName": "Radiator",
           "quantity": 1,
-          "sdc": 40,
+          "sdc": 30,
           "hp": 0,
           "ar": 9,
           "calledShotPenalty": -3,
@@ -86,9 +122,57 @@
         }
       ],
       "customOneOffs": [
-        "Base S.D.C. for the Radiator Component is 1D4x10+20 (defaulted to 40 in standard calculations).",
-        "If the radiator is destroyed, the Morphus heals at half the normal rate.",
-        "Leaking antifreeze from a damaged radiator leaves a visible trail, granting pursuers a +20% bonus to Tracking."
+        "Radiator has 1D4x10+20 S.D.C. (localized component; default 30 in calculations).",
+        "Impervious to poisons/toxins and bloodborne diseases; blood is toxic to vampires (4D6 damage per sip).",
+        "If the radiator is destroyed it will not regenerate unless the Nightbane returns to Facade for at least 1D4 hours; Morphus then takes double fire/cold damage and heals at half rate (usually 5 S.D.C./H.P. per melee).",
+        "Leaking antifreeze grants pursuers +20% to Tracking."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ]
+    },
+    {
+      "id": "gear_head_exhaust_pipes",
+      "name": "Exhaust Pipes",
+      "tableCategory": "Gear-Head",
+      "description": "Metal exhaust pipes on the shoulders or back release a steady stream of vehicle-like exhaust vapor; pipes are hot to the touch.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": -5
+        }
+      },
+      "damageAffinities": {
+        "airborneToxins": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to poisonous/toxic gas or fumes, including smoke, tear gas, and knockout gas.",
+        "Easier to locate due to exhaust smell, heat, and larger profile (-20% Prowl).",
+        "Perception penalty applies only to olfactory senses."
       ],
       "gameSystems": [
         "nightbane"
@@ -105,18 +189,28 @@
       "id": "gear_head_nitrous_bottles",
       "name": "Nitrous Bottles",
       "tableCategory": "Gear-Head",
-      "description": "Pressurized canisters of nitrous oxide are bolted to the back, thighs, or forearms, piped directly into the character's internal biology for massive bursts of speed.",
+      "description": "Pressurized nitrous tanks bolted to the back, body, or upper legs provide brief speed bursts and enhanced leaping.",
       "statModifiers": {
-        "spd": {
-          "flat": 2
-        },
         "pe": {
-          "flat": -1
+          "flat": -2
+        },
+        "ppe": {
+          "dice": "-1D6"
+        }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 12
+          },
+          "standingDistance": {
+            "flat": 40
+          }
         }
       },
       "activatedAbilities": [
         {
-          "abilityName": "Nitrous Oxide Injection Burn",
+          "abilityName": "Nitrous Oxide Injection",
           "chargesPerPeriod": 4,
           "resetPeriod": "hourly",
           "durationFormula": "1D6 minutes",
@@ -137,7 +231,185 @@
         }
       ],
       "customOneOffs": [
-        "If a canister is targeted and ruptured (Requires a Called Shot at -4), it explodes for 3D6 damage to the Nightbane."
+        "Can leap 12 feet (3.7 m) high and up to 40 feet (12.2 m) across.",
+        "If a canister is ruptured with a Called Shot at -4, it explodes for 3D6 damage to the Nightbane."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_hydraulics",
+      "name": "Hydraulics",
+      "tableCategory": "Gear-Head",
+      "description": "Hydraulic struts on the limbs extend arms and legs up to three additional feet (0.9 m).",
+      "statModifiers": {
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": -2
+        }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 10
+          },
+          "standingDistance": {
+            "flat": 20
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Extended reach; power punches count as one attack instead of two.",
+        "Can leap 10 feet (3 m) high or 20 feet (6.1 m) across."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_shocks_struts",
+      "name": "Shocks & Struts",
+      "tableCategory": "Gear-Head",
+      "description": "Heavy-duty automotive shocks and struts are incorporated into the legs (or wheel-legs), absorbing impacts from falls and running.",
+      "statModifiers": {
+        "spd": {
+          "flat": 3
+        },
+        "pp": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "rollWithPunch": {
+          "flat": 4
+        }
+      },
+      "damageAffinities": {
+        "falling": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Can drop from up to 200 feet (61 m) and land on his feet without injury (loses two melee attacks; no penalty from 60 feet/18.3 m or less).",
+        "Morphus forms with wheels for legs enjoy +10% speed on rough terrain."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "id": "gear_head_air_horn",
+      "name": "Air Horn",
+      "tableCategory": "Gear-Head",
+      "description": "A large vehicle or locomotive-style air horn is built into the back, neck, or shoulders.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6"
+        },
+        "ppe": {
+          "dice": "-1D4"
+        },
+        "initiative": {
+          "flat": -1
+        },
+        "perception": {
+          "flat": -3
+        }
+      },
+      "customOneOffs": [
+        "Horn audible up to one mile (1.6 km); within 25 feet (7.6 m) unprotected targets are deafened 1D4 melee rounds (-4 initiative, -2 to all combat rolls). Everyone in radius is affected except the Nightbane.",
+        "Impervious to loud sounds that would otherwise deafen others.",
+        "Cannot hear whispers; may mishear important sounds. Perception penalty applies to hearing, identifying, and tracking by sound."
       ],
       "gameSystems": [
         "nightbane"
@@ -154,18 +426,11 @@
       "id": "gear_head_searchlight_headlights",
       "name": "Searchlight/Headlights",
       "tableCategory": "Gear-Head",
-      "description": "A high-intensity vehicular searchlight or a pair of bright automotive headlights are built directly into the face, chest, or shoulders.",
+      "description": "1D4 high-powered lights built into the torso, head, or arms swivel up to 30 degrees and pierce magical darkness at half normal range and intensity.",
       "statModifiers": {
-        "perception": {
-          "flat": 1
-        },
-        "pb": {
-          "flat": -1
+        "ppe": {
+          "dice": "-1D6"
         }
-      },
-      "sensory": {
-        "nightvisionRangeFlatBonus": 300,
-        "seeInvisible": false
       },
       "specialCombatInterceptions": [
         {
@@ -173,10 +438,24 @@
           "modifierFlat": -3
         }
       ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
+      },
       "customOneOffs": [
-        "Projects a beam of intense light up to 300 feet.",
-        "Can temporarily blind targets in close range (Save vs. Pain or lose 1 melee attack and suffer -4 to strike/parry/dodge for 1D4 rounds).",
-        "Allows the user to attempt to parry incoming Shadow or Darkness-based attacks."
+        "Lights engaged: see in the dark and through magically created darkness; Prowl is impossible.",
+        "Lights off: -10% to Disguise and Undercover Ops.",
+        "Successful parry with the lights completely negates Shadow or Darkness-based attacks."
       ],
       "gameSystems": [
         "nightbane"
@@ -190,21 +469,88 @@
       ]
     },
     {
+      "id": "gear_head_winch_cable",
+      "name": "Winch and Cable",
+      "tableCategory": "Gear-Head",
+      "description": "A motorized winch spools 50 feet (15 m) of cable (+1 foot/0.3 m per level) from the back, shoulder, abdomen, or coiled around the body.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6+8"
+        },
+        "strike": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 2
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "spd": {
+          "dice": "-1D6"
+        },
+        "dodge": {
+          "flat": -1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Cable Whip",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Cable can wrap inanimate objects or entangle/disarm/pin opponents (5–10 foot/1.5–3 m reach per cable).",
+        "Winch can pull twice the Nightbane's maximum carry weight."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ]
+    },
+    {
       "id": "gear_head_chrome_job",
       "name": "Chrome Job",
       "tableCategory": "Gear-Head",
-      "description": "The character's skin, or specific isolated body parts, are replaced with highly polished, reflective automotive chrome plating.",
-      "naturalAr": 12,
+      "description": "Polished chrome bolt-heads, grilles, tanks, and limb shielding are incorporated into the Morphus; may include a chrome head or chrome hands.",
+      "naturalAr": 11,
       "statModifiers": {
-        "pb": {
-          "dice": "1D4"
-        },
         "sdc": {
-          "dice": "2D6x10"
+          "dice": "2D6+10"
         },
-        "ma": {
+        "rollWithPunch": {
+          "flat": 2
+        },
+        "hf": {
           "flat": 1
         }
+      },
+      "damageAffinities": {
+        "lasers": 0.5,
+        "energy": 0.5
       },
       "specialCombatInterceptions": [
         {
@@ -213,7 +559,7 @@
         },
         {
           "interceptAction": "parry_lasers_light",
-          "modifierFlat": -2
+          "modifierFlat": -3
         }
       ],
       "limbDurability": [
@@ -229,72 +575,43 @@
       "naturalWeapons": [
         {
           "limbType": "misc_limbs",
-          "label": "Chrome Plated Hands",
+          "label": "Chrome Hands",
           "damageFormula": "1D4",
           "isAdditiveToHth": true
         }
       ],
-      "customOneOffs": [
-        "Highly reflective; lasers and light-based attacks do half damage.",
-        "Can parry melee weapons (swords, axes) with bare hands without taking damage.",
-        "The chrome plating makes sneaking in bright areas very difficult (-20% to Prowl in daylight)."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 34
-        }
-      ]
-    },
-    {
-      "id": "gear_head_exhaust_pipes",
-      "name": "Exhaust Pipes",
-      "tableCategory": "Gear-Head",
-      "description": "Thick metal exhaust pipes vent hot gases, flames, and thick smoke from the back, shoulders, or forearms.",
-      "statModifiers": {
-        "sdc": {
-          "dice": "3D6"
-        },
-        "pb": {
-          "flat": -2
-        },
-        "hf": {
-          "flat": 1
-        }
-      },
-      "sensory": {
-        "externalSensoryObfuscation": [
-          "scent_masking"
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
         ]
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Exhaust Burn (Touch)",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": true
-        }
-      ],
-      "activatedAbilities": [
-        {
-          "abilityName": "Smokescreen Vent",
-          "chargesPerPeriod": 0,
-          "resetPeriod": "per_encounter",
-          "durationFormula": "1D4 melee rounds",
-          "statModifiers": {
-            "dodge": {
-              "flat": 2
-            }
-          }
-        }
-      ],
       "customOneOffs": [
-        "Smokescreen Vent: Unlimited uses, but costs 1 melee action to activate. Fills a 20x20 foot area with thick black smoke, blinding those inside (-4 to strike/parry/dodge).",
-        "The overpowering smell of exhaust masks the character's natural scent, ruining tracking by smell."
+        "Optional chrome head adds +20 S.D.C. to the head.",
+        "Heals 6 S.D.C./Hit Point per melee round (slower than usual 8/10)."
       ],
       "gameSystems": [
         "nightbane"
@@ -303,7 +620,7 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
+          "pageNumber": 35
         }
       ]
     }

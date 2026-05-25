@@ -1,0 +1,118 @@
+{
+  "tableId": "gear_head",
+  "entries": [
+    {
+      "id": "gear_head_engine_block",
+      "name": "Engine Block",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_coolant_tubes_radiator",
+      "name": "Coolant Tubes/Radiator",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_exhaust_pipes",
+      "name": "Exhaust Pipes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_nitrous_bottles",
+      "name": "Nitrous Bottles",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "activated abilities (burst)",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_hydraulics",
+      "name": "Hydraulics",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_shocks_struts",
+      "name": "Shocks & Struts",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_air_horn",
+      "name": "Air Horn",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_searchlight_headlights",
+      "name": "Searchlight/Headlights",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "combat interceptions",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_winch_cable",
+      "name": "Winch and Cable",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "gear_head_chrome_job",
+      "name": "Chrome Job",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "combat interceptions",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

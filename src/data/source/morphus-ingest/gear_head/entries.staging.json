@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "id": "gear_head_coolant_tubes_radiator",
+      "name": "Coolant Tubes/Radiator",
+      "tableCategory": "Gear-Head",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\gear_head\\extracted-authoritative.txt (11-19%; authority=dark_designs)."
+    },
+    {
+      "id": "gear_head_engine_block",
+      "name": "Engine Block",
+      "tableCategory": "Gear-Head",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\gear_head\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "gear_head_exhaust_pipes",
+      "name": "Exhaust Pipes",
+      "tableCategory": "Gear-Head",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\gear_head\\extracted-authoritative.txt (20-28%; authority=dark_designs)."
+    }
+  ]
+}

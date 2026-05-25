@@ -1,0 +1,96 @@
+{
+  "tableId": "gear_head",
+  "generatedAt": "2026-05-25T22:03:07.205Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 3,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "gear_head_coolant_tubes_radiator",
+        "name": "Coolant Tubes/Radiator",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "gear_head_engine_block",
+        "name": "Engine Block",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "gear_head_exhaust_pipes",
+        "name": "Exhaust Pipes",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 10,
+    "ids": [
+      "gear_head_engine_block",
+      "gear_head_coolant_tubes_radiator",
+      "gear_head_exhaust_pipes",
+      "gear_head_nitrous_bottles",
+      "gear_head_hydraulics",
+      "gear_head_shocks_struts",
+      "gear_head_air_horn",
+      "gear_head_searchlight_headlights",
+      "gear_head_winch_cable",
+      "gear_head_chrome_job"
+    ]
+  },
+  "bookIndex": {
+    "total": 3,
+    "included": 3,
+    "skippedOther": 0,
+    "names": [
+      "Coolant Tubes/Radiator",
+      "Engine Block",
+      "Exhaust Pipes"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: gear_head_nitrous_bottles, gear_head_hydraulics, gear_head_shocks_struts, gear_head_air_horn, gear_head_searchlight_headlights, gear_head_winch_cable, gear_head_chrome_job"
+  ]
+}

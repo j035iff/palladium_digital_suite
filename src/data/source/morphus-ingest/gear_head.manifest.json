@@ -1,0 +1,19 @@
+{
+  "id": "gear_head",
+  "displayName": "Gear-Head",
+  "tableCategory": "Gear-Head",
+  "tableHeading": "01-10% Engine Block",
+  "targetJson": "src/data/content/morphus/tables/gear_head.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "01-10% Engine Block",
+      "authoritative": true
+    }
+  ]
+}
