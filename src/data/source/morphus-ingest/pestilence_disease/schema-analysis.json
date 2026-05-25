@@ -1,0 +1,489 @@
+{
+  "generatedAt": "2026-05-25T21:03:32.039Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs"
+  ],
+  "traitCount": 12,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Typhoid Mary/Patient Zero",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "11-20%",
+      "name": "Ebola/Bleeding",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "21-25%",
+      "name": "Anthrax",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "26-35%",
+      "name": "Creeping Crud",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "36-45%",
+      "name": "Pestilence/Bugs/Parasite Infestation",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "46-55%",
+      "name": "Life Support/Coma Victim",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "56-65%",
+      "name": "Madness/Mad Cow/Brain Worm",
+      "pageNumber": 46,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "66-70%",
+      "name": "Swelling/Bloating",
+      "pageNumber": 47,
+      "patterns": [
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "71-75%",
+      "name": "Malignant Growths",
+      "pageNumber": 47,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "76-85%",
+      "name": "Oozing Rash",
+      "pageNumber": 47,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "86-90%",
+      "name": "Infected Lesions",
+      "pageNumber": 47,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Buzzing Pests",
+      "pageNumber": 47,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "damageAffinities"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: mobility, sensory, weaponClassBonuses, heightModifier, weightModifier, naturalWeapons, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "pestilence_disease"
+}

@@ -1,0 +1,196 @@
+{
+  "entries": [
+    {
+      "id": "pestilence_disease_anthrax",
+      "name": "Anthrax",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (21-25%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_buzzing_pests",
+      "name": "Buzzing Pests",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (91-00%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_creeping_crud",
+      "name": "Creeping Crud",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (26-35%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_ebola_bleeding",
+      "name": "Ebola/Bleeding",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_infected_lesions",
+      "name": "Infected Lesions",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (86-90%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_life_support_coma_victim",
+      "name": "Life Support/Coma Victim",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (46-55%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_madness_mad_cow_brain_worm",
+      "name": "Madness/Mad Cow/Brain Worm",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (56-65%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_malignant_growths",
+      "name": "Malignant Growths",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (71-75%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_oozing_rash",
+      "name": "Oozing Rash",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (76-85%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
+      "name": "Pestilence/Bugs/Parasite Infestation",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (36-45%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_swelling_bloating",
+      "name": "Swelling/Bloating",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (66-70%; authority=dark_designs)."
+    },
+    {
+      "id": "pestilence_disease_typhoid_mary_patient_zero",
+      "name": "Typhoid Mary/Patient Zero",
+      "tableCategory": "Pestilence & Disease",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\pestilence_disease\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    }
+  ]
+}

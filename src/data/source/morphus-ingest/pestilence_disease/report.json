@@ -1,0 +1,159 @@
+{
+  "tableId": "pestilence_disease",
+  "generatedAt": "2026-05-25T21:05:22.224Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 12,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "pestilence_disease_anthrax",
+        "name": "Anthrax",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_buzzing_pests",
+        "name": "Buzzing Pests",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_creeping_crud",
+        "name": "Creeping Crud",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_ebola_bleeding",
+        "name": "Ebola/Bleeding",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_infected_lesions",
+        "name": "Infected Lesions",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_life_support_coma_victim",
+        "name": "Life Support/Coma Victim",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_madness_mad_cow_brain_worm",
+        "name": "Madness/Mad Cow/Brain Worm",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_malignant_growths",
+        "name": "Malignant Growths",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_oozing_rash",
+        "name": "Oozing Rash",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
+        "name": "Pestilence/Bugs/Parasite Infestation",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_swelling_bloating",
+        "name": "Swelling/Bloating",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "pestilence_disease_typhoid_mary_patient_zero",
+        "name": "Typhoid Mary/Patient Zero",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 12,
+    "ids": [
+      "pestilence_disease_typhoid_mary_patient_zero",
+      "pestilence_disease_ebola_bleeding",
+      "pestilence_disease_anthrax",
+      "pestilence_disease_creeping_crud",
+      "pestilence_disease_pestilence_bugs_parasite_infestation",
+      "pestilence_disease_life_support_coma_victim",
+      "pestilence_disease_madness_mad_cow_brain_worm",
+      "pestilence_disease_swelling_bloating",
+      "pestilence_disease_malignant_growths",
+      "pestilence_disease_oozing_rash",
+      "pestilence_disease_infected_lesions",
+      "pestilence_disease_buzzing_pests"
+    ]
+  },
+  "bookIndex": {
+    "total": 12,
+    "included": 12,
+    "skippedOther": 0,
+    "names": [
+      "Anthrax",
+      "Buzzing Pests",
+      "Creeping Crud",
+      "Ebola/Bleeding",
+      "Infected Lesions",
+      "Life Support/Coma Victim",
+      "Madness/Mad Cow/Brain Worm",
+      "Malignant Growths",
+      "Oozing Rash",
+      "Pestilence/Bugs/Parasite Infestation",
+      "Swelling/Bloating",
+      "Typhoid Mary/Patient Zero"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

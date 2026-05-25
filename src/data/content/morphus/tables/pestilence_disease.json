@@ -1,8 +1,476 @@
 {
   "id": "pestilence_disease",
   "kind": "morphus_trait_table",
-  "displayName": "Pestilence Disease",
+  "displayName": "Pestilence & Disease",
   "parentTable": null,
-  "description": "Pestilence Disease Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Pestilence & Disease Morphus table (Dark Designs pp. 46–47). Sickly, infectious, or disease-haunted forms.",
+  "entries": [
+    {
+      "id": "pestilence_disease_typhoid_mary_patient_zero",
+      "name": "Typhoid Mary/Patient Zero",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Constantly ill appearance—sallow skin, rheumy eyes, rattling cough, mucus, stained clothing—yet fully functional.",
+      "statModifiers": {
+        "me": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -1 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "disease": 4,
+        "possession": 1,
+        "insanity": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ]
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_ebola_bleeding",
+      "name": "Ebola/Bleeding",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Blood oozes from eyes, nose, ears, and mouth; sweat-plastered hair; gurgling speech. May take Bloodbath Elite Talent at double range/duration without self-damage.",
+      "statModifiers": {
+        "me": { "flat": 1 },
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 2 },
+        "perception": { "flat": 3 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "possession": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "+3 Perception regarding disease, blood loss, and vampires (partially in statModifiers).",
+        "+1 to save vs mind control.",
+        "Bloodbath Elite Talent at double range/duration without damage cost.",
+        "Vampires and blood-scent creatures +25% to track; blood trail +15% Tracking (blood DNA differs from Facade).",
+        "-20% Performance skills (not separately cataloged).",
+        "Some develop a taste for enemy blood."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_anthrax",
+      "name": "Anthrax",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Feverish skin with red/white blisters, dark scabs, ulcers; persistent cough and wheeze.",
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "sdc": { "dice": "3D6" },
+        "hf": { "flat": 1 },
+        "perception": { "flat": 3 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "illusions": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -15 }
+        ],
+        "globalSkillModifier": -5
+      },
+      "customOneOffs": [
+        "+2 to save vs fever (not a separate save type in schema).",
+        "-15% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_creeping_crud",
+      "name": "Creeping Crud",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Crusty scabs or oozing slime/mucus coating half the face, neck, hands, arms, and chest—armor-like protection.",
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "me": { "flat": 1 },
+        "sdc": { "dice": "1D6x10+30" },
+        "hf": { "flat": 2 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_barter", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "May appear as a different gender than the Facade.",
+        "-20% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
+      "name": "Pestilence/Bugs/Parasite Infestation",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Maggots, worms, leeches, or lamprey-like parasites across face, torso, and limbs; infestation adds armor-like protection.",
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "sdc": { "dice": "5D6+20" },
+        "hf": { "flat": 2 },
+        "ma": { "flat": -3 },
+        "pb": { "flat": -3 }
+      },
+      "saveModifiers": {
+        "disease": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_barter", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to insect venom.",
+        "-30% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_life_support_coma_victim",
+      "name": "Life Support/Coma Victim",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Hospital gown with dangling I.V., catheter, and monitor leads; ghostly machinery sounds (Perception 12+); gaunt, zombie-like pallor.",
+      "statModifiers": {
+        "hp": { "dice": "3D6" },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 },
+        "ppe": { "dice": "-2D6" }
+      },
+      "saveModifiers": {
+        "comaDeath": { "percent": 20 },
+        "disease": 1
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "noBreathingRequired": true,
+          "canBreatheUnderwater": true
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "+20% to save vs coma and death (partially in saveModifiers.comaDeath).",
+        "Faint beeping/whirring of missing machinery when within close range.",
+        "-20% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_madness_mad_cow_brain_worm",
+      "name": "Madness/Mad Cow/Brain Worm",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Bloodshot eyes, frazzled hair, twitching, foaming when angry; mutters or giggles unconsciously.",
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "pe": { "dice": "1D4" },
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "5D6" },
+        "hf": { "flat": 1 },
+        "me": { "flat": -3 },
+        "ma": { "flat": -1 }
+      },
+      "saveModifiers": {
+        "insanity": 3
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -5
+      },
+      "customOneOffs": [
+        "Absent-minded and forgetful."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 46
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_swelling_bloating",
+      "name": "Swelling/Bloating",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Severely swollen purple/brown/yellow limbs, abdomen, and neck—squishy, jointless-looking mass.",
+      "statModifiers": {
+        "sdc": { "dice": "3D6+12" },
+        "hf": { "flat": 1 },
+        "pp": { "flat": -1 },
+        "pb": { "flat": -1 },
+        "spd": { "dice": "-1D4" }
+      },
+      "saveModifiers": {
+        "disease": 1
+      },
+      "damageAffinities": {
+        "blunt": 0.5,
+        "falling": 0.5,
+        "kinetic": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_tailing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ]
+      },
+      "customOneOffs": [
+        "Half damage from falls, punches, kicks, and blunt attacks (partially in damageAffinities).",
+        "-10% Physical skills (partially modeled above)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_malignant_growths",
+      "name": "Malignant Growths",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Large or clustered tumors distorting the body; at least one mass disfigures the face.",
+      "statModifiers": {
+        "me": { "flat": 1 },
+        "sdc": { "dice": "3D6" },
+        "ar": { "flat": 1 },
+        "pe": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ],
+        "globalSkillModifier": -10
+      },
+      "customOneOffs": [
+        "+1 Natural A.R. (modeled as statModifiers.ar flat +1).",
+        "-10% Physical skills (global modifier above)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_oozing_rash",
+      "name": "Oozing Rash",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Red rash seeping pus/blood over half the body; sloughed patches reveal raw pink flesh underneath.",
+      "statModifiers": {
+        "me": { "flat": 2 },
+        "hf": { "flat": 2 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "perception": { "flat": -1 }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -5,
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to infection.",
+        "Grapplers must save vs Horror Factor 16 or refuse to touch the Nightbane.",
+        "-20% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_infected_lesions",
+      "name": "Infected Lesions",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Suppurating gangrenous wounds—yellow/green tissue, angry red veins, terrible smell; some bleed continuously.",
+      "statModifiers": {
+        "me": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "hp": { "dice": "2D6" },
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 2 },
+        "ma": { "flat": -1 },
+        "ps": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "disease": 2,
+        "poison": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "-20% Performance (not separately cataloged)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    },
+    {
+      "id": "pestilence_disease_buzzing_pests",
+      "name": "Buzzing Pests",
+      "tableCategory": "Pestilence & Disease",
+      "description": "Swarm of mosquitoes, flies, gnats, or similar insects circling the Nightbane—never biting him, instantly replaced when killed.",
+      "statModifiers": {
+        "me": { "flat": 3 },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -3 },
+        "pb": { "flat": -1 },
+        "ppe": { "flat": -2 },
+        "perception": { "flat": -3 }
+      },
+      "saveModifiers": {
+        "disease": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Resistant to insect venom (half damage, penalties, and duration).",
+        "Opponents in hand-to-hand: -2 initiative, strike, parry, dodge, disarm, etc.; talking difficult.",
+        "01–50% chance speech or spellcasting within 3 ft fails (coughing on insects; no P.P.E. lost).",
+        "Disguise and Undercover Ops impossible."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    }
+  ]
 }

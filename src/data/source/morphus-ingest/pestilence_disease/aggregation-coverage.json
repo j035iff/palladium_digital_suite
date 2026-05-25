@@ -1,0 +1,134 @@
+{
+  "tableId": "pestilence_disease",
+  "entries": [
+    {
+      "id": "pestilence_disease_typhoid_mary_patient_zero",
+      "name": "Typhoid Mary/Patient Zero",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_ebola_bleeding",
+      "name": "Ebola/Bleeding",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_anthrax",
+      "name": "Anthrax",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_creeping_crud",
+      "name": "Creeping Crud",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
+      "name": "Pestilence/Bugs/Parasite Infestation",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_life_support_coma_victim",
+      "name": "Life Support/Coma Victim",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_madness_mad_cow_brain_worm",
+      "name": "Madness/Mad Cow/Brain Worm",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_swelling_bloating",
+      "name": "Swelling/Bloating",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_malignant_growths",
+      "name": "Malignant Growths",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_oozing_rash",
+      "name": "Oozing Rash",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_infected_lesions",
+      "name": "Infected Lesions",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "pestilence_disease_buzzing_pests",
+      "name": "Buzzing Pests",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}
