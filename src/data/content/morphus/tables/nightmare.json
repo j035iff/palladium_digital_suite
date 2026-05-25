@@ -3,6 +3,382 @@
   "kind": "morphus_trait_table",
   "displayName": "Nightmare",
   "parentTable": null,
-  "description": "Nightmare Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Nightmare Morphus table (Dark Designs pp. 41–43). Dreamstream-haunted forms; may select Bloodbath or Mark of the Nightbane elite Talents as with Stigmata.",
+  "entries": [
+    {
+      "id": "nightmare_floating",
+      "name": "Floating",
+      "tableCategory": "Nightmare",
+      "description": "Hovering 1–3 ft off the ground; ghostly, terror-pale appearance with hair and clothing always fluttering. Cannot fall from heights over 60 ft but takes full impact damage from strikes and vehicles.",
+      "statModifiers": {
+        "me": { "dice": "-1D4" },
+        "ma": { "dice": "-1D4" },
+        "spd": { "percent": -50 },
+        "hf": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 },
+        "pullPunch": { "flat": 2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 }
+        ]
+      },
+      "customOneOffs": [
+        "+10% to Intimidation rolls.",
+        "Hover/float 1–3 ft (0.3–0.9 m); max Spd equals Spd attribute; no fall damage; no footprints/tracks; avoids pressure plates; still vulnerable to motion/heat detection.",
+        "Fear of Heights plus two other phobias or random insanities (player picks category, rolls on Nightbane RPG p. 44)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ]
+    },
+    {
+      "id": "nightmare_contorted_body",
+      "name": "Contorted Body",
+      "tableCategory": "Nightmare",
+      "description": "Torso, head, and limbs twisted into impossible anatomy; moves by waddle, crab-walk, crawl, or tumble with surprising agility.",
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "me": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "1D6x10" },
+        "hf": { "flat": 2 },
+        "pp": { "flat": -2 },
+        "pb": { "dice": "-1D4" },
+        "strike": { "flat": -1 },
+        "parry": { "flat": -1 },
+        "rollWithPunch": { "flat": -1 },
+        "dodge": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "-10% to Physical skills (partially modeled via Prowl/Climbing penalties).",
+        "Disguise and Undercover Ops impossible."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ]
+    },
+    {
+      "id": "nightmare_gnarled_limbs",
+      "name": "Gnarled Limbs",
+      "tableCategory": "Nightmare",
+      "description": "Deformed, juxtaposed, or elongated limbs with abnormal musculature; double-jointed throughout.",
+      "statModifiers": {
+        "ps": { "dice": "1D4" },
+        "pe": { "flat": 1 },
+        "hf": { "flat": 1 },
+        "pb": { "dice": "-1D4" },
+        "spd": { "dice": "-1D4" },
+        "strike": { "flat": -1 },
+        "parry": { "flat": -1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_escape_artist", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_palming", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_concealment", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Double-jointed in all limbs.",
+        "Requires custom clothing."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ]
+    },
+    {
+      "id": "nightmare_spines",
+      "name": "Spines",
+      "tableCategory": "Nightmare",
+      "description": "1D4+2 articulated bone or metal spines from the upper torso (~3 ft reach); usable for parry, stab, rake, or bludgeon but cannot wield tools.",
+      "statModifiers": {
+        "ps": { "flat": -2 },
+        "pp": { "flat": -1 },
+        "pb": { "flat": -1 },
+        "hf": { "flat": 2 },
+        "apm": { "flat": 1 },
+        "parry": { "flat": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Spine (slash)",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 }
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Spine (stab)",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "limbDurability": [
+        {
+          "limbName": "Torso Spine",
+          "quantity": 1,
+          "sdc": 20,
+          "calledShotPenalty": -3
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -40 }
+        ]
+      },
+      "customOneOffs": [
+        "1D4+2 spines (1D4x10+20 S.D.C. each); regrow in one hour if destroyed.",
+        "One or two spines per attack (single strike roll); cannot grasp weapons.",
+        "Requires custom clothing; spines must be taped down for Impersonation/Disguise attempts."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ]
+    },
+    {
+      "id": "nightmare_pulsating_skin",
+      "name": "Pulsating Skin",
+      "tableCategory": "Nightmare",
+      "description": "Skin ripples, crawls, or pulsates as if something moves beneath; opponents grappling must save vs Horror Factor or hesitate.",
+      "statModifiers": {
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "5D6" },
+        "hf": { "flat": 2 },
+        "ma": { "dice": "-1D4" },
+        "pb": { "dice": "-1D4" },
+        "perception": { "flat": -1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "Horror Factor roll when a new opponent attempts to grapple; failed save loses one melee attack and initiative, -1 to all combat maneuvers while distracted.",
+        "-20% to Performance skills (not in skill catalog; other penalties modeled above)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ]
+    },
+    {
+      "id": "nightmare_straight_jacket",
+      "name": "Straight-Jacket",
+      "tableCategory": "Nightmare",
+      "description": "Bound in a resilient straight-jacket (and optional muzzle mask); arms pinned—nimble on feet with acrobatic rooftop running.",
+      "statModifiers": {
+        "pe": { "flat": 2 },
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "2D4x10" },
+        "hf": { "flat": 1 },
+        "me": { "flat": -3 },
+        "ma": { "flat": -2 },
+        "dodge": { "flat": 2 },
+        "rollWithPunch": { "flat": 3 },
+        "bonusHthDamage": { "dice": "1D6" }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Bound Kick",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 30,
+            "modifierPercent": 30
+          },
+          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "+2 P.P. and -2 P.P. from jacket binding (net +0; dodge/roll bonuses modeled in statModifiers).",
+        "Arms immobilized: cannot use tools/weapons, cannot parry, hand-based skills impossible.",
+        "Body block/ram equals power punch (two attacks); may tread water with legs if Swimming skill is known.",
+        "Run along rooftops, walls, ledges, and taut ropes like a tightrope walker."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ]
+    },
+    {
+      "id": "nightmare_torture_mask",
+      "name": "Torture Mask",
+      "tableCategory": "Nightmare",
+      "description": "Face sealed in an irremovable torture mask (hood, cage, vice, grafted skin, etc.); sees, breathes, and speaks through it normally.",
+      "statModifiers": {
+        "me": { "dice": "1D4" },
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 },
+        "ma": { "dice": "-1D4" },
+        "pe": { "flat": -1 },
+        "pb": { "flat": -3 }
+      },
+      "saveModifiers": {
+        "possession": 2,
+        "psionics": 1
+      },
+      "customOneOffs": [
+        "+1 to save vs mind control (in addition to psionics/possession bonuses above).",
+        "Interrogators suffer -30% Interrogation when questioning this character."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ]
+    },
+    {
+      "id": "nightmare_massive_maw",
+      "name": "Massive Maw",
+      "tableCategory": "Nightmare",
+      "description": "Impossibly large devouring mouth (mandibles, bear-trap jaws, endless darkness, etc.); crocodile-like latch after a successful bite.",
+      "statModifiers": {
+        "pb": { "dice": "-1D4" },
+        "hf": { "flat": 1 },
+        "strike": { "flat": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Massive Maw",
+          "damageFormula": "4D6+5",
+          "isAdditiveToHth": false,
+          "damageModifier": { "percent": 100 }
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_language", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "+2 to strike with bite only (P.P. bonuses still apply).",
+        "Impervious to poison, spoiled food, and disease.",
+        "Latch bite: target needs Supernatural P.S. twice the Nightbane's to pry free (or teleport, etc.).",
+        "Gnaw through wood barrier in 1D4+2 melees.",
+        "-20% Language skills; spell casting unaffected."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ]
+    },
+    {
+      "id": "nightmare_gruesome_weapon",
+      "name": "Gruesome Weapon",
+      "tableCategory": "Nightmare",
+      "description": "Signature nightmarish melee weapon grafted or handheld (claws, bone blades, scythe, cleaver, etc.); never lent to others.",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 },
+        "apm": { "flat": 1 },
+        "strike": { "flat": 2 },
+        "parry": { "flat": 2 },
+        "disarm": { "flat": 2 },
+        "pullPunch": { "flat": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Gruesome Weapon",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true,
+          "damageModifier": { "percent": 100 },
+          "weaponTraits": ["indestructible", "disarm_immune"]
+        }
+      ],
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 2
+        }
+      },
+      "customOneOffs": [
+        "Automatically has W.P. Paired Weapons; bonuses apply to Gruesome Weapon only.",
+        "Damage equals Supernatural P.S. +3D6 (modeled as +3D6 additive natural weapon).",
+        "Two small weapons possible: +1D6+3 damage each instead of +3D6 total.",
+        "Other weapons -2 strike/parry; weapon 45 S.D.C. +5/level, called shot only; crumbles at 0 S.D.C. until personal S.D.C. fully restored.",
+        "Without weapon: combat bonuses halved and -1 attack/melee."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 43
+        }
+      ]
+    }
+  ]
 }

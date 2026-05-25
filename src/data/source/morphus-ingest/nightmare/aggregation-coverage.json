@@ -1,0 +1,100 @@
+{
+  "tableId": "nightmare",
+  "entries": [
+    {
+      "id": "nightmare_floating",
+      "name": "Floating",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_contorted_body",
+      "name": "Contorted Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_gnarled_limbs",
+      "name": "Gnarled Limbs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_spines",
+      "name": "Spines",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_pulsating_skin",
+      "name": "Pulsating Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_straight_jacket",
+      "name": "Straight-Jacket",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_torture_mask",
+      "name": "Torture Mask",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_massive_maw",
+      "name": "Massive Maw",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_gruesome_weapon",
+      "name": "Gruesome Weapon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "weapon class bonuses",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

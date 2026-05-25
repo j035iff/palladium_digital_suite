@@ -1,0 +1,148 @@
+{
+  "entries": [
+    {
+      "id": "nightmare_contorted_body",
+      "name": "Contorted Body",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_floating",
+      "name": "Floating",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_gnarled_limbs",
+      "name": "Gnarled Limbs",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_gruesome_weapon",
+      "name": "Gruesome Weapon",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 43
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_massive_maw",
+      "name": "Massive Maw",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_pulsating_skin",
+      "name": "Pulsating Skin",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_spines",
+      "name": "Spines",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 41
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_straight_jacket",
+      "name": "Straight-Jacket",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "nightmare_torture_mask",
+      "name": "Torture Mask",
+      "tableCategory": "Nightmare",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 42
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\nightmare\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    }
+  ]
+}

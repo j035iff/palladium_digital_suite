@@ -1,0 +1,135 @@
+{
+  "tableId": "nightmare",
+  "generatedAt": "2026-05-25T20:55:53.681Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 9,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "nightmare_contorted_body",
+        "name": "Contorted Body",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_floating",
+        "name": "Floating",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_gnarled_limbs",
+        "name": "Gnarled Limbs",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_gruesome_weapon",
+        "name": "Gruesome Weapon",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_massive_maw",
+        "name": "Massive Maw",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_pulsating_skin",
+        "name": "Pulsating Skin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_spines",
+        "name": "Spines",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_straight_jacket",
+        "name": "Straight-Jacket",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "nightmare_torture_mask",
+        "name": "Torture Mask",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 9,
+    "ids": [
+      "nightmare_floating",
+      "nightmare_contorted_body",
+      "nightmare_gnarled_limbs",
+      "nightmare_spines",
+      "nightmare_pulsating_skin",
+      "nightmare_straight_jacket",
+      "nightmare_torture_mask",
+      "nightmare_massive_maw",
+      "nightmare_gruesome_weapon"
+    ]
+  },
+  "bookIndex": {
+    "total": 9,
+    "included": 9,
+    "skippedOther": 0,
+    "names": [
+      "Contorted Body",
+      "Floating",
+      "Gnarled Limbs",
+      "Gruesome Weapon",
+      "Massive Maw",
+      "Pulsating Skin",
+      "Spines",
+      "Straight-Jacket",
+      "Torture Mask"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}
