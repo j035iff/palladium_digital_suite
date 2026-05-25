@@ -1,6 +1,6 @@
 {
   "tableId": "hobbyist",
-  "generatedAt": "2026-05-25T19:39:16.118Z",
+  "generatedAt": "2026-05-25T22:08:32.897Z",
   "schemaKeys": [
     "activatedAbilities",
     "companionBlueprint",
@@ -10,6 +10,7 @@
     "disabledNaturalAttackTags",
     "gameSystems",
     "gimmickInventory",
+    "gimmickToySwitches",
     "handCapacityConstraints",
     "heightModifier",
     "id",

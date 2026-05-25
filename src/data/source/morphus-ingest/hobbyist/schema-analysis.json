@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T19:40:03.787Z",
+  "generatedAt": "2026-05-25T22:07:22.871Z",
   "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
   "schemaTopLevelKeys": [
     "id",
@@ -25,6 +25,7 @@
     "companionBlueprint",
     "isPolymorphicTemplate",
     "gimmickInventory",
+    "gimmickToySwitches",
     "disabledNaturalAttackTags",
     "activatedAbilities",
     "specialCombatInterceptions",
@@ -570,7 +571,7 @@
     },
     {
       "priority": "info",
-      "action": "Optional schema fields not detected in this table: heightModifier, weightModifier, subTraitChoicesBudget, handCapacityConstraints, isPolymorphicTemplate, disabledNaturalAttackTags, specialCombatInterceptions"
+      "action": "Optional schema fields not detected in this table: heightModifier, weightModifier, subTraitChoicesBudget, handCapacityConstraints, isPolymorphicTemplate, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
     }
   ],
   "blocking": [],

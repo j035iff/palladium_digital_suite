@@ -104,6 +104,9 @@
         },
         "me": {
           "flat": -1
+        },
+        "ppe": {
+          "dice": "-1D6+2"
         }
       },
       "weaponClassBonuses": {
@@ -132,8 +135,7 @@
       ],
       "customOneOffs": [
         "Thrown cards: aces and face cards inflict 2D6 damage.",
-        "On a Natural 19 or 20 with thrown cards or other thrown weapons, add +2D6 damage.",
-        "Permanent P.P.E. base is reduced by 1D6+2."
+        "On a Natural 19 or 20 with thrown cards or other thrown weapons, add +2D6 damage."
       ],
       "gameSystems": [
         "nightbane"
@@ -157,6 +159,9 @@
         },
         "ma": {
           "flat": -2
+        },
+        "ppe": {
+          "dice": "-2D6"
         }
       },
       "saveModifiers": {
@@ -213,7 +218,6 @@
       ],
       "customOneOffs": [
         "Three video-game powers (+1 per level) may be activated each hour; duration is one melee round (15 seconds) unless noted instant.",
-        "Permanent P.P.E. base is reduced by 2D6.",
         "Powers include: Demon Death Strike (double damage vs demons/Nightlands creatures on one attack), Float (safe descent/leap, water run), Force Field (60 +10 S.D.C. per level for 1 round), Life Points (restore 3D6+18 H.P. or S.D.C. to self), Heal Other (3D6+18 to one touched), Impervious to Fire, Impervious to Magic, Jump (+3 dodge for 1 round), See the Invisible, Energy Bolt (4D6+2/level, 600 ft +100 ft/level), Returning Melee Weapon (1 round).",
         "If the controller is lost or destroyed: lose 2D4 S.D.C. (or H.P. if S.D.C. depleted), -1 attack per melee, -10% all skills until Facade for one hour then resume Morphus.",
         "Controller has 10 S.D.C. and is only damaged on a Called Shot."
@@ -259,7 +263,7 @@
         }
       ],
       "customOneOffs": [
-        "+1 to strike and parry when using the dice bag as a weapon.",
+        "+1 to strike and parry when using the dice bag as a weapon (+1 strike via melee weapon class when applicable).",
         "Dice may be removed and scattered on hard ground to discourage pursuit."
       ],
       "gameSystems": [
@@ -497,10 +501,6 @@
         "guns": {
           "flat": 2
         }
-      },
-      "sensory": {
-        "nightvisionRangeFlatBonus": 0,
-        "seeInvisible": false
       },
       "skillModifiers": {
         "specificSkillOverrides": [
