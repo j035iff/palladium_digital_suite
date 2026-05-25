@@ -1,0 +1,148 @@
+{
+  "entries": [
+    {
+      "id": "substance_abuse_alcohol_soaked",
+      "name": "Alcohol-Soaked",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 57
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_branded_loyalty",
+      "name": "Branded Loyalty",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 57
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_hypodermic_quills",
+      "name": "Hypodermic Quills",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_pills",
+      "name": "Pills",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 56
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (11-30%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_pipe_throat",
+      "name": "Pipe Throat",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_rolling_paper_or_leafy_skin",
+      "name": "Rolling Paper or Leafy Skin",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_rotted_teeth",
+      "name": "Rotted Teeth",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_speed_freak",
+      "name": "Speed Freak",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (91-00%; authority=dark_designs)."
+    },
+    {
+      "id": "substance_abuse_roid_rage",
+      "name": "‘Roid-Rage",
+      "tableCategory": "Substance Abuse",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\substance_abuse\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    }
+  ]
+}

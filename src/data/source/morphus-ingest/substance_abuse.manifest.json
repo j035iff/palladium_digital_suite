@@ -1,0 +1,19 @@
+{
+  "id": "substance_abuse",
+  "displayName": "Substance Abuse",
+  "tableCategory": "Substance Abuse",
+  "tableHeading": "Substance Abuse Table",
+  "targetJson": "src/data/content/morphus/tables/substance_abuse.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Substance Abuse",
+      "authoritative": true
+    }
+  ]
+}

@@ -3,6 +3,343 @@
   "kind": "morphus_trait_table",
   "displayName": "Substance Abuse",
   "parentTable": null,
-  "description": "Substance Abuse Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Substance Abuse Morphus table (Dark Designs pp. 55–58). Features reflect drugs of choice; typically 01–60% active addiction, 61–80% history of abuse, or 81–00% family history/fear of addiction without personal dependency.",
+  "entries": [
+    {
+      "id": "substance_abuse_hypodermic_quills",
+      "name": "Hypodermic Quills",
+      "tableCategory": "Substance Abuse",
+      "description": "Hollow needles from back, shoulders, and arms—poison sloshing in visible chambers or leaking from the tips.",
+      "statModifiers": {
+        "pe": { "dice": "1D4" },
+        "ps": { "dice": "1D4" },
+        "sdc": { "dice": "6D6" },
+        "hf": { "flat": 2 },
+        "rollWithPunch": { "flat": 3 },
+        "pb": { "dice": "-1D4" },
+        "spd": { "dice": "-1D4" },
+        "hp": { "dice": "-2D4" },
+        "ppe": { "dice": "-2D4" },
+        "perception": { "flat": -2 },
+        "initiative": { "flat": -2 },
+        "dodge": { "flat": -1 },
+        "pullPunch": { "flat": -1 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Hypodermic Syringe",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "bite",
+          "label": "Toxic Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "globalSkillModifier": -10,
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "+2 strike and +2 parry with syringe only.",
+        "Claw slash 1D4 bleeding; on piercing hit may inject poison (save vs poison 14+): +2D4 H.P. damage; -1 combat and Perception per failed save 1D4 minutes (max -5). Half effect vs supernatural/magical (1D4 H.P., 1 minute).",
+        "May remove one or two syringes for poisoned dagger/spike attacks."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 56
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_pills",
+      "name": "Pills",
+      "tableCategory": "Substance Abuse",
+      "description": "Pills inset in flesh, transparent pill-bottle flesh, or capsules erupting as pimples and warts—picked and eaten for a buzz.",
+      "statModifiers": {
+        "sdc": { "dice": "5D6" },
+        "hf": { "flat": 1 },
+        "initiative": { "flat": 1 }
+      },
+      "saveModifiers": {
+        "horrorFactor": 2,
+        "poison": 2
+      },
+      "customOneOffs": [
+        "+2 to save vs drugs and poison (partially in saveModifiers.poison).",
+        "Pill duration 1D4+2 minutes unless noted; after-effects 2D4+4 minutes unless noted. Oral ingestion, effect in 1D4 melee rounds. Save 16+ vs non-lethal poison when unwilling; no save when taken willingly. One pill type at a time; new pill replaces prior bonuses; penalties stack in order taken.",
+        "Anti-Toxin (1D4+2): settles stomach, stops vomiting, helps hangover (half duration), restores 1D4 H.P. from poison.",
+        "Booster (1D4+6): +2 Perception, +1 initiative, awake 1D4+2 hours. After: -4 Perception, -2 initiative, -20% all skills 1D6+6 hours or 7 hours sleep.",
+        "Fat (1D4+4): no hunger 1D4+4 hours. After: -1 Perception/initiative, -1 all combat, -10% Spd for 1D6+4 hours.",
+        "Happy (2D6+3): +4 save vs H.F., +5% all skills under fire; -4 Perception, -4 initiative, -20% Spd, prefers talk/drink to fight. After: -1 H.F. save, -10% skills (double under death), -4 Perception/initiative, -20% Spd 1D6×10 minutes.",
+        "Hallucinogenic (1D4+2): on failed save, -6 Perception, -5 initiative, -3 strike/parry/dodge, -4 H.F./illusion saves, -30% skills for 1D4 minutes. After: -2 Perception/initiative, -10% skills, -2 H.F./illusion saves 1 hour.",
+        "Magic (1D4+1): +1 all magic/illusion/disease/poison/mind-control saves, +2 possession; doubled vs Nightlands/Nightlords/demons/Nightbane. After: -1 magic/illusion/mind-control/poison, -2 possession vs Nightlords/Nightlands/demons 1D6+6 minutes.",
+        "Painkillers (2D4+4): half pain penalties; -2 Perception/initiative, -1 all combat, -5% skills while active.",
+        "Sedatives (1D4+4): on failed save, half attacks/Spd/skills, zero combat bonuses 1D6+2 minutes; save 4 or less = deep sleep. After: -1 combat, -10% Spd, -5% skills 2D6+2 minutes.",
+        "Steroids (2D4+2): +1D4+4 P.S., +2D6+10 S.D.C. (damage hits S.D.C. first), +2 initiative; aggressive. After: P.S. -1D6 below normal, -4 initiative, -20% Spd, sluggish 2D4+4 minutes."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 56
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_alcohol_soaked",
+      "name": "Alcohol-Soaked",
+      "tableCategory": "Substance Abuse",
+      "description": "Permanently drunk-stumbling Morphus—clothing soaked through, liquor dripping, smell pervasive.",
+      "statModifiers": {
+        "hp": { "dice": "1D6" },
+        "sdc": { "dice": "3D6" },
+        "ps": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "rollWithPunch": { "flat": 5 },
+        "iq": { "flat": -2 },
+        "me": { "flat": -2 },
+        "perception": { "flat": -3 },
+        "initiative": { "flat": -2 }
+      },
+      "saveModifiers": {
+        "poison": 3,
+        "horrorFactor": 3
+      },
+      "damageAffinities": {
+        "cold": 0.1,
+        "ice": 0.1
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -10,
+        "specificSkillOverrides": [
+          { "targetType": "category", "targetValue": "Communications", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "Never has a hangover; interrogators -30% Interrogation vs this Nightbane.",
+        "Cold attacks, even magical, only do 10% of normal damage (cold/ice damageAffinities).",
+        "Poor memory and blackouts.",
+        "50% chance to catch fire from fire attacks (+3D6 damage/round for 1D6+4 rounds until extinguished)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 57
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_branded_loyalty",
+      "name": "Branded Loyalty",
+      "tableCategory": "Substance Abuse",
+      "description": "1D6+1 product brands burned into forearms, chest, hands, wrists, neck, or face—alcohol, tobacco, or drug logos.",
+      "statModifiers": {
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "3D6" },
+        "hf": { "flat": 1 },
+        "me": { "flat": -2 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -40 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -40 }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to negative effects and disease from branded products."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 57
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_rolling_paper_leafy_skin",
+      "name": "Rolling Paper or Leafy Skin",
+      "tableCategory": "Substance Abuse",
+      "description": "Overlapping leaves or cigarette-rolling paper skin; yellowing patches, smoldering cigarette-like eyes, wisps of smoke and tobacco breath.",
+      "statModifiers": {
+        "sdc": { "dice": "5D6" },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -3 },
+        "pe": { "flat": -3 }
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Smoke has no adverse effect in Morphus form."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_pipe_throat",
+      "name": "Pipe Throat",
+      "tableCategory": "Substance Abuse",
+      "description": "Metal or glass throat tubing—raspy Darth Vader voice, glowing pipe, acrid smoke shroud.",
+      "statModifiers": {
+        "hf": { "flat": 1 },
+        "ppe": { "dice": "-1D6" },
+        "perception": { "flat": -1 }
+      },
+      "damageAffinities": {
+        "airborneToxins": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -25 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -25 }
+        ]
+      },
+      "customOneOffs": [
+        "Immune to smoke, sulfur, tear gas, and similar airborne toxins/poisons.",
+        "Blowing Smoke: rings/signals, or gust in opponent’s face (3 ft)—-1 Perception and all combat rolls one melee round.",
+        "-1 strike with ranged weapons due to obscuring smoke; persistent cough."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_rotted_teeth",
+      "name": "Rotted Teeth",
+      "tableCategory": "Substance Abuse",
+      "description": "Brown/yellow cracked teeth—1D4×10% missing; discolored gums and rancid breath.",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -2 },
+        "pb": { "flat": -2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Rotted Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_barter", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Bite double damage vs Nightlords and demonic minions.",
+        "Stench gust (4 ft): save vs non-lethal poison 16+; fail = -3 Perception, -2 all combat one round (01–30% vomit, lose one melee). Save = -1 Perception one round."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_roid_rage",
+      "name": "'Roid-Rage",
+      "tableCategory": "Substance Abuse",
+      "description": "Strained oversized muscles, bulging veins, heavy breathing—angry or mad expression; ignores injury.",
+      "statModifiers": {
+        "pe": { "flat": 4 },
+        "sdc": { "dice": "1D6x10+20" },
+        "hf": { "flat": 1 }
+      },
+      "saveModifiers": {
+        "comaDeath": { "percent": -10 }
+      },
+      "customOneOffs": [
+        "Does not feel pain; fights beyond rational limits and may not notice S.D.C./H.P. nearing zero.",
+        "Aggressive, quick to anger and violence."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ]
+    },
+    {
+      "id": "substance_abuse_speed_freak",
+      "name": "Speed Freak",
+      "tableCategory": "Substance Abuse",
+      "description": "Gaunt, hollow-cheeked, visible ribs, trembling hands—nervous energy as if sleepless and starved for days.",
+      "statModifiers": {
+        "perception": { "flat": 1 },
+        "initiative": { "flat": 3 },
+        "parry": { "flat": 1 },
+        "dodge": { "flat": 1 },
+        "ma": { "dice": "-1D4" }
+      },
+      "saveModifiers": {
+        "horrorFactor": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "category", "targetValue": "Pilot", "modifierPercent": 10 }
+        ]
+      },
+      "customOneOffs": [
+        "Talks fast, lives hard; daredevil thrill-junkie—risks danger to self and allies.",
+        "-10% on skills requiring a delicate touch due to trembling."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 58
+        }
+      ]
+    }
+  ]
 }

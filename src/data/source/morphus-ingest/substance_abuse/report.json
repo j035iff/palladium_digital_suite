@@ -1,0 +1,138 @@
+{
+  "tableId": "substance_abuse",
+  "generatedAt": "2026-05-25T22:52:18.133Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 9,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "substance_abuse_alcohol_soaked",
+        "name": "Alcohol-Soaked",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_branded_loyalty",
+        "name": "Branded Loyalty",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_hypodermic_quills",
+        "name": "Hypodermic Quills",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_pills",
+        "name": "Pills",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_pipe_throat",
+        "name": "Pipe Throat",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_rolling_paper_or_leafy_skin",
+        "name": "Rolling Paper or Leafy Skin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_rotted_teeth",
+        "name": "Rotted Teeth",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_speed_freak",
+        "name": "Speed Freak",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "substance_abuse_roid_rage",
+        "name": "‘Roid-Rage",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 9,
+    "ids": [
+      "substance_abuse_hypodermic_quills",
+      "substance_abuse_pills",
+      "substance_abuse_alcohol_soaked",
+      "substance_abuse_branded_loyalty",
+      "substance_abuse_rolling_paper_leafy_skin",
+      "substance_abuse_pipe_throat",
+      "substance_abuse_rotted_teeth",
+      "substance_abuse_roid_rage",
+      "substance_abuse_speed_freak"
+    ]
+  },
+  "bookIndex": {
+    "total": 9,
+    "included": 9,
+    "skippedOther": 0,
+    "names": [
+      "Alcohol-Soaked",
+      "Branded Loyalty",
+      "Hypodermic Quills",
+      "Pills",
+      "Pipe Throat",
+      "Rolling Paper or Leafy Skin",
+      "Rotted Teeth",
+      "Speed Freak",
+      "‘Roid-Rage"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: substance_abuse_rolling_paper_leafy_skin",
+    "Staging has ids not in target (merge pending): substance_abuse_rolling_paper_or_leafy_skin"
+  ]
+}

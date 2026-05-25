@@ -1,0 +1,478 @@
+{
+  "generatedAt": "2026-05-25T22:50:17.383Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs"
+  ],
+  "traitCount": 9,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Hypodermic Quills",
+      "pageNumber": 55,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "11-30%",
+      "name": "Pills",
+      "pageNumber": 56,
+      "patterns": [
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "saveModifiers",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Alcohol-Soaked",
+      "pageNumber": 57,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Branded Loyalty",
+      "pageNumber": 57,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Rolling Paper or Leafy Skin",
+      "pageNumber": 58,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Pipe Throat",
+      "pageNumber": 58,
+      "patterns": [
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "71-80%",
+      "name": "Rotted Teeth",
+      "pageNumber": 58,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "‘Roid-Rage",
+      "pageNumber": 58,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Speed Freak",
+      "pageNumber": 58,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "substance_abuse_hypodermic_quills",
+        "name": "Hypodermic Quills",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_pills",
+        "name": "Pills",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_alcohol_soaked",
+        "name": "Alcohol-Soaked",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_branded_loyalty",
+        "name": "Branded Loyalty",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_rolling_paper_leafy_skin",
+        "name": "Rolling Paper or Leafy Skin",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_pipe_throat",
+        "name": "Pipe Throat",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_rotted_teeth",
+        "name": "Rotted Teeth",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_roid_rage",
+        "name": "'Roid-Rage",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "substance_abuse_speed_freak",
+        "name": "Speed Freak",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: naturalAr, mobility, sensory, weaponClassBonuses, heightModifier, weightModifier, naturalWeapons, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "substance_abuse"
+}

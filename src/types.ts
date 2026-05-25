@@ -786,7 +786,7 @@ export type MorphusSkillModifiers = {
 }
 
 /** Vulnerability tier multiplier (0 = none … 2 = double; 1.5 = increased). */
-export type MorphusDamageAffinityMultiplier = 0 | 0.25 | 0.5 | 1 | 1.5 | 2
+export type MorphusDamageAffinityMultiplier = 0 | 0.1 | 0.25 | 0.5 | 1 | 1.5 | 2
 
 export type MorphusDamageAffinityType =
   | 'heat'

@@ -144,7 +144,7 @@ export function resolveCompoundDamageAffinity(
 export function normalizeDamageAffinityMultiplier(
   value: number,
 ): MorphusDamageAffinityMultiplier {
-  const tiers: MorphusDamageAffinityMultiplier[] = [0, 0.25, 0.5, 1, 1.5, 2]
+  const tiers: MorphusDamageAffinityMultiplier[] = [0, 0.1, 0.25, 0.5, 1, 1.5, 2]
   let best: MorphusDamageAffinityMultiplier = 1
   let bestDelta = Number.POSITIVE_INFINITY
   for (const tier of tiers) {
@@ -756,6 +756,7 @@ const DAMAGE_AFFINITY_LABELS: Partial<Record<MorphusDamageAffinityType, string>>
 
 export function formatMorphusDamageAffinityMultiplier(multiplier: number): string {
   if (multiplier === 0) return 'immune'
+  if (multiplier === 0.1) return '10% damage'
   if (multiplier === 0.25) return '¼ damage'
   if (multiplier === 0.5) return '½ damage'
   if (multiplier === 1.5) return '×1.5 damage'

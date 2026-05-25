@@ -1,0 +1,101 @@
+{
+  "tableId": "substance_abuse",
+  "entries": [
+    {
+      "id": "substance_abuse_hypodermic_quills",
+      "name": "Hypodermic Quills",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_pills",
+      "name": "Pills",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_alcohol_soaked",
+      "name": "Alcohol-Soaked",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_branded_loyalty",
+      "name": "Branded Loyalty",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_rolling_paper_leafy_skin",
+      "name": "Rolling Paper or Leafy Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_pipe_throat",
+      "name": "Pipe Throat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_rotted_teeth",
+      "name": "Rotted Teeth",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_roid_rage",
+      "name": "'Roid-Rage",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "substance_abuse_speed_freak",
+      "name": "Speed Freak",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

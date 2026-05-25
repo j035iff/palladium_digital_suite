@@ -713,8 +713,8 @@
     },
     "damageAffinityMultiplier": {
       "type": "number",
-      "enum": [0, 0.25, 0.5, 1, 1.5, 2],
-      "description": "Vulnerability tier: 0 none, 0.25 quarter, 0.5 half, 1 normal, 1.5 increased, 2 double."
+      "enum": [0, 0.1, 0.25, 0.5, 1, 1.5, 2],
+      "description": "Vulnerability tier: 0 none, 0.1 tenth, 0.25 quarter, 0.5 half, 1 normal, 1.5 increased, 2 double."
     },
     "damageAffinities": {
       "type": "object",
