@@ -1,0 +1,103 @@
+{
+  "tableId": "artisan",
+  "entries": [
+    {
+      "id": "artisan_paint_palette",
+      "name": "Paint Palette",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_bellows_lungs",
+      "name": "Bellows Lungs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_drawing_table",
+      "name": "Drawing Table",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_chisel_fingers",
+      "name": "Chisel Fingers",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "burrowing engine",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_typewriter_keyboard",
+      "name": "Typewriter/Keyboard",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom system rolls",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_costumes_cosplay",
+      "name": "Costumes/Outfits/Cosplay",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "sensory obfuscation",
+        "polymorphic template",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_iron_works",
+      "name": "Iron Works",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_instrument_mic_stand",
+      "name": "Instrument/Mic Stand",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artisan_body_artist",
+      "name": "Body Artist (Tattoos & Piercings)",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

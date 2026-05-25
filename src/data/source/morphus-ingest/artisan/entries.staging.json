@@ -1,0 +1,148 @@
+{
+  "entries": [
+    {
+      "id": "artisan_bellows_lungs",
+      "name": "Bellows Lungs",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (16-20%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_body_artist_tattoos_piercings",
+      "name": "Body Artist (Tattoos & Piercings)",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_chisel_fingers",
+      "name": "Chisel Fingers",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_costumes_outfits_cosplay",
+      "name": "Costumes/Outfits/Cosplay",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_drawing_table",
+      "name": "Drawing Table",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_instrument_mic_stand",
+      "name": "Instrument/Mic Stand",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_iron_works",
+      "name": "Iron Works",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 27
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_paint_palette",
+      "name": "Paint Palette",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (01-15%; authority=dark_designs)."
+    },
+    {
+      "id": "artisan_typewriter_keyboard",
+      "name": "Typewriter/Keyboard",
+      "tableCategory": "Artisan",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 26
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    }
+  ]
+}

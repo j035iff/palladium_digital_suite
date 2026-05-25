@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Artisan",
   "parentTable": null,
-  "description": "Artisan Morphus table. Add characteristic rows from the book.",
+  "description": "Artistic Nightbane and those who share a great appreciation for art may find their Morphus forms reflect creative identity through painterly, sculptural, literary, costume, metalwork, musical, or body-art features (WB6 pp. 26–27).",
   "entries": [
     {
       "id": "artisan_paint_palette",
@@ -16,6 +16,9 @@
         },
         "parry": {
           "flat": 1
+        },
+        "strike": {
+          "flat": -1
         },
         "ppe": {
           "dice": "1D4"
@@ -51,8 +54,7 @@
         ]
       },
       "customOneOffs": [
-        "Enables the Nightbane to paint images that are startlingly realistic and work like optical illusions (Save vs illusions or Perception 14 to see through).",
-        "-1 to strike with the limb holding the palette."
+        "Enables the Nightbane to paint images that are startlingly realistic and work like optical illusions (Save vs illusions or Perception 14 to see through)."
       ],
       "gameSystems": [
         "nightbane"
@@ -194,21 +196,11 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_art",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_art",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_art",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_computer_operation",
+            "targetValue": "skill_computer_programming",
             "modifierPercent": -20
           },
           {
@@ -235,6 +227,9 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
+      ],
+      "customOneOffs": [
+        "+10% to Whittling & Sculpting skill while in Morphus form."
       ],
       "mobility": {
         "burrowingEngine": {
@@ -277,11 +272,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_writing",
-            "modifierPercent": 10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_writing",

@@ -1,0 +1,138 @@
+{
+  "tableId": "artisan",
+  "generatedAt": "2026-05-25T21:44:35.557Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 9,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "artisan_bellows_lungs",
+        "name": "Bellows Lungs",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_body_artist_tattoos_piercings",
+        "name": "Body Artist (Tattoos & Piercings)",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_chisel_fingers",
+        "name": "Chisel Fingers",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_costumes_outfits_cosplay",
+        "name": "Costumes/Outfits/Cosplay",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_drawing_table",
+        "name": "Drawing Table",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_instrument_mic_stand",
+        "name": "Instrument/Mic Stand",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_iron_works",
+        "name": "Iron Works",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_paint_palette",
+        "name": "Paint Palette",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artisan_typewriter_keyboard",
+        "name": "Typewriter/Keyboard",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 9,
+    "ids": [
+      "artisan_paint_palette",
+      "artisan_bellows_lungs",
+      "artisan_drawing_table",
+      "artisan_chisel_fingers",
+      "artisan_typewriter_keyboard",
+      "artisan_costumes_cosplay",
+      "artisan_iron_works",
+      "artisan_instrument_mic_stand",
+      "artisan_body_artist"
+    ]
+  },
+  "bookIndex": {
+    "total": 9,
+    "included": 9,
+    "skippedOther": 0,
+    "names": [
+      "Bellows Lungs",
+      "Body Artist (Tattoos & Piercings)",
+      "Chisel Fingers",
+      "Costumes/Outfits/Cosplay",
+      "Drawing Table",
+      "Instrument/Mic Stand",
+      "Iron Works",
+      "Paint Palette",
+      "Typewriter/Keyboard"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: artisan_costumes_cosplay, artisan_body_artist",
+    "Staging has ids not in target (merge pending): artisan_body_artist_tattoos_piercings, artisan_costumes_outfits_cosplay"
+  ]
+}
