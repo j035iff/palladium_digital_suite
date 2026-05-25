@@ -18,14 +18,11 @@
         "sdc": { "dice": "2D6" }
       },
       "skillModifiers": {
-        "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -5 }
-        ],
         "globalSkillModifier": -5
       },
       "customOneOffs": [
         "No Secondary Skills—career-focused only.",
-        "-5% to all skills except Communications, Math, and Technical skills (partially modeled via global -5% with listed exceptions at 0% offset)."
+        "Communications, Math, and Technical skills are not subject to the -5% penalty."
       ],
       "gameSystems": ["nightbane"],
       "sources": [
@@ -49,9 +46,6 @@
         "perception": { "flat": 2 }
       },
       "skillModifiers": {
-        "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 }
-        ],
         "globalSkillModifier": -10
       },
       "customOneOffs": [
@@ -250,8 +244,7 @@
         "pp": { "flat": 2 },
         "sdc": { "dice": "1D6x10+20" },
         "pb": { "flat": -1 },
-        "spd": { "dice": "-1D4" },
-        "perception": { "flat": 2 }
+        "spd": { "dice": "-1D4" }
       },
       "customOneOffs": [
         "+2 Perception only for mechanical problems and repairs; -2 Perception when absorbed in machine work.",
@@ -277,8 +270,7 @@
         "pp": { "flat": 2 },
         "sdc": { "dice": "4D6+6" },
         "pe": { "flat": -1 },
-        "spd": { "dice": "-1D4" },
-        "perception": { "flat": 2 }
+        "spd": { "dice": "-1D4" }
       },
       "damageAffinities": {
         "electricity": 0.5
