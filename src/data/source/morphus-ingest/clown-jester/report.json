@@ -1,0 +1,168 @@
+{
+  "tableId": "clown-jester",
+  "generatedAt": "2026-05-25T21:57:44.954Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "conditionalStanceModifiers",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 13,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "clown-jester_balloons",
+        "name": "Balloons",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_clown_clothes",
+        "name": "Clown Clothes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_clown_gags",
+        "name": "Clown Gags",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_clown_nose",
+        "name": "Clown Nose",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_clown_shoes",
+        "name": "Clown Shoes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_coolant_tubes_radiator",
+        "name": "Coolant Tubes/Radiator",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_engine_block",
+        "name": "Engine Block",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_exhaust_pipes",
+        "name": "Exhaust Pipes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_face_paint",
+        "name": "Face Paint",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_jack_in_the_box",
+        "name": "Jack-in-the-Box",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_jesters_cap_and_costume",
+        "name": "Jester’s Cap and Costume",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_outrageous_hair_and_head",
+        "name": "Outrageous Hair and Head",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "clown-jester_scepter_baton_or_bowling_pin",
+        "name": "Scepter/Baton or Bowling Pin",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 10,
+    "ids": [
+      "clown_nose",
+      "clown_face_paint",
+      "clown_clothes",
+      "clown_shoes",
+      "clown_outrageous_hair_head",
+      "clown_balloons",
+      "clown_gags",
+      "clown_jesters_cap_costume",
+      "clown_scepter_bowling_pin",
+      "clown_jack_in_the_box"
+    ]
+  },
+  "bookIndex": {
+    "total": 13,
+    "included": 13,
+    "skippedOther": 0,
+    "names": [
+      "Balloons",
+      "Clown Clothes",
+      "Clown Gags",
+      "Clown Nose",
+      "Clown Shoes",
+      "Coolant Tubes/Radiator",
+      "Engine Block",
+      "Exhaust Pipes",
+      "Face Paint",
+      "Jack-in-the-Box",
+      "Jester’s Cap and Costume",
+      "Outrageous Hair and Head",
+      "Scepter/Baton or Bowling Pin"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: clown_nose, clown_face_paint, clown_clothes, clown_shoes, clown_outrageous_hair_head, clown_balloons, clown_gags, clown_jesters_cap_costume, clown_scepter_bowling_pin, clown_jack_in_the_box",
+    "Staging has ids not in target (merge pending): clown-jester_balloons, clown-jester_clown_clothes, clown-jester_clown_gags, clown-jester_clown_nose, clown-jester_clown_shoes, clown-jester_coolant_tubes_radiator, clown-jester_engine_block, clown-jester_exhaust_pipes, clown-jester_face_paint, clown-jester_jack_in_the_box, clown-jester_jesters_cap_and_costume, clown-jester_outrageous_hair_and_head, clown-jester_scepter_baton_or_bowling_pin"
+  ]
+}

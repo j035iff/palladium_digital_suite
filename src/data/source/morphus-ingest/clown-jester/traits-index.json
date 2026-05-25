@@ -1,0 +1,225 @@
+{
+  "tableId": "clown-jester",
+  "tableHeading": "accept Clown Nightbane",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 13,
+  "traits": [
+    {
+      "name": "Balloons",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31,
+          "percent": "51-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Clown Clothes",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30,
+          "percent": "21-30%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Clown Gags",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31,
+          "percent": "61-70%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Clown Nose",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Clown Shoes",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30,
+          "percent": "31-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Coolant Tubes/Radiator",
+      "percent": "11-19%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33,
+          "percent": "11-19%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Engine Block",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Exhaust Pipes",
+      "percent": "20-28%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33,
+          "percent": "20-28%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Face Paint",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30,
+          "percent": "11-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Jack-in-the-Box",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Jester\u2019s Cap and Costume",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Outrageous Hair and Head",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30,
+          "percent": "41-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Scepter/Baton or Bowling Pin",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    }
+  ]
+}

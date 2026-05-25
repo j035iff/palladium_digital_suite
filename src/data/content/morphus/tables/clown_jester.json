@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Clown/Jester",
   "parentTable": null,
-  "description": "Clown/Jester Morphus table. Add characteristic rows from the book.",
+  "description": "Nightbane with a substantial interest in clowns, jesters, or circus performance may manifest garish, unsettling, or darkly humorous Morphus features. Anyone afraid of clowns treats these Morphus forms as Horror Factor 18 (WB6 pp. 30–32).",
   "entries": [
     {
       "id": "clown_nose",
@@ -160,11 +160,6 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_sing",
-            "modifierPercent": 15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_dance",
             "modifierPercent": 15
           },
           {

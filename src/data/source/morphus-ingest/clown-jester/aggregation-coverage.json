@@ -1,0 +1,115 @@
+{
+  "tableId": "clown-jester",
+  "entries": [
+    {
+      "id": "clown_nose",
+      "name": "Clown Nose",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_face_paint",
+      "name": "Face Paint",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "polymorphic template",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_clothes",
+      "name": "Clown Clothes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "sensory obfuscation",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_shoes",
+      "name": "Clown Shoes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_outrageous_hair_head",
+      "name": "Outrageous Hair and Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_balloons",
+      "name": "Balloons",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_gags",
+      "name": "Clown Gags",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "gimmick inventory",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_jesters_cap_costume",
+      "name": "Jester's Cap and Costume",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_scepter_bowling_pin",
+      "name": "Scepter/Baton or Bowling Pin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "clown_jack_in_the_box",
+      "name": "Jack-in-the-Box",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "companion blueprint",
+        "disabled natural attacks",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

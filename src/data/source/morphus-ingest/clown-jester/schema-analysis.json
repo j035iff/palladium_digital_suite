@@ -1,0 +1,680 @@
+{
+  "generatedAt": "2026-05-25T21:57:42.120Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "conditionalStanceModifiers"
+  ],
+  "traitCount": 13,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Clown Nose",
+      "pageNumber": 30,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "11-20%",
+      "name": "Face Paint",
+      "pageNumber": 30,
+      "patterns": [
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "polymorphic",
+          "schemaPaths": [
+            "isPolymorphicTemplate"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "saveModifiers",
+        "activatedAbilities",
+        "isPolymorphicTemplate",
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Clown Clothes",
+      "pageNumber": 30,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Clown Shoes",
+      "pageNumber": 30,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Outrageous Hair and Head",
+      "pageNumber": 30,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Balloons",
+      "pageNumber": 31,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Clown Gags",
+      "pageNumber": 31,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "gimmick_spawn",
+          "schemaPaths": [
+            "gimmickInventory"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "limb_component",
+          "schemaPaths": [
+            "limbDurability"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "jump",
+          "schemaPaths": [
+            "mobility.jumpModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons",
+        "activatedAbilities",
+        "gimmickInventory",
+        "limbDurability",
+        "conditionalStanceModifiers",
+        "mobility"
+      ]
+    },
+    {
+      "percent": "71-80%",
+      "name": "Jester’s Cap and Costume",
+      "pageNumber": 32,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Scepter/Baton or Bowling Pin",
+      "pageNumber": 32,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Jack-in-the-Box",
+      "pageNumber": 32,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "height_weight",
+          "schemaPaths": [
+            "heightModifier",
+            "weightModifier"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "activatedAbilities",
+        "heightModifier",
+        "weightModifier"
+      ]
+    },
+    {
+      "percent": "01-10%",
+      "name": "Engine Block",
+      "pageNumber": 30,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "11-19%",
+      "name": "Coolant Tubes/Radiator",
+      "pageNumber": 33,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "limb_component",
+          "schemaPaths": [
+            "limbDurability"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "limbDurability",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "20-28%",
+      "name": "Exhaust Pipes",
+      "pageNumber": 33,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "clown_nose",
+        "name": "Clown Nose",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_face_paint",
+        "name": "Face Paint",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "isPolymorphicTemplate",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_clothes",
+        "name": "Clown Clothes",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sensory",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_shoes",
+        "name": "Clown Shoes",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_outrageous_hair_head",
+        "name": "Outrageous Hair and Head",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_balloons",
+        "name": "Balloons",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_gags",
+        "name": "Clown Gags",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "gimmickInventory",
+          "id",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_jesters_cap_costume",
+        "name": "Jester's Cap and Costume",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_scepter_bowling_pin",
+        "name": "Scepter/Baton or Bowling Pin",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalWeapons",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "clown_jack_in_the_box",
+        "name": "Jack-in-the-Box",
+        "topLevelKeys": [
+          "companionBlueprint",
+          "customOneOffs",
+          "description",
+          "disabledNaturalAttackTags",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: sensory, weaponClassBonuses, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "clown-jester"
+}

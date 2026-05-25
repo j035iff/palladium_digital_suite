@@ -1,0 +1,212 @@
+{
+  "entries": [
+    {
+      "id": "clown-jester_balloons",
+      "name": "Balloons",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_clown_clothes",
+      "name": "Clown Clothes",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_clown_gags",
+      "name": "Clown Gags",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 31
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_clown_nose",
+      "name": "Clown Nose",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_clown_shoes",
+      "name": "Clown Shoes",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_coolant_tubes_radiator",
+      "name": "Coolant Tubes/Radiator",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (11-19%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_engine_block",
+      "name": "Engine Block",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_exhaust_pipes",
+      "name": "Exhaust Pipes",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (20-28%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_face_paint",
+      "name": "Face Paint",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_jack_in_the_box",
+      "name": "Jack-in-the-Box",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (91-00%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_jesters_cap_and_costume",
+      "name": "Jester’s Cap and Costume",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_outrageous_hair_and_head",
+      "name": "Outrageous Hair and Head",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 30
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "clown-jester_scepter_baton_or_bowling_pin",
+      "name": "Scepter/Baton or Bowling Pin",
+      "tableCategory": "Clown",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 32
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    }
+  ]
+}
