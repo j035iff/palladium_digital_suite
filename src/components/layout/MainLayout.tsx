@@ -617,6 +617,7 @@ const GIMMICK_FLAG_LABELS: Record<string, string> = {
 const REGEN_LABELS: Record<string, string> = {
   hourly: 'Hourly',
   daily: 'Daily',
+  per_24_hours: 'Every 24 hours',
   per_transformation: 'Per transformation',
   per_encounter: 'Per encounter',
 }
@@ -967,8 +968,14 @@ function MorphusTraitsPanel({
               {' — '}
               S.D.C. {g.sdc}
               {g.usageLimit != null ? ` · ${g.usageLimit} uses` : ''}
+              {g.usageLimitFormula != null
+                ? ` · ${g.usageLimitFormula} uses`
+                : ''}
               {g.regenerationRule
                 ? ` · ${REGEN_LABELS[g.regenerationRule] ?? g.regenerationRule}`
+                : ''}
+              {(g.components?.length ?? 0) > 0
+                ? ` · ${g.components!.map((c) => `${c.quantity}× ${c.limbName} ${c.sdc} S.D.C.`).join(', ')}`
                 : ''}
               <br />
               <span className="text-xs text-violet-300/80">{g.effectFormula}</span>

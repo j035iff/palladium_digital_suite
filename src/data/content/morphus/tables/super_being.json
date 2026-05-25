@@ -3,6 +3,499 @@
   "kind": "morphus_trait_table",
   "displayName": "Super Being",
   "parentTable": null,
-  "description": "Super Being Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Superbeing Morphus table (Dark Designs pp. 59–62). Comic-book super-hero (or super-villain) features—idealistic crusaders who protect civilians, or theatrical, vindictive villains shunned by other Nightbane.",
+  "entries": [
+    {
+      "id": "super_being_super_brain",
+      "name": "Super-Brain",
+      "tableCategory": "Superbeing",
+      "description": "Enlarged cranium, visible brain under glass, or mad-scientist bearing—vastly heightened intellect in Morphus.",
+      "statModifiers": {
+        "iq": { "dice": "2D4+4" },
+        "me": { "dice": "1D4+1" },
+        "ppe": { "dice": "-2D6" },
+        "ma": { "dice": "-1D4" },
+        "ps": { "dice": "-1D4" },
+        "pe": { "flat": -2 },
+        "spd": { "flat": -2 },
+        "perception": { "flat": -1 },
+        "initiative": { "flat": -1 },
+        "hf": { "flat": -1 }
+      },
+      "saveModifiers": {
+        "possession": 3,
+        "illusions": 3,
+        "magic": -2
+      },
+      "skillModifiers": {
+        "globalSkillModifier": 20
+      },
+      "customOneOffs": [
+        "+3 to save vs mind control (with possession/illusions in saveModifiers).",
+        "1D4+3 additional Science, Medical, Electrical, and/or Mechanical skills in Morphus (+30% to those categories; global +20% to all skills)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ]
+    },
+    {
+      "id": "super_being_super_fast",
+      "name": "Super-Fast",
+      "tableCategory": "Superbeing",
+      "description": "Powerful legs, energy aura, lightning boots or wings—blinding speed running, swimming, or flying.",
+      "statModifiers": {
+        "ppe": { "dice": "-(2D6+6)" },
+        "perception": { "flat": -3 },
+        "rollWithPunch": { "flat": 3 },
+        "apm": { "flat": 1 }
+      },
+      "saveModifiers": {
+        "magic": -2,
+        "illusions": -2
+      },
+      "customOneOffs": [
+        "Multiply initial Spd ×10 in Morphus; +1 attack per melee.",
+        "+2 damage to punches, kicks, body blocks, and melee strikes per 20 mph above 40 mph.",
+        "No fatigue at maximum speed.",
+        "High metabolism: eats 3× normal; if underfed, double Perception penalty, half Spd and S.D.C., -1 attack, -15% all skills."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ]
+    },
+    {
+      "id": "super_being_super_strong",
+      "name": "Super-Strong",
+      "tableCategory": "Superbeing",
+      "description": "Exaggerated comic-book musculature—square jaw, flowing hair, supernatural lifting and throwing power.",
+      "statModifiers": {
+        "ps": { "dice": "1D4+10" },
+        "sdc": { "dice": "1D6x10" },
+        "hf": { "flat": 2 },
+        "pp": { "flat": -1 },
+        "spd": { "dice": "-1D4+2" },
+        "ppe": { "dice": "-1D6" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Punches and physical attacks +50% damage vs Nightlords, demonic minions, and Nightlands denizens.",
+        "Lift/carry triple normal capacity; throw objects three times farther."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ]
+    },
+    {
+      "id": "super_being_chiseled_jaw_bold_beautiful",
+      "name": "Chiseled Jaw and Physique or the Bold and the Beautiful",
+      "tableCategory": "Superbeing",
+      "description": "Perfect comic-book hero/heroine looks—rugged movie-star features, flawless skin and hair, ideal proportions (may differ from the Facade).",
+      "statModifiers": {
+        "ps": { "dice": "1D4+1" },
+        "pb": { "dice": "1D4+1" },
+        "sdc": { "dice": "6D6+10" },
+        "hf": { "flat": 1 },
+        "me": { "flat": -2 },
+        "ppe": { "dice": "-2D6" }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -10,
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": 20 }
+        ]
+      },
+      "customOneOffs": [
+        "+10% to charm and impress (in addition to M.A./P.B. bonuses).",
+        "May underestimate opponents and overestimate own abilities."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_super_costume",
+      "name": "Super-Costume",
+      "tableCategory": "Superbeing",
+      "description": "Dynamic spandex (or similar) super-hero suit with crest or emblem—regenerates like the Nightbane.",
+      "statModifiers": {
+        "ma": { "flat": 2 },
+        "pb": { "flat": 2 },
+        "sdc": { "dice": "2D4x10" },
+        "ar": { "flat": 2 },
+        "hf": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_camouflage", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_tailing", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "+2 to Natural A.R. (modeled as statModifiers.ar +2).",
+        "Costume S.D.C. regenerates at the same rate as the Nightbane heals.",
+        "Penalties apply unless the costume can be concealed."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_oversized_flowing_cape_cloak",
+      "name": "Oversized, Flowing Cape or Cloak",
+      "tableCategory": "Superbeing",
+      "description": "Billowing cape or cloak to the knees—emblem on cape and chest; hovers and flies at Spd.",
+      "statModifiers": {
+        "spd": { "dice": "1D6" },
+        "hf": { "flat": 2 },
+        "pe": { "dice": "-1D4" },
+        "pp": { "flat": -1 },
+        "ppe": { "dice": "-2D6" }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Cape",
+          "quantity": 1,
+          "sdc": 0,
+          "ar": 14
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_concealment", "modifierPercent": 20 }
+        ],
+        "globalSkillModifier": -10
+      },
+      "customOneOffs": [
+        "Cape S.D.C. 1D6×10+40; covers Nightbane and up to two adults vs gunfire, explosions, and debris.",
+        "Hover, float, and fly at Spd attribute speed.",
+        "Global -10% applies to Physical skills including Climbing and Prowl.",
+        "Cape limb entry uses A.R. 14; set S.D.C. at play (1D6×10+40)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_energized",
+      "name": "Energized",
+      "tableCategory": "Superbeing",
+      "description": "Crackling fire or energy around the head—glowing eyes, energy blasts, aggressive combat demeanor.",
+      "statModifiers": {
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "1D6x10+20" },
+        "ma": { "flat": -2 },
+        "me": { "flat": -2 },
+        "ppe": { "dice": "-(4D6+6)" }
+      },
+      "damageAffinities": {
+        "energy": 0.5,
+        "fire": 0.5,
+        "electricity": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -50 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -50 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -50 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -50 }
+        ]
+      },
+      "customOneOffs": [
+        "Energy Blast: 3D6 +1 per level; double vs Nightlords, minions, Nightlands creatures, and demons; 200 ft +20 ft/level; one melee attack.",
+        "Tends to be aggressive and enjoy combat in Morphus."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_technonaut_cyborg",
+      "name": "Technonaut or Cyborg",
+      "tableCategory": "Superbeing",
+      "description": "Half-man, half-machine—bionic, biomechanical, or bio-engineered living armor on head, limbs, and torso.",
+      "naturalAr": 14,
+      "statModifiers": {
+        "ps": { "dice": "1D6" },
+        "spd": { "dice": "2D6" },
+        "sdc": { "dice": "1D6x10+80" },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -2 },
+        "me": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "ppe": { "dice": "-5D6" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -30 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "One Gadgeteer item (81–90%) with double range where applicable.",
+        "Non-flesh components self-repair at twice normal healing rate.",
+        "Permanent P.P.E. base -2D6 and additional -3D6 (total -5D6 in statModifiers.ppe)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_gadgeteer",
+      "name": "Gadgeteer",
+      "tableCategory": "Superbeing",
+      "description": "Super-spy jumpsuit, mask, gauntlets, and utility gear—built-in gadgets that only work for this Nightbane.",
+      "statModifiers": {
+        "iq": { "dice": "1D4" },
+        "ma": { "dice": "1D4" },
+        "sdc": { "dice": "1D4x10+10" },
+        "ps": { "dice": "-1D4" },
+        "ppe": { "dice": "-(2D6+16)" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 5 },
+          { "targetType": "category", "targetValue": "Espionage", "modifierPercent": 5 },
+          { "targetType": "category", "targetValue": "Rogue", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "subTraitChoicesBudget": {
+        "slotsFormula": "1D4+2",
+        "allowedChoicesPool": [
+          "gadget_lock_pick",
+          "gadget_eggshell_grenades",
+          "gadget_glide_pack",
+          "gadget_grapple_gun",
+          "gadget_laser_torch",
+          "gadget_mini_map",
+          "gadget_multi_optical",
+          "gadget_rebreather",
+          "gadget_rocket_jump_boots",
+          "gadget_stun_bola"
+        ]
+      },
+      "gimmickInventory": [
+        {
+          "id": "gadget_lock_pick",
+          "itemName": "Lock Pick Tool",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "92% pick civilian locks in 1D4 melee actions; -20% high-tech, military, or alien locks; can start most vehicles (G.M. discretion).",
+          "skillGrants": [
+            { "targetType": "skill_id", "targetValue": "skill_locksmith", "grantUnlearnedValue": 50 },
+            { "targetType": "skill_id", "targetValue": "skill_safe_cracking", "grantUnlearnedValue": 50 }
+          ]
+        },
+        {
+          "id": "gadget_eggshell_grenades",
+          "itemName": "Eggshell Grenades",
+          "sdc": 20,
+          "usageLimitFormula": "1D6+2",
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "10 ft (3 m) smoke cloud; -8 to all combat rolls inside (including the Nightbane)."
+        },
+        {
+          "id": "gadget_glide_pack",
+          "itemName": "Glide Pack",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Controlled descent from any height; pilot 74% +1% per level.",
+          "components": [
+            { "limbName": "Glider Wing", "quantity": 2, "sdc": 50, "hp": 0 }
+          ],
+          "statModifiers": {
+            "dodge": { "flat": 1 }
+          }
+        },
+        {
+          "id": "gadget_grapple_gun",
+          "itemName": "Grapple Gun",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "100 ft (30.5 m) cable; strike 8+ (-2 moving shooter/target, -2 target smaller than microwave; cumulative). Cable 20 S.D.C./ft, holds 1,000 lb (450 kg)."
+        },
+        {
+          "id": "gadget_laser_torch",
+          "itemName": "Laser Torch",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Melee -2 strike, 2D6 damage (counts as one attack); cuts soft materials 15 ft/melee, hard 1 ft/melee; range 6 in (0.15 m); unlimited payload."
+        },
+        {
+          "id": "gadget_mini_map",
+          "itemName": "Mini-Map",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Rough map 50 ft (15.2 m) radius, one story up/down; compass and GPS on visor/wrist. Needs GPS outdoors or floor plans/security tap indoors.",
+          "skillGrants": [
+            { "targetType": "skill_id", "targetValue": "skill_navigation", "modifierPercent": 30 }
+          ]
+        },
+        {
+          "id": "gadget_multi_optical",
+          "itemName": "Multi-Optical System",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Laser rangefinder and 2 mi (3.2 km) telescopic zoom; passive nightvision, IR, and UV 1,000 ft (305 m); macro 20×; auto-tint vs sudden flashes."
+        },
+        {
+          "id": "gadget_rebreather",
+          "itemName": "Rebreather Mask",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Breathe underwater 1D4 hours; same time to recharge oxygen supply."
+        },
+        {
+          "id": "gadget_rocket_jump_boots",
+          "itemName": "Rocket Jump Boots",
+          "sdc": 20,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Leap 50 ft (15.2 m) high or 12 ft (3.7 m) high and 100 ft (30.5 m) across; safe land from 200 ft (61 m), half damage higher. Rocket leap kick/body block: 2 attacks, +10 damage, 01-50% knockdown human-sized."
+        },
+        {
+          "id": "gadget_stun_bola",
+          "itemName": "Stun Bola",
+          "sdc": 20,
+          "usageLimit": 3,
+          "regenerationRule": "per_24_hours",
+          "effectFormula": "Thrown/fired bola -2 disarm (called shot); save 13+ or stunned (-2 attacks, -3 combat 1D4 rounds); roll 5- or dazed 1D4 rounds. Untangle 1D4+2 actions or S.P.S. 30+ or 30 S.D.C. to cut free.",
+          "traitFlags": ["auto_returning"]
+        }
+      ],
+      "customOneOffs": [
+        "Gadgets are part of the Morphus and work only for this Nightbane; each has 20 S.D.C. unless noted.",
+        "If most gadgets are destroyed, lost, or out of ammo and only one or two remain: -30% all skills, -1 melee attack, combat bonuses halved.",
+        "Non-flesh components self-repair at the same rate the Nightbane heals."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ]
+    },
+    {
+      "id": "super_being_mutant_or_alien",
+      "name": "Mutant or Alien",
+      "tableCategory": "Superbeing",
+      "description": "Super-hero costume with unearthly skin color and inhuman features—X-Men or Star Trek alien styling.",
+      "statModifiers": {
+        "apm": { "flat": 1 },
+        "iq": { "flat": 1 },
+        "ma": { "flat": 2 },
+        "sdc": { "dice": "1D6x10+12" },
+        "hf": { "flat": 1 },
+        "me": { "flat": -2 },
+        "ppe": { "dice": "-3D6" }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -10,
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": 10 }
+        ]
+      },
+      "customOneOffs": [
+        "+1D6 to P.P. or P.S. (player choice).",
+        "May underestimate opponents and overestimate own abilities."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62
+        }
+      ]
+    },
+    {
+      "id": "super_being_theme_music",
+      "name": "Theme Music",
+      "tableCategory": "Superbeing",
+      "description": "Dramatic heroic music follows the Nightbane—personal theme on grand entrances; can be silenced with concentration.",
+      "statModifiers": {
+        "hf": { "flat": 2 }
+      },
+      "saveModifiers": {
+        "allSaves": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "While theme music plays: +1 attack, +4 damage, +1 strike/parry/dodge/disarm.",
+        "While music is NOT playing: -1 attack, -2 all combat maneuvers, -2 all saves, -2 Horror Factor save, -15% skills.",
+        "Music may be silenced at will with concentration."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62
+        }
+      ]
+    }
+  ]
 }

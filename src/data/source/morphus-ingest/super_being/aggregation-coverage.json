@@ -1,0 +1,119 @@
+{
+  "tableId": "super_being",
+  "entries": [
+    {
+      "id": "super_being_super_brain",
+      "name": "Super-Brain",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_super_fast",
+      "name": "Super-Fast",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_super_strong",
+      "name": "Super-Strong",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_chiseled_jaw_bold_beautiful",
+      "name": "Chiseled Jaw and Physique or the Bold and the Beautiful",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_super_costume",
+      "name": "Super-Costume",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_oversized_flowing_cape_cloak",
+      "name": "Oversized, Flowing Cape or Cloak",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_energized",
+      "name": "Energized",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_technonaut_cyborg",
+      "name": "Technonaut or Cyborg",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_gadgeteer",
+      "name": "Gadgeteer",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_mutant_or_alien",
+      "name": "Mutant or Alien",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "super_being_theme_music",
+      "name": "Theme Music",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

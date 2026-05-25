@@ -72,7 +72,7 @@
     "gimmickInventory": {
       "type": "array",
       "items": { "$ref": "#/$defs/gimmickInventoryItem" },
-      "description": "Spawned Morphus gadgets (Dark Designs Clown/Jester, pp. 29–33)."
+      "description": "Spawned Morphus gadgets (Dark Designs Clown/Jester pp. 29–33; Hobbyist; Superbeing Gadgeteer pp. 60–62)."
     },
     "gimmickToySwitches": {
       "$ref": "#/$defs/gimmickToySwitchBoard",
@@ -180,6 +180,11 @@
       "additionalProperties": false,
       "required": ["itemName", "sdc", "effectFormula"],
       "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable slug referenced by subTraitChoicesBudget.allowedChoicesPool (e.g. gadget_lock_pick)."
+        },
         "itemName": {
           "type": "string",
           "minLength": 1,
@@ -193,17 +198,36 @@
         "usageLimit": {
           "type": "integer",
           "minimum": 0,
-          "description": "Optional uses per regeneration window before depletion."
+          "description": "Optional fixed uses per regeneration window before depletion."
+        },
+        "usageLimitFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice formula for consumable count (e.g. 1D6+2 Eggshell grenades)."
         },
         "regenerationRule": {
           "type": "string",
-          "enum": ["hourly", "daily", "per_transformation"],
-          "description": "When the gadget or its uses replenish."
+          "enum": ["hourly", "daily", "per_24_hours", "per_transformation"],
+          "description": "When the gadget or its uses replenish (per_24_hours = Dark Designs Gadgeteer re-materialize)."
         },
         "effectFormula": {
           "type": "string",
           "minLength": 1,
           "description": "Damage, range, or effect dice/formula for the gimmick payload."
+        },
+        "components": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/limbDurability" },
+          "description": "Sub-parts with their own S.D.C. (e.g. Glide Pack wings at 50 S.D.C. each)."
+        },
+        "statModifiers": {
+          "$ref": "#/$defs/statModifiers",
+          "description": "Passive bonuses while this gadget is owned and intact (e.g. Glide Pack +1 dodge)."
+        },
+        "skillGrants": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skillOverride" },
+          "description": "Morphus-only skill overrides tied to this gadget (e.g. Lock Pick Tool at 50%)."
         },
         "traitFlags": {
           "type": "array",
@@ -760,14 +784,29 @@
     "subTraitChoicesBudget": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["slotsAvailable", "allowedChoicesPool"],
+      "required": ["allowedChoicesPool"],
       "properties": {
-        "slotsAvailable": { "type": "integer", "minimum": 0 },
+        "slotsAvailable": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Fixed number of picks from allowedChoicesPool."
+        },
+        "slotsFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice formula for how many picks (e.g. 1D4+2 Gadgeteer gadgets)."
+        },
         "allowedChoicesPool": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 }
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Ids from gimmickInventory entries or other sub-trait slugs the player may select."
         }
-      }
+      },
+      "oneOf": [
+        { "required": ["slotsAvailable"] },
+        { "required": ["slotsFormula"] }
+      ]
     },
     "handCapacityConstraints": {
       "type": "object",

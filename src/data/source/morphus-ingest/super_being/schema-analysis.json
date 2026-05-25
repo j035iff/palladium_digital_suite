@@ -1,0 +1,671 @@
+{
+  "generatedAt": "2026-05-25T22:59:31.153Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "conditionalStanceModifiers"
+  ],
+  "traitCount": 10,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Super-Brain",
+      "pageNumber": 59,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "11-21%",
+      "name": "Super-Fast",
+      "pageNumber": 59,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Super-Strong",
+      "pageNumber": 59,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "height_weight",
+          "schemaPaths": [
+            "heightModifier",
+            "weightModifier"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "heightModifier",
+        "weightModifier",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Super-Costume",
+      "pageNumber": 60,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Oversized, Flowing Cape or Cloak",
+      "pageNumber": 60,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Energized",
+      "pageNumber": 60,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "71-80%",
+      "name": "Technonaut or Cyborg",
+      "pageNumber": 60,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Gadgeteer",
+      "pageNumber": 60,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "naturalWeapons",
+        "activatedAbilities",
+        "damageAffinities",
+        "customOneOffs",
+        "sensory",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "91-95%",
+      "name": "Mutant or Alien",
+      "pageNumber": 62,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "96-00%",
+      "name": "Theme Music",
+      "pageNumber": 62,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "activatedAbilities",
+        "damageAffinities",
+        "conditionalStanceModifiers"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "super_being_super_brain",
+        "name": "Super-Brain",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_super_fast",
+        "name": "Super-Fast",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_super_strong",
+        "name": "Super-Strong",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_chiseled_jaw_bold_beautiful",
+        "name": "Chiseled Jaw and Physique or the Bold and the Beautiful",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_super_costume",
+        "name": "Super-Costume",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_oversized_flowing_cape_cloak",
+        "name": "Oversized, Flowing Cape or Cloak",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "limbDurability",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_energized",
+        "name": "Energized",
+        "topLevelKeys": [
+          "customOneOffs",
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_technonaut_cyborg",
+        "name": "Technonaut or Cyborg",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalAr",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_gadgeteer",
+        "name": "Gadgeteer",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_mutant_or_alien",
+        "name": "Mutant or Alien",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "super_being_theme_music",
+        "name": "Theme Music",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: mobility, weaponClassBonuses, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "super_being"
+}

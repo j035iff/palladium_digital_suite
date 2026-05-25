@@ -1,0 +1,164 @@
+{
+  "entries": [
+    {
+      "id": "super_being_energized",
+      "name": "Energized",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_gadgeteer",
+      "name": "Gadgeteer",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_mutant_or_alien",
+      "name": "Mutant or Alien",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (91-95%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_oversized_flowing_cape_or_cloak",
+      "name": "Oversized, Flowing Cape or Cloak",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_super_brain",
+      "name": "Super-Brain",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_super_costume",
+      "name": "Super-Costume",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_super_fast",
+      "name": "Super-Fast",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (11-21%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_super_strong",
+      "name": "Super-Strong",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_technonaut_or_cyborg",
+      "name": "Technonaut or Cyborg",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+    },
+    {
+      "id": "super_being_theme_music",
+      "name": "Theme Music",
+      "tableCategory": "Superbeing",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\super_being\\extracted-authoritative.txt (96-00%; authority=dark_designs)."
+    }
+  ]
+}

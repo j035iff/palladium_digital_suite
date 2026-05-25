@@ -1,0 +1,177 @@
+{
+  "tableId": "super_being",
+  "tableHeading": "Superbeing Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 10,
+  "traits": [
+    {
+      "name": "Energized",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60,
+          "percent": "61-70%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Gadgeteer",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Mutant or Alien",
+      "percent": "91-95%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62,
+          "percent": "91-95%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Oversized, Flowing Cape or Cloak",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60,
+          "percent": "51-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Super-Brain",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Super-Costume",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60,
+          "percent": "41-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Super-Fast",
+      "percent": "11-21%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59,
+          "percent": "11-21%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Super-Strong",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59,
+          "percent": "21-30%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Technonaut or Cyborg",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 60,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Theme Music",
+      "percent": "96-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 62,
+          "percent": "96-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    }
+  ]
+}

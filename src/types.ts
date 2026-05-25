@@ -545,6 +545,7 @@ export type MorphusNaturalWeapon = {
 export type MorphusGimmickRegenerationRule =
   | 'hourly'
   | 'daily'
+  | 'per_24_hours'
   | 'per_transformation'
 
 export type MorphusGimmickTraitFlag =
@@ -553,11 +554,18 @@ export type MorphusGimmickTraitFlag =
   | 'auto_returning'
 
 export type MorphusGimmickInventoryItem = {
+  /** Slug referenced by {@link MorphusSubTraitChoicesBudget.allowedChoicesPool}. */
+  id?: string
   itemName: string
   sdc: number
   usageLimit?: number
+  /** Dice formula for consumable count (e.g. 1D6+2). */
+  usageLimitFormula?: string
   regenerationRule?: MorphusGimmickRegenerationRule
   effectFormula: string
+  components?: readonly MorphusLimbDurability[]
+  statModifiers?: MorphusStatModifiers
+  skillGrants?: readonly MorphusSkillOverride[]
   traitFlags?: readonly MorphusGimmickTraitFlag[]
 }
 
@@ -827,7 +835,8 @@ export type MorphusWeaponClassBonuses = {
 }
 
 export type MorphusSubTraitChoicesBudget = {
-  slotsAvailable: number
+  slotsAvailable?: number
+  slotsFormula?: string
   allowedChoicesPool: readonly string[]
 }
 
