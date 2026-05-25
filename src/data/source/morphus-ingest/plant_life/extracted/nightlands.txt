@@ -1,0 +1,777 @@
+Plant Life Table 
+Note: In all cases, fire does double damage, but the Nightbane is re­
+sistant to cold (does half damage). 
+01-20 % Humanoid Tree: The Nightbane looks like a tree that has 
+come to life. The strength and resilience of the character is incredible, 
+but he is very slow and cumbersome. He has a tree trunk instead of a 
+torso and two long branches with leaves instead of arms (if an Unnatu­
+ral Limbs characteristic, adding extra limbs is also taken, the tree shape 
+would have additional branches). His head is sunken at the top of the 
+trunk and between the two arms/branches. It is leaf-covered and mis­
+shapened. Instead of legs, several root-like limbs allow some very slow 
+movement. The character could pass for a strangely-shaped tree if he 
+does not move; he can even make his "roots" sink into the ground, com­
+pleting the illusion. 
+Add 3D4xl O  to S.D.C., +6 to P.S., +ID4 to horror factor, can heal 
+2D6 S.D.C./hit points every 24 hours, but reduce speed by half, and re­
+duce skill performance by 7S%. 
+21-30% Cactus Skin: The character looks normal except his skin is 
+green and covered with long, white, needle-like cactus spines six inches 
+(O. I S  m) long. Add +4D6x2 to S.D.C., l D4 to hand to hand damage, at­
+tackers cannot brab or wrestle with the character without taking 2D6 
+damage per each attack/grab. +2 to horror factor. 
+142 
+31-40 % Thorn Skin: The character's skin is dark brown and his 
+body encoiled in brown vines covered with thorns! Add +SD6x3 to 
+S.D.C., I D6 to hand to hand damage, and attackers cannot grab or 
+wrestle with the character without taking 3D6 damage per each at­
+tack/grab. +3 to horror factor. 
+41-60% Living Mannequin: The Nightbane looks as if he is a gi­
+ant, unfinished puppet or mannequin with a body made of polished 
+wood but with the wood grain still showing. Add 2D4xlO to S.D.C., 
+I D4 to hand to hand damage and + 1 to horror factor. 
+61-70 % Tree Features: The character's hair is replaced with green 
+vines, or leaves or a cluster of tiny, thin branches; his fingers and nose 
+are long and gnarled (branch-like in appearance), body hair becomes a 
+fine light green moss, and his skin a bit wrinkled (not like bark exactly, 
+more like a 90 year old) and has a grayish green color. Add 4D6 to 
+S.D.C. and +2 to horror factor. 
+71-80 % Flower Child: The character seems radiant, with a bright 
+smile, sparkling eyes and a pleasant, fresh, clean, light flower aroma. 
+The hair is long and flowing and literally filled with flowers of all kind. 
+Likewise, the skin is healthy but seems to have dozens of small colorful 
+flowers glued to it. Insects, even monstrous ones, will not attack this 
+character (note that spiders and scorpions are not insects, they are 
+arachnids and will attack). Plus I D6 to S.D.C., +lD6 to M.A. and +3D4 
+to P.B., strangely attractive and alluring! 
+81-90 % Bark Skin: The character's skin is hard and looks and feels 
+like rough tree bark. Add 4D6x2 to S.D.C. and +2 to H.F. 
+91-00% Stink Weed: The character's skin is a pale green and he is 
+covered by fine vines with small, ID4x lO bulb-like clusters covering 
+his body. One or two clusters can be opened at will (counts as one me­
+lee attack). Opening one cluster releases a repugnant, sweet odor. Any­
+body within 10 feet (3 m) must roll to save vs non-lethal poison (16 or 
+higher). A failed roll means the person gags, feels nauseous and is -3 on 
+initiative, - 1  to strike, parry and dodge, and -10% on skill performance; 
+distracted by the terrible smell. Opening two will double the range and 
+penalties. The smell lasts for one minute per level of the character and 
+radiates around him like a flower, so it goes where he goes. Once a 
+cluster has been used/opened it cannot be used again for 24 hours. A 
+successful save means the character is only -I on initiative and -S% on 
+skill performance. Smashing or cutting open a cluster will have the 
+same effect. 
+Also add 3D6 to S.D.C. and + 1 to horror factor. 
+New Nightbane Talents 
+Animate Shadow 
+Darkbonds 
+Mark of the Nightbane 
+Remove Facade 
+Shadows of Fear 
+Shadow Storm 
+A Note on Talents: Unless otherwise indicated, all Talents have a 
+duration of one minute per level of experience, except certain combat­
+oriented Talents where the P.P.E. spent powers one attack or effect each 
+time it is used. 
+Animate Shadow 
+This talent causes the shadow of the Nightbane's Morphus form to 
+come to life. This shadowy creature looks like a solid ink-black version 
+of the Nightbane, although without any distinguishing features beyond 
+its outline. The shape will follow mental commands given by its creator, 
+and can fight and follow most complex orders competently. The 
+shadow has half the Nightbane's S.D.C., but no hit points and does not 
+regenerate damage. It also has all its creator's skills at -20% (the hand 
+to hand skill is reduced by one level), and attacks per melee round, but 
+not Nightbane Talents. 
+Joe Sifferman (Order #46323384)
+Limitations: Usable in Morphus fonn only; not available until the 
+third level. The Animated Shadow exists for one minute per level of ex­
+perience or until destroyed or dismissed by its creator. Only one shadow 
+can be animated at a time. 
+Cost: 1 5  P.P.E. for pennanent acquisition; 12 to activate. 
+Darkbonds 
+The Nightbane creates black bonds of some sort (they could be ten­
+drils of energy, or chains, ropes, etc.) and controls them to hold cap­
+tives. The bonds do no damage other than restrain the character just like 
+real rope or chains. To break free, the opponent must roll one 20 sided 
+die and add his P.S. bonuses, if any. The total roll must be equal or ex­
+ceed the P.S. number of the bonds (minimum 1 8). The P.S. of the Dark­
+bonds is equal to 1 8  at the base P.P.E. cost. One additional point can be 
+added to the Darkbonds for every extra 2 P.P.E. spent on it. The Dark­
+bonds last one minute per level of experience. 
+Limitations: Usable by the Morphus fonn only. 
+Cost: 8 P.P.E. for pennanent acquisition; 6 P.P.E. to activate with a 
+P.S. 18; each additional +2 P.P.E. adds one P.S. point to the bonds. 
+There is no limit other than the character's P.P.E. reserve. 
+Mark of the Nightbane (Elite Talent) 
+Nightbane with Stigmata characteristics can temporarily curse oth­
+ers by inflicting their gruesome defonnities upon them. If the victim 
+fails to save vs magic, the Nightbane's characteristic stigmata suddenly 
+appears on his flesh and skin! Regardless of the type of stigmata, the 
+victim suffers 3D6 points of damage when they first appear and is 
+racked with pain (no initiative, -3 to all combat actions, -20% on all 
+skills). Humans and other non-supernatural targets must also save ver­
+sus a horror factor of 15. Duration is one minute per level of experience 
+and can be cast on an opponent up to 200 feet (6 1 m) away. 
+Limitations: Usable in Morphus fonn only. Not available until third 
+level. Can only be used by Nightbane with one or more Stigmata char­
+acteristics. The "mark" can only be cast on one person at a time and 
+only one "mark" attack per individual. 
+Cost: 10 P.P.E. to acquire pennanently. Using it against human and 
+non-supernatural creatures costs 1 0  P.P.E.; using it against supernatural 
+beings costs 20 P.P.E. 
+Remove Facade 
+This Talent affects not only Nightbane, but all other shape-chang­
+ing creatures and metamorphosis magic. The Nightbane can force a 
+creature to assume its real fonn; in the case of Nightbane, they are 
+forced to assume their Morphus fonn. The target can resist by making a 
+save versus magic of 14 or higher. Any creature who is hiding its true 
+shape through magic, shape-shifting, etc., will revert to its original 
+fonn. 
+Limitations: Not available until 5th level. Can be used by both the 
+Facade and the Morphus. This power does not affect illusions or physi­
+cal disguises, including the Hollow Men's artificial constructs, or the 
+Skinners control of a corpse. 
+Cost: 1 5  pennanent to acquire; 20 to activate. 
+Shadows of Fear 
+This Talents must be used in a shadowy or dark area. Throughout 
+the area of effect, the shadows seem to move (can only be seen from the 
+comer of one's eye) and strange and frightening noises can be heard 
+coming from every shadow. Some are like the rustling sounds of small 
+animals, while others sound like deep growls and the shuffling steps of 
+some large creature. While the power is on, Perception rolls are at -4, as 
+everyone in the area is distracted by the noises. Also, some people or 
+creatures (especially nonnal humans) may need to save versus a horror 
+factor of 1 2  (at the GM's discretion). 
+143 
+Limitations: Usable in Morphus fonn only. The base area affected 
+has a 20 foot (6 m) radius; for every additional 2 P.P.E. spent, add an­
+other 10 feet (3 m) to the radius. 
+Cost: 5 for pennanent acquisition. 4 to activate plus 2 for each addi­
+tional 10 feet (3 m) in radius. 
+Shadow Storm 
+This Talent creates a swirling cloud of dark energy that fills an area 
+equal to one yard/meter radius per 4 P.P.E. spent. This cloud can be sent 
+forward at a Speed of 30; maximum distance away from the creator is 
+500 feet ( 1 52 m). The dark energies of the cloud inflict damage on any­
+thing or anybody in its path, doing 3D6 points of damage three times 
+per melee round. Dodging the stonn requires a 1 6  or higher. Each time 
+it hits, the sound of thunder is heard overhead. 
+Limitations: Usable in Morphus fonn only. Not available until third 
+level. 
+Cost: 10 P.P.E. to acquire it pennanently. 4 P.P.E. per yard/meter of 
+radius. 
+More 
+Scenario Ideas 
+The Typhoon Rebellion - Optional 
+Could the Nightbane take over a city in the Nightlands? Typhoon is 
+a hot-bed of Nightbane activity; if a rebellion could happen anywhere, it 
+would be here. What role the characters play in the victory or defeat, or 
+any of the consequences, is up to the Game Master and the players' 
+creativity. 
+Scenario #1 : The Taking of Typhoon: The Resistance is ready, 
+and for the first time ever, is actually working alongside other factions 
+in a concerted way. The Nocturnes and the Lightbringers have agreed to 
+join forces with the Nightbane to help liberate the city. Spook Squad is 
+not officially helping, but a deal is worked out "under the table" be­
+tween local Beachhead commanders and the Resistance. The deal is hu­
+mans will stage a number of raids outside the city to distract the 
+Nightlord's minions. As each faction moves dozens or even hundred of 
+troops in or near Typhoon, a number of operations must be conducted 
+to guarantee victory. 
+What can the player characters do? Obviously, running the entire 
+battle is out of the question: too many things would be happening at the 
+same time for anybody to keep track of it all. Instead, the G.M. can as­
+sign specific missions to the player characters: seize a particular villain 
+or Artifact, assault a guard tower, blow up a barracks full of Hounds 
+and then attack any survivors, hit the dungeons and free any slaves -
+any of those missions could make an important contribution to the bat­
+tle. If the characters do their jobs, it should have an impact on the over­
+all situation. 
+The Game Master should outline what else happens in the battle, if 
+only to report to the player characters what they hear/see happening. A 
+concerted attack by hundreds of Nightbane, sorcerers, Guardians and 
+others, especially with many Hounds away from the city, might be 
+enough to destroy the local forces and take control of Typhoon! If this 
+happens, our heroes will be needed to keep the city and fight any infil­
+tration or raids by minions. There is a chance that Lord Magog might 
+teleport into the city to try to rally his troops; if the player characters are 
+aching for a major challenge, this might be their chance to take on a 
+Nightlord! This is not recommended unless the characters are very 
+high-level, or they have some avenue of escape. 
+Scenario #2: The Failed Revolution: This scenario assumes that 
+the Resistance makes a grab for the city and fails miserably. There 
+Joe Sifferman (Order #46323384)
+could be many reasons for this. Lord Magog has a spy in the ranks of 
+the Nightbane (see the Lord Magog section) who might alert his crea­
+tor. Or maybe the Nightbane have underestimated the power of the en­
+emy (very likely). The end result is the same: the Resistance fights 
+valiantly in a hopeless battle and suffers severe losses before having to 
+retreat. 
+Typhoon remains in the hands of the Nightlords, but what happens 
+next? Here are some possibilities. 1 .  The Nightlords send their minions 
+to hunt down and destroy the retreating and scattering Resistance forces 
+- perhaps they can crush their enemy completely. The player charac­
+ters could be on the run for weeks. 
+2. Emboldened by their resounding defeat of the attackers, the 
+Nightlords decide to launch an assault against Beachhead or other Re­
+sistance or freedom fighters' stronghold. 
+3. The player characters escape back to Chicago - only to find a 
+city-wide hunt for "terrorists" being conducted by the NSB and local 
+authorities. It looks like the entire region is too hot for the characters 
+right now and they will need all their wits to survive. Game Masters 
+should think of movies like The Fugitive when developing this scenario. 
+4. Our heroes are hiding in Typhoon, cut-off from their retreating 
+comrades. As they make their way through the city of shadows, they 
+find something of value: a breach in the palace wall, a secret complex, 
+an injured Night Prince (at half) with an artifact or captive freedom 
+144 
+fighters (do our heroes attack?), and so on. Can they take advantage of 
+the situation? 
+Scenario #3: The Price of Victory: If the Resistance wins, this 
+marks a turning point in the war. For the first time in history, a Night­
+lord City-State has been seized by an outside force. Lord Magog's repu­
+tation will be utterly destroyed. Even if allowed to live, he will lose 
+most or all of his dominion. The Nightlords will be severely shaken by 
+this occurrence. 
+However, taking Typhoon does not mean the Nightbane get to keep 
+it. The Nightlords will amass a huge army and send it to surround and 
+attack. The most likely outcome is that the Resistance will Awaken and 
+release most of the Dopplegangers in the city, bum or destroy most im­
+portant buildings, and then withdraw from the city. 
+Winning this battle will have consequences for the player characters, 
+especially if they played a major role. The Nightlords will make a spe­
+cial point to go after those they consider responsible for this affront. As­
+sassins, Hounds and monsters will be sent on the trail of the characters, 
+who will need all their wits and powers to elude their pursuers. 
+Scenario #4: What about Chicago? Even if Typhoon should fall, 
+Lord Magog and a large number of his minions remain in control of 
+Earth's Chicago. Do the player characters and their allies go there next 
+to free it too? 
+Joe Sifferman (Order #46323384)
+● Imagine Earth transformed into an alien landscape.
+● Humans exist – barely. And we are not alone.
+● Aliens and monsters emerge from the RiŌs – holes torn in the fabric of 
+space and Ɵme, connected to countless worlds and realiƟes.
+● Ancient gods, demons and magic have returned.
+● Magic and technology clash.
+● Hund
+● Hundreds of character classes, many inhuman.
+● RiŌs® UlƟmate EdiƟon is the core RPG rule book.
+● Expansive world seƫng with 90+ sourcebooks to draw upon.
+● RiŌs®, your portal to endless adventure.
+● Limited only by your imaginaƟon.
+Other RPG Worlds from Palladium Books®:
+● RiŌs® – the ulƟmate role-playing experience.
+● RiŌs® Chaos Earth® – Play the apocalypse as it happens.
+● Splicers® – Weird science. Bio-tech baƩles insane robot legions.
+● Robotech® RPG – All eras of the TV show brought to life.
+● Dead Reign® RPG – Can you survive the Zombie Apocalypse?
+● Palladium Fantasy RPG® – Unique world, monsters as player characters, 
+magic and more.
+● 
+Heroes 
+Unlimited™ 
+RPG 
+– 
+Play 
+any 
+hero; 
+mutants, 
+aliens, 
+cyborgs, 
+superhu-
+mans, mages, immortals and more.
+● Nightbane® RPG – Conspiracy, magic, horror and monsters.
+● Beyond the Supernatural™ RPG – Modern horror and suspense.
+● Ninjas and Superspies™, and more.
+www.palladiumbooks.com
+© 2014 Palladium Books. RiŌs®, Megaverse®, Nightbane® and other Ɵtles, slogans and likenesses are trademarks of Palladium Books, Inc.    
+Palladium Books - 39074 Webb Court, Westland, MI 48185 USA – 734-271-2903 order line.
+®
+Joe Sifferman (Order #46323384)
+www.palladium books.com
+© Copyright 2017 Palladium Books Inc. 
+All rights reserved. Rifts®, Palladium Books®, Megaverse®, Nightbane®, Dead Reign®, Heroes Unlimited and other published book titles, names, slogans and likenesses are trademarks of Palladium Books Inc.
+Beyond the Supernatural
+™ RPG        Nightbane® RPG
+Other horror titles from Palladium Books
+®
+Fear the Reaper
+™ Sourcebook
+ Heroes who, like knights of old, travel the highways fighting zombies 
+and helping survivors.
+● Comprehensive background on the Road Reapers.
+● Their code, missions, weapons, strategies and tactics.
+● The Terror Zombie and more.
+● $12.95 
+● $12.95 retail – 48 pages – Cat. No. 234. 
+Available now.
+Graveyard Earth™ Sourcebook
+ The Zombie Apocalypse across the globe; provides a world overview 
+and many adventure ideas.
+● Many tables for settings, encounters and adventure hooks.
+● Random Safe Havens by region, and Survivor Leaders.
+● How to get home from abroad, zombie threat levels & more.
+● $12.95 
+● $12.95 retail – 64 pages – Cat. No. 235. 
+Available now.
+Hell Followed™ Sourcebook
+ This big, 160 page sourcebook begins to redefine the zombie genre. It 
+broadens the field of possibilities and expands upon the modern zombie 
+mythos. It is full of twists and surprises you will not expect.
+● 11 new types of terrifying zombies.
+● 7 player characters, plus Masked Lunatics – heroes or madmen?
+● 21 disasters to complicate survival, and urban survival.
+● 21 disasters to complicate survival, and urban survival.
+● Government enclaves, conspiracy theories and more.
+● $20.95 retail – 160 pages – Cat. No. 236. 
+Available now.
+The Dead Reign® RPG series
+Dead Reign® RPG – “Core Rules.” It is the aftermath of the zombie 
+apocalypse. The dead reign and the living fight against impossible odds. 
+Can you survive? Find out with this fast-paced horror game. Easy to 
+learn. Fast character creation and combat.
+● Zombie combat and survival rules, vehicles and equipment.
+● 
+● 6 iconic Character Classes plus Ordinary People (40+ occupations).
+● 7 types of zombies, plus the Half-Living.
+● 101 Random Scenarios, Encounters, Settings and other tables.
+● $22.95 retail – 224 pages – Cat. No. 230. 
+Available now.
+Civilization Gone
+™ Sourcebook
+Civilization has crumbled to nothing. There is no army. No govern-
+ment. No help coming. What now?
+● Madmen, Psychopaths, villains, heroes and protectors.
+● House, home and survivor camp tables, resources & encounters.
+● $12.92 retail – 64 pages – Cat. No. 231. 
+Available now.
+Dark Places
+™ Sourcebook
+Travel the rails and urban underground to move about undetected by 
+zombies.
+● Worm Meat, Bug Boy, Sewer Crawler & Impersonator Zombies.
+● Traveling the rails, sewers and other dark places.
+● Random encounter tables, boxcar content tables, and much more.
+● $12.92 retail – 64 pages – Cat. No. 232. 
+Available now.
+Endless Dead™ Sourcebook
+The zombies grow in number and strangeness. Can humankind 
+survive?
+● Zombie amalgamations, tables and encounters.
+● New playe
+● New player characters & timetables for your campaign.
+● Weaponizing vehicles, vehicle combat rules, and military bases.
+● Creating survivor caravans, hideouts, Safe Havens & more.
+● $16.95 retail – 96 pages – Cat. No. 233. 
+Available now.
+Can YOU survive the Zombie 
+Apocalypse?
+Joe Sifferman (Order #46323384)
+Palladium Books® Check List & Order Form
+Dept. P-16, 39074 Webb Court, Westland, MI 48185
+Name:                                                                           Address:                                                                                                                   
+City:                                                                                   State:                        Zip/Postal Code:                      Country:                        
+Credit Card Number:                                                                                      Expiration Date:                            Visa       MasterCard
+Telephone Number:                                                            Signature:                                                                          AMEX       Other
+The Rifter® Series
+       175 The Rifter® #75 – $13.95
+       176 The Rifter® #76 – $13.95
+       177 The Rifter® #77 – $13.95
+       178 The Rifter® #78 – $13.95
+       179 The Rifter® #79 – $13.95
+       180 The Rifter® #80 – $14.99 (coming)
+       181 The Rifter® #81 – $14.99 (coming)
+Splicers®      Note: Sourcebooks coming soon.
+       200 Splicers® RPG – $23.95
+Dead Reign®
+       230 Dead Reign® RPG – $24.95
+       231 SB 1: Civilization Gone™ – $12.95
+       232 SB 2: Dark Places™ – $12.95
+       233 SB 3: Endless Dead™ – $16.95
+       234 SB 4: Fear the Reaper™ – $12.95
+       235 SB 5: Graveyard Earth™ – $12.95
+       236 SB 6: Hell Followed™ – $20.95
+       237 SB 7: In the Face of Death™ – $17.99 
+(coming)
+Rifts® Novels
+       301 Sonic Boom™ – $9.95
+       302 Deception’s Web™ – $9.95
+       304 Tales of the Chi-Town ‘Burbs™ – $12.95
+       305 Rifts® Path of the Storm™ – $12.95
+Weapons Books
+       401 Weapons and Armor™ – $8.95
+       402 Weapons and Castles™ – $8.95
+       403 Weapons and Assassins™ – $9.99
+       404 Weapons & Castles of the Orient™ – $9.95
+       409 Exotic Weapons™ – $9.99 (coming)
+       410 European Castles™ – $9.99 (coming)
+Palladium Fantasy RPG®
+       450 The Palladium Fantasy RPG® – $26.95
+       451 Dragons & Gods™ – $24.95
+       453 Old Ones™ 2nd Ed. – $24.95
+       454 Monsters & Animals™ 2nd Ed. – $26.99
+       455 Adventures on the High Seas™ – $24.95
+       458 Island at the Edge of the World™ – $20.95
+       459 Yin-Sloth Jungles™ – $20.95
+       462 Western Empire™ – $24.95
+       463 Baalgor Wastelands™ – $24.95
+       464 Mount Nimro™ – $20.95
+       465 Eastern Territory™ – $24.95
+       466 Library of Bletherad™ – $20.95
+       467 Northern Hinterlands™ – $24.95
+       468 Land/Damned 1: Chaos Lands™ – $24.95
+       469 LoD 2: Eternal Torment™ – $24.95
+       470 LoD 3: The Citadel – $26.99 (coming)
+       471 Wolfen Empire™ – $20.95
+       472 Mysteries of Magic™ One: Heart of 
+Magic – $16.95
+       474 Bizantium/Northern Islands™ – $20.95
+       475 Garden of the Gods™ – $17.99 (coming)
+Heroes Unlimited™ / After the Bomb®
+       500-2 Heroes Unlimited™, 2nd Ed. – $26.95
+       5000HC Heroes Unlimited™ 
+	
+30th Anniversary Hardcover – $50.00
+       501 Villains Unlimited™ Revised – $24.95
+       503 After the Bomb® RPG – $24.95
+       505 Road Hogs™ (After the Bomb® II) – 
+$9.95
+       507 Mutants Down Under™ (AB III) – $9.95
+       511 Mutants of the Yucatan™ (AB IV) – $9.95
+       513 Mutants in Avalon™ (AB V) – $16.95
+       514 Mutants in Orbit™ (AB VI) – $16.95
+       515 Aliens Unlimited™ – $24.95
+       516 Heroes Unlimited™ G.M.’s Guide – 
+$24.95
+       517 Century Station™ – $24.95
+       518 Gramercy Island™ – $24.95
+       519 Aliens Unlimited Galaxy Guide™ – 
+$24.95
+       520 Mutant Underground™ – $16.95
+       521 Powers Unlimited® One – $16.95
+       522 Powers Unlimited® Two – $16.95
+       523 Powers Unlimited® Three – $16.95
+       525 Revised Ninjas & Superspies™ – $20.95
+       526 Mystic China™ – $24.95
+       527 Armageddon Unlimited™ – $20.95
+Beyond the Supernatural™
+       700 Beyond the Supernatural™, 2nd Ed. 
+– $24.95
+       702 Tome Grotesque™ – $22.99 (coming)
+       703 Beyond Arcanum™ – $26.99 (coming)
+Nightbane®
+       730 Nightbane® RPG – $24.95
+       731 Nightbane®: Between the Shadows™ 
+– $20.95
+       732 Nightbane®: Nightlands™ – $20.95
+       733 Nightbane®: Through the Glass 
+Darkly™ – $20.95
+       735 Nightbane® Survival Guide™ – $20.95
+       736 Nightbane® Dark Designs™ – $20.95
+Rifts® Chaos Earth®
+       660 Rifts® Chaos Earth® RPG – $20.95
+       661 Rifts® CE Creatures of Chaos™ – $12.95
+       662 Rifts® CE The Rise of Magic™ – $12.95
+       665 Rifts® Chaos Earth® First Responders™ 
+– $17.99 (coming)
+       666 Rifts® Chaos Earth® Resurrection™ 
+– $20.95
+Rifts®
+       800HC Rifts® RPG Ultimate Edition – $41.99
+       801 Rifts® Sourcebook One Revised – $20.95
+       802-E Rifts® World Book 1: Vampire 
+Kingdoms™, Revised – $26.99
+       803 Rifts® Conversion Book One™ – $24.95
+       804 Rifts® WB 2: Atlantis™ – $20.95
+       805 Rifts® Sourcebook 2: Mechanoids™ 
+– $17.99
+       807 Rifts® WB 3: England™ – $20.95
+       808 Rifts® WB 4: Africa™ – $20.95
+       809 Rifts® Dimension Book 1: Worm-
+wood™ – $22.99
+       810 Rifts® WB 5: Triax™ – $24.95
+       811 Rifts® Pantheons of the Megaverse® 
+– $24.95
+       812 Rifts® Sourcebook 3: Mindwerks™ 
+– $17.99
+       813 Rifts® Mercenaries™ – $20.95
+       814 Rifts® WB 6: South America – $20.95
+       815 Rifts® WB 7: Underseas™ – $24.95
+       816 Rifts® DB 2: Phase World® – $26.99
+       817 Rifts® DB 3: Phase World® Source-
+book – $16.95
+       818 Rifts® WB 8: Rifts® Japan™ – $24.95
+       819 Rifts® WB 9: South America Two™ 
+– $24.95
+       820 Rifts® WB 10: Juicer Uprising™ – 
+$20.95
+       821 Rifts® WB 11: Coalition War Cam-
+paign™ – $24.95
+       822 Rifts® WB 12: Psyscape™ – $20.95
+       825 Rifts® WB 13: Lone Star™ – $20.95
+       826 Rifts® WB 14: New West™ – $24.95
+       827 Rifts® WB 15: Spirit West™ – $24.95
+       828 Rifts® Sourcebook 4: Coalition 
+Navy™ – $16.95
+       829 Rifts® WB 16: Federation of Magic™ 
+– $22.99
+       830 Rifts® DB 4: Skraypers™ – $20.95
+       831 Rifts® Index Volume Two™ – $16.95
+       832 Rifts® WB 17: Warlords of Russia™ 
+– $24.95
+       833 Rifts® WB 18: Mystic Russia™ – $20.95
+       834 Rifts® WB 19: Australia – $24.95
+       835 Rifts® WB 20: Canada™ – $24.95
+       836 Rifts® WB 21: Splynn Dimensional 
+Market™ – $24.95
+       837 Rifts® WB 22: Free Quebec™ – $24.95
+       838 Rifts® WB 23: Xiticix Invasion™ – 
+$22.99
+       839 Rifts® Coalition Wars®: Sedition™ 
+– $20.95
+       840 Rifts® Coalition Wars®: Coalition 
+Overkill™ – $17.99
+       841 Rifts® Coalition Wars®: Sorcerers’ 
+Revenge™ – $16.95
+       842 Rifts® Coalition Wars®: Cyber-
+Knights™ – $16.95
+       843 Rifts® Coalition Wars®: Shadows of 
+Evil™ – $16.95
+Joe Sifferman (Order #46323384)
+       844 Rifts® Coalition Wars®: Final 
+Siege™ – $24.95
+       845 Rifts® Game Master Guide™ – $26.95
+       846 Rifts® Aftermath™ – $26.99
+       847 Rifts® DB5: Anvil Galaxy™ – $20.95
+       848 Rifts® Book of Magic™ – $26.95
+       849 Rifts® Adventure Guide™ – $24.95
+       850 Rifts® Bionics Sourcebook™ – $16.95
+       851 Rifts® DB 6: Three Galaxies™ – $20.95
+       852 Rifts® Dark Conversions™ – $24.95
+       853 Rifts® Chi-Town ‘Burbs™ – $9.99
+       854 Rifts® The Tolkeen Crisis™ – $12.95
+       855 Rifts® The Black Vault™ – $9.95
+       856 Rifts® The Vanguard™ – $9.95
+       857 Rifts® WB 24: China One™ – $20.95
+       858 Rifts® WB 25: China Two™ – $20.95
+       859 Rifts® DB 7: Megaverse Builder™ – 
+$16.95
+       860 Rifts® DB 8: Naruni Wave 2™ – $16.95
+       862 Rifts® WB 26: Dinosaur Swamp™ – 
+$20.95
+       863 Rifts® MercTown™ – $20.95
+       865 Rifts® Merc Ops™ – $20.95
+       866 Rifts® WB 27: Adventures in Dino-
+saur Swamp™ – $20.95
+       867 Rifts® Mercenary Adventure Source-
+book – $12.95
+       868 Rifts® WB 28: Arzno™ – $20.95
+       869 Rifts® WB 29: Madhaven™ – $16.95
+       870 Rifts® John Zeleznik Coloring Book 
+– $5.95
+       871 Rifts® Machinations of Doom™ – 
+$18.95
+       872 Rifts® DB 10: Hades™ – $24.95
+       873 Rifts® DB 11: Dyval™ – $24.95
+       874 Rifts® WB 30: D-Bees of North 
+America™ – $24.95
+       875 Rifts® DB12: Dimensional Outbreak 
+– $24.95
+       876 Rifts® Megaverse® in Flames™ – 
+$24.95
+       876HC Rifts® Megaverse® in Flames™ 
+Gold Hardcover Edition – $50.00
+       877 Rifts® Heroes of the Megaverse® – 
+$16.95
+       878 Rifts® Sourcebook: Shemarrian Na-
+tion™ – $16.95
+       880 Phase World®: Fleets of the Three 
+Galaxies™ – $17.99
+       881 Rifts® WB 31: Triax™ Two – $26.99
+       883 Rifts® DB 14: Thundercloud Galaxy™ 
+– $20.95
+       884 Rifts® Vampires Sourcebook™ – $20.95
+       885 Rifts® WB 32: Lemuria™ – $24.95
+       886 Rifts® Black Market™ – $26.99
+       886HC Rifts® Black Market™ Hardcover 
+Gold Edition – $60.00
+       887 Rifts® WB 33: Northern Gun™ One 
+– $24.95
+       888 Rifts® WB 34: Northern Gun™ Two 
+– $26.95
+       889 Rifts® Sourcebook: Coalition States, 
+Heroes of Humanity™ – $20.95
+       890 Rifts® Dimension Book 15: Secrets of 
+the Atlanteans™ – $24.95
+       890HC Rifts® DB 15: Secrets of the
+	
+Atlanteans™ Gold Edition – $50.00
+       MI8029 Coalition Dog Boy #4 – $6.00
+       MI8030 Coalition Dog Boy #5 – $6.00
+       MI8031 Glitter Boy – $20.00
+       MI8032 Glitter Boy Pilot – $6.00
+       MI8033 Kydian Overlord – $20.00
+       MI8034 Dragonsaurus – $10.00
+       MI8035 Slaver and Slave (Atlantis) Set – 
+$10.00
+       MI8036 Crazy – $6.00
+       MI8037 Juicer #1 – $6.00
+       MI8038 Juicer #2 – $6.00
+       MI8039 Cyborg #1 – $12.00
+       MI8040 Cyborg #2 – $12.00
+       MI8041 Cyborg #3 – $6.00
+       MI8042 Coalition Officer – $6.00
+       MI8043 Coalition Grunt #1 – $6.00
+       MI8044 Coalition Grunt #2 – $6.00
+       MI8045 Coalition Grunt #3 – $6.00
+When placing an order by mail, please 
+add money for shipping and handling. Add 
+$5.00 for orders totaling $1-$50, $10.00 for or-
+ders totaling $51-$95, and for orders totaling 
+$96-$200 please add $15.00 US. Double the 
+amount for Canada, and quadruple it for over-
+seas orders. For more shipping options, order 
+online at www.palladiumbooks.com.
+Allow 2-4 weeks for delivery.
+Make checks and money orders payable to: 
+Palladium Books
+Check release dates for new products. If 
+the book you order has not been released yet, 
+your order will be held as a backorder until the 
+product is available. Please note that prices are 
+subject to change without notice.
+Orders can also be placed by phone, at 
+(734) 721-2903 (order line only). Please have 
+your credit card information when you call.
+       891 Rifts® World Book: Sovietski™ – $26.95
+       892 Rifts® Sourcebook: The Disavowed™ 
+– $17.99 (coming)
+       893 Rifts® CS: Heroes of Humanity™ 
+Arsenal Sourcebook – $17.99 (coming)
+       894 Rifts® Haunted Tech™ – $17.99 (coming)
+       895 Rifts® Living Nowhere™ – $17.99 
+(coming)
+       896 Rifts® Bestiary: North America, Vol-
+ume One – $26.99 (coming)
+       897 Rifts® Bestiary: North America, Vol-
+ume Two – $26.99 (coming)
+       2510 Rifts® & The Megaverse® Art Book 
+– $22.95
+       2510-HC Rifts® & The Megaverse® Art 
+Book, Hardcover – $50.00
+       2510-CML Rifts® & The Megaverse® Art 
+Book, Collector’s Masterwork – $125.00
+Miscellaneous Products
+       600 Deluxe Revised RECON® RPG – 
+$22.95
+       2537 Gamer Coffee Mug – $10.00
+       2545 Dead Reign® Coffee Mug – $10.00
+       2554 Palladium Bookmarks, Set One – $5.00
+       2555 Palladium Bookmarks, Set Two – $5.00
+       2561 Property of Chi-Town Library Pencil 
+– $0.50 each
+       2562 Future Visions™ – The Artistry of 
+Charles Walton II – $13.95
+       2566 Glitter Boy Mouse Pad – $9.95
+       2567 Old Ones Mouse Pad – $9.95
+       2568 Zombie Graveyard Mouse Pad – $9.95
+       2575 Rifts Poker Cards 1 (full color) – $11.99
+       2576 Rifts Poker Cards 2 (line art) – $11.99
+Note: T-tshirts and other products can be found online:
+Rifts® Miniatures
+       MI8002 Xiticix Pack – $18.00
+       MI8004 Coalition Dog Pack – $18.00
+       MI8005 Men of Magic Pack #1 – $18.00
+       MI8006 Cyborgs Pack #1 – $18.00
+       MI8007 Simvan & Ostrosaurus Pack – $18.00
+       MI8008 Coalition Skelebots Pack #1 – $18.00
+       MI8009 Coalition SAMAS Pack #1 – $22.00
+       MI8010 Coalition Sky Cycle Pack – $22.00
+       MI8011 Coalition Dog Pack #2 – $18.00
+       MI8015 Damaged Skelebots Pack #1 – 
+$12.00
+       MI8016 Cyber-Adventurers Pack – $18.00
+       MI8017 Rogues & Scout Pack #1 – $18.00
+       MI8018 Brodkil & Witchling Pack – $18.00
+       MI8019 Damaged Skelebots Pack #2 – 
+$18.00
+       MI8020 Psi-Stalkers & Scouts Pack #1 – 
+$18.00
+       MI8021 Shadow Beast – $12.00
+       MI8022 Mystic Knight – $6.00
+       MI8023 Lord Magus – $6.00
+       MI8024 High Magus – $6.00
+       MI8025 Coalition Psi-Stalker – $6.00
+       MI8026 Coalition Dog Boy in DPM-D1 
+Armor – $6.00
+       MI8027 Coalition Dog Boy #2 – $6.00
+       MI8028 Coalition Dog Boy #3 – $6.00
+www.palladiumbooks.com
+Joe Sifferman (Order #46323384)
+www.palladiumbooks.com
+®
+Unleash your imagination™
+Palladium Books
+® Presents:
+Nightlands
+™
+For the Nightbane
+® RPG Series
+Nightlands™ takes a closer look at the nefarious Nightlords, their minions, and the legendary force of evil 
+behind them, The Dark. In addition, we are given a glance at their eternal twilight world beyond the darkening 
+mirror known as the Nightlands.
+● 
+● A terrifying look at the Nightlands!
+● The secrets of The Dark and insights about the Nightlords.
+● Key cities and places in the Nightlands and on Earth.
+● King Moloch and notable Nightlords, villains and minions.
+● New Nightlord minions and monsters like the Great Hounds, Living Chariots, Skinners, Immortals and others.
+● Rune-like weapons known as “Artifacts.”
+● New Nightbane Morphus Tables and Talents.
+● 
+● World information, adventure ideas, and more.
+● 144 pages.
+$20.95
+Cat. No. 732
+ISBN-10: 0-916211-97-5
+ISBN-13: 978-0-916211-97-4
+Available
+at stores
+everywhere
+Also for Nightbane®
+Nightbane® Role-Playing Game – 240 pages, Cat. No. 730
+Between the Shadows™ – 144 pages, Cat. No. 731
+Through the Glass Darkly™ – 152 pages, Cat. No. 733
+Dark Designs™ – 160 pages, Cat. No. 736
+Dead Reign® RPG
+Civilization
+Civilization has crumbled. The walking dead have risen and 
+feed upon the living. Can you survive when the dead reign?
+● 6 
+Apocalyptic character classes. 7 different types of zombies.
+● Zombie combat tips, survival advice and resources.
+● Death Cults, world overview, and many adventure ideas.
+● 
+A complete role-playing game, 224 pages, Cat. No. 230.
+Also for Dead Reign®
+Civilization Gone™
+Civilization Gone™ – 64 pages, Cat. No. 231
+Dark Places™ – 64 pages, Cat. No. 232
+Endless Dead™ – 96 pages, Cat. No. 233
+Fear the Reaper™ – 48 pages, Cat. No. 234
+Graveyard Earth™ – 64 pages, Cat. No. 235
+Hell Followed™ – 160 pages, Cat. No. 236
+Also from Palladium Books
+®
+Nightbane® Survival Guide
+The world changed after Dark Day, and so did you. You are the Nightbane and only you can stop 
+the horror that is the Nightlords.
+● Nightbane survival tips, and the Nightbane’s role in the Hidden War.
+● New Nightbane Morphus Tables, Talents, Insanity Tables and skills.
+● New Nightbane Creation Guideline
+● New Nightbane Creation Guideline Tables, Education Modifiers and Character Detail Tables.
+● Rules for Nightbane Contacts (informers, spies and buddies), and for creating your own faction.
+● 
+A complete adventure, adventure ideas, world information and more. 160 pages, Cat. No. 735.
+Joe Sifferman (Order #46323384)

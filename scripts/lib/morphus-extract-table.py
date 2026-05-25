@@ -27,7 +27,7 @@ except ImportError:
 
 
 TRAIT_RE = re.compile(
-    r"(\d{2})-(\d{2})%\s+([^:\n]{1,120}?):\s*",
+    r"(\d{2})-(\d{2})\s*%\s+([^:\n]{1,120}?):\s*",
     re.MULTILINE,
 )
 ROLL_OTHER_RE = re.compile(r"other:\s*roll", re.IGNORECASE)

@@ -3,6 +3,780 @@
   "kind": "morphus_trait_table",
   "displayName": "Plant Life",
   "parentTable": null,
-  "description": "Plant Life Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Plant Life and Plant Life II Morphus tables. Plant traits are universally vulnerable to fire/heat (double damage) and resistant to cold/ice (half damage). Plant Life II entries also inherit the table rule that defoliants/herbicides act as lethal poison.",
+  "entries": [
+    {
+      "id": "plant_life_humanoid_tree",
+      "name": "Humanoid Tree",
+      "tableCategory": "Plant Life",
+      "description": "A living tree-like Morphus with trunk torso, branch arms, root-legs, and a recessed leafy head; can pass for a strange tree while still.",
+      "statModifiers": {
+        "sdc": { "dice": "3D4x10" },
+        "ps": { "flat": 6 },
+        "hf": { "dice": "1D4" },
+        "spd": { "percent": -50 }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -75,
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Can sink root-legs into soil and remain motionless to mimic a misshapen tree.",
+        "Regenerates 2D6 S.D.C./Hit Points every 24 hours."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_cactus_skin",
+      "name": "Cactus Skin",
+      "tableCategory": "Plant Life",
+      "description": "Green skin covered in six-inch cactus needles.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6x2" },
+        "bonusHthDamage": { "dice": "1D4" },
+        "hf": { "flat": 2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Attackers who grab/wrestle take 2D6 damage per successful grab."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_thorn_skin",
+      "name": "Thorn Skin",
+      "tableCategory": "Plant Life",
+      "description": "Dark brown vine-coated body wrapped in heavy thorns.",
+      "statModifiers": {
+        "sdc": { "dice": "5D6x3" },
+        "bonusHthDamage": { "dice": "1D6" },
+        "hf": { "flat": 3 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Attackers who grab/wrestle take 3D6 damage per successful grab."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_living_mannequin",
+      "name": "Living Mannequin",
+      "tableCategory": "Plant Life",
+      "description": "A giant unfinished wooden puppet/mannequin with visible wood grain.",
+      "statModifiers": {
+        "sdc": { "dice": "2D4x10" },
+        "bonusHthDamage": { "dice": "1D4" },
+        "hf": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_tree_features",
+      "name": "Tree Features",
+      "tableCategory": "Plant Life",
+      "description": "Vine/leaves/branches replace hair; fingers and nose become gnarled, branch-like; skin turns aged gray-green.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "hf": { "flat": 2 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_flower_child",
+      "name": "Flower Child",
+      "tableCategory": "Plant Life",
+      "description": "Radiant floral Morphus with flowing flower-filled hair, healthy skin, and fresh floral scent.",
+      "statModifiers": {
+        "sdc": { "dice": "1D6" },
+        "ma": { "dice": "1D6" },
+        "pb": { "dice": "3D4" }
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Insects (not arachnids) normally will not attack this Nightbane."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_bark_skin",
+      "name": "Bark Skin",
+      "tableCategory": "Plant Life",
+      "description": "Rough bark-like skin with hardened texture.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6x2" },
+        "ar": { "flat": 1 },
+        "hf": { "flat": 2 }
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Uses Nightlands value for S.D.C. (+4D6x2); Dark Designs appendix prints +4D6x20 in error."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_stink_weed",
+      "name": "Stink Weed",
+      "tableCategory": "Plant Life",
+      "description": "Pale green vine-coated Morphus with bulb clusters that can be opened to vent nauseating sweet odor clouds.",
+      "statModifiers": {
+        "sdc": { "dice": "3D6" },
+        "hf": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Has 1D4x10 odor clusters; opening one or two clusters counts as one melee attack.",
+        "One open cluster: 10 ft cloud; save vs non-lethal poison 16+. Failed save: gagging/nausea, -3 initiative, -1 strike/parry/dodge, -10% skills. Successful save: -1 initiative and -5% skills.",
+        "Opening two clusters doubles cloud range and penalties.",
+        "Odor persists 1 minute per character level and radiates with the Nightbane.",
+        "Used clusters cannot be reused for 24 hours. Smashing/cutting a cluster triggers the same effect."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_fern_fronds",
+      "name": "Fern Fronds",
+      "tableCategory": "Plant Life II",
+      "description": "Long fern-like fronds grow from head, shoulders, and back, draping like hair.",
+      "statModifiers": {
+        "hf": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Can subsist on sunlight and water alone if receiving at least 14 hours of sunlight per week.",
+        "Must receive at least two hours of sunlight weekly (unless in the Nightlands); each missed week inflicts cumulative penalties of P.S. -3, P.E. -3, and Morphus S.D.C. -30 until sunlight is restored.",
+        "If P.S., P.E., or Morphus S.D.C. reaches zero from sunlight deprivation, Morphus is unavailable until sunlight is regained."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_vines",
+      "name": "Vines",
+      "tableCategory": "Plant Life II",
+      "description": "Arms, legs, and torso are wrapped in fibrous non-prehensile vines usable as whips, ropes, or bindings.",
+      "statModifiers": {
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "3D6+6" },
+        "ps": { "flat": -2 },
+        "ppe": { "dice": "-1D6" },
+        "strike": { "flat": 1 },
+        "disarm": { "flat": 1 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Vine Whip",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_camouflage", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 5 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "About 120 feet of vines cover the body and can be torn off in 3-30 foot sections.",
+        "Each foot of vine has 20 S.D.C. and regrows at one foot per hour.",
+        "As bindings/lasso, vines hold with half the Nightbane's Supernatural P.S.",
+        "Maximum whip reach is 20 feet."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_nutshell",
+      "name": "Nutshell",
+      "tableCategory": "Plant Life II",
+      "description": "Skin transforms into a thick woody shell resembling coconut or walnut husk.",
+      "statModifiers": {
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "2D4x10+20" },
+        "pp": { "flat": -2 },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 }
+      },
+      "naturalAr": 12,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -5 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -15 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -15 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_itch_weed",
+      "name": "Itch-Weed",
+      "tableCategory": "Plant Life II",
+      "description": "Green waxy skin secretes a potent poison-ivy-like irritant.",
+      "statModifiers": {
+        "hf": { "flat": 1 },
+        "ma": { "flat": -1 },
+        "sdc": { "dice": "-2D6" },
+        "ppe": { "dice": "-1D6" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -15 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -15 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -15 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5,
+        "poison": 0.5
+      },
+      "customOneOffs": [
+        "Resistant to poison: on failed saves, damage, duration, and penalties are halved.",
+        "Poisonous Skin: after exposed-skin contact and failed save vs non-lethal poison 16+, victim suffers itching/burning within 1D4 melees.",
+        "Poisonous Skin effects: -2 attacks per melee, -2 all combat rolls, -10% all skills for 2D6 minutes; double penalties and duration vs Nightlords and Nightlands denizens."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_moss_monster",
+      "name": "Moss Monster",
+      "tableCategory": "Plant Life II",
+      "description": "Body overgrown with moss that masks features, softens movement noise, and helps blend into overgrown spaces.",
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "4D6" },
+        "hf": { "flat": 1 },
+        "ma": { "flat": -1 },
+        "spd": { "percent": -50 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_camouflage", "modifierPercent": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "If perfectly still in graveyards, ruins, or parks, can pass for an old statue."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_venus_flytrap",
+      "name": "Venus Flytrap",
+      "tableCategory": "Plant Life II",
+      "description": "Giant carnivorous plant Morphus with root-legs, vine-arms, and a massive motion-sensitive flytrap maw.",
+      "statModifiers": {
+        "me": { "flat": 2 },
+        "ps": { "flat": 2 },
+        "initiative": { "flat": 1 },
+        "strike": { "flat": 2 },
+        "parry": { "flat": 1 },
+        "sdc": { "dice": "1D6x10" },
+        "hf": { "flat": 2 },
+        "ma": { "flat": -3 },
+        "pb": { "flat": -4 },
+        "spd": { "flat": -6 }
+      },
+      "saveModifiers": {
+        "gas": 4
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "float"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Flytrap Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "limbDurability": [
+        {
+          "limbName": "Flytrap Head/Maw",
+          "quantity": 1,
+          "sdc": 64,
+          "calledShotPenalty": -3
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_trait", "targetValue": "requires_hands", "modifierPercent": -30 },
+          { "targetType": "category", "targetValue": "Ranged", "isNegated": true },
+          { "targetType": "skill_trait", "targetValue": "uses_machinery", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "isNegated": true },
+          { "targetType": "category", "targetValue": "Performance", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true },
+          { "targetType": "category", "targetValue": "Pilot", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "isNegated": true }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Penalties for darkness/blindness are only -2 due to motion-sensitive fibers in the maw.",
+        "Head/maw has 4D6+50 S.D.C. by source; limbDurability uses representative baseline 64 and this textual rule is authoritative for table play.",
+        "If flytrap head is destroyed, Morphus collapses to Facade; head regrows completely in 1D4+1 hours.",
+        "Maw can seize prey in a vise grip; prying open requires twice the Nightbane's Supernatural P.S.",
+        "Captured prey takes 2D6 acid damage per melee while held in maw; double damage to Nightlords and Nightlands denizens.",
+        "Reducing the Nightbane to 3 or fewer Hit Points forces the maw open and releases prey."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_seed_spore_pods",
+      "name": "Seed/Spore Pods",
+      "tableCategory": "Plant Life II",
+      "description": "2D6+2 fragile skin pods release seed/spore clouds when popped, broken, or crushed in grapples.",
+      "statModifiers": {
+        "pe": { "flat": -1 },
+        "pb": { "flat": -2 },
+        "sdc": { "dice": "2D6" },
+        "ppe": { "dice": "-1D6" }
+      },
+      "saveModifiers": {
+        "poison": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Has 2D6+2 pods (2 S.D.C. each); each broken pod creates a 6-foot radius cloud for 1D4 melee rounds.",
+        "Wrestling this Nightbane has a 55% chance to rupture one or more pods.",
+        "Spore cloud (not affecting the Nightbane): lose initiative and one attack, -2 all combat rolls, -10% skills; lasts 1D4 melees after leaving cloud."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_fungus_mushrooms",
+      "name": "Fungus/Mushrooms",
+      "tableCategory": "Plant Life II",
+      "description": "Mushroom colonies grow over back, shoulders, neck, and head (often replacing hair), each with distinct effects when harvested and used.",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "pb": { "flat": -2 },
+        "spd": { "flat": -2 },
+        "ppe": { "dice": "-2D6" }
+      },
+      "saveModifiers": {
+        "poison": 3
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Mushroom catalog: 2D4 Decomposing, 1D6+2 Deadly, 1D6+4 Debilitating Poison, 1D6+4 Edible, 1D6+2 Medicinal.",
+        "Decomposing: one on a corpse consumes entire body in 1D6 melee rounds.",
+        "Deadly: ingested, 3D6 Hit Point damage each; save vs lethal poison for half damage.",
+        "Debilitating Poison: per mushroom eaten, -1 attack, -2 combat rolls/bonuses, Spd -20%, -15% skills for 20 minutes each.",
+        "Edible: each provides one meal.",
+        "Medicinal: cures upset stomach/vomiting/heartburn; helps hangovers (half duration); restores 1D4 poison-caused H.P. (or 1D6 H.P. per mushroom when used specifically to recover poison damage).",
+        "Any used/destroyed mushroom regrows in 24 hours."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_fruit_bearing_vines",
+      "name": "Fruit-Bearing Vines",
+      "tableCategory": "Plant Life II",
+      "description": "Leafy body vines produce clustered berries and small fruit (6D6+10) that can be eaten or thrown.",
+      "statModifiers": {
+        "iq": { "flat": 1 },
+        "ma": { "flat": 1 },
+        "sdc": { "dice": "4D6" },
+        "pp": { "flat": -1 },
+        "spd": { "flat": -1 },
+        "ppe": { "dice": "-1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -20 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+        ]
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "customOneOffs": [
+        "Fruits regrow in 24 hours if eaten, destroyed, or removed.",
+        "Berries: thrown range 20 ft, no damage, but can splatter and obscure lenses/visors/windows on called shot.",
+        "Large fruit (apple/pear/plum/tangerine/mango size): thrown range 100 ft, 1 damage, 20% chance to cause vision-smear penalties (-2 strike/parry/dodge/disarm, -1 visual Perception) until washed with water.",
+        "Eight berries or one large fruit provide full-meal nourishment."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ]
+    },
+    {
+      "id": "plant_life_ii_sap",
+      "name": "Sap",
+      "tableCategory": "Plant Life II",
+      "description": "Tough onion-stalk or light-bark skin; bleeds sticky sap and can spit sap globs for utility and combat.",
+      "statModifiers": {
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "6D6" },
+        "pp": { "flat": -1 },
+        "pb": { "flat": -1 },
+        "ppe": { "dice": "-2D4" },
+        "entangle": { "flat": 3 },
+        "disarm": { "flat": 3 }
+      },
+      "damageAffinities": {
+        "fire": 2,
+        "heat": 2,
+        "cold": 0.5,
+        "ice": 0.5,
+        "poison": 0.5,
+        "airborneToxins": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 15 },
+          { "targetType": "skill_id", "targetValue": "skill_palming", "modifierPercent": 15 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -10 },
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to diseases, poisons, toxins, and smoke that affect humans; only plant-targeting poisons/toxins affect this Nightbane and then at half damage.",
+        "Piercing/cutting weapons have 50% chance to stick in sap-coated body; freeing one requires combined Supernatural P.S. 30 and two attacks (the Nightbane can remove stuck weapons easily).",
+        "Can spit or exude sap (half handful per melee action) for glue-like repairs, sealing wounds, adhesion, and trail-marking.",
+        "Sap is difficult to remove; requires soap, hot water, and vigorous scrubbing."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 50
+        }
+      ]
+    }
+  ]
 }

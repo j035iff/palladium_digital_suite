@@ -1,0 +1,332 @@
+{
+  "entries": [
+    {
+      "id": "plant_life_bark_skin",
+      "name": "Bark Skin",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (81-90%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_cactus_skin",
+      "name": "Cactus Skin",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (21-30%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_fern_fronds",
+      "name": "Fern Fronds",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (01-10%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_flower_child",
+      "name": "Flower Child",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (71-80%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_fruit_bearing_vines",
+      "name": "Fruit-Bearing Vines",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (81-90%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_fungus_mushrooms",
+      "name": "Fungus/Mushrooms",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (71-80%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_humanoid_tree",
+      "name": "Humanoid Tree",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (01-20%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_itch_weed",
+      "name": "Itch-Weed",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (31-40%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_living_mannequin",
+      "name": "Living Mannequin",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (41-60%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_moss_monster",
+      "name": "Moss Monster",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (41-50%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_nutshell",
+      "name": "Nutshell",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (21-30%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_sap",
+      "name": "Sap",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 50
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (91-00%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_seed_spore_pods",
+      "name": "Seed/Spore Pods",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (61-70%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_stink_weed",
+      "name": "Stink Weed",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (91-00%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_thorn_skin",
+      "name": "Thorn Skin",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (31-40%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_tree_features",
+      "name": "Tree Features",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (61-70%; authority=dark_designs). Also in: nightlands."
+    },
+    {
+      "id": "plant_life_venus_flytrap",
+      "name": "Venus Flytrap",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (51-60%; authority=dark_designs). Also in: plant_life_ii."
+    },
+    {
+      "id": "plant_life_vines",
+      "name": "Vines",
+      "tableCategory": "Plant Life",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\plant_life\\extracted-authoritative.txt (11-20%; authority=dark_designs). Also in: plant_life_ii."
+    }
+  ]
+}

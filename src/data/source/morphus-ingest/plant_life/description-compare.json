@@ -1,0 +1,52 @@
+{
+  "differences": [
+    {
+      "trait": "Humanoid Tree",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Cactus Skin",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Thorn Skin",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Living Mannequin",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Tree Features",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Flower Child",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Bark Skin",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Stink Weed",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

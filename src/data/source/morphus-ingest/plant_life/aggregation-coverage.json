@@ -1,0 +1,205 @@
+{
+  "tableId": "plant_life",
+  "entries": [
+    {
+      "id": "plant_life_humanoid_tree",
+      "name": "Humanoid Tree",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_cactus_skin",
+      "name": "Cactus Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_thorn_skin",
+      "name": "Thorn Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_living_mannequin",
+      "name": "Living Mannequin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_tree_features",
+      "name": "Tree Features",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_flower_child",
+      "name": "Flower Child",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_bark_skin",
+      "name": "Bark Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_stink_weed",
+      "name": "Stink Weed",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_fern_fronds",
+      "name": "Fern Fronds",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_vines",
+      "name": "Vines",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_nutshell",
+      "name": "Nutshell",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_itch_weed",
+      "name": "Itch-Weed",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_moss_monster",
+      "name": "Moss Monster",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_venus_flytrap",
+      "name": "Venus Flytrap",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_seed_spore_pods",
+      "name": "Seed/Spore Pods",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_fungus_mushrooms",
+      "name": "Fungus/Mushrooms",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_fruit_bearing_vines",
+      "name": "Fruit-Bearing Vines",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "plant_life_ii_sap",
+      "name": "Sap",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

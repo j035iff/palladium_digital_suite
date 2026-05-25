@@ -1,0 +1,275 @@
+{
+  "tableId": "plant_life",
+  "generatedAt": "2026-05-25T23:24:27.689Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 18,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "plant_life_bark_skin",
+        "name": "Bark Skin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_cactus_skin",
+        "name": "Cactus Skin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_fern_fronds",
+        "name": "Fern Fronds",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_flower_child",
+        "name": "Flower Child",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_fruit_bearing_vines",
+        "name": "Fruit-Bearing Vines",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_fungus_mushrooms",
+        "name": "Fungus/Mushrooms",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_humanoid_tree",
+        "name": "Humanoid Tree",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_itch_weed",
+        "name": "Itch-Weed",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_living_mannequin",
+        "name": "Living Mannequin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_moss_monster",
+        "name": "Moss Monster",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_nutshell",
+        "name": "Nutshell",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_sap",
+        "name": "Sap",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_seed_spore_pods",
+        "name": "Seed/Spore Pods",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_stink_weed",
+        "name": "Stink Weed",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_thorn_skin",
+        "name": "Thorn Skin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_tree_features",
+        "name": "Tree Features",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_venus_flytrap",
+        "name": "Venus Flytrap",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "plant_life_vines",
+        "name": "Vines",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 18,
+    "ids": [
+      "plant_life_humanoid_tree",
+      "plant_life_cactus_skin",
+      "plant_life_thorn_skin",
+      "plant_life_living_mannequin",
+      "plant_life_tree_features",
+      "plant_life_flower_child",
+      "plant_life_bark_skin",
+      "plant_life_stink_weed",
+      "plant_life_ii_fern_fronds",
+      "plant_life_ii_vines",
+      "plant_life_ii_nutshell",
+      "plant_life_ii_itch_weed",
+      "plant_life_ii_moss_monster",
+      "plant_life_ii_venus_flytrap",
+      "plant_life_ii_seed_spore_pods",
+      "plant_life_ii_fungus_mushrooms",
+      "plant_life_ii_fruit_bearing_vines",
+      "plant_life_ii_sap"
+    ]
+  },
+  "bookIndex": {
+    "total": 18,
+    "included": 18,
+    "skippedOther": 0,
+    "names": [
+      "Bark Skin",
+      "Cactus Skin",
+      "Fern Fronds",
+      "Flower Child",
+      "Fruit-Bearing Vines",
+      "Fungus/Mushrooms",
+      "Humanoid Tree",
+      "Itch-Weed",
+      "Living Mannequin",
+      "Moss Monster",
+      "Nutshell",
+      "Sap",
+      "Seed/Spore Pods",
+      "Stink Weed",
+      "Thorn Skin",
+      "Tree Features",
+      "Venus Flytrap",
+      "Vines"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      },
+      {
+        "key": "plant_life_ii",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": false
+      },
+      {
+        "key": "nightlands",
+        "pdf": "src/data/reference/nightbane/WB2-Nightlands.pdf",
+        "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+        "authoritative": false
+      }
+    ],
+    "multiSourceTraits": 8
+  },
+  "recommendations": [
+    "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json",
+    "Target has ids not in staging: plant_life_ii_fern_fronds, plant_life_ii_vines, plant_life_ii_nutshell, plant_life_ii_itch_weed, plant_life_ii_moss_monster, plant_life_ii_venus_flytrap, plant_life_ii_seed_spore_pods, plant_life_ii_fungus_mushrooms, plant_life_ii_fruit_bearing_vines, plant_life_ii_sap",
+    "Staging has ids not in target (merge pending): plant_life_fern_fronds, plant_life_fruit_bearing_vines, plant_life_fungus_mushrooms, plant_life_itch_weed, plant_life_moss_monster, plant_life_nutshell, plant_life_sap, plant_life_seed_spore_pods, plant_life_venus_flytrap, plant_life_vines"
+  ],
+  "descriptionCompare": {
+    "differences": [
+      {
+        "trait": "Humanoid Tree",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Cactus Skin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Thorn Skin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Living Mannequin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Tree Features",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Flower Child",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Bark Skin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Stink Weed",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      }
+    ]
+  }
+}

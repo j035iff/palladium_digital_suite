@@ -1,0 +1,409 @@
+{
+  "tableId": "plant_life",
+  "tableHeading": "Plant Life Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "plant_life_ii",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": false
+    },
+    {
+      "key": "nightlands",
+      "pdf": "src/data/reference/nightbane/WB2-Nightlands.pdf",
+      "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 18,
+  "traits": [
+    {
+      "name": "Bark Skin",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "81-90%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Cactus Skin",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "21-30%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Fern Fronds",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 47,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Flower Child",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "71-80%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Fruit-Bearing Vines",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Fungus/Mushrooms",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Humanoid Tree",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "01-20%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "01-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Itch-Weed",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Living Mannequin",
+      "percent": "41-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "41-60%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "41-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Moss Monster",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48,
+          "percent": "41-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Nutshell",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Sap",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 50,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Seed/Spore Pods",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 49,
+          "percent": "61-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Stink Weed",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "91-00%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Thorn Skin",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "31-40%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Tree Features",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 142,
+          "percent": "61-70%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 143,
+          "percent": "61-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Venus Flytrap",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48,
+          "percent": "51-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    },
+    {
+      "name": "Vines",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "plant_life_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 48,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "plant_life_ii"
+      ]
+    }
+  ]
+}
