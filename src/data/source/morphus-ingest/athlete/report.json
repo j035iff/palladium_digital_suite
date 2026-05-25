@@ -1,15 +1,17 @@
 {
   "tableId": "athlete",
-  "generatedAt": "2026-05-25T17:49:53.207Z",
+  "generatedAt": "2026-05-25T21:48:08.697Z",
   "schemaKeys": [
     "activatedAbilities",
     "companionBlueprint",
+    "conditionalStanceModifiers",
     "customOneOffs",
     "damageAffinities",
     "description",
     "disabledNaturalAttackTags",
     "gameSystems",
     "gimmickInventory",
+    "gimmickToySwitches",
     "handCapacityConstraints",
     "heightModifier",
     "id",

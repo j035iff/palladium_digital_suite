@@ -1,0 +1,544 @@
+{
+  "generatedAt": "2026-05-25T21:48:05.724Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "conditionalStanceModifiers"
+  ],
+  "traitCount": 9,
+  "perTrait": [
+    {
+      "percent": "01-11%",
+      "name": "Streamlined",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "spd_override",
+          "schemaPaths": [
+            "statModifiers.spd.isOverride",
+            "statModifiers.spd.dice"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "height_weight",
+          "schemaPaths": [
+            "heightModifier",
+            "weightModifier"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons",
+        "conditionalStanceModifiers",
+        "heightModifier",
+        "weightModifier"
+      ]
+    },
+    {
+      "percent": "12-22%",
+      "name": "Gymnast’s Build",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_grant_level",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides.grantUnlearnedValue",
+            "skillModifiers.specificSkillOverrides.perLevelIncrement"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "23-34%",
+      "name": "Musclebound",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "35-45%",
+      "name": "Team Jersey",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "stat_flat_attribute",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "saveModifiers",
+        "conditionalStanceModifiers"
+      ]
+    },
+    {
+      "percent": "46-56%",
+      "name": "Skates",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "terrain_speed",
+          "schemaPaths": [
+            "mobility.conditionalTerrainModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "mobility"
+      ]
+    },
+    {
+      "percent": "57-67%",
+      "name": "Club/Stick",
+      "pageNumber": 28,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "68-78%",
+      "name": "Protective Gear",
+      "pageNumber": 29,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "79-89%",
+      "name": "Cleats",
+      "pageNumber": 29,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "90-00%",
+      "name": "Game Ball/Projectile",
+      "pageNumber": 29,
+      "patterns": [
+        {
+          "patternId": "skill_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "hand_capacity",
+          "schemaPaths": [
+            "handCapacityConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "handCapacityConstraints"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "athlete_streamlined",
+        "name": "Streamlined",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "heightModifier",
+          "id",
+          "name",
+          "naturalWeapons",
+          "sources",
+          "statModifiers",
+          "tableCategory",
+          "weightModifier"
+        ]
+      },
+      {
+        "id": "athlete_gymnasts_build",
+        "name": "Gymnast's Build",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_musclebound",
+        "name": "Musclebound",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_team_jersey",
+        "name": "Team Jersey",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_skates",
+        "name": "Skates",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_club_stick",
+        "name": "Club/Stick",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "handCapacityConstraints",
+          "id",
+          "name",
+          "naturalWeapons",
+          "sources",
+          "statModifiers",
+          "tableCategory",
+          "weaponClassBonuses"
+        ]
+      },
+      {
+        "id": "athlete_protective_gear",
+        "name": "Protective Gear",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalAr",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_cleats",
+        "name": "Cleats",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalWeapons",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "athlete_game_ball_projectile",
+        "name": "Game Ball/Projectile",
+        "topLevelKeys": [
+          "customOneOffs",
+          "description",
+          "gameSystems",
+          "handCapacityConstraints",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory",
+          "weaponClassBonuses"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: sensory, damageAffinities, weaponClassBonuses, limbDurability, subTraitChoicesBudget, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "athlete"
+}
