@@ -1,0 +1,134 @@
+{
+  "tableId": "athlete",
+  "generatedAt": "2026-05-25T17:49:53.207Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 9,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "athlete_cleats",
+        "name": "Cleats",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_club_stick",
+        "name": "Club/Stick",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_game_ball_projectile",
+        "name": "Game Ball/Projectile",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_gymnasts_build",
+        "name": "Gymnast’s Build",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_musclebound",
+        "name": "Musclebound",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_protective_gear",
+        "name": "Protective Gear",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_skates",
+        "name": "Skates",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_streamlined",
+        "name": "Streamlined",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "athlete_team_jersey",
+        "name": "Team Jersey",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 9,
+    "ids": [
+      "athlete_streamlined",
+      "athlete_gymnasts_build",
+      "athlete_musclebound",
+      "athlete_team_jersey",
+      "athlete_skates",
+      "athlete_club_stick",
+      "athlete_protective_gear",
+      "athlete_cleats",
+      "athlete_game_ball_projectile"
+    ]
+  },
+  "bookIndex": {
+    "total": 9,
+    "included": 9,
+    "skippedOther": 0,
+    "names": [
+      "Cleats",
+      "Club/Stick",
+      "Game Ball/Projectile",
+      "Gymnast’s Build",
+      "Musclebound",
+      "Protective Gear",
+      "Skates",
+      "Streamlined",
+      "Team Jersey"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

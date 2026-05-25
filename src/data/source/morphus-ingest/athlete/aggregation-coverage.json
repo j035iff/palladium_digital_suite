@@ -1,0 +1,100 @@
+{
+  "tableId": "athlete",
+  "entries": [
+    {
+      "id": "athlete_streamlined",
+      "name": "Streamlined",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_gymnasts_build",
+      "name": "Gymnast's Build",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_musclebound",
+      "name": "Musclebound",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_team_jersey",
+      "name": "Team Jersey",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_skates",
+      "name": "Skates",
+      "hooks": [
+        "terrain Spd multipliers",
+        "skill overrides",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_club_stick",
+      "name": "Club/Stick",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "weapon class bonuses",
+        "hand capacity",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_protective_gear",
+      "name": "Protective Gear",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_cleats",
+      "name": "Cleats",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "terrain Spd multipliers",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "athlete_game_ball_projectile",
+      "name": "Game Ball/Projectile",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "weapon class bonuses",
+        "hand capacity",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

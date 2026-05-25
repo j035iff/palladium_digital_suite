@@ -1,0 +1,57 @@
+{
+  "tableId": "hobbyist",
+  "tableHeading": "Hobbyist Table",
+  "bookPdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+  "traitCount": 8,
+  "includedCount": 8,
+  "traits": [
+    {
+      "percent": "01-11%",
+      "name": "Backpack",
+      "pageNumber": 35,
+      "skip": false
+    },
+    {
+      "percent": "12-22%",
+      "name": "Card Deck",
+      "pageNumber": 35,
+      "skip": false
+    },
+    {
+      "percent": "23-35%",
+      "name": "Video Games",
+      "pageNumber": 35,
+      "skip": false
+    },
+    {
+      "percent": "36-44%",
+      "name": "Dice Bag",
+      "pageNumber": 36,
+      "skip": false
+    },
+    {
+      "percent": "45-55%",
+      "name": "Display Case",
+      "pageNumber": 36,
+      "skip": false
+    },
+    {
+      "percent": "56-66%",
+      "name": "Leather-Bound",
+      "pageNumber": 36,
+      "skip": false
+    },
+    {
+      "percent": "67-77%",
+      "name": "Saddle",
+      "pageNumber": 36,
+      "skip": false
+    },
+    {
+      "percent": "78-88%",
+      "name": "Telescopic or Binocular Eyes",
+      "pageNumber": 37,
+      "skip": false
+    }
+  ]
+}

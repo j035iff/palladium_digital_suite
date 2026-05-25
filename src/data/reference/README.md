@@ -16,3 +16,5 @@ nightbane/
 ```
 
 When transcribing Morphus tables: use printed **start page** in `sources`, skip **Other** percentile rows, and run `npm run validate:schemas` after edits.
+
+Automated per-table workflow: `npm run morphus:ingest` — see `src/data/source/morphus-ingest/README.md`. List every book that contains the table; **Dark Designs** is authoritative when descriptions differ.

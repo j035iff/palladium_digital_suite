@@ -1,0 +1,148 @@
+{
+  "entries": [
+    {
+      "id": "athlete_cleats",
+      "name": "Cleats",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (79-89%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_club_stick",
+      "name": "Club/Stick",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (57-67%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_game_ball_projectile",
+      "name": "Game Ball/Projectile",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (90-00%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_gymnasts_build",
+      "name": "Gymnast’s Build",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (12-22%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_musclebound",
+      "name": "Musclebound",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (23-34%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_protective_gear",
+      "name": "Protective Gear",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 29
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (68-78%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_skates",
+      "name": "Skates",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (46-56%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_streamlined",
+      "name": "Streamlined",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (01-11%; authority=dark_designs)."
+    },
+    {
+      "id": "athlete_team_jersey",
+      "name": "Team Jersey",
+      "tableCategory": "Athlete",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 28
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (35-45%; authority=dark_designs)."
+    }
+  ]
+}

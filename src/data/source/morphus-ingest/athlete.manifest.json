@@ -1,0 +1,19 @@
+{
+  "id": "athlete",
+  "displayName": "Athlete",
+  "tableCategory": "Athlete",
+  "tableHeading": "Athlete Table",
+  "targetJson": "src/data/content/morphus/tables/athlete.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Athlete Table",
+      "authoritative": true
+    }
+  ]
+}

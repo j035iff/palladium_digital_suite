@@ -1,0 +1,172 @@
+{
+  "tableId": "hobbyist",
+  "generatedAt": "2026-05-25T17:07:45.559Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 17,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "hobbyist_backpack",
+        "name": "Backpack",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_card_deck",
+        "name": "Card Deck",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_video_games",
+        "name": "Video Games",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_dice_bag",
+        "name": "Dice Bag",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_display_case",
+        "name": "Display Case",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_leather_bound",
+        "name": "Leather-Bound",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_saddle",
+        "name": "Saddle",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_telescopic_or_binocular_eyes",
+        "name": "Telescopic or Binocular Eyes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_bigfoot_wendigo_yeti",
+        "name": "Bigfoot/Wendigo/Yeti",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_djinn",
+        "name": "Djinn",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_dragon_wyvern_serpent",
+        "name": "Dragon/Wyvern/Serpent",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_gorgon",
+        "name": "Gorgon",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_griffin",
+        "name": "Griffin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_sphinx",
+        "name": "Sphinx",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_unicorn",
+        "name": "Unicorn",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_fairy",
+        "name": "Fairy",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "hobbyist_cyclops_giant",
+        "name": "Cyclops/Giant",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 0,
+    "ids": []
+  },
+  "bookIndex": {
+    "total": 19,
+    "included": 17,
+    "skippedOther": 2,
+    "names": [
+      "Backpack",
+      "Card Deck",
+      "Video Games",
+      "Dice Bag",
+      "Display Case",
+      "Leather-Bound",
+      "Saddle",
+      "Telescopic or Binocular Eyes",
+      "Bigfoot/Wendigo/Yeti",
+      "Djinn",
+      "Dragon/Wyvern/Serpent",
+      "Gorgon",
+      "Griffin",
+      "Sphinx",
+      "Unicorn",
+      "Fairy",
+      "Cyclops/Giant"
+    ]
+  },
+  "recommendations": [
+    "Staging has ids not in target (merge pending): hobbyist_backpack, hobbyist_card_deck, hobbyist_video_games, hobbyist_dice_bag, hobbyist_display_case, hobbyist_leather_bound, hobbyist_saddle, hobbyist_telescopic_or_binocular_eyes, hobbyist_bigfoot_wendigo_yeti, hobbyist_djinn, hobbyist_dragon_wyvern_serpent, hobbyist_gorgon, hobbyist_griffin, hobbyist_sphinx, hobbyist_unicorn, hobbyist_fairy, hobbyist_cyclops_giant"
+  ]
+}

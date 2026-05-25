@@ -1,0 +1,132 @@
+{
+  "entries": [
+    {
+      "id": "hobbyist_backpack",
+      "name": "Backpack",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (01-11%)"
+    },
+    {
+      "id": "hobbyist_card_deck",
+      "name": "Card Deck",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (12-22%)"
+    },
+    {
+      "id": "hobbyist_video_games",
+      "name": "Video Games",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (23-35%)"
+    },
+    {
+      "id": "hobbyist_dice_bag",
+      "name": "Dice Bag",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (36-44%)"
+    },
+    {
+      "id": "hobbyist_display_case",
+      "name": "Display Case",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (45-55%)"
+    },
+    {
+      "id": "hobbyist_leather_bound",
+      "name": "Leather-Bound",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (56-66%)"
+    },
+    {
+      "id": "hobbyist_saddle",
+      "name": "Saddle",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (67-77%)"
+    },
+    {
+      "id": "hobbyist_telescopic_or_binocular_eyes",
+      "name": "Telescopic or Binocular Eyes",
+      "tableCategory": "Hobbyist",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\hobbyist\\extracted.txt (78-88%)"
+    }
+  ]
+}
