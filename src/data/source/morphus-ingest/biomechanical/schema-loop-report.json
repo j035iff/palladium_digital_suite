@@ -1,0 +1,12 @@
+{
+  "tableId": "biomechanical",
+  "maxIterations": 12,
+  "iterations": [
+    {
+      "iteration": 1,
+      "readyToTranscribe": true,
+      "edgeCaseCount": 0
+    }
+  ],
+  "completed": true
+}

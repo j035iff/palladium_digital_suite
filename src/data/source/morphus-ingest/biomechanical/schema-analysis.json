@@ -1,0 +1,164 @@
+{
+  "generatedAt": "2026-05-25T19:47:20.770Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs"
+  ],
+  "traitCount": 11,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Armorgraft",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "11-20%",
+      "name": "Plastic",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "21-25%",
+      "name": "Rocket Jets",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "26-30%",
+      "name": "Metal Teeth and Talons",
+      "pageNumber": 138,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Metal Endoskeleton",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "41-50%",
+      "name": "Mechanical Limbs",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "51-60%",
+      "name": "Weapon Hand",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "61-70%",
+      "name": "Metal Exoskeleton",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "71-80%",
+      "name": "Metal Head & Camera Eyes",
+      "pageNumber": 138,
+      "patterns": [
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "sensory"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Wheels or Treads",
+      "pageNumber": 138,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "91-00%",
+      "name": "Gun Limbs",
+      "pageNumber": 139,
+      "patterns": [
+        {
+          "patternId": "permanent_ppe",
+          "schemaPaths": [
+            "customOneOffs",
+            "statModifiers.ppe"
+          ],
+          "severity": "warn",
+          "note": "Permanent P.P.E. burn may need customOneOffs; statModifiers.ppe is Morphus-only shift."
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "customOneOffs",
+        "statModifiers"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: naturalAr, saveModifiers, mobility, skillModifiers, damageAffinities, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "biomechanical"
+}

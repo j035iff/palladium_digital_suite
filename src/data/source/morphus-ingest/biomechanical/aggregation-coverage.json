@@ -1,0 +1,101 @@
+{
+  "tableId": "biomechanical",
+  "entries": [
+    {
+      "id": "biomechanical_armorgraft",
+      "name": "Armorgraft",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_plastic",
+      "name": "Plastic",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_rocket_jets",
+      "name": "Rocket Jets",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_metal_teeth_and_talons",
+      "name": "Metal Teeth and Talons",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_metal_endoskeleton",
+      "name": "Metal Endoskeleton",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_mechanical_limbs",
+      "name": "Mechanical Limbs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_weapon_hand",
+      "name": "Weapon Hand",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_metal_exoskeleton",
+      "name": "Metal Exoskeleton",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_metal_head_and_camera_eyes",
+      "name": "Metal Head & Camera Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_wheels_or_treads",
+      "name": "Wheels or Treads",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_gun_limbs",
+      "name": "Gun Limbs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}
