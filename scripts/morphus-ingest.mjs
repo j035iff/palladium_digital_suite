@@ -2,16 +2,14 @@
 /**
  * Morphus table ingest pipeline (per content group).
  *
- * Workflow:
- *   1. init     — create manifest for table + book + target JSON
- *   2. extract  — PDF → extracted.txt + traits-index.json (needs pymupdf)
- *   3. scaffold — traits-index → entries.staging.json skeletons (+ sources pages)
- *   4. (you/agent transcribe mechanics into entries.staging.json vs schema)
- *   5. report   — validate staging/target, schema key audit, book index diff
- *   6. merge    — copy staging entries into content/morphus/tables/<id>.json
- *   7. validate — npm run validate:schemas (morphus focus)
- *   8. aggregate — aggregation hook coverage per entry
- *   all         — extract → scaffold → report → validate → aggregate
+ * High-level pipeline:
+ *   prepare  — extract PDF → schema-loop (analyze ↔ apply schema until ready)
+ *   build    — scaffold + transcribe JSON + merge + validate (after prepare)
+ *   finalize — aggregation coverage on target JSON
+ *
+ * Low-level:
+ *   init, extract, analyze-schema, apply-schema, schema-loop, scaffold, report, merge, validate, aggregate
+ *   all = prepare only (does not transcribe or aggregate)
  *
  * Usage:
  *   npm run morphus:ingest -- init --id athlete --display "Athlete" \
@@ -33,6 +31,14 @@ import {
   aggregationCoverageReport,
 } from './lib/morphus-aggregation-coverage.mjs'
 import {
+  analyzeMorphusSchemaFit,
+  printSchemaAnalysisSummary,
+} from './lib/morphus-schema-analysis.mjs'
+import {
+  applySchemaPatches,
+  buildSchemaPatches,
+} from './lib/morphus-schema-apply.mjs'
+import {
   characteristicSchemaKeys,
   formatAjvErrors,
   getMorphusValidators,
@@ -45,6 +51,7 @@ import {
   repoRoot,
   resolveRepoPath,
   slugifyTraitId,
+  resetMorphusValidators,
   sourcesFromTraitIndex,
   workDir,
   writeJson,
@@ -56,15 +63,15 @@ const PY_SCRIPT = join(repoRoot, 'scripts/lib/morphus-extract-table.py')
 function usage() {
   console.log(`Morphus ingest — per-table pipeline
 
-Commands:
-  init      Create manifest (--id, --display, --heading, --book, [--also-book]…, [--books-file])
-  extract   PDF(s) → extracted/<book>.txt + merged traits-index.json
-  scaffold  traits-index → entries.staging.json (multi-book sources; authority = Dark Designs)
-  report    Validate + schema audit + book index diff
-  merge     Apply entries.staging.json → target table JSON
-  validate  Run npm run validate:schemas
-  aggregate Aggregation hook coverage report
-  all       extract → scaffold → report → validate → aggregate
+Commands (pipeline):
+  prepare      extract + schema-loop until schema ready
+  build        scaffold + validate target JSON (transcribe + merge first)
+  finalize     aggregation coverage on target JSON
+
+Commands (steps):
+  init, extract, analyze-schema, apply-schema, schema-loop [--max N]
+  scaffold, report, merge, validate, aggregate
+  all          same as prepare (extract + schema-loop)
 
 Example:
   npm run morphus:ingest -- init --id athlete --display "Athlete" \\
@@ -222,6 +229,182 @@ function runPythonExtract(tableId) {
 
 function cmdExtract(tableId) {
   runPythonExtract(tableId)
+}
+
+function runMorphusAnalyze(tableId) {
+  const manifest = loadManifest(tableId)
+  const authPath = join(workDir(tableId), 'extracted-authoritative.txt')
+  if (!existsSync(authPath)) {
+    throw new Error(`missing ${authPath} — run: npm run morphus:ingest -- extract ${tableId}`)
+  }
+  const tableText = readFileSync(authPath, 'utf8')
+  const indexPath = join(workDir(tableId), 'traits-index.json')
+  const traitsIndex = existsSync(indexPath) ? loadJson(indexPath) : null
+  const targetPath = resolveRepoPath(manifest.targetJson)
+  const targetTable = existsSync(targetPath) ? loadJson(targetPath) : null
+  resetMorphusValidators()
+  const schemaKeys = characteristicSchemaKeys()
+  const analysis = analyzeMorphusSchemaFit({
+    tableText,
+    schemaKeys,
+    targetTable,
+    traitsIndex,
+  })
+  analysis.tableId = tableId
+  const outPath = join(workDir(tableId), 'schema-analysis.json')
+  writeJson(outPath, analysis)
+  return { analysis, outPath }
+}
+
+function cmdAnalyzeSchema(tableId, { quiet = false } = {}) {
+  const { analysis, outPath } = runMorphusAnalyze(tableId)
+  if (!quiet) {
+    printSchemaAnalysisSummary(analysis)
+    console.log(`OK  schema analysis → ${outPath}`)
+  }
+  return analysis
+}
+
+function cmdApplySchema(tableId) {
+  const analysisPath = join(workDir(tableId), 'schema-analysis.json')
+  if (!existsSync(analysisPath)) {
+    throw new Error(`missing ${analysisPath} — run analyze-schema first`)
+  }
+  const analysis = loadJson(analysisPath)
+  const patches = buildSchemaPatches(analysis)
+  const result = applySchemaPatches(patches)
+  const outPath = join(workDir(tableId), 'schema-apply-log.json')
+  writeJson(outPath, {
+    tableId,
+    generatedAt: new Date().toISOString(),
+    patches,
+    ...result,
+  })
+  resetMorphusValidators()
+  if (result.schemaChanged) {
+    console.log(`OK  applied ${result.applied.length} schema patch(es) → ${outPath}`)
+    cmdValidate()
+  } else {
+    console.log(`OK  no automatic schema patches applied (${result.manual.length} need manual edit)`)
+  }
+  if (result.manual.length) {
+    const tasksPath = join(workDir(tableId), 'schema-gap-tasks.json')
+    writeJson(tasksPath, {
+      tableId,
+      manual: result.manual,
+      edgeCases: analysis.edgeCases ?? [],
+    })
+    console.log(`    manual tasks → ${tasksPath}`)
+  }
+  return result
+}
+
+function cmdSchemaLoop(tableId, flags = {}) {
+  const max = Number(flags.max ?? 12)
+  const loopReport = {
+    tableId,
+    maxIterations: max,
+    iterations: [],
+    completed: false,
+  }
+  for (let i = 1; i <= max; i++) {
+    console.log(`\n--- schema loop ${i}/${max} ---`)
+    const analysis = cmdAnalyzeSchema(tableId, { quiet: false })
+    const iteration = {
+      iteration: i,
+      readyToTranscribe: analysis.readyToTranscribe,
+      edgeCaseCount: analysis.edgeCases?.length ?? 0,
+    }
+    if (analysis.readyToTranscribe) {
+      loopReport.iterations.push(iteration)
+      loopReport.completed = true
+      const outPath = join(workDir(tableId), 'schema-loop-report.json')
+      writeJson(outPath, loopReport)
+      console.log(`\nOK  schema loop complete after ${i} iteration(s) → ${outPath}`)
+      return true
+    }
+    const applyResult = cmdApplySchema(tableId)
+    iteration.applied = applyResult.applied.length
+    iteration.manual = applyResult.manual.length
+    iteration.schemaChanged = applyResult.schemaChanged
+    loopReport.iterations.push(iteration)
+    if (!applyResult.schemaChanged) {
+      const tasksPath = join(workDir(tableId), 'schema-gap-tasks.json')
+      console.error(
+        `\nERR schema loop stopped — manual schema edits required (see ${tasksPath}). Re-run: npm run morphus:ingest -- schema-loop ${tableId}`,
+      )
+      writeJson(join(workDir(tableId), 'schema-loop-report.json'), loopReport)
+      process.exitCode = 2
+      return false
+    }
+  }
+  writeJson(join(workDir(tableId), 'schema-loop-report.json'), loopReport)
+  console.error(`ERR schema loop exceeded --max ${max} — extend schema manually, then re-run schema-loop`)
+  process.exitCode = 2
+  return false
+}
+
+function requireSchemaReady(tableId) {
+  const analysisPath = join(workDir(tableId), 'schema-analysis.json')
+  if (!existsSync(analysisPath)) {
+    throw new Error(`Run prepare first: npm run morphus:ingest -- prepare ${tableId}`)
+  }
+  const analysis = loadJson(analysisPath)
+  if (!analysis.readyToTranscribe) {
+    throw new Error(
+      `Schema not ready (${analysis.edgeCases?.length ?? 0} edge case(s)). Run: npm run morphus:ingest -- schema-loop ${tableId}`,
+    )
+  }
+}
+
+function cmdPrepare(tableId, flags = {}) {
+  const authPath = join(workDir(tableId), 'extracted-authoritative.txt')
+  if (!existsSync(authPath) || flags['re-extract']) {
+    cmdExtract(tableId)
+  }
+  cmdSchemaLoop(tableId, flags)
+}
+
+function cmdBuild(tableId) {
+  requireSchemaReady(tableId)
+  const stagingPath = join(workDir(tableId), 'entries.staging.json')
+  if (!existsSync(stagingPath)) {
+    cmdScaffold(tableId)
+  }
+  const manifest = loadManifest(tableId)
+  const targetPath = resolveRepoPath(manifest.targetJson)
+  cmdReport(tableId)
+  if (!existsSync(targetPath)) {
+    console.log('\nNext: transcribe entries.staging.json (or target JSON), then:')
+    console.log(`  npm run morphus:ingest -- merge ${tableId}`)
+    console.log(`  npm run morphus:ingest -- build ${tableId}`)
+    return
+  }
+  const target = loadJson(targetPath)
+  const todo = (target.entries ?? []).filter((e) =>
+    String(e.description ?? '').includes('TODO: transcribe'),
+  )
+  if (todo.length) {
+    console.log(`\nWARN ${todo.length} entr(ies) still have TODO descriptions — finish transcription, merge, then re-run build`)
+    process.exitCode = 1
+    return
+  }
+  if (!validateEntries(target.entries ?? [], manifest.targetJson)) {
+    process.exit(1)
+  }
+  cmdValidate()
+  console.log(`\nOK  build complete — target ${manifest.targetJson} validates`)
+  console.log(`Next: npm run morphus:ingest -- finalize ${tableId}`)
+}
+
+function cmdFinalize(tableId) {
+  requireSchemaReady(tableId)
+  const manifest = loadManifest(tableId)
+  const targetPath = resolveRepoPath(manifest.targetJson)
+  if (!existsSync(targetPath)) {
+    throw new Error(`Missing target ${targetPath} — run build (merge) first`)
+  }
+  cmdAggregate(tableId)
 }
 
 function cmdScaffold(tableId) {
@@ -460,16 +643,12 @@ function cmdAggregate(tableId) {
   }
 }
 
-function cmdAll(tableId) {
-  cmdExtract(tableId)
-  cmdScaffold(tableId)
-  cmdReport(tableId)
-  cmdValidate()
-  cmdAggregate(tableId)
-  console.log('\nNext: transcribe mechanics in entries.staging.json, then:')
-  console.log(`  npm run morphus:ingest -- merge ${tableId}`)
-  console.log('  npm run morphus:ingest -- validate')
-  console.log(`  npm run morphus:ingest -- aggregate ${tableId}`)
+function cmdAll(tableId, flags = {}) {
+  cmdPrepare(tableId, flags)
+  console.log('\n--- Phase 2: build JSON (after transcription) ---')
+  console.log(`  npm run morphus:ingest -- build ${tableId}`)
+  console.log('\n--- Phase 3: aggregate ---')
+  console.log(`  npm run morphus:ingest -- finalize ${tableId}`)
 }
 
 function main() {
@@ -487,6 +666,33 @@ function main() {
       case 'extract':
         if (!tableId) throw new Error('table id required')
         cmdExtract(tableId)
+        break
+      case 'analyze-schema':
+        if (!tableId) throw new Error('table id required')
+        cmdAnalyzeSchema(tableId)
+        if (!loadJson(join(workDir(tableId), 'schema-analysis.json')).readyToTranscribe) {
+          process.exitCode = 2
+        }
+        break
+      case 'apply-schema':
+        if (!tableId) throw new Error('table id required')
+        cmdApplySchema(tableId)
+        break
+      case 'schema-loop':
+        if (!tableId) throw new Error('table id required')
+        cmdSchemaLoop(tableId, flags)
+        break
+      case 'prepare':
+        if (!tableId) throw new Error('table id required')
+        cmdPrepare(tableId, flags)
+        break
+      case 'build':
+        if (!tableId) throw new Error('table id required')
+        cmdBuild(tableId)
+        break
+      case 'finalize':
+        if (!tableId) throw new Error('table id required')
+        cmdFinalize(tableId)
         break
       case 'scaffold':
         if (!tableId) throw new Error('table id required')
@@ -509,7 +715,7 @@ function main() {
         break
       case 'all':
         if (!tableId) throw new Error('table id required')
-        cmdAll(tableId)
+        cmdAll(tableId, flags)
         break
       default:
         usage()

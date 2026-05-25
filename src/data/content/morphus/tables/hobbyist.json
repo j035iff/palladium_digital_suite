@@ -3,6 +3,533 @@
   "kind": "morphus_trait_table",
   "displayName": "Hobbyist",
   "parentTable": null,
-  "description": "Hobbyist Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Hobbyist Morphus table (Nightbane® Dark Designs Sourcebook, pp. 35–37).",
+  "entries": [
+    {
+      "id": "hobbyist_backpack",
+      "name": "Backpack",
+      "tableCategory": "Hobbyist",
+      "description": "The Morphus appears with a very large, oversized backpack or duffle bag that is tougher than usual and somewhat larger inside than it appears.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "pp": {
+          "flat": -1
+        },
+        "spd": {
+          "flat": -6
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "limbDurability": [
+        {
+          "limbName": "Backpack",
+          "quantity": 1,
+          "sdc": 60,
+          "hp": 0
+        }
+      ],
+      "customOneOffs": [
+        "Stores up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience.",
+        "The backpack can usually only be struck from behind.",
+        "Despite its size, the pack does not seem to encumber the Nightbane excessively."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_card_deck",
+      "name": "Card Deck",
+      "tableCategory": "Hobbyist",
+      "description": "The Morphus bears a playing-card motif and carries a deck of tough, flexible cards in a case on belt or pocket. When the deck is used up, a new deck appears automatically.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "me": {
+          "flat": -1
+        }
+      },
+      "weaponClassBonuses": {
+        "thrown": {
+          "flat": 2
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Playing Card",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "gimmickInventory": [
+        {
+          "itemName": "Playing Card Deck",
+          "sdc": 10,
+          "effectFormula": "1D6 per card (2D6 for aces and face cards); thrown range 60 feet (18.3 m)",
+          "regenerationRule": "per_transformation",
+          "traitFlags": [
+            "infinite_ammo"
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Thrown cards: aces and face cards inflict 2D6 damage.",
+        "On a Natural 19 or 20 with thrown cards or other thrown weapons, add +2D6 damage.",
+        "Permanent P.P.E. base is reduced by 1D6+2."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_video_games",
+      "name": "Video Games",
+      "tableCategory": "Hobbyist",
+      "description": "The Morphus resembles a video-game character and wears VR goggles that make the real world feel like a game. A wireless controller can bestow video-game powers with the press of a button.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -2
+        }
+      },
+      "saveModifiers": {
+        "insanity": 2
+      },
+      "limbDurability": [
+        {
+          "limbName": "Video Game Controller",
+          "quantity": 1,
+          "sdc": 10,
+          "hp": 0,
+          "calledShotPenalty": -4
+        }
+      ],
+      "activatedAbilities": [
+        {
+          "abilityName": "Hyper-Combat",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "1 melee round",
+          "statModifiers": {
+            "apm": {
+              "flat": 2
+            },
+            "spd": {
+              "percent": 20
+            },
+            "strike": {
+              "flat": 1
+            },
+            "parry": {
+              "flat": 1
+            },
+            "dodge": {
+              "flat": 1
+            },
+            "disarm": {
+              "flat": 1
+            }
+          }
+        },
+        {
+          "abilityName": "Force Field",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "1 melee round"
+        },
+        {
+          "abilityName": "Life Points",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "instant"
+        }
+      ],
+      "customOneOffs": [
+        "Three video-game powers (+1 per level) may be activated each hour; duration is one melee round (15 seconds) unless noted instant.",
+        "Permanent P.P.E. base is reduced by 2D6.",
+        "Powers include: Demon Death Strike (double damage vs demons/Nightlands creatures on one attack), Float (safe descent/leap, water run), Force Field (60 +10 S.D.C. per level for 1 round), Life Points (restore 3D6+18 H.P. or S.D.C. to self), Heal Other (3D6+18 to one touched), Impervious to Fire, Impervious to Magic, Jump (+3 dodge for 1 round), See the Invisible, Energy Bolt (4D6+2/level, 600 ft +100 ft/level), Returning Melee Weapon (1 round).",
+        "If the controller is lost or destroyed: lose 2D4 S.D.C. (or H.P. if S.D.C. depleted), -1 attack per melee, -10% all skills until Facade for one hour then resume Morphus.",
+        "Controller has 10 S.D.C. and is only damaged on a Called Shot."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 35
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_dice_bag",
+      "name": "Dice Bag",
+      "tableCategory": "Hobbyist",
+      "description": "A large bag of multifaceted dice hangs from wrist, belt, or similar. It can be used as a bludgeon; dice can be scattered to discourage pursuit.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "pullPunch": {
+          "flat": -1
+        }
+      },
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Dice Bag",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "+1 to strike and parry when using the dice bag as a weapon.",
+        "Dice may be removed and scattered on hard ground to discourage pursuit."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_display_case",
+      "name": "Display Case",
+      "tableCategory": "Hobbyist",
+      "description": "One or more panes of glass are built into the Morphus with collectibles displayed beneath. Cases may be opened to carry small objects but are easily seen.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_barter",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Built-in display cases may be opened to carry other small objects.",
+        "Contents are easily seen (-30% to Concealment)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_leather_bound",
+      "name": "Leather-Bound",
+      "tableCategory": "Hobbyist",
+      "description": "The Nightbane's skin is well-worn leather like an old book, often with small belts and buckles. Avid readers or leatherworkers commonly have this feature.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "naturalAr": 8,
+      "damageAffinities": {
+        "fire": 1.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Bonus: +2 to I.Q. or +2 to P.P. (player chooses one for this Morphus).",
+        "Takes 50% more damage from fire-based attacks.",
+        "-2 to Perception Rolls involving the sense of touch."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_saddle",
+      "name": "Saddle",
+      "tableCategory": "Hobbyist",
+      "description": "A riding saddle is worn on the back, fastened with straps. The Nightbane may have a cowboy aesthetic, etched leather skin, branding marks, or horse-like features.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "me": {
+          "flat": -1
+        },
+        "rollWithPunch": {
+          "flat": -3
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_horsemanship",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Nightbane capable of running on all fours can let others ride in the saddle.",
+        "Rider in the saddle: +1 initiative, +2 melee damage, +1 dodge (no riding skill required).",
+        "Saddle may be leather or other materials; leather is most common."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 36
+        }
+      ]
+    },
+    {
+      "id": "hobbyist_telescopic_binocular_eyes",
+      "name": "Telescopic or Binocular Eyes",
+      "tableCategory": "Hobbyist",
+      "description": "Magnifying lenses replace one or more eyes, inset or protruding up to 2 feet (0.6 m). Optics allow seeing objects up to 2 miles (3.2 km) away as if within a few feet.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
+        },
+        "dodge": {
+          "flat": -1
+        }
+      },
+      "weaponClassBonuses": {
+        "bow": {
+          "flat": 2
+        },
+        "guns": {
+          "flat": 2
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 0,
+        "seeInvisible": false
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_computer_operation",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_locks",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Characters with nightvision see as if using a passive nightvision scope.",
+        "-15% to skills requiring fine detail up close (e.g. reading, surgery, Computer Operation, Pick Locks)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 37
+        }
+      ]
+    }
+  ]
 }

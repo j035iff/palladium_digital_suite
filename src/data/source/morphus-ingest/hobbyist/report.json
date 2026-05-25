@@ -1,6 +1,6 @@
 {
   "tableId": "hobbyist",
-  "generatedAt": "2026-05-25T17:07:45.559Z",
+  "generatedAt": "2026-05-25T19:39:16.118Z",
   "schemaKeys": [
     "activatedAbilities",
     "companionBlueprint",
@@ -31,7 +31,7 @@
     "weightModifier"
   ],
   "staging": {
-    "entryCount": 17,
+    "entryCount": 8,
     "unknownKeys": [],
     "aggregation": [
       {
@@ -81,92 +81,49 @@
         "name": "Telescopic or Binocular Eyes",
         "hooks": [],
         "notesOnly": false
-      },
-      {
-        "id": "hobbyist_bigfoot_wendigo_yeti",
-        "name": "Bigfoot/Wendigo/Yeti",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_djinn",
-        "name": "Djinn",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_dragon_wyvern_serpent",
-        "name": "Dragon/Wyvern/Serpent",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_gorgon",
-        "name": "Gorgon",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_griffin",
-        "name": "Griffin",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_sphinx",
-        "name": "Sphinx",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_unicorn",
-        "name": "Unicorn",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_fairy",
-        "name": "Fairy",
-        "hooks": [],
-        "notesOnly": false
-      },
-      {
-        "id": "hobbyist_cyclops_giant",
-        "name": "Cyclops/Giant",
-        "hooks": [],
-        "notesOnly": false
       }
     ]
   },
   "target": {
-    "entryCount": 0,
-    "ids": []
+    "entryCount": 8,
+    "ids": [
+      "hobbyist_backpack",
+      "hobbyist_card_deck",
+      "hobbyist_video_games",
+      "hobbyist_dice_bag",
+      "hobbyist_display_case",
+      "hobbyist_leather_bound",
+      "hobbyist_saddle",
+      "hobbyist_telescopic_binocular_eyes"
+    ]
   },
   "bookIndex": {
-    "total": 19,
-    "included": 17,
-    "skippedOther": 2,
+    "total": 8,
+    "included": 8,
+    "skippedOther": 0,
     "names": [
       "Backpack",
       "Card Deck",
-      "Video Games",
       "Dice Bag",
       "Display Case",
       "Leather-Bound",
       "Saddle",
       "Telescopic or Binocular Eyes",
-      "Bigfoot/Wendigo/Yeti",
-      "Djinn",
-      "Dragon/Wyvern/Serpent",
-      "Gorgon",
-      "Griffin",
-      "Sphinx",
-      "Unicorn",
-      "Fairy",
-      "Cyclops/Giant"
-    ]
+      "Video Games"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
   },
   "recommendations": [
-    "Staging has ids not in target (merge pending): hobbyist_backpack, hobbyist_card_deck, hobbyist_video_games, hobbyist_dice_bag, hobbyist_display_case, hobbyist_leather_bound, hobbyist_saddle, hobbyist_telescopic_or_binocular_eyes, hobbyist_bigfoot_wendigo_yeti, hobbyist_djinn, hobbyist_dragon_wyvern_serpent, hobbyist_gorgon, hobbyist_griffin, hobbyist_sphinx, hobbyist_unicorn, hobbyist_fairy, hobbyist_cyclops_giant"
+    "Target has ids not in staging: hobbyist_telescopic_binocular_eyes",
+    "Staging has ids not in target (merge pending): hobbyist_telescopic_or_binocular_eyes"
   ]
 }

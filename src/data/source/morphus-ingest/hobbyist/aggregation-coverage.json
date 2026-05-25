@@ -1,0 +1,94 @@
+{
+  "tableId": "hobbyist",
+  "entries": [
+    {
+      "id": "hobbyist_backpack",
+      "name": "Backpack",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_card_deck",
+      "name": "Card Deck",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "weapon class bonuses",
+        "gimmick inventory",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_video_games",
+      "name": "Video Games",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "activated abilities (burst)",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_dice_bag",
+      "name": "Dice Bag",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "weapon class bonuses",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_display_case",
+      "name": "Display Case",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_leather_bound",
+      "name": "Leather-Bound",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_saddle",
+      "name": "Saddle",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_telescopic_binocular_eyes",
+      "name": "Telescopic or Binocular Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "weapon class bonuses",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

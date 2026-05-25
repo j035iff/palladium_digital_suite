@@ -278,6 +278,20 @@ export function getMorphusValidators() {
 
 
 
+/** Clear cached Ajv compilers after palladium-morphus.schema.json changes. */
+
+export function resetMorphusValidators() {
+
+  ajvInstance = undefined
+
+  validateCharacteristic = undefined
+
+  validateTableDoc = undefined
+
+}
+
+
+
 /** Top-level keys allowed on a characteristic row (from palladium-morphus.schema.json). */
 
 export function characteristicSchemaKeys() {
