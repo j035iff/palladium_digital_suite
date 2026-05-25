@@ -91,7 +91,6 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "weapon class bonuses",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

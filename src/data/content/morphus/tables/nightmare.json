@@ -217,6 +217,7 @@
       "tableCategory": "Nightmare",
       "description": "Bound in a resilient straight-jacket (and optional muzzle mask); arms pinned—nimble on feet with acrobatic rooftop running.",
       "statModifiers": {
+        "pp": { "flat": 2 },
         "pe": { "flat": 2 },
         "spd": { "dice": "1D6" },
         "sdc": { "dice": "2D4x10" },
@@ -251,7 +252,7 @@
         ]
       },
       "customOneOffs": [
-        "+2 P.P. and -2 P.P. from jacket binding (net +0; dodge/roll bonuses modeled in statModifiers).",
+        "-2 P.P. attribute penalty from binding (bonus +2 P.P. is in statModifiers; net +0 on P.P.).",
         "Arms immobilized: cannot use tools/weapons, cannot parry, hand-based skills impossible.",
         "Body block/ram equals power punch (two attacks); may tread water with legs if Swimming skill is known.",
         "Run along rooftops, walls, ledges, and taut ropes like a tightrope walker."
@@ -302,8 +303,7 @@
       "description": "Impossibly large devouring mouth (mandibles, bear-trap jaws, endless darkness, etc.); crocodile-like latch after a successful bite.",
       "statModifiers": {
         "pb": { "dice": "-1D4" },
-        "hf": { "flat": 1 },
-        "strike": { "flat": 2 }
+        "hf": { "flat": 1 }
       },
       "naturalWeapons": [
         {
@@ -359,11 +359,6 @@
           "weaponTraits": ["indestructible", "disarm_immune"]
         }
       ],
-      "weaponClassBonuses": {
-        "melee": {
-          "flat": 2
-        }
-      },
       "customOneOffs": [
         "Automatically has W.P. Paired Weapons; bonuses apply to Gruesome Weapon only.",
         "Damage equals Supernatural P.S. +3D6 (modeled as +3D6 additive natural weapon).",
