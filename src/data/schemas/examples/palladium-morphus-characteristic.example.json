@@ -60,6 +60,27 @@
         "surfaceTypes": ["rough_uneven"],
         "spdMultiplier": 0.5
       }
+    ],
+    "conditionalStanceModifiers": [
+      {
+        "stanceType": "mounted",
+        "statModifiers": {
+          "strike": {
+            "flat": 2
+          },
+          "parry": {
+            "flat": 1
+          }
+        }
+      },
+      {
+        "stanceType": "dismounted",
+        "statModifiers": {
+          "spd": {
+            "flat": -2
+          }
+        }
+      }
     ]
   },
   "sensory": {
@@ -103,9 +124,22 @@
       "limbType": "talons",
       "label": "Raptor Talons",
       "damageFormula": "3D6",
-      "isAdditiveToHth": true
+      "isAdditiveToHth": true,
+      "weaponTraits": ["disarm_immune"],
+      "damageModifier": {
+        "percent": 50
+      }
     }
   ],
+  "companionBlueprint": {
+    "entityName": "Warhorse Centaur Lower Body (example)",
+    "poolSharingRule": "fifty_fifty_split",
+    "statModifiers": {
+      "spd": {
+        "flat": 4
+      }
+    }
+  },
   "limbDurability": [
     {
       "limbName": "Wings",

@@ -3,15 +3,26 @@ import type {
   Character,
   FeatureModifiers,
   MorphusCharacteristic,
-  MorphusPolymorphicModifier,
+  MorphusStanceType,
   MorphusStatModifiers,
+  MorphusSurfaceType,
+  MorphusWeaponTrait,
 } from '../types'
 import { getFormState } from '../types'
 import { resolveMorphusCharacteristicsByIds } from '../data/library/morphusTableCatalogLoader'
 import {
   aggregateHandCapacityFromTraits,
   aggregateMorphusSaveBonuses,
+  collectAvailableMorphusStanceTypes,
   collectMorphusSkillOverridesForSurface,
+  collectMorphusStatModifierBlocks,
+  collectMorphusTraitNotes,
+  flattenMorphusNaturalWeapons,
+  resolveMorphusCompanionSnapshots,
+  unionMorphusWeaponTraits,
+  type MorphusDerivedCompanion,
+  type MorphusDerivedNaturalWeapon,
+  type MorphusTraitNote,
   resolveMorphusTerrainSpdMultiplier,
   sumRelativeArShiftFromTraits,
 } from './morphusCharacteristicAggregation'
@@ -46,18 +57,6 @@ const STAT_TO_PASSIVE: Partial<
   bonusHthDamage: 'bonusHthDamage',
 }
 
-function collectModifiersForStat(
-  traits: readonly MorphusCharacteristic[],
-  key: keyof MorphusStatModifiers,
-): MorphusPolymorphicModifier[] {
-  const out: MorphusPolymorphicModifier[] = []
-  for (const t of traits) {
-    const m = t.statModifiers?.[key]
-    if (m) out.push(m)
-  }
-  return out
-}
-
 export type MorphusPassiveBundle = {
   modifiers: FeatureModifiers
   /** Additive shift to equipped + natural A.R. (statModifiers.ar flat sum). */
@@ -65,7 +64,23 @@ export type MorphusPassiveBundle = {
   terrainSpdMultiplier: number
   terrainSkillOverrides: ReturnType<typeof collectMorphusSkillOverridesForSurface>
   handCapacity: ReturnType<typeof aggregateHandCapacityFromTraits>
+  stanceType?: MorphusStanceType
+  naturalWeapons: readonly MorphusDerivedNaturalWeapon[]
+  weaponTraits: readonly MorphusWeaponTrait[]
+  companions: readonly MorphusDerivedCompanion[]
+  traitNotes: readonly MorphusTraitNote[]
+  availableStanceTypes: readonly MorphusStanceType[]
 }
+
+export type MorphusDerivedSheetSlice = Pick<
+  MorphusPassiveBundle,
+  | 'naturalWeapons'
+  | 'weaponTraits'
+  | 'companions'
+  | 'traitNotes'
+  | 'availableStanceTypes'
+  | 'stanceType'
+>
 
 export function resolveActiveMorphusTraits(
   character: Pick<Character, 'activeMorphusCharacteristicIds'>,
@@ -81,11 +96,18 @@ export function resolveActiveMorphusTraits(
 export function buildMorphusPassiveBundle(
   character: Character,
   activeForm: ActiveForm,
-  surfaceType: import('../types').MorphusSurfaceType = 'hard_flat',
+  surfaceType: MorphusSurfaceType = 'hard_flat',
+  stanceType?: MorphusStanceType,
 ): MorphusPassiveBundle | null {
   if (activeForm !== 'morphus') return null
   const traits = resolveActiveMorphusTraits(character)
   if (!traits.length) return null
+
+  const availableStanceTypes = collectAvailableMorphusStanceTypes(traits)
+  const effectiveStance =
+    stanceType && availableStanceTypes.includes(stanceType)
+      ? stanceType
+      : undefined
 
   const form = getFormState(character, activeForm)
   const attrs = form.attributes
@@ -94,7 +116,7 @@ export function buildMorphusPassiveBundle(
   for (const [statKey, passiveKey] of Object.entries(STAT_TO_PASSIVE)) {
     const key = statKey as keyof MorphusStatModifiers
     const pk = passiveKey as keyof FeatureModifiers
-    const blocks = collectModifiersForStat(traits, key)
+    const blocks = collectMorphusStatModifierBlocks(traits, key, effectiveStance)
     if (!blocks.length) continue
 
     let base = 0
@@ -131,6 +153,12 @@ export function buildMorphusPassiveBundle(
       surfaceType,
     ),
     handCapacity: aggregateHandCapacityFromTraits(traits),
+    stanceType: effectiveStance,
+    naturalWeapons: flattenMorphusNaturalWeapons(traits),
+    weaponTraits: unionMorphusWeaponTraits(traits),
+    companions: resolveMorphusCompanionSnapshots(traits),
+    traitNotes: collectMorphusTraitNotes(traits),
+    availableStanceTypes,
   }
 }
 

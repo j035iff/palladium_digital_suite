@@ -1,4 +1,11 @@
-import type { ActiveForm, Character, Feature, FeatureModifiers } from '../types'
+import type {
+  ActiveForm,
+  Character,
+  Feature,
+  FeatureModifiers,
+  MorphusStanceType,
+  MorphusSurfaceType,
+} from '../types'
 import { getFeatureById, getRaceById } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { racePassiveModifiers } from './raceEngine'
@@ -7,8 +14,6 @@ import {
   buildMorphusPassiveBundle,
   mergeMorphusIntoPassive,
 } from './morphusPassiveBridge'
-import type { MorphusSurfaceType } from '../types'
-
 export function morphusRequired(feature: Feature): boolean {
   return feature.requirement?.form === 'morphus' || feature.metadata?.morphusOnly === true
 }
@@ -52,10 +57,15 @@ export function aggregateCreationSkillModifiers(character: Character): FeatureMo
   return out
 }
 
+export type MorphusPassiveOptions = {
+  surfaceType?: MorphusSurfaceType
+  stanceType?: MorphusStanceType
+}
+
 export function aggregateAllPassiveModifiers(
   character: Character,
   activeForm: ActiveForm,
-  morphusSurfaceType: MorphusSurfaceType = 'hard_flat',
+  morphusOptions: MorphusPassiveOptions = {},
 ): FeatureModifiers {
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
   const sk = aggregateCreationSkillModifiers(character)
@@ -69,7 +79,8 @@ export function aggregateAllPassiveModifiers(
   const morphus = buildMorphusPassiveBundle(
     character,
     activeForm,
-    morphusSurfaceType,
+    morphusOptions.surfaceType ?? 'hard_flat',
+    morphusOptions.stanceType,
   )
   out = mergeMorphusIntoPassive(out, morphus)
   return out

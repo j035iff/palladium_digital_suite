@@ -4,5 +4,456 @@
   "displayName": "Ancient Warrior",
   "parentTable": null,
   "description": "Ancient Warrior Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "entries": [
+    {
+      "id": "ancient_warrior_infantry",
+      "name": "Ancient Infantry/Foot Soldier",
+      "tableCategory": "Ancient Warrior",
+      "description": "The backbone of almost any ancient military force was its infantry. Nightbane warriors are dressed in simple clothing or armor matching an ancient society and carry weapons that can never be broken or dulled.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "me": {
+          "flat": -1
+        },
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -2
+        }
+      },
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Ancient Melee Weapon(s) / Shield",
+          "damageFormula": "Varies",
+          "isAdditiveToHth": true,
+          "weaponTraits": [
+            "indestructible",
+            "disarm_immune"
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "A single two-handed melee weapon or pair of one-handed weapons (which may include a shield) rounds out the warrior.",
+        "The weapon cannot be separated from the Nightbane which means it either stays in the hand or is somehow secured to the character."
+      ]
+    },
+    {
+      "id": "ancient_warrior_archer",
+      "name": "Archer",
+      "tableCategory": "Ancient Warrior",
+      "description": "The snipers and marksmen of their day, archers were typically meant to rain death upon enemies from afar. Every Nightbane archer has a bow and a quiver of arrows or bolts that never runs out.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "-1D6"
+        }
+      },
+      "weaponClassBonuses": {
+        "bow": {
+          "flat": 2
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Archer's Bow/Crossbow",
+          "damageFormula": "1D6 to 3D6 (Varies)",
+          "isAdditiveToHth": false,
+          "weaponTraits": [
+            "infinite_ammo"
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "+1 attack per melee round, but ONLY when using a bow and arrow or a crossbow.",
+        "Tends to be uncomfortable in confined spaces."
+      ]
+    },
+    {
+      "id": "ancient_warrior_assassin",
+      "name": "Assassin",
+      "tableCategory": "Ancient Warrior",
+      "description": "Clandestine warriors whose job it was to infiltrate enemy camps or cities and eliminate high-value targets. This Morphus is dressed in dark clothing that has numerous folds and pockets.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
+      },
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 1
+        },
+        "bow": {
+          "flat": 1
+        },
+        "thrown": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Hidden Daggers (x2)",
+          "damageFormula": "Varies",
+          "isAdditiveToHth": true,
+          "weaponTraits": [
+            "auto_returning"
+          ]
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Small Throwing Weapons (2D4)",
+          "damageFormula": "Varies",
+          "isAdditiveToHth": false,
+          "weaponTraits": [
+            "auto_returning"
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Weapons disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds).",
+        "Their appearance makes others leery, making Invoke Trust impossible."
+      ]
+    },
+    {
+      "id": "ancient_warrior_cavalry",
+      "name": "Cavalry",
+      "tableCategory": "Ancient Warrior",
+      "description": "Cavalry soldiers are mounted warriors trained to fight while astride powerful steeds. They always appear in Morphus with a horse, or may be Centaur-like themselves.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hp": {
+          "dice": "6D6"
+        }
+      },
+      "companionBlueprint": {
+        "entityName": "Cavalry Mount / Horse Lower Body",
+        "poolSharingRule": "fifty_fifty_split",
+        "statModifiers": {
+          "ps": {
+            "dice": "2D6"
+          },
+          "pe": {
+            "flat": 2
+          },
+          "pb": {
+            "dice": "1D4"
+          },
+          "spd": {
+            "dice": "1D6x10+20"
+          }
+        }
+      },
+      "mobility": {
+        "conditionalStanceModifiers": [
+          {
+            "stanceType": "mounted",
+            "statModifiers": {
+              "apm": {
+                "flat": 2
+              },
+              "initiative": {
+                "flat": 1
+              },
+              "parry": {
+                "flat": 2
+              },
+              "dodge": {
+                "flat": 2
+              },
+              "bonusHthDamage": {
+                "flat": 6
+              }
+            }
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Cavalry Weapon (Lance/Flail/Sword)",
+          "damageFormula": "1D8 or 2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "The horse can pull 10 times the normal carrying weight and jump 10 feet high and 20 feet lengthwise.",
+        "Though the rider can dismount, the two must remain in physical contact. Both portions heal 5 Hit Points/S.D.C. per melee round.",
+        "When dismounted, the Nightbane has half the normal number of attacks and combat bonuses."
+      ]
+    },
+    {
+      "id": "ancient_warrior_warchief",
+      "name": "War-Chief/Warlord",
+      "tableCategory": "Ancient Warrior",
+      "description": "The Nightbane looks like a nobleman, warlord, or chieftain outfitted for battle. Any garb worn is of the highest quality and an ornate headdress or helm denoting a commanding rank.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "naturalAr": 9,
+      "weaponClassBonuses": {
+        "melee": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Warlord Weapons (Three High-Quality)",
+          "damageFormula": "Varies",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "percent": 50
+          }
+        }
+      ],
+      "customOneOffs": [
+        "+1 to parry and disarm with melee weapons.",
+        "Any enemies are +2 on Perception Rolls to notice the actions of this character.",
+        "Looking like a leader tends to make one a target in battle.",
+        "If armor is a part of the Morphus via another feature, it will be richly decorated or gilded and adds 50% more S.D.C."
+      ]
+    },
+    {
+      "id": "ancient_warrior_light_armor",
+      "name": "Light Armor",
+      "tableCategory": "Ancient Warrior",
+      "description": "The Nightbane appears to be wearing some kind of light armor such as studded leather armor or a half-suit of chain mail and a helmet.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D4x10+40"
+        },
+        "pe": {
+          "flat": -1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "naturalAr": 11,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "This armor cannot be removed. It is a part of the character."
+      ]
+    },
+    {
+      "id": "ancient_warrior_heavy_armor",
+      "name": "Heavy Armor",
+      "tableCategory": "Ancient Warrior",
+      "description": "A Nightbane clad in some kind of heavy armor. The armor is full body, including some sort of helmet that may or may not cover the face.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+100"
+        },
+        "pp": {
+          "flat": -2
+        },
+        "pe": {
+          "flat": -2
+        },
+        "spd": {
+          "percent": -20
+        }
+      },
+      "naturalAr": 13,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "This armor cannot be removed like normal armor. It is a part of the Morphus."
+      ]
+    },
+    {
+      "id": "ancient_warrior_color_standard",
+      "name": "Color Standard",
+      "tableCategory": "Ancient Warrior",
+      "description": "The Nightbane possesses a standard (flag, banner, or symbol representing a military force) while in Morphus form. Displayed prominently for all to see.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "1D4+1"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "apm": {
+          "flat": -1
+        },
+        "dodge": {
+          "flat": -1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Standard/Staff",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "+1 to parry and disarm if the standard is handheld."
+      ]
+    }
+  ]
 }

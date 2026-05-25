@@ -511,11 +511,24 @@ export type MorphusPoisonProfile = {
   passDamageFormula: string
 }
 
+export type MorphusWeaponTrait =
+  | 'indestructible'
+  | 'disarm_immune'
+  | 'infinite_ammo'
+  | 'auto_returning'
+
+export type MorphusWeaponDamageModifier = {
+  percent?: number
+  flat?: number
+}
+
 export type MorphusNaturalWeapon = {
   limbType: MorphusNaturalWeaponLimbType
   label?: string
   damageFormula: string
   isAdditiveToHth: boolean
+  weaponTraits?: readonly MorphusWeaponTrait[]
+  damageModifier?: MorphusWeaponDamageModifier
   poison?: MorphusPoisonProfile
 }
 
@@ -616,12 +629,31 @@ export type MorphusConditionalTerrainModifier = {
   skillModifiers?: MorphusSkillModifiers
 }
 
+export type MorphusStanceType = 'mounted' | 'dismounted' | 'prone' | 'cloaked'
+
+export type MorphusConditionalStanceModifier = {
+  stanceType: MorphusStanceType
+  statModifiers: MorphusStatModifiers
+}
+
+export type MorphusPoolSharingRule =
+  | 'independent'
+  | 'fifty_fifty_split'
+  | 'shared'
+
+export type MorphusCompanionBlueprint = {
+  entityName: string
+  statModifiers?: MorphusStatModifiers
+  poolSharingRule: MorphusPoolSharingRule
+}
+
 export type MorphusMobility = {
   jumpModifiers?: MorphusJumpModifiers
   swimSpeedBonus?: MorphusPolymorphicModifier
   aquaticTraits?: MorphusAquaticTraits
   flightEngine?: MorphusFlightEngine
   conditionalTerrainModifiers?: readonly MorphusConditionalTerrainModifier[]
+  conditionalStanceModifiers?: readonly MorphusConditionalStanceModifier[]
 }
 
 export type MorphusPerceptionSpecialties = {
@@ -734,6 +766,8 @@ export type MorphusCharacteristic = {
   limbDurability?: readonly MorphusLimbDurability[]
   subTraitChoicesBudget?: MorphusSubTraitChoicesBudget
   handCapacityConstraints?: MorphusHandCapacityConstraints
+  /** Nested mount / companion entity (Ancient Warrior centaur, warhorse, etc.). */
+  companionBlueprint?: MorphusCompanionBlueprint
   customOneOffs?: readonly string[]
 }
 

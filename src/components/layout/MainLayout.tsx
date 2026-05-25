@@ -11,6 +11,7 @@ import { IdentityXpBar } from '../live/IdentityXpBar'
 import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
+import type { MorphusDerivedSheetSlice } from '../../lib/morphusPassiveBridge'
 import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
@@ -30,6 +31,9 @@ export function MainLayout() {
     returnToLauncher,
     morphusSurfaceType,
     setMorphusSurfaceType,
+    morphusStanceType,
+    setMorphusStanceType,
+    morphusDerived,
     morphusRelativeArShift,
     morphusNaturalAr,
     activeForm,
@@ -173,22 +177,44 @@ export function MainLayout() {
                 : ''}
             </p>
             {morphusActive ? (
-              <label className="mt-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
-                Surface
-                <select
-                  value={morphusSurfaceType}
-                  onChange={(e) =>
-                    setMorphusSurfaceType(
-                      e.target.value as 'hard_flat' | 'rough_uneven' | 'soft_fluid',
-                    )
-                  }
-                  className="rounded border border-violet-700 bg-slate-950 px-2 py-0.5 font-mono normal-case text-violet-100"
-                >
-                  <option value="hard_flat">Hard / flat</option>
-                  <option value="rough_uneven">Rough / uneven</option>
-                  <option value="soft_fluid">Soft / fluid</option>
-                </select>
-              </label>
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <label className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
+                  Surface
+                  <select
+                    value={morphusSurfaceType}
+                    onChange={(e) =>
+                      setMorphusSurfaceType(
+                        e.target.value as 'hard_flat' | 'rough_uneven' | 'soft_fluid',
+                      )
+                    }
+                    className="rounded border border-violet-700 bg-slate-950 px-2 py-0.5 font-mono normal-case text-violet-100"
+                  >
+                    <option value="hard_flat">Hard / flat</option>
+                    <option value="rough_uneven">Rough / uneven</option>
+                    <option value="soft_fluid">Soft / fluid</option>
+                  </select>
+                </label>
+                {(morphusDerived?.availableStanceTypes.length ?? 0) > 0 ? (
+                  <label className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
+                    Stance
+                    <select
+                      value={morphusStanceType}
+                      onChange={(e) =>
+                        setMorphusStanceType(
+                          e.target.value as typeof morphusStanceType,
+                        )
+                      }
+                      className="rounded border border-violet-700 bg-slate-950 px-2 py-0.5 font-mono normal-case text-violet-100"
+                    >
+                      {(morphusDerived?.availableStanceTypes ?? []).map((s) => (
+                        <option key={s} value={s}>
+                          {s.replace(/_/g, ' ')}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+              </div>
             ) : null}
           </div>
 
@@ -340,6 +366,10 @@ export function MainLayout() {
             <PsStrengthPanel capacities={strengthCapacities} morphus={morphusActive} />
           </div>
         </section>
+
+        {morphusActive && morphusDerived ? (
+          <MorphusTraitsPanel derived={morphusDerived} />
+        ) : null}
 
         <SavingThrowsPanel />
 
@@ -541,6 +571,98 @@ function VitalityStat({
         />
       </div>
     </div>
+  )
+}
+
+const WEAPON_TRAIT_LABELS: Record<string, string> = {
+  indestructible: 'Indestructible',
+  disarm_immune: 'Disarm immune',
+  infinite_ammo: 'Infinite ammo',
+  auto_returning: 'Auto-returning',
+}
+
+function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) {
+  const hasWeapons = derived.naturalWeapons.length > 0
+  const hasCompanions = derived.companions.length > 0
+  const hasNotes = derived.traitNotes.length > 0
+  const hasTraits = derived.weaponTraits.length > 0
+  if (!hasWeapons && !hasCompanions && !hasNotes && !hasTraits) return null
+
+  return (
+    <section
+      aria-labelledby="morphus-traits-heading"
+      className="rounded-lg border border-violet-800/60 bg-violet-950/30 px-4 py-3"
+    >
+      <h2
+        id="morphus-traits-heading"
+        className="mb-2 text-sm font-semibold uppercase tracking-wide text-violet-300"
+      >
+        Morphus traits (aggregated)
+      </h2>
+      {hasTraits ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Weapon flags:{' '}
+          {derived.weaponTraits
+            .map((t) => WEAPON_TRAIT_LABELS[t] ?? t)
+            .join(' · ')}
+        </p>
+      ) : null}
+      {hasWeapons ? (
+        <ul className="mb-2 list-inside list-disc text-sm text-violet-100/95">
+          {derived.naturalWeapons.map((w, i) => (
+            <li key={`${w.sourceTraitId}-${i}`}>
+              <span className="font-medium">{w.label ?? w.limbType}</span>
+              {' — '}
+              {w.displayDamage}
+              {w.isAdditiveToHth ? ' (+ HtH)' : ''}
+              <span className="text-violet-400/80"> ({w.sourceTraitName})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {hasCompanions ? (
+        <div className="mb-2 space-y-2 text-sm text-violet-100/95">
+          {derived.companions.map((c) => (
+            <div
+              key={c.sourceTraitId}
+              className="rounded border border-violet-700/50 bg-slate-950/40 px-2 py-1.5"
+            >
+              <p className="font-medium text-violet-200">{c.entityName}</p>
+              <p className="text-xs text-violet-400/90">
+                Pool: {c.poolSharingRule.replace(/_/g, ' ')} · from {c.sourceTraitName}
+              </p>
+              {Object.keys(c.attributeDeltas).length > 0 ? (
+                <p className="mt-1 font-mono text-xs">
+                  {Object.entries(c.attributeDeltas)
+                    .filter(([, v]) => v != null && v !== 0)
+                    .map(([k, v]) => `${k} ${v! >= 0 ? '+' : ''}${v}`)
+                    .join(' · ')}
+                </p>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {hasNotes ? (
+        <details className="text-xs text-violet-300/80">
+          <summary className="cursor-pointer font-semibold uppercase tracking-wide">
+            Rules text ({derived.traitNotes.length} traits)
+          </summary>
+          <ul className="mt-2 space-y-2">
+            {derived.traitNotes.map((n) => (
+              <li key={n.traitId}>
+                <span className="font-medium text-violet-200">{n.traitName}</span>
+                <ul className="ml-4 list-disc">
+                  {n.lines.map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+    </section>
   )
 }
 

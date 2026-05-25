@@ -49,6 +49,7 @@
     },
     "subTraitChoicesBudget": { "$ref": "#/$defs/subTraitChoicesBudget" },
     "handCapacityConstraints": { "$ref": "#/$defs/handCapacityConstraints" },
+    "companionBlueprint": { "$ref": "#/$defs/companionBlueprint" },
     "customOneOffs": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
@@ -100,7 +101,40 @@
         "label": { "type": "string", "minLength": 1 },
         "damageFormula": { "type": "string", "minLength": 1 },
         "isAdditiveToHth": { "type": "boolean" },
+        "weaponTraits": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "indestructible",
+              "disarm_immune",
+              "infinite_ammo",
+              "auto_returning"
+            ]
+          },
+          "description": "Tactical weapon flags (Dark Designs Ancient Warrior, pp. 18–20)."
+        },
+        "damageModifier": {
+          "$ref": "#/$defs/weaponDamageModifier",
+          "description": "Scales resolved damage from damageFormula (e.g. Warlord +50% percent)."
+        },
         "poison": { "$ref": "#/$defs/poison" }
+      }
+    },
+    "weaponDamageModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "percent": {
+          "type": "integer",
+          "description": "Percentage adjustment to baseline weapon damage output."
+        },
+        "flat": {
+          "type": "integer",
+          "description": "Flat adjustment applied after percent scaling."
+        }
       }
     },
     "poison": {
@@ -256,6 +290,43 @@
         }
       }
     },
+    "conditionalStanceModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stanceType", "statModifiers"],
+      "properties": {
+        "stanceType": {
+          "type": "string",
+          "enum": ["mounted", "dismounted", "prone", "cloaked"],
+          "description": "Posture gate for stance-dependent stat swaps (Ancient Warrior centaur / cloak)."
+        },
+        "statModifiers": {
+          "$ref": "#/$defs/statModifiers",
+          "description": "Attribute/combat modifiers active only while this stance applies."
+        }
+      }
+    },
+    "companionBlueprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entityName", "poolSharingRule"],
+      "properties": {
+        "entityName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Mount or sub-entity label (e.g. Warhorse Centaur Lower Body)."
+        },
+        "statModifiers": {
+          "$ref": "#/$defs/statModifiers",
+          "description": "Dedicated bonuses for the companion entity profile."
+        },
+        "poolSharingRule": {
+          "type": "string",
+          "enum": ["independent", "fifty_fifty_split", "shared"],
+          "description": "How H.P./S.D.C. pools split between rider and companion."
+        }
+      }
+    },
     "mobility": {
       "type": "object",
       "additionalProperties": false,
@@ -268,6 +339,11 @@
           "type": "array",
           "items": { "$ref": "#/$defs/conditionalTerrainModifier" },
           "description": "Surface-dependent movement and skill adjustments."
+        },
+        "conditionalStanceModifiers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/conditionalStanceModifier" },
+          "description": "Stance-dependent stat modifier swaps (mounted, prone, etc.)."
         }
       }
     },

@@ -92,7 +92,10 @@ import {
   deriveInventoryForHost,
   transformCharacterToHostEnvironment,
 } from '../utils/genreTransformer'
-import { buildMorphusPassiveBundle } from '../lib/morphusPassiveBridge'
+import {
+  buildMorphusPassiveBundle,
+  type MorphusDerivedSheetSlice,
+} from '../lib/morphusPassiveBridge'
 import {
   morphusBlocksTwoHandedWeapon,
   stackNaturalArmorFromTraits,
@@ -114,6 +117,7 @@ import type {
   CombatNarrativeEntry,
   FeatureModifiers,
   PsychicTier,
+  MorphusStanceType,
   MorphusSurfaceType,
   VitalityFlashKind,
   Weapon,
@@ -211,6 +215,11 @@ type CharacterContextValue = {
   /** Hand capacity from active Morphus gear traits. */
   morphusHandCapacityOccupied: number
   morphusBlocksTwoHandedWeapons: boolean
+  /** Posture gate for Ancient Warrior cavalry / cloak rows (mounted, dismounted, …). */
+  morphusStanceType: MorphusStanceType
+  setMorphusStanceType: (stance: MorphusStanceType) => void
+  /** Natural weapons, companions, trait notes, and stance options from active Morphus traits. */
+  morphusDerived: MorphusDerivedSheetSlice | null
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
@@ -501,6 +510,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
   const [morphusSurfaceType, setMorphusSurfaceType] =
     useState<MorphusSurfaceType>('hard_flat')
+  const [morphusStanceType, setMorphusStanceType] =
+    useState<MorphusStanceType>('mounted')
   const [psychicTier, setPsychicTierState] = useState<PsychicTier>(() =>
     ensureCharacterOcc(INITIAL_CHARACTER_SNAPSHOT).occ.category === 'psychic'
       ? 'master'
@@ -768,20 +779,40 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         rawCharacter,
         sheetActiveForm,
         morphusSurfaceType,
+        morphusStanceType,
       ),
-    [rawCharacter, sheetActiveForm, morphusSurfaceType],
+    [rawCharacter, sheetActiveForm, morphusSurfaceType, morphusStanceType],
   )
 
   const morphusRelativeArShift = morphusPassiveBundle?.relativeArShift ?? 0
 
+  const morphusDerived = useMemo((): MorphusDerivedSheetSlice | null => {
+    if (!morphusPassiveBundle) return null
+    return {
+      naturalWeapons: morphusPassiveBundle.naturalWeapons,
+      weaponTraits: morphusPassiveBundle.weaponTraits,
+      companions: morphusPassiveBundle.companions,
+      traitNotes: morphusPassiveBundle.traitNotes,
+      availableStanceTypes: morphusPassiveBundle.availableStanceTypes,
+      stanceType: morphusPassiveBundle.stanceType,
+    }
+  }, [morphusPassiveBundle])
+
+  useEffect(() => {
+    const available = morphusPassiveBundle?.availableStanceTypes ?? []
+    if (!available.length) return
+    if (!available.includes(morphusStanceType)) {
+      setMorphusStanceType(available[0]!)
+    }
+  }, [morphusPassiveBundle?.availableStanceTypes, morphusStanceType])
+
   const sheetPassiveModifiers = useMemo(
     () =>
-      aggregateAllPassiveModifiers(
-        rawCharacter,
-        sheetActiveForm,
-        morphusSurfaceType,
-      ),
-    [rawCharacter, sheetActiveForm, morphusSurfaceType],
+      aggregateAllPassiveModifiers(rawCharacter, sheetActiveForm, {
+        surfaceType: morphusSurfaceType,
+        stanceType: morphusStanceType,
+      }),
+    [rawCharacter, sheetActiveForm, morphusSurfaceType, morphusStanceType],
   )
 
   const sheetDisplayScalars = useMemo(() => {
@@ -1008,6 +1039,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             rawCharacter,
             sheetActiveForm,
             morphusSurfaceType,
+            morphusStanceType,
           )
           if (
             bundle &&
@@ -1026,7 +1058,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         return next
       })
     },
-    [inventoryItems, equippedArmorId, rawCharacter, sheetActiveForm, morphusSurfaceType],
+    [
+      inventoryItems,
+      equippedArmorId,
+      rawCharacter,
+      sheetActiveForm,
+      morphusSurfaceType,
+      morphusStanceType,
+    ],
   )
 
   const spendWeaponAmmo = useCallback(
@@ -1566,6 +1605,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         morphusPassiveBundle?.handCapacity.occupiesHands ?? 0,
       morphusBlocksTwoHandedWeapons:
         morphusPassiveBundle?.handCapacity.blocksTwoHandedWeapons ?? false,
+      morphusStanceType,
+      setMorphusStanceType,
+      morphusDerived,
       activeForm: sheetActiveForm,
       supportsDualForm,
       activeRace,
@@ -1657,6 +1699,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       morphusPassiveBundle,
       morphusNaturalAr,
       morphusRelativeArShift,
+      morphusStanceType,
+      morphusDerived,
       sheetActiveForm,
       supportsDualForm,
       activeRace,

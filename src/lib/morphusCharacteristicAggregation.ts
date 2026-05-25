@@ -1,10 +1,17 @@
 import type {
   MorphusCharacteristic,
+  MorphusCompanionBlueprint,
   MorphusDamageAffinityType,
   MorphusDamageAffinityMultiplier,
   MorphusHandCapacityConstraints,
+  MorphusNaturalWeapon,
+  MorphusPolymorphicModifier,
   MorphusSkillOverride,
+  MorphusStanceType,
+  MorphusStatModifiers,
   MorphusSurfaceType,
+  MorphusWeaponDamageModifier,
+  MorphusWeaponTrait,
 } from '../types'
 import { polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
 
@@ -252,4 +259,148 @@ export function morphusBlocksTwoHandedWeapon(
   const cat = weaponCategory.toLowerCase()
   if (cat.includes('heavy') || cat.includes('two')) return true
   return handCapacity.occupiesHands >= 1
+}
+
+/** Stance types declared on any active trait (for UI toggles). */
+export function collectAvailableMorphusStanceTypes(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): MorphusStanceType[] {
+  const set = new Set<MorphusStanceType>()
+  for (const t of traits) {
+    const rows = t.mobility?.conditionalStanceModifiers
+    if (!rows?.length) continue
+    for (const row of rows) set.add(row.stanceType)
+  }
+  return [...set]
+}
+
+/** Stat modifier blocks from traits + matching stance rows for one axis. */
+export function collectMorphusStatModifierBlocks(
+  traits: readonly Pick<MorphusCharacteristic, 'statModifiers' | 'mobility'>[],
+  key: keyof MorphusStatModifiers,
+  stanceType?: MorphusStanceType,
+): MorphusPolymorphicModifier[] {
+  const out: MorphusPolymorphicModifier[] = []
+  for (const t of traits) {
+    const base = t.statModifiers?.[key]
+    if (base) out.push(base)
+    if (!stanceType) continue
+    const stanceRows = t.mobility?.conditionalStanceModifiers
+    if (!stanceRows?.length) continue
+    for (const row of stanceRows) {
+      if (row.stanceType !== stanceType) continue
+      const sm = row.statModifiers?.[key]
+      if (sm) out.push(sm)
+    }
+  }
+  return out
+}
+
+export function unionMorphusWeaponTraits(
+  traits: readonly Pick<MorphusCharacteristic, 'naturalWeapons'>[],
+): MorphusWeaponTrait[] {
+  const set = new Set<MorphusWeaponTrait>()
+  for (const t of traits) {
+    for (const w of t.naturalWeapons ?? []) {
+      for (const tr of w.weaponTraits ?? []) set.add(tr)
+    }
+  }
+  return [...set]
+}
+
+export type MorphusDerivedNaturalWeapon = MorphusNaturalWeapon & {
+  sourceTraitId: string
+  sourceTraitName: string
+  displayDamage: string
+}
+
+/** Human-readable damage line after optional percent/flat scaling. */
+export function formatMorphusWeaponDamageDisplay(
+  damageFormula: string,
+  modifier?: MorphusWeaponDamageModifier,
+): string {
+  if (!modifier?.percent && !modifier?.flat) return damageFormula
+  const parts: string[] = [damageFormula]
+  if (modifier.percent) parts.push(`+${modifier.percent}%`)
+  if (modifier.flat) parts.push(`${modifier.flat >= 0 ? '+' : ''}${modifier.flat}`)
+  return parts.join(' ')
+}
+
+export function flattenMorphusNaturalWeapons(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'naturalWeapons'
+  >[],
+): MorphusDerivedNaturalWeapon[] {
+  const out: MorphusDerivedNaturalWeapon[] = []
+  for (const t of traits) {
+    for (const w of t.naturalWeapons ?? []) {
+      out.push({
+        ...w,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+        displayDamage: formatMorphusWeaponDamageDisplay(
+          w.damageFormula,
+          w.damageModifier,
+        ),
+      })
+    }
+  }
+  return out
+}
+
+export type MorphusDerivedCompanion = {
+  sourceTraitId: string
+  sourceTraitName: string
+  entityName: string
+  poolSharingRule: MorphusCompanionBlueprint['poolSharingRule']
+  attributeDeltas: Partial<Record<keyof MorphusStatModifiers, number>>
+}
+
+export function resolveMorphusCompanionSnapshots(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'companionBlueprint'
+  >[],
+): MorphusDerivedCompanion[] {
+  const out: MorphusDerivedCompanion[] = []
+  for (const t of traits) {
+    const bp = t.companionBlueprint
+    if (!bp) continue
+    const attributeDeltas: MorphusDerivedCompanion['attributeDeltas'] = {}
+    const sm = bp.statModifiers
+    if (sm) {
+      for (const key of Object.keys(sm) as (keyof MorphusStatModifiers)[]) {
+        const blocks = sm[key]
+        if (!blocks) continue
+        attributeDeltas[key] = polymorphicDeltaFromBase(0, [blocks])
+      }
+    }
+    out.push({
+      sourceTraitId: t.id,
+      sourceTraitName: t.name,
+      entityName: bp.entityName,
+      poolSharingRule: bp.poolSharingRule,
+      attributeDeltas,
+    })
+  }
+  return out
+}
+
+export type MorphusTraitNote = {
+  traitId: string
+  traitName: string
+  lines: readonly string[]
+}
+
+export function collectMorphusTraitNotes(
+  traits: readonly Pick<MorphusCharacteristic, 'id' | 'name' | 'customOneOffs'>[],
+): MorphusTraitNote[] {
+  return traits
+    .filter((t) => (t.customOneOffs?.length ?? 0) > 0)
+    .map((t) => ({
+      traitId: t.id,
+      traitName: t.name,
+      lines: t.customOneOffs ?? [],
+    }))
 }
