@@ -491,6 +491,8 @@ export type MorphusPolymorphicModifier = {
   percent?: number
   /** When true, replaces base value instead of additive stacking (middleware). */
   isOverride?: boolean
+  /** Conditional tier notes (e.g. floating balloon count penalties). */
+  variableScaleConditions?: readonly string[]
 }
 
 export type MorphusNaturalWeaponLimbType =
@@ -522,6 +524,13 @@ export type MorphusWeaponDamageModifier = {
   flat?: number
 }
 
+export type MorphusWeaponActivationResourceType = 'hp' | 'sdc' | 'ppe' | 'isp'
+
+export type MorphusWeaponActivationCost = {
+  resourceType: MorphusWeaponActivationResourceType
+  value: number
+}
+
 export type MorphusNaturalWeapon = {
   limbType: MorphusNaturalWeaponLimbType
   label?: string
@@ -529,8 +538,35 @@ export type MorphusNaturalWeapon = {
   isAdditiveToHth: boolean
   weaponTraits?: readonly MorphusWeaponTrait[]
   damageModifier?: MorphusWeaponDamageModifier
+  activationCost?: MorphusWeaponActivationCost
   poison?: MorphusPoisonProfile
 }
+
+export type MorphusGimmickRegenerationRule =
+  | 'hourly'
+  | 'daily'
+  | 'per_transformation'
+
+export type MorphusGimmickTraitFlag =
+  | 'infinite_ammo'
+  | 'fragile'
+  | 'auto_returning'
+
+export type MorphusGimmickInventoryItem = {
+  itemName: string
+  sdc: number
+  usageLimit?: number
+  regenerationRule?: MorphusGimmickRegenerationRule
+  effectFormula: string
+  traitFlags?: readonly MorphusGimmickTraitFlag[]
+}
+
+export type MorphusDisabledNaturalAttackTag =
+  | 'kick'
+  | 'bite'
+  | 'head_butt'
+  | 'tail'
+  | 'claws'
 
 export type MorphusLimbDurability = {
   limbName: string
@@ -799,6 +835,9 @@ export type MorphusCharacteristic = {
    * Dynamic archetype wrapper — UI may swap visual skin and spawn ephemeral S.D.C. shields.
    */
   isPolymorphicTemplate?: boolean
+  gimmickInventory?: readonly MorphusGimmickInventoryItem[]
+  /** Natural limb attack types disabled while this trait is active. */
+  disabledNaturalAttackTags?: readonly MorphusDisabledNaturalAttackTag[]
   customOneOffs?: readonly string[]
 }
 

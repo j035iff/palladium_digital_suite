@@ -5,6 +5,9 @@ import type {
   MorphusCompanionBlueprint,
   MorphusCustomSystemRoll,
   MorphusDamageAffinityType,
+  MorphusDisabledNaturalAttackTag,
+  MorphusGimmickInventoryItem,
+  MorphusJumpModifiers,
   MorphusExternalSensoryObfuscation,
   MorphusDamageAffinityMultiplier,
   MorphusHandCapacityConstraints,
@@ -316,29 +319,184 @@ export type MorphusDerivedNaturalWeapon = MorphusNaturalWeapon & {
   sourceTraitId: string
   sourceTraitName: string
   displayDamage: string
+  /** True when a trait's disabledNaturalAttackTags blocks this limbType. */
+  isLimbTypeDisabled: boolean
 }
 
-/** Human-readable damage line after optional percent/flat scaling. */
+/** Human-readable damage line after optional percent/flat scaling and activation cost. */
 export function formatMorphusWeaponDamageDisplay(
   damageFormula: string,
   modifier?: MorphusWeaponDamageModifier,
+  activationCost?: MorphusNaturalWeapon['activationCost'],
 ): string {
-  if (!modifier?.percent && !modifier?.flat) return damageFormula
   const parts: string[] = [damageFormula]
-  if (modifier.percent) parts.push(`+${modifier.percent}%`)
-  if (modifier.flat) parts.push(`${modifier.flat >= 0 ? '+' : ''}${modifier.flat}`)
-  return parts.join(' ')
+  if (modifier?.percent) parts.push(`+${modifier.percent}%`)
+  if (modifier?.flat) parts.push(`${modifier.flat >= 0 ? '+' : ''}${modifier.flat}`)
+  if (activationCost) {
+    parts.push(`cost ${activationCost.value} ${activationCost.resourceType.toUpperCase()}`)
+  }
+  return parts.length > 1 ? parts.join(' · ') : damageFormula
+}
+
+export function unionDisabledNaturalAttackTags(
+  traits: readonly Pick<MorphusCharacteristic, 'disabledNaturalAttackTags'>[],
+): MorphusDisabledNaturalAttackTag[] {
+  const set = new Set<MorphusDisabledNaturalAttackTag>()
+  for (const t of traits) {
+    for (const tag of t.disabledNaturalAttackTags ?? []) set.add(tag)
+  }
+  return [...set]
+}
+
+export type MorphusDerivedGimmickItem = MorphusGimmickInventoryItem & {
+  sourceTraitId: string
+  sourceTraitName: string
+}
+
+export function flattenMorphusGimmickInventory(
+  traits: readonly Pick<
+    MorphusCharacteristic,
+    'id' | 'name' | 'gimmickInventory'
+  >[],
+): MorphusDerivedGimmickItem[] {
+  const out: MorphusDerivedGimmickItem[] = []
+  for (const t of traits) {
+    for (const g of t.gimmickInventory ?? []) {
+      out.push({
+        ...g,
+        sourceTraitId: t.id,
+        sourceTraitName: t.name,
+      })
+    }
+  }
+  return out
+}
+
+export type MorphusVariableScaleNote = {
+  traitId: string
+  traitName: string
+  statKey: keyof MorphusStatModifiers
+  conditions: readonly string[]
+}
+
+export function collectMorphusVariableScaleNotes(
+  traits: readonly Pick<MorphusCharacteristic, 'id' | 'name' | 'statModifiers'>[],
+): MorphusVariableScaleNote[] {
+  const out: MorphusVariableScaleNote[] = []
+  for (const t of traits) {
+    const sm = t.statModifiers
+    if (!sm) continue
+    for (const key of Object.keys(sm) as (keyof MorphusStatModifiers)[]) {
+      const block = sm[key]
+      const conditions = block?.variableScaleConditions
+      if (!conditions?.length) continue
+      out.push({
+        traitId: t.id,
+        traitName: t.name,
+        statKey: key,
+        conditions,
+      })
+    }
+  }
+  return out
+}
+
+export type MorphusAggregatedJumpBonuses = {
+  standingHeight: number
+  standingDistance: number
+  runningHeight: number
+  runningDistance: number
+}
+
+export function aggregateMorphusJumpBonuses(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): MorphusAggregatedJumpBonuses {
+  const sumAxis = (axis: keyof MorphusJumpModifiers): number => {
+    let total = 0
+    for (const t of traits) {
+      const block = t.mobility?.jumpModifiers?.[axis]
+      if (!block) continue
+      total += polymorphicDeltaFromBase(0, [block])
+    }
+    return total
+  }
+  return {
+    standingHeight: sumAxis('standingHeight'),
+    standingDistance: sumAxis('standingDistance'),
+    runningHeight: sumAxis('runningHeight'),
+    runningDistance: sumAxis('runningDistance'),
+  }
+}
+
+/** Flat/dice swim speed bonus from Morphus mobility (Clown shoes, etc.). */
+export function aggregateMorphusSwimSpeedBonus(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): number {
+  let total = 0
+  for (const t of traits) {
+    const block = t.mobility?.swimSpeedBonus
+    if (!block) continue
+    total += polymorphicDeltaFromBase(0, [block])
+  }
+  return total
+}
+
+export type MorphusDamageAffinityNote = {
+  damageType: MorphusDamageAffinityType
+  multiplier: number
+  label: string
+}
+
+const DAMAGE_AFFINITY_LABELS: Partial<Record<MorphusDamageAffinityType, string>> = {
+  explosives: 'Explosives / impact objects',
+  falling: 'Falls',
+  fire: 'Fire',
+  heat: 'Heat',
+}
+
+export function collectMorphusDamageAffinityNotes(
+  traits: readonly Pick<MorphusCharacteristic, 'damageAffinities'>[],
+): MorphusDamageAffinityNote[] {
+  const types = new Set<MorphusDamageAffinityType>()
+  for (const t of traits) {
+    if (!t.damageAffinities) continue
+    for (const k of Object.keys(t.damageAffinities) as MorphusDamageAffinityType[]) {
+      types.add(k)
+    }
+  }
+  const out: MorphusDamageAffinityNote[] = []
+  for (const damageType of types) {
+    const multiplier = resolveCompoundDamageAffinity(traits, damageType)
+    if (multiplier === 1) continue
+    out.push({
+      damageType,
+      multiplier,
+      label: DAMAGE_AFFINITY_LABELS[damageType] ?? damageType,
+    })
+  }
+  return out
 }
 
 export function flattenMorphusNaturalWeapons(
   traits: readonly Pick<
     MorphusCharacteristic,
-    'id' | 'name' | 'naturalWeapons'
+    'id' | 'name' | 'naturalWeapons' | 'disabledNaturalAttackTags'
   >[],
+  disabledTags: readonly MorphusDisabledNaturalAttackTag[] = unionDisabledNaturalAttackTags(
+    traits,
+  ),
 ): MorphusDerivedNaturalWeapon[] {
+  const disabled = new Set(disabledTags)
   const out: MorphusDerivedNaturalWeapon[] = []
   for (const t of traits) {
     for (const w of t.naturalWeapons ?? []) {
+      const limbDisabled =
+        w.limbType !== 'misc_limbs' &&
+        w.limbType !== 'pincers' &&
+        w.limbType !== 'talons' &&
+        w.limbType !== 'stomp' &&
+        w.limbType !== 'beak' &&
+        disabled.has(w.limbType as MorphusDisabledNaturalAttackTag)
       out.push({
         ...w,
         sourceTraitId: t.id,
@@ -346,7 +504,9 @@ export function flattenMorphusNaturalWeapons(
         displayDamage: formatMorphusWeaponDamageDisplay(
           w.damageFormula,
           w.damageModifier,
+          w.activationCost,
         ),
+        isLimbTypeDisabled: limbDisabled,
       })
     }
   }

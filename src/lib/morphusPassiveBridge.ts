@@ -4,6 +4,7 @@ import type {
   FeatureModifiers,
   MorphusCharacteristic,
   MorphusBurrowingEngine,
+  MorphusDisabledNaturalAttackTag,
   MorphusExternalSensoryObfuscation,
   MorphusStanceType,
   MorphusStatModifiers,
@@ -19,9 +20,19 @@ import {
   collectMorphusSkillOverridesForSurface,
   collectMorphusStatModifierBlocks,
   collectMorphusTraitNotes,
+  aggregateMorphusJumpBonuses,
+  aggregateMorphusSwimSpeedBonus,
+  collectMorphusDamageAffinityNotes,
+  collectMorphusVariableScaleNotes,
   collectPolymorphicTemplateTraits,
+  flattenMorphusGimmickInventory,
   flattenMorphusNaturalWeapons,
   mergeMorphusBurrowingEngines,
+  unionDisabledNaturalAttackTags,
+  type MorphusAggregatedJumpBonuses,
+  type MorphusDamageAffinityNote,
+  type MorphusDerivedGimmickItem,
+  type MorphusVariableScaleNote,
   resolveMorphusCompanionSnapshots,
   resolveMorphusCustomSystemRollSnapshots,
   unionExternalSensoryObfuscation,
@@ -82,6 +93,12 @@ export type MorphusPassiveBundle = {
   burrowingEngine?: MorphusBurrowingEngine
   externalSensoryObfuscation: readonly MorphusExternalSensoryObfuscation[]
   polymorphicTemplates: readonly MorphusPolymorphicTemplateFlag[]
+  gimmickInventory: readonly MorphusDerivedGimmickItem[]
+  disabledNaturalAttackTags: readonly MorphusDisabledNaturalAttackTag[]
+  variableScaleNotes: readonly MorphusVariableScaleNote[]
+  jumpBonuses: MorphusAggregatedJumpBonuses
+  swimSpeedBonus: number
+  damageAffinityNotes: readonly MorphusDamageAffinityNote[]
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -96,6 +113,12 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'burrowingEngine'
   | 'externalSensoryObfuscation'
   | 'polymorphicTemplates'
+  | 'gimmickInventory'
+  | 'disabledNaturalAttackTags'
+  | 'variableScaleNotes'
+  | 'jumpBonuses'
+  | 'swimSpeedBonus'
+  | 'damageAffinityNotes'
 >
 
 export function resolveActiveMorphusTraits(
@@ -170,8 +193,13 @@ export function buildMorphusPassiveBundle(
     ),
     handCapacity: aggregateHandCapacityFromTraits(traits),
     stanceType: effectiveStance,
-    naturalWeapons: flattenMorphusNaturalWeapons(traits),
+    disabledNaturalAttackTags: unionDisabledNaturalAttackTags(traits),
+    naturalWeapons: flattenMorphusNaturalWeapons(
+      traits,
+      unionDisabledNaturalAttackTags(traits),
+    ),
     weaponTraits: unionMorphusWeaponTraits(traits),
+    gimmickInventory: flattenMorphusGimmickInventory(traits),
     companions: resolveMorphusCompanionSnapshots(traits),
     traitNotes: collectMorphusTraitNotes(traits),
     availableStanceTypes,
@@ -183,6 +211,10 @@ export function buildMorphusPassiveBundle(
     burrowingEngine: mergeMorphusBurrowingEngines(traits),
     externalSensoryObfuscation: unionExternalSensoryObfuscation(traits),
     polymorphicTemplates: collectPolymorphicTemplateTraits(traits),
+    variableScaleNotes: collectMorphusVariableScaleNotes(traits),
+    jumpBonuses: aggregateMorphusJumpBonuses(traits),
+    swimSpeedBonus: aggregateMorphusSwimSpeedBonus(traits),
+    damageAffinityNotes: collectMorphusDamageAffinityNotes(traits),
   }
 }
 

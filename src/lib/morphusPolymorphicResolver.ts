@@ -6,9 +6,12 @@ import { rollDiceNotation } from './diceNotation'
  * Dice strings support Palladium forms and leading minus (e.g. "-1D6", "2D4x10+40").
  */
 export function evaluatePolymorphicDice(notation: string): number {
-  const trimmed = notation.trim().replace(/\s+/g, '')
+  let trimmed = notation.trim().replace(/\s+/g, '')
   const neg = /^-/.test(trimmed)
-  const core = neg ? trimmed.slice(1) : trimmed
+  let core = neg ? trimmed.slice(1) : trimmed
+  if (neg && core.startsWith('(') && core.endsWith(')')) {
+    core = core.slice(1, -1)
+  }
   const rolled = rollDiceNotation(core)
   return neg ? -rolled : rolled
 }

@@ -4,5 +4,535 @@
   "displayName": "Clown/Jester",
   "parentTable": null,
   "description": "Clown/Jester Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "entries": [
+    {
+      "id": "clown_nose",
+      "name": "Clown Nose",
+      "tableCategory": "Clown",
+      "description": "The character has a small, brightly colored rubber ball over the tip of the nose which honks when squeezed. Unlike a normal clown nose, this one is a part of the 'Bane and cannot be removed.",
+      "statModifiers": {
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "ppe": {
+          "flat": -3
+        },
+        "hf": {
+          "flat": -2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 70,
+            "perLevelIncrement": 1
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "+10% bonus to follow blood or chemical scents.",
+        "If the character honks the nose while smiling or behaving in a silly manner, those who see him are temporarily unaffected by his Horror Factor.",
+        "Grants a base Charm/Impress of 35% (or +10% if P.B. offers higher), doubling (+20%) when dealing with children under the age of thirteen."
+      ]
+    },
+    {
+      "id": "clown_face_paint",
+      "name": "Face Paint",
+      "tableCategory": "Clown",
+      "description": "The Morphus of the Nightbane has a white face painted in classic clown patterns in a riot of garish colors. Can be silly, friendly, happy, sad, or frightening.",
+      "isPolymorphicTemplate": true,
+      "statModifiers": {
+        "ma": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "me": {
+          "flat": -2
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ppe": {
+          "dice": "-(3D6+10)"
+        }
+      },
+      "saveModifiers": {
+        "magic": -1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "grantUnlearnedValue": 62,
+            "perLevelIncrement": 2
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "grantUnlearnedValue": 62,
+            "perLevelIncrement": 2
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Mold Face (Special): Can morph face to look like another humanoid, monster, or specific person in 1D4 melee rounds, perfectly imitating their voice."
+      ]
+    },
+    {
+      "id": "clown_clothes",
+      "name": "Clown Clothes",
+      "tableCategory": "Clown",
+      "description": "The clothing that appears on this Nightbane is garishly colored and may be baggy and oversized. Attire ranges from overalls to jester outfits or a suit and tie.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "ar": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "spd": {
+          "flat": -2
+        }
+      },
+      "sensory": {
+        "externalSensoryObfuscation": [
+          "digital_photo_blur",
+          "video_distortion"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_sing",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_palming",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Nobody can remember the clown's face. They can describe his clothing, but his face is a blank and it is blurred out in photographs, video, and film.",
+        "Skills like Seduction and Undercover Ops are impossible while in this Morphus."
+      ]
+    },
+    {
+      "id": "clown_shoes",
+      "name": "Clown Shoes",
+      "tableCategory": "Clown",
+      "description": "The character's Morphus is wearing brightly colored shoes that are roughly twice the normal size.",
+      "statModifiers": {
+        "pp": {
+          "flat": -2
+        },
+        "me": {
+          "flat": -2
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "mobility": {
+        "swimSpeedBonus": {
+          "flat": 6
+        }
+      },
+      "damageAffinities": {
+        "explosives": 0,
+        "falling": 0
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Clown Shoe Kick/Stomp",
+          "damageFormula": "6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Impervious to damage from falls and impact from large objects (e.g. falling safe, car, boulder).",
+        "Punches, bullets, and melee weapons do full damage.",
+        "Cannot leap/jump."
+      ]
+    },
+    {
+      "id": "clown_outrageous_hair_head",
+      "name": "Outrageous Hair and Head",
+      "tableCategory": "Clown",
+      "description": "Wild hair that could be a mohawk, spikes, or a giant afro. And the head is completely REMOVABLE! Usually done for shock value and to create fear or panic.",
+      "statModifiers": {
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The head is impervious to physical damage! Bullets bounce off, blows hurt but do no damage, and the clown cannot be knocked out.",
+        "+2 to Horror Factor when the head is visibly detached.",
+        "The head holds the brains and consciousness of the Nightbane, and it still controls the body even when detached.",
+        "If the head or body is stolen and taken more than 120 feet away, forces the Nightbane to switch to Facade to reunite."
+      ]
+    },
+    {
+      "id": "clown_balloons",
+      "name": "Balloons",
+      "tableCategory": "Clown",
+      "description": "2D4+3 medium-sized helium balloons of various colors are tied to this Morphus on strings.",
+      "statModifiers": {
+        "dodge": {
+          "flat": -3
+        },
+        "spd": {
+          "flat": -6,
+          "variableScaleConditions": [
+            "2+ balloons: -6 Spd",
+            "1 balloon: -2 Spd"
+          ]
+        }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 30
+          },
+          "standingDistance": {
+            "flat": 30
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Balloons have 1 S.D.C. each and regenerate at the rate of one every hour.",
+        "As long as one balloon is attached, the Nightbane floats down from any height, taking only 1D6 damage (double damage from heights greater than 200 feet).",
+        "When separated, each balloon acts as a supernatural decoy, registering to supernatural senses as the Nightbane for 1 hour.",
+        "Tailing, Disguise, and Undercover Ops are impossible."
+      ]
+    },
+    {
+      "id": "clown_gags",
+      "name": "Clown Gags",
+      "tableCategory": "Clown",
+      "description": "Part and parcel of almost any clown act are the gimmicks and gags used to garner laughs. The Nightbane manifests 1D4+1 unique gags.",
+      "statModifiers": {
+        "spd": {
+          "flat": -3
+        },
+        "ppe": {
+          "dice": "-2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "gimmickInventory": [
+        {
+          "itemName": "Chatter Teeth",
+          "sdc": 5,
+          "regenerationRule": "per_transformation",
+          "effectFormula": "Animates to bite opponents (1D6+1 to 2D6+2 damage). +3 strike, +5 dodge.",
+          "traitFlags": [
+            "auto_returning"
+          ]
+        },
+        {
+          "itemName": "Exploding Cigars",
+          "sdc": 1,
+          "usageLimit": 7,
+          "regenerationRule": "hourly",
+          "effectFormula": "Deals 1D4 damage. 20ft radius explosion causes deafness (-1 attack, -2 init for 1D4 rounds).",
+          "traitFlags": []
+        },
+        {
+          "itemName": "Extend-O-Glove",
+          "sdc": 20,
+          "regenerationRule": "per_transformation",
+          "effectFormula": "Melee punch with 7ft reach. Variable damage: 1, 1D6, 2D6, or 4D6.",
+          "traitFlags": []
+        },
+        {
+          "itemName": "Fake Hand",
+          "sdc": 10,
+          "regenerationRule": "per_transformation",
+          "effectFormula": "Detaches to grapple/distract or crawls at Spd 7. +2 to dodge, 3 attacks/melee.",
+          "traitFlags": [
+            "fragile"
+          ]
+        },
+        {
+          "itemName": "Toy Horn",
+          "sdc": 15,
+          "regenerationRule": "per_transformation",
+          "effectFormula": "Once per melee, blasts a 10ft foghorn knocking down human-sized targets (Save 14 or lose init and 1 attack).",
+          "traitFlags": []
+        },
+        {
+          "itemName": "Pie Case (Shaving Cream/Mud)",
+          "sdc": 10,
+          "regenerationRule": "hourly",
+          "effectFormula": "Blinds target (lose 1 attack, -10 strike/parry/dodge). Range 20ft.",
+          "traitFlags": []
+        },
+        {
+          "itemName": "Squirt Flower",
+          "sdc": 2,
+          "regenerationRule": "hourly",
+          "effectFormula": "Squirt water (1D6 to vampires). Spend 1 HP to squirt blood, acid (2D6 to metal), kerosene, or mace.",
+          "traitFlags": [
+            "infinite_ammo"
+          ]
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Joy Buzzer",
+          "damageFormula": "1 (up to +3D6)",
+          "isAdditiveToHth": false,
+          "activationCost": {
+            "resourceType": "hp",
+            "value": 3
+          }
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Toy Pistol",
+          "damageFormula": "2D6+2",
+          "isAdditiveToHth": false,
+          "activationCost": {
+            "resourceType": "hp",
+            "value": 2
+          }
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Squeak Mallet",
+          "damageFormula": "1D6+2",
+          "isAdditiveToHth": true,
+          "activationCost": {
+            "resourceType": "hp",
+            "value": 2
+          }
+        }
+      ],
+      "customOneOffs": [
+        "-15% to Invoke Trust/Intimidate."
+      ]
+    },
+    {
+      "id": "clown_jesters_cap_costume",
+      "name": "Jester's Cap and Costume",
+      "tableCategory": "Clown",
+      "description": "The Morphus is a jester with a multi-pointed cap featuring bells, charms, spikes, or bones.",
+      "statModifiers": {
+        "ma": {
+          "flat": -1
+        },
+        "me": {
+          "flat": -1
+        }
+      },
+      "customOneOffs": [
+        "+5% to any single Espionage skill and any single Rogue skill (player choice)."
+      ]
+    },
+    {
+      "id": "clown_scepter_bowling_pin",
+      "name": "Scepter/Baton or Bowling Pin",
+      "tableCategory": "Clown",
+      "description": "A short staff, ornate rod, or bowling pin that the Nightbane juggles and spins.",
+      "statModifiers": {
+        "ppe": {
+          "flat": -2
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Baton/Bowling Pin",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "+1 attack when using ONLY this item in combat for the entire melee round.",
+        "+1 to strike in HTH or thrown, and +2 to parry and pull punch with the item."
+      ]
+    },
+    {
+      "id": "clown_jack_in_the_box",
+      "name": "Jack-in-the-Box",
+      "tableCategory": "Clown",
+      "description": "Humanoid upper body atop a giant coiled spring attached to a decorative circus box. The Nightbane controls when it pops out.",
+      "statModifiers": {
+        "pp": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D6x10+60"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -70
+        }
+      },
+      "disabledNaturalAttackTags": [
+        "kick"
+      ],
+      "companionBlueprint": {
+        "entityName": "Decorative Box Base",
+        "poolSharingRule": "fifty_fifty_split",
+        "statModifiers": {
+          "ar": {
+            "flat": 11
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "customOneOffs": [
+        "+2 to Horror Factor ONLY on the first melee round the Nightbane 'pops out'.",
+        "Surprise attack occurs on a Natural 19 or 20, inflicting double damage.",
+        "Coil jumps propel the Nightbane 1.5 feet per point of P.S., permitting power strikes without using two attacks.",
+        "Acrobatics, Prowl, Running, Tailing, Undercover Ops, and Driving are impossible."
+      ]
+    }
+  ]
 }

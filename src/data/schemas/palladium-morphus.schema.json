@@ -54,6 +54,20 @@
       "type": "boolean",
       "description": "When true, tells the frontend presentation sheet that this morphus choice acts as a dynamic archetype wrapper capable of altering its visual skin and spawning minor temporary S.D.C. shields at execution time."
     },
+    "gimmickInventory": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gimmickInventoryItem" },
+      "description": "Spawned Morphus gadgets (Dark Designs Clown/Jester, pp. 29–33)."
+    },
+    "disabledNaturalAttackTags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["kick", "bite", "head_butt", "tail", "claws"]
+      },
+      "description": "Natural attack limb types disabled while this trait is active (e.g. oversized shoes block kicks)."
+    },
     "customOneOffs": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
@@ -79,6 +93,69 @@
           "type": "boolean",
           "default": false,
           "description": "When true, the associated calculation overwrites the base value entirely instead of additive stacking (middleware engine)."
+        },
+        "variableScaleConditions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Documented conditional scalar tiers (e.g. balloon count penalties) for UI and future tier resolvers."
+        }
+      }
+    },
+    "weaponActivationCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceType", "value"],
+      "properties": {
+        "resourceType": {
+          "type": "string",
+          "enum": ["hp", "sdc", "ppe", "isp"],
+          "description": "Pool spent when the natural weapon or gimmick effect activates."
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Amount deducted from resourceType on activation."
+        }
+      }
+    },
+    "gimmickInventoryItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemName", "sdc", "effectFormula"],
+      "properties": {
+        "itemName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Spawned gadget label (e.g. Seltzer Bottle, Joy Buzzer)."
+        },
+        "sdc": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Structural capacity of the spawned item."
+        },
+        "usageLimit": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional uses per regeneration window before depletion."
+        },
+        "regenerationRule": {
+          "type": "string",
+          "enum": ["hourly", "daily", "per_transformation"],
+          "description": "When the gadget or its uses replenish."
+        },
+        "effectFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Damage, range, or effect dice/formula for the gimmick payload."
+        },
+        "traitFlags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["infinite_ammo", "fragile", "auto_returning"]
+          },
+          "description": "Operational flags for spawned gimmick items."
         }
       }
     },
@@ -122,6 +199,10 @@
         "damageModifier": {
           "$ref": "#/$defs/weaponDamageModifier",
           "description": "Scales resolved damage from damageFormula (e.g. Warlord +50% percent)."
+        },
+        "activationCost": {
+          "$ref": "#/$defs/weaponActivationCost",
+          "description": "Health or energy sacrifice to activate this natural weapon (Clown table payload costs)."
         },
         "poison": { "$ref": "#/$defs/poison" }
       }

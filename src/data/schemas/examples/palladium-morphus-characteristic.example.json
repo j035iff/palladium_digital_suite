@@ -6,7 +6,12 @@
   "description": "Schema example — not book data.",
   "statModifiers": {
     "spd": {
-      "percent": 20
+      "percent": 20,
+      "variableScaleConditions": [
+        "1 balloon: -5% Spd",
+        "2 balloons: -10% Spd",
+        "3+ balloons: -15% Spd"
+      ]
     },
     "pp": {
       "flat": 14,
@@ -138,6 +143,17 @@
       "flat": 1
     }
   },
+  "disabledNaturalAttackTags": ["kick", "bite"],
+  "gimmickInventory": [
+    {
+      "itemName": "Seltzer Bottle (example)",
+      "sdc": 10,
+      "usageLimit": 6,
+      "regenerationRule": "per_transformation",
+      "effectFormula": "1D4 irritant",
+      "traitFlags": ["infinite_ammo", "fragile"]
+    }
+  ],
   "naturalWeapons": [
     {
       "limbType": "talons",
@@ -147,6 +163,10 @@
       "weaponTraits": ["disarm_immune"],
       "damageModifier": {
         "percent": 50
+      },
+      "activationCost": {
+        "resourceType": "hp",
+        "value": 2
       }
     }
   ],

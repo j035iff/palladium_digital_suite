@@ -799,6 +799,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       burrowingEngine: morphusPassiveBundle.burrowingEngine,
       externalSensoryObfuscation: morphusPassiveBundle.externalSensoryObfuscation,
       polymorphicTemplates: morphusPassiveBundle.polymorphicTemplates,
+      gimmickInventory: morphusPassiveBundle.gimmickInventory,
+      disabledNaturalAttackTags: morphusPassiveBundle.disabledNaturalAttackTags,
+      variableScaleNotes: morphusPassiveBundle.variableScaleNotes,
+      jumpBonuses: morphusPassiveBundle.jumpBonuses,
+      swimSpeedBonus: morphusPassiveBundle.swimSpeedBonus,
+      damageAffinityNotes: morphusPassiveBundle.damageAffinityNotes,
     }
   }, [morphusPassiveBundle])
 

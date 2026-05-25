@@ -594,6 +594,18 @@ const BURROW_SUBSTRATE_LABELS: Record<string, string> = {
   concrete: 'Concrete',
 }
 
+const GIMMICK_FLAG_LABELS: Record<string, string> = {
+  infinite_ammo: 'Infinite uses',
+  fragile: 'Fragile',
+  auto_returning: 'Auto-returning',
+}
+
+const REGEN_LABELS: Record<string, string> = {
+  hourly: 'Hourly',
+  daily: 'Daily',
+  per_transformation: 'Per transformation',
+}
+
 function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) {
   const hasWeapons = derived.naturalWeapons.length > 0
   const hasCompanions = derived.companions.length > 0
@@ -603,6 +615,18 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
   const hasBurrow = derived.burrowingEngine != null
   const hasObfuscation = derived.externalSensoryObfuscation.length > 0
   const hasPoly = derived.polymorphicTemplates.length > 0
+  const hasGimmicks = derived.gimmickInventory.length > 0
+  const hasDisabled =
+    derived.disabledNaturalAttackTags.length > 0
+  const hasVarScale = derived.variableScaleNotes.length > 0
+  const jump = derived.jumpBonuses
+  const hasJump =
+    jump.standingHeight > 0 ||
+    jump.standingDistance > 0 ||
+    jump.runningHeight > 0 ||
+    jump.runningDistance > 0
+  const hasSwim = derived.swimSpeedBonus !== 0
+  const hasAffinity = derived.damageAffinityNotes.length > 0
   if (
     !hasWeapons &&
     !hasCompanions &&
@@ -611,7 +635,13 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
     !hasRolls &&
     !hasBurrow &&
     !hasObfuscation &&
-    !hasPoly
+    !hasPoly &&
+    !hasGimmicks &&
+    !hasDisabled &&
+    !hasVarScale &&
+    !hasJump &&
+    !hasSwim &&
+    !hasAffinity
   ) {
     return null
   }
@@ -661,6 +691,77 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
           ))}
         </ul>
       ) : null}
+      {hasDisabled ? (
+        <p className="mb-2 text-xs text-rose-200/90">
+          Disabled natural attacks:{' '}
+          {derived.disabledNaturalAttackTags.join(', ')}
+        </p>
+      ) : null}
+      {hasVarScale ? (
+        <ul className="mb-2 list-inside list-disc text-xs text-violet-200/85">
+          {derived.variableScaleNotes.map((n) => (
+            <li key={`${n.traitId}-${n.statKey}`}>
+              <span className="font-medium">{n.traitName}</span> ({n.statKey}):{' '}
+              {n.conditions.join(' · ')}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {hasJump ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Jump +{jump.standingHeight} ft height / +{jump.standingDistance} ft distance
+          {jump.runningHeight > 0 || jump.runningDistance > 0
+            ? ` (run +${jump.runningHeight}/+${jump.runningDistance})`
+            : ''}
+        </p>
+      ) : null}
+      {hasSwim ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Swim speed bonus: +{derived.swimSpeedBonus}
+        </p>
+      ) : null}
+      {hasAffinity ? (
+        <p className="mb-2 text-xs text-violet-200/90">
+          Damage immunity:{' '}
+          {derived.damageAffinityNotes
+            .map((a) =>
+              a.multiplier === 0
+                ? `${a.label} (none)`
+                : `${a.label} ×${a.multiplier}`,
+            )
+            .join(' · ')}
+        </p>
+      ) : null}
+      {hasGimmicks ? (
+        <ul className="mb-2 space-y-1.5 text-sm text-violet-100/95">
+          {derived.gimmickInventory.map((g, i) => (
+            <li
+              key={`${g.sourceTraitId}-${g.itemName}-${i}`}
+              className="rounded border border-violet-700/40 bg-slate-950/30 px-2 py-1"
+            >
+              <span className="font-medium">{g.itemName}</span>
+              {' — '}
+              S.D.C. {g.sdc}
+              {g.usageLimit != null ? ` · ${g.usageLimit} uses` : ''}
+              {g.regenerationRule
+                ? ` · ${REGEN_LABELS[g.regenerationRule] ?? g.regenerationRule}`
+                : ''}
+              <br />
+              <span className="text-xs text-violet-300/80">{g.effectFormula}</span>
+              {(g.traitFlags?.length ?? 0) > 0 ? (
+                <span className="text-xs text-violet-400/70">
+                  {' '}
+                  ·{' '}
+                  {g.traitFlags!
+                    .map((f) => GIMMICK_FLAG_LABELS[f] ?? f)
+                    .join(' · ')}
+                </span>
+              ) : null}
+              <span className="text-violet-400/80"> ({g.sourceTraitName})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {hasTraits ? (
         <p className="mb-2 text-xs text-violet-200/90">
           Weapon flags:{' '}
@@ -672,11 +773,15 @@ function MorphusTraitsPanel({ derived }: { derived: MorphusDerivedSheetSlice }) 
       {hasWeapons ? (
         <ul className="mb-2 list-inside list-disc text-sm text-violet-100/95">
           {derived.naturalWeapons.map((w, i) => (
-            <li key={`${w.sourceTraitId}-${i}`}>
+            <li
+              key={`${w.sourceTraitId}-${i}`}
+              className={w.isLimbTypeDisabled ? 'opacity-60 line-through' : undefined}
+            >
               <span className="font-medium">{w.label ?? w.limbType}</span>
               {' — '}
               {w.displayDamage}
               {w.isAdditiveToHth ? ' (+ HtH)' : ''}
+              {w.isLimbTypeDisabled ? ' [disabled]' : ''}
               <span className="text-violet-400/80"> ({w.sourceTraitName})</span>
             </li>
           ))}
