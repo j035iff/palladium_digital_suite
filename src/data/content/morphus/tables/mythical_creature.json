@@ -21,8 +21,7 @@
         "perception": { "flat": 2 }
       },
       "sensory": {
-        "nightvisionRangeFlatBonus": 1000,
-        "seeInvisible": false
+        "nightvisionRangeFlatBonus": 1000
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -67,6 +66,7 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
           { "targetType": "skill_id", "targetValue": "skill_tailing", "modifierPercent": 10 },
           { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
           { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
@@ -228,8 +228,7 @@
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 1500,
-        "telescopicVision": true,
-        "seeInvisible": false
+        "telescopicVision": true
       },
       "mobility": {
         "flightEngine": {
@@ -268,7 +267,6 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
-          { "targetType": "skill_id", "targetValue": "skill_strike", "modifierPercent": -20 },
           { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
           { "targetType": "skill_id", "targetValue": "skill_swim", "isNegated": true }
         ],
@@ -431,8 +429,7 @@
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 1000,
-        "telescopicVision": true,
-        "seeInvisible": false
+        "telescopicVision": true
       },
       "mobility": {
         "flightEngine": {
