@@ -1,0 +1,154 @@
+{
+  "tableId": "angelic",
+  "generatedAt": "2026-05-25T23:40:50.544Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 11,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "angelic_wings",
+        "name": "Angelic Wings",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_halo_of_power",
+        "name": "Halo of Power",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_heroic_proportions",
+        "name": "Heroic Proportions",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_icon_of_the_faith",
+        "name": "Icon of the Faith",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_inner_light",
+        "name": "Inner Light",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_living_armor",
+        "name": "Living Armor",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_living_holy_shield",
+        "name": "Living Holy Shield",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_living_holy_weapon",
+        "name": "Living Holy Weapon",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_melodious_voice",
+        "name": "Melodious Voice",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_mystical_protection",
+        "name": "Mystical Protection",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "angelic_noble_bearing",
+        "name": "Noble Bearing",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 11,
+    "ids": [
+      "angelic_inner_light",
+      "angelic_angelic_wings",
+      "angelic_melodious_voice",
+      "angelic_living_armor",
+      "angelic_living_holy_weapon",
+      "angelic_living_holy_shield",
+      "angelic_heroic_proportions",
+      "angelic_halo_of_power",
+      "angelic_mystical_protection",
+      "angelic_noble_bearing",
+      "angelic_icon_of_the_faith"
+    ]
+  },
+  "bookIndex": {
+    "total": 11,
+    "included": 11,
+    "skippedOther": 0,
+    "names": [
+      "Angelic Wings",
+      "Halo of Power",
+      "Heroic Proportions",
+      "Icon of the Faith",
+      "Inner Light",
+      "Living Armor",
+      "Living Holy Shield",
+      "Living Holy Weapon",
+      "Melodious Voice",
+      "Mystical Protection",
+      "Noble Bearing"
+    ],
+    "authoritativeBookKey": "survival_guide",
+    "books": [
+      {
+        "key": "survival_guide",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": [
+    "Target has ids not in staging: angelic_angelic_wings",
+    "Staging has ids not in target (merge pending): angelic_wings"
+  ]
+}

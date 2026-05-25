@@ -1,0 +1,21 @@
+{
+  "tableId": "angelic",
+  "maxIterations": 12,
+  "iterations": [
+    {
+      "iteration": 1,
+      "readyToTranscribe": false,
+      "edgeCaseCount": 1,
+      "applied": 0,
+      "manual": 1,
+      "schemaChanged": false,
+      "note": "Heroic Proportions height/weight covered via heightModifier and weightModifier in target JSON."
+    },
+    {
+      "iteration": 2,
+      "readyToTranscribe": true,
+      "edgeCaseCount": 0
+    }
+  ],
+  "completed": true
+}

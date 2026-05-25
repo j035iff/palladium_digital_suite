@@ -1,0 +1,117 @@
+{
+  "tableId": "angelic",
+  "entries": [
+    {
+      "id": "angelic_inner_light",
+      "name": "Inner Light",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_angelic_wings",
+      "name": "Angelic Wings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "flight engine",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_melodious_voice",
+      "name": "Melodious Voice",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_living_armor",
+      "name": "Living Armor",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_living_holy_weapon",
+      "name": "Living Holy Weapon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_living_holy_shield",
+      "name": "Living Holy Shield",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "limb durability components",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_heroic_proportions",
+      "name": "Heroic Proportions",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_halo_of_power",
+      "name": "Halo of Power",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_mystical_protection",
+      "name": "Mystical Protection",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_noble_bearing",
+      "name": "Noble Bearing",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "angelic_icon_of_the_faith",
+      "name": "Icon of the Faith",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

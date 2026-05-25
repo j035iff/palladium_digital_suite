@@ -1,0 +1,19 @@
+{
+  "id": "angelic",
+  "displayName": "Angelic",
+  "tableCategory": "Angelic",
+  "tableHeading": "Angelic Table",
+  "targetJson": "src/data/content/morphus/tables/angelic.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Angelic Table\nCharacters with",
+      "authoritative": true
+    }
+  ]
+}

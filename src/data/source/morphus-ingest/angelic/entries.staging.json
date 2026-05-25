@@ -1,0 +1,180 @@
+{
+  "entries": [
+    {
+      "id": "angelic_wings",
+      "name": "Angelic Wings",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 73
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (11-20%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_halo_of_power",
+      "name": "Halo of Power",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (61-70%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_heroic_proportions",
+      "name": "Heroic Proportions",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (52-60%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_icon_of_the_faith",
+      "name": "Icon of the Faith",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (91-00%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_inner_light",
+      "name": "Inner Light",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 73
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (01-10%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_living_armor",
+      "name": "Living Armor",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (31-37%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_living_holy_shield",
+      "name": "Living Holy Shield",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (45-51%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_living_holy_weapon",
+      "name": "Living Holy Weapon",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (38-44%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_melodious_voice",
+      "name": "Melodious Voice",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (21-30%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_mystical_protection",
+      "name": "Mystical Protection",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (71-80%; authority=survival_guide)."
+    },
+    {
+      "id": "angelic_noble_bearing",
+      "name": "Noble Bearing",
+      "tableCategory": "Angelic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ],
+      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\angelic\\extracted-authoritative.txt (81-90%; authority=survival_guide)."
+    }
+  ]
+}

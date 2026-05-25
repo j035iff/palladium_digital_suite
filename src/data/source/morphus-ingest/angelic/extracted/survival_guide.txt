@@ -1,0 +1,157 @@
+Angelic Table
+Characters with this Morphus often believe they were chosen
+by the deity they worship or some other benevolent supernatural
+power for a purpose, such as to fight evil, protect the innocent,
+drive away the Nightlords, to serve as an example for others,
+and so on. Such ‘Bane usually have great faith and a strong
+sense of goodness, right and wrong. Most are of good alignment
+and try to fulfill their purpose.
+The physical appearance varies depending on the cultural
+and/or religious background of the Nightbane, and all don’t look
+human. Regardless of their appearance, many Nightbane do not
+get along well with an Angelic ‘Bane, as they see them as arro-
+gant or as a mockery of their own beliefs. On the other hand,
+members of the Lightbringers (and Guardians, in general) tend
+to accept them.
+01-10% Inner Light: The character glows with an inner
+brilliance that seems to radiate from under his skin. This charac-
+ter may also have a halo around his head. Ordinary people are
+either in awe of the Nightbane or fear him out of ignorance. Bo-
+nuses: +1 to M.A. and M.E., +4D6 S.D.C., +2 to Awe/Horror
+Factor and laser and energy blasts do no damage. Penalty: Can-
+not Prowl or hide at night or in shadow, glows like a beacon.
+11-20% Angelic Wings: The ‘Bane has a beautiful pair of
+6-10 foot (1.8-3 m) feathered wings sprouting from his or her
+back. The feathers can be any color, solid or a mixture of 2-3
+colors, and even metallic colors (exact colors are left up to the
+player), and each wing has 1D6x10+50 S.D.C., regenerate at the
+same rate as the Nightbane (will grow back in one day if de-
+stroyed), can hover, glide (silent) and provide a flight speed of
+1D4x10+26 (25-45 mph/40-72 km). Bonuses: +4D6 to S.D.C.,
++1 to P.P., +1D4 to P.B., +1 to strike and parry, +2 to dodge and
+pull punch while in flight, and +3 to Awe/Horror Factor. Pen-
+alty: -20% to Prowl on foot, cannot use disguise or perform un-
+73
+Joe Sifferman (Order #46323384)
+dercover work in angel form (unless it is as another angel), and
+requires custom clothing to accommodate the wings.
+21-30% Melodious Voice: Talented singers are sometimes
+said to have a “voice like an angel,” but this ‘Bane puts them to
+shame. Whenever the character speaks, those around him listen.
+His voice also has a calming effect on even the most angry or
+beleaguered souls, and to hear him sing is to be left speechless
+(also all who hear the singing are so distracted by it that Percep-
+tion Rolls are -10, -2 on initiative and -15% on skill perfor-
+mance. Bonuses: +1D4 to M.A., +1 to Awe/Horror Factor, and
++20% to any skill that involves speaking, performance or sing-
+ing. Penalty: Vulnerable to sonic attacks (they inflict 50%
+greater damage and penalties are double).
+31-37% Living Armor: The Morphus appears as a suit of
+impressive, polished armor. The armor may be highly ornate
+with etched graphics or designs, spikes or spines, to simplistic
+or without decoration at all. A helmet is optional and can be re-
+moved, but the rest of the armor cannot; it is part of the
+Nightbane. Bonuses: Regardless of its appearance, +4D6x10
+S.D.C., a Natural A.R. of 14, +1 to P.S., and +1D4 to Awe/Hor-
+ror Factor. Penalties: -10% on all skills involving flexibility of
+movement (Acrobatics, Climbing, Prowl, Swimming, etc.), dou-
+ble the character’s weight, -30% to Disguise skill, and cannot be
+easily concealed without something bulky like a cloak, poncho,
+or oversized overcoat or trench coat, which might be nearly as
+conspicuous.
+38-44% Living Holy Weapon: In his Morphus the ‘Bane
+possesses a gleaming weapon of exquisite craftsmanship. The
+type of weapon and its decoration vary with the tastes of the
+‘Bane, but is always an ancient weapon (01-25% short sword,
+26-50% large sword, 51-70% battle axe, 71-85% mace or other
+blunt weapon, 86-00% pole arm, scythe, pitchfork or other large
+weapon). The Nightbane also has a scabbard, sling or case for
+the weapon so that he doesn’t need to hold it in his hands all the
+time. This weapon may be lent to others, dropped, or stolen, but
+it will disappear when the ‘Bane switches back to Facade form
+and reappear with him when he assumes his Morphus the next
+time. The weapon is a living part of the character. Bonuses: +2
+to Awe/Horror Factor, the weapon does 4D6 damage regardless
+of type, +14 damage to Nightlords, their minions, demons,
+undead, and other supernatural creatures; half damage to crea-
+tures of magic, and +1 on initiative, +2 to strike, +3 to parry,
+disarm and pull punch with the Holy Weapon (plus any applica-
+ble attribute or skill bonuses). Penalties: Prefers to use this
+weapon above all others and feels naked without it, and the
+weapon is likely difficult to conceal or hide. The Holy Weapon
+has 40 S.D.C. +10 per level of experience, but the ‘Bane feels
+any attacks leveled against the weapon, and he takes damage or
+feels the effect after the weapon’s S.D.C. is reduced to one point
+or less, as it is a living part of him; damage is inflicted to the
+weapon only when it its specifically targeted. When the S.D.C.
+of the Holy Sword and his own S.D.C. are both reduced to zero,
+the weapon vanishes and cannot be made to reappear until the
+character recovers all of his own S.D.C. Most outsiders do not
+know about this vulnerability.
+45-51% Living Holy Shield: A shield appears strapped on
+one arm (or suitable appendage) or slung on the back of the
+Nightbane when in Morphus form. The sheild’s appearance may
+vary from ornate to plain. Bonuses: +1 to M.A. and P.P., +5D6
+S.D.C. to the Nightbane, +1 to strike and disarm, +3 to parry
+and pull punch with the shield (in addition to any applicable at-
+tribute or skill bonuses). The shield has 100 S.D.C., is only
+damaged by attacks that specifically target it, and regenerates at
+the same rate as the Nightbane. Should the shield be destroyed,
+it vanishes and does not return for 24 hours. Penalties: The
+weapon is difficult to conceal or hide and is definitely conspicu-
+ous in hand.
+52-60% Heroic Proportions: In his Morphus, the Nightbane
+is tall, has broad shoulders, a square jaw, handsome face (differ-
+ent than his human Facade), and is heavily muscled. Bonuses:
+Increase height by one foot (0.3 m) and weight by 50%. +6D6 to
+S.D.C., +4 to P.S., +1 to P.E., +1D4 to P.B. Penalty: Reduce
+Horror Factor -1D4.
+61-70% Halo of Power: The Nightbane radiates with a glow
+around his head and shoulders or has a circular halo hovering
+above his head. In the latter case, this may be a golden glowing
+light, or it may be a physical gold ring or full gold disk that
+gleams in the light, radiating like a miniature sun symbol. What-
+ever its appearance, the halo will attract a lot of attention. Bo-
+nuses: +1 to P.B., +1D4 to M.A., +4D6 S.D.C., resitant to fire
+and cold (takes half damage), +1 attack per melee round, +2 on
+initiative and pull punch, and +2 to Awe/Horror Factor. Pen-
+alty: Diguise is impossible, and the character is likely to be
+among the first to be targeted by evil.
+71-80% Mystical Protection: The Nightbane radiates with a
+thin white or light blue aura that is, in effect, a field of mystical
+protection. The character also has a small or large mystic sym-
+bol on his forehead or neck, and on his chest or the backs of his
+hands. It appears to be a tattoo or branded and the symbol glows
+during combat or times of apparent danger. Bonuses: The
+Nightbane’s Natural A.R. is increased by 1D4 points (A.R. 19
+maximum), the field provides 1D6x10+30 S.D.C. in addition to
+the character’s own, +2 to save vs magic and illusions, +4 to
+save vs possession, and +1 to all other saving throws. Penalty:
+Offers no protection against weapons made of silver and dam-
+age goes right to the character’s own S.D.C. then Hit Points.
+81-90% Noble Bearing: This ‘Bane moves with the confi-
+dence, sense of importance and grace of royalty; fluid and delib-
+erate, with shoulders square and head held high. Bonuses: +4D6
+to S.D.C., +1D4 to M.A., +1 to M.E., +1 to P.P., +1 to P.B., +1
+to Awe/Horror Factor, +5% to Dance and all Physical skills (as
+applicable). Penalties: Reduce Spd by 10% and -10% on Dis-
+guise and Undercover skills.
+91-00% Icon of the Faith: The Morphus appears with a
+large iconic symbol of the closest faith (a Crucifix, Star of Da-
+vid, wreath, etc.). This is typically worn around the neck on a
+chain, but may also appear on, or in addition to, a headdress,
+helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter,
+statuette, handheld holy symbol, or fetish. In the case of the
+Nightbane, the symbol might even be fused to the body (typi-
+cally head, neck or chest). This icon may be lent to others,
+dropped, or stolen, but it will disappear when the Nightbane
+switches back to Facade form and reappear with him when he
+assumes his Morphus the next time. The icon is a living part of
+the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A.,
+and a +2 bonus to all saving throws, and impervious to posses-
+sion, the vampire’s bite and mind control of the vampire. The
+icon is also capable of repelling and holding the undead, ani-
+74
+Joe Sifferman (Order #46323384)
+mated dead, were-beasts and other creatures susceptible to holy
+symbols at bay.

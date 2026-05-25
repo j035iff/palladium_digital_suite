@@ -63,7 +63,12 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
         if other_m:
             rest = rest[: other_m.start()]
     next_m = re.search(
-        r"\n(?:[A-Z][A-Za-z0-9/'’\-\s]+ Table|Mythical Creature|Video Games \(powers\))\b",
+        r"\n(?:"
+        r"[A-Z][A-Za-z0-9/'’\-\s]+ Table"
+        r"|Aquatic Animal Form Tables"
+        r"|Mythical Creature"
+        r"|Video Games \(powers\)"
+        r")\b",
         rest,
     )
     chunk = rest[: next_m.start()] if next_m else rest

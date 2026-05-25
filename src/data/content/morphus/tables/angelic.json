@@ -3,6 +3,374 @@
   "kind": "morphus_trait_table",
   "displayName": "Angelic",
   "parentTable": null,
-  "description": "Angelic Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Angelic Morphus table (Nightbane Survival Guide, p. 73). Nightbane who believe they were chosen for a holy purpose—appearance varies by faith; many other Nightbane find them arrogant.",
+  "entries": [
+    {
+      "id": "angelic_inner_light",
+      "name": "Inner Light",
+      "tableCategory": "Angelic",
+      "description": "Radiant brilliance from under the skin; may include a halo. Ordinary people are in awe or fear the Nightbane.",
+      "statModifiers": {
+        "ma": { "flat": 1 },
+        "me": { "flat": 1 },
+        "sdc": { "dice": "4D6" },
+        "hf": { "flat": 2 }
+      },
+      "damageAffinities": {
+        "lasers": 0,
+        "energy": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Laser and energy blasts inflict no damage.",
+        "Cannot Prowl or hide at night or in shadow; glows like a beacon."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 73
+        }
+      ]
+    },
+    {
+      "id": "angelic_angelic_wings",
+      "name": "Angelic Wings",
+      "tableCategory": "Angelic",
+      "description": "Beautiful 6–10 foot feathered wings (player-chosen colors); hover, silent glide, and powered flight.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "pp": { "flat": 1 },
+        "pb": { "dice": "1D4" },
+        "strike": { "flat": 1 },
+        "parry": { "flat": 1 },
+        "dodge": { "flat": 2 },
+        "pullPunch": { "flat": 2 },
+        "hf": { "flat": 3 }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Wing (each)",
+          "quantity": 2,
+          "sdc": 50,
+          "hp": 0
+        }
+      ],
+      "mobility": {
+        "flightEngine": {
+          "maxSpeedMph": 45
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Each wing has 1D6×10+50 S.D.C. (limb entry uses 50 base); regrows in one day if destroyed.",
+        "Flight speed 1D4×10+26 mph (25–45 mph / 40–72 km); +1 strike/parry and +2 dodge/pull punch while flying.",
+        "Undercover work only as another angel; requires custom clothing for wings."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 73
+        }
+      ]
+    },
+    {
+      "id": "angelic_melodious_voice",
+      "name": "Melodious Voice",
+      "tableCategory": "Angelic",
+      "description": "Compelling speech and singing that calms souls; listeners hang on every word.",
+      "statModifiers": {
+        "ma": { "dice": "1D4" },
+        "hf": { "flat": 1 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "category", "targetValue": "Performance", "modifierPercent": 20 }
+        ]
+      },
+      "customOneOffs": [
+        "+20% to skills involving speaking, performance, or singing (in addition to Performance category bonus).",
+        "Singing distracts listeners: Perception −10, initiative −2, skills −15%.",
+        "Sonic attacks inflict 50% greater damage and double penalties."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_living_armor",
+      "name": "Living Armor",
+      "tableCategory": "Angelic",
+      "description": "Polished living armor fused to the body; optional removable helmet.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6x10" },
+        "ps": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "naturalAr": 14,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 }
+        ]
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "customOneOffs": [
+        "Double body weight.",
+        "Concealment requires bulky cloak, poncho, or oversized coat (still conspicuous)."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_living_holy_weapon",
+      "name": "Living Holy Weapon",
+      "tableCategory": "Angelic",
+      "description": "Gleaming ancient holy weapon (type by roll) with scabbard or case; part of the Morphus and returns when the Nightbane shifts form.",
+      "statModifiers": {
+        "hf": { "flat": 2 },
+        "initiative": { "flat": 1 },
+        "strike": { "flat": 2 },
+        "parry": { "flat": 3 },
+        "disarm": { "flat": 3 },
+        "pullPunch": { "flat": 3 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Living Holy Weapon",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Weapon type: 01–25% short sword, 26–50% large sword, 51–70% battle axe, 71–85% mace/blunt, 86–00% pole arm or large weapon.",
+        "+14 damage vs Nightlords, minions, demons, undead, and other supernatural foes; half damage vs creatures of magic.",
+        "Holy Weapon has 40 S.D.C. +10 per level; damage to weapon only on called shots—overflow hits the Nightbane when weapon S.D.C. ≤1.",
+        "If weapon and Morphus S.D.C. both reach 0, weapon vanishes until Morphus S.D.C. fully recovers.",
+        "Prefers this weapon; difficult to conceal."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_living_holy_shield",
+      "name": "Living Holy Shield",
+      "tableCategory": "Angelic",
+      "description": "Living shield on arm or back—ornate or plain; regenerates with the Nightbane.",
+      "statModifiers": {
+        "ma": { "flat": 1 },
+        "pp": { "flat": 1 },
+        "sdc": { "dice": "5D6" },
+        "strike": { "flat": 1 },
+        "disarm": { "flat": 1 },
+        "parry": { "flat": 3 },
+        "pullPunch": { "flat": 3 }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Living Holy Shield",
+          "quantity": 1,
+          "sdc": 100,
+          "hp": 0
+        }
+      ],
+      "customOneOffs": [
+        "Shield damaged only by attacks that target it; if destroyed, vanishes 24 hours.",
+        "Conspicuous and difficult to conceal when carried."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_heroic_proportions",
+      "name": "Heroic Proportions",
+      "tableCategory": "Angelic",
+      "description": "Tall, broad-shouldered, square-jawed heroic build distinct from the Facade.",
+      "statModifiers": {
+        "sdc": { "dice": "6D6" },
+        "ps": { "flat": 4 },
+        "pe": { "flat": 1 },
+        "pb": { "dice": "1D4" },
+        "hf": { "dice": "-1D4" }
+      },
+      "heightModifier": {
+        "flat": 12
+      },
+      "weightModifier": {
+        "percent": 50
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_halo_of_power",
+      "name": "Halo of Power",
+      "tableCategory": "Angelic",
+      "description": "Glowing halo around head and shoulders or hovering gold ring or disk—highly visible.",
+      "statModifiers": {
+        "pb": { "flat": 1 },
+        "ma": { "dice": "1D4" },
+        "sdc": { "dice": "4D6" },
+        "apm": { "flat": 1 },
+        "initiative": { "flat": 2 },
+        "pullPunch": { "flat": 2 },
+        "hf": { "flat": 2 }
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5,
+        "cold": 0.5,
+        "ice": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true }
+        ]
+      },
+      "customOneOffs": [
+        "Likely first target of evil foes."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_mystical_protection",
+      "name": "Mystical Protection",
+      "tableCategory": "Angelic",
+      "description": "Thin white or light-blue protective aura with glowing mystic symbols on forehead, neck, chest, or hands.",
+      "statModifiers": {
+        "sdc": { "dice": "1D6x10+30" }
+      },
+      "saveModifiers": {
+        "magic": 2,
+        "illusions": 2,
+        "possession": 4,
+        "allSaves": 1
+      },
+      "customOneOffs": [
+        "Natural A.R. increased by 1D4 (maximum A.R. 19).",
+        "No protection vs silver weapons—damage bypasses the field to personal S.D.C./H.P.",
+        "Field provides 1D6×10+30 S.D.C. in addition to personal S.D.C."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_noble_bearing",
+      "name": "Noble Bearing",
+      "tableCategory": "Angelic",
+      "description": "Royal grace and confidence—shoulders square, head high.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "ma": { "dice": "1D4" },
+        "me": { "flat": 1 },
+        "pp": { "flat": 1 },
+        "pb": { "flat": 1 },
+        "hf": { "flat": 1 },
+        "spd": { "percent": -10 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_dance", "modifierPercent": 5 },
+          { "targetType": "category", "targetValue": "Physical", "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+        ]
+      },
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    },
+    {
+      "id": "angelic_icon_of_the_faith",
+      "name": "Icon of the Faith",
+      "tableCategory": "Angelic",
+      "description": "Large holy symbol of the character's faith—worn, carried, or fused to body; returns with the Morphus.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "me": { "flat": 2 },
+        "ma": { "flat": 1 }
+      },
+      "saveModifiers": {
+        "allSaves": 2
+      },
+      "customOneOffs": [
+        "Impervious to possession, vampire bite, and vampire mind control.",
+        "Holy icon repels and holds at bay undead, animated dead, were-beasts, and creatures susceptible to holy symbols."
+      ],
+      "gameSystems": ["nightbane"],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 74
+        }
+      ]
+    }
+  ]
 }
