@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Palladium reference books (PDFs on disk only; not committed)
+src/data/reference/**
+!src/data/reference/README.md
