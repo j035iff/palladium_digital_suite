@@ -14,7 +14,21 @@
           "pageNumber": 26
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (16-20%; authority=dark_designs)."
+      "description": "Reflecting an interest in glassblow- ing or metalworking, the powerful lungs of the Nightbane’s Morphus form are actually oversized bellows. Part or all of the flesh of the upper torso is replaced with a dark, leathery mate- rial that is visibly ribbed. As the Nightbane breathes the mate- rial expands outward, allowing for a much greater lung capacity than normal. Bonuses: +2 to the M.E. and P.E. attributes, +3D6 S.D.C. Those with this feature can hold their breath for a num- ber of minutes equal to the P.E. attribute. Additionally, heat and fire (even the magic varieties) do half damage to the Morphus form. Penalties: -2 to the P.B. attribute. The bellows increase buoyancy which makes swimming difficult, -20% to the Swim- ming or S.C.U.B.A. skills. Also, they make a lot more noise than normal breathing, causing a -10% penalty to the Prowl skill.",
+      "statModifiers": {
+        "me": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "artisan_body_artist_tattoos_piercings",
@@ -30,7 +44,18 @@
           "pageNumber": 27
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+      "description": "The Morphus body is covered in tattoos (player’s choice of how many and what they are), or scarification (cuts to create patterns; may be aboriginal or something more modern), and/or piercings of all kinds. The fingers may also be adorned in heavy rings (+1D4 damage to punches). Bonuses: In combat, the tattoos or scar patterns seem to move, which is unnerving and makes oppo- nents -1 to strike and parry, and adds +1 to the Horror Factor of the Nightbane. +1D4x10+10 to S.D.C. Penalties: -10% to Prowl, -50% to Disguise and Impersonate, and is impossible to look inconspicuous unless completely covered, and even then, piercings and tattoos or scarification on the face may make that difficult.",
+      "statModifiers": {
+        "strike": {
+          "flat": -1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D4x10+10"
+        }
+      }
     },
     {
       "id": "artisan_chisel_fingers",
@@ -46,7 +71,15 @@
           "pageNumber": 26
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+      "description": "A sign of a sculptor or wood- worker, the tips of each finger end in a variety of metal tools useful for chipping away at and carving wood or stone, en- graving, etc. Bonuses: +1 to the M.E. attribute and +1 to Per- ception rolls. +10% to the Whittling & Sculpting skill while in Morphus form. The Nightbane is also able to dig/tunnel through rock and dirt at the rate of three feet (0.9 m) per melee round, and the sharpened tips function like claws, adding 1D6 to the Supernatural P.S. punch damage for any claw attack. Penalties: -1 to the P.B. attribute. -20% to any skills requiring a sensitive touch like Art, Computer Programming, Surgery, Forgery or Pick Pockets.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "artisan_costumes_outfits_cosplay",
@@ -62,7 +95,32 @@
           "pageNumber": 27
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+      "description": "The hallmark of an actor and cosplay costume makers (or other costume/fashion designer), is creating costumes for the characters they portray. In this case, the Nightbane Morphus manifests as one particu- lar “outfit” each time he switches from Facade to Morphus. He may select the same favorite appearance as the Morphus or a completely new costume and different look each time he transforms into his Morphus. That can include a diverse range of looks and characters: cyborg, executioner, spy, ninja, ex- ecutive in a suit, wizard, knight, werewolf, demon, an anime character, a super-hero, and on an on; each look typically re- flecting the Nightbane’s emotions or state of mind or whether he or she is trying to impress, scare or confuse his adversaries. Inevitably, the Nightbane is likely to have 2-4 favorite default “costumes” or looks that he appears in the most often, but that too can change over time. Such outfits can include small tools, gadgets, weapons, regalia and makeup that go with the costume. HOWEVER, much like props in acting and cosplay, any equipment is completely fake and non-functional even if it looks convincing (and cosplay creations usually look amaz- ingly real, including faux tails, wings and claws). But that can work to the Nightbane’s advantage, since his opponents don’t know what’s real and what’s fake. Bonuses: +1D4+1 to the M.A. attribute, +15% to the Disguise and Impersonation skills, +5% to any other skill that might benefit from a specific outfit, such as dark-colored clothing aiding the Prowl skill in the dark. Special: +1 to Horror Factor and/or +10% to intimi- date when trying to look scary or dangerous, or +10% to evoke trust and confidence BUT ONLY WHEN dressed for the part. +1D4 to P.B. when dressed and made up to look glamorous and sexy. The Nightbane also gains S.D.C. protection from the costume as if he was wearing a physical outfit. This is equal to the actual S.D.C. of the real costume, but remember, the armor is NOT real, but only made to look like armor, and so it offers minimal protection. Special Conditions: 1. Because it is fake, the most S.D.C. any outfit can add is 30 points. 2. The Nightbane can only manifest costumes/appearances (including makeup) that he has actually worn or created himself. Yes, this means a cosplayer or costume designer can create new out- fits, disguises, and appearances for himself, BUT they must be worn, in public, for at least 2 hours for them to become acces- sible as a Morphus option. Penalties: -1 to strike, parry, and dodge, -5% to all Physical skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming.",
+      "statModifiers": {
+        "ma": {
+          "flat": 1,
+          "dice": "1D4+1"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": -1
+        },
+        "pb": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": 15,
+            "grantUnlearnedValue": 40
+          }
+        ]
+      }
     },
     {
       "id": "artisan_drawing_table",
@@ -78,7 +136,18 @@
           "pageNumber": 26
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+      "description": "The front of the torso folds down to reveal a flat, sturdy surface suitable for drawing anything from building plans to cartoon illustrations. Instead of organs, the chest cavity contains a variety of drawing implements and tools from a compass to a T-square as well as various pencils and pens to suit the needs of the chosen type of art. Bonuses: +1 to the M.E. attribute and +4D6 S.D.C.; +1 on Perception Rolls. The character gains the equivalent of the psionic power of Total Recall at no cost, but only for images, not words; however, that includes faces and tattoos as well as design elements. Normal verbal memory will likely remember key words or short phrases but not whole texts. Recalled images can then be duplicated as a detailed sketch with a successful roll under the character’s Art skill. This pro- cess takes just 2D4 minutes (twice that for color images). Those Nightbane who are skilled in drafting can duplicate building plans just by having seen them or been through the building once. +10% to Art skill. Penalties: -1 to the P.S., P.E. and P.B. attri- butes, -1D4 to Spd.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "4D6"
+        }
+      }
     },
     {
       "id": "artisan_instrument_mic_stand",
@@ -94,7 +163,15 @@
           "pageNumber": 27
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+      "description": "Musicians of all stripes may find that they appear in Morphus form with their cho- sen or favorite instrument ready to play. Vocalists will have a microphone with or without its stand rather than an instru- ment. Without any kind of amplification, the music produced with this instrument can be heard up to a half mile to one full mile (0.8 to 1.6 km) away. This may be useful for putting on concerts, making money as a street performer or at clubs, sig- naling allies, confusing the enemy or creating a distraction (may even cause a crowd to gather which can add to confu- sion, block traffic, etc.). Bonuses: +1 to the M.E. and M.A. attributes, +20% to the Play Musical Instrument and/or Sing skill, whichever this feature reflects. Unlike most musical in- struments, this instrument is sturdy enough to be used as a blunt weapon in combat. A small instrument like a flute or fiddle does 1D4 damage while medium-sized instruments like a saxophone, clarinet or guitar do 1D6 damage and the largest instruments like a cello or tuba do 1D6+3 damage. Penalties: -1D6 on base P.P.E., -1 to Horror Factor, and -5% to all Physi- cal skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "artisan_iron_works",
@@ -110,7 +187,21 @@
           "pageNumber": 27
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+      "description": "This is a sculptor who works in metal, cutting and welding metal to create abstract works of art or ani- mals and such out of metal, or could be a blacksmith hobbyist. In either case, the Morphus is a well-muscled body that seems to be made of smooth steel (light grey) or iron (a darker, blue grey), a welder’s mask (or monstrous equivalent) that can flip up to re- veal the face (could be anything underneath), heavy work gloves, and an acetylene torch (2D6 damage, melee combat range) or a small sledgehammer (1D6 damage) and a large sledgehammer (2D6 damage). Bonuses: +2 to P.S. attribute, +1 to P.P., and +1D6x10+40 to S.D.C. Damage from weapons is in addition to his Supernatural P.S. Penalties: -1 to P.B., -1D6 to Spd attribute, and -10% on skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D6x10+40"
+        }
+      }
     },
     {
       "id": "artisan_paint_palette",
@@ -126,7 +217,15 @@
           "pageNumber": 26
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (01-15%; authority=dark_designs)."
+      "description": "Attached to the forearm above the non-dominant hand, a wide board contains a number of daubs of different colored paints. The paint never runs out and the color and consistency of it can be altered before it is used by the Nightbane with nothing more than a thought. Accompa- nying this palette is a small, quiver-like container of paint- brushes of different sizes and shapes hanging from a belt or shoulder-strap. This feature enables the Nightbane to paint images that are startlingly realistic, and can even work like optical illusions for a time. For instance, from a distance a painting of a large pothole on a road might keep someone from driving over it, or a painting of a guard next to a door might discourage others from approaching. Note: Only a save vs illusions or a Percep- tion Roll of 14 or better lets observers realize the image is an illusion – a painting – without careful examination that takes at least 1D4 minutes (twice as long if examined from further than 10 feet/3 m). Bonuses: +15% to any Art skill involving paint and +10% to create Camouflage; +2 on Perception Rolls, +1 to parry using the palette like a shield and +1D4 P.P.E. Penalties: -1 to strike with the limb holding the palette. It also makes certain Physical skills like Acrobatics, Climbing and Swimming harder to perform, imposing a -10% penalty to such skills.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "artisan_typewriter_keyboard",
@@ -142,7 +241,18 @@
           "pageNumber": 26
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\artisan\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+      "description": "Whether it is carried or built into the body of the Morphus, the character’s love of writing is represented as a computer keyboard or old-fashioned typewriter. This tool is fully functional and can be used at any time to type personal reminders, a record of events, etc. There is never a need for paper or replacement ink, either, and any finished document will either appear on the character’s hand, somehow print out, or can be removed from the top of the typewriter. Bonuses: +1 to the M.E. attribute and +2D6 S.D.C. +10% to Creative Writing or Technical Writing skill. A final, odd effect is that a Nightbane with this feature can sometimes (5% base chance, +3% at levels 3, 6, 9, 12, and 15) gain spontaneous insight about a nagging question by taking 1D4 hours to journal about it. Such questions can include anything from the identity of a mole within a faction to the location of a lost object or the significance of a clue (G.M. discretion). Many think this is just an effect of careful contem- plation, but there are some who believe the writer taps into the Joe Sifferman (Order #46319524) 27 collective unconscious, or an unearthly source of knowledge that enables him to recognize overlooked clues or snatch a sudden burst of insight from the aether. Penalties: -2 to the M.A. attri- bute. -1D6 base P.P.E.; Nightbane with this feature often seem to be distracted by their own thoughts.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      }
     }
   ]
 }
