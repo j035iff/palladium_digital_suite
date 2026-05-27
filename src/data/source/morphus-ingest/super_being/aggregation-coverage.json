@@ -56,9 +56,11 @@
       "name": "Oversized, Flowing Cape or Cloak",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "natural A.R.",
         "skill overrides",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -90,7 +92,9 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "gimmick inventory",
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },

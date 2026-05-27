@@ -111,6 +111,21 @@ _GEAR_HEAD_MID_TABLE_RE = re.compile(
 )
 
 
+# Trait title split across a PDF page break before the colon (e.g. Superbeing "Bold and the\nBeautiful:").
+_BROKEN_TRAIT_HEADER_RE = re.compile(
+    r"(^|\n)(\d{2}-\d{2}\s*%\s+)([^\n:!]{3,200}?)\n([A-Za-z][^\n]{1,80}?):\s+",
+    re.MULTILINE,
+)
+
+
+def join_broken_trait_headers(text: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        prefix, pct, part1, part2 = m.groups()
+        return f"{prefix}{pct}{part1.strip()} {part2.strip()}: "
+
+    return _BROKEN_TRAIT_HEADER_RE.sub(repl, text)
+
+
 def sanitize_trait_body(text: str) -> str:
     """Strip PDF watermarks and mid-table page headers from trait prose."""
     text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", text)
@@ -125,6 +140,7 @@ def sanitize_table_text(table_text: str) -> str:
     text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", table_text)
     text = re.sub(r"-?\s*Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
     text = re.sub(r"([a-z]{2,})-\s+([a-z])", r"\1\2", text, flags=re.I)
+    text = join_broken_trait_headers(text)
     return text
 
 

@@ -1,6 +1,6 @@
 {
   "tableId": "super_being",
-  "tableHeading": "Superbeing Table",
+  "tableHeading": "Superbeing Table\nWhile the primary",
   "authoritativeBookKey": "dark_designs",
   "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
   "books": [
@@ -11,8 +11,24 @@
       "authoritative": true
     }
   ],
-  "traitCount": 10,
+  "traitCount": 11,
   "traits": [
+    {
+      "name": "Chiseled Jaw and Physique or the Bold and the Beautiful",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 59,
+          "percent": "31-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
     {
       "name": "Energized",
       "percent": "61-70%",
@@ -53,7 +69,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 62,
+          "pageNumber": 61,
           "percent": "91-95%",
           "authoritative": true
         }

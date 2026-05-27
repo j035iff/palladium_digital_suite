@@ -2,10 +2,11 @@
   "id": "super_being",
   "displayName": "Super Being",
   "tableCategory": "Superbeing",
-  "tableHeading": "Superbeing Table",
+  "tableHeading": "Superbeing Table\nWhile the primary",
   "targetJson": "src/data/content/morphus/tables/super_being.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
