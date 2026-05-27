@@ -2,12 +2,32 @@
   "tableId": "alien_shape",
   "entries": [
     {
-      "id": "alien_shape_plasmoid",
-      "name": "Plasmoid",
+      "id": "alien_shape_abnormally_large_sensory_organs",
+      "name": "Abnormally Large Sensory Organs",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "damage affinities",
-        "custom one-offs (notes only)"
+        "skill overrides",
+        "nightvision bonus",
+        "scent tracking"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_armored_scales",
+      "name": "Armored Scales",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R."
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_baggy_flaps_of_skin",
+      "name": "Baggy Flaps of Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides"
       ],
       "notesOnly": false
     },
@@ -28,10 +48,22 @@
       "notesOnly": false
     },
     {
-      "id": "alien_shape_thorns",
-      "name": "Thorns",
+      "id": "alien_shape_brute",
+      "name": "Brute",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_cone_head",
+      "name": "Cone head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "balance modifier"
       ],
       "notesOnly": false
     },
@@ -42,24 +74,8 @@
         "stat modifiers / A.R. shift",
         "natural weapons",
         "damage affinities",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_living_tattoos",
-      "name": "Living Tattoos",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_unusual_skin_color",
-      "name": "Unusual Skin Color",
-      "hooks": [
-        "stat modifiers / A.R. shift"
+        "combat interceptions",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
@@ -73,37 +89,22 @@
       "notesOnly": false
     },
     {
+      "id": "alien_shape_living_tattoos",
+      "name": "Living Tattoos",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
       "id": "alien_shape_mouth_covered_body",
       "name": "Mouth-Covered Body",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_combination_of_two",
-      "name": "Combination of Two",
-      "hooks": [
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": true
-    },
-    {
-      "id": "alien_shape_no_bones",
-      "name": "No Bones",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_armored_scales",
-      "name": "Armored Scales",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "natural A.R."
+        "natural weapons",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
@@ -112,7 +113,41 @@
       "name": "Multiple Heads",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_no_bones",
+      "name": "No Bones",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "combat context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_on_fire",
+      "name": "On Fire",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "combat context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_plasmoid",
+      "name": "Plasmoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "appearance constraints",
+        "at-will abilities"
       ],
       "notesOnly": false
     },
@@ -122,7 +157,18 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "skill context modifiers",
+        "light sensitivity"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "alien_shape_shaggy_hairy",
+      "name": "Shaggy Hairy",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
       ],
       "notesOnly": false
     },
@@ -132,27 +178,25 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
     {
-      "id": "alien_shape_abnormally_large_sensory_organs",
-      "name": "Abnormally Large Sensory Organs",
+      "id": "alien_shape_thorns",
+      "name": "Thorns",
       "hooks": [
-        "stat modifiers / A.R. shift",
-        "nightvision bonus",
-        "custom one-offs (notes only)"
+        "stat modifiers / A.R. shift"
       ],
       "notesOnly": false
     },
     {
-      "id": "alien_shape_shaggy_hairy",
-      "name": "Shaggy Hairy",
+      "id": "alien_shape_unusual_skin_color",
+      "name": "Unusual Skin Color",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
-        "custom one-offs (notes only)"
+        "player choices"
       ],
       "notesOnly": false
     },
@@ -162,48 +206,6 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R."
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_brute",
-      "name": "Brute",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "natural weapons",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_on_fire",
-      "name": "On Fire",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides",
-        "damage affinities",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_baggy_flaps_of_skin",
-      "name": "Baggy Flaps of Skin",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "natural A.R.",
-        "skill overrides",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "alien_shape_cone_head",
-      "name": "Cone Head",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides",
-        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     }

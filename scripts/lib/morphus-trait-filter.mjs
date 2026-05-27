@@ -22,6 +22,7 @@ const NON_PLAYABLE_NAME_RES = [
   /^step two\b/i,
   /^disproportionate\s/i,
   /^roll (?:on|again|twice|percentile)\b/i,
+  /^combination of two\b/i,
 ]
 
 export function normTraitName(name) {

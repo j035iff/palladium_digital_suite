@@ -122,14 +122,48 @@ function parseStatModifiers(body, out) {
     if (key) addStat(out, key, { dice: `${m[1] === '-' ? '-' : ''}${m[2].replace(/x/gi, 'x')}` })
   }
 
-  const sdcRe = /([+-])(\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+D\d+)\s+(?:to\s+)?S\.D\.C\./gi
+  const sdcRe =
+    /([+-])?(\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+D\d+)\s+(?:to\s+)?(?:the\s+)?S\.D\.C\./gi
   for (const m of body.matchAll(sdcRe)) {
-    addStat(out, 'sdc', { dice: `${m[1] === '-' ? '-' : ''}${m[2].replace(/x/gi, 'x')}` })
+    const sign = m[1] === '-' ? '-' : ''
+    addStat(out, 'sdc', { dice: `${sign}${m[2].replace(/x/gi, 'x')}` })
+  }
+  const addSdcRe = /Add\s+(\d+D\d+(?:x\d+)?(?:\+\d+)?)\s+to\s+(?:the\s+)?S\.D\.C\./gi
+  for (const m of body.matchAll(addSdcRe)) {
+    addStat(out, 'sdc', { dice: m[1].replace(/x/gi, 'x') })
   }
 
+  const hfDiceRe = /(?:add\s+)?\+(\d+D\d+(?:\+\d+)?)\s+to\s+Horror Factor/gi
+  for (const m of body.matchAll(hfDiceRe)) {
+    addStat(out, 'hf', { dice: m[1].replace(/x/gi, 'x') })
+  }
+
+  const superPsHthRe = /\+(\d+D\d+)\s+damage to the usual Supernatural P\.S\./i
+  const spm = body.match(superPsHthRe)
+  if (spm) addStat(out, 'bonusHthDamage', { dice: spm[1] })
+
+  const reducePsSpdRe = /Reduce\s+P\.S\.\s+and\s+Spd\s+by\s+(\d+)%/i
+  const rps = body.match(reducePsSpdRe)
+  if (rps) {
+    addStat(out, 'ps', { percent: -Number(rps[1]) })
+    addStat(out, 'spd', { percent: -Number(rps[1]) })
+  }
+
+  const reducePbPctRe = /Reduce\s+P\.B\.\s+by\s+(\d+)%/i
+  const rpb = body.match(reducePbPctRe)
+  if (rpb) addStat(out, 'pb', { percent: -Number(rpb[1]) })
+
+  const allPercRe = /\+(\d+)\s+to\s+ALL\s+Perception Rolls/i
+  const apm = body.match(allPercRe)
+  if (apm) addStat(out, 'perception', { flat: Number(apm[1]) })
+
+  const fireHthRe = /fire punches inflict\s+\+(\d+D\d+)\s+S\.D\.C\./i
+  const fhm = body.match(fireHthRe)
+  if (fhm) addStat(out, 'bonusHthDamage', { dice: fhm[1] })
+
   const spdPctRe = /(?:Reduce|reduces?)\s+Spd(?: attribute)?\s+by\s+(\d+)%/i
-  const spm = body.match(spdPctRe)
-  if (spm) addStat(out, 'spd', { percent: -Number(spm[1]) })
+  const spdPctM = body.match(spdPctRe)
+  if (spdPctM) addStat(out, 'spd', { percent: -Number(spdPctM[1]) })
 
   const hthRe = /([+-])(\d+D\d+|\d+)\s+to\s+damage in (?:hand to hand )?combat/i
   const hm = body.match(hthRe)
@@ -169,9 +203,23 @@ function parseDamageAffinities(body, out) {
   if (/fire does double|fire inflicts double|double damage.*fire/i.test(body)) da.fire = 2
   if (/kinetic attacks?.{0,60}quarter/i.test(body)) da.kinetic = 0.25
   if (/blades?.{0,40}quarter|cut, stab, impale/i.test(body)) da.piercing = 0.25
-  if (/kinetic attacks?.{0,60}half/i.test(body) || /punches to bullets\) do half/i.test(body)) {
+  if (
+    /kinetic attacks?.{0,60}half/i.test(body) ||
+    /punches to bullets\) do half/i.test(body) ||
+    /physical attacks directed at the character.*do half damage/i.test(body) ||
+    /all physical attacks do half damage/i.test(body)
+  ) {
     da.kinetic = da.kinetic ?? 0.5
   }
+  if (/heat and fire attacks? do no damage/i.test(body)) {
+    da.heat = 0
+    da.fire = 0
+  }
+  if (/heat and fire do half damage/i.test(body)) {
+    da.heat = da.heat ?? 0.5
+    da.fire = da.fire ?? 0.5
+  }
+  if (/Cold attacks do double/i.test(body)) da.cold = 2
   if (/fire, water and electricity.*double/i.test(body)) {
     da.fire = 2
     da.water = 2
@@ -212,7 +260,19 @@ function parseSkillModifiers(body, out) {
         })
         continue
       }
-      if (/Physical skills/i.test(name)) continue
+      if (/Physical skills/i.test(name)) {
+        overrides.push({
+          targetType: 'category',
+          targetValue: 'physical',
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/Concealment/i.test(name)) {
+        const id = findSkillId('Concealment')
+        if (id) overrides.push({ targetType: 'skill_id', targetValue: id, modifierPercent: pct })
+        continue
+      }
       const id = findSkillId(name)
       if (id) overrides.push({ targetType: 'skill_id', targetValue: id, modifierPercent: pct })
     }
@@ -268,6 +328,9 @@ function parseMobility(body, out) {
   const balanceRe = /([+-])(\d+)%\s+to\s+sense of balance/i
   const bm = body.match(balanceRe)
   if (bm) mob.balanceModifierPercent = Number(bm[2]) * (bm[1] === '-' ? -1 : 1)
+  const balanceOnRe = /([+-])(\d+)%\s+on balance/i
+  const bom = body.match(balanceOnRe)
+  if (bom) mob.balanceModifierPercent = Number(bom[2]) * (bom[1] === '-' ? -1 : 1)
   const reachRe = /(\d+)%\s+longer than usual/i
   const rm = body.match(reachRe)
   if (rm) mob.reachPercentBonus = Number(rm[1])
@@ -312,7 +375,63 @@ function parseSensory(body, out) {
       baseSuccessPercent: Number(tm[1]),
       perLevelIncrement: Number(tm[2]),
     }
-    sen.perceptionSpecialties = { smell: 2 }
+    sen.perceptionSpecialties = { ...(sen.perceptionSpecialties ?? {}), smell: 2 }
+  }
+  const trackIsRe = /Track by Scent is\s*(\d+)%\s*\+(\d+)% per level/i
+  const tim = body.match(trackIsRe)
+  if (tim) {
+    sen.scentTracking = {
+      enabled: true,
+      baseSuccessPercent: Number(tim[1]),
+      perLevelIncrement: Number(tim[2]),
+    }
+  }
+  const recScentRe = /recognize scent is (\d+)%\s*\+(\d+)% per level/i
+  const rsm = body.match(recScentRe)
+  if (rsm) {
+    sen.scentTracking = {
+      ...(sen.scentTracking ?? { enabled: true }),
+      recognizeScentBasePercent: Number(rsm[1]),
+      recognizeScentPerLevel: Number(rsm[2]),
+    }
+  }
+  const specScentRe = /recognize specific scent[^.]*is (\d+)%\s*\+(\d+)% per level/i
+  const ssm = body.match(specScentRe)
+  if (ssm) {
+    sen.scentTracking = {
+      ...(sen.scentTracking ?? { enabled: true }),
+      recognizeSpecificScentBasePercent: Number(ssm[1]),
+      recognizeSpecificScentPerLevel: Number(ssm[2]),
+    }
+  }
+  if (/\(\+30% for common scents\)/i.test(body)) {
+    sen.scentTracking = {
+      ...(sen.scentTracking ?? { enabled: true }),
+      recognizeCommonScentBonusPercent: 30,
+    }
+  }
+  if (/hawk-like day vision/i.test(body)) sen.hawkLikeDayVision = true
+  if (/whisper at (\d+)\s+feet/i.test(body)) {
+    const wm = body.match(/whisper at (\d+)\s+feet/i)
+    if (wm) sen.whisperHearingRangeFeet = Number(wm[1])
+  }
+  if (/(\d+)%\s+invisible in darkness/i.test(body)) {
+    const dm = body.match(/(\d+)%\s+invisible in darkness/i)
+    if (dm) sen.darknessInvisibilityPercent = Number(dm[1])
+  }
+  if (/Day vision is half normal/i.test(body)) {
+    sen.lightSensitivity = {
+      ...(sen.lightSensitivity ?? {}),
+      daylightVisionMultiplier: 0.5,
+    }
+  }
+  const tasteRe = /discern specific substances by taste[^.]*at (\d+)%\s*\+(\d+)% per level/i
+  const ttm = body.match(tasteRe)
+  if (ttm) {
+    sen.tasteIdentification = {
+      baseSuccessPercent: Number(ttm[1]),
+      perLevelIncrement: Number(ttm[2]),
+    }
   }
   if (/cannot track by scent/i.test(body)) {
     sen.scentTracking = { enabled: false, identifyOdorsModifierPercent: -10 }
@@ -476,6 +595,153 @@ function parseCapabilityFields(body, out, entryName) {
   if (/Roll twice|two disproportions/i.test(body)) {
     out.tableWorkflow = { stepOneRollCount: 2, excludeSelfFromReroll: true }
   }
+  if (/parry bladed weapons.*bare hands/i.test(body)) {
+    out.specialCombatInterceptions = [
+      ...(out.specialCombatInterceptions ?? []),
+      { interceptAction: 'bare_handed_melee_parry', modifierFlat: 0 },
+    ]
+  }
+  if (/80% invisible in darkness/i.test(body)) {
+    out.sensory = {
+      ...(out.sensory ?? {}),
+      darknessInvisibilityPercent: 80,
+    }
+  }
+  if (/\+20% to Prowl.*low-light|low-light environments/i.test(body)) {
+    out.skillContextModifiers = [
+      ...(out.skillContextModifiers ?? []),
+      {
+        skillId: 'skill_prowl',
+        modifierPercent: 20,
+        context: 'darkness',
+      },
+    ]
+    const baseProwl = body.match(/or base of (\d+)%/i)
+    if (baseProwl) {
+      out.skillModifiers = out.skillModifiers ?? { specificSkillOverrides: [] }
+      out.skillModifiers.specificSkillOverrides.push({
+        targetType: 'skill_id',
+        targetValue: 'skill_prowl',
+        modifierPercent: 20,
+        grantUnlearnedValue: Number(baseProwl[1]),
+      })
+      out.skillModifiers.specificSkillOverrides = dedupeOverrides(
+        out.skillModifiers.specificSkillOverrides,
+      )
+    }
+  }
+  if (/-20% in bright lighting/i.test(body)) {
+    out.skillContextModifiers = [
+      ...(out.skillContextModifiers ?? []),
+      { skillId: 'skill_prowl', modifierPercent: -20, context: 'bright_light' },
+    ]
+  }
+  if (/Escape Artist skill \(or a base of (\d+)%\)/i.test(body)) {
+    const em = body.match(/Escape Artist skill \(or a base of (\d+)%\)/i)
+    const id = findSkillId('Escape Artist')
+    if (id && em) {
+      out.skillModifiers = out.skillModifiers ?? { specificSkillOverrides: [] }
+      out.skillModifiers.specificSkillOverrides.push({
+        targetType: 'skill_id',
+        targetValue: id,
+        modifierPercent: 20,
+        grantUnlearnedValue: Number(em[1]),
+      })
+      out.skillModifiers.specificSkillOverrides = dedupeOverrides(
+        out.skillModifiers.specificSkillOverrides,
+      )
+    }
+  }
+  if (/A\.R\.\s+of\s+(\d+).*against grapples/i.test(body)) {
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'grapple_defense',
+        target: 'self',
+        naturalArFlat: Number(body.match(/A\.R\.\s+of\s+(\d+)/i)?.[1] ?? 10),
+        note: 'Add dodge bonuses against grapples and holds.',
+      },
+    ]
+  }
+  if (/take (\d+D\d+) damage every round they are touching/i.test(body)) {
+    const cm = body.match(/take (\d+D\d+) damage every round they are touching/i)
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'physical_contact',
+        target: 'opponent',
+        damagePerRound: cm?.[1] ?? '1D4',
+      },
+    ]
+  }
+  if (/enemies are \+(\d+)% to Track/i.test(body)) {
+    const tm = body.match(/enemies are \+(\d+)% to Track/i)
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'physical_contact',
+        target: 'opponent',
+        opponentTrackingBonusPercent: Number(tm?.[1] ?? 20),
+        note: 'Opponents gain bonus to Track or Tail this character.',
+      },
+    ]
+  }
+  if (/save vs Horror Factor or they will be so disgusted/i.test(body)) {
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'physical_contact',
+        target: 'opponent',
+        note: 'Touching character requires save vs Horror Factor or refuse further contact.',
+      },
+    ]
+  }
+  if (/blind all who look at him.*\(1-60% chance\)/i.test(body)) {
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'bright_light',
+        target: 'opponent',
+        blindChancePercent: 60,
+        note: 'Reflected light may blind onlookers in bright light.',
+      },
+    ]
+  }
+  if (/adds 3 to Horror Factor when all of them are screaming/i.test(body)) {
+    out.combatContextModifiers = [
+      ...(out.combatContextModifiers ?? []),
+      {
+        condition: 'grappling',
+        target: 'self',
+        horrorFactorFlat: 3,
+        note: 'Hellish chorus when all tiny mouths scream.',
+      },
+    ]
+  }
+  if (/controlled directly by the character \(50-50 chance/i.test(body)) {
+    out.playerChoices = [
+      {
+        label: 'Living tattoo control',
+        options: ['Emotion-reactive (no control)', 'Player-controlled'],
+        timing: 'character_creation',
+      },
+    ]
+  }
+  if (/two or more heads resting on his shoulders \(01-75%/i.test(body)) {
+    out.variantPercentiles = [
+      { roll: '01-75%', label: 'Two heads', description: 'Two heads on shoulders.' },
+      { roll: '76-98%', label: 'Three heads', description: 'Three heads on shoulders.' },
+      { roll: '99-00%', label: 'Four heads', description: 'Four heads on shoulders.' },
+    ]
+  }
+  if (/Increase body size and weight by (\d+)%/i.test(body)) {
+    const wm = body.match(/Increase body size and weight by (\d+)%/i)
+    if (wm) out.weightModifier = { percent: Number(wm[1]) }
+  }
+  if (/stands (\d+D\d+\+\d+) feet/i.test(body)) {
+    const hm = body.match(/stands (\d+D\d+\+\d+) feet/i)
+    if (hm) out.heightModifier = { dice: hm[1].replace(/\+/g, '+') }
+  }
 }
 
 function slugTableId(name) {
@@ -484,6 +750,13 @@ function slugTableId(name) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '_')
     .replace(/^_|_$/g, '')
+}
+
+function parseNaturalAr(body, out) {
+  const m = body.match(/Natural\s+A\.R\.\s*(?:of\s+)?(\d+)/i)
+  if (m) out.naturalAr = Number(m[1])
+  const grappleAr = body.match(/A\.R\.\s+of\s+(\d+)\s*\+\s*dodge bonuses against grapples/i)
+  if (grappleAr && !out.naturalAr) out.naturalAr = Number(grappleAr[1])
 }
 
 function parseNaturalWeapons(body, out) {
@@ -497,6 +770,56 @@ function parseNaturalWeapons(body, out) {
       damageFormula: bm[1].includes('D') ? bm[1] : '1D4',
       isAdditiveToHth: true,
       ...(body.match(/half.*bite/i) ? { damageModifier: { percent: -50 } } : {}),
+    })
+  }
+  const biteDoRe = /bite attacks? do (\d+D\d+)/i
+  const bdm = body.match(biteDoRe)
+  if (bdm && !bm) {
+    weapons.push({
+      limbType: 'bite',
+      label: 'Bite',
+      damageFormula: bdm[1],
+      isAdditiveToHth: true,
+    })
+  }
+  const clawDoRe = /claw attacks? do (\d+D\d+)/i
+  const cdm = body.match(clawDoRe)
+  if (cdm) {
+    weapons.push({
+      limbType: 'claws',
+      label: 'Claws',
+      damageFormula: cdm[1],
+      isAdditiveToHth: true,
+    })
+  }
+  const slashRe = /crystals that slash, doing (\d+D\d+) plus punch damage/i
+  const sm = body.match(slashRe)
+  if (sm) {
+    weapons.push({
+      limbType: 'claws',
+      label: 'Crystal slash',
+      damageFormula: sm[1],
+      isAdditiveToHth: true,
+    })
+  }
+  const brassRe = /brass knuckles adding (\d+D\d+) to punch damage/i
+  const brm = body.match(brassRe)
+  if (brm) {
+    weapons.push({
+      limbType: 'claws',
+      label: 'Crystal knuckles',
+      damageFormula: brm[1],
+      isAdditiveToHth: true,
+    })
+  }
+  const grappleBiteRe = /inflicts (\d+D\d+) damage per mouth/i
+  const gbm = body.match(grappleBiteRe)
+  if (gbm) {
+    weapons.push({
+      limbType: 'bite',
+      label: 'Tiny mouths (grapple)',
+      damageFormula: gbm[1],
+      isAdditiveToHth: false,
     })
   }
   const kickBonusRe = /\+(\d+)\s+kick and stomp damage/i
@@ -568,6 +891,7 @@ export function structureFromTraitBody(body, options = {}) {
   parseMobility(body, out)
   parseSensory(body, out)
   parseCapabilityFields(body, out, entryName)
+  parseNaturalAr(body, out)
   parseNaturalWeapons(body, out)
   parseWeightHeight(body, out)
   const role = detectEntryRole(entryName, body)
@@ -618,7 +942,13 @@ export function enrichMorphusEntry(entry, body, options = {}) {
   const { fillOnly = true, descriptionText } = options
   const structured = structureFromTraitBody(body, { entryName: entry.name })
   mergeDeep(entry, structured, { fillOnly })
-  if (descriptionText && (!entry.description || /TODO: transcribe/i.test(entry.description))) {
+  if (
+    descriptionText &&
+    (!fillOnly ||
+      !entry.description ||
+      /TODO: transcribe/i.test(entry.description) ||
+      entry.description.length < 120)
+  ) {
     entry.description = descriptionText.trim()
   }
   if (structured.customOneOffs?.length && !fillOnly) {

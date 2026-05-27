@@ -768,6 +768,16 @@ export type MorphusScentTracking = {
   baseSuccessPercent?: number
   perLevelIncrement?: number
   identifyOdorsModifierPercent?: number
+  recognizeScentBasePercent?: number
+  recognizeScentPerLevel?: number
+  recognizeSpecificScentBasePercent?: number
+  recognizeSpecificScentPerLevel?: number
+  recognizeCommonScentBonusPercent?: number
+}
+
+export type MorphusTasteIdentification = {
+  baseSuccessPercent?: number
+  perLevelIncrement?: number
 }
 
 export type MorphusSensory = {
@@ -785,6 +795,10 @@ export type MorphusSensory = {
   lightSensitivity?: MorphusLightSensitivity
   scentTracking?: MorphusScentTracking
   prowlUnderwaterModifierPercent?: number
+  darknessInvisibilityPercent?: number
+  whisperHearingRangeFeet?: number
+  hawkLikeDayVision?: boolean
+  tasteIdentification?: MorphusTasteIdentification
 }
 
 export type MorphusSkillOverrideTargetType = 'skill_id' | 'category' | 'skill_trait'
@@ -1101,6 +1115,8 @@ export type MorphusCombatContextCondition =
   | 'bright_light'
   | 'surprise_from_behind_or_side'
   | 'grappling'
+  | 'grapple_defense'
+  | 'physical_contact'
 
 export type MorphusCombatContextModifier = {
   condition: MorphusCombatContextCondition
@@ -1109,6 +1125,11 @@ export type MorphusCombatContextModifier = {
   parry?: number
   dodge?: number
   grapplingAffordance?: 'rope_grip_with_teeth'
+  naturalArFlat?: number
+  damagePerRound?: string
+  horrorFactorFlat?: number
+  blindChancePercent?: number
+  opponentTrackingBonusPercent?: number
   note?: string
 }
 

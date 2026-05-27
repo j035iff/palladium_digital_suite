@@ -51,6 +51,7 @@ NON_PLAYABLE_NAME_RES = [
     re.compile(r"^step two\b", re.I),
     re.compile(r"^disproportionate\s", re.I),
     re.compile(r"^roll (?:on|again|twice|percentile)\b", re.I),
+    re.compile(r"^combination of two\b", re.I),
 ]
 # Footer order / watermark lines (ignore when detecting printed page).
 _ORDER_LINE_RE = re.compile(r"order\s*#\s*\d", re.IGNORECASE)

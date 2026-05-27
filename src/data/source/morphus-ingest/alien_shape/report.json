@@ -1,13 +1,20 @@
 {
   "tableId": "alien_shape",
-  "generatedAt": "2026-05-27T02:37:23.081Z",
+  "generatedAt": "2026-05-27T17:38:12.171Z",
   "schemaKeys": [
     "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
     "companionBlueprint",
+    "conditionalPenalties",
+    "crossTableRoll",
     "customOneOffs",
     "damageAffinities",
     "description",
     "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
     "gameSystems",
     "gimmickInventory",
     "gimmickToySwitches",
@@ -16,32 +23,53 @@
     "id",
     "isPolymorphicTemplate",
     "limbDurability",
+    "livingWeaponRules",
     "mobility",
+    "morphusRules",
     "name",
     "naturalAr",
     "naturalWeapons",
+    "playerChoices",
+    "recoveryBehaviors",
     "saveModifiers",
     "sensory",
+    "skillContextModifiers",
     "skillModifiers",
     "sources",
     "specialCombatInterceptions",
     "statModifiers",
     "subTraitChoicesBudget",
     "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
     "weaponClassBonuses",
     "weightModifier"
   ],
   "staging": {
-    "entryCount": 22,
+    "entryCount": 21,
     "unknownKeys": [],
     "aggregation": [
       {
-        "id": "alien_shape_plasmoid",
-        "name": "Plasmoid",
+        "id": "alien_shape_abnormally_large_sensory_organs",
+        "name": "Abnormally Large Sensory Organs",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "damage affinities",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_armored_scales",
+        "name": "Armored Scales",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_baggy_flaps_of_skin",
+        "name": "Baggy Flaps of Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
         ],
         "notesOnly": false
       },
@@ -62,8 +90,17 @@
         "notesOnly": false
       },
       {
-        "id": "alien_shape_thorns",
-        "name": "Thorns",
+        "id": "alien_shape_brute",
+        "name": "Brute",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "appearance constraints"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_cone_head",
+        "name": "Cone head",
         "hooks": [
           "stat modifiers / A.R. shift"
         ],
@@ -72,140 +109,40 @@
       {
         "id": "alien_shape_crystalline",
         "name": "Crystalline",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "natural weapons",
-          "damage affinities",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_living_tattoos",
-        "name": "Living Tattoos",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_unusual_skin_color",
-        "name": "Unusual Skin Color",
-        "hooks": [
-          "stat modifiers / A.R. shift"
-        ],
+        "hooks": [],
         "notesOnly": false
       },
       {
         "id": "alien_shape_hulking_monster",
         "name": "Hulking Monster",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
         ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_living_tattoos",
+        "name": "Living Tattoos",
+        "hooks": [],
         "notesOnly": false
       },
       {
         "id": "alien_shape_mouth_covered_body",
         "name": "Mouth-Covered Body",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_combination_of_two",
-        "name": "Combination of Two",
-        "hooks": [
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": true
-      },
-      {
-        "id": "alien_shape_no_bones",
-        "name": "No Bones",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_armored_scales",
-        "name": "Armored Scales",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "natural A.R."
-        ],
+        "hooks": [],
         "notesOnly": false
       },
       {
         "id": "alien_shape_multiple_heads",
         "name": "Multiple Heads",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "custom one-offs (notes only)"
-        ],
+        "hooks": [],
         "notesOnly": false
       },
       {
-        "id": "alien_shape_shadow_man",
-        "name": "Shadow Man",
+        "id": "alien_shape_no_bones",
+        "name": "No Bones",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "skill overrides",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_slimy_slug_like_skin",
-        "name": "Slimy, Slug-Like Skin",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "skill overrides",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_abnormally_large_sensory_organs",
-        "name": "Abnormally Large Sensory Organs",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "nightvision bonus",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_shaggy_hairy",
-        "name": "Shaggy Hairy",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "skill overrides",
-          "custom one-offs (notes only)"
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_wrinkled_skin",
-        "name": "Wrinkled Skin",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "natural A.R."
-        ],
-        "notesOnly": false
-      },
-      {
-        "id": "alien_shape_brute",
-        "name": "Brute",
-        "hooks": [
-          "stat modifiers / A.R. shift",
-          "natural weapons",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
         ],
         "notesOnly": false
       },
@@ -213,66 +150,94 @@
         "id": "alien_shape_on_fire",
         "name": "On Fire",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "skill overrides",
-          "damage affinities",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
         ],
         "notesOnly": false
       },
       {
-        "id": "alien_shape_baggy_flaps_of_skin",
-        "name": "Baggy Flaps of Skin",
+        "id": "alien_shape_plasmoid",
+        "name": "Plasmoid",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "natural A.R.",
-          "skill overrides",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
         ],
         "notesOnly": false
       },
       {
-        "id": "alien_shape_cone_head",
-        "name": "Cone Head",
+        "id": "alien_shape_shadow_man",
+        "name": "Shadow Man",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_shaggy_hairy",
+        "name": "Shaggy Hairy",
         "hooks": [
-          "stat modifiers / A.R. shift",
-          "skill overrides",
-          "custom one-offs (notes only)"
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_slimy_slug_like_skin",
+        "name": "Slimy, Slug-Like Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_thorns",
+        "name": "Thorns",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_unusual_skin_color",
+        "name": "Unusual Skin Color",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_wrinkled_skin",
+        "name": "Wrinkled Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
         ],
         "notesOnly": false
       }
     ]
   },
   "target": {
-    "entryCount": 22,
+    "entryCount": 21,
     "ids": [
-      "alien_shape_plasmoid",
+      "alien_shape_abnormally_large_sensory_organs",
+      "alien_shape_armored_scales",
+      "alien_shape_baggy_flaps_of_skin",
       "alien_shape_bark_like_skin",
       "alien_shape_bony_exoskeleton",
-      "alien_shape_thorns",
-      "alien_shape_crystalline",
-      "alien_shape_living_tattoos",
-      "alien_shape_unusual_skin_color",
-      "alien_shape_hulking_monster",
-      "alien_shape_mouth_covered_body",
-      "alien_shape_combination_of_two",
-      "alien_shape_no_bones",
-      "alien_shape_armored_scales",
-      "alien_shape_multiple_heads",
-      "alien_shape_shadow_man",
-      "alien_shape_slimy_slug_like_skin",
-      "alien_shape_abnormally_large_sensory_organs",
-      "alien_shape_shaggy_hairy",
-      "alien_shape_wrinkled_skin",
       "alien_shape_brute",
+      "alien_shape_cone_head",
+      "alien_shape_crystalline",
+      "alien_shape_hulking_monster",
+      "alien_shape_living_tattoos",
+      "alien_shape_mouth_covered_body",
+      "alien_shape_multiple_heads",
+      "alien_shape_no_bones",
       "alien_shape_on_fire",
-      "alien_shape_baggy_flaps_of_skin",
-      "alien_shape_cone_head"
+      "alien_shape_plasmoid",
+      "alien_shape_shadow_man",
+      "alien_shape_shaggy_hairy",
+      "alien_shape_slimy_slug_like_skin",
+      "alien_shape_thorns",
+      "alien_shape_unusual_skin_color",
+      "alien_shape_wrinkled_skin"
     ]
   },
   "bookIndex": {
-    "total": 22,
-    "included": 22,
+    "total": 21,
+    "included": 21,
+    "skippedNonPlayable": 0,
     "skippedOther": 0,
     "names": [
       "Abnormally Large Sensory Organs",
@@ -281,7 +246,6 @@
       "Bark-like Skin",
       "Bony Exoskeleton",
       "Brute",
-      "Combination of Two",
       "Cone head",
       "Crystalline",
       "Hulking Monster",
@@ -319,7 +283,7 @@
         "authoritative": false
       }
     ],
-    "multiSourceTraits": 10
+    "multiSourceTraits": 9
   },
   "recommendations": [
     "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json"

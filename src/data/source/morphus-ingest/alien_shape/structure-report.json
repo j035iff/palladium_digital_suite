@@ -1,0 +1,19 @@
+{
+  "tableId": "alien_shape",
+  "generatedAt": "2026-05-27T17:48:43.318Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 18,
+      "entryCount": 21
+    },
+    {
+      "path": "src/data/content/morphus/tables/alien_shape.json",
+      "changed": 18,
+      "entryCount": 21
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 36
+}

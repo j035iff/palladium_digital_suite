@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-27T02:26:09.353Z",
+  "generatedAt": "2026-05-27T17:38:09.805Z",
   "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
   "schemaTopLevelKeys": [
     "id",
@@ -29,14 +29,28 @@
     "disabledNaturalAttackTags",
     "activatedAbilities",
     "specialCombatInterceptions",
-    "customOneOffs"
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
   ],
-  "traitCount": 9,
+  "traitCount": 8,
   "perTrait": [
     {
       "percent": "01-12%",
       "name": "Plasmoid",
-      "pageNumber": 136,
+      "pageNumber": 135,
       "patterns": [
         {
           "patternId": "damage_affinity",
@@ -46,38 +60,58 @@
           ],
           "severity": "info",
           "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
         }
       ],
       "suggestedTopLevelKeys": [
         "damageAffinities",
-        "customOneOffs"
+        "customOneOffs",
+        "statModifiers"
       ]
     },
     {
       "percent": "13-24%",
       "name": "Bark-like Skin",
-      "pageNumber": 136,
+      "pageNumber": 135,
       "patterns": [],
       "suggestedTopLevelKeys": []
     },
     {
       "percent": "25-37%",
       "name": "Bony Exoskeleton",
-      "pageNumber": 136,
+      "pageNumber": 135,
       "patterns": [],
       "suggestedTopLevelKeys": []
     },
     {
       "percent": "38-45%",
       "name": "Thorns",
-      "pageNumber": 136,
-      "patterns": [],
-      "suggestedTopLevelKeys": []
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
     },
     {
       "percent": "46-54%",
       "name": "Crystalline",
-      "pageNumber": 136,
+      "pageNumber": 135,
       "patterns": [
         {
           "patternId": "damage_affinity",
@@ -97,21 +131,21 @@
     {
       "percent": "55-66%",
       "name": "Living Tattoos",
-      "pageNumber": 137,
+      "pageNumber": 136,
       "patterns": [],
       "suggestedTopLevelKeys": []
     },
     {
       "percent": "67-77%",
       "name": "Unusual Skin Color",
-      "pageNumber": 137,
+      "pageNumber": 136,
       "patterns": [],
       "suggestedTopLevelKeys": []
     },
     {
       "percent": "78-85%",
       "name": "Hulking Monster",
-      "pageNumber": 137,
+      "pageNumber": 136,
       "patterns": [
         {
           "patternId": "natural_weapon",
@@ -125,13 +159,6 @@
       "suggestedTopLevelKeys": [
         "naturalWeapons"
       ]
-    },
-    {
-      "percent": "96-00%",
-      "name": "Combination of Two",
-      "pageNumber": 137,
-      "patterns": [],
-      "suggestedTopLevelKeys": []
     }
   ],
   "targetAudit": {
@@ -276,7 +303,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_no_bones",
+        "id": "alien_shape_no_bones",
         "name": "No Bones",
         "topLevelKeys": [
           "customOneOffs",
@@ -290,7 +317,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_armored_scales",
+        "id": "alien_shape_armored_scales",
         "name": "Armored Scales",
         "topLevelKeys": [
           "description",
@@ -304,7 +331,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_multiple_heads",
+        "id": "alien_shape_multiple_heads",
         "name": "Multiple Heads",
         "topLevelKeys": [
           "customOneOffs",
@@ -318,7 +345,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_shadow_man",
+        "id": "alien_shape_shadow_man",
         "name": "Shadow Man",
         "topLevelKeys": [
           "customOneOffs",
@@ -333,7 +360,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_slimy_slug_skin",
+        "id": "alien_shape_slimy_slug_like_skin",
         "name": "Slimy, Slug-Like Skin",
         "topLevelKeys": [
           "customOneOffs",
@@ -348,7 +375,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_large_sensory_organs",
+        "id": "alien_shape_abnormally_large_sensory_organs",
         "name": "Abnormally Large Sensory Organs",
         "topLevelKeys": [
           "customOneOffs",
@@ -363,7 +390,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_shaggy_hairy",
+        "id": "alien_shape_shaggy_hairy",
         "name": "Shaggy Hairy",
         "topLevelKeys": [
           "customOneOffs",
@@ -378,7 +405,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_wrinkled_skin",
+        "id": "alien_shape_wrinkled_skin",
         "name": "Wrinkled Skin",
         "topLevelKeys": [
           "description",
@@ -392,7 +419,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_brute",
+        "id": "alien_shape_brute",
         "name": "Brute",
         "topLevelKeys": [
           "customOneOffs",
@@ -407,7 +434,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_on_fire",
+        "id": "alien_shape_on_fire",
         "name": "On Fire",
         "topLevelKeys": [
           "customOneOffs",
@@ -423,7 +450,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_baggy_flaps_of_skin",
+        "id": "alien_shape_baggy_flaps_of_skin",
         "name": "Baggy Flaps of Skin",
         "topLevelKeys": [
           "customOneOffs",
@@ -439,7 +466,7 @@
         ]
       },
       {
-        "id": "alien_shape_ii_cone_head",
+        "id": "alien_shape_cone_head",
         "name": "Cone Head",
         "topLevelKeys": [
           "customOneOffs",
@@ -463,7 +490,7 @@
     },
     {
       "priority": "info",
-      "action": "Optional schema fields not detected in this table: statModifiers, naturalAr, saveModifiers, mobility, sensory, skillModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions"
+      "action": "Optional schema fields not detected in this table: naturalAr, saveModifiers, mobility, sensory, skillModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, entryRole, variantPercentiles, crossTableRoll, morphusRules, appearanceConstraints, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
     }
   ],
   "blocking": [],

@@ -23,7 +23,7 @@
       "authoritative": false
     }
   ],
-  "traitCount": 22,
+  "traitCount": 21,
   "traits": [
     {
       "name": "Abnormally Large Sensory Organs",
@@ -145,31 +145,6 @@
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
         "survival_guide"
-      ]
-    },
-    {
-      "name": "Combination of Two",
-      "percent": "96-00%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "dark_designs",
-          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 136,
-          "percent": "96-00%",
-          "authoritative": true
-        },
-        {
-          "bookKey": "core",
-          "reference": "Nightbane\u00ae RPG",
-          "pageNumber": 104,
-          "percent": "96-00%",
-          "authoritative": false
-        }
-      ],
-      "descriptionAuthority": "dark_designs",
-      "alsoPublishedIn": [
-        "core"
       ]
     },
     {

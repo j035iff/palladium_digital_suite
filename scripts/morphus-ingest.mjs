@@ -25,7 +25,7 @@
  *   npm run morphus:ingest -- all hobbyist
  */
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import {
   aggregationCoverageReport,
@@ -46,6 +46,7 @@ import {
 import {
   filterPlayableEntries,
   isPlayableMorphusTrait,
+  normTraitName,
   traitIndexRowIsPlayable,
 } from './lib/morphus-trait-filter.mjs'
 import {
@@ -387,13 +388,47 @@ function traitBodyToDescription(body) {
   return body.replace(/^\d{2}-\d{2}%\s+[^:]+:\s*/i, '').replace(/\s+/g, ' ').trim()
 }
 
+/** Trait blocks from authoritative extract plus per-book extracts (e.g. Alien Shape II). */
+function loadTraitBlocksForStructure(tableId) {
+  const work = workDir(tableId)
+  const blocks = []
+  const seen = new Set()
+  const addFromText = (text) => {
+    for (const block of splitTraitBlocks(text)) {
+      const key = normTraitName(block.name)
+      if (!seen.has(key)) {
+        seen.add(key)
+        blocks.push(block)
+      }
+    }
+  }
+  const authPath = join(work, 'extracted-authoritative.txt')
+  if (existsSync(authPath)) addFromText(readFileSync(authPath, 'utf8'))
+  const extractedDir = join(work, 'extracted')
+  if (existsSync(extractedDir)) {
+    for (const name of readdirSync(extractedDir)
+      .filter((f) => f.endsWith('.txt'))
+      .sort()) {
+      addFromText(readFileSync(join(extractedDir, name), 'utf8'))
+    }
+  }
+  return blocks
+}
+
+function inferTraitTableCategory(trait, manifest) {
+  const bookKeys = new Set((trait.sources ?? []).map((s) => s.bookKey))
+  const survivalOnly =
+    bookKeys.has('survival_guide') && !bookKeys.has('dark_designs') && !bookKeys.has('core')
+  if (survivalOnly) return 'Alien Shape II'
+  return manifest.tableCategory ?? manifest.displayName
+}
+
 function cmdStructureEntries(tableId, flags = {}) {
   const authPath = join(workDir(tableId), 'extracted-authoritative.txt')
   if (!existsSync(authPath)) {
     throw new Error(`Missing ${authPath} — run extract first`)
   }
-  const authText = readFileSync(authPath, 'utf8')
-  const blocks = splitTraitBlocks(authText)
+  const blocks = loadTraitBlocksForStructure(tableId)
   const fillOnly = !flags.force
   const manifest = loadManifest(tableId)
   const targets = []
@@ -527,7 +562,7 @@ function cmdScaffold(tableId) {
     entries.push({
       id,
       name: trait.name,
-      tableCategory: manifest.tableCategory ?? manifest.displayName,
+      tableCategory: inferTraitTableCategory(trait, manifest),
       gameSystems: [manifest.gameSystem],
       sources,
       description: `TODO: transcribe from ${authExtract} (${trait.percent}; authority=${authKey}).${alsoNote}`,

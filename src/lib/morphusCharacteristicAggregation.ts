@@ -1279,6 +1279,42 @@ export function buildMorphusCapabilitySummary(
         'bonus',
       )
     }
+    if (sensory?.darknessInvisibilityPercent != null) {
+      pushCapabilityLine(
+        lines,
+        'senses',
+        'Darkness',
+        `${sensory.darknessInvisibilityPercent}% invisible in darkness`,
+        t,
+        'bonus',
+      )
+    }
+    if (sensory?.hawkLikeDayVision) {
+      pushCapabilityLine(lines, 'senses', 'Day vision', 'Hawk-like daylight vision', t, 'bonus')
+    }
+    if (sensory?.whisperHearingRangeFeet != null) {
+      pushCapabilityLine(
+        lines,
+        'senses',
+        'Hearing',
+        `Hear a whisper at ${sensory.whisperHearingRangeFeet} ft`,
+        t,
+        'bonus',
+      )
+    }
+    const taste = sensory?.tasteIdentification
+    if (taste?.baseSuccessPercent != null) {
+      const perLvl = taste.perLevelIncrement ?? 0
+      const resolved = Math.min(98, taste.baseSuccessPercent + Math.max(0, level - 1) * perLvl)
+      pushCapabilityLine(
+        lines,
+        'senses',
+        'Taste identification',
+        `${resolved}% at level ${level}`,
+        t,
+        'bonus',
+      )
+    }
     if (sensory?.prowlUnderwaterModifierPercent != null) {
       pushCapabilityLine(
         lines,
@@ -1414,11 +1450,68 @@ export function buildMorphusCapabilitySummary(
           ? 'in bright light'
           : cm.condition === 'surprise_from_behind_or_side'
             ? 'on surprise from behind/side'
-            : 'in grappling'
+            : cm.condition === 'grapple_defense'
+              ? 'vs grapples/holds'
+              : cm.condition === 'physical_contact'
+                ? 'on physical contact'
+                : 'in grappling'
       if (adj) {
         const pol =
           (cm.strike ?? 0) + (cm.parry ?? 0) + (cm.dodge ?? 0) >= 0 ? 'bonus' : 'penalty'
         pushCapabilityLine(lines, 'combat', cond, `${who}: ${adj}`, t, pol)
+      }
+      if (cm.naturalArFlat != null) {
+        pushCapabilityLine(
+          lines,
+          'defense',
+          cond,
+          `Natural A.R. ${cm.naturalArFlat}${cm.note ? ` — ${cm.note}` : ''}`,
+          t,
+          'bonus',
+        )
+      }
+      if (cm.damagePerRound) {
+        pushCapabilityLine(
+          lines,
+          'combat',
+          cond,
+          `Contact: ${cm.damagePerRound} damage/round`,
+          t,
+          'bonus',
+        )
+      }
+      if (cm.horrorFactorFlat != null) {
+        pushCapabilityLine(
+          lines,
+          'combat',
+          cond,
+          `${formatSigned(cm.horrorFactorFlat)} Horror Factor`,
+          t,
+          cm.horrorFactorFlat >= 0 ? 'bonus' : 'penalty',
+        )
+      }
+      if (cm.blindChancePercent != null) {
+        pushCapabilityLine(
+          lines,
+          'combat',
+          cond,
+          `${cm.blindChancePercent}% chance to blind onlookers`,
+          t,
+          'penalty',
+        )
+      }
+      if (cm.opponentTrackingBonusPercent != null) {
+        pushCapabilityLine(
+          lines,
+          'combat',
+          cond,
+          `Opponents +${cm.opponentTrackingBonusPercent}% to Track/Tail`,
+          t,
+          'penalty',
+        )
+      }
+      if (cm.note && !adj && cm.naturalArFlat == null && !cm.damagePerRound) {
+        pushCapabilityLine(lines, 'combat', cond, cm.note, t, 'neutral')
       }
     }
 

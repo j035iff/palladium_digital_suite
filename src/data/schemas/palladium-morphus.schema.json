@@ -1109,6 +1109,29 @@
         "prowlUnderwaterModifierPercent": {
           "type": "integer",
           "description": "Bonus to hide/Prowl underwater (Glass)."
+        },
+        "darknessInvisibilityPercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Chance to be invisible in darkness (Shadow Man)."
+        },
+        "whisperHearingRangeFeet": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Distance at which a whisper can be heard clearly."
+        },
+        "hawkLikeDayVision": {
+          "type": "boolean",
+          "description": "Exceptional daylight visual acuity."
+        },
+        "tasteIdentification": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "baseSuccessPercent": { "type": "integer", "minimum": 0, "maximum": 98 },
+            "perLevelIncrement": { "type": "integer" }
+          }
         }
       }
     },
@@ -1782,7 +1805,12 @@
         "identifyOdorsModifierPercent": {
           "type": "integer",
           "description": "Modifier to identify-odors skill checks (Tiny Nose -10)."
-        }
+        },
+        "recognizeScentBasePercent": { "type": "integer", "minimum": 0, "maximum": 98 },
+        "recognizeScentPerLevel": { "type": "integer" },
+        "recognizeSpecificScentBasePercent": { "type": "integer", "minimum": 0, "maximum": 98 },
+        "recognizeSpecificScentPerLevel": { "type": "integer" },
+        "recognizeCommonScentBonusPercent": { "type": "integer" }
       }
     },
     "appearanceConstraints": {
@@ -1833,7 +1861,9 @@
           "enum": [
             "bright_light",
             "surprise_from_behind_or_side",
-            "grappling"
+            "grappling",
+            "grapple_defense",
+            "physical_contact"
           ],
           "description": "When this modifier applies."
         },
@@ -1850,6 +1880,30 @@
           "type": "string",
           "enum": ["rope_grip_with_teeth"],
           "description": "Special grappling interaction granted by this Morphus."
+        },
+        "naturalArFlat": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Natural A.R. applied in this context (No Bones vs grapples)."
+        },
+        "damagePerRound": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Damage formula per round (On Fire contact)."
+        },
+        "horrorFactorFlat": {
+          "type": "integer",
+          "description": "Flat Horror Factor adjustment in this context."
+        },
+        "blindChancePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Chance to blind onlookers (Crystalline reflected light)."
+        },
+        "opponentTrackingBonusPercent": {
+          "type": "integer",
+          "description": "Bonus percent for opponents tracking this character."
         },
         "note": {
           "type": "string",
