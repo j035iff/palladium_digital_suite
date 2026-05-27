@@ -7,6 +7,11 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { isPlayableMorphusTrait } from './morphus-trait-filter.mjs'
 import { repoRoot } from './morphus-ingest-shared.mjs'
+import {
+  parseTraitAndImpossibleSkillModifiers,
+  SKILL_TRAIT_DEXTERITY,
+  SKILL_TRAIT_LIGHT_TOUCH,
+} from './morphus-skill-modifier-parse.mjs'
 
 const TRAIT_HEADER = /(\d{2})-(\d{2})%\s+(.{1,120}?)[!:.]\s+/g
 
@@ -254,17 +259,35 @@ function parseSaveModifiers(body, out) {
 }
 
 function parseSkillModifiers(body, out) {
-  const overrides = []
+  const overrides = [
+    ...parseTraitAndImpossibleSkillModifiers(body, findSkillId),
+  ]
   const skillPctRe = /([+-])(\d+)%\s+to\s+(?:the\s+)?([A-Za-z][A-Za-z &/]+?)(?:\s+skill)?(?:\s+and\s+([A-Za-z][A-Za-z &/]+?)(?:\s+skill)?)?/gi
   for (const m of body.matchAll(skillPctRe)) {
     const sign = m[1] === '-' ? -1 : 1
     const pct = sign * Number(m[2])
     const names = [m[3], m[4]].filter(Boolean)
     for (const name of names) {
-      if (/delicate touch|manual dexterity|fingers/i.test(name)) {
+      if (/manual dexterity/i.test(name)) {
         overrides.push({
           targetType: 'skill_trait',
-          targetValue: 'requires_light_touch',
+          targetValue: SKILL_TRAIT_DEXTERITY,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/light touch|soft touch|delicate touch|delicate work|delicate skills/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_LIGHT_TOUCH,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/fingers/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_LIGHT_TOUCH,
           modifierPercent: pct,
         })
         continue
@@ -287,7 +310,9 @@ function parseSkillModifiers(body, out) {
     }
   }
   const grantRe = /(?:base skill of|grantUnlearnedValue|gets the .+ skill at) (\d+)%/i
-  const grantM = body.match(/\+(\d+)%.*Disguise|Disguise skill as[^.]+(\d+)%/i)
+  const grantM = body.match(
+    /\+(\d+)%\s+(?:to\s+)?(?:the\s+)?Disguise|Disguise skill as[^.]+?(\d+)%/i,
+  )
   if (grantM) {
     const id = findSkillId('Disguise')
     if (id) {

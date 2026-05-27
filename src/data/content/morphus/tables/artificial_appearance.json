@@ -177,7 +177,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -500,16 +500,6 @@
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": 15,
-            "grantUnlearnedValue": 40
-          }
-        ]
       },
       "customOneOffs": [
         "Disguise: +15% or base 40% (whichever is better)."

@@ -71,6 +71,15 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required",
         "narrowOpeningAccess": "restricted"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -158,6 +167,30 @@
         "bonusHthDamage": {
           "flat": -2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {

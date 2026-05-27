@@ -63,11 +63,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "modifierPercent": -30
           }
@@ -127,22 +122,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_tailing",
             "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
@@ -218,6 +203,7 @@
         }
       ],
       "skillModifiers": {
+        "globalSkillModifier": -10,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -232,25 +218,24 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_acrobatics",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_gymnastics",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
-        ],
-        "globalSkillModifier": -10
+        ]
       },
       "customOneOffs": [
         "+1 to Spell Strength if a spell caster.",
@@ -443,6 +428,7 @@
         }
       ],
       "skillModifiers": {
+        "globalSkillModifier": -20,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -451,16 +437,15 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "isNegated": true
+            "targetValue": "skill_swim",
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_swim",
-            "isNegated": true
+            "targetValue": "skill_swimming",
+            "impossibleInMorphus": true
           }
-        ],
-        "globalSkillModifier": -20
+        ]
       },
       "customOneOffs": [
         "Flying speed 1D4x10+70; wings 1D4x10+40 S.D.C. each, regrow in one day.",
@@ -545,12 +530,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
@@ -720,6 +705,7 @@
         }
       },
       "skillModifiers": {
+        "globalSkillModifier": -10,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -753,21 +739,20 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "isNegated": true
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_swim",
-            "isNegated": true
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "impossibleInMorphus": true
           }
-        ],
-        "globalSkillModifier": -10
+        ]
       },
       "customOneOffs": [
         "Flying speed 1D4x10+20; normal hover 1D4 ft off ground.",
@@ -823,6 +808,7 @@
         "seeInvisible": true
       },
       "skillModifiers": {
+        "globalSkillModifier": -25,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -842,15 +828,19 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "impossibleInMorphus": true
           }
-        ],
-        "globalSkillModifier": -25
+        ]
       },
       "customOneOffs": [
         "Exceptional vision to 1 mile.",

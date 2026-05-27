@@ -38,19 +38,38 @@ export function morphusOverrideAppliesToSkill(
   return (skill.skillTraits ?? []).includes(target.traitId)
 }
 
+/** Whether any active Morphus override marks this skill unusable in Morphus. */
+export function isMorphusSkillImpossible(
+  skill: Pick<PalladiumSkillCatalogEntry, 'id' | 'categories' | 'skillTraits'>,
+  overrides: readonly MorphusSkillOverride[] | undefined,
+): boolean {
+  if (!overrides?.length) return false
+  for (const o of overrides) {
+    if (!morphusOverrideAppliesToSkill(skill, o)) continue
+    if (o.impossibleInMorphus === true) return true
+    if (o.isNegated === true && o.modifierPercent == null && o.grantUnlearnedValue == null) {
+      return true
+    }
+  }
+  return false
+}
+
 /**
  * Sum signed % modifiers from Morphus overrides that match this skill.
  * Honors `isNegated` by zeroing that override's contribution.
+ * Skips overrides that mark the skill impossible in Morphus.
  */
 export function sumMorphusSkillModifierPercent(
   skill: Pick<PalladiumSkillCatalogEntry, 'id' | 'categories' | 'skillTraits'>,
   overrides: readonly MorphusSkillOverride[] | undefined,
 ): number {
   if (!overrides?.length) return 0
+  if (isMorphusSkillImpossible(skill, overrides)) return 0
   let total = 0
   for (const o of overrides) {
     if (!morphusOverrideAppliesToSkill(skill, o)) continue
     if (o.isNegated === true) continue
+    if (o.impossibleInMorphus === true) continue
     if (typeof o.modifierPercent === 'number') {
       total += o.modifierPercent
     }

@@ -53,16 +53,6 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_safe_cracking",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_art",
-            "modifierPercent": 5
           }
         ]
       }
@@ -134,11 +124,6 @@
             "targetType": "skill_id",
             "targetValue": "skill_concealment",
             "modifierPercent": 25
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
           },
           {
             "targetType": "category",
@@ -458,7 +443,10 @@
       "playerChoices": [
         {
           "label": "Living tattoo control",
-          "options": ["Emotion-reactive (no control)", "Player-controlled"],
+          "options": [
+            "Emotion-reactive (no control)",
+            "Player-controlled"
+          ],
           "timing": "character_creation"
         }
       ],
@@ -538,9 +526,21 @@
         }
       },
       "variantPercentiles": [
-        { "roll": "01-75%", "label": "Two heads", "description": "Two heads on shoulders." },
-        { "roll": "76-98%", "label": "Three heads", "description": "Three heads on shoulders." },
-        { "roll": "99-00%", "label": "Four heads", "description": "Four heads on shoulders." }
+        {
+          "roll": "01-75%",
+          "label": "Two heads",
+          "description": "Two heads on shoulders."
+        },
+        {
+          "roll": "76-98%",
+          "label": "Three heads",
+          "description": "Three heads on shoulders."
+        },
+        {
+          "roll": "99-00%",
+          "label": "Four heads",
+          "description": "Four heads on shoulders."
+        }
       ],
       "customOneOffs": [
         "-1 M.A. and -1 P.B. per head beyond the first."
@@ -638,7 +638,16 @@
       ],
       "customOneOffs": [
         "Prowl and hiding are impossible due to light and noise of the flames."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "alien_shape_plasmoid",

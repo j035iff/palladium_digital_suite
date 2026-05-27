@@ -324,11 +324,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_gymnastics",
             "modifierPercent": -20
           },

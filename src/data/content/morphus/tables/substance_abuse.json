@@ -74,12 +74,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -531,6 +531,11 @@
             "targetType": "category",
             "targetValue": "Pilot",
             "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
           }
         ]
       },

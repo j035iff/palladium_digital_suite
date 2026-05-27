@@ -487,7 +487,16 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 140
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_ii_monitor_eyes",
@@ -1060,6 +1069,15 @@
       ],
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -1353,7 +1371,16 @@
           "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_iii_universal_connection_port",
@@ -1422,6 +1449,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_swim",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
           }
         ]
       },

@@ -60,18 +60,8 @@
             "modifierPercent": -10
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_locks",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_pockets",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_art",
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
             "modifierPercent": -5
           }
         ]
@@ -156,18 +146,8 @@
             "modifierPercent": -30
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_locks",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_pockets",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_art",
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
             "modifierPercent": -20
           }
         ]

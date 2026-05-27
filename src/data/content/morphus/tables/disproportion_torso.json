@@ -39,6 +39,15 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {

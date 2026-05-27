@@ -513,7 +513,15 @@ export function SkillEngine() {
                   <li key={id} className="border-b border-white/10 pb-2 last:border-0">
                     <div className="font-semibold">{def.name}</div>
                     <div className="font-mono tabular-nums opacity-90">
-                      Final % ≈ <strong>{resolved.total}%</strong>
+                      {resolved.impossibleInMorphus ? (
+                        <>
+                          Final %: <strong>Impossible</strong>
+                        </>
+                      ) : (
+                        <>
+                          Final % ≈ <strong>{resolved.total}%</strong>
+                        </>
+                      )}
                     </div>
                     {resolved.lines.length > 0 ? (
                       <ul className="mt-1 space-y-0.5 font-mono text-[10px] opacity-75">

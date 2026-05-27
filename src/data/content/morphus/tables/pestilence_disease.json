@@ -179,6 +179,7 @@
         "illusions": 2
       },
       "skillModifiers": {
+        "globalSkillModifier": -5,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -205,8 +206,7 @@
             "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
-        ],
-        "globalSkillModifier": -5
+        ]
       },
       "customOneOffs": [
         "+3 to Perception Rolls to recognize disease.",
@@ -434,11 +434,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
@@ -502,7 +497,8 @@
         "insanity": 3
       },
       "skillModifiers": {
-        "globalSkillModifier": -5
+        "globalSkillModifier": -5,
+        "specificSkillOverrides": []
       },
       "customOneOffs": [
         "Absent-minded and forgetful."
@@ -630,7 +626,8 @@
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -10
+        "globalSkillModifier": -10,
+        "specificSkillOverrides": []
       },
       "customOneOffs": [
         "+1 Natural A.R. (modeled as statModifiers.ar flat +1).",
@@ -821,12 +818,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },

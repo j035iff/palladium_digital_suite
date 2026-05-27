@@ -115,12 +115,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -206,18 +206,13 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "isNegated": true
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_impersonation",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -298,11 +293,6 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -40
           },
           {
             "targetType": "skill_id",
@@ -468,12 +458,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_swim",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },

@@ -1,6 +1,7 @@
 import type { MorphusCharacteristic, MorphusSkillOverride } from '../types'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import {
+  isMorphusSkillImpossible,
   morphusGrantFloorForSkill,
   sumMorphusSkillModifierPercent,
 } from './skillTraitResolution'
@@ -37,12 +38,22 @@ export function sumMorphusSkillPercentForCatalogSkill(
     characterLevel?: number
     extraOverrides?: readonly MorphusSkillOverride[]
   },
-): { global: number; specific: number; grantFloor: number | null; total: number } {
+): {
+  global: number
+  specific: number
+  grantFloor: number | null
+  total: number
+  impossible: boolean
+} {
   const global = sumGlobalMorphusSkillModifier(traits)
   const overrides = [
     ...collectMorphusSkillOverrides(traits),
     ...(options?.extraOverrides ?? []),
   ]
+  const impossible = isMorphusSkillImpossible(skill, overrides)
+  if (impossible) {
+    return { global: 0, specific: 0, grantFloor: null, total: 0, impossible: true }
+  }
   const specific = sumMorphusSkillModifierPercent(skill, overrides)
   const grantFloor = morphusGrantFloorForSkill(
     skill,
@@ -52,5 +63,5 @@ export function sumMorphusSkillPercentForCatalogSkill(
   const additive = global + specific
   const total =
     grantFloor != null ? Math.max(additive, grantFloor) : additive
-  return { global, specific, grantFloor, total }
+  return { global, specific, grantFloor, total, impossible: false }
 }

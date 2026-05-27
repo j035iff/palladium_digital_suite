@@ -20,6 +20,8 @@ export type SkillPercentBreakdown = {
   equationPercent: number
   lines: readonly SkillPercentBreakdownLine[]
   total: number
+  /** Morphus characteristic marks this skill unusable in Morphus form. */
+  impossibleInMorphus?: boolean
 }
 
 /** Build resolution context from sheet state (Skill Engine, W.P. profiles, etc.). */
@@ -129,6 +131,14 @@ export function resolveSkillPercent(
         extraOverrides: terrainOverrides,
       },
     )
+    if (morphus.impossible) {
+      return {
+        equationPercent,
+        lines: [{ label: 'Morphus', value: 0 }],
+        total: 0,
+        impossibleInMorphus: true,
+      }
+    }
     if (morphus.global !== 0) {
       lines.push({ label: 'Morphus (all skills)', value: morphus.global })
     }

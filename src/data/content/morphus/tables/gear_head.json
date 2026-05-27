@@ -52,6 +52,26 @@
             "targetType": "skill_id",
             "targetValue": "skill_tailing",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
           }
         ]
       },

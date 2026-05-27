@@ -33,7 +33,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -106,12 +106,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -434,7 +434,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },

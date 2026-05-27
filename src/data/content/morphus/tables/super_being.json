@@ -48,7 +48,8 @@
         "magic": -2
       },
       "skillModifiers": {
-        "globalSkillModifier": 20
+        "globalSkillModifier": 20,
+        "specificSkillOverrides": []
       },
       "customOneOffs": [
         "+3 to save vs mind control (with possession/illusions in saveModifiers).",
@@ -325,14 +326,14 @@
         }
       ],
       "skillModifiers": {
+        "globalSkillModifier": -10,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
             "targetValue": "skill_concealment",
             "modifierPercent": 20
           }
-        ],
-        "globalSkillModifier": -10
+        ]
       },
       "customOneOffs": [
         "Cape S.D.C. 1D6×10+40; covers Nightbane and up to two adults vs gunfire, explosions, and debris.",
@@ -545,11 +546,6 @@
             "targetType": "category",
             "targetValue": "Rogue",
             "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
@@ -796,15 +792,6 @@
       },
       "saveModifiers": {
         "allSaves": 1
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "isNegated": true
-          }
-        ]
       },
       "customOneOffs": [
         "While theme music plays: +1 attack, +4 damage, +1 strike/parry/dodge/disarm.",

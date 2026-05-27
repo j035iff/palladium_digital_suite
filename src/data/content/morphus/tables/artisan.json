@@ -275,13 +275,6 @@
         }
       },
       "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_writing",
-            "modifierPercent": 10
-          }
-        ],
         "customSystemRolls": [
           {
             "rollName": "Spontaneous Insight",
@@ -290,6 +283,13 @@
               "levelInterval": 3,
               "chanceBonus": 3
             }
+          }
+        ],
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_writing",
+            "modifierPercent": 10
           }
         ]
       },
@@ -342,12 +342,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": 15,
-            "grantUnlearnedValue": 40
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_impersonation",

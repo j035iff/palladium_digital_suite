@@ -1162,6 +1162,10 @@
         "isNegated": {
           "type": "boolean"
         },
+        "impossibleInMorphus": {
+          "type": "boolean",
+          "description": "When true, the skill cannot be used in Morphus (character sheet shows Impossible). Prefer over isNegated for new data."
+        },
         "grantUnlearnedValue": {
           "type": "integer",
           "minimum": 0,

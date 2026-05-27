@@ -808,6 +808,11 @@ export type MorphusSkillOverride = {
   targetValue: string
   modifierPercent?: number
   isNegated?: boolean
+  /**
+   * Skill cannot be used in Morphus (sheet shows "Impossible").
+   * Legacy: `isNegated` without `modifierPercent` is treated the same at runtime.
+   */
+  impossibleInMorphus?: boolean
   grantUnlearnedValue?: number
   /** Per-level increment on base % (e.g. Gymnast Build +4%/level). */
   perLevelIncrement?: number

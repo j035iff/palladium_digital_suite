@@ -114,11 +114,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_impersonation",
             "modifierPercent": -5
           },
@@ -175,17 +170,17 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_impersonation",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -442,7 +437,8 @@
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -5
+        "globalSkillModifier": -5,
+        "specificSkillOverrides": []
       },
       "customOneOffs": [
         "Primary (pick one): light assault rifle 4D6/600 m, heavy assault 5D6/500 m, light MG 6D6/1000 m, sniper 5D6/1609 m, shotgun 4D6/61 m, SMG 3D6/200 m.",
@@ -525,12 +521,12 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "isNegated": true
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "isNegated": true
+            "impossibleInMorphus": true
           }
         ]
       },

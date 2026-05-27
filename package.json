@@ -10,6 +10,7 @@
     "validate:schemas": "node scripts/validate-palladium-schemas.mjs",
     "morphus:ingest": "node scripts/morphus-ingest.mjs",
     "apply:skill-traits": "node scripts/apply-skill-traits.mjs",
+    "migrate:morphus-skills": "node scripts/migrate-morphus-skill-modifiers.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -34,11 +34,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_impersonation",
             "modifierPercent": -20
           }
@@ -350,6 +345,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
             "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "impossibleInMorphus": true
           }
         ]
       },
