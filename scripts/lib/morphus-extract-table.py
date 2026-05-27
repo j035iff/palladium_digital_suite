@@ -101,6 +101,7 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
     next_m = re.search(
         r"\n(?:"
         r"[A-Z][A-Za-z0-9/'’\-\s]+ Table"
+        r"|Biomechanical:\s*[A-Za-z0-9/'’\-\s]+ Table"
         r"|Aquatic Animal Form Tables"
         r"|Mythical Creature"
         r"|Video Games \(powers\)"

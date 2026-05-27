@@ -1,0 +1,143 @@
+{
+  "tableId": "artificial_appearance",
+  "generatedAt": "2026-05-27T16:03:56.275Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 10,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "artificial_appearance_crash_test_dummy",
+        "name": "Crash Test Dummy",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_glass",
+        "name": "Glass",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_junk_golem",
+        "name": "Junk Golem",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_mirror_man",
+        "name": "Mirror Man",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_porcelain_ceramic",
+        "name": "Porcelain/Ceramic",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_scarecrow",
+        "name": "Scarecrow",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_soft_clay",
+        "name": "Soft Clay",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_store_mannequin",
+        "name": "Store Mannequin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_stuffed_animal",
+        "name": "Stuffed Animal",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "artificial_appearance_wood_statue",
+        "name": "Wood Statue",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 10,
+    "ids": [
+      "artificial_appearance_crash_test_dummy",
+      "artificial_appearance_glass",
+      "artificial_appearance_junk_golem",
+      "artificial_appearance_mirror_man",
+      "artificial_appearance_porcelain_ceramic",
+      "artificial_appearance_scarecrow",
+      "artificial_appearance_soft_clay",
+      "artificial_appearance_store_mannequin",
+      "artificial_appearance_stuffed_animal",
+      "artificial_appearance_wood_statue"
+    ]
+  },
+  "bookIndex": {
+    "total": 10,
+    "included": 10,
+    "skippedOther": 0,
+    "names": [
+      "Crash Test Dummy",
+      "Glass",
+      "Junk Golem",
+      "Mirror Man",
+      "Porcelain/Ceramic",
+      "Scarecrow",
+      "Soft Clay",
+      "Store Mannequin",
+      "Stuffed Animal",
+      "Wood Statue"
+    ],
+    "authoritativeBookKey": "survival_guide",
+    "books": [
+      {
+        "key": "survival_guide",
+        "pdf": "c:/Users/joesi/OneDrive/Documents/Palladium/Nightbane/Books/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

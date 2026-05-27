@@ -1,9 +1,4 @@
 {
-  "id": "artificial_appearance",
-  "kind": "morphus_trait_table",
-  "displayName": "Artificial Appearance",
-  "parentTable": null,
-  "description": "Artificial Appearance Morphus table (Nightbane Survival Guide, WB5, printed pp. 80-82). Nightbane who appear artificial or man-made—mannequins, dummies, scarecrows, porcelain, junk, glass, clay, wood, mirrors, or stuffed animals.",
   "entries": [
     {
       "id": "artificial_appearance_crash_test_dummy",
