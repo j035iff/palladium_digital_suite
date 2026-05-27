@@ -11,8 +11,40 @@
       "authoritative": true
     }
   ],
-  "traitCount": 3,
+  "traitCount": 10,
   "traits": [
+    {
+      "name": "Air Horn",
+      "percent": "56-64%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "56-64%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Chrome Job",
+      "percent": "83-91%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "83-91%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
     {
       "name": "Coolant Tubes/Radiator",
       "percent": "11-19%",
@@ -55,6 +87,86 @@
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 33,
           "percent": "20-28%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Hydraulics",
+      "percent": "38-46%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "38-46%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Nitrous Bottles",
+      "percent": "29-37%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "29-37%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Searchlight(s)",
+      "percent": "65-73%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "65-73%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Shocks & Struts",
+      "percent": "47-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "47-55%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Winch and Cable",
+      "percent": "74-82%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 34,
+          "percent": "74-82%",
           "authoritative": true
         }
       ],

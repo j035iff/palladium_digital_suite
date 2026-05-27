@@ -82,8 +82,32 @@ def norm_trait_alias(name: str) -> str:
     aliases = {
         "chain saw arms": "chainsaw arms",
         "metal head camera eyes": "metal head & camera eyes",
+        "searchlight(s)": "searchlight/headlights",
     }
     return aliases.get(key, key)
+
+
+_WATERMARK_RE = re.compile(r"Joe Sifferman \(Order #\d+\)", re.I)
+_GEAR_HEAD_MID_TABLE_RE = re.compile(
+    r"(?:,\s*)?Gear-Head Table\s*"
+    r"For around 100 years,.*?epitomize\s*"
+    r"(?:Joe Sifferman \(Order #\d+\)\s*)?\d*\s*",
+    re.DOTALL | re.I,
+)
+
+
+def sanitize_trait_body(text: str) -> str:
+    """Strip PDF watermarks and mid-table page headers from trait prose."""
+    text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", text)
+    text = re.sub(r"Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    return re.sub(r"\s{2,}", " ", text).strip()
+
+
+def sanitize_table_text(table_text: str) -> str:
+    """Clean raw PDF table extract before writing extracted/*.txt."""
+    text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", table_text)
+    text = re.sub(r"Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    return text
 
 
 def printed_page(page: fitz.Page) -> int | None:
@@ -155,23 +179,30 @@ def is_non_playable_trait(name: str, body_start: str, full_body: str = "") -> bo
     return not playable
 
 
+def _is_gear_head_extract(heading: str) -> bool:
+    return bool(re.search(r"gear[- ]?head|engine block", heading, re.I))
+
+
 def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other: bool) -> str:
     rest = full_text[start + len(heading) :]
     if trim_at_other:
         other_m = re.search(r"\n\d{2}-\d{2}% Other:", rest)
         if other_m:
             rest = rest[: other_m.start()]
-    boundary_patterns = [
-        r"\n(?:"
-        r"[A-Z][A-Za-z0-9/'’\-\s]+ Table"
-        r"|Biomechanical:\s*[A-Za-z0-9/'’\-\s]+ Table"
-        r"|Aquatic Animal Form Tables"
-        r"|Mythical Creature"
-        r"|Video Games \(powers\)"
-        r")\b",
-        r"\nGear-Head Table\b",
-        r"\njust such a bond in a new, physical way",
-    ]
+    if _is_gear_head_extract(heading):
+        boundary_patterns = [r"\nHobbyist Table\b"]
+    else:
+        boundary_patterns = [
+            r"\n(?:"
+            r"[A-Z][A-Za-z0-9/'’\-\s]+ Table"
+            r"|Biomechanical:\s*[A-Za-z0-9/'’\-\s]+ Table"
+            r"|Aquatic Animal Form Tables"
+            r"|Mythical Creature"
+            r"|Video Games \(powers\)"
+            r")\b",
+            r"\nGear-Head Table\b",
+            r"\njust such a bond in a new, physical way",
+        ]
     end = len(rest)
     for pat in boundary_patterns:
         hit = re.search(pat, rest)
@@ -240,7 +271,8 @@ def trait_bodies(table_text: str, table_start: int) -> dict[str, str]:
         if not is_valid_trait_name(name):
             continue
         end = matches[i + 1].start() if i + 1 < len(matches) else len(table_text)
-        bodies[norm_trait_name(name)] = table_text[m.end() : end].strip()
+        raw_body = table_text[m.end() : end].strip()
+        bodies[norm_trait_alias(name)] = sanitize_trait_body(raw_body)
     return bodies
 
 
@@ -314,6 +346,7 @@ def extract_book(
             raise
         print(f"WARN skip {book['key']}: {err}", file=sys.stderr)
         return None
+    table_text = sanitize_table_text(table_text)
     table_start = full_text.find(table_text[: min(80, len(table_text))])
     bodies = trait_bodies(table_text, table_start)
 

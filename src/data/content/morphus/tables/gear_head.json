@@ -9,14 +9,15 @@
       "id": "gear_head_engine_block",
       "name": "Engine Block",
       "tableCategory": "Gear-Head",
-      "description": "An entire engine block replaces or is built into the chest, idling at rest and revving under exertion.",
+      "description": "Either replacing or built into the chest of this Nightbane is an entire engine block. This might be a min- iaturized car or truck engine, a motorcycle engine, etc. When sta- tionary, the engine constantly idles, but when the Nightbane is running or engaged in strenuous activity, it revs up just like the real thing. Bonuses: +3 to the P.S. attribute, +3D6+10 to Spd, +2D6x10 to S.D.C. with a base Natural A.R. of 10 (or +1 to an existing A.R. that is greater than 10), +2 to Horror Factor and +10% to all piloting skills that involve a motor. Penalties: -3 to the P.P. and P.B. attributes. Electrical and fire attacks inflict 50% more damage and the character will drown within 1D4+2 melee rounds if dropped into deep water in Morphus form (can’t hold breath or swim, too heavy). -30% to Climbing and Tailing. Skills like Acrobatics, Disguise, Gymnastics, Prowl, and Undercover Ops are impossible in this Morphus.",
       "naturalAr": 10,
       "statModifiers": {
         "ps": {
           "flat": 3
         },
         "spd": {
-          "dice": "3D6+10"
+          "dice": "3D6+10",
+          "flat": 10
         },
         "sdc": {
           "dice": "2D6x10"
@@ -73,7 +74,7 @@
       "id": "gear_head_coolant_tubes_radiator",
       "name": "Coolant Tubes/Radiator",
       "tableCategory": "Gear-Head",
-      "description": "Transparent tubes filled with antifreeze and water connect to a central radiator jutting from the abdomen or back.",
+      "description": "In place of veins, this character has transparent or translucent plastic tubes filled with blue or green liquid. In truth, this is ethylene glycol (antifreeze) and water, and the tubes all connect to a central radiator that juts from the abdomen or back. This radiator has 1D4x10+20 S.D.C. and an A.R. of 9, but is a relatively small target that requires a Called Shot at -3 to hit. Bonuses: +2 to the P.E. attribute, +2D6+10 to S.D.C. +1 to Horror Factor, the Nightbane is imper- vious to poisons/toxins as well as diseases that affect the blood, his blood is toxic to vampires (4D6 damage per sip) and cold, heat and fire (even magical) do half damage. Penalties: -2 to the P.B. and Spd attributes, and -1D6 P.P.E. If the radiator is ever completely destroyed, it will not regenerate as normal unless the Nightbane returns to Facade form for at least 1D4 hours. Without the radiator, the Morphus form takes double damage from fire and cold-based attacks and heals at half the normal rate (usually 5 S.D.C./H.P. per melee). Also, the leaking antifreeze makes the Nightbane much easier to track (+20% bonus to those tracking him).",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -96,7 +97,7 @@
       },
       "damageAffinities": {
         "heat": 0.5,
-        "fire": 0.5,
+        "fire": 2,
         "cold": 0.5,
         "poison": 0
       },
@@ -142,7 +143,7 @@
       "id": "gear_head_exhaust_pipes",
       "name": "Exhaust Pipes",
       "tableCategory": "Gear-Head",
-      "description": "Metal exhaust pipes on the shoulders or back release a steady stream of vehicle-like exhaust vapor; pipes are hot to the touch.",
+      "description": "One or more metal pipes protrude from the shoulders or back of the Nightbane, releasing a steady stream of exhaust vapor. This exhaust is indistinguishable from vehicle exhaust (gas or diesel), though it contains carbon dioxide rather than carbon monoxide. The pipes themselves may look like any car, truck, or motorcycle exhaust, with or without a mufflerand are hot to the touch. Bonuses: +1 to the P.E. attribute, +3D6 to S.D.C., impervious to poisonous/toxic gas or fumes, including smoke, tear gas and knockout gas, and +1 to Horror Factor. Pen- alties: The Nightbane is much easier to locate due to the smell of the exhaust, heat of the pipes, and larger visual profile; -20% to the Prowl skill. The exhaust also hampers the character’s own sense of smell, so there is a -5 penalty to any Perception Rolls relying upon olfactory senses.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -158,7 +159,8 @@
         }
       },
       "damageAffinities": {
-        "airborneToxins": 0
+        "airborneToxins": 0,
+        "poison": 0
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -189,13 +191,19 @@
       "id": "gear_head_nitrous_bottles",
       "name": "Nitrous Bottles",
       "tableCategory": "Gear-Head",
-      "description": "Pressurized nitrous tanks bolted to the back, body, or upper legs provide brief speed bursts and enhanced leaping.",
+      "description": "Nitrous oxide is sometimes used in amateur street-racing and thrill-ride experiences. When injected into the engine it provides a short boost of power and speed at the risk of destroying the engine. This Morphus feature adds small nitrous tanks or “bottles” to the Nightbane’s back, body or upper legs to give him temporary speed boosts and the ability to leap 12 feet (3.7 m) high and up to 40 feet (12.2 m) across! Bonuses: Four times per hour, the character can hit the nitrous to enjoy a rocketing +70 Spd bonus (that’s a bonus of 50 mph/80 km added to his usual Spd). The speed boost lasts for 1D6 minutes at a time. During this period the Nightbane is +2 on initiative, +2 to dodge, and +3 to roll with impact. Penalties: -2 to the P.E. attribute, -1D6 to his base P.P.E., and the character is a speed-freak and/or thrill seeker who tends to be a daredevil who likes to take risks.",
       "statModifiers": {
         "pe": {
           "flat": -2
         },
         "ppe": {
           "dice": "-1D6"
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "rollWithPunch": {
+          "flat": 3
         }
       },
       "mobility": {
@@ -249,7 +257,7 @@
       "id": "gear_head_hydraulics",
       "name": "Hydraulics",
       "tableCategory": "Gear-Head",
-      "description": "Hydraulic struts on the limbs extend arms and legs up to three additional feet (0.9 m).",
+      "description": "The Morphus has hydraulic struts at- tached to his limbs, which are extendable. Arms and legs can stretch an additional three feet (0.9 m). Bonuses: Has an extend- ed reach, can perform power punches without using up two at- tacks, counts as one attack, can leap 10 feet (3 m) high or 20 feet (6.1 m) across, +1D6 to the Spd attribute, +1 to roll with impact, and +4D6 S.D.C. Penalties: -2 to dodge, and -20% to Acrobatics, Dance, Disguise, Gymnastics, and Undercover Ops.",
       "statModifiers": {
         "spd": {
           "dice": "1D6"
@@ -322,7 +330,7 @@
       "id": "gear_head_shocks_struts",
       "name": "Shocks & Struts",
       "tableCategory": "Gear-Head",
-      "description": "Heavy-duty automotive shocks and struts are incorporated into the legs (or wheel-legs), absorbing impacts from falls and running.",
+      "description": "The Nightbane’s legs incorporate heavy-duty automotive shocks and struts capable of reducing the impact from falls and running. For Morphus forms with wheels in the place of legs, they are able to handle rough terrain without any difficulty and enjoy a 10% speed bonus. Bonuses: +3 to the Spd attribute, can drop from heights as great as 200 feet (61 m) and land on his feet without injury (only loses two melee attacks; no penalty if the drop or fall was from 60 feet/18.3 m or shorter), and is +4 to roll with falls and impact (half damage). Penalties: -1 to P.P. and P.B. attributes, -15% to skills like Acrobatics, Dance, Disguise, Gymnastics, and Undercover Ops.",
       "statModifiers": {
         "spd": {
           "flat": 3
@@ -388,7 +396,7 @@
       "id": "gear_head_air_horn",
       "name": "Air Horn",
       "tableCategory": "Gear-Head",
-      "description": "A large vehicle or locomotive-style air horn is built into the back, neck, or shoulders.",
+      "description": "Incorporated into the character’s Morphus form is a large air horn similar to those used on eighteen-wheelers and locomotives. This horn is usually visible as several flared tubes sticking out of the Nightbane’s back, neck or shoulders. This horn can be heard for one mile (1.6 km) and can be used as a warning or signal. At close range, its blare is powerful enough to temporarily deafen anyone unprotected within a 25 foot (7.6 m) radius of the Nightbane). The deafness lasts for 1D4 melee rounds (15-60 seconds). Those affected are temporarily unable to hear sounds and are -4 on initiative and -2 to all combat rolls. Note that the character is unable to choose who is or isn’t af- fected. Everyone in the radius of effect is impacted; only the Nightbane himself is not affected. Bonuses: +1 to the P.E. at- tribute, +1D6 to S.D.C., impervious to loud sounds that would otherwise deafen other people. Penalties: -1D4 to base P.P.E., and the Nightbane is a bit hard of hearing, incurring a penalty of -3 to Perception Rolls involving sound, identifying and follow- ing/tracking sounds, and cannot hear whisper level sounds; -1 on initiative and may mishear/misunderstand something that could be important or lead to a misunderstanding/brawl or mistake on his part.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -426,10 +434,13 @@
       "id": "gear_head_searchlight_headlights",
       "name": "Searchlight/Headlights",
       "tableCategory": "Gear-Head",
-      "description": "1D4 high-powered lights built into the torso, head, or arms swivel up to 30 degrees and pierce magical darkness at half normal range and intensity.",
+      "description": "The character has 1D4 high-powered lights built into his torso, head, upper arms, or forearms near the wrist. These lights are capable of swiveling up to 30 degrees (or points where the arm points when in the forearms or where the head turns when in the head), and have the benefit of being able to penetrate even magical darkness, though at half their usual range and intensity. Bonuses: The searchlights can be engaged to see in the dark and through any magically created darkness as well as used to attempt to “parry” incoming Shadow or Darkness-based attacks (-3 to parry such attacks). If the parry is successful, the light completely negates them. Penalties: -1D6 base P.P.E. When any of the lights are on, Prowling is impossible. When off, the Nightbane is -10% to skills like Disguise and Undercover Ops.",
       "statModifiers": {
         "ppe": {
           "dice": "-1D6"
+        },
+        "parry": {
+          "flat": -3
         }
       },
       "specialCombatInterceptions": [
@@ -472,7 +483,7 @@
       "id": "gear_head_winch_cable",
       "name": "Winch and Cable",
       "tableCategory": "Gear-Head",
-      "description": "A motorized winch spools 50 feet (15 m) of cable (+1 foot/0.3 m per level) from the back, shoulder, abdomen, or coiled around the body.",
+      "description": "This is a 50 foot (15 m) length of cable attached to a motorized spool, or winch. The winch may be built into the back, shoulder, or abdomen of the Nightbane Morphus or the ‘Bane may have cable coiled around his arms and torso. To unleash the cable, it can be fired or released from the Nightbane’s hands or wrists. Shooting out at its target as if they had a life of their own. The cable(s) automatically wrap and tie themselves to an inanimate object like a tree, lamppost, flag- pole, ledge or vehicle, with the other end remaining tethered to the Nightbane. This can be used to secure himself to particular location, to pull out a vehicle or person trapped in mud or water, etc., or to climb by having the cable snare a ledge or outcropping and using the winch to pull the ‘Bane to that location (or to lower him to the ground). Maximum range/length of cable is 50 feet (15.2 m) +1 foot (0.3 m) per level of experience. Against a live opponent, the Winch and Cable Morphus en- ables the Nightbane to unspool a 5-10 foot (1.5 to 3 m) length of cable he can use as a whip (one in each hand even), that inflicts 2D6 damage or can be used to try to disarm an opponent. Or the ‘Bane can entangle the legs or pin one or both arms of an oppo- nent with the cables (maximum one from each hand). The cables shooting out as if they were alive. Opponents can try to parry or dodge such attacks. Bonuses: +2 to the P.S. attribute, +2D6+8 to S.D.C., +1 to strike with cable, +2 to disarm, entangle or pin, +15% to the Climbing skill. The winch is capable of pulling twice the Nightbane’s maximum carry weight. Penalties: -1D6 to P.P.E. base, -1D6 to the Spd attribute, and -1 to dodge.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -497,6 +508,9 @@
         },
         "dodge": {
           "flat": -1
+        },
+        "pp": {
+          "dice": "-1D6"
         }
       },
       "naturalWeapons": [
@@ -535,7 +549,7 @@
       "id": "gear_head_chrome_job",
       "name": "Chrome Job",
       "tableCategory": "Gear-Head",
-      "description": "Polished chrome bolt-heads, grilles, tanks, and limb shielding are incorporated into the Morphus; may include a chrome head or chrome hands.",
+      "description": "A Nightbane with this Morphus fea- ture has several metal accents incorporated into his physical form. These take the shape of bolt-heads, grilles, tanks, shielding on the side of the forearms and legs, and other such details, but all are polished chrome and gleam in the light. The Nightbane might even have a chrome head (+20 S.D.C. to the head) or chrome hands (+1D4 damage and can parry melee weapons with bare hands). Whether the bits are plain, ornate, or even futuristic, the end result is the same. Bonuses: +2D6+10 to S.D.C., +1 to Natu- ral A.R., +2 to roll with impact and +1 to Awe/Horror Factor. The character can also attempt to parry light-based attacks such as those from Guardians or high-tech laser weapons with only a -3 penalty to parry. Penalties: -10% to Prowl, -5% to Swimming, -20% to Disguise, Impersonation and Undercover Ops, and the Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per melee round).",
       "naturalAr": 11,
       "statModifiers": {
         "sdc": {

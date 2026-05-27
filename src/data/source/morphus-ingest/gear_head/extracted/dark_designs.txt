@@ -37,4 +37,121 @@ from the shoulders or back of the Nightbane, releasing a steady
 stream of exhaust vapor. This exhaust is indistinguishable from 
 vehicle exhaust (gas or diesel), though it contains carbon dioxide 
 rather than carbon monoxide. The pipes themselves may look like 
-any car, truck, or motorcycle exhaust, with or without a muffler, 
+any car, truck, or motorcycle exhaust, with or without a mufflerand are hot to the touch. Bonuses: +1 to the P.E. attribute, +3D6 
+to S.D.C., impervious to poisonous/toxic gas or fumes, including 
+smoke, tear gas and knockout gas, and +1 to Horror Factor. Pen-
+alties: The Nightbane is much easier to locate due to the smell 
+of the exhaust, heat of the pipes, and larger visual profile; -20% 
+to the Prowl skill. The exhaust also hampers the character’s own 
+sense of smell, so there is a -5 penalty to any Perception Rolls 
+relying upon olfactory senses.
+29-37% Nitrous Bottles: Nitrous oxide is sometimes used in 
+amateur street-racing and thrill-ride experiences. When injected 
+into the engine it provides a short boost of power and speed at the 
+risk of destroying the engine. This Morphus feature adds small 
+nitrous tanks or “bottles” to the Nightbane’s back, body or upper 
+legs to give him temporary speed boosts and the ability to leap 
+12 feet (3.7 m) high and up to 40 feet (12.2 m) across! Bonuses: 
+Four times per hour, the character can hit the nitrous to enjoy a 
+rocketing +70 Spd bonus (that’s a bonus of 50 mph/80 km added 
+to his usual Spd). The speed boost lasts for 1D6 minutes at a time. 
+During this period the Nightbane is +2 on initiative, +2 to dodge, 
+and +3 to roll with impact. Penalties: -2 to the P.E. attribute, 
+-1D6 to his base P.P.E., and the character is a speed-freak and/or 
+thrill seeker who tends to be a daredevil who likes to take risks.
+38-46% Hydraulics: The Morphus has hydraulic struts at-
+tached to his limbs, which are extendable. Arms and legs can 
+stretch an additional three feet (0.9 m). Bonuses: Has an extend-
+ed reach, can perform power punches without using up two at-
+tacks, counts as one attack, can leap 10 feet (3 m) high or 20 feet 
+(6.1 m) across, +1D6 to the Spd attribute, +1 to roll with impact, 
+and +4D6 S.D.C. Penalties: -2 to dodge, and -20% to Acrobatics, 
+Dance, Disguise, Gymnastics, and Undercover Ops.
+47-55% Shocks & Struts: The Nightbane’s legs incorporate 
+heavy-duty automotive shocks and struts capable of reducing the 
+impact from falls and running. For Morphus forms with wheels in 
+the place of legs, they are able to handle rough terrain without any 
+difficulty and enjoy a 10% speed bonus. Bonuses: +3 to the Spd 
+attribute, can drop from heights as great as 200 feet (61 m) and 
+land on his feet without injury (only loses two melee attacks; no 
+penalty if the drop or fall was from 60 feet/18.3 m or shorter), and 
+is +4 to roll with falls and impact (half damage). Penalties: -1 to 
+P.P. and P.B. attributes, -15% to skills like Acrobatics, Dance, 
+Disguise, Gymnastics, and Undercover Ops.
+56-64% Air Horn: Incorporated into the character’s Morphus 
+form is a large air horn similar to those used on eighteen-wheelers 
+and locomotives. This horn is usually visible as several flared 
+tubes sticking out of the Nightbane’s back, neck or shoulders. 
+This horn can be heard for one mile (1.6 km) and can be used as 
+a warning or signal. At close range, its blare is powerful enough 
+to temporarily deafen anyone unprotected within a 25 foot (7.6 
+m) radius of the Nightbane). The deafness lasts for 1D4 melee 
+rounds (15-60 seconds). Those affected are temporarily unable 
+to hear sounds and are -4 on initiative and -2 to all combat rolls. 
+Note that the character is unable to choose who is or isn’t af-
+fected. Everyone in the radius of effect is impacted; only the 
+Nightbane himself is not affected. Bonuses: +1 to the P.E. at-
+tribute, +1D6 to S.D.C., impervious to loud sounds that would 
+otherwise deafen other people. Penalties: -1D4 to base P.P.E., 
+and the Nightbane is a bit hard of hearing, incurring a penalty of 
+-3 to Perception Rolls involving sound, identifying and follow-
+ing/tracking sounds, and cannot hear whisper level sounds; -1 on 
+initiative and may mishear/misunderstand something that could 
+be important or lead to a misunderstanding/brawl or mistake on 
+his part.
+65-73% Searchlight(s): The character has 1D4 high-powered 
+lights built into his torso, head, upper arms, or forearms near the 
+wrist. These lights are capable of swiveling up to 30 degrees (or 
+points where the arm points when in the forearms or where the 
+head turns when in the head), and have the benefit of being able to 
+penetrate even magical darkness, though at half their usual range 
+and intensity. Bonuses: The searchlights can be engaged to see 
+in the dark and through any magically created darkness as well as 
+used to attempt to “parry” incoming Shadow or Darkness-based 
+attacks (-3 to parry such attacks). If the parry is successful, the 
+light completely negates them. Penalties: -1D6 base P.P.E. When 
+any of the lights are on, Prowling is impossible. When off, the 
+Nightbane is -10% to skills like Disguise and Undercover Ops.
+74-82% Winch and Cable: This is a 50 foot (15 m) length 
+of cable attached to a motorized spool, or winch. The winch may 
+be built into the back, shoulder, or abdomen of the Nightbane 
+Morphus or the ‘Bane may have cable coiled around his arms 
+and torso. To unleash the cable, it can be fired or released from 
+the Nightbane’s hands or wrists. Shooting out at its target as if 
+they had a life of their own. The cable(s) automatically wrap and 
+tie themselves to an inanimate object like a tree, lamppost, flag-
+pole, ledge or vehicle, with the other end remaining tethered to 
+the Nightbane. This can be used to secure himself to particular 
+location, to pull out a vehicle or person trapped in mud or water, 
+etc., or to climb by having the cable snare a ledge or outcropping 
+and using the winch to pull the ‘Bane to that location (or to lower 
+him to the ground). Maximum range/length of cable is 50 feet 
+(15.2 m) +1 foot (0.3 m) per level of experience.
+Against a live opponent, the Winch and Cable Morphus en-
+ables the Nightbane to unspool a 5-10 foot (1.5 to 3 m) length of 
+cable he can use as a whip (one in each hand even), that inflicts 
+2D6 damage or can be used to try to disarm an opponent. Or the 
+‘Bane can entangle the legs or pin one or both arms of an oppo-
+nent with the cables (maximum one from each hand). The cables 
+shooting out as if they were alive. Opponents can try to parry or 
+dodge such attacks. Bonuses: +2 to the P.S. attribute, +2D6+8 
+to S.D.C., +1 to strike with cable, +2 to disarm, entangle or pin, 
++15% to the Climbing skill. The winch is capable of pulling 
+twice the Nightbane’s maximum carry weight. Penalties: -1D6 
+to P.P.E. base, -1D6 to the Spd attribute, and -1 to dodge.
+83-91% Chrome Job: A Nightbane with this Morphus fea-
+ture has several metal accents incorporated into his physical 
+form. These take the shape of bolt-heads, grilles, tanks, shielding 
+on the side of the forearms and legs, and other such details, but all 
+are polished chrome and gleam in the light. The Nightbane might 
+even have a chrome head (+20 S.D.C. to the head) or chrome 
+hands (+1D4 damage and can parry melee weapons with bare 
+hands). Whether the bits are plain, ornate, or even futuristic, the 
+end result is the same. Bonuses: +2D6+10 to S.D.C., +1 to Natu-
+ral A.R., +2 to roll with impact and +1 to Awe/Horror Factor. 
+The character can also attempt to parry light-based attacks such 
+as those from Guardians or high-tech laser weapons with only a 
+-3 penalty to parry. Penalties: -10% to Prowl, -5% to Swimming, 
+-20% to Disguise, Impersonation and Undercover Ops, and the 
+Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per 
+melee round).

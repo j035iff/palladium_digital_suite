@@ -81,6 +81,15 @@ function normTraitName(s) {
   return normalizeSkillName(s)
 }
 
+const TRAIT_NAME_ALIASES = {
+  'searchlight s': 'searchlight headlights',
+}
+
+function normTraitNameForMatch(s) {
+  const key = normTraitName(s)
+  return TRAIT_NAME_ALIASES[key] ?? key
+}
+
 function findSkillId(skillPhrase) {
   const idx = loadSkillNameIndex()
   const key = normalizeSkillName(skillPhrase.replace(/\s+skill$/i, ''))
@@ -961,6 +970,6 @@ export function enrichMorphusEntry(entry, body, options = {}) {
 }
 
 export function matchBlockForEntry(blocks, entry) {
-  const want = normTraitName(entry.name)
-  return blocks.find((b) => normTraitName(b.name) === want)
+  const want = normTraitNameForMatch(entry.name)
+  return blocks.find((b) => normTraitNameForMatch(b.name) === want)
 }
