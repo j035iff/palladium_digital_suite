@@ -60,7 +60,12 @@ import {
   type MorphusTraitNote,
   resolveMorphusTerrainSpdMultiplier,
   sumRelativeArShiftFromTraits,
+  buildMorphusCapabilitySummary,
+  aggregateMorphusBalanceModifierPercent,
+  aggregateMorphusReachPercentBonus,
+  aggregateMorphusJumpMultiplier,
 } from './morphusCharacteristicAggregation'
+import type { MorphusCapabilitySummary } from '../types'
 import { polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
 
 const STAT_TO_PASSIVE: Partial<
@@ -124,6 +129,11 @@ export type MorphusPassiveBundle = {
   activeBurstKeys: readonly string[]
   gimmickToySwitches: readonly MorphusDerivedGimmickSwitch[]
   activeGimmickSwitchKeys: readonly string[]
+  capabilitySummary: MorphusCapabilitySummary
+  balanceModifierPercent: number
+  reachPercentBonus: number
+  jumpMultiplier: number
+  minimumJumpFeet: number
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -153,6 +163,11 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'activeBurstKeys'
   | 'gimmickToySwitches'
   | 'activeGimmickSwitchKeys'
+  | 'capabilitySummary'
+  | 'balanceModifierPercent'
+  | 'reachPercentBonus'
+  | 'jumpMultiplier'
+  | 'minimumJumpFeet'
 >
 
 export type MorphusPassiveBuildOptions = {
@@ -291,6 +306,13 @@ export function buildMorphusPassiveBundle(
     flightEngine: aggregateMorphusFlightEngine(traits),
     activeBurstKeys: options.activeBurstKeys ?? [],
     activeGimmickSwitchKeys: options.activeGimmickSwitchKeys ?? [],
+    capabilitySummary: buildMorphusCapabilitySummary(traits, character.level),
+    balanceModifierPercent: aggregateMorphusBalanceModifierPercent(traits),
+    reachPercentBonus: aggregateMorphusReachPercentBonus(traits),
+    ...(() => {
+      const j = aggregateMorphusJumpMultiplier(traits)
+      return { jumpMultiplier: j.multiplier, minimumJumpFeet: j.minimumJumpFeet }
+    })(),
   }
 }
 

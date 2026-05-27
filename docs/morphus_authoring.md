@@ -2,15 +2,36 @@
 
 How to encode Nightbane Morphus characteristics so the app can apply rules automatically **and** surface edge cases clearly.
 
-## Layers (use all three)
+## Layers (prefer top to bottom)
 
 | Layer | When to use | Runtime effect |
 |--------|-------------|----------------|
-| **Structured fields** | Bonuses the engine already models | Auto: attributes, skills, damage, movement, senses, combat |
-| **`morphusRules`** | Named edge cases (mirror walk, reform, etc.) | Trait notes + future automation hooks |
-| **`customOneOffs`** | Anything still narrative | Always shown in trait notes |
+| **Core structured fields** | Stats, skills, damage, movement, senses | Aggregated into passive modifiers and combat |
+| **Capability fields** | One-offs that must appear on the character sheet | `buildMorphusCapabilitySummary()` → grouped player digest |
+| **`customOneOffs`** | Pure flavor not worth typing yet | Still shown in trait notes |
 
-Prefer structured fields first; push leftovers to `morphusRules` (tagged) then `customOneOffs` (free text).
+Avoid new `morphusRules` — use the capability fields below.
+
+### Capability fields (character sheet digest)
+
+| Field | Examples |
+|-------|----------|
+| `appearanceConstraints` | Clothing fit, narrow openings, hide among mannequins |
+| `combatContextModifiers` | Opponent -5 strike in bright light; surprise +2 strike |
+| `recoveryBehaviors` | Reform after destruction, waterlog, immobilization |
+| `conditionalPenalties` | Cold halves Spd/APM |
+| `atWillAbilities` | Mirror Walk, stand motionless |
+| `playerChoices` | Scythe vs sickle at creation |
+| `tableWorkflow` | Roll Step One twice (Disproportion) |
+| `livingWeaponRules` | Living scarecrow weapon |
+| `skillContextModifiers` | Prowl -50% in bright light |
+| `disguiseLimits` | Soft Clay impersonation rules |
+| Extended `sensory` | `peripheralVisionDegrees`, `lightSensitivity`, `scentTracking`, `prowlUnderwaterModifierPercent` |
+| Extended `mobility` | `balanceModifierPercent`, `reachPercentBonus`, `jumpMultiplier`, `waterlogMinutesDice` |
+| Extended `saveModifiers` | `nauseaVomiting` |
+| Extended `limbDurability` | `requiresCalledShot` |
+
+Runtime: `morphusDerived.capabilitySummary` in CharacterContext (grouped by `senses`, `movement`, `combat`, `defense`, `skills`, `appearance`, `abilities`, `recovery`, `choices`, `workflow`).
 
 ## Structured fields (engine-backed)
 
@@ -39,9 +60,9 @@ Aggregation rules (stacking) live in `src/lib/morphusCharacteristicAggregation.t
 
 ### `entryRole`
 
-- `trait` — default; playable Morphus result
-- `table_router` — Step One only (e.g. Disproportion “Head”, “Arms & Hands”)
-- `subtable_header` — section label, not rolled alone
+- `trait` — default; playable Morphus result (only these are ingested into catalog JSON)
+- `table_router` — Step One routing row (e.g. Disproportion “Head”); **not ingested**
+- `subtable_header` — section label, not rolled alone; **not ingested**
 
 ### `variantPercentiles`
 
@@ -64,41 +85,59 @@ Inner rolls inside one trait (Junk Golem body type, Mirror Man mirror style):
 }
 ```
 
-### `morphusRules`
+### Example: Mirror Man
 
 ```json
-"morphusRules": [
-  {
-    "kind": "mirror_walk",
-    "summary": "Mirror Walk at will (see Nightbane core Mirror Walk rules)."
-  },
-  {
-    "kind": "reform_after_destruction",
-    "summary": "If destroyed, reforms in 2D6 minutes at half S.D.C./H.P. or Facade with Morphus lockout 1D6+1 hours.",
-    "params": { "reformMinutesDice": "2D6", "lockoutHoursDice": "1D6+1" }
-  }
+"atWillAbilities": [{ "id": "mirror_walk", "label": "Mirror Walk", "note": "At will." }],
+"combatContextModifiers": [{
+  "condition": "bright_light",
+  "target": "opponent",
+  "strike": -5,
+  "parry": -5,
+  "dodge": -5
+}],
+"skillContextModifiers": [
+  { "skillId": "skill_prowl", "modifierPercent": -20, "context": "darkness" },
+  { "skillId": "skill_prowl", "modifierPercent": -50, "context": "bright_light" }
 ]
 ```
 
-Kinds: `mirror_walk`, `reform_after_destruction`, `called_shot_defense`, `environmental_vulnerability`, `immobilization`, `player_choice`, `cross_reference`, `combat_opponent_modifier`, `weapon_living_part`, `other`.
-
 ## Ingest workflow
+
+Ingest **playable traits only**. The pipeline skips table routers (Disproportion Step One rows like Head/Torso), "Other" / roll-twice rows, and instruction-only percentile bands. Percentile ranges are used for PDF extraction only — they are not stored on catalog entries. Manifest flag `excludeNonPlayable` (default `true`) controls this; pass `--include-non-playable` to `init` to disable.
+
+**Multi-section tables (Disproportion, Animal):** use a `category_hub` parent (`disproportion.json`) with leaf `morphus_trait_table` files per book section (`disproportion_head.json`, etc.). Step One routing stays in the hub `description`; traits live on leaf tables with `parentTable: "disproportion"`.
 
 ```bash
 npm run morphus:ingest -- init --id my_table --display "My Table" \
   --heading "My Table" --book src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf
 npm run morphus:ingest -- prepare my_table
-npm run morphus:ingest -- scaffold my_table
-# Transcribe: add structured fields + morphusRules + trim customOneOffs
+# prepare = extract → schema-loop → scaffold → structure-entries (auto-parse book text)
 npm run morphus:ingest -- merge my_table
 npm run morphus:ingest -- build my_table
 npm run morphus:ingest -- finalize my_table
 ```
 
-`prepare` runs schema analysis; extend `scripts/lib/morphus-schema-analysis.mjs` `MECHANIC_PATTERNS` when new book phrasing appears.
+### `structure-entries` (mechanical transcription)
+
+After schema is ready, `structure-entries` reads `extracted-authoritative.txt` and fills:
+
+- `statModifiers`, `saveModifiers`, `damageAffinities`, `skillModifiers`, `mobility`, `sensory`
+- Capability fields (`atWillAbilities`, `combatContextModifiers`, `recoveryBehaviors`, …)
+- Full `description` from book (replaces `TODO: transcribe` stubs)
+
+By default it **fills missing fields only** (`--force` overwrites). Run on target JSON with `--target`.
+
+```bash
+npm run morphus:ingest -- structure-entries my_table
+npm run morphus:ingest -- structure-entries my_table --target --force
+```
+
+Extend parsers in `scripts/lib/morphus-transcribe-structure.mjs` and `MECHANIC_PATTERNS` in `morphus-schema-analysis.mjs` when new book phrasing appears. Goal: **zero or minimal `customOneOffs`** per trait.
 
 ## Do not
 
 - Put `conditionalStanceModifiers` at the **top level** — only under `mobility.conditionalStanceModifiers`.
 - Rely on description-only rows for mechanics the schema already supports.
 - Duplicate full book text in `customOneOffs` if it is already in `description`.
+- Add new `morphusRules` — use capability fields so `capabilitySummary` and future automation stay typed.

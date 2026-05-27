@@ -1,0 +1,231 @@
+{
+  "id": "disproportion_arms_hands",
+  "kind": "morphus_trait_table",
+  "displayName": "Arms & Hands",
+  "parentTable": "disproportion",
+  "description": "Disproportionate Arms & Hands (WB5 pp. 87–88). Roll percentile on this sub-table after Step One selects arms and hands.",
+  "entries": [
+    {
+      "id": "disproportion_huge_forearms",
+      "name": "Huge Forearms",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "The character has forearms like Popeye, +1D4 P.S., +1D6 to S.D.C, and +1 to parry. Penalties: Wearing tight clothing and long sleeves is impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required",
+        "narrowOpeningAccess": "restricted"
+      }
+    },
+    {
+      "id": "disproportion_huge_hands",
+      "name": "Huge Hands",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Hands are two or three times the size of normal. +1 to P.S., +1 to entangle and disarm, +2 to damage, +1D4 to S.D.C. and +1 to Horror Factor. Penalties: -1 to P.P., -1 to pull punch, -5% to delicate skills, and makes wearing tight clothing and long sleeves impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "pullPunch": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D4"
+        },
+        "bonusHthDamage": {
+          "flat": 2
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required",
+        "narrowOpeningAccess": "restricted"
+      }
+    },
+    {
+      "id": "disproportion_huge_broad_shoulders",
+      "name": "Huge, Broad, Shoulders",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "+2 to P.S., +1D6+1 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossible (too tight); needs oversized shirts, jackets and coats.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6+1"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
+    },
+    {
+      "id": "disproportion_large_muscular_upper_arms",
+      "name": "Large, Muscular Upper Arms",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "+1D4 to P.S., +1D6+2 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossi- ble (too tight); needs oversized shirts, jackets and coats or cus- tom-made clothing.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D6+2"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
+    },
+    {
+      "id": "disproportion_small_hands",
+      "name": "Small Hands",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturb- ing. Disproportionate Legs & Feet",
+      "statModifiers": {
+        "pp": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": -2
+        },
+        "bonusHthDamage": {
+          "flat": -2
+        }
+      }
+    },
+    {
+      "id": "disproportion_small_narrow_shoulders",
+      "name": "Small, Narrow Shoulders",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Can fit through small, narrow spaces, +5% to Escape Artist skill. Penalties: -5% to Disguise skill and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed.",
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "disproportion_thin_forearms",
+      "name": "Thin Forearms",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Es- cape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even nor- mal hands may look oversized and disproportionate.",
+      "statModifiers": {
+        "ps": {
+          "dice": "-1D4"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
+    },
+    {
+      "id": "disproportion_unusually_long_arms",
+      "name": "Unusually Long Arms",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "The character has long up- per and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires cus- tom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      }
+    }
+  ]
+}

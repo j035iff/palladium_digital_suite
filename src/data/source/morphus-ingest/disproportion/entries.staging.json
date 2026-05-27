@@ -1,22 +1,6 @@
 {
   "entries": [
     {
-      "id": "disproportion_arms_hands",
-      "name": "Arms & Hands",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 87
-        }
-      ],
-      "description": "Step One (Disproportion Table, WB5 p. 87): the disproportionate body area is the arms and hands. Roll on Disproportionate Arms & Hands (p. 88)."
-    },
-    {
       "id": "disproportion_barrel_chested_and_stoutly_built",
       "name": "Barrel-Chested and Stoutly Built",
       "tableCategory": "Disproportion",
@@ -30,23 +14,27 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character’s overall body is stout with a thick, short waist and muscular, bar- rel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, other- wise clothing must be loose or a bit oversized."
-    },
-    {
-      "id": "disproportion_head",
-      "name": "Head",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 87
+      "description": "The character’s overall body is stout with a thick, short waist and muscular, bar- rel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, other- wise clothing must be loose or a bit oversized.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "pullPunch": {
+          "flat": -1
+        },
+        "ps": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "spd": {
+          "percent": -5
         }
-      ],
-      "description": "Step One (Disproportion Table, WB5 p. 87): the disproportionate body area is the head. Roll on Disproportionate Head for the specific trait, bonuses, and penalties."
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "disproportion_huge_ears",
@@ -62,7 +50,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "1D4 times larger than is common; +1D4 to Perception Rolls dealing with sound. Penalties: -2 to P.B. and -20% to Disguise and Undercover Ops skills."
+      "description": "1D4 times larger than is common; +1D4 to Perception Rolls dealing with sound. Penalties: -2 to P.B. and -20% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "pb": {
+          "flat": -2
+        }
+      }
     },
     {
       "id": "disproportion_huge_eyes",
@@ -78,7 +71,21 @@
           "pageNumber": 87
         }
       ],
-      "description": "Perfect vision, excellent peripheral vi- sion (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Per- ception Rolls involving vision in well lit areas and daytime."
+      "description": "Perfect vision, excellent peripheral vi- sion (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Per- ception Rolls involving vision in well lit areas and daytime.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "sharpVision": true,
+        "peripheralVisionDegrees": 180,
+        "lightSensitivity": {
+          "daylightVisionMultiplier": 0.5,
+          "perceptionVisionPenalty": -2
+        }
+      }
     },
     {
       "id": "disproportion_huge_feet",
@@ -94,7 +101,45 @@
           "pageNumber": 88
         }
       ],
-      "description": "+5% to Swimming skill and swimming speed, +2 kick and stomp damage, +10% to balance, and +1 to Horror Factor. Penalties: Reduce Speed by 10%, -5% to Prowl, and may need custom shoes."
+      "description": "+5% to Swimming skill and swimming speed, +2 kick and stomp damage, +10% to balance, and +1 to Horror Factor. Penalties: Reduce Speed by 10%, -5% to Prowl, and may need custom shoes.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": 5
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required",
+        "customFootwearRequired": true
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Natural kick",
+          "damageFormula": "1D8",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "flat": 2
+          }
+        },
+        {
+          "limbType": "stomp",
+          "label": "Natural stomp",
+          "damageFormula": "1D8",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "flat": 2
+          }
+        }
+      ]
     },
     {
       "id": "disproportion_huge_forearms",
@@ -110,7 +155,16 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character has forearms like Popeye, +1D4 P.S., +1D6 to S.D.C, and +1 to parry. Penalties: Wearing tight clothing and long sleeves is impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces."
+      "description": "The character has forearms like Popeye, +1D4 P.S., +1D6 to S.D.C, and +1 to parry. Penalties: Wearing tight clothing and long sleeves is impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required",
+        "narrowOpeningAccess": "restricted"
+      }
     },
     {
       "id": "disproportion_huge_hands",
@@ -126,7 +180,34 @@
           "pageNumber": 88
         }
       ],
-      "description": "Hands are two or three times the size of normal. +1 to P.S., +1 to entangle and disarm, +2 to damage, +1D4 to S.D.C. and +1 to Horror Factor. Penalties: -1 to P.P., -1 to pull punch, -5% to delicate skills, and makes wearing tight clothing and long sleeves impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces."
+      "description": "Hands are two or three times the size of normal. +1 to P.S., +1 to entangle and disarm, +2 to damage, +1D4 to S.D.C. and +1 to Horror Factor. Penalties: -1 to P.P., -1 to pull punch, -5% to delicate skills, and makes wearing tight clothing and long sleeves impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "pullPunch": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D4"
+        },
+        "bonusHthDamage": {
+          "flat": 2
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required",
+        "narrowOpeningAccess": "restricted"
+      }
     },
     {
       "id": "disproportion_huge_jaw_strong_neck",
@@ -142,7 +223,26 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Hor- ror Factor. Penalties: -1 to P.B. and -20% to Disguise and Un- dercover skills."
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Hor- ror Factor. Penalties: -1 to P.B. and -20% to Disguise and Un- dercover skills.",
+      "statModifiers": {
+        "pb": {
+          "flat": -1
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "grapplingAffordance": "rope_grip_with_teeth"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ]
     },
     {
       "id": "disproportion_huge_legs",
@@ -158,7 +258,21 @@
           "pageNumber": 88
         }
       ],
-      "description": "Large, thick, muscular upper legs remi- niscent of a frog’s legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing."
+      "description": "Large, thick, muscular upper legs remi- niscent of a frog’s legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "spd": {
+          "flat": 6
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
     },
     {
       "id": "disproportion_huge_nose",
@@ -174,7 +288,11 @@
           "pageNumber": 87
         }
       ],
-      "description": "Keen sense of smell, can track by scent: 20% +4% per level of experience, and +2 to Perception Rolls dealing with scents and odors. Penalties: -2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and -3 to save vs nausea and vomiting resulting from foul odors and airborne toxins."
+      "description": "Keen sense of smell, can track by scent: 20% +4% per level of experience, and +2 to Perception Rolls dealing with scents and odors. Penalties: -2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and -3 to save vs nausea and vomiting resulting from foul odors and airborne toxins.",
+      "saveModifiers": {
+        "gas": -2,
+        "nauseaVomiting": -3
+      }
     },
     {
       "id": "disproportion_huge_teeth",
@@ -190,7 +308,23 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage to bite attacks, +1 to Horror Factor. Penalty: -1 to P.B."
+      "description": "+1D6 damage to bite attacks, +1 to Horror Factor. Penalty: -1 to P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ]
     },
     {
       "id": "disproportion_huge_broad_shoulders",
@@ -206,7 +340,21 @@
           "pageNumber": 88
         }
       ],
-      "description": "+2 to P.S., +1D6+1 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossible (too tight); needs oversized shirts, jackets and coats."
+      "description": "+2 to P.S., +1D6+1 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossible (too tight); needs oversized shirts, jackets and coats.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6+1"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "disproportion_large_head",
@@ -222,7 +370,18 @@
           "pageNumber": 87
         }
       ],
-      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vul- nerable and unable to defend himself than he really is; -2 from Horror Factor."
+      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vul- nerable and unable to defend himself than he really is; -2 from Horror Factor.",
+      "statModifiers": {
+        "me": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -1
+        },
+        "iq": {
+          "dice": "1D4"
+        }
+      }
     },
     {
       "id": "disproportion_large_mouth",
@@ -238,7 +397,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "The mouth is unusually large and creepy, lips may be large and plump or thin; +2 to bite damage and +1 to Horror Factor. Penalty: -1 from P.B."
+      "description": "The mouth is unusually large and creepy, lips may be large and plump or thin; +2 to bite damage and +1 to Horror Factor. Penalty: -1 from P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
     },
     {
       "id": "disproportion_large_muscular_upper_arms",
@@ -254,7 +418,21 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1D4 to P.S., +1D6+2 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossi- ble (too tight); needs oversized shirts, jackets and coats or cus- tom-made clothing."
+      "description": "+1D4 to P.S., +1D6+2 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossi- ble (too tight); needs oversized shirts, jackets and coats or cus- tom-made clothing.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D6+2"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "disproportion_large_thick_neck",
@@ -270,23 +448,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6+2 S.D.C. and +1 Horror Factor."
-    },
-    {
-      "id": "disproportion_legs_feet",
-      "name": "Legs & Feet",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 87
+      "description": "+1D6+2 S.D.C. and +1 Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6+2"
         }
-      ],
-      "description": "Step One (Disproportion Table, WB5 p. 87): the disproportionate body area is the legs and feet. Roll on Disproportionate Legs & Feet (p. 88)."
+      }
     },
     {
       "id": "disproportion_long_thin_legs",
@@ -302,7 +469,18 @@
           "pageNumber": 88
         }
       ],
-      "description": "Increase length/height by 10%, straight legs like a board, +1 to dodge, +1 to kick damage, and +1D4 to Spd attribute. Penalties: -1 to P.E. attribute."
+      "description": "Increase length/height by 10%, straight legs like a board, +1 to dodge, +1 to kick damage, and +1D4 to Spd attribute. Penalties: -1 to P.E. attribute.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": -1
+        }
+      },
+      "heightModifier": {
+        "percent": 10
+      }
     },
     {
       "id": "disproportion_morbidly_obese",
@@ -318,7 +496,18 @@
           "pageNumber": 88
         }
       ],
-      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and -10% to Disguise and Undercover Ops skills."
+      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and -10% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "spd": {
+          "percent": -20
+        }
+      }
     },
     {
       "id": "disproportion_muscular",
@@ -334,7 +523,15 @@
           "pageNumber": 88
         }
       ],
-      "description": "Chiseled and sculpted stomach, chest, and shoulder muscles; +3D6+6 S.D.C. +1D6 to P.S. Penalties: -1 on initiative and -1D4 from Spd."
+      "description": "Chiseled and sculpted stomach, chest, and shoulder muscles; +3D6+6 S.D.C. +1D6 to P.S. Penalties: -1 on initiative and -1D4 from Spd.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "3D6+6"
+        }
+      }
     },
     {
       "id": "disproportion_no_chin",
@@ -350,7 +547,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "The character’s chin is small, flat, and seems to practically fade into the neck. Penalties: -1 to P.B. and -1 from Horror Factor."
+      "description": "The character’s chin is small, flat, and seems to practically fade into the neck. Penalties: -1 to P.B. and -1 from Horror Factor.",
+      "statModifiers": {
+        "pb": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "disproportion_pencil_neck",
@@ -366,7 +568,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "The neck seems unusually thin and long. The advantage is -1 to be hit by a Called Shot to the neck. Penalties: -1D6 S.D.C. and -1 from Horror Factor."
+      "description": "The neck seems unusually thin and long. The advantage is -1 to be hit by a Called Shot to the neck. Penalties: -1D6 S.D.C. and -1 from Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "-1D6"
+        }
+      }
     },
     {
       "id": "disproportion_puny_build",
@@ -382,23 +589,15 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body looks like the prover- bial 90 pound weakling or an emaciated concentration camp vic- tim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B."
-    },
-    {
-      "id": "disproportion_roll_twice_for_two_disproportions",
-      "name": "Roll twice for two disproportions",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 87
+      "description": "The upper body looks like the prover- bial 90 pound weakling or an emaciated concentration camp vic- tim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
         }
-      ],
-      "description": "Step One (Disproportion Table, WB5 p. 87): roll twice on Step One to determine two disproportionate body areas, then roll on each appropriate sub-table."
+      },
+      "weightModifier": {
+        "percent": -50
+      }
     },
     {
       "id": "disproportion_short_legs",
@@ -414,7 +613,18 @@
           "pageNumber": 88
         }
       ],
-      "description": "Short, stubby legs like those of a go- rilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Fac- tor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage."
+      "description": "Short, stubby legs like those of a go- rilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Fac- tor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "mobility": {
+        "balanceModifierPercent": 5
+      }
     },
     {
       "id": "disproportion_small_feet",
@@ -430,7 +640,15 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance and -10% to Climbing skill. Disproportionate Torso"
+      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance and -10% to Climbing skill. Disproportionate Torso",
+      "statModifiers": {
+        "pp": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "balanceModifierPercent": -10
+      }
     },
     {
       "id": "disproportion_small_hands",
@@ -446,7 +664,18 @@
           "pageNumber": 88
         }
       ],
-      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturb- ing. Disproportionate Legs & Feet"
+      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturb- ing. Disproportionate Legs & Feet",
+      "statModifiers": {
+        "pp": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": -2
+        },
+        "bonusHthDamage": {
+          "flat": -2
+        }
+      }
     },
     {
       "id": "disproportion_small_narrow_shoulders",
@@ -462,7 +691,10 @@
           "pageNumber": 88
         }
       ],
-      "description": "Can fit through small, narrow spaces, +5% to Escape Artist skill. Penalties: -5% to Disguise skill and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed."
+      "description": "Can fit through small, narrow spaces, +5% to Escape Artist skill. Penalties: -5% to Disguise skill and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed.",
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
     },
     {
       "id": "disproportion_thin_and_tall_long",
@@ -478,7 +710,21 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills."
+      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "heightModifier": {
+        "dice": "2D4"
+      }
     },
     {
       "id": "disproportion_thin_forearms",
@@ -494,7 +740,15 @@
           "pageNumber": 88
         }
       ],
-      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Es- cape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even nor- mal hands may look oversized and disproportionate."
+      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Es- cape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even nor- mal hands may look oversized and disproportionate.",
+      "statModifiers": {
+        "ps": {
+          "dice": "-1D4"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "disproportion_tiny_ears",
@@ -510,7 +764,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1 to Perception Rolls dealing with sound."
+      "description": "+1 to Perception Rolls dealing with sound.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        }
+      }
     },
     {
       "id": "disproportion_tiny_eyes",
@@ -526,7 +785,25 @@
           "pageNumber": 87
         }
       ],
-      "description": "Perfect 20/20 vision, but poor peripheral vision (only 90 degrees), +1 to Horror Factor and Perception Rolls. Penalties: -1 to P.B. attribute, -1 to parry and dodge, and is not likely to see anyone sneaking up on him from behind or the side (opponents are +2 to strike with surprise attacks from behind)!"
+      "description": "Perfect 20/20 vision, but poor peripheral vision (only 90 degrees), +1 to Horror Factor and Perception Rolls. Penalties: -1 to P.B. attribute, -1 to parry and dodge, and is not likely to see anyone sneaking up on him from behind or the side (opponents are +2 to strike with surprise attacks from behind)!",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": 2
+        }
+      },
+      "sensory": {
+        "sharpVision": true,
+        "peripheralVisionDegrees": 90
+      }
     },
     {
       "id": "disproportion_tiny_mouth",
@@ -542,7 +819,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "The mouth is unusually small, practi- cally a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A."
+      "description": "The mouth is unusually small, practi- cally a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
     },
     {
       "id": "disproportion_tiny_nose",
@@ -558,7 +840,25 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 to P.B., +2 to save vs gas attacks (in- cluding smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands"
+      "description": "+1 to P.B., +2 to save vs gas attacks (in- cluding smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands",
+      "statModifiers": {
+        "pb": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": -3
+        }
+      },
+      "saveModifiers": {
+        "gas": 2,
+        "nauseaVomiting": 4
+      },
+      "sensory": {
+        "scentTracking": {
+          "enabled": false,
+          "identifyOdorsModifierPercent": -10
+        }
+      }
     },
     {
       "id": "disproportion_tiny_teeth",
@@ -577,22 +877,6 @@
       "description": "The teeth look like those of a young human child or even smaller, and if the ‘Bane has fangs they are tiny too. The character may have twice as many teeth because they are so small. Penalties: -1 from Horror Factor and any damage from bite attacks is half the normal amount."
     },
     {
-      "id": "disproportion_torso",
-      "name": "Torso",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 87
-        }
-      ],
-      "description": "Step One (Disproportion Table, WB5 p. 87): the disproportionate body area is the torso. Roll on Disproportionate Torso (p. 88)."
-    },
-    {
       "id": "disproportion_unusually_long_arms",
       "name": "Unusually Long Arms",
       "tableCategory": "Disproportion",
@@ -606,7 +890,15 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character has long up- per and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires cus- tom clothing, otherwise shirts, jackets, etc., look too short/small in the arms."
+      "description": "The character has long up- per and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires cus- tom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "disproportion_very_small_head",
@@ -622,7 +914,18 @@
           "pageNumber": 87
         }
       ],
-      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Pen- alties: -1 to I.Q. and P.B. attributes."
+      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Pen- alties: -1 to I.Q. and P.B. attributes.",
+      "statModifiers": {
+        "strike": {
+          "flat": -3
+        },
+        "hf": {
+          "flat": 2
+        },
+        "iq": {
+          "flat": -1
+        }
+      }
     }
   ]
 }

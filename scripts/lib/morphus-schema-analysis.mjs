@@ -5,6 +5,7 @@
 
 import { morphusSchemaPathExists } from './morphus-schema-paths.mjs'
 import { detectUnmatchedMechanicalProse } from './morphus-schema-apply.mjs'
+import { isPlayableMorphusTrait } from './morphus-trait-filter.mjs'
 
 const TRAIT_HEADER = /(\d{2}-\d{2})%\s+([^:\n]+):/g
 
@@ -193,19 +194,19 @@ const MECHANIC_PATTERNS = [
   {
     id: 'called_shot',
     re: /Called Shot|only be struck from behind/i,
-    schemaPaths: ['limbDurability', 'morphusRules'],
+    schemaPaths: ['limbDurability', 'combatContextModifiers'],
     severity: 'info',
   },
   {
     id: 'mirror_walk',
     re: /Mirror Walk at will/i,
-    schemaPaths: ['morphusRules'],
+    schemaPaths: ['atWillAbilities'],
     severity: 'info',
   },
   {
     id: 'reform',
     re: /reforms? in \d+D\d+|reform in \d+D\d+ minutes/i,
-    schemaPaths: ['morphusRules'],
+    schemaPaths: ['recoveryBehaviors'],
     severity: 'info',
   },
   {
@@ -247,7 +248,73 @@ const MECHANIC_PATTERNS = [
   {
     id: 'living_weapon',
     re: /weapon is a living part|Scarecrow weapon/i,
-    schemaPaths: ['naturalWeapons', 'limbDurability', 'morphusRules'],
+    schemaPaths: ['naturalWeapons', 'limbDurability', 'livingWeaponRules'],
+    severity: 'info',
+  },
+  {
+    id: 'appearance_clothing',
+    re: /tight clothing|oversized|custom(-made)? clothing|custom shoes/i,
+    schemaPaths: ['appearanceConstraints'],
+    severity: 'info',
+  },
+  {
+    id: 'combat_context_bright',
+    re: /opponents are -?\d+ to strike.*bright light|surprise attacks from behind/i,
+    schemaPaths: ['combatContextModifiers'],
+    severity: 'info',
+  },
+  {
+    id: 'scent_track',
+    re: /track by scent|cannot track by scent/i,
+    schemaPaths: ['sensory.scentTracking'],
+    severity: 'info',
+  },
+  {
+    id: 'balance_reach',
+    re: /sense of balance|longer than usual/i,
+    schemaPaths: ['mobility.balanceModifierPercent', 'mobility.reachPercentBonus'],
+    severity: 'info',
+  },
+  {
+    id: 'at_will_stand',
+    re: /stand motionless|indistinguishable among/i,
+    schemaPaths: ['atWillAbilities', 'appearanceConstraints'],
+    severity: 'info',
+  },
+  {
+    id: 'table_workflow',
+    re: /Roll twice|Step One/i,
+    schemaPaths: ['tableWorkflow', 'entryRole'],
+    severity: 'info',
+  },
+  {
+    id: 'player_weapon_choice',
+    re: /player chooses|player can elect/i,
+    schemaPaths: ['playerChoices'],
+    severity: 'info',
+  },
+  {
+    id: 'disguise_limits',
+    re: /similar size and weight|cannot impersonate specific/i,
+    schemaPaths: ['disguiseLimits'],
+    severity: 'info',
+  },
+  {
+    id: 'conditional_cold',
+    re: /freezing temperature|attacks per melee and Spd by half/i,
+    schemaPaths: ['conditionalPenalties'],
+    severity: 'info',
+  },
+  {
+    id: 'light_sensitivity',
+    re: /light sensitive|bright lights hurt/i,
+    schemaPaths: ['sensory.lightSensitivity'],
+    severity: 'info',
+  },
+  {
+    id: 'peripheral_vision',
+    re: /peripheral vision \(\d+ degrees\)/i,
+    schemaPaths: ['sensory.peripheralVisionDegrees'],
     severity: 'info',
   },
   {
@@ -400,7 +467,7 @@ export function analyzeMorphusSchemaFit(options) {
 
   const edgeCases = []
   const perTrait = traitBlocks
-    .filter((b) => !/^Other\b/i.test(b.name))
+    .filter((b) => isPlayableMorphusTrait(b.name, b.body, b.body))
     .map((block) => {
       const indexRow = traitsIndex?.traits?.find(
         (t) => t.name === block.name || t.percent === block.percent,

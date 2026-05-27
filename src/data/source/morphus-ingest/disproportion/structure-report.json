@@ -1,0 +1,14 @@
+{
+  "tableId": "disproportion",
+  "generatedAt": "2026-05-27T17:13:43.928Z",
+  "fillOnly": true,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 1,
+      "entryCount": 39
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 1
+}

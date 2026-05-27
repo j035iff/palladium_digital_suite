@@ -12,6 +12,7 @@ import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
 import type { MorphusDerivedSheetSlice } from '../../lib/morphusPassiveBridge'
+import { MorphusCapabilitiesPanel } from '../live/MorphusCapabilitiesPanel'
 import {
   formatMorphusDamageAffinityMultiplier,
   GIMMICK_TOY_SWITCH_LOCATION_LABELS,
@@ -376,13 +377,22 @@ export function MainLayout() {
         </section>
 
         {morphusActive && morphusDerived ? (
-          <MorphusTraitsPanel
-            derived={morphusDerived}
-            activeBurstKeys={morphusActiveBurstKeys}
-            onToggleBurst={toggleMorphusBurst}
-            activeGimmickSwitchKeys={morphusActiveGimmickSwitchKeys}
-            onToggleGimmickSwitch={toggleMorphusGimmickSwitch}
-          />
+          <>
+            <MorphusCapabilitiesPanel
+              summary={morphusDerived.capabilitySummary}
+              balanceModifierPercent={morphusDerived.balanceModifierPercent}
+              reachPercentBonus={morphusDerived.reachPercentBonus}
+              jumpMultiplier={morphusDerived.jumpMultiplier}
+              minimumJumpFeet={morphusDerived.minimumJumpFeet}
+            />
+            <MorphusTraitsPanel
+              derived={morphusDerived}
+              activeBurstKeys={morphusActiveBurstKeys}
+              onToggleBurst={toggleMorphusBurst}
+              activeGimmickSwitchKeys={morphusActiveGimmickSwitchKeys}
+              onToggleGimmickSwitch={toggleMorphusGimmickSwitch}
+            />
+          </>
         ) : null}
 
         <SavingThrowsPanel />

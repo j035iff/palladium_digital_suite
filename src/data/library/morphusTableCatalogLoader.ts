@@ -26,6 +26,13 @@ export function getMorphusTableById(id: string): PalladiumMorphusTable | undefin
   return byId.get(id)
 }
 
+/** Leaf trait tables that declare `parentTable` equal to `hubId`. */
+export function listMorphusChildTables(hubId: string): readonly PalladiumMorphusTable[] {
+  return MORPHUS_TABLE_CATALOG.filter(
+    (t) => t.kind === 'morphus_trait_table' && t.parentTable === hubId,
+  )
+}
+
 export function listMorphusTableIds(): readonly string[] {
   return MORPHUS_TABLE_CATALOG.map((t) => t.id)
 }

@@ -47,6 +47,9 @@
           "minItems": 1,
           "items": { "$ref": "#/$defs/subtableRef" }
         },
+        "tableWorkflow": {
+          "$ref": "https://megaverse-companion.local/schemas/palladium-morphus.schema.json#/$defs/tableWorkflow"
+        },
         "entries": {
           "type": "array",
           "items": { "$ref": "#/$defs/characteristicRow" }

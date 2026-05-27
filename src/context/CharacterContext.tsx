@@ -848,6 +848,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       activeBurstKeys: morphusPassiveBundle.activeBurstKeys,
       gimmickToySwitches: morphusPassiveBundle.gimmickToySwitches,
       activeGimmickSwitchKeys: morphusPassiveBundle.activeGimmickSwitchKeys,
+      capabilitySummary: morphusPassiveBundle.capabilitySummary,
+      balanceModifierPercent: morphusPassiveBundle.balanceModifierPercent,
+      reachPercentBonus: morphusPassiveBundle.reachPercentBonus,
+      jumpMultiplier: morphusPassiveBundle.jumpMultiplier,
+      minimumJumpFeet: morphusPassiveBundle.minimumJumpFeet,
     }
   }, [morphusPassiveBundle])
 

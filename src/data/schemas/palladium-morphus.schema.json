@@ -174,7 +174,65 @@
       "items": {
         "$ref": "#/$defs/morphusRule"
       },
-      "description": "Structured edge-case rules (reform, mirror walk, immobilization) for UI and future automation."
+      "description": "Legacy tagged rules — prefer appearanceConstraints, combatContextModifiers, recoveryBehaviors, atWillAbilities, and extended sensory/mobility fields."
+    },
+    "appearanceConstraints": {
+      "$ref": "#/$defs/appearanceConstraints",
+      "description": "Clothing fit, narrow-space access, and contextual hiding/blending."
+    },
+    "combatContextModifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/combatContextModifier"
+      },
+      "description": "Conditional combat adjustments (opponent penalties, surprise bonuses, grappling affordances)."
+    },
+    "recoveryBehaviors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recoveryBehavior"
+      },
+      "description": "Reform, immobilization, and waterlog recovery profiles."
+    },
+    "conditionalPenalties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conditionalPenalty"
+      },
+      "description": "Environmental triggers that scale stats (cold halving Spd/APM, etc.)."
+    },
+    "atWillAbilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/atWillAbility"
+      },
+      "description": "Always-available Morphus abilities (Mirror Walk, stand motionless, etc.)."
+    },
+    "playerChoices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/playerChoice"
+      },
+      "description": "Character-creation or table-resolution player picks."
+    },
+    "tableWorkflow": {
+      "$ref": "#/$defs/tableWorkflow",
+      "description": "Multi-step table instructions (roll twice on Step One, etc.)."
+    },
+    "livingWeaponRules": {
+      "$ref": "#/$defs/livingWeaponRules",
+      "description": "Living Morphus weapon durability and attachment rules."
+    },
+    "skillContextModifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/skillContextModifier"
+      },
+      "description": "Skill bonuses/penalties tied to lighting, terrain, or context."
+    },
+    "disguiseLimits": {
+      "$ref": "#/$defs/disguiseLimits",
+      "description": "Morphus-specific Disguise restrictions beyond skillModifiers."
     }
   },
   "$defs": {
@@ -499,6 +557,10 @@
           "type": "integer",
           "description": "Strike penalty when this component is targeted (e.g. -3)."
         },
+        "requiresCalledShot": {
+          "type": "boolean",
+          "description": "When true, attackers must make a Called Shot to target this component (Very Small Head)."
+        },
         "destructionConditionOverrides": {
           "$ref": "#/$defs/limbDestructionConditionOverrides",
           "description": "Stat/affinity overrides applied when this limb's S.D.C. is depleted."
@@ -686,6 +748,10 @@
         },
         "allSaves": {
           "type": "integer"
+        },
+        "nauseaVomiting": {
+          "type": "integer",
+          "description": "Save vs nausea/vomiting from foul odors and airborne toxins."
         },
         "comaDeath": {
           "$ref": "#/$defs/polymorphicModifier"
@@ -911,6 +977,29 @@
         "burrowingEngine": {
           "$ref": "#/$defs/burrowingEngine",
           "description": "Subterranean traversal rate and permitted substrates (Dark Designs Artisan, pp. 25–27)."
+        },
+        "balanceModifierPercent": {
+          "type": "integer",
+          "description": "Percent bonus/penalty to sense of balance (Disproportion Huge Feet, Short Legs)."
+        },
+        "reachPercentBonus": {
+          "type": "integer",
+          "description": "Melee reach extension percent (Unusually Long Arms)."
+        },
+        "jumpMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Multiplier applied to jump distance/height after flat bonuses (Huge Legs: 2)."
+        },
+        "minimumJumpFeet": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum jump height/distance in feet when jumpMultiplier applies."
+        },
+        "waterlogMinutesDice": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Minutes until buoyant Morphus sinks after waterlogging (Stuffed Animal)."
         }
       }
     },
@@ -1002,6 +1091,24 @@
             ]
           },
           "description": "Identity / recording defenses against external capture (Artisan table)."
+        },
+        "peripheralVisionDegrees": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 360,
+          "description": "Peripheral vision arc in degrees (Huge Eyes 180, Tiny Eyes 90)."
+        },
+        "lightSensitivity": {
+          "$ref": "#/$defs/lightSensitivity",
+          "description": "Bright-light / daylight vision penalties (Huge Eyes)."
+        },
+        "scentTracking": {
+          "$ref": "#/$defs/scentTracking",
+          "description": "Track-by-scent profile and odor identification modifiers."
+        },
+        "prowlUnderwaterModifierPercent": {
+          "type": "integer",
+          "description": "Bonus to hide/Prowl underwater (Glass)."
         }
       }
     },
@@ -1635,6 +1742,330 @@
         "params": {
           "type": "object",
           "description": "Optional machine-readable parameters (dice, durations, skill ids)."
+        }
+      }
+    },
+    "lightSensitivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "daylightVisionMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Multiplier to normal daylight vision (0.5 = half)."
+        },
+        "perceptionVisionPenalty": {
+          "type": "integer",
+          "description": "Penalty to Perception Rolls involving vision in well-lit areas."
+        }
+      }
+    },
+    "scentTracking": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "When false, character cannot track by scent."
+        },
+        "baseSuccessPercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98
+        },
+        "perLevelIncrement": {
+          "type": "integer",
+          "description": "Percent added per level of experience."
+        },
+        "identifyOdorsModifierPercent": {
+          "type": "integer",
+          "description": "Modifier to identify-odors skill checks (Tiny Nose -10)."
+        }
+      }
+    },
+    "appearanceConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "clothingFit": {
+          "type": "string",
+          "enum": [
+            "oversized_required",
+            "custom_required",
+            "loose_required",
+            "baggy_appearance"
+          ],
+          "description": "How standard clothing fits this Morphus."
+        },
+        "narrowOpeningAccess": {
+          "type": "string",
+          "enum": ["restricted", "enhanced"],
+          "description": "Whether the body fits or struggles through narrow openings."
+        },
+        "hideAmongContext": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Context where the character blends in (store mannequins)."
+        },
+        "standMotionlessIndefinitely": {
+          "type": "boolean",
+          "description": "Can hold perfectly still for any duration."
+        },
+        "customFootwearRequired": {
+          "type": "boolean"
+        },
+        "customClothingNote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "combatContextModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition"],
+      "properties": {
+        "condition": {
+          "type": "string",
+          "enum": [
+            "bright_light",
+            "surprise_from_behind_or_side",
+            "grappling"
+          ],
+          "description": "When this modifier applies."
+        },
+        "target": {
+          "type": "string",
+          "enum": ["opponent", "self"],
+          "default": "opponent",
+          "description": "Who receives strike/parry/dodge adjustments."
+        },
+        "strike": { "type": "integer" },
+        "parry": { "type": "integer" },
+        "dodge": { "type": "integer" },
+        "grapplingAffordance": {
+          "type": "string",
+          "enum": ["rope_grip_with_teeth"],
+          "description": "Special grappling interaction granted by this Morphus."
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "recoveryBehavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trigger"],
+      "properties": {
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "destruction",
+            "large_explosion",
+            "submersion",
+            "waterlog"
+          ]
+        },
+        "reformMinutesDice": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lockoutHoursDice": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Morphus unavailable duration when returning to Facade."
+        },
+        "globCountDice": {
+          "type": "string",
+          "minLength": 1
+        },
+        "residualSdcPercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "S.D.C./H.P. after reform (50 = half)."
+        },
+        "dryHoursDice": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hours to recover from immobilization (Soft Clay)."
+        },
+        "gardenHoseDamage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fireHoseDamage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "conditionalPenalty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trigger"],
+      "properties": {
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "cold_attack",
+            "freezing_temperature"
+          ]
+        },
+        "apmMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "spdMultiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "atWillAbility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "mirror_walk",
+            "stand_motionless",
+            "other"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "playerChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "options"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "timing": {
+          "type": "string",
+          "enum": ["character_creation", "any"],
+          "default": "character_creation"
+        }
+      }
+    },
+    "tableWorkflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "stepOneRollCount": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Roll Step One this many times (Disproportion: 2)."
+        },
+        "excludeSelfFromReroll": {
+          "type": "boolean",
+          "description": "Exclude the 'roll twice' router row from Step One rerolls."
+        }
+      }
+    },
+    "livingWeaponRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "sdcPerLevel": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "onlyDamagedWhenTargeted": {
+          "type": "boolean"
+        },
+        "vanishesWhenBothZero": {
+          "type": "boolean",
+          "description": "Weapon vanishes if weapon S.D.C. and character S.D.C. both reach zero."
+        },
+        "preferredWeapon": {
+          "type": "boolean",
+          "description": "Character prefers this weapon and feels vulnerable without it."
+        },
+        "hardToConceal": {
+          "type": "boolean"
+        }
+      }
+    },
+    "skillContextModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId", "modifierPercent", "context"],
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modifierPercent": {
+          "type": "integer"
+        },
+        "context": {
+          "type": "string",
+          "enum": [
+            "underwater",
+            "darkness",
+            "bright_light",
+            "daylight",
+            "well_lit"
+          ]
+        }
+      }
+    },
+    "disguiseLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "similarSizeWeightOnly": {
+          "type": "boolean"
+        },
+        "cannotImpersonateIndividuals": {
+          "type": "boolean"
+        },
+        "skinColorRequiresMakeup": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

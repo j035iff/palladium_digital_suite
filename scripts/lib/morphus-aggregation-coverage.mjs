@@ -32,9 +32,25 @@ const HOOKS = [
   { path: 'conditionalStanceModifiers', label: 'stance modifiers' },
   { path: 'customOneOffs', label: 'custom one-offs (notes only)' },
   { path: 'variantPercentiles', label: 'variant percentiles (notes)' },
-  { path: 'crossTableRoll', label: 'cross-table roll (notes)' },
-  { path: 'morphusRules', label: 'structured edge rules (notes)' },
+  { path: 'crossTableRoll', label: 'cross-table roll' },
   { path: 'entryRole', label: 'entry role (router/header)' },
+  { path: 'appearanceConstraints', label: 'appearance constraints' },
+  { path: 'combatContextModifiers', label: 'combat context modifiers' },
+  { path: 'recoveryBehaviors', label: 'recovery behaviors' },
+  { path: 'conditionalPenalties', label: 'conditional penalties' },
+  { path: 'atWillAbilities', label: 'at-will abilities' },
+  { path: 'playerChoices', label: 'player choices' },
+  { path: 'tableWorkflow', label: 'table workflow' },
+  { path: 'livingWeaponRules', label: 'living weapon rules' },
+  { path: 'skillContextModifiers', label: 'skill context modifiers' },
+  { path: 'disguiseLimits', label: 'disguise limits' },
+  { path: 'mobility.balanceModifierPercent', label: 'balance modifier' },
+  { path: 'mobility.reachPercentBonus', label: 'reach bonus' },
+  { path: 'mobility.jumpMultiplier', label: 'jump multiplier' },
+  { path: 'sensory.lightSensitivity', label: 'light sensitivity' },
+  { path: 'sensory.scentTracking', label: 'scent tracking' },
+  { path: 'sensory.peripheralVisionDegrees', label: 'peripheral vision' },
+  { path: 'morphusRules', label: 'legacy morphusRules (deprecated)' },
 ]
 
 function getAt(obj, dotted) {
@@ -59,8 +75,10 @@ export function aggregationCoverageReport(entries) {
     id: entry.id,
     name: entry.name,
     hooks: aggregationCoverageForEntry(entry),
-    notesOnly:
-      aggregationCoverageForEntry(entry).length === 1 &&
-      aggregationCoverageForEntry(entry)[0] === 'custom one-offs (notes only)',
+    notesOnly: (() => {
+      const hooks = aggregationCoverageForEntry(entry)
+      const wired = hooks.filter((h) => h !== 'custom one-offs (notes only)')
+      return wired.length === 0 && hooks.includes('custom one-offs (notes only)')
+    })(),
   }))
 }

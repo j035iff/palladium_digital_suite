@@ -11,24 +11,8 @@
       "authoritative": true
     }
   ],
-  "traitCount": 39,
+  "traitCount": 34,
   "traits": [
-    {
-      "name": "Arms & Hands",
-      "percent": "21-50%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "survival_guide",
-          "reference": "Nightbane\u00ae Survival Guide (WB5)",
-          "pageNumber": 87,
-          "percent": "21-50%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "survival_guide",
-      "alsoPublishedIn": []
-    },
     {
       "name": "Barrel-Chested and Stoutly Built",
       "percent": "41-60%",
@@ -39,22 +23,6 @@
           "reference": "Nightbane\u00ae Survival Guide (WB5)",
           "pageNumber": 88,
           "percent": "41-60%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "survival_guide",
-      "alsoPublishedIn": []
-    },
-    {
-      "name": "Head",
-      "percent": "01-20%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "survival_guide",
-          "reference": "Nightbane\u00ae Survival Guide (WB5)",
-          "pageNumber": 87,
-          "percent": "01-20%",
           "authoritative": true
         }
       ],
@@ -286,22 +254,6 @@
       "alsoPublishedIn": []
     },
     {
-      "name": "Legs & Feet",
-      "percent": "71-90%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "survival_guide",
-          "reference": "Nightbane\u00ae Survival Guide (WB5)",
-          "pageNumber": 87,
-          "percent": "71-90%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "survival_guide",
-      "alsoPublishedIn": []
-    },
-    {
       "name": "Long, Thin Legs",
       "percent": "21-40%",
       "skip": false,
@@ -391,22 +343,6 @@
           "reference": "Nightbane\u00ae Survival Guide (WB5)",
           "pageNumber": 88,
           "percent": "21-40%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "survival_guide",
-      "alsoPublishedIn": []
-    },
-    {
-      "name": "Roll twice for two disproportions",
-      "percent": "91-00%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "survival_guide",
-          "reference": "Nightbane\u00ae Survival Guide (WB5)",
-          "pageNumber": 87,
-          "percent": "91-00%",
           "authoritative": true
         }
       ],
@@ -583,22 +519,6 @@
           "reference": "Nightbane\u00ae Survival Guide (WB5)",
           "pageNumber": 87,
           "percent": "26-30%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "survival_guide",
-      "alsoPublishedIn": []
-    },
-    {
-      "name": "Torso",
-      "percent": "51-70%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "survival_guide",
-          "reference": "Nightbane\u00ae Survival Guide (WB5)",
-          "pageNumber": 87,
-          "percent": "51-70%",
           "authoritative": true
         }
       ],

@@ -588,6 +588,7 @@ export type MorphusLimbDurability = {
   hp?: number
   ar?: number
   calledShotPenalty?: number
+  requiresCalledShot?: boolean
   destructionConditionOverrides?: MorphusLimbDestructionConditionOverrides
 }
 
@@ -655,6 +656,7 @@ export type MorphusSaveModifiers = {
   illusions?: number
   nightlordMagic?: number
   allSaves?: number
+  nauseaVomiting?: number
   comaDeath?: MorphusPolymorphicModifier
 }
 
@@ -737,6 +739,11 @@ export type MorphusMobility = {
   conditionalTerrainModifiers?: readonly MorphusConditionalTerrainModifier[]
   conditionalStanceModifiers?: readonly MorphusConditionalStanceModifier[]
   burrowingEngine?: MorphusBurrowingEngine
+  balanceModifierPercent?: number
+  reachPercentBonus?: number
+  jumpMultiplier?: number
+  minimumJumpFeet?: number
+  waterlogMinutesDice?: string
 }
 
 export type MorphusPerceptionSpecialties = {
@@ -751,6 +758,18 @@ export type MorphusExternalSensoryObfuscation =
   | 'biometric_scrambling'
   | 'scent_masking'
 
+export type MorphusLightSensitivity = {
+  daylightVisionMultiplier?: number
+  perceptionVisionPenalty?: number
+}
+
+export type MorphusScentTracking = {
+  enabled?: boolean
+  baseSuccessPercent?: number
+  perLevelIncrement?: number
+  identifyOdorsModifierPercent?: number
+}
+
 export type MorphusSensory = {
   nightvisionRangeFlatBonus?: number
   perceptionSpecialties?: MorphusPerceptionSpecialties
@@ -762,6 +781,10 @@ export type MorphusSensory = {
   sharpHearing?: boolean
   invisibleToThermalImaging?: boolean
   externalSensoryObfuscation?: readonly MorphusExternalSensoryObfuscation[]
+  peripheralVisionDegrees?: number
+  lightSensitivity?: MorphusLightSensitivity
+  scentTracking?: MorphusScentTracking
+  prowlUnderwaterModifierPercent?: number
 }
 
 export type MorphusSkillOverrideTargetType = 'skill_id' | 'category' | 'skill_trait'
@@ -1014,8 +1037,18 @@ export type MorphusCharacteristic = {
   variantPercentiles?: readonly MorphusVariantPercentile[]
   /** Roll on another Morphus table (e.g. Stuffed Animal → animal_form). */
   crossTableRoll?: MorphusCrossTableRoll
-  /** Structured edge-case rules for notes and future automation. */
+  /** @deprecated Prefer typed capability fields; kept for legacy rows. */
   morphusRules?: readonly MorphusEdgeCaseRule[]
+  appearanceConstraints?: MorphusAppearanceConstraints
+  combatContextModifiers?: readonly MorphusCombatContextModifier[]
+  recoveryBehaviors?: readonly MorphusRecoveryBehavior[]
+  conditionalPenalties?: readonly MorphusConditionalPenalty[]
+  atWillAbilities?: readonly MorphusAtWillAbility[]
+  playerChoices?: readonly MorphusPlayerChoice[]
+  tableWorkflow?: MorphusTableWorkflow
+  livingWeaponRules?: MorphusLivingWeaponRules
+  skillContextModifiers?: readonly MorphusSkillContextModifier[]
+  disguiseLimits?: MorphusDisguiseLimits
 }
 
 export type MorphusVariantPercentile = {
@@ -1049,6 +1082,139 @@ export type MorphusEdgeCaseRule = {
   params?: Record<string, unknown>
 }
 
+export type MorphusClothingFit =
+  | 'oversized_required'
+  | 'custom_required'
+  | 'loose_required'
+  | 'baggy_appearance'
+
+export type MorphusAppearanceConstraints = {
+  clothingFit?: MorphusClothingFit
+  narrowOpeningAccess?: 'restricted' | 'enhanced'
+  hideAmongContext?: string
+  standMotionlessIndefinitely?: boolean
+  customFootwearRequired?: boolean
+  customClothingNote?: string
+}
+
+export type MorphusCombatContextCondition =
+  | 'bright_light'
+  | 'surprise_from_behind_or_side'
+  | 'grappling'
+
+export type MorphusCombatContextModifier = {
+  condition: MorphusCombatContextCondition
+  target?: 'opponent' | 'self'
+  strike?: number
+  parry?: number
+  dodge?: number
+  grapplingAffordance?: 'rope_grip_with_teeth'
+  note?: string
+}
+
+export type MorphusRecoveryTrigger =
+  | 'destruction'
+  | 'large_explosion'
+  | 'submersion'
+  | 'waterlog'
+
+export type MorphusRecoveryBehavior = {
+  trigger: MorphusRecoveryTrigger
+  reformMinutesDice?: string
+  lockoutHoursDice?: string
+  globCountDice?: string
+  residualSdcPercent?: number
+  dryHoursDice?: string
+  gardenHoseDamage?: string
+  fireHoseDamage?: string
+  note?: string
+}
+
+export type MorphusConditionalPenaltyTrigger = 'cold_attack' | 'freezing_temperature'
+
+export type MorphusConditionalPenalty = {
+  trigger: MorphusConditionalPenaltyTrigger
+  apmMultiplier?: number
+  spdMultiplier?: number
+  note?: string
+}
+
+export type MorphusAtWillAbilityId = 'mirror_walk' | 'stand_motionless' | 'other'
+
+export type MorphusAtWillAbility = {
+  id: MorphusAtWillAbilityId
+  label: string
+  note?: string
+}
+
+export type MorphusPlayerChoice = {
+  label: string
+  options: readonly string[]
+  timing?: 'character_creation' | 'any'
+}
+
+export type MorphusTableWorkflow = {
+  stepOneRollCount?: number
+  excludeSelfFromReroll?: boolean
+}
+
+export type MorphusLivingWeaponRules = {
+  sdcPerLevel?: number
+  onlyDamagedWhenTargeted?: boolean
+  vanishesWhenBothZero?: boolean
+  preferredWeapon?: boolean
+  hardToConceal?: boolean
+}
+
+export type MorphusSkillContext =
+  | 'underwater'
+  | 'darkness'
+  | 'bright_light'
+  | 'daylight'
+  | 'well_lit'
+
+export type MorphusSkillContextModifier = {
+  skillId: string
+  modifierPercent: number
+  context: MorphusSkillContext
+}
+
+export type MorphusDisguiseLimits = {
+  similarSizeWeightOnly?: boolean
+  cannotImpersonateIndividuals?: boolean
+  skinColorRequiresMakeup?: boolean
+  note?: string
+}
+
+/** Player-facing capability digest category (character sheet summary). */
+export type MorphusCapabilityCategory =
+  | 'senses'
+  | 'movement'
+  | 'combat'
+  | 'defense'
+  | 'skills'
+  | 'appearance'
+  | 'abilities'
+  | 'recovery'
+  | 'choices'
+  | 'workflow'
+
+export type MorphusCapabilityPolarity = 'bonus' | 'penalty' | 'neutral' | 'choice'
+
+export type MorphusDerivedCapabilityLine = {
+  category: MorphusCapabilityCategory
+  label: string
+  detail: string
+  sourceTraitId: string
+  sourceTraitName: string
+  polarity: MorphusCapabilityPolarity
+}
+
+export type MorphusCapabilitySummary = {
+  lines: readonly MorphusDerivedCapabilityLine[]
+  byCategory: Readonly<Partial<Record<MorphusCapabilityCategory, readonly MorphusDerivedCapabilityLine[]>>>
+}
+
 /**
  * Morphus table document (`content/morphus/tables/*.json`, palladium-morphus-table.schema.json).
  * `category_hub` tables route to leaf `morphus_trait_table` files via `subtables`.
@@ -1060,6 +1226,8 @@ export type PalladiumMorphusTable = {
   description?: string
   parentTable: string | null
   subtables?: readonly MorphusTableSubtableRef[]
+  /** Hub-level Step One rules (e.g. Disproportion roll twice on 91–00%). */
+  tableWorkflow?: MorphusTableWorkflow
   entries: readonly MorphusCharacteristic[]
 }
 

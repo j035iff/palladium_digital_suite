@@ -1,0 +1,150 @@
+{
+  "id": "disproportion_torso",
+  "kind": "morphus_trait_table",
+  "displayName": "Torso",
+  "parentTable": "disproportion",
+  "description": "Disproportionate Torso (WB5 p. 88). Roll percentile on this sub-table after Step One selects the torso.",
+  "entries": [
+    {
+      "id": "disproportion_barrel_chested_and_stoutly_built",
+      "name": "Barrel-Chested and Stoutly Built",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "The character’s overall body is stout with a thick, short waist and muscular, bar- rel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, other- wise clothing must be loose or a bit oversized.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "pullPunch": {
+          "flat": -1
+        },
+        "ps": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "spd": {
+          "percent": -5
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
+    },
+    {
+      "id": "disproportion_morbidly_obese",
+      "name": "Morbidly Obese",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and -10% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "spd": {
+          "percent": -20
+        }
+      }
+    },
+    {
+      "id": "disproportion_muscular",
+      "name": "Muscular",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Chiseled and sculpted stomach, chest, and shoulder muscles; +3D6+6 S.D.C. +1D6 to P.S. Penalties: -1 on initiative and -1D4 from Spd.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "3D6+6"
+        }
+      }
+    },
+    {
+      "id": "disproportion_puny_build",
+      "name": "Puny Build",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "The upper body looks like the prover- bial 90 pound weakling or an emaciated concentration camp vic- tim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      },
+      "weightModifier": {
+        "percent": -50
+      }
+    },
+    {
+      "id": "disproportion_thin_and_tall_long",
+      "name": "Thin and Tall/Long",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "heightModifier": {
+        "dice": "2D4"
+      }
+    }
+  ]
+}

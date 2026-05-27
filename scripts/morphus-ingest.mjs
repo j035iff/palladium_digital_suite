@@ -3,12 +3,12 @@
  * Morphus table ingest pipeline (per content group).
  *
  * High-level pipeline:
- *   prepare  — extract PDF → schema-loop (analyze ↔ apply schema until ready)
- *   build    — scaffold + transcribe JSON + merge + validate (after prepare)
+ *   prepare  — extract PDF → schema-loop → scaffold → structure-entries
+ *   build    — structure-entries + merge + validate (after prepare)
  *   finalize — aggregation coverage on target JSON
  *
  * Low-level:
- *   init, extract, analyze-schema, apply-schema, schema-loop, scaffold, report, merge, validate, aggregate
+ *   init, extract, analyze-schema, apply-schema, schema-loop, scaffold, structure-entries, report, merge, validate, aggregate
  *   all = prepare only (does not transcribe or aggregate)
  *
  * Usage:
@@ -39,6 +39,16 @@ import {
   buildSchemaPatches,
 } from './lib/morphus-schema-apply.mjs'
 import {
+  enrichMorphusEntry,
+  matchBlockForEntry,
+  splitTraitBlocks,
+} from './lib/morphus-transcribe-structure.mjs'
+import {
+  filterPlayableEntries,
+  isPlayableMorphusTrait,
+  traitIndexRowIsPlayable,
+} from './lib/morphus-trait-filter.mjs'
+import {
   characteristicSchemaKeys,
   formatAjvErrors,
   getMorphusValidators,
@@ -64,13 +74,13 @@ function usage() {
   console.log(`Morphus ingest — per-table pipeline
 
 Commands (pipeline):
-  prepare      extract + schema-loop until schema ready
-  build        scaffold + validate target JSON (transcribe + merge first)
+  prepare      extract + schema-loop + scaffold + structure-entries
+  build        structure-entries + validate target JSON (merge if needed)
   finalize     aggregation coverage on target JSON
 
 Commands (steps):
   init, extract, analyze-schema, apply-schema, schema-loop [--max N]
-  scaffold, sync-sources, report, merge, validate, aggregate
+  scaffold, structure-entries [--force] [--target], sync-sources, report, merge, validate, aggregate
   all          same as prepare (extract + schema-loop)
 
 Example:
@@ -196,6 +206,7 @@ function cmdInit(flags) {
     targetJson,
     gameSystem: flags.gameSystem ?? 'nightbane',
     excludeOther: flags['include-other'] ? false : true,
+    excludeNonPlayable: flags['include-non-playable'] ? false : true,
     authoritativeBookKey,
     descriptionAuthorityNote:
       'Transcribe description and mechanics from the authoritative book (Dark Designs when present).',
@@ -362,15 +373,103 @@ function cmdPrepare(tableId, flags = {}) {
   if (!existsSync(authPath) || flags['re-extract']) {
     cmdExtract(tableId)
   }
-  cmdSchemaLoop(tableId, flags)
+  const schemaOk = cmdSchemaLoop(tableId, flags)
+  if (!schemaOk) return false
+  const stagingPath = join(workDir(tableId), 'entries.staging.json')
+  if (!existsSync(stagingPath) || flags.scaffold) {
+    cmdScaffold(tableId)
+  }
+  cmdStructureEntries(tableId, flags)
+  return true
 }
 
-function cmdBuild(tableId) {
+function traitBodyToDescription(body) {
+  return body.replace(/^\d{2}-\d{2}%\s+[^:]+:\s*/i, '').replace(/\s+/g, ' ').trim()
+}
+
+function cmdStructureEntries(tableId, flags = {}) {
+  const authPath = join(workDir(tableId), 'extracted-authoritative.txt')
+  if (!existsSync(authPath)) {
+    throw new Error(`Missing ${authPath} — run extract first`)
+  }
+  const authText = readFileSync(authPath, 'utf8')
+  const blocks = splitTraitBlocks(authText)
+  const fillOnly = !flags.force
+  const manifest = loadManifest(tableId)
+  const targets = []
+
+  const stagingPath = join(workDir(tableId), 'entries.staging.json')
+  if (existsSync(stagingPath)) targets.push({ path: stagingPath, label: 'entries.staging.json' })
+
+  const targetPath = resolveRepoPath(manifest.targetJson)
+  if (flags.target || !existsSync(stagingPath)) {
+    if (existsSync(targetPath)) targets.push({ path: targetPath, label: manifest.targetJson })
+  }
+
+  if (!targets.length) {
+    console.log('WARN structure-entries — no staging or target JSON; run scaffold first')
+    return { changed: 0, unmatched: [] }
+  }
+
+  const report = {
+    tableId,
+    generatedAt: new Date().toISOString(),
+    fillOnly,
+    files: [],
+  }
+  let totalChanged = 0
+  const unmatched = []
+
+  for (const { path, label } of targets) {
+    const doc = loadJson(path)
+    let changed = 0
+    for (const entry of doc.entries ?? []) {
+      if (entry.entryRole === 'table_router' || entry.entryRole === 'subtable_header') {
+        continue
+      }
+      if (!isPlayableMorphusTrait(entry.name, entry.description ?? '', entry.description ?? '')) {
+        continue
+      }
+      const block = matchBlockForEntry(blocks, entry)
+      if (!block) {
+        unmatched.push({ id: entry.id, name: entry.name, file: label })
+        continue
+      }
+      const before = JSON.stringify(entry)
+      enrichMorphusEntry(entry, block.body, {
+        fillOnly,
+        descriptionText: traitBodyToDescription(block.body),
+      })
+      if (JSON.stringify(entry) !== before) changed += 1
+    }
+    writeJson(path, doc)
+    if (path === targetPath) {
+      validateTableDoc(doc, manifest.targetJson)
+    } else {
+      validateEntries(doc.entries ?? [], label)
+    }
+    totalChanged += changed
+    report.files.push({ path: label, changed, entryCount: doc.entries?.length ?? 0 })
+    console.log(`OK  structure-entries ${changed}/${doc.entries?.length ?? 0} rows → ${label}`)
+  }
+
+  const reportPath = join(workDir(tableId), 'structure-report.json')
+  report.unmatched = unmatched
+  report.totalChanged = totalChanged
+  writeJson(reportPath, report)
+  if (unmatched.length) {
+    console.log(`WARN ${unmatched.length} entr(ies) not matched to book blocks — see structure-report.json`)
+  }
+  return report
+}
+
+function cmdBuild(tableId, flags = {}) {
   requireSchemaReady(tableId)
   const stagingPath = join(workDir(tableId), 'entries.staging.json')
   if (!existsSync(stagingPath)) {
     cmdScaffold(tableId)
   }
+  cmdStructureEntries(tableId, flags)
   const manifest = loadManifest(tableId)
   const targetPath = resolveRepoPath(manifest.targetJson)
   cmdReport(tableId)
@@ -418,7 +517,7 @@ function cmdScaffold(tableId) {
   const authExtract = join('src/data/source/morphus-ingest', tableId, 'extracted-authoritative.txt')
   const entries = []
   for (const trait of index.traits) {
-    if (trait.skip) continue
+    if (!traitIndexRowIsPlayable(trait)) continue
     const id = slugifyTraitId(tableId, trait.name)
     const sources = sourcesFromTraitIndex(trait, manifest.gameSystem)
     const alsoNote =
@@ -506,11 +605,13 @@ function cmdReport(tableId) {
 
   if (existsSync(indexPath)) {
     const index = loadJson(indexPath)
-    const included = index.traits.filter((t) => !t.skip)
+    const included = index.traits.filter((t) => traitIndexRowIsPlayable(t))
+    const skipped = index.traits.filter((t) => !traitIndexRowIsPlayable(t))
     report.bookIndex = {
       total: index.traits.length,
       included: included.length,
-      skippedOther: index.traits.length - included.length,
+      skippedNonPlayable: skipped.length,
+      skippedOther: skipped.length,
       names: included.map((t) => t.name),
       authoritativeBookKey: index.authoritativeBookKey,
       books: index.books ?? manifest.books?.map((b) => b.key),
@@ -599,7 +700,7 @@ function cmdSyncSources(tableId) {
   const index = loadJson(indexPath)
   const byId = new Map()
   for (const trait of index.traits) {
-    if (trait.skip) continue
+    if (!traitIndexRowIsPlayable(trait)) continue
     byId.set(slugifyTraitId(tableId, trait.name), sourcesFromTraitIndex(trait, manifest.gameSystem))
   }
 
@@ -645,11 +746,23 @@ function cmdSyncSources(tableId) {
   }
 }
 
-function cmdMerge(tableId) {
+function cmdMerge(tableId, flags = {}) {
+  cmdStructureEntries(tableId, flags)
   const manifest = loadManifest(tableId)
   const stagingPath = join(workDir(tableId), 'entries.staging.json')
   if (!existsSync(stagingPath)) throw new Error(`Missing ${stagingPath}`)
   const staging = loadJson(stagingPath)
+  const { kept, skipped } = filterPlayableEntries(staging.entries ?? [])
+  if (skipped.length) {
+    console.log(
+      `OK  prune non-playable ${skipped.length} entr(ies): ${skipped.map((s) => s.name).join(', ')}`,
+    )
+  }
+  staging.entries = kept
+  writeJson(stagingPath, staging)
+  if (!validateEntries(staging.entries ?? [], 'entries.staging.json (post-prune)')) {
+    process.exit(1)
+  }
   if (!validateEntries(staging.entries ?? [], 'entries.staging.json (pre-merge)')) {
     process.exit(1)
   }
@@ -748,7 +861,7 @@ function main() {
         break
       case 'build':
         if (!tableId) throw new Error('table id required')
-        cmdBuild(tableId)
+        cmdBuild(tableId, flags)
         break
       case 'finalize':
         if (!tableId) throw new Error('table id required')
@@ -757,6 +870,10 @@ function main() {
       case 'scaffold':
         if (!tableId) throw new Error('table id required')
         cmdScaffold(tableId)
+        break
+      case 'structure-entries':
+        if (!tableId) throw new Error('table id required')
+        cmdStructureEntries(tableId, flags)
         break
       case 'report':
         if (!tableId) throw new Error('table id required')
@@ -768,7 +885,7 @@ function main() {
         break
       case 'merge':
         if (!tableId) throw new Error('table id required')
-        cmdMerge(tableId)
+        cmdMerge(tableId, flags)
         break
       case 'validate':
         cmdValidate()

@@ -46,6 +46,16 @@ const TS_TOP_LEVEL_FIELDS = {
   variantPercentiles: 'variantPercentiles?: readonly MorphusVariantPercentile[]',
   crossTableRoll: 'crossTableRoll?: MorphusCrossTableRoll',
   morphusRules: 'morphusRules?: readonly MorphusEdgeCaseRule[]',
+  appearanceConstraints: 'appearanceConstraints?: MorphusAppearanceConstraints',
+  combatContextModifiers: 'combatContextModifiers?: readonly MorphusCombatContextModifier[]',
+  recoveryBehaviors: 'recoveryBehaviors?: readonly MorphusRecoveryBehavior[]',
+  conditionalPenalties: 'conditionalPenalties?: readonly MorphusConditionalPenalty[]',
+  atWillAbilities: 'atWillAbilities?: readonly MorphusAtWillAbility[]',
+  playerChoices: 'playerChoices?: readonly MorphusPlayerChoice[]',
+  tableWorkflow: 'tableWorkflow?: MorphusTableWorkflow',
+  livingWeaponRules: 'livingWeaponRules?: MorphusLivingWeaponRules',
+  skillContextModifiers: 'skillContextModifiers?: readonly MorphusSkillContextModifier[]',
+  disguiseLimits: 'disguiseLimits?: MorphusDisguiseLimits',
 }
 
 /** Paths that belong under mobility — never add as top-level characteristic fields. */

@@ -116,4 +116,5 @@ export {
   listMorphusTableIds,
   listMorphusCategoryHubs,
   listMorphusTraitTables,
+  listMorphusChildTables,
 } from './morphusTableCatalogLoader'

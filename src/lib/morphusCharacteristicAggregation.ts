@@ -1,10 +1,14 @@
 import type {
+  MorphusCapabilityCategory,
+  MorphusCapabilityPolarity,
+  MorphusCapabilitySummary,
   MorphusCharacteristic,
   MorphusBurrowSubstrate,
   MorphusBurrowingEngine,
   MorphusCompanionBlueprint,
   MorphusCustomSystemRoll,
   MorphusDamageAffinityType,
+  MorphusDerivedCapabilityLine,
   MorphusDisabledNaturalAttackTag,
   MorphusActivatedAbility,
   MorphusGimmickInventoryItem,
@@ -192,6 +196,7 @@ export function aggregateMorphusSaveBonuses(
     illusions: 'save_illusions',
     nightlordMagic: 'save_magic',
     allSaves: 'save_all',
+    nauseaVomiting: 'save_nausea_vomiting',
   }
   for (const t of traits) {
     const s = t.saveModifiers
@@ -980,6 +985,8 @@ export function collectMorphusTraitNotes(
     | 'crossTableRoll'
     | 'morphusRules'
     | 'entryRole'
+    | 'atWillAbilities'
+    | 'playerChoices'
   >[],
 ): MorphusTraitNote[] {
   const out: MorphusTraitNote[] = []
@@ -998,6 +1005,12 @@ export function collectMorphusTraitNotes(
     }
     for (const rule of t.morphusRules ?? []) {
       lines.push(`[${rule.kind}] ${rule.summary}`)
+    }
+    for (const aw of t.atWillAbilities ?? []) {
+      lines.push(`[ability] ${aw.label}${aw.note ? `: ${aw.note}` : ''}`)
+    }
+    for (const pc of t.playerChoices ?? []) {
+      lines.push(`[choice] ${pc.label}: ${pc.options.join(' · ')}`)
     }
     const board = t.gimmickToySwitches
     if (board) {
@@ -1137,4 +1150,486 @@ export function collectPolymorphicTemplateTraits(
   return traits
     .filter((t) => t.isPolymorphicTemplate === true)
     .map((t) => ({ traitId: t.id, traitName: t.name }))
+}
+
+/** Sum balance % bonuses from mobility (Disproportion feet/legs). */
+export function aggregateMorphusBalanceModifierPercent(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): number {
+  let total = 0
+  for (const t of traits) {
+    const v = t.mobility?.balanceModifierPercent
+    if (typeof v === 'number') total += v
+  }
+  return total
+}
+
+/** Highest reach extension among active traits. */
+export function aggregateMorphusReachPercentBonus(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): number {
+  let max = 0
+  for (const t of traits) {
+    const v = t.mobility?.reachPercentBonus
+    if (typeof v === 'number' && v > max) max = v
+  }
+  return max
+}
+
+/** Product of jump multipliers (default 1). */
+export function aggregateMorphusJumpMultiplier(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): { multiplier: number; minimumJumpFeet: number } {
+  let multiplier = 1
+  let minimumJumpFeet = 0
+  for (const t of traits) {
+    const m = t.mobility?.jumpMultiplier
+    if (typeof m === 'number' && m > 0) multiplier *= m
+    const min = t.mobility?.minimumJumpFeet
+    if (typeof min === 'number' && min > minimumJumpFeet) minimumJumpFeet = min
+  }
+  return { multiplier, minimumJumpFeet }
+}
+
+function pushCapabilityLine(
+  lines: MorphusDerivedCapabilityLine[],
+  category: MorphusCapabilityCategory,
+  label: string,
+  detail: string,
+  trait: { id: string; name: string },
+  polarity: MorphusCapabilityPolarity = 'neutral',
+): void {
+  lines.push({
+    category,
+    label,
+    detail,
+    sourceTraitId: trait.id,
+    sourceTraitName: trait.name,
+    polarity,
+  })
+}
+
+function formatSigned(n: number): string {
+  return n >= 0 ? `+${n}` : `${n}`
+}
+
+function formatCombatAdjust(strike?: number, parry?: number, dodge?: number): string {
+  const parts: string[] = []
+  if (strike != null) parts.push(`${formatSigned(strike)} strike`)
+  if (parry != null) parts.push(`${formatSigned(parry)} parry`)
+  if (dodge != null) parts.push(`${formatSigned(dodge)} dodge`)
+  return parts.join(', ')
+}
+
+/**
+ * Player-facing digest of Morphus capabilities — structured fields from active traits,
+ * grouped for character sheet presentation.
+ */
+export function buildMorphusCapabilitySummary(
+  traits: readonly MorphusCharacteristic[],
+  characterLevel = 1,
+): MorphusCapabilitySummary {
+  const lines: MorphusDerivedCapabilityLine[] = []
+  const level = Math.max(1, Math.floor(characterLevel))
+
+  for (const t of traits) {
+    if (t.entryRole === 'table_router') {
+      pushCapabilityLine(
+        lines,
+        'workflow',
+        'Table router',
+        t.description ?? `Roll on the ${t.name} sub-table.`,
+        t,
+        'neutral',
+      )
+      continue
+    }
+
+    const sensory = t.sensory
+    if (sensory?.peripheralVisionDegrees != null) {
+      pushCapabilityLine(
+        lines,
+        'senses',
+        'Peripheral vision',
+        `${sensory.peripheralVisionDegrees}° arc`,
+        t,
+        sensory.peripheralVisionDegrees >= 180 ? 'bonus' : 'penalty',
+      )
+    }
+    if (sensory?.lightSensitivity) {
+      const ls = sensory.lightSensitivity
+      const bits: string[] = []
+      if (ls.daylightVisionMultiplier != null) {
+        bits.push(`daylight vision ×${ls.daylightVisionMultiplier}`)
+      }
+      if (ls.perceptionVisionPenalty != null) {
+        bits.push(`${formatSigned(ls.perceptionVisionPenalty)} Perception (vision) in bright light`)
+      }
+      if (bits.length) {
+        pushCapabilityLine(lines, 'senses', 'Light sensitive', bits.join('; '), t, 'penalty')
+      }
+    }
+    if (sensory?.invisibleToThermalImaging) {
+      pushCapabilityLine(
+        lines,
+        'senses',
+        'Thermal imaging',
+        'Does not register on heat sensors',
+        t,
+        'bonus',
+      )
+    }
+    if (sensory?.prowlUnderwaterModifierPercent != null) {
+      pushCapabilityLine(
+        lines,
+        'skills',
+        'Prowl underwater',
+        `${formatSigned(sensory.prowlUnderwaterModifierPercent)}% hide/Prowl underwater`,
+        t,
+        sensory.prowlUnderwaterModifierPercent >= 0 ? 'bonus' : 'penalty',
+      )
+    }
+    const scent = sensory?.scentTracking
+    if (scent) {
+      if (scent.enabled === false) {
+        pushCapabilityLine(lines, 'senses', 'Scent tracking', 'Cannot track by scent', t, 'penalty')
+      } else if (scent.baseSuccessPercent != null) {
+        const perLvl = scent.perLevelIncrement ?? 0
+        const resolved = Math.min(
+          98,
+          scent.baseSuccessPercent + Math.max(0, level - 1) * perLvl,
+        )
+        pushCapabilityLine(
+          lines,
+          'senses',
+          'Scent tracking',
+          `${resolved}% at level ${level} (${scent.baseSuccessPercent}% + ${perLvl}%/level)`,
+          t,
+          'bonus',
+        )
+      }
+      if (scent.identifyOdorsModifierPercent != null) {
+        pushCapabilityLine(
+          lines,
+          'senses',
+          'Identify odors',
+          `${formatSigned(scent.identifyOdorsModifierPercent)}%`,
+          t,
+          scent.identifyOdorsModifierPercent >= 0 ? 'bonus' : 'penalty',
+        )
+      }
+    }
+
+    const mob = t.mobility
+    if (mob?.balanceModifierPercent != null) {
+      pushCapabilityLine(
+        lines,
+        'movement',
+        'Balance',
+        `${formatSigned(mob.balanceModifierPercent)}%`,
+        t,
+        mob.balanceModifierPercent >= 0 ? 'bonus' : 'penalty',
+      )
+    }
+    if (mob?.reachPercentBonus != null) {
+      pushCapabilityLine(
+        lines,
+        'combat',
+        'Reach',
+        `${mob.reachPercentBonus}% longer than usual`,
+        t,
+        'bonus',
+      )
+    }
+    if (mob?.jumpMultiplier != null && mob.jumpMultiplier !== 1) {
+      const min =
+        mob.minimumJumpFeet != null ? ` (${mob.minimumJumpFeet} ft minimum)` : ''
+      pushCapabilityLine(
+        lines,
+        'movement',
+        'Jumping',
+        `×${mob.jumpMultiplier} distance and height${min}`,
+        t,
+        'bonus',
+      )
+    }
+    if (mob?.waterlogMinutesDice) {
+      pushCapabilityLine(
+        lines,
+        'recovery',
+        'Waterlogging',
+        `Sinks after ${mob.waterlogMinutesDice} minutes in water`,
+        t,
+        'penalty',
+      )
+    }
+    if (mob?.aquaticTraits?.buoyancy === 'sink') {
+      pushCapabilityLine(lines, 'movement', 'Aquatic', 'Cannot swim (sinks)', t, 'penalty')
+    } else if (mob?.aquaticTraits?.buoyancy === 'float') {
+      pushCapabilityLine(lines, 'movement', 'Aquatic', 'Floats on water', t, 'bonus')
+    }
+
+    for (const limb of t.limbDurability ?? []) {
+      if (limb.requiresCalledShot) {
+        const pen =
+          limb.calledShotPenalty != null
+            ? `; ${formatSigned(limb.calledShotPenalty)} to strike when called`
+            : ''
+        pushCapabilityLine(
+          lines,
+          'defense',
+          limb.limbName,
+          `Called Shot required to target${pen}`,
+          t,
+          'bonus',
+        )
+      } else if (limb.calledShotPenalty != null && limb.calledShotPenalty !== 0) {
+        pushCapabilityLine(
+          lines,
+          'defense',
+          `Called shot: ${limb.limbName}`,
+          `${formatSigned(limb.calledShotPenalty)} to strike`,
+          t,
+          limb.calledShotPenalty < 0 ? 'bonus' : 'penalty',
+        )
+      }
+    }
+
+    for (const cm of t.combatContextModifiers ?? []) {
+      if (cm.grapplingAffordance === 'rope_grip_with_teeth') {
+        pushCapabilityLine(
+          lines,
+          'combat',
+          'Grappling',
+          cm.note ?? 'Hold rope with teeth at hand strength without neck injury',
+          t,
+          'bonus',
+        )
+        continue
+      }
+      const who = cm.target === 'self' ? 'You' : 'Opponents'
+      const adj = formatCombatAdjust(cm.strike, cm.parry, cm.dodge)
+      const cond =
+        cm.condition === 'bright_light'
+          ? 'in bright light'
+          : cm.condition === 'surprise_from_behind_or_side'
+            ? 'on surprise from behind/side'
+            : 'in grappling'
+      if (adj) {
+        const pol =
+          (cm.strike ?? 0) + (cm.parry ?? 0) + (cm.dodge ?? 0) >= 0 ? 'bonus' : 'penalty'
+        pushCapabilityLine(lines, 'combat', cond, `${who}: ${adj}`, t, pol)
+      }
+    }
+
+    for (const rb of t.recoveryBehaviors ?? []) {
+      const bits: string[] = []
+      if (rb.reformMinutesDice) bits.push(`reform in ${rb.reformMinutesDice} min`)
+      if (rb.residualSdcPercent != null) bits.push(`${rb.residualSdcPercent}% S.D.C./H.P. after reform`)
+      if (rb.lockoutHoursDice) bits.push(`Facade lockout ${rb.lockoutHoursDice} hr`)
+      if (rb.globCountDice) bits.push(`${rb.globCountDice} fragments`)
+      if (rb.dryHoursDice) bits.push(`dry out in ${rb.dryHoursDice} hr`)
+      if (rb.gardenHoseDamage) bits.push(`garden hose ${rb.gardenHoseDamage}`)
+      if (rb.fireHoseDamage) bits.push(`fire hose ${rb.fireHoseDamage}`)
+      if (rb.note) bits.push(rb.note)
+      pushCapabilityLine(
+        lines,
+        'recovery',
+        rb.trigger.replace(/_/g, ' '),
+        bits.join('; ') || rb.trigger,
+        t,
+        'neutral',
+      )
+    }
+
+    for (const cp of t.conditionalPenalties ?? []) {
+      const bits: string[] = []
+      if (cp.apmMultiplier != null) bits.push(`APM ×${cp.apmMultiplier}`)
+      if (cp.spdMultiplier != null) bits.push(`Spd ×${cp.spdMultiplier}`)
+      if (cp.note) bits.push(cp.note)
+      pushCapabilityLine(
+        lines,
+        'combat',
+        cp.trigger.replace(/_/g, ' '),
+        bits.join('; '),
+        t,
+        'penalty',
+      )
+    }
+
+    const ac = t.appearanceConstraints
+    if (ac) {
+      if (ac.clothingFit) {
+        const fitLabel: Record<string, string> = {
+          oversized_required: 'Oversized clothing required',
+          custom_required: 'Custom clothing required',
+          loose_required: 'Loose/oversized clothing required',
+          baggy_appearance: 'Clothing appears baggy/frumpy',
+        }
+        pushCapabilityLine(lines, 'appearance', 'Clothing', fitLabel[ac.clothingFit] ?? ac.clothingFit, t, 'penalty')
+      }
+      if (ac.narrowOpeningAccess === 'restricted') {
+        pushCapabilityLine(
+          lines,
+          'appearance',
+          'Narrow spaces',
+          'Trouble fitting through narrow openings',
+          t,
+          'penalty',
+        )
+      } else if (ac.narrowOpeningAccess === 'enhanced') {
+        pushCapabilityLine(
+          lines,
+          'appearance',
+          'Narrow spaces',
+          'Fits through small openings easily',
+          t,
+          'bonus',
+        )
+      }
+      if (ac.hideAmongContext) {
+        pushCapabilityLine(
+          lines,
+          'appearance',
+          'Hide',
+          `Indistinguishable among ${ac.hideAmongContext}`,
+          t,
+          'bonus',
+        )
+      }
+      if (ac.standMotionlessIndefinitely) {
+        pushCapabilityLine(
+          lines,
+          'abilities',
+          'Stand motionless',
+          'Can hold perfectly still indefinitely',
+          t,
+          'bonus',
+        )
+      }
+      if (ac.customFootwearRequired) {
+        pushCapabilityLine(lines, 'appearance', 'Footwear', 'Custom shoes may be required', t, 'penalty')
+      }
+      if (ac.customClothingNote) {
+        pushCapabilityLine(lines, 'appearance', 'Clothing note', ac.customClothingNote, t, 'neutral')
+      }
+    }
+
+    for (const aw of t.atWillAbilities ?? []) {
+      pushCapabilityLine(
+        lines,
+        'abilities',
+        aw.label,
+        aw.note ?? 'At will',
+        t,
+        'bonus',
+      )
+    }
+
+    for (const pc of t.playerChoices ?? []) {
+      pushCapabilityLine(
+        lines,
+        'choices',
+        pc.label,
+        pc.options.join(' · '),
+        t,
+        'choice',
+      )
+    }
+
+    if (t.tableWorkflow?.stepOneRollCount != null) {
+      pushCapabilityLine(
+        lines,
+        'workflow',
+        'Multi-area disproportion',
+        `Roll Step One ${t.tableWorkflow.stepOneRollCount} times, then each sub-table`,
+        t,
+        'neutral',
+      )
+    }
+
+    if (t.crossTableRoll) {
+      const ref = t.crossTableRoll.targetTableName ?? t.crossTableRoll.targetTableId
+      pushCapabilityLine(
+        lines,
+        'workflow',
+        'Cross-table',
+        `Also roll ${ref}${t.crossTableRoll.note ? ` — ${t.crossTableRoll.note}` : ''}`,
+        t,
+        'neutral',
+      )
+    }
+
+    const lw = t.livingWeaponRules
+    if (lw) {
+      const bits: string[] = []
+      if (lw.sdcPerLevel != null) bits.push(`+${lw.sdcPerLevel} S.D.C./level`)
+      if (lw.onlyDamagedWhenTargeted) bits.push('only damaged when targeted')
+      if (lw.vanishesWhenBothZero) bits.push('vanishes if weapon and body S.D.C. both 0')
+      if (lw.preferredWeapon) bits.push('prefers this weapon')
+      if (lw.hardToConceal) bits.push('hard to conceal')
+      pushCapabilityLine(lines, 'combat', 'Living weapon', bits.join('; '), t, 'neutral')
+    }
+
+    for (const scm of t.skillContextModifiers ?? []) {
+      const ctx = scm.context.replace(/_/g, ' ')
+      pushCapabilityLine(
+        lines,
+        'skills',
+        scm.skillId.replace(/^skill_/, '').replace(/_/g, ' '),
+        `${formatSigned(scm.modifierPercent)}% (${ctx})`,
+        t,
+        scm.modifierPercent >= 0 ? 'bonus' : 'penalty',
+      )
+    }
+
+    const dl = t.disguiseLimits
+    if (dl) {
+      const bits: string[] = []
+      if (dl.similarSizeWeightOnly) bits.push('similar size/weight only')
+      if (dl.cannotImpersonateIndividuals) bits.push('cannot impersonate specific people')
+      if (dl.skinColorRequiresMakeup) bits.push('skin color needs makeup')
+      if (dl.note) bits.push(dl.note)
+      if (bits.length) {
+        pushCapabilityLine(lines, 'skills', 'Disguise limits', bits.join('; '), t, 'penalty')
+      }
+    }
+
+    if (t.saveModifiers?.nauseaVomiting != null) {
+      pushCapabilityLine(
+        lines,
+        'defense',
+        'Save vs nausea',
+        formatSigned(t.saveModifiers.nauseaVomiting),
+        t,
+        t.saveModifiers.nauseaVomiting >= 0 ? 'bonus' : 'penalty',
+      )
+    }
+
+    // Legacy morphusRules until rows are migrated
+    for (const rule of t.morphusRules ?? []) {
+      const pol: MorphusCapabilityPolarity =
+        rule.kind === 'player_choice'
+          ? 'choice'
+          : rule.kind === 'environmental_vulnerability' ||
+              rule.kind === 'immobilization'
+            ? 'penalty'
+            : 'neutral'
+      pushCapabilityLine(lines, 'abilities', rule.kind.replace(/_/g, ' '), rule.summary, t, pol)
+    }
+
+    for (const note of t.customOneOffs ?? []) {
+      pushCapabilityLine(lines, 'abilities', 'Note', note, t, 'neutral')
+    }
+  }
+
+  const byCategory: Partial<Record<MorphusCapabilityCategory, MorphusDerivedCapabilityLine[]>> =
+    {}
+  for (const line of lines) {
+    const bucket = byCategory[line.category] ?? []
+    bucket.push(line)
+    byCategory[line.category] = bucket
+  }
+
+  return { lines, byCategory }
 }

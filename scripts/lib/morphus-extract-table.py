@@ -32,6 +32,26 @@ TRAIT_RE = re.compile(
     re.MULTILINE,
 )
 ROLL_OTHER_RE = re.compile(r"other:\s*roll", re.IGNORECASE)
+
+STEP_ONE_ROUTER_NAMES = frozenset(
+    {
+        "head",
+        "torso",
+        "arms & hands",
+        "arms and hands",
+        "legs & feet",
+        "legs and feet",
+    }
+)
+
+NON_PLAYABLE_NAME_RES = [
+    re.compile(r"^other\b", re.I),
+    re.compile(r"^roll twice\b", re.I),
+    re.compile(r"^step one\b", re.I),
+    re.compile(r"^step two\b", re.I),
+    re.compile(r"^disproportionate\s", re.I),
+    re.compile(r"^roll (?:on|again|twice|percentile)\b", re.I),
+]
 # Footer order / watermark lines (ignore when detecting printed page).
 _ORDER_LINE_RE = re.compile(r"order\s*#\s*\d", re.IGNORECASE)
 
@@ -90,6 +110,35 @@ def is_other_trait(name: str, body_start: str) -> bool:
     if name.strip().lower() in ("other", "other, but related"):
         return True
     return False
+
+
+def classify_trait(name: str, body_start: str, full_body: str = "") -> tuple[bool, str | None]:
+    """Return (playable, skip_reason)."""
+    if is_other_trait(name, body_start):
+        return False, "other_roll_row" if ROLL_OTHER_RE.search(body_start[:200]) else "other"
+
+    n = norm_trait_name(name)
+    for pat in NON_PLAYABLE_NAME_RES:
+        if pat.search(name):
+            return False, "non_playable_name"
+
+    body = full_body.strip()
+    if n in STEP_ONE_ROUTER_NAMES:
+        has_mechanics = bool(re.search(r"Bonuses?:|Penalties?:|[+-]\d", body, re.I))
+        if len(body) < 80 or not has_mechanics:
+            return False, "step_one_router"
+
+    if re.match(r"^roll (?:on|see|refer to|use the)\s", body, re.I) and not re.search(
+        r"Bonuses?:", body, re.I
+    ):
+        return False, "instruction_only"
+
+    return True, None
+
+
+def is_non_playable_trait(name: str, body_start: str, full_body: str = "") -> bool:
+    playable, _ = classify_trait(name, body_start, full_body)
+    return not playable
 
 
 def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other: bool) -> str:
@@ -224,7 +273,7 @@ def extract_book(
     repo_root: Path,
     book: dict,
     *,
-    exclude_other: bool,
+    exclude_non_playable: bool,
 ) -> tuple[str, list[dict], dict[str, str]] | None:
     pdf_path = Path(book["pdf"])
     if not pdf_path.is_absolute():
@@ -238,7 +287,7 @@ def extract_book(
         table_text = extract_table(
             full_text,
             heading,
-            trim_at_other=exclude_other,
+            trim_at_other=exclude_non_playable,
         )
     except SystemExit as err:
         if book.get("required", True):
@@ -249,12 +298,16 @@ def extract_book(
     bodies = trait_bodies(table_text, table_start)
 
     traits: list[dict] = []
-    for m in TRAIT_RE.finditer(table_text):
+    matches = list(TRAIT_RE.finditer(table_text))
+    for i, m in enumerate(matches):
         name = clean_trait_name(m.group(3))
         if not is_valid_trait_name(name):
             continue
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(table_text)
         body_start = table_text[m.end() : m.end() + 240]
-        skip = exclude_other and is_other_trait(name, body_start)
+        full_body = table_text[m.end() : end].strip()
+        playable, skip_reason = classify_trait(name, body_start, full_body)
+        skip = exclude_non_playable and not playable
         global_index = table_start + m.start() if table_start >= 0 else m.start()
         traits.append(
             {
@@ -262,6 +315,7 @@ def extract_book(
                 "name": name,
                 "pageNumber": page_at(page_by_char, global_index),
                 "skip": skip,
+                "skipReason": skip_reason,
                 "bookKey": book["key"],
                 "reference": book["reference"],
             }
@@ -368,7 +422,10 @@ def main() -> None:
     extracted_dir = work / "extracted"
     extracted_dir.mkdir(parents=True, exist_ok=True)
 
-    exclude_other = manifest.get("excludeOther", True)
+    exclude_non_playable = manifest.get(
+        "excludeNonPlayable",
+        manifest.get("excludeOther", True),
+    )
     auth_key = manifest["authoritativeBookKey"]
     book_results: list[tuple[dict, list[dict], dict[str, str]]] = []
 
@@ -376,7 +433,7 @@ def main() -> None:
         result = extract_book(
             repo_root,
             book,
-            exclude_other=exclude_other,
+            exclude_non_playable=exclude_non_playable,
         )
         if result is None:
             continue

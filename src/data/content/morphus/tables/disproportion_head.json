@@ -1,0 +1,411 @@
+{
+  "id": "disproportion_head",
+  "kind": "morphus_trait_table",
+  "displayName": "Head",
+  "parentTable": "disproportion",
+  "description": "Disproportionate Head (WB5 p. 87). Roll percentile on this sub-table after Step One selects the head.",
+  "entries": [
+    {
+      "id": "disproportion_huge_ears",
+      "name": "Huge Ears",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "1D4 times larger than is common; +1D4 to Perception Rolls dealing with sound. Penalties: -2 to P.B. and -20% to Disguise and Undercover Ops skills.",
+      "statModifiers": {
+        "pb": {
+          "flat": -2
+        }
+      }
+    },
+    {
+      "id": "disproportion_huge_eyes",
+      "name": "Huge Eyes",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "Perfect vision, excellent peripheral vi- sion (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Per- ception Rolls involving vision in well lit areas and daytime.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "sharpVision": true,
+        "peripheralVisionDegrees": 180,
+        "lightSensitivity": {
+          "daylightVisionMultiplier": 0.5,
+          "perceptionVisionPenalty": -2
+        }
+      }
+    },
+    {
+      "id": "disproportion_huge_jaw_strong_neck",
+      "name": "Huge Jaw, Strong Neck",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Hor- ror Factor. Penalties: -1 to P.B. and -20% to Disguise and Un- dercover skills.",
+      "statModifiers": {
+        "pb": {
+          "flat": -1
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "grapplingAffordance": "rope_grip_with_teeth"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    },
+    {
+      "id": "disproportion_huge_nose",
+      "name": "Huge Nose",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "Keen sense of smell, can track by scent: 20% +4% per level of experience, and +2 to Perception Rolls dealing with scents and odors. Penalties: -2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and -3 to save vs nausea and vomiting resulting from foul odors and airborne toxins.",
+      "saveModifiers": {
+        "gas": -2,
+        "nauseaVomiting": -3
+      }
+    },
+    {
+      "id": "disproportion_huge_teeth",
+      "name": "Huge Teeth",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "+1D6 damage to bite attacks, +1 to Horror Factor. Penalty: -1 to P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    },
+    {
+      "id": "disproportion_large_head",
+      "name": "Large Head",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vul- nerable and unable to defend himself than he really is; -2 from Horror Factor.",
+      "statModifiers": {
+        "me": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -1
+        },
+        "iq": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "disproportion_large_mouth",
+      "name": "Large Mouth",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The mouth is unusually large and creepy, lips may be large and plump or thin; +2 to bite damage and +1 to Horror Factor. Penalty: -1 from P.B.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "disproportion_large_thick_neck",
+      "name": "Large, Thick Neck",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "+1D6+2 S.D.C. and +1 Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6+2"
+        }
+      }
+    },
+    {
+      "id": "disproportion_no_chin",
+      "name": "No chin",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The character’s chin is small, flat, and seems to practically fade into the neck. Penalties: -1 to P.B. and -1 from Horror Factor.",
+      "statModifiers": {
+        "pb": {
+          "flat": -1
+        }
+      }
+    },
+    {
+      "id": "disproportion_pencil_neck",
+      "name": "Pencil Neck",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The neck seems unusually thin and long. The advantage is -1 to be hit by a Called Shot to the neck. Penalties: -1D6 S.D.C. and -1 from Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "-1D6"
+        }
+      }
+    },
+    {
+      "id": "disproportion_tiny_ears",
+      "name": "Tiny Ears",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "+1 to Perception Rolls dealing with sound.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "disproportion_tiny_eyes",
+      "name": "Tiny Eyes",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "Perfect 20/20 vision, but poor peripheral vision (only 90 degrees), +1 to Horror Factor and Perception Rolls. Penalties: -1 to P.B. attribute, -1 to parry and dodge, and is not likely to see anyone sneaking up on him from behind or the side (opponents are +2 to strike with surprise attacks from behind)!",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": 2
+        }
+      },
+      "sensory": {
+        "sharpVision": true,
+        "peripheralVisionDegrees": 90
+      }
+    },
+    {
+      "id": "disproportion_tiny_mouth",
+      "name": "Tiny Mouth",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The mouth is unusually small, practi- cally a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "disproportion_tiny_nose",
+      "name": "Tiny Nose",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "+1 to P.B., +2 to save vs gas attacks (in- cluding smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands",
+      "statModifiers": {
+        "pb": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": -3
+        }
+      },
+      "saveModifiers": {
+        "gas": 2,
+        "nauseaVomiting": 4
+      },
+      "sensory": {
+        "scentTracking": {
+          "enabled": false,
+          "identifyOdorsModifierPercent": -10
+        }
+      }
+    },
+    {
+      "id": "disproportion_tiny_teeth",
+      "name": "Tiny Teeth",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The teeth look like those of a young human child or even smaller, and if the ‘Bane has fangs they are tiny too. The character may have twice as many teeth because they are so small. Penalties: -1 from Horror Factor and any damage from bite attacks is half the normal amount."
+    },
+    {
+      "id": "disproportion_very_small_head",
+      "name": "Very Small Head",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 87
+        }
+      ],
+      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Pen- alties: -1 to I.Q. and P.B. attributes.",
+      "statModifiers": {
+        "strike": {
+          "flat": -3
+        },
+        "hf": {
+          "flat": 2
+        },
+        "iq": {
+          "flat": -1
+        }
+      }
+    }
+  ]
+}
