@@ -29,6 +29,7 @@ const NON_PLAYABLE_NAME_RES = [
 const CROSS_TABLE_ROUTER_BODY_RES = [
   /\broll\s+(?:for\s+or\s+)?select(?:\s+a)?\s+feature\s+from\s+(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b/i,
   /\broll\s+or\s+select\s+(?:a\s+)?feature\s+from\s+(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b/i,
+  /\b(?:random\s+)?roll\s+or\s+select\s+from\s+another\s+table\b/i,
   /\broll\s+on\s+(?:the\s+)?[\w\s,&/'-]+\s+table\b/i,
 ]
 

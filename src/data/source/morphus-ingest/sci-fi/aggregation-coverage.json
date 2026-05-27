@@ -103,14 +103,6 @@
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
-    },
-    {
-      "id": "sci_fi_bug_eyed_monster",
-      "name": "Bug-Eyed Monster",
-      "hooks": [
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": true
     }
   ]
 }

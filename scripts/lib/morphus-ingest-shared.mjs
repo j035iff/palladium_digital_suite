@@ -306,6 +306,8 @@ export function characteristicSchemaKeys() {
 
 export function slugifyTraitId(tableId, name) {
 
+  const tableSlug = String(tableId).toLowerCase().replace(/-/g, '_')
+
   const base = name
 
     .toLowerCase()
@@ -316,7 +318,7 @@ export function slugifyTraitId(tableId, name) {
 
     .replace(/^_+|_+$/g, '')
 
-  const prefixed = base.startsWith(`${tableId}_`) ? base : `${tableId}_${base}`
+  const prefixed = base.startsWith(`${tableSlug}_`) ? base : `${tableSlug}_${base}`
 
   return prefixed.replace(/_+/g, '_')
 

@@ -65,6 +65,7 @@ CROSS_TABLE_ROUTER_BODY_RES = [
         r"(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b",
         re.I,
     ),
+    re.compile(r"\b(?:random\s+)?roll\s+or\s+select\s+from\s+another\s+table\b", re.I),
     re.compile(r"\broll\s+on\s+(?:the\s+)?[\w\s,&/'-]+\s+table\b", re.I),
 ]
 # Footer order / watermark lines (ignore when detecting printed page).

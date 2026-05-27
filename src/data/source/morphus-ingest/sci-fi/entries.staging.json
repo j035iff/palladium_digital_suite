@@ -1,23 +1,7 @@
 {
   "entries": [
     {
-      "id": "sci-fi_bug_eyed_monster",
-      "name": "Bug-Eyed Monster",
-      "tableCategory": "Science Fiction",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 53
-        }
-      ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (95-00%; authority=dark_designs)."
-    },
-    {
-      "id": "sci-fi_energy_blaster",
+      "id": "sci_fi_energy_blaster",
       "name": "Energy Blaster",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -27,13 +11,18 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 3
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (29-37%; authority=dark_designs)."
+      "description": "Whether a handheld weapon or one built into the body of the Morphus form, this feature provides a long-range energy weapon. The look may vary from high-tech to organic but always looks futuristic or alien/strange. The blaster is fueled by the Nightbane’s P.P.E., dealing 1D6 damage per point of P.P.E. expended with a max of 10 points able to be spent per attack. Bonuses: +3 to strike with an energy blast, range is 2,000 feet (610 m), +1 to Awe/Horror Factor. Penalties: -2D6 from the permanent base P.P.E. and reduce the number of starting Talents by one. Note that the damage inflicted by the energy blaster is NOT considered magical or supernatural in nature.",
+      "statModifiers": {
+        "strike": {
+          "flat": 3
+        }
+      }
     },
     {
-      "id": "sci-fi_flight_pack_thrusters",
+      "id": "sci_fi_flight_pack_thrusters",
       "name": "Flight Pack/Thrusters",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -43,13 +32,24 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 2
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (20-28%; authority=dark_designs)."
+      "description": "This feature may appear as a number of things from a flame-spewing jet pack, to a series of anti-gravity nodes built into various points of the Morphus form, to organic looking tubes growing out of the back or behind the shoulders. Regardless of the look, this feature offers the ability of high-speed, wingless flight. Maximum flight speed is 1D6x10+72 (57-90 mph/91.2 to 144 kph) with a max altitude of 10,000 feet (3,048 m). The flight system has 100 S.D.C. of its own, but is only damaged when specifically targeted via Called Shot. The Flight Pack regenerates at the same rate as the Nightbane, but takes a full day to regenerate if completely destroyed. It is inoperable while regenerating. Bonuses: +2 to dodge while in flight; +4 to dodge when traveling at 60 mph (96 kph). +2 to damage for every 20 mph (32 km) of speed. +1 to Awe/Horror Factor when flying. Penalties: -1 to the P.E. and P.B. attributes and -2D6 to running speed, -2D6 from permanent P.P.E. base, and cannot hover (built for speed).",
+      "statModifiers": {
+        "dodge": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": -1
+        },
+        "bonusHthDamage": {
+          "flat": 2
+        }
+      }
     },
     {
-      "id": "sci-fi_force_field_array",
+      "id": "sci_fi_force_field_array",
       "name": "Force Field Array",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -59,13 +59,18 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (86-94%; authority=dark_designs)."
+      "description": "A series of nodes or small, electronic patches are built into the Morphus or incorporated into some kind of harness or full-body suit. This system projects a form fitting energy field that defends against a variety of attacks. The force field protects the Nightbane from poison gases and fumes, as well as kinetic and energy attacks such as punches, explosions, bullets, energy blast and even magically created energy like a fire ball or lightning bolt. It does NOT protect against Mesmerism, illusions, mind control and possession. The force field provides an additional 1D6x10+200 S.D.C. Any damage directed at the Nightbane is subtracted from the force field first. As long as the force field has S.D.C., it regenerates from damage and restores S.D.C. at the same rate as the Nightbane normally heals. If the force field is reduced to zero S.D.C., it is down and unavailable for 6 hours. When it comes back online it is at full power. Note: To activate Talents or tocast spells this force field must be dropped while the P.P.E. is expended. Raising and lowering the shield is so fast it does not require using a melee action, but does leave the Nightbane open to attack for 2D4 seconds. Bonuses: +1D6 to the ‘Bane’s Hit Points. Damage is always subtracted from this force field before the character’s personal S.D.C. or Hit Points can be affected. Immune to gases, poison, and diseases while the force field is up. Penalties: -2D6+3 from the permanent P.P.E. base, and a Nightbane with this feature can never develop Talents such as Shadow Shield or Pipe Bomb that create a magical protective field.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+200"
+        }
+      }
     },
     {
-      "id": "sci-fi_heavy_sci_fi_armor",
+      "id": "sci_fi_heavy_sci_fi_armor",
       "name": "Heavy Sci-Fi Armor",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -75,13 +80,24 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 2
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (11-19%; authority=dark_designs)."
+      "description": "This is a full suit of advanced, heavy body armor that covers the Morphus from head to toe. It is an environmental suit and is much heavier and bulkier than the light armor for greater protection in combat. It may have a high-tech mechanical look or may have an organic, resin or genetically engineered appearance. As a heavy armor, it is an augmentation system that slightly boosts the Nightbane’s strength. Bonuses: +1D4 to the P.S. attribute, +2D6x10+120 to S.D.C. (the armor), increase the Nightbane’s Natural A.R. to 14, +2 to roll with punch/fall/impact, kinetic attacks like punches and kicks do half damage, +1 to Awe/Horror Factor, and the environmentally sealed armor means the ‘Bane does not need air to breathe (the armored suit provides it) and he is immune to airborne irritants, toxins, and poisonous gases. Penalties: -2 to Perception Rolls, -2 to the P.E. and Spd attributes, -3 to save vs magic of any kind, -20% to skills that require a delicate touch or precision (like most repairs, Art, Pick Locks, Pick Pockets, etc.), and -30% to Physical skills like Acrobatics, Climbing, Prowl and Swimming due to physical encumbrance.",
+      "statModifiers": {
+        "pe": {
+          "flat": -2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "2D6x10+120"
+        }
+      }
     },
     {
-      "id": "sci-fi_hologram_projector",
+      "id": "sci_fi_hologram_projector",
       "name": "Hologram Projector",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -91,13 +107,18 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (77-85%; authority=dark_designs)."
+      "description": "The Nightbane’s Morphus form has a futuristic-looking camera built into the body (usually the head, shoulder or forearm) or carried on the person. This is actually a complex projector capable of creating holograms, 3-dimensional images made of light. Such holograms have no substance but look completely real from any angle and can even fool beings immune to magical illusions. Holograms may cover an area up to 10 feet x 10 feet x 10 feet (3x3x3 m) in size and projected as far as 50 feet (15.2 m) away. They can also be made to surround the Nightbane, other people, or other objects. While these images are incredibly convincing, keep in mind that they do not fool other senses like hearing, smell or touch, nor supernatural senses like Sense Evil, Sense Magic, See Aura, or sensors such as pressure plates or thermal optic systems. Normal cameras will record the hologram, though. The projector can only operate for five minutes out of any one hour period before needing to recharge from the character’s bio-kinetic energy. Bonuses: +1 to all Perception Rolls and +2 to save vs illusions. Automatically gets the Disguise and Camouflage skills at 80% or a bonus of +20% (whichever is higher) if using the projector for disguising his own appearance, hiding or concealment. Penalties: -1D6+6 from permanent P.P.E. base. -2 attacks/actions per melee round and reduce Spd 10% while the projector and holographic image are active.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        }
+      }
     },
     {
-      "id": "sci-fi_light_sci_fi_armor",
+      "id": "sci_fi_light_sci_fi_armor",
       "name": "Light Sci-Fi Armor",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -107,13 +128,24 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 50
+          "pageNumber": 1
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+      "description": "The body of the Morphus appears to be sheathed in a full suit of advanced body armor, including a helmet that fully covers the face, which may or may not be visible. This armor typically looks to be composed of overlapping plates but may incorporate form-fitting mesh, rubberized pieces, ceramic material, etc. Whatever it is, the armor looks like a high-tech, light, environmental body armor or plated spacesuit. Bonuses: +2D4x10+40 to S.D.C. (the armor), increase the Nightbane’s Natural A.R. to 11, +1 to roll with punch/fall/impact, +1 to Awe/Horror Factor, and the armor is environmentally sealed so the ‘Bane does not need air to breathe (the armored suit provides it) and he is immune to airborne irritants, toxins, and poisonous gases. Penalties: -1 to Perception Rolls, -1 to the P.E. attribute, -1 to save vs magic of any kind, -5% to skills that require a delicate touch or precision (like most repairs, Art, Pick Locks, Pick Pockets, etc.), and -10% to Physical skills like Acrobatics, Climbing, Prowl and Swimming due to physical encumbrance.",
+      "statModifiers": {
+        "perception": {
+          "flat": -1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "2D4x10+40"
+        }
+      }
     },
     {
-      "id": "sci-fi_personal_scanner_sensors",
+      "id": "sci_fi_personal_scanner_sensors",
       "name": "Personal Scanner/Sensors",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -123,13 +155,24 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (67-76%; authority=dark_designs)."
+      "description": "The Morphus has a small device that is handheld or cybernetic and built into the hand, forearm, shoulder, or head. This device incorporates a variety of sensory equipment with various capabilities. Bonuses: +1 to Awe/Horror Factor. Penalties: -1 to M.A. and -1D4 from the permanent P.P.E. base per EACH scan feature selected. 1D4+1 scan features may be selected from those listed below. Bio-Scanner: A futuristic biometric scanner that can determine body temperature, blood pressure, heart rate, respiration rate, oxygen saturation, pupil dilation, synaptic activity, etc. of the Nightbane, plus a warning system when Hit Points are being lost, blood loss, disease, etc. HOWEVER, the scanner also works on reading the biometrics of others, either by touch by the Nightbane or a scan up to 10 feet (3 m) away; line of sight required. This can be used for a host of medical and non-medical uses from pinpointing internal bleeding to respiratory function, organ failure, identifying broken bones, and to a lesser degree gauging emotional states. The latter cannot be used as a lie detector, but it will indicate if the individual seems excited/agitated, or calm/relaxed, which may offer clues as to whether the individual may be saying things contrary to his feelings, or indicate that things may not be what they seem; i.e. a capture feigning terror but the bioscan suggests he is calm and not afraid. Which, in turn, suggests this may be a trap, he is lying or more powerful or at least more confident than he is pretending to be. Which should raise the question of why? +10% to all Medical skills while in Morphus form as well as +10% to Interrogation and Intelligence skills. EM Field Detector: A scanning tool that picks up a variety of electromagnetic radiation such as that put out by electronic devices and magnetic fields. Detection range is 50 feet (15.2 m). Add +10% to all Electrical skills while in Morphus form. Geiger Counter: A device used to detect potentially dangerous nuclear radiation; it will deliver a warning when harmful levels are detected and indicate exactly what the level of radiation is and where the radiation increases and decreases. Detection range is 50 feet (15.2 m). Miniature Radar: A small radar unit used to track flying objects as small as human-sized. It can isolate and track up to 20 different objects up to a range of 30 miles (48 km) with a floor of 25 feet (7.6 m). +1 on initiative and +1 to strike flying opponents, or +2 to dodge incoming attacks. Also reduce penalties in darkness and when blind by half. Motion Detector: This sensor monitors for minute changes in air pressure that indicate moving objects. Detection range is 100 feet (30.5 m). Reduce penalties in darkness and when blinded by half, and +1 to dodge. Moreover, the ‘Bane cannot be surprised by an attack that is coming in from behind or above. Molecular Analyzer: A sophisticated tool that uses mass spectrometry to determine the exact chemical composition of anything scanned. Can detect chemical traces as low as 20 parts per million at a range of up to 25 feet (7.6 m). +10% to Crime Scene Investigation and all Chemistry skills while in Morphus form. Sense Magic: The sensor can pick up strong, magical energy signatures such as ley lines, nexus points, and magic items and living beings who contain/possess more than 70 points of P.P.E. Detection range is 30 feet (9.1 m).",
+      "statModifiers": {
+        "ma": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        }
+      }
     },
     {
-      "id": "sci-fi_sci_fi_melee_weapon_s",
+      "id": "sci_fi_melee_weapon_s",
       "name": "Sci-Fi Melee Weapon(s)",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -139,13 +182,18 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (38-46%; authority=dark_designs)."
+      "description": "This feature provides a futuristic melee weapon (or pair if one-handed) that can be energized to deal additional damage. The weapon itself can look like any real or imagined weapon from a knife or sword to a battle-axe or mace, but typically has artistic accents and features that set it apart from mundane versions. It may appear to be made out of alien crystal or resin, or organic, and it could have portions of it that softly glow, have an electric hum, etc. In its normal state, a small weapon does 1D6 damage while large weapons do 2D6, although if the Nightbane expends three P.P.E. per melee round for a small or six P.P.E. per melee round for a large weapon, its base damage is doubled, and the weapon does triple damage to Nightlords and their demonic minions. This increased power level is apparent as the weapon will hum with a high-frequency vibration, be sheathed in some form of energy, or something similar. Bonuses: +1 to Awe/Horror Factor when the weapon is energized to do extra damage. If not already known, the Nightbane gets the appropriate Weapon Proficiency skill for the weapon, but it is applicable only while in Morphus form. The Sci-Fi weapon(s) cannot be forcibly taken from the character or otherwise disarmed, but can be sheathed or put aside, and willingly relinquished. HOWEVER, anyone else trying to use the weapon finds it deceptively heavy and not well balanced (-6 to strike, parry and disarm). Penalties: -1D6 Hit Points and -1D6 from permanent P.P.E. base, and do NOT add Supernatural P.S. punch or any strength bonuses to energized weapon damage.",
+      "statModifiers": {
+        "strike": {
+          "flat": -6
+        }
+      }
     },
     {
-      "id": "sci-fi_sci_fi_optics",
+      "id": "sci_fi_optics",
       "name": "Sci-Fi Optics",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -155,13 +203,24 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (57-66%; authority=dark_designs)."
+      "description": "Most often appearing as a helmet, goggles, visor, or mechanical/cybernetic eye(s), this feature enables the Nightbane to see in a variety of different ways and in different spectrums of light. Infrared (heat) and ultraviolet (U.V.) spectrums are visible until they transition to radio and microwaves. The ability to see heat signatures means the Nightbane can “see” if an engine is hot or cold, see targets in smoke and through thin walls, as well as see and follow recent footsteps thatare less than 10 minutes old. Automatic light-adjusting lens and polarization protects against bright light and glare, and a virtual targeting reticule is superimposed over vision when in combat. For an expense of 3 P.P.E., the Nightbane can see the magically invisible (range 1,000 feet/305 m) for one minute per level of experience. Bonuses: +2 to Perception Rolls and +1 to strike with ranged weapons. +1 to Awe/Horror Factor. Penalties: -1 to the P.B. attribute and -1D6 from permanent P.P.E. base.",
+      "statModifiers": {
+        "perception": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      }
     },
     {
-      "id": "sci-fi_universal_translator",
+      "id": "sci_fi_universal_translator",
       "name": "Universal Translator",
       "tableCategory": "Science Fiction",
       "gameSystems": [
@@ -171,10 +230,18 @@
         {
           "gameSystem": "nightbane",
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51
+          "pageNumber": 4
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\sci-fi\\extracted-authoritative.txt (47-56%; authority=dark_designs)."
+      "description": "This feature usually takes the shape of a futuristic earpiece, mask, or cell phone-like mini-computer, and sometimes what looks to be a cybernetic implant in the ear, head, or neck. It allows the Nightbane to understand and speak ALL languages with 98% fluency. Even alien languages never heard on Earth will be comprehended as long as there is no additional non-lingual component such as physical gestures or color-changing skin or lights as part of the language. In addition, this Nightbane is likely to find different cultures, people and societies very interesting. Bonuses: Ability to understand and speak all languages, +1 to I.Q. and M.A. attributes, +5% bonus to any Communications and Lore skills, and +10 Anthropology and Archeology skills (when applicable). Penalties: -1 to the P.B. attribute and -1D6 from permanent P.P.E. base.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      }
     }
   ]
 }

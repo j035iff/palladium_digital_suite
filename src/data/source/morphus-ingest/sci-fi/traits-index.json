@@ -1,6 +1,6 @@
 {
   "tableId": "sci-fi",
-  "tableHeading": "Science Fiction Table",
+  "tableHeading": "Science Fiction",
   "authoritativeBookKey": "dark_designs",
   "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
   "books": [
@@ -11,24 +11,8 @@
       "authoritative": true
     }
   ],
-  "traitCount": 11,
+  "traitCount": 10,
   "traits": [
-    {
-      "name": "Bug-Eyed Monster",
-      "percent": "95-00%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "dark_designs",
-          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 53,
-          "percent": "95-00%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "dark_designs",
-      "alsoPublishedIn": []
-    },
     {
       "name": "Energy Blaster",
       "percent": "29-37%",
@@ -37,7 +21,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 3,
           "percent": "29-37%",
           "authoritative": true
         }
@@ -53,7 +37,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 2,
           "percent": "20-28%",
           "authoritative": true
         }
@@ -69,7 +53,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52,
+          "pageNumber": 4,
           "percent": "86-94%",
           "authoritative": true
         }
@@ -85,7 +69,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 2,
           "percent": "11-19%",
           "authoritative": true
         }
@@ -101,7 +85,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52,
+          "pageNumber": 4,
           "percent": "77-85%",
           "authoritative": true
         }
@@ -117,7 +101,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 50,
+          "pageNumber": 1,
           "percent": "01-10%",
           "authoritative": true
         }
@@ -133,7 +117,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 52,
+          "pageNumber": 4,
           "percent": "67-76%",
           "authoritative": true
         }
@@ -149,7 +133,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 4,
           "percent": "38-46%",
           "authoritative": true
         }
@@ -165,7 +149,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 4,
           "percent": "57-66%",
           "authoritative": true
         }
@@ -181,7 +165,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 51,
+          "pageNumber": 4,
           "percent": "47-56%",
           "authoritative": true
         }

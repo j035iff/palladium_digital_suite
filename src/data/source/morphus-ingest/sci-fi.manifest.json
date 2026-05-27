@@ -2,10 +2,11 @@
   "id": "sci-fi",
   "displayName": "Science Fiction",
   "tableCategory": "Science Fiction",
-  "tableHeading": "Science Fiction Table",
+  "tableHeading": "Science Fiction",
   "targetJson": "src/data/content/morphus/tables/sci-fi.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
