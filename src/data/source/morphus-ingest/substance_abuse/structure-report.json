@@ -1,0 +1,19 @@
+{
+  "tableId": "substance_abuse",
+  "generatedAt": "2026-05-27T22:27:19.275Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 9,
+      "entryCount": 9
+    },
+    {
+      "path": "src/data/content/morphus/tables/substance_abuse.json",
+      "changed": 9,
+      "entryCount": 9
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 18
+}

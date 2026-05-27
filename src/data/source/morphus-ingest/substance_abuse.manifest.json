@@ -6,6 +6,7 @@
   "targetJson": "src/data/content/morphus/tables/substance_abuse.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {

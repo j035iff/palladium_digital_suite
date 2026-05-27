@@ -29,6 +29,7 @@
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

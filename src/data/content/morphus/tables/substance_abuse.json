@@ -9,21 +9,50 @@
       "id": "substance_abuse_hypodermic_quills",
       "name": "Hypodermic Quills",
       "tableCategory": "Substance Abuse",
-      "description": "Hollow needles from back, shoulders, and arms—poison sloshing in visible chambers or leaking from the tips.",
+      "description": "Hollow needles protrude from the back and shoulders, and may even continue down the back or arms of the Nightbane. These quills only add 1D6 damage toattacks using them, but the true danger lies in the poison they can inject (whether the syringe chambers are visible or not). If the chambers are visible this poison can be seen sloshing around inside. In some cases, the substance even slowly leaks from the tips of the needles and drips to the ground. In combat, the Nightbane can remove one or two hypodermic syringes to use like poisoned daggers or spikes for stabbing and slashing. However, the ‘Bane’s bite (1D6 damage) and claw slash also deliver the same toxic substance that hurts and impairs his opponents. The Nightbane does not have claws per se, but does have somewhat overgrown fingernails that can cut and gouge. The cut is not deep, but it is enough to cause bleeding (1D4 damage) and to get the poison into his opponent’s system. On a successful strike that pierces an opponent’s skin, the Nightbane may choose to release a dose of poison into the target. If said target fails the saving throw vs poison (needs a 14 or better), he takes an additional 2D4 damage from the poison. This damage is done directly to Hit Points! Victims of this drug are also -1 to all combat and Perception Rolls for 1D4 minutes per each failed roll up to a maximum penalty of -5. The poison is only half as effective (1D4 damage and penalties last only one minute) against supernatural and magical creatures, including the Nightlords and their demonic minions. Bonuses: +1D4 to the P.E. and P.S. attributes, +6D6 to S.D.C., +2 to strike and parry with syringe only, +3 to roll with punch, fall or impact, and +2 to Horror Factor. Penalties: -1D4 P.B. and Spd attributes, -2D4 to Hit Points, -2D4 from the character’s permanent P.P.E. base, -2 on Perception Rolls and initiative, -1 to dodge and pull punch, -10% on the performance of all skills, and skills like Disguise and Undercover Ops are impossible.",
       "statModifiers": {
-        "pe": { "dice": "1D4" },
-        "ps": { "dice": "1D4" },
-        "sdc": { "dice": "6D6" },
-        "hf": { "flat": 2 },
-        "rollWithPunch": { "flat": 3 },
-        "pb": { "dice": "-1D4" },
-        "spd": { "dice": "-1D4" },
-        "hp": { "dice": "-2D4" },
-        "ppe": { "dice": "-2D4" },
-        "perception": { "flat": -2 },
-        "initiative": { "flat": -2 },
-        "dodge": { "flat": -1 },
-        "pullPunch": { "flat": -1 }
+        "pe": {
+          "dice": "1D4"
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "6D6"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "rollWithPunch": {
+          "flat": 3
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "hp": {
+          "dice": "-2D4"
+        },
+        "ppe": {
+          "dice": "-2D4"
+        },
+        "perception": {
+          "flat": -2
+        },
+        "initiative": {
+          "flat": -2
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "pullPunch": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -42,8 +71,16 @@
       "skillModifiers": {
         "globalSkillModifier": -10,
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "isNegated": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "isNegated": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "isNegated": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "isNegated": true
+          }
         ]
       },
       "customOneOffs": [
@@ -51,7 +88,9 @@
         "Claw slash 1D4 bleeding; on piercing hit may inject poison (save vs poison 14+): +2D4 H.P. damage; -1 combat and Perception per failed save 1D4 minutes (max -5). Half effect vs supernatural/magical (1D4 H.P., 1 minute).",
         "May remove one or two syringes for poisoned dagger/spike attacks."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -64,11 +103,27 @@
       "id": "substance_abuse_pills",
       "name": "Pills",
       "tableCategory": "Substance Abuse",
-      "description": "Pills inset in flesh, transparent pill-bottle flesh, or capsules erupting as pimples and warts—picked and eaten for a buzz.",
+      "description": "This Morphus can manifest in a number of different ways. Prescription pill bottles may be inset into various parts of the Nightbane’s body, portions of the flesh replaced by the transparent plastic of pill bottles revealing medication inside; or one of the most common and horrific manifestations is pills as the heads of pimples and warts all over the face, arms, and body, the heads of the capsules and pills poking out through the skin, and the Nightbane picking at them, plucking them out and eating them like candy to get a buzz. A bit of ooze or pus coats every pill when it is removed and trickles out from the empty socket. Whatever the case may be, it is bizarre and repugnant – tablets and capsules poking out of the skin or pills heard rattling around in the containers inside the Nightbane’s body as he moves. Bonuses: +1 on initiative, +5D6 to S.D.C. and +1 to the Nightbane’s Horror Factor, and +2 to save vs Horror Factor, drugs and poison. Pill Notes: Pill Duration: The effects and bonuses of ALL pills last 1D4+2 minutes unless stated otherwise. After-Effects: Last for 2D4+4 minutes or as indicated in the description. Ingested: All pills must be taken orally and ingested, with the effect kicking in within 1D4 melee rounds. Slipping a ground-up pill into food and drink makes it noticeably bitter and foul tasting, so the target is likely (01-80% chance) to throw it away and not consume enough for the pill to have any effect. Saving Throw: 16 or higher vs non-lethal poison. No save applicable when the pill is taken willingly. A successful save means no bonuses or penalties occur in the person, unless stated otherwise. Taking more than one of the same pill has NO additional effect. Penalties and bonuses cannot be stacked via taking multiple pills. Likewise, the effects of only ONE pill at a time apply, so if a new pill is taken, it cancels out the bonuses and effects of the previous pill and replaces them with the effects of the new pill. HOWEVER, penalties from all pills remain in place, with new penalties occurring after the previous ones stop, in the order that the pills were taken. Pill Quantities and Descriptions: 1D4+2 Anti-Toxin: Taking this pill settles an upset stomach, stops vomiting, cures heartburn/acid indigestion, can help with a hangover (reduce duration by half), and it also restores 1D4 lost Hit Points caused by poison of any kind. After-Effects: None.1D4+6 Booster Pills: This is a cocktail of chemicals to increase awareness and prevent sleep. Character is +2 on Perception Rolls, +1 on initiative, and is wide awake for 1D4+2 hours. After-Effects When Duration Ends: -4 on Perception Rolls, -2 on initiative, and drowsiness (-20% on performance of all skills, and will doze off when things get quiet or slow down). The aftereffects last for 1D6+6 hours or go away after getting seven hours of sleep. 1D4+4 Fat Pills: Kills the user’s appetite. Does not feel hungry for 1D4+4 hours. On the down side, the character is not eating enough to be properly well nourished and over a long period of time, could feel sick and become malnourished and weak. After-Effects When Duration Ends: Low energy and hungry for 1D6+4 hours: -1 on Perception Rolls and initiative, -1 on all combat rolls and -10% to Spd attribute. 2D6+3 Happy Pills: The user feels relaxed and cheerful, and is disoriented in a positive, happy manner, making him feel unafraid and calm even under duress. This is good and bad, because while +4 to save vs Horror Factor, and +5 on all skills even when under fire and dealing with life and death conditions, the character is -4 on Perception Rolls, -4 on initiative, reduce Spd by 20%, and the character would rather talk, negotiate or drink than fight. After-Effects When Duration Ends: -1 to save vs Horror Factor, and -10% on the performance of all skills, double when facing death conditions, and the character remains -4 on Perception Rolls and initiative and reduce Spd by 20% for 1D6x10 minutes. 1D4+2 Hallucinogenic Pills: On a failed saving throw, the person suffers from strong perceptual distortions and visual hallucinations. For example, the character may see everyone around him as cartoon characters or monsters, or angels, or aliens, or as members of a favorite (or scary) TV show, and so on. Or the environment might be someplace different or reflect the setting of a favorite or feared book, game, TV show or movie. (“How did we get on the Nostromo?! Where’s Ripley?”) Or people may glow or the sky may be filled with changing colors, flashing lights and so on. While hallucinating, victims are -6 on Perception Rolls, -5 on initiative, -3 to strike, parry, and dodge, -4 to save vs Horror Factor and illusions, and skill performance is -30%. These effects last for 1D4 minutes. After-Effects When Duration Ends: The character remains disoriented for the next hour, -2 on Perception Rolls and initiative (not sure what’s real and what’s not), -10% to the performance of all skills and -2 to save vs Horror Factor and illusions for the next hour. 1D4+1 Magic Pills: Is it a placebo or real? +1 to save vs all magic attacks, illusions, disease, poison and mind control, and +2 to save vs possession; double the bonuses to save against demons, the Nightlords, their demonic minions, any creature from the Nightlands, and other Nightbane. After-Effects When Duration Ends: Feels emboldened and powerful or lucky, but is now really -1 to save vs all magic attacks and illusions, mind control, poison and toxins, and -2 to save vs possession and the magic or psionic attacks of the Nightlords and any creature from the Nightlands as well as demons, for the next 1D6+6 minutes. 2D4+4 Powerful Painkillers: Reduces pain and decreases any pain related penalties by half. The character can function reasonably well, but is foggy and the painkiller makes him -2 on Perception Rolls and initiative, -1 on all combat rolls and -5% on the performance of skills (in addition to any other penalties already in place from injury/pain). After-Effects When Duration Ends: None, other than the pain returning and the full penalties from it roll back in place. Frequent use of powerful painkillers can lead to addiction. 1D4+4 Sedatives: On a failed roll to save, the recipient is incredibly groggy: Reduce attacks per melee, Spd and the performance of all skills by half, and combat bonuses to zero for 1D6+2 minutes. If the roll to save was 4 or below, the victim falls into a deep sleep. After-Effects When Duration Ends: Remains sluggish for 1D6 minutes during which the character is -1 on all combat rolls, -10% on speed and -5% on skill performance for 2D6+2 minutes. 2D4+2 Steroids: Temporary bonuses of +1D4+4 to P.S., +2D6+10 to S.D.C. (damage comes off this first), +2 on initiative, but makes the character aggressive, quick to physical violence and prone to take risks and throw a punch rather than talk things out peacefully. After-Effects When Duration Ends: The character’s P.S. returns to normal and then is temporarily reduced by 1D6 P.S. points, S.D.C. returns to normal, -4 on initiative, reduce Spd by 20%, and the character feels tired and sluggish. Penalties last 2D4+4 minutes.",
       "statModifiers": {
-        "sdc": { "dice": "5D6" },
-        "hf": { "flat": 1 },
-        "initiative": { "flat": 1 }
+        "sdc": {
+          "dice": "2D6+10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": -3
+        },
+        "ps": {
+          "flat": 4,
+          "dice": "1D4+4"
+        },
+        "spd": {
+          "percent": -20
+        }
       },
       "saveModifiers": {
         "horrorFactor": 2,
@@ -87,7 +142,9 @@
         "Sedatives (1D4+4): on failed save, half attacks/Spd/skills, zero combat bonuses 1D6+2 minutes; save 4 or less = deep sleep. After: -1 combat, -10% Spd, -5% skills 2D6+2 minutes.",
         "Steroids (2D4+2): +1D4+4 P.S., +2D6+10 S.D.C. (damage hits S.D.C. first), +2 initiative; aggressive. After: P.S. -1D6 below normal, -4 initiative, -20% Spd, sluggish 2D4+4 minutes."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -100,17 +157,35 @@
       "id": "substance_abuse_alcohol_soaked",
       "name": "Alcohol-Soaked",
       "tableCategory": "Substance Abuse",
-      "description": "Permanently drunk-stumbling Morphus—clothing soaked through, liquor dripping, smell pervasive.",
+      "description": "The Nightbane is drenched with liquor to the point that any clothing is soaked through, the liquid drips to the ground, and its smell pervades the surrounding area. The character also moves in a stumbling manner as if permanently drunk. Bonuses: +1D6 Hit Points, +3D6 S.D.C., +1 to the P.S. and P.E. attributes, +5 to roll with punch, fall or impact, +3 to save vs poison and Horror Factor, never has a hangover, and interrogators suffer a -30% Interrogation skill penalty when trying to get anything useful out of this ‘Bane. Cold attacks, even magical ones, only do 10% of their normal damage. Penalties: -2 to the I.Q. and M.E. attributes, poor memory and subject to blackouts, -3 on Perception Rolls, -2 on initiative, -30% on all Communications skills, and -10% on all other skills. The alcoholsoaked Nightbane has a 50% chance of catching fire from any fire attacks, in which case he takes an additional 3D6 damage per melee round for 1D6+4 rounds or until the fire is put out.",
       "statModifiers": {
-        "hp": { "dice": "1D6" },
-        "sdc": { "dice": "3D6" },
-        "ps": { "flat": 1 },
-        "pe": { "flat": 1 },
-        "rollWithPunch": { "flat": 5 },
-        "iq": { "flat": -2 },
-        "me": { "flat": -2 },
-        "perception": { "flat": -3 },
-        "initiative": { "flat": -2 }
+        "hp": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 5
+        },
+        "iq": {
+          "flat": -2
+        },
+        "me": {
+          "flat": -2
+        },
+        "perception": {
+          "flat": -3
+        },
+        "initiative": {
+          "flat": -2
+        }
       },
       "saveModifiers": {
         "poison": 3,
@@ -123,7 +198,11 @@
       "skillModifiers": {
         "globalSkillModifier": -10,
         "specificSkillOverrides": [
-          { "targetType": "category", "targetValue": "Communications", "modifierPercent": -20 }
+          {
+            "targetType": "category",
+            "targetValue": "Communications",
+            "modifierPercent": -20
+          }
         ]
       },
       "customOneOffs": [
@@ -132,7 +211,9 @@
         "Poor memory and blackouts.",
         "50% chance to catch fire from fire attacks (+3D6 damage/round for 1D6+4 rounds until extinguished)."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -145,27 +226,57 @@
       "id": "substance_abuse_branded_loyalty",
       "name": "Branded Loyalty",
       "tableCategory": "Substance Abuse",
-      "description": "1D6+1 product brands burned into forearms, chest, hands, wrists, neck, or face—alcohol, tobacco, or drug logos.",
+      "description": "1D6+1 product names are burned into the Nightbane’s skin. These may be brands of alcohol, cigarettes, prescription drug manufacturers or the names of drugs, etc. These brands are rough in appearance and always in clearly visible places like the forearms, chest, tops of hands, wrists, neck andface. Bonuses: +2 to the P.E. attribute, +3D6 to S.D.C., impervious to any negative effects and disease from the products whose logo is branded into his skin, and +1 to Horror Factor. Penalties: -2 to the M.E., M.A. and P.B. attributes, and -40% to skills such as Disguise, Impersonation, Seduction and Undercover Ops.",
       "statModifiers": {
-        "pe": { "flat": 2 },
-        "sdc": { "dice": "3D6" },
-        "hf": { "flat": 1 },
-        "me": { "flat": -2 },
-        "ma": { "flat": -2 },
-        "pb": { "flat": -2 }
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "me": {
+          "flat": -2
+        },
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -40 },
-          { "targetType": "skill_id", "targetValue": "skill_impersonation", "modifierPercent": -40 },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -40 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -40 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
         ]
       },
       "customOneOffs": [
         "Impervious to negative effects and disease from branded products."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -178,12 +289,20 @@
       "id": "substance_abuse_rolling_paper_leafy_skin",
       "name": "Rolling Paper or Leafy Skin",
       "tableCategory": "Substance Abuse",
-      "description": "Overlapping leaves or cigarette-rolling paper skin; yellowing patches, smoldering cigarette-like eyes, wisps of smoke and tobacco breath.",
+      "description": "The skin of the Morphus form is composed of overlapping green or brown leaves, or a paper similar to that used to hand-roll cigarettes. At various points on the body the skin may appear to be yellowing and the eyes resemble a lit, smoldering cigarette. Small wisps of smoke sometimes issue forth from the eyes, nostrils and mouth, especially when excited or agitated, and the breath smells of cigarettes. Bonuses: +5D6 to S.D.C. Heat and fire do half damage (even magic fire), smoke has no adverse effect while in Morphus form, and +1 to Horror Factor. Penalties: -3 to the M.A. and P.E. attribute, and a persistent cough imposes a -30% to Prowl, Performance and Public Speaking skills.",
       "statModifiers": {
-        "sdc": { "dice": "5D6" },
-        "hf": { "flat": 1 },
-        "ma": { "flat": -3 },
-        "pe": { "flat": -3 }
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -3
+        },
+        "pe": {
+          "flat": -3
+        }
       },
       "damageAffinities": {
         "fire": 0.5,
@@ -191,15 +310,29 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 },
-          { "targetType": "category", "targetValue": "Performance", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": -30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "category",
+            "targetValue": "Performance",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_public_speaking",
+            "modifierPercent": -30
+          }
         ]
       },
       "customOneOffs": [
         "Smoke has no adverse effect in Morphus form."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -212,19 +345,36 @@
       "id": "substance_abuse_pipe_throat",
       "name": "Pipe Throat",
       "tableCategory": "Substance Abuse",
-      "description": "Metal or glass throat tubing—raspy Darth Vader voice, glowing pipe, acrid smoke shroud.",
+      "description": "The throat of the Nightbane is at least partially replaced by metal or glass tubing. This has a drastic effect on the sound of the character’s voice and breathing (think Darth Vader). The voice has a rasping, wheezing or even gurgling quality and the piping may or may not glow red as the Nightbane speaks or breathes. At the same time, acrid smoke regularly wafts from the mouth and nostrils and hangs about the character like a shroud. Bonuses: The Nightbane is immune to smoke, sulfur, tear gas and other such airborne toxins/poisons, +1 to Horror Factor, and Blowing Smoke (special): The Nightbane can blow smoke in rings for entertainment or as a signal, or can blow a gust of smoke into an opponent’s face (3 foot/0.9 m range). The smoke temporarily irritates the eyes and lungs, imposing a -1 penalty to Perception Rolls and all combat rolls for one melee round (15 seconds). Penalties: -1D6 from the permanent P.P.E. base, bad breath, -1 to Perception Rolls, -1 to strike with ranged weapons due to the obscuring smoke and a persistent cough that also imposes a -25% penalty to Prowl and Seduction.",
       "statModifiers": {
-        "hf": { "flat": 1 },
-        "ppe": { "dice": "-1D6" },
-        "perception": { "flat": -1 }
+        "hf": {
+          "flat": 1
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "perception": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": -1
+        }
       },
       "damageAffinities": {
         "airborneToxins": 0
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -25 },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -25 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -25
+          }
         ]
       },
       "customOneOffs": [
@@ -232,7 +382,9 @@
         "Blowing Smoke: rings/signals, or gust in opponent’s face (3 ft)—-1 Perception and all combat rolls one melee round.",
         "-1 strike with ranged weapons due to obscuring smoke; persistent cough."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -245,12 +397,20 @@
       "id": "substance_abuse_rotted_teeth",
       "name": "Rotted Teeth",
       "tableCategory": "Substance Abuse",
-      "description": "Brown/yellow cracked teeth—1D4×10% missing; discolored gums and rancid breath.",
+      "description": "Many of the teeth are brown or yellow, cracked and broken, and 1D4x10% are missing. The teeth and gums are discolored and the breath is likely rancid. Bonuses: Bite attack does 2D4 damage (double damage to Nightlords and their demonic minions), +2D6 S.D.C., +1 to Horror Factor, and stench. The Nightbane can blow a gust of stench into an opponent’s face (4 foot/1.2 m range). Victims roll to save vs non-lethal poison (16 or greater is needed to save). A fail roll means the foul smell temporarily irritates the eyes and lungs, and causes the stomach to churn (01-30% chance of vomiting, in which case the victim loses one melee round). The rancid smell imposes a -3 penalty to Perception Rolls and -2 penalty to all combat rolls for one melee round (15 seconds). A successful save means eyes suddenly burn but only -1 on Perception Rolls for one melee round. Penalties: -2 to the M.A. and P.B. attributes, and -30% to skills like Disguise, Undercover Ops, Barter, Seduction and Public Speaking.",
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "hf": { "flat": 1 },
-        "ma": { "flat": -2 },
-        "pb": { "flat": -2 }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        }
       },
       "naturalWeapons": [
         {
@@ -262,18 +422,40 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_barter", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_public_speaking", "modifierPercent": -30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_barter",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_public_speaking",
+            "modifierPercent": -30
+          }
         ]
       },
       "customOneOffs": [
         "Bite double damage vs Nightlords and demonic minions.",
         "Stench gust (4 ft): save vs non-lethal poison 16+; fail = -3 Perception, -2 all combat one round (01–30% vomit, lose one melee). Save = -1 Perception one round."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -286,20 +468,30 @@
       "id": "substance_abuse_roid_rage",
       "name": "'Roid-Rage",
       "tableCategory": "Substance Abuse",
-      "description": "Strained oversized muscles, bulging veins, heavy breathing—angry or mad expression; ignores injury.",
+      "description": "Every muscle in the character’s body looks larger but strained at all times. Veins stand out, breathing is heavy, and the expression on the face of the Morphus is almost always one of anger or madness. This does not make the Morphus larger or stronger, but someone with this feature seems to completely ignore physical injury. Bonuses: The character does not feel pain, +4 to the P.E. attribute, +1D6x10+20 S.D.C., and +1 to Horror Factor. Penalties: Because the Nightbane does not feel pain, he takes foolish risks, fights beyond rational limits, and does not realize when his S.D.C. and Hit Points plummet toward zero; -10% to save vs coma and death. Tends to be aggressive and quick to anger and violence.",
       "statModifiers": {
-        "pe": { "flat": 4 },
-        "sdc": { "dice": "1D6x10+20" },
-        "hf": { "flat": 1 }
+        "pe": {
+          "flat": 4
+        },
+        "sdc": {
+          "dice": "1D6x10+20"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "saveModifiers": {
-        "comaDeath": { "percent": -10 }
+        "comaDeath": {
+          "percent": -10
+        }
       },
       "customOneOffs": [
         "Does not feel pain; fights beyond rational limits and may not notice S.D.C./H.P. nearing zero.",
         "Aggressive, quick to anger and violence."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -312,27 +504,43 @@
       "id": "substance_abuse_speed_freak",
       "name": "Speed Freak",
       "tableCategory": "Substance Abuse",
-      "description": "Gaunt, hollow-cheeked, visible ribs, trembling hands—nervous energy as if sleepless and starved for days.",
+      "description": "The Morphus form is gaunt and unhealthy looking. Dark circles ring the eyes, cheeks are hollow, rib bones are visible beneath the skin, and the Nightbane’s hand and body shake slightly with nervous energy. It is as if the character hasn’t slept or eaten in days. Bonuses: +1 to all Perception Rolls, +3 on initiative, +1 to parry and dodge, +10% to all Piloting skills, and talks fast, lives hard, and is +2 to save vs Horror Factor. Penalties: -1D4 to M.A., -10% on all skills that require a delicate touch due to trembling, and takes risks and tends to be a daredevil and death defying thrill-junkie who is sometimes a danger to himself and to those around him. Loves action, danger and speed.",
       "statModifiers": {
-        "perception": { "flat": 1 },
-        "initiative": { "flat": 3 },
-        "parry": { "flat": 1 },
-        "dodge": { "flat": 1 },
-        "ma": { "dice": "-1D4" }
+        "perception": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 3
+        },
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
       },
       "saveModifiers": {
         "horrorFactor": 2
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "category", "targetValue": "Pilot", "modifierPercent": 10 }
+          {
+            "targetType": "category",
+            "targetValue": "Pilot",
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [
         "Talks fast, lives hard; daredevil thrill-junkie—risks danger to self and allies.",
         "-10% on skills requiring a delicate touch due to trembling."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
