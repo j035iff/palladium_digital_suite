@@ -6,6 +6,7 @@
   "targetJson": "src/data/content/morphus/tables/angelic.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "survival_guide",
   "books": [
     {

@@ -20,7 +20,8 @@
         "skill overrides",
         "flight engine",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -41,7 +42,8 @@
         "stat modifiers / A.R. shift",
         "natural A.R.",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
