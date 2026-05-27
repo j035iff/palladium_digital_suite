@@ -14,7 +14,7 @@
           "pageNumber": 29
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (79-89%; authority=dark_designs)."
+      "description": "Specialized footwear with small metal spikes built into the bottom. Worn by runners, golfers, baseball play- ers and many other athletes who compete on dirt or turf. These shoes are meant to provide greater traction. For the Nightbane with this feature, the cleats even dig into asphalt and concrete that hasn’t been reinforced. Bonuses: +1D4 to the Spd attribute and +3 to kick damage. Surfaces such as ice, mud, and even oil- slicked floors do not cause the Nightbane to lose his footing, slip or fall. Penalties: -20% to Prowl across hard surfaces where the spikes scratch, clunk and make a rackets as well as leave scuffs and scratches on the surface. The Nightbane is also easily tracked across soft and hard surfaces due to the tell-tale gouges and holes left in the ground by the cleats and scratches and pockmarks left on hard surfaces."
     },
     {
       "id": "athlete_club_stick",
@@ -30,7 +30,15 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (57-67%; authority=dark_designs)."
+      "description": "Several sports use a stick, club, mallet or bat. This Nightbane played or admired such a sport and so his Morphus includes the blunt item of that game be it a hockey Joe Sifferman (Order #46319524) 29 stick, golf club, cricket bat, baseball bat, polo mallet, etc. No mat- ter what form it takes, this piece of gear is a blunt weapon that inflicts 1D6+3 damage in addition to the Supernatural P.S. punch damage of the character when used as a weapon. Bonuses: +1 to strike and parry with the club, +2 to pull punch. Penalties: The stick is large and unwieldy to carry, so other two-handed weap- ons cannot be used unless it can be slung over the back or the Nightbane has other appendages.",
+      "statModifiers": {
+        "strike": {
+          "flat": 1
+        },
+        "pullPunch": {
+          "flat": 2
+        }
+      }
     },
     {
       "id": "athlete_game_ball_projectile",
@@ -46,7 +54,15 @@
           "pageNumber": 29
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (90-00%; authority=dark_designs)."
+      "description": "The Nightbane’s Morphus is likely to have the kind of stitching and patterns of the ball used in his sport of choice, incorporated into his body appearance. He also carries a ball, puck, Frisbee, or similar object used to play a particular sport. This ball may look like the genuine item or be styled after the Morphus, but the effects are the same. The projec- tile can be thrown, kicked, or otherwise propelled at tremendous speed to strike up to 300 feet (91.5 m) away and returns to the character after being thrown. Bank-shots are also possible, but -2 to strike, with only the final surface struck taking damage. Anything hit by the speeding ball/projectile takes damage equal to half the Nightbane’s Supernatural P.S. punch damage +1D6. There is also a chance that a victim struck by the ball is knocked off his feet, losing initiative and one melee attack. Against targets with normal strength, there is a 01-25% chance of being knocked flat, and a 01-10% chance against those with Supernatural Strength or larger than 8 feet (2.4 m); +20% to those odds if the target is already off balance. The Nightbane may pass this projectile to another person up to 300 feet (91.5 m) away, but once dropped or thrown, it returns to the Nightbane it belongs to. Bonuses: +2 to strike with the projectile, +2 to catch balls or in- tercept thrown projectiles, and +1 to dodge projectiles. Penalties: -3 to base P.P.E. -20% to skills like Climbing, Swimming, and other physical activities that require the use of both hands. The ball must always be held, meaning that no two-handed weapons can be used unless the Nightbane has multiple limbs, or turns into his Facade.",
+      "statModifiers": {
+        "strike": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": 1
+        }
+      }
     },
     {
       "id": "athlete_gymnasts_build",
@@ -62,7 +78,27 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (12-22%; authority=dark_designs)."
+      "description": "Compact, lithe, and flexible, the build of this Morphus form is perfect for feats of physical agility and strength without compromising speed of movement. While it is not always apparent that ‘Bane with this build are as physi- cally adept as they are, when they spring into action the grace of their movements is stunning. Bonuses: +2 to the P.S., +1D4 to P.P., +1 to P.E. and +2 to the P.B. attribute, +4D6 S.D.C., automatically gets the Gymnastics skill at 68% +4% per level of experience, and +10% to Physical skills such as Acrobatics and Climbing/Rappelling. Penalties: -2 to save vs poisons/toxins and -1 to Horror Factor.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": -1
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
+        }
+      }
     },
     {
       "id": "athlete_musclebound",
@@ -78,7 +114,25 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (23-34%; authority=dark_designs)."
+      "description": "The Morphus has musculature on par with an Olympic weightlifter or circus strongman, with a thick neck, broad shoulders and chest, and massive arms and legs. Every major muscle in the Nightbane’s body is also toned and well defined. In the absence of obvious deformities, this character can enter and win bodybuilding contests hands-down. Bonuses: +1D6+4 to the P.S. attribute, +2 to P.E., and +1 to P.B., +1D4x10 S.D.C., +1 to Awe/Horror Factor, and the character can lift and carry twice the standard amount for their strength attribute. Pen- alties: -1 to the P.P. attribute, -1D6 to Spd, and -10% on skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming.",
+      "statModifiers": {
+        "ps": {
+          "flat": 4,
+          "dice": "1D6+4"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        }
+      }
     },
     {
       "id": "athlete_protective_gear",
@@ -94,7 +148,15 @@
           "pageNumber": 29
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (68-78%; authority=dark_designs)."
+      "description": "The Morphus wears the protective gear common to the Nightbane’s chosen sport(s) like American football, hockey, and so on. This protective gear may appear to be vintage, modern, or even futuristic, and may have stylistic features that fit with the overall Morphus, such as shin guards made of chitin for an insectoid Nightbane. Bonuses: Heavy pads and protectors like those worn by most football or hockey play- ers over the shoulders, chest, elbows, hands, knees and thighs, as well as some sort of helmet or head protection provides an ad- ditional +2D4x10 S.D.C. and +1 to Natural A.R. Penalties: -3 to the Spd attribute and -15% to all Physical skills that require flex- ibility and movement such as Acrobatics, Climbing, Gymnastics, Prowl, Swimming, and in this case skills like Pick Locks, Pick Pockets and Disguise.",
+      "statModifiers": {
+        "spd": {
+          "flat": -3
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        }
+      }
     },
     {
       "id": "athlete_skates",
@@ -110,7 +172,7 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (46-56%; authority=dark_designs)."
+      "description": "Ice skates, inline roller skates, or some other type of skates are attached to the feet of the Morphus form. Mov- ing on skates is second nature to this Nightbane, allowing him to not only perform feats of speed on flat surfaces but also to move normally on surfaces not ordinarily negotiable on skates. Bonus- es: Double the Nightbane’s speed on hard, flat surfaces like ice, roller rinks, pavement, concrete, tiled flooring, etc., +1D6 to kick damage. Penalties: -20% to Prowl and half speed on rough, un- even or soft surfaces such as gravel, grass and mud."
     },
     {
       "id": "athlete_streamlined",
@@ -126,7 +188,15 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (01-11%; authority=dark_designs)."
+      "description": "Built for running, this Nightbane has a lean body with long, powerful limbs. Whether walking, jog- ging, running, or swimming, he or she seems to glide almost ef- fortlessly across the ground or through the water. Of course, this also means that the body is less massive than would otherwise be the case (-20% normal weight), sacrificing strength and damage resistance for speed and endurance. Bonuses: The Morphus is taller than average, add one foot (0.3 m) to normal height. Nor- mal Spd attribute is replaced with 2D4x10+40 (approximately 20.5 to 82 mph or 33-131 kph), and +1 to the P.P. attribute. Even running at maximum speed for hours at a time does NOT fatigue the Nightbane in any way. +1D6 to kick damage. Penalties: -1D6 to the P.S. attribute and reduce starting S.D.C. by 10%. If the Morphus form has an A.R., reduce it by 2 points.",
+      "statModifiers": {
+        "pp": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "-1D6"
+        }
+      }
     },
     {
       "id": "athlete_team_jersey",
@@ -142,7 +212,18 @@
           "pageNumber": 28
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\athlete\\extracted-authoritative.txt (35-45%; authority=dark_designs)."
+      "description": "Whether this jersey is from the char- acter’s high-school sports team, a favorite professional team, or some other athletic organization, the effects are the same. Wear- ing a team’s colors provides a strong sense of identity and be- longing that is reassuring, comforting, and a point of pride and inspiration. Interestingly, no substance like dirt, blood, or even paint soils the team logo on this jersey no matter how much cov- ers the Nightbane. Bonuses: +1 to the M.E. attribute, +1 on Per- ception Rolls involving sports and sports teams (+2 on Perception Rolls involving the team represented on the jersey), +1 to save vs mind control and possession, +1 to save vs Horror Factor, and +1D6 S.D.C. Penalty: -1 to the P.E. attribute.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D6"
+        }
+      }
     }
   ]
 }
