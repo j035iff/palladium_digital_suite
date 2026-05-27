@@ -1,0 +1,19 @@
+{
+  "tableId": "artificial_appearance",
+  "generatedAt": "2026-05-27T20:49:05.358Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 10,
+      "entryCount": 10
+    },
+    {
+      "path": "src/data/content/morphus/tables/artificial_appearance.json",
+      "changed": 9,
+      "entryCount": 10
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 19
+}

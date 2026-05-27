@@ -6,6 +6,7 @@
   "targetJson": "src/data/content/morphus/tables/artificial_appearance.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "survival_guide",
   "descriptionAuthorityNote": "Transcribe description and mechanics from the authoritative book (Dark Designs when present).",
   "books": [

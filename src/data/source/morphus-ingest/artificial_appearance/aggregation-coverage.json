@@ -4,61 +4,123 @@
     {
       "id": "artificial_appearance_crash_test_dummy",
       "name": "Crash Test Dummy",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_glass",
       "name": "Glass",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "variant percentiles (notes)"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_junk_golem",
       "name": "Junk Golem",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_mirror_man",
       "name": "Mirror Man",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "variant percentiles (notes)",
+        "combat context modifiers",
+        "at-will abilities",
+        "skill context modifiers"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_porcelain_ceramic",
       "name": "Porcelain/Ceramic",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_scarecrow",
       "name": "Scarecrow",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "damage affinities",
+        "limb durability components",
+        "recovery behaviors",
+        "player choices",
+        "living weapon rules"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_soft_clay",
       "name": "Soft Clay",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "recovery behaviors",
+        "conditional penalties",
+        "disguise limits"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_store_mannequin",
       "name": "Store Mannequin",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "at-will abilities"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_stuffed_animal",
       "name": "Stuffed Animal",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "cross-table roll",
+        "recovery behaviors",
+        "player choices"
+      ],
       "notesOnly": false
     },
     {
       "id": "artificial_appearance_wood_statue",
       "name": "Wood Statue",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities"
+      ],
       "notesOnly": false
     }
   ]

@@ -6,7 +6,7 @@
   "books": [
     {
       "key": "survival_guide",
-      "pdf": "c:/Users/joesi/OneDrive/Documents/Palladium/Nightbane/Books/WB5-Nightbane_Survival_Guide.pdf",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
       "reference": "Nightbane\u00ae Survival Guide (WB5)",
       "authoritative": true
     }

@@ -47,6 +47,7 @@
         "cold": 0,
         "heat": 0,
         "poison": 0,
+        "airborneToxins": 0,
         "fire": 1
       },
       "customOneOffs": [
@@ -79,7 +80,7 @@
           "flat": 2
         },
         "ma": {
-          "flat": -2
+          "dice": "-1D4"
         },
         "pp": {
           "flat": -1
@@ -134,7 +135,7 @@
           "pageNumber": 81
         }
       ],
-      "description": "Morphus body composed of junk; roll variant for appearance. Bonuses and penalties per book (WB5 p. 81).",
+      "description": "The character may always have con- sidered junkyards and alleys as treasure troves, or full of adven- ture, or he may have felt like he or his life was junk. At any rate, this Morphus is composed of junk. The following are most com- mon: 01-25% A human body imbedded with a hodgepodge of small pieces of junk such as bottles, cans, rusty nails, bricks, bits of wire, broken glass, etc. 26-50% A junk body made of old car parts such as tires, fenders, car batteries, shocks, spark plugs, etc. 51-75% A junk body made of nails, wire and wood from pallets and shipping crates. 76-00% A junk body made of paint cans, paint chips, paint brushes, bits of metal, plastic sheeting and tarps. Bonuses: +2D4x10+10 to S.D.C., +1D4 to Horror Factor, +1D6 damage in hand to hand combat, and resistant to heat, cold and poison (half damage). Penalties: Double (01-50%) or triple (51-00%) weight. -1D4 to P.B., -10% to per- form any skills that require a delicate touch, cannot swim (un- less mostly wood), is impossible to disguise, and -30% to Prowl.",
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10+10"
@@ -146,7 +147,7 @@
           "dice": "1D6"
         },
         "pb": {
-          "flat": -2
+          "dice": "-1D4"
         }
       },
       "damageAffinities": {
@@ -226,7 +227,7 @@
           "pageNumber": 81
         }
       ],
-      "description": "Reflective mirror-bodied Morphus; roll variant for appearance. Mirror Walk at will (WB5 p. 81).",
+      "description": "01-33% A smooth, featureless hu- manoid figure made of a mirror-like reflective material that bends with body movement. 34-66% A human body covered in small mirrors, all the same shape and style; facial features ob- scured or the head is a box made of mirrors (can still talk). 67-00% The body is covered in the cracked and shattered pieces of broken mirrors. In bright light the ‘Bane creates flashes of light that make looking at him difficult (opponents are -5 to strike, parry, and dodge): This Morphus enables the character to Mirror Walk at will! No one knows how this works, as any mir- ror used is supposed to have a counterpart in the opposite world, but some see it as a sign that the barrier between Earth and the Nightlands is continuing to thin. Whatever the case, these Nightbane are highly sought after specifically for this ability. Bonuses: +5D6+5 S.D.C., +1 on Perception Rolls, +2 to Horror Factor, impervious to laser and light attacks, and takes half dam- age from energy attacks. Penalties: -2 to M.A., -2 to P.P., can- not swim (sinks like a rock), and -50% to Prowl in daylight/bright light and -20% to Prowl in darkness due to light reflections.",
       "statModifiers": {
         "sdc": {
           "dice": "5D6+5"
@@ -242,11 +243,15 @@
         },
         "pp": {
           "flat": -2
+        },
+        "strike": {
+          "flat": -5
         }
       },
       "damageAffinities": {
         "lasers": 0,
-        "energy": 0.5
+        "energy": 0.5,
+        "light": 0
       },
       "mobility": {
         "aquaticTraits": {
@@ -283,7 +288,7 @@
         {
           "id": "mirror_walk",
           "label": "Mirror Walk",
-          "note": "At will (core Nightbane Mirror Walk rules)."
+          "note": "At will (core Nightbane rules)."
         }
       ],
       "combatContextModifiers": [
@@ -334,7 +339,7 @@
           "flat": 3
         },
         "ma": {
-          "flat": -2
+          "dice": "-1D4"
         }
       },
       "damageAffinities": {
@@ -382,7 +387,7 @@
           "pageNumber": 81
         }
       ],
-      "description": "Classic animated scarecrow with living weapon (sickle, machete, or scythe — player choice at creation). WB5 p. 81.",
+      "description": "Quite plainly, this Morphus looks like the classic animated scarecrow – a straw stuffed shirt and pants probably tied together with rope, gloves for hands, a sack for a head, maybe a hat, and comes with a sickle sword (does 2D6 damage), machete (does 2D6 damage) or scythe (does 3D6 damage). This weapon may be lent to others, dropped, or stolen, but it will disappear when the ‘Bane switches back to Facade form and reappears with him when he assumes his Morphus the next time. The weapon is a living part of the character. Bo- nuses: +4D6 S.D.C., +2 to P.P., +2 to Horror Factor, +1 to roll with impact, and if torn apart, knocked apart or blown to pieces, the character reforms in 2D6 minutes at half S.D.C. and Hit Points or the ‘Bane can turn back into his Facade (if he does the latter he can’t use his Morphus for 1D6+1 hours thereafter), floats on water, and is impervious to cold, heat, poison and tox- ins. Penalties: -2 to P.S. and P.E., and takes double damage from fire (though he will not catch ablaze like a normal scare- crow). Prefers to use his Scarecrow weapon above all others and feels vulnerable without it. The weapon is likely to be difficult to conceal or hide. It has 40 S.D.C. +5 per level of experience, but the weapon only takes damage when it is specifically tar- geted. When the S.D.C. of the weapon and the Nightbane’s own S.D.C. are both reduced to zero, the weapon vanishes and can- not be made to reappear until the character recovers all of his own S.D.C.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
@@ -511,14 +516,7 @@
       ],
       "recoveryBehaviors": [
         {
-          "trigger": "large_explosion",
-          "reformMinutesDice": "1D6+4",
-          "globCountDice": "1D6x10",
-          "note": "Explosions inflict 25% damage only"
-        },
-        {
           "trigger": "submersion",
-          "dryHoursDice": "2D6",
           "gardenHoseDamage": "1D4",
           "fireHoseDamage": "2D6"
         }
@@ -527,8 +525,7 @@
         {
           "trigger": "cold_attack",
           "apmMultiplier": 0.5,
-          "spdMultiplier": 0.5,
-          "note": "Half damage from cold; attacks and Spd halved"
+          "spdMultiplier": 0.5
         },
         {
           "trigger": "freezing_temperature",
@@ -538,7 +535,7 @@
       ],
       "disguiseLimits": {
         "similarSizeWeightOnly": true,
-        "cannotImpersonateIndividuals": true,
+        "cannotImpersonateIndividuals": false,
         "skinColorRequiresMakeup": true
       }
     },
@@ -571,7 +568,8 @@
           "flat": 1
         },
         "ma": {
-          "flat": -2
+          "flat": -2,
+          "dice": "-1D4"
         }
       },
       "damageAffinities": {
@@ -591,21 +589,6 @@
             "targetType": "skill_id",
             "targetValue": "skill_swimming",
             "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_wardrobe_and_grooming",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 5
           }
         ]
       },
@@ -638,7 +621,7 @@
           "pageNumber": 81
         }
       ],
-      "description": "Roll on the Animal Form Table (any) to determine the type of giant stuffed animal, or the player can elect to go with the classic stuffed Teddy Bear. Fur coloring may be realistic or not (purple, pink, polka dotted, etc.) and the face may be simple or wildly exaggerated to look sweet or dangerous (has pointed teeth and fangs, horns, etc.). The animal may be a humanoid caricature, a la the Teddy Bear, or a more realistic stuffed rendition of the creature, but all are roughly human size, can speak and walk on two legs. The animal abilities remain roughly the same as those described in the Animal Form table, however, S.D.C., Spd, and bonuses are half, and the animal is made of fabric and stuffing so weight is half that of the character's normal weight. Bonuses: +2D6 S.D.C., +1D4 to M.A., +20% to Prowl, impervious to heat, cold, and poison, kinetic attacks (from punches to bullets) do half damage, and floats on water until it becomes waterlogged and sinks (takes 4D6+20 minutes). Penalties: Reduce Spd by 20%, skills that require a delicate touch or fingers are -15%, and fire does double damage.",
+      "description": "Roll on the Animal Form Table (any) to determine the type of giant stuffed animal, or the player can elect to go with the classic stuffed Teddy Bear. Fur coloring may be realistic or not (purple, pink, polka dotted, etc.) and the face may be simple or wildly exaggerated to look sweet or dan- gerous (has pointed teeth and fangs, horns, etc.). The animal may be a humanoid caricature, a la the Teddy Bear, or a more realistic stuffed rendition of the creature, but all are roughly hu- man size, can speak and walk on two legs. The animal abilities remain roughly the same as those described in the Animal Form table, however, S.D.C., Spd, and bonuses are half, and the ani- mal is made of fabric and stuffing so weight is half that of the character’s normal weight. Bonuses: +2D6 S.D.C., +1D4 to M.A., +20% to Prowl, impervious to heat, cold, and poison, ki- netic attacks (from punches to bullets) do half damage, and floats on water until it becomes waterlogged and sinks (takes 4D6+20 minutes). Penalties: Reduce Spd by 20%, skills that re- quire a delicate touch or fingers are -15%, and fire does double damage.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -693,6 +676,12 @@
             "Classic giant Teddy Bear"
           ],
           "timing": "character_creation"
+        }
+      ],
+      "recoveryBehaviors": [
+        {
+          "trigger": "waterlog",
+          "note": "Floats until waterlogged, then sinks"
         }
       ]
     },
