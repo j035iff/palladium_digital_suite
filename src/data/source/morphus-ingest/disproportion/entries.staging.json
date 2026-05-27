@@ -1,14 +1,8 @@
 {
-  "id": "disproportion",
-  "kind": "morphus_trait_table",
-  "displayName": "Disproportion",
-  "parentTable": null,
-  "description": "Disproportion Morphus table (Nightbane Survival Guide, WB5, printed pp. 87–88). Body image has always been one of the most common fears throughout time. People thinking they are too fat, too skinny, have huge feet or ears, etc., leading to fear that one’s body is ugly and malformed. Perhaps this character obsessed about such things, and now has a Morphus body that is grossly out of pro- portion (2-3 times larger or smaller than normal). One could have thin, spindly arms or normal arms and massive, oversized, clawed hands, or large, muscular legs and tiny feet, or normal legs and oversized feet, a button nose or large nose, tiny ears or elephant ears, or head too small for the character’s hulking body, and so on. Step One selects the body area (head, arms & hands, torso, legs & feet, or two areas); Step Two rolls on the matching sub-table.",
   "entries": [
     {
       "id": "disproportion_arms_hands",
       "name": "Arms & Hands",
-      "entryRole": "table_router",
       "tableCategory": "Disproportion",
       "gameSystems": [
         "nightbane"
@@ -41,7 +35,6 @@
     {
       "id": "disproportion_head",
       "name": "Head",
-      "entryRole": "table_router",
       "tableCategory": "Disproportion",
       "gameSystems": [
         "nightbane"
@@ -282,7 +275,6 @@
     {
       "id": "disproportion_legs_feet",
       "name": "Legs & Feet",
-      "entryRole": "table_router",
       "tableCategory": "Disproportion",
       "gameSystems": [
         "nightbane"
@@ -395,7 +387,6 @@
     {
       "id": "disproportion_roll_twice_for_two_disproportions",
       "name": "Roll twice for two disproportions",
-      "entryRole": "table_router",
       "tableCategory": "Disproportion",
       "gameSystems": [
         "nightbane"
@@ -588,7 +579,6 @@
     {
       "id": "disproportion_torso",
       "name": "Torso",
-      "entryRole": "table_router",
       "tableCategory": "Disproportion",
       "gameSystems": [
         "nightbane"

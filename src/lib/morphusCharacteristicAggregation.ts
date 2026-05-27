@@ -972,12 +972,33 @@ export type MorphusTraitNote = {
 export function collectMorphusTraitNotes(
   traits: readonly Pick<
     MorphusCharacteristic,
-    'id' | 'name' | 'customOneOffs' | 'gimmickToySwitches'
+    | 'id'
+    | 'name'
+    | 'customOneOffs'
+    | 'gimmickToySwitches'
+    | 'variantPercentiles'
+    | 'crossTableRoll'
+    | 'morphusRules'
+    | 'entryRole'
   >[],
 ): MorphusTraitNote[] {
   const out: MorphusTraitNote[] = []
   for (const t of traits) {
     const lines: string[] = [...(t.customOneOffs ?? [])]
+    if (t.entryRole === 'table_router') {
+      lines.unshift(`[Router] ${t.name} — follow table instructions; not a final Morphus look.`)
+    }
+    for (const v of t.variantPercentiles ?? []) {
+      lines.push(`[${v.roll}] ${v.label}${v.description ? `: ${v.description}` : ''}`)
+      if (v.customOneOffs?.length) lines.push(...v.customOneOffs)
+    }
+    if (t.crossTableRoll) {
+      const ref = t.crossTableRoll.targetTableName ?? t.crossTableRoll.targetTableId
+      lines.push(`Also roll on: ${ref}${t.crossTableRoll.note ? ` (${t.crossTableRoll.note})` : ''}`)
+    }
+    for (const rule of t.morphusRules ?? []) {
+      lines.push(`[${rule.kind}] ${rule.summary}`)
+    }
     const board = t.gimmickToySwitches
     if (board) {
       if (board.disguiseImpossible) lines.push('Disguise impossible while this Morphus is active.')

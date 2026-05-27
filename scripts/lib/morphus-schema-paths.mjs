@@ -34,9 +34,15 @@ function resolveRef(root, node) {
  * Walk schema from characteristic root; return whether dotted path exists.
  * @param {string} path - e.g. "mobility.burrowingEngine" or "statModifiers.spd.isOverride"
  */
+/** Map ingest shorthand paths to canonical schema locations. */
+export function normalizeMorphusSchemaPath(path) {
+  if (path === 'conditionalStanceModifiers') return 'mobility.conditionalStanceModifiers'
+  return path
+}
+
 export function morphusSchemaPathExists(path) {
   const root = loadMorphusCharacteristicSchema()
-  const parts = path.split('.').filter(Boolean)
+  const parts = normalizeMorphusSchemaPath(path).split('.').filter(Boolean)
   let node = { type: 'object', properties: root.properties }
   for (const part of parts) {
     node = resolveRef(root, node)

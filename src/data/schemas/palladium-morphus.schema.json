@@ -5,9 +5,15 @@
   "description": "One Morphus characteristic row from the Nightbane Core Rulebook Morphus tables (pp. 85–93). Compiled at runtime via morphusCharacteristicAggregation.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "name", "tableCategory"],
+  "required": [
+    "id",
+    "name",
+    "tableCategory"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$",
@@ -39,39 +45,71 @@
       "$ref": "#/$defs/sources",
       "description": "Book and page citations for this Morphus characteristic row."
     },
-    "description": { "type": "string" },
-    "statModifiers": { "$ref": "#/$defs/statModifiers" },
+    "description": {
+      "type": "string"
+    },
+    "statModifiers": {
+      "$ref": "#/$defs/statModifiers"
+    },
     "naturalAr": {
       "type": "integer",
       "minimum": 0,
       "description": "Absolute natural A.R. granted by this trait (not a polymorphic modifier). Stacked by the master A.R. parser."
     },
-    "saveModifiers": { "$ref": "#/$defs/saveModifiers" },
-    "mobility": { "$ref": "#/$defs/mobility" },
-    "sensory": { "$ref": "#/$defs/sensory" },
-    "skillModifiers": { "$ref": "#/$defs/skillModifiers" },
-    "damageAffinities": { "$ref": "#/$defs/damageAffinities" },
-    "weaponClassBonuses": { "$ref": "#/$defs/weaponClassBonuses" },
-    "heightModifier": { "$ref": "#/$defs/polymorphicModifier" },
-    "weightModifier": { "$ref": "#/$defs/polymorphicModifier" },
+    "saveModifiers": {
+      "$ref": "#/$defs/saveModifiers"
+    },
+    "mobility": {
+      "$ref": "#/$defs/mobility"
+    },
+    "sensory": {
+      "$ref": "#/$defs/sensory"
+    },
+    "skillModifiers": {
+      "$ref": "#/$defs/skillModifiers"
+    },
+    "damageAffinities": {
+      "$ref": "#/$defs/damageAffinities"
+    },
+    "weaponClassBonuses": {
+      "$ref": "#/$defs/weaponClassBonuses"
+    },
+    "heightModifier": {
+      "$ref": "#/$defs/polymorphicModifier"
+    },
+    "weightModifier": {
+      "$ref": "#/$defs/polymorphicModifier"
+    },
     "naturalWeapons": {
       "type": "array",
-      "items": { "$ref": "#/$defs/naturalWeapon" }
+      "items": {
+        "$ref": "#/$defs/naturalWeapon"
+      }
     },
     "limbDurability": {
       "type": "array",
-      "items": { "$ref": "#/$defs/limbDurability" }
+      "items": {
+        "$ref": "#/$defs/limbDurability"
+      }
     },
-    "subTraitChoicesBudget": { "$ref": "#/$defs/subTraitChoicesBudget" },
-    "handCapacityConstraints": { "$ref": "#/$defs/handCapacityConstraints" },
-    "companionBlueprint": { "$ref": "#/$defs/companionBlueprint" },
+    "subTraitChoicesBudget": {
+      "$ref": "#/$defs/subTraitChoicesBudget"
+    },
+    "handCapacityConstraints": {
+      "$ref": "#/$defs/handCapacityConstraints"
+    },
+    "companionBlueprint": {
+      "$ref": "#/$defs/companionBlueprint"
+    },
     "isPolymorphicTemplate": {
       "type": "boolean",
       "description": "When true, tells the frontend presentation sheet that this morphus choice acts as a dynamic archetype wrapper capable of altering its visual skin and spawning minor temporary S.D.C. shields at execution time."
     },
     "gimmickInventory": {
       "type": "array",
-      "items": { "$ref": "#/$defs/gimmickInventoryItem" },
+      "items": {
+        "$ref": "#/$defs/gimmickInventoryItem"
+      },
       "description": "Spawned Morphus gadgets (Dark Designs Clown/Jester pp. 29–33; Hobbyist; Superbeing Gadgeteer pp. 60–62)."
     },
     "gimmickToySwitches": {
@@ -83,23 +121,60 @@
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "enum": ["kick", "bite", "head_butt", "tail", "claws"]
+        "enum": [
+          "kick",
+          "bite",
+          "head_butt",
+          "tail",
+          "claws"
+        ]
       },
       "description": "Natural attack limb types disabled while this trait is active (e.g. oversized shoes block kicks)."
     },
     "activatedAbilities": {
       "type": "array",
-      "items": { "$ref": "#/$defs/activatedAbility" },
+      "items": {
+        "$ref": "#/$defs/activatedAbility"
+      },
       "description": "Limited burst abilities with charge pools (Dark Designs Gear-Head, pp. 33–35)."
     },
     "specialCombatInterceptions": {
       "type": "array",
-      "items": { "$ref": "#/$defs/specialCombatInterception" },
+      "items": {
+        "$ref": "#/$defs/specialCombatInterception"
+      },
       "description": "Specialized parry/intercept rules (shadow, lasers, bare-handed melee)."
     },
     "customOneOffs": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Narrative rules not yet modeled in structured fields (always show in trait notes)."
+    },
+    "entryRole": {
+      "type": "string",
+      "enum": ["trait", "table_router", "subtable_header"],
+      "description": "trait = playable Morphus result; table_router = Step-One style redirect (e.g. disproportion body area); subtable_header = section label only."
+    },
+    "variantPercentiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/variantPercentile"
+      },
+      "description": "Inner percentile sub-rolls within one trait (e.g. Junk Golem junk type 01-25%, Mirror Man mirror style)."
+    },
+    "crossTableRoll": {
+      "$ref": "#/$defs/crossTableRoll",
+      "description": "Requires rolling on another Morphus table (e.g. Stuffed Animal → Animal Form)."
+    },
+    "morphusRules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/morphusRule"
+      },
+      "description": "Structured edge-case rules (reform, mirror walk, immobilization) for UI and future automation."
     }
   },
   "$defs": {
@@ -110,7 +185,11 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["gameSystem", "reference", "pageNumber"],
+        "required": [
+          "gameSystem",
+          "reference",
+          "pageNumber"
+        ],
         "properties": {
           "gameSystem": {
             "type": "string",
@@ -136,7 +215,9 @@
       "additionalProperties": false,
       "minProperties": 1,
       "properties": {
-        "flat": { "type": "integer" },
+        "flat": {
+          "type": "integer"
+        },
         "dice": {
           "type": "string",
           "minLength": 1,
@@ -153,7 +234,10 @@
         },
         "variableScaleConditions": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "Documented conditional scalar tiers (e.g. balloon count penalties) for UI and future tier resolvers."
         }
       }
@@ -161,11 +245,19 @@
     "weaponActivationCost": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["resourceType", "value"],
+      "required": [
+        "resourceType",
+        "value"
+      ],
       "properties": {
         "resourceType": {
           "type": "string",
-          "enum": ["hp", "sdc", "ppe", "isp"],
+          "enum": [
+            "hp",
+            "sdc",
+            "ppe",
+            "isp"
+          ],
           "description": "Pool spent when the natural weapon or gimmick effect activates."
         },
         "value": {
@@ -178,7 +270,11 @@
     "gimmickInventoryItem": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["itemName", "sdc", "effectFormula"],
+      "required": [
+        "itemName",
+        "sdc",
+        "effectFormula"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -207,7 +303,12 @@
         },
         "regenerationRule": {
           "type": "string",
-          "enum": ["hourly", "daily", "per_24_hours", "per_transformation"],
+          "enum": [
+            "hourly",
+            "daily",
+            "per_24_hours",
+            "per_transformation"
+          ],
           "description": "When the gadget or its uses replenish (per_24_hours = Dark Designs Gadgeteer re-materialize)."
         },
         "effectFormula": {
@@ -217,7 +318,9 @@
         },
         "components": {
           "type": "array",
-          "items": { "$ref": "#/$defs/limbDurability" },
+          "items": {
+            "$ref": "#/$defs/limbDurability"
+          },
           "description": "Sub-parts with their own S.D.C. (e.g. Glide Pack wings at 50 S.D.C. each)."
         },
         "statModifiers": {
@@ -226,7 +329,9 @@
         },
         "skillGrants": {
           "type": "array",
-          "items": { "$ref": "#/$defs/skillOverride" },
+          "items": {
+            "$ref": "#/$defs/skillOverride"
+          },
           "description": "Morphus-only skill overrides tied to this gadget (e.g. Lock Pick Tool at 50%)."
         },
         "traitFlags": {
@@ -234,7 +339,11 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "enum": ["infinite_ammo", "fragile", "auto_returning"]
+            "enum": [
+              "infinite_ammo",
+              "fragile",
+              "auto_returning"
+            ]
           },
           "description": "Operational flags for spawned gimmick items."
         }
@@ -243,7 +352,11 @@
     "naturalWeapon": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["limbType", "damageFormula", "isAdditiveToHth"],
+      "required": [
+        "limbType",
+        "damageFormula",
+        "isAdditiveToHth"
+      ],
       "properties": {
         "limbType": {
           "type": "string",
@@ -260,9 +373,17 @@
             "misc_limbs"
           ]
         },
-        "label": { "type": "string", "minLength": 1 },
-        "damageFormula": { "type": "string", "minLength": 1 },
-        "isAdditiveToHth": { "type": "boolean" },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "damageFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "isAdditiveToHth": {
+          "type": "boolean"
+        },
         "weaponTraits": {
           "type": "array",
           "uniqueItems": true,
@@ -285,7 +406,9 @@
           "$ref": "#/$defs/weaponActivationCost",
           "description": "Health or energy sacrifice to activate this natural weapon (Clown table payload costs)."
         },
-        "poison": { "$ref": "#/$defs/poison" }
+        "poison": {
+          "$ref": "#/$defs/poison"
+        }
       }
     },
     "weaponDamageModifier": {
@@ -306,11 +429,27 @@
     "poison": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["saveType", "failDamageFormula", "passDamageFormula"],
+      "required": [
+        "saveType",
+        "failDamageFormula",
+        "passDamageFormula"
+      ],
       "properties": {
-        "saveType": { "type": "string", "enum": ["poison", "gas"] },
-        "failDamageFormula": { "type": "string", "minLength": 1 },
-        "passDamageFormula": { "type": "string", "minLength": 1 }
+        "saveType": {
+          "type": "string",
+          "enum": [
+            "poison",
+            "gas"
+          ]
+        },
+        "failDamageFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "passDamageFormula": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "limbDestructionConditionOverrides": {
@@ -318,19 +457,39 @@
       "additionalProperties": false,
       "description": "Injected when component S.D.C. reaches 0 (Gear-Head sub-component destruction).",
       "properties": {
-        "statModifiers": { "$ref": "#/$defs/statModifiers" },
-        "damageAffinities": { "$ref": "#/$defs/damageAffinities" }
+        "statModifiers": {
+          "$ref": "#/$defs/statModifiers"
+        },
+        "damageAffinities": {
+          "$ref": "#/$defs/damageAffinities"
+        }
       }
     },
     "limbDurability": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["limbName", "quantity", "sdc"],
+      "required": [
+        "limbName",
+        "quantity",
+        "sdc"
+      ],
       "properties": {
-        "limbName": { "type": "string", "minLength": 1 },
-        "quantity": { "type": "integer", "minimum": 1 },
-        "sdc": { "type": "integer", "minimum": 0 },
-        "hp": { "type": "integer", "minimum": 0 },
+        "limbName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sdc": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hp": {
+          "type": "integer",
+          "minimum": 0
+        },
         "ar": {
           "type": "integer",
           "minimum": 0,
@@ -368,7 +527,11 @@
         },
         "resetPeriod": {
           "type": "string",
-          "enum": ["hourly", "daily", "per_encounter"],
+          "enum": [
+            "hourly",
+            "daily",
+            "per_encounter"
+          ],
           "description": "When the charge pool refills."
         },
         "durationFormula": {
@@ -385,7 +548,10 @@
     "specialCombatInterception": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["interceptAction", "modifierFlat"],
+      "required": [
+        "interceptAction",
+        "modifierFlat"
+      ],
       "properties": {
         "interceptAction": {
           "type": "string",
@@ -406,30 +572,78 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "iq": { "$ref": "#/$defs/polymorphicModifier" },
-        "me": { "$ref": "#/$defs/polymorphicModifier" },
-        "ma": { "$ref": "#/$defs/polymorphicModifier" },
-        "ps": { "$ref": "#/$defs/polymorphicModifier" },
-        "pp": { "$ref": "#/$defs/polymorphicModifier" },
-        "pe": { "$ref": "#/$defs/polymorphicModifier" },
-        "pb": { "$ref": "#/$defs/polymorphicModifier" },
-        "spd": { "$ref": "#/$defs/polymorphicModifier" },
-        "sdc": { "$ref": "#/$defs/polymorphicModifier" },
-        "hp": { "$ref": "#/$defs/polymorphicModifier" },
-        "ppe": { "$ref": "#/$defs/polymorphicModifier" },
-        "hf": { "$ref": "#/$defs/polymorphicModifier" },
-        "perception": { "$ref": "#/$defs/polymorphicModifier" },
-        "apm": { "$ref": "#/$defs/polymorphicModifier" },
-        "initiative": { "$ref": "#/$defs/polymorphicModifier" },
-        "strike": { "$ref": "#/$defs/polymorphicModifier" },
-        "parry": { "$ref": "#/$defs/polymorphicModifier" },
-        "dodge": { "$ref": "#/$defs/polymorphicModifier" },
-        "rollWithPunch": { "$ref": "#/$defs/polymorphicModifier" },
-        "pullPunch": { "$ref": "#/$defs/polymorphicModifier" },
-        "entangle": { "$ref": "#/$defs/polymorphicModifier" },
-        "disarm": { "$ref": "#/$defs/polymorphicModifier" },
-        "strikeWithGuns": { "$ref": "#/$defs/polymorphicModifier" },
-        "bonusHthDamage": { "$ref": "#/$defs/polymorphicModifier" },
+        "iq": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "me": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "ma": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "ps": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "pp": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "pe": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "pb": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "spd": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "sdc": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "hp": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "ppe": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "hf": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "perception": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "apm": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "initiative": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "strike": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "parry": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "dodge": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "rollWithPunch": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "pullPunch": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "entangle": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "disarm": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "strikeWithGuns": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "bonusHthDamage": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
         "ar": {
           "$ref": "#/$defs/polymorphicModifier",
           "description": "Relative Armor Rating shift (supports negative flat values, e.g. {\"flat\": -2})."
@@ -440,51 +654,104 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "magic": { "type": "integer" },
-        "psionics": { "type": "integer" },
-        "insanity": { "type": "integer" },
-        "poison": { "type": "integer" },
-        "gas": { "type": "integer" },
-        "horrorFactor": { "type": "integer" },
-        "disease": { "type": "integer" },
-        "possession": { "type": "integer" },
-        "illusions": { "type": "integer" },
-        "nightlordMagic": { "type": "integer" },
-        "allSaves": { "type": "integer" },
-        "comaDeath": { "$ref": "#/$defs/polymorphicModifier" }
+        "magic": {
+          "type": "integer"
+        },
+        "psionics": {
+          "type": "integer"
+        },
+        "insanity": {
+          "type": "integer"
+        },
+        "poison": {
+          "type": "integer"
+        },
+        "gas": {
+          "type": "integer"
+        },
+        "horrorFactor": {
+          "type": "integer"
+        },
+        "disease": {
+          "type": "integer"
+        },
+        "possession": {
+          "type": "integer"
+        },
+        "illusions": {
+          "type": "integer"
+        },
+        "nightlordMagic": {
+          "type": "integer"
+        },
+        "allSaves": {
+          "type": "integer"
+        },
+        "comaDeath": {
+          "$ref": "#/$defs/polymorphicModifier"
+        }
       }
     },
     "jumpModifiers": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "standingHeight": { "$ref": "#/$defs/polymorphicModifier" },
-        "standingDistance": { "$ref": "#/$defs/polymorphicModifier" },
-        "runningHeight": { "$ref": "#/$defs/polymorphicModifier" },
-        "runningDistance": { "$ref": "#/$defs/polymorphicModifier" }
+        "standingHeight": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "standingDistance": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "runningHeight": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "runningDistance": {
+          "$ref": "#/$defs/polymorphicModifier"
+        }
       }
     },
     "waterCombatModifiers": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "strike": { "$ref": "#/$defs/polymorphicModifier" },
-        "parry": { "$ref": "#/$defs/polymorphicModifier" },
-        "dodge": { "$ref": "#/$defs/polymorphicModifier" }
+        "strike": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "parry": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "dodge": {
+          "$ref": "#/$defs/polymorphicModifier"
+        }
       }
     },
     "aquaticTraits": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "holdBreathDuration": { "$ref": "#/$defs/polymorphicModifier" },
-        "canBreatheUnderwater": { "type": "boolean" },
-        "noBreathingRequired": { "type": "boolean" },
-        "depthToleranceFeet": { "type": "integer", "minimum": 0 },
-        "waterCombatModifiers": { "$ref": "#/$defs/waterCombatModifiers" },
+        "holdBreathDuration": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "canBreatheUnderwater": {
+          "type": "boolean"
+        },
+        "noBreathingRequired": {
+          "type": "boolean"
+        },
+        "depthToleranceFeet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "waterCombatModifiers": {
+          "$ref": "#/$defs/waterCombatModifiers"
+        },
         "buoyancy": {
           "type": "string",
-          "enum": ["sink", "float", "neutral"]
+          "enum": [
+            "sink",
+            "float",
+            "neutral"
+          ]
         }
       }
     },
@@ -492,26 +759,47 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "strike": { "$ref": "#/$defs/polymorphicModifier" },
-        "parry": { "$ref": "#/$defs/polymorphicModifier" },
-        "dodge": { "$ref": "#/$defs/polymorphicModifier" },
-        "rollWithPunch": { "$ref": "#/$defs/polymorphicModifier" }
+        "strike": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "parry": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "dodge": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "rollWithPunch": {
+          "$ref": "#/$defs/polymorphicModifier"
+        }
       }
     },
     "flightEngine": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "flySpdAttribute": { "$ref": "#/$defs/polymorphicModifier" },
-        "maxSpeedMph": { "type": "number", "minimum": 0 },
-        "maxAltitudeFeet": { "type": "number", "minimum": 0 },
-        "flightCombatBonuses": { "$ref": "#/$defs/flightCombatBonuses" }
+        "flySpdAttribute": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "maxSpeedMph": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxAltitudeFeet": {
+          "type": "number",
+          "minimum": 0
+        },
+        "flightCombatBonuses": {
+          "$ref": "#/$defs/flightCombatBonuses"
+        }
       }
     },
     "conditionalTerrainModifier": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["surfaceTypes", "spdMultiplier"],
+      "required": [
+        "surfaceTypes",
+        "spdMultiplier"
+      ],
       "properties": {
         "surfaceTypes": {
           "type": "array",
@@ -519,7 +807,11 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "enum": ["hard_flat", "rough_uneven", "soft_fluid"]
+            "enum": [
+              "hard_flat",
+              "rough_uneven",
+              "soft_fluid"
+            ]
           },
           "description": "Terrain surfaces this row applies to (Dark Designs Athlete / Skates, pp. 28–29)."
         },
@@ -537,11 +829,19 @@
     "conditionalStanceModifier": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["stanceType", "statModifiers"],
+      "required": [
+        "stanceType",
+        "statModifiers"
+      ],
       "properties": {
         "stanceType": {
           "type": "string",
-          "enum": ["mounted", "dismounted", "prone", "cloaked"],
+          "enum": [
+            "mounted",
+            "dismounted",
+            "prone",
+            "cloaked"
+          ],
           "description": "Posture gate for stance-dependent stat swaps (Ancient Warrior centaur / cloak)."
         },
         "statModifiers": {
@@ -553,7 +853,10 @@
     "companionBlueprint": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["entityName", "poolSharingRule"],
+      "required": [
+        "entityName",
+        "poolSharingRule"
+      ],
       "properties": {
         "entityName": {
           "type": "string",
@@ -566,7 +869,11 @@
         },
         "poolSharingRule": {
           "type": "string",
-          "enum": ["independent", "fifty_fifty_split", "shared"],
+          "enum": [
+            "independent",
+            "fifty_fifty_split",
+            "shared"
+          ],
           "description": "How H.P./S.D.C. pools split between rider and companion."
         }
       }
@@ -575,18 +882,30 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "jumpModifiers": { "$ref": "#/$defs/jumpModifiers" },
-        "swimSpeedBonus": { "$ref": "#/$defs/polymorphicModifier" },
-        "aquaticTraits": { "$ref": "#/$defs/aquaticTraits" },
-        "flightEngine": { "$ref": "#/$defs/flightEngine" },
+        "jumpModifiers": {
+          "$ref": "#/$defs/jumpModifiers"
+        },
+        "swimSpeedBonus": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "aquaticTraits": {
+          "$ref": "#/$defs/aquaticTraits"
+        },
+        "flightEngine": {
+          "$ref": "#/$defs/flightEngine"
+        },
         "conditionalTerrainModifiers": {
           "type": "array",
-          "items": { "$ref": "#/$defs/conditionalTerrainModifier" },
+          "items": {
+            "$ref": "#/$defs/conditionalTerrainModifier"
+          },
           "description": "Surface-dependent movement and skill adjustments."
         },
         "conditionalStanceModifiers": {
           "type": "array",
-          "items": { "$ref": "#/$defs/conditionalStanceModifier" },
+          "items": {
+            "$ref": "#/$defs/conditionalStanceModifier"
+          },
           "description": "Stance-dependent stat modifier swaps (mounted, prone, etc.)."
         },
         "burrowingEngine": {
@@ -598,7 +917,10 @@
     "burrowingEngine": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["feetPerMeleeRound", "allowedSubstrates"],
+      "required": [
+        "feetPerMeleeRound",
+        "allowedSubstrates"
+      ],
       "properties": {
         "feetPerMeleeRound": {
           "type": "integer",
@@ -611,7 +933,11 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "enum": ["soil_dirt", "solid_rock", "concrete"]
+            "enum": [
+              "soil_dirt",
+              "solid_rock",
+              "concrete"
+            ]
           },
           "description": "Ground types this burrow profile may traverse."
         }
@@ -621,24 +947,48 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "vision": { "type": "integer" },
-        "smell": { "type": "integer" },
-        "sound": { "type": "integer" }
+        "vision": {
+          "type": "integer"
+        },
+        "smell": {
+          "type": "integer"
+        },
+        "sound": {
+          "type": "integer"
+        }
       }
     },
     "sensory": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "nightvisionRangeFlatBonus": { "type": "integer" },
-        "perceptionSpecialties": { "$ref": "#/$defs/perceptionSpecialties" },
-        "telescopicVision": { "type": "boolean" },
-        "thermalVision": { "type": "boolean" },
-        "seeInvisible": { "type": "boolean" },
-        "sharpVision": { "type": "boolean" },
-        "sonarHearing": { "type": "boolean" },
-        "sharpHearing": { "type": "boolean" },
-        "invisibleToThermalImaging": { "type": "boolean" },
+        "nightvisionRangeFlatBonus": {
+          "type": "integer"
+        },
+        "perceptionSpecialties": {
+          "$ref": "#/$defs/perceptionSpecialties"
+        },
+        "telescopicVision": {
+          "type": "boolean"
+        },
+        "thermalVision": {
+          "type": "boolean"
+        },
+        "seeInvisible": {
+          "type": "boolean"
+        },
+        "sharpVision": {
+          "type": "boolean"
+        },
+        "sonarHearing": {
+          "type": "boolean"
+        },
+        "sharpHearing": {
+          "type": "boolean"
+        },
+        "invisibleToThermalImaging": {
+          "type": "boolean"
+        },
         "externalSensoryObfuscation": {
           "type": "array",
           "uniqueItems": true,
@@ -658,20 +1008,35 @@
     "skillOverride": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["targetType", "targetValue"],
+      "required": [
+        "targetType",
+        "targetValue"
+      ],
       "properties": {
         "targetType": {
           "type": "string",
-          "enum": ["skill_id", "category", "skill_trait"]
+          "enum": [
+            "skill_id",
+            "category",
+            "skill_trait"
+          ]
         },
         "targetValue": {
           "type": "string",
           "minLength": 1,
           "description": "When **targetType** is **skill_trait**, use a registry id (e.g. **requires_dexterity**, **requires_light_touch**) from **skill_trait_registry.json**."
         },
-        "modifierPercent": { "type": "integer" },
-        "isNegated": { "type": "boolean" },
-        "grantUnlearnedValue": { "type": "integer", "minimum": 0, "maximum": 98 },
+        "modifierPercent": {
+          "type": "integer"
+        },
+        "isNegated": {
+          "type": "boolean"
+        },
+        "grantUnlearnedValue": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98
+        },
         "perLevelIncrement": {
           "type": "integer",
           "description": "Per-level increment stacked on modifierPercent or grantUnlearnedValue (e.g. Gymnast Build 68% base +4% per level)."
@@ -681,7 +1046,10 @@
     "customSystemRollLevelIntervalScaling": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["levelInterval", "chanceBonus"],
+      "required": [
+        "levelInterval",
+        "chanceBonus"
+      ],
       "properties": {
         "levelInterval": {
           "type": "integer",
@@ -697,7 +1065,10 @@
     "customSystemRoll": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["rollName", "baseSuccessChance"],
+      "required": [
+        "rollName",
+        "baseSuccessChance"
+      ],
       "properties": {
         "rollName": {
           "type": "string",
@@ -726,65 +1097,137 @@
         },
         "specificSkillOverrides": {
           "type": "array",
-          "items": { "$ref": "#/$defs/skillOverride" }
+          "items": {
+            "$ref": "#/$defs/skillOverride"
+          }
         },
         "customSystemRolls": {
           "type": "array",
-          "items": { "$ref": "#/$defs/customSystemRoll" },
+          "items": {
+            "$ref": "#/$defs/customSystemRoll"
+          },
           "description": "Narrative / psychic percentile checks not tied to the skill catalog (Artisan table)."
         }
       }
     },
     "damageAffinityMultiplier": {
       "type": "number",
-      "enum": [0, 0.1, 0.25, 0.5, 1, 1.5, 2],
+      "enum": [
+        0,
+        0.1,
+        0.25,
+        0.5,
+        1,
+        1.5,
+        2
+      ],
       "description": "Vulnerability tier: 0 none, 0.1 tenth, 0.25 quarter, 0.5 half, 1 normal, 1.5 increased, 2 double."
     },
     "damageAffinities": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "heat": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "fire": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "cold": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "ice": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "poison": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "airborneToxins": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "electricity": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "lasers": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "energy": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "kinetic": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "blunt": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "explosives": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "falling": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "fatigue": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "magic": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "nightlordMagic": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "water": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "wood": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "silver": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "holyWeapons": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "piercing": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "pain": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "light": { "$ref": "#/$defs/damageAffinityMultiplier" },
-        "darknessPowers": { "$ref": "#/$defs/damageAffinityMultiplier" }
+        "heat": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "fire": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "cold": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "ice": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "poison": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "airborneToxins": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "electricity": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "lasers": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "energy": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "kinetic": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "blunt": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "explosives": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "falling": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "fatigue": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "magic": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "nightlordMagic": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "water": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "wood": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "silver": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "holyWeapons": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "piercing": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "pain": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "light": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "darknessPowers": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        }
       }
     },
     "weaponClassBonuses": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "melee": { "$ref": "#/$defs/polymorphicModifier" },
-        "thrown": { "$ref": "#/$defs/polymorphicModifier" },
-        "bow": { "$ref": "#/$defs/polymorphicModifier" },
-        "guns": { "$ref": "#/$defs/polymorphicModifier" },
-        "requiring_hands": { "$ref": "#/$defs/polymorphicModifier" }
+        "melee": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "thrown": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "bow": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "guns": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "requiring_hands": {
+          "$ref": "#/$defs/polymorphicModifier"
+        }
       }
     },
     "subTraitChoicesBudget": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["allowedChoicesPool"],
+      "required": [
+        "allowedChoicesPool"
+      ],
       "properties": {
         "slotsAvailable": {
           "type": "integer",
@@ -799,19 +1242,33 @@
         "allowedChoicesPool": {
           "type": "array",
           "minItems": 1,
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "Ids from gimmickInventory entries or other sub-trait slugs the player may select."
         }
       },
       "oneOf": [
-        { "required": ["slotsAvailable"] },
-        { "required": ["slotsFormula"] }
+        {
+          "required": [
+            "slotsAvailable"
+          ]
+        },
+        {
+          "required": [
+            "slotsFormula"
+          ]
+        }
       ]
     },
     "handCapacityConstraints": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["occupiesHands", "blocksTwoHandedWeapons"],
+      "required": [
+        "occupiesHands",
+        "blocksTwoHandedWeapons"
+      ],
       "properties": {
         "occupiesHands": {
           "type": "integer",
@@ -899,9 +1356,13 @@
     "gimmickToySwitchEffect": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["effectKind"],
+      "required": [
+        "effectKind"
+      ],
       "properties": {
-        "effectKind": { "$ref": "#/$defs/gimmickToyEffectKind" },
+        "effectKind": {
+          "$ref": "#/$defs/gimmickToyEffectKind"
+        },
         "displayName": {
           "type": "string",
           "minLength": 1,
@@ -916,13 +1377,29 @@
           "minimum": 0,
           "description": "Melee rounds the effect lasts when not using durationFormula."
         },
-        "damageFormula": { "type": "string", "minLength": 1 },
-        "strikeBonus": { "type": "integer" },
-        "parryBonus": { "type": "integer" },
-        "dodgeBonus": { "type": "integer" },
-        "disarmBonus": { "type": "integer" },
-        "rangeFeet": { "type": "number", "minimum": 0 },
-        "horrorFactor": { "type": "integer" },
+        "damageFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "strikeBonus": {
+          "type": "integer"
+        },
+        "parryBonus": {
+          "type": "integer"
+        },
+        "dodgeBonus": {
+          "type": "integer"
+        },
+        "disarmBonus": {
+          "type": "integer"
+        },
+        "rangeFeet": {
+          "type": "number",
+          "minimum": 0
+        },
+        "horrorFactor": {
+          "type": "integer"
+        },
         "usesPerPeriod": {
           "type": "integer",
           "minimum": 0,
@@ -930,7 +1407,12 @@
         },
         "resetPeriod": {
           "type": "string",
-          "enum": ["per_use", "hourly", "daily", "per_encounter"],
+          "enum": [
+            "per_use",
+            "hourly",
+            "daily",
+            "per_encounter"
+          ],
           "description": "When limited uses replenish."
         },
         "spdMultiplierWhileActive": {
@@ -942,9 +1424,15 @@
           "$ref": "#/$defs/statModifiers",
           "description": "Combat/stat shifts only while the switch effect is active."
         },
-        "sensoryWhileActive": { "$ref": "#/$defs/sensory" },
-        "mobilityWhileActive": { "$ref": "#/$defs/mobility" },
-        "naturalWeaponWhileActive": { "$ref": "#/$defs/naturalWeapon" },
+        "sensoryWhileActive": {
+          "$ref": "#/$defs/sensory"
+        },
+        "mobilityWhileActive": {
+          "$ref": "#/$defs/mobility"
+        },
+        "naturalWeaponWhileActive": {
+          "$ref": "#/$defs/naturalWeapon"
+        },
         "notes": {
           "type": "string",
           "description": "Narrative rules not yet modeled in structured fields."
@@ -959,69 +1447,194 @@
           "type": "boolean",
           "description": "Large wind-up key protruding from the back."
         },
-        "chestCountFormula": { "type": "string" },
-        "perArmCountFormula": { "type": "string" },
-        "perLegCountFormula": { "type": "string" },
-        "perHandBackCount": { "type": "integer", "minimum": 0 },
-        "neckOrHeadSideCount": { "type": "integer", "minimum": 0 },
-        "headBackCount": { "type": "integer", "minimum": 0 }
+        "chestCountFormula": {
+          "type": "string"
+        },
+        "perArmCountFormula": {
+          "type": "string"
+        },
+        "perLegCountFormula": {
+          "type": "string"
+        },
+        "perHandBackCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "neckOrHeadSideCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "headBackCount": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "gimmickToyAssignedSwitch": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["bodyLocation"],
+      "required": [
+        "bodyLocation"
+      ],
       "properties": {
         "label": {
           "type": "string",
           "description": "Optional player label for this switch."
         },
-        "bodyLocation": { "$ref": "#/$defs/gimmickToySwitchLocation" },
-        "controlType": { "$ref": "#/$defs/gimmickToySwitchControlType" },
-        "effect": { "$ref": "#/$defs/gimmickToySwitchEffect" },
+        "bodyLocation": {
+          "$ref": "#/$defs/gimmickToySwitchLocation"
+        },
+        "controlType": {
+          "$ref": "#/$defs/gimmickToySwitchControlType"
+        },
+        "effect": {
+          "$ref": "#/$defs/gimmickToySwitchEffect"
+        },
         "effectRef": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$",
           "description": "References presetEffectCatalog[].id when effect is not inlined."
         }
       },
-      "anyOf": [{ "required": ["effect"] }, { "required": ["effectRef"] }]
+      "anyOf": [
+        {
+          "required": [
+            "effect"
+          ]
+        },
+        {
+          "required": [
+            "effectRef"
+          ]
+        }
+      ]
     },
     "gimmickToyPresetEffect": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "effect"],
+      "required": [
+        "id",
+        "effect"
+      ],
       "properties": {
         "id": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$",
           "description": "Stable slug referenced by assignedSwitches[].effectRef."
         },
-        "effect": { "$ref": "#/$defs/gimmickToySwitchEffect" }
+        "effect": {
+          "$ref": "#/$defs/gimmickToySwitchEffect"
+        }
       }
     },
     "gimmickToySwitchBoard": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["switchLayout", "presetEffectCatalog"],
+      "required": [
+        "switchLayout",
+        "presetEffectCatalog"
+      ],
       "properties": {
-        "switchLayout": { "$ref": "#/$defs/gimmickToySwitchLayout" },
+        "switchLayout": {
+          "$ref": "#/$defs/gimmickToySwitchLayout"
+        },
         "presetEffectCatalog": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/gimmickToyPresetEffect" },
+          "items": {
+            "$ref": "#/$defs/gimmickToyPresetEffect"
+          },
           "description": "All G.M.-approved preset effects; assign one fixed effect per physical switch at creation."
         },
         "assignedSwitches": {
           "type": "array",
-          "items": { "$ref": "#/$defs/gimmickToyAssignedSwitch" },
+          "items": {
+            "$ref": "#/$defs/gimmickToyAssignedSwitch"
+          },
           "description": "Fixed switch-to-effect mapping (filled at character creation)."
         },
-        "disguiseImpossible": { "type": "boolean" },
-        "customClothingRequired": { "type": "boolean" },
+        "disguiseImpossible": {
+          "type": "boolean"
+        },
+        "customClothingRequired": {
+          "type": "boolean"
+        },
         "gmApprovalRequiredForCustom": {
           "type": "boolean",
           "description": "Player-suggested switch effects need G.M. approval."
+        }
+      }
+    },
+    "variantPercentile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roll", "label"],
+      "properties": {
+        "roll": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Inner percentile band (e.g. 01-25%, 67-00%)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "customOneOffs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "crossTableRoll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetTableId"],
+      "properties": {
+        "targetTableId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "description": "Morphus table id slug (e.g. animal_form, sci-fi)."
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "Printed book reference when id differs from display name."
+        },
+        "note": {
+          "type": "string",
+          "description": "Scaling notes (e.g. half S.D.C. and bonuses from Animal Form)."
+        }
+      }
+    },
+    "morphusRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "summary"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "mirror_walk",
+            "reform_after_destruction",
+            "called_shot_defense",
+            "environmental_vulnerability",
+            "immobilization",
+            "player_choice",
+            "cross_reference",
+            "combat_opponent_modifier",
+            "weapon_living_part",
+            "other"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "params": {
+          "type": "object",
+          "description": "Optional machine-readable parameters (dice, durations, skill ids)."
         }
       }
     }

@@ -1,0 +1,21 @@
+{
+  "id": "disproportion",
+  "displayName": "Disproportion",
+  "tableCategory": "Disproportion",
+  "tableHeading": "Disproportion Table",
+  "targetJson": "src/data/content/morphus/tables/disproportion.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "authoritativeBookKey": "survival_guide",
+  "descriptionAuthorityNote": "Transcribe description and mechanics from the authoritative book (Dark Designs when present).",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Disproportion Table",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

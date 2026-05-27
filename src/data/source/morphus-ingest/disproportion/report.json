@@ -1,0 +1,376 @@
+{
+  "tableId": "disproportion",
+  "generatedAt": "2026-05-27T16:25:29.356Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "conditionalStanceModifiers",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 39,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "disproportion_arms_hands",
+        "name": "Arms & Hands",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_barrel_chested_and_stoutly_built",
+        "name": "Barrel-Chested and Stoutly Built",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_head",
+        "name": "Head",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_ears",
+        "name": "Huge Ears",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_eyes",
+        "name": "Huge Eyes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_feet",
+        "name": "Huge Feet",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_forearms",
+        "name": "Huge Forearms",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_hands",
+        "name": "Huge Hands",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_jaw_strong_neck",
+        "name": "Huge Jaw, Strong Neck",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_legs",
+        "name": "Huge Legs",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_nose",
+        "name": "Huge Nose",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_teeth",
+        "name": "Huge Teeth",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_huge_broad_shoulders",
+        "name": "Huge, Broad, Shoulders",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_large_head",
+        "name": "Large Head",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_large_mouth",
+        "name": "Large Mouth",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_large_muscular_upper_arms",
+        "name": "Large, Muscular Upper Arms",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_large_thick_neck",
+        "name": "Large, Thick Neck",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_legs_feet",
+        "name": "Legs & Feet",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_long_thin_legs",
+        "name": "Long, Thin Legs",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_morbidly_obese",
+        "name": "Morbidly Obese",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_muscular",
+        "name": "Muscular",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_no_chin",
+        "name": "No chin",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_pencil_neck",
+        "name": "Pencil Neck",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_puny_build",
+        "name": "Puny Build",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_roll_twice_for_two_disproportions",
+        "name": "Roll twice for two disproportions",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_short_legs",
+        "name": "Short Legs",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_small_feet",
+        "name": "Small Feet",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_small_hands",
+        "name": "Small Hands",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_small_narrow_shoulders",
+        "name": "Small, Narrow Shoulders",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_thin_and_tall_long",
+        "name": "Thin and Tall/Long",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_thin_forearms",
+        "name": "Thin Forearms",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_tiny_ears",
+        "name": "Tiny Ears",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_tiny_eyes",
+        "name": "Tiny Eyes",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_tiny_mouth",
+        "name": "Tiny Mouth",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_tiny_nose",
+        "name": "Tiny Nose",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_tiny_teeth",
+        "name": "Tiny Teeth",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_torso",
+        "name": "Torso",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_unusually_long_arms",
+        "name": "Unusually Long Arms",
+        "hooks": [],
+        "notesOnly": false
+      },
+      {
+        "id": "disproportion_very_small_head",
+        "name": "Very Small Head",
+        "hooks": [],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 39,
+    "ids": [
+      "disproportion_arms_hands",
+      "disproportion_barrel_chested_and_stoutly_built",
+      "disproportion_head",
+      "disproportion_huge_ears",
+      "disproportion_huge_eyes",
+      "disproportion_huge_feet",
+      "disproportion_huge_forearms",
+      "disproportion_huge_hands",
+      "disproportion_huge_jaw_strong_neck",
+      "disproportion_huge_legs",
+      "disproportion_huge_nose",
+      "disproportion_huge_teeth",
+      "disproportion_huge_broad_shoulders",
+      "disproportion_large_head",
+      "disproportion_large_mouth",
+      "disproportion_large_muscular_upper_arms",
+      "disproportion_large_thick_neck",
+      "disproportion_legs_feet",
+      "disproportion_long_thin_legs",
+      "disproportion_morbidly_obese",
+      "disproportion_muscular",
+      "disproportion_no_chin",
+      "disproportion_pencil_neck",
+      "disproportion_puny_build",
+      "disproportion_roll_twice_for_two_disproportions",
+      "disproportion_short_legs",
+      "disproportion_small_feet",
+      "disproportion_small_hands",
+      "disproportion_small_narrow_shoulders",
+      "disproportion_thin_and_tall_long",
+      "disproportion_thin_forearms",
+      "disproportion_tiny_ears",
+      "disproportion_tiny_eyes",
+      "disproportion_tiny_mouth",
+      "disproportion_tiny_nose",
+      "disproportion_tiny_teeth",
+      "disproportion_torso",
+      "disproportion_unusually_long_arms",
+      "disproportion_very_small_head"
+    ]
+  },
+  "bookIndex": {
+    "total": 39,
+    "included": 39,
+    "skippedOther": 0,
+    "names": [
+      "Arms & Hands",
+      "Barrel-Chested and Stoutly Built",
+      "Head",
+      "Huge Ears",
+      "Huge Eyes",
+      "Huge Feet",
+      "Huge Forearms",
+      "Huge Hands",
+      "Huge Jaw, Strong Neck",
+      "Huge Legs",
+      "Huge Nose",
+      "Huge Teeth",
+      "Huge, Broad, Shoulders",
+      "Large Head",
+      "Large Mouth",
+      "Large, Muscular Upper Arms",
+      "Large, Thick Neck",
+      "Legs & Feet",
+      "Long, Thin Legs",
+      "Morbidly Obese",
+      "Muscular",
+      "No chin",
+      "Pencil Neck",
+      "Puny Build",
+      "Roll twice for two disproportions",
+      "Short Legs",
+      "Small Feet",
+      "Small Hands",
+      "Small, Narrow Shoulders",
+      "Thin and Tall/Long",
+      "Thin Forearms",
+      "Tiny Ears",
+      "Tiny Eyes",
+      "Tiny Mouth",
+      "Tiny Nose",
+      "Tiny Teeth",
+      "Torso",
+      "Unusually Long Arms",
+      "Very Small Head"
+    ],
+    "authoritativeBookKey": "survival_guide",
+    "books": [
+      {
+        "key": "survival_guide",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

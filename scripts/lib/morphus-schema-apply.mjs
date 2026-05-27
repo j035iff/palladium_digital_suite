@@ -8,6 +8,7 @@ import {
   clearMorphusSchemaCache,
   loadMorphusCharacteristicSchema,
   morphusSchemaPathExists,
+  normalizeMorphusSchemaPath,
 } from './morphus-schema-paths.mjs'
 import { schemasDir, repoRoot } from './morphus-ingest-shared.mjs'
 
@@ -41,7 +42,21 @@ const TS_TOP_LEVEL_FIELDS = {
   activatedAbilities: 'activatedAbilities?: readonly MorphusActivatedAbility[]',
   specialCombatInterceptions: 'specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]',
   customOneOffs: 'customOneOffs?: readonly string[]',
+  entryRole: "entryRole?: 'trait' | 'table_router' | 'subtable_header'",
+  variantPercentiles: 'variantPercentiles?: readonly MorphusVariantPercentile[]',
+  crossTableRoll: 'crossTableRoll?: MorphusCrossTableRoll',
+  morphusRules: 'morphusRules?: readonly MorphusEdgeCaseRule[]',
 }
+
+/** Paths that belong under mobility — never add as top-level characteristic fields. */
+const MOBILITY_NESTED_ONLY = new Set([
+  'conditionalStanceModifiers',
+  'conditionalTerrainModifiers',
+  'burrowingEngine',
+  'aquaticTraits',
+  'flightEngine',
+  'jumpModifiers',
+])
 
 function resolveRef(root, node) {
   if (!node || typeof node !== 'object') return node
@@ -103,13 +118,24 @@ export function buildSchemaPatches(analysis) {
         const parts = path.split('.')
         const top = parts[0]
         if (parts.length === 1) {
-          patches.push({
-            kind: 'top_level',
-            path,
-            property: top,
-            schema: { type: 'string' },
-            note: edge.note,
-          })
+          if (MOBILITY_NESTED_ONLY.has(top)) {
+            patches.push({
+              kind: 'def_property',
+              path: `mobility.${top}`,
+              defName: 'mobility',
+              property: top,
+              schema: { type: 'array', items: { type: 'object' } },
+              note: edge.note,
+            })
+          } else {
+            patches.push({
+              kind: 'top_level',
+              path,
+              property: top,
+              schema: { type: 'string' },
+              note: edge.note,
+            })
+          }
         } else if (parts.length === 2) {
           const defName = top === 'mobility' || top === 'sensory' || top === 'skillModifiers'
             ? top
@@ -168,7 +194,7 @@ export function applySchemaPatches(patches) {
           TS_TOP_LEVEL_FIELDS[patch.property] ??
           `${patch.property}?: unknown /* TODO: tighten type */`
         appendMorphusCharacteristicTypeField(tsLine)
-      } else if (!morphusSchemaPathExists(patch.path)) {
+      } else if (!morphusSchemaPathExists(normalizeMorphusSchemaPath(patch.path))) {
         manual.push({ ...patch, reason: 'top-level add failed' })
       }
       continue

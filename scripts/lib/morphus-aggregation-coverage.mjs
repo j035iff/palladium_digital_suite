@@ -31,6 +31,10 @@ const HOOKS = [
   { path: 'limbDurability', label: 'limb durability components' },
   { path: 'conditionalStanceModifiers', label: 'stance modifiers' },
   { path: 'customOneOffs', label: 'custom one-offs (notes only)' },
+  { path: 'variantPercentiles', label: 'variant percentiles (notes)' },
+  { path: 'crossTableRoll', label: 'cross-table roll (notes)' },
+  { path: 'morphusRules', label: 'structured edge rules (notes)' },
+  { path: 'entryRole', label: 'entry role (router/header)' },
 ]
 
 function getAt(obj, dotted) {

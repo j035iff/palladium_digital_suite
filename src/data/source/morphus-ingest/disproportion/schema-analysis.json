@@ -1,0 +1,512 @@
+{
+  "generatedAt": "2026-05-27T16:20:34.186Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "conditionalStanceModifiers"
+  ],
+  "traitCount": 33,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Large Head",
+      "pageNumber": 88,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "11-15%",
+      "name": "Huge Jaw, Strong Neck",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "21-25%",
+      "name": "Huge Teeth",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "26-30%",
+      "name": "Tiny Teeth",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "31-35%",
+      "name": "Large, Thick Neck",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "36-40%",
+      "name": "Pencil Neck",
+      "pageNumber": 87,
+      "patterns": [
+        {
+          "patternId": "limb_component",
+          "schemaPaths": [
+            "limbDurability"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "limbDurability"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "Very Small Head",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "limb_component",
+          "schemaPaths": [
+            "limbDurability"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "limbDurability"
+      ]
+    },
+    {
+      "percent": "51-55%",
+      "name": "Large Mouth",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "56-60%",
+      "name": "Tiny Mouth",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "61-67%",
+      "name": "Huge Ears",
+      "pageNumber": 87,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "68-75%",
+      "name": "Tiny Ears",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "76-82%",
+      "name": "Huge Eyes",
+      "pageNumber": 87,
+      "patterns": [
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "sensory"
+      ]
+    },
+    {
+      "percent": "83-89%",
+      "name": "Tiny Eyes",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "90-95%",
+      "name": "Huge Nose",
+      "pageNumber": 87,
+      "patterns": [
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "96-00%",
+      "name": "Tiny Nose",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "01-10%",
+      "name": "Huge Forearms",
+      "pageNumber": 88,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "11-20%",
+      "name": "Thin Forearms",
+      "pageNumber": 88,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "21-30%",
+      "name": "Unusually Long Arms",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Large, Muscular Upper Arms",
+      "pageNumber": 88,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "41-50%",
+      "name": "Huge, Broad, Shoulders",
+      "pageNumber": 88,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "51-60%",
+      "name": "Small, Narrow Shoulders",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "61-80%",
+      "name": "Huge Hands",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "81-00%",
+      "name": "Small Hands",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "01-20%",
+      "name": "Huge Legs",
+      "pageNumber": 87,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "conditionalStanceModifiers"
+      ]
+    },
+    {
+      "percent": "21-40%",
+      "name": "Long, Thin Legs",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "41-60%",
+      "name": "Short Legs",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "61-80%",
+      "name": "Huge Feet",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "81-00%",
+      "name": "Small Feet",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "01-20%",
+      "name": "Muscular",
+      "pageNumber": 87,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "21-40%",
+      "name": "Puny Build",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "41-60%",
+      "name": "Barrel-Chested and Stoutly Built",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "61-80%",
+      "name": "Morbidly Obese",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "81-00%",
+      "name": "Thin and Tall/Long",
+      "pageNumber": 88,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "blocking",
+      "action": "Resolve edgeCases in schema-analysis.json (schema-loop applies safe patches automatically)."
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: statModifiers, naturalAr, mobility, weaponClassBonuses, heightModifier, weightModifier, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions"
+    }
+  ],
+  "blocking": [
+    {
+      "trait": "Muscular",
+      "kind": "unmatched_mechanical_prose",
+      "action": "Book text has mechanical rules but no catalog pattern matched — add MECHANIC_PATTERNS or schema fields.",
+      "detail": null
+    }
+  ],
+  "readyToTranscribe": true,
+  "tableId": "disproportion"
+}

@@ -1008,6 +1008,45 @@ export type MorphusCharacteristic = {
   activatedAbilities?: readonly MorphusActivatedAbility[]
   specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]
   customOneOffs?: readonly string[]
+  /** Step-One router or section header — not a final Morphus look by itself. */
+  entryRole?: 'trait' | 'table_router' | 'subtable_header'
+  /** Inner percentile bands inside one trait row (Junk Golem body type, Mirror Man style, etc.). */
+  variantPercentiles?: readonly MorphusVariantPercentile[]
+  /** Roll on another Morphus table (e.g. Stuffed Animal → animal_form). */
+  crossTableRoll?: MorphusCrossTableRoll
+  /** Structured edge-case rules for notes and future automation. */
+  morphusRules?: readonly MorphusEdgeCaseRule[]
+}
+
+export type MorphusVariantPercentile = {
+  roll: string
+  label: string
+  description?: string
+  customOneOffs?: readonly string[]
+}
+
+export type MorphusCrossTableRoll = {
+  targetTableId: string
+  targetTableName?: string
+  note?: string
+}
+
+export type MorphusEdgeCaseRuleKind =
+  | 'mirror_walk'
+  | 'reform_after_destruction'
+  | 'called_shot_defense'
+  | 'environmental_vulnerability'
+  | 'immobilization'
+  | 'player_choice'
+  | 'cross_reference'
+  | 'combat_opponent_modifier'
+  | 'weapon_living_part'
+  | 'other'
+
+export type MorphusEdgeCaseRule = {
+  kind: MorphusEdgeCaseRuleKind
+  summary: string
+  params?: Record<string, unknown>
 }
 
 /**

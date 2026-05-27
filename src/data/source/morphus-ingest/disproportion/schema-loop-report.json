@@ -1,0 +1,23 @@
+{
+  "tableId": "disproportion",
+  "maxIterations": 12,
+  "iterations": [
+    {
+      "iteration": 1,
+      "readyToTranscribe": false,
+      "edgeCaseCount": 2,
+      "applied": 1,
+      "manual": 0,
+      "schemaChanged": true
+    },
+    {
+      "iteration": 2,
+      "readyToTranscribe": false,
+      "edgeCaseCount": 1,
+      "applied": 0,
+      "manual": 0,
+      "schemaChanged": false
+    }
+  ],
+  "completed": false
+}
