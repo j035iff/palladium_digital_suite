@@ -6,6 +6,7 @@
   "targetJson": "src/data/content/morphus/tables/plant_life.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
@@ -13,21 +14,24 @@
       "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
       "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
       "tableHeading": "Plant Life Table\nNote:",
-      "authoritative": true
+      "authoritative": true,
+      "required": true
     },
     {
-      "key": "plant_life_ii",
+      "key": "dark_designs_ii",
       "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
       "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-      "tableHeading": "Plant Life Table II\nA Nightbane",
-      "authoritative": true
+      "tableHeading": "Plant Life Table II",
+      "authoritative": false,
+      "required": true
     },
     {
       "key": "nightlands",
       "pdf": "src/data/reference/nightbane/WB2-Nightlands.pdf",
       "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-      "tableHeading": "Plant Life Table \nNote:",
-      "authoritative": false
+      "tableHeading": "Plant Life Table",
+      "authoritative": false,
+      "required": true
     }
   ]
 }

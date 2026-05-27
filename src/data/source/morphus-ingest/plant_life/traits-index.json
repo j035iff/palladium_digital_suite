@@ -11,7 +11,7 @@
       "authoritative": true
     },
     {
-      "key": "plant_life_ii",
+      "key": "dark_designs_ii",
       "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
       "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
       "authoritative": false
@@ -33,14 +33,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "81-90%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "81-90%",
           "authoritative": false
         }
@@ -58,14 +58,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "21-30%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "21-30%",
           "authoritative": false
         }
@@ -81,7 +81,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 47,
           "percent": "01-10%",
@@ -90,7 +90,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -101,14 +101,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "71-80%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "71-80%",
           "authoritative": false
         }
@@ -124,7 +124,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 49,
           "percent": "81-90%",
@@ -133,7 +133,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -142,7 +142,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 49,
           "percent": "71-80%",
@@ -151,7 +151,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -162,14 +162,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "01-20%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "01-20%",
           "authoritative": false
         }
@@ -185,7 +185,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 48,
           "percent": "31-40%",
@@ -194,7 +194,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -205,14 +205,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "41-60%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "41-60%",
           "authoritative": false
         }
@@ -228,7 +228,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 48,
           "percent": "41-50%",
@@ -237,7 +237,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -246,7 +246,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 48,
           "percent": "21-30%",
@@ -255,7 +255,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -264,7 +264,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 50,
           "percent": "91-00%",
@@ -273,7 +273,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -282,7 +282,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 49,
           "percent": "61-70%",
@@ -291,7 +291,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -302,14 +302,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "91-00%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "91-00%",
           "authoritative": false
         }
@@ -327,14 +327,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "31-40%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "31-40%",
           "authoritative": false
         }
@@ -352,14 +352,14 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 142,
+          "pageNumber": 141,
           "percent": "61-70%",
           "authoritative": true
         },
         {
           "bookKey": "nightlands",
           "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 143,
+          "pageNumber": 142,
           "percent": "61-70%",
           "authoritative": false
         }
@@ -375,7 +375,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 48,
           "percent": "51-60%",
@@ -384,7 +384,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     },
     {
@@ -393,7 +393,7 @@
       "skip": false,
       "sources": [
         {
-          "bookKey": "plant_life_ii",
+          "bookKey": "dark_designs_ii",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
           "pageNumber": 48,
           "percent": "11-20%",
@@ -402,7 +402,7 @@
       ],
       "descriptionAuthority": "dark_designs",
       "alsoPublishedIn": [
-        "plant_life_ii"
+        "dark_designs_ii"
       ]
     }
   ]

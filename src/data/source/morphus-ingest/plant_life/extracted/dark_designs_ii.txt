@@ -1,0 +1,205 @@
+Plant Life Table II
+A Nightbane with any of these features takes the phrase “green 
+thumb” to a whole new level. The character may be a student of 
+botany, an environmental activist, or just has fond memories of 
+Grandpa’s garden or camping weekends. Whatever the reasoning, some aspect of the plant kingdom is represented within the 
+Morphus form. Note: As with the original Plant Life Table (see 
+Nightbane® Sourcebook 2: Nightlands or the Morphus Appendix at the back of this sourcebook), a Nightbane with features 
+from this table takes double damage from fire and half damage 
+from cold. Defoliants and herbicides also act as lethal poisons if 
+the Nightbane comes into contact with them, dealing an average 
+of 3D6 damage direct to Hit Points per 12 fluid ounces (355 ml) 
+on a failed save vs lethal poison (14 or higher to save); half the 
+damage on a successful save.
+Roll percentile dice once for random determination, or pick 
+one.
+01-10% Fern Fronds: Growing from the head, shoulders, 
+and back of the Morphus form are long stems with tiny leaves. 
+These fronds cascade down the sides of the head and the back like 
+long, flowing hair. The most common colors are green, brown, 
+yellow, and blue. Bonuses: The fronds allow the Nightbane to 
+subsist completely on sunlight and water. As long as the character gets at least 14 hours of sunlight per week, no other food is 
+needed. If less sunlight exposure is obtained, it must be supplemented with solid food. The foliage also makes pretty good camouflage in wooded environments, adding a +5% bonus to Prowl, 
+and +1 to Awe/Horror Factor. Penalties: The character must get 
+at least two hours of sunlight per week. Every week without it 
+reduces the P.S. and P.E. attributes by three and the S.D.C. of the 
+Morphus form by 30. If any of these stats reaches zero, the Morphus becomes unavailable until there is sunlight to be had. This 
+need for sunlight does not apply while in the Nightlands. -20% 
+on skills like Disguise, Impersonation, Performance, Seduction 
+and Undercover Ops.
+11-20% Vines: Winding around the arms, legs, and torso of 
+the Morphus are a number of clinging vines. While not prehensile, these fibrous lengths can serve as whips, lassoes, and climbing ropes. They can even be torn off in 3-30 foot (0.9 to 9.1 m) 
+sections to bind captives, secure cargo, use as rope, etc. Taken 
+together, there is roughly 120 feet (36.6 m) of vines covering the 
+character. Bonuses: +1 to the P.E. attribute and +3D6+6 S.D.C. 
+The vines have 20 S.D.C. per foot (0.3 m) and regrow if removed 
+at the rate of one foot (0.3 m) per hour. If used as a lasso, bindings, etc., the vine holds with half the Supernatural Physical 
+Strength of the Nightbane. As a whip, the vines deal 3D6 damage 
+with a maximum reach of 20 feet (6.1 m) and a +1 bonus to strike 
+and disarm. +5% to the Camouflage and Climbing skills. Penalties: -2 to the P.S. attribute and -1D6 from base P.P.E.
+21-30% Nutshell: The character is, quite literally, a tough 
+nut to crack. The skin becomes a thick, woody shell reminiscent 
+of a walnut or coconut. Bonuses: +2 to the P.E. attribute and 
++2D4x10+20 S.D.C. with a Natural A.R. of 12. Penalties: -2 to 
+the P.P., P.B. and Spd attributes, and -5% skill penalty on those 
+requiring delicate work or a light touch, including Art, Forgery, 
+Palming, Pick Pockets, etc., and a -15% penalty on skills like 
+Disguise, Impersonation, Performance, Seduction and Undercover Ops.
+31-40% Itch-Weed: The skin of the Nightbane’s Morphus 
+form is green and has a waxy sheen to it. Part of this sheen is 
+the chemical irritant constantly secreted by the character. This irritant is essentially a powerful version of the substance produced 
+by plants such as Poison Ivy and Poison Oak. Bonuses: +1 to 
+Horror Factor, resistant to poison (half damage, duration and penalties on a failed saving throw), and -15% on skills like Disguise, 
+Impersonation, Performance, Seduction and Undercover Ops.
+Poisonous Skin (special): Within 1D4 melee rounds of contact 
+with exposed skin (and a failed save vs non-lethal poison of 16 or 
+greater is necessary), any place an opponent has been touched by 
+the Nightbane turns a bright red and begins to itch and burn. This 
+causes victims to lose 2 attacks per melee round and imposes a -2 
+penalty on all combat rolls and a -10% penalty to all skills. These 
+effects last for 2D6 minutes. Double the penalties and duration 
+against the Nightlords and the denizens of the Nightlands. Penalties: -1 to the M.A. attribute, -2D6 S.D.C., and -1D6 base P.P.E.
+41-50% Moss Monster: Growing over every part of the character is one of several varieties of moss. This clinging plant covers most if not all of the Nightbane’s features, making for great 
+natural camouflage. It even softens the sounds of movement and 
+the appearance of the character’s tracks. If standing completely 
+still in places such as graveyards, ancient ruins, and parks, the 
+‘Bane might even pass for an old statue. Bonuses: +1 to the P.S. 
+and P.E. attributes and +4D6 to S.D.C., +1 to Horror Factor and 
++20% to the Prowl and Camouflage skills outdoors in fields, tall 
+grass and woodlands. Penalties: -1 to the M.A. attribute, reduce 
+Spd by half, and -20% penalty on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.
+51-60% Venus Flytrap: The Venus flytrap is a small, 
+carnivorous plant that survives by catching insects in a wide, 
+mouth-like opening and dissolving them for food. This Nightbane is essentially a giant version of the normal plant (think 
+“Little Shop of Horrors”). Legs and feet are replaced by bundles of roots that form 4-8 appendages and provide locomotion. 
+Likewise, rudimentary hands and arms are formed out of leafy 
+vines. The body becomes a relatively thin stalk which has several leafy offshoots.
+The head of the plant Morphus with its giant maw is the defining feature of this Morphus form, as it is the part that opensup to snap up and hold prey. When closed, the plant head is 
+relatively thin, and appears to be two curved leaves with spiny 
+edges that curl together to form the massive maw. The whole 
+“head” opens up to reveal the mouth. This mouth can open 180 
+degrees so that the spines or “teeth” all face the same direction 
+and is large enough to easily swallow animals as big as a large 
+dog or wolf, a child, or half of a man. There are no visible 
+eyes, ears, or nose, but the Nightbane is able to see, hear, and 
+smell. In addition, the inside of the mouth is equipped with 
+motion-sensitive fibers that are fine-tuned enough to pick up 
+movement within 20 feet (6.1 m) of the Nightbane, so penalties for darkness/blindness are only -2 (not -10). Bonuses: +2 
+to the M.E. and P.S. attributes, +1 on initiative, +2 to strike/
+bite, +1 to parry and entangles with vine arms, +4 to save 
+vs gas attacks, +2 to Horror Factor, and +1D6x10 to S.D.C. 
+(Note: The giant plant head/maw/flytrap has 4D6+50 S.D.C. 
+all by itself, and if destroyed, forces the Nightbane to turn 
+back into his Facade. The head/flytrap regrows completely after 1D4+1 hours. The head takes damage only when targeted 
+with a Called Shot.) Bite Attack: 3D6 damage per bite, each 
+bite counts as one melee attack. What makes the bite attack 
+so dangerous is that the Venus flytrap, holds its prey (or part 
+of him) inside the maw where it secretes digestive acid to kill 
+and dissolve it! The powerful bite holds its prey tight in a viselike grip that requires twice the flytrap’s Supernatural P.S. to 
+pry open. (Reducing the Nightbane’s Hit Points to three or 
+less causes the flytrap head to open and release its prey.) The 
+mouth can also hold prey, covering up to half of a humansized target, while digestive juices inflict 2D6 damage per 
+melee round (15 seconds)! Double damage to Nightlords and 
+the denizens of the Nightlands. Penalties: -3 to the M.A. attribute, -4 to P.B., and -6 to Spd. The use of ranged weapons and 
+most machinery is impossible and -30% to any skill requiring 
+the use of hands (Art, Climbing, Computer Operation, Pick 
+Locks, etc.). Skills like Acrobatics, Disguise, Impersonation, 
+Performance, Prowl, Seduction, Undercover Ops, Piloting/
+driving, etc., are impossible to use in this Morphus. While the 
+character is unable to swim as a giant plant, it does float on the 
+surface of water indefinitely unless weighed down.
+61-70% Seed/Spore Pods: Dotting the exterior of the Morphus, 2D6+2 small pods or seed clusters protrude from the skin. 
+While seemingly innocuous, any or all of these pods can be 
+popped or broken apart at the will of the Nightbane to fill the 
+surrounding area with tiny spores or seeds. Wrestling with this 
+character is also likely to break one or more of the pods (55% 
+chance), as they only have 2 S.D.C. each. Once the particles 
+contained within are released, they cover a 6 foot (1.8 m) radius 
+around the character for 1D4 melee rounds. Bonuses: +1 to the 
+P.E. attribute, +2D6 to S.D.C., +1 to save vs poison, and Spore 
+Attack, below. -10% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Penalties: -2 to the 
+P.E. and P.B. attribute and -1D6 from base P.P.E.
+Spore Attack: The spore/seed clouds impair vision and breathing as they get caught in the eyes, nose, and throat. Anyone in a 
+seed cloud except for the Nightbane, himself, loses initiative and 
+one attack and are -2 on all combat rolls and -10% to skill performance due to hacking and coughing. Duration 1D4 melee rounds 
+even after leaving the cloud of spores.
+71-80% Fungus/Mushrooms: A variety of small to mediumsized mushrooms grow on the back, neck, shoulders, upper arms, 
+and perhaps on the head of the Nightbane instead of hair. Each 
+has its own effect, which is activated by picking the fungus and 
+getting the intended victim or recipient to consume the mushroom (or placed on a corpse). Bonuses: +3 to save vs poisons/
+toxins, +2D6 S.D.C., and mushrooms with varying effects. Penalties: -2 to the P.B. and Spd attributes, and reduce the permanent 
+base P.P.E. by 2D6 points, and -20% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.
+The Types of Mushrooms:
+2D4 Decomposing Mushrooms (dark brown top, grey stem): 
+One decomposing mushroom placed on a dead body completely 
+devours the corpse within 1D6 melee rounds.
+1D6+2 Deadly Mushrooms (red top and black underside): 
+3D6 damage direct to Hit Points per each mushroom eaten. Must 
+be ingested. A successful save vs lethal poison reduces the damage by half (round down).
+1D6+4 Debilitating Poison Mushrooms (white with brown 
+highlights): Poison mushrooms taste delicious, but are poisonous 
+when eaten. Even eating just one causes vomiting and stomach 
+cramps (-1 attack, -2 to all combat rolls and bonuses, reduce Spd 
+by 20%, and -15% on skill performance). Duration of penalites: 
+20 minutes per each mushroom eaten.
+1D6+4 Edible Mushrooms (tan): One edible mushroom provides the nourishment of a single meal.
+1D6+2 Medicinal Mushrooms (pale green top and stem): This 
+small green mushroom resembles a bulbous green button. Eating one settles an upset stomach, stops vomiting, cures heartburn/
+acid indigestion, can help with a hangover (reduces duration by 
+half), and restores 1D4 lost Hit Points caused by poison of any 
+kind. In the case of curing poison, each mushroom consumed restores 1D6 Hit Points, but only damage caused by poison.
+Note: Any fungus that is plucked, eaten or otherwise used or 
+destroyed regrows in 24 hours.
+81-90% Fruit-Bearing Vines: Leafy vines covers the 
+Nightbane’s body. Hanging under the arms and from vines 
+covering the body are 6D6+10 small fruits, like berries or 
+grapes located in clusters. These fruits can be real fruit of almost any kind, but typically berries (raspberries, blueberries, 
+blackberries, and even small apples, small pears, plums, figs, 
+tangerines and mangoes). They might also be completely 
+fictional varieties but taste like one of the above. The fruit 
+can be picked and eaten, given away as a treat, or thrown 
+to attract attention (only the larger, harder fruit like an apple, pear, tangerine or mango do one point of damage when 
+thrown hard). The fruit is one of the Nightbane’s favorites 
+and he regularly munches on it, but is likely to get angry 
+with anyone who picks the fruit without asking. Fruits that 
+are eaten, lost or destroyed regrow in 24 hours. Bonuses: +1 
+to the I.Q. and M.A. attributes, +4D6 to S.D.C. If thrown, 
+berries only have a range of 20 feet (6.1 m) and do no damage, but splatter on impact and make a mess which could (on 
+a Called Shot) obscure the vision of goggles, visors, camera lenses and windows until washed away with water. Fruit 
+juice and pulp smear when simply wiped away with a hand 
+or towel, causing a wider amount of obstruction of vision. 
+Even if semi-transparent/semi-opaque, the smear is annoying 
+and impairs vision (-2 to strike, parry, dodge, and disarm; 
+-1 on Perception Rolls that require sight). Only the larger, 
+heavier fruit do a single point of damage and have a throwing 
+range of 100 feet (30.5 m). As a tougher fruit, they are less 
+likely to leave behind a smear that impairs vision (01-20% 
+chance). Eating eight berries, or one of the larger fruit like 
+an apple, provides the equivalent nourishment of a full meal, 
+and fruit on the Nightbane is always fresh, tasty, and edible. 
+Penalties: -1 to the P.P. and Spd attributes, -1D4 from the 
+permanent base P.P.E., and -20% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.
+91-00% Sap: The Nightbane has a tough, brown or greenish-brown skin that feels like an onion stalk, or it may have 
+a light bark texture to it. Rather than blood and normal body 
+fluids, the Nightbane’s Morphus bleeds a thick, sticky sap. The 
+same sap can be produced from the mouth (half a handful per 
+melee action, the creation of each gob counts as one melee attack) and has a variety of uses. Bonuses: +2 to the P.E. attribute 
+and +6D6 S.D.C., resistant to heat and cold (half damage, but 
+fire and magic cold do full damage), impervious to diseases, 
+poisons, toxins and smoke that would affect humans, only poison/toxins that harm plant life hurt this Nightbane and even they 
+only do half damage. If pierced or cut by a weapon there is a 
+50% chance it will become stuck in the character. For anyone 
+but the Nightbane to free it requires a combined Supernatural 
+P.S. of 30 and takes two attacks; the Nightbane can remove it 
+with ease, though the blade will have sap on it which could 
+make it stick to the next thing it touches, get stuck inside its 
+scabbard if put away with the sap blood on it, etc. The sap can 
+be used in place of glue to repair items, seal wounds, and to help 
+hold onto objects and opponents (+3 to entangle and disarm an 
+opponent, -2 for the Nightbane to be disarmed, and +15% to 
+the Climbing and Palming skills.) The sap is also incredibly 
+difficult to wash off so it can be used to mark a trail. To wash it 
+off requires soap and hot (not cold or warm) water and plenty of 
+elbow grease. Penalties: -1 to the P.P., P.E. and P.B. attributes, 
+-2D4 to the permanent base P.P.E., and -10% on skills like Disguise, Impersonation, Performance, Seduction and Undercover 
+Ops.

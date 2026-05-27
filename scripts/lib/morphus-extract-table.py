@@ -113,14 +113,17 @@ _GEAR_HEAD_MID_TABLE_RE = re.compile(
 def sanitize_trait_body(text: str) -> str:
     """Strip PDF watermarks and mid-table page headers from trait prose."""
     text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", text)
-    text = re.sub(r"Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    text = re.sub(r"-?\s*Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    # Rejoin words split across PDF page-break watermarks (e.g. "cam- ouflage", "ap- ple").
+    text = re.sub(r"([a-z]{2,})-\s+([a-z])", r"\1\2", text, flags=re.I)
     return re.sub(r"\s{2,}", " ", text).strip()
 
 
 def sanitize_table_text(table_text: str) -> str:
     """Clean raw PDF table extract before writing extracted/*.txt."""
     text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", table_text)
-    text = re.sub(r"Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    text = re.sub(r"-?\s*Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
+    text = re.sub(r"([a-z]{2,})-\s+([a-z])", r"\1\2", text, flags=re.I)
     return text
 
 

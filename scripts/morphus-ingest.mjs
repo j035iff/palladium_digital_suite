@@ -394,9 +394,10 @@ function extractedTxtPriority(fileName) {
     'extracted-authoritative.txt',
     'core.txt',
     'between_the_shadows.txt',
-    'dark_designs_ii.txt',
+    'nightlands.txt',
     'survival_guide.txt',
     'dark_designs.txt',
+    'dark_designs_ii.txt',
   ]
   const base = fileName.replace(/^.*[/\\]/, '')
   const i = rank.indexOf(base)
@@ -451,6 +452,12 @@ function inferTraitTableCategory(trait, manifest) {
     if (tableIII) return 'Biomechanical III'
     if (tableII) return 'Biomechanical II'
     return 'Biomechanical'
+  }
+  if (manifest.id === 'plant_life') {
+    if (bookKeys.has('dark_designs_ii') || bookKeys.has('plant_life_ii')) {
+      return 'Plant Life II'
+    }
+    return 'Plant Life'
   }
   return manifest.tableCategory ?? manifest.displayName
 }

@@ -1,8 +1,7 @@
 Plant Life Table
 Note: In all cases, fire does double damage to plant-life, but 
 the Nightbane is resistant to cold (does half damage). In most 
-cases, Disguise, Seduction and Undercover Ops skills are impos-
-sible.
+cases, Disguise, Seduction and Undercover Ops skills are impossible.
 01-20% Humanoid Tree: The Nightbane looks like a tree 
 that has come to life. The strength and resilience of the character 
 is incredible, but he is very slow and cumbersome. He has a tree 
@@ -10,9 +9,7 @@ trunk instead of a torso and two long branches with leaves instead
 of arms (if an Unnatural Limbs characteristic, adding extra limbs 
 is also taken, the tree shape would have additional branches). His 
 head is sunken at the top of the trunk and between the two arms/
-branches. It is leaf-covered and misshapen. Instead of legs, sev-
-eral root-like limbs allow some very slow movement. The char-
-acter could pass for a strangely-shaped tree if he does not move; 
+branches. It is leaf-covered and misshapen. Instead of legs, several root-like limbs allow some very slow movement. The character could pass for a strangely-shaped tree if he does not move; 
 he can even make his “roots” sink into the ground, completing 
 the illusion.
 Add 3D4x10 to S.D.C., +6 to P.S., +1D4 to Horror Factor, can 
@@ -28,15 +25,13 @@ Horror Factor.
 his body is coiled in brown vines covered with thorns! Bonuses: 
 +5D6x3 to S.D.C., 1D6 to damage in addition to Supernatural 
 P.S. punches, attackers cannot grab or wrestle with the character 
-without taking 3D6 damage per each attack/grab, and +3 to Hor-
-ror Factor.
+without taking 3D6 damage per each attack/grab, and +3 to Horror Factor.
 41-60% Living Mannequin: The Nightbane looks as if he 
 is a giant, unfinished puppet or mannequin with a body made of 
 polished wood but with the wood grain still showing. Bonuses: 
 2D4x10 to S.D.C., 1D4 to damage and +1 to Horror Factor.
 61-70% Tree Features: The character’s hair is replaced with 
-green vines, or leaves or a cluster of tiny, thin branches; his fin-
-gers and nose are long and gnarled (branch-like in appearance), 
+green vines, or leaves or a cluster of tiny, thin branches; his fingers and nose are long and gnarled (branch-like in appearance), 
 body hair becomes a fine, light green moss, and his skin a bit 
 wrinkled (not like bark exactly, more like a 90 year old) and has 
 a grayish green color. Bonuses: +4D6 to S.D.C. and +2 to Horror 
@@ -54,26 +49,18 @@ strangely attractive and alluring!
 and feels like rough tree bark. Bonuses: +4D6x20 to S.D.C., +1 
 to A.R. and +2 to Horror Factor.
 91-00% Stink Weed: The character’s skin is a pale green and 
-he is covered by fine vines with 1D4x10 small, bulb-like clus-
-ters covering his body. One or two clusters can be opened at will 
-(counts as one melee attack). Opening one cluster releases a re-
-pugnant, sweet odor. Anybody within 10 feet (3 m) must roll to 
+he is covered by fine vines with 1D4x10 small, bulb-like clusters covering his body. One or two clusters can be opened at will 
+(counts as one melee attack). Opening one cluster releases a repugnant, sweet odor. Anybody within 10 feet (3 m) must roll to 
 save vs non-lethal poison (16 or higher) and a failed roll means 
 the person gags, feels nauseous and is -3 on initiative, -1 to strike, 
 parry and dodge, and -10% on skill performance; distracted by 
-the terrible smell. Opening two will double the range and penal-
-ties. The smell lasts for one minute per level of the character and 
-Joe Sifferman (Order #46319524)
-142
-radiates around him like a flower, so it goes where he goes. Once 
+the terrible smell. Opening two will double the range and penalties. The smell lasts for one minute per level of the character andradiates around him like a flower, so it goes where he goes. Once 
 a cluster has been used/opened it cannot be used again for 24 
-hours. A successful save means the character is only -1 on initia-
-tive and -5% on skill performance. Smashing or cutting open a 
+hours. A successful save means the character is only -1 on initiative and -5% on skill performance. Smashing or cutting open a 
 cluster will have the same effect. Bonuses: +3D6 to S.D.C. and 
 +1 to Horror Factor.
 Talent Manifestations
-Talents are unlike any other ability in Palladium’s role-play-
-ing games. While powered by P.P.E., they are not spells. Nor are 
+Talents are unlike any other ability in Palladium’s role-playing games. While powered by P.P.E., they are not spells. Nor are 
 they psionic powers or super abilities. Talents are more akin to 
 tangible expressions of will on the behalf of the Nightbane (and 
 Shadow Mages).
@@ -83,18 +70,15 @@ the mechanics of the powers are always the same, but visually
 they can be quite different.
 For example, Stony Lonesome, a Nightbane with rock-like 
 skin covered in razor wire, has the Darkwhip Talent. So does 
-Crosswire, a Nightbane with a camera-like head and a robot-
-ic body. For both individuals, the Darkwhip Talent works the 
+Crosswire, a Nightbane with a camera-like head and a robotic body. For both individuals, the Darkwhip Talent works the 
 same way. However, Stony’s Darkwhip comes out as a long, 
 deadly strand of barbed wire, and Crosswire’s Darkwhip flashes 
 out as a bundle of seemingly animated electrical wiring. Such 
 variations and effects do not add damage or functionality, but 
-reflect aspects of personality and individuality to each Night-
-bane character.
+reflect aspects of personality and individuality to each Nightbane character.
 It also means that other Nightbane sometimes have to guess at 
 what Talents a Nightbane is using. When you see a holographic 
-image overlay Crosswire’s Facade, making him look like some-
-one else, did he just use Reshape Facade or is it something else? 
+image overlay Crosswire’s Facade, making him look like someone else, did he just use Reshape Facade or is it something else? 
 The observers are not 100% certain.
 And there’s the fun.
 A group of player characters may see Stony embrace with a 
@@ -103,19 +87,16 @@ her. He may be using Infectious Control or he might be using the
 Sharing the Flesh ability. If they attack and take the woman from 
 him, they may save her life . . . or they may prevent him from 
 healing her, and the shock could cause her to die.
-Likewise, when special lenses drop over Crosswire’s camera-
-like eyes, did he just use See Truth or is he peering at that mirror 
+Likewise, when special lenses drop over Crosswire’s cameralike eyes, did he just use See Truth or is he peering at that mirror 
 on the wall and using Mirror Sight?
 The manifestation of Talents usually have some connection 
 or similarity to the Nightbane’s Morphus or personality. For 
 example, Darksong may be a long, blood-curdling howl for a 
 Nightbane with wolf-like attributes in Morphus, but a strange, 
 unearthly choir begins singing whenever a Nightbane with an 
-Angel Morphus uses the same Talent. Gloppy the Kid, a Night-
-bane with a plasmoid, shapeless body, oozes into his computer 
+Angel Morphus uses the same Talent. Gloppy the Kid, a Nightbane with a plasmoid, shapeless body, oozes into his computer 
 through the disc drive or DVD-ROM slot when he uses Lightning 
-Rider, but Crosswire streams into his screen as a series of glow-
-ing “1”s and “0”s.
+Rider, but Crosswire streams into his screen as a series of glowing “1”s and “0”s.
 The only limit to the different Talent manifestations is your 
 imagination. Just remember, the manifestations are only cosmetic 
 visual variations. They do NOT provide any tangible benefit to 
@@ -125,10 +106,7 @@ just look different.
 Appendix
 Talents
 For your convenience, we have reprinted the Morphus Tables 
-from the Nightbane® RPG and select sourcebooks.
-Joe Sifferman (Order #46319524)
-143
-Common Talents
+from the Nightbane® RPG and select sourcebooks.Common Talents
 from Nightbane® RPG
 Anti-Arcane
 Borrow Morphus
@@ -174,8 +152,7 @@ any of the Talents possessed by the Nightbane he is imitating,
 but only abilities that the borrowing character knew the other 
 possessed. Furthermore, the borrowing Nightbane cannot use 
 his own Talents until he resumes his true form. He also uses his 
-own combat skills (modified by the borrowed form’s attribute bo-
-nuses) and his normal skills – the Talent borrows only the other 
+own combat skills (modified by the borrowed form’s attribute bonuses) and his normal skills – the Talent borrows only the other 
 person’s physical body and does NOT include the character’s 
 memories, knowledge, or insanities. The transformation lasts 4 
 melee rounds (one minute).
@@ -203,8 +180,7 @@ with a P.S. equal to the amount of P.P.E. spent on creating them.
 Lasts for 4 melee rounds (one minute), after which they must be 
 recreated. Range is 60 feet (18.3 m). The tendrils can have any 
 shape, not limited to whips and tentacles, although those are the 
-most common. The Darkwhip can be used to strike and also to en-
-tangle or disarm, provided those skills are known to the wielder.
+most common. The Darkwhip can be used to strike and also to entangle or disarm, provided those skills are known to the wielder.
 Limitations: Usable by the Morphus only.
 Cost: Eight permanent to acquire; 4 to activate (additional 
 P.P.E. increases the amount of damage the whip inflicts with each 
@@ -218,15 +194,11 @@ point at least once in his life, or he must have line of sight.
 Limitations: Usable by the Morphus only. Not available until 
 reaching 5th level.
 Cost: Fifteen P.P.E. to permanently acquire it, and a minimum 
-of 2 P.P.E. to activate (see above). This power can also open a 
-Joe Sifferman (Order #46319524)
-144
-doorway to the Nightlands or back, but this costs 40 P.P.E., plus 
+of 2 P.P.E. to activate (see above). This power can also open adoorway to the Nightlands or back, but this costs 40 P.P.E., plus 
 5 P.P.E. per mile.
 Infectious Control
 This often-repulsive Talent allows the Nightbane to take over 
-a person by “infecting” him with a portion of his body. The mani-
-festations of this power are varied. Some Nightbane shoot spines 
+a person by “infecting” him with a portion of his body. The manifestations of this power are varied. Some Nightbane shoot spines 
 or needless that, when they pierce the flesh of the target, enable 
 them to take over. Others create little “parasites” that burrow into 
 the victim’s body. Biomechanicals often drill or shoot wires or 
@@ -240,22 +212,16 @@ try to resist (save vs magic); if he fails the save, he is under the
 control of the Nightbane for 30 minutes. New saves are allowed 
 every 10 minutes.
 While in control, the Nightbane can see, hear and experience 
-everything his victim does while he acts as puppeteer, control-
-ling every word and movement of the victim. The main drawback 
+everything his victim does while he acts as puppeteer, controlling every word and movement of the victim. The main drawback 
 is that the Nightbane has to split his concentration and attention 
 between his own body and that of his victim. Thus, his attacks/
-actions per melee round are divided evenly between the two bod-
-ies, he has no initiative bonus, and combat bonuses and skill per-
-formance is reduced by half, unless he relinquishes his control 
+actions per melee round are divided evenly between the two bodies, he has no initiative bonus, and combat bonuses and skill performance is reduced by half, unless he relinquishes his control 
 over his puppet.
-The “infection” also allows the Nightbane to search the mem-
-ories of his victim; one piece of information can be extracted by 
+The “infection” also allows the Nightbane to search the memories of his victim; one piece of information can be extracted by 
 spending an additional 5 P.P.E. (and the victim gets a separate 
 save to resist against the intrusion; this save is against psionic 
-attack rather than magic). Each “memory search” takes 1D6 min-
-utes and is limited to one small bit of information at a time.
-Limitations: Usable only in Morphus form and is not avail-
-able until 6th level.
+attack rather than magic). Each “memory search” takes 1D6 minutes and is limited to one small bit of information at a time.
+Limitations: Usable only in Morphus form and is not available until 6th level.
 Cost: Twenty P.P.E. are permanently spent to acquire it; 20 
 P.P.E. to activate, plus 20 P.P.E. every additional half hour. The 
 memory of the victim can be searched for an additional 5 P.P.E. 
@@ -263,25 +229,19 @@ per piece of information.
 Note: Victims who have an M.E. of 7 or less are controlled for 
 an hour at a time rather than the usual half an hour.
 Lightning Rider
-The Nightbane becomes a being of pure electrical energy! Un-
-less a great deal of P.P.E. is spent, the electrical charge is weak 
+The Nightbane becomes a being of pure electrical energy! Unless a great deal of P.P.E. is spent, the electrical charge is weak 
 and does not inflict damage. However, while in electrical form, 
-the Nightbane can travel through conductive materials at enor-
-mous speeds. When the power is activated, the Nightbane disap-
-pears in a flash of electricity and “leaps” onto the nearest conduc-
-tive material (metal and exposed wires works best). If no such 
+the Nightbane can travel through conductive materials at enormous speeds. When the power is activated, the Nightbane disappears in a flash of electricity and “leaps” onto the nearest conductive material (metal and exposed wires works best). If no such 
 material is around, the Nightbane appears to become a small pool 
 of sparks, or a small, crackling lightning ball that crawls around 
 at a speed of 8.
 With the invention of the telephone and electrical wires, this 
 Talent came into its own and enables Nightbane to travel from 
 one corner of the world to the next in a matter of minutes through 
-them. Some Nightbane become extremely proficient in navigat-
-ing through telephone exchanges. The easiest way, of course, was 
+them. Some Nightbane become extremely proficient in navigating through telephone exchanges. The easiest way, of course, was 
 to call the place one wished to travel to and then travel through 
 the phone lines and jump out of the receiver! With the advent of 
-computers and the Internet, this power has become even more in-
-fluential. A character with Computer Operations can understand 
+computers and the Internet, this power has become even more influential. A character with Computer Operations can understand 
 the information superhighway and hitch rides on modem calls. A 
 character with Computer Programming can become the ultimate 
 hacker!
@@ -296,13 +256,11 @@ damage before being disabled.
 Mirror Sight
 This and other mirror related talents and natural abilities give 
 the archaic name of “looking glass” great new significance when 
-dealing with the Nightbane and the Nightlords. This Talent en-
-ables the Nightbane to see the other side of a mirror, into the 
+dealing with the Nightbane and the Nightlords. This Talent enables the Nightbane to see the other side of a mirror, into the 
 Nightlands, and vice versa, as if it were a window. A mirror or 
 any highly reflective surface (glass, polished metal, a quiet body 
 of water) must be available. The character can only see what the 
-mirror image faces in the Nightlands, and vice versa. Some Night-
-lands creatures may sense they are being “looked at” and could 
+mirror image faces in the Nightlands, and vice versa. Some Nightlands creatures may sense they are being “looked at” and could 
 cross over to confront or attack the “peeper” (see the Nightlands 
 Section for more information).
 Limitations: Requires a mirror; can be used by both Morphus 
@@ -316,11 +274,7 @@ the person or object he seeks. This is an area effect Talent that
 effectively scans a 10 mile (16 km) radius (more if additional 
 P.P.E. are expended) in search of the person or item sought. This 
 does not mean that the nearest mirror will reveal the target of the 
-search, but the closest area and mirror to it. For example: Search-
-Joe Sifferman (Order #46319524)
-145
-ing for a kidnapped friend, the mirror search may reveal the im-
-age of a bathroom in a hotel. The name of the hotel is visible from 
+search, but the closest area and mirror to it. For example: Searching for a kidnapped friend, the mirror search may reveal the image of a bathroom in a hotel. The name of the hotel is visible from 
 the hanging towels, which may be enough to figure out, at least 
 roughly, where the person is. Or there may actually be a mirror 
 in the hotel room (there usually is) that shows the Nightbane’s 
@@ -330,47 +284,38 @@ Limitations: Usable by the Morphus only.
 Cost: Ten P.P.E. to acquire permanently; 15 to activate for a 
 10 mile (16 km) area, +5 P.P.E. per additional 10 miles (16 km).
 Note: Both mirror sight and mirror search show only images, 
-not sound – it is like looking through the glass of a closed win-
-dow into the room or area that the mirror is located (which may 
-show parts of other rooms or a hallway, things outside the win-
-dows in that room, etc.).
+not sound – it is like looking through the glass of a closed window into the room or area that the mirror is located (which may 
+show parts of other rooms or a hallway, things outside the windows in that room, etc.).
 Covering a mirror with a blanket, towel, or other covering will 
-prevent a character from effectively using mirror sight and mir-
-ror search, because all the mirror will show is that it is covered. 
+prevent a character from effectively using mirror sight and mirror search, because all the mirror will show is that it is covered. 
 However, it does not prevent a Nightlord or other so empowered 
 being from traveling and entering that room through the covered 
 mirror, even if wrapped snugly – the monster tears right through 
 the cloth or tarp. However, painting the mirror will prevent such 
 passage as well as use of the mirror as a window.
 Nightbringer
-Absorbs light around the Nightbane, creating an area of dark-
-ness equal to 10 feet (3 m) in diameter per every 2 P.P.E. spent. 
+Absorbs light around the Nightbane, creating an area of darkness equal to 10 feet (3 m) in diameter per every 2 P.P.E. spent. 
 The power also absorbs energy attacks, except Shadow Blast, 
 Dark Whip and other darkness-based attacks and magic. People 
 caught in the unnatural darkness are at -6 to strike, parry and 
 dodge, and -4 on their Perception Rolls (penalties are half for 
 creatures with nightvision).
 Limitations: Usable by the Morphus only.
-Cost: Five P.P.E. to acquire permanently; 2 minimum to acti-
-vate. Each additional 2 P.P.E. increases the diameter of the dark-
-ness by 10 feet (3 m).
+Cost: Five P.P.E. to acquire permanently; 2 minimum to activate. Each additional 2 P.P.E. increases the diameter of the darkness by 10 feet (3 m).
 Premonition
 Gives the character feelings and visions about the future, often 
 at unexpected times (ultimately, when the Game Master decides 
 the character should get a vision, he does) or at moments of crisis. 
-For the most part, “feelings” of premonition will give the char-
-acter a feeling that something good, bad or dangerous is going to 
+For the most part, “feelings” of premonition will give the character a feeling that something good, bad or dangerous is going to 
 happen soon, or at some particular place, or to some particular 
 person. These feelings are just that, and do not come with any 
 dreams or images.
 “Visions” on the other hand, are usually images and/or short 
-dream sequences that are accompanied by “feelings.” These im-
-ages are often symbolic omens and can be cryptic (but G.M.s, 
+dream sequences that are accompanied by “feelings.” These images are often symbolic omens and can be cryptic (but G.M.s, 
 not too cryptic) and may give some hints of things to come. For 
 example: The Nightbane may have a reoccurring vision about a 
 man or Nightlord, or minion slaughtering innocent people, his 
-friends or even himself. The murderous figure is always in shad-
-ow so his features cannot be seen, but the vision always ends with 
+friends or even himself. The murderous figure is always in shadow so his features cannot be seen, but the vision always ends with 
 the image of a stylized eagle. Then one day, the Nightbane meets 
 a person with a tattoo of that eagle, indicating that this person is 
 the culprit, but not always. The tattoo could be the symbol of a 
@@ -403,21 +348,16 @@ see the true nature of one person or object. This includes actually
 seeing a Nightbane’s Facade and Morphus forms, superimposed 
 one over the other. The alignment of the target can also be seen; 
 applicable to humans and Nightbane (in the latter case, it counts 
-as a separate use of this Talent). Furthermore, See Truth also re-
-veals strong emanations of magic, the undead/vampires, serious 
+as a separate use of this Talent). Furthermore, See Truth also reveals strong emanations of magic, the undead/vampires, serious 
 illness, and strong emotions (hatred when the person is smiling 
 and being nice, etc.); all these things are considered aspects of 
 the soul and/or personality of the target being examined via this 
 Talent.
-The subject saves against magic (12 or higher) to resist reveal-
-ing the truth. The Nightbane can increase the difficulty of the 
+The subject saves against magic (12 or higher) to resist revealing the truth. The Nightbane can increase the difficulty of the 
 save by expending more P.P.E.: every additional 4 P.P.E. raises 
 the save number by +1 (maximum of 18, for 24 P.P.E.).
 Limitations:
-Range: line of sight up to 300 feet (91 m) away.
-Joe Sifferman (Order #46319524)
-146
-Cost: Three permanent, 2 points to activate, +4 to increase 
+Range: line of sight up to 300 feet (91 m) away.Cost: Three permanent, 2 points to activate, +4 to increase 
 save number by one.
 Shadow Blast
 Fires a black energy bolt that does 1D4 S.D.C. for every point 
@@ -429,12 +369,9 @@ Range: 500 feet/152 m.
 Cost: Five P.P.E. to permanently acquire it; one P.P.E. per 
 every 1D4 points of damage.
 Shadow Shield
-Creates a force field of dark energy around the Nightbane, pro-
-viding 20 S.D.C. per 2 P.P.E. spent (P.P.E. spent cannot exceed 
-4 per level of experience). The Shadow Shield completely sur-
-rounds the character, protecting him from toxic gases, disease, 
-punches, bullets, heat, fire, and similar dangers as long as it re-
-mains in force; it is the shield that takes the damage inflicted by 
+Creates a force field of dark energy around the Nightbane, providing 20 S.D.C. per 2 P.P.E. spent (P.P.E. spent cannot exceed 
+4 per level of experience). The Shadow Shield completely surrounds the character, protecting him from toxic gases, disease, 
+punches, bullets, heat, fire, and similar dangers as long as it remains in force; it is the shield that takes the damage inflicted by 
 such attacks.
 Duration: 30 minutes per level of experience or until all the 
 S.D.C. of the shadow shield is used up.
@@ -442,8 +379,7 @@ Limitations: Usable by the Morphus only. Maximum of 40
 S.D.C. per level of experience.
 Cost: Seven P.P.E. to acquire it permanently; two P.P.E. to 
 activate Shadow Shield with 20 S.D.C., plus 2 P.P.E. for each 
-additional 20 S.D.C. Cannot exceed 40 S.D.C. per level of ex-
-perience.
+additional 20 S.D.C. Cannot exceed 40 S.D.C. per level of experience.
 Sharing the Flesh
 This is a strange and horrific healing spell. The Nightbane 
 touches an injured person to magically transfer the other person’s 
@@ -453,8 +389,7 @@ completely well. The effect if often gruesome, with nasty wounds
 spontaneously appearing on the Nightbane as the subject is being 
 healed. The Nightbane can transfer as much damage as he or she 
 can tolerate, which may be a little amount to all. This is actually a 
-painful sacrifice on the part of the Nightbane as he/she heals as nor-
-mal – fortunately, these creature heal rapidly compared to humans.
+painful sacrifice on the part of the Nightbane as he/she heals as normal – fortunately, these creature heal rapidly compared to humans.
 Limitations: Usable only while in the Morphus form and 
 the Nightbane must perform this act of sacrifice of his own free 
 will. Healing critically injured/comatose characters requires the 
@@ -468,17 +403,14 @@ same healing but will die in the process.
 Cost: Two P.P.E. to acquire it permanently; 8 to activate (see 
 above for coma cases).
 The Shroud
-This powerful Talent enables a Nightbane to become invis-
-ible and noiseless to normal vision and senses as well as to elec-
-tronic devices like cameras, motion detectors, heat sensors, etc. 
+This powerful Talent enables a Nightbane to become invisible and noiseless to normal vision and senses as well as to electronic devices like cameras, motion detectors, heat sensors, etc. 
 This ability can be used selectively, enabling some people to see 
 the character while others can’t. Vengeful Nightbane have been 
 known to drive a human insane by pursuing him in plain sight, 
 invisible to everyone else. The victim’s cries for help would be 
 useless, for nobody else can see the monsters threatening him!
 The power is very expensive to maintain for long periods of 
-time (10 P.P.E. per minute). Also, the moment the Nightbane at-
-tacks anybody (he can threaten, scream or make gestures all he 
+time (10 P.P.E. per minute). Also, the moment the Nightbane attacks anybody (he can threaten, scream or make gestures all he 
 wants), the Talent stops working and he becomes visible for all to 
 see. Likewise, a Nightbane actively engaged in combat or other 
 activity, or standing in plain sight, cannot activate this Talent to 
@@ -491,27 +423,18 @@ The Nightbane must be in Morphus form for this power to
 work. The character becomes an insubstantial shadow, or, more 
 accurately, like one of those mirages you can see on a paved road 
 during a sunny day – a flickering shadow that seems to sink into 
-the earth and fades away as if it never was. While in this two-
-dimensional form, the Nightbane can slither along walls or across 
-the ground, virtually invisible and able to slide through any open-
-ing, no matter how narrow (only air-tight containers will prevent 
-the shadow-slider from coming through). The Nightbane’s cloth-
-ing and small personal effects are transformed automatically; 
+the earth and fades away as if it never was. While in this twodimensional form, the Nightbane can slither along walls or across 
+the ground, virtually invisible and able to slide through any opening, no matter how narrow (only air-tight containers will prevent 
+the shadow-slider from coming through). The Nightbane’s clothing and small personal effects are transformed automatically; 
 additionally, he can carry objects at an additional P.P.E. cost (2 
 P.P.E. per pound/0.45 kg of weight).
 Limitations: Usable by the Morphus only.
-Cost: Eight P.P.E. to acquire it permanently; 10 points to acti-
-vate and 10 per each minute the Talent is maintained.
+Cost: Eight P.P.E. to acquire it permanently; 10 points to activate and 10 per each minute the Talent is maintained.
 Soul Shield
-Protects against mental attacks/probes and the See Truth Tal-
-ent. The Soul Shield acts like a psychic mind block, preventing 
+Protects against mental attacks/probes and the See Truth Talent. The Soul Shield acts like a psychic mind block, preventing 
 most means of magical or psionic probes from intruding into the 
 Nightbane’s mind. More importantly, while the Soul Shield is 
-up, any spell or power that tries to control or dominate the Night-
-bane’s mind will automatically fail.
-Joe Sifferman (Order #46319524)
-147
-Those who attempt to read the protected character’s mind will 
+up, any spell or power that tries to control or dominate the Nightbane’s mind will automatically fail.Those who attempt to read the protected character’s mind will 
 see only a pool of utter darkness. The mind reader/psychic will 
 find it very difficult to pry himself from that darkness (a save 
 versus psionics is necessary; roll every melee round), and until he 
@@ -525,8 +448,7 @@ This powerful ability enables the Nightbane to separate his
 Facade and Morphus forms and act normally in both of them! 
 The Nightbane in effect becomes two people. The character 
 is aware of what both sides are doing, but his consciousness 
-must be focused on one form or the other (he can switch view-
-points at will). The form where his consciousness is focused 
+must be focused on one form or the other (he can switch viewpoints at will). The form where his consciousness is focused 
 on acts normally; the other appears to lapse into a trance-like 
 state and is at -2 to all combat and Perception Rolls, has half 
 the normal attacks per melee round, and is at -40% to perform 
@@ -544,8 +466,7 @@ This powerful talent enables the Nightbane to control the
 weather. Rain, winds and the temperature can be altered. The 
 more extreme the changes and the greater the area affected, the 
 more P.P.E. the character must spend. This talent is particularly 
-powerful because two or more Nightbane who know it can com-
-bine their efforts (and P.P.E.) to produce an even more powerful 
+powerful because two or more Nightbane who know it can combine their efforts (and P.P.E.) to produce an even more powerful 
 effect. There are legends of ancient Nightbane groups sending 
 hurricanes and tornadoes against people who offended or injured 
 them.
@@ -553,8 +474,7 @@ The P.P.E. cost varies; the effects take 1D6x10 minutes to
 manifest, and then lasts one hour. At the end of the hour, the same 
 amount of P.P.E. must be spent to keep it going or it fades away. 
 Some guidelines are given below:
-A minor change in existing weather conditions like rais-
-ing the wind by up to 5 mph (8 km), increasing or decreasing 
+A minor change in existing weather conditions like raising the wind by up to 5 mph (8 km), increasing or decreasing 
 cloudiness, intensifying already existing rain, raising or lowering 
 overall temperature by 4 degrees Fahrenheit: 5 P.P.E.
 A moderate change of weather conditions like starting rain 
@@ -562,13 +482,10 @@ on an overcast day, turning a downpour into a storm or vice versa,
 raising or lowering overall temperature by 10 degrees Fahrenheit: 
 10 P.P.E.
 Sudden, major change in weather like starting rain during a 
-clear, sunny day, stopping a downpour, or creating a major thun-
-der or electrical storm during a rainy day, raising or lowering 
+clear, sunny day, stopping a downpour, or creating a major thunder or electrical storm during a rainy day, raising or lowering 
 overall temperature by 20 degrees Fahrenheit: 20 P.P.E.
 Extreme changes in weather like creating a fog, or starting a 
-hailstorm or electrical storm during a clear, sunny day – or turn-
-ing a storm into a sunny day, turning a thunderstorm into a tropi-
-cal storm with near-hurricane winds (70 mph/112 km), raising or 
+hailstorm or electrical storm during a clear, sunny day – or turning a storm into a sunny day, turning a thunderstorm into a tropical storm with near-hurricane winds (70 mph/112 km), raising or 
 lowering overall temperature by 30 degrees Fahrenheit: 40 P.P.E.
 Total upheaval in weather such as starting a hurricane or 
 tornado from scratch (90+ mph/144 km winds), create a blinding 
@@ -591,29 +508,20 @@ Deus Ex Machina
 Lord/Lady of the Wild
 Swarm Self
 These powers have certain prerequisites. For instance, animal 
-control abilities apply only to Nightbane who have some ele-
-ments of those animals in their Morphus.
-Elite Talents seem to be an extension of the Nightbane’s self-
-conception, i.e. a machine-man might see himself capable of 
+control abilities apply only to Nightbane who have some elements of those animals in their Morphus.
+Elite Talents seem to be an extension of the Nightbane’s selfconception, i.e. a machine-man might see himself capable of 
 controlling other machines, but not animals. On the other hand, 
 a Biomechanical-animal Nightbane would have access to both 
 types of powers.
 Bloodbath
 This grotesque power allows the Nightbane to use his own 
 blood to suffocate victims. A stream of blood pours from the 
-character (this inflicts 1D6 points of damage to the character ac-
-tivating the Talent). The Nightbane is at +3 to strike with it. On 
-a successful hit, the blood will rush into the victim’s nose and 
-Joe Sifferman (Order #46319524)
-148
-throat, and cause him to choke! While drowning in blood, the vic-
-tim is at -2 to all combat actions and is unable to use spells, Tal-
-ents or any skill that requires concentration. The blood remains 
+character (this inflicts 1D6 points of damage to the character activating the Talent). The Nightbane is at +3 to strike with it. On 
+a successful hit, the blood will rush into the victim’s nose andthroat, and cause him to choke! While drowning in blood, the victim is at -2 to all combat actions and is unable to use spells, Talents or any skill that requires concentration. The blood remains 
 alive for 1D4 melee rounds, inflicting 2D6 points of damage at 
 the end of each melee round. A successful save versus non-lethal 
 poison will avoid damage for that round, but the penalties remain. 
-Additionally, a victim unfamiliar with that attack must save ver-
-sus a Horror Factor of 12 to avoid panicking. If panicked, the 
+Additionally, a victim unfamiliar with that attack must save versus a Horror Factor of 12 to avoid panicking. If panicked, the 
 penalties for the victim are doubled.
 Prerequisite: At least one characteristic from the Stigmata 
 Table.
@@ -623,8 +531,7 @@ Duration: 1D4 melee rounds.
 Cost: Fifteen P.P.E. for permanent acquisition; 8 to activate 
 plus it inflicts 1D6 points of damage on the user.
 Deus Ex Machina (Machine Control)
-The Nightbane can control machines from cars to micro-
-waves, to lamps or weapons. One device can be controlled for 
+The Nightbane can control machines from cars to microwaves, to lamps or weapons. One device can be controlled for 
 every three points of I.Q. he has (thus, a Nightbane with an I.Q. 
 13 could control 4 machines). The machines can then be made 
 to do anything within their capabilities. For example, a lamp can 
@@ -638,8 +545,7 @@ Example: The aforementioned Nightbane is trapped in a
 house by a number of NSB agents. Trying to create a diversion, 
 he activates Deus Ex Machina and takes control of four machines, 
 including a desktop computer, a laser printer, a lawn mower just 
-outside the house, and a lamp on the desk. He first orders the of-
-fice machines to start the diversion, the lamp will turn itself on 
+outside the house, and a lamp on the desk. He first orders the office machines to start the diversion, the lamp will turn itself on 
 and off for a melee round, the computer will start making noise at 
 the top of its Soundblaster speakers, and the laser printer will start 
 spitting blank pieces of paper. As the NSB are distracted by the 
@@ -661,19 +567,16 @@ foot (30.5 m) radius of control.
 Lord/Lady of the Wild
 (Animal Control)
 The Nightbane gains mastery over any animal species he/she 
-is associated with; thus, a wolf-life Nightbane will be able to con-
-trol wolves and any canine animal, while a bird-like character 
+is associated with; thus, a wolf-life Nightbane will be able to control wolves and any canine animal, while a bird-like character 
 would gain powers over all birds. The power has variable range 
 and effects, depending on the amount of P.P.E. the Nightbane 
 spends. Simple commands like “Come here,” “Attack this man,” 
-“Go,” or “Make a lot of noise” will be readily heeded. A char-
-acter with this power can also make animals behave in unnatural 
+“Go,” or “Make a lot of noise” will be readily heeded. A character with this power can also make animals behave in unnatural 
 ways, like attacking armed men, something most animals will 
 never do, dance in circles, leap through a wall of fire, etc., but 
 this will cost more P.P.E. Some guidelines are described below:
 Calling animals: Any animals of the appropriate species will 
-come from up to a one mile (1.6 km) radius per level of experi-
-ence: Costs 2 P.P.E. Once they get there, the animals will revert 
+come from up to a one mile (1.6 km) radius per level of experience: Costs 2 P.P.E. Once they get there, the animals will revert 
 to normal unless new commands are given.
 Minor, non-dangerous actions: Like making noise, hiding, 
 fluttering about, or acting in fairly normal ways: Costs 1 P.P.E. 
@@ -684,8 +587,7 @@ at, block or otherwise hindering armed humans, or behavior that
 goes against the animal’s normal behavior (asking a nocturnal 
 animal to operate in the daytime, etc.): Costs 5 P.P.E. per large 
 animal or per group of up to ten small animals.
-Suicidal actions: Recklessly attacking humans or supernatu-
-ral beings, intercepting vehicles (a flock of birds can bring down 
+Suicidal actions: Recklessly attacking humans or supernatural beings, intercepting vehicles (a flock of birds can bring down 
 a plane by flying into its engines), fight to the death, and other 
 suicidal or utterly unnatural acts: Costs 10 P.P.E. per large animal 
 or per group of up to ten small animals.
