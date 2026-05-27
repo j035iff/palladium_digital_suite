@@ -1,6 +1,6 @@
 {
   "tableId": "occupation",
-  "tableHeading": "Occupation Table",
+  "tableHeading": "Occupation",
   "authoritativeBookKey": "dark_designs",
   "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
   "books": [
@@ -85,7 +85,7 @@
         {
           "bookKey": "dark_designs",
           "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 45,
+          "pageNumber": 44,
           "percent": "71-77%",
           "authoritative": true
         }

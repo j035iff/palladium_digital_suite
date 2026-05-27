@@ -1,0 +1,19 @@
+{
+  "tableId": "occupation",
+  "generatedAt": "2026-05-27T22:00:04.173Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 10,
+      "entryCount": 10
+    },
+    {
+      "path": "src/data/content/morphus/tables/occupation.json",
+      "changed": 10,
+      "entryCount": 10
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 20
+}

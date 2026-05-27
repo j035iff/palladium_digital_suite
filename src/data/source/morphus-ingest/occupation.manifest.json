@@ -2,10 +2,11 @@
   "id": "occupation",
   "displayName": "Occupation",
   "tableCategory": "Occupation",
-  "tableHeading": "Occupation Table",
+  "tableHeading": "Occupation",
   "targetJson": "src/data/content/morphus/tables/occupation.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {

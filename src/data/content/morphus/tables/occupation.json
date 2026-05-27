@@ -9,13 +9,23 @@
       "id": "occupation_suit_consummate_professional",
       "name": "A Suit/Consummate Professional",
       "tableCategory": "Occupation",
-      "description": "Business attire and executive bearing—power-player confidence suited to Wall Street or any cubicle farm.",
+      "description": "The Nightbane is dressed in business attire. Whether that’s khakis and a polo shirt, designer dress/skirt and blouse, or top quality three-piece suit, in the absence of other Morphus features the character would not look out of place on Wall Street, Silicon Valley or any cubicle farm in the business world. The ‘Bane also moves with a speed and deliberateness that bespeaks a great degree of self-confidence and sense of purpose. The character is a power-player and knows it. Bonuses: +1 to I.Q. and M.E., +1D4 to the M.A. attribute, +1 to P.B., and +2D6 S.D.C. Penalties: No Secondary Skills as the character is focused only on his career, -5% to Prowl and -5% on all skills other than Communications, Math skills and Technical skills.",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "me": { "flat": 1 },
-        "ma": { "dice": "1D4" },
-        "pb": { "flat": 1 },
-        "sdc": { "dice": "2D6" }
+        "iq": {
+          "flat": 1
+        },
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "1D4"
+        },
+        "pb": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
       },
       "skillModifiers": {
         "globalSkillModifier": -5
@@ -24,7 +34,9 @@
         "No Secondary Skills—career-focused only.",
         "Communications, Math, and Technical skills are not subject to the -5% penalty."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -37,13 +49,23 @@
       "id": "occupation_uniform_official",
       "name": "Uniform/Official",
       "tableCategory": "Occupation",
-      "description": "Service-profession uniform (medic, firefighter, police, pilot, mechanic, etc.)—symbol of authority and pride, details may be accurate or invented.",
+      "description": "The character’s identity is tied to a specific service profession that is represented by its uniform. Medical professionals, firemen, police, guards, airline pilot, me- chanic, and others have a highly visible style of dress that sets them apart from the public, and may be a symbol of authority, and often serves as a point of pride. The Nightbane’s Morphus is dressed as one such profession, whether all the details of that uniform are accurate or even made up. Bonuses: +1 to the M.E., M.A., and P.B. attributes, +2D6 S.D.C., +5% to Invoke Trust/ Intimidate and +2 to Perception Rolls. Penalties: -10% to Prowl and -10% on all Physical and Rogue skills. The Nightbane is unlikely to be fully trusted by criminals like the majority of the Warlords faction.",
       "statModifiers": {
-        "me": { "flat": 1 },
-        "ma": { "flat": 1 },
-        "pb": { "flat": 1 },
-        "sdc": { "dice": "2D6" },
-        "perception": { "flat": 2 }
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "perception": {
+          "flat": 2
+        }
       },
       "skillModifiers": {
         "globalSkillModifier": -10
@@ -53,7 +75,9 @@
         "-10% to all Physical and Rogue skills (global modifier above; adjust individual skills at play).",
         "Unlikely to be fully trusted by Warlords criminals."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -66,21 +90,33 @@
       "id": "occupation_hazardous_duty",
       "name": "Hazardous Duty",
       "tableCategory": "Occupation",
-      "description": "Protective gear from hazardous jobs—vest, riot gear, hard hat, Hazmat, clean-room suit, heat suit, etc.; same bonuses regardless of appearance.",
+      "description": "The Morphus form is decked out in some kind of protective gear from one of a number of jobs. Examples of this include a bullet-proof vest, riot gear, construc- tion (hard hat, heavy gloves and overalls), reflective clothes, Hazmat suit (full environmental), “clean” room gear (jumpsuit, hairnet, surgical gloves, surgical mask or re-breather) or even a heat-resistant “volcano” suit. Despite the wide variety of appear- ances possible with this feature, all provide the same bonuses. Bonuses: +1 to P.E., +2 to save vs disease, gases and toxins, +4D6 S.D.C. and a Natural A.R. of 8. Penalties: -1D4 to the P.P. attribute and -1D6 to Spd. -1 to Perception Rolls.",
       "naturalAr": 8,
       "statModifiers": {
-        "pe": { "flat": 1 },
-        "sdc": { "dice": "4D6" },
-        "pp": { "dice": "-1D4" },
-        "spd": { "dice": "-1D6" },
-        "perception": { "flat": -1 }
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "pp": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "dice": "-1D6"
+        },
+        "perception": {
+          "flat": -1
+        }
       },
       "saveModifiers": {
         "disease": 2,
         "gas": 2,
         "poison": 2
       },
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -93,16 +129,32 @@
       "id": "occupation_communications",
       "name": "Communications",
       "tableCategory": "Occupation",
-      "description": "Ear devices and built-in wireless comms (walkie-talkie, phone, CB, etc.); can reach any wireless network when frequency or number is known.",
+      "description": "Simply put, the character has ear plugs or headphones or some similar device for his ears and some audio communication device such as a walkie-talkie, cell phone, electronic notepad or old-style telephone or CB radio type device built somewhere into his body and another in his pocket or in a case on his belt. This grants the Nightbane the ability to com- municate with any type of wireless communications device and radios over a number of different types of networks and systems. A walkie-talkie or CB radio can be used as a short-wave, cellular, or even satellite communication device. However, the character still needs to know that the network is there and how to communi- cate with it (i.e. the recipient’s phone number or radio frequency). This also means he has access to popular communication network systems such as the Internet, GPS, and so on. Bonuses: +10% to all Communications skills and the Nightbane’s own communica- tions and devices are untraceable by modern methods. And did we mention there are no roaming charges? Penalties: -2D4 from the character’s base P.P.E. and -1D4 to Perception Rolls. This character can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range.",
       "statModifiers": {
-        "ppe": { "dice": "-2D4" },
-        "perception": { "dice": "-1D4" }
+        "ppe": {
+          "dice": "-2D4"
+        },
+        "perception": {
+          "dice": "-1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_radio_basic", "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_radio_scramblers", "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_computer_operation", "modifierPercent": 10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_radio_basic",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_radio_scramblers",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_computer_operation",
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [
@@ -111,7 +163,9 @@
         "Internet, GPS, and similar network access when the network is known.",
         "Detected by Hounds and supernatural-sensitive beings at 50% greater range."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -124,12 +178,20 @@
       "id": "occupation_tools_of_the_trade",
       "name": "Tools of the Trade",
       "tableCategory": "Occupation",
-      "description": "1D4+3 profession-critical tools on transformation (may be grafted); player and G.M. choose items together.",
+      "description": "The Nightbane has a handful of items when the Morphus form is assumed. These 1D4+3 items are devices or tools of critical importance to the character’s chosen profession. For example, a mechanic might have a large wrench, socket set, pair of screwdrivers, pliers, a hammer and a voltmeter. A police officer or detective is likely to have a pair of handcuffs, a heavy flashlight, pepper spray, billy club/baton, a badge and a side arm. However, some of these tools may be grafted to the Nightbane’s body or replace fingers and hands. Any Tools of the Trade function and behave the same as nor- mal, but only have 3D6 S.D.C. each and disappear for 24 hours when lost or destroyed. Those tools or devices that require batter- ies never run low, and ammunition or similar supplies start fully loaded and (magically?) reload/recharge every hour with a full payload. Given the wide variety of possible items, it is suggested that players and G.M.s work together to choose what Tools of the Trade are allowed. Bonuses: +1 to I.Q. attribute, +2D6 to S.D.C., +5% to all O.C.C. Skills that relate to the tools and the trade, like mechanical or electrical repair, maintenance, etc. Some tools may be suitable as weapons, but the vast majority only deal 1D4 to 1D6 damage. Penalties: -2 to the Spd attribute and -1D6 from the base P.P.E.",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "sdc": { "dice": "2D6" },
-        "spd": { "flat": -2 },
-        "ppe": { "dice": "-1D6" }
+        "iq": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "spd": {
+          "flat": -2
+        },
+        "ppe": {
+          "dice": "-1D6"
+        }
       },
       "customOneOffs": [
         "+5% to O.C.C. skills related to the tools and trade.",
@@ -137,7 +199,9 @@
         "Battery-powered tools never run low; ammo/supplies reload each hour.",
         "Most tools 1D4–1D6 damage if used as weapons."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -150,20 +214,46 @@
       "id": "occupation_time_clock_timepiece",
       "name": "Time Clock or Timepiece",
       "tableCategory": "Occupation",
-      "description": "Punch clock or electronic scanner built into the chest; displays exact time to the second.",
+      "description": "Built into the chest of the Morphus is a boxy device used by many employers to track the attendance of hourly workers. This might be an older “punch” device or a newer electronic scanner. Either type accurately dis- plays the current time to the second. Bonuses: +2 to P.E. and Spd attributes, +2D4 S.D.C., and the character is able to accurately sense the exact time and the passage of time while in Morphus form, provides a +5% bonus to skills related to time and timing such as Demolitions, Dance, Mathematical calculations, Perfor- mance, etc., including time anomalies. Penalties: -2 to the M.A. and Spd attributes, -1 to Perception Rolls, -1D4 from base P.P.E., and the character is always on time, though a bit anxiety prone and overly concerned with punctuality.",
       "statModifiers": {
-        "pe": { "flat": 2 },
-        "sdc": { "dice": "2D4" },
-        "ma": { "flat": -2 },
-        "perception": { "flat": -1 },
-        "ppe": { "dice": "-1D4" }
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D4"
+        },
+        "ma": {
+          "flat": -2
+        },
+        "perception": {
+          "flat": -1
+        },
+        "ppe": {
+          "dice": "-1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_demolitions", "modifierPercent": 5 },
-          { "targetType": "skill_id", "targetValue": "skill_dance", "modifierPercent": 5 },
-          { "targetType": "skill_id", "targetValue": "skill_mathematics_basic", "modifierPercent": 5 },
-          { "targetType": "skill_id", "targetValue": "skill_mathematics_advanced", "modifierPercent": 5 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_demolitions",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_mathematics_basic",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_mathematics_advanced",
+            "modifierPercent": 5
+          }
         ]
       },
       "customOneOffs": [
@@ -172,7 +262,9 @@
         "+5% to time/timing skills including Performance and time anomalies (partially modeled above).",
         "Always on time; anxiety prone about punctuality."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -185,14 +277,27 @@
       "id": "occupation_water_cooler",
       "name": "Water Cooler",
       "tableCategory": "Occupation",
-      "description": "Large back-mounted drink tank (water, coffee, etc.) with spigot; affable gossip in casual situations.",
+      "description": "The Nightbane has a large, multi- gallon, plastic or glass tank incorporated into his body, usually mounted on the back. This tank is translucent, revealing water, coffee, or another drink as its contents. It is connected to a small spigot that can be used to indefinitely dispense the potable drink. In addition, the Nightbane seems to have an affable, easy-going air in casual situations and is often given to lengthy discussions or gossip. Bonuses: +1D4+2 to the M.A. attribute and +1 to P.E., the character does not require any hydration while in Morphus form and is never thirsty; moreover, he can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container. The tank has 40 S.D.C. Penalties: -2 to P.P. and -1D4 to Spd attributes, -1 to dodge, -2 to roll with punch, fall or impact, -20% to skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming due to the weight and the sloshing from the water inside the tank (always two-thirds full and weighs 25 pounds (11 kg).",
       "statModifiers": {
-        "ma": { "dice": "1D4+2" },
-        "pe": { "flat": 1 },
-        "pp": { "flat": -2 },
-        "spd": { "dice": "-1D4" },
-        "dodge": { "flat": -1 },
-        "rollWithPunch": { "flat": -2 }
+        "ma": {
+          "dice": "1D4+2",
+          "flat": 2
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -2
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "rollWithPunch": {
+          "flat": -2
+        }
       },
       "limbDurability": [
         {
@@ -207,16 +312,38 @@
           "label": "Water Blast",
           "damageFormula": "2D6",
           "isAdditiveToHth": false,
-          "damageModifier": { "percent": 100 }
+          "damageModifier": {
+            "percent": 100
+          }
         }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "modifierPercent": -20 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": -20 },
-          { "targetType": "skill_id", "targetValue": "skill_gymnastics", "modifierPercent": -20 },
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -20 },
-          { "targetType": "skill_id", "targetValue": "skill_swim", "modifierPercent": -20 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swim",
+            "modifierPercent": -20
+          }
         ]
       },
       "customOneOffs": [
@@ -224,7 +351,9 @@
         "Water blast 2D6 to vampires; one attack per blast; endless payload; burst only (cannot fill a glass).",
         "Tank ~25 lb (11 kg), always two-thirds full; sloshing weight causes skill penalties above."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -237,21 +366,36 @@
       "id": "occupation_mechanic_mechanical",
       "name": "Mechanic/Mechanical",
       "tableCategory": "Occupation",
-      "description": "Gears, springs, pulleys, and bolts built into or bolted onto the body—machine repair specialist.",
+      "description": "The Nightbane’s profession involves making and/or repairing machines, whether it is clocks or toasters to air conditioners and automobiles/vehicle engines. This ‘Bane is good with his hands and likes to build or take things apart. His Morphus has gears, springs, pulleys, nuts and bolts ei- ther built right into his body or as a sort of weird piecemeal ar- mor bolted to parts of his body. Bonuses: +2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it, +2 to P.S. and P.P. attributes, +1D6x10+20 S.D.C., a Natural A.R. of 10, and +10% bonus to skills related to mechanics and mechanical repair. Penalties: -2 on all Perception Rolls when caught up in examining or working on machines, -1 to P.B., -1D4 to the Spd attribute, and the character tends to enjoy working on machines than hanging out with people.",
       "naturalAr": 10,
       "statModifiers": {
-        "ps": { "flat": 2 },
-        "pp": { "flat": 2 },
-        "sdc": { "dice": "1D6x10+20" },
-        "pb": { "flat": -1 },
-        "spd": { "dice": "-1D4" }
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D6x10+20"
+        },
+        "pb": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "perception": {
+          "flat": 2
+        }
       },
       "customOneOffs": [
         "+2 Perception only for mechanical problems and repairs; -2 Perception when absorbed in machine work.",
         "+10% to mechanics and mechanical repair skills.",
         "Prefers working on machines over socializing."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -264,13 +408,24 @@
       "id": "occupation_electrician_electronic_devices",
       "name": "Electrician/Electronic Devices",
       "tableCategory": "Occupation",
-      "description": "Wires, microchips, and circuit boards on or emerging from the body; eyes may appear as dim LEDs.",
+      "description": "The Nightbane’s profession involves making and/or repairing cell phones, com- puters, and electronic devices, or he is an electrician who re- wires entire houses and electrical systems. This ‘Bane is good with his hands and likes to build or take part electrical devices. His Morphus has wires, microchips and circuit boards built right into his body or as a sort of weird piecemeal armor attached to or coming out of his body. Eyes are probably dim LED lights. Bonuses: +2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them, +2 to P.P. attribute, +4D6+6 S.D.C., a Natural A.R. of 9, electrical attacks and lightning do half damage, and +5% bonus to skills related to electronics and electrical repair and computers. Penalties: -3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices, -1 to P.E., -1D4 to the Spd attribute, and the character tends to lose himself in electronic devices, losing track of time and the things going on around him.",
       "naturalAr": 9,
       "statModifiers": {
-        "pp": { "flat": 2 },
-        "sdc": { "dice": "4D6+6" },
-        "pe": { "flat": -1 },
-        "spd": { "dice": "-1D4" }
+        "pp": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "pe": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "perception": {
+          "flat": 2
+        }
       },
       "damageAffinities": {
         "electricity": 0.5
@@ -281,7 +436,9 @@
         "Electrical attacks and lightning half damage (modeled in damageAffinities).",
         "Loses track of time when focused on devices."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
@@ -294,13 +451,23 @@
       "id": "occupation_workaholic",
       "name": "Workaholic",
       "tableCategory": "Occupation",
-      "description": "Haggard, bloodshot, caffeine-fueled appearance—wrinkled clothes, five-o'clock shadow, built-in caffeine tubes optional.",
+      "description": "The character’s Morphus form has a haggard, disheveled look with bloodshot eyes and dark circles and bags underneath/around the eyes, a pale complexion, messy hair, and wrinkled or sweat-stained clothes, all of which speak to a long period of hard work without sleep. Males may also have a five o’clock shadow while all genders may also carry a tea or cof- fee mug or can of soda with them – or as the Morphus, have a de- vice built into their body with tubes that pump caffeine into their bodies. Bonuses: +2 to the M.E. and P.E. attributes. The Night- bane needs only half the amount of sleep as a normal person. Penalties: -2 to P.B. and Spd attributes, -2 on all Perception Rolls while skills that require focus and brain power (like all Science and most Technical skills, Piloting, Demolitions and similar) suf- fer a -5% penalty. Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty. 01-50% chance of falling asleep on guard duty or as a lookout.",
       "statModifiers": {
-        "me": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "pb": { "flat": -2 },
-        "spd": { "flat": -2 },
-        "perception": { "flat": -2 }
+        "me": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "flat": -2
+        },
+        "perception": {
+          "flat": -2
+        }
       },
       "customOneOffs": [
         "Needs only half normal sleep.",
@@ -308,7 +475,9 @@
         "Physical skills and quick tasks: no penalty.",
         "01–50% chance of falling asleep on guard duty or as lookout."
       ],
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
         {
           "gameSystem": "nightbane",
