@@ -8,7 +8,8 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "nightvision bonus",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },

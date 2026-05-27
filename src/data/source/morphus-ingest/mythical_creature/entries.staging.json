@@ -14,7 +14,24 @@
           "pageNumber": 37
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+      "description": "This Nightbane is likely be a nature lover or environmentalist, or just someone fascinated by the legends and stories about Bigfoot. The Sasquatch-type Mor- phus is a tall humanoid with thick, shaggy fur covering most of the body. The facial features are reminiscent to primates such as chimpanzees, as are the long, powerful limbs. The legs and feet, however, are better suited for walking and running than climbing through trees, and shaped more like a modern human’s. Bigfoot Nightbane are 7-8 feet (2.1 to 2.4 m) tall and weigh 300-350 pounds (136.5 to 157.5 kg). Bonuses: +1D6 to the P.S. and P.E. attributes, +2D6 to Spd, +1D4x10 S.D.C., Nightvision is extended to 1,000 feet (305 m), +2 on Perception Rolls espe- cially regarding ambushes, hiding and tracking in the wilderness, +20% to the Prowl, Camouflage and Climbing skills in wooded environments, and +10% to all Wilderness skills. Automatically starts with the Leave No Trace Talent. Penalties: -1 to I.Q. and M.A. and -2 to P.B. attributes; custom clothing is necessary to clothe these forest giants, and these Nightbane can be somewhat shy and slow to trust others. They also tend to eschew high-tech “gadgets” like cell phones and computers. -30% to Disguise, Im- personate and Undercover Ops skills in this Morphus.",
+      "statModifiers": {
+        "iq": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -2
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
     },
     {
       "id": "mythical_creature_cyclops_giant",
@@ -30,7 +47,25 @@
           "pageNumber": 40
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+      "description": "This Nightbane Morphus is that of a hulking, brutish man-monster (or giant Amazon-like woman), 10-12 feet (3 to 3.7 m) tall, muscular, barrel-chested, and with one large eye in the center of his forehead. This may not be the character’s only eye, it’s just that the other two are small and squinty, so they look more like folds on the face rather than eyes. Whether a single cyclopean eye or a large “third eye,” the spe- cial eye provides the abilities to see the invisible and to see in darkness. (In the alternative, the eye can be in the back of the Nightbane’s head. It has the same sight capabilities and bonuses, but also prevents the character from being surprised from attacks from behind.) Bonuses: +6 to P.S. and +2 P.E., +2D6 Hit Points and +1D6x10+20 S.D.C., Natural A.R. 10, +1D6 damage from punches and kicks in addition to Supernatural P.S. punch damage due to his strength, size and weight (700 pounds/315 kg), +3 to all Perception Rolls, Nightvision is extended to 1,000 feet (305 m), exceptional vision (can see a rabbit or read a sign a mile/1.6 km away), see the invisible, +2 to Horror Factor. Penalties: Using conventional modern weapons/guns and devices like cell phones and keyboards are difficult to impossible to use due to the large size of the Cyclop’s hands. -2 to dodge, -25% to all skills that require a delicate touch and human-sized fingers/hands, -30% to Prowl, Acrobatics and Gymnastics, and skills like Disguise, Im- personation, Tailing and Undercover Ops are impossible to use in Morphus form. Clothing must be custom made and the large size makes fitting inside most vehicles difficult and uncomfortable to impossible. Hates confined spaces. Note: The Cyclops is likely to be seen as a brutish warrior or monster, but the reality is that the character may be gentle and kind, or timid and shy. The choice of a giant, bestial Morphus may be the result of his insecurity or fears, or a desire to be taken seriously or to be big and strong so as to not to be picked on by bullies.",
+      "statModifiers": {
+        "ps": {
+          "flat": 6
+        },
+        "hf": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "1D6x10+20"
+        },
+        "perception": {
+          "flat": 3
+        }
+      },
+      "naturalAr": 10
     },
     {
       "id": "mythical_creature_djinn",
@@ -46,7 +81,19 @@
           "pageNumber": 37
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+      "description": "With origins in Near-Eastern mythology, the Djinn have been described as a curious combination of the sub- stantial and insubstantial and said to be comprised of fire, smoke, or mist, and are seldom visible to humans. This Nightbane’s Morphus is visible and solid, though it is surrounded by a veil of swirling mist, smoke or heat vapors that partially obscure the body from the chest down, so at a quick glance, the character appears to be fading in and out or looks insubstantial. The rough outline of the Nightbane’s body can be discerned through this ob- scuring haze as it is darker than the surroundings, and the upper body and head are usually clearly visible, unless the Nightbane wants his face blurred out. The only details that truly stand out, however, are eyes that glow like hot coals and which brighten or dim with the character’s mood. Bonuses: +1D4 to P.S., +2 to P.P., and +4D4 to Spd, has a Natural A.R. of 10, +1 on initiative and +10% to Prowl and Tailing skills. Penalties: -2 to M.A., P.E. and P.B. attributes, -10% to Prowl, and -30% to Disguise, Imper- sonate and Undercover Ops skills.",
+      "statModifiers": {
+        "pp": {
+          "flat": 2
+        },
+        "ma": {
+          "flat": -2
+        },
+        "ps": {
+          "dice": "1D4"
+        }
+      },
+      "naturalAr": 10
     },
     {
       "id": "mythical_creature_dragon_wyvern_serpent",
@@ -62,7 +109,31 @@
           "pageNumber": 37
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+      "description": "Many cultures believe in dragons and magical serpents, with stories passed down through the ages. Cultures as diverse as the Maya, Aztec and Native Americans to Europe, the Norse, to Japan, China and Australia, have stories of dragons, wyverns, winged serpents, and similar creatures. Dragons have since become the very essence of my- thology while being popularized in art, fantasy literature, and many other mediums. Those Nightbane in awe of the power and majesty of fabled dragons may manifest a Morphus that is effec- tively a miniaturized version of them at 9-12 feet (2.7-3.7 m) in length from snout to tip of the tail. Wingspan usually matches or exceeds body length by an extra 1D4+2 feet (0.9 to 1.8 m). This form weighs anywhere from 500-800 lbs (225 to 360 kg) and can fly! The exact style and look of said dragon may vary based on the cultural or pop culture influences of the individual. The Morphus usually has two to six wings, a serpentine tail, and a long, flexible neck. The body rests on all fours, though two limbs may be arms with fully articulated humanoid hands. The digits all end in sharp talons and the long muzzle opens to reveal a wide mouth filled with crocodile-like teeth. The hide is tough and scaly, with many dragon Nightbane possessing bony plates or horns protecting key points such as the head and neck. Cos- metic details like color, shape of any crest or horns, etc., are left to the player and/or G.M. to determine. Some are more humanoid in shape and appearance, others are classic four-legged, winged dragons in miniature. Bonuses: +1D6x10+20 to base P.P.E. and +1 to Spell Strength if a spell caster, +1D6+6 to P.S., +1D6 to P.E., +2 Awe/Horror Factor, +3D6+4 to Hit Points, +1D6x10 S.D.C., Natural A.R. 14, bite attacks do 3D6 damage (double to Nightlords and the denizens of the Nightlands). The character does not get a breath weapon, but can select the Fire Breather Talent (Nightbane® Survival Guide, page 102) at half the nor- mal cost and double the normal damage to Nightlords and the denizens of the Nightlands. The wings provide a flying speed of 1D4x10+88 (70-90 mph/112 to 144 kph), and have 1D6x10+60 S.D.C. each, regenerate at the same rate as the Nightbane, but will completely grow back in one day if destroyed. Penalties: -2 to dodge when not airborne. In Morphus form the character is too large to fit in ordinary vehicles and may have trouble negotiat- ing hallways and staircases inside buildings. While in the dragon Morphus the Nightbane is -10% on the performance of all skills, -30% to Prowl and Swimming, while Acrobatics, Disguise, Gym- nastics, Impersonation, and Undercover Ops are impossible. All magic and enchanted weapons, including Dark Blades, ignore the character’s Natural A.R. and inflict full damage. Dragon slaying weapons do double damage.",
+      "statModifiers": {
+        "ps": {
+          "flat": 6,
+          "dice": "1D6+6"
+        },
+        "dodge": {
+          "flat": -2
+        },
+        "pe": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D6x10+60"
+        }
+      },
+      "naturalAr": 14,
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true
+        }
+      ]
     },
     {
       "id": "mythical_creature_fairy",
@@ -78,7 +149,27 @@
           "pageNumber": 40
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+      "description": "This Nightbane is lithe and attractive and adorned with semi-transparent gossamer wings that resemble a dragonfly or colorful butterfly wings like those of mythical faer- ies. Whatever the character’s Facade, he or she is beautiful, with long, delicate fingers and limbs, and a gracefulness about them. The character is 4-6 feet tall (1.2 to 1.8 m; player’s choice) with a corresponding weight for a thin, agile human. The wings are iridescent or butterfly-like and provide hovering and modest fly- ing capabilities. Bonuses: +1D6 to M.A., +8 to P.B., and +1D6 to running speed (flying speed is 1D4x10+20), hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane, +3D6 to P.P.E., +1D6 to Hit Points, +5D6 to S.D.C., +2 to all Perception Rolls, +2 to dodge, Nightvision is extended to 1,000 feet (305 m), exceptional vision (can see a rabbit or read a sign a mile/1.6 km away), +1 to Awe/Horror Factor, +10% to Ac- robatics, Dance, Gymnastics, Sing, Prowl and any Wilderness skills. Penalties: -10% to Espionage and Rogue skills and any skills related to combat or destruction. Skills like Disguise, Im- personation, Undercover Ops and Swimming are impossible to use in Morphus form. Cannot fit inside most vehicles, because the wings are too large. Note: Characters with this Morphus are playful and often either quite young and innocent or naive and in denial about the Nightlords and their Minions, and the horrors in the world. They hate ugliness, cruelty, bullies and wickedness.",
+      "statModifiers": {
+        "pb": {
+          "flat": 8
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "ma": {
+          "dice": "1D6"
+        },
+        "pp": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "5D6"
+        },
+        "perception": {
+          "flat": 2
+        }
+      }
     },
     {
       "id": "mythical_creature_gorgon",
@@ -94,7 +185,37 @@
           "pageNumber": 38
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
+      "description": "This Morphus appears to be an interpreta- tion of the fabled serpent-women of Greek mythology, the most well-known being Medusa. However, the Aztec, Indian and other cultures also have similar myths about serpentine gods, beings and monsters with multiple snake heads or who appeared to be part human, part snake, or could command snakes or change from serpent to human. This Morphus could represent any of them. The Nightbane’s skin is covered in fine scales in shades of green, greyish blue, or bronze, some with red or black patterns, the eyes golden or green, the tongue forked like a snake’s nestled inside a mouth filled with pointed teeth and a pair a fangs, and each finger ends in yellowed claws. Of course, the most bizarre and frightening aspect of the Gorgon visage is hair replaced by a coil of 2D6+10 writhing snakes, each three feet (0.9 m) long and able of attack and bite anyone who engages the Nightbane in melee combat or comes too close for comfort. All of this makes the Gorgon Nightbane as deadly as vipers and they are capable, often ruthless, warriors. Bonuses: +2 to the P.S. and P.P. attributes, +6D6 S.D.C., Natural A.R. 10, +2 to Horror Factor, claws dam- age equal to Supernatural P.S. punch damage +3 for claw attacks, the Gorgon’s bite does 2D6 damage and has the same venom as the snakes (see Snake Attack, below), 2D6+10 snakes are at- tached to the Nightbane’s head in place of hair. Each snake has 2D6+12 S.D.C. and will grow back in a single day if destroyed (requires a Called Shot to hit per each snake). Attacks from be- hind are detected by the snakes and conveyed to the Nightbane, so surprise attacks are nearly impossible when the crown of ser- pents is not covered by a hood, hat or veil, and they also add +3 to initiative and +2 to parry and dodge. Note: Automatically starts with the Gorgon’s Touch Elite Talent (see Nightbane® Survival Guide, page 104, or the Talents Appendix in this book) or select one extra Talent. Penalties: -1 to I.Q., -2 to M.E., -2 to M.A., and -1D4 to the P.B. attribute. Gorgon Nightbane tend to be a bit vain and jealous of anyone more attractive than themselves, which can cause strife with Barbie and Ken Morphuses, Guardians, etc. Dis- guise, Impersonation, and Undercover Ops are impossible in this Morphus. Snake Attack (special): 1D4+1 snakes strike at the same tar- get at a time, each doing 1D4 damage per bite. This ultimately provides the Nightbane an extra five attacks per melee round, but only against those who come within striking distance (3 feet/0.9 m). Each snake bite injects a poison that temporarily makes its victim turn ashen colored and makes muscles tighten and stiffen, which is where the myth of turning people to stone may have originated. (Or is it the other way around?) Victims must roll to save vs nonlethal poison (16 or greater). A successful save vs nonlethal poison means half damage and none of the penalties described below. A failed save reduces the victim’s Spd and attacks per melee round by half! Combat bonuses and the performance of skills are also reduced by half as the cramping and tight muscles make it an effort to move. Duration of the venom is two melee rounds for each failed snake bite. Note: Double damage and double the du- ration of penalties to Night Princes, Nightlords, Hounds, Hound Masters, Hunters, and other denizens of the Nightlands.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        },
+        "initiative": {
+          "flat": 3
+        },
+        "parry": {
+          "flat": 2
+        },
+        "iq": {
+          "flat": -1
+        },
+        "me": {
+          "flat": -2
+        },
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "2D6+12"
+        }
+      },
+      "naturalAr": 10
     },
     {
       "id": "mythical_creature_griffin",
@@ -110,7 +231,30 @@
           "pageNumber": 39
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+      "description": "This Morphus gives the Nightbane the head of a hawk or eagle, hands that more resemble the talons of an eagle, the mane, fur and tail of an African lion, and the wings of an eagle. The wings, chest, and forelegs are plumed while the body and hindquarters have short, tan fur. The player can decide whether the Morphus retains its humanoid body (common) or whether he becomes a four-legged creature (rare); in either case, he can speak. The Griffin Morphus is a foot (0.3 m) taller than the Nightbane’s Facade, weighs 300 pounds (135 kg),and the most common colors are white and dark brown feathers and tan fur, though the colors for each are left to the player or G.M.’s imagi- nation. Note: Many different cultures, from Egyptians to Rus- sians to Asians and Native Americans, have myths about power- ful and heroic avian spirits, gods and monsters, be it the winged jinn or genie, to the Anzu of Mesopotamia, and many others. This manifestation could represent any of them. Griffins are present in several Eurasian mythologies, in which they are often said to be guardians of priceless treasure or divine figures, so Nightbane with this Morphus may be particularly pro- tective or vigilant. They certainly make devastating foes when their powerful limbs, razor-sharp beak, slashing talons, and flight capabilities are considered. Bonuses: +1D4 to the P.S. attribute, +2 to P.P., +4D6 to running speed (flying speed is 1D4x10+70), +1D4x10+20 S.D.C., +20% to Prowl skill (in the air or on the ground), and +2 to Horror Factor. The wings have 1D4x10+40 S.D.C. each and regenerate at the same rate as the Nightbane. If a wing(s) is destroyed, it will grow back in one day. Nightvision is extended to 1,500 feet (457.2 m), the Nightbane has exceptional distance vision (can see a rabbit or read a sign two miles/3.2 km away), 180 degree peripheral vision, can turn his head 180 de- grees, is +3 to all Perception Rolls involving sight, +1 on initia- tive and +2 to dodge in flight. The character can leap 20 feet (6.1 m) high or across from a standing position and 40 feet (12.2 m) with a running start without actually taking flight. Damage from the talons is +2D4 in addition to Supernatural P.S. punch damage, a beak bite or slash does +1D6 damage in addition to Supernatural P.S. punch damage. Diving/swooping attacks inflict double damage but count as two attacks. Talon and beak attacks do double damage to Nightlords and the denizens of the Night- lands. Penalties: In Morphus form the taloned hands/forelegs make it very difficult to use tools or weapons (-3 to strike, parry or disarm) and -20% on the performance of all skills, and Griffins are completely unable to swim whether the Morphus is humanoid or animal shaped. Griffin Nightbane are often loyal to a fault, but can be overprotective and imperious at times. Disguise, Im- personation, Swimming and similar skills are impossible in this Morphus.",
+      "statModifiers": {
+        "pp": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": -3
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D4x10+40"
+        },
+        "perception": {
+          "flat": 3
+        }
+      }
     },
     {
       "id": "mythical_creature_sphinx",
@@ -126,7 +270,24 @@
           "pageNumber": 39
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+      "description": "Similar to the Griffin, the mythological Sphinx has the body of a lion with a humanoid head and pair of feathered wings. The Sphinx Nightbane may have a humanoid form and stand erect, but his body resembles that of an African lion walking on its hind legs, or the Morphus could look just like the mythic creature and walk on all fours in the body of a lion. In either case, the head is that of a human, but it looks different than the face of the Facade, so the Morphus conceals the character’s human Facade identity. Height (or length if animal form) is nine feet (2.7 m), with a majestic wingspan of 16-20 feet (4.9 to 6.1 m). In mythology, the Sphinx is a guardian of knowledge and the divine, capable of warding off evil and is associated with wis- dom, knowledge, and lore-keepers. Normal speaking capabilities. Bonuses: +1D4 to I.Q., +2 to the M.E. and M.A. attributes, +1D6 to P.S., +1D4x10 to running speed (flying speed is 1D6x10+70), +2D6 Hit Points, +1D4x10 S.D.C., and +2 to Horror Factor. The wings have 1D6x10+40 S.D.C. each and regenerate at the same rate as the Nightbane, but will grow back in one day if destroyed. +1D4x10 to base P.P.E. and +1 to Spell Strength if a magic user. The Sphinx can leap 30 feet (9.1 m) high or across from a stand- ing position and 60 feet (18.3 m) with a running start without actually taking flight. +2D6 damage from claw attacks in addition to Supernatural P.S. punch damage; double damage to Nightlords and all denizen of the Nightlands. Diving/swooping attacks in- flict double damage but count as two melee attacks. Penalties: In Morphus form, the Nightbane is completely unable to use tools or weapons and is too large to fit inside most automobiles, needs a mini-van with back seats down, a van, pickup truck and simi- lar or larger vehicles. Hates confined spaces. Skills that require hands are impossible to perform, Disguise and Undercover Ops are impossible, and the Sphinx Nightbane is -30% to Swimming. They also tend to have a penchant for acquiring and hoarding knowledge and secrets that can get them into trouble, and only trust those closest to them.",
+      "statModifiers": {
+        "me": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        },
+        "iq": {
+          "dice": "1D4"
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D6x10+40"
+        }
+      }
     },
     {
       "id": "mythical_creature_unicorn",
@@ -142,7 +303,33 @@
           "pageNumber": 39
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\mythical_creature\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+      "description": "The body of this Nightbane Morphus a beautiful, sleek, light horse like an Arabian or Appaloosa (15 hands tall) with a single, conical horn in the middle of the horse’s forehead measuring 1-2 feet (0.3 to 0.6 m) long. The horn itself appears to be made of ivory, pure white marble or a white crys- tal. The coloring of the fur and mane, hooves, etc., is left to the player to decide, but the hair/mane is always in contrast to the color of the body fur; which according to most myths is white or a light golden color (both a rarity in nature). It is also possible for the “unicorn” to have a centaur-like, with the body and legs of a horse and the upper body of an incredibly attractive human (+10 to P.B. attribute, male or female) with long, silky hair down to the waist, and the classic Unicorn’s horn protruding from his or her forehead. Bonuses: +2D6 to Hit Points, +1D6x10+20 to S.D.C., +4D6 to base P.P.E., +1D6 to the M.A. attribute, +1D6 to P.S., +1 to P.P. and P.E., +10 to P.B. attribute, and +2 to Awe/Horror Factor. +1D6x10+50 to running Spd, and the Nightbane can leap 10 feet (3 m) high and 20 feet (6.1 m) lengthwise with a running start, +10% to Swimming skill, and gains the Auto-Dodge ability (use only the bonuses from the R.C.C. and high P.P. attribute). Damage: +1D6 damage to kick attacks with front legs, 2D6 dam- age with back legs, both in addition to equivalent of Supernatural P.S. punch damage, and +3D6 damage from a stabbing/impaling horn strike or 2D6 damage with a slashing horn attack — triple horn damage against Nightlords, Night Princes, all denizens of the Nightlands, vampires, demons and all creatures of darkness. Penalties: In Morphus form the Nightbane is completely unable to use tools or weapons (unless a Unicorn Centaur) and is too large to fit inside most conventional vehicles, not even mini-vans and pickup trucks, and needs a larger vehicle or horse trailer. Moreover, the Unicorn hates confined spaces and does not like to let people ride on its back, with the exception of children and those who are gentle and innocent. Skills that require hands are impossible to perform, Disguise and Undercover Ops are also im- possible. The Unicorn Nightbane is likely to be the first target of Nightlords and their minions, as well as many demons and other beings of supernatural evil that hate beauty and seek to destroy it. Many Unicorn Nightbane are idealistic dreamers which can lead to a certain level of naivety, and risk-taking, especially when it comes to helping or defending the innocent and heroic under- dogs.",
+      "statModifiers": {
+        "pb": {
+          "flat": 10
+        },
+        "pp": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "1D6"
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D6x10+20"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": 10
+          }
+        ]
+      }
     }
   ]
 }

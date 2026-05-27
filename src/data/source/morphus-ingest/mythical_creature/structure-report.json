@@ -1,0 +1,19 @@
+{
+  "tableId": "mythical_creature",
+  "generatedAt": "2026-05-27T21:54:28.132Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 9,
+      "entryCount": 9
+    },
+    {
+      "path": "src/data/content/morphus/tables/mythical_creature.json",
+      "changed": 9,
+      "entryCount": 9
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 18
+}

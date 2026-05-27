@@ -2,10 +2,11 @@
   "id": "mythical_creature",
   "displayName": "Mythical Creature",
   "tableCategory": "Mythical Creature",
-  "tableHeading": "Mythical Creature Table",
+  "tableHeading": "Mythical Creature",
   "targetJson": "src/data/content/morphus/tables/mythical_creature.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
