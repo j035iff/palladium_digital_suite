@@ -1,0 +1,19 @@
+{
+  "tableId": "hobbyist",
+  "generatedAt": "2026-05-27T21:39:34.317Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 8,
+      "entryCount": 8
+    },
+    {
+      "path": "src/data/content/morphus/tables/hobbyist.json",
+      "changed": 8,
+      "entryCount": 8
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 16
+}
