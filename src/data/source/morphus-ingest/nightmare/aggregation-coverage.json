@@ -39,7 +39,8 @@
         "skill overrides",
         "natural weapons",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -81,6 +82,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "natural weapons",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

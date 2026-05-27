@@ -2,10 +2,11 @@
   "id": "nightmare",
   "displayName": "Nightmare",
   "tableCategory": "Nightmare",
-  "tableHeading": "Nightmare Table",
+  "tableHeading": "Nightmare",
   "targetJson": "src/data/content/morphus/tables/nightmare.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
