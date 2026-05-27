@@ -53,6 +53,20 @@ NON_PLAYABLE_NAME_RES = [
     re.compile(r"^roll (?:on|again|twice|percentile)\b", re.I),
     re.compile(r"^combination of two\b", re.I),
 ]
+
+CROSS_TABLE_ROUTER_BODY_RES = [
+    re.compile(
+        r"\broll\s+(?:for\s+or\s+)?select(?:\s+a)?\s+feature\s+from\s+"
+        r"(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b",
+        re.I,
+    ),
+    re.compile(
+        r"\broll\s+or\s+select\s+(?:a\s+)?feature\s+from\s+"
+        r"(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b",
+        re.I,
+    ),
+    re.compile(r"\broll\s+on\s+(?:the\s+)?[\w\s,&/'-]+\s+table\b", re.I),
+]
 # Footer order / watermark lines (ignore when detecting printed page).
 _ORDER_LINE_RE = re.compile(r"order\s*#\s*\d", re.IGNORECASE)
 
@@ -142,6 +156,17 @@ def norm_trait_name(name: str) -> str:
     return re.sub(r"\s+", " ", name.lower().replace("'", "'")).strip()
 
 
+def _has_own_trait_mechanics(body: str) -> bool:
+    return bool(re.search(r"Bonuses?:\s*[+-]|\bPenalties?:\s*[+-]", body, re.I))
+
+
+def is_cross_table_router_trait(name: str, body_start: str, full_body: str = "") -> bool:
+    body = (full_body or body_start or "").strip()
+    if not body or _has_own_trait_mechanics(body):
+        return False
+    return any(pat.search(body) for pat in CROSS_TABLE_ROUTER_BODY_RES)
+
+
 def is_other_trait(name: str, body_start: str) -> bool:
     if ROLL_OTHER_RE.search(body_start[:200]):
         return True
@@ -170,6 +195,9 @@ def classify_trait(name: str, body_start: str, full_body: str = "") -> tuple[boo
         r"Bonuses?:", body, re.I
     ):
         return False, "instruction_only"
+
+    if is_cross_table_router_trait(name, body_start, body):
+        return False, "cross_table_router"
 
     return True, None
 

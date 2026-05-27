@@ -2710,7 +2710,7 @@
       ],
       "prerequisites": {
         "morphusTableIds": [
-          "modern_warrior",
+          "modern_soldier",
           "super_being",
           "occupation"
         ]
@@ -3771,7 +3771,7 @@
       "prerequisites": {
         "morphusTableIds": [
           "occupation",
-          "modern_warrior",
+          "modern_soldier",
           "ancient_warrior",
           "super_being"
         ]
@@ -4022,7 +4022,7 @@
         "morphusTableIds": [
           "ancient_warrior",
           "athlete",
-          "modern_warrior"
+          "modern_soldier"
         ]
       }
     },

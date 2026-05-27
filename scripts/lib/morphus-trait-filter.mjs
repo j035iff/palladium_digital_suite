@@ -25,6 +25,23 @@ const NON_PLAYABLE_NAME_RES = [
   /^combination of two\b/i,
 ]
 
+/** Percentile rows that only send the player to another Morphus table (no trait mechanics). */
+const CROSS_TABLE_ROUTER_BODY_RES = [
+  /\broll\s+(?:for\s+or\s+)?select(?:\s+a)?\s+feature\s+from\s+(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b/i,
+  /\broll\s+or\s+select\s+(?:a\s+)?feature\s+from\s+(?:one\s+of\s+)?(?:the\s+)?[\w\s,&/'-]+\s+tables?\b/i,
+  /\broll\s+on\s+(?:the\s+)?[\w\s,&/'-]+\s+table\b/i,
+]
+
+function hasOwnTraitMechanics(body) {
+  return /Bonuses?:\s*[+-]|\bPenalties?:\s*[+-]/i.test(body)
+}
+
+export function isCrossTableRouterTrait(name, bodySnippet = '', fullBody = '') {
+  const body = (fullBody || bodySnippet || '').trim()
+  if (!body || hasOwnTraitMechanics(body)) return false
+  return CROSS_TABLE_ROUTER_BODY_RES.some((re) => re.test(body))
+}
+
 export function normTraitName(name) {
   return String(name)
     .toLowerCase()
@@ -66,6 +83,10 @@ export function classifyMorphusTrait(name, bodySnippet = '', fullBody = '') {
 
   if (/^roll (?:on|see|refer to|use the)\s/i.test(body) && !/Bonuses?:/i.test(body)) {
     return { playable: false, reason: 'instruction_only' }
+  }
+
+  if (isCrossTableRouterTrait(name, head, body)) {
+    return { playable: false, reason: 'cross_table_router' }
   }
 
   return { playable: true }

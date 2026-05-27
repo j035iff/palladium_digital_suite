@@ -1,8 +1,8 @@
 {
-  "tableId": "modern_warrior",
+  "tableId": "modern_soldier",
   "entries": [
     {
-      "id": "modern_warrior_body_armor",
+      "id": "modern_soldier_body_armor",
       "name": "Body Armor",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -13,7 +13,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_camouflage",
+      "id": "modern_soldier_camouflage",
       "name": "Camouflage",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -23,7 +23,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_dress_uniform",
+      "id": "modern_soldier_dress_uniform",
       "name": "Dress Uniform",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -33,7 +33,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_gas_mask",
+      "id": "modern_soldier_gas_mask",
       "name": "Gas Mask",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -45,7 +45,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_medic_first_aid",
+      "id": "modern_soldier_medic_and_first_aid",
       "name": "Medic and First Aid",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -55,7 +55,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_night_hunter_nightvision_goggles",
+      "id": "modern_soldier_night_hunter_nightvision_goggles",
       "name": "Night Hunter/Nightvision Goggles",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -65,7 +65,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_field_radio",
+      "id": "modern_soldier_field_radio",
       "name": "Field Radio",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -76,7 +76,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_personal_weaponry",
+      "id": "modern_soldier_personal_weaponry",
       "name": "Personal Weaponry",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -85,7 +85,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_heavy_firepower",
+      "id": "modern_soldier_heavy_firepower",
       "name": "Heavy Firepower",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -95,7 +95,7 @@
       "notesOnly": false
     },
     {
-      "id": "modern_warrior_biomechanical",
+      "id": "modern_soldier_biomechanical",
       "name": "Biomechanical",
       "hooks": [
         "custom one-offs (notes only)"

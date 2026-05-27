@@ -1,5 +1,5 @@
 {
-  "tableId": "modern_warrior",
+  "tableId": "modern_soldier",
   "tableHeading": "Modern Soldier Table",
   "authoritativeBookKey": "dark_designs",
   "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
@@ -11,24 +11,8 @@
       "authoritative": true
     }
   ],
-  "traitCount": 10,
+  "traitCount": 9,
   "traits": [
-    {
-      "name": "Biomechanical",
-      "percent": "91-00%",
-      "skip": false,
-      "sources": [
-        {
-          "bookKey": "dark_designs",
-          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
-          "pageNumber": 55,
-          "percent": "91-00%",
-          "authoritative": true
-        }
-      ],
-      "descriptionAuthority": "dark_designs",
-      "alsoPublishedIn": []
-    },
     {
       "name": "Body Armor",
       "percent": "01-10%",

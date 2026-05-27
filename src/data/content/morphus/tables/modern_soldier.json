@@ -1,0 +1,553 @@
+{
+  "id": "modern_soldier",
+  "kind": "morphus_trait_table",
+  "displayName": "Modern Soldier",
+  "parentTable": null,
+  "description": "Modern Soldier Morphus table (Dark Designs pp. 53–55). Military gear and tactics; weapons, helmets, and armor may be biomechanical. With any Modern Soldier feature: +1 to save vs Horror Factor and +1 to Perception Rolls to recognize ambushes, booby-traps, military weapons, and explosive devices.",
+  "entries": [
+    {
+      "id": "modern_soldier_body_armor",
+      "name": "Body Armor",
+      "tableCategory": "Modern Soldier",
+      "description": "This ‘Bane is always wearing a mod- ern body armor of some form. Regardless of the style, it is a full suit of combat armor complete with a helmet. While it looks like the genuine article, complete with zippers and other fasteners, the armor is unable to be removed as it is part of the Morphus. The coloring is typically a matte black, dark grey, desert brown or some kind of camouflage pattern and may have multiple pock- ets and fasteners to store equipment. Bonuses: Increase the base Natural A.R. to 1D4+10, add 1D6x10+70 to S.D.C., and blunt at- tacks and explosions do half damage. Penalties: -1 to the P.E. at- tribute and -1D4 to Spd, -5% to skills like Acrobatics, Climbing, Gymnastics, Prowl, Swimming, Disguise and Undercover Ops. The armor provides no protection against damage from disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers (which ignore the armor’s S.D.C. entirely).",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+70"
+        },
+        "pe": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D4"
+        }
+      },
+      "damageAffinities": {
+        "blunt": 0.5,
+        "explosives": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swim",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Natural A.R. becomes 1D4+10.",
+        "No protection vs disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers (they ignore armor S.D.C.)."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_camouflage",
+      "name": "Camouflage",
+      "tableCategory": "Modern Soldier",
+      "description": "This character’s Morphus form is dressed from head to toe in camouflage clothing. This may be as simple as a set of modern “digital camo” fatigues and grease paint to a full-fledged ghillie suit that incorporates local foliage. Biomechanical Nightbane might have a camouflage paint job or cargo netting. Whatever form the camouflage takes, it alters ev- ery time he changes to Morphus to match the surrounding en- vironment and/or the psyche of the Nightbane. Bonuses: +4D6 to S.D.C., +25% to the Camouflage skill, and +10% to Prowl and Tailing skills. Given 1D4 minutes and suitable materials, the Nightbane can prepare a personal hiding spot that is extremely difficult to detect (Perception Roll of 1D4+13 needed to spot the character). -20% to opponents’ ability to Detect Concealment, Detect Ambush, Tailing, or Tracking rolls when trying to locate this Nightbane (bonus does not apply if other people are with the ‘Bane). Gets automatic first initiative when ambushing an oppo- nent from a hiding place. Penalties: -1D4 to Spd, -1 on initiative when not ambushing opponents, and -5% to skills like Disguise, Impersonation, and Undercover Ops.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "initiative": {
+          "flat": -1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": 25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "customOneOffs": [
+        "With 1D4 minutes and materials, personal hide Perception 1D4+13 to spot.",
+        "-20% to opponents’ Detect Concealment, Detect Ambush, Tailing, and Tracking vs this Nightbane alone.",
+        "Automatic first initiative when ambushing from hiding.",
+        "Initiative penalty applies when not ambushing."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_dress_uniform",
+      "name": "Dress Uniform",
+      "tableCategory": "Modern Soldier",
+      "description": "Dress uniforms are meant for for- mal occasions such as military ceremonies rather than combat. Such clothing is typically replete with patches, medals, and other such ornamentation designed to look striking and impressive. This Morphus is always decked-out in such military finery which gives him an aura of authority. It may also make him look out of place. This uniform can be from any military organization that has ever existed or a fictional one like in Star Trek. Whatever the case, it is sure to attract attention. Bonuses: +2 to M.A., +1 to M.E., +3D6+10 to S.D.C., +2 to Awe/Horror Factor, and the Nightbane gains one Modern Weapon Proficiency of choice, but it can only be used while in Morphus form. Penalties: Such uni- forms tend to be quite conspicuous; -10% to Prowl, and skills like Disguise, Impersonation and Undercover Ops are impossible unless impersonating a military officer in full regalia.",
+      "statModifiers": {
+        "ma": {
+          "flat": 2
+        },
+        "me": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6+10"
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "isNegated": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "isNegated": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "isNegated": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "One Modern Weapon Proficiency of choice (Morphus only).",
+        "Disguise, Impersonation, and Undercover Ops allowed only when impersonating a military officer in full regalia."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_gas_mask",
+      "name": "Gas Mask",
+      "tableCategory": "Modern Soldier",
+      "description": "Like the Body Armor feature, the gas mask is part of the Nightbane’s Morphus and probably perma- nently attached to his face (Biomechanical or cybernetic). It can be any style of gas mask from WWI to modern day equivalents. This protective device was invented to shield and protect the wearer from chemical weapons on the battlefield, but this one is equally useful against chemical fumes, tear gas, gas attacks of all kinds and even airborne pathogens. Bonuses: +2D6 to S.D.C. and +1 to Horror Factor. While in Morphus form the Nightbane is immune to any airborne chemicals, gas attacks, fumes, stench or disease that is not magical in nature. Even when it is magical, the character is +4 to save against its effects. Nuclear radiation is also ineffective against this Nightbane and will not even irradiate per- sonal equipment kept on the character’s person. Penalties: -1 on Perception Rolls, -1D4 to M.A. and P.B. attributes, voice is a bit muffled, -10% to all Communications skills, -60% to Disguise, Seduction and Undercover Ops.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": -1
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
+      },
+      "saveModifiers": {
+        "gas": 4,
+        "magic": 4
+      },
+      "damageAffinities": {
+        "airborneToxins": 0
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "Communications",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -60
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Immune to non-magical airborne chemicals, gas attacks, fumes, stench, and disease; +4 to save vs magical gas effects.",
+        "Nuclear radiation ineffective; personal equipment on person not irradiated.",
+        "Voice muffled."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 53
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_medic_and_first_aid",
+      "name": "Medic and First Aid",
+      "tableCategory": "Modern Soldier",
+      "description": "This Morphus is a combat medic, which means a pair of surgical gloves and surgical mask covering the mouth and nose are likely to be part of it, along with a medium-sized kit of field medical supplies. Blood pres- sure device, stethoscope, thermometer for taking temperature, pen flashlight, various sizes of bandages, rolls of bandages, tubes of antiseptic, quick-clotting agent, needle and thread, bottle of aspirin, pen and notepad, and various other useful medical items. However, the bag/box/kit seems too small for everything that the Nightbane can remove from it to help people. In truth, the charac- ter thinks of what is needed, reaches into the kit, and retrieves the supplies he was thinking of (within reason and only as it applies to first aid situations and healing, not a gun or cell phone or large equipment like an EKG machine). All conjured supplies should be basic medical supplies that you would expect to find in a large, well-equipped first aid kit. No rare and expensive drugs, no nar- cotics, no fancy medical devices. Also, this feature does NOT automatically create the right tool for the job. The Nightbane must visualize what is to be produced and spend one P.P.E. for each item (a pack of tongue depressors or band aids would still count as one item). If the Nightbane Medic has any stigmata, it is likely to be bullet holes in his body or limbs that never heal and regularly ooze blood. Likewise, this morphus may have bandages covering his head or face, even though he is the medic. Bonuses: +1 to M.E. and P.E. attributes, +2 to pull punch and disarm, and +20% to the First Aid, Paramedic, or Medical Doctor skills and with an expenditure of 6 P.P.E. he has a healing touch that stops bleed, causes open wound to begin to heal, start any heart that has stopped, and instantly restores 4D6 Hit Points or S.D.C.! Penal- ties: -1D6+6 from the permanent P.P.E. base and -4 to damage from this character’s melee attacks.",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pullPunch": {
+          "flat": 2
+        },
+        "disarm": {
+          "flat": 2
+        },
+        "ppe": {
+          "dice": "-(1D6+6)"
+        },
+        "bonusHthDamage": {
+          "flat": -4
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_first_aid",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_paramedic",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_medical_doctor",
+            "modifierPercent": 20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Kit supplies conjured by thought (first aid only; no guns, phones, or EKG machines).",
+        "6 P.P.E. healing touch: stop bleed, heal open wounds, restart heart, restore 4D6 H.P. or S.D.C.",
+        "-4 damage from this character’s melee attacks.",
+        "Common stigmata: oozing bullet holes or bandaged head/face."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_night_hunter_nightvision_goggles",
+      "name": "Night Hunter/Nightvision Goggles",
+      "tableCategory": "Modern Soldier",
+      "description": "Though this feature may seem redundant given the Nightbane’s natural night- vision, this permanent fixture increases range to 3,000 feet (914 m) and enables him to see in magical darkness and shadows at half the usual range without need of a saving throw. Bonuses: +2D6 to S.D.C., +2 to all Perception Rolls, never afraid of the dark, impervious to even magical blindness and his punches, kicks and melee attacks with a handheld weapon do double dam- age to Shadow creatures, Nightlords and all creatures from the Nightlands! Penalties: -2D4 from permanent P.P.E. base, dis- likes bright lights/sunlight, and -3 on Perception Rolls and -5% on all skill performance in well-lit areas and in daylight.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "perception": {
+          "flat": 2
+        },
+        "ppe": {
+          "dice": "-2D4"
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 3000
+      },
+      "customOneOffs": [
+        "Never afraid of the dark; impervious to magical blindness.",
+        "Punches, kicks, and handheld melee weapons do double damage vs Shadow creatures, Nightlords, and Nightlands denizens.",
+        "In daylight or well-lit areas: -3 Perception Rolls and -5% all skills."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_field_radio",
+      "name": "Field Radio",
+      "tableCategory": "Modern Soldier",
+      "description": "The Nightbane has a military-grade field radio and/or satellite phone on hand at all times while in Morphus form, or a cybernetic equivalent. This device rang- es from the size of a large cell phone to the bulky, WWII era, backpack units. This provides the Nightbane with a 50 mile (80 km) radius of radio communications that can only be jammed by magical means like the Anti-Magic Cloud or Sanctum spell. Bo- nuses: +4D6 to S.D.C., automatically gets the Radio: Basic and Cryptography skills at 80% (or +20% whichever is greater) while in Morphus form; +10% to any other Communications skills the character may possess. Double the range and halve the cost of us- ing the Operator Talent if possessed by this Nightbane. Also dou- ble the range in the Nightlands. Penalties: -2D4 base P.P.E., and electrical attacks deal an additional 50% damage to the character.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "ppe": {
+          "dice": "-2D4"
+        }
+      },
+      "damageAffinities": {
+        "electricity": 1.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_radio_basic",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_cryptography",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "Communications",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Radio: Basic and Cryptography at 80% or +20% (whichever is higher) in Morphus.",
+        "Double Operator Talent range and halve its cost; double range in the Nightlands."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_personal_weaponry",
+      "name": "Personal Weaponry",
+      "tableCategory": "Modern Soldier",
+      "description": "The Nightbane’s Morphus may have a bit of a machine-like appearance and certainly wears a combat helmet and fatigues. Select one weapon from each of the following lists. These weapons always appear on the char- acter when the Morphus form is assumed, with firearms fully loaded and with spare ammunition. Expended rounds are replen- ished every 24 hours, but additional store-bought commercial rounds (or stolen ordnance) of the same caliber may be provided by the character. Note that these may be hard to come by, es- pecially high-damage rounds of military ordnance. All weapons have standard features common to that type (e.g. assault rifles and machine-guns can fire bursts, sniper rifles have long-range scopes, etc.), and may be Biomechanical, meaning they many be built into the Nightbane’s body or limbs. Bonuses: +1D6 to Spd attribute, +6D6 S.D.C., and while in Morphus, the Nightbane has a bonus of +2 to strike and +1 to parry with any weapons from this feature, and all ch weapons do an extra +2D6 damage against the Nightlords, their demonic minions and all denizens of the Nightlands. Penalties: -2D6+6 from the permanent P.P.E. base, and -5% on the performance of all skills except W.P.s, Military, Physical and Espionage skills. Primary Weapon Light Assault Rifle: 4D6 damage with a 1,969 foot (600 m) range and three 50 round clips. Heavy Assault Rifle: 5D6 damage with a 1,640 foot (500 m) range and three 30 round clips. Light Machine-Gun: 6D6 damage with a 3,280 foot (1,000 m) range and a single 100 round belt. Sniper Rifle: 5D6 damage with a 5,280 foot (1,609 m) range and three 10 round clips. Shotgun: 4D6 damage with a 200 foot (61 m) range and a 7 round capacity plus two full reloads. Submachine-Gun: 3D6 damage with a 656 foot (200 m) range and three 30 round clips. Secondary Weapon/Side Arm Light Pistol: 3D6 damage with a 200 foot (61 m) range and three 15 round clips. Heavy Pistol: 4D6 damage with a 160 foot (48.8 m) range and three 9 round clips. Machine-Pistol: 2D6 damage with a 160 foot (48.8 m) range and three 20 round clips. Grenades (x3): Hand thrown or rifle-launched, deal 1D6x10 damage to a 15 foot (4.6 m) radius. Survival Knife or Small Melee Weapon: Likely a knife or bayonet, deals 1D6 damage, for melee combat and may retract from a wrist or forearm housing. Large Melee Weapon: Something like a machete, sword or large entrenching tool that inflicts 2D6 damage, for melee combat and may retract from a wrist or forearm housing",
+      "statModifiers": {
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "6D6"
+        },
+        "ppe": {
+          "dice": "-(2D6+6)"
+        },
+        "strike": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "globalSkillModifier": -5
+      },
+      "customOneOffs": [
+        "Primary (pick one): light assault rifle 4D6/600 m, heavy assault 5D6/500 m, light MG 6D6/1000 m, sniper 5D6/1609 m, shotgun 4D6/61 m, SMG 3D6/200 m.",
+        "Secondary (pick one): light pistol 3D6, heavy pistol 4D6, machine-pistol 2D6, 3× grenades 1D6x10/4.6 m, survival knife 1D6, large melee 2D6.",
+        "+2 strike and +1 parry with weapons from this feature; +2D6 damage vs Nightlords, minions, and Nightlands denizens.",
+        "-5% all skills except W.P., Military, Physical, and Espionage categories."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 54
+        }
+      ]
+    },
+    {
+      "id": "modern_soldier_heavy_firepower",
+      "name": "Heavy Firepower",
+      "tableCategory": "Modern Soldier",
+      "description": "The Nightbane’s Morphus pos- sesses heavy weaponry that by all rights shouldn’t be one man- portable. This weapon might take the form of a multi-shot rocket pod, a heavy machine-gun, Gatling-gun, or even a miniaturized light artillery cannon. Whatever it is, it’s big and unwieldy, but deals out devastating amounts of damage: 1D6x10 damage per melee attack! Maximum range is also impressive at 4,000 feet (1,219 m). Any ammunition necessary is provided at a rate of three shots per melee round. Each attack with this beast counts as one attack, but there are encumbrance and size penalties. Bo- nuses: +2 to P.S. and P.E., +1D4x10 S.D.C., double the range and damage of the Darkblast Talent if channeled through this weapon, +1 to Horror Factor, and add an additional +10 damage against the Nightlords, their demonic minions and all denizens of the Nightlands. Penalties: Reduce Spd attribute by half, -3 to dodge and roll with impact, -1D6 to Hit Points, -3D6+10 from the permanent P.P.E. base, and -40% to skills like Acrobatics, Climbing, Gymnastics, Prowl, and Swimming, while skills like Disguise and Undercover Ops are impossible!",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "hp": {
+          "dice": "-1D6"
+        },
+        "ppe": {
+          "dice": "-(3D6+10)"
+        },
+        "spd": {
+          "percent": -50
+        },
+        "dodge": {
+          "flat": -3
+        },
+        "rollWithPunch": {
+          "flat": -3
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swim",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "isNegated": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "isNegated": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Double Darkblast range and damage when channeled through this weapon.",
+        "+10 damage vs Nightlords, demonic minions, and Nightlands denizens."
+      ],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 55
+        }
+      ]
+    }
+  ]
+}
