@@ -9,18 +9,38 @@
       "id": "ancient_warrior_infantry",
       "name": "Ancient Infantry/Foot Soldier",
       "tableCategory": "Ancient Warrior",
-      "description": "The backbone of almost any ancient military force was its infantry. Nightbane warriors are dressed in simple clothing or armor matching an ancient society and carry weapons that can never be broken or dulled.",
+      "description": "The backbone of al- most any ancient military force was its infantry. While not as glo- rified as warriors such as knights or archers, these steadfast and brave souls were often required to march for hundreds of miles and engage enemies in brutal melee combat. On more than one occasion, “infantry” included simple peasants using their farming implements or scavenged weaponry. Nightbane warriors are dressed in simple clothing, perhaps even as little as a loincloth, that may or may not match that of an ancient society. They may also have other small distinguishing features such as the piercings of a Zulu warrior or face paint of a Viking or Native American. Armor and helmet or uniform/iconic imagery may be Babylonian, Egyptian, Greek, Roman, Norman, French Musketeer, Samurai, American Civil War, and countless others. A single two-handed melee weapon or pair of one-hand- ed weapons (see the Nightbane® Main Book, pages 204-209 for some options) rounds out the warrior. Note that one-handed weapons may also include shields, and almost every infantry sol- dier throughout time had a helmet or headdress of some kind that protected the head and identified the fighting force. The helmet may be something worn or horns or bone in the shape of the hel- met for the infantry of the appropriate era and country. Damage inflicted by each ancient weapon is the same as its mundane equivalent though it can never be broken and he blade never dulls. Of course, it also cannot be separated from the Night- bane which means it either stays in the hand (cannot be disarmed) or somehow secured to the character. Bonuses: +1D4 to the P.S. attribute, +1D4 to P.E., and +1D6 to Spd. +1D6x10 S.D.C. +1 to strike and parry with a melee weapon. +1 to Awe/Horror Factor. Penalties: -1 to the M.E. attribute, -1 to M.A., and -2 to P.B.",
       "statModifiers": {
-        "ps": { "dice": "1D4" },
-        "pe": { "dice": "1D4" },
-        "spd": { "dice": "1D6" },
-        "sdc": { "dice": "1D6x10" },
-        "hf": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "me": { "flat": -1 },
-        "ma": { "flat": -1 },
-        "pb": { "flat": -2 }
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "me": {
+          "flat": -1
+        },
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -2
+        }
       },
       "naturalWeapons": [
         {
@@ -34,6 +54,10 @@
           ]
         }
       ],
+      "livingWeaponRules": {
+        "preferredWeapon": true,
+        "onlyDamagedWhenTargeted": false
+      },
       "customOneOffs": [
         "A single two-handed melee weapon or pair of one-handed weapons (which may include a shield) rounds out the warrior.",
         "The weapon cannot be separated from the Nightbane which means it either stays in the hand or is somehow secured to the character."
@@ -53,16 +77,32 @@
       "id": "ancient_warrior_archer",
       "name": "Archer",
       "tableCategory": "Ancient Warrior",
-      "description": "The snipers and marksmen of their day, archers were typically meant to rain death upon enemies from afar. Every Nightbane archer has a bow and a quiver of arrows or bolts that never runs out.",
+      "description": "The snipers and marksmen of their day, archers were typically meant to rain death upon enemies from afar. Primarily deployed in ranks behind other units, on defen- sive structures, or in ambush positions, archers were almost never intended to engage the enemy in close quarters except as a last resort. Of course, exceptions such as Comanche braves, Russian Cossacks, Mongolian horsemen, and Japanese samurai, all excel- lent horsemen skilled at firing a bow from horseback at full gal- lop, did exist. Amazon warrior women, though the stuff of myth, my also be an element in a Nightbane’s Morphus. Nightbane archers may be dressed according to the garb of an ancient civilization or a fictitious equivalent, or something more gothic. While the dress of Nightbane archers can vary from indi- vidual to individual, every Nightbane archer has at least one thing in common: Each has a bow of some kind and quiver of arrows or bolts when in Morphus form. This can be a short bow (1D6 dam- age, 340 feet/104 m range), longbow (2D6 damage, 640 foot/195 m range), modern crossbow (2D6 damage, 470 foot/143 m range), modern crossbow pistol (probably one for each hand/arm; 1D6 damage, 120 feet/36.6 m range), or heavy modern crossbow (3D6 damage, 600 foot/183 m range), whichever weapon seems the most appropriate. The number of attacks per melee that can be made with this weapon is equal to the number of hand to hand attacks using a bow, and half that for a crossbow. The quiver NEVER runs out of ammunition. Bonuses: +1 to the M.E. at- tribute, +1 to P.S., +1 to P.P., and +1 to Perception Rolls. Also +1 one attack per melee round and +2 to strike, but ONLY when using a bow and arrow or a crossbow. Penalties: -1 to the P.E. attribute and -1D6 S.D.C. Also tends to be uncomfortable in con- fined spaces.",
       "statModifiers": {
-        "me": { "flat": 1 },
-        "ps": { "flat": 1 },
-        "pp": { "flat": 1 },
-        "perception": { "flat": 1 },
-        "apm": { "flat": 1 },
-        "pe": { "flat": -1 },
-        "sdc": { "dice": "-1D6" },
-        "strike": { "flat": 2 }
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "apm": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "-1D6"
+        },
+        "strike": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -95,16 +135,32 @@
       "id": "ancient_warrior_assassin",
       "name": "Assassin",
       "tableCategory": "Ancient Warrior",
-      "description": "Clandestine warriors whose job it was to infiltrate enemy camps or cities and eliminate high-value targets. This Morphus is dressed in dark clothing that has numerous folds and pockets.",
+      "description": "Clandestine warriors whose job it was to infiltrate enemy camps or cities and eliminate high-value targets, assassins used a number of tactics to accomplish their missions. From the ubiquitous ninja clans of ancient Japan to lesser known varieties, these trained killers were often widely feared. Then again they were just as often shunned for doing the dirty work so few would undertake. This Morphus is dressed in dark clothing that has numerous folds and pockets or pouches suitable for concealing weapons and tools. The Nightbane also always appears tense and on edge as if danger lurks around every corner. Two small weapons such as daggers are always hidden somewhere on his person, along with 2D4 small throwing weapons such as darts, spikes, or shuriken. These weapons deal the same damage as their mundane coun- terparts, but disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds). Bonuses: +1 to the M.E. attribute, +1 to P.S., and +1D4 to P.P., +4D6 to S.D.C., +1 to all Perception Rolls, +1 to Awe/Horror Factor, +1 to strike with melee weapons, bow, and thrown weapons, and +10% to the Prowl skill. Penalties: -1D4 to the M.A. attribute. Their appearance makes other leery, making Invoke Trust impos- sible.",
       "statModifiers": {
-        "me": { "flat": 1 },
-        "ps": { "flat": 1 },
-        "pp": { "dice": "1D4" },
-        "sdc": { "dice": "4D6" },
-        "perception": { "flat": 1 },
-        "hf": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "ma": { "dice": "-1D4" }
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -154,7 +210,7 @@
       "id": "ancient_warrior_cavalry",
       "name": "Cavalry",
       "tableCategory": "Ancient Warrior",
-      "description": "Cavalry soldiers are mounted warriors trained to fight while astride powerful steeds. They always appear in Morphus with a horse, or may be Centaur-like themselves.",
+      "description": "Cavalry soldiers are mounted warriors trained to fight while astride powerful steeds and used to punch holes in enemy lines or flank around them. The cavalry were the battle-tanks of their day. Superior height and momentum gave them a decided advantage against unmounted opponents, and speed allowed cavalry to adapt quickly to changing battlefield conditions and harry enemy forces with hit-and-run tactics. Dress can vary widely among those Nightbane with this feature. From richly colored robes to simple animal skins or furs, the appearance can reflect real warriors such as the Cossacks, Samurai or Sioux horsemen, to imaginary or fictional types. Whatever the garb, the thing that distinguishes these Nightbane is that they always appear in Morphus with a horse, or may be Centaur-like themselves, with the lower body of a horse. The horse can be of any color or breed, and may look absolutely ordinary, beautiful, emaciated, monstrous in some way, partially armored or demonic, but it is always a horse. While the mount may look like a separate creature, it is actually a part of the Nightbane and fully under his or her complete control. A large weapon meant for mounted combat, such as a lance (1D8 damage) or flail (2D6 damage), or long, curved cavalry sword (2D6 damage) rounds out the appearance. Though the “rider” can dismount, the two must remain in physical contact, even if it is leading the horse portion by the reins. The only exception is when one or the other is destroyed. If this happens, restoring the destroyed half requires transforming to Facade and back to Morphus which splits the remaining Hit Points/S.D.C. between the two. Bonuses: Humanoid: +1D4 to the P.S. and +1D6 to Spd attributes; +2D6x10 S.D.C. and +6D6 Hit Points. Horse: +2D6 to P.S., +2 to P.E., +1D4 to P.B. and 1D6x10+20 to Spd; the horse can also pull 10 times the normal carrying weight and jump 10 feet (3 m) high and 20 feet (6.1 m) lengthwise. Mount- ed Combat Bonuses (Nightbane is on his horse): +2 attacks per melee, +1 on initiative, +2 to parry and dodge, and +6 to dam- age. Penalties: The “mount/horse” has half of the Nightbane’s S.D.C. and Hit Points while the rider has the other half, mak- ing the two halves easier to destroy when targeted separately. Each portion heals 5 Hit Points/S.D.C. per melee round, and both must be destroyed to kill the Nightbane. Note: When dis- mounted the Nightbane has half the normal number of attacks and combat bonuses.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -208,9 +264,32 @@
                 "flat": 6
               }
             }
+          },
+          {
+            "stanceType": "dismounted",
+            "statModifiers": {
+              "apm": {
+                "percent": -50
+              },
+              "strike": {
+                "percent": -50
+              },
+              "parry": {
+                "percent": -50
+              },
+              "dodge": {
+                "percent": -50
+              }
+            }
           }
         ]
       },
+      "recoveryBehaviors": [
+        {
+          "trigger": "destruction",
+          "note": "If rider or mount is destroyed, restore via Facade→Morphus; remaining H.P./S.D.C. split between halves. Each portion heals 5 H.P./S.D.C. per melee; both must be destroyed to kill."
+        }
+      ],
       "naturalWeapons": [
         {
           "limbType": "misc_limbs",
@@ -239,19 +318,41 @@
       "id": "ancient_warrior_warchief",
       "name": "War-Chief/Warlord",
       "tableCategory": "Ancient Warrior",
-      "description": "The Nightbane looks like a nobleman, warlord, or chieftain outfitted for battle. Any garb worn is of the highest quality and an ornate headdress or helm denoting a commanding rank.",
+      "description": "The Nightbane looks like a nobleman, warlord, or chieftain outfitted for battle. Any garb worn is of the highest quality and an ornate headdress or helm denoting a commanding rank. If armor is a part of the Morphus, via another feature, it will be richly decorated or gilded and adds 50% more S.D.C. The same goes for the three high-quality ancient weapons that are also part of this feature. Typically, these consist of a large, two-handed weapon, a sword or dag- ger as a backup, and a ranged weapon such as a bow, spear or javelin. Each of these weapons inflicts 50% more damage than its real world equivalent. For example, a warlord’s battle-axe would deal 3D6 damage rather than the normal 2D6. Bonuses: +1 to I.Q., +2 to M.A., +1D4 to P.S., +2 to P.P. and P.E., and +1D4 to P.B. +1D4x10 to S.D.C., Natural A.R. 9, +2 to strike, +1 to parry and disarm with melee weapons, and +1 to Awe/ Horror Factor. Penalties: The appearance of a warlord is meant to inspire friendly forces and intimidate enemies, not to make it easy to hide in shadowy alleys, so the Nightbane is -20% to Prowl and any enemies are +2 on Perception Rolls to notice the actions of this character. Looking like a leader also tends to make one a target in battle.",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "ma": { "flat": 2 },
-        "ps": { "dice": "1D4" },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "pb": { "dice": "1D4" },
-        "sdc": { "dice": "1D4x10" },
-        "hf": { "flat": 1 },
-        "strike": { "flat": 2 },
-        "parry": { "flat": 1 },
-        "disarm": { "flat": 1 }
+        "iq": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 1
+        }
       },
       "naturalAr": 9,
       "skillModifiers": {
@@ -263,6 +364,13 @@
           }
         ]
       },
+      "combatContextModifiers": [
+        {
+          "condition": "physical_contact",
+          "target": "opponent",
+          "note": "Enemies are +2 on Perception Rolls to notice this character's actions."
+        }
+      ],
       "naturalWeapons": [
         {
           "limbType": "misc_limbs",
@@ -294,7 +402,7 @@
       "id": "ancient_warrior_light_armor",
       "name": "Light Armor",
       "tableCategory": "Ancient Warrior",
-      "description": "The Nightbane appears to be wearing some kind of light armor such as studded leather armor or a half-suit of chain mail and a helmet.",
+      "description": "The Nightbane appears to be wear- ing some kind of light armor such as studded leather armor or a half-suit of chain mail and a helmet. This armor was favored not just because it was much cheaper to produce and maintain. Light armor was also much easier than heavier types to wear and move in while still offering a measure of protection against melee and missile weapons. The type and look of the armor is left up to the player and does not affect the bonuses gained. This armor cannot be removed. It is a part of the character. Bonuses: Increase the character’s base Natural A.R. to 11 and +1D4x10+40 to S.D.C. Penalties: -1 to the P.E. attribute, -10% to the final Spd attribute, and -10% to the performance of Physical skills such as Swim- ming, Prowl, Climbing and Acrobatics.",
       "statModifiers": {
         "sdc": {
           "dice": "1D4x10+40"
@@ -349,7 +457,7 @@
       "id": "ancient_warrior_heavy_armor",
       "name": "Heavy Armor",
       "tableCategory": "Ancient Warrior",
-      "description": "A Nightbane clad in some kind of heavy armor. The armor is full body, including some sort of helmet that may or may not cover the face.",
+      "description": "From the plate mail of Eastern Eu- rope to the lacquered armor of Japanese samurai, a number of ancient cultures sought to protect their warriors from harm as best they could. A Nightbane with the Heavy Armor feature is clad in some kind of heavy armor. Appearance and styling of the armor is up to the player, but it looks like an ancient suit of armor rather than anything modern. The armor is full body, including some sort of helmet that may or may not cover the face. It is a part of the Morphus and cannot be removed like normal armor. Bonus- es: Increase the base Natural A.R. to 13. +1D6x10+100 to S.D.C. Penalties: -2 to P.P. and P.E. attributes, -20% to the final Spd attribute, and -20% to the performance of Physical skills such as Swimming, Prowl, Climbing and Acrobatics.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10+100"
@@ -407,7 +515,7 @@
       "id": "ancient_warrior_color_standard",
       "name": "Color Standard",
       "tableCategory": "Ancient Warrior",
-      "description": "The Nightbane possesses a standard (flag, banner, or symbol representing a military force) while in Morphus form. Displayed prominently for all to see.",
+      "description": "A standard is some kind of flag, banner, or symbol representing a military force. In ancient war- fare they were used to identify different armies or army units on a battlefield. Standards served as a rallying point and as morale boosters, so if the carrier was slain the standard would be picked up by another soldier and hoisted once more. The Nightbane possesses such a standard while in Morphus form. It might be carried or mounted somewhere onto the body, but whatever the case, it is displayed prominently for all to see. The exact symbol, colors, design or flag is up to the player and can be historically accurate or completely made-up as long as it holds some kind of meaning for the Nightbane character. If handheld, the standard can be used as a blunt weapon, like a staff that does 1D6 damage in addition to that of the Nightbane’s Su- pernatural Strength. Bonuses: +1 to the M.E. attribute, +1D4+1 to M.A., +1 to P.S., and +1 to P.B. +4D6+6 S.D.C., +1 to parry and disarm if the standard is handheld, and +1 to Awe/Horror Factor. Penalties: -1D4 to the Spd attribute, -1 attack per melee, and -1 to dodge.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -430,10 +538,18 @@
         "spd": {
           "dice": "-1D4"
         },
-        "apm": { "flat": -1 },
-        "dodge": { "flat": -1 },
-        "parry": { "flat": 1 },
-        "disarm": { "flat": 1 }
+        "apm": {
+          "flat": -1
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {

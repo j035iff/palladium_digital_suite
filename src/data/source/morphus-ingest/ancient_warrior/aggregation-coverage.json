@@ -7,7 +7,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "living weapon rules"
       ],
       "notesOnly": false
     },
@@ -39,7 +40,8 @@
         "stat modifiers / A.R. shift",
         "natural weapons",
         "companion blueprint",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "recovery behaviors"
       ],
       "notesOnly": false
     },
@@ -51,7 +53,8 @@
         "natural A.R.",
         "skill overrides",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },

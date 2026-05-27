@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T21:38:20.513Z",
+  "generatedAt": "2026-05-27T18:08:20.907Z",
   "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
   "schemaTopLevelKeys": [
     "id",
@@ -30,7 +30,20 @@
     "activatedAbilities",
     "specialCombatInterceptions",
     "customOneOffs",
-    "conditionalStanceModifiers"
+    "entryRole",
+    "variantPercentiles",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
   ],
   "traitCount": 10,
   "perTrait": [
@@ -104,10 +117,35 @@
           ],
           "severity": "info",
           "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "initiative",
+          "schemaPaths": [
+            "statModifiers.initiative"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "prowl_modifier",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
         }
       ],
       "suggestedTopLevelKeys": [
-        "skillModifiers"
+        "skillModifiers",
+        "statModifiers"
       ]
     },
     {
@@ -121,6 +159,14 @@
             "statModifiers",
             "skillModifiers",
             "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "prowl_modifier",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
           ],
           "severity": "info",
           "note": null
@@ -144,10 +190,48 @@
           ],
           "severity": "info",
           "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "perception_rolls",
+          "schemaPaths": [
+            "statModifiers.perception",
+            "sensory.perceptionSpecialties"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
         }
       ],
       "suggestedTopLevelKeys": [
-        "skillModifiers"
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "sensory"
       ]
     },
     {
@@ -195,6 +279,23 @@
           "note": null
         },
         {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "perception_rolls",
+          "schemaPaths": [
+            "statModifiers.perception",
+            "sensory.perceptionSpecialties"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
           "patternId": "nightvision",
           "schemaPaths": [
             "sensory.nightvisionRangeFlatBonus",
@@ -233,10 +334,19 @@
           ],
           "severity": "info",
           "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
         }
       ],
       "suggestedTopLevelKeys": [
-        "skillModifiers"
+        "skillModifiers",
+        "statModifiers"
       ]
     },
     {
@@ -258,6 +368,14 @@
           "patternId": "natural_weapon",
           "schemaPaths": [
             "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
           ],
           "severity": "info",
           "note": null
@@ -301,6 +419,23 @@
           "note": null
         },
         {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
           "patternId": "permanent_ppe",
           "schemaPaths": [
             "customOneOffs",
@@ -313,8 +448,8 @@
       "suggestedTopLevelKeys": [
         "skillModifiers",
         "activatedAbilities",
-        "customOneOffs",
-        "statModifiers"
+        "statModifiers",
+        "customOneOffs"
       ]
     },
     {
@@ -325,14 +460,14 @@
         {
           "patternId": "stance",
           "schemaPaths": [
-            "conditionalStanceModifiers"
+            "mobility.conditionalStanceModifiers"
           ],
           "severity": "info",
           "note": null
         }
       ],
       "suggestedTopLevelKeys": [
-        "conditionalStanceModifiers"
+        "mobility"
       ]
     }
   ],
@@ -476,7 +611,7 @@
     },
     {
       "priority": "info",
-      "action": "Optional schema fields not detected in this table: saveModifiers, mobility, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions"
+      "action": "Optional schema fields not detected in this table: saveModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions, entryRole, variantPercentiles, crossTableRoll, morphusRules, appearanceConstraints, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
     }
   ],
   "blocking": [],

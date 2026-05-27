@@ -2,10 +2,11 @@
   "id": "ancient_warrior",
   "displayName": "Ancient Warrior",
   "tableCategory": "Ancient Warrior",
-  "tableHeading": "Ancient Warrior Table",
+  "tableHeading": "From Stone-Age hunters",
   "targetJson": "src/data/content/morphus/tables/ancient_warrior.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {

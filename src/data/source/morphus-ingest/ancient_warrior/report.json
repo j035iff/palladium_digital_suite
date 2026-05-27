@@ -1,14 +1,20 @@
 {
   "tableId": "ancient_warrior",
-  "generatedAt": "2026-05-25T21:38:23.454Z",
+  "generatedAt": "2026-05-27T18:08:23.078Z",
   "schemaKeys": [
     "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
     "companionBlueprint",
-    "conditionalStanceModifiers",
+    "conditionalPenalties",
+    "crossTableRoll",
     "customOneOffs",
     "damageAffinities",
     "description",
     "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
     "gameSystems",
     "gimmickInventory",
     "gimmickToySwitches",
@@ -17,18 +23,25 @@
     "id",
     "isPolymorphicTemplate",
     "limbDurability",
+    "livingWeaponRules",
     "mobility",
+    "morphusRules",
     "name",
     "naturalAr",
     "naturalWeapons",
+    "playerChoices",
+    "recoveryBehaviors",
     "saveModifiers",
     "sensory",
+    "skillContextModifiers",
     "skillModifiers",
     "sources",
     "specialCombatInterceptions",
     "statModifiers",
     "subTraitChoicesBudget",
     "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
     "weaponClassBonuses",
     "weightModifier"
   ],
@@ -45,75 +58,96 @@
       {
         "id": "ancient_warrior_body_armor",
         "name": "Body Armor",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_camouflage",
         "name": "Camouflage",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_dress_uniform",
         "name": "Dress Uniform",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_field_radio",
         "name": "Field Radio",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_gas_mask",
         "name": "Gas Mask",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_heavy_firepower",
         "name": "Heavy Firepower",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_medic_and_first_aid",
         "name": "Medic and First Aid",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_night_hunter_nightvision_goggles",
         "name": "Night Hunter/Nightvision Goggles",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       },
       {
         "id": "ancient_warrior_personal_weaponry",
         "name": "Personal Weaponry",
-        "hooks": [],
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
         "notesOnly": false
       }
     ]
   },
   "target": {
-    "entryCount": 8,
+    "entryCount": 10,
     "ids": [
-      "ancient_warrior_infantry",
-      "ancient_warrior_archer",
-      "ancient_warrior_assassin",
-      "ancient_warrior_cavalry",
-      "ancient_warrior_warchief",
-      "ancient_warrior_light_armor",
-      "ancient_warrior_heavy_armor",
-      "ancient_warrior_color_standard"
+      "ancient_warrior_biomechanical",
+      "ancient_warrior_body_armor",
+      "ancient_warrior_camouflage",
+      "ancient_warrior_dress_uniform",
+      "ancient_warrior_field_radio",
+      "ancient_warrior_gas_mask",
+      "ancient_warrior_heavy_firepower",
+      "ancient_warrior_medic_and_first_aid",
+      "ancient_warrior_night_hunter_nightvision_goggles",
+      "ancient_warrior_personal_weaponry"
     ]
   },
   "bookIndex": {
     "total": 10,
     "included": 10,
+    "skippedNonPlayable": 0,
     "skippedOther": 0,
     "names": [
       "Biomechanical",
@@ -138,8 +172,5 @@
     ],
     "multiSourceTraits": 0
   },
-  "recommendations": [
-    "Target has ids not in staging: ancient_warrior_infantry, ancient_warrior_archer, ancient_warrior_assassin, ancient_warrior_cavalry, ancient_warrior_warchief, ancient_warrior_light_armor, ancient_warrior_heavy_armor, ancient_warrior_color_standard",
-    "Staging has ids not in target (merge pending): ancient_warrior_biomechanical, ancient_warrior_body_armor, ancient_warrior_camouflage, ancient_warrior_dress_uniform, ancient_warrior_field_radio, ancient_warrior_gas_mask, ancient_warrior_heavy_firepower, ancient_warrior_medic_and_first_aid, ancient_warrior_night_hunter_nightvision_goggles, ancient_warrior_personal_weaponry"
-  ]
+  "recommendations": []
 }
