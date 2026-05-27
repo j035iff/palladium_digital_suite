@@ -1,3 +1,16 @@
+Clown Table
+Nightbane with features from this table might have been the 
+“class-clown,” dreamed about joining the circus, wanted to be-
+come a mime, clown or rodeo clown, or possibly even had a 
+deathly fear of clowns and their ilk, so to them, clowns are scary 
+and monstrous. While Nightbane with such a comical appearance 
+might initially be disregarded or even persecuted by their breth-
+Joe Sifferman (Order #46319524)
+30
+ren, there is something a little more than unsettling about watch-
+ing this Nightbane in combat or caving in a Hound’s head with 
+a “toy” mallet or cartwheel through a gunfight while cackling 
+like a fool. Even the most battle-hardened warriors grudgingly 
 accept Clown Nightbane as capable allies or foes, even if their 
 antics can be annoying. Note: Nightbane with any of the features 
 below automatically have a Horror Factor of 18 to anyone afraid 
@@ -327,55 +340,3 @@ Acrobatics, Bicycling, Disguise, Gymnastics, Prowl, Running,
 Tailing, Undercover Ops and driving most vehicles (no legs) are 
 impossible in this Morphus form. Likewise, special kick attacks 
 are impossible to perform.
-just such a bond in a new, physical way. Perhaps the character 
-spent hours wrenching on engines with Dad or with friends, went 
-sightseeing around the country in a motor home or family car, 
-worked in an auto factory or design center, loved cruising on his 
-motorcycle, is a NASCAR or other racing enthusiast, lived on 
-the road as a traveling salesman or trucker, or just always had 
-a love for cars. Whatever the reason, this Nightbane’s Morphus 
-now incorporates one or more features of a vehicle. Note: Fea-
-tures in this table are considered Biomechanical for the purposes 
-of Talent eligibility.
-Roll percentile dice once for random determination, or pick 
-one.
-01-10% Engine Block: Either replacing or built into the chest 
-of this Nightbane is an entire engine block. This might be a min-
-iaturized car or truck engine, a motorcycle engine, etc. When sta-
-tionary, the engine constantly idles, but when the Nightbane is 
-running or engaged in strenuous activity, it revs up just like the 
-real thing. Bonuses: +3 to the P.S. attribute, +3D6+10 to Spd, 
-+2D6x10 to S.D.C. with a base Natural A.R. of 10 (or +1 to an 
-existing A.R. that is greater than 10), +2 to Horror Factor and 
-+10% to all piloting skills that involve a motor. Penalties: -3 to 
-the P.P. and P.B. attributes. Electrical and fire attacks inflict 50% 
-more damage and the character will drown within 1D4+2 melee 
-rounds if dropped into deep water in Morphus form (can’t hold 
-breath or swim, too heavy). -30% to Climbing and Tailing. Skills 
-like Acrobatics, Disguise, Gymnastics, Prowl, and Undercover 
-Ops are impossible in this Morphus.
-11-19% Coolant Tubes/Radiator: In place of veins, this 
-character has transparent or translucent plastic tubes filled with 
-blue or green liquid. In truth, this is ethylene glycol (antifreeze) 
-and water, and the tubes all connect to a central radiator that juts 
-from the abdomen or back. This radiator has 1D4x10+20 S.D.C. 
-and an A.R. of 9, but is a relatively small target that requires 
-a Called Shot at -3 to hit. Bonuses: +2 to the P.E. attribute, 
-+2D6+10 to S.D.C. +1 to Horror Factor, the Nightbane is imper-
-vious to poisons/toxins as well as diseases that affect the blood, 
-his blood is toxic to vampires (4D6 damage per sip) and cold, 
-heat and fire (even magical) do half damage. Penalties: -2 to the 
-P.B. and Spd attributes, and -1D6 P.P.E. If the radiator is ever 
-completely destroyed, it will not regenerate as normal unless the 
-Nightbane returns to Facade form for at least 1D4 hours. Without 
-the radiator, the Morphus form takes double damage from fire 
-and cold-based attacks and heals at half the normal rate (usually 
-5 S.D.C./H.P. per melee). Also, the leaking antifreeze makes the 
-Nightbane much easier to track (+20% bonus to those tracking 
-him).
-20-28% Exhaust Pipes: One or more metal pipes protrude 
-from the shoulders or back of the Nightbane, releasing a steady 
-stream of exhaust vapor. This exhaust is indistinguishable from 
-vehicle exhaust (gas or diesel), though it contains carbon dioxide 
-rather than carbon monoxide. The pipes themselves may look like 
-any car, truck, or motorcycle exhaust, with or without a muffler, 

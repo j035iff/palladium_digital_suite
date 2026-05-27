@@ -14,7 +14,15 @@
           "pageNumber": 31
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (51-60%; authority=dark_designs)."
+      "description": "Tied to this Morphus on strings are 2D4+3 medium-sized helium balloons of various colors. Each floats a few feet (a meter) above the Nightbane. They never seem to tangle or otherwise impede the Nightbane’s movement, though they may obscure views of anything directly above. Each balloon has only a single point of S.D.C., but they are only damaged by attacks leveled directly at them. The balloons can also be cut free and even handed out or left tied to objects. By squeezing and twisting the balloons, they can be made into balloon animals and other shapes. Balloons that are destroyed or cut loose regenerate at the rate of one every hour. Bonuses: As long as one balloon is still attached, the Nightbane floats down when he jumps from any height, taking 1D6 damage upon a hard landing; double damage from heights greater than 200 feet (61 m). He can also jump up to 30 feet (9.1 m) high or across as long as he has one or more balloons. When separated from the Nightbane, each balloon con- tinues to register to any supernatural senses as that Nightbane for one hour. This can be used to create the equivalent of su- pernatural decoys, sending pursuers off on wild goose chases or causing them to overestimate the number of Nightbane present. Penalties: -6 to the Spd attribute when there are two or more bal- loons attached to the Nightbane (-2 if there is only one balloon attached), -3 to dodge, and the balloons are easy to spot, so -10% to Prowl and skills like Tailing, Disguise, and Undercover Ops are impossible.",
+      "statModifiers": {
+        "spd": {
+          "flat": -6
+        },
+        "dodge": {
+          "flat": -3
+        }
+      }
     },
     {
       "id": "clown-jester_clown_clothes",
@@ -30,7 +38,24 @@
           "pageNumber": 30
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (21-30%; authority=dark_designs)."
+      "description": "The clothing that appears on this Nightbane is garishly colored and may be baggy and oversized. The actual type of attire varies drastically, and can range from the denim overalls and the western shirt of a rodeo clown to multi- colored outfits attributed to clowns or medieval court jesters, to suit and tie. Bonuses: +2D6 S.D.C. and +1 to Natural A.R. +1 to dodge and entangle. +15% to any skills used to entertain such as Performance, Sing, and Dance. +20% to the Concealment and Palming skills if hiding something on the Nightbane’s person. Moreover, no body can remember the clown’s face. They can describe his clothing, but his face is a blank and it is blurred out in photographs, video and film. Penalties: -1 to the P.P. attribute and -2 to Spd. -15% to Climbing, Prowl, and Swimming skills. Skills like Seduction and Undercover Ops are likely impossible while in this Morphus, but nobody can remember the face.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "spd": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
     },
     {
       "id": "clown-jester_clown_gags",
@@ -46,7 +71,18 @@
           "pageNumber": 31
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (61-70%; authority=dark_designs)."
+      "description": "Part and parcel of almost any clown act are the gimmicks and gags used to garner laughs. A Nightbane with this feature may look like a clown or have subtle clown-like features along with 1D4+1 of the following gags that always ap- pear on the Morphus. They may be worn, kept on a web-vest or inside pockets, tucked in a belt, carried in hand or slung over the shoulder in a cloth sack. However, these gimmicks are usually not concealed in any way. Chatter Teeth: 1D4 sets of teeth (human or animal) that ani- mate and chatter along the ground at a maximum speed of 5. They can also jump up to 8 feet (2.4 m) high to nip and bite opponents. Human-sized and smaller teeth inflict 1D6+1 bite damage while larger and sharper teeth may do up to 2D6+2 damage. Each set of chatter teeth has two attacks per melee round and is +3 to strike and +5 to dodge attacks against it. Exploding Cigars: A package containing 1D4+3 normal look- ing cigars. However, five seconds after being lit these cigars ex- plode with a loud report. Anyone in a 20 foot (6 m) radius that isn’t wearing hearing protection loses one melee attack and is -2 on initiative for 1D4 melee rounds. If in someone’s mouth or slipped into a pocket or bag, or held in hand, the cigar does 1D4 damage and blackens the face, hand or bag with soot. Exploding cigars are replaced at the rate of one per hour. Extend-O-Glove: A large boxing glove at the end of an ex- tendable armature, this odd device enables the Nightbane to deliver a punch to a target up to seven feet (2.1 m) beyond his normal reach. The Nightbane can dictate the amount of damage delivered by the glove’s punch: One point of damage (a playful bop), 1D6 damage, 2D6 damage or 4D6 damage. The character’s usual bonus to strike applies. Fake Hand: This is a convincing facsimile of one of the Mor- phus’ hands. Often used when shaking someone’s hand for a laugh, the fake hand can detatch to remain holding onto the per- son who just shook hands or grabbed the Nightbane’s hand. It holds on until it can be pulled off, which takes 1D4 melee attacks to shake or pull loose. Until pulled off, the victim cannot use that hand to punch, hold a weapon or perform a skill. The fake hand can also be detached and animated to scurry over the ground or a piece of furniture to retrieve small items or to enter small spaces, slip through an open window to unlock a door, etc. The hand can crawl at a maximum speed of 7 and has a P.S. that is half that of the owner. To manipulate the fake hand, the Nightbane must be able to see it to control it with his mind. Maximum range is 60 feet (18.3 m) with a clear line of sight. The fake hand is unable to punch, strike, or use a weapon, but the hand can grasp and cling to others, distracting and often creeping opponents out. The ap- pendage has three attacks/actions per melee round and is +2 to dodge. A lost or destroyed hand reappears after the Nightbane returns to his Facade and back into his Morphus. Toy Horn: This is a small, metal or plastic horn that resembles a miniature trumpet or bicycle horn with a squeeze bulb to make it honk. While it can be used purely for entertainment, once per melee it can unleash a foghorn-like blare which is accompanied by a powerful blast of air. This blast is sufficient to knock down human-sized targets within 10 feet (3 m) and send lightweight objects like loose papers, dry leaves, sawdust, and magazines fly- ing up to 20 feet (6.1 m) away. The latter is done to cause confu- sion or momentarily obscure the vision of an opponent. Targets must make a saving throw vs a 14 or lose initiative and one melee attack/action. Toy Pistol: This may be a brightly colored, obviously toy gun, or a realistic-looking pistol that extends a little flag reading something like “POW!” “Boom!” or “Gotcha!” Alternatively, it might be a gun that produces a small pop and fires only confetti or streamers. That is, until the Nightbane sacrifices two Hit Points to temporarily allow the weapon to fire a real slug. This attack deals 2D6+2 damage and has a range of 120 feet (36.6 m). Each real shot requires the sacrifice of two Hit Points that heal normally. Afterwards, it reverts back to its natural toy form. Joy Buzzer: This small electric device is concealed in one of the palms of the Nightbane in Morphus. Upon contact with an- other person it emits a loud buzz and a low-grade shock (does a single point of damage). Most often this is used when shaking hands with someone for the first time. The damage can be in- creased by the Nightbane by temporarily burning Hit Points. Up Joe Sifferman (Order #46319524) 32 to 3 Hit Points can be spent in this manner per attack, with each H.P. adding 1D6 damage. Furthermore, anyone hit with a “juiced up” buzzer attack is at -1 on all combat rolls for one melee round. Pie Case: A medium-sized satchel, duffle bag, purse or crate contains shaving cream pies. These are hurled into the faces of hapless marks just for laughs. If done for fun, the pie’s contents can simply be wiped or rinsed off, but the victim of a pie to the face is momentarily blinded until wiped from the eyes, and loses one melee attack. The Nightbane can elect to generate pies that cling like thick mud at the cost of one Hit Point. This forces the target to spend 1D4 attacks to clear the muck from his eyes and face. Otherwise, the victim is blinded, suffering the usual -10 penalty to strike, parry, dodge, etc. The Nightbane is +2 to strike with either type of pie, with a maximum throwing range of 20 feet (6 m). Throwing a pie in the face of a specific target requires a Called Shot, though it should be presumed that any pie is in- tended for a shot to the face. Squeak Mallet: This looks like a large, imposing gag hammer that squeaks when it strikes and does no damage. For the most part, it is used to playfully swat others or pop them on top of the head (no damage). Each blow is accompanied by some humorous sound effect such as a squeak or honk or fart noise. At will, the Nightbane can spend two Hit Points to turn the Squeak Mallet into a weapon capable of caving in a person’s skull! It remains a deadly weapon for one melee round per level of the Nightbane and each attack does 1D6+2 damage in addition to the character’s own Supernatural P.S. punch damage. This can be especially deadly if the opponent is only expecting one of the playful hits. Squirt Flower: A fake-looking plastic flower pinned to the la- pel discharges a small, four ounce (118 ml) stream of water when the hidden bulb is depressed. Harmless to most (if annoying), the water does 1D6 damage to vampires and other creatures vulner- able to water. The Squirt Flower somehow never runs dry, mean- ing it can be used to slowly fill canteens and the like with potable drinking water in the absence of other sources. By temporarily sacrificing one Hit Point, the flower can release a 10 ounce (2957 ml) squirt of water or one of the following substances: blood (suf- ficient to feed a vampire with multiple uses), ink (stains most cloth, paper, etc.), inorganic acid (does 2D6 damage to metal, concrete, and other non-organic substances), kerosene (highly flammable), or mace (victim is temporarily blinded and -10 to strike, parry, and dodge for 1D4 melee rounds). Bonuses: See items above. Penalties: -3 to the Spd attribute, -2D6 base P.P.E., -15% to Invoke Trust/Intimidate, and -10% to Prowl.",
+      "statModifiers": {
+        "strike": {
+          "flat": -10
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "spd": {
+          "flat": -3
+        }
+      }
     },
     {
       "id": "clown-jester_clown_nose",
@@ -62,7 +98,15 @@
           "pageNumber": 30
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
+      "description": "The character has a small, brightly colored rubber ball over the tip of the nose which honks when squeezed. Unlike a normal clown nose, this one is a part of the ‘Bane and cannot be removed. The skin color of the Nightbane’s face may be normal or pale grey or white like that of clown, or reflect the rest of his Morphus. Bonuses: Keen sense of smell. Track by smell equal to a bloodhound (70% +1% per level of experience; +10% to follow blood or chemical scent). As a funny prop, if the character honks the nose while smiling, laughing, be- having in a silly manner or striking a silly pose, those who see or encounter him are temporarily unaffected by the Nightbane’s Horror Factor. In fact, as long as he makes no aggressive or scary moves, he seems harmless, even comical and friendly. It also gives the Nightbane a base Charm/Impress of 35% or a +10% if his P.B. attribute offers a higher than 35% chance, and double the base percentage (or +20%) when dealing with children under the age of thirteen. Penalties: -2 to M.A. and P.B. attributes, -3 to base P.P.E., -2 to Horror Factor and -20% to the Disguise and Impersonation skills.",
+      "statModifiers": {
+        "ma": {
+          "flat": -2
+        },
+        "hf": {
+          "flat": -2
+        }
+      }
     },
     {
       "id": "clown-jester_clown_shoes",
@@ -78,55 +122,12 @@
           "pageNumber": 30
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (31-40%; authority=dark_designs)."
-    },
-    {
-      "id": "clown-jester_coolant_tubes_radiator",
-      "name": "Coolant Tubes/Radiator",
-      "tableCategory": "Clown",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
+      "description": "The character’s Morphus is wear- ing brightly colored shoes that are roughly twice the normal size. These stereotypical “clown” shoes make running or sneak- ing more difficult, but they’re good for a laugh and have a few perks. Bonuses: +6 to the swimming Spd only, +6 damage from kicks and stomp attacks, and impervious to damage from falls and impact from large objects (special) like a falling safe, car, truck, boulder, etc., as well as explosions (no damage!). Note that punches, kicks, bullets and melee weapons, including blunt weapons, do full damage to the clown. Penalties: -2 to the P.P. and M.E. attributes, reduce land Spd by half, -20% to Prowl, -30% to Climbing and cannot leap/jump.",
+      "statModifiers": {
+        "pp": {
+          "flat": -2
         }
-      ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (11-19%; authority=dark_designs)."
-    },
-    {
-      "id": "clown-jester_engine_block",
-      "name": "Engine Block",
-      "tableCategory": "Clown",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
-        }
-      ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (01-10%; authority=dark_designs)."
-    },
-    {
-      "id": "clown-jester_exhaust_pipes",
-      "name": "Exhaust Pipes",
-      "tableCategory": "Clown",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
-        }
-      ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (20-28%; authority=dark_designs)."
+      }
     },
     {
       "id": "clown-jester_face_paint",
@@ -142,7 +143,18 @@
           "pageNumber": 30
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (11-20%; authority=dark_designs)."
+      "description": "The Morphus of the Nightbane has a white face painted in classic clown patterns in a riot of gar- ish colors. This may be the traditional embellishment of clowns the world over or a completely original pattern that may look silly, friendly, happy, sad, or yes, frightening and monstrous. The juxtaposition of the clown motif with other monstrous or spooky elements like fangs or pointed teeth, glowing eyes, spikes, mouth sewn shut, etc. can make the clown face seem all the more menacing and creepy. Bonuses: +2 to M.A., +1 on ini- tiative, +1 to Horror Factor, and can mold his face to resemble another person or monster! Mold Face (special): The Nightbane can morph his face to look like some other kind of humanoid, demon or monster or to look like a specific person (must have the person there or good reference). The transformation takes 1D4 melee rounds (15-60 seconds). If the subject being copied is in front of him, he/she can imitate the person’s voice as well! This is transformation is done to confuse and freak out people as well as to impersonate them. Suddenly seeing your own face or that of a loved one looking back at you is very unnerving and frightening. Automatically gets the Disguise and Impersonation skills at 62% +2% per level of experience. Penalties: -2 to P.B. and M.E. attributes, -1 to save vs magic, and -3D6+10 from permanent P.P.E. base.",
+      "statModifiers": {
+        "ma": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -2
+        }
+      }
     },
     {
       "id": "clown-jester_jack_in_the_box",
@@ -158,7 +170,28 @@
           "pageNumber": 32
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (91-00%; authority=dark_designs)."
+      "description": "One of the oddest Morphus forms are those Nightbane who look like giant versions of the children’s toy known as a Jack-in-the-box. The upper half of the character’s body may look like a clown, a jester or inhuman, and has a hu- manoid shape with arms, neck and head. The lower body from the waist down is a giant coiled spring covered in fabric, making it resemble an accordion, and is attached to a decorative box large enough for the Nightbane to hunker down into and close the flip top lid. The box may be colorful or ominous in its design but always has a circus, carnival or freak show vibe. There is also a winding key that when cranked, causes the box to play music un- til the box lid pops open and the hidden Nightbane inside springs out. The Nightbane has full control over this, which means anoth- er person cannot force the handle to turn and make the box open against his will. The Nightbane is also in control of the moment he chooses to pop out, making his appearance unpredictable and startling every time. The extendable, accordion-like leg area enables a Jack-in-the- Box Nightbane to stretch up to twice his normal height with an average of 12 feet (3.7 m). The character can also collapse to half of his normal height with an average of 3 feet (0.9) for the box, leaving little room inside for anything but the torso, a few weap- ons and some personal equipment. The Jack-in-the-Box Night- bane can twist his accordion-like legs attached to the inside of the box to turn 360 degrees and is so bendable that the Nightbane can invert the torso by bending in half. Movement is an interesting process, with the Jack-in-the-box having to hop like a person in a potato-sack race (reduce Spd by 70%!) or he can crawl, inch- worm fashion, dragging the box behind him. This toy anatomy also changes the way damage is dealt with. The body from the waist up can be specifically targeted and has Hit Points and S.D.C. as you would expect, but Hit Points and S.D.C. are divided evenly between the upper body and the box, which also has a Natural A.R. of 12. If the body is severed below the waist, the torso must crawl into the box portion to reattach, which takes one full melee round (15 seconds). Otherwise the Nightbane’s Morphus can only be made whole again by trans- forming back into the Facade, which causes the box portion to disappear. Bonuses: +2 to the P.P. attribute, +1D6x10+60 to Joe Sifferman (Order #46319524) 33 S.D.C., the box has a Natural A.R. of 11, +2 to Horror Factor ONLY the first melee round that the Nightbane “pops out” of the box, +2 on initiative, a surprise attack occurs on a roll of a Natural 19 or 20, double damage on a surprise attack, +1 to strike and parry, +2 to dodge, and +1 to entangle. Coil jumps are pos- sible by compressing the trunk then rapidly extending it and can propel the Nightbane 1.5 feet (0.5 m) per point of P.S. This can also be used to perform a power strike, which works just like a power punch (counts as two attacks). Penalties: The Spd at- tribute is reduced by 70% and half that when crawling, -30% to Climbing, -50% to Dancing and Swimming, and some skills like Acrobatics, Bicycling, Disguise, Gymnastics, Prowl, Running, Tailing, Undercover Ops and driving most vehicles (no legs) are impossible in this Morphus form. Likewise, special kick attacks are impossible to perform.",
+      "statModifiers": {
+        "pp": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -70
+        }
+      },
+      "naturalAr": 12
     },
     {
       "id": "clown-jester_jesters_cap_and_costume",
@@ -174,7 +207,12 @@
           "pageNumber": 32
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (71-80%; authority=dark_designs)."
+      "description": "The Morphus of this Nightbane is that of a jester with an odd, multi-pointed cap af- fixed to the head. A bell may be attached to each point of the cap, or it could have some other decorative item like charms, rings, spikes, tiny skulls, bones or fingers. The cap and costume may be multi-colored, bright or ominously dark. Bonuses: +5% to any single Espionage and Rogue skill (pick one from each category). Penalties: -1 to the M.A. and M.E. attributes.",
+      "statModifiers": {
+        "ma": {
+          "flat": -1
+        }
+      }
     },
     {
       "id": "clown-jester_outrageous_hair_and_head",
@@ -190,7 +228,15 @@
           "pageNumber": 30
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (41-50%; authority=dark_designs)."
+      "description": "The Nightbane has a painted clown face, and wild hair that could be a mohawk of any variety, shaped into spikes, frizzed up and out in one or more weird directions, a giant Afro, incredibly long or in ponytails, and in one or more bright colors. And the head is REMOVABLE! Yes, removable. This us usually done for shock value and to cre- ate fear, confusion and panic. Or the head could have some other outrage and disturbing element such as being able to split the head in half, or lift the top off like a lid to a jar to reveal his brain (momentary +2 to Horror Factor), or has fangs when he wants them to show, etc. Bonuses: The head is impervious to physical damage! Bullets bounce off, blows to the head hurt but do no damage, and the clown cannot be knocked out from a blow to the head. +2 to Horror Factor when the head is visibly detached from the body and held in one of the Nightbane’s hands or tucked under an arm, kept inside a box, etc. The head can be removed and placed someplace inconspicuous to spy on people, removed to frighten people, kept in a box and revealed to frighten people, placed on a stick like a living scepter, or float like a balloon on a string one or two feet (0.3 or 0.6 m) above the neck and shoul- ders. The head holds the brains and consciousness of the Night- bane, and it still controls the body even when detached. Though detachable, the body is never more than 20 feet (6.1 m) away. If the head or body is stolen and taken more than 120 feet (36.6 m) away, it forces the Nightbane to switch from Morphus into Joe Sifferman (Order #46319524) 31 his Facade to reunite his body with his head. Penalties: -1D4 to the M.A. and P.B. attributes, -5% to Prowl and -40% to Tailing. Skills like Undercover Ops, Seduction, Disguise and Imperson- ation are impossible while in this Morphus.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
+      }
     },
     {
       "id": "clown-jester_scepter_baton_or_bowling_pin",
@@ -206,7 +252,15 @@
           "pageNumber": 32
         }
       ],
-      "description": "TODO: transcribe from src\\data\\source\\morphus-ingest\\clown-jester\\extracted-authoritative.txt (81-90%; authority=dark_designs)."
+      "description": "A scepter or baton is a short staff or rod made of anything from wood to bone, to metal, and is almost always ornate. Some even include gems, bells or ribbons for added flair. Everyone should know what a bowling pin looks like. The Nightbane is able to perform numerous tricks with the item, spinning, flipping, juggling and balancing it on end or on one finger, his head or nose. In a pinch, it can be used as a blunt weapon that deals 1D6 damage in addition to a Supernatu- ral P.S. punch damage and can parry melee attacks. Bonuses: +1 attack when using only this item in combat for the entire melee round, +1 to strike in hand to hand combat or thrown, and +2 to parry and pull punch with the item. Penalties: -2 from permanent P.P.E. base.",
+      "statModifiers": {
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 2
+        }
+      }
     }
   ]
 }

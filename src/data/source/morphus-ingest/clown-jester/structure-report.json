@@ -1,0 +1,19 @@
+{
+  "tableId": "clown-jester",
+  "generatedAt": "2026-05-27T21:21:16.261Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 10,
+      "entryCount": 10
+    },
+    {
+      "path": "src/data/content/morphus/tables/clown_jester.json",
+      "changed": 10,
+      "entryCount": 10
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 20
+}

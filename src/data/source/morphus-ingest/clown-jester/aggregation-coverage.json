@@ -30,7 +30,8 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "sensory obfuscation",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -104,6 +105,7 @@
       "name": "Jack-in-the-Box",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "natural A.R.",
         "skill overrides",
         "companion blueprint",
         "disabled natural attacks",

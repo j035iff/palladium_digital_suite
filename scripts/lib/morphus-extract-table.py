@@ -161,7 +161,7 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
         other_m = re.search(r"\n\d{2}-\d{2}% Other:", rest)
         if other_m:
             rest = rest[: other_m.start()]
-    next_m = re.search(
+    boundary_patterns = [
         r"\n(?:"
         r"[A-Z][A-Za-z0-9/'’\-\s]+ Table"
         r"|Biomechanical:\s*[A-Za-z0-9/'’\-\s]+ Table"
@@ -169,9 +169,15 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
         r"|Mythical Creature"
         r"|Video Games \(powers\)"
         r")\b",
-        rest,
-    )
-    chunk = rest[: next_m.start()] if next_m else rest
+        r"\nGear-Head Table\b",
+        r"\njust such a bond in a new, physical way",
+    ]
+    end = len(rest)
+    for pat in boundary_patterns:
+        hit = re.search(pat, rest)
+        if hit and hit.start() < end:
+            end = hit.start()
+    chunk = rest[:end]
     return heading + chunk
 
 
