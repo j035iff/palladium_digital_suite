@@ -23,7 +23,24 @@
       "statModifiers": {
         "pb": {
           "flat": -2
+        },
+        "perception": {
+          "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -40,16 +57,14 @@
           "pageNumber": 87
         }
       ],
-      "description": "Perfect vision, excellent peripheral vi- sion (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Per- ception Rolls involving vision in well lit areas and daytime.",
-      "statModifiers": {
-        "perception": {
-          "flat": 1
-        }
-      },
+      "description": "Perfect vision, excellent peripheral vision (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Perception Rolls involving vision in well lit areas and daytime.",
       "sensory": {
         "nightvisionRangeFlatBonus": 1000,
         "sharpVision": true,
         "peripheralVisionDegrees": 180,
+        "perceptionSpecialties": {
+          "vision": 1
+        },
         "lightSensitivity": {
           "daylightVisionMultiplier": 0.5,
           "perceptionVisionPenalty": -2
@@ -70,10 +85,13 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Hor- ror Factor. Penalties: -1 to P.B. and -20% to Disguise and Un- dercover skills.",
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and -20% to Disguise and Undercover skills.",
       "statModifiers": {
         "pb": {
           "flat": -1
+        },
+        "hf": {
+          "flat": 1
         }
       },
       "combatContextModifiers": [
@@ -89,7 +107,21 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      }
     },
     {
       "id": "disproportion_huge_nose",
@@ -109,6 +141,16 @@
       "saveModifiers": {
         "gas": -2,
         "nauseaVomiting": -3
+      },
+      "sensory": {
+        "perceptionSpecialties": {
+          "smell": 2
+        },
+        "scentTracking": {
+          "enabled": true,
+          "baseSuccessPercent": 20,
+          "perLevelIncrement": 4
+        }
       }
     },
     {
@@ -157,13 +199,19 @@
           "pageNumber": 87
         }
       ],
-      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vul- nerable and unable to defend himself than he really is; -2 from Horror Factor.",
+      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vulnerable and unable to defend himself than he really is; -2 from Horror Factor.",
       "statModifiers": {
         "me": {
           "flat": 2
         },
         "pb": {
           "flat": -1
+        },
+        "pe": {
+          "flat": -1
+        },
+        "hf": {
+          "flat": -2
         },
         "iq": {
           "dice": "1D4"
@@ -188,8 +236,22 @@
       "statModifiers": {
         "hf": {
           "flat": 1
+        },
+        "pb": {
+          "flat": -1
         }
-      }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "flat": 2
+          }
+        }
+      ]
     },
     {
       "id": "disproportion_large_thick_neck",
@@ -209,6 +271,9 @@
       "statModifiers": {
         "sdc": {
           "dice": "1D6+2"
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -226,9 +291,12 @@
           "pageNumber": 87
         }
       ],
-      "description": "The character’s chin is small, flat, and seems to practically fade into the neck. Penalties: -1 to P.B. and -1 from Horror Factor.",
+      "description": "-1 to P.B. and -1 from Horror Factor.",
       "statModifiers": {
         "pb": {
+          "flat": -1
+        },
+        "hf": {
           "flat": -1
         }
       }
@@ -251,8 +319,19 @@
       "statModifiers": {
         "sdc": {
           "dice": "-1D6"
+        },
+        "hf": {
+          "flat": -1
         }
-      }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Neck",
+          "quantity": 1,
+          "sdc": 0,
+          "calledShotPenalty": -1
+        }
+      ]
     },
     {
       "id": "disproportion_tiny_ears",
@@ -300,14 +379,24 @@
         "parry": {
           "flat": -1
         },
-        "strike": {
-          "flat": 2
+        "dodge": {
+          "flat": -1
+        },
+        "perception": {
+          "flat": 1
         }
       },
       "sensory": {
         "sharpVision": true,
         "peripheralVisionDegrees": 90
-      }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "surprise_from_behind_or_side",
+          "target": "opponent",
+          "strike": 2
+        }
+      ]
     },
     {
       "id": "disproportion_tiny_mouth",
@@ -323,10 +412,13 @@
           "pageNumber": 87
         }
       ],
-      "description": "The mouth is unusually small, practi- cally a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
+      "description": "The mouth is unusually small, practically a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
       "statModifiers": {
         "hf": {
           "flat": 1
+        },
+        "ma": {
+          "flat": -1
         }
       }
     },
@@ -344,7 +436,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 to P.B., +2 to save vs gas attacks (in- cluding smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands",
+      "description": "+1 to P.B., +2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors.",
       "statModifiers": {
         "pb": {
           "flat": 1
@@ -378,7 +470,23 @@
           "pageNumber": 87
         }
       ],
-      "description": "The teeth look like those of a young human child or even smaller, and if the ‘Bane has fangs they are tiny too. The character may have twice as many teeth because they are so small. Penalties: -1 from Horror Factor and any damage from bite attacks is half the normal amount."
+      "description": "The teeth look like those of a young human child or even smaller, and if the ‘Bane has fangs they are tiny too. The character may have twice as many teeth because they are so small. Penalties: -1 from Horror Factor and any damage from bite attacks is half the normal amount.",
+      "statModifiers": {
+        "hf": {
+          "flat": -1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "percent": -50
+          }
+        }
+      ]
     },
     {
       "id": "disproportion_very_small_head",
@@ -394,18 +502,27 @@
           "pageNumber": 87
         }
       ],
-      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Pen- alties: -1 to I.Q. and P.B. attributes.",
+      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Penalties: -1 to I.Q. and P.B. attributes.",
       "statModifiers": {
-        "strike": {
-          "flat": -3
-        },
         "hf": {
           "flat": 2
         },
         "iq": {
           "flat": -1
+        },
+        "pb": {
+          "flat": -1
         }
-      }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Head",
+          "quantity": 1,
+          "sdc": 0,
+          "requiresCalledShot": true,
+          "calledShotPenalty": -3
+        }
+      ]
     }
   ]
 }

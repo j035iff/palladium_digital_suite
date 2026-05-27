@@ -101,7 +101,7 @@ function collectImpossibleSkillPhrases(body) {
   const patterns = [
     /\b([A-Za-z][A-Za-z &/,]+?)\s+are\s+impossible\b/gi,
     /\b([A-Za-z][A-Za-z &/,]+?)\s+is\s+impossible\b/gi,
-    /\bimpossible\s+to\s+([A-Za-z][A-Za-z &/]+?)(?:\s+and\s+([A-Za-z][A-Za-z &/]+?))?(?=[\s,.])/gi,
+    /\bimpossible\s+to\s+([A-Za-z][A-Za-z &/]+?)(?:\s+and\s+([A-Za-z][A-Za-z &/]+?))?(?=[\s,.;])/gi,
     /\b([A-Za-z][A-Za-z &/,]+?)\s+impossible\s+in\s+this\s+Morphus/gi,
     /\bSkills?\s+like\s+([A-Za-z][A-Za-z &/,]+?)\s+are\s+(?:likely\s+)?impossible/gi,
   ]
@@ -112,6 +112,7 @@ function collectImpossibleSkillPhrases(body) {
       if (!raw || IMPOSSIBLE_WHILE_RE.test(m[0])) continue
       const tail = body.slice(m.index, m.index + m[0].length + 40)
       if (/\s+while\s+/i.test(tail)) continue
+      if (/clothing|shirts?|jackets?|coats?|shoes?|sleeves?/i.test(raw)) continue
       phrases.push(raw)
     }
   }

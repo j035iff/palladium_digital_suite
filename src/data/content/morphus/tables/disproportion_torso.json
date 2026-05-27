@@ -19,7 +19,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character’s overall body is stout with a thick, short waist and muscular, bar- rel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, other- wise clothing must be loose or a bit oversized.",
+      "description": "The character’s overall body is stout with a thick, short waist and muscular, barrel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, otherwise clothing must be loose or a bit oversized.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -44,8 +44,13 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "impossibleInMorphus": true
+            "modifierPercent": -15
           }
         ]
       }
@@ -75,6 +80,20 @@
         "spd": {
           "percent": -20
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -98,6 +117,12 @@
         },
         "sdc": {
           "dice": "3D6+6"
+        },
+        "initiative": {
+          "flat": -1
+        },
+        "spd": {
+          "dice": "-1D4"
         }
       }
     },
@@ -115,14 +140,37 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body looks like the prover- bial 90 pound weakling or an emaciated concentration camp vic- tim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
+      "description": "The upper body looks like the proverbial 90 pound weakling or an emaciated concentration camp victim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
       "statModifiers": {
         "hf": {
           "flat": 2
+        },
+        "pe": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "-4D6"
         }
       },
       "weightModifier": {
         "percent": -50
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -144,6 +192,9 @@
         "dodge": {
           "flat": 1
         },
+        "entangle": {
+          "flat": 1
+        },
         "hf": {
           "flat": 1
         },
@@ -153,6 +204,20 @@
       },
       "heightModifier": {
         "dice": "2D4"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     }
   ]

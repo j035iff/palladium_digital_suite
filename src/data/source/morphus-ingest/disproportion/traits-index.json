@@ -143,14 +143,14 @@
     },
     {
       "name": "Huge Nose",
-      "percent": "90-95%",
+      "percent": "87-95%",
       "skip": false,
       "sources": [
         {
           "bookKey": "survival_guide",
           "reference": "Nightbane\u00ae Survival Guide (WB5)",
           "pageNumber": 87,
-          "percent": "90-95%",
+          "percent": "87-95%",
           "authoritative": true
         }
       ],

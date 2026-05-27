@@ -165,7 +165,7 @@ function stripFalseDisguiseGrants(overrides) {
   )
 }
 
-function migrateEntrySkillModifiers(entry) {
+export function migrateEntrySkillModifiers(entry) {
   const existing = entry.skillModifiers?.specificSkillOverrides ?? []
   let overrides = stripFalseDisguiseGrants(existing.map(migrateOverride))
 
@@ -211,6 +211,14 @@ function hasTraitData(table) {
   )
 }
 
+const isMain =
+  Boolean(process.argv[1]) &&
+  fileURLToPath(import.meta.url).replace(/\\/g, '/') ===
+    process.argv[1].replace(/\\/g, '/')
+
+if (!isMain) {
+  // Imported by disproportion-structure-subtables.mjs — skip batch file loop.
+} else {
 const files = readdirSync(tablesDir).filter((f) => f.endsWith('.json'))
 let filesTouched = 0
 let entriesTouched = 0
@@ -241,3 +249,4 @@ for (const file of files.sort()) {
 console.log(
   `${dryRun ? 'Dry run:' : 'Done:'} ${filesTouched} file(s), ${entriesTouched} entr(ies) with skill modifier changes.`,
 )
+}

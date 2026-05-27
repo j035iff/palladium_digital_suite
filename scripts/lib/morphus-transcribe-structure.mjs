@@ -262,12 +262,18 @@ function parseSkillModifiers(body, out) {
   const overrides = [
     ...parseTraitAndImpossibleSkillModifiers(body, findSkillId),
   ]
-  const skillPctRe = /([+-])(\d+)%\s+to\s+(?:the\s+)?([A-Za-z][A-Za-z &/]+?)(?:\s+skill)?(?:\s+and\s+([A-Za-z][A-Za-z &/]+?)(?:\s+skill)?)?/gi
+  const skillPctRe =
+    /([+-])(\d+)%\s+to\s+(?:the\s+)?([A-Za-z][A-Za-z &'/,-]+(?:\s+and\s+[A-Za-z][A-Za-z &'/,-]+)*)(?:\s+skills?)?(?=[\s,.;)]|$)/gi
   for (const m of body.matchAll(skillPctRe)) {
     const sign = m[1] === '-' ? -1 : 1
     const pct = sign * Number(m[2])
-    const names = [m[3], m[4]].filter(Boolean)
-    for (const name of names) {
+    const names = String(m[3])
+      .replace(/\s+skills?$/i, '')
+      .split(/\s+and\s+/i)
+      .map((n) => n.trim())
+      .filter(Boolean)
+    for (const rawName of names) {
+      const name = rawName.replace(/\bUndercover\b/i, 'Undercover Ops')
       if (/manual dexterity/i.test(name)) {
         overrides.push({
           targetType: 'skill_trait',
@@ -276,7 +282,15 @@ function parseSkillModifiers(body, out) {
         })
         continue
       }
-      if (/light touch|soft touch|delicate touch|delicate work|delicate skills/i.test(name)) {
+      if (/^delicate skills$/i.test(name.trim())) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_DEXTERITY,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/light touch|soft touch|delicate touch|delicate work/i.test(name)) {
         overrides.push({
           targetType: 'skill_trait',
           targetValue: SKILL_TRAIT_LIGHT_TOUCH,
