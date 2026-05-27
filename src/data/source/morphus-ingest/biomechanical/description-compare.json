@@ -13,6 +13,12 @@
       "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
     },
     {
+      "trait": "Rocket Jets",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
       "trait": "Metal Teeth and Talons",
       "authoritativeBookKey": "dark_designs",
       "otherBookKey": "core",
@@ -26,6 +32,12 @@
     },
     {
       "trait": "Mechanical Limbs",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Weapon Hand",
       "authoritativeBookKey": "dark_designs",
       "otherBookKey": "core",
       "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."

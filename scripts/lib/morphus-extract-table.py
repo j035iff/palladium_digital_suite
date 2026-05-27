@@ -58,7 +58,8 @@ _ORDER_LINE_RE = re.compile(r"order\s*#\s*\d", re.IGNORECASE)
 
 
 def clean_trait_name(name: str) -> str:
-    cleaned = re.sub(r"[!.:]+\s*$", "", name.strip())
+    cleaned = re.sub(r"^[!.:]+\s*", "", name.strip())
+    cleaned = re.sub(r"[!.:]+\s*$", "", cleaned)
     # PDFs sometimes use "Cone head" — only normalize all-lowercase names.
     if re.fullmatch(r"[a-z]+(?:[ ,'-][a-z]+)*", cleaned):
         return cleaned.title()
@@ -68,9 +69,21 @@ def clean_trait_name(name: str) -> str:
 def is_valid_trait_name(name: str) -> bool:
     if not name or len(name) < 2:
         return False
+    if name.lstrip().startswith(":"):
+        return False
     if "%" in name or re.search(r"\d{2}-\d{2}\s*%", name):
         return False
     return True
+
+
+def norm_trait_alias(name: str) -> str:
+    """Fold common PDF spelling variants for merge/structure matching."""
+    key = norm_trait_name(name)
+    aliases = {
+        "chain saw arms": "chainsaw arms",
+        "metal head camera eyes": "metal head & camera eyes",
+    }
+    return aliases.get(key, key)
 
 
 def printed_page(page: fitz.Page) -> int | None:
@@ -334,7 +347,7 @@ def merge_traits(
 
     for book, traits, bodies in book_results:
         for t in traits:
-            key = norm_trait_name(t["name"])
+            key = norm_trait_alias(t["name"])
             if key not in merged:
                 merged[key] = {
                     "name": t["name"],

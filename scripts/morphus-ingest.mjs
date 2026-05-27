@@ -388,38 +388,70 @@ function traitBodyToDescription(body) {
   return body.replace(/^\d{2}-\d{2}%\s+[^:]+:\s*/i, '').replace(/\s+/g, ' ').trim()
 }
 
+/** Later files win when the same trait name appears in multiple book extracts. */
+function extractedTxtPriority(fileName) {
+  const rank = [
+    'extracted-authoritative.txt',
+    'core.txt',
+    'between_the_shadows.txt',
+    'dark_designs_ii.txt',
+    'survival_guide.txt',
+    'dark_designs.txt',
+  ]
+  const base = fileName.replace(/^.*[/\\]/, '')
+  const i = rank.indexOf(base)
+  return i >= 0 ? i : rank.length + base.localeCompare('')
+}
+
 /** Trait blocks from authoritative extract plus per-book extracts (e.g. Alien Shape II). */
 function loadTraitBlocksForStructure(tableId) {
   const work = workDir(tableId)
-  const blocks = []
-  const seen = new Set()
+  const byName = new Map()
   const addFromText = (text) => {
     for (const block of splitTraitBlocks(text)) {
-      const key = normTraitName(block.name)
-      if (!seen.has(key)) {
-        seen.add(key)
-        blocks.push(block)
-      }
+      byName.set(normTraitName(block.name), block)
     }
   }
+  const paths = []
   const authPath = join(work, 'extracted-authoritative.txt')
-  if (existsSync(authPath)) addFromText(readFileSync(authPath, 'utf8'))
+  if (existsSync(authPath)) paths.push(authPath)
   const extractedDir = join(work, 'extracted')
   if (existsSync(extractedDir)) {
-    for (const name of readdirSync(extractedDir)
-      .filter((f) => f.endsWith('.txt'))
-      .sort()) {
-      addFromText(readFileSync(join(extractedDir, name), 'utf8'))
+    for (const name of readdirSync(extractedDir).filter((f) => f.endsWith('.txt'))) {
+      paths.push(join(extractedDir, name))
     }
   }
-  return blocks
+  for (const name of readdirSync(work).filter((f) => /^extracted_.+\.txt$/i.test(f))) {
+    paths.push(join(work, name))
+  }
+  paths.sort((a, b) => extractedTxtPriority(a) - extractedTxtPriority(b))
+  for (const path of paths) {
+    addFromText(readFileSync(path, 'utf8'))
+  }
+  return [...byName.values()]
 }
 
 function inferTraitTableCategory(trait, manifest) {
   const bookKeys = new Set((trait.sources ?? []).map((s) => s.bookKey))
-  const survivalOnly =
-    bookKeys.has('survival_guide') && !bookKeys.has('dark_designs') && !bookKeys.has('core')
-  if (survivalOnly) return 'Alien Shape II'
+  if (manifest.id === 'alien_shape') {
+    const survivalOnly =
+      bookKeys.has('survival_guide') && !bookKeys.has('dark_designs') && !bookKeys.has('core')
+    if (survivalOnly) return 'Alien Shape II'
+    return manifest.tableCategory ?? manifest.displayName
+  }
+  if (manifest.id === 'biomechanical') {
+    const tableI =
+      bookKeys.has('dark_designs') || bookKeys.has('core')
+    const tableII =
+      bookKeys.has('dark_designs_ii') || bookKeys.has('between_the_shadows')
+    const tableIII = bookKeys.has('survival_guide')
+    if (tableIII && !tableI && !tableII) return 'Biomechanical III'
+    if (tableII && !tableI && !tableIII) return 'Biomechanical II'
+    if (tableI && !tableII && !tableIII) return 'Biomechanical'
+    if (tableIII) return 'Biomechanical III'
+    if (tableII) return 'Biomechanical II'
+    return 'Biomechanical'
+  }
   return manifest.tableCategory ?? manifest.displayName
 }
 

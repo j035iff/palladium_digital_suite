@@ -9,7 +9,7 @@
       "id": "biomechanical_armorgraft",
       "name": "Armorgraft",
       "tableCategory": "Biomechanical",
-      "description": "Pieces of archaic body armor (helmets, breastplates, gauntlets, chain mail, segmented mail) are fused with the Nightbane’s skin.",
+      "description": "Pieces of archaic body armor (helmets, breastplates, gauntlets, chain mail, segmented mail) are fused with the Nightbane’s skin. Add 1D6x10 to S.D.C. and +2 to Hor- ror Factor.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10"
@@ -38,7 +38,7 @@
       "id": "biomechanical_plastic",
       "name": "Plastic",
       "tableCategory": "Biomechanical",
-      "description": "Parts or all of the character’s skin has been replaced with plastic or rubber (player may pick colors and texture).",
+      "description": "Parts or all of the character’s skin has been replaced with plastic or rubber (player can pick the colors and texture). Bonuses: +5D6 to S.D.C. and +1 to Horror Factor, un- less the skin coverings are made up of transparent plastic, reveal- ing internal organs, in which case the Horror Factor is +1D4.",
       "statModifiers": {
         "sdc": {
           "dice": "5D6"
@@ -70,7 +70,7 @@
       "id": "biomechanical_rocket_jets",
       "name": "Rocket Jets",
       "tableCategory": "Biomechanical",
-      "description": "Metallic exhaust tubes and small jet engines grow from the character’s back, providing limited flight with hover capability.",
+      "description": "The Nightbane has metallic exhaust tubes and small jet engines growing out of his back! They provide limited flight: 80 mph (128 km), maximum altitude 5,000 feet (1,524 m) and hover capabilities. Bonuses: +4D6 to S.D.C. and +1 to Horror Factor. Penalty: There is actually a roaring sound of engines when the jets are used so Prowl is impossible even when hovering.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
@@ -103,7 +103,7 @@
       "id": "biomechanical_metal_teeth_and_talons",
       "name": "Metal Teeth and Talons",
       "tableCategory": "Biomechanical",
-      "description": "Metal fangs and talons replace normal teeth and fingernails (may be retractable). Metal teeth inflict 3D6 on a bite; claws add +1D6 to Supernatural P.S. punch damage.",
+      "description": "The Nightbane has metal fangs and talons instead of normal teeth and fingernails (may be retractable). The metal teeth inflict 3D6 points of damage with a bite, and the claws do +1D6 damage in addition to Supernatural P.S. punch damage. Bonuses: +2 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -143,7 +143,7 @@
       "id": "biomechanical_metal_endoskeleton",
       "name": "Metal Endoskeleton",
       "tableCategory": "Biomechanical",
-      "description": "Metallic bones mix with living flesh; metal often rips through the skin on hands, arms, neck, cheeks, and legs.",
+      "description": "Metallic bones are mixed with living flesh in grotesque ways. There is always a place where the metal seems to rip out of the skin, usually on the hands, arms, neck, cheeks and legs. Bonuses: +2 to P.S., +2 to P.E., +2D4x10 to S.D.C., and +1D4 to Horror Factor.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -178,7 +178,7 @@
       "id": "biomechanical_mechanical_limbs",
       "name": "Mechanical Limbs",
       "tableCategory": "Biomechanical",
-      "description": "Arms and legs are obviously mechanical (piston-driven iron, bronze, chrome cyberpunk limbs, etc.). Limbs do not bleed; oil, grease, wires, or metal components may be exposed when struck.",
+      "description": "The arms and legs of the Night- bane are obviously mechanical. They may be piston-driven, huge mechanisms of iron and bronze, or microchip covered or chrome- plated creations of “cyberpunk” mythology. These limbs do not bleed when struck, instead a sort of oil or grease may ooze out or wires, metal components and other artificial “guts” be revealed. Bonuses: +4 to P.S., +1D4x10 to S.D.C., (if he character has legs, they are also mechanical and get +4D6 to Spd), +1D4 to Horror Factor.",
       "statModifiers": {
         "ps": {
           "flat": 4
@@ -216,7 +216,7 @@
       "id": "biomechanical_weapon_hand",
       "name": "Weapon Hand",
       "tableCategory": "Biomechanical",
-      "description": "One or both hands can metamorphose at will into a melee weapon (knife, sword, battle axe, trident, sickle, etc.). Weapon does normal damage for that type plus Supernatural P.S. punch damage and cannot break (see Supernatural Strength Damage).",
+      "description": "One or both of the Nightbane’s hands can metamorphosize, at will, into a hand to hand weap- on such as a knife, a sword, battle axe, trident, sickle, etc. The weapon does normal damage for that particular weapon type, in addition to Supernatural P.S. punch damage, and is at no risk of breaking (see Supernatural Strength Damage). Bonuses: +1 to strike and parry with his weapon limb and +2 to Horror Factor.",
       "statModifiers": {
         "strike": {
           "flat": 1
@@ -247,7 +247,7 @@
       "id": "biomechanical_metal_exoskeleton",
       "name": "Metal Exoskeleton",
       "tableCategory": "Biomechanical",
-      "description": "Mechanical armor covers the body—riveted Victorian iron, chrome bands, robot-like plates, or power-armor styling.",
+      "description": "The character is covered in mechanical armor that can look hard and bulky with rivets and seams or smooth and chrome-like – Victorian-era Nightbane often walked the world with riveted iron instead of skin. Mod- ern characters tend to “favor” metallic bands or a combination of metal plates and bands and resemble robots or suits of power armor. Bonuses: +3D6x10 to S.D.C., +2 to P.S., +1 to P.E., and +1D4 to Horror Factor.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -282,7 +282,7 @@
       "id": "biomechanical_metal_head_and_camera_eyes",
       "name": "Metal Head & Camera Eyes",
       "tableCategory": "Biomechanical",
-      "description": "Head resembles a robot or cyborg; camera lenses replace eyes with telescopic sight, polarized filters, and memory projections (silent, picture-perfect 2D images as literally seen, including bias).",
+      "description": "The character’s head looks like a robot or cyborg and instead of eyes, he has two cam- era lenses protruding from the eye sockets. These artificial eyes raise the character’s Nightvision range to 2,000 feet (610 m) and provide him with telescopic sight like a pair of high-powered bin- oculars, and polarized filters. Even more amazing, the Nightbane can turn his eyes into movie projectors, and show moving pic- tures of anything he remembers (the depiction will be literally as seen by his eyes and may reflect personal prejudices, bias, and emotions). These two-dimensional projections have no sound, but are otherwise picture-perfect. Bonus: +1D4 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "dice": "1D4"
@@ -317,7 +317,7 @@
       "id": "biomechanical_wheels_or_treads",
       "name": "Wheels or Treads",
       "tableCategory": "Biomechanical",
-      "description": "Lower body is a wheeled or treaded vehicle (motorcycle, four-wheeler, or tank chassis) grafted to a human or cyborg upper torso.",
+      "description": "Instead of legs, the Nightbane is a two-wheeled man-machine hybrid. The upper body looks human or half human and half cyborg, while the lower body is a machine vehicle. The vehicle part of the body can look like a motorcycle, four-wheeled vehicle or miniature tank with treads. More than one motorcycle enthusiast has found himself grafted to a Harley Davidson, and gun-bunnies or military aficionados to the chassis of a tank! Bonuses: +3 to P.S., +2 to P.E., +2D4x10 to Spd, +2D4x10 to S.D.C. and +1D4 to Horror Factor. Note: The Nightbane may find it difficult to operate indoors or in confined spaces, -2 to all combat rolls.",
       "statModifiers": {
         "ps": {
           "flat": 3
@@ -329,7 +329,7 @@
           "dice": "2D4x10"
         },
         "sdc": {
-          "dice": "3D6x10"
+          "dice": "2D4x10"
         },
         "hf": {
           "dice": "1D4"
@@ -345,7 +345,6 @@
         }
       },
       "customOneOffs": [
-        "Printed bonus is +2D4x10 to Spd (corrected from OCR “3D64x10”).",
         "Difficult to operate indoors or in confined spaces: -2 to all combat rolls."
       ],
       "gameSystems": [
@@ -368,10 +367,13 @@
       "id": "biomechanical_gun_limbs",
       "name": "Gun Limbs",
       "tableCategory": "Biomechanical",
-      "description": "One or more gun barrels grow from the body (usually protruding from flesh and muscle). Guns use normal firearm stats; largest typical built-in gun is rifle-type 6D6 S.D.C. damage.",
+      "description": "The Nightbane has one or more guns built into his body! The grotesque result is usually a weapon bar- rel protruding from flesh and muscle. These guns will have nor- mal gun stats; the biggest gun available would be a rifle type do- ing 6D6 S.D.C. damage. Note: This advantage actually requires a permanent P.P.E. sacrifice, equal to 1 P.P.E. per die of damage, and 2 P.P.E. if the gun is an automatic weapon (capable of firing bursts). Additionally, the character has to find bullets for the gun! A maximum of 100 bullets can be “stored” inside the body (to do this, the Nightbane literally has to shove the bullets into his flesh, inflicting 1D6 S.D.C. to himself per 10 bullets). Bonus: +1D4 to Horror Factor. Morphus Tables from Between the Shadows™",
       "statModifiers": {
         "hf": {
           "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D6"
         }
       },
       "customOneOffs": [
@@ -398,7 +400,7 @@
       "id": "biomechanical_ii_screen_face",
       "name": "Screen Face",
       "tableCategory": "Biomechanical II",
-      "description": "The face is a television or monitor screen instead of normal features; images are controlled by the Nightbane (messages, cartoon face, test patterns, snow, mood-driven, or random).",
+      "description": "The face of the Nightbane is shaped normally, but the front of the face is a television or monitor screen instead of normal facial features. The screen images are controlled by the Nightbane; some flash written messages instead of talking, others have an animated or computer generated, car- toon image of a normal face, some show test patterns and others show electronic snow. The images may be changed to reflect the character’s moods, or at random. Bonus: +1D4 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "dice": "1D4"
@@ -415,7 +417,7 @@
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Nightbane® Between the Shadows (WB1)",
           "pageNumber": 132
         }
       ]
@@ -424,7 +426,7 @@
       "id": "biomechanical_ii_speakers",
       "name": "Speakers",
       "tableCategory": "Biomechanical II",
-      "description": "Speakers built into head or body (mouth, eyes, ears, or torso). The Nightbane produces frightening human, animal, and/or electronic sounds (not specific voices) to intimidate; range roughly 100 feet (30.5 m).",
+      "description": "Sound speakers are built into the head or body of the Nightbane. The actual location is determined by the player; some Nightbane have speakers instead of mouths, eyes, or ears, while others have them built into their torsos. The Night- bane can produce frightening human, animal and/or electronic sounds (but not specific voices). These sounds add to the Horror Factor of the Nightbane and can be used to intimidate. Bonuses: +1D4 to M.A., and +3 to Horror Factor. A frightened or intimi- dated victim (failed to save vs Horror Factor or intimidation fac- tor) is -2 on initiative and -5% on all skill performance. Range for the sound transmission is roughly 100 feet (30.5 m).",
       "statModifiers": {
         "ma": {
           "dice": "1D4"
@@ -447,7 +449,7 @@
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Nightbane® Between the Shadows (WB1)",
           "pageNumber": 132
         }
       ]
@@ -456,7 +458,7 @@
       "id": "biomechanical_ii_tool_hands",
       "name": "Tool Hands",
       "tableCategory": "Biomechanical II",
-      "description": "Handheld tools (clippers, scissors, screwdrivers, drills, pliers, etc.) replace one or both hands. Tools inflict +3D6 damage in addition to Supernatural P.S. punch damage.",
+      "description": "Any type of handheld tool, from hedge clippers and scissors to screwdrivers, drills and pliers replaced one or both hands of the character. If both hands are replaced with tools, any skill requiring delicate finger control is at -30%. Bonuses: The tools do +3D6 damage in addition to Supernatural P.S. punch damage, +1 to parry, and +1D4 to Horror Factor.",
       "statModifiers": {
         "parry": {
           "flat": 1
@@ -491,10 +493,13 @@
       "id": "biomechanical_ii_monitor_eyes",
       "name": "Monitor Eyes",
       "tableCategory": "Biomechanical II",
-      "description": "Eyes replaced by digital monitors or camera-like lenses (heartbeat traces, voice-reactive waves, psychedelic displays, or steady artificial light).",
+      "description": "The eyes of the character are replaced by two digital monitors or camera-like lenses. Some act like a hospital’s life sign monitors, with a line that jumps at every heart- beat flashing through the monitors, some wave and jump in re- action to the character’s voice or emotions, while others project psychedelic light shows, or simply flash with artificial green or violet light. Bonuses: The eyes raise the character’s Nightvision to 2000 feet (610 m) and +2 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "flat": 2
+        },
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "sensory": {
@@ -512,7 +517,7 @@
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Nightbane® Between the Shadows (WB1)",
           "pageNumber": 133
         }
       ]
@@ -521,13 +526,16 @@
       "id": "biomechanical_ii_chainsaw_arms",
       "name": "Chainsaw Arms",
       "tableCategory": "Biomechanical II",
-      "description": "One or both forearms are chainsaws inflicting 4D6 S.D.C. in addition to Supernatural P.S. punch damage. Nothing can be held by chainsaw arms.",
+      "description": "One or both of the Nightbane’s forearms are replaced by a chainsaw. This lethal weapon does 4D6 S.D.C. in addition to Supernatural P.S. punch damage. Bo- nuses: +1 to parry, +1D4 to Horror Factor. Note: Nothing can be held by the chainsaw arms and characters with two such arms will be at a great disadvantage in performing skills (-70%).",
       "statModifiers": {
         "parry": {
           "flat": 1
         },
         "hf": {
           "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "naturalWeapons": [
@@ -556,7 +564,7 @@
       "id": "biomechanical_ii_computer_creature",
       "name": "Computer Creature",
       "tableCategory": "Biomechanical II",
-      "description": "A working home computer is built into the body (screen in head/face/eyes/chest/belly; keyboard on forearm with cables; processor in torso or hip). Reads disks, thumb drives, and other computers; includes retractable interface cables.",
+      "description": "A home computer is built into the body of the Nightbane. The screen may be in the head, face, eyes, or built into the chest or belly. The keyboard is often grown onto a forearm, and connected by a cable(s) to the body, and the processor is usually in the upper or lower torso or hip. The computer will actually work, and will read information from disks, thumb drives and other computers. Retractable interface cables are included. Bonuses: +15% on Computer Operations and Programming skills, +5% for Computer Hacking when he uses his “personal” computer, and +2 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -599,7 +607,7 @@
       "id": "biomechanical_ii_projectile_limbs",
       "name": "Projectile Limbs",
       "tableCategory": "Biomechanical II",
-      "description": "Hand, forearm, or entire arm(s) can be fired at a target like flying fists, returning after they strike. Range 300 feet (91.4 m); inflicts normal punch damage plus any claw or weapon damage on the hands.",
+      "description": "The hand, forearm or entire arm or arms of the character can be “fired” at a target. The hands act like flying fists, returning to the character after they strike. These projectile limbs have a range of 300 feet (91.4 m) and are +2 to strike. They inflict normal punch damage for the character, plus any claws or weapon damage that may be part of the hands.",
       "statModifiers": {
         "strike": {
           "flat": 2
@@ -619,7 +627,7 @@
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Nightbane® Between the Shadows (WB1)",
           "pageNumber": 133
         }
       ]
@@ -628,7 +636,7 @@
       "id": "biomechanical_iii_batteries",
       "name": "Batteries",
       "tableCategory": "Biomechanical III",
-      "description": "Visible batteries (C/D cells, 9-volt, car batteries, etc.) embedded in the body store electrical energy from movement. Enables 200 ft (61 m) electrical blasts (3D6), shock touch (1D6), or electricity-charged punch (3D6 plus punch).",
+      "description": "Visible batteries – one type or a wide va- riety of C and D-cells, 9-volts, large batteries and car batteries – are imbedded into the character’s back, sides, chest, neck, shoul- ders, arms and upper legs. The batteries store electrical energy that is generated by movement and physical activity. This en- ables the Nightbane to fire short-range (200 feet/61 m) electrical blasts (inflict 3D6 damage) and a light electrical shock touch (1D6 damage) or an electricity charged punch (3D6 damage plus punch damage). Bonuses: +6D6+12 S.D.C., Natural A.R. 10, +2 to Horror Factor, impervious to electrical and acid at- tacks. Penalties: Double weight, reduce Spd by 20%, cannot be easily disguised (-20%), and custom clothing may be required. Note: Can be used to charge a car battery with the proper ca- bles, but cannot be used as a generator to run equipment.",
       "naturalAr": 10,
       "statModifiers": {
         "sdc": {
@@ -655,16 +663,19 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 83
         }
-      ]
+      ],
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
     },
     {
       "id": "biomechanical_iii_gimmick_toy_switches",
       "name": "Gimmick Toy Switches",
       "tableCategory": "Biomechanical III",
-      "description": "Wind-up keys, knobs, buttons, strings, and levers on the body (chest, limbs, hands, neck, head). Each control triggers a fixed toy-like effect tied to its body area; the Nightbane learns which switch does what.",
+      "description": "A large wind-up key pro- trudes from the back, and 1D6+1 wind-up keys, knobs, push buttons, pull strings, levers and switches are located in the chest, 1D6 in each of the arms and legs, one on the back of each hand, two in the neck or side of the head, and one in the back of the head. Each time one is pressed, pulled, or wound up, it causes a different effect or ability as is common to toys and action fig- ures. Here are some possibilities. Once selected the ability is al- ways the same and it should relate to the corresponding body area. The Nightbane quickly learns which switches do what. - Theme music plays for 30 seconds (may be from a well known movie or TV show), can be used to be fun, funny, dramatic, startling or as a signal. - Sings beautifully for 1D6x10+20 seconds. - Whistles a happy tune for 1D6x10+20 seconds. - Loud barking as if from a large dog for 1D6x10+10 sec- onds. - Loud, angry growl like from a bear or T-Rex for 1D6+6 seconds. - Loud siren plays for 1D4x10 seconds, may be used as a warning. - Talks in a different voice for 1D6x10+30 seconds. - Talks in a different language (pick one) for 1D6x10+20 seconds. - Talks in a distorted mechanical voice for 1D6x10+30 sec- onds. - Eyes glow yellow for 1D4x10+20 seconds and emit a beam of light equal to a flashlight – range is 500 feet (152.4 m). - Eyes glow green for 1D4x10+20 seconds and provide Nightvision 300 feet (91.5 m). - Eyes glow white for 1D4x10+20 seconds and provide tele- scopic binocular vision – 3,000 feet (914 m). - Eyes glow orange for 1D4x10+20 seconds and provide thermal and infrared vision – 300 feet (91.5 m). - Eyes glow red and the ‘Bane can fire lasers for one melee round (15 seconds); 2D6 damage per dual blast, 1000 foot (305 m) range! - Tiny blinking lights concealed in the upper torso (no noise), blink for 1D4x10 seconds, and may used as a sin- gle or warning. - Quick Disguise: With the press of a button or pull of a string, the head spins around and turns into a completely different face wearing a mask. Lasts until activated again to return it to the original face. Has only two faces, masked and unmasked, but the unmasked face is different from the Nightbane’s Facade. - Secret Compartment: Chest opens up to reveal a storage cavity about the size of a lunch box. Cannot be seen or found unless lever, switch, or button to open is activated. - Pop-Apart Body: Arms and legs fall from the body with- out blood. This may be used for shock value (it has a Hor- ror Factor of 16) or to fake a death, or to hide or put the character into a small container or suitcase. Comes back together when the switch is activated again or within 3D6+20 minutes, whichever comes first. If a limb goes missing, the character can restore himself by reverting back to his Facade, but he cannot use his Morphus again for 2D4+22 hours, at which point all limbs are back in place and at full S.D.C. - Missile Firing Action: One melee attack, +1 to strike, does 4D6 blunt damage, does NOT actually explode, 500 foot (152.4 m) range. Has a payload of four, and unless the “missile” is retrieved and put back into the Morphus, this attack is gone until missiles reform 24 hours later. - Squirt Gun Finger: One melee attack, no damage but may be startling (victim loses one melee action) and does 1D6 damage to vampires and beings vulnerable to water; 30 foot (9.1 m) range, unlimited payload. - Flying Fist: One melee attack, +2 to strike, does 2D6 dam- age for that character, 120 foot (36.6 m) range and reap- pears on the character’s wrist a second after it hits. - Power Punch Action: One melee attack, +1 to strike, punch does double normal punch damage. - Karate-Chop Action: One melee attack, does 3D6 damage and is +2 to strike, regardless of normal punch damage. - Karate-Kick Action: One melee attack, +2 to strike and does 4D6 damage, regardless of normal punch damage. - Retractable Claws (small): Claws extend from the fingers, do +2D4 damage with claw attacks (P.S. damage bonus applies), and claws remain extended for one melee round (15 seconds). - Sword Arm: A sword extends from the forearm, does +2D6 damage, +1 to parry and disarm, and remains ex- tended for one melee round (15 seconds). - Fire Fist: One melee attack, fist glows red and inflicts 1D6 burning damage, plus normal punch damage for that char- acter, 120 foot (36.6 m) range. - Laser Fist: One melee attack, fist glows blue and shoots a laser beam, 3D6 damage, 120 foot (36.6 m) range. - Running Action: Runs at double normal speed for 1D6 melee rounds. - Spinning Action: One melee action, makes a quick spin- ning action that is +3 to dodge. - Dancing Action: Character dances flawlessly for 1D6x10 seconds, +1 to dodge. - Jumping Action: One melee action, leaps 20 feet (6.1 m) high. - Kung-fu Leaping Action: One melee action, leaps 10 feet (3 m) high and 20 feet (6.1 m) across. - Flying Action: The character can hover and fly up to a speed of 50 mph (80 km) for 1D4 melee rounds (15-60 seconds). - Pop-Out Roller Blade Feet: A pair of roller blades pop out from the soles of the character’s feet; double speed on smooth, hard, flat surfaces; reduce speed by 70% on grass, dirt, carpet or rocky surface. - Transforming Tank Legs: Legs and lower torso turn into tank treads and has motorized locomotion: 35 mph (56 km) but can ride over broken terrain and debris. - Transforming Motorcycle Legs: Legs and lower torso turn into a motorcycle and has motorized locomotion: 80 mph (128 km) on the road. Note: Players may suggest other possibilities like those above, but it is up to the Game Master to allow them. Make sure they are not too powerful or overwhelming, and respect the G.M. if he or she says “no.” Gimmick Toy Bonuses: +3D6+3 to S.D.C., +1 to Horror Factor. Penalties: -1 to M.A., disguise is impossible, and custom clothing is necessary for the Morphus.",
       "statModifiers": {
         "sdc": {
           "dice": "3D6+3"
@@ -674,6 +685,15 @@
         },
         "ma": {
           "flat": -1
+        },
+        "strike": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
         }
       },
       "gimmickToySwitches": {
@@ -1034,16 +1054,19 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 83
         }
-      ]
+      ],
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
     },
     {
       "id": "biomechanical_iii_hidden_compartments",
       "name": "Hidden Compartments",
       "tableCategory": "Biomechanical III",
-      "description": "Flaps or doors reveal hidden storage: lunch-box chest/stomach cavity, card-deck shoulders, banana-sized forearm and upper-leg compartments—invisible when closed.",
+      "description": "Although the Morphus may appear to be made of flesh and blood (or not), the character can open up a flap or door in his body to reveal a small hiding space. The chest or stomach opens up to reveal a storage cavity about the size of a lunch box. Each shoulder has a compartment large enough to hold a deck of playing cards, each forearm has a compartment long and deep enough to hold a banana, and so does each upper leg. When closed the compartment is com- pletely invisible. Bonuses: +4D6 to S.D.C., +1 to Horror Factor, +20% for Concealment skill and +5% Palming. Penalties: -1 to M.A. and P.E.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
@@ -1078,7 +1101,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 84
         }
       ]
@@ -1087,7 +1110,7 @@
       "id": "biomechanical_iii_computer_brain",
       "name": "Computer Brain",
       "tableCategory": "Biomechanical III",
-      "description": "Head shows bulletproof glass circuit enclosure (01–50%) or circuit-board skin with glass-like eyes. Total Recall equivalent; mathematics at 90%.",
+      "description": "As a rule, this Morphus makes it so the top of the head is a bulletproof glass enclosure in which circuit boards and microchips are clearly visible (01-50%), or the head, face and neck are covered with computer circuitry, like a circuit board, imbedded in the skin, and the eyes look as if they are made of glass. Bonuses: +2D6 to S.D.C., +1 to Horror Factor, Total Recall (the equivalent of the psionic power of the same name), Mathematics: Basic and Advanced are performed at 90%, +20% to all computer skills and +10% to all other skills known by the character. Penalties: -1D4 to M.A., P.P. and P.B. attributes, and tends to be a bit cool and aloof.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -1136,7 +1159,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 84
         }
       ]
@@ -1145,7 +1168,7 @@
       "id": "biomechanical_iii_internal_machinery",
       "name": "Internal Machinery",
       "tableCategory": "Biomechanical III",
-      "description": "Movement and impacts produce whirs, clicks, and metallic clunks; internal organs and bones are replaced with machine parts (clockwork, modern, or futuristic).",
+      "description": "Although the character is likely to appear as flesh and blood (or not), whenever he moves, the whirl and click of machine parts can be heard, and in combat a metallic clunk can be heard when struck. Indeed, the internal organs and bones are replaced with machine parts and the bones with metal replacements; may look like clockworks, modern mechanics, or futuristic bionics. Bonuses: +2D4x10 to S.D.C., +2D6 to Hit Points, +2D6 to Spd, +5 to roll with impact, +6 to save vs poison, toxins, and disease, +4 to save vs possession, and tires at half the normal rate. Penalties: -2 to M.A., –30% to Prowl, Disguise and Undercover Ops skills, and the constant hum, clicks and whirls of the machine are disturbing to some people.",
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10"
@@ -1196,7 +1219,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]
@@ -1205,7 +1228,7 @@
       "id": "biomechanical_iii_radar_system",
       "name": "Radar System",
       "tableCategory": "Biomechanical III",
-      "description": "Large circular glass screen in chest or forehead registers aerial movement within 3,000 feet (914 m), tracking bullets, arrows, thrown objects, aerial attacks, fast ground attacks (30+ mph), and 2D6+12 specific aerial targets.",
+      "description": "The Nightbane has a large, circular, glass screen in his chest or in the forehead which constantly and registers all aerial movement within a 3,000 foot (914 m) radius. Bonuses: +4D6 S.D.C., a Natural A.R. 9, and +2 to Horror Fac- tor. The radar constantly tracks incoming objects in the air, in- cluding bullets, arrows, thrown objects, aerial attacks and even fast moving (30 mph/48 km or faster) ground attacks, as well as tracks up to 2D6+12 specific aerial targets within a 3,000 foot (914.4 m) radius. Radar provides +1 on initiative, +1 to parry, +1D4 to dodge and makes surprise attacks against him from the air impossible. Penalties: Increase weight 30%, reduce Spd 10%, unit continues to flash and blip making Disguise, Prowl, and hiding difficult (-20%).",
       "naturalAr": 9,
       "statModifiers": {
         "sdc": {
@@ -1237,7 +1260,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]
@@ -1246,7 +1269,7 @@
       "id": "biomechanical_iii_gyroscope",
       "name": "Gyroscope",
       "tableCategory": "Biomechanical III",
-      "description": "Visible or concealed gyroscope grants an unerring sense of orientation underwater or in the air.",
+      "description": "Somewhere within the ‘Bane’s body, either visible or concealed deep inside him, is a gyroscope, granting the Nightbane an incredible sense of balance. Bonuses: The gyroscope imparts an unerring sense of which way is up, down, or sideways even underwater or in the air, +2 to roll with impact, +1 to dodge, +10% to skill with Maintain Balance rolls like Gymnastics and Acrobatics.",
       "statModifiers": {
         "rollWithPunch": {
           "flat": 2
@@ -1278,7 +1301,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]
@@ -1287,7 +1310,7 @@
       "id": "biomechanical_iii_drill_auger_hand",
       "name": "Drill/Auger Hand",
       "tableCategory": "Biomechanical III",
-      "description": "One or all hands replaced by auger drill bits driven from the forearm; face behind welder-style mask or helmet. Inactive punch +1D6; active drill 5D6, opponent A.R. -3 vs this attack.",
+      "description": "One or all hands (player’s choice) have been replaced by large auger drill bits and the fore- arm is the machine that drives the drill. The face is concealed behind a protective face mask or helmet similar to a welder’s mask. Bonuses: +4D6+4 S.D.C., +2 to P.S., +1D4 to Horror Factor, +1D6 to punch damage when inactive, but does 5D6 damage when the drill is active. In addition, an opponent’s A.R. is -3 points against this attack. Penalties: If all hands are re- placed, skills requiring the use of the hands are impossible. In- crease weight 30%, reduce Spd 10%, disguise is impossible, and custom made clothing is probably necessary.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6+4"
@@ -1327,7 +1350,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]
@@ -1336,7 +1359,7 @@
       "id": "biomechanical_iii_universal_connection_port",
       "name": "Universal Connection Port",
       "tableCategory": "Biomechanical III",
-      "description": "Socket and cable (arm, chest, neck, or head) link to computers, TVs, electronic instruments, video/communications gear, and similar devices for hands-free control (on/off, manipulation) within device limits—not Telemechanics.",
+      "description": "This Nightbane has an unparalleled ability to link to electronic devices via a socket and connector cable from his arm, chest, neck or head. This allows him to link himself to computers, televisions, electronic music instruments, most types of video and communications equip- ment, and any type of electronic device. Once connected, the Nightbane can control and manipulate the device, turn it on or off, etc. The only limitations are those of the device. Note: The ‘Bane cannot drive a car by plugging into the cigarette lighter, nor can he have unrestricted access to a computer if he doesn’t know the passwords. This is not Telemechanics or Deus Ex Ma- china, it only allows hands free use of the device. If the ‘Bane has some kind of onboard computer himself and computer skills, he may be able to send to and download from the memory of the device to which he is linked.",
       "customOneOffs": [
         "Cannot drive a car via cigarette lighter alone; computer access still requires known passwords.",
         "With onboard computer and Computer skills, may send to/download from linked device memory."
@@ -1347,7 +1370,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]
@@ -1356,7 +1379,7 @@
       "id": "biomechanical_iii_heavy_plating",
       "name": "Heavy Plating",
       "tableCategory": "Biomechanical III",
-      "description": "High-tech war armor exoskeleton and helmet/face plate; always bulky regardless of style.",
+      "description": "This Morphus appears as high-tech body armor or exoskeleton and helmet or face plate, all of which looks to be built for war. The armor can have any style the player desires, but will always be bulky looking. Bonuses: +3D6x10+40 to S.D.C., Natural A.R. of 15, +2 to Horror Factor. Penalties: Double weight, reduce Spd by 30%, -1 to P.P., -2D6 to Spd, -20% to Acrobatics, Climb, Gymnastics, Prowl and Swim, impossible to disguise or easily conceal, and fitting in- side an average vehicle is cramped and takes up two spaces.",
       "naturalAr": 15,
       "statModifiers": {
         "sdc": {
@@ -1412,7 +1435,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane® Survival Guide (WB5)",
           "pageNumber": 85
         }
       ]

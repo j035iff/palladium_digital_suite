@@ -1,0 +1,19 @@
+{
+  "tableId": "biomechanical",
+  "generatedAt": "2026-05-27T21:13:23.271Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 4,
+      "entryCount": 28
+    },
+    {
+      "path": "src/data/content/morphus/tables/biomechanical.json",
+      "changed": 8,
+      "entryCount": 28
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 12
+}
