@@ -1,0 +1,391 @@
+{
+  "tableId": "alien_shape",
+  "generatedAt": "2026-05-27T02:37:23.081Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "companionBlueprint",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "mobility",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "saveModifiers",
+    "sensory",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "tableCategory",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 22,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "alien_shape_plasmoid",
+        "name": "Plasmoid",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "damage affinities",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_bark_like_skin",
+        "name": "Bark-like Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_bony_exoskeleton",
+        "name": "Bony Exoskeleton",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_thorns",
+        "name": "Thorns",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_crystalline",
+        "name": "Crystalline",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural weapons",
+          "damage affinities",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_living_tattoos",
+        "name": "Living Tattoos",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_unusual_skin_color",
+        "name": "Unusual Skin Color",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_hulking_monster",
+        "name": "Hulking Monster",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_mouth_covered_body",
+        "name": "Mouth-Covered Body",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_combination_of_two",
+        "name": "Combination of Two",
+        "hooks": [
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": true
+      },
+      {
+        "id": "alien_shape_no_bones",
+        "name": "No Bones",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_armored_scales",
+        "name": "Armored Scales",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R."
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_multiple_heads",
+        "name": "Multiple Heads",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_shadow_man",
+        "name": "Shadow Man",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_slimy_slug_like_skin",
+        "name": "Slimy, Slug-Like Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_abnormally_large_sensory_organs",
+        "name": "Abnormally Large Sensory Organs",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "nightvision bonus",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_shaggy_hairy",
+        "name": "Shaggy Hairy",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_wrinkled_skin",
+        "name": "Wrinkled Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R."
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_brute",
+        "name": "Brute",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural weapons",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_on_fire",
+        "name": "On Fire",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "damage affinities",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_baggy_flaps_of_skin",
+        "name": "Baggy Flaps of Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R.",
+          "skill overrides",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "alien_shape_cone_head",
+        "name": "Cone Head",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "custom one-offs (notes only)"
+        ],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 22,
+    "ids": [
+      "alien_shape_plasmoid",
+      "alien_shape_bark_like_skin",
+      "alien_shape_bony_exoskeleton",
+      "alien_shape_thorns",
+      "alien_shape_crystalline",
+      "alien_shape_living_tattoos",
+      "alien_shape_unusual_skin_color",
+      "alien_shape_hulking_monster",
+      "alien_shape_mouth_covered_body",
+      "alien_shape_combination_of_two",
+      "alien_shape_no_bones",
+      "alien_shape_armored_scales",
+      "alien_shape_multiple_heads",
+      "alien_shape_shadow_man",
+      "alien_shape_slimy_slug_like_skin",
+      "alien_shape_abnormally_large_sensory_organs",
+      "alien_shape_shaggy_hairy",
+      "alien_shape_wrinkled_skin",
+      "alien_shape_brute",
+      "alien_shape_on_fire",
+      "alien_shape_baggy_flaps_of_skin",
+      "alien_shape_cone_head"
+    ]
+  },
+  "bookIndex": {
+    "total": 22,
+    "included": 22,
+    "skippedOther": 0,
+    "names": [
+      "Abnormally Large Sensory Organs",
+      "Armored Scales",
+      "Baggy Flaps of Skin",
+      "Bark-like Skin",
+      "Bony Exoskeleton",
+      "Brute",
+      "Combination of Two",
+      "Cone head",
+      "Crystalline",
+      "Hulking Monster",
+      "Living Tattoos",
+      "Mouth-Covered Body",
+      "Multiple Heads",
+      "No Bones",
+      "On Fire",
+      "Plasmoid",
+      "Shadow Man",
+      "Shaggy Hairy",
+      "Slimy, Slug-Like Skin",
+      "Thorns",
+      "Unusual Skin Color",
+      "Wrinkled Skin"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      },
+      {
+        "key": "core",
+        "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+        "reference": "Nightbane® RPG",
+        "authoritative": false
+      },
+      {
+        "key": "survival_guide",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": false
+      }
+    ],
+    "multiSourceTraits": 10
+  },
+  "recommendations": [
+    "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json"
+  ],
+  "descriptionCompare": {
+    "differences": [
+      {
+        "trait": "Plasmoid",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Bark-like Skin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Bony Exoskeleton",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Thorns",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Crystalline",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Living Tattoos",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Unusual Skin Color",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Hulking Monster",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Mouth-Covered Body",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Combination of Two",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      }
+    ]
+  }
+}

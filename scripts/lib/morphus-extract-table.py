@@ -26,22 +26,58 @@ except ImportError:
     sys.exit(2)
 
 
+# Trait lines start at line beginning; name ends with `:`, `!`, or `.` (books vary).
 TRAIT_RE = re.compile(
-    r"(\d{2})-(\d{2})\s*%\s+([^:\n]{1,120}?):\s*",
+    r"(?:^|\n)(\d{2})-(\d{2})\s*%\s+(.{1,120}?)[!:.]\s+",
     re.MULTILINE,
 )
 ROLL_OTHER_RE = re.compile(r"other:\s*roll", re.IGNORECASE)
+# Footer order / watermark lines (ignore when detecting printed page).
+_ORDER_LINE_RE = re.compile(r"order\s*#\s*\d", re.IGNORECASE)
+
+
+def clean_trait_name(name: str) -> str:
+    cleaned = re.sub(r"[!.:]+\s*$", "", name.strip())
+    # PDFs sometimes use "Cone head" — only normalize all-lowercase names.
+    if re.fullmatch(r"[a-z]+(?:[ ,'-][a-z]+)*", cleaned):
+        return cleaned.title()
+    return cleaned
+
+
+def is_valid_trait_name(name: str) -> bool:
+    if not name or len(name) < 2:
+        return False
+    if "%" in name or re.search(r"\d{2}-\d{2}\s*%", name):
+        return False
+    return True
 
 
 def printed_page(page: fitz.Page) -> int | None:
+    """Printed folio from the bottom margin (avoids percentile digits in table body)."""
+    rect = page.rect
+    footer_y_min = rect.y0 + rect.height * 0.88
     nums: list[tuple[float, int]] = []
     for block in page.get_text("dict").get("blocks", []):
         for line in block.get("lines", []):
+            line_text = "".join(
+                span.get("text", "") for span in line.get("spans", [])
+            )
+            if _ORDER_LINE_RE.search(line_text):
+                continue
             for span in line.get("spans", []):
                 t = span.get("text", "").strip()
-                if t.isdigit() and len(t) <= 2:
-                    nums.append((span["bbox"][1], int(t)))
-    return max(nums)[1] if nums else None
+                if not re.fullmatch(r"\d{1,3}", t):
+                    continue
+                n = int(t)
+                if n < 1 or n > 999:
+                    continue
+                y = span["bbox"][1]
+                if y >= footer_y_min:
+                    nums.append((y, n))
+    if not nums:
+        return None
+    # Lowest on page (folio) then highest number (e.g. 103 beats stray 3).
+    return max(nums, key=lambda pair: (pair[0], pair[1]))[1]
 
 
 def norm_trait_name(name: str) -> str:
@@ -130,7 +166,9 @@ def trait_bodies(table_text: str, table_start: int) -> dict[str, str]:
     matches = list(TRAIT_RE.finditer(table_text))
     bodies: dict[str, str] = {}
     for i, m in enumerate(matches):
-        name = m.group(3).strip()
+        name = clean_trait_name(m.group(3))
+        if not is_valid_trait_name(name):
+            continue
         end = matches[i + 1].start() if i + 1 < len(matches) else len(table_text)
         bodies[norm_trait_name(name)] = table_text[m.end() : end].strip()
     return bodies
@@ -211,7 +249,9 @@ def extract_book(
 
     traits: list[dict] = []
     for m in TRAIT_RE.finditer(table_text):
-        name = m.group(3).strip()
+        name = clean_trait_name(m.group(3))
+        if not is_valid_trait_name(name):
+            continue
         body_start = table_text[m.end() : m.end() + 240]
         skip = exclude_other and is_other_trait(name, body_start)
         global_index = table_start + m.start() if table_start >= 0 else m.start()

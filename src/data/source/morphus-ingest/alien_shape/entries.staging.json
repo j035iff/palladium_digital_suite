@@ -1,9 +1,4 @@
 {
-  "id": "alien_shape",
-  "kind": "morphus_trait_table",
-  "displayName": "Alien Shape",
-  "parentTable": null,
-  "description": "Alien Shape (Nightbane RPG p. 103; Dark Designs appendix p. 136) plus Alien Shape II (Nightbane Survival Guide p. 72).",
   "entries": [
     {
       "id": "alien_shape_plasmoid",

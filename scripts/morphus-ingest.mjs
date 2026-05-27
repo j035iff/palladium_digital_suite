@@ -70,7 +70,7 @@ Commands (pipeline):
 
 Commands (steps):
   init, extract, analyze-schema, apply-schema, schema-loop [--max N]
-  scaffold, report, merge, validate, aggregate
+  scaffold, sync-sources, report, merge, validate, aggregate
   all          same as prepare (extract + schema-loop)
 
 Example:
@@ -563,9 +563,14 @@ function cmdReport(tableId) {
         report.recommendations.push(`Staging has ids not in target (merge pending): ${missingInTarget.join(', ')}`)
       }
       if (report.bookIndex) {
-        const bookNames = new Set(report.bookIndex.names)
+        const normName = (s) =>
+          String(s)
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, ' ')
+            .trim()
+        const bookNames = new Set(report.bookIndex.names.map(normName))
         for (const e of staging.entries ?? []) {
-          if (!bookNames.has(e.name)) {
+          if (!bookNames.has(normName(e.name))) {
             report.recommendations.push(`Staging name not in book index: ${e.name} (${e.id})`)
           }
         }
@@ -583,6 +588,61 @@ function cmdReport(tableId) {
     for (const r of report.recommendations) console.log(`  • ${r}`)
   }
   if (!ok) process.exitCode = 1
+}
+
+function cmdSyncSources(tableId) {
+  const manifest = loadManifest(tableId)
+  const indexPath = join(workDir(tableId), 'traits-index.json')
+  if (!existsSync(indexPath)) {
+    throw new Error(`Missing ${indexPath} — run extract first`)
+  }
+  const index = loadJson(indexPath)
+  const byId = new Map()
+  for (const trait of index.traits) {
+    if (trait.skip) continue
+    byId.set(slugifyTraitId(tableId, trait.name), sourcesFromTraitIndex(trait, manifest.gameSystem))
+  }
+
+  const targetPath = resolveRepoPath(manifest.targetJson)
+  if (!existsSync(targetPath)) {
+    throw new Error(`Missing ${targetPath}`)
+  }
+  const target = loadJson(targetPath)
+  let updated = 0
+  for (const entry of target.entries ?? []) {
+    const sources = byId.get(entry.id)
+    if (!sources) continue
+    entry.sources = sources
+    updated += 1
+  }
+  writeJson(targetPath, target)
+  if (!validateTableDoc(target, manifest.targetJson)) process.exit(1)
+  console.log(`OK  sync-sources ${updated}/${target.entries?.length ?? 0} entries → ${manifest.targetJson}`)
+
+  const stagingPath = join(workDir(tableId), 'entries.staging.json')
+  if (existsSync(stagingPath)) {
+    const staging = loadJson(stagingPath)
+    let stagingUpdated = 0
+    for (const entry of staging.entries ?? []) {
+      const sources = byId.get(entry.id)
+      if (!sources) continue
+      entry.sources = sources
+      stagingUpdated += 1
+    }
+    writeJson(stagingPath, staging)
+    console.log(`OK  sync-sources ${stagingUpdated}/${staging.entries?.length ?? 0} staging rows`)
+  }
+
+  const missing = (target.entries ?? []).filter((e) => !byId.has(e.id)).map((e) => e.id)
+  if (missing.length) {
+    console.log(`WARN ${missing.length} target id(s) not in traits-index: ${missing.join(', ')}`)
+  }
+  const extra = [...byId.keys()].filter(
+    (id) => !(target.entries ?? []).some((e) => e.id === id),
+  )
+  if (extra.length) {
+    console.log(`WARN ${extra.length} index trait(s) not in target — transcribe and merge: ${extra.join(', ')}`)
+  }
 }
 
 function cmdMerge(tableId) {
@@ -701,6 +761,10 @@ function main() {
       case 'report':
         if (!tableId) throw new Error('table id required')
         cmdReport(tableId)
+        break
+      case 'sync-sources':
+        if (!tableId) throw new Error('table id required')
+        cmdSyncSources(tableId)
         break
       case 'merge':
         if (!tableId) throw new Error('table id required')

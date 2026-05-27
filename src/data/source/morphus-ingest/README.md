@@ -84,6 +84,7 @@ Ingest Morphus table:
 | `apply-schema` | Apply patches from last analysis |
 | `schema-loop` | Analyze ↔ apply until ready (or manual tasks) |
 | `scaffold` | Multi-book `sources` on staging rows |
+| `sync-sources` | Refresh `sources[]` on target (and staging) from `traits-index.json` after re-extract |
 | `report` | Validation + book index diff |
 | `merge` | Staging → target table JSON |
 | `validate` | `npm run validate:schemas` |
