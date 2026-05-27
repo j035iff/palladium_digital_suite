@@ -6,13 +6,14 @@
   "targetJson": "src/data/content/morphus/tables/pestilence_disease.json",
   "gameSystem": "nightbane",
   "excludeOther": true,
+  "excludeNonPlayable": true,
   "authoritativeBookKey": "dark_designs",
   "books": [
     {
       "key": "dark_designs",
       "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
       "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-      "tableHeading": "Pestilence & Disease",
+      "tableHeading": "Pestilence & Disease Table",
       "authoritative": true
     }
   ]

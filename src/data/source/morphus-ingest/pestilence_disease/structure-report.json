@@ -1,0 +1,19 @@
+{
+  "tableId": "pestilence_disease",
+  "generatedAt": "2026-05-27T22:03:17.484Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 12,
+      "entryCount": 12
+    },
+    {
+      "path": "src/data/content/morphus/tables/pestilence_disease.json",
+      "changed": 12,
+      "entryCount": 12
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 24
+}
