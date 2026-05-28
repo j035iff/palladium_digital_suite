@@ -31,6 +31,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
+        "damage affinities",
         "activated abilities (burst)",
         "limb durability components",
         "custom one-offs (notes only)"

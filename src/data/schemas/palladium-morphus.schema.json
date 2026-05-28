@@ -66,6 +66,9 @@
     "mobility": {
       "$ref": "#/$defs/mobility"
     },
+    "survivalTraits": {
+      "$ref": "#/$defs/survivalTraits"
+    },
     "sensory": {
       "$ref": "#/$defs/sensory"
     },
@@ -293,6 +296,10 @@
           "type": "integer",
           "description": "Percentage adjustment applied to the underlying metric."
         },
+        "maxValue": {
+          "type": "integer",
+          "description": "Optional upper cap after applying modifier math (e.g. maximum A.R. 19)."
+        },
         "isOverride": {
           "type": "boolean",
           "default": false,
@@ -472,8 +479,63 @@
           "$ref": "#/$defs/weaponActivationCost",
           "description": "Health or energy sacrifice to activate this natural weapon (Clown table payload costs)."
         },
+        "conditionalTargetModifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/weaponConditionalTargetModifier"
+          },
+          "description": "Conditional damage scaling versus specific enemy groups (e.g. Nightlords, undead)."
+        },
+        "strikeBonus": {
+          "type": "integer"
+        },
+        "parryBonus": {
+          "type": "integer"
+        },
+        "dodgeBonus": {
+          "type": "integer"
+        },
+        "disarmBonus": {
+          "type": "integer"
+        },
+        "extraAttacks": {
+          "type": "integer",
+          "description": "Bonus attacks per melee granted exclusively when using this weapon."
+        },
+        "rangeFeet": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum effective range of the weapon/attack in feet."
+        },
         "poison": {
           "$ref": "#/$defs/poison"
+        }
+      }
+    },
+    "weaponConditionalTargetModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetEnemies"
+      ],
+      "properties": {
+        "targetEnemies": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Enemy tags this modifier applies to (e.g. nightlords, demons, undead, creatures_of_magic)."
+        },
+        "damageFlat": {
+          "type": "integer",
+          "description": "Flat damage added when the target is in targetEnemies."
+        },
+        "damageMultiplier": {
+          "type": "number",
+          "description": "Damage multiplier applied when the target is in targetEnemies."
         }
       }
     },
@@ -905,6 +967,16 @@
         }
       }
     },
+    "survivalTraits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "noBreathingRequired": {
+          "type": "boolean",
+          "description": "When true, this Morphus does not require breathing in normal or aquatic environments."
+        }
+      }
+    },
     "flightCombatBonuses": {
       "type": "object",
       "additionalProperties": false,
@@ -919,6 +991,9 @@
           "$ref": "#/$defs/polymorphicModifier"
         },
         "rollWithPunch": {
+          "$ref": "#/$defs/polymorphicModifier"
+        },
+        "pullPunch": {
           "$ref": "#/$defs/polymorphicModifier"
         }
       }
@@ -1200,6 +1275,14 @@
           "maximum": 100,
           "description": "Chance to be invisible in darkness (Shadow Man)."
         },
+        "opponentTrackingBonusPercent": {
+          "type": "integer",
+          "description": "Passive opponent tracking bonus against this Morphus (e.g. strong blood/odor trail)."
+        },
+        "opponentPerceptionBonusFlat": {
+          "type": "integer",
+          "description": "Flat bonus granted to opponents' Perception Rolls to notice this character (e.g., due to loud/bright/ornate traits)."
+        },
         "whisperHearingRangeFeet": {
           "type": "integer",
           "minimum": 0,
@@ -1400,6 +1483,9 @@
         "water": {
           "$ref": "#/$defs/damageAffinityMultiplier"
         },
+        "physical": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
         "wood": {
           "$ref": "#/$defs/damageAffinityMultiplier"
         },
@@ -1407,6 +1493,9 @@
           "$ref": "#/$defs/damageAffinityMultiplier"
         },
         "holyWeapons": {
+          "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "sonic": {
           "$ref": "#/$defs/damageAffinityMultiplier"
         },
         "piercing": {
@@ -1420,6 +1509,20 @@
         },
         "darknessPowers": {
           "$ref": "#/$defs/damageAffinityMultiplier"
+        },
+        "bypassesSdcAndArmor": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "silver",
+              "wood",
+              "magic",
+              "holyWeapons"
+            ]
+          },
+          "description": "Damage channels that bypass S.D.C. and armor protections."
         }
       }
     },
@@ -1804,6 +1907,27 @@
         "description": {
           "type": "string"
         },
+        "statModifiers": {
+          "$ref": "#/$defs/statModifiers"
+        },
+        "skillModifiers": {
+          "$ref": "#/$defs/skillModifiers"
+        },
+        "sensory": {
+          "$ref": "#/$defs/sensory"
+        },
+        "limbDurability": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/limbDurability"
+          }
+        },
+        "naturalWeapons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/naturalWeapon"
+          }
+        },
         "customOneOffs": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
@@ -1993,10 +2117,6 @@
           "maximum": 100,
           "description": "Chance to blind onlookers (Crystalline reflected light)."
         },
-        "opponentTrackingBonusPercent": {
-          "type": "integer",
-          "description": "Bonus percent for opponents tracking this character."
-        },
         "note": {
           "type": "string",
           "minLength": 1
@@ -2093,6 +2213,8 @@
           "enum": [
             "mirror_walk",
             "stand_motionless",
+            "repel_undead",
+            "auditory_distraction",
             "other"
           ]
         },

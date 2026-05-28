@@ -39,6 +39,7 @@
       "name": "Branded Loyalty",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "custom one-offs (notes only)"
       ],

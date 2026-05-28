@@ -9,7 +9,7 @@
       "id": "angelic_inner_light",
       "name": "Inner Light",
       "tableCategory": "Angelic",
-      "description": "The character glows with an inner brilliance that seems to radiate from under his skin. This charac- ter may also have a halo around his head. Ordinary people are either in awe of the Nightbane or fear him out of ignorance. Bo- nuses: +1 to M.A. and M.E., +4D6 S.D.C., +2 to Awe/Horror Factor and laser and energy blasts do no damage. Penalty: Can- not Prowl or hide at night or in shadow, glows like a beacon.",
+      "description": "The character glows with an inner brilliance that seems to radiate from under his skin. This character may also have a halo around his head. Ordinary people are either in awe of the Nightbane or fear him out of ignorance.",
       "statModifiers": {
         "ma": {
           "flat": 1
@@ -32,46 +32,23 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "prowl",
             "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Laser and energy blasts inflict no damage.",
-        "Cannot Prowl or hide at night or in shadow; glows like a beacon."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 73
-        }
+        "Cannot hide at night or in shadow; glows like a beacon."
       ]
     },
     {
       "id": "angelic_angelic_wings",
       "name": "Angelic Wings",
       "tableCategory": "Angelic",
-      "description": "The ‘Bane has a beautiful pair of 6-10 foot (1.8-3 m) feathered wings sprouting from his or her back. The feathers can be any color, solid or a mixture of 2-3 colors, and even metallic colors (exact colors are left up to the player), and each wing has 1D6x10+50 S.D.C., regenerate at the same rate as the Nightbane (will grow back in one day if de- stroyed), can hover, glide (silent) and provide a flight speed of 1D4x10+26 (25-45 mph/40-72 km). Bonuses: +4D6 to S.D.C., +1 to P.P., +1D4 to P.B., +1 to strike and parry, +2 to dodge and pull punch while in flight, and +3 to Awe/Horror Factor. Pen- alty: -20% to Prowl on foot, cannot use disguise or perform un- 73 Joe Sifferman (Order #46323384) dercover work in angel form (unless it is as another angel), and requires custom clothing to accommodate the wings.",
+      "description": "The 'Bane has a beautiful pair of 6-10 foot (1.8-3 m) feathered wings sprouting from his or her back. The feathers can be any color, solid or a mixture of 2-3 colors, and even metallic colors.",
       "statModifiers": {
         "pp": {
           "flat": 1
-        },
-        "strike": {
-          "flat": 1
-        },
-        "parry": {
-          "flat": 1
-        },
-        "dodge": {
-          "flat": 2
-        },
-        "pullPunch": {
-          "flat": 2
         },
         "pb": {
           "dice": "1D4"
@@ -87,58 +64,64 @@
         {
           "limbName": "Wing (each)",
           "quantity": 2,
-          "sdc": 50,
-          "hp": 0
+          "sdc": 50
         }
       ],
       "mobility": {
         "flightEngine": {
-          "maxSpeedMph": 45
+          "maxSpeedMph": 45,
+          "flightCombatBonuses": {
+            "strike": {
+              "flat": 1
+            },
+            "parry": {
+              "flat": 1
+            },
+            "dodge": {
+              "flat": 2
+            },
+            "pullPunch": {
+              "flat": 2
+            }
+          }
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "prowl",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "undercover_ops",
             "impossibleInMorphus": true
           }
         ]
       },
-      "customOneOffs": [
-        "Each wing has 1D6×10+50 S.D.C. (limb entry uses 50 base); regrows in one day if destroyed.",
-        "Flight speed 1D4×10+26 mph (25–45 mph / 40–72 km); +1 strike/parry and +2 dodge/pull punch while flying.",
-        "Undercover work only as another angel; requires custom clothing for wings."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 73
-        }
-      ],
       "appearanceConstraints": {
-        "clothingFit": "custom_required"
-      }
+        "clothingFit": "custom_required",
+        "customClothingNote": "Requires custom clothing to accommodate the wings."
+      },
+      "customOneOffs": [
+        "Each wing has 1D6x10+50 S.D.C.",
+        "Wings regenerate at the same rate as the Nightbane (will grow back in one day if destroyed).",
+        "Can hover and glide silently.",
+        "Flight speed 1D4x10+26 (25-45 mph/40-72 km).",
+        "Undercover work only possible if disguised as another angel."
+      ]
     },
     {
       "id": "angelic_melodious_voice",
       "name": "Melodious Voice",
       "tableCategory": "Angelic",
-      "description": "Talented singers are sometimes said to have a “voice like an angel,” but this ‘Bane puts them to shame. Whenever the character speaks, those around him listen. His voice also has a calming effect on even the most angry or beleaguered souls, and to hear him sing is to be left speechless (also all who hear the singing are so distracted by it that Percep- tion Rolls are -10, -2 on initiative and -15% on skill perfor- mance. Bonuses: +1D4 to M.A., +1 to Awe/Horror Factor, and +20% to any skill that involves speaking, performance or sing- ing. Penalty: Vulnerable to sonic attacks (they inflict 50% greater damage and penalties are double).",
+      "description": "Talented singers are sometimes said to have a 'voice like an angel,' but this 'Bane puts them to shame. Whenever the character speaks, those around him listen.",
       "statModifiers": {
         "ma": {
           "dice": "1D4"
@@ -147,81 +130,106 @@
           "flat": 1
         }
       },
+      "damageAffinities": {
+        "sonic": 1.5
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "category",
-            "targetValue": "Performance",
+            "targetValue": "performance",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "public_speaking",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "sing",
             "modifierPercent": 20
           }
         ]
       },
-      "customOneOffs": [
-        "+20% to skills involving speaking, performance, or singing (in addition to Performance category bonus).",
-        "Singing distracts listeners: Perception −10, initiative −2, skills −15%.",
-        "Sonic attacks inflict 50% greater damage and double penalties."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "atWillAbilities": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
+          "id": "auditory_distraction",
+          "label": "Angelic Singing",
+          "note": "Listeners are distracted: -10 to Perception Rolls, -2 on initiative, and -15% on skill performance."
         }
+      ],
+      "customOneOffs": [
+        "Voice has a calming effect on angry or beleaguered souls.",
+        "Sonic attacks inflict double penalties."
       ]
     },
     {
       "id": "angelic_living_armor",
       "name": "Living Armor",
       "tableCategory": "Angelic",
-      "description": "The Morphus appears as a suit of impressive, polished armor. The armor may be highly ornate with etched graphics or designs, spikes or spines, to simplistic or without decoration at all. A helmet is optional and can be re- moved, but the rest of the armor cannot; it is part of the Nightbane. Bonuses: Regardless of its appearance, +4D6x10 S.D.C., a Natural A.R. of 14, +1 to P.S., and +1D4 to Awe/Hor- ror Factor. Penalties: -10% on all skills involving flexibility of movement (Acrobatics, Climbing, Prowl, Swimming, etc.), dou- ble the character’s weight, -30% to Disguise skill, and cannot be easily concealed without something bulky like a cloak, poncho, or oversized overcoat or trench coat, which might be nearly as conspicuous.",
+      "description": "The Morphus appears as a suit of impressive, polished armor. The armor may be highly ornate with etched graphics or designs, spikes or spines, to simplistic or without decoration at all.",
+      "naturalAr": 14,
       "statModifiers": {
         "ps": {
           "flat": 1
         },
         "sdc": {
           "dice": "4D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
         }
-      },
-      "naturalAr": 14,
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
-          }
-        ]
       },
       "weightModifier": {
         "percent": 100
       },
-      "customOneOffs": [
-        "Double body weight.",
-        "Concealment requires bulky cloak, poncho, or oversized coat (still conspicuous)."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
-      ],
       "appearanceConstraints": {
-        "clothingFit": "oversized_required"
-      }
+        "clothingFit": "oversized_required",
+        "customClothingNote": "Cannot be easily concealed without a bulky cloak, poncho, or oversized overcoat (which is still conspicuous)."
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "A helmet is optional and can be removed, but the rest of the armor cannot; it is a part of the Nightbane."
+      ]
     },
     {
       "id": "angelic_living_holy_weapon",
       "name": "Living Holy Weapon",
       "tableCategory": "Angelic",
-      "description": "In his Morphus the ‘Bane possesses a gleaming weapon of exquisite craftsmanship. The type of weapon and its decoration vary with the tastes of the ‘Bane, but is always an ancient weapon (01-25% short sword, 26-50% large sword, 51-70% battle axe, 71-85% mace or other blunt weapon, 86-00% pole arm, scythe, pitchfork or other large weapon). The Nightbane also has a scabbard, sling or case for the weapon so that he doesn’t need to hold it in his hands all the time. This weapon may be lent to others, dropped, or stolen, but it will disappear when the ‘Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The weapon is a living part of the character. Bonuses: +2 to Awe/Horror Factor, the weapon does 4D6 damage regardless of type, +14 damage to Nightlords, their minions, demons, undead, and other supernatural creatures; half damage to crea- tures of magic, and +1 on initiative, +2 to strike, +3 to parry, disarm and pull punch with the Holy Weapon (plus any applica- ble attribute or skill bonuses). Penalties: Prefers to use this weapon above all others and feels naked without it, and the weapon is likely difficult to conceal or hide. The Holy Weapon has 40 S.D.C. +10 per level of experience, but the ‘Bane feels any attacks leveled against the weapon, and he takes damage or feels the effect after the weapon’s S.D.C. is reduced to one point or less, as it is a living part of him; damage is inflicted to the weapon only when it its specifically targeted. When the S.D.C. of the Holy Sword and his own S.D.C. are both reduced to zero, the weapon vanishes and cannot be made to reappear until the character recovers all of his own S.D.C. Most outsiders do not know about this vulnerability.",
+      "description": "In his Morphus the 'Bane possesses a gleaming weapon of exquisite craftsmanship. The type of weapon and its decoration vary with the tastes of the 'Bane, but is always an ancient weapon.",
       "statModifiers": {
+        "initiative": {
+          "flat": 1
+        },
         "strike": {
           "flat": 2
         },
@@ -243,15 +251,32 @@
           "limbType": "misc_limbs",
           "label": "Living Holy Weapon",
           "damageFormula": "4D6",
-          "isAdditiveToHth": false
+          "isAdditiveToHth": false,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "nightlords",
+                "minions",
+                "demons",
+                "undead",
+                "supernatural_creatures"
+              ],
+              "damageFlat": 14
+            },
+            {
+              "targetEnemies": [
+                "creatures_of_magic"
+              ],
+              "damageMultiplier": 0.5
+            }
+          ]
         }
       ],
       "limbDurability": [
         {
           "limbName": "Living Holy Weapon",
           "quantity": 1,
-          "sdc": 40,
-          "hp": 0
+          "sdc": 40
         }
       ],
       "livingWeaponRules": {
@@ -262,34 +287,26 @@
         "hardToConceal": true
       },
       "customOneOffs": [
-        "Weapon type: 01–25% short sword, 26–50% large sword, 51–70% battle axe, 71–85% mace/blunt, 86–00% pole arm or large weapon.",
-        "+14 damage vs Nightlords, minions, demons, undead, and other supernatural foes; half damage vs creatures of magic.",
-        "Holy Weapon has 40 S.D.C. +10 per level; damage to weapon only on called shots—overflow hits the Nightbane when weapon S.D.C. ≤1.",
-        "If weapon and Morphus S.D.C. both reach 0, weapon vanishes until Morphus S.D.C. fully recovers.",
-        "Prefers this weapon; difficult to conceal."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
+        "Weapon type: 01-25% short sword, 26-50% large sword, 51-70% battle axe, 71-85% mace or other blunt weapon, 86-00% pole arm, scythe, pitchfork or other large weapon.",
+        "Weapon may be lent to others, dropped, or stolen, but disappears when assuming Facade and reappears in Morphus form.",
+        "Damage is inflicted to the weapon only when specifically targeted. Any damage that exceeds its S.D.C. is applied to the Nightbane.",
+        "When the weapon's S.D.C. is reduced to one point or less, the Nightbane feels the effect/damage."
       ]
     },
     {
       "id": "angelic_living_holy_shield",
       "name": "Living Holy Shield",
       "tableCategory": "Angelic",
-      "description": "A shield appears strapped on one arm (or suitable appendage) or slung on the back of the Nightbane when in Morphus form. The sheild’s appearance may vary from ornate to plain. Bonuses: +1 to M.A. and P.P., +5D6 S.D.C. to the Nightbane, +1 to strike and disarm, +3 to parry and pull punch with the shield (in addition to any applicable at- tribute or skill bonuses). The shield has 100 S.D.C., is only damaged by attacks that specifically target it, and regenerates at the same rate as the Nightbane. Should the shield be destroyed, it vanishes and does not return for 24 hours. Penalties: The weapon is difficult to conceal or hide and is definitely conspicu- ous in hand.",
+      "description": "A shield appears strapped on one arm (or suitable appendage) or slung on the back of the Nightbane when in Morphus form. The shield's appearance may vary from ornate to plain.",
       "statModifiers": {
         "ma": {
           "flat": 1
         },
         "pp": {
           "flat": 1
+        },
+        "sdc": {
+          "dice": "5D6"
         },
         "strike": {
           "flat": 1
@@ -302,39 +319,29 @@
         },
         "pullPunch": {
           "flat": 3
-        },
-        "sdc": {
-          "dice": "5D6"
         }
       },
       "limbDurability": [
         {
           "limbName": "Living Holy Shield",
           "quantity": 1,
-          "sdc": 100,
-          "hp": 0
+          "sdc": 100
         }
       ],
+      "livingWeaponRules": {
+        "onlyDamagedWhenTargeted": true,
+        "hardToConceal": true
+      },
       "customOneOffs": [
-        "Shield damaged only by attacks that target it; if destroyed, vanishes 24 hours.",
-        "Conspicuous and difficult to conceal when carried."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
+        "Shield regenerates at the same rate as the Nightbane.",
+        "If destroyed, vanishes and does not return for 24 hours."
       ]
     },
     {
       "id": "angelic_heroic_proportions",
       "name": "Heroic Proportions",
       "tableCategory": "Angelic",
-      "description": "In his Morphus, the Nightbane is tall, has broad shoulders, a square jaw, handsome face (differ- ent than his human Facade), and is heavily muscled. Bonuses: Increase height by one foot (0.3 m) and weight by 50%. +6D6 to S.D.C., +4 to P.S., +1 to P.E., +1D4 to P.B. Penalty: Reduce Horror Factor -1D4.",
+      "description": "In his Morphus, the Nightbane is tall, has broad shoulders, a square jaw, handsome face (different than his human Facade), and is heavily muscled.",
       "statModifiers": {
         "ps": {
           "flat": 4
@@ -347,6 +354,9 @@
         },
         "sdc": {
           "dice": "6D6"
+        },
+        "hf": {
+          "dice": "-1D4"
         }
       },
       "heightModifier": {
@@ -354,23 +364,13 @@
       },
       "weightModifier": {
         "percent": 50
-      },
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
-      ]
+      }
     },
     {
       "id": "angelic_halo_of_power",
       "name": "Halo of Power",
       "tableCategory": "Angelic",
-      "description": "The Nightbane radiates with a glow around his head and shoulders or has a circular halo hovering above his head. In the latter case, this may be a golden glowing light, or it may be a physical gold ring or full gold disk that gleams in the light, radiating like a miniature sun symbol. What- ever its appearance, the halo will attract a lot of attention. Bo- nuses: +1 to P.B., +1D4 to M.A., +4D6 S.D.C., resitant to fire and cold (takes half damage), +1 attack per melee round, +2 on initiative and pull punch, and +2 to Awe/Horror Factor. Pen- alty: Diguise is impossible, and the character is likely to be among the first to be targeted by evil.",
+      "description": "The Nightbane radiates with a glow around his head and shoulders or has a circular halo hovering above his head.",
       "statModifiers": {
         "pb": {
           "flat": 1
@@ -381,13 +381,22 @@
         "sdc": {
           "dice": "4D6"
         },
+        "apm": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "pullPunch": {
+          "flat": 2
+        },
         "hf": {
           "flat": 2
         }
       },
       "damageAffinities": {
-        "fire": 0.5,
         "heat": 0.5,
+        "fire": 0.5,
         "cold": 0.5,
         "ice": 0.5
       },
@@ -395,31 +404,25 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Likely first target of evil foes."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
+        "Likely to be among the first to be targeted by evil."
       ]
     },
     {
       "id": "angelic_mystical_protection",
       "name": "Mystical Protection",
       "tableCategory": "Angelic",
-      "description": "The Nightbane radiates with a thin white or light blue aura that is, in effect, a field of mystical protection. The character also has a small or large mystic sym- bol on his forehead or neck, and on his chest or the backs of his hands. It appears to be a tattoo or branded and the symbol glows during combat or times of apparent danger. Bonuses: The Nightbane’s Natural A.R. is increased by 1D4 points (A.R. 19 maximum), the field provides 1D6x10+30 S.D.C. in addition to the character’s own, +2 to save vs magic and illusions, +4 to save vs possession, and +1 to all other saving throws. Penalty: Offers no protection against weapons made of silver and dam- age goes right to the character’s own S.D.C. then Hit Points.",
+      "description": "The Nightbane radiates with a thin white or light blue aura that is, in effect, a field of mystical protection. The character also has a small or large mystic symbol on his forehead or neck, and on his chest or the backs of his hands.",
       "statModifiers": {
+        "ar": {
+          "dice": "1D4",
+          "maxValue": 19
+        },
         "sdc": {
           "dice": "1D6x10+30"
         }
@@ -427,30 +430,31 @@
       "saveModifiers": {
         "magic": 2,
         "illusions": 2,
-        "possession": 4
+        "possession": 4,
+        "allSaves": 1
+      },
+      "damageAffinities": {
+        "bypassesSdcAndArmor": [
+          "silver"
+        ]
       },
       "customOneOffs": [
-        "Natural A.R. increased by 1D4 (maximum A.R. 19).",
-        "No protection vs silver weapons—damage bypasses the field to personal S.D.C./H.P.",
-        "Field provides 1D6×10+30 S.D.C. in addition to personal S.D.C."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
+        "The mystical field provides 1D6x10+30 S.D.C. in addition to the character's own.",
+        "Damage from silver weapons goes right to the character's own S.D.C., then Hit Points."
       ]
     },
     {
       "id": "angelic_noble_bearing",
       "name": "Noble Bearing",
       "tableCategory": "Angelic",
-      "description": "This ‘Bane moves with the confi- dence, sense of importance and grace of royalty; fluid and delib- erate, with shoulders square and head held high. Bonuses: +4D6 to S.D.C., +1D4 to M.A., +1 to M.E., +1 to P.P., +1 to P.B., +1 to Awe/Horror Factor, +5% to Dance and all Physical skills (as applicable). Penalties: Reduce Spd by 10% and -10% on Dis- guise and Undercover skills.",
+      "description": "This 'Bane moves with the confidence, sense of importance and grace of royalty; fluid and deliberate, with shoulders square and head held high.",
       "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "ma": {
+          "dice": "1D4"
+        },
         "me": {
           "flat": 1
         },
@@ -459,12 +463,6 @@
         },
         "pb": {
           "flat": 1
-        },
-        "ma": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "4D6"
         },
         "hf": {
           "flat": 1
@@ -477,59 +475,59 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_dance",
+            "targetValue": "dance",
             "modifierPercent": 5
           },
           {
             "targetType": "category",
             "targetValue": "physical",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -10
           }
         ]
-      },
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
-        }
-      ]
+      }
     },
     {
       "id": "angelic_icon_of_the_faith",
       "name": "Icon of the Faith",
       "tableCategory": "Angelic",
-      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of Da- vid, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typi- cally head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to posses- sion, the vampire’s bite of the vampire. The icon is also capable of repelling and holding the undead, ani- 74 Joe Sifferman (Order #46323384) mated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
+      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of David, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish.",
       "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
         "me": {
           "flat": 2
         },
         "ma": {
           "flat": 1
-        },
-        "sdc": {
-          "dice": "4D6"
         }
       },
       "saveModifiers": {
-        "allSaves": 2
+        "allSaves": 2,
+        "immunities": [
+          "possession"
+        ]
       },
-      "customOneOffs": [
-        "Impervious to possession, vampire bite, and the vampire's bite.",
-        "Holy icon repels and holds at bay undead, animated dead, were-beasts, and creatures susceptible to holy symbols."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "atWillAbilities": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 74
+          "id": "repel_undead",
+          "label": "Repel Undead",
+          "note": "Repels and holds at bay undead, animated dead, were-beasts, and creatures susceptible to holy symbols."
         }
+      ],
+      "customOneOffs": [
+        "Icon may be lent to others, dropped, or stolen, but disappears when switching to Facade and reappears in Morphus form.",
+        "The icon is a living part of the character."
       ]
     }
   ]

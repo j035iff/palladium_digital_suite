@@ -6,6 +6,7 @@
       "name": "Crash Test Dummy",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "damage affinities",
         "custom one-offs (notes only)"
       ],
@@ -64,6 +65,7 @@
       "name": "Scarecrow",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "natural weapons",
         "damage affinities",
         "limb durability components",
@@ -78,7 +80,6 @@
       "name": "Soft Clay",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
         "damage affinities",
         "custom one-offs (notes only)",
         "recovery behaviors",
@@ -105,6 +106,7 @@
       "name": "Stuffed Animal",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "damage affinities",
         "cross-table roll",

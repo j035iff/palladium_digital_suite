@@ -59,6 +59,7 @@
       "name": "Night Hunter/Nightvision Goggles",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "nightvision bonus",
         "custom one-offs (notes only)"
       ],
@@ -93,14 +94,6 @@
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
-    },
-    {
-      "id": "modern_soldier_biomechanical",
-      "name": "Biomechanical",
-      "hooks": [
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": true
     }
   ]
 }

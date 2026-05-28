@@ -26,7 +26,8 @@
       "isOverride": true
     },
     "ar": {
-      "flat": -2
+      "flat": -2,
+      "maxValue": 19
     },
     "strike": {
       "flat": 2
@@ -52,6 +53,9 @@
       "flightCombatBonuses": {
         "dodge": {
           "flat": 1
+        },
+        "pullPunch": {
+          "flat": 2
         }
       }
     },
@@ -100,6 +104,9 @@
       "allowedSubstrates": ["soil_dirt", "solid_rock"]
     }
   },
+  "survivalTraits": {
+    "noBreathingRequired": true
+  },
   "isPolymorphicTemplate": true,
   "sensory": {
     "nightvisionRangeFlatBonus": 1000,
@@ -110,7 +117,9 @@
     "externalSensoryObfuscation": [
       "digital_photo_blur",
       "biometric_scrambling"
-    ]
+    ],
+    "opponentTrackingBonusPercent": 20,
+    "opponentPerceptionBonusFlat": 2
   },
   "skillModifiers": {
     "globalSkillModifier": -10,
@@ -144,7 +153,10 @@
   },
   "damageAffinities": {
     "fire": 0.5,
-    "cold": 2
+    "cold": 2,
+    "physical": 0.5,
+    "sonic": 0.5,
+    "bypassesSdcAndArmor": ["silver", "magic"]
   },
   "weaponClassBonuses": {
     "melee": {
@@ -175,7 +187,37 @@
       "activationCost": {
         "resourceType": "hp",
         "value": 2
-      }
+      },
+      "strikeBonus": 2,
+      "parryBonus": 1,
+      "dodgeBonus": 1,
+      "disarmBonus": 3,
+      "extraAttacks": 1,
+      "rangeFeet": 30,
+      "conditionalTargetModifiers": [
+        {
+          "targetEnemies": ["nightlords", "demons", "undead", "creatures_of_magic"],
+          "damageFlat": 14
+        },
+        {
+          "targetEnemies": ["creatures_of_magic"],
+          "damageMultiplier": 0.5
+        }
+      ]
+    }
+  ],
+  "atWillAbilities": [
+    {
+      "id": "repel_undead",
+      "label": "Repel Undead"
+    },
+    {
+      "id": "auditory_distraction",
+      "label": "Auditory Distraction"
+    },
+    {
+      "id": "stand_motionless",
+      "label": "Remain Motionless"
     }
   ],
   "companionBlueprint": {
@@ -235,6 +277,45 @@
       "mini_missiles"
     ]
   },
+  "variantPercentiles": [
+    {
+      "roll": "01-50%",
+      "label": "Combat-heavy sub-roll",
+      "description": "Example variant percentile with structured mechanics.",
+      "statModifiers": {
+        "pp": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 200
+      },
+      "limbDurability": [
+        {
+          "limbName": "Forearm Plates",
+          "quantity": 2,
+          "sdc": 15
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Variant Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    }
+  ],
   "customOneOffs": [
     "Cannot fit through standard doorways without squeezing."
   ]

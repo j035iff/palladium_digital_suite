@@ -17,6 +17,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "custom one-offs (notes only)",
+        "appearance constraints",
         "player choices"
       ],
       "notesOnly": false
@@ -26,8 +27,7 @@
       "name": "Parasitic Alien",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "save modifiers",
-        "custom one-offs (notes only)"
+        "save modifiers"
       ],
       "notesOnly": false
     },

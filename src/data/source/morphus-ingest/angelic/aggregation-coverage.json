@@ -31,7 +31,9 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "at-will abilities"
       ],
       "notesOnly": false
     },
@@ -53,7 +55,9 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "limb durability components",
+        "custom one-offs (notes only)",
+        "living weapon rules"
       ],
       "notesOnly": false
     },
@@ -63,7 +67,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "living weapon rules"
       ],
       "notesOnly": false
     },
@@ -92,6 +97,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -111,7 +117,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "at-will abilities"
       ],
       "notesOnly": false
     }

@@ -122,6 +122,7 @@
       "name": "Tool Hands",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "natural weapons",
         "custom one-offs (notes only)"
       ],
@@ -182,6 +183,7 @@
       "name": "Gimmick Toy Switches",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "gimmick toy switches",
         "appearance constraints"
       ],
@@ -242,6 +244,7 @@
       "name": "Drill/Auger Hand",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "natural weapons",
         "custom one-offs (notes only)"
       ],

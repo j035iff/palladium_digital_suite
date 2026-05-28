@@ -80,6 +80,7 @@
       "name": "Massive Maw",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "natural weapons",
         "damage affinities",

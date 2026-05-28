@@ -7,8 +7,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "custom one-offs (notes only)",
-        "living weapon rules"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -18,7 +17,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "player choices"
       ],
       "notesOnly": false
     },
@@ -41,20 +41,19 @@
         "natural weapons",
         "companion blueprint",
         "custom one-offs (notes only)",
-        "recovery behaviors"
+        "player choices"
       ],
       "notesOnly": false
     },
     {
-      "id": "ancient_warrior_warchief",
+      "id": "ancient_warrior_war_chief",
       "name": "War-Chief/Warlord",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
         "skill overrides",
         "natural weapons",
-        "custom one-offs (notes only)",
-        "combat context modifiers"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -85,8 +84,7 @@
       "name": "Color Standard",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "natural weapons",
-        "custom one-offs (notes only)"
+        "natural weapons"
       ],
       "notesOnly": false
     }
