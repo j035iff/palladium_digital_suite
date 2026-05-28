@@ -2,24 +2,49 @@
   "tableId": "artificial_appearance",
   "entries": [
     {
+      "id": "artificial_appearance_store_mannequin",
+      "name": "Store Mannequin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "at-will abilities"
+      ],
+      "notesOnly": false
+    },
+    {
       "id": "artificial_appearance_crash_test_dummy",
       "name": "Crash Test Dummy",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
-        "damage affinities",
-        "custom one-offs (notes only)"
+        "damage affinities"
       ],
       "notesOnly": false
     },
     {
-      "id": "artificial_appearance_glass",
-      "name": "Glass",
+      "id": "artificial_appearance_scarecrow",
+      "name": "Scarecrow",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "damage affinities",
+        "recovery behaviors",
+        "player choices",
+        "living weapon rules"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artificial_appearance_porcelain_ceramic",
+      "name": "Porcelain/Ceramic",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
         "damage affinities",
-        "variant percentiles (notes)"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -36,22 +61,8 @@
       "notesOnly": false
     },
     {
-      "id": "artificial_appearance_mirror_man",
-      "name": "Mirror Man",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides",
-        "damage affinities",
-        "variant percentiles (notes)",
-        "combat context modifiers",
-        "at-will abilities",
-        "skill context modifiers"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "artificial_appearance_porcelain_ceramic",
-      "name": "Porcelain/Ceramic",
+      "id": "artificial_appearance_glass",
+      "name": "Glass",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
@@ -61,25 +72,11 @@
       "notesOnly": false
     },
     {
-      "id": "artificial_appearance_scarecrow",
-      "name": "Scarecrow",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "save modifiers",
-        "natural weapons",
-        "damage affinities",
-        "limb durability components",
-        "recovery behaviors",
-        "player choices",
-        "living weapon rules"
-      ],
-      "notesOnly": false
-    },
-    {
       "id": "artificial_appearance_soft_clay",
       "name": "Soft Clay",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "damage affinities",
         "custom one-offs (notes only)",
         "recovery behaviors",
@@ -89,15 +86,26 @@
       "notesOnly": false
     },
     {
-      "id": "artificial_appearance_store_mannequin",
-      "name": "Store Mannequin",
+      "id": "artificial_appearance_wood_statue",
+      "name": "Wood Statue",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
         "damage affinities",
-        "custom one-offs (notes only)",
-        "appearance constraints",
-        "at-will abilities"
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "artificial_appearance_mirror_man",
+      "name": "Mirror Man",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "variant percentiles (notes)",
+        "combat context modifiers",
+        "at-will abilities",
+        "skill context modifiers"
       ],
       "notesOnly": false
     },
@@ -106,22 +114,10 @@
       "name": "Stuffed Animal",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "save modifiers",
         "skill overrides",
         "damage affinities",
-        "cross-table roll",
-        "recovery behaviors",
-        "player choices"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "artificial_appearance_wood_statue",
-      "name": "Wood Statue",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides",
-        "damage affinities"
+        "custom one-offs (notes only)",
+        "cross-table roll"
       ],
       "notesOnly": false
     }

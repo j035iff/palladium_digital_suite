@@ -39,6 +39,8 @@
   "naturalAr": 10,
   "saveModifiers": {
     "poison": 2,
+    "mindControl": 2,
+    "immunities": ["mindControl"],
     "comaDeath": {
       "percent": -10
     }
@@ -95,6 +97,17 @@
         "statModifiers": {
           "spd": {
             "flat": -2
+          }
+        }
+      },
+      {
+        "stanceType": "costumed",
+        "statModifiers": {
+          "hf": {
+            "flat": 1
+          },
+          "pb": {
+            "dice": "1D4"
           }
         }
       }
@@ -265,6 +278,10 @@
     {
       "interceptAction": "parry_lasers_light",
       "modifierFlat": -3
+    },
+    {
+      "interceptAction": "catch_intercept_projectiles",
+      "modifierFlat": 2
     }
   ],
   "heightModifier": {
@@ -313,7 +330,52 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "weightModifier": {
+        "percent": 100,
+        "variableScaleConditions": [
+          "Example: double weight on this inner sub-roll (Junk Golem 01-50% band)."
+        ]
+      }
+    },
+    {
+      "roll": "51-00%",
+      "label": "Heavy junk sub-roll",
+      "description": "Example variant with sub-roll-specific weight only.",
+      "weightModifier": {
+        "percent": 200,
+        "variableScaleConditions": [
+          "Example: triple weight on this inner sub-roll (Junk Golem 51-00% band)."
+        ]
+      }
+    }
+  ],
+  "combatContextModifiers": [
+    {
+      "condition": "visual_engagement",
+      "target": "opponent",
+      "strike": -1,
+      "parry": -1,
+      "note": "Example: moving tattoos or hypnotic patterns (Artisan Body Artist)."
+    },
+    {
+      "condition": "bright_light",
+      "target": "opponent",
+      "strike": -5,
+      "parry": -5,
+      "dodge": -5
+    }
+  ],
+  "skillContextModifiers": [
+    {
+      "skillId": "skill_prowl",
+      "modifierPercent": 5,
+      "context": "costumed"
+    },
+    {
+      "skillId": "skill_intimidation",
+      "modifierPercent": 10,
+      "context": "costumed"
     }
   ],
   "customOneOffs": [

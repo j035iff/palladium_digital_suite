@@ -193,6 +193,7 @@ export function aggregateMorphusSaveBonuses(
     horrorFactor: 'save_horror',
     disease: 'save_disease',
     possession: 'save_possession',
+    mindControl: 'save_mind_control',
     illusions: 'save_illusions',
     nightlordMagic: 'save_magic',
     allSaves: 'save_all',
@@ -827,6 +828,7 @@ const INTERCEPT_ACTION_LABELS: Record<
   parry_shadow_darkness: 'Parry shadow / darkness',
   parry_lasers_light: 'Parry lasers / light',
   bare_handed_melee_parry: 'Bare-handed melee parry',
+  catch_intercept_projectiles: 'Catch / intercept projectiles',
 }
 
 export type MorphusDerivedCombatInterception = MorphusSpecialCombatInterception & {

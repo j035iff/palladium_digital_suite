@@ -690,9 +690,10 @@
           "enum": [
             "parry_shadow_darkness",
             "parry_lasers_light",
-            "bare_handed_melee_parry"
+            "bare_handed_melee_parry",
+            "catch_intercept_projectiles"
           ],
-          "description": "Specialized intercept channel (Gear-Head elemental exceptions)."
+          "description": "Specialized intercept channel (Gear-Head elemental exceptions; Athlete projectile catch)."
         },
         "modifierFlat": {
           "type": "integer",
@@ -865,6 +866,10 @@
         "possession": {
           "type": "integer"
         },
+        "mindControl": {
+          "type": "integer",
+          "description": "Save vs mind control (distinct from possession where rules apply separately)."
+        },
         "illusions": {
           "type": "integer"
         },
@@ -892,12 +897,13 @@
               "horrorFactor",
               "disease",
               "possession",
+              "mindControl",
               "illusions",
               "nightlordMagic",
               "allSaves"
             ]
           },
-          "description": "Absolute save immunities for this trait (e.g. impervious to possession)."
+          "description": "Absolute save immunities for this trait (e.g. impervious to possession or mind control)."
         },
         "comaDeath": {
           "$ref": "#/$defs/polymorphicModifier"
@@ -1065,9 +1071,10 @@
             "mounted",
             "dismounted",
             "prone",
-            "cloaked"
+            "cloaked",
+            "costumed"
           ],
-          "description": "Posture gate for stance-dependent stat swaps (Ancient Warrior centaur / cloak)."
+          "description": "Posture gate for stance-dependent stat swaps (Ancient Warrior centaur / cloak; Artisan costume context)."
         },
         "statModifiers": {
           "$ref": "#/$defs/statModifiers",
@@ -1928,6 +1935,10 @@
             "$ref": "#/$defs/naturalWeapon"
           }
         },
+        "weightModifier": {
+          "$ref": "#/$defs/polymorphicModifier",
+          "description": "Weight adjustment for this inner sub-roll (e.g. Junk Golem double vs triple weight by junk type)."
+        },
         "customOneOffs": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
@@ -2079,9 +2090,10 @@
             "surprise_from_behind_or_side",
             "grappling",
             "grapple_defense",
-            "physical_contact"
+            "physical_contact",
+            "visual_engagement"
           ],
-          "description": "When this modifier applies."
+          "description": "When this modifier applies (e.g. visual_engagement for moving tattoos or hypnotic patterns)."
         },
         "target": {
           "type": "string",
@@ -2312,8 +2324,10 @@
             "darkness",
             "bright_light",
             "daylight",
-            "well_lit"
-          ]
+            "well_lit",
+            "costumed"
+          ],
+          "description": "Lighting, terrain, or outfit context for the skill adjustment (e.g. costumed for Artisan outfit-specific bonuses)."
         }
       }
     },

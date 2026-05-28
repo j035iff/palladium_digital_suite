@@ -6,6 +6,87 @@
   "description": "Artificial Appearance Morphus table (Nightbane Survival Guide, WB5, printed pp. 80-82). Nightbane who appear artificial or man-made—mannequins, dummies, scarecrows, porcelain, junk, glass, clay, wood, mirrors, or stuffed animals.",
   "entries": [
     {
+      "id": "artificial_appearance_store_mannequin",
+      "name": "Store Mannequin",
+      "tableCategory": "Artificial Appearance",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
+      "description": "The Nightbane appears to be a real, department store mannequin. One can see where the arms, legs, and head attach, the hair is coarse and wiry, the facial features are painted on but can move, and the eyes are unblinking.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+12"
+        },
+        "pb": {
+          "flat": 1
+        },
+        "bonusHthDamage": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
+      },
+      "damageAffinities": {
+        "cold": 0,
+        "heat": 0.5,
+        "poison": 0.5,
+        "airborneToxins": 0.5,
+        "fire": 2
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "float"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "wardrobe_and_grooming",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": 5
+          }
+        ]
+      },
+      "atWillAbilities": [
+        {
+          "id": "stand_motionless",
+          "label": "Stand Motionless"
+        }
+      ],
+      "appearanceConstraints": {
+        "hideAmongContext": "store mannequins"
+      },
+      "customOneOffs": [
+        "Text states both 'impervious to cold' and 'resistant to cold (half damage)'. Assuming immunity to environmental cold, but double damage from fire."
+      ]
+    },
+    {
       "id": "artificial_appearance_crash_test_dummy",
       "name": "Crash Test Dummy",
       "tableCategory": "Artificial Appearance",
@@ -15,14 +96,20 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 80
         }
       ],
-      "description": "The Morphus looks like a scuffed and dirty crash test dummy with a few dents and a slightly torn jumpsuit, as if it had been in a minor accident. 80 Joe Sifferman (Order #46323384) Maybe this character feels like a protector, or as if his birth or his whole life was an accident. Bonuses: +6D6+11 S.D.C., +1 to P.P., +2 on Perception Rolls, +5 to roll with impact, +1 to Horror Factor, impervious to cold, heat, poison and toxins. Pen- alties: -1 to M.A., -1 to P.E., and fire does normal damage.",
+      "description": "The Morphus looks like a scuffed and dirty crash test dummy with a few dents and a slightly torn jumpsuit, as if it had been in a minor accident.",
       "statModifiers": {
+        "sdc": {
+          "dice": "6D6+11"
+        },
         "pp": {
           "flat": 1
+        },
+        "perception": {
+          "flat": 2
         },
         "rollWithPunch": {
           "flat": 5
@@ -35,26 +122,24 @@
         },
         "pe": {
           "flat": -1
-        },
-        "sdc": {
-          "dice": "6D6+11"
         }
       },
-      "damageAffinities": {
-        "cold": 0
-      },
-      "customOneOffs": [
-        "Fire inflicts normal (unresisted) damage."
-      ],
       "saveModifiers": {
         "immunities": [
-          "poison"
+          "poison",
+          "gas"
         ]
+      },
+      "damageAffinities": {
+        "cold": 0,
+        "heat": 0,
+        "poison": 0,
+        "airborneToxins": 0
       }
     },
     {
-      "id": "artificial_appearance_glass",
-      "name": "Glass",
+      "id": "artificial_appearance_scarecrow",
+      "name": "Scarecrow",
       "tableCategory": "Artificial Appearance",
       "gameSystems": [
         "nightbane"
@@ -62,242 +147,76 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 81
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
         }
       ],
-      "description": "This Nightbane’s body is made from (01-50%) impact resistant, cloudy, clear or colored glass (typi- cally white, blue, green, amber, or red), or even stained glass, or (51-00%) has a human body imbedded with shards of broken glass and bottles. Bonuses: +5D6+2 S.D.C., +1D6 to damage in combat, +2 to Horror Factor, +20% to hide/Prowl underwater (difficult to see). The character takes half damage from laser and light based attacks and does not register on heat sensors. Pen- alties: -1D4 to M.A., -1 to P.P., cannot swim (sinks like a rock), and -15% to Prowl due to light reflections.",
+      "description": "This Morphus looks like the classic animated scarecrow - a straw stuffed shirt and pants probably tied together with rope, gloves for hands, a sack for a head, maybe a hat.",
       "statModifiers": {
-        "hf": {
-          "flat": 2
+        "sdc": {
+          "dice": "4D6"
         },
         "pp": {
-          "flat": -1
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "5D6+2"
-        },
-        "bonusHthDamage": {
-          "dice": "1D6"
-        }
-      },
-      "damageAffinities": {
-        "lasers": 0.5,
-        "light": 0.5
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -15
-          }
-        ]
-      },
-      "variantPercentiles": [
-        {
-          "roll": "01-50%",
-          "label": "Glass body",
-          "description": "Impact-resistant cloudy, clear, colored, or stained glass."
-        },
-        {
-          "roll": "51-00%",
-          "label": "Glass shards",
-          "description": "Human body embedded with broken glass and bottles."
-        }
-      ],
-      "sensory": {
-        "invisibleToThermalImaging": true,
-        "prowlUnderwaterModifierPercent": 20
-      }
-    },
-    {
-      "id": "artificial_appearance_junk_golem",
-      "name": "Junk Golem",
-      "tableCategory": "Artificial Appearance",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 81
-        }
-      ],
-      "description": "The character may always have con- sidered junkyards and alleys as treasure troves, or full of adven- ture, or he may have felt like he or his life was junk. At any rate, this Morphus is composed of junk. The following are most com- mon: 01-25% A human body imbedded with a hodgepodge of small pieces of junk such as bottles, cans, rusty nails, bricks, bits of wire, broken glass, etc. 26-50% A junk body made of old car parts such as tires, fenders, car batteries, shocks, spark plugs, etc. 51-75% A junk body made of nails, wire and wood from pallets and shipping crates. 76-00% A junk body made of paint cans, paint chips, paint brushes, bits of metal, plastic sheeting and tarps. Bonuses: +2D4x10+10 to S.D.C., +1D4 to Horror Factor, +1D6 damage in hand to hand combat, and resistant to heat, cold and poison (half damage). Penalties: Double (01-50%) or triple (51-00%) weight. -1D4 to P.B., -10% to per- form any skills that require a delicate touch, cannot swim (un- less mostly wood), is impossible to disguise, and -30% to Prowl.",
-      "statModifiers": {
-        "pb": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "2D4x10+10"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "damageAffinities": {
-        "cold": 0.5,
-        "heat": 0.5
-      },
-      "weightModifier": {
-        "percent": 100,
-        "variableScaleConditions": [
-          "01-50% variant: double weight",
-          "51-00% variant: triple weight"
-        ]
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_trait",
-            "targetValue": "requires_light_touch",
-            "modifierPercent": -10
-          }
-        ]
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      },
-      "variantPercentiles": [
-        {
-          "roll": "01-25%",
-          "label": "Hodgepodge junk",
-          "description": "Human body embedded with bottles, cans, nails, wire, glass, etc."
-        },
-        {
-          "roll": "26-50%",
-          "label": "Car parts",
-          "description": "Junk body of tires, fenders, batteries, shocks, spark plugs, etc."
-        },
-        {
-          "roll": "51-75%",
-          "label": "Pallet wood and wire",
-          "description": "Nails, wire, and wood from pallets and shipping crates."
-        },
-        {
-          "roll": "76-00%",
-          "label": "Paint and tarps",
-          "description": "Paint cans, chips, brushes, metal, plastic sheeting, tarps."
-        }
-      ],
-      "customOneOffs": [
-        "Penalty: -1D4 to P.B. (roll at creation).",
-        "Unless mostly wood variant, cannot swim."
-      ]
-    },
-    {
-      "id": "artificial_appearance_mirror_man",
-      "name": "Mirror Man",
-      "tableCategory": "Artificial Appearance",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 81
-        }
-      ],
-      "description": "01-33% A smooth, featureless hu- manoid figure made of a mirror-like reflective material that bends with body movement. 34-66% A human body covered in small mirrors, all the same shape and style; facial features ob- scured or the head is a box made of mirrors (can still talk). 67-00% The body is covered in the cracked and shattered pieces of broken mirrors. In bright light the ‘Bane creates flashes of light that make looking at him difficult (opponents are -5 to strike, parry, and dodge): This Morphus enables the character to Mirror Walk at will! No one knows how this works, as any mir- ror used is supposed to have a counterpart in the opposite world, but some see it as a sign that the barrier between Earth and the Nightlands is continuing to thin. Whatever the case, these Nightbane are highly sought after specifically for this ability. Bonuses: +5D6+5 S.D.C., +1 on Perception Rolls, +2 to Horror Factor, impervious to laser and light attacks, and takes half dam- age from energy attacks. Penalties: -2 to M.A., -2 to P.P., can- not swim (sinks like a rock), and -50% to Prowl in daylight/bright light and -20% to Prowl in darkness due to light reflections.",
-      "statModifiers": {
-        "strike": {
-          "flat": -5
-        },
-        "parry": {
-          "flat": -5
+          "flat": 2
         },
         "hf": {
           "flat": 2
         },
-        "ma": {
+        "rollWithPunch": {
+          "flat": 1
+        },
+        "ps": {
           "flat": -2
         },
-        "pp": {
+        "pe": {
           "flat": -2
-        },
-        "sdc": {
-          "dice": "5D6+5"
         }
       },
       "damageAffinities": {
-        "lasers": 0,
-        "light": 0
+        "cold": 0,
+        "heat": 0,
+        "poison": 0,
+        "airborneToxins": 0,
+        "fire": 2
       },
       "mobility": {
         "aquaticTraits": {
-          "buoyancy": "sink"
+          "buoyancy": "float"
         }
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -50
-          }
-        ]
+      "playerChoices": [
+        {
+          "label": "Scarecrow Weapon",
+          "options": [
+            "Sickle Sword (2D6 damage)",
+            "Machete (2D6 damage)",
+            "Scythe (3D6 damage)"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Living Weapon (Sickle/Machete/Scythe)",
+          "damageFormula": "Varies by selection",
+          "isAdditiveToHth": false
+        }
+      ],
+      "livingWeaponRules": {
+        "sdcPerLevel": 5,
+        "onlyDamagedWhenTargeted": true,
+        "vanishesWhenBothZero": true,
+        "preferredWeapon": true,
+        "hardToConceal": true
       },
-      "variantPercentiles": [
+      "recoveryBehaviors": [
         {
-          "roll": "01-33%",
-          "label": "Featureless mirror humanoid",
-          "description": "Smooth reflective material; bends with body movement."
-        },
-        {
-          "roll": "34-66%",
-          "label": "Mirror tiles",
-          "description": "Small uniform mirrors; face obscured or mirror-box head."
-        },
-        {
-          "roll": "67-00%",
-          "label": "Shattered mirrors",
-          "description": "Cracked mirror shards covering the body."
-        }
-      ],
-      "atWillAbilities": [
-        {
-          "id": "mirror_walk",
-          "label": "Mirror Walk",
-          "note": "At will (core Nightbane rules)."
-        }
-      ],
-      "combatContextModifiers": [
-        {
-          "condition": "bright_light",
-          "target": "opponent",
-          "strike": -5,
-          "parry": -5,
-          "dodge": -5
-        }
-      ],
-      "skillContextModifiers": [
-        {
-          "skillId": "skill_prowl",
-          "modifierPercent": -20,
-          "context": "darkness"
-        },
-        {
-          "skillId": "skill_prowl",
-          "modifierPercent": -50,
-          "context": "bright_light"
+          "trigger": "destruction",
+          "reformMinutesDice": "2D6",
+          "residualSdcPercent": 50,
+          "lockoutHoursDice": "1D6+1",
+          "note": "If torn apart, knocked apart or blown to pieces, the character reforms in 2D6 minutes at half S.D.C. and Hit Points or the 'Bane can turn back into his Facade (preventing Morphus use for 1D6+1 hours)."
         }
       ]
     },
@@ -311,28 +230,31 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 81
         }
       ],
-      "description": "This Nightbane appears to be a giant porcelain doll or a ceramic doll or statue and can be quite beautiful. These Nightbane have a difficult time displaying emo- tion since their skin is so stiff their faces don’t move much. The skin is also tougher than normal ceramic or porcelain, but bul- lets and heavy impacts may cause chipping and a web of hair- line fractures to appear; heals as the ‘Bane heals. Bonuses: +1D6x10+6 S.D.C., +1D4 to P.B., and +3 to damage in hand to hand combat, does not register on heat sensors, and resistant to heat and cold (half damage). Penalties: -1D4 to M.A., cannot swim (sinks like a rock), -10% to Climbing skill, and is difficult to disguise (-10%).",
+      "description": "This Nightbane appears to be a giant porcelain doll or a ceramic doll or statue and can be quite beautiful. These Nightbane have a difficult time displaying emotion since their skin is so stiff.",
       "statModifiers": {
-        "pb": {
-          "dice": "1D4"
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
         "sdc": {
           "dice": "1D6x10+6"
         },
+        "pb": {
+          "dice": "1D4"
+        },
         "bonusHthDamage": {
           "flat": 3
+        },
+        "ma": {
+          "dice": "-1D4"
         }
       },
       "damageAffinities": {
-        "cold": 0.5,
-        "heat": 0.5
+        "heat": 0.5,
+        "cold": 0.5
+      },
+      "sensory": {
+        "invisibleToThermalImaging": true
       },
       "mobility": {
         "aquaticTraits": {
@@ -343,22 +265,23 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
             "modifierPercent": -10
           }
         ]
       },
       "customOneOffs": [
-        "Penalty: -1D4 to M.A. (roll at creation).",
-        "Chipping/fractures heal with the Nightbane."
-      ],
-      "sensory": {
-        "invisibleToThermalImaging": true
-      }
+        "Skin is tougher than normal ceramic, but bullets and heavy impacts may cause chipping and hairline fractures (heals as the 'Bane heals)."
+      ]
     },
     {
-      "id": "artificial_appearance_scarecrow",
-      "name": "Scarecrow",
+      "id": "artificial_appearance_junk_golem",
+      "name": "Junk Golem",
       "tableCategory": "Artificial Appearance",
       "gameSystems": [
         "nightbane"
@@ -366,89 +289,149 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 81
         }
       ],
-      "description": "Quite plainly, this Morphus looks like the classic animated scarecrow – a straw stuffed shirt and pants probably tied together with rope, gloves for hands, a sack for a head, maybe a hat, and comes with a sickle sword (does 2D6 damage), machete (does 2D6 damage) or scythe (does 3D6 damage). This weapon may be lent to others, dropped, or stolen, but it will disappear when the ‘Bane switches back to Facade form and reappears with him when he assumes his Morphus the next time. The weapon is a living part of the character. Bo- nuses: +4D6 S.D.C., +2 to P.P., +2 to Horror Factor, +1 to roll with impact, and if torn apart, knocked apart or blown to pieces, the character reforms in 2D6 minutes at half S.D.C. and Hit Points or the ‘Bane can turn back into his Facade (if he does the latter he can’t use his Morphus for 1D6+1 hours thereafter), floats on water, and is impervious to cold, heat, poison and tox- ins. Penalties: -2 to P.S. and P.E., and takes double damage from fire (though he will not catch ablaze like a normal scare- crow). Prefers to use his Scarecrow weapon above all others and feels vulnerable without it. The weapon is likely to be difficult to conceal or hide. It has 40 S.D.C. +5 per level of experience, but the weapon only takes damage when it is specifically tar- geted. When the S.D.C. of the weapon and the Nightbane’s own S.D.C. are both reduced to zero, the weapon vanishes and can- not be made to reappear until the character recovers all of his own S.D.C.",
+      "description": "This Morphus is composed of junk. The character may always have considered junkyards and alleys as treasure troves, or felt like he or his life was junk.",
       "statModifiers": {
-        "pp": {
-          "flat": 2
+        "sdc": {
+          "dice": "2D4x10+10"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "bonusHthDamage": {
+          "dice": "1D6"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
+      },
+      "damageAffinities": {
+        "heat": 0.5,
+        "cold": 0.5,
+        "poison": 0.5
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "01-25%",
+          "label": "Small Junk",
+          "description": "A human body imbedded with a hodgepodge of small pieces of junk such as bottles, cans, rusty nails, bricks, bits of wire, broken glass, etc.",
+          "weightModifier": {
+            "percent": 100
+          }
+        },
+        {
+          "roll": "26-50%",
+          "label": "Car Parts",
+          "description": "A junk body made of old car parts such as tires, fenders, car batteries, shocks, spark plugs, etc.",
+          "weightModifier": {
+            "percent": 100
+          }
+        },
+        {
+          "roll": "51-75%",
+          "label": "Wood & Wire",
+          "description": "A junk body made of nails, wire and wood from pallets and shipping crates.",
+          "weightModifier": {
+            "percent": 200
+          }
+        },
+        {
+          "roll": "76-00%",
+          "label": "Paints & Plastics",
+          "description": "A junk body made of paint cans, paint chips, paint brushes, bits of metal, plastic sheeting and tarps.",
+          "weightModifier": {
+            "percent": 200
+          }
+        }
+      ],
+      "customOneOffs": [
+        "Cannot swim (unless mostly wood)."
+      ]
+    },
+    {
+      "id": "artificial_appearance_glass",
+      "name": "Glass",
+      "tableCategory": "Artificial Appearance",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 81
+        }
+      ],
+      "description": "This Nightbane's body is made from impact resistant, cloudy, clear or colored glass, stained glass, or has a human body imbedded with shards of broken glass and bottles.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6+2"
+        },
+        "bonusHthDamage": {
+          "dice": "1D6"
         },
         "hf": {
           "flat": 2
         },
-        "rollWithPunch": {
-          "flat": 1
+        "ma": {
+          "dice": "-1D4"
         },
-        "ps": {
-          "flat": -2
-        },
-        "pe": {
-          "flat": -2
-        },
-        "sdc": {
-          "dice": "4D6"
+        "pp": {
+          "flat": -1
         }
       },
       "damageAffinities": {
-        "cold": 0,
-        "fire": 2
+        "lasers": 0.5,
+        "light": 0.5
+      },
+      "sensory": {
+        "prowlUnderwaterModifierPercent": 20,
+        "invisibleToThermalImaging": true
       },
       "mobility": {
         "aquaticTraits": {
-          "buoyancy": "float"
+          "buoyancy": "sink"
         }
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Scarecrow weapon (sickle/machete 2D6 or scythe 3D6)",
-          "damageFormula": "2D6",
-          "isAdditiveToHth": true,
-          "weaponTraits": [
-            "indestructible"
-          ]
-        }
-      ],
-      "limbDurability": [
-        {
-          "limbName": "Scarecrow weapon",
-          "quantity": 1,
-          "sdc": 40,
-          "hp": 0
-        }
-      ],
-      "recoveryBehaviors": [
-        {
-          "trigger": "destruction",
-          "reformMinutesDice": "2D6",
-          "residualSdcPercent": 50,
-          "lockoutHoursDice": "1D6+1"
-        }
-      ],
-      "livingWeaponRules": {
-        "sdcPerLevel": 5,
-        "onlyDamagedWhenTargeted": true,
-        "vanishesWhenBothZero": true,
-        "preferredWeapon": true,
-        "hardToConceal": true
-      },
-      "playerChoices": [
-        {
-          "label": "Scarecrow weapon",
-          "options": [
-            "Sickle/machete (2D6)",
-            "Scythe (3D6)"
-          ],
-          "timing": "character_creation"
-        }
-      ],
-      "saveModifiers": {
-        "immunities": [
-          "poison"
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -15
+          }
         ]
-      }
+      },
+      "customOneOffs": [
+        "Penalty to Prowl is due to light reflections."
+      ]
     },
     {
       "id": "artificial_appearance_soft_clay",
@@ -460,23 +443,25 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 81
         }
       ],
-      "description": "Appears to be made of soft, gray or tan colored clay. Bonuses: +1D6x10 S.D.C., +3 to roll with impact, kinetic attacks (punches, kicks, falls, impact, bullets, etc.) do a quarter their normal damage, so do blades (cut, stab, impale). Big explosions do only 25% damage but blow the character into 1D6x10 clay globs that take 1D6+4 minutes to reform. +15% (or a base skill of 40%) to Disguise skill as the Nightbane can shape his own features and even mold and shape his body; can only impersonate those of similar size and weight, cannot im- personate specific individuals, and the color of the skin cannot be changed without makeup or face paint. Penalties: Fire, water and electricity attacks inflict double damage. Cold-based attacks and freezing temperature do half damage but reduce the number of attacks and Spd by half. Being submerged in water or sprayed with gallons of water melts the Nightbane into a mound of wet clay, effectively immobilizing him until dried out (takes 2D6 hours!). Likewise, a blast from a garden hose does 1D4 damage and a blast from a fire hose does 2D6 damage. Cannot swim (sinks like a rock).",
+      "description": "Appears to be made of soft, gray or tan colored clay.",
       "statModifiers": {
-        "rollWithPunch": {
-          "flat": 3
-        },
         "sdc": {
           "dice": "1D6x10"
+        },
+        "rollWithPunch": {
+          "flat": 3
         }
       },
       "damageAffinities": {
-        "fire": 2,
         "kinetic": 0.25,
+        "blunt": 0.25,
         "piercing": 0.25,
+        "explosives": 0.25,
+        "fire": 2,
         "water": 2,
         "electricity": 2,
         "cold": 0.5
@@ -486,17 +471,16 @@
           "buoyancy": "sink"
         }
       },
-      "customOneOffs": [
-        "Disguise: +15% or base 40% (whichever is better)."
-      ],
-      "recoveryBehaviors": [
-        {
-          "trigger": "submersion",
-          "dryHoursDice": "2D6",
-          "gardenHoseDamage": "1D4",
-          "fireHoseDamage": "2D6"
-        }
-      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": 15,
+            "grantUnlearnedValue": 40
+          }
+        ]
+      },
       "conditionalPenalties": [
         {
           "trigger": "cold_attack",
@@ -509,157 +493,32 @@
           "spdMultiplier": 0.5
         }
       ],
-      "disguiseLimits": {
-        "similarSizeWeightOnly": true,
-        "cannotImpersonateIndividuals": false,
-        "skinColorRequiresMakeup": true
-      }
-    },
-    {
-      "id": "artificial_appearance_store_mannequin",
-      "name": "Store Mannequin",
-      "tableCategory": "Artificial Appearance",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 80
-        }
-      ],
-      "description": "The Nightbane appears to be a real, department store mannequin. One can see where the arms, legs, and head attach, the hair is coarse and wiry, the facial fea- tures are painted on but can move, and the eyes are unblinking. The clothing, even if leather, is usually what the character con- siders to be stylish or the latest fashion and will change over time. Perhaps this Nightbane loved shopping, worked in a de- partment store or was just so concerned with outer appearance that his Morphus reflects this. Or maybe he never felt real. Bo- nuses: +1D6x10+12 S.D.C., +1 to P.B., +2 to damage, +1 to Horror Factor, impervious to cold, floats on water, +10% to Swim skill, +20% to Wardrobe and Grooming skill, +5% to Dis- guise, +5% to Prowl and can stand motionless for any length of time, as well as hide in a store among mannequins and be indis- tinguishable from them. Resistant to cold, heat, poison and tox- ins (half damage). Penalties: -1D4 to M.A., and fire does double damage.",
-      "statModifiers": {
-        "pb": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 1
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "1D6x10+12"
-        },
-        "bonusHthDamage": {
-          "flat": 2
-        }
-      },
-      "damageAffinities": {
-        "cold": 0,
-        "heat": 0.5,
-        "fire": 2
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "float"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": 10
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Penalty: -1D4 to M.A. (roll at creation)."
-      ],
-      "atWillAbilities": [
-        {
-          "id": "stand_motionless",
-          "label": "Stand motionless",
-          "note": "Indefinitely"
-        }
-      ],
-      "appearanceConstraints": {
-        "standMotionlessIndefinitely": true,
-        "hideAmongContext": "store mannequins"
-      }
-    },
-    {
-      "id": "artificial_appearance_stuffed_animal",
-      "name": "Stuffed Animal",
-      "tableCategory": "Artificial Appearance",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 81
-        }
-      ],
-      "description": "Roll on the Animal Form Table (any) to determine the type of giant stuffed animal, or the player 81 Joe Sifferman (Order #46323384) can elect to go with the classic stuffed Teddy Bear. Fur coloring may be realistic or not (purple, pink, polka dotted, etc.) and the face may be simple or wildly exaggerated to look sweet or dan- gerous (has pointed teeth and fangs, horns, etc.). The animal may be a humanoid caricature, a la the Teddy Bear, or a more realistic stuffed rendition of the creature, but all are roughly hu- man size, can speak and walk on two legs. The animal abilities remain roughly the same as those described in the Animal Form table, however, S.D.C., Spd, and bonuses are half, and the ani- mal is made of fabric and stuffing so weight is half that of the character’s normal weight. Bonuses: +2D6 S.D.C., +1D4 to M.A., +20% to Prowl, impervious to heat, cold, and poison, ki- netic attacks (from punches to bullets) do half damage, and floats on water until it becomes waterlogged and sinks (takes 4D6+20 minutes). Penalties: Reduce Spd by 20%, skills that re- quire a delicate touch or fingers are -15%, and fire does double damage.",
-      "statModifiers": {
-        "ma": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "2D6"
-        },
-        "spd": {
-          "percent": -20
-        }
-      },
-      "damageAffinities": {
-        "heat": 0,
-        "fire": 2,
-        "kinetic": 0.5
-      },
-      "weightModifier": {
-        "percent": -50
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "float"
-        },
-        "waterlogMinutesDice": "4D6+20"
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_trait",
-            "targetValue": "requires_light_touch",
-            "modifierPercent": -15
-          }
-        ]
-      },
-      "crossTableRoll": {
-        "targetTableId": "animal",
-        "targetTableName": "Animal Form Table"
-      },
-      "playerChoices": [
-        {
-          "label": "Animal form",
-          "options": [
-            "Roll on Animal Form table",
-            "Classic giant Teddy Bear"
-          ],
-          "timing": "character_creation"
-        }
-      ],
       "recoveryBehaviors": [
         {
+          "trigger": "large_explosion",
+          "reformMinutesDice": "1D6+4",
+          "globCountDice": "1D6x10",
+          "note": "Big explosions do only 25% damage but blow the character into 1D6x10 clay globs that take 1D6+4 minutes to reform."
+        },
+        {
+          "trigger": "submersion",
+          "dryHoursDice": "2D6",
+          "note": "Being submerged in water or sprayed with gallons of water melts the Nightbane into a mound of wet clay, effectively immobilizing him until dried out."
+        },
+        {
           "trigger": "waterlog",
-          "note": "Floats until waterlogged, then sinks"
+          "gardenHoseDamage": "1D4",
+          "fireHoseDamage": "2D6"
         }
       ],
-      "saveModifiers": {
-        "immunities": [
-          "poison"
-        ]
-      }
+      "disguiseLimits": {
+        "similarSizeWeightOnly": true,
+        "cannotImpersonateIndividuals": true,
+        "skinColorRequiresMakeup": true
+      },
+      "customOneOffs": [
+        "Can shape his own features and even mold and shape his body."
+      ]
     },
     {
       "id": "artificial_appearance_wood_statue",
@@ -671,17 +530,23 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 81
         }
       ],
-      "description": "Looks like a simple, rough hewn, hu- man shaped statue carved from bare wood or looks like a giant marionette, but neither has any distinctive facial features. Bo- nuses: +6D6+6 S.D.C., +2 to P.S., +1 to P.E., +3 to damage in combat, +1 to Horror Factor and floats on water (+20% to Swim skill). Penalties: -1 to P.P. -1 to strike, parry, and dodge, -4 to Spd, double weight, fire does double damage, and -15% to Prowl (clunks when he walks).",
+      "description": "Looks like a simple, rough hewn, human shaped statue carved from bare wood or looks like a giant marionette, but neither has any distinctive facial features.",
       "statModifiers": {
+        "sdc": {
+          "dice": "6D6+6"
+        },
         "ps": {
           "flat": 2
         },
         "pe": {
           "flat": 1
+        },
+        "bonusHthDamage": {
+          "flat": 3
         },
         "hf": {
           "flat": 1
@@ -695,36 +560,203 @@
         "parry": {
           "flat": -1
         },
+        "dodge": {
+          "flat": -1
+        },
         "spd": {
           "flat": -4
-        },
-        "sdc": {
-          "dice": "6D6+6"
-        },
-        "bonusHthDamage": {
-          "flat": 3
         }
       },
       "damageAffinities": {
         "fire": 2
-      },
-      "weightModifier": {
-        "percent": 100
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "float"
         }
       },
+      "weightModifier": {
+        "percent": 100
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_swimming",
+            "targetValue": "swimming",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -15
           }
         ]
-      }
+      },
+      "customOneOffs": [
+        "Penalty to Prowl is because the character clunks when he walks."
+      ]
+    },
+    {
+      "id": "artificial_appearance_mirror_man",
+      "name": "Mirror Man",
+      "tableCategory": "Artificial Appearance",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 81
+        }
+      ],
+      "description": "The Morphus is formed from or covered in mirrors or reflective surfaces.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6+5"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        },
+        "ma": {
+          "flat": -2
+        },
+        "pp": {
+          "flat": -2
+        }
+      },
+      "damageAffinities": {
+        "lasers": 0,
+        "light": 0,
+        "energy": 0.5
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "atWillAbilities": [
+        {
+          "id": "mirror_walk",
+          "label": "Mirror Walk"
+        }
+      ],
+      "combatContextModifiers": [
+        {
+          "condition": "bright_light",
+          "target": "opponent",
+          "strike": -5,
+          "parry": -5,
+          "dodge": -5,
+          "note": "In bright light the 'Bane creates flashes of light that make looking at him difficult."
+        }
+      ],
+      "skillContextModifiers": [
+        {
+          "skillId": "prowl",
+          "modifierPercent": -50,
+          "context": "daylight"
+        },
+        {
+          "skillId": "prowl",
+          "modifierPercent": -50,
+          "context": "bright_light"
+        },
+        {
+          "skillId": "prowl",
+          "modifierPercent": -20,
+          "context": "darkness"
+        }
+      ],
+      "variantPercentiles": [
+        {
+          "roll": "01-33%",
+          "label": "Featureless Mirror",
+          "description": "A smooth, featureless humanoid figure made of a mirror-like reflective material that bends with body movement."
+        },
+        {
+          "roll": "34-66%",
+          "label": "Covered in Mirrors",
+          "description": "A human body covered in small mirrors, all the same shape and style; facial features obscured or the head is a box made of mirrors (can still talk)."
+        },
+        {
+          "roll": "67-00%",
+          "label": "Broken Mirrors",
+          "description": "The body is covered in the cracked and shattered pieces of broken mirrors."
+        }
+      ]
+    },
+    {
+      "id": "artificial_appearance_stuffed_animal",
+      "name": "Stuffed Animal",
+      "tableCategory": "Artificial Appearance",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 81
+        }
+      ],
+      "description": "A giant stuffed animal or classic stuffed Teddy Bear. Roughly human size, can speak, and walks on two legs. Fur coloring may be realistic or unnatural.",
+      "crossTableRoll": {
+        "targetTableId": "animal_form",
+        "note": "S.D.C., Spd, and bonuses from the animal table are halved."
+      },
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "ma": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "percent": -20
+        }
+      },
+      "damageAffinities": {
+        "heat": 0,
+        "cold": 0,
+        "poison": 0,
+        "airborneToxins": 0,
+        "kinetic": 0.5,
+        "blunt": 0.5,
+        "piercing": 0.5,
+        "explosives": 0.5,
+        "fire": 2
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "float"
+        },
+        "waterlogMinutesDice": "4D6+20"
+      },
+      "weightModifier": {
+        "percent": -50
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The animal may be a humanoid caricature or a more realistic stuffed rendition of the creature.",
+        "Floats on water until it becomes waterlogged and sinks (takes 4D6+20 minutes)."
+      ]
     }
   ]
 }

@@ -609,6 +609,7 @@ export type MorphusCombatInterceptAction =
   | 'parry_shadow_darkness'
   | 'parry_lasers_light'
   | 'bare_handed_melee_parry'
+  | 'catch_intercept_projectiles'
 
 export type MorphusSpecialCombatInterception = {
   interceptAction: MorphusCombatInterceptAction
@@ -660,6 +661,7 @@ export type MorphusSaveModifiers = {
   horrorFactor?: number
   disease?: number
   possession?: number
+  mindControl?: number
   illusions?: number
   nightlordMagic?: number
   allSaves?: number
@@ -677,6 +679,7 @@ export type MorphusSaveImmunityType =
   | 'horrorFactor'
   | 'disease'
   | 'possession'
+  | 'mindControl'
   | 'illusions'
   | 'nightlordMagic'
   | 'allSaves'
@@ -727,7 +730,12 @@ export type MorphusConditionalTerrainModifier = {
   skillModifiers?: MorphusSkillModifiers
 }
 
-export type MorphusStanceType = 'mounted' | 'dismounted' | 'prone' | 'cloaked'
+export type MorphusStanceType =
+  | 'mounted'
+  | 'dismounted'
+  | 'prone'
+  | 'cloaked'
+  | 'costumed'
 
 export type MorphusConditionalStanceModifier = {
   stanceType: MorphusStanceType
@@ -1111,6 +1119,12 @@ export type MorphusVariantPercentile = {
   roll: string
   label: string
   description?: string
+  statModifiers?: MorphusStatModifiers
+  skillModifiers?: MorphusSkillModifiers
+  sensory?: MorphusSensory
+  limbDurability?: readonly MorphusLimbDurability[]
+  naturalWeapons?: readonly MorphusNaturalWeapon[]
+  weightModifier?: MorphusPolymorphicModifier
   customOneOffs?: readonly string[]
 }
 
@@ -1159,6 +1173,7 @@ export type MorphusCombatContextCondition =
   | 'grappling'
   | 'grapple_defense'
   | 'physical_contact'
+  | 'visual_engagement'
 
 export type MorphusCombatContextModifier = {
   condition: MorphusCombatContextCondition
@@ -1235,6 +1250,7 @@ export type MorphusSkillContext =
   | 'bright_light'
   | 'daylight'
   | 'well_lit'
+  | 'costumed'
 
 export type MorphusSkillContextModifier = {
   skillId: string

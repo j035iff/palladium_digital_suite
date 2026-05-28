@@ -7,6 +7,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -89,8 +90,9 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "weapon class bonuses",
+        "natural weapons",
         "hand capacity",
+        "combat interceptions",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

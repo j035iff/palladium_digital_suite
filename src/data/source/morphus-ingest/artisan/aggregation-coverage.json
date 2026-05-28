@@ -7,6 +7,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
+        "natural weapons",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -18,8 +19,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "damage affinities",
-        "custom one-offs (notes only)",
-        "appearance constraints"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -40,8 +40,7 @@
         "stat modifiers / A.R. shift",
         "burrowing engine",
         "skill overrides",
-        "natural weapons",
-        "custom one-offs (notes only)"
+        "natural weapons"
       ],
       "notesOnly": false
     },
@@ -57,14 +56,13 @@
       "notesOnly": false
     },
     {
-      "id": "artisan_costumes_cosplay",
+      "id": "artisan_costumes_outfits_cosplay",
       "name": "Costumes/Outfits/Cosplay",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "sensory obfuscation",
-        "polymorphic template",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "skill context modifiers"
       ],
       "notesOnly": false
     },
@@ -74,7 +72,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "natural weapons"
+        "natural weapons",
+        "player choices"
       ],
       "notesOnly": false
     },
@@ -85,7 +84,8 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "player choices"
       ],
       "notesOnly": false
     },
