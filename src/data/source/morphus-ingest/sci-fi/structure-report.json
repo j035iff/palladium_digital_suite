@@ -1,6 +1,6 @@
 {
   "tableId": "sci-fi",
-  "generatedAt": "2026-05-27T22:24:02.260Z",
+  "generatedAt": "2026-05-28T02:47:57.924Z",
   "fillOnly": false,
   "files": [
     {
@@ -10,10 +10,10 @@
     },
     {
       "path": "src/data/content/morphus/tables/sci-fi.json",
-      "changed": 0,
+      "changed": 10,
       "entryCount": 10
     }
   ],
   "unmatched": [],
-  "totalChanged": 10
+  "totalChanged": 20
 }

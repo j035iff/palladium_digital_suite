@@ -17,18 +17,24 @@
         "me": {
           "flat": 1
         },
-        "ma": {
-          "dice": "1D4"
-        },
         "pb": {
           "flat": 1
+        },
+        "ma": {
+          "dice": "1D4"
         },
         "sdc": {
           "dice": "2D6"
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -5
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          }
+        ]
       },
       "customOneOffs": [
         "No Secondary Skills—career-focused only.",
@@ -57,18 +63,21 @@
         "ma": {
           "flat": 1
         },
-        "pb": {
-          "flat": 1
+        "perception": {
+          "flat": 2
         },
         "sdc": {
           "dice": "2D6"
-        },
-        "perception": {
-          "flat": 2
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -10
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       },
       "customOneOffs": [
         "+5% to Invoke Trust/Intimidate.",
@@ -96,23 +105,18 @@
         "pe": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "4D6"
+        "perception": {
+          "flat": -1
         },
         "pp": {
           "dice": "-1D4"
         },
-        "spd": {
-          "dice": "-1D6"
-        },
-        "perception": {
-          "flat": -1
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "saveModifiers": {
-        "disease": 2,
-        "gas": 2,
-        "poison": 2
+        "disease": 2
       },
       "gameSystems": [
         "nightbane"
@@ -183,14 +187,11 @@
         "iq": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "2D6"
-        },
         "spd": {
           "flat": -2
         },
-        "ppe": {
-          "dice": "-1D6"
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "customOneOffs": [
@@ -219,8 +220,8 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "2D4"
+        "spd": {
+          "flat": -2
         },
         "ma": {
           "flat": -2
@@ -228,8 +229,8 @@
         "perception": {
           "flat": -1
         },
-        "ppe": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "2D4"
         }
       },
       "skillModifiers": {
@@ -280,8 +281,8 @@
       "description": "The Nightbane has a large, multi- gallon, plastic or glass tank incorporated into his body, usually mounted on the back. This tank is translucent, revealing water, coffee, or another drink as its contents. It is connected to a small spigot that can be used to indefinitely dispense the potable drink. In addition, the Nightbane seems to have an affable, easy-going air in casual situations and is often given to lengthy discussions or gossip. Bonuses: +1D4+2 to the M.A. attribute and +1 to P.E., the character does not require any hydration while in Morphus form and is never thirsty; moreover, he can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container. The tank has 40 S.D.C. Penalties: -2 to P.P. and -1D4 to Spd attributes, -1 to dodge, -2 to roll with punch, fall or impact, -20% to skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming due to the weight and the sloshing from the water inside the tank (always two-thirds full and weighs 25 pounds (11 kg).",
       "statModifiers": {
         "ma": {
-          "dice": "1D4+2",
-          "flat": 2
+          "flat": 2,
+          "dice": "1D4+2"
         },
         "pe": {
           "flat": 1
@@ -289,14 +290,8 @@
         "pp": {
           "flat": -2
         },
-        "spd": {
-          "dice": "-1D4"
-        },
         "dodge": {
           "flat": -1
-        },
-        "rollWithPunch": {
-          "flat": -2
         }
       },
       "limbDurability": [
@@ -369,23 +364,20 @@
       "description": "The Nightbane’s profession involves making and/or repairing machines, whether it is clocks or toasters to air conditioners and automobiles/vehicle engines. This ‘Bane is good with his hands and likes to build or take things apart. His Morphus has gears, springs, pulleys, nuts and bolts ei- ther built right into his body or as a sort of weird piecemeal ar- mor bolted to parts of his body. Bonuses: +2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it, +2 to P.S. and P.P. attributes, +1D6x10+20 S.D.C., a Natural A.R. of 10, and +10% bonus to skills related to mechanics and mechanical repair. Penalties: -2 on all Perception Rolls when caught up in examining or working on machines, -1 to P.B., -1D4 to the Spd attribute, and the character tends to enjoy working on machines than hanging out with people.",
       "naturalAr": 10,
       "statModifiers": {
+        "perception": {
+          "flat": 2
+        },
         "ps": {
           "flat": 2
         },
         "pp": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "1D6x10+20"
-        },
         "pb": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D4"
-        },
-        "perception": {
-          "flat": 2
+        "sdc": {
+          "dice": "1D6x10+20"
         }
       },
       "customOneOffs": [
@@ -411,20 +403,17 @@
       "description": "The Nightbane’s profession involves making and/or repairing cell phones, com- puters, and electronic devices, or he is an electrician who re- wires entire houses and electrical systems. This ‘Bane is good with his hands and likes to build or take part electrical devices. His Morphus has wires, microchips and circuit boards built right into his body or as a sort of weird piecemeal armor attached to or coming out of his body. Eyes are probably dim LED lights. Bonuses: +2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them, +2 to P.P. attribute, +4D6+6 S.D.C., a Natural A.R. of 9, electrical attacks and lightning do half damage, and +5% bonus to skills related to electronics and electrical repair and computers. Penalties: -3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices, -1 to P.E., -1D4 to the Spd attribute, and the character tends to lose himself in electronic devices, losing track of time and the things going on around him.",
       "naturalAr": 9,
       "statModifiers": {
-        "pp": {
+        "perception": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "4D6+6"
+        "pp": {
+          "flat": 2
         },
         "pe": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D4"
-        },
-        "perception": {
-          "flat": 2
+        "sdc": {
+          "dice": "4D6+6"
         }
       },
       "damageAffinities": {
@@ -463,9 +452,6 @@
           "flat": -2
         },
         "spd": {
-          "flat": -2
-        },
-        "perception": {
           "flat": -2
         }
       },

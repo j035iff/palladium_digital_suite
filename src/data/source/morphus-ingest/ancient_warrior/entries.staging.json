@@ -19,6 +19,9 @@
         "strike": {
           "flat": 1
         },
+        "parry": {
+          "flat": 1
+        },
         "me": {
           "flat": -1
         },
@@ -36,6 +39,9 @@
         },
         "sdc": {
           "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -112,9 +118,21 @@
         "sdc": {
           "dice": "4D6"
         },
+        "hf": {
+          "flat": 1
+        },
         "perception": {
           "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -140,6 +158,9 @@
           "flat": 20
         },
         "parry": {
+          "flat": 2
+        },
+        "dodge": {
           "flat": 2
         },
         "ps": {
@@ -185,11 +206,17 @@
         "parry": {
           "flat": 1
         },
+        "disarm": {
+          "flat": 1
+        },
         "dodge": {
           "flat": -1
         },
         "sdc": {
           "dice": "4D6+6"
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -212,9 +239,26 @@
         "pp": {
           "flat": -2
         },
+        "pe": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "1D6x10+100"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -239,6 +283,20 @@
         "sdc": {
           "dice": "1D4x10+40"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -266,10 +324,16 @@
         "pp": {
           "flat": 2
         },
+        "pe": {
+          "flat": 2
+        },
         "strike": {
           "flat": 2
         },
         "parry": {
+          "flat": 1
+        },
+        "disarm": {
           "flat": 1
         },
         "ps": {
@@ -282,7 +346,16 @@
           "dice": "1D4x10"
         }
       },
-      "naturalAr": 9
+      "naturalAr": 9,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          }
+        ]
+      }
     }
   ]
 }

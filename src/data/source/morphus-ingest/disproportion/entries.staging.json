@@ -14,7 +14,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character’s overall body is stout with a thick, short waist and muscular, bar- rel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, other- wise clothing must be loose or a bit oversized.",
+      "description": "The character’s overall body is stout with a thick, short waist and muscular, barrel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, otherwise clothing must be loose or a bit oversized.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -34,6 +34,15 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -15
+          }
+        ]
       }
     },
     {
@@ -55,6 +64,20 @@
         "pb": {
           "flat": -2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -71,10 +94,10 @@
           "pageNumber": 87
         }
       ],
-      "description": "Perfect vision, excellent peripheral vi- sion (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Per- ception Rolls involving vision in well lit areas and daytime.",
+      "description": "Perfect vision, excellent peripheral vision (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Perception Rolls involving vision in well lit areas and daytime.",
       "statModifiers": {
         "perception": {
-          "flat": 1
+          "flat": -2
         }
       },
       "sensory": {
@@ -113,6 +136,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_swimming",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
           }
         ]
       },
@@ -188,6 +216,9 @@
         "entangle": {
           "flat": 1
         },
+        "disarm": {
+          "flat": 1
+        },
         "hf": {
           "flat": 1
         },
@@ -207,6 +238,15 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required",
         "narrowOpeningAccess": "restricted"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -223,8 +263,11 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Hor- ror Factor. Penalties: -1 to P.B. and -20% to Disguise and Un- dercover skills.",
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and -20% to Disguise and Undercover skills.",
       "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
         "pb": {
           "flat": -1
         }
@@ -242,7 +285,21 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      }
     },
     {
       "id": "disproportion_huge_legs",
@@ -258,7 +315,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Large, thick, muscular upper legs remi- niscent of a frog’s legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
+      "description": "Large, thick, muscular upper legs reminiscent of a frog’s legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -272,6 +329,24 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "mobility": {
+        "jumpMultiplier": 2,
+        "minimumJumpFeet": 12
       }
     },
     {
@@ -290,8 +365,23 @@
       ],
       "description": "Keen sense of smell, can track by scent: 20% +4% per level of experience, and +2 to Perception Rolls dealing with scents and odors. Penalties: -2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and -3 to save vs nausea and vomiting resulting from foul odors and airborne toxins.",
       "saveModifiers": {
-        "gas": -2,
+        "gas": -6,
         "nauseaVomiting": -3
+      },
+      "statModifiers": {
+        "perception": {
+          "flat": 2
+        }
+      },
+      "sensory": {
+        "scentTracking": {
+          "enabled": true,
+          "baseSuccessPercent": 20,
+          "perLevelIncrement": 4
+        },
+        "perceptionSpecialties": {
+          "smell": 2
+        }
       }
     },
     {
@@ -370,12 +460,15 @@
           "pageNumber": 87
         }
       ],
-      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vul- nerable and unable to defend himself than he really is; -2 from Horror Factor.",
+      "description": "The entire head is twice as large as usual. +1D4 to I.Q. and +2 to M.E. attributes. Penalties: -1 to P.B. and P.E. attributes, and the character may seem more vulnerable and unable to defend himself than he really is; -2 from Horror Factor.",
       "statModifiers": {
         "me": {
           "flat": 2
         },
         "pb": {
+          "flat": -1
+        },
+        "pe": {
           "flat": -1
         },
         "iq": {
@@ -418,7 +511,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1D4 to P.S., +1D6+2 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossi- ble (too tight); needs oversized shirts, jackets and coats or cus- tom-made clothing.",
+      "description": "+1D4 to P.S., +1D6+2 to S.D.C., and +1 to Horror Factor. Penalties: Makes wearing tight clothing and even normal sized clothing impossible (too tight); needs oversized shirts, jackets and coats or custom-made clothing.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -507,6 +600,20 @@
         "spd": {
           "percent": -20
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -547,7 +654,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "The character’s chin is small, flat, and seems to practically fade into the neck. Penalties: -1 to P.B. and -1 from Horror Factor.",
+      "description": "-1 to P.B. and -1 from Horror Factor.",
       "statModifiers": {
         "pb": {
           "flat": -1
@@ -589,7 +696,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body looks like the prover- bial 90 pound weakling or an emaciated concentration camp vic- tim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
+      "description": "The upper body looks like the proverbial 90 pound weakling or an emaciated concentration camp victim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -597,6 +704,15 @@
       },
       "weightModifier": {
         "percent": -50
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -613,9 +729,12 @@
           "pageNumber": 88
         }
       ],
-      "description": "Short, stubby legs like those of a go- rilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Fac- tor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage.",
+      "description": "Short, stubby legs like those of a gorilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Factor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage.",
       "statModifiers": {
         "ps": {
+          "flat": 1
+        },
+        "hf": {
           "flat": 1
         },
         "spd": {
@@ -664,7 +783,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturb- ing. Disproportionate Legs & Feet",
+      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturbing. Disproportionate Legs & Feet",
       "statModifiers": {
         "pp": {
           "flat": 1
@@ -672,9 +791,31 @@
         "entangle": {
           "flat": -2
         },
+        "disarm": {
+          "flat": -2
+        },
         "bonusHthDamage": {
           "flat": -2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -694,6 +835,20 @@
       "description": "Can fit through small, narrow spaces, +5% to Escape Artist skill. Penalties: -5% to Disguise skill and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed.",
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -710,9 +865,12 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills.",
+      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills. 88 Joe Sifferman (Order #46323384)",
       "statModifiers": {
         "dodge": {
+          "flat": 1
+        },
+        "entangle": {
           "flat": 1
         },
         "hf": {
@@ -724,6 +882,20 @@
       },
       "heightModifier": {
         "dice": "2D4"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -740,7 +912,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Es- cape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even nor- mal hands may look oversized and disproportionate.",
+      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Escape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even normal hands may look oversized and disproportionate.",
       "statModifiers": {
         "ps": {
           "dice": "-1D4"
@@ -748,6 +920,15 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": 2
+          }
+        ]
       }
     },
     {
@@ -768,6 +949,11 @@
       "statModifiers": {
         "perception": {
           "flat": 1
+        }
+      },
+      "sensory": {
+        "perceptionSpecialties": {
+          "sound": 1
         }
       }
     },
@@ -790,10 +976,16 @@
         "hf": {
           "flat": 1
         },
+        "perception": {
+          "flat": 1
+        },
         "pb": {
           "flat": -1
         },
         "parry": {
+          "flat": -1
+        },
+        "dodge": {
           "flat": -1
         },
         "strike": {
@@ -803,7 +995,14 @@
       "sensory": {
         "sharpVision": true,
         "peripheralVisionDegrees": 90
-      }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "surprise_from_behind_or_side",
+          "target": "opponent",
+          "strike": 2
+        }
+      ]
     },
     {
       "id": "disproportion_tiny_mouth",
@@ -819,7 +1018,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "The mouth is unusually small, practi- cally a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
+      "description": "The mouth is unusually small, practically a slit with no lips, and +1 to Horror Factor. Penalty: -1 from M.A.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -840,7 +1039,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 to P.B., +2 to save vs gas attacks (in- cluding smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands",
+      "description": "+1 to P.B., +2 to save vs gas attacks (including smoke, tear gas, stench, and other strong odors) and +4 to save vs nausea and vomiting resulting from foul odors and airborne toxins. Penalties: This little button nose has only a fair sense of smell: -10% to identify odors and cannot track by scent and -3 to Perception Rolls dealing with scents and odors. Disproportionate Arms & Hands",
       "statModifiers": {
         "pb": {
           "flat": 1
@@ -850,7 +1049,7 @@
         }
       },
       "saveModifiers": {
-        "gas": 2,
+        "gas": 6,
         "nauseaVomiting": 4
       },
       "sensory": {
@@ -890,14 +1089,32 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character has long up- per and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires cus- tom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
+      "description": "The character has long upper and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires custom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
       "statModifiers": {
         "parry": {
+          "flat": 1
+        },
+        "entangle": {
           "flat": 1
         },
         "pb": {
           "flat": -1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "mobility": {
+        "reachPercentBonus": 20
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
       }
     },
     {
@@ -914,7 +1131,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Pen- alties: -1 to I.Q. and P.B. attributes.",
+      "description": "The head is a small, low-profile target to hit; attackers must make a Called Shot to target it and still suffer a penalty of -3 to strike, +2 to Horror Factor. Penalties: -1 to I.Q. and P.B. attributes.",
       "statModifiers": {
         "strike": {
           "flat": -3
@@ -923,6 +1140,9 @@
           "flat": 2
         },
         "iq": {
+          "flat": -1
+        },
+        "pb": {
           "flat": -1
         }
       }

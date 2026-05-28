@@ -1,17 +1,17 @@
 {
-  "tableId": "angelic",
-  "generatedAt": "2026-05-28T02:49:10.041Z",
+  "tableId": "fantasy",
+  "generatedAt": "2026-05-28T02:47:45.477Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
       "changed": 0,
-      "entryCount": 11
+      "entryCount": 10
     },
     {
-      "path": "src/data/content/morphus/tables/angelic.json",
+      "path": "src/data/content/morphus/tables/fantasy.json",
       "changed": 0,
-      "entryCount": 11
+      "entryCount": 10
     }
   ],
   "unmatched": [],

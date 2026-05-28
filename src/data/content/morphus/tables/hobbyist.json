@@ -17,52 +17,22 @@
         "pe": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "2D6"
-        },
         "pp": {
           "flat": -1
         },
         "spd": {
           "flat": -6
+        },
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_prowl",
             "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_tailing",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -30
           }
         ]
       },
@@ -105,14 +75,11 @@
         "pp": {
           "flat": 1
         },
-        "me": {
-          "flat": -1
-        },
-        "ppe": {
-          "dice": "-1D6+2"
-        },
         "strike": {
           "flat": 2
+        },
+        "me": {
+          "flat": -1
         }
       },
       "weaponClassBonuses": {
@@ -160,27 +127,30 @@
       "tableCategory": "Hobbyist",
       "description": "Video games are extremely popular, especially among the adolescents and young adults most likely to become Nightbane. A fanatic about this form of electronic en- tertainment, this character’s Morphus is likely to resemble the appearance of a character from a video game, be it a hero, villain, or creature, or may incorporate some elements of such characters like hair and armor, etc. He also wears virtual reality goggles that make everything he sees in the real world appear to be part of a video game! Thus, he feels like he is a character inside a video game. This bit of detachment from reality keeps the Nightbane cool, calm and at arm’s length from what can become a frighten- ing reality. He also has a wireless video game controller or joystick that he can use to boost and alter his Morphus! With the press of a button he can bestow any one the following upon himself, with instant results in some cases like life points, or a duration of one melee round (15 seconds) for powers and special abilities. Three such video game powers, +1 per level of experience, can be acti- vated every hour. Demon Death Strike: With the press of a button the Night- bane’s hands and any weapon he is holding glow red. His next one attack, be it from a punch, kick, melee weapon, ranged weapon/gun, Talent or spell, inflicts double damage to demons and any creature from the Nightlands, including Night Princes, Nightlords, vampires and fellow Nightbane. Applies only to one attack. Roll to strike as usual. A successful parry means the crea- ture suffers normal damage from the Demon Death Strike, not double. A successful dodge means it avoids the attack and takes no damage whatsoever. Float: With two quick presses of a specific button, the Night- bane can leap from any height and safely float down to the ground or a rooftop below. Can also be used to float on water or run across water. Force Field: For one melee round the Nightbane is protected by a force field that has 60 S.D.C. +10 S.D.C. per each additional level of his experience. Life Points: With the press of a button the Nightbane glows and instantly restores 3D6+18 Hit Points or S.D.C. to himself. Heal Other: With the press of a different button the Nightbane can instantly restore 3D6+18 Hit Points or S.D.C. to any one per- son he touches. Hyper-Combat: Hit the right button sequence and for one melee round the Nightbane has two extra melee attacks, is 20% faster, and +1 to strike, parry, dodge, and disarm. Impervious to Fire: For one melee round the Nightbane is im- pervious to fire and smoke, including magic fire. Can be used to run through fire or run across burning embers or lava. Impervious to Magic: For one melee round the Nightbane is impervious to all types of magic. Jump: The Nightbane can jump around and over opponents. For one melee round he can leap up to 20 feet (6.1 m) high or 50 feet (15.2 m) lengthwise and is +3 to dodge. See the Invisible: For one melee round the Nightbane is able to see the invisible; line of sight. Special Attack: Energy Bolt: For one melee round the Night- bane can fire energy bolts from his hands; treat like a Talent. Each blast does 4D6 damage +2 per each level of the Nightbane’s ex- perience and has a range of 600 feet (183 m) +100 feet (30.5 m) per level of experience. Special Attack: Returning Melee Weapon: For one melee round, any melee weapon the Nightbane throws does an extra 1D6 damage, has a range of 120 feet (36.6 m), and it returns right back to him so he can throw it again. This includes impromptu weapons like a frying pan, peice of pipe, a bottle or a brick. Bonuses: +1 to I.Q., +2 to save vs insanity (but is already a little detached from reality as a coping mechanism). Penalties: -2 to the M.A. attribute, -2D6 from permanent base P.P.E., and the character tends to equate the real world with video game equiva- lents and analogies. Worst of all, if the Nightbane’s controller/ joystick is lost or destroyed, he feels powerless, loses 2D4 S.D.C. (or Hit Points if S.D.C. are gone) and is -1 attack per melee round, and -10% on the performance of all skills. To make the controller reappear, he must change back into his Facade and wait one hour before resuming his Morphus. Note: The controller has 10 S.D.C. and can only be hit if the enemy is specifically targeting it with a Called Shot.",
       "statModifiers": {
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 3
+        },
         "iq": {
           "flat": 1
         },
         "ma": {
           "flat": -2
         },
-        "ppe": {
-          "dice": "-2D6"
-        },
-        "strike": {
-          "flat": 1
-        },
-        "dodge": {
-          "flat": 3
-        },
         "sdc": {
           "dice": "2D4"
         }
       },
       "saveModifiers": {
-        "insanity": 2
+        "insanity": 2,
+        "immunities": [
+          "magic"
+        ]
       },
       "limbDurability": [
         {
@@ -246,7 +216,10 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 35
         }
-      ]
+      ],
+      "damageAffinities": {
+        "fire": 2
+      }
     },
     {
       "id": "hobbyist_dice_bag",
@@ -257,14 +230,17 @@
         "iq": {
           "flat": 1
         },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
         "dodge": {
           "flat": -1
         },
         "pullPunch": {
           "flat": -1
-        },
-        "strike": {
-          "flat": 1
         }
       },
       "weaponClassBonuses": {
@@ -309,43 +285,13 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_barter",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_camouflage",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -20
+            "targetValue": "skill_concealment",
+            "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_concealment",
-            "modifierPercent": -30
           }
         ]
       },
@@ -370,17 +316,17 @@
       "tableCategory": "Hobbyist",
       "description": "The skin of the Nightbane is actu- ally made of well-worn leather like that of an old book. Small belts and buckles may be incorporated as well, though things like spikes, studs, and zippers are rare. Nightbane with this feature are often avid readers/book collectors or do leatherwork as a hobby. Bonuses: +2 to the I.Q. or P.P. attribute, +4D6+6 to S.D.C., a Natural A.R. of 8 and +1 to Awe/Horror Factor. Penalties: -2 to Perception Rolls involving the sense of touch. The Nightbane also takes 50% more damage from fire-based attacks, and -10% to Acrobatics, Camouflage, Climb, Disguise, Gymnastics, Prowl, Swimming and Undercover Ops skills.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6+6"
-        },
-        "hf": {
-          "flat": 1
-        },
         "iq": {
           "flat": 2
         },
         "perception": {
           "flat": -2
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "hf": {
+          "flat": 1
         }
       },
       "naturalAr": 8,
@@ -389,41 +335,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_camouflage",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -459,20 +370,17 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "3D6"
-        },
-        "me": {
-          "flat": -1
-        },
-        "rollWithPunch": {
-          "flat": -3
-        },
         "initiative": {
           "flat": 1
         },
         "dodge": {
           "flat": 1
+        },
+        "me": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "3D6"
         },
         "bonusHthDamage": {
           "flat": 2
@@ -509,16 +417,13 @@
       "tableCategory": "Hobbyist",
       "description": "Whether it’s the re- sult of a love of astronomy, bird-watching, or a similar hobby, the Nightbane’s Morphus has a set of magnifying lenses that replace one or more of his eyes. The apparatus may be inset into the skull or protrude up to 2 feet (0.6 m) from the character’s face. These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet. Characters with nightvision can see as if they have a passive nightvision scope. Bonuses: +2 to strike with long-range weapons like rifles or bow and ar- row, +1 to Horror Factor. Penalties: -1 to strike, parry, and dodge in melee combat, and -15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc.",
       "statModifiers": {
-        "hf": {
-          "flat": 1
-        },
         "strike": {
           "flat": -1
         },
-        "parry": {
-          "flat": -1
+        "hf": {
+          "flat": 1
         },
-        "dodge": {
+        "parry": {
           "flat": -1
         }
       },

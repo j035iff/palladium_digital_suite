@@ -1,11 +1,11 @@
 {
   "tableId": "artisan",
-  "generatedAt": "2026-05-27T20:55:11.496Z",
+  "generatedAt": "2026-05-28T02:47:37.093Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 9,
+      "changed": 5,
       "entryCount": 9
     },
     {
@@ -15,5 +15,5 @@
     }
   ],
   "unmatched": [],
-  "totalChanged": 18
+  "totalChanged": 14
 }

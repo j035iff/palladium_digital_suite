@@ -22,7 +22,13 @@
         "strike": {
           "flat": 1
         },
+        "parry": {
+          "flat": 1
+        },
         "dodge": {
+          "flat": 2
+        },
+        "pullPunch": {
           "flat": 2
         },
         "pb": {
@@ -30,6 +36,9 @@
         },
         "sdc": {
           "dice": "4D6"
+        },
+        "hf": {
+          "flat": 3
         }
       },
       "appearanceConstraints": {
@@ -60,6 +69,9 @@
         },
         "sdc": {
           "dice": "4D6"
+        },
+        "hf": {
+          "flat": 2
         }
       }
     },
@@ -107,7 +119,7 @@
           "pageNumber": 74
         }
       ],
-      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of Da- vid, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typi- cally head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to posses- sion, the vampire’s bite and mind control of the vampire. The icon is also capable of repelling and holding the undead, ani- 74 Joe Sifferman (Order #46323384) mated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
+      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of Da- vid, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typi- cally head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to posses- sion, the vampire’s bite of the vampire. The icon is also capable of repelling and holding the undead, ani- 74 Joe Sifferman (Order #46323384) mated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
       "statModifiers": {
         "me": {
           "flat": 2
@@ -139,8 +151,14 @@
         "ma": {
           "flat": 1
         },
+        "me": {
+          "flat": 1
+        },
         "sdc": {
           "dice": "4D6"
+        },
+        "hf": {
+          "flat": 2
         }
       }
     },
@@ -170,7 +188,16 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
       },
-      "naturalAr": 14
+      "naturalAr": 14,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "angelic_living_holy_shield",
@@ -191,10 +218,19 @@
         "ma": {
           "flat": 1
         },
+        "pp": {
+          "flat": 1
+        },
         "strike": {
           "flat": 1
         },
+        "disarm": {
+          "flat": 1
+        },
         "parry": {
+          "flat": 3
+        },
+        "pullPunch": {
           "flat": 3
         },
         "sdc": {
@@ -223,6 +259,15 @@
         },
         "parry": {
           "flat": 3
+        },
+        "disarm": {
+          "flat": 3
+        },
+        "pullPunch": {
+          "flat": 3
+        },
+        "hf": {
+          "flat": 2
         }
       }
     },
@@ -244,6 +289,9 @@
       "statModifiers": {
         "ma": {
           "dice": "1D4"
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -266,6 +314,11 @@
         "sdc": {
           "dice": "1D6x10+30"
         }
+      },
+      "saveModifiers": {
+        "magic": 2,
+        "illusions": 2,
+        "possession": 4
       }
     },
     {
@@ -299,9 +352,26 @@
         "sdc": {
           "dice": "4D6"
         },
+        "hf": {
+          "flat": 1
+        },
         "spd": {
           "percent": -10
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": 5
+          }
+        ]
       }
     }
   ]

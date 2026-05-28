@@ -105,6 +105,9 @@
       ],
       "description": "As a rule, this Morphus makes it so the top of the head is a bulletproof glass enclosure in which circuit boards and microchips are clearly visible (01-50%), or the head, face and neck are covered with computer circuitry, like a circuit board, imbedded in the skin, and the eyes look as if they are made of glass. Bonuses: +2D6 to S.D.C., +1 to Horror Factor, Total Recall (the equivalent of the psionic power of the same name), Mathematics: Basic and Advanced are performed at 90%, +20% to all computer skills and +10% to all other skills 84 Joe Sifferman (Order #46323384) known by the character. Penalties: -1D4 to M.A., P.P. and P.B. attributes, and tends to be a bit cool and aloof.",
       "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
         "ma": {
           "dice": "-1D4"
         },
@@ -160,7 +163,19 @@
         },
         "sdc": {
           "dice": "4D6+4"
+        },
+        "hf": {
+          "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -185,6 +200,9 @@
         "parry": {
           "flat": 1
         },
+        "disarm": {
+          "flat": 1
+        },
         "dodge": {
           "flat": 1
         },
@@ -200,6 +218,15 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -247,9 +274,21 @@
       ],
       "description": "Somewhere within the ‘Bane’s body, either visible or concealed deep inside him, is a gyroscope, granting the Nightbane an incredible sense of balance. Bonuses: The gyroscope imparts an unerring sense of which way is up, down, or sideways even underwater or in the air, +2 to roll with impact, +1 to dodge, +10% to skill with Maintain Balance rolls like Gymnastics and Acrobatics.",
       "statModifiers": {
+        "rollWithPunch": {
+          "flat": 2
+        },
         "dodge": {
           "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -281,7 +320,16 @@
           "percent": -30
         }
       },
-      "naturalAr": 15
+      "naturalAr": 15,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_hidden_compartments",
@@ -303,6 +351,9 @@
           "flat": 1
         },
         "ma": {
+          "flat": -1
+        },
+        "pe": {
           "flat": -1
         },
         "sdc": {
@@ -332,9 +383,17 @@
         "ma": {
           "flat": -2
         },
+        "hp": {
+          "dice": "2D6"
+        },
         "sdc": {
           "dice": "2D4x10"
         }
+      },
+      "saveModifiers": {
+        "poison": 6,
+        "disease": 6,
+        "possession": 4
       }
     },
     {
@@ -512,9 +571,6 @@
       ],
       "description": "The eyes of the character are replaced by two digital monitors or camera-like lenses. Some act like a hospital’s life sign monitors, with a line that jumps at every heart- beat flashing through the monitors, some wave and jump in re- action to the character’s voice or emotions, while others project psychedelic light shows, or simply flash with artificial green or violet light. Bonuses: The eyes raise the character’s Nightvision to 2000 feet (610 m) and +2 to Horror Factor.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
         "hf": {
           "flat": 2
         }
@@ -711,6 +767,15 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -751,6 +816,9 @@
       "description": "One or both of the Nightbane’s hands can metamorphosize, at will, into a hand to hand weap- on such as a knife, a sword, battle axe, trident, sickle, etc. The weapon does normal damage for that particular weapon type, in addition to Supernatural P.S. punch damage, and is at no risk of breaking (see Supernatural Strength Damage). Bonuses: +1 to strike and parry with his weapon limb and +2 to Horror Factor.",
       "statModifiers": {
         "strike": {
+          "flat": 1
+        },
+        "parry": {
           "flat": 1
         },
         "hf": {

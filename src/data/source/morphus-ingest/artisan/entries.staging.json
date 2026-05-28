@@ -19,6 +19,9 @@
         "me": {
           "flat": 2
         },
+        "pe": {
+          "flat": 2
+        },
         "pb": {
           "flat": -2
         },
@@ -47,6 +50,9 @@
       "description": "The Morphus body is covered in tattoos (player’s choice of how many and what they are), or scarification (cuts to create patterns; may be aboriginal or something more modern), and/or piercings of all kinds. The fingers may also be adorned in heavy rings (+1D4 damage to punches). Bonuses: In combat, the tattoos or scar patterns seem to move, which is unnerving and makes oppo- nents -1 to strike and parry, and adds +1 to the Horror Factor of the Nightbane. +1D4x10+10 to S.D.C. Penalties: -10% to Prowl, -50% to Disguise and Impersonate, and is impossible to look inconspicuous unless completely covered, and even then, piercings and tattoos or scarification on the face may make that difficult.",
       "statModifiers": {
         "strike": {
+          "flat": -1
+        },
+        "parry": {
           "flat": -1
         },
         "hf": {
@@ -107,6 +113,9 @@
         "strike": {
           "flat": -1
         },
+        "parry": {
+          "flat": -1
+        },
         "pb": {
           "dice": "1D4"
         }
@@ -118,6 +127,16 @@
             "targetValue": "skill_disguise",
             "modifierPercent": 15,
             "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -5
           }
         ]
       }
@@ -144,9 +163,24 @@
         "ps": {
           "flat": -1
         },
+        "pe": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
         "sdc": {
           "dice": "4D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -168,9 +202,21 @@
         "me": {
           "flat": 1
         },
+        "ma": {
+          "flat": 1
+        },
         "hf": {
           "flat": -1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {

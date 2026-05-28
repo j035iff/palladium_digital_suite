@@ -22,6 +22,27 @@
         "dodge": {
           "flat": -3
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true,
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "impossibleInMorphus": true,
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -43,6 +64,9 @@
         "dodge": {
           "flat": 1
         },
+        "entangle": {
+          "flat": 1
+        },
         "pp": {
           "flat": -1
         },
@@ -55,6 +79,50 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_sing",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -15
+          }
+        ]
       }
     },
     {
@@ -79,9 +147,21 @@
         "dodge": {
           "flat": 2
         },
+        "parry": {
+          "flat": -10
+        },
         "spd": {
           "flat": -3
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -103,9 +183,21 @@
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
         "hf": {
           "flat": -2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -126,7 +218,24 @@
       "statModifiers": {
         "pp": {
           "flat": -2
+        },
+        "me": {
+          "flat": -2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -153,7 +262,13 @@
         },
         "pb": {
           "flat": -2
+        },
+        "me": {
+          "flat": -2
         }
+      },
+      "saveModifiers": {
+        "magic": -1
       }
     },
     {
@@ -181,6 +296,9 @@
         "strike": {
           "flat": 1
         },
+        "parry": {
+          "flat": 1
+        },
         "dodge": {
           "flat": 2
         },
@@ -191,7 +309,51 @@
           "percent": -70
         }
       },
-      "naturalAr": 12
+      "naturalAr": 12,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_running",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -50
+          }
+        ]
+      }
     },
     {
       "id": "clown-jester_jesters_cap_and_costume",
@@ -210,6 +372,9 @@
       "description": "The Morphus of this Nightbane is that of a jester with an odd, multi-pointed cap af- fixed to the head. A bell may be attached to each point of the cap, or it could have some other decorative item like charms, rings, spikes, tiny skulls, bones or fingers. The cap and costume may be multi-colored, bright or ominously dark. Bonuses: +5% to any single Espionage and Rogue skill (pick one from each category). Penalties: -1 to the M.A. and M.E. attributes.",
       "statModifiers": {
         "ma": {
+          "flat": -1
+        },
+        "me": {
           "flat": -1
         }
       }
@@ -236,6 +401,30 @@
         "ma": {
           "dice": "-1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -258,6 +447,9 @@
           "flat": 1
         },
         "parry": {
+          "flat": 2
+        },
+        "pullPunch": {
           "flat": 2
         }
       }

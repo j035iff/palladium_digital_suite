@@ -644,6 +644,13 @@ export type MorphusStatModifiers = {
   ar?: MorphusPolymorphicModifier
 }
 
+export type MorphusProgressionModifiers = {
+  /** Additive change to normal per-level P.P.E gain (e.g. +3/level). */
+  ppePerLevel?: MorphusPolymorphicModifier
+  /** Additive change to normal per-level I.S.P gain. */
+  ispPerLevel?: MorphusPolymorphicModifier
+}
+
 export type MorphusSaveModifiers = {
   magic?: number
   psionics?: number
@@ -657,8 +664,22 @@ export type MorphusSaveModifiers = {
   nightlordMagic?: number
   allSaves?: number
   nauseaVomiting?: number
+  immunities?: readonly MorphusSaveImmunityType[]
   comaDeath?: MorphusPolymorphicModifier
 }
+
+export type MorphusSaveImmunityType =
+  | 'magic'
+  | 'psionics'
+  | 'insanity'
+  | 'poison'
+  | 'gas'
+  | 'horrorFactor'
+  | 'disease'
+  | 'possession'
+  | 'illusions'
+  | 'nightlordMagic'
+  | 'allSaves'
 
 export type MorphusJumpModifiers = {
   standingHeight?: MorphusPolymorphicModifier
@@ -869,6 +890,19 @@ export type MorphusDamageAffinities = Partial<
   Record<MorphusDamageAffinityType, MorphusDamageAffinityMultiplier>
 >
 
+export type MorphusEffectDurationMultiplier = MorphusDamageAffinityMultiplier
+
+export type MorphusMagicEffectDurationProfile = {
+  effectMultiplier?: MorphusEffectDurationMultiplier
+  durationMultiplier?: MorphusEffectDurationMultiplier
+}
+
+export type MorphusMagicInteractionModifiers = {
+  incomingMagic?: MorphusMagicEffectDurationProfile
+  incomingNightlordMagic?: MorphusMagicEffectDurationProfile
+  incomingPsionics?: MorphusMagicEffectDurationProfile
+}
+
 export type MorphusWeaponClassBonuses = {
   melee?: MorphusPolymorphicModifier
   thrown?: MorphusPolymorphicModifier
@@ -1023,6 +1057,7 @@ export type MorphusCharacteristic = {
   sources?: readonly PalladiumSourceRef[]
   description?: string
   statModifiers?: MorphusStatModifiers
+  progressionModifiers?: MorphusProgressionModifiers
   /** Absolute natural A.R. from this trait (not a polymorphic modifier). */
   naturalAr?: number
   saveModifiers?: MorphusSaveModifiers
@@ -1030,6 +1065,7 @@ export type MorphusCharacteristic = {
   sensory?: MorphusSensory
   skillModifiers?: MorphusSkillModifiers
   damageAffinities?: MorphusDamageAffinities
+  magicInteractionModifiers?: MorphusMagicInteractionModifiers
   weaponClassBonuses?: MorphusWeaponClassBonuses
   heightModifier?: MorphusPolymorphicModifier
   weightModifier?: MorphusPolymorphicModifier

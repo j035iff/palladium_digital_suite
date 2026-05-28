@@ -42,6 +42,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
           }
         ]
       },
@@ -50,7 +55,10 @@
           "buoyancy": "sink"
         }
       },
-      "naturalAr": 15
+      "naturalAr": 15,
+      "saveModifiers": {
+        "magic": 1
+      }
     },
     {
       "id": "extraterrestrial_b_movie_alien",
@@ -128,6 +136,12 @@
         "iq": {
           "flat": 1
         },
+        "pp": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 1
+        },
         "sdc": {
           "dice": "1D6x10"
         }
@@ -145,6 +159,9 @@
         "aquaticTraits": {
           "buoyancy": "sink"
         }
+      },
+      "damageAffinities": {
+        "magicEnergy": 2
       }
     },
     {
@@ -161,12 +178,15 @@
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus Nightbane appears to be a normal human under the control of an icky, slimy, alien parasite. The eyes are blank and lifeless or solid black or solid red, speaks in an even, monotone voice even when excited or shouting, and possesses superhuman strength. The alien parasite is a hideous thing (large leech, worm, insect, crustacean, tentacle thingy, or something else repugnant) attached to the base or side of the neck, spinal cord between the shoulder blades, chest, belly, side of the head, or even over part of the face (mouth or eyes), or under the skin, but the skin can be seen moving and undulating on a regular basis. Killing or removing the parasite means killing the Nightbane! Bonuses: +1D6x10+6 S.D.C., +1D6 to P.S., +1 to P.E., +4 to save vs mind control and possession, and +1D4 to Horror Factor. Penalties: -1 to I.Q. and M.A., and reduce speed by 10%.",
+      "description": "The Morphus Nightbane appears to be a normal human under the control of an icky, slimy, alien parasite. The eyes are blank and lifeless or solid black or solid red, speaks in an even, monotone voice even when excited or shouting, and possesses superhuman strength. The alien parasite is a hideous thing (large leech, worm, insect, crustacean, tentacle thingy, or something else repugnant) attached to the base or side of the neck, spinal cord between the shoulder blades, chest, belly, side of the head, or even over part of the face (mouth or eyes), or under the skin, but the skin can be seen moving and undulating on a regular basis. Killing or removing the parasite means killing the Nightbane! Bonuses: +1D6x10+6 S.D.C., +1D6 to P.S., +1 to P.E., +4 to save vs possession, and +1D4 to Horror Factor. Penalties: -1 to I.Q. and M.A., and reduce speed by 10%.",
       "statModifiers": {
         "pe": {
           "flat": 1
         },
         "iq": {
+          "flat": -1
+        },
+        "ma": {
           "flat": -1
         },
         "ps": {
@@ -178,6 +198,9 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "saveModifiers": {
+        "possession": 4
       }
     },
     {
@@ -196,7 +219,13 @@
       ],
       "description": "The Morphus appears to be one of the little gray aliens associated with the supposed Roswell flying saucer crash: Small, thin, pasty gray skin, a frail-looking body with thin arms and legs, no hair and a huge, bulbous head and large, black, almond-shaped eyes, tiny nose, no apparent ears and a slit for a mouth. Bonuses: +1D4 to I.Q. and M.E., +10% to Prowl, +20% to all computer and medical skills, +2 to Horror Factor. Penalties: Reduce size and weight by 20%, -1D4 to P.S. and Spd and -1 to P.E. and P.B.",
       "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
         "pe": {
+          "flat": -1
+        },
+        "pb": {
           "flat": -1
         },
         "iq": {

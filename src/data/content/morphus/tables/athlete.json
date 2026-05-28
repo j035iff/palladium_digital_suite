@@ -11,21 +11,11 @@
       "tableCategory": "Athlete",
       "description": "Built for running, this Nightbane has a lean body with long, powerful limbs. Whether walking, jog- ging, running, or swimming, he or she seems to glide almost ef- fortlessly across the ground or through the water. Of course, this also means that the body is less massive than would otherwise be the case (-20% normal weight), sacrificing strength and damage resistance for speed and endurance. Bonuses: The Morphus is taller than average, add one foot (0.3 m) to normal height. Nor- mal Spd attribute is replaced with 2D4x10+40 (approximately 20.5 to 82 mph or 33-131 kph), and +1 to the P.P. attribute. Even running at maximum speed for hours at a time does NOT fatigue the Nightbane in any way. +1D6 to kick damage. Penalties: -1D6 to the P.S. attribute and reduce starting S.D.C. by 10%. If the Morphus form has an A.R., reduce it by 2 points.",
       "statModifiers": {
-        "spd": {
-          "dice": "2D4x10+40",
-          "isOverride": true
-        },
         "pp": {
           "flat": 1
         },
         "ps": {
           "dice": "-1D6"
-        },
-        "sdc": {
-          "percent": -10
-        },
-        "ar": {
-          "flat": -2
         }
       },
       "heightModifier": {
@@ -65,20 +55,20 @@
         "ps": {
           "flat": 2
         },
-        "pp": {
-          "dice": "1D4"
-        },
         "pe": {
           "flat": 1
         },
         "pb": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "4D6"
-        },
         "hf": {
           "flat": -1
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "saveModifiers": {
@@ -87,22 +77,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "grantUnlearnedValue": 68,
-            "perLevelIncrement": 4
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": 10
-          },
           {
             "targetType": "category",
             "targetValue": "physical",
@@ -128,6 +102,7 @@
       "description": "The Morphus has musculature on par with an Olympic weightlifter or circus strongman, with a thick neck, broad shoulders and chest, and massive arms and legs. Every major muscle in the Nightbane’s body is also toned and well defined. In the absence of obvious deformities, this character can enter and win bodybuilding contests hands-down. Bonuses: +1D6+4 to the P.S. attribute, +2 to P.E., and +1 to P.B., +1D4x10 S.D.C., +1 to Awe/Horror Factor, and the character can lift and carry twice the standard amount for their strength attribute. Pen- alties: -1 to the P.P. attribute, -1D6 to Spd, and -10% on skills like Acrobatics, Climbing, Gymnastics, Prowl and Swimming.",
       "statModifiers": {
         "ps": {
+          "flat": 4,
           "dice": "1D6+4"
         },
         "pe": {
@@ -138,9 +113,6 @@
         },
         "pp": {
           "flat": -1
-        },
-        "spd": {
-          "dice": "-1D6"
         },
         "sdc": {
           "dice": "1D4x10"
@@ -282,16 +254,16 @@
       "id": "athlete_club_stick",
       "name": "Club/Stick",
       "tableCategory": "Athlete",
-      "description": "Several sports use a stick, club, mallet or bat. This Nightbane played or admired such a sport and so his Morphus includes the blunt item of that game be it a hockey stick, golf club, cricket bat, baseball bat, polo mallet, etc. No mat- ter what form it takes, this piece of gear is a blunt weapon that inflicts 1D6+3 damage in addition to the Supernatural P.S. punch damage of the character when used as a weapon. Bonuses: +1 to strike and parry with the club, +2 to pull punch. Penalties: The stick is large and unwieldy to carry, so other two-handed weap- ons cannot be used unless it can be slung over the back or the Nightbane has other appendages.",
+      "description": "Several sports use a stick, club, mallet or bat. This Nightbane played or admired such a sport and so his Morphus includes the blunt item of that game be it a hockey Joe Sifferman (Order #46319524) 29 stick, golf club, cricket bat, baseball bat, polo mallet, etc. No mat- ter what form it takes, this piece of gear is a blunt weapon that inflicts 1D6+3 damage in addition to the Supernatural P.S. punch damage of the character when used as a weapon. Bonuses: +1 to strike and parry with the club, +2 to pull punch. Penalties: The stick is large and unwieldy to carry, so other two-handed weap- ons cannot be used unless it can be slung over the back or the Nightbane has other appendages.",
       "statModifiers": {
-        "pullPunch": {
-          "flat": 2
-        },
         "strike": {
           "flat": 1
         },
         "parry": {
           "flat": 1
+        },
+        "pullPunch": {
+          "flat": 2
         }
       },
       "naturalWeapons": [
@@ -327,59 +299,24 @@
       "tableCategory": "Athlete",
       "description": "The Morphus wears the protective gear common to the Nightbane’s chosen sport(s) like American football, hockey, and so on. This protective gear may appear to be vintage, modern, or even futuristic, and may have stylistic features that fit with the overall Morphus, such as shin guards made of chitin for an insectoid Nightbane. Bonuses: Heavy pads and protectors like those worn by most football or hockey play- ers over the shoulders, chest, elbows, hands, knees and thighs, as well as some sort of helmet or head protection provides an ad- ditional +2D4x10 S.D.C. and +1 to Natural A.R. Penalties: -3 to the Spd attribute and -15% to all Physical skills that require flex- ibility and movement such as Acrobatics, Climbing, Gymnastics, Prowl, Swimming, and in this case skills like Pick Locks, Pick Pockets and Disguise.",
       "statModifiers": {
-        "sdc": {
-          "dice": "2D4x10"
-        },
         "spd": {
           "flat": -3
+        },
+        "sdc": {
+          "dice": "2D4x10"
         }
       },
       "naturalAr": 1,
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_locks",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_pockets",
+            "targetType": "category",
+            "targetValue": "physical",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
             "modifierPercent": -15
           }
         ]
@@ -453,14 +390,11 @@
       "tableCategory": "Athlete",
       "description": "The Nightbane’s Morphus is likely to have the kind of stitching and patterns of the ball used in his sport of choice, incorporated into his body appearance. He also carries a ball, puck, Frisbee, or similar object used to play a particular sport. This ball may look like the genuine item or be styled after the Morphus, but the effects are the same. The projec- tile can be thrown, kicked, or otherwise propelled at tremendous speed to strike up to 300 feet (91.5 m) away and returns to the character after being thrown. Bank-shots are also possible, but -2 to strike, with only the final surface struck taking damage. Anything hit by the speeding ball/projectile takes damage equal to half the Nightbane’s Supernatural P.S. punch damage +1D6. There is also a chance that a victim struck by the ball is knocked off his feet, losing initiative and one melee attack. Against targets with normal strength, there is a 01-25% chance of being knocked flat, and a 01-10% chance against those with Supernatural Strength or larger than 8 feet (2.4 m); +20% to those odds if the target is already off balance. The Nightbane may pass this projectile to another person up to 300 feet (91.5 m) away, but once dropped or thrown, it returns to the Nightbane it belongs to. Bonuses: +2 to strike with the projectile, +2 to catch balls or in- tercept thrown projectiles, and +1 to dodge projectiles. Penalties: -3 to base P.P.E. -20% to skills like Climbing, Swimming, and other physical activities that require the use of both hands. The ball must always be held, meaning that no two-handed weapons can be used unless the Nightbane has multiple limbs, or turns into his Facade.",
       "statModifiers": {
-        "ppe": {
-          "flat": -3
+        "strike": {
+          "flat": 2
         },
         "dodge": {
           "flat": 1
-        },
-        "strike": {
-          "flat": 2
         }
       },
       "weaponClassBonuses": {

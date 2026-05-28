@@ -51,6 +51,10 @@
     "statModifiers": {
       "$ref": "#/$defs/statModifiers"
     },
+    "progressionModifiers": {
+      "$ref": "#/$defs/progressionModifiers",
+      "description": "Persistent per-level growth modifiers applied on top of normal class/race progression."
+    },
     "naturalAr": {
       "type": "integer",
       "minimum": 0,
@@ -70,6 +74,10 @@
     },
     "damageAffinities": {
       "$ref": "#/$defs/damageAffinities"
+    },
+    "magicInteractionModifiers": {
+      "$ref": "#/$defs/magicInteractionModifiers",
+      "description": "How incoming magic/psionic effects and durations are scaled."
     },
     "weaponClassBonuses": {
       "$ref": "#/$defs/weaponClassBonuses"
@@ -712,6 +720,61 @@
         }
       }
     },
+    "progressionModifiers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ppePerLevel": {
+          "$ref": "#/$defs/polymorphicModifier",
+          "description": "Additive modifier applied to normal P.P.E gain each time the character levels (e.g. +3 per level)."
+        },
+        "ispPerLevel": {
+          "$ref": "#/$defs/polymorphicModifier",
+          "description": "Additive modifier applied to normal I.S.P gain each level."
+        }
+      }
+    },
+    "effectDurationMultiplier": {
+      "type": "number",
+      "enum": [
+        0,
+        0.1,
+        0.25,
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "description": "Scalar for incoming effect or duration (0 none, 0.5 half, 1 normal, 2 double)."
+    },
+    "magicEffectDurationProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "effectMultiplier": {
+          "$ref": "#/$defs/effectDurationMultiplier"
+        },
+        "durationMultiplier": {
+          "$ref": "#/$defs/effectDurationMultiplier"
+        }
+      }
+    },
+    "magicInteractionModifiers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "incomingMagic": {
+          "$ref": "#/$defs/magicEffectDurationProfile"
+        },
+        "incomingNightlordMagic": {
+          "$ref": "#/$defs/magicEffectDurationProfile"
+        },
+        "incomingPsionics": {
+          "$ref": "#/$defs/magicEffectDurationProfile"
+        }
+      }
+    },
     "saveModifiers": {
       "type": "object",
       "additionalProperties": false,
@@ -752,6 +815,27 @@
         "nauseaVomiting": {
           "type": "integer",
           "description": "Save vs nausea/vomiting from foul odors and airborne toxins."
+        },
+        "immunities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "magic",
+              "psionics",
+              "insanity",
+              "poison",
+              "gas",
+              "horrorFactor",
+              "disease",
+              "possession",
+              "illusions",
+              "nightlordMagic",
+              "allSaves"
+            ]
+          },
+          "description": "Absolute save immunities for this trait (e.g. impervious to possession)."
         },
         "comaDeath": {
           "$ref": "#/$defs/polymorphicModifier"

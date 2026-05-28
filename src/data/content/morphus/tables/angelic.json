@@ -56,16 +56,10 @@
       "id": "angelic_angelic_wings",
       "name": "Angelic Wings",
       "tableCategory": "Angelic",
-      "description": "The ‘Bane has a beautiful pair of 6-10 foot (1.8-3 m) feathered wings sprouting from his or her back. The feathers can be any color, solid or a mixture of 2-3 colors, and even metallic colors (exact colors are left up to the player), and each wing has 1D6x10+50 S.D.C., regenerate at the same rate as the Nightbane (will grow back in one day if destroyed), can hover, glide (silent) and provide a flight speed of 1D4x10+26 (25-45 mph/40-72 km). Bonuses: +4D6 to S.D.C., +1 to P.P., +1D4 to P.B., +1 to strike and parry, +2 to dodge and pull punch while in flight, and +3 to Awe/Horror Factor. Penalty: -20% to Prowl on foot, cannot use disguise or perform undercover work in angel form (unless it is as another angel), and requires custom clothing to accommodate the wings.",
+      "description": "The ‘Bane has a beautiful pair of 6-10 foot (1.8-3 m) feathered wings sprouting from his or her back. The feathers can be any color, solid or a mixture of 2-3 colors, and even metallic colors (exact colors are left up to the player), and each wing has 1D6x10+50 S.D.C., regenerate at the same rate as the Nightbane (will grow back in one day if de- stroyed), can hover, glide (silent) and provide a flight speed of 1D4x10+26 (25-45 mph/40-72 km). Bonuses: +4D6 to S.D.C., +1 to P.P., +1D4 to P.B., +1 to strike and parry, +2 to dodge and pull punch while in flight, and +3 to Awe/Horror Factor. Pen- alty: -20% to Prowl on foot, cannot use disguise or perform un- 73 Joe Sifferman (Order #46323384) dercover work in angel form (unless it is as another angel), and requires custom clothing to accommodate the wings.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
         "pp": {
           "flat": 1
-        },
-        "pb": {
-          "dice": "1D4"
         },
         "strike": {
           "flat": 1
@@ -78,6 +72,12 @@
         },
         "pullPunch": {
           "flat": 2
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
         },
         "hf": {
           "flat": 3
@@ -178,39 +178,16 @@
       "tableCategory": "Angelic",
       "description": "The Morphus appears as a suit of impressive, polished armor. The armor may be highly ornate with etched graphics or designs, spikes or spines, to simplistic or without decoration at all. A helmet is optional and can be re- moved, but the rest of the armor cannot; it is part of the Nightbane. Bonuses: Regardless of its appearance, +4D6x10 S.D.C., a Natural A.R. of 14, +1 to P.S., and +1D4 to Awe/Hor- ror Factor. Penalties: -10% on all skills involving flexibility of movement (Acrobatics, Climbing, Prowl, Swimming, etc.), dou- ble the character’s weight, -30% to Disguise skill, and cannot be easily concealed without something bulky like a cloak, poncho, or oversized overcoat or trench coat, which might be nearly as conspicuous.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6x10"
-        },
         "ps": {
           "flat": 1
         },
-        "hf": {
-          "dice": "1D4"
+        "sdc": {
+          "dice": "4D6x10"
         }
       },
       "naturalAr": 14,
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swim",
-            "modifierPercent": -10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
@@ -245,12 +222,6 @@
       "tableCategory": "Angelic",
       "description": "In his Morphus the ‘Bane possesses a gleaming weapon of exquisite craftsmanship. The type of weapon and its decoration vary with the tastes of the ‘Bane, but is always an ancient weapon (01-25% short sword, 26-50% large sword, 51-70% battle axe, 71-85% mace or other blunt weapon, 86-00% pole arm, scythe, pitchfork or other large weapon). The Nightbane also has a scabbard, sling or case for the weapon so that he doesn’t need to hold it in his hands all the time. This weapon may be lent to others, dropped, or stolen, but it will disappear when the ‘Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The weapon is a living part of the character. Bonuses: +2 to Awe/Horror Factor, the weapon does 4D6 damage regardless of type, +14 damage to Nightlords, their minions, demons, undead, and other supernatural creatures; half damage to crea- tures of magic, and +1 on initiative, +2 to strike, +3 to parry, disarm and pull punch with the Holy Weapon (plus any applica- ble attribute or skill bonuses). Penalties: Prefers to use this weapon above all others and feels naked without it, and the weapon is likely difficult to conceal or hide. The Holy Weapon has 40 S.D.C. +10 per level of experience, but the ‘Bane feels any attacks leveled against the weapon, and he takes damage or feels the effect after the weapon’s S.D.C. is reduced to one point or less, as it is a living part of him; damage is inflicted to the weapon only when it its specifically targeted. When the S.D.C. of the Holy Sword and his own S.D.C. are both reduced to zero, the weapon vanishes and cannot be made to reappear until the character recovers all of his own S.D.C. Most outsiders do not know about this vulnerability.",
       "statModifiers": {
-        "hf": {
-          "flat": 2
-        },
-        "initiative": {
-          "flat": 1
-        },
         "strike": {
           "flat": 2
         },
@@ -262,6 +233,9 @@
         },
         "pullPunch": {
           "flat": 3
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "naturalWeapons": [
@@ -317,9 +291,6 @@
         "pp": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "5D6"
-        },
         "strike": {
           "flat": 1
         },
@@ -331,6 +302,9 @@
         },
         "pullPunch": {
           "flat": 3
+        },
+        "sdc": {
+          "dice": "5D6"
         }
       },
       "limbDurability": [
@@ -362,9 +336,6 @@
       "tableCategory": "Angelic",
       "description": "In his Morphus, the Nightbane is tall, has broad shoulders, a square jaw, handsome face (differ- ent than his human Facade), and is heavily muscled. Bonuses: Increase height by one foot (0.3 m) and weight by 50%. +6D6 to S.D.C., +4 to P.S., +1 to P.E., +1D4 to P.B. Penalty: Reduce Horror Factor -1D4.",
       "statModifiers": {
-        "sdc": {
-          "dice": "6D6"
-        },
         "ps": {
           "flat": 4
         },
@@ -374,8 +345,8 @@
         "pb": {
           "dice": "1D4"
         },
-        "hf": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "6D6"
         }
       },
       "heightModifier": {
@@ -409,15 +380,6 @@
         },
         "sdc": {
           "dice": "4D6"
-        },
-        "apm": {
-          "flat": 1
-        },
-        "initiative": {
-          "flat": 2
-        },
-        "pullPunch": {
-          "flat": 2
         },
         "hf": {
           "flat": 2
@@ -465,8 +427,7 @@
       "saveModifiers": {
         "magic": 2,
         "illusions": 2,
-        "possession": 4,
-        "allSaves": 1
+        "possession": 4
       },
       "customOneOffs": [
         "Natural A.R. increased by 1D4 (maximum A.R. 19).",
@@ -490,12 +451,6 @@
       "tableCategory": "Angelic",
       "description": "This ‘Bane moves with the confi- dence, sense of importance and grace of royalty; fluid and delib- erate, with shoulders square and head held high. Bonuses: +4D6 to S.D.C., +1D4 to M.A., +1 to M.E., +1 to P.P., +1 to P.B., +1 to Awe/Horror Factor, +5% to Dance and all Physical skills (as applicable). Penalties: Reduce Spd by 10% and -10% on Dis- guise and Undercover skills.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
-        "ma": {
-          "dice": "1D4"
-        },
         "me": {
           "flat": 1
         },
@@ -504,6 +459,12 @@
         },
         "pb": {
           "flat": 1
+        },
+        "ma": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
         },
         "hf": {
           "flat": 1
@@ -521,18 +482,8 @@
           },
           {
             "targetType": "category",
-            "targetValue": "Physical",
+            "targetValue": "physical",
             "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -10
           }
         ]
       },
@@ -551,16 +502,16 @@
       "id": "angelic_icon_of_the_faith",
       "name": "Icon of the Faith",
       "tableCategory": "Angelic",
-      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of David, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typically head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to possession, the vampire’s bite of the vampire. The icon is also capable of repelling and holding the undead, animated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
+      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of Da- vid, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typi- cally head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to posses- sion, the vampire’s bite of the vampire. The icon is also capable of repelling and holding the undead, ani- 74 Joe Sifferman (Order #46323384) mated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
         "me": {
           "flat": 2
         },
         "ma": {
           "flat": 1
+        },
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "saveModifiers": {

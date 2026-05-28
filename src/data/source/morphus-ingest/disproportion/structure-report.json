@@ -1,14 +1,19 @@
 {
   "tableId": "disproportion",
-  "generatedAt": "2026-05-27T17:13:43.928Z",
-  "fillOnly": true,
+  "generatedAt": "2026-05-28T02:47:42.672Z",
+  "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 1,
-      "entryCount": 39
+      "changed": 24,
+      "entryCount": 34
+    },
+    {
+      "path": "src/data/content/morphus/tables/disproportion.json",
+      "changed": 0,
+      "entryCount": 0
     }
   ],
   "unmatched": [],
-  "totalChanged": 1
+  "totalChanged": 24
 }

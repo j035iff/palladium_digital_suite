@@ -1,11 +1,11 @@
 {
   "tableId": "substance_abuse",
-  "generatedAt": "2026-05-27T22:27:19.275Z",
+  "generatedAt": "2026-05-28T02:47:59.315Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 9,
+      "changed": 8,
       "entryCount": 9
     },
     {
@@ -15,5 +15,5 @@
     }
   ],
   "unmatched": [],
-  "totalChanged": 18
+  "totalChanged": 17
 }

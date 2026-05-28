@@ -18,6 +18,9 @@
       "statModifiers": {
         "strike": {
           "flat": 3
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -43,6 +46,12 @@
         "pe": {
           "flat": -1
         },
+        "pb": {
+          "flat": -1
+        },
+        "hf": {
+          "flat": 1
+        },
         "bonusHthDamage": {
           "flat": 2
         }
@@ -62,7 +71,7 @@
           "pageNumber": 4
         }
       ],
-      "description": "A series of nodes or small, electronic patches are built into the Morphus or incorporated into some kind of harness or full-body suit. This system projects a form fitting energy field that defends against a variety of attacks. The force field protects the Nightbane from poison gases and fumes, as well as kinetic and energy attacks such as punches, explosions, bullets, energy blast and even magically created energy like a fire ball or lightning bolt. It does NOT protect against Mesmerism, illusions, mind control and possession. The force field provides an additional 1D6x10+200 S.D.C. Any damage directed at the Nightbane is subtracted from the force field first. As long as the force field has S.D.C., it regenerates from damage and restores S.D.C. at the same rate as the Nightbane normally heals. If the force field is reduced to zero S.D.C., it is down and unavailable for 6 hours. When it comes back online it is at full power. Note: To activate Talents or tocast spells this force field must be dropped while the P.P.E. is expended. Raising and lowering the shield is so fast it does not require using a melee action, but does leave the Nightbane open to attack for 2D4 seconds. Bonuses: +1D6 to the ‘Bane’s Hit Points. Damage is always subtracted from this force field before the character’s personal S.D.C. or Hit Points can be affected. Immune to gases, poison, and diseases while the force field is up. Penalties: -2D6+3 from the permanent P.P.E. base, and a Nightbane with this feature can never develop Talents such as Shadow Shield or Pipe Bomb that create a magical protective field.",
+      "description": "A series of nodes or small, electronic patches are built into the Morphus or incorporated into some kind of harness or full-body suit. This system projects a form fitting energy field that defends against a variety of attacks. The force field protects the Nightbane from poison gases and fumes, as well as kinetic and energy attacks such as punches, explosions, bullets, energy blast and even magically created energy like a fire ball or lightning bolt. It does NOT protect against Mesmerism, illusions, possession. The force field provides an additional 1D6x10+200 S.D.C. Any damage directed at the Nightbane is subtracted from the force field first. As long as the force field has S.D.C., it regenerates from damage and restores S.D.C. at the same rate as the Nightbane normally heals. If the force field is reduced to zero S.D.C., it is down and unavailable for 6 hours. When it comes back online it is at full power. Note: To activate Talents or tocast spells this force field must be dropped while the P.P.E. is expended. Raising and lowering the shield is so fast it does not require using a melee action, but does leave the Nightbane open to attack for 2D4 seconds. Bonuses: +1D6 to the ‘Bane’s Hit Points. Damage is always subtracted from this force field before the character’s personal S.D.C. or Hit Points can be affected. Immune to gases, poison, and diseases while the force field is up. Penalties: -2D6+3 from the permanent P.P.E. base, and a Nightbane with this feature can never develop Talents such as Shadow Shield or Pipe Bomb that create a magical protective field.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10+200"
@@ -85,7 +94,13 @@
       ],
       "description": "This is a full suit of advanced, heavy body armor that covers the Morphus from head to toe. It is an environmental suit and is much heavier and bulkier than the light armor for greater protection in combat. It may have a high-tech mechanical look or may have an organic, resin or genetically engineered appearance. As a heavy armor, it is an augmentation system that slightly boosts the Nightbane’s strength. Bonuses: +1D4 to the P.S. attribute, +2D6x10+120 to S.D.C. (the armor), increase the Nightbane’s Natural A.R. to 14, +2 to roll with punch/fall/impact, kinetic attacks like punches and kicks do half damage, +1 to Awe/Horror Factor, and the environmentally sealed armor means the ‘Bane does not need air to breathe (the armored suit provides it) and he is immune to airborne irritants, toxins, and poisonous gases. Penalties: -2 to Perception Rolls, -2 to the P.E. and Spd attributes, -3 to save vs magic of any kind, -20% to skills that require a delicate touch or precision (like most repairs, Art, Pick Locks, Pick Pockets, etc.), and -30% to Physical skills like Acrobatics, Climbing, Prowl and Swimming due to physical encumbrance.",
       "statModifiers": {
+        "perception": {
+          "flat": -2
+        },
         "pe": {
+          "flat": -2
+        },
+        "spd": {
           "flat": -2
         },
         "ps": {
@@ -93,7 +108,30 @@
         },
         "sdc": {
           "dice": "2D6x10+120"
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "damageAffinities": {
+        "kinetic": 0.5
+      },
+      "saveModifiers": {
+        "magic": -3
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -115,6 +153,9 @@
         "perception": {
           "flat": 1
         }
+      },
+      "saveModifiers": {
+        "illusions": 2
       }
     },
     {
@@ -141,7 +182,27 @@
         },
         "sdc": {
           "dice": "2D4x10+40"
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "saveModifiers": {
+        "magic": -1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -168,7 +229,19 @@
         },
         "dodge": {
           "flat": 1
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_intelligence",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -189,6 +262,15 @@
       "statModifiers": {
         "strike": {
           "flat": -6
+        },
+        "parry": {
+          "flat": -6
+        },
+        "disarm": {
+          "flat": -6
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -216,6 +298,9 @@
         },
         "pb": {
           "flat": -1
+        },
+        "hf": {
+          "flat": 1
         }
       }
     },
@@ -236,6 +321,9 @@
       "description": "This feature usually takes the shape of a futuristic earpiece, mask, or cell phone-like mini-computer, and sometimes what looks to be a cybernetic implant in the ear, head, or neck. It allows the Nightbane to understand and speak ALL languages with 98% fluency. Even alien languages never heard on Earth will be comprehended as long as there is no additional non-lingual component such as physical gestures or color-changing skin or lights as part of the language. In addition, this Nightbane is likely to find different cultures, people and societies very interesting. Bonuses: Ability to understand and speak all languages, +1 to I.Q. and M.A. attributes, +5% bonus to any Communications and Lore skills, and +10 Anthropology and Archeology skills (when applicable). Penalties: -1 to the P.B. attribute and -1D6 from permanent P.P.E. base.",
       "statModifiers": {
         "iq": {
+          "flat": 1
+        },
+        "ma": {
           "flat": 1
         },
         "pb": {

@@ -1,19 +1,19 @@
 {
   "tableId": "modern_soldier",
-  "generatedAt": "2026-05-27T21:45:37.670Z",
+  "generatedAt": "2026-05-28T02:47:49.607Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 10,
+      "changed": 7,
       "entryCount": 10
     },
     {
       "path": "src/data/content/morphus/tables/modern_soldier.json",
-      "changed": 10,
-      "entryCount": 10
+      "changed": 9,
+      "entryCount": 9
     }
   ],
   "unmatched": [],
-  "totalChanged": 20
+  "totalChanged": 16
 }

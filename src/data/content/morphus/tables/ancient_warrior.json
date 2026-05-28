@@ -11,21 +11,6 @@
       "tableCategory": "Ancient Warrior",
       "description": "The backbone of al- most any ancient military force was its infantry. While not as glo- rified as warriors such as knights or archers, these steadfast and brave souls were often required to march for hundreds of miles and engage enemies in brutal melee combat. On more than one occasion, “infantry” included simple peasants using their farming implements or scavenged weaponry. Nightbane warriors are dressed in simple clothing, perhaps even as little as a loincloth, that may or may not match that of an ancient society. They may also have other small distinguishing features such as the piercings of a Zulu warrior or face paint of a Viking or Native American. Armor and helmet or uniform/iconic imagery may be Babylonian, Egyptian, Greek, Roman, Norman, French Musketeer, Samurai, American Civil War, and countless others. A single two-handed melee weapon or pair of one-hand- ed weapons (see the Nightbane® Main Book, pages 204-209 for some options) rounds out the warrior. Note that one-handed weapons may also include shields, and almost every infantry sol- dier throughout time had a helmet or headdress of some kind that protected the head and identified the fighting force. The helmet may be something worn or horns or bone in the shape of the hel- met for the infantry of the appropriate era and country. Damage inflicted by each ancient weapon is the same as its mundane equivalent though it can never be broken and he blade never dulls. Of course, it also cannot be separated from the Night- bane which means it either stays in the hand (cannot be disarmed) or somehow secured to the character. Bonuses: +1D4 to the P.S. attribute, +1D4 to P.E., and +1D6 to Spd. +1D6x10 S.D.C. +1 to strike and parry with a melee weapon. +1 to Awe/Horror Factor. Penalties: -1 to the M.E. attribute, -1 to M.A., and -2 to P.B.",
       "statModifiers": {
-        "ps": {
-          "dice": "1D4"
-        },
-        "pe": {
-          "dice": "1D4"
-        },
-        "spd": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "1D6x10"
-        },
-        "hf": {
-          "flat": 1
-        },
         "strike": {
           "flat": 1
         },
@@ -40,6 +25,18 @@
         },
         "pb": {
           "flat": -2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 1
         }
       },
       "naturalWeapons": [
@@ -91,17 +88,14 @@
         "perception": {
           "flat": 1
         },
-        "apm": {
-          "flat": 1
+        "strike": {
+          "flat": 2
         },
         "pe": {
           "flat": -1
         },
         "sdc": {
           "dice": "-1D6"
-        },
-        "strike": {
-          "flat": 2
         }
       },
       "naturalWeapons": [
@@ -143,23 +137,23 @@
         "ps": {
           "flat": 1
         },
+        "strike": {
+          "flat": 1
+        },
         "pp": {
           "dice": "1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
         },
         "sdc": {
           "dice": "4D6"
         },
-        "perception": {
-          "flat": 1
-        },
         "hf": {
           "flat": 1
         },
-        "strike": {
+        "perception": {
           "flat": 1
-        },
-        "ma": {
-          "dice": "-1D4"
         }
       },
       "skillModifiers": {
@@ -210,19 +204,28 @@
       "id": "ancient_warrior_cavalry",
       "name": "Cavalry",
       "tableCategory": "Ancient Warrior",
-      "description": "Cavalry soldiers are mounted warriors trained to fight while astride powerful steeds and used to punch holes in enemy lines or flank around them. The cavalry were the battle-tanks of their day. Superior height and momentum gave them a decided advantage against unmounted opponents, and speed allowed cavalry to adapt quickly to changing battlefield conditions and harry enemy forces with hit-and-run tactics. Dress can vary widely among those Nightbane with this feature. From richly colored robes to simple animal skins or furs, the appearance can reflect real warriors such as the Cossacks, Samurai or Sioux horsemen, to imaginary or fictional types. Whatever the garb, the thing that distinguishes these Nightbane is that they always appear in Morphus with a horse, or may be Centaur-like themselves, with the lower body of a horse. The horse can be of any color or breed, and may look absolutely ordinary, beautiful, emaciated, monstrous in some way, partially armored or demonic, but it is always a horse. While the mount may look like a separate creature, it is actually a part of the Nightbane and fully under his or her complete control. A large weapon meant for mounted combat, such as a lance (1D8 damage) or flail (2D6 damage), or long, curved cavalry sword (2D6 damage) rounds out the appearance. Though the “rider” can dismount, the two must remain in physical contact, even if it is leading the horse portion by the reins. The only exception is when one or the other is destroyed. If this happens, restoring the destroyed half requires transforming to Facade and back to Morphus which splits the remaining Hit Points/S.D.C. between the two. Bonuses: Humanoid: +1D4 to the P.S. and +1D6 to Spd attributes; +2D6x10 S.D.C. and +6D6 Hit Points. Horse: +2D6 to P.S., +2 to P.E., +1D4 to P.B. and 1D6x10+20 to Spd; the horse can also pull 10 times the normal carrying weight and jump 10 feet (3 m) high and 20 feet (6.1 m) lengthwise. Mount- ed Combat Bonuses (Nightbane is on his horse): +2 attacks per melee, +1 on initiative, +2 to parry and dodge, and +6 to dam- age. Penalties: The “mount/horse” has half of the Nightbane’s S.D.C. and Hit Points while the rider has the other half, mak- ing the two halves easier to destroy when targeted separately. Each portion heals 5 Hit Points/S.D.C. per melee round, and both must be destroyed to kill the Nightbane. Note: When dis- mounted the Nightbane has half the normal number of attacks and combat bonuses.",
+      "description": "Cavalry soldiers are mounted warriors trained to fight while astride powerful steeds and used to punch holes in enemy lines or flank around them. The cavalry were the battle-tanks of their day. Superior height and momentum gave them a decided advantage against unmounted opponents, and speed allowed cavalry to adapt quickly to changing battlefield conditions and harry enemy forces with hit-and-run tactics. Dress can vary widely among those Nightbane with this feature. From richly colored robes to simple animal skins or furs, the appear- ance can reflect real warriors such as the Cossacks, Samurai or Sioux horsemen, to imaginary or fictional types. Whatever the garb, the thing that distinguishes these Nightbane is that they al- ways appear in Morphus with a horse, or may be Centaur-like themselves, with the lower body of a horse. The horse can be of any color or breed, and may look abso- lutely ordinary, beautiful, emaciated, monstrous in some way, partially armored or demonic, but it is always a horse. While Joe Sifferman (Order #46319524) 20 the mount may look like a separate creature, it is actually a part of the Nightbane and fully under his or her complete control. A large weapon meant for mounted combat, such as a lance (1D8 damage) or flail (2D6 damage), or long, curved cavalry sword (2D6 damage) rounds out the appearance. Though the “rider” can dismount, the two must remain in physical contact, even if it is leading the horse portion by the reins. The only exception is when one or the other is destroyed. If this happens, restoring the destroyed half requires transforming to Facade and back to Morphus which splits the remaining Hit Points/S.D.C. between the two. Bonuses: Humanoid: +1D4 to the P.S. and +1D6 to Spd attributes; +2D6x10 S.D.C. and +6D6 Hit Points. Horse: +2D6 to P.S., +2 to P.E., +1D4 to P.B. and 1D6x10+20 to Spd; the horse can also pull 10 times the normal carrying weight and jump 10 feet (3 m) high and 20 feet (6.1 m) lengthwise. Mount- ed Combat Bonuses (Nightbane is on his horse): +2 attacks per melee, +1 on initiative, +2 to parry and dodge, and +6 to dam- age. Penalties: The “mount/horse” has half of the Nightbane’s S.D.C. and Hit Points while the rider has the other half, mak- ing the two halves easier to destroy when targeted separately. Each portion heals 5 Hit Points/S.D.C. per melee round, and both must be destroyed to kill the Nightbane. Note: When dis- mounted the Nightbane has half the normal number of attacks and combat bonuses.",
       "statModifiers": {
-        "ps": {
-          "dice": "1D4"
+        "pe": {
+          "flat": 2
         },
         "spd": {
-          "dice": "1D6"
+          "flat": 20
+        },
+        "parry": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "2D6"
+        },
+        "pb": {
+          "dice": "1D4"
         },
         "sdc": {
           "dice": "2D6x10"
-        },
-        "hp": {
-          "dice": "6D6"
         }
       },
       "companionBlueprint": {
@@ -326,23 +329,11 @@
         "ma": {
           "flat": 2
         },
-        "ps": {
-          "dice": "1D4"
-        },
         "pp": {
           "flat": 2
         },
         "pe": {
           "flat": 2
-        },
-        "pb": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "1D4x10"
-        },
-        "hf": {
-          "flat": 1
         },
         "strike": {
           "flat": 2
@@ -352,6 +343,15 @@
         },
         "disarm": {
           "flat": 1
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "1D4x10"
         }
       },
       "naturalAr": 9,
@@ -404,42 +404,24 @@
       "tableCategory": "Ancient Warrior",
       "description": "The Nightbane appears to be wear- ing some kind of light armor such as studded leather armor or a half-suit of chain mail and a helmet. This armor was favored not just because it was much cheaper to produce and maintain. Light armor was also much easier than heavier types to wear and move in while still offering a measure of protection against melee and missile weapons. The type and look of the armor is left up to the player and does not affect the bonuses gained. This armor cannot be removed. It is a part of the character. Bonuses: Increase the character’s base Natural A.R. to 11 and +1D4x10+40 to S.D.C. Penalties: -1 to the P.E. attribute, -10% to the final Spd attribute, and -10% to the performance of Physical skills such as Swim- ming, Prowl, Climbing and Acrobatics.",
       "statModifiers": {
-        "sdc": {
-          "dice": "1D4x10+40"
-        },
         "pe": {
           "flat": -1
         },
-        "spd": {
-          "percent": -10
+        "sdc": {
+          "dice": "1D4x10+40"
         }
       },
       "naturalAr": 11,
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetType": "category",
+            "targetValue": "physical",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
             "modifierPercent": -10
           }
         ]
@@ -464,45 +446,27 @@
       "tableCategory": "Ancient Warrior",
       "description": "From the plate mail of Eastern Eu- rope to the lacquered armor of Japanese samurai, a number of ancient cultures sought to protect their warriors from harm as best they could. A Nightbane with the Heavy Armor feature is clad in some kind of heavy armor. Appearance and styling of the armor is up to the player, but it looks like an ancient suit of armor rather than anything modern. The armor is full body, including some sort of helmet that may or may not cover the face. It is a part of the Morphus and cannot be removed like normal armor. Bonus- es: Increase the base Natural A.R. to 13. +1D6x10+100 to S.D.C. Penalties: -2 to P.P. and P.E. attributes, -20% to the final Spd attribute, and -20% to the performance of Physical skills such as Swimming, Prowl, Climbing and Acrobatics.",
       "statModifiers": {
-        "sdc": {
-          "dice": "1D6x10+100"
-        },
         "pp": {
           "flat": -2
         },
         "pe": {
           "flat": -2
         },
-        "spd": {
-          "percent": -20
+        "sdc": {
+          "dice": "1D6x10+100"
         }
       },
       "naturalAr": 13,
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetType": "category",
+            "targetValue": "physical",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_acrobatics",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
             "modifierPercent": -20
           }
         ]
@@ -531,6 +495,7 @@
           "flat": 1
         },
         "ma": {
+          "flat": 1,
           "dice": "1D4+1"
         },
         "ps": {
@@ -539,25 +504,19 @@
         "pb": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "4D6+6"
-        },
-        "hf": {
-          "flat": 1
-        },
-        "spd": {
-          "dice": "-1D4"
-        },
-        "apm": {
-          "flat": -1
-        },
-        "dodge": {
-          "flat": -1
-        },
         "parry": {
           "flat": 1
         },
         "disarm": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "4D6+6"
+        },
+        "hf": {
           "flat": 1
         }
       },

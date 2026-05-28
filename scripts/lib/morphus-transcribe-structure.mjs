@@ -20,6 +20,8 @@ import {
 const TRAIT_HEADER = /(\d{2})-(\d{2})%\s+(.{1,120}?)[!:.]\s+/g
 
 const STAT_KEY_MAP = {
+  'P.P.E.': 'ppe',
+  'Hit Points': 'hp',
   'P.S.': 'ps',
   'P.P.': 'pp',
   'P.E.': 'pe',
@@ -62,21 +64,26 @@ export function loadSkillNameIndex() {
 function normalizeSkillName(s) {
   return String(s)
     .toLowerCase()
+    .replace(/([a-z])-\s+([a-z])/g, '$1$2')
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim()
 }
 
 export function splitTraitBlocks(tableText) {
-  const headers = [...tableText.matchAll(TRAIT_HEADER)]
+  const cutoffRe =
+    /^(?:Talent Manifestations|New Common Talents|Appendix(?:\s+Talents)?|Elite Talents)\b/m
+  const cutoff = tableText.search(cutoffRe)
+  const boundedText = cutoff >= 0 ? tableText.slice(0, cutoff) : tableText
+  const headers = [...boundedText.matchAll(TRAIT_HEADER)]
   if (!headers.length) return []
   const blocks = []
   for (let i = 0; i < headers.length; i++) {
     const m = headers[i]
     const start = m.index
-    const end = i + 1 < headers.length ? headers[i + 1].index : tableText.length
+    const end = i + 1 < headers.length ? headers[i + 1].index : boundedText.length
     const name = m[3].trim().replace(/[!.:]+\s*$/, '')
-    const body = tableText.slice(start, end)
+    const body = boundedText.slice(start, end)
     blocks.push({
       percent: `${m[1]}-${m[2]}%`,
       name,
@@ -125,16 +132,51 @@ function addStat(out, key, mod) {
 }
 
 function parseStatModifiers(body, out) {
+  const statTokenRe =
+    /(P\.P\.E\.|Hit Points|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.|Spd|Horror Factor|Perception Rolls|initiative|strike|parry|dodge|entangle|disarm|pull punch|roll with impact)/gi
+  const groupedFlatRe =
+    /([+-])(\d+)\s+to\s+(?:the\s+)?((?:(?:P\.P\.E\.|Hit Points|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.|Spd|Horror Factor|Perception Rolls|initiative|strike|parry|dodge|entangle|disarm|pull punch|roll with impact)(?:\s*(?:,|and)\s*)?)+)/gi
+  for (const m of body.matchAll(groupedFlatRe)) {
+    const contextStart = Math.max(0, (m.index ?? 0) - 180)
+    const context = body.slice(contextStart, m.index ?? 0)
+    if (
+      /(?:failed|successful)\s+(?:save|roll)\s+means|victim|opponent|target|anybody within|save vs/i.test(
+        context,
+      )
+    ) {
+      continue
+    }
+    const sign = m[1] === '-' ? -1 : 1
+    const delta = sign * Number(m[2])
+    for (const tokenMatch of m[3].matchAll(statTokenRe)) {
+      const key = STAT_KEY_MAP[tokenMatch[1]] ?? null
+      if (key) addStat(out, key, { flat: delta })
+    }
+  }
+  const horrorFactorRe = /([+-])(\d+)\s+(?:Awe\/)?Horror Factor\b/gi
+  for (const m of body.matchAll(horrorFactorRe)) {
+    addStat(out, 'hf', { flat: Number(m[2]) * (m[1] === '-' ? -1 : 1) })
+  }
+
   const flatRe =
-    /([+-])(\d+)\s+to\s+(?:the\s+)?(P\.S\.|P\.P\.|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.|Spd|Horror Factor|Perception Rolls|initiative|strike|parry|dodge|entangle|disarm|pull punch|roll with impact)/gi
+    /([+-])(\d+)\s+to\s+(?:the\s+)?(P\.P\.E\.|Hit Points|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.|Spd|Horror Factor|Perception Rolls|initiative|strike|parry|dodge|entangle|disarm|pull punch|roll with impact)/gi
   for (const m of body.matchAll(flatRe)) {
+    const contextStart = Math.max(0, (m.index ?? 0) - 180)
+    const context = body.slice(contextStart, m.index ?? 0)
+    if (
+      /(?:failed|successful)\s+(?:save|roll)\s+means|victim|opponent|target|anybody within|save vs/i.test(
+        context,
+      )
+    ) {
+      continue
+    }
     const sign = m[1] === '-' ? -1 : 1
     const key = STAT_KEY_MAP[m[3]] ?? null
     if (key) addStat(out, key, { flat: sign * Number(m[2]) })
   }
 
   const diceAttrRe =
-    /([+-])(\d+D\d+(?:x\d+)?(?:\+\d+)?)\s+to\s+(?:the\s+)?(P\.S\.|P\.P\.|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.)/gi
+    /([+-])(\d+D\d+(?:x\d+)?(?:\+\d+)?)\s+to\s+(?:the\s+)?(P\.P\.E\.|Hit Points|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.)/gi
   for (const m of body.matchAll(diceAttrRe)) {
     const key = STAT_KEY_MAP[m[3]]
     if (key) addStat(out, key, { dice: `${m[1] === '-' ? '-' : ''}${m[2].replace(/x/gi, 'x')}` })
@@ -143,6 +185,9 @@ function parseStatModifiers(body, out) {
   const sdcRe =
     /([+-])?(\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+D\d+)\s+(?:to\s+)?(?:the\s+)?S\.D\.C\./gi
   for (const m of body.matchAll(sdcRe)) {
+    const lead = body.slice(Math.max(0, (m.index ?? 0) - 40), m.index ?? 0)
+    // Avoid capturing limb S.D.C. statements like "each wing has 1D6x10+11 S.D.C."
+    if (/wing has|each wing has|limb has|has \d+D\d+(?:x\d+)?(?:\+\d+)?\s*$/i.test(lead)) continue
     const sign = m[1] === '-' ? '-' : ''
     addStat(out, 'sdc', { dice: `${sign}${m[2].replace(/x/gi, 'x')}` })
   }
@@ -154,6 +199,15 @@ function parseStatModifiers(body, out) {
   const hfDiceRe = /(?:add\s+)?\+(\d+D\d+(?:\+\d+)?)\s+to\s+Horror Factor/gi
   for (const m of body.matchAll(hfDiceRe)) {
     addStat(out, 'hf', { dice: m[1].replace(/x/gi, 'x') })
+  }
+  const hfAweDiceRe = /([+-]?\d+D\d+(?:\+\d+)?)\s+to\s+(?:Awe\/)?Horror Factor/gi
+  for (const m of body.matchAll(hfAweDiceRe)) {
+    const value = m[1].replace(/^\+/, '').replace(/x/gi, 'x')
+    if (/[dD]/.test(value)) addStat(out, 'hf', { dice: value })
+  }
+  const hfFlatRe = /([+-]\d+)\s+to\s+(?:Awe\/)?Horror Factor/gi
+  for (const m of body.matchAll(hfFlatRe)) {
+    addStat(out, 'hf', { flat: Number(m[1]) })
   }
 
   const superPsHthRe = /\+(\d+D\d+)\s+damage to the usual Supernatural P\.S\./i
@@ -193,6 +247,15 @@ function parseStatModifiers(body, out) {
   const hthFlatRe = /([+-])(\d+)\s+to\s+damage(?: in combat)?(?!\s+in)/i
   const hfm = body.match(hthFlatRe)
   if (hfm && !hm) addStat(out, 'bonusHthDamage', { flat: Number(hfm[2]) * (hfm[1] === '-' ? -1 : 1) })
+
+  // If we captured both HP dice and the same trailing flat (e.g. +1D6+6), keep dice only.
+  if (out.statModifiers?.hp?.dice && Number.isFinite(out.statModifiers?.hp?.flat)) {
+    const m = String(out.statModifiers.hp.dice).match(/[+-](\d+)$/)
+    if (m && Number(m[1]) === out.statModifiers.hp.flat) {
+      delete out.statModifiers.hp.flat
+      if (!Object.keys(out.statModifiers.hp).length) delete out.statModifiers.hp
+    }
+  }
 }
 
 function parseDamageAffinities(body, out) {
@@ -249,17 +312,104 @@ function parseDamageAffinities(body, out) {
 }
 
 function parseSaveModifiers(body, out) {
+  const saveMap = [
+    { re: /night\s*prince|nightlord/i, key: 'nightlordMagic' },
+    { re: /\bmagic\b/i, key: 'magic' },
+    { re: /\bpsionics?\b/i, key: 'psionics' },
+    { re: /\binsanity\b/i, key: 'insanity' },
+    { re: /\bpoison\b/i, key: 'poison' },
+    { re: /\bgas\b/i, key: 'gas' },
+    { re: /\bhorror factor\b/i, key: 'horrorFactor' },
+    { re: /\bdisease\b/i, key: 'disease' },
+    { re: /\bpossession\b/i, key: 'possession' },
+    { re: /\billusions?\b/i, key: 'illusions' },
+  ]
+  const ensureSaves = () => {
+    out.saveModifiers = out.saveModifiers ?? {}
+    return out.saveModifiers
+  }
+  const addSave = (key, delta) => {
+    if (!key || !Number.isFinite(delta)) return
+    const saves = ensureSaves()
+    saves[key] = (saves[key] ?? 0) + delta
+  }
+  const addImmunity = (token) => {
+    const mapped = saveMap.find((row) => row.re.test(token))
+    if (!mapped) return
+    const saves = ensureSaves()
+    const existing = new Set(saves.immunities ?? [])
+    existing.add(mapped.key)
+    saves.immunities = [...existing]
+  }
+
   const gasRe = /([+-])(\d+)\s+to save vs gas/i
   const gm = body.match(gasRe)
   if (gm) {
-    out.saveModifiers = out.saveModifiers ?? {}
-    out.saveModifiers.gas = Number(gm[2]) * (gm[1] === '-' ? -1 : 1)
+    addSave('gas', Number(gm[2]) * (gm[1] === '-' ? -1 : 1))
   }
   const nauseaRe = /([+-])(\d+)\s+to save vs nausea/i
   const nm = body.match(nauseaRe)
   if (nm) {
-    out.saveModifiers = out.saveModifiers ?? {}
-    out.saveModifiers.nauseaVomiting = Number(nm[2]) * (nm[1] === '-' ? -1 : 1)
+    addSave('nauseaVomiting', Number(nm[2]) * (nm[1] === '-' ? -1 : 1))
+  }
+
+  const genericSaveRe =
+    /([+-])(\d+)\s+to\s+save\s+vs\s+([^.;\n]+?)(?=(?:,\s*[+-]\d+\s+to\s+save\s+vs)|[.;\n]|$)/gi
+  for (const m of body.matchAll(genericSaveRe)) {
+    const delta = Number(m[2]) * (m[1] === '-' ? -1 : 1)
+    const clause = String(m[3] ?? '')
+    for (const part of clause.split(/\s*(?:,|\band\b)\s*/i)) {
+      const text = part.trim()
+      if (!text) continue
+      if (/^[+-]?\d/i.test(text)) continue
+      if (/\beffects?\b|\bduration\b|cast against|aura cannot be read/i.test(text)) continue
+      // Prefer specific channel over general ones to avoid double-crediting.
+      if (/night\s*prince|nightlord/i.test(text)) {
+        addSave('nightlordMagic', delta)
+        continue
+      }
+      const mapped = saveMap.find((row) => row.re.test(text))
+      if (mapped) addSave(mapped.key, delta)
+    }
+  }
+
+  const imperviousRe =
+    /impervious to ([^.;\n]+?)(?=(?:,\s*[+-]\d+\s+to\s+save\s+vs)|[.;\n]|$)/gi
+  for (const m of body.matchAll(imperviousRe)) {
+    const clause = String(m[1] ?? '')
+    for (const part of clause.split(/\s*(?:,|\band\b)\s*/i)) {
+      const token = part.trim()
+      if (!token) continue
+      addImmunity(token)
+    }
+  }
+}
+
+function parseProgressionModifiers(body, out) {
+  const ppePerLevelRe = /([+-])(\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+)\s+P\.P\.E\.\s+per level/i
+  const m = body.match(ppePerLevelRe)
+  if (!m) return
+  const sign = m[1] === '-' ? -1 : 1
+  const raw = m[2].replace(/x/gi, 'x')
+  out.progressionModifiers = out.progressionModifiers ?? {}
+  if (/[dD]/.test(raw)) {
+    out.progressionModifiers.ppePerLevel = {
+      dice: `${sign < 0 ? '-' : ''}${raw}`,
+    }
+  } else {
+    out.progressionModifiers.ppePerLevel = { flat: sign * Number(raw) }
+  }
+}
+
+function parseMagicInteractionModifiers(body, out) {
+  const halfIncomingMagic =
+    /effects?\s+and\s+duration\s+of\s+magic\s+cast against (?:him|her|them|the character)\s+are\s+half/i
+  if (halfIncomingMagic.test(body)) {
+    out.magicInteractionModifiers = out.magicInteractionModifiers ?? {}
+    out.magicInteractionModifiers.incomingMagic = {
+      effectMultiplier: 0.5,
+      durationMultiplier: 0.5,
+    }
   }
 }
 
@@ -268,17 +418,24 @@ function parseSkillModifiers(body, out) {
     ...parseTraitAndImpossibleSkillModifiers(body, findSkillId),
   ]
   const skillPctRe =
-    /([+-])(\d+)%\s+to\s+(?:the\s+)?([A-Za-z][A-Za-z &'/,-]+(?:\s+and\s+[A-Za-z][A-Za-z &'/,-]+)*)(?:\s+skills?)?(?=[\s,.;)]|$)/gi
+    /([+-])(\d+)%\s+to\s+(?:the\s+)?([^.;\n]+?)(?:\s+skills?)?(?=(?:,\s*(?:and\s+)?[+-]\d+%\s+to\s)|[.;\n]|$)/gi
   for (const m of body.matchAll(skillPctRe)) {
     const sign = m[1] === '-' ? -1 : 1
     const pct = sign * Number(m[2])
     const names = String(m[3])
       .replace(/\s+skills?$/i, '')
-      .split(/\s+and\s+/i)
+      .split(/\s*(?:,|\band\b)\s*/i)
       .map((n) => n.trim())
       .filter(Boolean)
     for (const rawName of names) {
-      const name = rawName.replace(/\bUndercover\b/i, 'Undercover Ops')
+      const name = rawName
+        .replace(/[).,;:]+$/g, '')
+        .replace(
+          /^(?:skills?\s+(?:such as|like|used to|including)\s+|(?:any|all)\s+skills?\s+used\s+to\s+)/i,
+          '',
+        )
+        .replace(/\s+in\s+morphus.*$/i, '')
+        .replace(/^Undercover$/i, 'Undercover Ops')
       if (/manual dexterity/i.test(name)) {
         overrides.push({
           targetType: 'skill_trait',
@@ -939,7 +1096,9 @@ export function structureFromTraitBody(body, options = {}) {
   const entryName = options.entryName ?? ''
   const prose = stripMindControlFromMorphusProse(body)
   parseStatModifiers(prose, out)
+  parseProgressionModifiers(prose, out)
   parseDamageAffinities(prose, out)
+  parseMagicInteractionModifiers(prose, out)
   parseSaveModifiers(prose, out)
   parseSkillModifiers(prose, out)
   parseMobility(prose, out)
@@ -977,11 +1136,12 @@ function mergeDeep(target, source, { fillOnly }) {
       continue
     }
     if (typeof value === 'object' && value !== null) {
-      target[key] = mergeDeep(
-        typeof target[key] === 'object' && target[key] ? { ...target[key] } : {},
-        value,
-        { fillOnly },
-      )
+      // In force mode we want parser output to be authoritative for each object key.
+      const base =
+        fillOnly && typeof target[key] === 'object' && target[key]
+          ? { ...target[key] }
+          : {}
+      target[key] = mergeDeep(base, value, { fillOnly })
       continue
     }
     target[key] = value

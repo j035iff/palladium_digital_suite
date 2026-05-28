@@ -20,12 +20,27 @@
           "flat": 1,
           "dice": "1D4+1"
         },
+        "pb": {
+          "flat": 1
+        },
         "me": {
           "flat": -2
         },
         "sdc": {
           "dice": "6D6+10"
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": 20
+          }
+        ]
       }
     },
     {
@@ -50,6 +65,30 @@
         "sdc": {
           "dice": "1D6x10+20"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -50
+          }
+        ]
       }
     },
     {
@@ -89,6 +128,25 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -125,6 +183,15 @@
         "sdc": {
           "dice": "1D6x10+12"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -151,12 +218,34 @@
         },
         "sdc": {
           "dice": "1D6x10+40"
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
       },
-      "naturalAr": 14
+      "naturalAr": 14,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      }
     },
     {
       "id": "super_being_super_brain",
@@ -172,7 +261,7 @@
           "pageNumber": 59
         }
       ],
-      "description": "The cranium of the Nightbane may be enlarged and even have the shape of a brain, or show the enlarged brain under bulletproof glass, or perhaps the character has the stereotypical “mad scientist” look. Whatever the case, the Nightbane becomes much more intelligent than normal while in Morphus form. Some Nightbane with this feature become attached to the increased cerebral power and find any excuse to stay in Morphus form. Others like returning to “normal” and thinking about one thing at a time rather than juggling five or more concepts or tasks simultaneously. Bonuses: +2D4+4 to the I.Q. attribute, +1D4+1 to M.E., +3 to save vs mind control, illusions and possession, +20% to ALL skills when in Morphus and knows 1D4+3 additional skills total from one or a combination of the following: Science, Medical, Electrical or Mechanical skills (with a +30% bonus) when in Morphus. Penalties: -2D6 to permanent P.P.E. base, -1D4 to the M.A. and P.S. attributes, -2 to the P.E. and Spd attributes, -1 on Perception Rolls and initiative (distracted), -2 to save vs magic, and -1 to Horror Factor.",
+      "description": "The cranium of the Nightbane may be enlarged and even have the shape of a brain, or show the enlarged brain under bulletproof glass, or perhaps the character has the stereotypical “mad scientist” look. Whatever the case, the Nightbane becomes much more intelligent than normal while in Morphus form. Some Nightbane with this feature become attached to the increased cerebral power and find any excuse to stay in Morphus form. Others like returning to “normal” and thinking about one thing at a time rather than juggling five or more concepts or tasks simultaneously. Bonuses: +2D4+4 to the I.Q. attribute, +1D4+1 to M.E., +3 to save vs illusions and possession, +20% to ALL skills when in Morphus and knows 1D4+3 additional skills total from one or a combination of the following: Science, Medical, Electrical or Mechanical skills (with a +30% bonus) when in Morphus. Penalties: -2D6 to permanent P.P.E. base, -1D4 to the M.A. and P.S. attributes, -2 to the P.E. and Spd attributes, -1 on Perception Rolls and initiative (distracted), -2 to save vs magic, and -1 to Horror Factor.",
       "statModifiers": {
         "iq": {
           "flat": 4,
@@ -185,12 +274,20 @@
         "pe": {
           "flat": -2
         },
+        "spd": {
+          "flat": -2
+        },
         "hf": {
           "flat": -1
         },
         "ma": {
           "dice": "-1D4"
         }
+      },
+      "saveModifiers": {
+        "illusions": 3,
+        "possession": 3,
+        "magic": -2
       }
     },
     {
@@ -212,9 +309,39 @@
         "ma": {
           "flat": 2
         },
+        "pb": {
+          "flat": 2
+        },
         "sdc": {
           "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -231,7 +358,11 @@
           "pageNumber": 59
         }
       ],
-      "description": "The legs of the Morphus may be exceptionally strong and muscular, and surrounded by an odd energy and may have special boots, and wings or lightning bolt design elements. Biomechanical Nightbane will be beautifully streamlined and aerodynamic. However this feature manifests, the Nightbane can move with blinding speed whether running, swimming, or flying. Bonuses: Multiply the character’s initial Spd attribute number x10 and +1 extra attack per melee round! +2 damage to physical attacks, punches, kicks, body blocks, and strikes with a melee weapon per 20 mph (32 kph) above 40 mph (64 kph) the Nightbane is traveling. Even running at maximum speed does NOT fatigue the Nightbane in any way, and +3 to roll with punch, fall or impact. Penalties: -2D6+6 from the permanent P.P.E. base, -3 on Perception Rolls due to moving so fast and being distracted or bored, and -2 to save vs magic and illusions. High metabolism requiring the Nightbane to eat three times more than an average human being. Without enough food, double the Perception penalty, reduce speed and S.D.C. by half, -1 melee attack, and -15% on the performance of all skills."
+      "description": "The legs of the Morphus may be exceptionally strong and muscular, and surrounded by an odd energy and may have special boots, and wings or lightning bolt design elements. Biomechanical Nightbane will be beautifully streamlined and aerodynamic. However this feature manifests, the Nightbane can move with blinding speed whether running, swimming, or flying. Bonuses: Multiply the character’s initial Spd attribute number x10 and +1 extra attack per melee round! +2 damage to physical attacks, punches, kicks, body blocks, and strikes with a melee weapon per 20 mph (32 kph) above 40 mph (64 kph) the Nightbane is traveling. Even running at maximum speed does NOT fatigue the Nightbane in any way, and +3 to roll with punch, fall or impact. Penalties: -2D6+6 from the permanent P.P.E. base, -3 on Perception Rolls due to moving so fast and being distracted or bored, and -2 to save vs magic and illusions. High metabolism requiring the Nightbane to eat three times more than an average human being. Without enough food, double the Perception penalty, reduce speed and S.D.C. by half, -1 melee attack, and -15% on the performance of all skills.",
+      "saveModifiers": {
+        "magic": -2,
+        "illusions": -2
+      }
     },
     {
       "id": "super_being_super_strong",
@@ -261,7 +392,24 @@
         },
         "sdc": {
           "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -283,6 +431,12 @@
         "ma": {
           "flat": -2
         },
+        "me": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        },
         "ps": {
           "dice": "1D6"
         },
@@ -290,7 +444,31 @@
           "dice": "1D6x10+80"
         }
       },
-      "naturalAr": 14
+      "naturalAr": 14,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "super_being_theme_music",
@@ -306,20 +484,35 @@
           "pageNumber": 62
         }
       ],
-      "description": "Dramatic or heroic music follows the Nightbane wherever he or she goes. These melodies seem to emanate from the air around the character or may play through speakers on Biomechanical Nightbane. The music automatically matches the mood of the Nightbane (up-tempo when fighting, slow and plaintive when contemplative, perplexed or depressed, light when happy, bold when triumphant, etc.). When the character wishes to make a grand entrance or attempts some daring feat, one particular song will play, giving him or her a personal theme song. This music may be silenced at will, but the Nightbane must concentrate to do so. Bonuses: +1 to all saving throws and +2 to Awe/Horror Factor at all times. The character gets an additional +1 melee attack, +4 to damage, and +1 to strike, parry, dodge or disarm, but only when his music is playing! Penalties: Other than possibly annoying others, Prowl is impossible while the music is playing, and when the theme music is NOT playing, the Nightbane is -1 melee attack, -2 on all combat maneuvers, -2 to save on all saving throws, -2 to save vs Horror Factor, and -15% on skill performance. New Common Talents The number in brackets indicates which level of experience some powerful Talents become available. Hotwire [4] Hound Leash [2] Hyper-Awareness [3] Ignorance is Bliss Inferno Fist Iron Will Jam Senses [6] Killing Spree Launch Leap [2] Leave No Trace Livewire [2] Mage Siphon [7] Mass Transit [2/4] Mimic Spell [2] Mimic Talent Mirror Sense [4] Mirror Shield [4] Nega [2] Open Channel Phantom Limb Pipe Bomb Pocket Change Raven Wings [4] Reality Mooring [3] Skill Stealer All-Nighter [3] Ashes to Ashes Blast Wave [4] Bomb-Maker Bookworm [3] Brain Freeze Bypass [2] Chain Lightning Channel Speed Channel Strength [4] Chronosphere [5] Darkblast [2] Dark Edge [2] Darkmetal Infusion Death-Grip Down the Drain [7] Dust in the Wind [3] Earthworks Eavesdrop Encryption [2] Fear No Evil [4] Flurry [7] Form-Lock [2] Frightener Ghost Tag Gunslinger Sky Writer [3] Solar Flare Switchboard Operator Trap Shadow Ultra-Vision Wall Runner [2] Wall Whisperer Witch-Hunter’s Sight All-Nighter Since Nightbane still need a relatively normal amount of sleep, this simple Talent can be incredibly useful. Using AllNighter staves off the effects of sleep deprivation for an entire day at a time and enables the user to remain fully awake and be completely alert without sleep. This can be particularly useful when on guard or lookout duty, on the run from the authorities, or when trying to maintain a dual-identity as an average citizen and resistance fighter. Using All-Nighter also gives the Nightbane a slight Perception bonus of +1 and a +3 to save against sedatives or sleep-inducing powers. Limitations: Using this Talent only delays the need for sleep, so eventually the character will have to catch up on rest to the tune of at least four hours for each day of sleep that was skipped. All-Nighter can only be activated once per day, and may not be used on an unwilling subject.Note that while it is technically possible to stay awake indefinitely with this Talent, it is not natural and feels uncomfortable to go more than 3-5 days without sleeping. After 7 consecutive days of being awake, roll once each day on the Random Insanity Table on page 44 of the Nightbane® RPG. These insanities are temporary and disappear after the required amount of rest. Range: Self or one other by touch. Duration: 24 hours. Cost: One P.P.E. to acquire permanently. Twelve P.P.E. per use. 1-2 pounds (0.45 to 0.90 kg) = 1D6 damage: Heavy books, a medium-sized carved statue, axe handle, hockey stick, shovel handle, broom, mop, cane, fallen branch, a pair of blue jeans or slacks, a dress, a heavy jacket, a typical bed pillow, and similar items. 3-5 pounds (1.3 to 2.25 kg) = 2D6 damage: Large, heavy books, baseball bat, staff, a large picture frame, and similar. 6-20 pounds (2.7 to 9 kg) = 4D6 damage: Very large, heavy books, small shelving, small or light table, most simple wooden chairs, wooden folding chairs, very large picture frame, small split log, and similar. 25-35 pounds (11 to 16 kg) = 1D4x10 damage: Hollow-core interior door, small coffee table, desk chair/office chair, folding wooden table, wooden chest, and similar. 40-80 pounds (18 to 36 kg) = 2D4x10 damage: wood pallet, bookshelf, wooden kitchen table, large coffee table, solid-core door (usually an exterior door), light to medium desk, medium dining room table, armchair/easy chair, large log for fireplace and similar. 85-120 pounds (38 to 54 kg) = 2D6x10 damage: Heavy wood table, picnic bench, large heavy desk, large dead tree branch, log, and similar. The target has no chance to dodge out of the way because he is just suddenly consumed in flames. HOWEVER, living targets (as opposed to an inanimate object, fence, wall, streetlight, vehicle), get to save vs magic. A roll of 15 or higher is needed to save. Failure means full damage. A successful save vs magic means the intended victim takes only 20% damage (round down). Note that the target of the attack can be something like an object or structure and does not have to be flammable to be damaged. Limitations: This Talent can only be performed when in Morphus and it is not available until third level of experience. Only a single, combustible object (generally nothing larger than a love seat) can be sacrificed and its energy channeled to another target, and not anything like an entire house or the front porch, or part of a fence or wall. The item must be combustible, items made of ceramic, metal, plastic, stone, or concrete cannot be used. Limited to wood, paper, rubber and fabric. Magic items cannot be sacrificed nor can a living tree/plant, person or animal. Portions of objects cannot be sacrificed either, it’s all or nothing. Damage is always done to a target’s armor or magical shields first, and beings impervious to fire take no damage, though clothing and personal belongings on the target’s person may be burned to a crisp. Those resistant to fire take half damage. Range: Touch for the sacrificed object that is turned into ash, and 100 feet (30.5 m) for the attack delivered upon the real target. Duration: Instant. Cost: Thirteen P.P.E. to acquire permanently. Two P.P.E. for every weight category. Ashes to Ashes To activate this Talent, the Nightbane must be holding or touching a combustible object/item to sacrifice so that he may transfer the fiery damage to his intended target. The item held or touched is reduced to ashes in a flash of flames destroying it utterly. In the same instant, that fire is directed at the true target of the character’s choosing; line of sight required. The damage unleashed depends on the weight of the sacrificed object.Blast Wave This Talent enables a Nightbane to generate a powerful concussive shock wave that originates from his person. This wave of force expands rapidly outward in all directions or just in front of him, sending anyone and anything not sufficiently heavy or secured, flying several yards/meters away, and shattering fragile objects like windows. While this is primarily a defensive Talent meant to force back enemies within melee range, under the right circumstances it can be used to deadly effect; such as on the roof of a skyscraper. Victims caught in the shock wave are thrown 1D6 yards (0.9 to 5.5 m), take 2D6 damage, lose initiative, lose two melee attacks and are shaken up; -5% on the performance of all skills for one melee round. Reduce damage, but not penalties by half with a successful roll with impact of 16 or better. Limitations: The user can only expend 6 P.P.E. per level of experience on this Talent’s activation. Also note that the Nightbane cannot selectively affect those within the radius or forward arc of the blast. Everyone takes damage and is thrown. The only exceptions are those inside a vehicle or one to two people in physical contact with the Nightbane who are willed to be protected from the wave. Range: 20 foot (6.1 m) radius around the Nightbane, or a wide, forty foot (12.2 m) swath in front of him. Can control range/area of effect in increments of three feet (one yard/meter). Duration: Instant. Cost: Six P.P.E. to acquire permanently. Double this activation cost if used in Facade form. Bomb-Maker Most common among Nightbane belonging to the Resistance or Warlords factions, this Talent enables the user to transform inert substances into a variety of lethal explosives. For instance, a glass bottle of olive oil can be changed into a gasohol-filled Molotov cocktail, a barrel of sawdust into one of gunpowder, or a handful of clay or putty into C-4. While these explosives mimic the properties of their real-world equivalents (nitroglycerin is unstable, gunpowder won’t ignite when wet, etc.), the blast radius and damage they unleash depends on the P.P.E. used to transform the substance as well as the amount. Damage: 4D6 S.D.C. from “low-grade” explosives like TNT or gunpowder per 10 P.P.E. points spent, makes a one liter or one pound (0.45 kg) amount of low-grade explosive with a blast radius of 4 feet (1.2 m). 15 P.P.E. creates a half pound (0.225 kg) of high-explosives like plastique that does 1D4x10 S.D.C. damage with a blast radius of 3 feet (0.9 m). Any explosives created with this Talent are indistinguishable from the genuine explosives, which also means they can be detected and neutralized in the same manner. These substances are NOT magical in nature and will not do extra damage to beings vulnerable to magic. It is interesting to note that this Talent is similar to abilities over matter and energy exhibited by the Nightlords, which if brought to the attention of Spook Squad would only serve to reinforce their suspicions and fears about the Nightbane. Limitations: Nightbane can only use this Talent in Morphus form. Not available until 4th level. Only the explosive substance is created, not the containers for or means to detonate it. This means that for something like C-4, an electronic detonator will be required for it to be of any use. Likewise, to create things like grenades or land mines, the Nightbane or allies will have to acquire the proper casings in which to install the explosive (or substance to be converted). Range: Touch to transmute into an explosive material. Duration: The explosive material remains viable for 6 hours per level of experience. After that the explosive becomes inert and reverts back to its original material. Cost: Seventeen P.P.E. to acquire permanently. Bookworm With this Talent active, a Nightbane is able to quickly obtain any knowledge written on paper or similar material. To do so, the book, magazine, scroll, or whatever written source is devoured whole. While this may seem odd, it actually has a couple of advantages. The first is that once the pages are swallowed, every word is instantly known by the Nightbane. Another advantage is that the language the text is written in does not prevent the Talent user from understanding the content, even if it is as obscure as an ancient and/or forgotten language. The bonuses/effects vary depending on what information is consumed. Eating a book or magazine, the character knows and remembers everything in it as if he had just read it. A diary or a handwritten journal could reveal a critical clue relevant to an investigation. Technical or instructional material temporarily gives the Talent user the information in the book AND 1-4 skills at 90% (or boosts existing skills to the 90%+1D6% level) required to use that knowledge (i.e. repair an engine, computer programming or operation, piloting an aircraft, etc.). On the rare occasion the pages of a spell book or scroll is devoured, it temporarily enables the Bookworm to cast that spell (or spells) contained in it, but only if the Talent user can already cast spells. If there is no understanding of magic, the Nightbane cannot cast spells. Devoured text is not subject to any real biological processes and simply ceases to exist after being eaten – its knowledge or abilities available one melee round (15 seconds) after being eaten. It should be noted that Nightbane in the Seekers might be in the best position of any of their brethren to use this Talent, though a very few do so as destroying knowledge is tantamount to heresy for this covetous Faction. Many Nocturne Nightbane, however, have been known to make use ofBookworm for a quick knowledge boost in times of need. This fact has caused no small amount of friction between these two groups. Limitations: Usable in Morphus form only. Any source devoured is utterly destroyed. Only biological material can be devoured, meaning that items like stone inscriptions, overhead transparencies (printed on clear plastic), photos on photographic paper, slides, and similar are unable to be absorbed. Devouring enchanted or cursed tomes may have unforeseen consequences, so G.M.s should use their best discretion. Any knowledge gained is not permanent, and disappears whenever the duration of the Talent lapses. Range: Self. Duration: One hour per level of experience. Cost: Seven P.P.E. to acquire permanently. One P.P.E. per 25 pages of most mundane texts, but 2 P.P.E. per each page of a spell book or page equivalent for a scroll. Brain Freeze When a person consumes a cold substance too quickly, it can cause acute pain often referred to as “brain freeze.” This Talent allows the Nightbane to induce a similar experience in others, but magnified to a much greater and debilitating degree. If the target fails to make a saving throw vs magic of 15 or higher (include any P.E. bonus), then he is stricken by a severe, temporary pain that seems to spread from between his eyes straight to the back of the skull. When in the grips of Brain Freeze, the victim is -5 on Perception Rolls, -2 on all combat rolls, automatically has initiative last, skill performance is done at -30%, and spell casting or the use of psionics or Talents is impossible until the duration of Brain Freeze expires. And unless it is obvious, the victim cannot remember what he or she was about to say or do. If in the middle of a skill, he cannot remember the next step until the freeze is over. Limitations: Can only be used in Morphus form. Not available until 3rd level. Has no chance to affect immortal beings or supernatural creatures with physiologies radically different than humans (such as Nightland Hounds, Hunters, Hollow Men, Tarantuloids, etc.), though it will affect Night Princes (but not Nightlords), vampires, and Nightbane in Facade form or very human-looking Morphus forms. Range: 200 feet (61 m), +20 feet (6 m) per level of experience; line of sight required. Duration: 1D4 melees (15-60 seconds), though this can be extended (see cost below). Cost: Ten P.P.E. to acquire the Talent permanently. Six P.P.E. for the initial attack and 1D4 melee round duration. If the target fails to save, the Talent user can choose to spend an additional 6 P.P.E. at the beginning of each subsequent melee round to extend the duration for another melee (15 seconds) up to eight times in a row. Bypass As the name suggests, this Talent allows users to disable both conventional and high-tech locks and electrical surveillence systems and cameras. This includes padlocks, magnetic seals, deadbolts, camera systems and alarms. Even complex electronic locks and alarms such as those used in high-security corporate and government facilities can be sprung given enough time. Simple locks like those on store-bought diaries, cheap jewelry boxes, file cabinets, bedroom doors, or bathroom stalls are the easiest and quickest to bypass. Instant, counts as one melee attack/action. Standard locks are those found on most houses and common businesses, and include the majority of padlocks, handcuffs, security doors, car doors, car trunks, car ignitions, and similar. Takes 1D4 melee rounds (15-60 seconds). Complex locks are more robust than standard locks, such as those on prison-cell doors, locked hospital wards, commercial security doors, common safe/combination locks, keyless automobile ignitions, simple/basic commercial alarm and video systems, and similar. Shuts off the alarm and its sensor systems and any video cameras without triggering the alarm. However, the video feed goes dark and anyone watching the monitor screens will notice that the feed went dark, but no alarms were tripped (just a glitch or investigate?). Takes 1D4 minutes. Advanced locks, high-tech safes and security systems as found in the highest security areas, including bank vaults, high-risk research and medical facilities, top-secret data centers, government and military facilities, and similar. These locks are almost impossible to crack under normal circumstances and require significant time and P.P.E. expenditure to get through even with this Talent. 4D4 minutes! Limitations: Only usable in Morphus form and only affects a single lock per activation of this Talent. Use of Bypass disables locking mechanisms and any alarms, video cameras and other security systems that are tied into the lock/door. Does not work on magic locks or magical protections. Range: Touch. Duration: Varies as noted above. Saving Throws: Locks also get a saving throw or difficulty quotient: 15 for advanced (and alien locks), 8 for complex, 5 for standard, 2 for simple. The Talent user needs to roll higher than the saving throw number on a D20 to successfully open the lock. A failed roll means it is still locked, try again. Cost: Six P.P.E. to acquire permanently. One P.P.E. per use for simple locks, 2 P.P.E. for standard, 6 P.P.E. for complex mechanical or simple electronic locks, and 14 P.P.E. for the most advanced electronic locks or vault doors.Chain Lightning This Talent enables the Nightbane to unleash a devastating electrical attack capable of striking multiple enemies in close proximity to one another within a 30 foot (9.1 m) radius. The chain lightning jumping a second apart from one target to the next. The bolt of lightning generated strikes the first target for the full amount of damage, then moves on to another target to inflict one die less damage, and the next reduced by another die, until striking the last target for 1D6 damage. For example, if a character spent 9 P.P.E. to send out a bolt then the first target would take 3D6 damage, the second would take 2D6 damage, and the third target would sustain 1D6 damage. Chain lightning only travels from one living creature to the next and starts with the initial target and then leaps to the next closest, and the next closest after that in descending order. The Nightbane can dictate which targets will be hit beyond the first and the order of preferred targets, but this costs him two melee attacks. Otherwise, targets beyond the first are determined via proximity to one another. The Chain Lightning Talent is useful against groups of enemies or adversaries, but can be especially effective on Hounds, Hound Masters, Great Hounds, Hunters, and anyone using Darksteel weaponry or armor. These enemies must make a saving throw of 12 or higher including any P.E. bonus or they become dazed! Dazed targets lose initiative and two attacks for that melee; these penalties are cumulative with successive attacks. Furthermore, Hunters and other flying creatures take additional damage from this Talent (use eight-sided rather than 6-sided dice for damage). Limitations: Usable only by the Morphus. Not available until 2nd level. The maximum P.P.E. used to activate this Talent is limited to 9 per level of experience. Only damages living beings, not inanimate objects. Each individual in the area of effect can only be struck once per attack, so any damage capability remaining after all available targets are struck dissipates. Range: 100 feet (30.5 m) +20 feet (6.1 m) per level of experience to a 30 foot radius (9.1 m; double distance and radius of effect in the Nightlands). Ideal against a cluster of enemies and users of Darksteel. Duration: Instant. Cost: Ten P.P.E. to acquire permanently. Nine P.P.E. for a 3D6 damage lightning blast to the initial target (2D6 to the next victim, 1D6 to the third). The amount of damage can be increased in increments of 1D6 at the cost of 3 P.P.E. per each 1D6 points of damage up to a maximum of 7 times, making the blast to the first target as much as 10D6 (or 1D6x10) damage! Then 9D6 damage to the next target, then 8D6, then 7D6, then 6D6, then 5D6, then 4D6, then 3D6, then 2D6 and finally 1D6, affecting as many as 10 targets within the area of effect. Most attacks, however, are less than this, usually starting out at 6D6 damage. Channel Speed One of a handful of Talents meant for use only in the Facade form, Channel Speed taps into the power of the supernatural Morphus form to temporarily add 6 points to the P.P. attribute and 10 points to the Spd attribute for a brief period. The character also gains +1 to initiative and +2 to strike, parry, and dodge (in addition to any possible bonuses from improved P.P.). While this Talent is active, the user’s eyes dim and wisps of shadow rise like thin smoke from the hands and feet. Even though the Nightbane is in Facade form, he registers as a supernatural being for the duration of this Talent to any beings able to sense such things. Limitations: Can only be used in Facade form. Only the bonuses listed above are added, do NOT add bonuses from Morphus features. Range: Self only. Duration: See cost below. Cost: Eight P.P.E. to acquire permanently. Eight P.P.E. per two melee rounds (30 seconds). Channel Strength One of a handful of Talents meant for use only in the Facade form, Channel Strength temporarily adds 10 points to P.S. and 6 to P.E. in addition to providing 60 S.D.C. to the user. Any damage dealt to the character is subtracted from this additional temporary S.D.C. first. The character also gains +2 to save vs poison and disease, and +2 to save vs psionics, in addition to any possible bonuses from improved attributes. The Facade’s strength is converted to Supernatural for the duration of this ability. While this Talent is active, the user’s eyes dim and wisps of shadow rise like steam from the body, arms, and legs. Even though the Nightbane is in Facade form, he registers as a supernatural being for the duration of this Talent to any beings able to sense such things. Limitations: Can only be used in Facade form. Only the bonuses listed above are added, do NOT add bonuses from Morphus features. Range: Self. Duration: See cost below. Cost: Nine P.P.E. to acquire permanently. Nine P.P.E. per two melee rounds (30 seconds). Chronosphere Activating this Talent alters the temporal flow in the Nightbane’s immediate vicinity. Anyone of the user’s choosing within the affected radius must make a saving throw of 16 or higher including any P.E. bonus or find themselves temporarily moving at half their normal speed. Those affected have half the number of melee attacks (rounded up), as well as a -2 penalty to all combat rolls against anyone unaffected by the Chronosphere Talent. Anyone entering the area of effect after the initial activation must make the save as well or suffer the slowing effects. Likewise,projectiles or other non-magical attacks leveled against those within the Chronosphere are -4 to strike and do half damage as they slow upon entering the affected area. Note that Chronosphere is one of a handful of very rare Talents that can be used even in Facade form without any visual manifestation other than the slowed movement of those affected. The Talent user is not affected, but everyone else is. Those who can sense magic or anomalies in space and time will detect the Chronosphere. Limitations: Not available until level four. Range: Five foot (1.5 m) spherical radius per level of experience; double the radius for those with a Morphus feature from the",
+      "description": "Dramatic or heroic music follows the Nightbane wherever he or she goes. These melodies seem to emanate from the air around the character or may play through speakers on Biomechanical Nightbane. The music automatically matches the mood of the Nightbane (up-tempo when fighting, slow and plaintive when contemplative, perplexed or depressed, light when happy, bold when triumphant, etc.). When the character wishes to make a grand entrance or attempts some daring feat, one particular song will play, giving him or her a personal theme song. This music may be silenced at will, but the Nightbane must concentrate to do so. Bonuses: +1 to all saving throws and +2 to Awe/Horror Factor at all times. The character gets an additional +1 melee attack, +4 to damage, and +1 to strike, parry, dodge or disarm, but only when his music is playing! Penalties: Other than possibly annoying others, Prowl is impossible while the music is playing, and when the theme music is NOT playing, the Nightbane is -1 melee attack, -2 on all combat maneuvers, -2 to save on all saving throws, -2 to save vs Horror Factor, and -15% on skill performance.",
       "statModifiers": {
         "strike": {
-          "flat": -4
-        },
-        "initiative": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "1D4x10"
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
         },
         "bonusHthDamage": {
           "flat": 4
         }
+      },
+      "saveModifiers": {
+        "horrorFactor": -2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     }
   ]

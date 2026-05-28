@@ -11,17 +11,11 @@
       "tableCategory": "Artisan",
       "description": "Attached to the forearm above the non-dominant hand, a wide board contains a number of daubs of different colored paints. The paint never runs out and the color and consistency of it can be altered before it is used by the Nightbane with nothing more than a thought. Accompa- nying this palette is a small, quiver-like container of paint- brushes of different sizes and shapes hanging from a belt or shoulder-strap. This feature enables the Nightbane to paint images that are startlingly realistic, and can even work like optical illusions for a time. For instance, from a distance a painting of a large pothole on a road might keep someone from driving over it, or a painting of a guard next to a door might discourage others from approaching. Note: Only a save vs illusions or a Percep- tion Roll of 14 or better lets observers realize the image is an illusion – a painting – without careful examination that takes at least 1D4 minutes (twice as long if examined from further than 10 feet/3 m). Bonuses: +15% to any Art skill involving paint and +10% to create Camouflage; +2 on Perception Rolls, +1 to parry using the palette like a shield and +1D4 P.P.E. Penalties: -1 to strike with the limb holding the palette. It also makes certain Physical skills like Acrobatics, Climbing and Swimming harder to perform, imposing a -10% penalty to such skills.",
       "statModifiers": {
-        "perception": {
-          "flat": 2
-        },
         "parry": {
           "flat": 1
         },
         "strike": {
           "flat": -1
-        },
-        "ppe": {
-          "dice": "1D4"
         }
       },
       "skillModifiers": {
@@ -79,11 +73,11 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "3D6"
-        },
         "pb": {
           "flat": -2
+        },
+        "sdc": {
+          "dice": "3D6"
         }
       },
       "skillModifiers": {
@@ -136,12 +130,6 @@
         "me": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "4D6"
-        },
-        "perception": {
-          "flat": 1
-        },
         "ps": {
           "flat": -1
         },
@@ -151,8 +139,8 @@
         "pb": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "skillModifiers": {
@@ -186,9 +174,6 @@
       "description": "A sign of a sculptor or wood- worker, the tips of each finger end in a variety of metal tools useful for chipping away at and carving wood or stone, en- graving, etc. Bonuses: +1 to the M.E. attribute and +1 to Per- ception rolls. +10% to the Whittling & Sculpting skill while in Morphus form. The Nightbane is also able to dig/tunnel through rock and dirt at the rate of three feet (0.9 m) per melee round, and the sharpened tips function like claws, adding 1D6 to the Supernatural P.S. punch damage for any claw attack. Penalties: -1 to the P.B. attribute. -20% to any skills requiring a sensitive touch like Art, Computer Programming, Surgery, Forgery or Pick Pockets.",
       "statModifiers": {
         "me": {
-          "flat": 1
-        },
-        "perception": {
           "flat": 1
         },
         "pb": {
@@ -259,19 +244,16 @@
       "id": "artisan_typewriter_keyboard",
       "name": "Typewriter/Keyboard",
       "tableCategory": "Artisan",
-      "description": "Whether it is carried or built into the body of the Morphus, the character’s love of writing is represented as a computer keyboard or old-fashioned typewriter. This tool is fully functional and can be used at any time to type personal reminders, a record of events, etc. There is never a need for paper or replacement ink, either, and any finished document will either appear on the character’s hand, somehow print out, or can be removed from the top of the typewriter. Bonuses: +1 to the M.E. attribute and +2D6 S.D.C. +10% to Creative Writing or Technical Writing skill. A final, odd effect is that a Nightbane with this feature can sometimes (5% base chance, +3% at levels 3, 6, 9, 12, and 15) gain spontaneous insight about a nagging question by taking 1D4 hours to journal about it. Such questions can include anything from the identity of a mole within a faction to the location of a lost object or the significance of a clue (G.M. discretion). Many think this is just an effect of careful contem- plation, but there are some who believe the writer taps into the collective unconscious, or an unearthly source of knowledge that enables him to recognize overlooked clues or snatch a sudden burst of insight from the aether. Penalties: -2 to the M.A. attri- bute. -1D6 base P.P.E.; Nightbane with this feature often seem to be distracted by their own thoughts.",
+      "description": "Whether it is carried or built into the body of the Morphus, the character’s love of writing is represented as a computer keyboard or old-fashioned typewriter. This tool is fully functional and can be used at any time to type personal reminders, a record of events, etc. There is never a need for paper or replacement ink, either, and any finished document will either appear on the character’s hand, somehow print out, or can be removed from the top of the typewriter. Bonuses: +1 to the M.E. attribute and +2D6 S.D.C. +10% to Creative Writing or Technical Writing skill. A final, odd effect is that a Nightbane with this feature can sometimes (5% base chance, +3% at levels 3, 6, 9, 12, and 15) gain spontaneous insight about a nagging question by taking 1D4 hours to journal about it. Such questions can include anything from the identity of a mole within a faction to the location of a lost object or the significance of a clue (G.M. discretion). Many think this is just an effect of careful contem- plation, but there are some who believe the writer taps into the Joe Sifferman (Order #46319524) 27 collective unconscious, or an unearthly source of knowledge that enables him to recognize overlooked clues or snatch a sudden burst of insight from the aether. Penalties: -2 to the M.A. attri- bute. -1D6 base P.P.E.; Nightbane with this feature often seem to be distracted by their own thoughts.",
       "statModifiers": {
         "me": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "2D6"
-        },
         "ma": {
           "flat": -2
         },
-        "ppe": {
-          "dice": "-1D6"
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "skillModifiers": {
@@ -316,19 +298,17 @@
       "isPolymorphicTemplate": true,
       "statModifiers": {
         "ma": {
+          "flat": 1,
           "dice": "1D4+1"
+        },
+        "hf": {
+          "flat": 1
         },
         "strike": {
           "flat": -1
         },
         "parry": {
           "flat": -1
-        },
-        "dodge": {
-          "flat": -1
-        },
-        "hf": {
-          "flat": 1
         },
         "pb": {
           "dice": "1D4"
@@ -344,37 +324,18 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": 15
+            "targetValue": "skill_disguise",
+            "modifierPercent": 15,
+            "grantUnlearnedValue": 40
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetType": "category",
+            "targetValue": "physical",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_swimming",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
             "modifierPercent": -5
           }
         ]
@@ -408,14 +369,11 @@
         "pp": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "1D6x10+40"
-        },
         "pb": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D6"
+        "sdc": {
+          "dice": "1D6x10+40"
         }
       },
       "naturalWeapons": [
@@ -484,45 +442,12 @@
         "ma": {
           "flat": 1
         },
-        "ppe": {
-          "dice": "-1D6"
-        },
         "hf": {
           "flat": -1
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_play_musical_instrument",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_sing",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -5
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_swimming",
@@ -558,11 +483,17 @@
       "tableCategory": "Artisan",
       "description": "The Morphus body is covered in tattoos (player’s choice of how many and what they are), or scarification (cuts to create patterns; may be aboriginal or something more modern), and/or piercings of all kinds. The fingers may also be adorned in heavy rings (+1D4 damage to punches). Bonuses: In combat, the tattoos or scar patterns seem to move, which is unnerving and makes oppo- nents -1 to strike and parry, and adds +1 to the Horror Factor of the Nightbane. +1D4x10+10 to S.D.C. Penalties: -10% to Prowl, -50% to Disguise and Impersonate, and is impossible to look inconspicuous unless completely covered, and even then, piercings and tattoos or scarification on the face may make that difficult.",
       "statModifiers": {
-        "sdc": {
-          "dice": "1D4x10+10"
+        "strike": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
         },
         "hf": {
           "flat": 1
+        },
+        "sdc": {
+          "dice": "1D4x10+10"
         }
       },
       "combatContextModifiers": [

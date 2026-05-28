@@ -58,18 +58,17 @@ const TRAIT_PERCENT_PATTERNS = [
   },
 ]
 
-const IMPOSSIBLE_WHILE_RE = /\s+while\s+/i
-
 /**
  * @param {string} body
  * @param {(name: string) => string | null} findSkillId
  * @returns {Array<{ targetType: string, targetValue: string, modifierPercent?: number, impossibleInMorphus?: boolean }>}
  */
 export function parseTraitAndImpossibleSkillModifiers(body, findSkillId) {
+  const normalizedBody = String(body).replace(/([A-Za-z])-\s+([A-Za-z])/g, '$1$2')
   const overrides = []
 
   for (const { re, traitId } of TRAIT_PERCENT_PATTERNS) {
-    const m = body.match(re)
+    const m = normalizedBody.match(re)
     if (!m) continue
     const sign = m[1] === '-' ? -1 : 1
     overrides.push({
@@ -79,7 +78,7 @@ export function parseTraitAndImpossibleSkillModifiers(body, findSkillId) {
     })
   }
 
-  const impossiblePhrases = collectImpossibleSkillPhrases(body)
+  const impossiblePhrases = collectImpossibleSkillPhrases(normalizedBody)
   for (const phrase of impossiblePhrases) {
     for (const part of splitSkillListPhrase(phrase)) {
       const id = findSkillId(part)
@@ -109,9 +108,7 @@ function collectImpossibleSkillPhrases(body) {
   for (const re of patterns) {
     for (const m of body.matchAll(re)) {
       const raw = [m[1], m[2]].filter(Boolean).join(' and ')
-      if (!raw || IMPOSSIBLE_WHILE_RE.test(m[0])) continue
-      const tail = body.slice(m.index, m.index + m[0].length + 40)
-      if (/\s+while\s+/i.test(tail)) continue
+      if (!raw) continue
       if (/clothing|shirts?|jackets?|coats?|shoes?|sleeves?/i.test(raw)) continue
       phrases.push(raw)
     }
@@ -123,6 +120,11 @@ function collectImpossibleSkillPhrases(body) {
 function splitSkillListPhrase(phrase) {
   return phrase
     .split(/\s+and\s+|,\s*/i)
-    .map((s) => s.replace(/\s+skills?$/i, '').trim())
+    .map((s) =>
+      s
+        .replace(/([a-z])-\s+([a-z])/gi, '$1$2')
+        .replace(/\s+skills?$/i, '')
+        .trim(),
+    )
     .filter((s) => s.length > 1 && !/^(skills?|like)$/i.test(s))
 }

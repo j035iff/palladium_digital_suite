@@ -1,0 +1,96 @@
+{
+  "tableId": "fantasy",
+  "entries": [
+    {
+      "id": "fantasy_aura_of_magical_power",
+      "name": "Aura of Magical Power",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_branded_with_magic_symbols",
+      "name": "Branded with Magic Symbols",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_dragon_lord",
+      "name": "Dragon Lord",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_enchanted_knight_armor",
+      "name": "Enchanted Knight Armor",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R."
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_faerie_wings",
+      "name": "Faerie Wings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_ogre_warrior_with_a_magic_weapon",
+      "name": "Ogre Warrior with a Magic Weapon",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_prince_princess",
+      "name": "Prince/Princess",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_stone_like_flesh",
+      "name": "Stone-Like Flesh",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_wee_folk",
+      "name": "Wee Folk",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "fantasy_wizard_robes",
+      "name": "Wizard Robes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

@@ -17,9 +17,6 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "2D6"
-        },
         "hf": {
           "flat": 1
         },
@@ -31,6 +28,9 @@
         },
         "spd": {
           "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "saveModifiers": {
@@ -40,21 +40,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -82,8 +67,8 @@
         "me": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "2D6"
+        "perception": {
+          "flat": 3
         },
         "hf": {
           "flat": 2
@@ -97,8 +82,8 @@
         "spd": {
           "flat": -2
         },
-        "perception": {
-          "flat": 3
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "saveModifiers": {
@@ -106,21 +91,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -20
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -161,8 +131,8 @@
         "ps": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "3D6"
+        "perception": {
+          "flat": 3
         },
         "hf": {
           "flat": 1
@@ -176,40 +146,19 @@
         "spd": {
           "flat": -2
         },
-        "perception": {
-          "flat": 3
+        "sdc": {
+          "dice": "3D6"
         }
       },
       "saveModifiers": {
         "illusions": 2
       },
       "skillModifiers": {
-        "globalSkillModifier": -5,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "modifierPercent": -10
+            "modifierPercent": -15
           }
         ]
       },
@@ -242,9 +191,6 @@
         "me": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "1D6x10+30"
-        },
         "hf": {
           "flat": 2
         },
@@ -253,6 +199,9 @@
         },
         "pb": {
           "flat": -2
+        },
+        "sdc": {
+          "dice": "1D6x10+30"
         }
       },
       "damageAffinities": {
@@ -261,26 +210,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_barter",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -20
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -312,9 +241,6 @@
         "ps": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "5D6+20"
-        },
         "hf": {
           "flat": 2
         },
@@ -323,33 +249,19 @@
         },
         "pb": {
           "flat": -3
+        },
+        "sdc": {
+          "dice": "5D6+20"
         }
       },
       "saveModifiers": {
-        "disease": 2
+        "disease": 2,
+        "immunities": [
+          "horrorFactor"
+        ]
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_barter",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -30
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -378,17 +290,8 @@
       "tableCategory": "Pestilence & Disease",
       "description": "The Nightbane is dressed in a hospital gown with a number of tubes and wires at- tached to the body of the Morphus. Some are identifiable as I.V. lines, catheters, heart monitor leads, etc. There is also an oxy- gen mask or breathing tube that is easily visible, but the opposite ends of these lines are not attached to any machinery, leaving them dangling or floating in midair. To make things even more eerie, the sound of the missing machinery can still be faintly heard when close to the Nightbane (requires a Perception Roll of 12 or better), beeping, whirring, and hissing away. The figure looks gaunt, and somewhat zombie-like with sunken eyes and cheeks, and poor pallor. Bonuses: +3D6 to Hit Points, +1D4x10 to S.D.C. +20% to save vs coma and death, +2 to roll vs impact, +1 to save vs disease, +1 to Horror Factor and the Nightbane does not need air to breathe and can swim or remain underwater indefinitely! Penalties: -2 to the M.A., P.B. and Spd attributes, -2D6 from base P.P.E., -10% penalty on skills like Acrobatics, Climbing, Gymnastics, and Prowl, and -20% to Disguise, Imper- sonation, Performance, Seduction and Undercover Ops.",
       "statModifiers": {
-        "hp": {
-          "dice": "3D6"
-        },
-        "sdc": {
-          "dice": "1D4x10"
-        },
         "hf": {
           "flat": 1
-        },
-        "rollWithPunch": {
-          "flat": 2
         },
         "ma": {
           "flat": -2
@@ -399,14 +302,14 @@
         "spd": {
           "flat": -2
         },
-        "ppe": {
-          "dice": "-2D6"
+        "hp": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "1D4x10"
         }
       },
       "saveModifiers": {
-        "comaDeath": {
-          "percent": 20
-        },
         "disease": 1
       },
       "mobility": {
@@ -417,36 +320,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -20
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -476,18 +349,6 @@
       "tableCategory": "Pestilence & Disease",
       "description": "Much more com- mon in olden days or in countries that hold onto outdated views of mental illness, this feature occurs most often in those afraid that madness is contagious or caused by a parasite or disease. In modern, developed nations it may still be seen in those afraid of losing control of themselves due to illnesses such as dementia. This manifests with the Morphus having wide-open, bloodshot eyes, frazzled and unclean hair, a twitch and a generally unkempt appearance. The Nightbane foams at the mouth like a rabid dog when angry or upset, and may mutter or giggle to himself without realizing it. Bonuses: +1D4 to the P.S. and P.E. attributes, +1D6 to Spd, +5D6 to S.D.C., +3 to save vs insanity, and +1 to Horror Factor. Penalties: -3 to the M.E. attribute, -1 to M.A. and -5% on the performance of all skills. The character may be a bit absent- minded and forgetful.",
       "statModifiers": {
-        "ps": {
-          "dice": "1D4"
-        },
-        "pe": {
-          "dice": "1D4"
-        },
-        "spd": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "5D6"
-        },
         "hf": {
           "flat": 1
         },
@@ -496,6 +357,12 @@
         },
         "ma": {
           "flat": -1
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "5D6"
         }
       },
       "saveModifiers": {
@@ -525,9 +392,6 @@
       "tableCategory": "Pestilence & Disease",
       "description": "The Morphus’ limbs, abdomen, neck, and face are severely swollen and discolored. The abdomen is so distended that it makes the character appear overweight, and the neck is almost as wide as the head. Such is the circumfer- ence of the arms and legs that they almost appear to be missing the joints. All of the swelling takes on a dark purple, brown, or yellow cast and feels squishy to the touch. Bonuses: +3D6+12 S.D.C. Reduce all damage from falls, punches, kicks and blunt attacks by half. +1 to save vs disease, +1 to Horror Factor. Penal- ties: -1 to the P.P. and P.B. attributes, -1D4 to Spd, and a -10% penalty on skills like Acrobatics, Climbing, Gymnastics, Dis- guise, Impersonation, Swimming, Tailing and Undercover Ops.",
       "statModifiers": {
-        "sdc": {
-          "dice": "3D6+12"
-        },
         "hf": {
           "flat": 1
         },
@@ -537,8 +401,8 @@
         "pb": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "3D6+12"
         }
       },
       "saveModifiers": {
@@ -617,12 +481,6 @@
         "me": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "3D6"
-        },
-        "ar": {
-          "flat": 1
-        },
         "pe": {
           "flat": -2
         },
@@ -666,9 +524,6 @@
         },
         "pb": {
           "flat": -2
-        },
-        "perception": {
-          "flat": -1
         }
       },
       "skillModifiers": {
@@ -710,7 +565,12 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 47
         }
-      ]
+      ],
+      "saveModifiers": {
+        "immunities": [
+          "horrorFactor"
+        ]
+      }
     },
     {
       "id": "pestilence_disease_infected_lesions",
@@ -724,12 +584,6 @@
         "pe": {
           "flat": 1
         },
-        "hp": {
-          "dice": "2D6"
-        },
-        "sdc": {
-          "dice": "2D6"
-        },
         "hf": {
           "flat": 2
         },
@@ -741,6 +595,12 @@
         },
         "pb": {
           "flat": -2
+        },
+        "hp": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "saveModifiers": {
@@ -803,9 +663,6 @@
         "pb": {
           "flat": -1
         },
-        "ppe": {
-          "flat": -2
-        },
         "perception": {
           "flat": -3
         }
@@ -817,18 +674,13 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
           }
         ]
       },

@@ -1,19 +1,19 @@
 {
   "tableId": "gear_head",
-  "generatedAt": "2026-05-27T21:35:55.768Z",
+  "generatedAt": "2026-05-28T02:47:46.838Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 0,
+      "changed": 8,
       "entryCount": 10
     },
     {
       "path": "src/data/content/morphus/tables/gear_head.json",
-      "changed": 3,
+      "changed": 10,
       "entryCount": 10
     }
   ],
   "unmatched": [],
-  "totalChanged": 3
+  "totalChanged": 18
 }

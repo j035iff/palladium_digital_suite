@@ -44,6 +44,8 @@ const morphusTableSchema = loadJson(
 )
 const xpTableSchema = loadJson(join(schemasDir, 'palladium-xp-table.schema.json'))
 const xpTableBookSchema = loadJson(join(schemasDir, 'palladium-xp-table-book.schema.json'))
+const morphusDescriptionLeakRe =
+  /\b(?:Talent Manifestations|New Common Talents|Appendix Talents|Common Talents from Nightbane|Elite Talents from Nightbane)\b/i
 
 const ajv = new Ajv2020({
   allErrors: true,
@@ -478,6 +480,7 @@ try {
 
 if (morphusTableFiles.length > 0) {
   let morphusBad = 0
+  let leakBad = 0
   for (const file of morphusTableFiles) {
     const doc = loadJson(join(morphusTablesDir, file))
     if (!validateMorphusTableDoc(doc)) {
@@ -486,6 +489,16 @@ if (morphusTableFiles.length > 0) {
         console.error(
           `ERR morphus/tables/${file} id=${doc?.id ?? '?'}:`,
           validateMorphusTableDoc.errors,
+        )
+      }
+    }
+    for (const entry of doc.entries ?? []) {
+      const description = String(entry?.description ?? '')
+      if (!description || !morphusDescriptionLeakRe.test(description)) continue
+      leakBad++
+      if (leakBad <= 5) {
+        console.error(
+          `ERR morphus/tables/${file} id=${entry?.id ?? '?'}: description appears to include post-table appendix prose`,
         )
       }
     }
@@ -499,6 +512,12 @@ if (morphusTableFiles.length > 0) {
     console.error(
       `ERR morphus/tables — ${morphusBad} file(s) failed schema validation`,
     )
+  }
+  if (leakBad === 0) {
+    console.log('OK  morphus/tables descriptions — no post-table prose leakage markers')
+  } else {
+    failed = true
+    console.error(`ERR morphus/tables descriptions — ${leakBad} leaked description(s) found`)
   }
 }
 

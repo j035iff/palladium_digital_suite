@@ -1,0 +1,559 @@
+{
+  "generatedAt": "2026-05-28T02:06:07.579Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 10,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Wizard Robes",
+      "pageNumber": 90,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "11-20%",
+      "name": "Enchanted Knight Armor",
+      "pageNumber": 90,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "initiative",
+          "schemaPaths": [
+            "statModifiers.initiative"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Aura of Magical Power",
+      "pageNumber": 90,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Branded with Magic Symbols",
+      "pageNumber": 90,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "save_bonus",
+          "schemaPaths": [
+            "saveModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "saveModifiers",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "90-50%",
+      "name": "Prince/Princess",
+      "pageNumber": 90,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "51-60%",
+      "name": "Stone-Like Flesh",
+      "pageNumber": 91,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "aquatic_buoyancy",
+          "schemaPaths": [
+            "mobility.aquaticTraits.buoyancy",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "mobility"
+      ]
+    },
+    {
+      "percent": "61-70%",
+      "name": "Faerie Wings",
+      "pageNumber": 91,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "appearance_clothing",
+          "schemaPaths": [
+            "appearanceConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "appearanceConstraints"
+      ]
+    },
+    {
+      "percent": "71-80%",
+      "name": "Wee Folk",
+      "pageNumber": 91,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "appearance_clothing",
+          "schemaPaths": [
+            "appearanceConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "naturalWeapons",
+        "appearanceConstraints"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Ogre Warrior with a Magic Weapon",
+      "pageNumber": 91,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "weight_multiplier",
+          "schemaPaths": [
+            "weightModifier"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "living_weapon",
+          "schemaPaths": [
+            "naturalWeapons",
+            "limbDurability",
+            "livingWeaponRules"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "weightModifier",
+        "naturalWeapons",
+        "limbDurability",
+        "livingWeaponRules"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Dragon Lord",
+      "pageNumber": 91,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "limb_component",
+          "schemaPaths": [
+            "limbDurability"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "aquatic_buoyancy",
+          "schemaPaths": [
+            "mobility.aquaticTraits.buoyancy",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "called_shot",
+          "schemaPaths": [
+            "limbDurability",
+            "combatContextModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "limbDurability",
+        "customOneOffs",
+        "mobility",
+        "combatContextModifiers"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: sensory, weaponClassBonuses, heightModifier, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, entryRole, variantPercentiles, crossTableRoll, morphusRules, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "fantasy"
+}

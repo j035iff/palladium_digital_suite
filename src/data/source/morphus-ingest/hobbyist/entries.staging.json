@@ -19,6 +19,9 @@
         "ps": {
           "flat": 1
         },
+        "pe": {
+          "flat": 1
+        },
         "pp": {
           "flat": -1
         },
@@ -31,6 +34,15 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -50,6 +62,9 @@
       "description": "First, the Nightbane’s Morphus has a playing card motif element which may be subtle or unmistakable. This may be a classic poker card symbol – spade, club, heart, dia- mond or one of the face cards – emblazoned on his face or chest, arms, or the palms or tops of his hands, and similar, like a tattoo, or as a symbol on clothing, armor or a helmet. This Morphus also comes with a deck of playing cards carried in a small case, usual- ly hooked to a belt or held in a pocket. Unlike normal cards, they are tough and flexible enough to be used as thrown weapons. The sharp-edged cards inflict 1D6 damage each, with aces and face cards doing 2D6 damage. Throwing range is 60 feet (18.3 m). When the deck is used up, the Nightbane reaches back into his pocket or carrying case and pulls out a new deck; never runs out. Bonuses: +1 to I.Q. and P.P., +2 to strike with his pocker cards or any weapon designed for throwing, and does +2D6 damgae on a roll of a Natural 19 or 20. Penalties: -1 to the M.E. attribute and -1D6+2 from permanent P.P.E. base.",
       "statModifiers": {
         "iq": {
+          "flat": 1
+        },
+        "pp": {
           "flat": 1
         },
         "strike": {
@@ -82,6 +97,9 @@
         "strike": {
           "flat": 1
         },
+        "parry": {
+          "flat": 1
+        },
         "dodge": {
           "flat": -1
         },
@@ -109,6 +127,20 @@
         "pe": {
           "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -135,9 +167,21 @@
         },
         "sdc": {
           "dice": "4D6+6"
+        },
+        "hf": {
+          "flat": 1
         }
       },
-      "naturalAr": 8
+      "naturalAr": 8,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
+      }
     },
     {
       "id": "hobbyist_saddle",
@@ -156,6 +200,9 @@
       "description": "The character is an equestrian or enjoys horseback riding or caring for the animal. In Morphus, the char- acter may have a cowboy esthetic to his appearance and has a riding saddle either draped over one shoulder or worn on his own back, fastened to him with straps of rawhide or belts. The Night- bane’s body may resemble etched leather or be covered in burns from branding irons of various designs, or he may have a long, horse-like face or mane of hair. The saddle may be made of any number of materials with a wide variety of possible appearances, but leather is most common. Any Nightbane capable of running on all fours can let other people ride in the saddle. Bonuses: +2 to the P.S. and P.E. attributes, +3D6 to S.D.C., and +10% to any Horsemanship skill. Special: Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted com- bat. Penalties: -1 to M.E. attribute, -3 to roll with punch, fall, or impact, .",
       "statModifiers": {
         "ps": {
+          "flat": 2
+        },
+        "pe": {
           "flat": 2
         },
         "initiative": {
@@ -196,6 +243,9 @@
         },
         "hf": {
           "flat": 1
+        },
+        "parry": {
+          "flat": -1
         }
       }
     },
@@ -218,6 +268,9 @@
         "strike": {
           "flat": 1
         },
+        "parry": {
+          "flat": 1
+        },
         "dodge": {
           "flat": 3
         },
@@ -230,6 +283,15 @@
         "sdc": {
           "dice": "2D4"
         }
+      },
+      "damageAffinities": {
+        "fire": 2
+      },
+      "saveModifiers": {
+        "insanity": 2,
+        "immunities": [
+          "magic"
+        ]
       }
     }
   ]

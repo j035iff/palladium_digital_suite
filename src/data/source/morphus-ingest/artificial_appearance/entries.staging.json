@@ -37,6 +37,11 @@
       },
       "damageAffinities": {
         "cold": 0
+      },
+      "saveModifiers": {
+        "immunities": [
+          "poison"
+        ]
       }
     },
     {
@@ -66,6 +71,9 @@
         },
         "sdc": {
           "dice": "5D6+2"
+        },
+        "bonusHthDamage": {
+          "dice": "1D6"
         }
       },
       "damageAffinities": {
@@ -103,12 +111,33 @@
         },
         "sdc": {
           "dice": "2D4x10+10"
+        },
+        "hf": {
+          "dice": "1D4"
         }
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "sink"
         }
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "heat": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -130,6 +159,12 @@
         "strike": {
           "flat": -5
         },
+        "parry": {
+          "flat": -5
+        },
+        "hf": {
+          "flat": 2
+        },
         "ma": {
           "flat": -2
         },
@@ -149,6 +184,20 @@
           "id": "mirror_walk",
           "label": "Mirror Walk",
           "note": "At will (core Nightbane rules)."
+        }
+      ],
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "bright_light",
+          "target": "opponent",
+          "strike": -5,
+          "parry": -5,
+          "dodge": -5
         }
       ]
     },
@@ -176,6 +225,9 @@
         },
         "sdc": {
           "dice": "1D6x10+6"
+        },
+        "bonusHthDamage": {
+          "flat": 3
         }
       },
       "mobility": {
@@ -185,6 +237,19 @@
       },
       "sensory": {
         "invisibleToThermalImaging": true
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "heat": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -209,7 +274,13 @@
         "hf": {
           "flat": 2
         },
+        "rollWithPunch": {
+          "flat": 1
+        },
         "ps": {
+          "flat": -2
+        },
+        "pe": {
           "flat": -2
         },
         "sdc": {
@@ -217,7 +288,8 @@
         }
       },
       "damageAffinities": {
-        "cold": 0
+        "cold": 0,
+        "fire": 2
       },
       "mobility": {
         "aquaticTraits": {
@@ -248,6 +320,11 @@
         "vanishesWhenBothZero": true,
         "preferredWeapon": true,
         "hardToConceal": true
+      },
+      "saveModifiers": {
+        "immunities": [
+          "poison"
+        ]
       }
     },
     {
@@ -274,7 +351,12 @@
         }
       },
       "damageAffinities": {
-        "piercing": 0.25
+        "fire": 2,
+        "kinetic": 0.25,
+        "piercing": 0.25,
+        "water": 2,
+        "electricity": 2,
+        "cold": 0.5
       },
       "mobility": {
         "aquaticTraits": {
@@ -284,6 +366,7 @@
       "recoveryBehaviors": [
         {
           "trigger": "submersion",
+          "dryHoursDice": "2D6",
           "gardenHoseDamage": "1D4",
           "fireHoseDamage": "2D6"
         }
@@ -340,7 +423,8 @@
       },
       "damageAffinities": {
         "cold": 0,
-        "heat": 0.5
+        "heat": 0.5,
+        "fire": 2
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -424,7 +508,12 @@
           ],
           "timing": "character_creation"
         }
-      ]
+      ],
+      "saveModifiers": {
+        "immunities": [
+          "poison"
+        ]
+      }
     },
     {
       "id": "artificial_appearance_wood_statue",
@@ -457,11 +546,17 @@
         "strike": {
           "flat": -1
         },
+        "parry": {
+          "flat": -1
+        },
         "spd": {
           "flat": -4
         },
         "sdc": {
           "dice": "6D6+6"
+        },
+        "bonusHthDamage": {
+          "flat": 3
         }
       },
       "damageAffinities": {
@@ -471,6 +566,15 @@
         "aquaticTraits": {
           "buoyancy": "float"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": 20
+          }
+        ]
       }
     }
   ]

@@ -28,9 +28,24 @@
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -15
+          }
+        ]
       }
     },
     {
@@ -52,6 +67,9 @@
         "me": {
           "flat": 3
         },
+        "hf": {
+          "flat": 1
+        },
         "ma": {
           "flat": -3
         },
@@ -61,6 +79,23 @@
         "perception": {
           "flat": -3
         }
+      },
+      "saveModifiers": {
+        "disease": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -82,15 +117,30 @@
         "ps": {
           "flat": 1
         },
+        "me": {
+          "flat": 1
+        },
         "hf": {
           "flat": 2
         },
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "1D6x10+30"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -107,7 +157,7 @@
           "pageNumber": 46
         }
       ],
-      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane’s cloth- ing or armor. When the ‘Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time. Bonuses: +1 to M.E. attribute, +2D6 S.D.C., +3 to Perception Rolls regarding disease, blood loss and vampires, +1 to save vs possession and mind control, and +2 to Horror Factor. A character with this feature can take the Blood- bath Elite Talent (see Nightbane® RPG, page 113, or the Talent Appendix in this book) at double the range and duration and use it without taking damage. Penalties: -2 to M.A., P.B. and Spd attri- butes, -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus and know the Nightbane is approaching long before he is seen. Likewise, the constantly oozing blood is likely to leave a blood trail that can be tracked (+15% to Tracking skill); the blood does NOT have the same DNA as the Facade. Some Nightbane with this Morphus develop a taste for blood and may drink the blood of their enemies.",
+      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane’s cloth- ing or armor. When the ‘Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time. Bonuses: +1 to M.E. attribute, +2D6 S.D.C., +3 to Perception Rolls regarding disease, blood loss and vampires, +1 to save vs possession, and +2 to Horror Factor. A character with this feature can take the Blood- bath Elite Talent (see Nightbane® RPG, page 113, or the Talent Appendix in this book) at double the range and duration and use it without taking damage. Penalties: -2 to M.A., P.B. and Spd attri- butes, -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus and know the Nightbane is approaching long before he is seen. Likewise, the constantly oozing blood is likely to leave a blood trail that can be tracked (+15% to Tracking skill); the blood does NOT have the same DNA as the Facade. Some Nightbane with this Morphus develop a taste for blood and may drink the blood of their enemies.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -121,9 +171,32 @@
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "saveModifiers": {
+        "possession": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "modifierPercent": 15
+          }
+        ]
       }
     },
     {
@@ -157,9 +230,19 @@
         "ps": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
+        "hp": {
+          "dice": "2D6"
+        },
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "saveModifiers": {
+        "disease": 2,
+        "poison": 2
       }
     },
     {
@@ -184,9 +267,30 @@
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "flat": -2
+        },
+        "hp": {
+          "dice": "3D6"
+        },
         "sdc": {
           "dice": "1D4x10"
         }
+      },
+      "saveModifiers": {
+        "disease": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -205,6 +309,9 @@
       ],
       "description": "Much more com- mon in olden days or in countries that hold onto outdated views of mental illness, this feature occurs most often in those afraid that madness is contagious or caused by a parasite or disease. In modern, developed nations it may still be seen in those afraid of losing control of themselves due to illnesses such as dementia. This manifests with the Morphus having wide-open, bloodshot eyes, frazzled and unclean hair, a twitch and a generally unkempt appearance. The Nightbane foams at the mouth like a rabid dog when angry or upset, and may mutter or giggle to himself without realizing it. Bonuses: +1D4 to the P.S. and P.E. attributes, +1D6 to Spd, +5D6 to S.D.C., +3 to save vs insanity, and +1 to Horror Factor. Penalties: -3 to the M.E. attribute, -1 to M.A. and -5% on the performance of all skills. The character may be a bit absent- minded and forgetful.",
       "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
         "me": {
           "flat": -3
         },
@@ -217,6 +324,9 @@
         "sdc": {
           "dice": "5D6"
         }
+      },
+      "saveModifiers": {
+        "insanity": 3
       }
     },
     {
@@ -240,6 +350,9 @@
         },
         "pe": {
           "flat": -2
+        },
+        "pb": {
+          "flat": -2
         }
       }
     },
@@ -262,9 +375,20 @@
         "me": {
           "flat": 2
         },
+        "hf": {
+          "flat": 2
+        },
         "ma": {
           "flat": -2
+        },
+        "pb": {
+          "flat": -2
         }
+      },
+      "saveModifiers": {
+        "immunities": [
+          "horrorFactor"
+        ]
       }
     },
     {
@@ -292,9 +416,27 @@
         "ma": {
           "flat": -3
         },
+        "pb": {
+          "flat": -3
+        },
         "sdc": {
           "dice": "5D6+20"
         }
+      },
+      "saveModifiers": {
+        "disease": 2,
+        "immunities": [
+          "horrorFactor"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -319,9 +461,15 @@
         "pp": {
           "flat": -1
         },
+        "pb": {
+          "flat": -1
+        },
         "sdc": {
           "dice": "3D6+12"
         }
+      },
+      "saveModifiers": {
+        "disease": 1
       }
     },
     {
@@ -343,6 +491,9 @@
         "me": {
           "flat": 2
         },
+        "pe": {
+          "flat": 2
+        },
         "hf": {
           "flat": 1
         },
@@ -352,9 +503,26 @@
         "pb": {
           "flat": -2
         },
+        "spd": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "saveModifiers": {
+        "disease": 4,
+        "possession": 1,
+        "insanity": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     }
   ]

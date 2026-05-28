@@ -1,19 +1,19 @@
 {
   "tableId": "nightmare",
-  "generatedAt": "2026-05-27T21:57:18.364Z",
+  "generatedAt": "2026-05-28T02:52:52.260Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 9,
+      "changed": 3,
       "entryCount": 9
     },
     {
       "path": "src/data/content/morphus/tables/nightmare.json",
-      "changed": 9,
+      "changed": 2,
       "entryCount": 9
     }
   ],
   "unmatched": [],
-  "totalChanged": 18
+  "totalChanged": 5
 }

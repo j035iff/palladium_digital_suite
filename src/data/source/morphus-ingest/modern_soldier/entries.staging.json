@@ -38,6 +38,15 @@
         "sdc": {
           "dice": "1D6x10+70"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -59,6 +68,30 @@
         "sdc": {
           "dice": "4D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": 25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": 25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -85,7 +118,29 @@
         },
         "sdc": {
           "dice": "3D6+10"
+        },
+        "hf": {
+          "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -134,6 +189,15 @@
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -155,11 +219,20 @@
         "ps": {
           "flat": 2
         },
+        "pe": {
+          "flat": 2
+        },
         "hf": {
           "flat": 1
         },
         "dodge": {
           "flat": -3
+        },
+        "rollWithPunch": {
+          "flat": -3
+        },
+        "hp": {
+          "dice": "-1D6"
         },
         "sdc": {
           "dice": "1D4x10"
@@ -185,7 +258,13 @@
         "me": {
           "flat": 1
         },
+        "pe": {
+          "flat": 1
+        },
         "pullPunch": {
+          "flat": 2
+        },
+        "disarm": {
           "flat": 2
         },
         "bonusHthDamage": {
@@ -215,6 +294,11 @@
         "perception": {
           "flat": 2
         }
+      },
+      "saveModifiers": {
+        "immunities": [
+          "nightlordMagic"
+        ]
       }
     },
     {

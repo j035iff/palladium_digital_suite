@@ -16,11 +16,10 @@
           "flat": 3
         },
         "spd": {
-          "dice": "3D6+10",
           "flat": 10
         },
-        "sdc": {
-          "dice": "2D6x10"
+        "hf": {
+          "flat": 2
         },
         "pp": {
           "flat": -3
@@ -28,8 +27,8 @@
         "pb": {
           "flat": -3
         },
-        "hf": {
-          "flat": 2
+        "sdc": {
+          "dice": "2D6x10"
         }
       },
       "damageAffinities": {
@@ -39,19 +38,9 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "category",
-            "targetValue": "Pilot",
-            "modifierPercent": 10
-          },
-          {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_tailing",
-            "modifierPercent": -30
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
@@ -70,8 +59,13 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
+            "targetValue": "skill_climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": -30
           }
         ]
       },
@@ -99,8 +93,8 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "2D6+10"
+        "hf": {
+          "flat": 1
         },
         "pb": {
           "flat": -2
@@ -108,18 +102,12 @@
         "spd": {
           "flat": -2
         },
-        "ppe": {
-          "dice": "-1D6"
-        },
-        "hf": {
-          "flat": 1
+        "sdc": {
+          "dice": "2D6+10"
         }
       },
       "damageAffinities": {
-        "heat": 0.5,
-        "fire": 2,
-        "cold": 0.5,
-        "poison": 0
+        "fire": 2
       },
       "limbDurability": [
         {
@@ -168,18 +156,14 @@
         "pe": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "3D6"
-        },
         "hf": {
           "flat": 1
         },
-        "perception": {
-          "flat": -5
+        "sdc": {
+          "dice": "3D6"
         }
       },
       "damageAffinities": {
-        "airborneToxins": 0,
         "poison": 0
       },
       "skillModifiers": {
@@ -205,7 +189,13 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 33
         }
-      ]
+      ],
+      "saveModifiers": {
+        "immunities": [
+          "gas",
+          "horrorFactor"
+        ]
+      }
     },
     {
       "id": "gear_head_nitrous_bottles",
@@ -213,17 +203,14 @@
       "tableCategory": "Gear-Head",
       "description": "Nitrous oxide is sometimes used in amateur street-racing and thrill-ride experiences. When injected into the engine it provides a short boost of power and speed at the risk of destroying the engine. This Morphus feature adds small nitrous tanks or “bottles” to the Nightbane’s back, body or upper legs to give him temporary speed boosts and the ability to leap 12 feet (3.7 m) high and up to 40 feet (12.2 m) across! Bonuses: Four times per hour, the character can hit the nitrous to enjoy a rocketing +70 Spd bonus (that’s a bonus of 50 mph/80 km added to his usual Spd). The speed boost lasts for 1D6 minutes at a time. During this period the Nightbane is +2 on initiative, +2 to dodge, and +3 to roll with impact. Penalties: -2 to the P.E. attribute, -1D6 to his base P.P.E., and the character is a speed-freak and/or thrill seeker who tends to be a daredevil who likes to take risks.",
       "statModifiers": {
-        "pe": {
-          "flat": -2
-        },
-        "ppe": {
-          "dice": "-1D6"
-        },
         "dodge": {
           "flat": 2
         },
         "rollWithPunch": {
           "flat": 3
+        },
+        "pe": {
+          "flat": -2
         }
       },
       "mobility": {
@@ -279,17 +266,14 @@
       "tableCategory": "Gear-Head",
       "description": "The Morphus has hydraulic struts at- tached to his limbs, which are extendable. Arms and legs can stretch an additional three feet (0.9 m). Bonuses: Has an extend- ed reach, can perform power punches without using up two at- tacks, counts as one attack, can leap 10 feet (3 m) high or 20 feet (6.1 m) across, +1D6 to the Spd attribute, +1 to roll with impact, and +4D6 S.D.C. Penalties: -2 to dodge, and -20% to Acrobatics, Dance, Disguise, Gymnastics, and Undercover Ops.",
       "statModifiers": {
-        "spd": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "4D6"
-        },
         "rollWithPunch": {
           "flat": 1
         },
         "dodge": {
           "flat": -2
+        },
+        "sdc": {
+          "dice": "4D6"
         }
       },
       "mobility": {
@@ -304,26 +288,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_dance",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -20
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -360,9 +324,6 @@
         },
         "pb": {
           "flat": -1
-        },
-        "rollWithPunch": {
-          "flat": 4
         }
       },
       "damageAffinities": {
@@ -370,26 +331,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_dance",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -15
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -421,17 +362,11 @@
         "pe": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "1D6"
-        },
-        "ppe": {
-          "dice": "-1D4"
-        },
-        "initiative": {
-          "flat": -1
-        },
         "perception": {
           "flat": -3
+        },
+        "sdc": {
+          "dice": "1D6"
         }
       },
       "customOneOffs": [
@@ -456,9 +391,6 @@
       "tableCategory": "Gear-Head",
       "description": "The character has 1D4 high-powered lights built into his torso, head, upper arms, or forearms near the wrist. These lights are capable of swiveling up to 30 degrees (or points where the arm points when in the forearms or where the head turns when in the head), and have the benefit of being able to penetrate even magical darkness, though at half their usual range and intensity. Bonuses: The searchlights can be engaged to see in the dark and through any magically created darkness as well as used to attempt to “parry” incoming Shadow or Darkness-based attacks (-3 to parry such attacks). If the parry is successful, the light completely negates them. Penalties: -1D6 base P.P.E. When any of the lights are on, Prowling is impossible. When off, the Nightbane is -10% to skills like Disguise and Undercover Ops.",
       "statModifiers": {
-        "ppe": {
-          "dice": "-1D6"
-        },
         "parry": {
           "flat": -3
         }
@@ -471,11 +403,6 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -508,9 +435,6 @@
         "ps": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "2D6+8"
-        },
         "strike": {
           "flat": 1
         },
@@ -520,17 +444,14 @@
         "entangle": {
           "flat": 2
         },
-        "ppe": {
-          "dice": "-1D6"
-        },
-        "spd": {
-          "dice": "-1D6"
-        },
         "dodge": {
           "flat": -1
         },
-        "pp": {
+        "ppe": {
           "dice": "-1D6"
+        },
+        "sdc": {
+          "dice": "2D6+8"
         }
       },
       "naturalWeapons": [
@@ -572,11 +493,11 @@
       "description": "A Nightbane with this Morphus fea- ture has several metal accents incorporated into his physical form. These take the shape of bolt-heads, grilles, tanks, shielding on the side of the forearms and legs, and other such details, but all are polished chrome and gleam in the light. The Nightbane might even have a chrome head (+20 S.D.C. to the head) or chrome hands (+1D4 damage and can parry melee weapons with bare hands). Whether the bits are plain, ornate, or even futuristic, the end result is the same. Bonuses: +2D6+10 to S.D.C., +1 to Natu- ral A.R., +2 to roll with impact and +1 to Awe/Horror Factor. The character can also attempt to parry light-based attacks such as those from Guardians or high-tech laser weapons with only a -3 penalty to parry. Penalties: -10% to Prowl, -5% to Swimming, -20% to Disguise, Impersonation and Undercover Ops, and the Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per melee round).",
       "naturalAr": 11,
       "statModifiers": {
-        "sdc": {
-          "dice": "2D6+10"
-        },
         "rollWithPunch": {
           "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6+10"
         },
         "hf": {
           "flat": 1
@@ -618,28 +539,8 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swimming",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "modifierPercent": -20
+            "modifierPercent": -10
           }
         ]
       },

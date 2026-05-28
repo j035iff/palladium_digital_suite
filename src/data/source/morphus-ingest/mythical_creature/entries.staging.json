@@ -19,6 +19,9 @@
         "iq": {
           "flat": -1
         },
+        "ma": {
+          "flat": -1
+        },
         "pb": {
           "flat": -2
         },
@@ -31,6 +34,25 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -65,7 +87,50 @@
           "flat": 3
         }
       },
-      "naturalAr": 10
+      "naturalAr": 10,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "mythical_creature_djinn",
@@ -89,11 +154,41 @@
         "ma": {
           "flat": -2
         },
+        "pe": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        },
         "ps": {
           "dice": "1D4"
         }
       },
-      "naturalAr": 10
+      "naturalAr": 10,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "mythical_creature_dragon_wyvern_serpent",
@@ -115,8 +210,14 @@
           "flat": 6,
           "dice": "1D6+6"
         },
+        "hp": {
+          "dice": "3D6+4"
+        },
         "dodge": {
           "flat": -2
+        },
+        "hf": {
+          "flat": 2
         },
         "pe": {
           "dice": "1D6"
@@ -133,7 +234,34 @@
           "damageFormula": "3D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "impossibleInMorphus": true,
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          }
+        ]
+      }
     },
     {
       "id": "mythical_creature_fairy",
@@ -160,15 +288,65 @@
         "ma": {
           "dice": "1D6"
         },
-        "pp": {
+        "ppe": {
           "dice": "3D6"
+        },
+        "hp": {
+          "dice": "1D6"
         },
         "sdc": {
           "dice": "5D6"
         },
+        "hf": {
+          "flat": 1
+        },
         "perception": {
           "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_dance",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_sing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
+        ]
       }
     },
     {
@@ -190,6 +368,9 @@
         "ps": {
           "flat": 2
         },
+        "pp": {
+          "flat": 2
+        },
         "hf": {
           "flat": 2
         },
@@ -197,6 +378,9 @@
           "flat": 3
         },
         "parry": {
+          "flat": 2
+        },
+        "dodge": {
           "flat": 2
         },
         "iq": {
@@ -215,7 +399,16 @@
           "dice": "2D6+12"
         }
       },
-      "naturalAr": 10
+      "naturalAr": 10,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "mythical_creature_griffin",
@@ -245,6 +438,9 @@
         "strike": {
           "flat": -3
         },
+        "parry": {
+          "flat": -3
+        },
         "ps": {
           "dice": "1D4"
         },
@@ -254,6 +450,20 @@
         "perception": {
           "flat": 3
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -275,6 +485,9 @@
         "me": {
           "flat": 2
         },
+        "ma": {
+          "flat": 2
+        },
         "hf": {
           "flat": 2
         },
@@ -287,6 +500,25 @@
         "sdc": {
           "dice": "1D6x10+40"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -311,6 +543,12 @@
         "pp": {
           "flat": 1
         },
+        "pe": {
+          "flat": 1
+        },
+        "hp": {
+          "dice": "2D6"
+        },
         "ma": {
           "dice": "1D6"
         },
@@ -319,6 +557,9 @@
         },
         "sdc": {
           "dice": "1D6x10+20"
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "skillModifiers": {

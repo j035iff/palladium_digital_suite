@@ -1,19 +1,19 @@
 {
   "tableId": "super_being",
-  "generatedAt": "2026-05-27T22:35:16.883Z",
+  "generatedAt": "2026-05-28T03:00:29.024Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 11,
+      "changed": 1,
       "entryCount": 11
     },
     {
       "path": "src/data/content/morphus/tables/super_being.json",
-      "changed": 11,
+      "changed": 2,
       "entryCount": 11
     }
   ],
   "unmatched": [],
-  "totalChanged": 22
+  "totalChanged": 3
 }

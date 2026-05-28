@@ -19,12 +19,22 @@
         "ps": {
           "flat": 1
         },
+        "pe": {
+          "flat": 1
+        },
         "iq": {
+          "flat": -2
+        },
+        "me": {
           "flat": -2
         },
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "saveModifiers": {
+        "poison": 3,
+        "horrorFactor": 3
       }
     },
     {
@@ -52,9 +62,30 @@
         "me": {
           "flat": -2
         },
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "saveModifiers": {
+        "immunities": [
+          "disease",
+          "horrorFactor"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -76,18 +107,41 @@
         "strike": {
           "flat": 2
         },
+        "parry": {
+          "flat": 2
+        },
         "hf": {
           "flat": 2
         },
         "dodge": {
           "flat": -1
         },
+        "pullPunch": {
+          "flat": -1
+        },
         "pe": {
           "dice": "1D4"
+        },
+        "hp": {
+          "dice": "-2D4"
         },
         "sdc": {
           "dice": "6D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -104,9 +158,12 @@
           "pageNumber": 56
         }
       ],
-      "description": "This Morphus can manifest in a number of different ways. Prescription pill bottles may be inset into various parts of the Nightbane’s body, portions of the flesh replaced by the transparent plastic of pill bottles revealing medication inside; or one of the most common and horrific manifestations is pills as the heads of pimples and warts all over the face, arms, and body, the heads of the capsules and pills poking out through the skin, and the Nightbane picking at them, plucking them out and eating them like candy to get a buzz. A bit of ooze or pus coats every pill when it is removed and trickles out from the empty socket. Whatever the case may be, it is bizarre and repugnant – tablets and capsules poking out of the skin or pills heard rattling around in the containers inside the Nightbane’s body as he moves. Bonuses: +1 on initiative, +5D6 to S.D.C. and +1 to the Nightbane’s Horror Factor, and +2 to save vs Horror Factor, drugs and poison. Pill Notes: Pill Duration: The effects and bonuses of ALL pills last 1D4+2 minutes unless stated otherwise. After-Effects: Last for 2D4+4 minutes or as indicated in the description. Ingested: All pills must be taken orally and ingested, with the effect kicking in within 1D4 melee rounds. Slipping a ground-up pill into food and drink makes it noticeably bitter and foul tasting, so the target is likely (01-80% chance) to throw it away and not consume enough for the pill to have any effect. Saving Throw: 16 or higher vs non-lethal poison. No save applicable when the pill is taken willingly. A successful save means no bonuses or penalties occur in the person, unless stated otherwise. Taking more than one of the same pill has NO additional effect. Penalties and bonuses cannot be stacked via taking multiple pills. Likewise, the effects of only ONE pill at a time apply, so if a new pill is taken, it cancels out the bonuses and effects of the previous pill and replaces them with the effects of the new pill. HOWEVER, penalties from all pills remain in place, with new penalties occurring after the previous ones stop, in the order that the pills were taken. Pill Quantities and Descriptions: 1D4+2 Anti-Toxin: Taking this pill settles an upset stomach, stops vomiting, cures heartburn/acid indigestion, can help with a hangover (reduce duration by half), and it also restores 1D4 lost Hit Points caused by poison of any kind. After-Effects: None.1D4+6 Booster Pills: This is a cocktail of chemicals to increase awareness and prevent sleep. Character is +2 on Perception Rolls, +1 on initiative, and is wide awake for 1D4+2 hours. After-Effects When Duration Ends: -4 on Perception Rolls, -2 on initiative, and drowsiness (-20% on performance of all skills, and will doze off when things get quiet or slow down). The aftereffects last for 1D6+6 hours or go away after getting seven hours of sleep. 1D4+4 Fat Pills: Kills the user’s appetite. Does not feel hungry for 1D4+4 hours. On the down side, the character is not eating enough to be properly well nourished and over a long period of time, could feel sick and become malnourished and weak. After-Effects When Duration Ends: Low energy and hungry for 1D6+4 hours: -1 on Perception Rolls and initiative, -1 on all combat rolls and -10% to Spd attribute. 2D6+3 Happy Pills: The user feels relaxed and cheerful, and is disoriented in a positive, happy manner, making him feel unafraid and calm even under duress. This is good and bad, because while +4 to save vs Horror Factor, and +5 on all skills even when under fire and dealing with life and death conditions, the character is -4 on Perception Rolls, -4 on initiative, reduce Spd by 20%, and the character would rather talk, negotiate or drink than fight. After-Effects When Duration Ends: -1 to save vs Horror Factor, and -10% on the performance of all skills, double when facing death conditions, and the character remains -4 on Perception Rolls and initiative and reduce Spd by 20% for 1D6x10 minutes. 1D4+2 Hallucinogenic Pills: On a failed saving throw, the person suffers from strong perceptual distortions and visual hallucinations. For example, the character may see everyone around him as cartoon characters or monsters, or angels, or aliens, or as members of a favorite (or scary) TV show, and so on. Or the environment might be someplace different or reflect the setting of a favorite or feared book, game, TV show or movie. (“How did we get on the Nostromo?! Where’s Ripley?”) Or people may glow or the sky may be filled with changing colors, flashing lights and so on. While hallucinating, victims are -6 on Perception Rolls, -5 on initiative, -3 to strike, parry, and dodge, -4 to save vs Horror Factor and illusions, and skill performance is -30%. These effects last for 1D4 minutes. After-Effects When Duration Ends: The character remains disoriented for the next hour, -2 on Perception Rolls and initiative (not sure what’s real and what’s not), -10% to the performance of all skills and -2 to save vs Horror Factor and illusions for the next hour. 1D4+1 Magic Pills: Is it a placebo or real? +1 to save vs all magic attacks, illusions, disease, poison and mind control, and +2 to save vs possession; double the bonuses to save against demons, the Nightlords, their demonic minions, any creature from the Nightlands, and other Nightbane. After-Effects When Duration Ends: Feels emboldened and powerful or lucky, but is now really -1 to save vs all magic attacks and illusions, mind control, poison and toxins, and -2 to save vs possession and the magic or psionic attacks of the Nightlords and any creature from the Nightlands as well as demons, for the next 1D6+6 minutes. 2D4+4 Powerful Painkillers: Reduces pain and decreases any pain related penalties by half. The character can function reasonably well, but is foggy and the painkiller makes him -2 on Perception Rolls and initiative, -1 on all combat rolls and -5% on the performance of skills (in addition to any other penalties already in place from injury/pain). After-Effects When Duration Ends: None, other than the pain returning and the full penalties from it roll back in place. Frequent use of powerful painkillers can lead to addiction. 1D4+4 Sedatives: On a failed roll to save, the recipient is incredibly groggy: Reduce attacks per melee, Spd and the performance of all skills by half, and combat bonuses to zero for 1D6+2 minutes. If the roll to save was 4 or below, the victim falls into a deep sleep. After-Effects When Duration Ends: Remains sluggish for 1D6 minutes during which the character is -1 on all combat rolls, -10% on speed and -5% on skill performance for 2D6+2 minutes. 2D4+2 Steroids: Temporary bonuses of +1D4+4 to P.S., +2D6+10 to S.D.C. (damage comes off this first), +2 on initiative, but makes the character aggressive, quick to physical violence and prone to take risks and throw a punch rather than talk things out peacefully. After-Effects When Duration Ends: The character’s P.S. returns to normal and then is temporarily reduced by 1D6 P.S. points, S.D.C. returns to normal, -4 on initiative, reduce Spd by 20%, and the character feels tired and sluggish. Penalties last 2D4+4 minutes.",
+      "description": "This Morphus can manifest in a number of different ways. Prescription pill bottles may be inset into various parts of the Nightbane’s body, portions of the flesh replaced by the transparent plastic of pill bottles revealing medication inside; or one of the most common and horrific manifestations is pills as the heads of pimples and warts all over the face, arms, and body, the heads of the capsules and pills poking out through the skin, and the Nightbane picking at them, plucking them out and eating them like candy to get a buzz. A bit of ooze or pus coats every pill when it is removed and trickles out from the empty socket. Whatever the case may be, it is bizarre and repugnant – tablets and capsules poking out of the skin or pills heard rattling around in the containers inside the Nightbane’s body as he moves. Bonuses: +1 on initiative, +5D6 to S.D.C. and +1 to the Nightbane’s Horror Factor, and +2 to save vs Horror Factor, drugs and poison. Pill Notes: Pill Duration: The effects and bonuses of ALL pills last 1D4+2 minutes unless stated otherwise. After-Effects: Last for 2D4+4 minutes or as indicated in the description. Ingested: All pills must be taken orally and ingested, with the effect kicking in within 1D4 melee rounds. Slipping a ground-up pill into food and drink makes it noticeably bitter and foul tasting, so the target is likely (01-80% chance) to throw it away and not consume enough for the pill to have any effect. Saving Throw: 16 or higher vs non-lethal poison. No save applicable when the pill is taken willingly. A successful save means no bonuses or penalties occur in the person, unless stated otherwise. Taking more than one of the same pill has NO additional effect. Penalties and bonuses cannot be stacked via taking multiple pills. Likewise, the effects of only ONE pill at a time apply, so if a new pill is taken, it cancels out the bonuses and effects of the previous pill and replaces them with the effects of the new pill. HOWEVER, penalties from all pills remain in place, with new penalties occurring after the previous ones stop, in the order that the pills were taken. Pill Quantities and Descriptions: 1D4+2 Anti-Toxin: Taking this pill settles an upset stomach, stops vomiting, cures heartburn/acid indigestion, can help with a hangover (reduce duration by half), and it also restores 1D4 lost Hit Points caused by poison of any kind. After-Effects: None.1D4+6 Booster Pills: This is a cocktail of chemicals to increase awareness and prevent sleep. Character is +2 on Perception Rolls, +1 on initiative, and is wide awake for 1D4+2 hours. After-Effects When Duration Ends: -4 on Perception Rolls, -2 on initiative, and drowsiness (-20% on performance of all skills, and will doze off when things get quiet or slow down). The aftereffects last for 1D6+6 hours or go away after getting seven hours of sleep. 1D4+4 Fat Pills: Kills the user’s appetite. Does not feel hungry for 1D4+4 hours. On the down side, the character is not eating enough to be properly well nourished and over a long period of time, could feel sick and become malnourished and weak. After-Effects When Duration Ends: Low energy and hungry for 1D6+4 hours: -1 on Perception Rolls and initiative, -1 on all combat rolls and -10% to Spd attribute. 2D6+3 Happy Pills: The user feels relaxed and cheerful, and is disoriented in a positive, happy manner, making him feel unafraid and calm even under duress. This is good and bad, because while +4 to save vs Horror Factor, and +5 on all skills even when under fire and dealing with life and death conditions, the character is -4 on Perception Rolls, -4 on initiative, reduce Spd by 20%, and the character would rather talk, negotiate or drink than fight. After-Effects When Duration Ends: -1 to save vs Horror Factor, and -10% on the performance of all skills, double when facing death conditions, and the character remains -4 on Perception Rolls and initiative and reduce Spd by 20% for 1D6x10 minutes. 1D4+2 Hallucinogenic Pills: On a failed saving throw, the person suffers from strong perceptual distortions and visual hallucinations. For example, the character may see everyone around him as cartoon characters or monsters, or angels, or aliens, or as members of a favorite (or scary) TV show, and so on. Or the environment might be someplace different or reflect the setting of a favorite or feared book, game, TV show or movie. (“How did we get on the Nostromo?! Where’s Ripley?”) Or people may glow or the sky may be filled with changing colors, flashing lights and so on. While hallucinating, victims are -6 on Perception Rolls, -5 on initiative, -3 to strike, parry, and dodge, -4 to save vs Horror Factor and illusions, and skill performance is -30%. These effects last for 1D4 minutes. After-Effects When Duration Ends: The character remains disoriented for the next hour, -2 on Perception Rolls and initiative (not sure what’s real and what’s not), -10% to the performance of all skills and -2 to save vs Horror Factor and illusions for the next hour. 1D4+1 Magic Pills: Is it a placebo or real? +1 to save vs all magic attacks, illusions, disease, poison, and +2 to save vs possession; double the bonuses to save against demons, the Nightlords, their demonic minions, any creature from the Nightlands, and other Nightbane. After-Effects When Duration Ends: Feels emboldened and powerful or lucky, but is now really -1 to save vs all magic attacks and illusions, poison and toxins, and -2 to save vs possession and the magic or psionic attacks of the Nightlords and any creature from the Nightlands as well as demons, for the next 1D6+6 minutes. 2D4+4 Powerful Painkillers: Reduces pain and decreases any pain related penalties by half. The character can function reasonably well, but is foggy and the painkiller makes him -2 on Perception Rolls and initiative, -1 on all combat rolls and -5% on the performance of skills (in addition to any other penalties already in place from injury/pain). After-Effects When Duration Ends: None, other than the pain returning and the full penalties from it roll back in place. Frequent use of powerful painkillers can lead to addiction. 1D4+4 Sedatives: On a failed roll to save, the recipient is incredibly groggy: Reduce attacks per melee, Spd and the performance of all skills by half, and combat bonuses to zero for 1D6+2 minutes. If the roll to save was 4 or below, the victim falls into a deep sleep. After-Effects When Duration Ends: Remains sluggish for 1D6 minutes during which the character is -1 on all combat rolls, -10% on speed and -5% on skill performance for 2D6+2 minutes. 2D4+2 Steroids: Temporary bonuses of +1D4+4 to P.S., +2D6+10 to S.D.C. (damage comes off this first), +2 on initiative, but makes the character aggressive, quick to physical violence and prone to take risks and throw a punch rather than talk things out peacefully. After-Effects When Duration Ends: The character’s P.S. returns to normal and then is temporarily reduced by 1D6 P.S. points, S.D.C. returns to normal, -4 on initiative, reduce Spd by 20%, and the character feels tired and sluggish. Penalties last 2D4+4 minutes.",
       "statModifiers": {
         "strike": {
+          "flat": -3
+        },
+        "parry": {
           "flat": -3
         },
         "ps": {
@@ -119,6 +176,14 @@
         "spd": {
           "percent": -20
         }
+      },
+      "saveModifiers": {
+        "horrorFactor": -1,
+        "poison": 2,
+        "illusions": -6,
+        "magic": 0,
+        "disease": 1,
+        "nightlordMagic": -1
       }
     },
     {
@@ -137,6 +202,9 @@
       ],
       "description": "The throat of the Nightbane is at least partially replaced by metal or glass tubing. This has a drastic effect on the sound of the character’s voice and breathing (think Darth Vader). The voice has a rasping, wheezing or even gurgling quality and the piping may or may not glow red as the Nightbane speaks or breathes. At the same time, acrid smoke regularly wafts from the mouth and nostrils and hangs about the character like a shroud. Bonuses: The Nightbane is immune to smoke, sulfur, tear gas and other such airborne toxins/poisons, +1 to Horror Factor, and Blowing Smoke (special): The Nightbane can blow smoke in rings for entertainment or as a signal, or can blow a gust of smoke into an opponent’s face (3 foot/0.9 m range). The smoke temporarily irritates the eyes and lungs, imposing a -1 penalty to Perception Rolls and all combat rolls for one melee round (15 seconds). Penalties: -1D6 from the permanent P.P.E. base, bad breath, -1 to Perception Rolls, -1 to strike with ranged weapons due to the obscuring smoke and a persistent cough that also imposes a -25% penalty to Prowl and Seduction.",
       "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
         "perception": {
           "flat": -1
         },
@@ -165,6 +233,9 @@
           "flat": 1
         },
         "ma": {
+          "flat": -3
+        },
+        "pe": {
           "flat": -3
         },
         "sdc": {
@@ -198,6 +269,9 @@
         "ma": {
           "flat": -2
         },
+        "pb": {
+          "flat": -2
+        },
         "sdc": {
           "dice": "2D6"
         }
@@ -222,9 +296,27 @@
         "parry": {
           "flat": 1
         },
+        "dodge": {
+          "flat": 1
+        },
         "ma": {
           "dice": "-1D4"
+        },
+        "perception": {
+          "flat": 1
         }
+      },
+      "saveModifiers": {
+        "horrorFactor": 2
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {

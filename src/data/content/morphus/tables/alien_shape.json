@@ -29,29 +29,27 @@
         }
       },
       "sensory": {
-        "nightvisionRangeFlatBonus": 2000,
         "scentTracking": {
           "enabled": true,
           "baseSuccessPercent": 20,
           "perLevelIncrement": 5,
           "recognizeScentBasePercent": 25,
           "recognizeScentPerLevel": 5,
-          "recognizeSpecificScentBasePercent": 20,
-          "recognizeSpecificScentPerLevel": 3,
           "recognizeCommonScentBonusPercent": 30
         },
         "hawkLikeDayVision": true,
-        "whisperHearingRangeFeet": 150,
-        "tasteIdentification": {
-          "baseSuccessPercent": 30,
-          "perLevelIncrement": 5
-        }
+        "whisperHearingRangeFeet": 150
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
             "modifierPercent": 5
           }
         ]
@@ -108,13 +106,10 @@
           "flat": 1
         },
         "sdc": {
-          "dice": "5D6+5"
+          "dice": "5D6"
         },
         "pb": {
           "percent": -30
-        },
-        "spd": {
-          "percent": -10
         }
       },
       "naturalAr": 8,
@@ -129,11 +124,6 @@
             "targetType": "category",
             "targetValue": "physical",
             "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
           }
         ]
       }
@@ -193,9 +183,6 @@
         },
         "hf": {
           "dice": "1D4"
-        },
-        "bonusHthDamage": {
-          "dice": "1D6"
         }
       }
     },
@@ -282,9 +269,6 @@
         },
         "sdc": {
           "dice": "2D6"
-        },
-        "perception": {
-          "flat": 1
         }
       },
       "mobility": {
@@ -292,21 +276,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
@@ -336,11 +305,11 @@
       ],
       "description": "The character looks predominately hu- man, but has crystals that resemble quartz or diamonds growing out of his skin along the fingers, the bones of the hands, along the back of the arms up and down the spine and at the elbow, shoulders and knees. The head can look completely human or the hair can be replaced with a cap of crystals or a crown of tall, jutting crystal. Add 2D4x10 to the S.D.C., heat and fire do half damage, and the character can parry bladed weapons and Joe Sifferman (Order #46319524) 136 fiery torches with his bare hands. The fingernails are replaced by jagged crystals that slash, doing 1D6 plus punch damage and the crystal encrusted hands function similar to brass knuckles adding 1D6 to punch damage. Furthermore, in bright light, the Nightbane glitters like a gem and may (1-60% chance) blind all who look at him from the reflected light. Bonus: +2 to Horror Factor.",
       "statModifiers": {
-        "sdc": {
-          "dice": "2D4x10"
-        },
         "hf": {
           "flat": 2
+        },
+        "sdc": {
+          "dice": "2D4x10"
         }
       },
       "damageAffinities": {
@@ -403,14 +372,11 @@
         "sdc": {
           "dice": "1D6x10"
         },
-        "spd": {
-          "percent": -10
-        },
         "hf": {
           "dice": "1D4"
         },
-        "rollWithPunch": {
-          "flat": 2
+        "spd": {
+          "percent": -10
         }
       },
       "heightModifier": {
@@ -478,9 +444,10 @@
           "pageNumber": 103
         }
       ],
-      "description": "The Nightbane's body is covered by 2D6x10 tiny mouths. The mouths can gesture, stick out their tongues, whistle, hoot, growl, or scream in a hellish chorus. They cannot speak. The character can grapple an enemy and let the tiny mouths bite (1D4 damage per mouth; typically 1D6 mouths bite at once). Bonuses: +1D4+2 to Horror Factor (+3 when all mouths scream).",
+      "description": "+1D4+2 to Horror Factor.",
       "statModifiers": {
         "hf": {
+          "flat": 2,
           "dice": "1D4+2"
         }
       },
@@ -497,7 +464,7 @@
           "condition": "grappling",
           "target": "self",
           "horrorFactorFlat": 3,
-          "note": "Hellish chorus when all tiny mouths scream or screech at once."
+          "note": "Hellish chorus when all tiny mouths scream."
         }
       ]
     },
@@ -515,7 +482,7 @@
           "pageNumber": 72
         }
       ],
-      "description": "The Nightbane has two or more heads resting on his shoulders (01-75% two heads, 76-98% three, 99-00% four heads). Each head can speak and look in a different direction. Bonuses: +1 to Perception Rolls and Horror Factor for each additional head; +1 to I.Q. and +1 on initiative. Penalties: -1 to M.A. and -1 to P.B. per head.",
+      "description": "The Nightbane has two or more heads resting on his shoulders (01-75% two heads,",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -624,6 +591,9 @@
       "statModifiers": {
         "hf": {
           "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6"
         },
         "bonusHthDamage": {
           "dice": "2D6"
@@ -881,7 +851,7 @@
           "pageNumber": 103
         }
       ],
-      "description": "The Nightbane’s skin has an inhuman hue. The color is too intense and sharp to be normal, body paint or dyes. Colors can include shades of yellows, reds, greens, blues, purple/violets, copper, gold, metallic grey, silver, pitch black, and stark white. Roll or pick one. Bonus: +1 to Horror Factor.",
+      "description": "The Nightbane’s skin has an inhuman hue. The color is too intense and sharp to be normal, body paint or dyes. Colors can include shades of yellows, reds, greens, blues, purple/violets, copper, gold, metallic grey, silver, pitch black, and stark white. Roll or pick one. Bonus: +1 to Hor- ror Factor.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -928,9 +898,6 @@
         },
         "pb": {
           "flat": -2
-        },
-        "sdc": {
-          "dice": "5D6+5"
         }
       },
       "naturalAr": 8

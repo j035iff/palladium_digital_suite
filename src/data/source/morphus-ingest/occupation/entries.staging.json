@@ -19,6 +19,9 @@
         "iq": {
           "flat": 1
         },
+        "me": {
+          "flat": 1
+        },
         "pb": {
           "flat": 1
         },
@@ -28,6 +31,15 @@
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          }
+        ]
       }
     },
     {
@@ -106,7 +118,10 @@
           "dice": "4D6"
         }
       },
-      "naturalAr": 8
+      "naturalAr": 8,
+      "saveModifiers": {
+        "disease": 2
+      }
     },
     {
       "id": "occupation_mechanic_mechanical",
@@ -128,6 +143,9 @@
           "flat": 2
         },
         "ps": {
+          "flat": 2
+        },
+        "pp": {
           "flat": 2
         },
         "pb": {
@@ -157,6 +175,9 @@
       "statModifiers": {
         "pe": {
           "flat": 2
+        },
+        "spd": {
+          "flat": -2
         },
         "ma": {
           "flat": -2
@@ -215,12 +236,24 @@
         "me": {
           "flat": 1
         },
+        "ma": {
+          "flat": 1
+        },
         "perception": {
           "flat": 2
         },
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
       }
     },
     {
@@ -273,7 +306,13 @@
         "me": {
           "flat": 2
         },
+        "pe": {
+          "flat": 2
+        },
         "pb": {
+          "flat": -2
+        },
+        "spd": {
           "flat": -2
         }
       }

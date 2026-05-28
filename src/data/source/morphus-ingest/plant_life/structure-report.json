@@ -1,19 +1,19 @@
 {
   "tableId": "plant_life",
-  "generatedAt": "2026-05-27T22:16:32.897Z",
+  "generatedAt": "2026-05-28T03:01:21.776Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 1,
+      "changed": 5,
       "entryCount": 18
     },
     {
       "path": "src/data/content/morphus/tables/plant_life.json",
-      "changed": 1,
+      "changed": 5,
       "entryCount": 18
     }
   ],
   "unmatched": [],
-  "totalChanged": 2
+  "totalChanged": 10
 }

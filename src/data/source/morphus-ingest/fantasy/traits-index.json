@@ -1,0 +1,177 @@
+{
+  "tableId": "fantasy",
+  "tableHeading": "Fantasy Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane Survival Guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane Survival Guide",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 10,
+  "traits": [
+    {
+      "name": "Aura of Magical Power",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90,
+          "percent": "21-30%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Branded with Magic Symbols",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90,
+          "percent": "31-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Dragon Lord",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Enchanted Knight Armor",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90,
+          "percent": "11-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Faerie Wings",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91,
+          "percent": "61-70%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Ogre Warrior with a Magic Weapon",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Prince/Princess",
+      "percent": "90-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90,
+          "percent": "90-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Stone-Like Flesh",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91,
+          "percent": "51-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Wee Folk",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Wizard Robes",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}

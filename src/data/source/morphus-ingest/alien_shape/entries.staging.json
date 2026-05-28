@@ -34,6 +34,20 @@
         },
         "hawkLikeDayVision": true,
         "whisperHearingRangeFeet": 150
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_art",
+            "modifierPercent": 5
+          }
+        ]
       }
     },
     {
@@ -56,6 +70,9 @@
           "flat": 1
         },
         "pp": {
+          "flat": -1
+        },
+        "pb": {
           "flat": -1
         },
         "sdc": {
@@ -90,7 +107,21 @@
           "percent": -30
         }
       },
-      "naturalAr": 8
+      "naturalAr": 8,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 25
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          }
+        ]
+      }
     },
     {
       "id": "alien_shape_bark_like_skin",
@@ -193,6 +224,12 @@
       },
       "naturalWeapons": [
         {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
           "limbType": "claws",
           "label": "Claws",
           "damageFormula": "2D6",
@@ -231,6 +268,15 @@
       },
       "mobility": {
         "balanceModifierPercent": -10
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          }
+        ]
       }
     },
     {
@@ -254,6 +300,9 @@
       ],
       "description": "The character looks predominately hu- man, but has crystals that resemble quartz or diamonds growing out of his skin along the fingers, the bones of the hands, along the back of the arms up and down the spine and at the elbow, shoulders and knees. The head can look completely human or the hair can be replaced with a cap of crystals or a crown of tall, jutting crystal. Add 2D4x10 to the S.D.C., heat and fire do half damage, and the character can parry bladed weapons and Joe Sifferman (Order #46319524) 136 fiery torches with his bare hands. The fingernails are replaced by jagged crystals that slash, doing 1D6 plus punch damage and the crystal encrusted hands function similar to brass knuckles adding 1D6 to punch damage. Furthermore, in bright light, the Nightbane glitters like a gem and may (1-60% chance) blind all who look at him from the reflected light. Bonus: +2 to Horror Factor.",
       "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
         "sdc": {
           "dice": "2D4x10"
         }
@@ -264,6 +313,22 @@
           "label": "Crystal slash",
           "damageFormula": "1D6",
           "isAdditiveToHth": true
+        },
+        {
+          "limbType": "claws",
+          "label": "Crystal knuckles",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "damageAffinities": {
+        "heat": 0.5,
+        "fire": 0.5
+      },
+      "specialCombatInterceptions": [
+        {
+          "interceptAction": "bare_handed_melee_parry",
+          "modifierFlat": 0
         }
       ]
     },
@@ -294,11 +359,11 @@
         "sdc": {
           "dice": "1D6x10"
         },
-        "spd": {
-          "percent": -10
-        },
         "hf": {
           "dice": "1D4"
+        },
+        "spd": {
+          "percent": -10
         }
       },
       "heightModifier": {
@@ -358,6 +423,20 @@
           "damageFormula": "1D4",
           "isAdditiveToHth": false
         }
+      ],
+      "statModifiers": {
+        "hf": {
+          "flat": 2,
+          "dice": "1D4+2"
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "target": "self",
+          "horrorFactorFlat": 3,
+          "note": "Hellish chorus when all tiny mouths scream."
+        }
       ]
     },
     {
@@ -374,7 +453,24 @@
           "pageNumber": 72
         }
       ],
-      "description": "The Nightbane has two or more heads resting on his shoulders (01-75% two heads,"
+      "description": "The Nightbane has two or more heads resting on his shoulders (01-75% two heads,",
+      "variantPercentiles": [
+        {
+          "roll": "01-75%",
+          "label": "Two heads",
+          "description": "Two heads on shoulders."
+        },
+        {
+          "roll": "76-98%",
+          "label": "Three heads",
+          "description": "Three heads on shoulders."
+        },
+        {
+          "roll": "99-00%",
+          "label": "Four heads",
+          "description": "Four heads on shoulders."
+        }
+      ]
     },
     {
       "id": "alien_shape_no_bones",
@@ -468,7 +564,16 @@
           "target": "opponent",
           "damagePerRound": "1D4"
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "alien_shape_plasmoid",
@@ -524,6 +629,11 @@
           "skillId": "skill_prowl",
           "modifierPercent": 20,
           "context": "darkness"
+        },
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": -20,
+          "context": "bright_light"
         }
       ],
       "skillModifiers": {
@@ -535,6 +645,12 @@
             "grantUnlearnedValue": 45
           }
         ]
+      },
+      "sensory": {
+        "darknessInvisibilityPercent": 80,
+        "lightSensitivity": {
+          "daylightVisionMultiplier": 0.5
+        }
       }
     },
     {
@@ -599,7 +715,16 @@
           "target": "opponent",
           "note": "Touching character requires save vs Horror Factor or refuse further contact."
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      }
     },
     {
       "id": "alien_shape_thorns",

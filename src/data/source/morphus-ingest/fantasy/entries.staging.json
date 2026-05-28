@@ -1,9 +1,4 @@
 {
-  "id": "fantasy",
-  "kind": "morphus_trait_table",
-  "displayName": "Fantasy",
-  "parentTable": null,
-  "description": "Fantasy Morphus table. Add characteristic rows from the book.",
   "entries": [
     {
       "id": "fantasy_aura_of_magical_power",
@@ -152,13 +147,6 @@
           "buoyancy": "sink"
         }
       },
-      "limbDurability": [
-        {
-          "limbName": "Wings",
-          "quantity": 2,
-          "sdc": 85
-        }
-      ],
       "naturalAr": 12
     },
     {
@@ -232,14 +220,7 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
-      },
-      "limbDurability": [
-        {
-          "limbName": "Wings",
-          "quantity": 2,
-          "sdc": 46
-        }
-      ]
+      }
     },
     {
       "id": "fantasy_ogre_warrior_with_a_magic_weapon",

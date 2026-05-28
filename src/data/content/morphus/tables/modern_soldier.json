@@ -11,14 +11,11 @@
       "tableCategory": "Modern Soldier",
       "description": "This ‘Bane is always wearing a mod- ern body armor of some form. Regardless of the style, it is a full suit of combat armor complete with a helmet. While it looks like the genuine article, complete with zippers and other fasteners, the armor is unable to be removed as it is part of the Morphus. The coloring is typically a matte black, dark grey, desert brown or some kind of camouflage pattern and may have multiple pock- ets and fasteners to store equipment. Bonuses: Increase the base Natural A.R. to 1D4+10, add 1D6x10+70 to S.D.C., and blunt at- tacks and explosions do half damage. Penalties: -1 to the P.E. at- tribute and -1D4 to Spd, -5% to skills like Acrobatics, Climbing, Gymnastics, Prowl, Swimming, Disguise and Undercover Ops. The armor provides no protection against damage from disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers (which ignore the armor’s S.D.C. entirely).",
       "statModifiers": {
-        "sdc": {
-          "dice": "1D6x10+70"
-        },
         "pe": {
           "flat": -1
         },
-        "spd": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "1D6x10+70"
         }
       },
       "damageAffinities": {
@@ -27,36 +24,6 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_swim",
-            "modifierPercent": -5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -5
-          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -87,12 +54,6 @@
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
-        },
-        "spd": {
-          "dice": "-1D4"
-        },
-        "initiative": {
-          "flat": -1
         }
       },
       "skillModifiers": {
@@ -104,18 +65,13 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_tailing",
-            "modifierPercent": 10
+            "modifierPercent": 25
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -5
+            "targetValue": "skill_concealment",
+            "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
@@ -164,8 +120,8 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
@@ -174,13 +130,8 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "impossibleInMorphus": true
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
           }
         ]
       },
@@ -205,20 +156,14 @@
       "tableCategory": "Modern Soldier",
       "description": "Like the Body Armor feature, the gas mask is part of the Nightbane’s Morphus and probably perma- nently attached to his face (Biomechanical or cybernetic). It can be any style of gas mask from WWI to modern day equivalents. This protective device was invented to shield and protect the wearer from chemical weapons on the battlefield, but this one is equally useful against chemical fumes, tear gas, gas attacks of all kinds and even airborne pathogens. Bonuses: +2D6 to S.D.C. and +1 to Horror Factor. While in Morphus form the Nightbane is immune to any airborne chemicals, gas attacks, fumes, stench or disease that is not magical in nature. Even when it is magical, the character is +4 to save against its effects. Nuclear radiation is also ineffective against this Nightbane and will not even irradiate per- sonal equipment kept on the character’s person. Penalties: -1 on Perception Rolls, -1D4 to M.A. and P.B. attributes, voice is a bit muffled, -10% to all Communications skills, -60% to Disguise, Seduction and Undercover Ops.",
       "statModifiers": {
-        "sdc": {
-          "dice": "2D6"
-        },
         "hf": {
           "flat": 1
-        },
-        "perception": {
-          "flat": -1
         },
         "ma": {
           "dice": "-1D4"
         },
-        "pb": {
-          "dice": "-1D4"
+        "sdc": {
+          "dice": "2D6"
         }
       },
       "saveModifiers": {
@@ -231,24 +176,9 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "category",
-            "targetValue": "Communications",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -60
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -60
-          },
-          {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "modifierPercent": -60
+            "modifierPercent": -10
           }
         ]
       },
@@ -285,9 +215,6 @@
         },
         "disarm": {
           "flat": 2
-        },
-        "ppe": {
-          "dice": "-(1D6+6)"
         },
         "bonusHthDamage": {
           "flat": -4
@@ -340,9 +267,6 @@
         },
         "perception": {
           "flat": 2
-        },
-        "ppe": {
-          "dice": "-2D4"
         }
       },
       "sensory": {
@@ -362,7 +286,12 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 54
         }
-      ]
+      ],
+      "saveModifiers": {
+        "immunities": [
+          "nightlordMagic"
+        ]
+      }
     },
     {
       "id": "modern_soldier_field_radio",
@@ -372,9 +301,6 @@
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
-        },
-        "ppe": {
-          "dice": "-2D4"
         }
       },
       "damageAffinities": {
@@ -420,20 +346,14 @@
       "tableCategory": "Modern Soldier",
       "description": "The Nightbane’s Morphus may have a bit of a machine-like appearance and certainly wears a combat helmet and fatigues. Select one weapon from each of the following lists. These weapons always appear on the char- acter when the Morphus form is assumed, with firearms fully loaded and with spare ammunition. Expended rounds are replen- ished every 24 hours, but additional store-bought commercial rounds (or stolen ordnance) of the same caliber may be provided by the character. Note that these may be hard to come by, es- pecially high-damage rounds of military ordnance. All weapons have standard features common to that type (e.g. assault rifles and machine-guns can fire bursts, sniper rifles have long-range scopes, etc.), and may be Biomechanical, meaning they many be built into the Nightbane’s body or limbs. Bonuses: +1D6 to Spd attribute, +6D6 S.D.C., and while in Morphus, the Nightbane has a bonus of +2 to strike and +1 to parry with any weapons from this feature, and all ch weapons do an extra +2D6 damage against the Nightlords, their demonic minions and all denizens of the Nightlands. Penalties: -2D6+6 from the permanent P.P.E. base, and -5% on the performance of all skills except W.P.s, Military, Physical and Espionage skills. Primary Weapon Light Assault Rifle: 4D6 damage with a 1,969 foot (600 m) range and three 50 round clips. Heavy Assault Rifle: 5D6 damage with a 1,640 foot (500 m) range and three 30 round clips. Light Machine-Gun: 6D6 damage with a 3,280 foot (1,000 m) range and a single 100 round belt. Sniper Rifle: 5D6 damage with a 5,280 foot (1,609 m) range and three 10 round clips. Shotgun: 4D6 damage with a 200 foot (61 m) range and a 7 round capacity plus two full reloads. Submachine-Gun: 3D6 damage with a 656 foot (200 m) range and three 30 round clips. Secondary Weapon/Side Arm Light Pistol: 3D6 damage with a 200 foot (61 m) range and three 15 round clips. Heavy Pistol: 4D6 damage with a 160 foot (48.8 m) range and three 9 round clips. Machine-Pistol: 2D6 damage with a 160 foot (48.8 m) range and three 20 round clips. Grenades (x3): Hand thrown or rifle-launched, deal 1D6x10 damage to a 15 foot (4.6 m) radius. Survival Knife or Small Melee Weapon: Likely a knife or bayonet, deals 1D6 damage, for melee combat and may retract from a wrist or forearm housing. Large Melee Weapon: Something like a machete, sword or large entrenching tool that inflicts 2D6 damage, for melee combat and may retract from a wrist or forearm housing",
       "statModifiers": {
-        "spd": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "6D6"
-        },
-        "ppe": {
-          "dice": "-(2D6+6)"
-        },
         "strike": {
           "flat": 2
         },
         "parry": {
           "flat": 1
+        },
+        "sdc": {
+          "dice": "6D6"
         }
       },
       "skillModifiers": {
@@ -469,26 +389,20 @@
         "pe": {
           "flat": 2
         },
-        "sdc": {
-          "dice": "1D4x10"
-        },
         "hf": {
           "flat": 1
-        },
-        "hp": {
-          "dice": "-1D6"
-        },
-        "ppe": {
-          "dice": "-(3D6+10)"
-        },
-        "spd": {
-          "percent": -50
         },
         "dodge": {
           "flat": -3
         },
         "rollWithPunch": {
           "flat": -3
+        },
+        "hp": {
+          "dice": "-1D6"
+        },
+        "sdc": {
+          "dice": "1D4x10"
         }
       },
       "skillModifiers": {

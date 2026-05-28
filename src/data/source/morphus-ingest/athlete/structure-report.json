@@ -1,19 +1,19 @@
 {
   "tableId": "athlete",
-  "generatedAt": "2026-05-27T21:01:38.012Z",
+  "generatedAt": "2026-05-28T02:47:38.477Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 9,
+      "changed": 6,
       "entryCount": 9
     },
     {
       "path": "src/data/content/morphus/tables/athlete.json",
-      "changed": 9,
+      "changed": 6,
       "entryCount": 9
     }
   ],
   "unmatched": [],
-  "totalChanged": 18
+  "totalChanged": 12
 }

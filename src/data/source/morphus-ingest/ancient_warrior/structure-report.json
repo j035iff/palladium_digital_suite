@@ -1,19 +1,19 @@
 {
   "tableId": "ancient_warrior",
-  "generatedAt": "2026-05-27T18:14:51.610Z",
+  "generatedAt": "2026-05-28T02:47:32.903Z",
   "fillOnly": false,
   "files": [
     {
       "path": "entries.staging.json",
-      "changed": 8,
+      "changed": 7,
       "entryCount": 8
     },
     {
       "path": "src/data/content/morphus/tables/ancient_warrior.json",
-      "changed": 2,
+      "changed": 8,
       "entryCount": 8
     }
   ],
   "unmatched": [],
-  "totalChanged": 10
+  "totalChanged": 15
 }
