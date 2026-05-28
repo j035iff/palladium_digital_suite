@@ -419,6 +419,23 @@
             ]
           },
           "description": "Operational flags for spawned gimmick items."
+        },
+        "activationCost": {
+          "$ref": "#/$defs/weaponActivationCost",
+          "description": "HP/PPE/ISP/SDC spent to activate the gimmick payload (e.g. Squirt Flower blood/acid squirt)."
+        },
+        "rangeFeet": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum effective range of the gimmick attack or effect in feet."
+        },
+        "customOneOffs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Narrative rules for this spawned item not yet modeled in structured fields."
         }
       }
     },

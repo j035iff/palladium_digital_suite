@@ -1,0 +1,118 @@
+{
+  "tableId": "dinosaur",
+  "entries": [
+    {
+      "id": "dinosaur_sauropod_humanoid",
+      "name": "Sauropod Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "skill context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_raptor_legs",
+      "name": "Raptor Legs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_triceratops_head",
+      "name": "Triceratops Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_ankylosaur_humanoid",
+      "name": "Ankylosaur Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "skill context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_duckoid_humanoid",
+      "name": "Duckoid Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "skill context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_tyrannosaur_humanoid",
+      "name": "Tyrannosaur Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "scent tracking"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_pterodactyl_humanoid",
+      "name": "Pterodactyl Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "skill context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_lesothosaurus_humanoid",
+      "name": "Lesothosaurus Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "dinosaur_stegosaur_plates",
+      "name": "Stegosaur Plates",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "combat interceptions",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

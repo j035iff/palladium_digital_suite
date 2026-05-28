@@ -4,5 +4,765 @@
   "displayName": "Dinosaur",
   "parentTable": null,
   "description": "Dinosaur Morphus table (top-level, not an Animal hub sub-table). Add characteristic rows from the book.",
-  "entries": []
+  "entries": [
+    {
+      "id": "dinosaur_sauropod_humanoid",
+      "name": "Sauropod Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 85
+        }
+      ],
+      "description": "The Morphus is a humanoid Sauropod, with a small sauropod head and long neck (1D6+1 feet/0.6 to 2.1 m long) that can bend to look behind him, stretch to see from a height advantage, or fit through small openings.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -40
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+10"
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "skillContextModifiers": [
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": 15,
+          "context": "underwater"
+        }
+      ],
+      "customOneOffs": [
+        "The nostrils are on top of the head, allowing the creature to be underwater indefinitely and still breathe as long as the very top of the head is above the surface."
+      ]
+    },
+    {
+      "id": "dinosaur_raptor_legs",
+      "name": "Raptor Legs",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 85
+        }
+      ],
+      "description": "The upper torso is humanoid though the face is elongated, eyes are twice the normal size and the neck is 50% longer. The legs are those of a Raptor, covered with dark mottled scales, ending in huge feet with three clawed toes.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ma": {
+          "dice": "-1D4"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "4D6+12"
+        },
+        "sdc": {
+          "dice": "6D6+30"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 8
+          },
+          "standingDistance": {
+            "flat": 12
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Scythe Claw Kick",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "The Nightbane possesses a large scythe claw on the big toe of each foot that deals 3D6 damage with a kick."
+      ]
+    },
+    {
+      "id": "dinosaur_triceratops_head",
+      "name": "Triceratops Head",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus is a humanoid body with a thick neck and the head of a Triceratops, complete with three horns (one on the nose, two on the forehead) and a thick, bony frill or collar around the head.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "ma": {
+          "flat": -2
+        },
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6x10+16"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 3
+        },
+        "pullPunch": {
+          "flat": 3
+        },
+        "disarm": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "head_butt",
+          "label": "Triceratops Head-butt",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Horn Jab",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Running Ram",
+          "damageFormula": "6D6+6",
+          "isAdditiveToHth": false,
+          "extraAttacks": -1
+        },
+        {
+          "limbType": "bite",
+          "label": "Triceratops Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "The head and bony frill protecting the neck provide a Natural A.R. of 17.",
+        "The +3 Parry bonus specifically applies when parrying with the horns/head.",
+        "The running ram attack counts as two melee attacks."
+      ]
+    },
+    {
+      "id": "dinosaur_ankylosaur_humanoid",
+      "name": "Ankylosaur Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus is a humanoid with thick limbs, barrel chested, and covered in a tough, leathery and calcium shell. The head is large, square, hard, and covered in small, hard spikes.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "percent": -50
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "heightModifier": {
+        "percent": -10
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "skillContextModifiers": [
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": 40,
+          "context": "underwater"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "tail",
+          "label": "Mace-Like Tail",
+          "damageFormula": "2x normal punch damage",
+          "isAdditiveToHth": false,
+          "extraAttacks": 1
+        }
+      ],
+      "customOneOffs": [
+        "The front/belly shell has 2D4x10+12 S.D.C. and a Natural A.R. of 12.",
+        "The back shell (which makes the character look hunchbacked) has 3D6x10+55 S.D.C. and a Natural A.R. of 16.",
+        "The 6 foot (1.8 m) long tail is lightly armored, ends in a hard bone club (+1 to strike), is covered in small horns, and has 1D6x10+12 S.D.C.",
+        "Speed penalty does not apply in water (normal Spd)."
+      ]
+    },
+    {
+      "id": "dinosaur_duckoid_humanoid",
+      "name": "Duckoid Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus is humanoid with webbed toes, a protruding mouth, large flat nose, large lips, and a thick bony crest resembling an upside down ski rising from the crown of the head.",
+      "statModifiers": {
+        "pb": {
+          "flat": -2
+        },
+        "spd": {
+          "dice": "2D6",
+          "percent": -25
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+8"
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "sing",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "skillContextModifiers": [
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": 40,
+          "context": "underwater"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "head_butt",
+          "label": "Duckoid Head-Butt",
+          "damageFormula": "2x normal damage",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Can make deep, resonating noises through his nose and crest that can be heard up to 2 miles (3.2 km) away.",
+        "Anyone within 5 feet (1.5 m) of the Nightbane when he calls at full volume must save vs 16 or suffer temporary deafness for 1D4 rounds (lose initiative, -2 to parry, disarm, and dodge).",
+        "Can disguise his voice with 2D6+4 different voices at an 85% proficiency.",
+        "Speed penalty does not apply in water (normal Spd)."
+      ]
+    },
+    {
+      "id": "dinosaur_tyrannosaur_humanoid",
+      "name": "Tyrannosaur Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus has an oversized, elongated head with a muzzle-like maw filled with sharp teeth, tiny nose, large eyes, bald scaly skin, and feet with only four toes. The arms are spindly, while the legs are thickly muscled.",
+      "naturalAr": 11,
+      "statModifiers": {
+        "iq": {
+          "dice": "-1D4"
+        },
+        "me": {
+          "dice": "-1D4"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "4D4x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "apm": {
+          "flat": 1
+        }
+      },
+      "heightModifier": {
+        "dice": "1D4 feet"
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "sensory": {
+        "scentTracking": {
+          "enabled": true,
+          "baseSuccessPercent": 79
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "tracking",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Tyrannosaur Bite",
+          "damageFormula": "5D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "kick",
+          "label": "Foot Claw",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "stomp",
+          "label": "Tyrannosaur Stomp",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
+      ],
+      "variantPercentiles": [
+        {
+          "roll": "01-50%",
+          "label": "Tailed",
+          "description": "Possesses a heavy reptilian tail.",
+          "naturalWeapons": [
+            {
+              "limbType": "tail",
+              "label": "Tail Slap",
+              "damageFormula": "4D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Tail is 1D4+6 feet (2.1 to 3 m) long."
+          ]
+        },
+        {
+          "roll": "51-00%",
+          "label": "Tailless",
+          "description": "Has no tail."
+        }
+      ],
+      "customOneOffs": [
+        "The arms are 20% shorter and spindly, possessing only half the character's normal P.S.",
+        "The legs are 20% longer than normal and receive a +1D6 bonus to P.S.",
+        "Can smell blood and decaying bodies/meat up to one mile (1.6 km) away."
+      ]
+    },
+    {
+      "id": "dinosaur_pterodactyl_humanoid",
+      "name": "Pterodactyl Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus has a humanoid body with short legs, normal arms and hands, a human but elongated face, large taloned feet and a pair of massive leather wings.",
+      "naturalAr": 9,
+      "statModifiers": {
+        "pp": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 2
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        },
+        "flightEngine": {
+          "maxSpeedMph": 45
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "skillContextModifiers": [
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": 40,
+          "context": "costumed"
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "talons",
+          "label": "Prehensile Taloned Feet",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Wingspan is 3x the character's height.",
+        "The taloned feet are prehensile like a hawk, allowing the character to grasp and hold items (but cannot use any type of weapon) or claw opponents from the air/hovering.",
+        "Cannot swim; flounders and sinks.",
+        "Gliding flight is completely silent but reduces flying speed by half (negates the Prowl penalty)."
+      ]
+    },
+    {
+      "id": "dinosaur_lesothosaurus_humanoid",
+      "name": "Lesothosaurus Humanoid",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "The Morphus rather looks like a Komodo dragon that walks upright on two legs. The arms and hands are human, the head is that of a lizard, the neck is twice as long as a human's, and the tail narrows to a thin point.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "3D6+6"
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "heightModifier": {
+        "percent": -40
+      },
+      "weightModifier": {
+        "percent": -40
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 8
+          },
+          "standingDistance": {
+            "flat": 12
+          }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Lizard Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "The tail is as long as the character's body is tall."
+      ]
+    },
+    {
+      "id": "dinosaur_stegosaur_plates",
+      "name": "Stegosaur Plates",
+      "tableCategory": "Dinosaur",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 86
+        }
+      ],
+      "description": "This Morphus is a barrel chested humanoid with scaly skin, a reptilian head, and twin rows of triangular plates running from the back of the neck along the spine. Plates also line the shoulders and forearms. No tail.",
+      "naturalAr": 13,
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "4D4x10+16"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "apm": {
+          "flat": 1
+        },
+        "parry": {
+          "dice": "1D4"
+        },
+        "dodge": {
+          "dice": "-1D4"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "specialCombatInterceptions": [
+        {
+          "interceptAction": "bare_handed_melee_parry",
+          "modifierFlat": 0
+        }
+      ],
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Knuckle Spikes",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "The dorsal plates provide armor protection from attacks from behind.",
+        "Three pair of small triangular plates line the forearms, enabling the character to block melee weapons with his arms without taking damage.",
+        "1D4 spikes grow just behind the knuckles on the backs of the hands, adding 2D6 damage to punch attacks."
+      ]
+    }
+  ]
 }

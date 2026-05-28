@@ -567,6 +567,9 @@ export type MorphusGimmickInventoryItem = {
   statModifiers?: MorphusStatModifiers
   skillGrants?: readonly MorphusSkillOverride[]
   traitFlags?: readonly MorphusGimmickTraitFlag[]
+  activationCost?: MorphusWeaponActivationCost
+  rangeFeet?: number
+  customOneOffs?: readonly string[]
 }
 
 export type MorphusDisabledNaturalAttackTag =

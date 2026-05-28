@@ -23,6 +23,7 @@
       "name": "Rocket Jets",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "flight engine",
         "custom one-offs (notes only)"
       ],
@@ -59,7 +60,7 @@
       "name": "Weapon Hand",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
+        "natural weapons"
       ],
       "notesOnly": false
     },
@@ -72,7 +73,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_metal_head_and_camera_eyes",
+      "id": "biomechanical_metal_head_camera_eyes",
       "name": "Metal Head & Camera Eyes",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -96,20 +97,22 @@
       "name": "Gun Limbs",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "natural weapons",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_screen_face",
+      "id": "biomechanical_screen_face",
       "name": "Screen Face",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_speakers",
+      "id": "biomechanical_speakers",
       "name": "Speakers",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -118,7 +121,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_tool_hands",
+      "id": "biomechanical_tool_hands",
       "name": "Tool Hands",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -129,17 +132,18 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_monitor_eyes",
+      "id": "biomechanical_monitor_eyes",
       "name": "Monitor Eyes",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "nightvision bonus"
+        "nightvision bonus",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_chainsaw_arms",
-      "name": "Chainsaw Arms",
+      "id": "biomechanical_chain_saw_arms",
+      "name": "Chain saw Arms",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
@@ -148,7 +152,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_computer_creature",
+      "id": "biomechanical_computer_creature",
       "name": "Computer Creature",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -158,39 +162,38 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_ii_projectile_limbs",
+      "id": "biomechanical_projectile_limbs",
       "name": "Projectile Limbs",
       "hooks": [
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_batteries",
+      "name": "Batteries",
+      "hooks": [
         "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_batteries",
-      "name": "Batteries",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "natural A.R.",
-        "damage affinities",
-        "custom one-offs (notes only)",
-        "appearance constraints"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "biomechanical_iii_gimmick_toy_switches",
+      "id": "biomechanical_gimmick_toy_switches",
       "name": "Gimmick Toy Switches",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "gimmick toy switches",
-        "appearance constraints"
+        "gimmick toy switches"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_hidden_compartments",
+      "id": "biomechanical_hidden_compartments",
       "name": "Hidden Compartments",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -199,7 +202,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_computer_brain",
+      "id": "biomechanical_computer_brain",
       "name": "Computer Brain",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -209,7 +212,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_internal_machinery",
+      "id": "biomechanical_internal_machinery",
       "name": "Internal Machinery",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -220,17 +223,18 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_radar_system",
+      "id": "biomechanical_radar_system",
       "name": "Radar System",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
+        "skill overrides",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_gyroscope",
+      "id": "biomechanical_gyroscope",
       "name": "Gyroscope",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -240,7 +244,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_drill_auger_hand",
+      "id": "biomechanical_drill_auger_hand",
       "name": "Drill/Auger Hand",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -251,7 +255,7 @@
       "notesOnly": false
     },
     {
-      "id": "biomechanical_iii_universal_connection_port",
+      "id": "biomechanical_universal_connection_port",
       "name": "Universal Connection Port",
       "hooks": [
         "custom one-offs (notes only)"
@@ -259,7 +263,7 @@
       "notesOnly": true
     },
     {
-      "id": "biomechanical_iii_heavy_plating",
+      "id": "biomechanical_heavy_plating",
       "name": "Heavy Plating",
       "hooks": [
         "stat modifiers / A.R. shift",

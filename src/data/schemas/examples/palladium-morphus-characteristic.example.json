@@ -185,6 +185,21 @@
       "regenerationRule": "per_transformation",
       "effectFormula": "1D4 irritant",
       "traitFlags": ["infinite_ammo", "fragile"]
+    },
+    {
+      "itemName": "Squirt Flower (example)",
+      "sdc": 2,
+      "regenerationRule": "hourly",
+      "effectFormula": "1D6 water (vampires); 2D6 acid vs metal when upgraded",
+      "rangeFeet": 10,
+      "activationCost": {
+        "resourceType": "hp",
+        "value": 1
+      },
+      "traitFlags": ["infinite_ammo"],
+      "customOneOffs": [
+        "Spend activation cost to squirt blood, kerosene, or mace instead of water."
+      ]
     }
   ],
   "naturalWeapons": [

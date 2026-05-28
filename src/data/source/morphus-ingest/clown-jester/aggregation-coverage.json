@@ -7,7 +7,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "scent tracking"
       ],
       "notesOnly": false
     },
@@ -18,7 +19,6 @@
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "polymorphic template",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -28,10 +28,10 @@
       "name": "Clown Clothes",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "natural A.R.",
         "skill overrides",
         "sensory obfuscation",
-        "custom one-offs (notes only)",
-        "appearance constraints"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -40,6 +40,7 @@
       "name": "Clown Shoes",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "jump modifiers",
         "swim speed bonus",
         "skill overrides",
         "natural weapons",
@@ -65,6 +66,7 @@
         "stat modifiers / A.R. shift",
         "jump modifiers",
         "skill overrides",
+        "limb durability components",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -75,14 +77,12 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "natural weapons",
-        "gimmick inventory",
-        "custom one-offs (notes only)"
+        "gimmick inventory"
       ],
       "notesOnly": false
     },
     {
-      "id": "clown_jesters_cap_costume",
+      "id": "clown_jester_cap",
       "name": "Jester's Cap and Costume",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -91,7 +91,7 @@
       "notesOnly": false
     },
     {
-      "id": "clown_scepter_bowling_pin",
+      "id": "clown_scepter_baton",
       "name": "Scepter/Baton or Bowling Pin",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -105,10 +105,8 @@
       "name": "Jack-in-the-Box",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "natural A.R.",
         "skill overrides",
         "companion blueprint",
-        "disabled natural attacks",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
