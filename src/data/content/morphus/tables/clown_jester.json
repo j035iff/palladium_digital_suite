@@ -36,6 +36,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_impersonation",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
           }
         ]
       },

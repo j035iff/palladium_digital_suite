@@ -9,7 +9,7 @@
       "id": "super_being_super_brain",
       "name": "Super-Brain",
       "tableCategory": "Superbeing",
-      "description": "The cranium of the Nightbane may be enlarged and even have the shape of a brain, or show the enlarged brain under bulletproof glass, or perhaps the character has the stereotypical “mad scientist” look. Whatever the case, the Nightbane becomes much more intelligent than normal while in Morphus form. Some Nightbane with this feature become attached to the increased cerebral power and find any excuse to stay in Morphus form. Others like returning to “normal” and thinking about one thing at a time rather than juggling five or more concepts or tasks simultaneously. Bonuses: +2D4+4 to the I.Q. attribute, +1D4+1 to M.E., +3 to save vs mind control, illusions and possession, +20% to ALL skills when in Morphus and knows 1D4+3 additional skills total from one or a combination of the following: Science, Medical, Electrical or Mechanical skills (with a +30% bonus) when in Morphus. Penalties: -2D6 to permanent P.P.E. base, -1D4 to the M.A. and P.S. attributes, -2 to the P.E. and Spd attributes, -1 on Perception Rolls and initiative (distracted), -2 to save vs magic, and -1 to Horror Factor.",
+      "description": "The cranium of the Nightbane may be enlarged and even have the shape of a brain, or show the enlarged brain under bulletproof glass, or perhaps the character has the stereotypical “mad scientist” look. Whatever the case, the Nightbane becomes much more intelligent than normal while in Morphus form. Some Nightbane with this feature become attached to the increased cerebral power and find any excuse to stay in Morphus form. Others like returning to “normal” and thinking about one thing at a time rather than juggling five or more concepts or tasks simultaneously. Bonuses: +2D4+4 to the I.Q. attribute, +1D4+1 to M.E., +3 to save vs illusions and possession, +20% to ALL skills when in Morphus and knows 1D4+3 additional skills total from one or a combination of the following: Science, Medical, Electrical or Mechanical skills (with a +30% bonus) when in Morphus. Penalties: -2D6 to permanent P.P.E. base, -1D4 to the M.A. and P.S. attributes, -2 to the P.E. and Spd attributes, -1 on Perception Rolls and initiative (distracted), -2 to save vs magic, and -1 to Horror Factor.",
       "statModifiers": {
         "iq": {
           "dice": "2D4+4"
@@ -52,7 +52,6 @@
         "specificSkillOverrides": []
       },
       "customOneOffs": [
-        "+3 to save vs mind control (with possession/illusions in saveModifiers).",
         "1D4+3 additional Science, Medical, Electrical, and/or Mechanical skills in Morphus (+30% to those categories; global +20% to all skills)."
       ],
       "gameSystems": [
@@ -332,6 +331,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_concealment",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
           }
         ]
       },

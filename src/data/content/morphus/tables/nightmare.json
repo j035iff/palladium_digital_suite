@@ -121,6 +121,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -30
           }
         ]
       },
@@ -488,7 +498,7 @@
       "id": "nightmare_torture_mask",
       "name": "Torture Mask",
       "tableCategory": "Nightmare",
-      "description": "The face and head of the Morphus form is covered by a mask that may look like any number of things, from a leather covering or leather straps, to a grilled cage or metal enclosure with slits for the eyes and mouth, to being made of bone or the skin and face of another person or creature strapped over his own, to a hood or nylon making his face devoid of features, or covered in scars or burns, or melted wax, tar or metal. What is not different from individual to individual is that the mask is intended as a torture device. From smothering black hoods, to a vice-like clamp caving in the sides of the head, to cages, such masks have been used by interrogators and torturers from ancient to modern times. The Nightbane’s face may or may not be visible depending on the design of the mask. It is part of the Morphus form, though, and cannot be removed. However, the Nightbane is somehow able to see, breathe and speak through the mask as if it was not there. Bonuses: +1D4 to the M.E. attribute, 2D6 to S.D.C., +2 to save vs possession, +1 to Horror Factor, +1 to save vs psionics, mind control and possession, and interroga- tors find their Interrogation skill to be -30% when questioning this character. Penalties: -1D4 to M.A., -1 to P.E. and -3 to P.B.",
+      "description": "The face and head of the Morphus form is covered by a mask that may look like any number of things, from a leather covering or leather straps, to a grilled cage or metal enclosure with slits for the eyes and mouth, to being made of bone or the skin and face of another person or creature strapped over his own, to a hood or nylon making his face devoid of features, or covered in scars or burns, or melted wax, tar or metal. What is not different from individual to individual is that the mask is intended as a torture device. From smothering black hoods, to a vice-like clamp caving in the sides of the head, to cages, such masks have been used by interrogators and torturers from ancient to modern times. The Nightbane’s face may or may not be visible depending on the design of the mask. It is part of the Morphus form, though, and cannot be removed. However, the Nightbane is somehow able to see, breathe and speak through the mask as if it was not there. Bonuses: +1D4 to the M.E. attribute, 2D6 to S.D.C., +2 to save vs possession, +1 to Horror Factor, +1 to save vs psionics, and interroga- tors find their Interrogation skill to be -30% when questioning this character. Penalties: -1D4 to M.A., -1 to P.E. and -3 to P.B.",
       "statModifiers": {
         "me": {
           "dice": "1D4"
@@ -514,7 +524,6 @@
         "psionics": 1
       },
       "customOneOffs": [
-        "+1 to save vs mind control (in addition to psionics/possession bonuses above).",
         "Interrogators suffer -30% Interrogation when questioning this character."
       ],
       "gameSystems": [

@@ -122,7 +122,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
-            "modifierPercent": -10
+            "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
@@ -541,6 +541,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_swim",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -30
           }
         ]
       },
@@ -839,6 +844,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_tailing",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -25
           }
         ]
       },

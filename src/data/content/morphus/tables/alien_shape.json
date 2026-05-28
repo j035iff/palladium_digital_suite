@@ -129,6 +129,11 @@
             "targetType": "category",
             "targetValue": "physical",
             "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
           }
         ]
       }

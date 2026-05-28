@@ -1,0 +1,21 @@
+{
+  "id": "extraterrestrial",
+  "displayName": "Extraterrestrial",
+  "tableCategory": "Extraterrestrial",
+  "tableHeading": "Extraterrestrial Table\nExtraterrestrials have been a staple",
+  "targetJson": "src/data/content/morphus/tables/extraterrestrial.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Extraterrestrial Table\nExtraterrestrials have been a staple",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

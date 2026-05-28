@@ -1306,6 +1306,10 @@
         "magic": {
           "$ref": "#/$defs/damageAffinityMultiplier"
         },
+        "magicEnergy": {
+          "$ref": "#/$defs/damageAffinityMultiplier",
+          "description": "Magical energy attacks (e.g. spell energy blasts); distinct from generic magic saves."
+        },
         "nightlordMagic": {
           "$ref": "#/$defs/damageAffinityMultiplier"
         },

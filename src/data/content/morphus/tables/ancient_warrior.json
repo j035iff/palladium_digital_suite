@@ -436,6 +436,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_acrobatics",
             "modifierPercent": -10
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
           }
         ]
       },
@@ -493,6 +498,11 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
             "modifierPercent": -20
           }
         ]

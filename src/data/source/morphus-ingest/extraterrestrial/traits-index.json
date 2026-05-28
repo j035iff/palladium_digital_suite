@@ -1,0 +1,113 @@
+{
+  "tableId": "extraterrestrial",
+  "tableHeading": "Extraterrestrial Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane\u00ae Survival Guide (WB5)",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 6,
+  "traits": [
+    {
+      "name": "Alien Robotic Body",
+      "percent": "76-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 89,
+          "percent": "76-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "B-Movie Alien",
+      "percent": "21-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 89,
+          "percent": "21-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Energy Being",
+      "percent": "66-75%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 89,
+          "percent": "66-75%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Parasitic Alien",
+      "percent": "51-65%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 89,
+          "percent": "51-65%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Roswell Gray",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 89,
+          "percent": "01-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Spheroid",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 90,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}

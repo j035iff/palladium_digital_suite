@@ -854,6 +854,7 @@ export type MorphusDamageAffinityType =
   | 'falling'
   | 'fatigue'
   | 'magic'
+  | 'magicEnergy'
   | 'nightlordMagic'
   | 'water'
   | 'wood'

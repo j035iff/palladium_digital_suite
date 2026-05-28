@@ -1,0 +1,19 @@
+{
+  "tableId": "extraterrestrial",
+  "generatedAt": "2026-05-27T23:58:58.725Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 6
+    },
+    {
+      "path": "src/data/content/morphus/tables/extraterrestrial.json",
+      "changed": 0,
+      "entryCount": 6
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

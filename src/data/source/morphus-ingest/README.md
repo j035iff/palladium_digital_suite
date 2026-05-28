@@ -40,6 +40,7 @@ Do **not** transcribe table JSON until `schema-analysis.json` has `"readyToTrans
 - **Dark Designs** is the **authoritative** source for `description` and mechanics when wording differs (`authoritativeBookKey`: `dark_designs`).
 - Each characteristic row gets a **`sources`** array with one entry per book (printed **start page** only).
 - **Other** percentile rows are skipped (`excludeOther`: true).
+- **Mind control** save bonuses are stripped from descriptions and notes during structure/merge (`scripts/lib/morphus-nightbane-prose.mjs`) — Nightbane are immune to mind control in play.
 
 ## Prerequisites
 

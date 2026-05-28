@@ -1,0 +1,72 @@
+{
+  "tableId": "extraterrestrial",
+  "entries": [
+    {
+      "id": "extraterrestrial_roswell_gray",
+      "name": "Roswell Gray",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "extraterrestrial_b_movie_alien",
+      "name": "B-Movie Alien",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "extraterrestrial_parasitic_alien",
+      "name": "Parasitic Alien",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "extraterrestrial_energy_being",
+      "name": "Energy Being",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "extraterrestrial_alien_robotic_body",
+      "name": "Alien Robotic Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "save modifiers",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "extraterrestrial_spheroid",
+      "name": "Spheroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

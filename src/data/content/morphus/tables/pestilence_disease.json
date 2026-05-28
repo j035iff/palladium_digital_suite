@@ -77,7 +77,7 @@
       "id": "pestilence_disease_ebola_bleeding",
       "name": "Ebola/Bleeding",
       "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane’s cloth- ing or armor. When the ‘Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time. Bonuses: +1 to M.E. attribute, +2D6 S.D.C., +3 to Perception Rolls regarding disease, blood loss and vampires, +1 to save vs possession and mind control, and +2 to Horror Factor. A character with this feature can take the Blood- bath Elite Talent (see Nightbane® RPG, page 113, or the Talent Appendix in this book) at double the range and duration and use it without taking damage. Penalties: -2 to M.A., P.B. and Spd attri- butes, -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus and know the Nightbane is approaching long before he is seen. Likewise, the constantly oozing blood is likely to leave a blood trail that can be tracked (+15% to Tracking skill); the blood does NOT have the same DNA as the Facade. Some Nightbane with this Morphus develop a taste for blood and may drink the blood of their enemies.",
+      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane’s cloth- ing or armor. When the ‘Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time. Bonuses: +1 to M.E. attribute, +2D6 S.D.C., +3 to Perception Rolls regarding disease, blood loss and vampires, +1 to save vs possession, and +2 to Horror Factor. A character with this feature can take the Blood- bath Elite Talent (see Nightbane® RPG, page 113, or the Talent Appendix in this book) at double the range and duration and use it without taking damage. Penalties: -2 to M.A., P.B. and Spd attri- butes, -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus and know the Nightbane is approaching long before he is seen. Likewise, the constantly oozing blood is likely to leave a blood trail that can be tracked (+15% to Tracking skill); the blood does NOT have the same DNA as the Facade. Some Nightbane with this Morphus develop a taste for blood and may drink the blood of their enemies.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -125,12 +125,17 @@
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "modifierPercent": 15
           }
         ]
       },
       "customOneOffs": [
         "+3 to Perception Rolls regarding disease, blood loss, and vampires.",
-        "+1 to save vs mind control.",
+        ".",
         "Bloodbath Elite Talent at double range/duration without damage cost.",
         "Vampires and blood-scent creatures +25% to track; blood trail +15% Tracking (blood DNA differs from Facade).",
         "-20% Performance skills (not separately cataloged).",

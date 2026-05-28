@@ -757,6 +757,7 @@ const DAMAGE_AFFINITY_LABELS: Partial<Record<MorphusDamageAffinityType, string>>
   lasers: 'Lasers',
   light: 'Light',
   kinetic: 'Kinetic',
+  magicEnergy: 'Magic energy',
 }
 
 export function formatMorphusDamageAffinityMultiplier(multiplier: number): string {

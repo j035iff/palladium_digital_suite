@@ -371,6 +371,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_swimming",
             "modifierPercent": -5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -5
           }
         ]
       },

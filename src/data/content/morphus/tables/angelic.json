@@ -551,7 +551,7 @@
       "id": "angelic_icon_of_the_faith",
       "name": "Icon of the Faith",
       "tableCategory": "Angelic",
-      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of David, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typically head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to possession, the vampire’s bite and mind control of the vampire. The icon is also capable of repelling and holding the undead, animated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
+      "description": "The Morphus appears with a large iconic symbol of the closest faith (a Crucifix, Star of David, wreath, etc.). This is typically worn around the neck on a chain, but may also appear on, or in addition to, a headdress, helmet, armor, tunic, cape, etc. and/or carried as a staff, scepter, statuette, handheld holy symbol, or fetish. In the case of the Nightbane, the symbol might even be fused to the body (typically head, neck or chest). This icon may be lent to others, dropped, or stolen, but it will disappear when the Nightbane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The icon is a living part of the character. Bonuses: +4D6 S.D.C., +2 to M.E., +1 to M.A., and a +2 bonus to all saving throws, and impervious to possession, the vampire’s bite of the vampire. The icon is also capable of repelling and holding the undead, animated dead, were-beasts and other creatures susceptible to holy symbols at bay.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
@@ -567,7 +567,7 @@
         "allSaves": 2
       },
       "customOneOffs": [
-        "Impervious to possession, vampire bite, and vampire mind control.",
+        "Impervious to possession, vampire bite, and the vampire's bite.",
         "Holy icon repels and holds at bay undead, animated dead, were-beasts, and creatures susceptible to holy symbols."
       ],
       "gameSystems": [

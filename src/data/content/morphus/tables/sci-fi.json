@@ -63,6 +63,11 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": -5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
           }
         ]
       },
@@ -149,6 +154,11 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -30
           }
         ]
       },
@@ -451,7 +461,16 @@
           "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
           "pageNumber": 52
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_intelligence",
+            "modifierPercent": 10
+          }
+        ]
+      }
     },
     {
       "id": "sci_fi_hologram_projector",
@@ -507,7 +526,7 @@
       "id": "sci_fi_force_field_array",
       "name": "Force Field Array",
       "tableCategory": "Science Fiction",
-      "description": "A series of nodes or small, electronic patches are built into the Morphus or incorporated into some kind of harness or full-body suit. This system projects a form fitting energy field that defends against a variety of attacks. The force field protects the Nightbane from poison gases and fumes, as well as kinetic and energy attacks such as punches, explosions, bullets, energy blast and even magically created energy like a fire ball or lightning bolt. It does NOT protect against Mesmerism, illusions, mind control and possession. The force field provides an additional 1D6x10+200 S.D.C. Any damage directed at the Nightbane is subtracted from the force field first. As long as the force field has S.D.C., it regenerates from damage and restores S.D.C. at the same rate as the Nightbane normally heals. If the force field is reduced to zero S.D.C., it is down and unavailable for 6 hours. When it comes back online it is at full power. Note: To activate Talents or tocast spells this force field must be dropped while the P.P.E. is expended. Raising and lowering the shield is so fast it does not require using a melee action, but does leave the Nightbane open to attack for 2D4 seconds. Bonuses: +1D6 to the ‘Bane’s Hit Points. Damage is always subtracted from this force field before the character’s personal S.D.C. or Hit Points can be affected. Immune to gases, poison, and diseases while the force field is up. Penalties: -2D6+3 from the permanent P.P.E. base, and a Nightbane with this feature can never develop Talents such as Shadow Shield or Pipe Bomb that create a magical protective field.",
+      "description": "A series of nodes or small, electronic patches are built into the Morphus or incorporated into some kind of harness or full-body suit. This system projects a form fitting energy field that defends against a variety of attacks. The force field protects the Nightbane from poison gases and fumes, as well as kinetic and energy attacks such as punches, explosions, bullets, energy blast and even magically created energy like a fire ball or lightning bolt. It does NOT protect against Mesmerism, illusions, possession. The force field provides an additional 1D6x10+200 S.D.C. Any damage directed at the Nightbane is subtracted from the force field first. As long as the force field has S.D.C., it regenerates from damage and restores S.D.C. at the same rate as the Nightbane normally heals. If the force field is reduced to zero S.D.C., it is down and unavailable for 6 hours. When it comes back online it is at full power. Note: To activate Talents or tocast spells this force field must be dropped while the P.P.E. is expended. Raising and lowering the shield is so fast it does not require using a melee action, but does leave the Nightbane open to attack for 2D4 seconds. Bonuses: +1D6 to the ‘Bane’s Hit Points. Damage is always subtracted from this force field before the character’s personal S.D.C. or Hit Points can be affected. Immune to gases, poison, and diseases while the force field is up. Penalties: -2D6+3 from the permanent P.P.E. base, and a Nightbane with this feature can never develop Talents such as Shadow Shield or Pipe Bomb that create a magical protective field.",
       "statModifiers": {
         "hp": {
           "dice": "1D6"
@@ -522,7 +541,7 @@
       "customOneOffs": [
         "Force field 1D6x10+200 S.D.C.; damage hits field first; regens with Nightbane healing; down 6 hours at 0 S.D.C.",
         "Immune to gases, poison, and disease while field is up; protects kinetic and energy (incl. magical fireball/lightning).",
-        "Does NOT protect mesmerism, illusions, mind control, or possession.",
+        "Does NOT protect mesmerism, illusions, or possession.",
         "Field must drop to cast spells/activate Talents (2D4 seconds vulnerable; no melee action to toggle).",
         "Cannot develop Shadow Shield, Pipe Bomb, or similar magical protective-field Talents."
       ],

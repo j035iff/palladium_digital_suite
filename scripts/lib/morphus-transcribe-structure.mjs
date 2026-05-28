@@ -12,6 +12,10 @@ import {
   SKILL_TRAIT_DEXTERITY,
   SKILL_TRAIT_LIGHT_TOUCH,
 } from './morphus-skill-modifier-parse.mjs'
+import {
+  sanitizeMorphusEntryForNightbane,
+  stripMindControlFromMorphusProse,
+} from './morphus-nightbane-prose.mjs'
 
 const TRAIT_HEADER = /(\d{2})-(\d{2})%\s+(.{1,120}?)[!:.]\s+/g
 
@@ -240,6 +244,7 @@ function parseDamageAffinities(body, out) {
     da.electricity = 2
   }
   if (/cold-based attacks.*half damage/i.test(body)) da.cold = da.cold ?? 0.5
+  if (/magic energy does double damage/i.test(body)) da.magicEnergy = 2
   if (Object.keys(da).length === 0) delete out.damageAffinities
 }
 
@@ -932,19 +937,20 @@ function collectLeftoverNotes(body, structured) {
 export function structureFromTraitBody(body, options = {}) {
   const out = {}
   const entryName = options.entryName ?? ''
-  parseStatModifiers(body, out)
-  parseDamageAffinities(body, out)
-  parseSaveModifiers(body, out)
-  parseSkillModifiers(body, out)
-  parseMobility(body, out)
-  parseSensory(body, out)
-  parseCapabilityFields(body, out, entryName)
-  parseNaturalAr(body, out)
-  parseNaturalWeapons(body, out)
-  parseWeightHeight(body, out)
-  const role = detectEntryRole(entryName, body)
+  const prose = stripMindControlFromMorphusProse(body)
+  parseStatModifiers(prose, out)
+  parseDamageAffinities(prose, out)
+  parseSaveModifiers(prose, out)
+  parseSkillModifiers(prose, out)
+  parseMobility(prose, out)
+  parseSensory(prose, out)
+  parseCapabilityFields(prose, out, entryName)
+  parseNaturalAr(prose, out)
+  parseNaturalWeapons(prose, out)
+  parseWeightHeight(prose, out)
+  const role = detectEntryRole(entryName, prose)
   if (role) out.entryRole = role
-  const leftovers = collectLeftoverNotes(body, out)
+  const leftovers = collectLeftoverNotes(prose, out)
   if (leftovers) out.customOneOffs = leftovers
   return out
 }
@@ -988,7 +994,8 @@ function mergeDeep(target, source, { fillOnly }) {
  */
 export function enrichMorphusEntry(entry, body, options = {}) {
   const { fillOnly = true, descriptionText } = options
-  const structured = structureFromTraitBody(body, { entryName: entry.name })
+  const cleanedBody = stripMindControlFromMorphusProse(body)
+  const structured = structureFromTraitBody(cleanedBody, { entryName: entry.name })
   mergeDeep(entry, structured, { fillOnly })
   if (
     descriptionText &&
@@ -997,8 +1004,9 @@ export function enrichMorphusEntry(entry, body, options = {}) {
       /TODO: transcribe/i.test(entry.description) ||
       entry.description.length < 120)
   ) {
-    entry.description = descriptionText.trim()
+    entry.description = stripMindControlFromMorphusProse(descriptionText).trim()
   }
+  sanitizeMorphusEntryForNightbane(entry)
   if (structured.customOneOffs?.length && !fillOnly) {
     entry.customOneOffs = structured.customOneOffs
   } else if (structured.customOneOffs?.length && !entry.customOneOffs?.length) {
