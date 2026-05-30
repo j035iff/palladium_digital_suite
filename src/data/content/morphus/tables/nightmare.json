@@ -9,137 +9,174 @@
       "id": "nightmare_floating",
       "name": "Floating",
       "tableCategory": "Nightmare",
-      "description": "Nightmares of falling are an almost uni- versal human experience. As a response to this nightmare, the Nightbane floats in midair. The character is limited to a float- ing height of 1-3 feet (0.3 to 0.9 m) off the ground. He cannot fly but rather hovers and floats about. Maximum Spd is equal to his Spd attribute. Unlike his dreams, the Nightbane cannot fall. Dropping/falling from great heights (more than 60 feet/18.3 m) is a terrifying experience that is likely to cause the character to scream, but before hitting bottom, he suddenly begins to slow down and floats at 1-3 feet (0.3 to 0.9 m) above the ground. Im- pact from being struck by a vehicle or weapon does full damage. The Morphus is that of a person who looks to be in a constant state of fright, his face contorted into a grimace or scream, and his hair and clothing fluttering in the wind whether there is an actual wind or not. Moreover, the Nightbane’s complexion is pale from terror, all of which gives him a rather ghostly appearance. Bonuses: +10% to any Intimidation rolls, +2 to roll with impact and pull punch, +1 to Horror Factor, and +20% to Prowl. Hover- ing and floating a few feet above the ground is his natural state of being, no damage from falls, does not leave footprints/tracks, and prevents setting off pressure plates, but he remains vulnerable to motion and heat detection. Penalties: -1D4 to M.E. and M.A. attributes, reduce Spd attribute by half (floating is slow), and the character has a Fear of Heights phobia plus two other phobias or random insanities. Player should pick an insanity category and make a random roll. (See Nightbane® RPG for Insanity Tables starting on page 44.)",
-      "statModifiers": {
-        "rollWithPunch": {
-          "flat": 2
-        },
-        "pullPunch": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 1
-        },
-        "me": {
-          "dice": "-1D4"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 20
-          }
-        ]
-      },
-      "customOneOffs": [
-        "+10% to Intimidation rolls.",
-        "Hover/float 1–3 ft (0.3–0.9 m); max Spd equals Spd attribute; no fall damage; no footprints/tracks; avoids pressure plates; still vulnerable to motion/heat detection.",
-        "Fear of Heights plus two other phobias or random insanities (player picks category, rolls on Nightbane RPG p. 44)."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 41
         }
+      ],
+      "description": "As a response to nightmares of falling, the Nightbane floats in midair. The Morphus is that of a person who looks to be in a constant state of fright, his face contorted into a grimace or scream, and his hair and clothing fluttering in the wind whether there is an actual wind or not.",
+      "statModifiers": {
+        "me": {
+          "dice": "-1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "percent": -50
+        },
+        "hf": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 2
+        },
+        "pullPunch": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "intimidation",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": 20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The character is limited to a floating height of 1-3 feet (0.3 to 0.9 m) off the ground.",
+        "He cannot fly but rather hovers and floats about. Maximum Spd is equal to his Spd attribute.",
+        "Dropping/falling from great heights causes the character to slow down and float at 1-3 feet above the ground, taking no damage from falls. However, impact from being struck by a vehicle or weapon does full damage.",
+        "Hovering does not leave footprints/tracks and prevents setting off pressure plates, but he remains vulnerable to motion and heat detection.",
+        "The character has a Fear of Heights phobia plus two other phobias or random insanities."
       ]
     },
     {
       "id": "nightmare_contorted_body",
       "name": "Contorted Body",
       "tableCategory": "Nightmare",
-      "description": "The body of this Nightbane is twisted far out of normal shape. The spine might be twisted so that the torso faces the opposite way, hunched over, or doubled backward so that the legs straddle the abdomen, and/or curled forward with the legs wrapping around the head, forcing the char- acter to walk on his or her hands. Likewise, the head may be twisted around or to the side, the mouth may be extraordinarily large, the neck thick or nonexistent, the rib cage may jut out at odd angles, and so on. Whatever the case may be, the character does not move nor- mally. The Nightbane might waddle, crab-walk, crawl, or even tumble to get around, but he may do so with surprising speed and agility given the anatomical deformities present. This actually gives the Nightbane an advantage against opponents not used to fighting such an oddity. Just watching the character scuttle about is disconcerting for most people. Bonuses: +1D4 to the P.S. at- tribute, +1 to M.E. and P.E. and +1D6x10 to S.D.C. +1 to dodge and +2 to Horror Factor. Penalties: -2 to P.P. and -1D4 to the P.B. attribute, -1 to strike, parry and roll with impact, -10% to Physical skills like Prowl and Climbing, -30% to Swimming. Disguise and Undercover Ops are impossible for this Morphus.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 41
+        }
+      ],
+      "description": "The body of this Nightbane is twisted far out of normal shape. The spine might be twisted so that the torso faces the opposite way, hunched over, or doubled backward so that the legs straddle the abdomen, and/or curled forward with the legs wrapping around the head.",
       "statModifiers": {
-        "me": {
-          "flat": 1
+        "ps": {
+          "dice": "1D4"
         },
         "pe": {
           "flat": 1
         },
-        "dodge": {
+        "me": {
           "flat": 1
-        },
-        "hf": {
-          "flat": 2
         },
         "pp": {
           "flat": -2
-        },
-        "strike": {
-          "flat": -1
-        },
-        "parry": {
-          "flat": -1
-        },
-        "rollWithPunch": {
-          "flat": -1
-        },
-        "ps": {
-          "dice": "1D4"
         },
         "pb": {
           "dice": "-1D4"
         },
         "sdc": {
           "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": -1
+        },
+        "parry": {
+          "flat": -1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": -1
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
+            "targetValue": "prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_swimming",
+            "targetValue": "swimming",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "customOneOffs": [
-        "-10% to Physical skills (partially modeled via Prowl/Climbing penalties).",
-        "Disguise and Undercover Ops impossible."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 41
-        }
+        "The character might waddle, crab-walk, crawl, or even tumble to get around, but may do so with surprising speed and agility given the deformities present."
       ]
     },
     {
       "id": "nightmare_gnarled_limbs",
       "name": "Gnarled Limbs",
       "tableCategory": "Nightmare",
-      "description": "Arms, legs, and any other limbs of the Morphus are deformed. The arms and legs might be jux- taposed, or elongated or too short, or twisted and deformed, or marred by odd knots, grooves, and holes. Musculature is also ab- normal, with more or less muscle than normal in odd configura- tions. For instance, the arms might have two bicep muscles, an open gap between the bones of the forearm, large ridges of bone protruding from the shoulders, and so on. Bonuses: +1D4 to the P.S. attribute and +1 to P.E., and +1 point to Horror Factor. The Nightbane is also double-jointed in all of his limbs and +20% to the Escape Artist, Palming and Concealment skills. Penalties: -1D4 to the P.B. and Spd attributes, and -1 to strike and parry. Requires custom made clothing, -30% to skills like Acrobatics, Climbing, Gymnastics and Prowl, while Disguise, Imperson- ation, and Undercover Ops are impossible in this Morphus.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 41
+        }
+      ],
+      "description": "Arms, legs, and any other limbs of the Morphus are deformed. The arms and legs might be juxtaposed, elongated, or marred by odd knots, grooves, and holes.",
       "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
         "pe": {
+          "flat": 1
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "dice": "-1D4"
+        },
+        "hf": {
           "flat": 1
         },
         "strike": {
@@ -147,99 +184,85 @@
         },
         "parry": {
           "flat": -1
-        },
-        "ps": {
-          "dice": "1D4"
-        },
-        "pb": {
-          "dice": "-1D4"
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "impossibleInMorphus": true,
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "impossibleInMorphus": true,
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "impossibleInMorphus": true,
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "impossibleInMorphus": true,
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_escape_artist",
+            "targetValue": "escape_artist",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_palming",
+            "targetValue": "palming",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_concealment",
+            "targetValue": "concealment",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "customOneOffs": [
-        "Double-jointed in all limbs.",
-        "Requires custom clothing."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 41
-        }
+        "The Nightbane is double-jointed in all of his limbs."
       ]
     },
     {
       "id": "nightmare_spines",
       "name": "Spines",
       "tableCategory": "Nightmare",
-      "description": "The Nightbane has 1D4+2 articulated spines protruding from the sides of his upper torso in addition to his arms and legs, which may be normal or slightly deformed. While not able to grasp tools or weapons, these appendages are made of bone or metal and end in very sharp points. This makes the spines suitable as close-quarters weapons useful for parrying, stabbing, raking, or bludgeoning opponents. They have a reach equal to that of the Nightbane’s arms (roughly 3 feet/0.9 m on average). Bonuses: +1 attack per melee round, +2 to parry, +10% to the Climbing skill, +2 to Horror Factor. A slashing attack with a spine deals 1D6 damage in addition to Supernatural P.S. punch damage, while a stab deals 2D6 in addition to supernatural P.S. punch damage. The character can attack with one or two spines in a single melee attack (roll a single strike even if using two spines). Each spine has 1D4x10+20 S.D.C. and will completely regrow in an hour if destroyed. Penalties: -2 to the P.S. attribute, -1 to P.P., and -1 to P.B., requires custom clothing, and is -40% to Disguise, Impersonation and Undercover Ops in this Morphus (spines must be taped or otherwise strapped down).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 41
+        }
+      ],
+      "description": "The Nightbane has 1D4+2 articulated spines protruding from the sides of his upper torso in addition to his arms and legs. Made of bone or metal and ending in very sharp points, they are suitable as close-quarters weapons.",
       "statModifiers": {
-        "parry": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 2
-        },
         "ps": {
           "flat": -2
         },
@@ -249,148 +272,168 @@
         "pb": {
           "flat": -1
         },
-        "sdc": {
-          "dice": "1D4x10+20"
+        "hf": {
+          "flat": 2
+        },
+        "apm": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 2
         }
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Spine (slash)",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "percent": 100
-          }
-        },
-        {
-          "limbType": "misc_limbs",
-          "label": "Spine (stab)",
-          "damageFormula": "2D6",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "percent": 100
-          }
-        }
-      ],
       "limbDurability": [
         {
-          "limbName": "Torso Spine",
-          "quantity": 1,
-          "sdc": {
-            "flat": 20
+          "limbName": "Articulated Spines",
+          "quantity": {
+            "dice": "1D4+2"
           },
-          "calledShotPenalty": -3
+          "sdc": {
+            "dice": "1D4x10+20"
+          }
         }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "climbing",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "modifierPercent": -40
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "impersonation",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -40
           }
         ]
       },
-      "customOneOffs": [
-        "1D4+2 spines (1D4x10+20 S.D.C. each); regrow in one hour if destroyed.",
-        "One or two spines per attack (single strike roll); cannot grasp weapons.",
-        "Requires custom clothing; spines must be taped down for Impersonation/Disguise attempts."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "naturalWeapons": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 41
+          "limbType": "misc_limbs",
+          "label": "Spine Slash",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Spine Stab",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
         }
       ],
       "appearanceConstraints": {
-        "clothingFit": "custom_required"
-      }
+        "clothingFit": "custom_required",
+        "customClothingNote": "Spines must be taped or otherwise strapped down for disguises."
+      },
+      "customOneOffs": [
+        "Spines have a reach equal to that of the Nightbane's arms (roughly 3 feet/0.9 m on average).",
+        "The character can attack with one or two spines in a single melee attack (roll a single strike even if using two spines).",
+        "Averages 4 spines (1D4+2). Each has its own S.D.C. pool and will completely regrow in an hour if destroyed."
+      ]
     },
     {
       "id": "nightmare_pulsating_skin",
       "name": "Pulsating Skin",
       "tableCategory": "Nightmare",
-      "description": "The skin of the Morphus is an unnat- ural color, or pale and mottled with dark patches of blue and pur- plish spider-webbed veins or large veins that seem to move like snakes or pulsate. Or the flesh may be lumpy or ordinary looking but seems to glow and pulsate as if there were lights located under the skin. Whatever the case, the skin moves, ripples, crawls, and/ or pulsates as if there is something alive and moving beneath it. This pulsating/squirming sensation is also felt when holding the Nightbane. This movement may be random or timed to a biologi- cal rhythm such as his heartbeat or respiration. Some Nightbane even have lumps that move around the body or burrowing crea- tures or faces that become visible at intervals beneath the flesh of the Morphus. Bonuses: +2 to the P.E. attribute, +5D6 to S.D.C., +2 to Horror Factor. Horror Factor must be rolled any time a new opponent wishes to grapple with the Nightbane. Failure to save means the attacker hesitates at the last second and loses that one melee attack and initiative, and he engages the Nightbane with -1 to all combat maneuvers (strike, parry, dodge, etc.), because he is distracted and grossed out by the pulsating flesh. Penalties: -1D4 to the M.A. and P.B. attributes, -1 on all Perception Rolls, and -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.",
-      "statModifiers": {
-        "pe": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 2
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "5D6"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -20
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Horror Factor roll when a new opponent attempts to grapple; failed save loses one melee attack and initiative, -1 to all combat maneuvers while distracted.",
-        "-20% to Performance skills (not in skill catalog; other penalties modeled above)."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 41
         }
+      ],
+      "description": "The skin of the Morphus is an unnatural color, or pale and mottled with dark patches of blue and purplish spider-webbed veins. The skin moves, ripples, crawls, and/or pulsates as if there is something alive and moving beneath it.",
+      "statModifiers": {
+        "pe": {
+          "flat": 2
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": -1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "target": "opponent",
+          "note": "Horror Factor must be rolled any time a new opponent wishes to grapple. Failure means the attacker hesitates, loses one melee attack and initiative, and engages with -1 to all combat maneuvers (strike, parry, dodge) because they are distracted and grossed out."
+        }
+      ],
+      "customOneOffs": [
+        "The pulsating/squirming sensation is strongly felt when holding or grappling the Nightbane."
       ]
     },
     {
       "id": "nightmare_straight_jacket",
       "name": "Straight-Jacket",
       "tableCategory": "Nightmare",
-      "description": "The Nightbane is wrapped in what looks like a straight-jacket. The material this covering is made of may be leather, canvas, or some other resilient fabric. What is consistent is that the long sleeves and body of the jacket are fitted with belts and fasteners that restrict the movement of the arms. The arms may be held pinned at the sides or crossed over the chest or secured behind the character’s back. Straight-jackets have long been associated with insanity and violent or self-de- structive behavior. A leather or cage-like mask may also be part of the Morphus, obscuring the face and acting as something of a muzzle to prevent biting. Bonuses: +2 to the P.P. and P.E. attri- butes, +1D6 to Spd, +2 to dodge, +3 to roll with punch, fall and impact, +2D4x10 to S.D.C., and +1 to Horror Factor. The Night- bane’s kick attacks inflict an extra 1D6 damage in addition to the usual Supernatural P.S. kick damage, and a body block/ramming attack is the same as a power punch (still counts as two attacks to perform). The bound Nightbane is surprisingly nimble and is +20% to skills like Gymnastics and Prowl, and automatically gets the Acrobatics skill with +30% bonus, enabling him to run along rooftops, walls, ledges, and taught ropes and cables with like a skilled tightrope walker and do somersaults and rolls. Penalties: -3 to the M.E. attribute, -2 to M.A., and -2 to P.P. The arms are immobilized, so the Nightbane is unable to use tools and weapons and cannot parry attacks, nor perform skills that require the use of hands and arms, like Climbing and Swimming. However, if the character has the Swimming skill, he is able to tread water with the legs to stay afloat.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 42
+        }
+      ],
+      "description": "The Nightbane is wrapped in what looks like a straight-jacket. The long sleeves and body of the jacket are fitted with belts and fasteners that restrict the movement of the arms.",
       "statModifiers": {
-        "pp": {
-          "flat": -2
-        },
         "pe": {
           "flat": 2
-        },
-        "dodge": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 1
         },
         "me": {
           "flat": -3
@@ -398,60 +441,97 @@
         "ma": {
           "flat": -2
         },
+        "spd": {
+          "dice": "1D6"
+        },
         "sdc": {
           "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "rollWithPunch": {
+          "flat": 3
         }
       },
-      "naturalWeapons": [
-        {
-          "limbType": "kick",
-          "label": "Bound Kick",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "percent": 100
-          }
-        }
-      ],
+      "handCapacityConstraints": {
+        "occupiesHands": 2,
+        "blocksTwoHandedWeapons": true
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
+            "targetValue": "gymnastics",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "prowl",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_hands",
+            "impossibleInMorphus": true
           }
         ]
       },
-      "customOneOffs": [
-        "-2 P.P. attribute penalty from binding (bonus +2 P.P. is in statModifiers; net +0 on P.P.).",
-        "Arms immobilized: cannot use tools/weapons, cannot parry, hand-based skills impossible.",
-        "Body block/ram equals power punch (two attacks); may tread water with legs if Swimming skill is known.",
-        "Run along rooftops, walls, ledges, and taut ropes like a tightrope walker."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "naturalWeapons": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 42
+          "limbType": "kick",
+          "label": "Straight-Jacket Kick",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Body Block/Ram",
+          "damageFormula": "Power Punch",
+          "isAdditiveToHth": false,
+          "weaponTraits": [
+            "disarm_immune"
+          ]
         }
+      ],
+      "customOneOffs": [
+        "Body Block/Ram counts as two attacks to perform.",
+        "The text lists +2 to P.P. in the bonuses and -2 to P.P. in the penalties (net 0).",
+        "A leather or cage-like mask may also be part of the Morphus, obscuring the face and acting as something of a muzzle to prevent biting.",
+        "The arms are immobilized, so the Nightbane is unable to use tools and weapons, cannot parry attacks, nor perform skills that require hands and arms (like Climbing).",
+        "If the character has the Swimming skill, he is able to tread water with the legs to stay afloat.",
+        "Enables him to run along rooftops, walls, ledges, and taught ropes and cables like a skilled tightrope walker and do somersaults and rolls."
       ]
     },
     {
       "id": "nightmare_torture_mask",
       "name": "Torture Mask",
       "tableCategory": "Nightmare",
-      "description": "The face and head of the Morphus form is covered by a mask that may look like any number of things, from a leather covering or leather straps, to a grilled cage or metal enclosure with slits for the eyes and mouth, to being made of bone or the skin and face of another person or creature strapped over his own, to a hood or nylon making his face devoid of features, or covered in scars or burns, or melted wax, tar or metal. What is not different from individual to individual is that the mask is intended as a torture device. From smothering black hoods, to a vice-like clamp caving in the sides of the head, to cages, such masks have been used by interrogators and torturers from ancient to modern times. The Nightbane’s face may or may not be visible depending on the design of the mask. It is part of the Morphus form, though, and cannot be removed. However, the Nightbane is somehow able to see, breathe and speak through the mask as if it was not there. Bonuses: +1D4 to the M.E. attribute, 2D6 to S.D.C., +2 to save vs possession, +1 to Horror Factor, +1 to save vs psionics, and interroga- tors find their Interrogation skill to be -30% when questioning this character. Penalties: -1D4 to M.A., -1 to P.E. and -3 to P.B.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 42
+        }
+      ],
+      "description": "The face and head of the Morphus form is covered by a mask intended as a torture device. It is part of the Morphus form and cannot be removed.",
       "statModifiers": {
-        "hf": {
-          "flat": 1
+        "me": {
+          "dice": "1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
         },
         "pe": {
           "flat": -1
@@ -459,122 +539,122 @@
         "pb": {
           "flat": -3
         },
-        "me": {
-          "dice": "1D4"
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
         "sdc": {
           "dice": "2D6"
+        },
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
         "possession": 2,
+        "mindControl": 1,
         "psionics": 1
       },
       "customOneOffs": [
-        "Interrogators suffer -30% Interrogation when questioning this character."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 42
-        }
+        "Interrogators find their Interrogation skill to be -30% when questioning this character.",
+        "The Nightbane is somehow able to see, breathe and speak through the mask as if it was not there."
       ]
     },
     {
       "id": "nightmare_massive_maw",
       "name": "Massive Maw",
       "tableCategory": "Nightmare",
-      "description": "The mouth of the Nightbane be- comes a giant, devouring maw unlike anything from the natural world. The exact look of the head and mouth is up to the player. Common versions include a set of insect-like multi-segmented mandibles, a maw that opens impossibly large, a widely stretch- ing oral cavity filled with unending darkness, or a mouth filled with pointed or razor-sharp teeth that splits the cheeks back to the hinge of the jaw. Some Nightbane even appear to have a steel bear-trap grafted to the face. Despite any difference in ap- pearance, all function the same way. Bonuses: Bite attack does 4D6+5 damage, +2 to strike with a bite attack (only P.P. bonuses can be added to this attack), impervious to poison, spoiled food and disease (can eat raw and rotting meat and foods without get- ting ill), +1 to Horror Factor. The character can also latch onto an opponent after a successful bite attack with a bite that is like being caught in the jaws of a crocodile or vice. The target of such an attack needs a Supernatural P.S. twice that of the Nightbane to pry free, or some other means of escape such as teleportation. The Nightbane can gnaw through a wood fence, crate, door or other barrier in 1D4+2 melee rounds. Penalties: -1D4 to the P.B. attribute. Speech is also much more difficult, imposing a -20% on all Language skills. Strangely enough, this does not seem to hamper spell casting.",
-      "statModifiers": {
-        "strike": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 1
-        },
-        "pb": {
-          "dice": "-1D4"
-        }
-      },
-      "naturalWeapons": [
-        {
-          "limbType": "bite",
-          "label": "Massive Maw",
-          "damageFormula": "4D6+5",
-          "isAdditiveToHth": false,
-          "damageModifier": {
-            "percent": 100
-          }
-        }
-      ],
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_language",
-            "modifierPercent": -20
-          }
-        ]
-      },
-      "customOneOffs": [
-        "+2 to strike with bite only (P.P. bonuses still apply).",
-        "Impervious to poison, spoiled food, and disease.",
-        "Latch bite: target needs Supernatural P.S. twice the Nightbane's to pry free (or teleport, etc.).",
-        "Gnaw through wood barrier in 1D4+2 melees.",
-        "-20% Language skills; spell casting unaffected."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 42
         }
       ],
-      "damageAffinities": {
-        "poison": 0
+      "description": "The mouth of the Nightbane becomes a giant, devouring maw unlike anything from the natural world.",
+      "statModifiers": {
+        "pb": {
+          "dice": "-1D4"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "saveModifiers": {
         "immunities": [
-          "poison",
           "disease",
-          "horrorFactor"
+          "poison"
         ]
-      }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Massive Maw Bite",
+          "damageFormula": "4D6+5",
+          "isAdditiveToHth": false,
+          "strikeBonus": 2
+        }
+      ],
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "target": "opponent",
+          "grapplingAffordance": "rope_grip_with_teeth",
+          "note": "The character can latch onto an opponent after a successful bite attack like being caught in the jaws of a crocodile. The target needs a Supernatural P.S. twice that of the Nightbane to pry free."
+        }
+      ],
+      "customOneOffs": [
+        "Massive Maw bite: only P.P. bonuses can be added to this attack's strike roll.",
+        "Impervious to spoiled food; can eat raw and rotting meat and foods without getting ill.",
+        "Can gnaw through a wood fence, crate, door or other barrier in 1D4+2 melee rounds.",
+        "Speech is much more difficult, imposing a -20% on all Language skills. Strangely enough, this does not seem to hamper spell casting."
+      ]
     },
     {
       "id": "nightmare_gruesome_weapon",
       "name": "Gruesome Weapon",
       "tableCategory": "Nightmare",
-      "description": "Either held in the hand or grafted to one or more limbs is a nightmarish weapon. (May have two Gruesome Weapons if they are small, such as a knife or cleaver or tomahawk size, but the +3D6 damage is divided between the two as +1D6+3 for each.) These weapons are most often unconventional and especially frightening. Examples in- clude monstrous and gnarled claws, a bone spike or blade(s) at least the size of a short sword that extends and retracts from the forearm or are mounted onto the forearms, or pulled out (and put back into) his own body, or a handheld sword, scythe, sick- le, pitchfork, cleaver, meat hook, nail-studded club, etc. Such weapons are usually rusty, dripping blood or covered in gore or slime, and/or jagged/serrated or made from bone. Whether it is grafted on as part of the Morphus’ body or handheld, the Grue- some Weapon is the Nightbane’s signature weapon, always with him and never lent to others. It is his. Bonuses: Automati- cally has W.P. Paired Weapons skill; +1 melee attack and +2 to strike, parry and disarm with his Gruesome Weapon ONLY, and +2 to pull punch with the weapon too; +2D6 to S.D.C. +1 to Horror Factor, and damage is equal to the ‘Bane’s Supernatural P.S. +3D6 damage regardless of the type or size of the weapon. Penalties: The Gruesome Weapon is always the Nightbane’s first choice, “go-to” weapon. Other weapons can be used but are -2 to strike and parry. Note: The weapon itself has 45 S.D.C. +5 S.D.C. per level of the character, but only takes damage if it is targeted via Called Shot. If the S.D.C. of the Gruesome weapon is reduced to zero, it crumbles to dust and does not reappear until all of the character’s personal S.D.C. are restored to full capacity. Without this weapon, the Nightbane’s other combat bonuses are all reduced by half, and he is -1 attack per melee round.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 43
+        }
+      ],
+      "description": "Either held in the hand or grafted to one or more limbs is a nightmarish weapon. Such weapons are usually rusty, dripping blood or covered in gore or slime, and/or jagged/serrated or made from bone.",
       "statModifiers": {
-        "strike": {
-          "flat": -2
-        },
-        "parry": {
-          "flat": -2
-        },
-        "disarm": {
-          "flat": 2
-        },
-        "pullPunch": {
-          "flat": 2
+        "sdc": {
+          "dice": "2D6"
         },
         "hf": {
           "flat": 1
-        },
-        "sdc": {
-          "dice": "2D6"
         }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Gruesome Weapon",
+          "quantity": {
+            "flat": 1
+          },
+          "sdc": {
+            "flat": 45
+          },
+          "requiresCalledShot": true,
+          "destructionConditionOverrides": {
+            "statModifiers": {
+              "apm": {
+                "flat": -1
+              }
+            }
+          }
+        }
+      ],
+      "livingWeaponRules": {
+        "sdcPerLevel": 5,
+        "preferredWeapon": true,
+        "onlyDamagedWhenTargeted": true
       },
       "naturalWeapons": [
         {
@@ -582,31 +662,41 @@
           "label": "Gruesome Weapon",
           "damageFormula": "3D6",
           "isAdditiveToHth": true,
-          "damageModifier": {
-            "percent": 100
-          },
-          "weaponTraits": [
-            "indestructible",
-            "disarm_immune"
-          ]
+          "extraAttacks": 1,
+          "strikeBonus": 2,
+          "parryBonus": 2,
+          "dodgeBonus": 0,
+          "disarmBonus": 2
         }
       ],
       "customOneOffs": [
-        "Automatically has W.P. Paired Weapons; bonuses apply to Gruesome Weapon only.",
-        "Damage equals Supernatural P.S. +3D6 (modeled as +3D6 additive natural weapon).",
-        "Two small weapons possible: +1D6+3 damage each instead of +3D6 total.",
-        "Other weapons -2 strike/parry; weapon 45 S.D.C. +5/level, called shot only; crumbles at 0 S.D.C. until personal S.D.C. fully restored.",
-        "Without weapon: combat bonuses halved and -1 attack/melee."
-      ],
+        "+2 to pull punch with the Gruesome Weapon.",
+        "Damage is equal to the 'Bane's Supernatural P.S. +3D6 damage regardless of the type or size of the weapon.",
+        "If two smaller weapons are used instead of one large one, the +3D6 damage is divided as +1D6+3 for each.",
+        "Automatically has W.P. Paired Weapons skill.",
+        "If the S.D.C. of the Gruesome weapon is reduced to zero, it crumbles to dust and does not reappear until all of the character's personal S.D.C. are restored to full capacity.",
+        "Without this weapon, the Nightbane's other combat bonuses are all reduced by half.",
+        "Other weapons can be used but are -2 to strike and parry."
+      ]
+    },
+    {
+      "id": "nightmare_other",
+      "name": "Other",
+      "tableCategory": "Nightmare",
+      "entryRole": "table_router",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 43
         }
+      ],
+      "description": "Random roll or choose another table and relate the result to the character's fears or nightmares.",
+      "customOneOffs": [
+        "The most obvious choices include Stigmata, Pestilence, or Animal tables. Otherwise, re-roll on the Nightmare table and ignore this result."
       ]
     }
   ]

@@ -6,6 +6,7 @@
       "name": "Body Armor",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "damage affinities",
         "custom one-offs (notes only)"
@@ -17,6 +18,7 @@
       "name": "Camouflage",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "custom one-offs (notes only)"
       ],
@@ -27,6 +29,7 @@
       "name": "Dress Uniform",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "custom one-offs (notes only)"
       ],
@@ -39,7 +42,6 @@
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -49,19 +51,21 @@
       "name": "Medic and First Aid",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "modern_soldier_night_hunter_nightvision_goggles",
+      "id": "modern_soldier_night_hunter_goggles",
       "name": "Night Hunter/Nightvision Goggles",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
         "nightvision bonus",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
@@ -70,6 +74,7 @@
       "name": "Field Radio",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
         "damage affinities",
         "custom one-offs (notes only)"
@@ -81,7 +86,9 @@
       "name": "Personal Weaponry",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
+        "save modifiers",
+        "custom one-offs (notes only)",
+        "player choices"
       ],
       "notesOnly": false
     },
@@ -90,8 +97,21 @@
       "name": "Heavy Firepower",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "skill overrides",
+        "natural weapons",
         "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "modern_soldier_biomechanical",
+      "name": "Biomechanical",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)",
+        "entry role (router/header)"
       ],
       "notesOnly": false
     }

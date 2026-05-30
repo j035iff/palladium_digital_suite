@@ -586,7 +586,7 @@ export type MorphusLimbDestructionConditionOverrides = {
 
 export type MorphusLimbDurability = {
   limbName: string
-  quantity: number
+  quantity: MorphusPolymorphicModifier
   sdc: MorphusPolymorphicModifier
   hp?: MorphusPolymorphicModifier
   ar?: number

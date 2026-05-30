@@ -165,7 +165,9 @@
       "limbDurability": [
         {
           "limbName": "Flight Pack",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 100
           },

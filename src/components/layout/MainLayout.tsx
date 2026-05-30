@@ -832,7 +832,7 @@ function MorphusTraitsPanel({
               key={`${limb.sourceTraitId}-${limb.limbName}-${i}`}
               className="rounded border border-violet-700/40 bg-slate-950/30 px-2 py-1"
             >
-              <span className="font-medium">{limb.limbName}</span>
+              <span className="font-medium">{formatPolymorphicModifier(limb.quantity)}× {limb.limbName}</span>
               {' — '}
               S.D.C. {formatPolymorphicModifier(limb.sdc)}
               {limb.hp != null ? ` · H.P. ${formatPolymorphicModifier(limb.hp)}` : ''}
@@ -987,7 +987,7 @@ function MorphusTraitsPanel({
                 ? ` · ${REGEN_LABELS[g.regenerationRule] ?? g.regenerationRule}`
                 : ''}
               {(g.components?.length ?? 0) > 0
-                ? ` · ${g.components!.map((c) => `${c.quantity}× ${c.limbName} ${c.sdc} S.D.C.`).join(', ')}`
+                ? ` · ${g.components!.map((c) => `${formatPolymorphicModifier(c.quantity)}× ${c.limbName} ${formatPolymorphicModifier(c.sdc)} S.D.C.`).join(', ')}`
                 : ''}
               <br />
               <span className="text-xs text-violet-300/80">{g.effectFormula}</span>

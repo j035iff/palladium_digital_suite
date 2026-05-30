@@ -63,7 +63,9 @@
       "limbDurability": [
         {
           "limbName": "Wing (each)",
-          "quantity": 2,
+          "quantity": {
+            "flat": 2
+          },
           "sdc": {
             "dice": "1D6x10+50"
           }
@@ -277,7 +279,9 @@
       "limbDurability": [
         {
           "limbName": "Living Holy Weapon",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 40
           }
@@ -328,7 +332,9 @@
       "limbDurability": [
         {
           "limbName": "Living Holy Shield",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 100
           }

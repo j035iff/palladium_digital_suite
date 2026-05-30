@@ -291,7 +291,9 @@
   "limbDurability": [
     {
       "limbName": "Wings",
-      "quantity": 2,
+      "quantity": {
+        "flat": 2
+      },
       "sdc": {
         "dice": "1D6x10+50"
       },
@@ -366,11 +368,14 @@
       },
       "limbDurability": [
         {
-          "limbName": "Forearm Plates",
-          "quantity": 2,
+          "limbName": "Writhing Snakes",
+          "quantity": {
+            "dice": "2D6+10"
+          },
           "sdc": {
-            "flat": 15
-          }
+            "dice": "2D6+12"
+          },
+          "requiresCalledShot": true
         }
       ],
       "naturalWeapons": [

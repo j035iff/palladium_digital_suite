@@ -9,7 +9,17 @@
       "id": "hobbyist_backpack",
       "name": "Backpack",
       "tableCategory": "Hobbyist",
-      "description": "The character might be an avid outdoors- man, amateur athlete, hiker, camper or even a student or book- worm. Whatever the case, the Morphus appears with a very large, oversized backpack or duffle bag. This bag is much tougher than usual (60 S.D.C.) and can usually only be struck from behind. The large backpack, despite its size, does not seem to encumber the Nightbane too much and is somewhat larger inside than what it appears, making it capable of storing up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience. Bonuses: In addition to being able to carry a lot of gear, +1 to the P.S. and P.E. attributes and +2D6 to S.D.C. Penalties: -1 to P.P. and -6 to the Spd attribute, and -10% to skills like Climbing, Acrobatics, Gymnastics, and Prowl, and -30% to Disguise, Tailing and Un- dercover Ops in this Morphus.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 35
+        }
+      ],
+      "description": "The Morphus appears with a very large, oversized backpack or duffle bag[cite: 7]. This bag is much tougher than usual and can usually only be struck from behind[cite: 7]. The large backpack, despite its size, does not seem to encumber the Nightbane too much and is somewhat larger inside than what it appears[cite: 7].",
       "statModifiers": {
         "ps": {
           "flat": 1
@@ -27,51 +37,77 @@
           "dice": "2D6"
         }
       },
+      "limbDurability": [
+        {
+          "limbName": "Backpack",
+          "quantity": {
+            "flat": 1
+          },
+          "sdc": {
+            "flat": 60
+          },
+          "requiresCalledShot": true,
+          "calledShotPenalty": -3
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "climbing",
             "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "tailing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -30
           }
         ]
       },
-      "limbDurability": [
-        {
-          "limbName": "Backpack",
-          "quantity": 1,
-          "sdc": {
-            "flat": 60
-          },
-          "hp": {
-            "flat": 0
-          }
-        }
-      ],
       "customOneOffs": [
-        "Stores up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience.",
-        "The backpack can usually only be struck from behind.",
-        "Despite its size, the pack does not seem to encumber the Nightbane excessively."
-      ],
+        "Capable of storing up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience[cite: 7]."
+      ]
+    },
+    {
+      "id": "hobbyist_card_deck",
+      "name": "Card Deck",
+      "tableCategory": "Hobbyist",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 35
         }
       ],
-      "appearanceConstraints": {
-        "clothingFit": "oversized_required"
-      }
-    },
-    {
-      "id": "hobbyist_card_deck",
-      "name": "Card Deck",
-      "tableCategory": "Hobbyist",
-      "description": "First, the Nightbane’s Morphus has a playing card motif element which may be subtle or unmistakable. This may be a classic poker card symbol – spade, club, heart, dia- mond or one of the face cards – emblazoned on his face or chest, arms, or the palms or tops of his hands, and similar, like a tattoo, or as a symbol on clothing, armor or a helmet. This Morphus also comes with a deck of playing cards carried in a small case, usual- ly hooked to a belt or held in a pocket. Unlike normal cards, they are tough and flexible enough to be used as thrown weapons. The sharp-edged cards inflict 1D6 damage each, with aces and face cards doing 2D6 damage. Throwing range is 60 feet (18.3 m). When the deck is used up, the Nightbane reaches back into his pocket or carrying case and pulls out a new deck; never runs out. Bonuses: +1 to I.Q. and P.P., +2 to strike with his pocker cards or any weapon designed for throwing, and does +2D6 damgae on a roll of a Natural 19 or 20. Penalties: -1 to the M.E. attribute and -1D6+2 from permanent P.P.E. base.",
+      "description": "The Nightbane's Morphus has a playing card motif element which may be subtle or unmistakable[cite: 7]. This Morphus also comes with a deck of playing cards carried in a small case, usually hooked to a belt or held in a pocket[cite: 7]. Unlike normal cards, they are tough and flexible enough to be used as thrown weapons[cite: 7]. When the deck is used up, the Nightbane reaches back into his pocket or carrying case and pulls out a new deck; never runs out[cite: 7].",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -79,11 +115,11 @@
         "pp": {
           "flat": 1
         },
-        "strike": {
-          "flat": 2
-        },
         "me": {
           "flat": -1
+        },
+        "ppe": {
+          "dice": "-1D6-2"
         }
       },
       "weaponClassBonuses": {
@@ -91,90 +127,121 @@
           "flat": 2
         }
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Playing Card",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": false
-        }
-      ],
       "gimmickInventory": [
         {
-          "itemName": "Playing Card Deck",
-          "sdc": 10,
-          "effectFormula": "1D6 per card (2D6 for aces and face cards); thrown range 60 feet (18.3 m)",
-          "regenerationRule": "per_transformation",
+          "itemName": "Playing Cards",
+          "sdc": 1,
+          "effectFormula": "1D6",
+          "rangeFeet": 60,
           "traitFlags": [
             "infinite_ammo"
+          ],
+          "customOneOffs": [
+            "Aces and face cards do 2D6 damage[cite: 7]."
           ]
         }
       ],
       "customOneOffs": [
-        "Thrown cards: aces and face cards inflict 2D6 damage.",
-        "On a Natural 19 or 20 with thrown cards or other thrown weapons, add +2D6 damage."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 35
-        }
+        "Does +2D6 damage on a roll of a Natural 19 or 20 when using poker cards or any weapon designed for throwing[cite: 7]."
       ]
     },
     {
       "id": "hobbyist_video_games",
       "name": "Video Games",
       "tableCategory": "Hobbyist",
-      "description": "Video games are extremely popular, especially among the adolescents and young adults most likely to become Nightbane. A fanatic about this form of electronic en- tertainment, this character’s Morphus is likely to resemble the appearance of a character from a video game, be it a hero, villain, or creature, or may incorporate some elements of such characters like hair and armor, etc. He also wears virtual reality goggles that make everything he sees in the real world appear to be part of a video game! Thus, he feels like he is a character inside a video game. This bit of detachment from reality keeps the Nightbane cool, calm and at arm’s length from what can become a frighten- ing reality. He also has a wireless video game controller or joystick that he can use to boost and alter his Morphus! With the press of a button he can bestow any one the following upon himself, with instant results in some cases like life points, or a duration of one melee round (15 seconds) for powers and special abilities. Three such video game powers, +1 per level of experience, can be acti- vated every hour. Demon Death Strike: With the press of a button the Night- bane’s hands and any weapon he is holding glow red. His next one attack, be it from a punch, kick, melee weapon, ranged weapon/gun, Talent or spell, inflicts double damage to demons and any creature from the Nightlands, including Night Princes, Nightlords, vampires and fellow Nightbane. Applies only to one attack. Roll to strike as usual. A successful parry means the crea- ture suffers normal damage from the Demon Death Strike, not double. A successful dodge means it avoids the attack and takes no damage whatsoever. Float: With two quick presses of a specific button, the Night- bane can leap from any height and safely float down to the ground or a rooftop below. Can also be used to float on water or run across water. Force Field: For one melee round the Nightbane is protected by a force field that has 60 S.D.C. +10 S.D.C. per each additional level of his experience. Life Points: With the press of a button the Nightbane glows and instantly restores 3D6+18 Hit Points or S.D.C. to himself. Heal Other: With the press of a different button the Nightbane can instantly restore 3D6+18 Hit Points or S.D.C. to any one per- son he touches. Hyper-Combat: Hit the right button sequence and for one melee round the Nightbane has two extra melee attacks, is 20% faster, and +1 to strike, parry, dodge, and disarm. Impervious to Fire: For one melee round the Nightbane is im- pervious to fire and smoke, including magic fire. Can be used to run through fire or run across burning embers or lava. Impervious to Magic: For one melee round the Nightbane is impervious to all types of magic. Jump: The Nightbane can jump around and over opponents. For one melee round he can leap up to 20 feet (6.1 m) high or 50 feet (15.2 m) lengthwise and is +3 to dodge. See the Invisible: For one melee round the Nightbane is able to see the invisible; line of sight. Special Attack: Energy Bolt: For one melee round the Night- bane can fire energy bolts from his hands; treat like a Talent. Each blast does 4D6 damage +2 per each level of the Nightbane’s ex- perience and has a range of 600 feet (183 m) +100 feet (30.5 m) per level of experience. Special Attack: Returning Melee Weapon: For one melee round, any melee weapon the Nightbane throws does an extra 1D6 damage, has a range of 120 feet (36.6 m), and it returns right back to him so he can throw it again. This includes impromptu weapons like a frying pan, peice of pipe, a bottle or a brick. Bonuses: +1 to I.Q., +2 to save vs insanity (but is already a little detached from reality as a coping mechanism). Penalties: -2 to the M.A. attribute, -2D6 from permanent base P.P.E., and the character tends to equate the real world with video game equiva- lents and analogies. Worst of all, if the Nightbane’s controller/ joystick is lost or destroyed, he feels powerless, loses 2D4 S.D.C. (or Hit Points if S.D.C. are gone) and is -1 attack per melee round, and -10% on the performance of all skills. To make the controller reappear, he must change back into his Facade and wait one hour before resuming his Morphus. Note: The controller has 10 S.D.C. and can only be hit if the enemy is specifically targeting it with a Called Shot.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 35
+        }
+      ],
+      "description": "This character's Morphus is likely to resemble the appearance of a character from a video game, be it a hero, villain, or creature[cite: 7]. He wears virtual reality goggles that make everything he sees in the real world appear to be part of a video game[cite: 7]. He also has a wireless video game controller or joystick that he can use to boost and alter his Morphus[cite: 7]!",
       "statModifiers": {
-        "strike": {
-          "flat": 1
-        },
-        "parry": {
-          "flat": 1
-        },
-        "dodge": {
-          "flat": 3
-        },
         "iq": {
           "flat": 1
         },
         "ma": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "2D4"
+        "ppe": {
+          "dice": "-2D6"
         }
       },
       "saveModifiers": {
-        "insanity": 2,
-        "immunities": [
-          "magic"
-        ]
+        "insanity": 2
       },
       "limbDurability": [
         {
-          "limbName": "Video Game Controller",
-          "quantity": 1,
+          "limbName": "Wireless Controller",
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 10
           },
-          "hp": {
-            "flat": 0
-          },
-          "calledShotPenalty": -4
+          "requiresCalledShot": true,
+          "destructionConditionOverrides": {
+            "statModifiers": {
+              "apm": {
+                "flat": -1
+              }
+            }
+          }
+        }
+      ],
+      "recoveryBehaviors": [
+        {
+          "trigger": "destruction",
+          "lockoutHoursDice": "1",
+          "note": "If the controller is lost or destroyed, the Nightbane loses 2D4 S.D.C. (or Hit Points if S.D.C. are gone), loses 1 attack per melee, and is -10% on all skills[cite: 7]. To make the controller reappear, he must change back into his Facade and wait one hour before resuming his Morphus[cite: 7]."
         }
       ],
       "activatedAbilities": [
         {
+          "abilityName": "Demon Death Strike",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_attack",
+          "statModifiers": {}
+        },
+        {
+          "abilityName": "Float",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "instant"
+        },
+        {
+          "abilityName": "Force Field",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_melee_round",
+          "statModifiers": {
+            "sdc": {
+              "flat": 60
+            }
+          }
+        },
+        {
+          "abilityName": "Life Points",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "instant"
+        },
+        {
+          "abilityName": "Heal Other",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "instant"
+        },
+        {
           "abilityName": "Hyper-Combat",
           "chargesPerPeriod": 3,
           "resetPeriod": "hourly",
-          "durationFormula": "1 melee round",
+          "durationFormula": "one_melee_round",
           "statModifiers": {
             "apm": {
               "flat": 2
@@ -197,51 +264,69 @@
           }
         },
         {
-          "abilityName": "Force Field",
+          "abilityName": "Impervious to Fire",
           "chargesPerPeriod": 3,
           "resetPeriod": "hourly",
-          "durationFormula": "1 melee round"
+          "durationFormula": "one_melee_round"
         },
         {
-          "abilityName": "Life Points",
+          "abilityName": "Impervious to Magic",
           "chargesPerPeriod": 3,
           "resetPeriod": "hourly",
-          "durationFormula": "instant"
+          "durationFormula": "one_melee_round"
+        },
+        {
+          "abilityName": "Jump",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_melee_round",
+          "statModifiers": {
+            "dodge": {
+              "flat": 3
+            }
+          }
+        },
+        {
+          "abilityName": "See the Invisible",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_melee_round"
+        },
+        {
+          "abilityName": "Special Attack: Energy Bolt",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_melee_round"
+        },
+        {
+          "abilityName": "Special Attack: Returning Melee Weapon",
+          "chargesPerPeriod": 3,
+          "resetPeriod": "hourly",
+          "durationFormula": "one_melee_round"
         }
       ],
       "customOneOffs": [
-        "Three video-game powers (+1 per level) may be activated each hour; duration is one melee round (15 seconds) unless noted instant.",
-        "Powers include: Demon Death Strike (double damage vs demons/Nightlands creatures on one attack), Float (safe descent/leap, water run), Force Field (60 +10 S.D.C. per level for 1 round), Life Points (restore 3D6+18 H.P. or S.D.C. to self), Heal Other (3D6+18 to one touched), Impervious to Fire, Impervious to Magic, Jump (+3 dodge for 1 round), See the Invisible, Energy Bolt (4D6+2/level, 600 ft +100 ft/level), Returning Melee Weapon (1 round).",
-        "If the controller is lost or destroyed: lose 2D4 S.D.C. (or H.P. if S.D.C. depleted), -1 attack per melee, -10% all skills until Facade for one hour then resume Morphus.",
-        "Controller has 10 S.D.C. and is only damaged on a Called Shot."
-      ],
+        "The Nightbane shares a single pool of charges for all video game powers: 3 activations per hour, +1 per level of experience[cite: 7].",
+        "The character tends to equate the real world with video game equivalents and analogies[cite: 7]."
+      ]
+    },
+    {
+      "id": "hobbyist_dice_bag",
+      "name": "Dice Bag",
+      "tableCategory": "Hobbyist",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 35
+          "reference": "Dark Designs",
+          "pageNumber": 36
         }
       ],
-      "damageAffinities": {
-        "fire": 2
-      }
-    },
-    {
-      "id": "hobbyist_dice_bag",
-      "name": "Dice Bag",
-      "tableCategory": "Hobbyist",
-      "description": "A large bag filled with multifaceted dice hangs from the Nightbane’s wrist, belt, or other convenient point. The bag may be made of a number of materials from cloth to chain-mail links. Whatever the case, it is actually large and heavy enough to be used as a bludgeoning weapon in hand to hand com- bat, and does 1D6 damage plus Supernatural P.S. punch damage. The dice can also be removed from the bag and scattered on hard ground or floors to discourage pursuit. Bonuses: +1 to I.Q. and +1 to strike and parry using the dice bag as a weapon. Penalties: -1 to dodge and -1 to pull punch.",
+      "description": "A large bag filled with multifaceted dice hangs from the Nightbane's wrist, belt, or other convenient point[cite: 7]. It is actually large and heavy enough to be used as a bludgeoning weapon in hand to hand combat[cite: 7].",
       "statModifiers": {
         "iq": {
-          "flat": 1
-        },
-        "strike": {
-          "flat": 1
-        },
-        "parry": {
           "flat": 1
         },
         "dodge": {
@@ -251,39 +336,35 @@
           "flat": -1
         }
       },
-      "weaponClassBonuses": {
-        "melee": {
-          "flat": 1
-        }
-      },
       "naturalWeapons": [
         {
           "limbType": "misc_limbs",
           "label": "Dice Bag",
           "damageFormula": "1D6",
-          "isAdditiveToHth": true
+          "isAdditiveToHth": true,
+          "strikeBonus": 1,
+          "parryBonus": 1
         }
       ],
       "customOneOffs": [
-        "+1 to strike and parry when using the dice bag as a weapon (+1 strike via melee weapon class when applicable).",
-        "Dice may be removed and scattered on hard ground to discourage pursuit."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 36
-        }
+        "The dice can also be removed from the bag and scattered on hard ground or floors to discourage pursuit[cite: 7]."
       ]
     },
     {
       "id": "hobbyist_display_case",
       "name": "Display Case",
       "tableCategory": "Hobbyist",
-      "description": "One or more panes of glass are incor- porated into this character’s Morphus form. Underneath each one is any variety of collectible objects from toy cars to butterflies. These built-in display cases may be opened by the Nightbane and even used to carry other small objects, though they are easily seen (-30% to the Concealment skill). Bonuses: +1 to the P.E. attri- bute and +20% to the Barter skill when buying or trading for the collection. Penalties: -20% to Acrobatics, Camouflage, Disguise, Gymnastics, Prowl, Swimming and Undercover Ops skills.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 36
+        }
+      ],
+      "description": "One or more panes of glass are incorporated into this character's Morphus form. Underneath each one is any variety of collectible objects from toy cars to butterflies[cite: 7]. These built-in display cases may be opened by the Nightbane and even used to carry other small objects, though they are easily seen[cite: 7].",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -293,43 +374,72 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_concealment",
+            "targetValue": "concealment",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "barter",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "camouflage",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
-        "Built-in display cases may be opened to carry other small objects.",
-        "Contents are easily seen (-30% to Concealment)."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 36
-        }
+        "The Barter bonus applies only when buying or trading for the collection[cite: 7]."
       ]
     },
     {
       "id": "hobbyist_leather_bound",
       "name": "Leather-Bound",
       "tableCategory": "Hobbyist",
-      "description": "The skin of the Nightbane is actu- ally made of well-worn leather like that of an old book. Small belts and buckles may be incorporated as well, though things like spikes, studs, and zippers are rare. Nightbane with this feature are often avid readers/book collectors or do leatherwork as a hobby. Bonuses: +2 to the I.Q. or P.P. attribute, +4D6+6 to S.D.C., a Natural A.R. of 8 and +1 to Awe/Horror Factor. Penalties: -2 to Perception Rolls involving the sense of touch. The Nightbane also takes 50% more damage from fire-based attacks, and -10% to Acrobatics, Camouflage, Climb, Disguise, Gymnastics, Prowl, Swimming and Undercover Ops skills.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 36
+        }
+      ],
+      "description": "The skin of the Nightbane is actually made of well-worn leather like that of an old book[cite: 7]. Small belts and buckles may be incorporated as well, though things like spikes, studs, and zippers are rare[cite: 7].",
+      "naturalAr": 8,
       "statModifiers": {
-        "iq": {
-          "flat": 2
-        },
-        "perception": {
-          "flat": -2
-        },
         "sdc": {
           "dice": "4D6+6"
         },
@@ -337,40 +447,82 @@
           "flat": 1
         }
       },
-      "naturalAr": 8,
       "damageAffinities": {
         "fire": 1.5
       },
+      "playerChoices": [
+        {
+          "label": "Attribute Bonus",
+          "options": [
+            "+2 to I.Q.[cite: 7]",
+            "+2 to P.P.[cite: 7]"
+          ],
+          "timing": "character_creation"
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "camouflage",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -10
           }
         ]
       },
       "customOneOffs": [
-        "Bonus: +2 to I.Q. or +2 to P.P. (player chooses one for this Morphus).",
-        "Takes 50% more damage from fire-based attacks.",
-        "-2 to Perception Rolls involving the sense of touch."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 36
-        }
+        "-2 to Perception Rolls involving the sense of touch[cite: 7]."
       ]
     },
     {
       "id": "hobbyist_saddle",
       "name": "Saddle",
       "tableCategory": "Hobbyist",
-      "description": "The character is an equestrian or enjoys horseback riding or caring for the animal. In Morphus, the char- acter may have a cowboy esthetic to his appearance and has a riding saddle either draped over one shoulder or worn on his own back, fastened to him with straps of rawhide or belts. The Night- bane’s body may resemble etched leather or be covered in burns from branding irons of various designs, or he may have a long, horse-like face or mane of hair. The saddle may be made of any number of materials with a wide variety of possible appearances, but leather is most common. Any Nightbane capable of running on all fours can let other people ride in the saddle. Bonuses: +2 to the P.S. and P.E. attributes, +3D6 to S.D.C., and +10% to any Horsemanship skill. Special: Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted com- bat. Penalties: -1 to M.E. attribute, -3 to roll with punch, fall, or impact, .",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 36
+        }
+      ],
+      "description": "In Morphus, the character may have a cowboy esthetic to his appearance and has a riding saddle either draped over one shoulder or worn on his own back, fastened to him with straps of rawhide or belts[cite: 7]. Any Nightbane capable of running on all fours can let other people ride in the saddle[cite: 7].",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -378,62 +530,60 @@
         "pe": {
           "flat": 2
         },
-        "initiative": {
-          "flat": 1
-        },
-        "dodge": {
-          "flat": 1
-        },
         "me": {
           "flat": -1
         },
         "sdc": {
           "dice": "3D6"
         },
-        "bonusHthDamage": {
-          "flat": 2
+        "rollWithPunch": {
+          "flat": -3
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_horsemanship",
+            "targetValue": "horsemanship",
             "modifierPercent": 10
           }
         ]
       },
       "customOneOffs": [
-        "Nightbane capable of running on all fours can let others ride in the saddle.",
-        "Rider in the saddle: +1 initiative, +2 melee damage, +1 dodge (no riding skill required).",
-        "Saddle may be leather or other materials; leather is most common."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 36
-        }
+        "Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted combat[cite: 7]."
       ]
     },
     {
       "id": "hobbyist_telescopic_binocular_eyes",
       "name": "Telescopic or Binocular Eyes",
       "tableCategory": "Hobbyist",
-      "description": "Whether it’s the re- sult of a love of astronomy, bird-watching, or a similar hobby, the Nightbane’s Morphus has a set of magnifying lenses that replace one or more of his eyes. The apparatus may be inset into the skull or protrude up to 2 feet (0.6 m) from the character’s face. These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet. Characters with nightvision can see as if they have a passive nightvision scope. Bonuses: +2 to strike with long-range weapons like rifles or bow and ar- row, +1 to Horror Factor. Penalties: -1 to strike, parry, and dodge in melee combat, and -15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 37
+        }
+      ],
+      "description": "The Nightbane's Morphus has a set of magnifying lenses that replace one or more of his eyes[cite: 7]. The apparatus may be inset into the skull or protrude up to 2 feet (0.6 m) from the character's face[cite: 7].",
       "statModifiers": {
-        "strike": {
-          "flat": -1
-        },
         "hf": {
           "flat": 1
         },
+        "strike": {
+          "flat": -1
+        },
         "parry": {
           "flat": -1
+        },
+        "dodge": {
+          "flat": -1
         }
+      },
+      "sensory": {
+        "telescopicVision": true
       },
       "weaponClassBonuses": {
         "bow": {
@@ -447,29 +597,45 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_computer_operation",
+            "targetValue": "computer_operation",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_pick_locks",
+            "targetValue": "pick_locks",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "category",
+            "targetValue": "medical",
             "modifierPercent": -15
           }
         ]
       },
       "customOneOffs": [
-        "Characters with nightvision see as if using a passive nightvision scope.",
-        "-15% to skills requiring fine detail up close (e.g. reading, surgery, Computer Operation, Pick Locks)."
-      ],
+        "These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet[cite: 7].",
+        "Characters with nightvision can see as if they have a passive nightvision scope[cite: 7].",
+        "-15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc[cite: 7]."
+      ]
+    },
+    {
+      "id": "hobbyist_other",
+      "name": "Other",
+      "tableCategory": "Hobbyist",
+      "entryRole": "table_router",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 37
         }
+      ],
+      "description": "Roll on another random table and relate the result to the character's hobbies[cite: 7].",
+      "customOneOffs": [
+        "The most obvious choices include Artisan, Athlete, Biomechanical, Insectoid, or Plant Life tables. Otherwise, re-roll on the Hobbyist table and ignore this result[cite: 7]."
       ]
     }
   ]

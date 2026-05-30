@@ -432,7 +432,9 @@
       "limbDurability": [
         {
           "limbName": "Faerie Wings",
-          "quantity": 2,
+          "quantity": {
+            "flat": 2
+          },
           "sdc": {
             "dice": "1D6x10+11"
           },
@@ -687,7 +689,9 @@
       "limbDurability": [
         {
           "limbName": "Dragon Wings",
-          "quantity": 2,
+          "quantity": {
+            "flat": 2
+          },
           "sdc": {
             "dice": "1D6x10+50"
           },

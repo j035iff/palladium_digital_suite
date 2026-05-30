@@ -8,8 +8,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "limb durability components",
-        "custom one-offs (notes only)",
-        "appearance constraints"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -18,7 +17,6 @@
       "name": "Card Deck",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "natural weapons",
         "weapon class bonuses",
         "gimmick inventory",
         "custom one-offs (notes only)"
@@ -31,10 +29,10 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
-        "damage affinities",
         "activated abilities (burst)",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "recovery behaviors"
       ],
       "notesOnly": false
     },
@@ -44,7 +42,6 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "weapon class bonuses",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -67,7 +64,8 @@
         "natural A.R.",
         "skill overrides",
         "damage affinities",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "player choices"
       ],
       "notesOnly": false
     },
@@ -88,7 +86,17 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "weapon class bonuses",
+        "telescopic vision",
         "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "hobbyist_other",
+      "name": "Other",
+      "hooks": [
+        "custom one-offs (notes only)",
+        "entry role (router/header)"
       ],
       "notesOnly": false
     }

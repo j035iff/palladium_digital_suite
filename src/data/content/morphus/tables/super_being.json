@@ -275,7 +275,9 @@
       "limbDurability": [
         {
           "limbName": "Cape",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "dice": "1D6x10+40"
           },
@@ -543,7 +545,9 @@
           "components": [
             {
               "limbName": "Glider Wing",
-              "quantity": 2,
+              "quantity": {
+                "flat": 2
+              },
               "sdc": {
                 "flat": 50
               },

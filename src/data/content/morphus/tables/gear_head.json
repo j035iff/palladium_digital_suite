@@ -151,7 +151,9 @@
       "limbDurability": [
         {
           "limbName": "Central Radiator",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "dice": "1D4x10+20"
           },

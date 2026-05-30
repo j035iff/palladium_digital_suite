@@ -327,7 +327,9 @@
       "limbDurability": [
         {
           "limbName": "Neck",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 0
           },
@@ -519,7 +521,9 @@
       "limbDurability": [
         {
           "limbName": "Head",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 0
           },

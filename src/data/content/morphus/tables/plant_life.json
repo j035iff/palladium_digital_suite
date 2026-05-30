@@ -772,7 +772,9 @@
       "limbDurability": [
         {
           "limbName": "Flytrap Head/Maw",
-          "quantity": 1,
+          "quantity": {
+            "flat": 1
+          },
           "sdc": {
             "flat": 64
           },

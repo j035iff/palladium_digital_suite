@@ -17,7 +17,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -27,7 +28,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -50,7 +52,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
@@ -61,6 +64,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "natural weapons",
+        "hand capacity",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -81,10 +85,9 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
-        "skill overrides",
         "natural weapons",
-        "damage affinities",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers"
       ],
       "notesOnly": false
     },
@@ -94,7 +97,18 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "limb durability components",
+        "custom one-offs (notes only)",
+        "living weapon rules"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "nightmare_other",
+      "name": "Other",
+      "hooks": [
+        "custom one-offs (notes only)",
+        "entry role (router/header)"
       ],
       "notesOnly": false
     }

@@ -2,7 +2,7 @@
   "tableId": "mythical_creature",
   "entries": [
     {
-      "id": "mythical_creature_bigfoot_wendigo_yeti",
+      "id": "mythical_creature_bigfoot",
       "name": "Bigfoot/Wendigo/Yeti",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -25,7 +25,7 @@
       "notesOnly": false
     },
     {
-      "id": "mythical_creature_dragon_wyvern_serpent",
+      "id": "mythical_creature_dragon",
       "name": "Dragon/Wyvern/Serpent",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -60,10 +60,10 @@
         "skill overrides",
         "natural weapons",
         "nightvision bonus",
-        "telescopic vision",
         "flight engine",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "peripheral vision"
       ],
       "notesOnly": false
     },
@@ -74,9 +74,11 @@
         "stat modifiers / A.R. shift",
         "jump modifiers",
         "skill overrides",
+        "natural weapons",
         "flight engine",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -88,7 +90,8 @@
         "jump modifiers",
         "skill overrides",
         "natural weapons",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -99,23 +102,32 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "nightvision bonus",
-        "telescopic vision",
         "flight engine",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
     {
-      "id": "mythical_creature_cyclops_giant",
+      "id": "mythical_creature_cyclops",
       "name": "Cyclops/Giant",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
         "skill overrides",
         "nightvision bonus",
-        "telescopic vision",
         "see invisible",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mythical_creature_other",
+      "name": "Other",
+      "hooks": [
+        "custom one-offs (notes only)",
+        "entry role (router/header)"
       ],
       "notesOnly": false
     }

@@ -2,7 +2,7 @@
   "tableId": "occupation",
   "entries": [
     {
-      "id": "occupation_suit_consummate_professional",
+      "id": "occupation_suit",
       "name": "A Suit/Consummate Professional",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -12,12 +12,11 @@
       "notesOnly": false
     },
     {
-      "id": "occupation_uniform_official",
+      "id": "occupation_uniform",
       "name": "Uniform/Official",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
-        "custom one-offs (notes only)"
+        "skill overrides"
       ],
       "notesOnly": false
     },
@@ -27,7 +26,8 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "save modifiers"
+        "save modifiers",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -37,21 +37,23 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_tools_of_the_trade",
+      "id": "occupation_tools_trade",
       "name": "Tools of the Trade",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_time_clock_timepiece",
+      "id": "occupation_time_clock",
       "name": "Time Clock or Timepiece",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -73,23 +75,23 @@
       "notesOnly": false
     },
     {
-      "id": "occupation_mechanic_mechanical",
+      "id": "occupation_mechanic",
       "name": "Mechanic/Mechanical",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "custom one-offs (notes only)"
+        "skill overrides"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_electrician_electronic_devices",
+      "id": "occupation_electrician",
       "name": "Electrician/Electronic Devices",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "damage affinities",
-        "custom one-offs (notes only)"
+        "skill overrides",
+        "damage affinities"
       ],
       "notesOnly": false
     },
@@ -98,7 +100,17 @@
       "name": "Workaholic",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "occupation_other",
+      "name": "Other",
+      "hooks": [
+        "custom one-offs (notes only)",
+        "entry role (router/header)"
       ],
       "notesOnly": false
     }

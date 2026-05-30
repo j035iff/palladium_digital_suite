@@ -631,8 +631,8 @@
           "minLength": 1
         },
         "quantity": {
-          "type": "integer",
-          "minimum": 1
+          "$ref": "#/$defs/polymorphicModifier",
+          "description": "Count of this component (flat or dice formula, e.g. 2D6+10 snakes)."
         },
         "sdc": {
           "$ref": "#/$defs/polymorphicModifier",
