@@ -2,169 +2,203 @@
   "tableId": "mineral",
   "entries": [
     {
-      "id": "mineral_amethyst_crystal",
-      "name": "Amethyst Crystal",
+      "id": "mineral_1_rough_metal_body",
+      "name": "Rough Metal Body",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "save modifiers",
-        "skill overrides"
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_arsenic",
+      "id": "mineral_1_metal_statue",
+      "name": "Metal Statue",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_rough_stone_body",
+      "name": "Rough Stone Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_living_statue",
+      "name": "Living Statue",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_part_inorganic",
+      "name": "Part Inorganic",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_part_inorganic_with_weapons",
+      "name": "Part Inorganic with Weapons",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_horns_spines_spikes",
+      "name": "Horns, Spines or Spikes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_1_crystalline_body",
+      "name": "Crystalline Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_2_amethyst_crystal",
+      "name": "Amethyst Crystal",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_2_arsenic",
       "name": "Arsenic",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "damage affinities"
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_clear_crystal_quartz",
-      "name": "Clear Crystal/Quartz",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "save modifiers",
-        "skill overrides",
-        "damage affinities"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_crystalline_body",
-      "name": "Crystalline Body",
-      "hooks": [
-        "stat modifiers / A.R. shift"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_emerald_tourmaline",
+      "id": "mineral_2_emerald_tourmaline",
       "name": "Emerald/Tourmaline",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
-        "skill overrides"
+        "skill overrides",
+        "activated abilities (burst)",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_gold",
+      "id": "mineral_2_gold",
       "name": "Gold",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_horns_spines_or_spikes",
-      "name": "Horns, Spines or Spikes",
-      "hooks": [
-        "stat modifiers / A.R. shift"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_iron_hematite",
-      "name": "Iron: Hematite",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_iron_magnetite",
-      "name": "Iron: Magnetite",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_living_statue",
-      "name": "Living Statue",
-      "hooks": [
-        "stat modifiers / A.R. shift"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_metal_statue",
-      "name": "Metal Statue",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "save modifiers",
-        "damage affinities"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_orpiment",
+      "id": "mineral_2_orpiment",
       "name": "Orpiment",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "damage affinities"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_part_inorganic",
-      "name": "Part Inorganic",
-      "hooks": [
-        "stat modifiers / A.R. shift"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_part_inorganic_with_weapons",
-      "name": "Part Inorganic with Weapons",
+      "id": "mineral_2_iron_hematite",
+      "name": "Iron: Hematite",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "damage affinities"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_rough_metal_body",
-      "name": "Rough Metal Body",
+      "id": "mineral_2_iron_magnetite",
+      "name": "Iron: Magnetite",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "save modifiers",
-        "damage affinities"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_rough_stone_body",
-      "name": "Rough Stone Body",
-      "hooks": [
-        "stat modifiers / A.R. shift"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "mineral_silver",
+      "id": "mineral_2_silver",
       "name": "Silver",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "mineral_uraninite",
+      "id": "mineral_2_clear_crystal_quartz",
+      "name": "Clear Crystal/Quartz",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "mineral_2_uraninite",
       "name": "Uraninite",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     }

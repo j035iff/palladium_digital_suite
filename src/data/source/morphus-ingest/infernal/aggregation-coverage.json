@@ -2,40 +2,25 @@
   "tableId": "infernal",
   "entries": [
     {
-      "id": "infernal_burning_soul_of_hell",
-      "name": "Burning Soul of Hell",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "natural A.R.",
-        "save modifiers",
-        "damage affinities"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "infernal_cloven_hooved_beast",
-      "name": "Cloven Hooved Beast",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides"
-      ],
-      "notesOnly": false
-    },
-    {
       "id": "infernal_demon_claw",
       "name": "Demon Claw",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "infernal_demon_eyes",
-      "name": "Demon Eyes",
+      "id": "infernal_shadow_demon",
+      "name": "Shadow Demon",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -44,26 +29,49 @@
       "name": "Feral Monster",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
     {
-      "id": "infernal_fire_brimstone",
+      "id": "infernal_cloven_hooved_beast",
+      "name": "Cloven Hooved Beast",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_fire_and_brimstone",
       "name": "Fire & Brimstone",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "damage affinities"
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "infernal_living_weapon",
-      "name": "Living Weapon",
+      "id": "infernal_demon_eyes",
+      "name": "Demon Eyes",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "nightvision bonus",
+        "see invisible",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -73,16 +81,10 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "save modifiers"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "infernal_shadow_demon",
-      "name": "Shadow Demon",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "skill overrides"
+        "save modifiers",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -91,7 +93,34 @@
       "name": "The Mask of Darkness",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "save modifiers",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_burning_soul_of_hell",
+      "name": "Burning Soul of Hell",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_living_weapon",
+      "name": "Living Weapon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     }

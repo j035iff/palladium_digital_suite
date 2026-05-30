@@ -6,81 +6,6 @@
   "description": "Infernal Morphus table (Nightbane Survival Guide, pp. 91–93). Nightbane drawn to demonic myth, cursed self-image, or a dark path—may struggle with evil, fight it, or embrace it. When this table is selected, the player may elect Anarchist, Aberrant, or Miscreant alignment. Holy Weapons inflict 50% more damage to all Infernal-table characters; they tend to avoid churches and sacred places.",
   "entries": [
     {
-      "id": "infernal_burning_soul_of_hell",
-      "name": "Burning Soul of Hell",
-      "tableCategory": "Infernal",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 93
-        }
-      ],
-      "description": "The Morphus is a humanoid whose skin seems to be composed of, or covered with, hot coals. This makes the skin a hard, blotchy and mottled ash gray color with bits of glowing red from hot embers. Flakes of ash drop from the character when he moves quickly, the air visibly shimmers around him from heat vapors, and he burns to the touch. Only the palms of his hands, the underside of his fingers, soles of his feet, and the front and cheeks of his face are not hot, but the rest burns like hot coals, as does his inner spirit, making most Nightbane with this Morphus hot-tempered, aggressive and quick to action. Bonuses: +2D6x10 to S.D.C., Natural A.R. 12, +1 on initiative, impervious to heat and fire (including magic fire; no damage), and +2 to Horror Factor. Burning touch does 1D4 damage, burning punch does 2D6 damage plus Supernatural P.S. damage. When others punch/touch the character even for a moment, they are burned and suffer 1D4 damage. To grab and hold the Burning Soul inflicts 2D6 damage per melee action (i.e. every 3 seconds). Penalties: Increase weight by 30% and size by 10%, water, ice and cold attacks inflict double damage, rain does 1D6 damage per melee round, being immersed in water does 6D6 damage per melee round when in this Morphus form; no damage in Facade, but probably doesn’t care for water.",
-      "statModifiers": {
-        "initiative": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 2
-        },
-        "sdc": {
-          "dice": "2D6x10"
-        }
-      },
-      "damageAffinities": {
-        "heat": 0,
-        "fire": 0
-      },
-      "naturalAr": 12,
-      "customOneOffs": [
-        "Burning touch 1D4; burning punch 2D6 plus Supernatural P.S.; grab/hold inflicts 2D6 per melee action on others who contact hot skin.",
-        "Cold, ice, and water attacks inflict double damage; rain 1D6 per melee round; full immersion 6D6 per melee round in Morphus (no damage in Facade)."
-      ]
-    },
-    {
-      "id": "infernal_cloven_hooved_beast",
-      "name": "Cloven Hooved Beast",
-      "tableCategory": "Infernal",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 92
-        }
-      ],
-      "description": "The Morphus is reminiscent of the classic devil image, that of a humanoid with red skin, snake eyes, black hair, a small pair of goat or ram’s horns protruding from the forehead, and the legs and cloven feet of a goat. Bonuses: +1D6x10 to S.D.C., +1 to P.P., +2D4+4 to Spd, can leap 12 feet (3.6 m) high and across (double with a running start), +10% to balance, +1D6 damage to all kick attacks and +1 to Horror Factor. Penalties: Impossible to Disguise and engage in Undercover Ops, and likely to require custom-made clothes.",
-      "statModifiers": {
-        "pp": {
-          "flat": 1
-        },
-        "spd": {
-          "flat": 4
-        },
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "1D6x10"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          }
-        ]
-      }
-    },
-    {
       "id": "infernal_demon_claw",
       "name": "Demon Claw",
       "tableCategory": "Infernal",
@@ -90,56 +15,81 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 92
         }
       ],
-      "description": "The Morphus gives the character a demonic appearance: The face is an evil or twisted version of his own, the skin is a gray, pale white, sickly green, or red color, 1D4 small horns appear in the center of the forehead, 1D4 larger horns protrude from the temples or top of the head, another small or medium sized horn protrudes from the jaw, the eyes glow when angry, and the voice is distorted in a strange and frightening manner (raspy, unnaturally deep, or sounds like he is gargling while speaking). However, the most startling change is the hands and forearms are ugly, gnarled limbs, with skin like dry leather and long, withered fingers that end in six inch (0.15 m), blade-like claws. A pair of medium-sized horns also protrude from the shoulders. Bonuses: +1D6x10 to S.D.C., +1 on initiative, +1 to strike and parry, +2D6 to damage with a claw attack in addition to Supernatural P.S. punch damage, can parry blades and other weapons with bare hands without injury, +2 to Horror Factor but only when speaking, and +5% to Interrogation skill. Penalties: -1D4 to P.B., -25% to all skills requiring a delicate touch or nimble fingers, as well as those requiring charisma and trust such as Barter and Seduction, and -40% to Disguise and Undercover Ops.",
+      "description": "The face is an evil or twisted version of his own, the skin is a gray, pale white, sickly green, or red color. Small and medium horns appear on the head, jaw, and shoulders. The hands and forearms are ugly, gnarled limbs with dry leather skin and long, withered fingers ending in six inch blade-like claws. The voice is distorted in a strange and frightening manner.",
       "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
         "strike": {
           "flat": 1
         },
         "parry": {
           "flat": 1
         },
-        "hf": {
-          "flat": 2
-        },
         "pb": {
           "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "1D6x10"
         }
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
+            "targetType": "skill_id",
+            "targetValue": "interrogation",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "barter",
+            "modifierPercent": -25
+          },
+          {
             "targetType": "skill_trait",
-            "targetValue": "requires_light_touch",
+            "targetValue": "requires_delicate_touch",
             "modifierPercent": -25
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -25
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -40
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -40
           }
         ]
-      }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Demon Claws",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Can parry blades and other weapons with bare hands without injury.",
+        "+2 to Horror Factor, but only when speaking."
+      ]
     },
     {
-      "id": "infernal_demon_eyes",
-      "name": "Demon Eyes",
+      "id": "infernal_shadow_demon",
+      "name": "Shadow Demon",
       "tableCategory": "Infernal",
       "gameSystems": [
         "nightbane"
@@ -147,47 +97,76 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 92
         }
       ],
-      "description": "The Morphus is a red-skinned devil, with medium-sized horns projecting from the forehead, demonic features, forked tongue, and a devil’s tail. The most distinguishing feature is the Nightbane’s eyes which are capable of a chilling gaze, as if he were looking into your very soul. Eye color is typically a glacial blue, smoldering red or purple, or dead black. Bonuses: +5D6 to S.D.C., +2 to Perception Rolls, +10% to intimidation, Interrogation and Seduction rolls, +1 to Horror Factor, perfect, 20/20 vision, Nightvision 2000 feet (610 m), see the invisible, see aura (same as the psionic ability) and cannot be magically or psionically blinded. Penalties: Blinded by intense, bright light, Disguise and Undercover Ops are impossible, and the character always has a sinister or dangerous expression on his face; -1D4 to M.A.",
+      "description": "The Morphus is humanoid with dark gray skin, a pair of bull-like horns that project from the forehead and dark eyes that glow red at the center when angry or in combat. Even in broad daylight, deep shadows creep and crawl across his body as if they were alive, making it impossible to discern his entire features or clearly identify what he is holding.",
       "statModifiers": {
-        "perception": {
-          "flat": 2
+        "sdc": {
+          "dice": "2D6"
         },
         "hf": {
-          "flat": 1
+          "dice": "1D4"
         },
         "ma": {
           "dice": "-1D4"
         },
-        "sdc": {
-          "dice": "5D6"
+        "pb": {
+          "flat": -1
         }
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "escape_artist",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "concealment",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "palming",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "undercover_ops",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "barter",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_charisma_trust",
+            "modifierPercent": -30
           }
         ]
       },
-      "sensory": {
-        "sharpVision": true,
-        "nightvisionRangeFlatBonus": 2000,
-        "seeInvisible": true
-      },
       "customOneOffs": [
-        "See aura (same as the psionic ability); cannot be magically or psionically blinded; blinded by intense bright light.",
-        "Sinister expression; +10% intimidation, Interrogation, and Seduction."
+        "Suffers half damage and effect from magic and Talents involving shadows and darkness.",
+        "Contextual modifiers: {\"skillOverrides\":[{\"targetType\":\"skill_id\",\"targetValue\":\"prowl\",\"modifierPercent\":20},{\"targetType\":\"skill_id\",\"targetValue\":\"tailing\",\"modifierPercent\":20}]}",
+        "Contextual modifiers: {\"skillOverrides\":[{\"targetType\":\"skill_id\",\"targetValue\":\"prowl\",\"modifierPercent\":-20}]}"
       ]
     },
     {
@@ -200,43 +179,165 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 92
         }
       ],
-      "description": "The character looks rather like a minotaur, with a pair of large ram or bull horns, red, gray or black skin, muscular arms and upper body, hairy legs, and a face that is more like that of a rabid, wild animal (goat or bull) than human. The character almost always looks angry or upset, with teeth clenched, furrowed brows, flared nostrils, and a voice that is more like a growl. Bonuses: +2D4x10+16 to S.D.C., +1D6 to P.S., +1 to P.E., +13% to intimidate others, +13% to Interrogation skill, a bite attack does 2D4 damage, head butt does 2D6 damage plus the usual P.S. punch damage, and +1D4 to Horror Factor. Penalties: -1D4 from M.E., reduce Spd by 10%, double weight, increase size/height 20%, impossible to disguise and engage in Undercover Ops, and likely to require custom-made clothes.",
+      "description": "The character looks rather like a minotaur, with a pair of large ram or bull horns, red, gray or black skin, muscular arms and upper body, hairy legs, and a face that is more like that of a rabid, wild animal (goat or bull) than human. The voice is more like a growl.",
       "statModifiers": {
-        "pe": {
-          "flat": 1
+        "sdc": {
+          "dice": "2D4x10+16"
         },
         "ps": {
           "dice": "1D6"
         },
-        "me": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "2D4x10+16"
+        "pe": {
+          "flat": 1
         },
         "hf": {
           "dice": "1D4"
         },
+        "me": {
+          "dice": "-1D4"
+        },
         "spd": {
           "percent": -10
+        }
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "heightModifier": {
+        "percent": 20
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "intimidation",
+            "modifierPercent": 13
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "interrogation",
+            "modifierPercent": 13
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Feral Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "head_butt",
+          "label": "Horned Head-Butt",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "infernal_cloven_hooved_beast",
+      "name": "Cloven Hooved Beast",
+      "tableCategory": "Infernal",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 92
+        }
+      ],
+      "description": "The Morphus is reminiscent of the classic devil image, that of a humanoid with red skin, snake eyes, black hair, a small pair of goat or ram's horns protruding from the forehead, and the legs and cloven feet of a goat.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "pp": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "2D4+4"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": {
+            "flat": 12,
+            "isOverride": true
+          },
+          "standingHeight": {
+            "flat": 12,
+            "isOverride": true
+          },
+          "runningDistance": {
+            "flat": 24,
+            "isOverride": true
+          },
+          "runningHeight": {
+            "flat": 24,
+            "isOverride": true
+          }
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "impossibleInMorphus": true
           }
         ]
-      }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Hooved Kick",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "+10% to balance."
+      ]
     },
     {
-      "id": "infernal_fire_brimstone",
+      "id": "infernal_fire_and_brimstone",
       "name": "Fire & Brimstone",
       "tableCategory": "Infernal",
       "gameSystems": [
@@ -245,45 +346,319 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 92
         }
       ],
-      "description": "The Morphus is a humanoid with a pair of small horns, dry, cracked yellow or tan skin, and flaming red hair. Heat vapors rise from the head and shoulders and radiates with the faint smell of brimstone which is a combination of garlic, burning flesh and rotten eggs. Even as a faint smell it can be nauseating, and everyone within a 20 foot (6.1 m) radius must roll a 10 or higher to save vs nausea. A failed roll means the character’s stomach is queasy and any sudden movement has a 50% chance of making him throw up. When this ‘Bane is angry or in combat, the stench intensifies and those around him must roll a 16 or higher every minute of exposure or suffer from nausea and vomiting. A failed save means the victim is -1 on all combat rolls, -10% on skill performance, and reduce Spd by 50% (going any faster causes vomiting). Vomiting causes the victim to lose initiative and 1D4 melee attacks. Bonuses: +5D6 to S.D.C., resistant to heat and fire (half damage), impervious to foul odors, gas, and airborne toxins/poison, +4 to save vs all other types of poisons, and +1 to Horror Factor. Penalties: -1D4 to M.A. and P.B. This character literally stinks of death and brimstone, Disguise and Undercover Ops are impossible.",
+      "description": "The Morphus is a humanoid with a pair of small horns, dry, cracked yellow or tan skin, and flaming red hair. Heat vapors rise from the head and shoulders and radiates with the nauseating smell of brimstone (garlic, burning flesh and rotten eggs).",
       "statModifiers": {
-        "ma": {
-          "dice": "-1D4"
-        },
         "sdc": {
           "dice": "5D6"
         },
         "hf": {
           "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
         }
-      },
-      "damageAffinities": {
-        "heat": 0.5
       },
       "saveModifiers": {
         "immunities": [
           "gas",
+          "disease",
           "poison"
         ]
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5,
+        "holyWeapons": 1.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "undercover_ops",
             "impossibleInMorphus": true
           }
         ]
-      }
+      },
+      "customOneOffs": [
+        "This character literally stinks of death and brimstone.",
+        "Passive Aura: Everyone within 20 feet (6.1 m) must roll a 10 or higher to save vs nausea. A failed roll means the stomach is queasy and any sudden movement has a 50% chance of throwing up.",
+        "Combat Aura: When angry or in combat, the stench intensifies. Those around him must roll a 16 or higher every minute of exposure. A failed save means -1 on all combat rolls, -10% on skill performance, and reduce Spd by 50%. Vomiting causes the victim to lose initiative and 1D4 melee attacks.",
+        "+4 to save vs all other types of poisons (aside from the immunities listed to foul odors/airborne toxins)."
+      ]
+    },
+    {
+      "id": "infernal_demon_eyes",
+      "name": "Demon Eyes",
+      "tableCategory": "Infernal",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 92
+        }
+      ],
+      "description": "The Morphus is a red-skinned devil, with medium-sized horns projecting from the forehead, demonic features, forked tongue, and a devil's tail. The eyes are capable of a chilling gaze, colored a glacial blue, smoldering red, purple, or dead black.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6"
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        }
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000,
+        "seeInvisible": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "intimidation",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "interrogation",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Perfect 20/20 vision.",
+        "See Aura at will (same as the psionic ability).",
+        "Cannot be magically or psionically blinded.",
+        "Blinded by intense, bright light.",
+        "The character always has a sinister or dangerous expression on his face."
+      ]
+    },
+    {
+      "id": "infernal_mark_of_the_profane",
+      "name": "Mark of the Profane",
+      "tableCategory": "Infernal",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 92
+        }
+      ],
+      "description": "The Morphus is a burly demon with brownish-gray skin covered in scars and the symbol of an upside down cross as if it were carved or branded into his flesh. These markings cover his entire body, and a pentagram is etched across his full chest and back.",
+      "naturalAr": 11,
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "saveModifiers": {
+        "magic": 1
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Profane Strike (Bite/Punch/Claw)",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "guardians",
+                "supernatural beings of light"
+              ],
+              "damageMultiplier": 1.5
+            }
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "+3 to save vs magic that involves mind control, domination or pain.",
+        "Holy symbols have a Horror Factor of 13 (usual effects) for this Nightbane.",
+        "Holy Weapons inflict double damage.",
+        "Dislikes and distrusts clergy, angelic beings, Guardians, and gods of light."
+      ]
+    },
+    {
+      "id": "infernal_the_mask_of_darkness",
+      "name": "The Mask of Darkness",
+      "tableCategory": "Infernal",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 92
+        }
+      ],
+      "description": "The Morphus appears mostly human, only the face is covered with what appears to be a strange, exotic and elaborate mask, plus the body is covered in black, dark gray or blood red patterns. The mask conceals the character's identity and cannot be removed.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "ma": {
+          "flat": -2
+        }
+      },
+      "progressionModifiers": {
+        "ppePerLevel": {
+          "dice": "2D6"
+        }
+      },
+      "saveModifiers": {
+        "allSaves": 1
+      },
+      "damageAffinities": {
+        "holyWeapons": 1.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Deathbringer Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "night_princes",
+                "nightlords",
+                "demons"
+              ],
+              "damageMultiplier": 1.5
+            }
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Inscribed on the Nightbane's chest or back is a strange symbol which the 'Bane believes marks him as an agent of destruction to the Nightlords."
+      ]
+    },
+    {
+      "id": "infernal_burning_soul_of_hell",
+      "name": "Burning Soul of Hell",
+      "tableCategory": "Infernal",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 93
+        }
+      ],
+      "description": "The Morphus is a humanoid whose skin seems to be composed of hot coals. Flakes of ash drop from the character when he moves quickly, the air visibly shimmers around him from heat vapors, and he burns to the touch.",
+      "naturalAr": 12,
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "damageAffinities": {
+        "fire": 0,
+        "heat": 0,
+        "cold": 2,
+        "holyWeapons": 1.5
+      },
+      "weightModifier": {
+        "percent": 130
+      },
+      "heightModifier": {
+        "percent": 10
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Burning Touch",
+          "damageFormula": "1D4",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Burning Punch",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Impervious to heat and fire (including magic fire).",
+        "When others punch/touch the character even for a moment, they are burned and suffer 1D4 damage.",
+        "Water and ice attacks inflict double damage.",
+        "Rain does 1D6 damage per melee round.",
+        "Being immersed in water does 6D6 damage per melee round when in this Morphus form.",
+        "To grab and hold the Burning Soul inflicts 2D6 damage per melee action (i.e. every 3 seconds) to the attacker."
+      ]
     },
     {
       "id": "infernal_living_weapon",
@@ -295,12 +670,15 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 93
         }
       ],
-      "description": "The Morphus appears as demonic humanoid with jet black skin, fangs, glowing eyes, clawed fingers, and a pair of large horns. The Nightbane’s entire body is a living weapon. The shoulders are covered in 2D4+2 spikes, blades, or horns, blade-like fins line the forearms, the fingernails and toenails are sickle-shaped claws, the teeth are pointed and the canines are fangs. A single bone-like stabbing blade can be extended from the right forearm to be used as a short spear or sword. Moreover, 1D4+1 long strips of flesh hang from the left forearm. At the end of these strips are needle-sharp barbs that can be used like a whip to lash at the enemy, entangle, or climb like a whip. 1D4 spikes jut from the knees. Bonuses: +3D6 to S.D.C., +1 attack per melee, +1 to parry, disarm and entangle, +2 to pull punch. +1D6 damage to melee attacks using any body weapon, bites do 2D6 damage, +1D4+1 to Horror Factor.",
+      "description": "The Morphus appears as a demonic humanoid with jet black skin, fangs, glowing eyes, clawed fingers, and a pair of large horns. The Nightbane's entire body is a living weapon, covered in spikes, blades, or horns, with a retractable blade in the right arm and barbed whips hanging from the left.",
       "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
         "apm": {
           "flat": 1
         },
@@ -318,153 +696,40 @@
         },
         "hf": {
           "dice": "1D4+1"
-        },
-        "sdc": {
-          "dice": "3D6"
         }
       },
-      "livingWeaponRules": {
-        "preferredWeapon": true
+      "damageAffinities": {
+        "holyWeapons": 1.5
       },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Body Weapons (Blades/Spikes)",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Fanged Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Forearm Blade",
+          "damageFormula": "Short Spear/Sword",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Flesh Barbs/Whip",
+          "damageFormula": "Whip",
+          "isAdditiveToHth": false
+        }
+      ],
       "customOneOffs": [
-        "Shoulders bear 2D4+2 spikes/blades/horns; forearm blade extends for short spear/sword use; 1D4+1 barbed flesh-whip strips on left forearm; 1D4 knee spikes.",
-        "Body-weapon melee attacks +1D6 damage; bite 2D6."
+        "Can be used to entangle or climb."
       ]
-    },
-    {
-      "id": "infernal_mark_of_the_profane",
-      "name": "Mark of the Profane",
-      "tableCategory": "Infernal",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 92
-        }
-      ],
-      "description": "The Morphus is a burly demon with brownish-gray skin covered in scars and the symbol of an upside down cross as if it were carved or branded into his flesh. These markings of the “profane” cover his entire body, including the head and neck, and a pentagram is etched across his full chest and back. Bonuses: +3D6x10 to S.D.C., Natural A.R. of 11, +1D4 to P.S., +1D4 to Horror Factor, +3 to save vs magic that involves mind control, domination or pain, +1 to save vs all other types of magic, inflicts 50% greater bite, punch, and claw attack damage to Guardians and supernatural beings of light. Penalties: Holy symbols have a Horror Factor of 13 (usual effects), Holy Weapons inflict double damage, and dislikes and distrusts clergy, angelic beings, Guardians, and gods of light.",
-      "statModifiers": {
-        "ps": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "3D6x10"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "saveModifiers": {
-        "magic": 4
-      },
-      "naturalAr": 11
-    },
-    {
-      "id": "infernal_shadow_demon",
-      "name": "Shadow Demon",
-      "tableCategory": "Infernal",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 92
-        }
-      ],
-      "description": "The Morphus is humanoid with dark gray skin, a pair of bull-like horns that project from the forehead and dark eyes that glow red at the center when angry or in combat. Even in broad daylight or under a spotlight, deep shadows creep and crawl across his body as if they were alive, and they always obscure half to two-thirds of the Nightbane’s face and body, making it impossible to discern his entire features or clearly identify what he may be holding or wearing. Bonuses: +2D6 to S.D.C., suffers half damage and effect from magic and Talents involving shadows and darkness, +20% to Escape Artist, Concealment, and Palming skills, +20% to Prowl and Tailing but only in darkness, and +1D4 to Horror Factor. Penalties: -1D4 to M.A., -1 to P.B., -20% to Prowl in well lit conditions, -30% to all skills requiring charisma and trust such as Barter and Seduction, and impossible to Disguise and Undercover Ops.",
-      "statModifiers": {
-        "pb": {
-          "flat": -1
-        },
-        "ma": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "2D6"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_escape_artist",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_concealment",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_palming",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -30
-          }
-        ]
-      }
-    },
-    {
-      "id": "infernal_the_mask_of_darkness",
-      "name": "The Mask of Darkness",
-      "tableCategory": "Infernal",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 92
-        }
-      ],
-      "description": "The Morphus appears mostly human, only the face is covered with what appears to be a strange or exotic and elaborate mask, plus the body is covered in black, dark gray or blood red patterns that wrap around the arms, legs and torso. The mask is often leather and demonic or monstrous in appearance with horns, spikes, fins, or ribbing, but it may also be made of feathers, or strips of cloth, or porcelain. The mask conceals the character’s identity and cannot be removed. Inscribed on the Nightbane’s chest or back as well as the shoulders or forearms is a strange symbol which the ‘Bane believes marks him as an agent of destruction – a deathbringer to the Nightlords. Bonuses: +2D6x10 S.D.C., +2D6 P.P.E. per level of experience, +1 to all saving throws, and attacks leveled by the ‘Bane at Night Princes, Nightlords and demons inflict 50% more damage. Penalties: -2 from M.A., impossible to Disguise and engage in Undercover Ops.",
-      "statModifiers": {
-        "sdc": {
-          "dice": "2D6x10"
-        }
-      },
-      "progressionModifiers": {
-        "ppePerLevel": {
-          "dice": "2D6"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          }
-        ]
-      }
     }
   ]
 }

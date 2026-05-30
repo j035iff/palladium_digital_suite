@@ -5,7 +5,8 @@
       "id": "unearthly_beauty_animal_magnetism",
       "name": "Animal Magnetism",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -22,6 +23,7 @@
       "name": "Elfin Features",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)",
         "appearance constraints"
       ],
       "notesOnly": false
@@ -30,7 +32,9 @@
       "id": "unearthly_beauty_fallen_angel",
       "name": "Fallen Angel",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "flight engine",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },

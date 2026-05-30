@@ -3,184 +3,300 @@
   "kind": "morphus_trait_table",
   "displayName": "Mineral",
   "parentTable": null,
-  "description": "Mineral and Mineral II Morphus tables. Mineral Table I (Dark Designs / Nightlands): inorganic stone, metal, or crystal bodies—Disguise, Undercover Ops, and Swimming are usually impossible; Acrobatics, Gymnastics, Prowl, and similar skills often suffer -40%. Mineral Table II (Survival Guide): crystalline and metallic mineral forms; all Mineral II traits are impervious to the vampire's bite and mind control.",
+  "description": "Mineral and Mineral II Morphus tables. Mineral Table I (Dark Designs / Nightlands): inorganic stone, metal, or crystal bodies.",
   "entries": [
     {
-      "id": "mineral_amethyst_crystal",
-      "name": "Amethyst Crystal",
-      "tableCategory": "Mineral II",
+      "id": "mineral_1_rough_metal_body",
+      "name": "Rough Metal Body",
+      "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 1
+          "reference": "Nightlands",
+          "pageNumber": 144
         }
       ],
-      "description": "+3 to Perception Rolls, +1 on initiative, +1 to save vs possession and illusions, +1D4x10+26 S.D.C., +1 to M.A. and P.B. attributes. Penalties: Double weight in Morphus form, cannot swim (sinks like a rock) and -10% to skills like Acrobatics, Gymnastics, and Climbing.",
+      "description": "The Nightbane looks as if he was made from lumps/clusters of metal or molten metal that cooled in lumps and streams like the surface of a partially melted candle[cite: 39]. Or he may look like crude, unprocessed metal ore with a rough surface dotted with tiny crystals and discoloration[cite: 40].",
       "statModifiers": {
-        "perception": {
-          "flat": 3
-        },
-        "sdc": {
-          "dice": "1D4x10+26"
-        }
-      },
-      "saveModifiers": {
-        "possession": 1,
-        "illusions": 1
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          }
-        ]
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
-    },
-    {
-      "id": "mineral_arsenic",
-      "name": "Arsenic",
-      "tableCategory": "Mineral II",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 1
-        }
-      ],
-      "description": "Appears as a thick, bulky humanoid that seems to be made of living rock – rock formed from hundreds of porous, metallic balls fused together, giving the surface a lumpy, bumpy texture; brownish-gray to gray in color. Bonuses: +6D6+12 S.D.C., +1 to P.E. attribute, and +2 to Horror Factor. Clawing, biting and any attack by the Nightbane that cuts or stabs an opponent with the character’s mineral body does the usual damage plus 2D6 damage from poison. Furthermore, the ‘Bane can scrape grains of arsenic off his body to use as ingested poison typically mixed into food or drink. Anyone who eats arsenic suffers 3D6 damage direct to Hit Points. A Nightbane made of arsenic is also impervious to poison, +3 to save vs toxins and drugs, and resistant to fire and heat (does half damage). However, when heated the character exudes the smell of garlic which is repugnant to vampires, Wampyrs, were-beasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane. Penalties: Triple weight in Morphus form, cannot swim (sinks like a rock) and -15% to skills like Acrobatics, Gymnastics, and Climbing.",
-      "statModifiers": {
-        "pe": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 2
-        },
-        "sdc": {
-          "dice": "6D6+12"
-        }
-      },
-      "damageAffinities": {
-        "poison": 0
-      },
-      "saveModifiers": {
-        "immunities": [
-          "poison"
-        ]
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -15
-          }
-        ]
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
-    },
-    {
-      "id": "mineral_clear_crystal_quartz",
-      "name": "Clear Crystal/Quartz",
-      "tableCategory": "Mineral II",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 4
-        }
-      ],
-      "description": "+1 to P.S., +3 to damage, +1 to Perception Rolls, +1 to save vs psionic attacks, +1D6x10+30 S.D.C., impervious to laser attacks, half damage from electricity and other energy attacks, blunt and projectile attacks do full damage, and the Clear Crystal Morphus can see and attack Astral Beings, the clear crystals of his body able to inflict damage to Astral Being with punches, kicks, and any crystalline weapon. Can form one crystalline 94 Joe Sifferman (Order #46323384) weapon from his hand, typically a rod or sword-like weapon that does 2D6 damage (+1D6 to Astral Beings). Penalties: Double weight in Morphus form, cannot swim (sinks like a rock) and -10% to skills like Acrobatics, Gymnastics, and Climbing.",
-      "statModifiers": {
-        "hf": {
-          "flat": 2
-        },
         "ps": {
-          "flat": 1
+          "flat": 6
         },
-        "perception": {
-          "flat": 1
+        "spd": {
+          "flat": -6
         },
         "sdc": {
-          "dice": "1D6x10+30"
+          "dice": "4D6x10"
         },
-        "bonusHthDamage": {
-          "flat": 3
+        "hf": {
+          "dice": "1D4"
         }
       },
-      "damageAffinities": {
-        "lasers": 0
-      },
-      "saveModifiers": {
-        "psionics": 1
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          }
-        ]
+      "weightModifier": {
+        "flat": 400
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      }
+      },
+      "damageAffinities": {
+        "cold": 0,
+        "fire": 2
+      },
+      "customOneOffs": [
+        "The body is roughly human shaped, but large and heavy-set[cite: 41].",
+        "Impervious to cold (no damage) but takes double damage from fire[cite: 43]."
+      ]
     },
     {
-      "id": "mineral_crystalline_body",
+      "id": "mineral_1_metal_statue",
+      "name": "Metal Statue",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "The Nightbane is shaped like a well-sculpted metallic humanoid[cite: 44]. The form is not unattractive, but unsettlingly inhuman[cite: 45].",
+      "statModifiers": {
+        "ps": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 3
+        },
+        "spd": {
+          "flat": -4
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "flat": 300
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "cold": 0,
+        "fire": 2
+      },
+      "customOneOffs": [
+        "Since the Nightbane has a basically humanoid size and shape, he can hide his appearance under clothing and a hood or hat[cite: 45].",
+        "Impervious to cold (no damage) but takes double damage from fire[cite: 47]."
+      ]
+    },
+    {
+      "id": "mineral_1_rough_stone_body",
+      "name": "Rough Stone Body",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "The Nightbane looks like he is made of roughly hewn blocks of stone[cite: 48].",
+      "statModifiers": {
+        "ps": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 4
+        },
+        "spd": {
+          "flat": -4
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "weightModifier": {
+        "flat": 300
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 0.5
+      },
+      "customOneOffs": [
+        "Resistant to fire and cold (takes half damage)[cite: 50]."
+      ]
+    },
+    {
+      "id": "mineral_1_living_statue",
+      "name": "Living Statue",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "A finely sculpted and detailed humanoid figure that looks normal except it is made of inorganic material (crystal, marble, ebony or stone)[cite: 51].",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "flat": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 0.5
+      },
+      "customOneOffs": [
+        "Since the Nightbane has a basically humanoid size and shape, he can hide his appearance under clothing with a hood or a hat[cite: 52].",
+        "Resistant to fire and cold (takes half damage)[cite: 54]."
+      ]
+    },
+    {
+      "id": "mineral_1_part_inorganic",
+      "name": "Part Inorganic",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "The character has the hands and arms or chest and head of stone, crystal or metal, rough or highly polished[cite: 55]. In the alternative, large patches all over the body are made of crystals, stone or metal and look as if they are protruding through a thin covering of skin[cite: 56].",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "8D6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "customOneOffs": [
+        "If a leg is inorganic, reduce Spd by 10% (this is a GM/player call based on where the parts manifest)[cite: 55]."
+      ]
+    },
+    {
+      "id": "mineral_1_part_inorganic_with_weapons",
+      "name": "Part Inorganic with Weapons",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "The Nightbane's forearms and hands turn into stone, crystal or metal with a hand that is a sword or axe-like weapon or a hand that has long inorganic claws or knuckle spikes[cite: 58].",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Integrated Mineral Weapon",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "The hands are resistant to cold, heat and fire (take half damage)[cite: 59].",
+        "Adds 2D6 to damage[cite: 59]."
+      ]
+    },
+    {
+      "id": "mineral_1_horns_spines_spikes",
+      "name": "Horns, Spines or Spikes",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightlands",
+          "pageNumber": 144
+        }
+      ],
+      "description": "The character's spine is covered in thick spines or spikes made of inorganic material, or has a crown of inorganic horns/spikes, or has 3D4 small spikes or spines all over[cite: 60].",
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Spike Slash/Stab",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Adds an additional 1D6 damage when used as a weapon/in combat[cite: 61]."
+      ]
+    },
+    {
+      "id": "mineral_1_crystalline_body",
       "name": "Crystalline Body",
       "tableCategory": "Mineral",
       "gameSystems": [
@@ -189,38 +305,238 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 141
+          "reference": "Nightlands",
+          "pageNumber": 145
         }
       ],
-      "description": "The body looks like it is made of crystal. The shape is not unattractive but very inhuman. The crystalline body has many sharp edges, and will tear through clothing after a few hours of wear and tear. Bonuses: +2D4x10 to S.D.C., +1 to Horror Factor, laser resistant (half damage), and the crystalline hands and fingers act like claws, inflicting an additional 1D6 points of damage in addition to the Supernatural P.S. punch/kick damage. Note: The hands are not as articulated and have trouble holding on to things, -10% on all skills that require the use of hands.",
+      "description": "The body looks like it is made of crystal[cite: 63]. The shape is not unattractive but very inhuman[cite: 64].",
       "statModifiers": {
-        "hf": {
-          "flat": 1
-        },
         "sdc": {
           "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 1
         }
-      }
+      },
+      "damageAffinities": {
+        "lasers": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_hands",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Crystalline Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "The crystalline body has many sharp edges, and will tear through clothing after a few hours of wear and tear[cite: 64].",
+        "Laser resistant (half damage)[cite: 65].",
+        "The hands are not as articulated and have trouble holding on to things, resulting in a -10% on all skills that require the use of hands[cite: 66, 67].",
+        "The crystalline hands and fingers act like claws, inflicting an additional 1D6 points of damage on punches[cite: 65]."
+      ]
     },
     {
-      "id": "mineral_emerald_tourmaline",
-      "name": "Emerald/Tourmaline",
-      "tableCategory": "Mineral II",
+      "id": "mineral_2_amethyst_crystal",
+      "name": "Amethyst Crystal",
+      "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 2
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 93
         }
       ],
-      "description": "The character appears to be a sleek humanoid composed of rich green, translucent emerald or tourmaline crystal. Facial features are obscured as the face appears to have been cut from one giant gemstone or made up of several. Among mages and healers, green crystals are believed beneficial to the healing process anti-poison. Bonuses: 93 Joe Sifferman (Order #46323384) +2D4x10 S.D.C., +1D4 P.E., +3 to save vs poison and toxins, +1 to save vs disease/illness, plus the ‘Bane can heal others, restoring 4D6+6 S.D.C. or Hit Points twice per 24 hours, or completely negate poison (restoring all lost H.P./S.D.C. from poison). When the healing touch is used, the emerald hand glows as if there were a light inside the palm and radiates through the forearm. Penalties: Double weight in Morphus form, cannot swim (sinks like a rock), -10% to skills like Acrobatics, Gymnastics, and Climbing, and reduce Spd by 10%.",
+      "description": "The character appears to be a sleek humanoid composed of purple, translucent and prismatic amethyst crystal[cite: 1064]. Facial features are obscured as the face appears to have been cut from one or more giant gemstones[cite: 1065].",
       "statModifiers": {
         "sdc": {
-          "dice": "4D6+6"
+          "dice": "1D4x10+26"
+        },
+        "ma": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 3
+        },
+        "initiative": {
+          "flat": 1
+        }
+      },
+      "saveModifiers": {
+        "mindControl": 1,
+        "possession": 1,
+        "illusions": 1
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Among mages and healers, amethyst is said to have a property to improve powers of intuition[cite: 1066].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1069]."
+      ]
+    },
+    {
+      "id": "mineral_2_arsenic",
+      "name": "Arsenic",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
+        }
+      ],
+      "description": "Appears as a thick, bulky humanoid that seems to be made of living rock formed from hundreds of porous, metallic balls fused together, giving the surface a lumpy, bumpy texture; brownish-gray to gray in color[cite: 1070].",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "6D6+12"
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "saveModifiers": {
+        "poison": 3,
+        "immunities": [
+          "poison"
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Poisonous Mineral Strike",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Ingested Arsenic Grains",
+          "damageFormula": "0",
+          "isAdditiveToHth": false,
+          "poison": {
+            "saveType": "poison",
+            "failDamageFormula": "Anyone who eats the scraped arsenic suffers 3D6 damage direct to Hit Points[cite: 1074].",
+            "passDamageFormula": "None"
+          }
+        }
+      ],
+      "weightModifier": {
+        "percent": 300
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "A Nightbane made of arsenic is impervious to poison, +3 to save vs toxins and drugs, and resistant to fire and heat (does half damage)[cite: 1075].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1077].",
+        "When heated, the character exudes the smell of garlic which is repugnant to vampires, Wampyrs, were-beasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane[cite: 1076].",
+        "Clawing, biting and any attack by the Nightbane that cuts or stabs an opponent with the character's mineral body does the usual damage plus 2D6 damage from poison[cite: 1072].",
+        "The 'Bane can scrape grains of arsenic off his body to use as ingested poison, typically mixed into food or drink[cite: 1073]."
+      ]
+    },
+    {
+      "id": "mineral_2_emerald_tourmaline",
+      "name": "Emerald/Tourmaline",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
+        }
+      ],
+      "description": "The character appears to be a sleek humanoid composed of rich green, translucent emerald or tourmaline crystal[cite: 1078]. Facial features are obscured as the face appears to have been cut from one giant gemstone or made up of several[cite: 1079].",
+      "statModifiers": {
+        "pe": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "2D4x10"
         },
         "spd": {
           "percent": -10
@@ -230,336 +546,215 @@
         "poison": 3,
         "disease": 1
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -10
-          }
-        ]
+      "weightModifier": {
+        "percent": 200
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "activatedAbilities": [
+        {
+          "abilityName": "Healing / Negate Poison Touch",
+          "chargesPerPeriod": 2,
+          "resetPeriod": "daily",
+          "durationFormula": "instant"
+        }
+      ],
+      "customOneOffs": [
+        "When the healing touch is used, the emerald hand glows as if there were a light inside the palm and radiates through the forearm[cite: 1083].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1084].",
+        "Can heal others, restoring 4D6+6 S.D.C. or Hit Points twice per 24 hours, or completely negate poison (restoring all lost H.P./S.D.C. from poison)[cite: 1081, 1082]."
+      ]
     },
     {
-      "id": "mineral_gold",
+      "id": "mineral_2_gold",
       "name": "Gold",
-      "tableCategory": "Mineral II",
+      "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 2
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
         }
       ],
-      "description": "Appears to be a man made of solid metallic gold. The body is sleek, smooth, lustrous gold and the character weighs 10x more in his golden Morphus. Facial features are smoothed out and unidentifiable. Bonuses: +2D6x10+12 S.D.C. +1D4 to P.S., +6 to punch and kick damage (in addition to P.S. bonus), electricity does no damage (goes right through him), blunt attacks, bullets, projectiles, impacts and explosions inflict half damage, bullets and projectiles become imbedded in the soft gold mineral, but can be easily plucked out without any additional damage and a few minutes after being removed, the indentation smooths over to leave no mark/scar of any kind. Fire and heat do full damage. Penalties: Heavy as lead, the gold character’s weight may be a problem in certain situations, he cannot swim while in the gold form (sinks like a lead weight) nor perform Acrobatics or Gymnastics, -40% to Climbing skill and reduce Spd by half.",
+      "description": "Appears to be a man made of solid metallic gold[cite: 1085]. The body is sleek, smooth, lustrous gold[cite: 1086]. Facial features are smoothed out and unidentifiable[cite: 1087].",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
         },
         "sdc": {
           "dice": "2D6x10+12"
+        },
+        "spd": {
+          "percent": -50
         }
       },
+      "weightModifier": {
+        "percent": 1000
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "electricity": 0,
+        "blunt": 0.5,
+        "explosives": 0.5,
+        "kinetic": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Gold Unarmed Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
             "modifierPercent": -40
           }
         ]
       },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
+      "customOneOffs": [
+        "Bullets and projectiles become imbedded in the soft gold mineral, but can be easily plucked out without any additional damage[cite: 1088].",
+        "A few minutes after being removed, the indentation smooths over to leave no mark/scar of any kind[cite: 1088].",
+        "Fire and heat do full damage[cite: 1089].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a lead weight[cite: 1089].",
+        "+6 to punch and kick damage (in addition to P.S. bonus)[cite: 1088]."
+      ]
     },
     {
-      "id": "mineral_horns_spines_or_spikes",
-      "name": "Horns, Spines or Spikes",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 141
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "The character’s spine is covered in thick spines or spikes made of inorganic material, or has a crown of inorganic horns/spikes, or has 3D4 small spikes or spines all over. Bonuses: +5D6 to S.D.C., +1 to Horror Factor and an additional 1D6 damage when used as a weapon/in combat.",
-      "statModifiers": {
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "5D6"
-        }
-      }
-    },
-    {
-      "id": "mineral_iron_hematite",
-      "name": "Iron: Hematite",
-      "tableCategory": "Mineral II",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 3
-        }
-      ],
-      "description": "Hematite: Appears to me made of smooth gray, black or brownish-red iron. The body is heavy, weighing x6 more in his iron Morphus than his Facade. Facial features are smoothed out and unidentifiable/nondescript. Bonuses: +3D6x10+66 S.D.C. +1D6 to P.S., +2 to P.E., +2 to Horror Factor, +4 to punch and kick damage (in addition to P.S. bonus), and +3 to roll with impact. Blunt attacks, bullets, projectiles, impacts and explosions inflict half damage, and bullets and projectiles bounce off the iron body; fire, heat and extreme cold do half damage, and the character can parry weapons and fiery torches with his bare hands. Penalties: A heavy material, the iron character’s weight may be a problem in certain situations, he cannot swim while in the iron form (sinks like a rock) nor perform Acrobatics or Gymnastics, -30% to Climbing skill and reduce Spd by half.",
-      "statModifiers": {
-        "pe": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 2
-        },
-        "rollWithPunch": {
-          "flat": 3
-        },
-        "ps": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "3D6x10+66"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -30
-          }
-        ]
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
-    },
-    {
-      "id": "mineral_iron_magnetite",
-      "name": "Iron: Magnetite",
-      "tableCategory": "Mineral II",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 4
-        }
-      ],
-      "description": "Magnetite: Appears to be a man made of either smooth, dark gray metal/iron or a grainy black rock with flecks of bronze crystals and/or streaks. The body is heavy, weighing 6x more in his iron Morphus than his Facade. Facial features are smoothed out and unidentifiable. Bonuses: +2D6x10+40 S.D.C. +1D6 to P.S., +2 to Horror Factor, +3 to punch and kick damage (in addition to P.S. bonus). Blunt attacks, bullets, projectiles, impacts and explosions inflict half damage, and bullets and projectiles bounce off the iron body; fire and heat do half damage, and the character can parry weapons and fiery torches with his bare hands. This is a highly magnetic iron mineral, thus any iron or steel weapon or object that touches his body is held fast to it and requires a P.S. of 24 or greater to pull it free. The Nightbane can momentarily cancel the magnetic field to release any metal object attached to him, and can make any metal object within 6 feet (1.8 m) come to him, and one can be made to fly right into his hand (maximum weight 20 lbs/9 kg per object, and it must have sufficient iron/steel content). The character can also affix himself to iron/steel, enabling him to stand, walk and hold onto vehicles, boxcars, and even rockets or the hull of ships. This enables him to scale such structures or affix himself to them with such force that a combined P.S. of 50 is necessary to pry him loose. Always knows where north is located, +20% to Navigation skills, +5% to Land Navigation. Penalties: A heavy material, the iron character’s weight may be a problem in certain situations, he cannot swim while in the iron form (sinks like a rock) nor perform Acrobatics or Gymnastics, -30% to Climbing skill (unless using magnetic powers on steel) and reduce Spd by one third.",
-      "statModifiers": {
-        "hf": {
-          "flat": 2
-        },
-        "ps": {
-          "dice": "1D6"
-        },
-        "sdc": {
-          "dice": "2D6x10+40"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_navigation",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_land_navigation",
-            "modifierPercent": 5
-          }
-        ]
-      },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
-    },
-    {
-      "id": "mineral_living_statue",
-      "name": "Living Statue",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 141
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "A finely sculpted and detailed humanoid figure that looks normal except it’s made of inorganic material (crystal, marble, ebony or stone). Since the Nightbane (unless other characteristics change this) has a basically humanoid size and shape, he can hide his appearance under clothing with a hood or a hat. Weight is increased by 200 pounds (90 kg). Bonuses: +2D6x10 to S.D.C., +2 to P.S. and P.E., resistant to fire and cold (takes half damage), and +1 to the Horror Factor. Note: Reduce speed by 2 points.",
-      "statModifiers": {
-        "ps": {
-          "flat": 2
-        },
-        "pe": {
-          "flat": 2
-        },
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "2D6x10"
-        }
-      }
-    },
-    {
-      "id": "mineral_metal_statue",
-      "name": "Metal Statue",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 140
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "The Nightbane is shaped like a wellsculpted, metallic humanoid (this form, unless marred with a deformity, will mark the Nightbane as a “Ken or Barbie”). The form is not unattractive, but unsettling and inhuman. Since the Nightbane (unless other characteristics change this) has a basically humanoid size and shape, he can hide his appearance under clothing and a hood or hat. Bonuses: +3D6x10 to S.D.C., +3 to P.S. and P.E., impervious to cold (no damage) but takes double damage form fire, and +1 to Horror Factor. Note: Reduce speed by 4 points and weight is increased by 300 pounds (135 kg).",
-      "statModifiers": {
-        "ps": {
-          "flat": 3
-        },
-        "pe": {
-          "flat": 3
-        },
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "3D6x10"
-        }
-      },
-      "damageAffinities": {
-        "cold": 0,
-        "fire": 2
-      },
-      "saveModifiers": {
-        "immunities": [
-          "horrorFactor"
-        ]
-      }
-    },
-    {
-      "id": "mineral_orpiment",
+      "id": "mineral_2_orpiment",
       "name": "Orpiment",
-      "tableCategory": "Mineral II",
+      "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 3
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
         }
       ],
-      "description": "Appears to be a man made of a rich lemon yellow, prismatic crystal that resembles amber with many fine fracture lines running through it. The body is sleek, chiseled, smooth, lustrous, facial features are smoothed out and unidentifiable/nondescript and weighs 3x more in Morphus. A sulfide mineral, the Orpiment Morphus is impervious to the effects of stench and other powerful odors, and when heated smells of garlic, which is repugnant to vampires, wampyres, werebeasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane. Among mages and healers, yellow crystals represent inspiration. Bonuses: +1D6x10+6 S.D.C., +1D4 M.A. (radiates warmth and genuineness), +1 to M.E., +1 to P.B., impervious to stench and airborne toxins, and +1 to save vs poison and toxins of all kinds. Penalties: Triple weight in Morphus form, cannot swim (sinks like a rock), -15% to skills like Acrobatics, Gymnastics, and Climbing, and reduce Spd by 20%.",
+      "description": "Appears to be a man made of a rich lemon yellow, prismatic crystal that resembles amber with many fine fracture lines running through it[cite: 1090]. The body is sleek, chiseled, smooth, lustrous, facial features are smoothed out and unidentifiable/nondescript[cite: 1091].",
       "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+6"
+        },
+        "ma": {
+          "dice": "1D4"
+        },
         "me": {
           "flat": 1
         },
         "pb": {
           "flat": 1
         },
-        "sdc": {
-          "dice": "1D6x10+6"
-        },
         "spd": {
           "percent": -20
         }
       },
-      "damageAffinities": {
-        "poison": 0
-      },
       "saveModifiers": {
         "poison": 1,
         "immunities": [
-          "poison"
+          "gas"
         ]
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -15
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -15
-          }
-        ]
+      "weightModifier": {
+        "percent": 300
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "A sulfide mineral, the Orpiment Morphus is impervious to the effects of stench and other powerful odors, and airborne toxins[cite: 1092, 1093].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1094].",
+        "Impervious to stench.",
+        "When heated, smells of garlic, which is repugnant to vampires, wampyres, werebeasts and select other supernatural beings, holding them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane[cite: 1092]."
+      ]
     },
     {
-      "id": "mineral_part_inorganic",
-      "name": "Part Inorganic",
+      "id": "mineral_2_iron_hematite",
+      "name": "Iron: Hematite",
       "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
@@ -567,226 +762,461 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 141
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
         }
       ],
-      "description": "The character has hands and arms or his chest and head made of stone, crystal or metal, rough or highly polished. In the alternative, large patches all over the body are made of crystals, stone or metal and look as if they are protruding through a thin covering of skin. Bonuses: +2 to P.S., +4D6x2 to S.D.C. and +1 to Horror Factor.",
+      "description": "Appears to me made of smooth gray, black or brownish-red iron[cite: 1095]. Facial features are smoothed out and unidentifiable/nondescript[cite: 1097].",
       "statModifiers": {
+        "sdc": {
+          "dice": "3D6x10+66"
+        },
         "ps": {
+          "dice": "1D6"
+        },
+        "pe": {
           "flat": 2
         },
         "hf": {
-          "flat": 1
+          "flat": 2
         },
-        "sdc": {
-          "dice": "4D6x2"
-        }
-      }
-    },
-    {
-      "id": "mineral_part_inorganic_with_weapons",
-      "name": "Part Inorganic with Weapons",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 141
+        "spd": {
+          "percent": -50
         },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "The Nightbane’s forearms and hands turn into stone, crystal or metal, with a hand that is a sword or axe-like weapon or a hand that has long, inorganic claws or knuckle spikes. Bonuses: +2D6 to damage in additional to Supernatural P.S. punch damage, and +1 to Horror Factor. In addition, the hands are resistant to cold, heat and fire (take half damage).",
-      "statModifiers": {
-        "hf": {
-          "flat": 1
+        "rollWithPunch": {
+          "flat": 3
         }
       },
-      "damageAffinities": {
-        "cold": 0.5,
-        "heat": 0.5
-      }
-    },
-    {
-      "id": "mineral_rough_metal_body",
-      "name": "Rough Metal Body",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 140
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "The Nightbane looks as if he was made from lumps/clusters of metal or molten metal that cooled in lumps and streams like the surface of a partially melted candle. Or he may look like crude, unprocessed metal ore with a rough surface dotted with tiny crystals and discoloration. The body is roughly human shaped, but large and heavy set. Bonuses: +4D6x10 to S.D.C. and +6 to P.S. and P.E., impervious to cold (no damage) but takes double damage from fire, and +1D4 to Horror Factor. Note: Reduce speed by 6 points and weight is increased by 400 pounds (180 kg).",
-      "statModifiers": {
-        "ps": {
-          "flat": 6
-        },
-        "pe": {
-          "flat": 6
-        },
-        "sdc": {
-          "dice": "4D6x10"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "damageAffinities": {
-        "cold": 0,
-        "fire": 2
-      },
-      "saveModifiers": {
-        "immunities": [
-          "horrorFactor"
-        ]
-      }
-    },
-    {
-      "id": "mineral_rough_stone_body",
-      "name": "Rough Stone Body",
-      "tableCategory": "Mineral",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 140
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
-          "pageNumber": 141
-        }
-      ],
-      "description": "As above, but the Nightbane looks like he is made of roughly hewn blocks of stone. Bonuses: +3D6x10 to S.D.C., +4 to P.S. and P.E., resistant to fire and cold (takes half damage), and +1D4 to Horror Factor. Note: Reduce speed by 4 and weight is increased by 300 pounds (135 kg).",
-      "statModifiers": {
-        "ps": {
-          "flat": 4
-        },
-        "pe": {
-          "flat": 4
-        },
-        "sdc": {
-          "dice": "3D6x10"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      }
-    },
-    {
-      "id": "mineral_silver",
-      "name": "Silver",
-      "tableCategory": "Mineral II",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 4
-        }
-      ],
-      "description": "Appears to be made of a sleek, lustrous, metallic silver. Facial features are smoothed out and unidentifiable. Bonuses: +2D6x10+6 S.D.C. +1 to P.S., +3 to punch and kick damage (in addition to P.S. bonus), electricity does no damage (goes right through him), blunt attacks, bullets, projectiles, impacts and explosions inflict half damage and bounce off his body, and the character can parry weapons with his bare hands. Fire and heat do full damage. The punches, kicks and other attacks from a Nightbane made of silver inflict double damage to vampires, werebeasts and other beings vulnerable to silver. Furthermore, such beings view him with apprehension and fear, giving the silver character +2 on initiative and +1 to strike, parry and disarm when battling such creatures. Penalties: Heavy 8x normal weight, the silver character’s weight may be a problem in certain situations, he cannot swim while in the silver form (sinks like a rock) and is -20% to perform skills such as Acrobatics, Gymnastics, and Climbing, and reduce Spd by one third.",
-      "statModifiers": {
-        "ps": {
-          "flat": 1
-        },
-        "strike": {
-          "flat": 1
-        },
-        "parry": {
-          "flat": 1
-        },
-        "disarm": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "2D6x10+6"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "modifierPercent": -20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": -20
-          }
-        ]
+      "weightModifier": {
+        "percent": 600
       },
       "mobility": {
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      }
+      },
+      "damageAffinities": {
+        "blunt": 0.5,
+        "explosives": 0.5,
+        "fire": 0.5,
+        "heat": 0.5,
+        "cold": 0.5,
+        "kinetic": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Iron Unarmed Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Bullets and projectiles bounce off the iron body[cite: 1099].",
+        "The character can parry weapons and fiery torches with his bare hands[cite: 1100].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1101].",
+        "+4 to punch and kick damage (in addition to P.S. bonus)[cite: 1098]."
+      ]
     },
     {
-      "id": "mineral_uraninite",
-      "name": "Uraninite",
-      "tableCategory": "Mineral II",
+      "id": "mineral_2_iron_magnetite",
+      "name": "Iron: Magnetite",
+      "tableCategory": "Mineral",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 4
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 94
         }
       ],
-      "description": "Appears as a normal sized humanoid that seems to be made of living rock – rock formed from hundreds of granular habits/balls fused into stone, giving the surface a lumpy, bumpy texture; a dark, charred grey or black color with a few small specks of yellow that look like chip marks. Highly radioactive. Resistant to fire and heat (half damage) and can parry weapons and fiery torches with bare hands. Bonuses: +2D4x10 S.D.C., +1 to P.S., +4 to punch and kick damage (in addition to P.S. bonus), impervious to radiation, burning touch/fire fist – no flame but radiates heat from the hands to inflict 2D6 damage per attack. Can fire heat blast up to 20 feet (6.1 m) inflicting 2D6 damage. Penalties: The character weighs 10x more in his Mineral Morphus. Heavy as lead, the Uraninite character’s weight may be a problem in certain situations, he cannot swim while in the mineral form (sinks like a rock) nor perform Acrobatics or Gymnastics, -50% to Climbing skill and reduce Spd by half.",
+      "description": "Appears to be a man made of either smooth, dark gray metal/iron or a grainy black rock with flecks of bronze crystals and/or streaks[cite: 1102]. Facial features are smoothed out and unidentifiable[cite: 1104].",
       "statModifiers": {
-        "ps": {
-          "flat": 1
-        },
         "sdc": {
-          "dice": "2D4x10"
+          "dice": "2D6x10+40"
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "spd": {
+          "percent": -33
         }
       },
+      "weightModifier": {
+        "percent": 600
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "blunt": 0.5,
+        "explosives": 0.5,
+        "fire": 0.5,
+        "heat": 0.5,
+        "kinetic": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Iron Unarmed Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "navigation",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "land_navigation",
+            "modifierPercent": 5
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Bullets and projectiles bounce off the iron body[cite: 1107].",
+        "The character can parry weapons and fiery torches with his bare hands[cite: 1108].",
+        "Any iron or steel weapon or object that touches his body is held fast to it and requires a P.S. of 24 or greater to pull it free[cite: 1109].",
+        "The Nightbane can momentarily cancel the magnetic field to release any metal object attached to him, and can make any metal object within 6 feet (1.8 m) come to him, and one can be made to fly right into his hand (maximum weight 20 lbs/9 kg per object, and it must have sufficient iron/steel content)[cite: 1110].",
+        "The character can affix himself to iron/steel, enabling him to stand, walk and hold onto vehicles, boxcars, and even rockets or the hull of ships[cite: 1111].",
+        "This enables him to scale such structures or affix himself to them with such force that a combined P.S. of 50 is necessary to pry him loose[cite: 1112].",
+        "Always knows where north is located[cite: 1113].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1114].",
+        "+3 to punch and kick damage (in addition to P.S. bonus)[cite: 1106]."
+      ]
+    },
+    {
+      "id": "mineral_2_silver",
+      "name": "Silver",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 95
+        }
+      ],
+      "description": "Appears to be made of a sleek, lustrous, metallic silver[cite: 1115]. Facial features are smoothed out and unidentifiable[cite: 1115].",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10+6"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -33
+        }
+      },
+      "weightModifier": {
+        "percent": 800
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "electricity": 0,
+        "blunt": 0.5,
+        "explosives": 0.5,
+        "kinetic": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Silver Unarmed Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Bullets and projectiles bounce off his body, and the character can parry weapons with his bare hands[cite: 1116].",
+        "Fire and heat do full damage[cite: 1117].",
+        "Such beings (vampires/werebeasts) view him with apprehension and fear, giving the silver character +2 on initiative and +1 to strike, parry and disarm when battling such creatures[cite: 1118].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1119].",
+        "+3 to punch and kick damage (in addition to P.S. bonus)[cite: 1116].",
+        "Punches, kicks and other attacks from a Nightbane made of silver inflict double damage to vampires, werebeasts and other beings vulnerable to silver[cite: 1117]."
+      ]
+    },
+    {
+      "id": "mineral_2_clear_crystal_quartz",
+      "name": "Clear Crystal/Quartz",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The character's body appears to be covered in clear, translucent crystal rods sticking out of his flesh, face and skull, or he may appear to be made entirely of cut, clear crystal[cite: 1120]. He may also have a crown, horns or mane of crystals on his head instead of hair, and the face is covered and distorted by crystals as to conceal his human identity[cite: 1121].",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+30"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        }
+      },
+      "saveModifiers": {
+        "psionics": 1
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "lasers": 0,
+        "electricity": 0.5,
+        "energy": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Crystal Attack",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Formed Crystalline Weapon",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "astral beings"
+              ],
+              "damageMultiplier": 1
+            }
+          ]
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Resistant to fire and heat, and the character can parry weapons with his bare hands[cite: 1122].",
+        "+2 to Horror Factor if rods stick out of flesh, +1 if made entirely of cut crystal[cite: 1120].",
+        "Blunt and projectile attacks do full damage[cite: 1124].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1127].",
+        "+3 to damage[cite: 1123].",
+        "The Clear Crystal Morphus can see and attack Astral Beings, the clear crystals of his body able to inflict damage to Astral Being with punches, kicks, and any crystalline weapon[cite: 1124].",
+        "Can form one crystalline weapon from his hand, typically a rod or sword-like weapon that does 2D6 damage[cite: 1125, 1126].",
+        "Does +1D6 to Astral Beings[cite: 1126]."
+      ]
+    },
+    {
+      "id": "mineral_2_uraninite",
+      "name": "Uraninite",
+      "tableCategory": "Mineral",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 95
+        }
+      ],
+      "description": "Appears as a normal sized humanoid that seems to be made of living rock formed from hundreds of granular habits/balls fused into stone, giving the surface a lumpy, bumpy texture; a dark, charred grey or black color with a few small specks of yellow that look like chip marks[cite: 1128, 1129]. Highly radioactive[cite: 1129].",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "saveModifiers": {},
+      "weightModifier": {
+        "percent": 1000
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "damageAffinities": {
+        "fire": 0.5,
+        "heat": 0.5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Uraninite Unarmed Strike",
+          "damageFormula": "Standard",
+          "isAdditiveToHth": false
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Burning Touch/Fire Fist",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "misc_limbs",
+          "label": "Heat Blast",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false,
+          "rangeFeet": 20
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
             "modifierPercent": -50
           }
         ]
       },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
+      "customOneOffs": [
+        "Resistant to fire and heat (half damage) and can parry weapons and fiery torches with bare hands[cite: 1130].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
+        "Cannot swim; sinks like a rock[cite: 1134].",
+        "Impervious to radiation.",
+        "+4 to punch and kick damage (in addition to P.S. bonus)[cite: 1131].",
+        "No flame but radiates heat from the hands to inflict 2D6 damage per attack[cite: 1131].",
+        "Can fire heat blast up to 20 feet (6.1 m) inflicting 2D6 damage[cite: 1132]."
+      ]
     }
   ]
 }

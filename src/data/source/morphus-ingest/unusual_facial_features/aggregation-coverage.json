@@ -87,7 +87,11 @@
     {
       "id": "unusual_facial_features_metal_head",
       "name": "Metal Head",
-      "hooks": [],
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
       "notesOnly": false
     },
     {
@@ -120,16 +124,6 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "appearance constraints"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "unusual_facial_features_robotic_face_and_head",
-      "name": "Robotic Face And Head",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "save modifiers",
-        "skill overrides"
       ],
       "notesOnly": false
     },

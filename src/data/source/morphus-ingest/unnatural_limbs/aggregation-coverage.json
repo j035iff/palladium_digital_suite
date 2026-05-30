@@ -10,10 +10,12 @@
       "notesOnly": false
     },
     {
-      "id": "unnatural_limbs_antenna",
-      "name": "Antenna",
+      "id": "unnatural_limbs_additional_arms_in_unusual_places",
+      "name": "Additional Arms in Unusual Places",
       "hooks": [
-        "stat modifiers / A.R. shift"
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
       ],
       "notesOnly": false
     },
@@ -138,8 +140,7 @@
       "name": "Spider Legs",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
-        "appearance constraints"
+        "skill overrides"
       ],
       "notesOnly": false
     },
