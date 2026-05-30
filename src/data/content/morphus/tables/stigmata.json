@@ -3,6 +3,986 @@
   "kind": "morphus_trait_table",
   "displayName": "Stigmata",
   "parentTable": null,
-  "description": "Stigmata Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs): the Nightbane appears injured—open wounds, embedded objects, oozing blood or pus that never heal. Stigmata II (Dark Designs / Between the Shadows): alternate stigmata list; -20% to Disguise, Seduction, and Undercover Ops unless a trait says otherwise (may combine with Table I). Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91–96% Biomechanical and 97–00% Combination of Two on Table I are cross-table routers, not standalone traits.",
+  "entries": [
+    {
+      "id": "stigmata_barbed_wire_razor_wire",
+      "name": "Barbed Wire/Razor Wire",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        }
+      ],
+      "description": "Part of the character’s limbs head, neck or torso are wrapped in barbed or razor wire, causing bloody wounds that never heal. Same damage as #24-31 above. Bonuses: +4D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_bloody_ooze",
+      "name": "Bloody Ooze",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Covered in a slimy blood-like liquid, making his skin slippery. Bonuses: +2 to parry and dodge pins or grappling attacks, and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "parry": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_body_faces",
+      "name": "Body Faces",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "1D6 Small faces and heads dot the character’s body! These heads can be as small as a thumb or as large as a grapefruit. Some Nightbane can speak through these faces; others cannot stop the faces from screaming, laughing, gibbering, or mouthing expressions. The mouths of each face may also bite any enemy that gets within grappling distance; each can inflict 1D4 points of damage per bite. Bonuses: +4D6 to S.D.C. and +1D6 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_boils_or_sores",
+      "name": "Boils or Sores",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Areas of the character’s body are covered in open sores or festering boils. Bonuses: +3D6 to S.D.C. and +2 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_bones",
+      "name": "Bones",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Some (or even all) of the Nightbane’s body has been stripped of flesh and muscle to reveal bare bone. Bonuses: +5D6x10 to S.D.C. and 1D4+1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1,
+          "dice": "1D4+1"
+        },
+        "sdc": {
+          "dice": "5D6x10"
+        }
+      }
+    },
+    {
+      "id": "stigmata_broken_glass",
+      "name": "Broken Glass",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Jagged pieces of glass are embedded in the character’s flesh. They can be located in small specific areas or cover the body. Same damage as #24-31 above. Bonuses: +3D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_corpse_like",
+      "name": "Corpse-Like",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "The Nightbane’s skin is grayish-green, his eyes are sunken, and he looks like a days-old corpse, complete with the odor of death and signs of decay. Bonuses: +3D6 to S.D.C. and +1D4 to Horror Factor. Reduce P.B. by 25%.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "pb": {
+          "percent": -25
+        }
+      }
+    },
+    {
+      "id": "stigmata_crushed",
+      "name": "Crushed",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "Some part of the Morphus looks like it has been crushed beneath a heavy weight or vehicle. The crushed portion of the body is flat or mangled, has broken and shattered bones sticking out through the skin at several spots, and cuts and tears in the skin are constantly dripping blood and 95 Joe Sifferman (Order #46323384) ooze. Bonuses: +6D6 S.D.C., +1D4 to roll with impact, and +1D4 to Horror Factor. Penalties: -1 to P.B., and -40% to Disguise and Undercover Ops. If a leg or foot is crushed, the character walks with a limp and reduce Spd by 20%. If a hand or arm is crushed, reduce all combat bonuses (for that limb) by half; likewise, skill performance for all requiring the use of a hand is reduced by half.",
+      "statModifiers": {
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "6D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "percent": -20
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_dangling_intestines",
+      "name": "Dangling Intestines",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The abdomen appears to have been slashed open, causing some of the intestines to spill out and dangle from the grievous wound. The wound and the intestines constantly drip blood, leaving a highly visible trail wherever the Nightbane goes. Only enough, though uncomfortable and gruesome looking, the ‘Bane does not suffer blood loss or pain. Bonuses: 2D6 S.D.C., +1 to P.E., +1 to Horror Factor, and the ‘Bane can actually use his intestines to entangle or strangle an adversary, using them like a rope, or to climb (+5% skill bonus). Penalties: Reduce Spd by 10%, and -30% to Disguise, Prowl and Undercover Ops.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_eternal_wounds",
+      "name": "Eternal Wounds",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The Nightbane bears horrible wounds that never heal. Most often, the wounds are clearly visible and may appear to be deadly, including gaping chest wounds, gashes in the skull, cuts, gouges and other grotesqueries. The wounds cover any clothes the character wears with bloody patches in a matter of minutes, soaking through bandages and dressings after a while. Bonuses: +3D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_gut_tentacles",
+      "name": "Gut Tentacles",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "A pair of tentacles covered in purple and blue blood vessels or that resemble intestines, can extend out of the body from the belly and grapple, whip or strike at one’s opponents! These disgusting limbs inflict 2D6 damage with a whipping attack, 1D6 with a strike/punch, and can grapple enemies with the same strength as the Nightbane, with a maximum range of 6 feet (1.8 m). Adds one extra attack per melee, +2D6 S.D.C. and +2 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_horrific_acne",
+      "name": "Horrific Acne",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The worst acne you have ever seen. The Nightbane’s face, neck and most of his body is covered in thousands of large, infected zits that pop and ooze pus or blood whenever bumped, struck or scratched. Otherwise the skin is pockmarked and lumpy. Bonuses: +2D6 to S.D.C. and +1D4 to save vs disease/infection. Penalties: -1 to P.B., -40% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_inside_out_creature",
+      "name": "Inside-Out Creature",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "The Nightbane’s body has been literally turned inside out; his/her organs are on the outside of the body, resulting in the most grotesque image possible. Not even other Nightbane will feel comfortable around such a creature. Add 1D6x10 to S.D.C. and +1D4+2 to Horror Factor. Note: Disguise, Seduction and Undercover Ops are impossible.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2,
+          "dice": "1D4+2"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_leatherboy_girl",
+      "name": "Leatherboy/girl",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Portions (or all) of the Nightbane’s skin seems to have been replaced with shiny, polished leather, belts, bodysuits, and the like. S&M gear like hoods and straps is not uncommon, all grafted to the skin and flesh of the character. Metal studs, chains and other “decorations” finish the grotesque design. Bonuses: +5D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_missing_eyeball",
+      "name": "Missing Eyeball",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The face of the Nightbane looks battered and beaten, is covered with bruises and swollen lumps, but the most gruesome aspect is one of the eyes seems to be missing. 01-50% The eye socket is empty except for a tiny, eerie speck of light in the center or, 51-00% one eye dangles from an empty socket by its nerve ending and bobs and swings when the Nightbane moves. Either way, the Nightbane can still see, even out of an empty socket. Bonuses: +2D6 S.D.C., +1 on Perception Rolls, +2 to Horror Factor. Penalties: -1 from P.B. and -2 to dodge.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_missing_skin",
+      "name": "Missing Skin",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Patches of skin or even the whole skin (player’s choice) are missing, revealing bare muscle and bones. Bonuses: +3D6 to S.D.C. and +1D4+1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1,
+          "dice": "1D4+1"
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_nails",
+      "name": "Nails",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Metal nails, pins, spikes or screws protrude from the character’s skin. They can be localized to a few small areas on the body (around the eyes, on the forehead, hands, shoulders, torso, etc.), or they can completely cover the character (player’s choice). Bonuses: 4D6 to S.D.C. and, if covered, a body slam inflicts +2D6 added to normal Supernatural P.S. punch damage.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_nightmare_pet",
+      "name": "Nightmare Pet",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "Roll once on the Animal Form Table, or choose a common type of animal for this Stigmata. Dogs, cats, rats/rodents, birds, toads and snakes are all common. The head and/or head and front half of the body appears to grow out from the neck, shoulder or chest of the Nightbane. The animal is often (01-66%) without fur, adding to the grisly appearance and acts and reacts like a living independent animal. It growls, barks, hisses, squawks, and snaps at adversaries as if it were a loyal pet or attack animal. Get too close and you’ll get hurt. Bonuses: +4D6 S.D.C., +1 attack per melee, +1 on initiative and +1D4 to Horror Factor. The animal’s bite/attack does 2D6+2 damage. The animal is +3 to strike, dodge and pull punch/bite (these do not apply to the character’s combat bonuses). Penalties: -2 from P.B., -25% to Prowl and Swim, Disguise and Undercover Ops are impossible, custom-made clothing may be required.",
+      "statModifiers": {
+        "strike": {
+          "flat": 3
+        },
+        "dodge": {
+          "flat": 3
+        },
+        "pullPunch": {
+          "flat": 3
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true,
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -25
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "stigmata_outer_veins",
+      "name": "Outer Veins",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "Every blood vessel that would normally be an inch under the character’s skin is seen just under the surface of his pale skin. Countless lines of blue and purple veins cover the body from head to toe, pulsing with every heartbeat. Bonuses: +3D6 S.D.C. and +1 to Horror Factor. Penalties: -2 from P.B., -20% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_raw_meat",
+      "name": "Raw Meat",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "This Nightbane appears to have no skin, revealing bare, raw muscle. Cold and wet to the touch, and sweats a mixture of blood and ooze; makes a disgusting squishing sound when pushed/slapped/struck. Bonuses: +3D6 S.D.C., +1D4 to P.S. and +1D4 to Horror Factor. Penalties: -1D4 to P.B., Disguise and Undercover Ops are impossible (makeup won’t stick and causes irritation), the moist blood and ooze slowly stains any clothing until they are saturated, and -10% to Climbing and Prowl.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_razor_blades",
+      "name": "Razor Blades",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Razor blades are unnaturally attached to the Nightbane. They may have replaced teeth or fingernails, or cover the character like a porcupine’s quills. Bonuses: +1D4 to Horror Factor, +4D6 to S.D.C., and +1D6 damage added to Supernatural P.S. punch damage. In combat, if the fingernails or teeth have been replaced with razors, +1D6 damage to claw strikes and +2D6 damage to bite attacks. If the blades are on the skin, body slams do +2D6 S.D.C., plus normal punch damage.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    },
+    {
+      "id": "stigmata_see_no_evil_speak_no_evil",
+      "name": "See No Evil, Speak No Evil",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The ‘Bane eyes are sewn closed and the mouth is also sewn shut though a bit loose so the character can speak in a muffled mumble, as well as groan, hiss and growl. Although the eyes are sewn shut, the character can still see as normal. Bonuses: +1D6 S.D.C., cannot be blinded by any means, +1 to save vs illusions, and +1 to Horror Factor. Penalties: Cannot shout nor speak loudly nor clearly (-10% to all skills requiring clear speech and presentation), spell casting (if applicable) takes twice as long, and -1 from P.B.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "saveModifiers": {
+        "illusions": 1
+      }
+    },
+    {
+      "id": "stigmata_shifting_body",
+      "name": "Shifting Body",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "The Nightbane’s Morphus is always shifting uncontrollably, with characteristics from both stigmata tables appearing at random. So, for example, a tiny head might appear in the character’s chest, linger for 1D6 minutes, and then disappear, replaced by open wounds, protruding nails or similarly disgusting traits. The new feature stays on for 1D6 minutes (1- 50%) or 1D4 hours (51-00%), and then is replaced by something else. Also roll or select a new stigmata every time the character switches to the Facade and then back to Morphus; roll randomly to see what new feature appears on his body. However, the character does not gain any of the bonuses that normally accompany those stigmata, except for the Horror Factor. Bonuses: Instead the character gets +1D4x10 S.D.C., +1 on Perception Rolls, and +1 on initiative. Horror Factor is determined by the stigmata of the moment. Morphus Tables from Nightlands™ Sourcebook",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D4x10"
+        }
+      }
+    },
+    {
+      "id": "stigmata_splitting_headache",
+      "name": "Splitting Headache",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "The Nightbane’s head has been split open and spread apart in two pieces! It may look like a sword or axe cleaved the entire head down the middle, or like a small bomb blew a sizeable chunk out of his skull, to expose his brain and splatter blood and gore across his face, neck and clothing. If split in half, the head is divided down the middle, stopping at the jaw/chin so the two halves are spread apart in a V-shape and wobble when the character runs. Bonuses: +3D6 S.D.C., +1 to I.Q., and +1D4 to Horror Factor. Penalties: -2 from P.B. and Disguise and Undercover Ops are impossible.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_stitches",
+      "name": "Stitches",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "A crisscrossing of stitches at several points in the skin gives the Nightbane the appearance of a “rebuilt” corpse. Sometimes, the limbs and body may not quite match. For example, the “sewn-on” limbs might belong to an animal, while the torso and head are human-like! This is particularly appropriate for lycanthrope Nightbane who bear stigmata. Bonuses: 3D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_third_eye",
+      "name": "Third Eye",
+      "tableCategory": "Stigmata III",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 95
+        }
+      ],
+      "description": "A third eye is located in the center of the forehead, it weeps silent tears whenever it witnesses acts, or the results, of torture, disfigurement and cruelty. Bonuses: Nightvision +1000 feet (305 m), +2 to Perception Rolls, +10% to Tracking and Tailing skills, and the ‘Bane can see the invisible (as per the psionic power) at will. Penalties: -1 from P.B. and -30% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "perception": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      }
+    },
+    {
+      "id": "stigmata_translucent_skin",
+      "name": "Translucent Skin",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "The character’s skin has a translucent, semi-transparent quality, reminiscent of a thin plastic or rubber membrane, allowing muscle tissue and organs to be semivisible. Bonuses: +4D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "stigmata_withered_flesh",
+      "name": "Withered Flesh",
+      "tableCategory": "Stigmata II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Between the Shadows (WB1)",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140
+        }
+      ],
+      "description": "The Nightbane’s flesh is dried and mummy-like, making the character look like a desiccated corpse. Add 3D6 to S.D.C. and +1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      }
+    },
+    {
+      "id": "stigmata_zippers",
+      "name": "Zippers",
+      "tableCategory": "Stigmata I",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Zippers close horrible wounds in the character’s body. Bonuses: +3D6 to S.D.C. and 1 to Horror Factor, but the Horror Factor is increased by 3 if the Nightbane opens the zipper to reveal the pulsing flesh or organs underneath!",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        }
+      }
+    }
+  ]
 }

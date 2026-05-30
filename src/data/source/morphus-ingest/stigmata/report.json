@@ -1,0 +1,498 @@
+{
+  "tableId": "stigmata",
+  "generatedAt": "2026-05-30T19:46:56.299Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
+    "companionBlueprint",
+    "conditionalPenalties",
+    "crossTableRoll",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "independentSubRolls",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "livingWeaponRules",
+    "magicInteractionModifiers",
+    "mobility",
+    "morphusRules",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "playerChoices",
+    "progressionModifiers",
+    "recoveryBehaviors",
+    "saveModifiers",
+    "sensory",
+    "skillContextModifiers",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "survivalTraits",
+    "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 29,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "stigmata_barbed_wire_razor_wire",
+        "name": "Barbed Wire/Razor Wire",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_bloody_ooze",
+        "name": "Bloody Ooze",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_body_faces",
+        "name": "Body Faces",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_boils_or_sores",
+        "name": "Boils or Sores",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_bones",
+        "name": "Bones",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_broken_glass",
+        "name": "Broken Glass",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_corpse_like",
+        "name": "Corpse-Like",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_crushed",
+        "name": "Crushed",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_dangling_intestines",
+        "name": "Dangling Intestines",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_eternal_wounds",
+        "name": "Eternal Wounds",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_gut_tentacles",
+        "name": "Gut Tentacles",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_horrific_acne",
+        "name": "Horrific Acne",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_inside_out_creature",
+        "name": "Inside-Out Creature",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_leatherboy_girl",
+        "name": "Leatherboy/girl",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_missing_eyeball",
+        "name": "Missing Eyeball",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_missing_skin",
+        "name": "Missing Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_nails",
+        "name": "Nails",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_nightmare_pet",
+        "name": "Nightmare Pet",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides",
+          "appearance constraints"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_outer_veins",
+        "name": "Outer Veins",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_raw_meat",
+        "name": "Raw Meat",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_razor_blades",
+        "name": "Razor Blades",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural weapons"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_see_no_evil_speak_no_evil",
+        "name": "See No Evil, Speak No Evil",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_shifting_body",
+        "name": "Shifting Body",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_splitting_headache",
+        "name": "Splitting Headache",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_stitches",
+        "name": "Stitches",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_third_eye",
+        "name": "Third Eye",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_translucent_skin",
+        "name": "Translucent Skin",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_withered_flesh",
+        "name": "Withered Flesh",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "stigmata_zippers",
+        "name": "Zippers",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 29,
+    "ids": [
+      "stigmata_barbed_wire_razor_wire",
+      "stigmata_bloody_ooze",
+      "stigmata_body_faces",
+      "stigmata_boils_or_sores",
+      "stigmata_bones",
+      "stigmata_broken_glass",
+      "stigmata_corpse_like",
+      "stigmata_crushed",
+      "stigmata_dangling_intestines",
+      "stigmata_eternal_wounds",
+      "stigmata_gut_tentacles",
+      "stigmata_horrific_acne",
+      "stigmata_inside_out_creature",
+      "stigmata_leatherboy_girl",
+      "stigmata_missing_eyeball",
+      "stigmata_missing_skin",
+      "stigmata_nails",
+      "stigmata_nightmare_pet",
+      "stigmata_outer_veins",
+      "stigmata_raw_meat",
+      "stigmata_razor_blades",
+      "stigmata_see_no_evil_speak_no_evil",
+      "stigmata_shifting_body",
+      "stigmata_splitting_headache",
+      "stigmata_stitches",
+      "stigmata_third_eye",
+      "stigmata_translucent_skin",
+      "stigmata_withered_flesh",
+      "stigmata_zippers"
+    ]
+  },
+  "bookIndex": {
+    "total": 29,
+    "included": 29,
+    "skippedNonPlayable": 0,
+    "skippedOther": 0,
+    "names": [
+      "Barbed Wire/Razor Wire",
+      "Bloody Ooze",
+      "Body Faces",
+      "Boils or Sores",
+      "Bones",
+      "Broken Glass",
+      "Corpse-Like",
+      "Crushed",
+      "Dangling Intestines",
+      "Eternal Wounds",
+      "Gut Tentacles",
+      "Horrific Acne",
+      "Inside-Out Creature",
+      "Leatherboy/girl",
+      "Missing Eyeball",
+      "Missing Skin",
+      "Nails",
+      "Nightmare Pet",
+      "Outer Veins",
+      "Raw Meat",
+      "Razor Blades",
+      "See No Evil, Speak No Evil",
+      "Shifting Body",
+      "Splitting Headache",
+      "Stitches",
+      "Third Eye",
+      "Translucent Skin",
+      "Withered Flesh",
+      "Zippers"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      },
+      {
+        "key": "core",
+        "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+        "reference": "Nightbane® RPG (core rulebook)",
+        "authoritative": false
+      },
+      {
+        "key": "dark_designs_ii",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": false
+      },
+      {
+        "key": "between_the_shadows",
+        "pdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+        "reference": "Nightbane® Between the Shadows (WB1)",
+        "authoritative": false
+      },
+      {
+        "key": "stigmata_iii",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": false
+      }
+    ],
+    "multiSourceTraits": 18
+  },
+  "recommendations": [
+    "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json"
+  ],
+  "descriptionCompare": {
+    "differences": [
+      {
+        "trait": "Bloody Ooze",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Corpse-Like",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Stitches",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Nails",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Razor Blades",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Broken Glass",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Eternal Wounds",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Missing Skin",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Leatherboy/girl",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Boils or Sores",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Zippers",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Bones",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Biomechanical",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Combination of Two",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      }
+    ]
+  }
+}

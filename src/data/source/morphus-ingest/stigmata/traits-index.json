@@ -1,0 +1,693 @@
+{
+  "tableId": "stigmata",
+  "tableHeading": "Stigmata Table I",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane\u00ae RPG (core rulebook)",
+      "authoritative": false
+    },
+    {
+      "key": "dark_designs_ii",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": false
+    },
+    {
+      "key": "between_the_shadows",
+      "pdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+      "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+      "authoritative": false
+    },
+    {
+      "key": "stigmata_iii",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 29,
+  "traits": [
+    {
+      "name": "Barbed Wire/Razor Wire",
+      "percent": "40-47%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "40-47%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Bloody Ooze",
+      "percent": "01-05%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "01-05%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "01-05%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Body Faces",
+      "percent": "41-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "41-60%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "41-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Boils or Sores",
+      "percent": "72-79%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "72-79%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "72-79%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Bones",
+      "percent": "86-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "86-90%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "86-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Broken Glass",
+      "percent": "32-39%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "32-39%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "32-39%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Corpse-Like",
+      "percent": "06-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "06-10%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "06-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Crushed",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Dangling Intestines",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Eternal Wounds",
+      "percent": "48-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "48-55%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "48-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Gut Tentacles",
+      "percent": "76-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "76-90%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "76-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Horrific Acne",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Inside-Out Creature",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "01-20%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "01-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Leatherboy/girl",
+      "percent": "64-71%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "64-71%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "64-71%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Missing Eyeball",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Missing Skin",
+      "percent": "56-63%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "56-63%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "56-63%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Nails",
+      "percent": "16-23%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "16-23%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "16-23%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Nightmare Pet",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "51-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Outer Veins",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Raw Meat",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "41-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Razor Blades",
+      "percent": "24-31%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "24-31%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "24-31%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "See No Evil, Speak No Evil",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "61-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Shifting Body",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "91-00%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Splitting Headache",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Stitches",
+      "percent": "11-15%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "11-15%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 101,
+          "percent": "11-15%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Third Eye",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "stigmata_iii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 95,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "stigmata_iii"
+      ]
+    },
+    {
+      "name": "Translucent Skin",
+      "percent": "21-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "21-40%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "21-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Withered Flesh",
+      "percent": "61-75%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 132,
+          "percent": "61-75%",
+          "authoritative": false
+        },
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "61-75%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows",
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Zippers",
+      "percent": "80-85%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "80-85%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "80-85%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    }
+  ]
+}

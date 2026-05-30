@@ -1,0 +1,103 @@
+{
+  "tableId": "victim",
+  "entries": [
+    {
+      "id": "victim_beaten",
+      "name": "Beaten",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_broken_body",
+      "name": "Broken Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_child",
+      "name": "Child",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_dead_man_walking",
+      "name": "Dead Man Walking",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_escaped_captivity",
+      "name": "Escaped Captivity",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_face_of_comedy_and_tragedy",
+      "name": "Face of Comedy and Tragedy",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_faceless_victim",
+      "name": "Faceless Victim",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_filthy",
+      "name": "Filthy",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_frail",
+      "name": "Frail",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_hollow_eyes",
+      "name": "Hollow Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "victim_horribly_burned",
+      "name": "Horribly Burned",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

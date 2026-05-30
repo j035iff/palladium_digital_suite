@@ -1,0 +1,14 @@
+{
+  "tableId": "mineral",
+  "generatedAt": "2026-05-30T18:47:05.088Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 18
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

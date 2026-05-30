@@ -1,0 +1,319 @@
+Victim Table
+Most of these Nightbane were (or perceive themselves as
+having been) victims of circumstance, abused, tortured, neglected or unwanted, or they may simply feel helpless or vulnerable. Such Morphuses generally appear to be frail and weak,
+whether they really are or not.
+01-09% Horribly Burned: The Morphus is a humanoid
+with 90% of the body scarred and covered in third-degree burns.
+The face looks as if it was melted, there is only a hole for a nose
+and there are no lips, ears, or facial hair. Bonuses: +1D6x10+6
+S.D.C., +2 to P.E., fire and heat resistant (half damage), +1D4
+to Horror Factor. Penalties: -2 from M.A., -1D4 from P.B.
+10-18% Filthy: The Morphus of an emaciated human covered with filth – dirt, grime, old food, and dried blood. The hair
+is matted and has stuff sticking out of it, and any clothing is
+99
+Joe Sifferman (Order #46323384)
+similarly filthy, crumpled and unkempt. Bonuses: +2 to P.E., +1
+to M.E., +1 to Horror Factor. Penalties: -1D4 to P.B. and -25%
+to all skills involving appearance and performance, including
+Disguise and Seduction.
+19-27% Broken Body: The Morphus is of someone so badly
+beaten that his hands are gnarled, limbs bent and twisted, and
+the spine so damaged and deformed that the Nightbane stands
+hunched over, has a short, thick neck, and walks with a severe
+and noticeable limp. Bonuses: +4D4x10 to S.D.C., +1D4 to
+P.S., +1D4 to I.Q., M.E. and M.A., +1 on Perception Rolls, +5%
+on all R.C.C. Skills, and +2 to Horror Factor; the body may be
+broken, but the mind is as sharp as ever. Penalties: Reduce
+speed by 30%, -1 on initiative, leaping height and distance is
+half, -20% to any and all Physical skills, and Disguise and Undercover Ops are impossible.
+28-36% Beaten: The Morphus is that of someone covered in
+scars and bruises, the fingers are gnarled from having been broken many times, and limbs are crooked and lumpy from where
+broken bones have knitted back together improperly. Any clothing is likely to be torn or tattered. Bonuses: +3D6+6 Hit Points,
++2 to P.E. and +1 to dodge. Highly resistant to pain and interrogation (interrogators suffer a -35% skill penalty against this
+character), suffers half the normal penalties for physical pain,
+any spell or power that causes pain has absolutely no effect, and
+the ‘Bane heals at double the normal rate. Penalties: Reduces
+Spd by 1D4x10%, -2 from P.B., -1 from P.E., and -5% to Prowl,
+Disguise and Undercover Ops.
+37-45% Frail: The Morphus is an emaciated human, all skin
+and bones, frail and starving. Most opponents will underestimate the ‘Bane in combat, discounting him as a real threat. Bonuses: +1 on initiative, +1 attack per melee round, impervious
+to spoiled and rotten food, +1 to save vs poison and drugs, and
++2 to Horror Factor. Penalties: Reduce weight by 50%, S.D.C.
+by 20%, -2 from P.E., -1D6 from P.S. and Spd, and -25% to
+Disguise and Undercover Ops.
+46-54% Escaped Captivity: This Morphus is of someone
+with long dirty hair, a few noticeable scars, and a dirt smudged
+face. Manacles are clamped around the wrists and ankles, and a
+1D4 foot (0.3 to 1.2 m) length of heavy iron chains hangs from
+the manacles. The manacles cannot be removed, and the
+Nightbane doesn’t even try. Instead, he uses the chain lengths
+around his wrists as weapons (a chain whip attack does 2D6
+damage plus Supernatural P.S. punch damage). Bonuses: +6D6
+S.D.C., +2 to P.S., +1 to strike, parry and entangle with the
+chains, +5% to Climbing, and is impervious to the magic of
+Night Princes and Nightlords. Penalties: -30% to Prowl and
+Swimming, -15% to all skills involving appearance, including
+Disguise and Seduction, and the character has a phobia (terror)
+of being chained up again, or locked in a confined space or jail
+cell.
+55-63% Hollow Eyes: Also called the thousand yard stare,
+the Nightbane’s eyes are vacant. It’s as though they are staring
+at something off in the distance even when looking directly at
+someone or something, which most people find quite unnerving.
+Bonuses: Hawk-like vision, enabling him to read small signs or
+identify a face 2 miles (3.2 km) away, doubles the range of him
+night vision, and +1 to Horror Factor.
+64-73% Child: The Nightbane appears to be a youngster
+1D6+9 years old. Height and weight are reduced appropriately.
+Except for any injuries from other Morphus features, he appears
+healthy. However, voice is weak and the character is timid and
+shy until attacked or provoked. On the good side, people usually
+trust the character, but on the down side they treat him like a
+child, even if they know he is an adult. Bonuses: +1 on initiative, +3 to M.A., +1 to P.B., +4 to Spd, +3D6 to P.P.E. base.
+Penalties: Reduce Spd, P.S. and P.P by 10%, and needs children’s clothes.
+74-82% Dead Man Walking: The Morphus is someone who
+appears to be an animated corpse of a murder victim. He is
+splattered or covered in blood, obvious wounds (bullet holes,
+cuts, crushed skull, etc.), and when applicable, the murder
+weapon is apparent (a hammer or hatchet stuck in the skull,
+noose around the neck, a knife in the belly or neck, etc.). Bonuses: +5D6+5 S.D.C., +1 to Perception Rolls, resistant to the
+magic of the Nightlords (half damage, duration and effect), +1
+to Horror Factor, and +10% to all skills involving surveillance,
+tailing and investigation. Penalties: Obsessed with solving and
+stopping murders, injury cannot be easily concealed and the
+murder weapon, if present, cannot be removed, -40% to Disguise and Undercover Ops.
+83-91% Faceless Victim: A Morphus without a face – no
+eyes, mouth or any facial features (but can still see and talk),
+just a blank face. There are also ligature marks around the neck,
+wrists and ankles. This Morphus represents the multitude of
+people who simply vanish and victims of crimes that are never
+solved, as well as so-called victimless crimes. Tends to be an
+avenger and protector of the innocent. Bonuses: +1D4x10 Hit
+Points, +1D6 to P.S., +1 attack per melee round (+2 against the
+100
+Joe Sifferman (Order #46323384)
+Nightlords and Night Princes), fatigues at half the usual rate,
+and +1 to save vs mind control and illusions. Penalties: Reduce
+I.Q. and S.D.C. by 10%.
+92-00% Face of Comedy and Tragedy: This Morphus has
+two faces made of the porcelain masks used to represent film
+and entertainment. One is the face, one is the back of his head,
+but their position (front or back) can reverse depending on the
+mood of the Nightbane or the situation he faces. The character’s
+back is covered in blood and there will be a gaping wound or a
+knife sticking in it. This Morphus represents the victims of
+treachery, lies, deception and betrayal. Bonuses: +1D4x10
+S.D.C., +2 to M.A. and M.E., +1 to Perception Rolls, +3 to Perception Rolls involving lies, deception, and traps, impervious to
+Seduction, impervious to magic and psionic charms, automatically gets the skill I.D. Undercover Agent at 90%, and +1 to
+Horror Factor. Penalties: Distrusts strangers, the Guardians, and
+authority figures, hates the Nightlords, and Disguise and Undercover Ops are impossible.
+New Talents
+Talent Manifestations
+Talents
+are
+unlike
+any
+other
+ability
+in
+Palladium’s
+role-playing games. While powered by P.P.E., they are not
+spells. Nor are they psionics or super abilities. Talents are more
+akin to tangible expressions of will on the behalf of the
+Nightbane (and Shadow Mages).
+As such, they tend to manifest in different ways for different
+Nightbane. What this means for players and Game Masters is
+that the mechanics of the powers are always the same, but visually they can be quite different.
+For example, Stony Lonesome, a Nightbane with rock-like
+skin covered in razor wire, has the Darkwhip Talent. So does
+Crosswire, a Nightbane with a camera-like head and a robotic
+body. For both individuals, the Darkwhip Talent works the same
+way. However, Stony’s Darkwhip comes out as a long, deadly
+strand of barbed wire, and Crosswire’s Darkwhip flashes out as
+a bundle of seemingly animated electrical wiring. Such variations and effects do not add damage or functionality, but reflect
+aspects of personality and individuality to each Nightbane character.
+It also means that other Nightbane sometimes have to guess
+at what Talents a Nightbane is using. When you see a holographic image overlay Crosswire’s Facade, making him look
+like someone else, did he just use Reshape Facade or is it something else? The observers are not 100% certain.
+And there’s the fun.
+A group of player characters may see Stony embrace with a
+badly injured woman, appearing to vomit liquid concrete into
+her. He may be using Infectious Control or he might be using
+the Sharing the Flesh ability. If they attack and take the woman
+from him, they may save her life . . . or they may prevent him
+from healing her, and the shock could cause her to die.
+Likewise, when special lenses drop over Crosswire’s camera-like eyes, did he just use See Truth or is he peering at that
+mirror on the wall and using Mirror Sight?
+The manifestation of Talents usually have some connection
+or similarity to the Nightbane’s Morphus or personality. For example, Darksong may be a long, blood-curdling howl for a
+Nightbane with wolf-like attributes in Morphus, but a strange,
+unearthly choir begins singing whenever a Nightbane with an
+Angel Morphus uses the same Talent. Gloppy the Kid, a
+Nightbane with a plasmoid, shapeless body, oozes into his computer through the disc drive or DVD-ROM slot when he uses
+Lightning Rider, but Crosswire streams into his screen as a series of glowing “1”s and “0”s.
+The only limit to the different Talent manifestations is your
+imagination. Just remember, the manifestations are only cosmetic visual variations. They do NOT provide any tangible benefit to the actual Talent; the Talent always functions the same,
+does the same damage and has the same effect, duration and
+range, it may just look different. Note: Other Talents are described in the Nightbane® RPG and Between the Shadows™.
+New Nightbane Talents
+Air Swim
+Fire Breather
+Heal Facade
+Severance
+Shadow Pockets
+Shadow Weapon
+Speed Darkling
+Note: Also see Elite Talents, which follow.
+101
+Joe Sifferman (Order #46323384)
+Air Swim
+This Talent enables the Nightbane to swim through the air the
+same as if it were water. A Nightbane does not suffer penalties
+from drying out or breathing air when using this Talent when his
+Morphus is of an aquatic nature.
+Limitations: Maximum height above the ground is 15 feet
+(4.6 m) per level of experience. Speed is the same as
+Swimming.
+Cost: 7 P.P.E. to permanently acquire; 5 P.P.E. to activate
+for the first minute and 2 P.P.E. for each minute after that.
+Fire Breather
+The Nightbane is able to exhale a powerful jet of flames,
+similar to that of a flamethrower. The gout of fire inflicts 5D6
+damage to anything caught in its path, unless stopped by a wall,
+vehicle or large object (including a large Nightbane), otherwise
+the flames continue to their full range, burning everything they
+touch. The ‘Bane is impervious to his own flames, as well as
+natural fire and heat when this Talent is active (which is only
+the one melee round the fire breath is used). However, the character takes full damage from magical fire or the breath of other
+Nightbane.
+Limitations: Can only be used in Morphus form and only
+once per melee round (15 seconds), but counts as an extra melee
+attack. Range: 30 feet (9.1 m) +5 feet (1.5 m) per experience
+level.
+Cost: 8 P.P.E. to acquire permanently; 10 P.P.E. per melee
+round of use.
+Heal Facade
+This Talent enables a Nightbane to extend the superhuman
+regeneration rate of his Morphus to his Facade for a limited
+amount of time. When activated, the Facade form heals 1D6+4
+S.D.C./Hit Points per melee round!
+Limitations: Healing is applicable only to the Facade. Duration: One melee round per level of experience.
+Cost: 10 P.P.E. to permanently acquire; 10 P.P.E. to activate
+for the first melee round, and 5 P.P.E. for each subsequent melee round.
+Severance
+The Nightbane is able to temporarily shut down his supernatural aura, making himself undetectable to other Nightbane, psychics, mages and supernatural creatures who can sense and track
+the supernatural aura of Nightbane and other paranormal beings.
+It can prevent detection by Hounds, Hunters, Great Hounds, and
+Soul Trackers, as well as defeat the “Sense Nightbane” ability
+inherent to other Nightbane. Furthermore, it makes the character’s aura appear to be that of an ordinary human.
+However, using the Severance Talent comes at a cost. As
+long as the Severance is in place and the supernatural aura is
+suppressed, the ‘Bane can not use any of his other Talents nor
+cast any magic if the Nightbane is a Mystic or Sorcerer. Furthermore, the Nightbane feels cut off from the metaphysical world,
+and the sensation of alienation can be unsettling, particularly for
+Mystics, who tend to feel the most attuned with the supernatural
+world.
+Limitations: Not available until 4th level. Range: Self, only.
+Duration: One minute (4 melee rounds) per level of experience.
+Cost: 15 P.P.E. to acquire permanently; 10 P.P.E. to activate.
+Shadow Pockets
+This Talent enables the Nightbane to access a mini-dimension suitable for storing small objects. Though it can be used in
+both the Facade and Morphus, P.P.E. must be spent for each
+item brought into or out of the pocket. The Shadow Pocket may
+hold up to five pounds (2.25 kg) per level of experience, but no
+single object may weigh more than 15 pounds (6.75 kg). Placing
+an object into or retrieving an object from the pocket takes one
+melee attack/action.
+There are many different ways this Talent can appear to function. One is for the Nightbane to actually reach into the pockets
+of his clothing and another is to put his hand into a shadow and
+seem to remove an item from it like a sleight of hand trick.
+While inside the pocket, objects are held in a state of limbo,
+and can only be brought back by the Nightbane who put them
+there. The objects can remain in the pocket indefinitely without
+ill effect, even if the Nightbane is sleeping or knocked unconscious. If the character is killed in Morphus form, his Morphus
+vanishes and all the objects in the Shadow Pocket appear where
+he last stood. If the character is killed in Facade form, the objects in the Shadow Pocket remain in the shadow dimension and
+are presumably lost forever.
+Limitations: Not available until 5th level.
+Cost: 16 P.P.E. to acquire permanently; 8 P.P.E. to place or
+retrieve one object.
+Shadow Weapon
+A Nightbane with this Talent can create a melee weapon
+made of dark energy. The weapon can look like any type of one
+piece melee weapon, such as a sword, knife, axe, pole arm, pick,
+mace, morning star, etc., but not bows or modern weapons with
+moving parts. The character can only create one type of weapon
+and must decide what the weapon will look like when he first
+gains this Talent. From that point forward, his Shadow Weapon
+is always the same. Regardless of the weapon type it inflicts
+102D6 damage +1D6 additional damage at levels 6, 9, 12 and 15 –
+and does 50% greater damage to Night Princes and Nightlords!
+W.P. skill bonuses are applicable if the Shadow Weapon fits the
+Weapon Proficiency. The weapon is substantial and can be used
+to parry, but can NOT be thrown; the weapon disappears if it
+leaves the Nightbane’s hands.
+Limitations: Usable in Morphus form only; not available until 3rd level.
+Cost: 15 P.P.E. to acquire permanently. 10 P.P.E. to activate
+for the first melee round and 5 P.P.E. for each melee round of
+subsequent use.
+Speed Darkling
+This Talent gives the Nightbane incredible speed. Take the
+Spd attribute number x10 mph (16 km). Thus if the character
+has a Spd of 9, he can now run 90 mph (144 km), if he had a
+Spd of 96 he can now run 960 mph, and so on. Speed Bonuses:
++1 attack per melee, +1 on initiative, +4 to automatic dodge (the
+act of dodging does not use up a melee attack/action). Speed
+Penalty: When the duration of the enhanced speed ends, the
+character feels spent, his normal Spd is half, and he is -1 attack
+per melee, no initiative (is the last to attack) and is -2 to strike,
+parry and dodge for 1D6 melee rounds.
+Limitations: Usable only in Morphus form and lasts for one
+minute per level of experience.
+Cost: 20 P.P.E. to permanently acquire it; 15 P.P.E. per melee to activate for the first minute and 5 P.P.E. for each minute
+of additional use.
+New Elite Talents
+A Face in the Crowd
+Abduction
+Commanding Presence
+Forbidding Woods
+Gorgon’s Touch
+Guardian Angel
+Kill Switch
+Lend a Hand
+Nightshade
+Spelljack
+The Taint
+True Reflection
+Vicious Cycle
+Voice of the Beast
+Zombie Master
+A Face in the Crowd
+This powerful and useful Talent enables the Nightbane to
+temporarily conceal his inhuman appearance under the guise of
+a very average looking human being. The specific appearance of
+the human disguise automatically varies to fit the situation – i.e.
+attire will match the occasion, sex is that of the Nightbane, ethnicity mimics the local population, etc. – which also prevents
+the ‘Bane from being recognized from use to use. When this
+Talent is in effect, the Nightbane temporarily loses all Morphus
+abilities (flight, weapon limbs, claws, horns, and Horror Factor).
+However, his attributes, P.P.E., S.D.C., Hit Points, and the like
+remain unchanged. Physical Beauty of the false appearance is
+1D4+8.
+Prerequisites: At least one monstrous or alien trait/feature
+from any appropriate table. This talent will not work on “Kens”
+and “Barbies” or other attractive or completely human looking
+Nightbane.
+Limitations: Can be used only in Morphus form and not
+available until 4th level. The Talent does not mask the supernatural nature/aura of the Nightbane, meaning beings like Hounds
+and Hunters will recognize them for what they really are and are
+easily able to hunt those using this Talent!
+Cost: 15 P.P.E. to permanently acquire; 10 P.P.E. to activate
+plus 5 for each minute of continued duration.
+Abduction
+Upon the activation of this Talent, a single target is whisked
+away by dark energies to a limbo-like pocket dimension. These
+energies can take the shape of a swirling vortex, sweeping portal, or even a beam of darkness that strikes the target from
+above. No harm comes to the target, but unless they can
+dimensionally teleport they are stuck in limbo until the Talent’s
+duration expires.
+Prerequisites: One or more characteristics from the Alien

@@ -1,0 +1,177 @@
+{
+  "tableId": "infernal",
+  "tableHeading": "Infernal Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane Survival Guide (WB5)",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane Survival Guide (WB5)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 10,
+  "traits": [
+    {
+      "name": "Burning Soul of Hell",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 93,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Cloven Hooved Beast",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "31-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Demon Claw",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Demon Eyes",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "51-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Feral Monster",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "21-30%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Fire & Brimstone",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "41-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Living Weapon",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 93,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Mark of the Profane",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "61-70%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Shadow Demon",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "11-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "The Mask of Darkness",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 92,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}

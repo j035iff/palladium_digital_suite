@@ -23,6 +23,8 @@ const NON_PLAYABLE_NAME_RES = [
   /^disproportionate\s/i,
   /^roll (?:on|again|twice|percentile)\b/i,
   /^combination of two\b/i,
+  /^two\b/i,
+  /^three\b/i,
 ]
 
 /** Percentile rows that only send the player to another Morphus table (no trait mechanics). */

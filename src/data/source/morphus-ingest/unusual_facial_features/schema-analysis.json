@@ -1,0 +1,318 @@
+{
+  "generatedAt": "2026-05-30T20:20:24.145Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 14,
+  "perTrait": [
+    {
+      "percent": "01-07%",
+      "name": "Oversized Carnivorous Mouth",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "appearance_clothing",
+          "schemaPaths": [
+            "appearanceConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "activatedAbilities",
+        "statModifiers",
+        "customOneOffs",
+        "appearanceConstraints"
+      ]
+    },
+    {
+      "percent": "08-15%",
+      "name": "Glowing Eyes",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs",
+        "sensory"
+      ]
+    },
+    {
+      "percent": "16-22%",
+      "name": "Cyclops",
+      "pageNumber": 134,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "23-30%",
+      "name": "Misshapen Facial Features",
+      "pageNumber": 134,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "31-38%",
+      "name": "Extra Eyes",
+      "pageNumber": 135,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "39-46%",
+      "name": "Sharp Teeth",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons",
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "47-55%",
+      "name": "Skull Face",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "56-62%",
+      "name": "Small Horns",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "63-70%",
+      "name": "Large Horns",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "71-78%",
+      "name": "Facial Tentacles",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "79-85%",
+      "name": "No Face",
+      "pageNumber": 135,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "91-95%",
+      "name": "Alien Features",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "96-98%",
+      "name": "Two",
+      "pageNumber": 135,
+      "patterns": [
+        {
+          "patternId": "table_workflow",
+          "schemaPaths": [
+            "tableWorkflow",
+            "entryRole"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "tableWorkflow",
+        "entryRole"
+      ]
+    },
+    {
+      "percent": "99-00%",
+      "name": "Three",
+      "pageNumber": 135,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, naturalAr, saveModifiers, mobility, survivalTraits, skillModifiers, damageAffinities, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "unusual_facial_features"
+}

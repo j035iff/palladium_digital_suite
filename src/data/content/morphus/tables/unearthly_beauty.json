@@ -3,6 +3,181 @@
   "kind": "morphus_trait_table",
   "displayName": "Unearthly Beauty",
   "parentTable": null,
-  "description": "Unearthly Beauty Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Unearthly Beauty Morphus table (Nightbane RPG / Dark Designs). Not all Morphus forms are horrible—some inspire fascination and awe. These Nightbane are often nicknamed \"Barbie\" or \"Ken\" by others. Table I rolls 01–90%; 91–95% Combination of Two and 96–00% Other are cross-table routers (not listed as traits).",
+  "entries": [
+    {
+      "id": "unearthly_beauty_animal_magnetism",
+      "name": "Animal Magnetism",
+      "tableCategory": "Unearthly Beauty",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 93
+        }
+      ],
+      "description": "The Nightbane’s P.B. and M.A. are increased by 8 (minimum P.B. and M.A. is 20!). Not only is his/her Morphus incredibly beautiful, it radiates charisma. This is a mixed blessing, however, for the attraction the character exerts cannot be turned off. This can lead to a number of distractions, annoyances and even hazards, as total strangers make advances towards the character, or try to force their affections on him/her.",
+      "statModifiers": {
+        "pb": {
+          "flat": 8
+        },
+        "ma": {
+          "flat": 8
+        }
+      },
+      "customOneOffs": [
+        "Minimum P.B. and M.A. is 20 after bonuses.",
+        "Charisma attraction cannot be turned off; strangers may become a distraction or hazard."
+      ]
+    },
+    {
+      "id": "unearthly_beauty_doll_like_appearance",
+      "name": "Doll-Like Appearance",
+      "tableCategory": "Unearthly Beauty",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 93
+        }
+      ],
+      "description": "The Nightbane’s body is tiny and toy-like. His or her skin becomes unnaturally smooth and featureless (no fingerprints), size is reduced by 2D6+10 inches (0.3 to 0.55 m), and body temperature is inhumanly cold. The character’s P.B. is raised by 6 points and from a distance, the character will be mistaken for a small child. If standing perfectly still, he or she might pass as a storefront mannequin. In a good light, the inhuman features of the Nightbane have a frightening aspect, providing a Horror Factor of 10.",
+      "statModifiers": {
+        "pb": {
+          "flat": 6
+        },
+        "hf": {
+          "flat": 10
+        }
+      }
+    },
+    {
+      "id": "unearthly_beauty_elfin_features",
+      "name": "Elfin Features",
+      "tableCategory": "Unearthly Beauty",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 93
+        }
+      ],
+      "description": "The character has slender and delicate features, oversized eyes and vaguely pointed ears, reminiscent of the legends of elves and faeries. Increase P.B. by 7 points (minimum 17) and size by 1D6 inches (1.5 to 15.2 cm). Their unusual appearance has a Horror Factor 6.",
+      "statModifiers": {
+        "pb": {
+          "flat": 7
+        },
+        "hf": {
+          "flat": 6
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      },
+      "customOneOffs": [
+        "Minimum P.B. 17 after bonus."
+      ]
+    },
+    {
+      "id": "unearthly_beauty_fallen_angel",
+      "name": "Fallen Angel",
+      "tableCategory": "Unearthly Beauty",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 93
+        }
+      ],
+      "description": "A Nightbane with inhuman beauty; increase P.B. by 6 and S.D.C. by 3D6. Fallen angels also have feathered wings on their backs which provide slow flying (Speed of 4D6 in the air).",
+      "statModifiers": {
+        "pb": {
+          "flat": 6
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": {
+            "dice": "4D6"
+          }
+        }
+      },
+      "customOneOffs": [
+        "Feathered wings on back; slow flight."
+      ]
+    },
+    {
+      "id": "unearthly_beauty_physical_perfection",
+      "name": "Physical Perfection",
+      "tableCategory": "Unearthly Beauty",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 93
+        }
+      ],
+      "description": "The Nightbane’s True Shape is at the peak of physical condition, with perfectly delineated muscles and a shape somewhere between a gymnast and a bodybuilder. Increase P.B., P.E. and P.S. by 1D4 each and S.D.C. by 4D6. The character projects an aura of danger that intimidates those around him, giving the Nightbane a base Horror Factor of 6.",
+      "statModifiers": {
+        "pb": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "flat": 6
+        }
+      }
+    }
+  ]
 }

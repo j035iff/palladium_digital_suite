@@ -1,0 +1,227 @@
+{
+  "generatedAt": "2026-05-30T20:11:08.266Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 9,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Prehensile Tail",
+      "pageNumber": 97,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "11-20%",
+      "name": "Spiked Prehensile Tail",
+      "pageNumber": 97,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "21-30%",
+      "name": "Tentacles",
+      "pageNumber": 97,
+      "patterns": [
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "31-40%",
+      "name": "Long, Sensitive Fingers",
+      "pageNumber": 97,
+      "patterns": [
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "skillModifiers"
+      ]
+    },
+    {
+      "percent": "41-50%",
+      "name": "2D4 Pairs of Tiny Arms and Hands",
+      "pageNumber": 136,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "51-65%",
+      "name": "Four Arms",
+      "pageNumber": 136,
+      "patterns": [
+        {
+          "patternId": "activated_burst",
+          "schemaPaths": [
+            "activatedAbilities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "activatedAbilities"
+      ]
+    },
+    {
+      "percent": "66-80%",
+      "name": "Pseudopods",
+      "pageNumber": 136,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "81-90%",
+      "name": "Articulated Spikes",
+      "pageNumber": 136,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Antennae",
+      "pageNumber": 105,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, naturalAr, saveModifiers, mobility, survivalTraits, sensory, damageAffinities, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, specialCombatInterceptions, entryRole, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, appearanceConstraints, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "unnatural_limbs"
+}

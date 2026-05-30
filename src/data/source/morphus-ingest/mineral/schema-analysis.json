@@ -1,0 +1,539 @@
+{
+  "generatedAt": "2026-05-30T18:46:05.720Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 8,
+  "perTrait": [
+    {
+      "percent": "01-20%",
+      "name": "Rough Metal Body",
+      "pageNumber": 140,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "impervious",
+          "schemaPaths": [
+            "damageAffinities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "21-35%",
+      "name": "Metal Statue",
+      "pageNumber": 140,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "impervious",
+          "schemaPaths": [
+            "damageAffinities"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs",
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "36-50%",
+      "name": "Rough Stone Body",
+      "pageNumber": 140,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "51-65%",
+      "name": "Living Statue",
+      "pageNumber": 141,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "66-75%",
+      "name": "Part Inorganic",
+      "pageNumber": 141,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "76-85%",
+      "name": "Part Inorganic with Weapons",
+      "pageNumber": 141,
+      "patterns": [
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "damageAffinities",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "86-90%",
+      "name": "Horns, Spines or Spikes",
+      "pageNumber": 141,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "91-00%",
+      "name": "Crystalline Body",
+      "pageNumber": 141,
+      "patterns": [
+        {
+          "patternId": "natural_weapon",
+          "schemaPaths": [
+            "naturalWeapons"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalWeapons",
+        "damageAffinities",
+        "customOneOffs",
+        "statModifiers"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "mineral_amethyst_crystal",
+        "name": "Amethyst Crystal",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_arsenic",
+        "name": "Arsenic",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_clear_crystal_quartz",
+        "name": "Clear Crystal/Quartz",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_crystalline_body",
+        "name": "Crystalline Body",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_emerald_tourmaline",
+        "name": "Emerald/Tourmaline",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_gold",
+        "name": "Gold",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_horns_spines_or_spikes",
+        "name": "Horns, Spines or Spikes",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_iron",
+        "name": "Iron",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_living_statue",
+        "name": "Living Statue",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_metal_statue",
+        "name": "Metal Statue",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_orpiment",
+        "name": "Orpiment",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_part_inorganic",
+        "name": "Part Inorganic",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_part_inorganic_with_weapons",
+        "name": "Part Inorganic with Weapons",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_rough_metal_body",
+        "name": "Rough Metal Body",
+        "topLevelKeys": [
+          "damageAffinities",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "saveModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_rough_stone_body",
+        "name": "Rough Stone Body",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_silver",
+        "name": "Silver",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "mineral_uraninite",
+        "name": "Uraninite",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, naturalAr, saveModifiers, mobility, survivalTraits, sensory, skillModifiers, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, entryRole, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, appearanceConstraints, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "mineral"
+}

@@ -1,0 +1,99 @@
+{
+  "tableId": "infernal",
+  "entries": [
+    {
+      "id": "infernal_burning_soul_of_hell",
+      "name": "Burning Soul of Hell",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "save modifiers",
+        "damage affinities"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_cloven_hooved_beast",
+      "name": "Cloven Hooved Beast",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_demon_claw",
+      "name": "Demon Claw",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_demon_eyes",
+      "name": "Demon Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_feral_monster",
+      "name": "Feral Monster",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_fire_brimstone",
+      "name": "Fire & Brimstone",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides",
+        "damage affinities"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_living_weapon",
+      "name": "Living Weapon",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_mark_of_the_profane",
+      "name": "Mark of the Profane",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "save modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_shadow_demon",
+      "name": "Shadow Demon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "infernal_the_mask_of_darkness",
+      "name": "The Mask of Darkness",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

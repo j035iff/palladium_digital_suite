@@ -1,0 +1,491 @@
+{
+  "tableId": "unusual_facial_features",
+  "tableHeading": "Unusual Facial Features Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane\u00ae RPG (core rulebook)",
+      "authoritative": false
+    },
+    {
+      "key": "facial_features_ii",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 21,
+  "traits": [
+    {
+      "name": "Alien Features",
+      "percent": "91-95%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "91-95%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 103,
+          "percent": "91-95%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Angel Face",
+      "percent": "36-45%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "36-45%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Chest Face",
+      "percent": "23-35%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 98,
+          "percent": "23-35%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Cyclops",
+      "percent": "16-22%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "16-22%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "16-22%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Extra Eyes",
+      "percent": "31-38%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "31-38%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "31-38%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Facial Tentacles",
+      "percent": "71-78%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "71-78%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 103,
+          "percent": "71-78%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Glowing Eyes",
+      "percent": "08-15%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "08-15%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "08-15%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Heat Pits",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 98,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Large Horns",
+      "percent": "63-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "63-70%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 103,
+          "percent": "63-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Masked Face",
+      "percent": "46-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "46-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Metal Head",
+      "percent": "79-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "79-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Misshapen Facial Features",
+      "percent": "23-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "23-30%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "23-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Multiple Faces",
+      "percent": "11-22%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 98,
+          "percent": "11-22%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "No Face",
+      "percent": "79-85%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "79-85%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 103,
+          "percent": "79-85%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Oversized Carnivorous Mouth",
+      "percent": "01-07%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134,
+          "percent": "01-07%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "01-07%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Sharp Teeth",
+      "percent": "39-46%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "39-46%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "39-46%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Skull Face",
+      "percent": "47-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "47-55%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 102,
+          "percent": "47-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Small Horns",
+      "percent": "56-62%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135,
+          "percent": "56-62%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 103,
+          "percent": "56-62%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Snake, Worm, or Millipede for a Tongue",
+      "percent": "56-68%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "56-68%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Strange Ears",
+      "percent": "69-78%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "69-78%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    },
+    {
+      "name": "Worm Face",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "facial_features_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "facial_features_ii"
+      ]
+    }
+  ]
+}

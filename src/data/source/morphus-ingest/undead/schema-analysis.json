@@ -1,0 +1,576 @@
+{
+  "generatedAt": "2026-05-30T19:55:46.006Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 5,
+  "perTrait": [
+    {
+      "percent": "01-20%",
+      "name": "Partial Skeleton Form",
+      "pageNumber": 1,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "disguise_penalty",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "prowl_modifier",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "21-40%",
+      "name": "Walking Corpse",
+      "pageNumber": 2,
+      "patterns": [
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "damage_affinity",
+          "schemaPaths": [
+            "damageAffinities",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "prowl_modifier",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "damageAffinities"
+      ]
+    },
+    {
+      "percent": "41-60%",
+      "name": "Walking Mummy",
+      "pageNumber": 2,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "prowl_modifier",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "61-80%",
+      "name": "Vampiric Nature",
+      "pageNumber": 2,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "skill_named_percent",
+          "schemaPaths": [
+            "skillModifiers.specificSkillOverrides"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bonuses_penalties_block",
+          "schemaPaths": [
+            "statModifiers",
+            "skillModifiers",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "mobility.conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "skillModifiers",
+        "customOneOffs",
+        "mobility"
+      ]
+    },
+    {
+      "percent": "81-00%",
+      "name": "Nosferatu Vampire",
+      "pageNumber": 3,
+      "patterns": [
+        {
+          "patternId": "natural_ar",
+          "schemaPaths": [
+            "naturalAr",
+            "statModifiers.ar"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "mobility.conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "perception_rolls",
+          "schemaPaths": [
+            "statModifiers.perception",
+            "sensory.perceptionSpecialties"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "aquatic_buoyancy",
+          "schemaPaths": [
+            "mobility.aquaticTraits.buoyancy",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "appearance_clothing",
+          "schemaPaths": [
+            "appearanceConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "nightvision",
+          "schemaPaths": [
+            "sensory.nightvisionRangeFlatBonus",
+            "sensory.seeInvisible"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "naturalAr",
+        "statModifiers",
+        "mobility",
+        "customOneOffs",
+        "sensory",
+        "appearanceConstraints"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "undead_chains",
+        "name": "Chains",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_dual_forearms_and_hands_on_each_arm",
+        "name": "Dual Forearms and Hands on Each Arm",
+        "topLevelKeys": [
+          "appearanceConstraints",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_elephant_trunk",
+        "name": "Elephant Trunk",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_eye_stalks",
+        "name": "Eye Stalks",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sensory",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_flexible_limbs",
+        "name": "Flexible Limbs",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_mandibles",
+        "name": "Mandibles",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalWeapons",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_nosferatu_vampire",
+        "name": "Nosferatu Vampire",
+        "topLevelKeys": [
+          "appearanceConstraints",
+          "description",
+          "gameSystems",
+          "id",
+          "mobility",
+          "name",
+          "naturalAr",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_partial_skeleton_form",
+        "name": "Partial Skeleton Form",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_prehensile_hair",
+        "name": "Prehensile Hair",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_snake_body",
+        "name": "Snake Body",
+        "topLevelKeys": [
+          "appearanceConstraints",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_spider_legs",
+        "name": "Spider Legs",
+        "topLevelKeys": [
+          "appearanceConstraints",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_vampiric_nature",
+        "name": "Vampiric Nature",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalAr",
+          "saveModifiers",
+          "skillModifiers",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_walking_corpse",
+        "name": "Walking Corpse",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "undead_walking_mummy",
+        "name": "Walking Mummy",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "naturalAr",
+          "sources",
+          "statModifiers",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, saveModifiers, survivalTraits, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, naturalWeapons, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, entryRole, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "undead"
+}

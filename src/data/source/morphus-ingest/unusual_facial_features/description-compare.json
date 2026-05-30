@@ -1,0 +1,82 @@
+{
+  "differences": [
+    {
+      "trait": "Oversized Carnivorous Mouth",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Glowing Eyes",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Cyclops",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Misshapen Facial Features",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Extra Eyes",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Sharp Teeth",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Skull Face",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Small Horns",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Large Horns",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Facial Tentacles",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "No Face",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Alien Features",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Two",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

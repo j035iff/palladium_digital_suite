@@ -1,0 +1,88 @@
+{
+  "differences": [
+    {
+      "trait": "Bloody Ooze",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Corpse-Like",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Stitches",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Nails",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Razor Blades",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Broken Glass",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Eternal Wounds",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Missing Skin",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Leatherboy/girl",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Boils or Sores",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Zippers",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Bones",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Biomechanical",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Combination of Two",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

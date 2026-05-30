@@ -1,0 +1,14 @@
+{
+  "tableId": "stigmata",
+  "generatedAt": "2026-05-30T19:46:55.976Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 29
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

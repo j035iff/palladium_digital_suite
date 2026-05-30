@@ -70,6 +70,15 @@ function normalizeSkillName(s) {
     .trim()
 }
 
+function expandCompoundTraitName(name, bodyStart) {
+  if (name.includes(':')) return name
+  const m = bodyStart.match(
+    /^([A-Za-z][A-Za-z0-9'-]{1,28}): (?!(?:Bonuses|Penalties|The|Note|When|If)\b)/,
+  )
+  if (m) return `${name}: ${m[1].trim()}`
+  return name
+}
+
 export function splitTraitBlocks(tableText) {
   const cutoffRe =
     /^(?:Talent Manifestations|New Common Talents|Appendix(?:\s+Talents)?|Elite Talents)\b/m
@@ -80,9 +89,15 @@ export function splitTraitBlocks(tableText) {
   const blocks = []
   for (let i = 0; i < headers.length; i++) {
     const m = headers[i]
+    const rawName = m[3].trim()
+    if (!rawName || /^[a-z]/.test(rawName)) continue
     const start = m.index
     const end = i + 1 < headers.length ? headers[i + 1].index : boundedText.length
-    const name = m[3].trim().replace(/[!.:]+\s*$/, '')
+    const bodyStart = boundedText.slice(m.index + m[0].length, m.index + m[0].length + 240)
+    const name = expandCompoundTraitName(
+      m[3].trim().replace(/[!.:]+\s*$/, ''),
+      bodyStart,
+    )
     const body = boundedText.slice(start, end)
     blocks.push({
       percent: `${m[1]}-${m[2]}%`,
@@ -99,6 +114,8 @@ function normTraitName(s) {
 
 const TRAIT_NAME_ALIASES = {
   'searchlight s': 'searchlight headlights',
+  antenna: 'antennae',
+  'no face!': 'no face',
 }
 
 function normTraitNameForMatch(s) {
@@ -207,6 +224,41 @@ function parseStatModifiers(body, out) {
   }
   const hfFlatRe = /([+-]\d+)\s+to\s+(?:Awe\/)?Horror Factor/gi
   for (const m of body.matchAll(hfFlatRe)) {
+    addStat(out, 'hf', { flat: Number(m[1]) })
+  }
+
+  const raisedIncreasedRe =
+    /((?:(?:P\.P\.E\.|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.)(?:\s*(?:,|and)\s*)?)+)\s+(?:is|are)\s+(?:raised|increased)\s+by\s+(\d+)/gi
+  for (const m of body.matchAll(raisedIncreasedRe)) {
+    for (const tokenMatch of m[1].matchAll(statTokenRe)) {
+      const key = STAT_KEY_MAP[tokenMatch[1]]
+      if (key) addStat(out, key, { flat: Number(m[2]) })
+    }
+  }
+
+  const increaseStatRe =
+    /Increase\s+((?:(?:P\.P\.E\.|P\.S\.|P\.P\.(?!E)|P\.E\.|P\.B\.|M\.A\.|M\.E\.|I\.Q\.)(?:\s*(?:,|and)\s*)?)+)\s+by\s+(\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+)/gi
+  for (const m of body.matchAll(increaseStatRe)) {
+    const raw = m[2]
+    const mod = /[dD]/.test(raw) ? { dice: raw.replace(/x/gi, 'x') } : { flat: Number(raw) }
+    for (const tokenMatch of m[1].matchAll(statTokenRe)) {
+      const key = STAT_KEY_MAP[tokenMatch[1]]
+      if (key) addStat(out, key, mod)
+    }
+  }
+
+  const increasePbRe = /increase P\.B\. by (\d+)/gi
+  for (const m of body.matchAll(increasePbRe)) {
+    addStat(out, 'pb', { flat: Number(m[1]) })
+  }
+
+  const sdcByRe = /S\.D\.C\. by (\d+D\d+(?:x\d+)?(?:\+\d+)?|\d+D\d+)/gi
+  for (const m of body.matchAll(sdcByRe)) {
+    addStat(out, 'sdc', { dice: m[1].replace(/x/gi, 'x') })
+  }
+
+  const hfOfRe = /(?:base\s+)?Horror Factor(?:\s+of|\s+is)?\s+(\d+)/gi
+  for (const m of body.matchAll(hfOfRe)) {
     addStat(out, 'hf', { flat: Number(m[1]) })
   }
 

@@ -1,0 +1,97 @@
+{
+  "tableId": "undead",
+  "tableHeading": "Undead Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane\u00ae Survival Guide (WB5)",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 5,
+  "traits": [
+    {
+      "name": "Nosferatu Vampire",
+      "percent": "81-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 3,
+          "percent": "81-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Partial Skeleton Form",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 1,
+          "percent": "01-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Vampiric Nature",
+      "percent": "61-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 2,
+          "percent": "61-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Walking Corpse",
+      "percent": "21-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 2,
+          "percent": "21-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Walking Mummy",
+      "percent": "41-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 2,
+          "percent": "41-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}

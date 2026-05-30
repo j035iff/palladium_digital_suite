@@ -1,0 +1,249 @@
+{
+  "tableId": "stigmata",
+  "entries": [
+    {
+      "id": "stigmata_barbed_wire_razor_wire",
+      "name": "Barbed Wire/Razor Wire",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_bloody_ooze",
+      "name": "Bloody Ooze",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_body_faces",
+      "name": "Body Faces",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_boils_or_sores",
+      "name": "Boils or Sores",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_bones",
+      "name": "Bones",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_broken_glass",
+      "name": "Broken Glass",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_corpse_like",
+      "name": "Corpse-Like",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_crushed",
+      "name": "Crushed",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_dangling_intestines",
+      "name": "Dangling Intestines",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_eternal_wounds",
+      "name": "Eternal Wounds",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_gut_tentacles",
+      "name": "Gut Tentacles",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_horrific_acne",
+      "name": "Horrific Acne",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_inside_out_creature",
+      "name": "Inside-Out Creature",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_leatherboy_girl",
+      "name": "Leatherboy/girl",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_missing_eyeball",
+      "name": "Missing Eyeball",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_missing_skin",
+      "name": "Missing Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_nails",
+      "name": "Nails",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_nightmare_pet",
+      "name": "Nightmare Pet",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_outer_veins",
+      "name": "Outer Veins",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_raw_meat",
+      "name": "Raw Meat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_razor_blades",
+      "name": "Razor Blades",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_see_no_evil_speak_no_evil",
+      "name": "See No Evil, Speak No Evil",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_shifting_body",
+      "name": "Shifting Body",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_splitting_headache",
+      "name": "Splitting Headache",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_stitches",
+      "name": "Stitches",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_third_eye",
+      "name": "Third Eye",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_translucent_skin",
+      "name": "Translucent Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_withered_flesh",
+      "name": "Withered Flesh",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "stigmata_zippers",
+      "name": "Zippers",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

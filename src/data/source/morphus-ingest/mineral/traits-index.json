@@ -1,0 +1,400 @@
+{
+  "tableId": "mineral",
+  "tableHeading": "Mineral Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "nightlands",
+      "pdf": "src/data/reference/nightbane/WB2-Nightlands.pdf",
+      "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+      "authoritative": false
+    },
+    {
+      "key": "mineral_ii",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 18,
+  "traits": [
+    {
+      "name": "Amethyst Crystal",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 1,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Arsenic",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 1,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Clear Crystal/Quartz",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 4,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Crystalline Body",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 141,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Emerald/Tourmaline",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 2,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Gold",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 2,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Horns, Spines or Spikes",
+      "percent": "86-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 141,
+          "percent": "86-90%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "86-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Iron: Hematite",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 3,
+          "percent": "51-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Iron: Magnetite",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 4,
+          "percent": "61-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Living Statue",
+      "percent": "51-65%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "51-65%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "51-65%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Metal Statue",
+      "percent": "21-35%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "21-35%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "21-35%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Orpiment",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 3,
+          "percent": "41-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Part Inorganic",
+      "percent": "66-75%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 141,
+          "percent": "66-75%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "66-75%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Part Inorganic with Weapons",
+      "percent": "76-85%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 141,
+          "percent": "76-85%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "76-85%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Rough Metal Body",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "01-20%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "01-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Rough Stone Body",
+      "percent": "36-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 140,
+          "percent": "36-50%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "nightlands",
+          "reference": "Nightbane\u00ae Sourcebook 2: Nightlands (WB2)",
+          "pageNumber": 141,
+          "percent": "36-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "nightlands"
+      ]
+    },
+    {
+      "name": "Silver",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 4,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    },
+    {
+      "name": "Uraninite",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "mineral_ii",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 4,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "mineral_ii"
+      ]
+    }
+  ]
+}

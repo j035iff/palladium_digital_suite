@@ -1,0 +1,52 @@
+{
+  "differences": [
+    {
+      "trait": "Prehensile Tail",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Tentacles",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Long, Sensitive Fingers",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "2D4 Pairs of Tiny Arms and Hands",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Four Arms",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Pseudopods",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Articulated Spikes",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Antennae",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

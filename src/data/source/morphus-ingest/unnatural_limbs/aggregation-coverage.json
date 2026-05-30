@@ -1,0 +1,161 @@
+{
+  "tableId": "unnatural_limbs",
+  "entries": [
+    {
+      "id": "unnatural_limbs_2d4_pairs_of_tiny_arms_and_hands",
+      "name": "2D4 Pairs of Tiny Arms and Hands",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_antenna",
+      "name": "Antenna",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_antennae",
+      "name": "Antennae",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_articulated_spikes",
+      "name": "Articulated Spikes",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_chains",
+      "name": "Chains",
+      "hooks": [],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_dual_forearms_and_hands_on_each_arm",
+      "name": "Dual Forearms and Hands on Each Arm",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_elephant_trunk",
+      "name": "Elephant Trunk",
+      "hooks": [],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_eye_stalks",
+      "name": "Eye Stalks",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_flexible_limbs",
+      "name": "Flexible Limbs",
+      "hooks": [
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_four_arms",
+      "name": "Four Arms",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_long_sensitive_fingers",
+      "name": "Long, Sensitive Fingers",
+      "hooks": [
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_mandibles",
+      "name": "Mandibles",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_prehensile_hair",
+      "name": "Prehensile Hair",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_prehensile_tail",
+      "name": "Prehensile Tail",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_pseudopods",
+      "name": "Pseudopods",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_snake_body",
+      "name": "Snake Body",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_spider_legs",
+      "name": "Spider Legs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_spiked_prehensile_tail",
+      "name": "Spiked Prehensile Tail",
+      "hooks": [],
+      "notesOnly": false
+    },
+    {
+      "id": "unnatural_limbs_tentacles",
+      "name": "Tentacles",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

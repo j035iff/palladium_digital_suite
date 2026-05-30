@@ -1,0 +1,243 @@
+{
+  "generatedAt": "2026-05-30T20:03:23.568Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 5,
+  "perTrait": [
+    {
+      "percent": "01-10%",
+      "name": "Doll-Like Appearance",
+      "pageNumber": 126,
+      "patterns": [
+        {
+          "patternId": "stat_increased_by",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "stance",
+          "schemaPaths": [
+            "mobility.conditionalStanceModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "mobility"
+      ]
+    },
+    {
+      "percent": "11-30%",
+      "name": "Animal Magnetism",
+      "pageNumber": 126,
+      "patterns": [
+        {
+          "patternId": "stat_increased_by",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "31-50%",
+      "name": "Elfin Features",
+      "pageNumber": 126,
+      "patterns": [
+        {
+          "patternId": "stat_increased_by",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "appearance_clothing",
+          "schemaPaths": [
+            "appearanceConstraints"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "appearanceConstraints"
+      ]
+    },
+    {
+      "percent": "51-70%",
+      "name": "Physical Perfection",
+      "pageNumber": 126,
+      "patterns": [
+        {
+          "patternId": "stat_increased_by",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "71-90%",
+      "name": "Fallen Angel",
+      "pageNumber": 126,
+      "patterns": [
+        {
+          "patternId": "stat_increased_by",
+          "schemaPaths": [
+            "statModifiers"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    }
+  ],
+  "targetAudit": {
+    "unknownKeys": [],
+    "perEntry": [
+      {
+        "id": "unearthly_beauty_animal_magnetism",
+        "name": "Animal Magnetism",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "unearthly_beauty_doll_like_appearance",
+        "name": "Doll-Like Appearance",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "unearthly_beauty_elfin_features",
+        "name": "Elfin Features",
+        "topLevelKeys": [
+          "appearanceConstraints",
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "unearthly_beauty_fallen_angel",
+        "name": "Fallen Angel",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      },
+      {
+        "id": "unearthly_beauty_physical_perfection",
+        "name": "Physical Perfection",
+        "topLevelKeys": [
+          "description",
+          "gameSystems",
+          "id",
+          "name",
+          "sources",
+          "tableCategory"
+        ]
+      }
+    ]
+  },
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, naturalAr, saveModifiers, survivalTraits, sensory, skillModifiers, damageAffinities, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, naturalWeapons, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, customOneOffs, entryRole, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "unearthly_beauty"
+}

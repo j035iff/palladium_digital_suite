@@ -1,0 +1,1909 @@
+Stigmata Table II ------
+When determining stigmata features, the player can roll on 
+the original table as presented in the Nightbane RPG, page 101 , 
+or he may roll on this one, or make selections from both.
+01-20 % Inside-Out Creature: The Nightbane's body has 
+been literally turned inside out; his/her organs are on the outside 
+of the body, resulting in the most grotesque image possible. Not 
+even other Nightbanes will feel comfortable around such a crea­
+ture. Add 1 D6x l O  to S.D.C. and + 1 D4+2 to horror factor.
+21-40% Translucent Skin: The character's skin has a trans­
+lucent, semi-transparent quality, reminiscent of a thin plastic or 
+rubber membrane, allowing muscle tissue and organs to be semi­
+visible. Add 4D6 to S.D.C. and + 1 D4 to horror factor.
+41-60 % Body Faces: Small faces and heads (from one to 
+six) dot the character's body! These heads can be as small as a 
+thumb or as large as a grapefruit. Some Nightbanes can speak 
+through these faces; others cannot stop the faces from scream­
+ing, laughing, gibbering, or mouthing expressions. The mouths 
+of each face may also bite any enemy that gets within grappling 
+distance; each can inflict 1 D4 points of damage per bite. Add 
+4D6 to S.D.C. and + 1 D6 to horror factor.
+61-75 % Withered Flesh: The Nightbane's flesh is dried and 
+mummy-like, making the character look like a desiccated corpse. 
+Add 3D6 to S.D.C. and + 1 to horror factor.
+76-90% Gut Tentacles: A pair of tentacles covered in purple 
+and blue blood vessels, resembling internal organs or intestines, 
+can extend out of the body from the belly and grapple, whip or 
+strike at one's opponents! These disgusting limbs inflict 2D6 
+damage with a whipping attack, 1 D6 with a strike/punch, and 
+can grapple enemies with the same strength as the Nightbane, 
+with a maximum range of 6 feet ( 1 .8 m). Adds one extra attack 
+per melee, +2D6 S.D.C. and +2 to horror factor.
+91-00 % Shifting Body: The Nightbane's Morphus is always 
+shifting uncontrollably, with stigmata characteristics from both 
+stigmata tables appearing at random. So, for example, a tiny 
+head might appear in the character's chest, linger for 1 D6 min­
+utes, and then disappear, replaced by open wounds, protruding 
+nails or similarly disgusting traits. The new feature stays for 1 D6 
+minutes ( 1 -50%) or 1 D4 hours (5 1 -00%), and then is replaced by 
+something else. Also roll or select a new stigmata every time the 
+character switches to the Facade and then back to Morphus. 
+However, the character does not gain any of the bonuses that 
+normally accompany those stigmatas, except for the horror fac­
+tor. Instead, the character gets + l D4x10 S.D.C., +1 on percep­
+tion rolls, and + 1 on initiative. Horror Factor is determined by 
+the stigmata of the moment. 
+Joe Sifferman (Order #46323384)
+New Nightbane® Talents 
+Air Grab 
+The Nightbane can "grab" somebody up to 50 feet (15.2 m) 
+away +10 feet (3 m) per additional level by making a grabbing 
+gesture in the direction of the target. The grab simply holds a 
+person for two melee actions, or roughly 5 seconds, during 
+which time he cannot move or physically attack. The captive of 
+an air grab can break free with one, flexing, melee action of his 
+own, but only if his strength is equal to or greater than the Night­
+bane's. 
+An "air squeeze" does supernatural P.S. damage; use the 
+Nightbane's P.S. minus five points, and counts as two melee at­
+tacks. 
+The Nightbane can also use the power to grab and bring/pull 
+the victim to him in one melee action (2 seconds). The captive of 
+an air grab can break free or resist being pulled only if his own 
+P.S. is equal to or greater than the Nightbane. Instead of pulling 
+the grabbed character to him, the Nightbane can throw him up to 
+1 0  feet (3 m) away. Unless the victim makes a successful roll 
+with fall/impact he takes I D6 S.D.C. damage and loses two me­
+lee actions/attacks and initiative. 
+Victims must know they are being targeted with this power to 
+avoid it, and even then they need to roll a 1 6  or higher to dodge. 
+Limitations: Usable by the Morphus only. Each action or at­
+tack costs 8 P.P.E. 
+Cost: 10 P.P.E. to acquire it permanently; 8 P.P.E. per grab­
+bing action. 
+Astral Self 
+The Nightbane becomes an astral being with no physical 
+body. In this form, the character has all the abilities and limita­
+tions of an astral projection (see Nightbane RPG, page 70), but 
+without a silver cord, or any physical body left behind. The 
+S.D.C. of the astral-self is equal to the combined S.D.C. and hit 
+points of the Nightbane, times two! While in astral form, the 
+character can enter the Astral Plane, affect insubstantial crea­
+tures and other astral beings, and visit astral domains or king­
+doms (see the Astral Plane section for more information). Once 
+transformed, the Nightbane can stay in astral form indefinitely, 
+although changing back will use up P.P.E. 
+Limitations: Usable by the Morphus form only. 
+Cost: 8 P.P.E. to acquire permanently. 8 P.P.E. to activate, 
+and 8 P.P.E. to return to physical form (the character must have 
+returned to the physical world, either Earth or the Nightlands, to 
+return to his normal state). 
+Darkwave 
+The Nightbane becomes a semi-liquid mass of pure darkness 
+that can engulf and injure opponents. An engulf counts as a nor­
+mal melee attack. An intended victim can try to dodge but does 
+so with a -4 penalty. Once engulfed, the victim is helplessly con­
+fined in absolute darkness, and possibly made to suffer 2D6 
+S.D.C. per melee round locked within the darkwave. This dam­
+age cannot be regenerated until the victim is free of the darkness. 
+While trapped, the victim loses half his attacks/actions per melee 
+133 
+round, and all combat bonuses. The use of spells and psionics 
+are impossible. 
+The size of the Darkwave is determined by the level of the 
+Nightbane. At levels one and two, the character can engulf one 
+victim, two victims at level three, three at level six, and one ad­
+ditional victim at levels nine, twelve and fifteen. Multiple vic­
+tims get a dodge defense against the Nightbane' s single attack 
+roll without penalty. 
+While in this state, the Nightbane takes half damage from 
+physical attacks directed at the darkness, and double damage 
+from energy and magical attacks from those not trapped inside. 
+Furthermore, strong light will inflict damage: no damage from 
+street lights, I D6 from a pen light (range: 5 feet/1 .5 m), 3D6 
+from a commercial flashlight (range 10 feet/3.0 m), 5D6 from a 
+high-powered or police flashlight, and I D6x lO from a spotlight 
+or magic light or Guardian. This damage can be inflicted once 
+per melee round per light wielder. The power cannot be used 
+during the day; or the Nightbane will take I D6x l O  points of 
+damage at the end of every melee round. 
+Limitations: Usable by the Morphus only, vulnerable to 
+light, and not advisable in daylight. 
+Cost: 1 2  P.P.E. to acquire permanently; 6 P.P.E. per 30 sec­
+onds (two melee rounds). 
+Dervish Dance 
+The Nightbane can move in a circular pattern and make spin­
+ning attacks with incredible speed. Basically, the character spins 
+at blurring speeds in a large circle - an area 10 feet (3.0 m) in 
+diameter. All opponents within, or who enter the dance zone gets 
+attacked as if the Nightbane had made an attack roll of 10 + 1 per 
+level of the Nightbane (maximum 19). Everybody in the dance 
+circle is attacked again if anyone in the zone tries to attack the 
+Nightbane dervish dancer. Opponents can try to dodge the der­
+vish attack as normal, parry at -6, or try to roll with the punch, 
+fall or impact after being struck. The Nightbane also uses the at­
+tack roll number (10 + 1 per level of experience) to automatically 
+parry all incoming attacks, even bullets, arrows and similar mis­
+sile attacks (but not energy attacks - they strike and damage as 
+normal). 
+The dervish dance lasts one entire melee round (15 seconds), 
+must be the Nightbane's first attack of that melee round, and 
+counts as all the character's melee attacks for that round. Exam­
+,: Sargon the Uncanny, 6th level Nightbane, attacks a group of 
+three Hounds with his Dervish Dance. All fall within the diame­
+ter of his attack (10 ft/3 m). He activates the power and wades 
+into the group, striking at each one with a 16 to hit (no die roll is 
+necessary). Each Hounds tries to dodge; rolls are a 10, a 15, and 
+a 3, all fail, so each takes damage as if Sargon had punched them 
+individually. The Hounds then all attack back; their attack rolls 
+must exceed a 16 to harm Sargon; only one attack roll in the en­
+tire melee round does so, lightly injuring Sargon. Because they 
+retaliated, Sargon's dervish dance enables him to strike again, 
+this time the Hounds roll a 14, a 1 6  and a 1 9  respectively. Only 
+the 14 suffers damage. The 1 6  ties, so the dodge was successful 
+and the 19 dodged with ease (but all attempting the dodge use up 
+one melee attack/action). Now, if none of the Hounds attack 
+again, Sargon cannot strike again. But if even one Hound at­
+tacks, Sargon parries with a 1 6  (17 or higher hits) and all three 
+are attacked again. Of course, any Hound that runs away is 
+Joe Sifferman (Order #46323384)
+likely to get outside the diameter of the dance and be safe from 
+any further attacks. However, looking at the blur of action, he 
+can try to strike the whirling Nightbane but still must roll a 17 or 
+higher to hit him. At the end of the melee round, the Nightbane 
+stops and prepares to fight them normally. If he had wanted to 
+keep the power going, he would have had to spend an additional 
+20 P.P.E. 
+Limitations: Only usable in the Morphus form and limited to 
+a 10 foot (3 m) diameter striking range. 
+Cost: 1 5  to acquire permanently; 20 P.P.E. per melee round. 
+Dreamer 
+With this power, the Nightbane can enter the Dreamstream, 
+body and soul. While in the Dreamstream, the Nightbane has a 
+"psychic S.D.C." equal to his normal S.D.C. and hit points com­
+bined. The character can use his other talents normally, and can 
+enter the Dream Pools of other people. Although Nightbanes 
+cannot manipulate dreamstuff to terrorize dreamers, their mere 
+shape and appearance are often enough to create nightmares. See 
+the Dreamstream section for more information. 
+Limitations: Usable by the Morphus only. If all psychic 
+S.D.C. are reduced to below zero, the character is slain and van­
+ishes as if he never existed. 
+Club Freak™ 
+A New Nightbane Faction 
+I knock on the metal door, once, two raps, then one more. I 
+bought the code from a - thing that lives in an abandoned 
+building and claims to eat human flesh. 
+The viewing slits opens with a slam. An inhumanly large eye, 
+bloodshot and angry, stares out at me. "You ain't Morphed 
+out," a voice hisses behind the door. 
+"Out here? In the street?" /t's more than fear that makes me 
+hesitate. I don' t  want to Change. I don' t  want to see what I've 
+become. I thought they would understand. 
+"This here's Club Freak, jerk. Gotta see if you look the part. 
+You a Ken-doll?" 
+I shake my head violently. Not a Ken; not even close. "All 
+right," I spit out, and start the Change. 
+It hurts at first. The glass shards push their way out of my 
+skin, and blood seeps out, cooling in the evening air. A pressure 
+on my forehead gives way to a tearing pain, and a short tentacle, 
+tipped by a large blue eye, pokes its way out. My bones stretch 
+and twist, and now my arms reach down to the floor, and black 
+claws tip my fingers. 
+"You happy now?" I growl at the doorman. I hate him almost 
+as much as I hate myself. 
+The door swings open. I shuffle into a smokelilled room. 
+Blues music is playing loudly in the background, but it is half­
+drowned by laughter and conversation. My three eyes blink. 
+Everywhere I look, there are monsters. A wolf-creature is play­
+ing poker with an insectoid thing and a woman who would be 
+pretty if it wasn't for the oozing wounds that stain her clothing 
+and her chair. A game of darts is being dominated by a fourCost: 10 to permanently acquire, and 10 to enter, or leave the 
+Dreamstream. Once there, the Nightbane can stay indefinitely. 
+Piecework 
+By using this power, the Nightbane can remove a part of his 
+own flesh and place it somwhere as a spying device; some re­
+move an eye, ear, or other sensory body parts, but a finger or toe 
+will do just as well. The body part will be able to hear, see and 
+feel everything around it, although it may be limited by where it 
+has been placed and cannot move or communicate. The Night­
+bane cannot learn anything from the detached appendage until 
+he reattaches it. When the piece is reattached, the character re­
+members everything experienced by the piece as if he had been 
+there himself. Each piece has 10 S.D.C. and 4 hit points (these 
+cannot be regenerated until the piece is destroyed or reattached). 
+Limitations: Usable by the Morphus only. 
+Cost: 10 to permanently acquire the power, and 8 to activate 
+the missing piece. Every hour after the first that the piece is 
+missing, the Nightbane must spend an additional 6 P.P.E. or the 
+missing piece will disappear. If this occurs the Nightbane regen­
+erate the damage and the item, but he loses any information the 
+original might have gained. If the body part or piece of flesh is 
+burned, eaten or otherwise destroyed, it ceases to exist, with the 
+same effects. 
+armed thrower. Something like an ink blot slithers down from 
+the ceiling and pours itself into a human shape - human, except 
+for horns and cloven feet. 
+134 
+The conversation dies out as people notice my entrance. The 
+music drones on for a few moments, and then somebody or 
+something turns off the record machine. The entire rooms takes 
+a long look at me. 
+Somebody in the back starts clapping. 
+The entire club, the freaks and the monsters applaud me, 
+cheer me, welcome me. They give me a standing ovation, clap­
+ping together clawed hands, tentacles and chitinous limbs. They 
+are glad to see me. 
+My smile tastes of joyous tears as I join my people. 
+The first Club Freak appeared in London during the late 19th 
+century. It was the creation of the self-styled "Earl of Hideous," 
+a centuries old Nightbane said to be related to the Tudor kings. 
+His design aped the gentlemen's clubs that were common at the 
+time, a place where the well-to-do could relax and socialize with 
+their peers. The Earl's version was a place where Nightbanes 
+could abandon their "charade of humanity" and could be them­
+selves in every sense of the word. In the following century, over 
+a dozen such clubs appeared throughout the world. 
+Most Club Freaks are places where any and all Nightbanes 
+are welcome, as long as they behave themselves. Some clubs are 
+more restrictive, however, rejecting "Kens and Barbies," as they 
+refer to those Nightbanes without noticeable deformities. The 
+emphasis is on the fact that Nightbanes are not human. The Fa­
+cade is considered a necessary disguise that members are supJoe Sifferman (Order #46323384)
+posed to "check at the door," just as one would a coat or hat -
+an unnecessary accessory when in a safe place. For decades, 
+members sneered at humankind, so mortal, weak and fearful of 
+the inhuman. The clubs' goals went beyond providing a safe 
+place for Nightbanes to socialize; the Earl of Hideous wished to 
+establish a network of influence among those Nightbanes who 
+used their longevity to amass wealth and power. Even the poor­
+est and most destitute Nightbanes were welcome because, after 
+all, who knew what they might accomplish ten, fifty, or a hun­
+dred years down the line? Many Nightbanes suspect that the 
+Earl's ultimate goal was to forge a secret society that would run 
+world affairs from behind closed doors. 
+Whatever the club's ultimate ends may have been, they re­
+mained popular in the years preceding Dark Day. During the 
+1 920s, the U.S. versions of Club Freaks became more like Jazz 
+clubs or "speak-easies" (secret drinking establishments during 
+Prohibition). During the 1980s and '90s, new clubs looked more 
+like alternative nightclubs where young and scared Nightbanes 
+could feel right at home. In all its manifestations, the club freaks 
+all honored one old tradition: newcomer Nightbanes were wel­
+comed with a standing ovation in celebration of their hideous­
+ness. 
+Organization 
+All Club Freaks are owned in common by a group of wealthy 
+and influential Nightbanes known as the Club Trustees. This 
+loose organization's comprised of some of the most important 
+Nightbanes in the world. Supernatural beings so powerful that 
+they snickered at the Underground Railroad. Beneath the Trus­
+tees are other Nightbanes charged with managing each club 
+"franchise" as they see fit. Although the managers answer to the 
+Trustees, they often run each Club Freaks as their personal king­
+dom. 
+Many of the larger clubs employ humans, a necessity given 
+the relative few number of Nightbanes even after Dark Day. The 
+Club employees are usually people who for some reason or an­
+other owe loyalty to the Nightbane. Most of them belong to ex­
+tended families who have been in the service of the older Club 
+Trustees for centuries, long before Club Freaks were even dis­
+covered. These volunteers undergo a magically-enforced oath of 
+secrecy; in return, they are the highest-paid waiters, barmen and 
+servants in the world. 
+While each Club Freaks is often unique and has its own idi­
+osyncrasies and special elements, a few stand out far above the 
+rest. The two most notable clubs are described below. 
+The Capital Club 
+Set in Washington D.C., the membership of the club includes 
+Nightbanes who manipulated the U.S. government for decades, 
+if not centuries. These Nightbanes did not control the govern­
+ment, but through campaign contributions (or outright bribes), 
+hired lobbyists and with the occasional use of Nightbane talents 
+or magic spells, often helped shape policies that affected the 
+U.S. and the entire world. The club had one of the largest mem­
+berships in the world, just as Washington had one of the largest 
+pre-Dark Day Nightbane populations. The reason was obvious; 
+this was the place to be if one wanted to have an impact on 
+world affairs. Many ancient Nightbanes set up shop here and 
+rubbed shoulders with their peers at the Capital Club. 
+136 
+When the Ba'al and their agents seized control of the U.S. 
+government, the club members' carefully nurtured network of 
+influence collapsed like a house of cards. Three of the most 
+prominent Nightbane members were killed during Dark Day. In 
+their arrogance they had become public personalities, and they 
+were thus easily discovered and destroyed by Hounds and other 
+Ba'al minions. The survivors quickly hid themselves and their 
+organization, and have managed to weather the storm. The club 
+is now working to pay the invaders back. 
+The Capital Club can be reached through the Washington 
+subway system, where a number of secret doors (all carefully 
+watched and concealed with the best available magical and tech­
+nological resources) will lead members to a richly-furnished 
+"gentlemen's club" (female Nightbanes have been welcome 
+there since the mid-20th Century). Members who wish to relax 
+can go to the Sitting Room to enjoy well-padded armchairs 
+while waiters (loyal humans, with a few psychics and supernatu­
+ral beings thrown into the mix) keep them supplied with the best 
+food and drinks in town. An open bar and a dining room are 
+places to socialize and find out what's new. 
+The Capital Club has 1 1  charter members (there were 1 4) and 
+about two dozen "regulars" who show up at least once a month. 
+Another few dozen Nightbanes who inhabit the city know about 
+the Club and visit infrequently for meetings with others of their 
+kind, to acquire or share information, seek help, or simply to re­
+lax. 
+The Astral Club 
+The largest Freaks' Club is not found on Earth. Instead, it ex­
+ists in an astral domain (see the Astral Plane section), con­
+structed by Nightbane sorcerers aided by 
+a mysterious 
+organization of human mystics. The Astral Club is twice the size 
+of a city block, and acts both as a social club, a bar and a lodging 
+house with a capacity of over two hundred guests. 
+The club is divided into over a dozen chambers. There is, for 
+example, the Concert Chamber, where musically-adept Night­
+banes perform for their peers. On any given night, patrons can 
+be entertained by ancient Greek harp-music, Gregorian chants, 
+rock 'n roll and rap music, one after the other. Guests wishing to 
+enjoy a good meal go to the Dining Chamber, where a 300 year 
+old Nightbane known as 1. Blades will prepare almost every 
+known dish in history with the quality of a five-star restaurant. 
+Other chambers include a casino, bars, dance floors, banquet 
+halls, and a hotel. Servants include humans, Tarantuloids and as­
+tral entities. Portals reach into no less than a dozen locations on 
+Earth, including two other clubs (in London and Boston), a 
+number of Nightbane safe houses and other secure locales. 
+Although the Astral Club has avoided politics in the Astral 
+Plane, recent events have made it difficult to stay out of them. 
+As the Nightlords' influence over astral space increases, the 
+managers of the club worry that soon their domain will be tar­
+geted by the Ba'al. The Trustees are considering trying to make 
+a deal with other astral organizations to protect this valuable lo­
+cation. Some members have spoken about waging their own se­
+cret war against the evil interlopers. 
+Joe Sifferman (Order #46323384)
+Club Freaks relations 
+with other Factions 
+The Clubs Freak's are unique in that they are places where 
+Nightbanes from any faction are welcomed, so long as they are 
+peaceful. Still, individual clubs often show favoritism for some 
+groups over others. 
+The Underground Railroad: This faction's policy of hiding 
+and retreating from humankind has often been considered cow­
+ardly by the powerful trustees and managers of the Club Freaks. 
+Still, many wealthy Trustees have helped fund and underwrite 
+many of the Railroad's activities, recognizing the need to safe­
+guard as many Nightbanes as possible. With the coming of the 
+Dark Day invasion, however, the Club Trustees are more inter­
+ested in action rather than escape, and their support for the Rail­
+road has greatly diminished. 
+The Resistance: Many Club Trustees are important members 
+of the Resistance, and most clubs act as unofficial Resistance 
+meeting places and safe houses. The additional risks of doing so 
+are minimal, since a Nightbane owned and operated estab­
+lishment would be marked for termination by the Ba'al in any 
+case. The most militant Resistance members, especially those 
+who have no trust for humans, are frequent "regulars" at these 
+places. 
+Spook Squad: As far as the Trustees are concerned, this or­
+ganization represents the worst aspects of humankind, and any 
+Squad member (even a Nightbane) who discovers the existence 
+of any club will be targeted for termination. At the same time, 
+some Spook Squad agents have uncovered evidence of Night­
+bane interference in American politics, and suspect the existence 
+of some sort of "power monger" Nightbane group that existed 
+before the coming of the Nightlords. 
+137 
+The NocturneslVampires/Wampyrs: Although most clubs 
+will not welcome any non-Nightbane, some will make an excep­
+tion for supernatural beings, as long as Nightbane club members 
+in good standing vouch for them. A non-human who has proven 
+himself to be a friend of Nightkind may even be made an honor­
+ary member (a rarity). A few Nocturne members have earned 
+this distinction; they are the closest thing to a mediator between 
+the Nocturnes and the other Nightbane factions. 
+The Warlords: Two Clubs, one in Chicago and one in New 
+York, have more of a "streetwise" outlook than most other es­
+tablishments. Rap is the music of choice, and most of the patrons 
+are tough Nightbanes, many of them minority members who 
+grew up in the slums. Several Warlords frequent these two 
+clubs; their outlook of racial superiority over humans is echoed 
+by the club's policies. The only problem is violence often erupts 
+among the Warlords themselves, let alone between the Warlords 
+and Nightbanes from other factions. Since fighting is not al­
+lowed in any Club Freak, Warlords have been ejected on many 
+occasions. Nightbanes were killed during two particularly nasty 
+incidents. The Club Trustees are pondering the wisdom of cater­
+ing to these outlaws, and may end up closing the two clubs alto­
+gether. 
+The Lightbringers/Guardians: The same principles that ap­
+ply to all supernatural beings include Guardians, although more 
+of their number than any other have become honorary members. 
+However, the Lightbringers as a whole see these clubs as places 
+where Nightbanes reject their humanity, something that may 
+(and often does) lead Nightbanes to believe they are above mo­
+rality and the law. In New Orleans, a group of Lightbringers 
+tried to forcibly shut down a Club Freak's that had existed in 
+that city since the 1 920's. The ensuing brawl left three Night­
+banes, two Guardians and twelve humans dead, as well as a 
+score injured. Now New Orleans is split in a three-way war be­
+tween the ResistanceIFreak's Club, the surviving Lightbringers, 
+and the Nightlord controlling the city. This conflict has colored 
+the worldwide relationship between these organizations. 
+The Seekers & Sorcerous Orders: Human sorcerers and 
+psychics are greatly feared by many Nightbanes, since they are 
+one of the few groups who can discover and ferret them out, no 
+matter how well hidden they are. Since most Club Freak's are 
+protected by magical circles and wards, their greatest vulnerabil­
+ity is from magicians. As a result, some club members will "pre­
+empt" any sorcerers they find - by killing them on sight. There 
+are some exceptions to this rule, however. One is a mysterious 
+group of wizards who are believed to have taught magic to a 
+number of Nightbanes. The other is the Gray Ghost Society (see 
+below). Likewise, the occasional lone wizard who has proven 
+his loyalty may be employed or associated with a club. 
+The Seekers are considered to be a danger. This organization 
+of scholars has discovered the existence of the London, Wash­
+ington D.C. and Tokyo clubs, and suspects that more exist. The 
+Club Trustees know that the Seekers know, and fear the worst. 
+So far, however, the Seekers have not used their knowledge 
+against the Nightbanes, so the club is reexamining its policy to­
+wards them. Maybe a truce, at least until the Nightlords are dealt 
+with. 
+The Gray Ghost Society: The existence of the Astral Club 
+Freaks is known to the Gray Ghost Society, and vice versa. In 
+recent months, an attack against the club by Necrophim led club 
+Joe Sifferman (Order #46323384)
+patrons and Gray Ghost psychics to join forces to repel the at­
+tack. This collaboration came out of mutual necessity, and has 
+softened the attitude of some club members, and even a couple 
+of the Trustees, towards human psychics and magicians. Their 
+argument is that psychics and magicians are, in their own way, 
+almost as inhuman as the Nightbanes themselves. 
+Places of Interest 
+Rehabilitation Camps 
+In the year 2002, the Preserver Administration launched a 
+program designed to "revolutionize penal institutions." This pro­
+gram financed the opening of twenty-five Rehabilitation Camps 
+throughout California, Texas and Florida - all places where 
+warm weather made it easy to build housing. The Rehabilitation 
+Camps use makeshift construction materials and rely on barbed 
+wire and watchtowers to keep the prisoners in. The inmates are 
+housed in wooden barracks and every day they are put to work 
+in fields picking fruit, harvesting crops, and similar jobs. Most of 
+the pay for those jobs goes to the State. The Preserver propa­
+ganda paints these camps as the cheapest option available to deal 
+with the criminal element. By 2004, twenty-one of the camps 
+were paying for their own costs, and seven were even making a 
+small profit. The propaganda overlooked the fact that the camps 
+are, in fact, selling slave labor to wealthy farming concerns. The 
+similarity between these places and concentration camps, or at 
+least work camps, has not even been noted by the media. 
+Life inside the camps is hellish. The prisoners are not locked 
+in individual cells but placed in barracks. Cameras monitor each 
+barrack; if any outbreak of violence occurs, pipes flood the 
+structure with "nausea gas" (see the New Weapons section). A 
+heavily-armed team of guards will then move in and proceed to 
+"pacify" the barracks. Particularly unruly prisoners are placed in 
+Solitary Confinement, a 6x6x6 foot ( 1 .8 by 1 .8 by 1 .8 m) box. 
+The box has an air conditioner system, but it is always turned 
+off, leaving the victim to broil in the usually hot conditions. 
+Many who draw a tum in solitary also end up severely beaten by 
+the guards. Career criminals who have tried to bribe or intimi­
+date the guards have found themselves in solitary; to the last 
+man, the guards in the Rehabilitation Camps are incorruptible, 
+because they are Hollow Men (60%) and Dopplegangers (35%), 
+as well as a few Ashmedai and similar creatures (5%). 
+Disappearances at these camps are quite common. Sometimes 
+an entire barrack of inmates won't show up for their daily work 
+period, and are never heard from again; truckloads of replace­
+ments usually arrive soon after. Typical excuses for these disap­
+pearances are transfers or early releases, but soon most prisoners 
+realize that these are lies, and that they may be next to suffer an 
+unknown fate. Very few inmates have actually been released in 
+the two to three years since the camps opened, because most of 
+them had prison terms of at least five years. The few who are re­
+leased for "good behavior" are typically Doppleganger replace­
+ments sent out to infiltrate dissident groups or to carry out other 
+tasks. 
+The guards in these camps carry M- 16 rifles and will fire on 
+full automatic at those attempting to escape, careless of any in-
+138 
+nocent bystanders (one of the reasons the camps are usually built 
+away from populated areas). Other security systems include mo­
+tion sensors "planted" in a perimeter around the barbed wire, 
+guard dogs, and, it is rumored, anti-personnel mine fields placed 
+alongside possible escape routes (a wrong step and the unfortu­
+nate takes I D4x l O  damage! ). 
+Spook Squad is constantly looking for ways to break more 
+prisoners out. So far, most attempts have failed. 
+Spook Squad Safe Houses 
+A typical Spook Squad safe house looks completely normal 
+from the outside. Common locales include farms, ranches, sum­
+mer camps, vacation resorts, houses in the city, and buildings 
+that appear to be condemned. Even before Dark Day, many of 
+these locations were heavily protected by advanced security sys­
+tems, including cameras, motion sensors, and more. Since then, 
+the ADA has made each house into a small bunker, fortified and 
+brimming with traps and weapons. Most front doors are armored 
+and booby-trapped; if somebody knocks down the reinforced 
+doors (A.R. 1 2, 350 S.D.C.), an explosive device is detonated, 
+blasting a 10 foot (3 m) area (2D4x l O  damage). Typically a 
+number of weapons will be in special, hidden places; most will 
+be pistols and sub-machine guns, but these have been recently 
+supplemented with grenades, assault rifles and other military­
+grade equipment. 
+More important than these defenses (which are only meant to 
+slow down, not stop the enemy) are the escape routes Spook 
+Squad engineers have built into most of these houses. Hidden 
+passages and tunnels typically lead several hundred feet away 
+from the buildings. City locales usually have tunnels connecting 
+to the sewer system or subway, while countryside houses lead to 
+other houses, barns and fields where vehicles are stored for just 
+such an eventuality. 
+As a last resort, most safe houses have a self-destruct device. 
+These consist of incendiary bombs and are designed to destroy 
+any information and evidence that might fall into the enemy's 
+hands. The incendiary bombs will inflict I D6x l 00 S.D.C. to 
+everything within the house and the fire will bum for 3D6 min­
+utes, inflicting an additional I D6x 1000 points of damage and 
+consuming anything that remains. Any files, computers and 
+other information storage devices will be completely obliterated, 
+as well as, (hopefully) any Nightlord minions caught in the blast. 
+Extreme measures, but Spook Squad believes it's better to be 
+safe than sorry. 
+Joe Sifferman (Order #46323384)
+Campaign & Adventure Ideas 
+Covert Revolution 
+One of the goals of Spook Squad is to destabilize the Ba'al­
+run governments and try to "take America back." At the same 
+time, secrecy is to be maintained to prevent panic and to pre­
+serve the Squad's own secrets. This delicate balancing act de­
+pends on covert operations: assassination, infiltration and small 
+military operations hidden away from the public eye. Some­
+times, secrecy may be more important than the mission itself, at 
+least in the opinion of some pencil pushers micro-managing the 
+operation. This may mean some agents risk being "left out in the 
+cold" if things go wrong, and they may have to return to base by 
+themselves or try to strike out on their own. Any theme from spy 
+movies (from cinematic action to complex games of death and 
+deceit) can be used in this campaign. 
+Common O.C.C.s: All Spook Squad O.c.c.s, including Ex­
+Federal Agents, former spies, former soldiers, police, etc. 
+Enemies/Rivals: NSB agents (human and otherwise), Ash­
+medai, Dopplegangers, Nightbane factions, independent Night­
+bane, cults, and so on, might be involved. If it hits the fan, 
+Hounds, Hunters and other cannon fodder creatures will be sent 
+against them. 
+Role-playing Hooks: Some character "types" can include the 
+betrayed spy who will trust no one, the patriotic hero who trusts 
+too much, the self-serving mercenary who does the right thing 
+only by accident, the snitch, the traitor, and the spy (or double 
+agent). 
+Nightland Wars 
+This campaign is centered around the Beachhead, Spook 
+Squad's invasion of the Nightlands. The characters are humans 
+facing the alien entities that prowl this dark world. They have 
+their weapons and technology to deal with the supernatural pow­
+ers of the enemy. All too often, this is not enough. As losses 
+mount, the survivors start sacrificing their own humanity to fight 
+their monstrous enemies. Desperate times breed desperate meas­
+ures. 
+139 
+Common O.C.C.s: Any military O.C.c. will fit into this 
+campaign. Additionally, the players can be researchers, scien­
+tists, psychics, Nightbane or even sorcerers. Supernatural players 
+are possible, but should probably be discouraged, since they 
+might unbalance in a mostly-human group (or give the group its 
+edge). 
+Enemies/Rivals: Since most missions will be conducted in 
+the Nightlands, the most common encounters will be with 
+Hounds and Hunters. Although these creatures rely on primitive 
+hand weapons, they are extremely dangerous due to their high 
+A.R. and supernatural P.S. Other minions such as Dopplegang­
+ers, Ashmedai and Hollow Men may be found, particularly in 
+the Ba'al City States. Occasionally, other dwellers of the Night­
+lands (whether or not they are associated with the Nightlords) 
+may attack or cause trouble for the patrols. Nightbanes often 
+venture into the Nightlands, and may be tentative allies or yet 
+another enemy. 
+Role-Playing Hooks: Many themes from war movies can be 
+played out in this campaign, including psychological warfare 
+and shell shock. Some possible character concepts include the 
+"green" recruit, well-trained and eager to go to combat, but inex­
+perienced to the horrors of the Nightlands; he may become the 
+hero or the goat (or the pawn). The grizzled NCO veteran who is 
+the soul of the squad or platoon. The decent but sometimes naive 
+commanding officer, or the self-serving commander who takes 
+advantage of the confusion of war to line his own pockets (or es­
+cape danger) at the expense of others. 
+Not all missions are conducted in the lifeless Wastes; some­
+times combat teams will venture into the City States, where the 
+soldiers may interact peacefully with Doppleganger renegades, 
+Nightbanes, human ex-slaves and other unfortunates hiding out 
+in the catacombs beneath the cities. 
+Adventure Ideas: Plots from spy and war movies or TV 
+shows like Combat, The Prisoner, and Space: Above & Beyond 
+can be adapted to this campaign setting. The biggest challenge 
+Joe Sifferman (Order #46323384)
+for the Game Master is to keep things fresh and prevent the cam­
+paign from degenerating into "shoot-out of the week" games. 
+Some possible ideas include: 
+Weapon Test: A new weapon system has been developed by 
+Spook Squad's scientists (some possibilities include an energy 
+cannon, new bullets, a sonic projector, etc.) and the players' 
+team is given the task of testing it in the field. Any number of 
+things can go wrong: the weapon may fail catastrophically, or it 
+works fine -but it attracts the attention of a large force of 
+Hounds and Hunters, or it falls into enemy hands and must be re­
+trieved. The characters have to survive and make it back to their 
+own lines, but without leading the Hounds to them, etc. 
+Another classic is to have the members of the player group, 
+along with some non-player characters, get captured by the en­
+emy and placed in a prison camp, or holding area. Here, they 
+must endure all manner of hardships (interrogation, torture, psy­
+chological tests/games, infiltration, etc.) before they can finally 
+escape, hopefully with new insight or valuable information 
+about the enemy, or they may rescue other prisoners or a famous 
+hero believed to have been killed. 
+Other adventures in the Nightlands can include exploration, 
+uncovering ancient weapons or artifacts (which the bad guys or 
+bandits also want), helping a group or village of local inhabi­
+tants, uncovering a Nightlord plot or spy operating on Earth, de­
+veloping friendships with Nightbanes and Guardians, combating 
+human traitors, etc. 
+Astral Exploration & Politics 
+The Astral Plane can easily become the focus of a campaign 
+or mini-campaign. Just exploring the myriad domains and king­
+doms that exist there can keep a group busy for dozens of game 
+sessions. Game masters who wish to give their campaign a 
+change of pace can use the Plane to drop the characters into a 
+fantasy or science fiction domain, or some other kind of bizarre, 
+alien or offbeat environment or situation. 
+The characters may get involved in the intrigue and machina­
+tions of the Astral Lords and their kingdoms. They might en­
+counter (or be) ambassadors from one of the Nightbane factions 
+or Spook Squad, trying to get help against the Nightlords. The 
+Ba'al's expansion into the Astral Plane is a danger to every 
+realm, but many Astral Lords and other rulers of these domains 
+distrust each other, and getting them to cooperate will not be 
+easy. Even worse, some "monarchs" may decide that they will 
+benefit from an alliance with the Nightlords, and may betray the 
+adventurers. Some of these lords are as despicable as the Ba'al 
+and have their own agenda. 
+Some of the rulers of the plane may require the characters to 
+undertake quests or missions for them. Others may try to assassi­
+nate the characters, or capture them and use them as a bargaining 
+chip with the Nightlords. An atmosphere of paranoia and tension 
+works best in adventures of this type. The characters' skills at 
+negotiating, planning and manipulation may be of great impor­
+tance; action and danger will always be a possibility. 
+Common O.C.C.s: Astral lords and mages will be very use­
+ful. Nightbanes, Guardians, psychics, astral travelers and others 
+can also be allies, bodyguards and friends. Some players might 
+even want to play some astral creature like the Tarantuloid or 
+Millek, or perhaps a Necrophim. 
+140 
+Enemies/Rivals: The Ba'al have several types of minions op­
+erating in the planes. The mysterious Necrophim may be ene­
+mies, or allies of convenience. Entities have their own alien 
+goals and agendas, and may befriend or betray the characters. 
+Dream Wars ™ 
+The Dark Day invasion did not limit itself to the waking 
+world. The Ba'al already had a presence in the Dreamstream, 
+and after they broke free from the Nightlands, they took steps to 
+attack humans in their sleep! This is being accomplished by us­
+ing their dream minions to twist or shatter the minds of thou­
+sands, making them more docile victims, and even assassinating 
+those who might be a threat. In this battlefield, the characters are 
+fighting for the sanity of humankind. These heroes can be Night­
+banes, Guardians, Dream Makers, psychics and magicians. Sev­
+eral groups, such as the Order of Morpheus (see the 
+Dreamstream Section), dedicate all their efforts to expel the 
+Ba'al and their minions from this realm. The characters may be 
+members of such a group, or occasionally lend them a hand. 
+Another possibility is to conduct a campaign before Dark 
+Day (or even completely unrelated to the Dark Day invasion), 
+focusing mainly on the Dreamstream and the characters who 
+venture there. The characters can belong to one of the organiza­
+tions mentioned in the Dreamstream section, or can be on their 
+own. Furthermore, all kinds of psycho-dramas, horror stories and 
+surreal adventures can be played out in this realm of half-reali­
+ties, nightmares and dreams. 
+Common O.C.C.s: All the dream P.C.C.s will be very influ­
+ential, but Nightbane, psychics and practitioners of magic are 
+also appropriate. Even a Spook Squad agent might find his way 
+into the Dreamstream (or be abducted into it). 
+Enemies/Rivals: Dream creatures and Nightlord minions are 
+the obvious choices, but independent personas, dream con­
+structs, and all the fears, anxieties, guilt, desires and dark 
+thoughts locked away in the subconscious can be unleashed with 
+infinite possibilities. An interesting twist might be to take the 
+characters' own dreams and tum them against him or the group. 
+Anybody's fears, hopes and fantasies may all come to life in the 
+Dreamstream to pester, endanger or enlighten them. 
+Role-playing Hooks: Venturing into the Dreamstream means 
+delving into the collective human consciousness, or entering the 
+Dream Pool (mind) of a specific person - explore the possibili­
+ties. Characters may discover a great deal about themselves and 
+each other just by experiencing their dreams come to life. And 
+don't forget, the Nightlords dream too. 
+More Conversion Notes 
+& Crossover Ideas 
+A number of fan letters and reader comments requested more 
+ways to mix and match Nightbane with other Palladium Megav­
+erse settings. Detailed below are some more suggestions and op­
+tional rules for integrating other Palladium RPG worlds with the 
+concepts in Nightbane, particularly campaign and adventure 
+ideas. 
+Joe Sifferman (Order #46323384)
+Heroes Unlimited ™ 
+Superheroes and horror/dark fantasy can be mixed to interest­
+ing effect, as witnessed by DC Comics' Vertigo line. Mutants, 
+experimental subjects and other super-characters can be valuable 
+allies in the war against the Nightlords. Some of the campaign 
+ideas described below work on finding ways to mix a world 
+where super-abilities are real with a place where Spook Squad 
+plots and the Ba'al invade the Earth through supernatural means. 
+Then there's the Dreamstream and Astral Plane, likely places 
+imaginary and where not so imaginary super-powered beings 
+can meet and collide in environments that are strange and alien 
+or as common as the back alleys of any big city. 
+Rule Adjustments 
+These are some optional rules for adapting Heroes Unlimited 
+to Nightbane. Game masters can do with them as they wish, of 
+course. 
+Supernatural P.S.: Stone and metal alterations, invulnerabil­
+ity, increased strength and any power, mutant or alien charac­
+teristic that gives strength bonuses all give the characters the 
+equivalent of supernatural strength. Physical training does not 
+grant supernatural strength, however. 
+Invulnerability: Invulnerable characters are NOT immune to 
+the attacks of supernatural creatures! Damage from supernatural 
+strength, magic and psionic energies of Nightbanes, Guardians 
+and minions of the Nightlords will inflict full (or half) damage 
+even to otherwise invulnerable characters. If these characters re­
+main invulnerable even to magic and the supernatural, they are 
+certainly vulnerable through their dreams! 
+What are the fears, gUilt and desires of a superhero? How will 
+even the mightiest of heroes face his own inner hostilities and 
+dark emotions in the Dreamstream? Likewise, invulnerable and 
+super-powerful beings may not be as powerful or meet their 
+match in the Dreamstream or in the Astral Plane where astral 
+villains can mold their world into their own dark image. 
+Magic: The magic system depicted in Heroes Unlimited does 
+not use the more common, P.P.E. based system that is now 
+standard throughout most Palladium lines (including the upcom­
+ing Palladium Fantasy RPG, Second Edition). Game masters 
+may want to adapt the spells from HU into the P.P.E. based sys­
+tem found in the Nightbane RPG. 
+Villains: Guilt Eaters, Furies, Living Nightmares, Soul Eat­
+ers, astral lords, astral assassins, and other supernatural beings 
+all make great super villains, just as Dream Makers, Dream 
+Dancers, Psychic Detectives, Nightbane and others might make 
+interesting superheroes and anti-heroes. 
+Campaign and Adventure Ideas 
+The Secret Invasion: Theirs was a world of heroes. Cos­
+tumed crusaders had walked the Earth since World War II, and 
+the sight of a caped hero flying over the skyscrapers of a city 
+was something most people were used to. Heroes and villains 
+slugged it out in heroic battles, and evil seemed easy to recog­
+nize. Then Dark Day came. 
+The Nightlords planned their strike with great care. During 
+the twenty-four hours of darkness, many heroes (and villains) 
+were taken by surprise and overwhelmed by Hounds, Hunters 
+and other horrors. Most survivors were forced into hiding, and 
+the fearful peoples of the Earth looked towards the darkening 
+141 
+skies for help - and saw nothing. Feeling betrayed, many com­
+mon people turned against their former idols. Reports of mon­
+strous "mutants" (the Nightbanes) further fueled the hysteria 
+against ultra-humans. The Preserver Party ran on a platform of 
+"preserving Earth for Humankind," targeting mutants, so-called 
+superhumans, and ultra-humans as the cause of Dark Day and 
+the ensuing chaos. Super-abilities are now considered to be in­
+herently dangerous or evil, and those who exhibit them are 
+marked for persecution or worse. 
+Most heroes have abandoned their costumes and now live in 
+hiding. Some blame the Nightbanes for their downfall, and at­
+tack them on sight, unwittingly doing the Nightlords' work for 
+them. Many others have discovered the terrible secret of the in­
+vasion, and now fight side by side with Nightbanes, Guardians 
+and Wampyrs. A few daring heroes still retain their costumes 
+and try to act as living symbols of freedom, but they are often 
+the first to fall, hunted by supernatural minions, super-villains 
+(many of whom now serve the Nightlords), and rejected by most 
+common people. Ironically, some villains and self-serving mas­
+terminds are now fighting side by side with heroes, because they 
+understand that the Nightlords are a common threat that must be 
+dealt with. Some of these criminals, however, are still looking 
+out for number one, and will try to take advantage of their new 
+"allies" at the earliest opportunity. Other villains take advantage 
+of the chaos and strike at heroes, freedom fighters and the Night­
+lords alike. 
+This would be a "gritty" super-heroic game, where most he­
+roes have abandoned their colorful costumes and nicknames, and 
+are involved in a long, inglorious, dirty war against an absolutely 
+evil enemy. Ultra-humans and Nightbanes are considered equals 
+in the eyes of the common man and the media: strange beings 
+with great power, hated and feared. Even the ultra-humans' 
+powers may not be enough to deal with such enemies. 
+In this setting, the Spook Squad and other characters and 
+creatures from this book would all fit in nicely. 
+Arena: A group of astral travelers come upon a bizarre Astral 
+Kingdom where beings with super-abilities are pitted against 
+each other for the entertainment of a race of bizarre beings. The 
+characters are captured and forced to fight in the Great Arena 
+against these ultra-human champions. When (if) the travelers es­
+cape, one or two renegade super-beings may follow them (new 
+player characters, perhaps?). 
+Ninjas and Superspies/Mystic China™ 
+Martial artists from Ninjas and Superspies have the skills and 
+mystic powers to stand alongside psychics, mages and other hu­
+man champions in the war against the Nightlords. Superspies, 
+with their gadgets and special equipment, can give Spook Squad 
+a more "cinematic" feel, more James Bond than Tom Clancy, 
+which may appeal to some players. The Mystic China supple­
+ment adds even more special abilities, strange supernatural crea­
+tures (like Immortals), and more magic stuff; all of which can be 
+incorporated into a Nightbane campaign and vice versa. 
+Campaign and Adventure Ideas 
+Dragons Against the Darkness: The Silver Dragons, a se­
+cret society of martial artists, has been founded in Asia to com­
+bat the Nightlords. The Silver Dragons include not only martial 
+artists but a number of Nightbanes, psychics, mystics and superJoe Sifferman (Order #46323384)
+natural creatures. More information on the Silver Dragons and 
+similar societies will be detailed in future Nightbane source­
+books, but game masters with Ninjas and Superspies and/or 
+Mystic China can adopt the concept of the Silver Dragons or a 
+similar group in their campaigns. 
+Creatures of the Night: Friends and associates of the charac­
+ters (members of their Nightbane Faction, perhaps) are being 
+murdered one by one. At first, it appears that the Nightlords are 
+responsible. Eventually, however, the characters realize they and 
+their friends are the target of a Ninja clan. Maybe the Ninja are 
+in the employ of the Ba'al, or they stalk the characters for their 
+own purposes. The shadow assassins will eventually pit their 
+dark Chi powers against the Nightbanes in a fight to the death. 
+The Evil Immortal: A group of Nightbanes crosses paths 
+with an Evil Immortal (see Mystic China), a powerful martial 
+artist and alchemist who, over the centuries, has amassed great 
+power. In a historical campaign where the characters "live" 
+through several centuries before the Dark Day invasion, this im­
+mortal could be their nemesis, always managing to cheat death 
+to torment the Nightbanes another day. Now, the immortal is the 
+overlord of a city's Chinatown; the Nightlord in charge of that 
+city is trying to destroy this obstacle. The characters must decide 
+whether or not to help their old enemy, or to destroy him even if 
+this means a victory for the Nightlords! Or the characters could 
+get caught in the middle of a war between Nightlord minions 
+and the martial-arts trained servants of the immortal master. 
+Rifts® 
+The Rifts setting, with its links to the entire Megaverse, is one 
+of the most likely sources of crossover games, characters, mon­
+sters, elements, other dimensions (like the Astral Plane and 
+Dreamstream) and adventures. Integrating characters and themes 
+from Nightbane into Rifts (and vice versa) can add even more 
+levels to the campaign. Outlined below are a few more such 
+ideas. 
+Rule Adjustments 
+These are some optional rules to adapt Nightbane to Rifts and 
+vice versa. Game Masters should feel free to modify them to suit 
+their own tastes and the needs of their campaign. 
+Nightbane M.D.C. Conversions: On Rifts Earth, Nightbanes 
+are S.D.C. beings in their Facade form, and M.D.C. beings in 
+Morphus form. In the latter shape, take their S.D.C. and hit 
+points and transform them into M.D.C. on a one to one basis. 
+Nightbanes regenerate 10 M.D.C. points per melee round; their 
+powers inflict mega-damage and their strength is supernatural as 
+per the Rifts Conversion Book One, page 22. The Coalition 
+States will regard them as dangerous, baby-eating monsters to be 
+hunted down and destroyed. Places like Lazlo will accept them 
+as fellow inhumans, and Tolkeen and the Federation of Magic 
+will recruit them in their armies to oppose the CS. Playing a 
+Nightbane in Rifts would be cool. 
+Guardians and Wampyrs are also supernatural beings with 
+M.D.C. points equivalent to their S.D.C. and Hit Points com­
+bined. 
+Nightbanes and Other Races: The Facade of a Nightbane 
+can belong to any non-supernatural humanoid (and human­
+sized) race, although most (90%) Nightbane are human. This in­
+cludes such races as Elves, Dwarves, True Atlaneans, and 
+similar human-like races. No supernatural race (includes races 
+142 
+Joe Sifferman (Order #46323384)
+with supernatural strength, large amounts of S.D.C. (100+) or 
+any mega-damage beings or creatures of magic) are never Night­
+bane. 
+Nightbanes and Special Enhancements: Nightbanes cannot 
+accept bionics in either Morphus or Facade form. Characters 
+whose Facades have lost limbs can have them replaced with cy­
+bernetic prosthetics or bio-systems; these prosthetics disappear 
+when the Morphus form is assumed. All other cybernetic im­
+plants and bionics are expelled out of the body of the Facade in a 
+matter of 2D6 hours (the Morphus will expel them in 2D4 melee 
+rounds!). This is true even for Nightbanes with Biomechanical 
+characteristics (remember, these biomechanicals are not "real" 
+but simply a shape adopted by the character). Furthermore, 
+magical enhancements like bio-wizardry, tattoo magic, Nazca 
+runes, and transformation rituals or circles, have NO effect on 
+either the Facade or Morphus of the character. Even latent 
+Nightbanes cannot get magic tattoos (or, more precisely, can 
+have tattoos imprinted on them but they will not work). This will 
+reveal the fact that they are not truly human. 
+Rifts Races on Nightbane Earth: Normal S.D.C. races re­
+quire no changes; supernatural (M.D.C.) species use their 
+M.D.C. as S.D.C. points; Hit Points may be two or three times 
+greater than normal, depending on how powerful the Game Mas­
+ter wants the creatures to be. So, for example, a hatchling dragon 
+would have I D4x100 S.D.C. and P.E. x2 hit points, plus 2D6 hit 
+points per level. The largest and most powerful M.D.C. beings 
+may require further reductions (adult dragons might only have 
+one-half of their normal M.D.C. converted to S.D.C.), or might 
+not be allowed at all (they may be inappropriate, over-powering, 
+or funky). Any unusual natural powers will inflict normal S.D.C. 
+damage. 
+Technology and Armor on Nightbane Earth: Bringing 
+M.D.C. weapons and armor into the world of Nightbane would 
+be completely unbalancing. The quickest fix for this is suggested 
+on page 203 of the Nightbane RPG: any non-organic object en­
+tering that world is disintegrated. This would make it impossible 
+for 'borgs, power armor, robots, and other characters to enter 
+this world. Some players and game masters may find such a so­
+lution unfair, so here are two other "fixes" to deal with this situ­
+ation: 
+SD.C. Switch: This solution was suggested in the Conversion 
+Book One; simply convert all M.D.C. damage and values to 
+S.D.C. on a one to one basis. While this will not unbalance the 
+campaign, players will be disappointed when they discover that 
+their weapons and armor may be less effective than their 20th 
+Century equivalents! 
+SD.C. Conversion: Alternatively, the G.M. may convert 
+M.D.C. to S.D.C. on a 1 to 5, or I to 10 bases (i.e., 1 point of 
+M.D.C. is equivalent to 5 or lO points of S.D.C.). By doing this, 
+ultra-tech body armor and weapons will be much more effective 
+than Earth equivalents - although most weapon systems will 
+not be able to get repairs and maintenance under such primitive 
+conditions. Sooner or later, characters will have to abandon their 
+advanced weapons when they run out of E-clips or when power 
+armor is severely damaged. Furthermore, the Nightlords and 
+groups like Spook Squad are likely to hunt these characters 
+down and try to capture them and their equipment for study. Be 
+careful not to create characters that are too powerful. 
+143 
+The Nightlords™ & their Minions 
+in the Rifts® Setting 
+The Nightlords themselves: In the P.P.E. rich environment 
+of Rifts Earth, the Ba'al's powers would be increased to god-like 
+levels. Their powers would inflict equivalents in mega-damage. 
+Their M.D.C. while on such places as Rifts Earth, Wormwood 
+and Phase World would be 3D4x l ,000, making them the match 
+for alien intelligences, godlings and lesser gods. These powers, 
+coupled with their numbers (possibly hundreds of them), would 
+make the Nightlords a serious danger. However, it is probably 
+best not to have the Nightlords invade the Earth with plans of 
+conquest, but to have one or two expeditionary forces or rogue 
+Nightlords (and their loyal minions) establish a small stronghold 
+or kingdom on Rifts Earth. Likewise, the Ba'al may visit Rifts 
+Earth periodically as dimensional raiders, or as mercenaries or 
+allies of another supernatural force. 
+Of all the evil powers on Rifts Earth, the Ba'al would be most 
+closely linked to the Horsemen of the Apocalypse (see Rifts 
+World Book Four: Africa). Like the Horsemen, the Nightlords' 
+goal appears to be the destruction of all life. The Nightlords 
+might also pay homage to the Lord of the Deep (see Rifts Un­
+derseas), who may belong to the unknown "pantheon" wor­
+shipped by these malevolent beings. On the other hand, the 
+Splugorth, Myrrlin and his master, the vampire intelligences of 
+Central and South America and Inix of Cibola would be seen as 
+enemies to be eliminated (and vice versa). Alliances of conven­
+ience with any of the above entities, except vampires, would be 
+considered at first, but neither side could trust the other to keep 
+its promises. 
+Rifts® Campaign and Adventure Ideas 
+The Hunted: Nightbanes traveling the Astral Plane are pur­
+sued by a team of Splugorth Conservators (see Rifts World Book 
+Two: Atlantis) who have used magical means to travel into the 
+Plane (double their body M.D.C. to determine astral S.D.C.). 
+Which will prevail, Nightbane talents or alien bio-wizardry? The 
+hunt can be conducted in the plane itself or an Astral domain or 
+kingdom. If the Conservators win, they might choose to enslave 
+rather than kill the Nightbanes. Next stop: the Atlantis Arena! 
+Rifted Adrift: A group of adventurers from Rifts Earth are 
+swept away by a dimensional maelstrom and find themselves on 
+Nightbane Earth! All their high-tech equipment is lost during the 
+dimensional disturbance, and they must rely on their skills and 
+smarts to survive. They will face persecution from the NSB and 
+Nightlords, and may find allies among the Nightbanes or other 
+factions. Ambitious and resourceful characters may try to ad­
+vance the technology of 2 1  st Century Earth, helping enhance ex­
+isting weapon systems. A techno-wizard might be extremely 
+useful to Spook Squad and similar organizations. 
+Random Rifts: Rifts characters can get accidentally, ran­
+domly, or deliberately Rifted to the Nightlands, Nightbane 
+Earth, the Astral Plane, or the Dreamstream. 
+Joe Sifferman (Order #46323384)
+Experience Point Tables 
+Fonner Special Forces/ 
+Team Epsilon Trooper, 
+ADA & PAB Field Agent, 
+Pandora Project Researcher, 
+Ex-Government Agent 
+1 0,000- 1 ,900 
+2 1 ,900-3,800 
+3 3,801 -7,300 
+4 7,30 1 - 14,300 
+5 14,30 1 -2 1 ,000 
+6 2 1 ,001 -3 1 ,000 
+7 3 1 ,001 -4 1 ,000 
+8 41 ,00 1 -53,000 
+9 53,00 1 -73,000 
+10 73,00 1 - 103,000 
+1 1  1 03,00 1 - 1 38,000 
+1 2  1 38,00 1 - 1 88,000 
+1 3  1 88,001 -238,000 
+1 4  238,001 -288,000 
+1 5  288,001 -328,000 
+Dream Maker, 
+Dream Dancer, 
+Astral Lord 
+1 0,000-2,500 
+2 2,501 -5,000 
+3 5,00 1 - 10,000 
+4 1 0,001 -20,000 
+5 20,001 -30,000 
+6 30,001 -50,000 
+7 50,001 -80,000 
+8 80,000 1 - 120,000 
+9 1 20,00 1 - 1 70,000 
+1 0  170,001 -225,000 
+1 1  225,001 -275,000 
+1 2  275 ,001 -350,000 
+1 3  350,001 -420,000 
+14 420,001 -520,000 
+1 5  520,001 -700,000 
+Arcane Detective, 
+P AB Psychic Agent 
+1 0,000-2,300 
+2 2,301 -4,600 
+3 4,601 -9,200 
+4 9,20 1 - 1 8,400 
+5 1 8,401 -26,500 
+6 26,501 -36,600 
+7 36,60 1 -5 1 ,700 
+8 5 1 ,701 -7 1 ,800 
+9 7 1 ,801 -96,900 
+1 0  96,90 1 - 1 37,000 
+1 1  1 37,00 1 - 1 88,100 
+1 2  1 88,101 -229,200 
+1 3  229,201 -289,200 
+1 4  289,201 -355,400 
+1 5  355,401 -420,800 
+• 
+Torturian, 
+Turantuloid Warrior 
+1 0,000-2,050 
+2 2,05 1 -4, 1 00 
+3 4, 101 -8,250 
+4 8,25 1 - 1 6,500 
+5 1 6,501 -24,600 
+6 24,601 -34,700 
+7 34,701 -49,800 
+8 49,801 -69,900 
+9 69,001 -95,000 
+10 95,000- 1 30, 1 00 
+1 1  1 30, 1 0 1 - 1 80,200 
+1 2  1 80,201 -230,300 
+1 3  230,301 -280,400 
+14 280,401 -340,500 
+1 5  340,501 -400,600 
+Dream Ghouls, 
+Astral Entities 
+1 0,000-2,240 
+2 2,241 -4,480 
+3 4,48 1 -8,960 
+4 8,96 1 - 17,920 
+5 17,921 -25,920 
+6 25,921 -35,920 
+7 35,92 1 -50,920 
+8 50,92 1 -70,920 
+9 70,921 -95,920 
+10 95,92 1 - 1 35,920 
+1 1  1 35,92 1 - 1 85,920 
+1 2  1 85,921 -225,920 
+1 3  225,921 -275,920 
+14 275,921 -335,920 
+1 5  335,921 -395,920 
+'Kinetic, 
+Genius & Natural, 
+Psi-Mechanic 
+1 0,000-2, 1 20 
+2 2, 1 2 1 -4,240 
+3 4,241 -8,480 
+4 8,48 1 - 16,960 
+5 1 6,961 -24,960 
+6 24,96 1 -34,960 
+7 34,961 -49,960 
+8 49,96 1 -69,960 
+9 69,96 1 -94,960 
+10 94,961 - 1 29,960 
+1 1  1 29,96 1 - 1 79,960 
+1 2  1 79,96 1 -229,960 
+1 3  229,961 -279,960 
+14 279,961 -329,960 
+1 5  329,96 1 -389,960 
+• 
+144 
+Necrophim 
+1 0,000-2,700 
+2 2,701 -5,400 
+3 5,40 1 - 10,800 
+4 1 0,80 1 -2 1 ,600 
+5 2 1 ,601 -3 1 ,600 
+6 3 1 ,601 -42,800 
+7 42,801 -62,000 
+8 62,001 -90,000 
+9 90,00 1 - 120,000 
+1 0  1 20,00 1 - 170,000 
+1 1  1 70,001 -220,000 
+1 2  220,00 1 -280,000 
+1 3  280,001 -370,000 
+1 4  370,001 -480,000 
+1 5  480,001 -650,000 
+Millek, 
+Mind Master, 
+Astral Mage 
+1 0,000-2,600 
+2 2,60 1 -5,000 
+3 5,00 1 - 10,000 
+4 10,001 -20,000 
+5 20,00 1 -30,000 
+6 30,001 -50,000 
+7 50,001 -80,000 
+8 80,00 1 - 1 30,000 
+9 1 30,00 1 - 1 80,000 
+1 0  1 80,001 -230,000 
+1 1  230,001 -290,000 
+1 2  290,001 -370,000 
+1 3  370,001 -480,000 
+1 4  480,001 -575,000 
+1 5  575,001 -750,000 
+Mountebank, 
+Turantuloid Mystic 
+1 0,000-2,400 
+2 2,601 -4,600 
+3 4,601 -9,200 
+4 9,20 1 - 1 8,400 
+5 18,401 -28,300 
+6 28,301 -48,000 
+7 48,00 1 -78,000 
+8 78,00 1 - 1 1 0,000 
+9 1 10,00 1 - 1 50,000 
+1 0  1 50,001 -200,000 
+1 1  200,001 -250,000 
+1 2  250,00 1 -3 1 0,000 
+1 3  3 10,001 -380,000 
+1 4  380,001 -470,000 
+1 5  470,001 -600,000 
+Morpheomoth, 
+Living Nightmare 
+1 0,000-3,000 
+2 3,001 -6,000 
+3 6,00 1 - 1 2,000 
+4 1 2,001 -24,000 
+5 24,001 -50,000 
+6 50,001 -80,000 
+7 80,00 1 - 1 20,000 
+8 1 20,00 1 - 170,00 
+9 1 70,001 -220,000 
+10 220,001 -290,000 
+1 1  290,001 -375,000 
+1 2  375,001 -450,000 
+1 3  450,001 -525,000 
+14 525,001 -625,000 
+1 5  625,001 -875,000 
+Joe Sifferman (Order #46323384)
+● Imagine Earth transformed into an alien landscape.
+● Humans exist – barely. And we are not alone.
+● Aliens and monsters emerge from the RiŌs – holes torn in the fabric of 
+space and Ɵme, connected to countless worlds and realiƟes.
+● Ancient gods, demons and magic have returned.
+● Magic and technology clash.
+● Hund
+● Hundreds of character classes, many inhuman.
+● RiŌs® UlƟmate EdiƟon is the core RPG rule book.
+● Expansive world seƫng with 90+ sourcebooks to draw upon.
+● RiŌs®, your portal to endless adventure.
+● Limited only by your imaginaƟon.
+Other RPG Worlds from Palladium Books®:
+● RiŌs® – the ulƟmate role-playing experience.
+● RiŌs® Chaos Earth® – Play the apocalypse as it happens.
+● Splicers® – Weird science. Bio-tech baƩles insane robot legions.
+● Robotech® RPG – All eras of the TV show brought to life.
+● Dead Reign® RPG – Can you survive the Zombie Apocalypse?
+● Palladium Fantasy RPG® – Unique world, monsters as player characters, 
+magic and more.
+● 
+Heroes 
+Unlimited™ 
+RPG 
+– 
+Play 
+any 
+hero; 
+mutants, 
+aliens, 
+cyborgs, 
+superhumans, mages, immortals and more.
+● Nightbane® RPG – Conspiracy, magic, horror and monsters.
+● Beyond the Supernatural™ RPG – Modern horror and suspense.
+● Ninjas and Superspies™, and more.
+www.palladiumbooks.com
+© 2014 Palladium Books. RiŌs®, Megaverse®, Nightbane® and other Ɵtles, slogans and likenesses are trademarks of Palladium Books, Inc.    
+Palladium Books - 39074 Webb Court, Westland, MI 48185 USA – 734-271-2903 order line.
+®
+Joe Sifferman (Order #46323384)
+© 2014 Palladium Books. Robotech®, Robotech® The Shadow Chronicles®, Macross® Saga and other Ɵtles and likenesses are trademarks of Harmony Gold USA, Inc. Palladium Books - 39074 Webb Court, Westland, MI 48185 USA – 734-271-2903 order line.
+www.palladiumbooks.com
+®
+Rol
+e-Pl
+ayi
+ng Game and Sourcebooks
+● Four generations of heroes and mecha ● Giant transformable robots ● Alien 
+invaders ● Battle for control of the Earth ● Combat takes to the stars ● All presented in a core rule book and dynamic set of epic sourcebooks ● Easy to learn 
+● Fun to play ● Quick character generation ● Fast combat ● Captures the action 
+and adventure of the anime TV series ● Isn’t it time you joined the adventure?
+Robotech® “Core Rules” – Shadow Chronicles® RPG Hardcover
+All the rules and informaƟon a player needs to start a Robotech® 
+role-playing campaign with Admiral Rick Hunter and the United Earth 
+ExpediƟonary Force trekking across the galaxy.
+● Human mecha: Alphas, Betas, Cyclones & much more.
+● Five character classes. 25 diﬀerent Military SpecialƟes.
+● I
+● Invid mecha, Haydonites, and alien enemies.
+● Quick roll character tables. Make a character in 15 minutes.
+● A complete, stand-alone RPG.
+● 224 pages. Cat. No. 550HC. 8½ x 11 size, hardcover.
+Robotech®: The Macross® Saga Sourcebook – Cat. No. 551
+A 
+treasure 
+chest 
+packed 
+with 
+the 
+iconic 
+mecha, 
+vehicles, 
+weapons 
+and 
+characters that made Robotech® famous. Valkyries, Destroids, ground 
+vehicles, aircraŌ, spacecraŌ, weapons, Zentraedi soldiers, Zentraedi 
+mecha, alien invaders, heroes, villains, and more.
+● All the iconic Macross mecha, vehicles, weapons & characters.
+Robotech®: The Masters Saga™ Sourcebook – Cat. No. 552
+Tons of never before seen stats and descripƟons for the many 
+weapons, armor, mecha and robots of the Army of the Southern Cross.
+● The Army of the Southern Cross™ – all 15 branches and their mecha!
+Robotech®: New GeneraƟon™ Sourcebook – Cat. No. 554
+The baƩle for the liberaƟon of Earth starts here.
+● Ki
+● Kit-bashed mecha combining parts from diﬀerent mecha.
+● Invid Hives, world overview, key characters and adventure ideas.
+Robotech®: Genesis Pits™ Sourcebook – Cat. No. 555
+The Invid Genesis Pits, their purpose, funcƟon.
+● Inorganics and other war machines of the Invid Regent.
+● Genesis Pit mutaƟons and monsters.
+Robotech®: ExpediƟonary Marines Sourcebook – Cat. No. 553
+ Join the UEEF (United Earth ExpediƟonary Force) led by Admiral Rick 
+Hunter as they travel across the galaxy liberaƟng planets from the 
+bondage of the Invid Regent, the Robotech Masters and other tyrants.
+● New mecha, weapons, and character classes of the UEEF Marines.
+● New alien species and allies. Planet hopping and more.
+Joe Sifferman (Order #46323384)
+© Palladium Books Inc. Robotech® is a Registered Trademark of Harmony Gold USA, Inc.
+Palladium Books, 39074 Webb Court, Westland, MI 48185-7606. Order line: 734-721-2903.
+www.palladiumbooks.com
+Zentraedi Glaug Command™ – Cat. No. 55403
+This 
+diverse 
+pack 
+provides 
+your 
+Zentraedi 
+forces 
+with 
+greater 
+tacƟcal 
+capabiliƟes; three game pieces total. $36.95 retail.
+● 1 Glaug Oﬃcer’s BaƩlepod – the fast and deadly mecha of Zentraedi 
+ﬁeld leaders.
+● 1 Quel-Regult Scout BaƩlepod – the stealthy eyes and ears of your 
+Zentraedi baƩle force; electronic warfare capabiliƟes.
+● 1 Quel-Gulnau Recovery Pod – enhances the Glaug’
+s ability to bring 
+in BaƩlepod reinforcements. Note: This ﬁgure has NEVER before 
+been oﬀered by any company.
+Zentraedi ArƟllery BaƩlepods™ – Cat. No. 55402
+Give your Zentraedi legion greater ﬁrepower with these arƟllery and 
+support BaƩlepods; four game pieces total. $36.95 retail.
+● 4 Zentraedi Support BaƩlepods, each of which can be made into:
+Gluuhaug-Regult – Light ArƟllery BaƩlepod
+Serauhaug-Regult – Heavy ArƟllery BaƩlepod
+Telnesta-Regult – Experimental ParƟcle Beam BaƩlepod
+Four game pieces total.
+Zentraedi Regult BaƩlepods™ – Cat. No. 55401
+Expand your Zentraedi forces with their main infantry baƩle mecha; 
+six game pieces total. $36.95 retail.
+● 6 
+Regult 
+TacƟcal 
+BaƩlepods 
+– 
+the 
+lightning 
+quick 
+Regults, 
+armed 
+with 
+a 
+pair of parƟcle cannons and auto-cannons, aƩack in wave aŌer wave.
+UEDF Spartan/Phalanx Destroids™ – Cat. No. 55203
+Add some long-range power and up-close punch to your army with 
+these valuable Destroids; four game pieces total. $32.95 retail.
+● 2 Spartan Destroids – civil defense, riot control and deadly in hand to 
+hand combat.
+● 2 Phalanx Destroids – a walking, long-range missile arƟllery unit.
+UEDF 
+Tomahawk/Defender 
+Destroids™ 
+– 
+Cat. 
+No. 
+55202
+Expand your Destroid squad with these formidable walking tanks; 
+four game pieces total. $32.95 retail.
+● 2 Tomahawk Destroids – the main baƩle tank of Destroids, brimming 
+with powerful parƟcle beam cannons for arms, and wielding a 
+baƩery of missiles and an array of other weapons.
+● 2 Defender Destroids – a long-range, anƟ-aircraŌ juggernaut capable 
+of shooƟng down incoming Zentraedi BaƩlepods and Gnerl Fighters.
+UEDF Valkyrie Wing™
+– Cat. No. 55201
+Build your ﬂeet of Earth defenders with the Valkyrie Veritech 
+Fighter; six game pieces total. $36.95 retail.
+● 2 Valkyries in Fighter mode.
+● 2 Valkyries in Guardian mode.
+● 
+● 2 Valkyries in BaƩloid mode.
+● MulƟple heads for making the VF-1A, VF-1J, VF-1R & VF-1S.
+Note: Each product contains plasƟc game pieces requiring assembly and painƟng. Glue not included. This is not a toy. Small parts, not suitable for children under the 
+age of 13. Adult supervision advised. Images shown here are not to scale.
+A fast-paced, strategy baƩle game that captures the speed and acƟon of Robotech®. 
+Play Earth defenders or Zentraedi invaders.
+● Scalable from small squad skirmishes to mass baƩles.
+● Turn-based system of play and uses D6. Two or more players.
+● 34 highly detailed game pieces. 6mm scale.
+● 112 page color rule book with paint guide and index.
+● 53 laminated, color game cards.
+● 24 cu
+● 24 custom dice, two decal sheets and more.
+● Assembly and painƟng required. Glue not included.
+● $99.95 retail – Cat. No. 55100 – shipping now!
+● Available in North and South America, the EU, Australia & New Zealand.
+Main Boxed Game – Cat. No. 55100 – Available Now!
+Joe Sifferman (Order #46323384)
+www.palladium books.com
+© Copyright 2017 Palladium Books Inc. 
+All rights reserved. Rifts®, Palladium Books®, Megaverse®, Nightbane®, Dead Reign®, Heroes Unlimited and other published book titles, names, slogans and likenesses are trademarks of Palladium Books Inc.
+Beyond the Supernatural
+™ RPG        Nightbane® RPG
+Other horror titles from Palladium Books
+®
+Fear the Reaper
+™ Sourcebook
+ Heroes who, like knights of old, travel the highways fighting zombies 
+and helping survivors.
+● Comprehensive background on the Road Reapers.
+● Their code, missions, weapons, strategies and tactics.
+● The Terror Zombie and more.
+● $12.95 
+● $12.95 retail – 48 pages – Cat. No. 234. 
+Available now.
+Graveyard Earth™ Sourcebook
+ The Zombie Apocalypse across the globe; provides a world overview 
+and many adventure ideas.
+● Many tables for settings, encounters and adventure hooks.
+● Random Safe Havens by region, and Survivor Leaders.
+● How to get home from abroad, zombie threat levels & more.
+● $12.95 
+● $12.95 retail – 64 pages – Cat. No. 235. 
+Available now.
+Hell Followed™ Sourcebook
+ This big, 160 page sourcebook begins to redefine the zombie genre. It 
+broadens the field of possibilities and expands upon the modern zombie 
+mythos. It is full of twists and surprises you will not expect.
+● 11 new types of terrifying zombies.
+● 7 player characters, plus Masked Lunatics – heroes or madmen?
+● 21 disasters to complicate survival, and urban survival.
+● 21 disasters to complicate survival, and urban survival.
+● Government enclaves, conspiracy theories and more.
+● $20.95 retail – 160 pages – Cat. No. 236. 
+Available now.
+The Dead Reign® RPG series
+Dead Reign® RPG – “Core Rules.” It is the aftermath of the zombie 
+apocalypse. The dead reign and the living fight against impossible odds. 
+Can you survive? Find out with this fast-paced horror game. Easy to 
+learn. Fast character creation and combat.
+● Zombie combat and survival rules, vehicles and equipment.
+● 
+● 6 iconic Character Classes plus Ordinary People (40+ occupations).
+● 7 types of zombies, plus the Half-Living.
+● 101 Random Scenarios, Encounters, Settings and other tables.
+● $22.95 retail – 224 pages – Cat. No. 230. 
+Available now.
+Civilization Gone
+™ Sourcebook
+Civilization has crumbled to nothing. There is no army. No government. No help coming. What now?
+● Madmen, Psychopaths, villains, heroes and protectors.
+● House, home and survivor camp tables, resources & encounters.
+● $12.92 retail – 64 pages – Cat. No. 231. 
+Available now.
+Dark Places
+™ Sourcebook
+Travel the rails and urban underground to move about undetected by 
+zombies.
+● Worm Meat, Bug Boy, Sewer Crawler & Impersonator Zombies.
+● Traveling the rails, sewers and other dark places.
+● Random encounter tables, boxcar content tables, and much more.
+● $12.92 retail – 64 pages – Cat. No. 232. 
+Available now.
+Endless Dead™ Sourcebook
+The zombies grow in number and strangeness. Can humankind 
+survive?
+● Zombie amalgamations, tables and encounters.
+● New playe
+● New player characters & timetables for your campaign.
+● Weaponizing vehicles, vehicle combat rules, and military bases.
+● Creating survivor caravans, hideouts, Safe Havens & more.
+● $16.95 retail – 96 pages – Cat. No. 233. 
+Available now.
+Can YOU survive the Zombie 
+Apocalypse?
+Joe Sifferman (Order #46323384)
+Palladium Books® Check List & Order Form
+Dept. P-16, 39074 Webb Court, Westland, MI 48185
+Name:                                                                           Address:                                                                                                                   
+City:                                                                                   State:                        Zip/Postal Code:                      Country:                        
+Credit Card Number:                                                                                      Expiration Date:                            Visa       MasterCard
+Telephone Number:                                                            Signature:                                                                          AMEX       Other
+The Rifter® Series
+       175 The Rifter® #75 – $13.95
+       176 The Rifter® #76 – $13.95
+       177 The Rifter® #77 – $13.95
+       178 The Rifter® #78 – $13.95
+       179 The Rifter® #79 – $13.95
+Splicers®      Note: Sourcebooks coming soon.
+       200 Splicers® RPG – $23.95
+Dead Reign®
+       230 Dead Reign® RPG – $22.95
+       231 SB 1: Civilization Gone™ – $12.95
+       232 SB 2: Dark Places™ – $12.95
+       233 SB 3: Endless Dead™ – $16.95
+       234 SB 4: Fear the Reaper™ – $12.95
+       235 SB 5: Graveyard Earth™ – $12.95
+       236 SB 6: Hell Followed™ – $20.95
+       237 SB 7: In the Face of Death™ (coming)
+Rifts® Novels
+       301 Sonic Boom™ – $9.95
+       302 Deception’s Web™ – $9.95
+       303 Treacherous Awakenings™ – $9.95
+       304 Tales of the Chi-Town ‘Burbs™ – $12.95
+       305 Rifts® Path of the Storm™ – $12.95
+Weapons Books
+       401 Weapons and Armor™ – $8.95
+       402 Weapons and Castles™ – $8.95
+       403 Weapons and Assassins™ – $9.95
+       404 Weapons & Castles of the Orient™ – $9.95
+       409 Exotic Weapons™ – $9.95
+       410 European Castles™ – $9.95
+Palladium Fantasy RPG®
+       450 The Palladium Fantasy RPG® – $26.95
+       4500HC Palladium Fantasy RPG® 30th 
+Anniversary Hardcover – $50.00
+       451 Dragons & Gods™ – $24.95
+       453 Old Ones™ 2nd Ed. – $24.95
+       454 Monsters & Animals™ 2nd Ed. – $24.95
+       455 Adventures on the High Seas™ – $24.95
+       458 Island at the Edge of the World™ – $20.95
+       459 Yin-Sloth Jungles™ – $20.95
+       462 Western Empire™ – $24.95
+       463 Baalgor Wastelands™ – $24.95
+       464 Mount Nimro™ – $20.95
+       465 Eastern Territory™ – $24.95
+       466 Library of Bletherad™ – $20.95
+       467 Northern Hinterlands™ – $24.95
+       468 Land/Damned 1: Chaos Lands™ – $24.95
+       469 LoD 2: Eternal Torment™ – $24.95
+       470 LoD 3: The Citadel – $24.95 (coming)
+       471 Wolfen Empire™ – $20.95
+       472 Mysteries of Magic™ One: Heart of 
+Magic – $16.95
+       474 Bizantium/Northern Islands™ – $20.95
+       475 Garden of the Gods™ – $16.95 (coming)
+Heroes Unlimited™ / After the Bomb®
+       500-2 Heroes Unlimited™, 2nd Ed. – $26.95
+       5000HC Heroes Unlimited™ 30th Anniversary Hardcover – $50.00
+       501 Villains Unlimited™ Revised – $24.95
+       503 After the Bomb® RPG – $24.95
+       505 Road Hogs™ (After the Bomb® II) – 
+$9.95
+       507 Mutants Down Under™ (AB III) – $9.95
+       511 Mutants of the Yucatan™ (AB IV) – $9.95
+       513 Mutants in Avalon™ (AB V) – $16.95
+       514 Mutants in Orbit™ (AB VI) – $16.95
+       515 Aliens Unlimited™ – $24.95
+       516 Heroes Unlimited™ G.M.’s Guide – 
+$24.95
+       517 Century Station™ – $24.95
+       518 Gramercy Island™ – $24.95
+       519 Aliens Unlimited Galaxy Guide™ – 
+$24.95
+       520 Mutant Underground™ – $16.95
+       521 Powers Unlimited® One – $16.95
+       522 Powers Unlimited® Two – $16.95
+       523 Powers Unlimited® Three – $16.95
+       525 Revised Ninjas & Superspies™ – $20.95
+       526 Mystic China™ – $24.95
+       527 Armageddon Unlimited™ – $20.95
+Robotech® RPG
+       550 Robotech® The Shadow Chronicles® 
+RPG (manga size) – $16.95
+       550HC Robotech® The Shadow Chronicles® Deluxe Hardcover RPG – $30.95
+       5500HC Robotech® The Shadow Chronicles® Gold Ed. Hardcover RPG – $70.00
+       551 Robotech® Macross® Saga Sourcebook – $16.95
+       552 Robotech® The Masters Saga™ 
+Sourcebook (NEW in 8½ x 11) – $20.95
+       553 Robotech®: Expeditionary Force 
+Marines Sourcebook – $20.95
+       554 Robotech® The New Generation™ 
+Sourcebook – $16.95
+       555 Robotech® Genesis Pits Sourcebook – 
+$16.95
+Robotech® RPG Tactics™  (New!)
+       55100 Robotech® RPG Tactics™ – $99.95
+       55105 Robotech® RPG Tactics™ Rulebook – $20.00
+       55101 UEDF Dice Pack – $12.00
+       55102 Zentraedi Dice Pack – $12.00
+       55201 UEDF Valkyrie Wing – $36.95
+       55202 UEDF Destroid Pack – $32.95
+       55203 UEDF Spartan Pack – $32.95
+       55401 Zentraedi Regult Battlepods – $36.95
+       55402 Zentraedi Artillery Battlepods – $36.95
+       55403 Zentraedi Glaug Command – $36.95
+Rifts® Chaos Earth®
+       660 Rifts® Chaos Earth® RPG – $20.95
+       661 Rifts® CE Creatures of Chaos™ – $12.95
+       662 Rifts® CE The Rise of Magic™ – $12.95
+       665 Rifts® Chaos Earth® First Responders™ 
+– $16.95 (coming)
+       666 Rifts® Chaos Earth® Resurrection™ 
+– $20.95
+Beyond the Supernatural™
+       700 Beyond the Supernatural™, 2nd Ed. 
+– $24.95
+       702 Tome Grotesque™ – $20.95 (coming)
+       703 Beyond Arcanum™ – $24.95 (coming)
+Nightbane®
+       730 Nightbane® RPG – $24.95
+       731 Nightbane®: Between the Shadows™ 
+– $20.95
+       732 Nightbane®: Nightlands™ – $20.95
+       733 Nightbane®: Through the Glass 
+Darkly™ – $20.95
+       735 Nightbane® Survival Guide™ – $20.95
+       736 Nightbane® Dark Designs™ – $20.95
+Rifts®
+       800HC Rifts® RPG Ultimate Edition – $39.95
+       801 Rifts® Sourcebook One Revised – $20.95
+       802-E Rifts® World Book 1: Vampire Kingdoms™, Revised – $24.95
+       803 Rifts® Conversion Book One™ – $24.95
+       804 Rifts® WB 2: Atlantis™ – $20.95
+       805 Rifts® Sourcebook 2: Mechanoids™ 
+– $16.95
+       807 Rifts® WB 3: England™ – $20.95
+       808 Rifts® WB 4: Africa™ – $20.95
+       809 Rifts® Dimension Book 1: Wormwood™ – $20.95
+       810 Rifts® WB 5: Triax™ – $24.95
+       811 Rifts® Pantheons of the Megaverse® 
+– $24.95
+       812 Rifts® Sourcebook 3: Mindwerks™ 
+– $16.95
+       813 Rifts® Mercenaries™ – $20.95
+       814 Rifts® WB 6: South America – $20.95
+       815 Rifts® WB 7: Underseas™ – $24.95
+       816 Rifts® DB 2: Phase World® – $24.95
+       817 Rifts® DB 3: Phase World® Sourcebook – $16.95
+       818 Rifts® WB 8: Rifts® Japan™ – $24.95
+       819 Rifts® WB 9: South America Two™ 
+– $24.95
+       820 Rifts® WB 10: Juicer Uprising™ – 
+$20.95
+       821 Rifts® WB 11: Coalition War Campaign™ – $24.95
+       822 Rifts® WB 12: Psyscape™ – $20.95
+       825 Rifts® WB 13: Lone Star™ – $20.95Rifts® WB 14: New West™ – $24.95
+       827 Rifts® WB 15: Spirit West™ – $24.95
+       828 Rifts® Sourcebook 4: Coalition 
+Navy™ – $16.95
+       829 Rifts® WB 16: Federation of Magic™ 
+– $20.95
+       830 Rifts® DB 4: Skraypers™ – $20.95
+       831 Rifts® Index Volume Two™ – $16.95
+       832 Rifts® WB 17: Warlords of Russia™ 
+– $24.95
+       833 Rifts® WB 18: Mystic Russia™ – $20.95
+       834 Rifts® WB 19: Australia – $24.95
+       835 Rifts® WB 20: Canada™ – $24.95
+       836 Rifts® WB 21: Splynn Dimensional 
+Market™ – $24.95
+       837 Rifts® WB 22: Free Quebec™ – $24.95
+       838 Rifts® WB 23: Xiticix Invasion™ – 
+$20.95
+       839 Rifts® Coalition Wars®: Sedition™ 
+– $20.95
+       840 Rifts® Coalition Wars®: Coalition 
+Overkill™ – $16.95
+       841 Rifts® Coalition Wars®: Sorcerers’ 
+Revenge™ – $16.95
+       842 Rifts® Coalition Wars®: CyberKnights™ – $16.95
+       843 Rifts® Coalition Wars®: Shadows of 
+Evil™ – $16.95
+       844 Rifts® Coalition Wars®: Final 
+Siege™ – $24.95
+       845 Rifts® Game Master Guide™ – $26.95
+       846 Rifts® Aftermath™ – $24.95
+       847 Rifts® DB5: Anvil Galaxy™ – $20.95
+       848 Rifts® Book of Magic™ – $26.95
+       849 Rifts® Adventure Guide™ – $24.95
+       850 Rifts® Bionics Sourcebook™ – $16.95
+       851 Rifts® DB 6: Three Galaxies™ – $20.95
+       852 Rifts® Dark Conversions™ – $24.95
+       853 Rifts® Chi-Town ‘Burbs™ – $9.95
+       854 Rifts® The Tolkeen Crisis™ – $12.95
+       855 Rifts® The Black Vault™ – $9.95
+       856 Rifts® The Vanguard™ – $9.95
+       857 Rifts® WB 24: China One™ – $20.95
+       858 Rifts® WB 25: China Two™ – $20.95
+       859 Rifts® DB 7: Megaverse Builder™ – 
+$16.95
+       860 Rifts® DB 8: Naruni Wave 2™ – $16.95
+       862 Rifts® WB 26: Dinosaur Swamp™ – 
+$20.95
+       863 Rifts® MercTown™ – $20.95
+       865 Rifts® Merc Ops™ – $20.95
+       866 Rifts® WB 27: Adventures in Dinosaur Swamp™ – $20.95
+       867 Rifts® Mercenary Adventure Sourcebook – $12.95
+       868 Rifts® WB 28: Arzno™ – $20.95
+       869 Rifts® WB 29: Madhaven™ – $16.95
+       870 Rifts® John Zeleznik Coloring Book 
+– $5.95
+       871 Rifts® Machinations of Doom™ – 
+$18.95
+       872 Rifts® DB 10: Hades™ – $24.95
+       873 Rifts® DB 11: Dyval™ – $24.95
+       874 Rifts® WB 30: D-Bees of North 
+America™ – $24.95
+       875 Rifts® DB12: Dimensional Outbreak 
+– $24.95
+       MI8006 Cyborgs Pack #1 – $18.00
+       MI8007 Simvan & Ostrosaurus Pack – 
+$18.00
+       MI8008 Coalition Skelebots Pack #1 – $18.00
+       MI8009 Coalition SAMAS Pack #1 – $22.00
+       MI8010 Coalition Sky Cycle Pack – $22.00
+       MI8011 Coalition Dog Pack #2 – $18.00
+       MI8015 Damaged Skelebots Pack #1 – 
+$12.00
+       MI8016 Cyber-Adventurers Pack – $18.00
+       MI8017 Rogues & Scout Pack #1 – $18.00
+       MI8018 Brodkil & Witchling Pack – $18.00
+       MI8019 Damaged Skelebots Pack #2 – 
+$18.00
+       MI8020 Psi-Stalkers & Scouts Pack #1 – 
+$18.00
+       MI8021 Shadow Beast – $12.00
+       MI8022 Mystic Knight – $6.00
+       MI8023 Lord Magus – $6.00
+       MI8024 High Magus – $6.00
+       MI8025 Coalition Psi-Stalker – $6.00
+       MI8026 Coalition Dog Boy in DPM-D1 
+Armor – $6.00
+       MI8027 Coalition Dog Boy #2 – $6.00
+       MI8028 Coalition Dog Boy #3 – $6.00
+       MI8029 Coalition Dog Boy #4 – $6.00
+       MI8030 Coalition Dog Boy #5 – $6.00
+       MI8031 Glitter Boy – $20.00
+       MI8032 Glitter Boy Pilot – $6.00
+       MI8033 Kydian Overlord – $20.00
+       MI8034 Dragonsaurus – $10.00
+       MI8035 Slaver and Slave (Atlantis) Set – 
+$10.00
+       MI8036 Crazy – $6.00
+       MI8037 Juicer #1 – $6.00
+       MI8038 Juicer #2 – $6.00
+       MI8039 Cyborg #1 – $12.00
+       MI8040 Cyborg #2 – $12.00
+       MI8041 Cyborg #3 – $6.00
+       MI8042 Coalition Officer – $6.00
+       MI8043 Coalition Grunt #1 – $6.00
+       MI8044 Coalition Grunt #2 – $6.00
+       MI8045 Coalition Grunt #3 – $6.00
+When placing an order by mail, please 
+add money for shipping and handling. Add 
+$5.00 for orders totaling $1-$50, $10.00 for orders totaling $51-$95, and for orders totaling 
+$96-$200 please add $15.00 US. Double the 
+amount for Canada, and quadruple it for overseas orders. For more shipping options, order 
+online at www.palladiumbooks.com.
+Allow 2-4 weeks for delivery.
+Make checks and money orders payable to: 
+Palladium Books
+Check release dates for new products. If 
+the book you order has not been released yet, 
+your order will be held as a backorder until the 
+product is available. Please note that prices are 
+subject to change without notice.
+Orders can also be placed by phone, at 
+(734) 721-2903 (order line only). Please have 
+your credit card information when you call.
+www.palladiumbooks.com
+       876 Rifts® Megaverse® in Flames™ – 
+$24.95
+       876HC Rifts® Megaverse® in Flames™ 
+Gold Hardcover Edition – $50.00
+       877 Rifts® Heroes of the Megaverse® – 
+$16.95
+       878 Rifts® Sourcebook: Shemarrian Nation™ – $16.95
+       880 Phase World®: Fleets of the Three 
+Galaxies™ – $16.95
+       881 Rifts® WB 31: Triax™ Two – $24.95
+       883 Rifts® DB 14: Thundercloud Galaxy™ 
+– $20.95
+       884 Rifts® Vampires Sourcebook™ – $20.95
+       885 Rifts® WB 32: Lemuria™ – $24.95
+       886 Rifts® Black Market™ – $24.95
+       886HC Rifts® Black Market™ Hardcover 
+Gold Edition – $60.00
+       887 Rifts® WB 33: Northern Gun™ One 
+– $24.95
+       888 Rifts® WB 34: Northern Gun™ Two 
+– $26.95
+       889 Rifts® Sourcebook: Coalition States, 
+Heroes of Humanity™ – $20.95
+       890 Rifts® Dimension Book 15: Secrets of 
+the Atlanteans™ – $24.95
+       890HC Rifts® DB 15: Secrets of the 
+Atlanteans™ Gold Edition – $50.00
+       891 Rifts® World Book: Sovietski™ – 
+$24.95 (coming)
+       892 Rifts® Sourcebook: The Disavowed™ 
+– $16.95 (coming)
+       893 Rifts® CS: Heroes of Humanity™ 
+Arsenal Sourcebook – $16.95 (coming)
+       894 Rifts® Haunted Tech™ – $16.95 (coming)
+       895 Rifts® Living Nowhere™ – $16.95 
+(coming)
+       2510 Rifts® & The Megaverse® Art Book 
+– $22.95
+       2510-HC Rifts® & The Megaverse® Art 
+Book, Hardcover – $50.00
+       2510-CML Rifts® & The Megaverse® Art 
+Book, Collector’s Masterwork – $125.00
+Miscellaneous Products
+       600 Deluxe Revised RECON® RPG – 
+$22.95
+       2537 Gamer Coffee Mug – $10.00
+       2545 Dead Reign™ Coffee Mug – $10.00
+       2554 Palladium Bookmarks, Set One – $5.00
+       2555 Palladium Bookmarks, Set Two – $5.00
+       2561 Property of Chi-Town Library Pencil 
+– $0.50 each
+       2562 Future Visions™ – The Artistry of 
+Charles Walton II – $13.95
+       2566 Glitter Boy Mouse Pad – $9.95
+       2567 Old Ones Mouse Pad – $9.95
+       2568 Zombie Graveyard Mouse Pad – $9.95
+       2575 Rifts Poker Cards 1 (full color) – $11.99
+       2576 Rifts Poker Cards 2 (line art) – $11.99
+Note: T-tshirts and other products can be 
+found online: www.palladiumbooks.com
+Rifts® Miniatures
+       MI8002 Xiticix Pack – $18.00
+       MI8004 Coalition Dog Pack – $18.00
+       MI8005 Men of Magic Pack #1 – $18.00
+Joe Sifferman (Order #46323384)
+www.palladiumbooks.com
+®
+Palladium Books
+® Presents:
+Between the Shadows
+™
+Between the Shadows explores three mysterious worlds. The first is the world of espionage, spies, duplicity and 
+secrets as practiced by an organization known as Spook Squad — ex-CIA, FBI, DEA, and other operatives, soldiers 
+in a war against the supernatural.
+The
+The 
+Astral Plane, an endless expanse of swirling, white mists and clouds, but far more mysterious and alive than 
+most Earth mystics realize. 
+An entire dimension of the fantastic.
+Even humankind’s dreams are not safe from the Nightlords and their minions. The Dreamstream is the creation 
+of humankind’s collective subconscious, yet it is more than the stuff of lost dreams and desires — it is the domain of 
+Living Nightmares, Guilt Eaters, and dark personas waiting to strike while we sleep. Plus ...
+● Over a dozen new character classes including the 
+Astral Mage, Dream Dancer, and the 
+Arcane Detective.
+● Spook Squad, its agents, organization, weapons and goals.
+● 
+Astral and Dream magic, combat and predators.
+● New Nightbane Morphus Tables and Talents.
+● The secrets of the 
+Astral Plane and Dreamstream.
+● World information, adventures, adventure ideas, and more.
+● The first of many supplements for the Nightbane® RPG series.
+$20.95
+Cat. No. 731
+ISBN-10: 0-9162
+ISBN-10: 0-916211-90-8
+ISBN-13: 978-0-916211-90-5
+Available
+at stores
+everywhere
+Also for Nightbane®
+Nightbane® Role-Playing Game – 240 pages, Cat. No. 730
+Nightlands™ – 144 pages, Cat. No. 732
+Through the Glass Darkly™ – 152 pages, Cat. No. 733
+Dead Reign® RPG
+Civilization
+Civilization has crumbled. 
+The walking dead have risen and 
+feed upon the living. Can you survive when the dead reign?
+● 6 
+Apocalyptic character classes. 7 different types of zombies.
+● Zombie combat tips, survival advice and resources.
+● Death Cults, world overview, and many adventure ideas.
+● 
+A complete role-playing game, 224 pages, Cat. No. 230.
+Also for Dead Reign®
+Civilization Gone™
+Civilization Gone™ – 64 pages, Cat. No. 231
+Dark Places™ – 64 pages, Cat. No. 232
+Endless Dead™ – 96 pages, Cat. No. 233
+Fear the Reaper™ – 48 pages, Cat. No. 234
+Graveyard Earth™ – 64 pages, Cat. No. 235
+Hell Followed™ – 160 pages, Cat. No. 236
+Also from Palladium Books
+®
+Nightbane® Survival Guide
+The world changed after Dark Day, and so did you. 
+You are the Nightbane and only you can stop 
+the horror that is the Nightlords.
+● Nightbane survival tips, and the Nightbane’s role in the Hidden War.
+● New Nightbane Morphus Tables, Talents, Insanity Tables and skills.
+● New Nightbane Creation Guideline
+● New Nightbane Creation Guideline Tables, Education Modifiers and Character Detail Tables.
+● Rules for Nightbane Contacts (informers, spies and buddies), and for creating your own faction.
+● 
+A complete adventure, adventure ideas, world information and more. 160 pages, Cat. No. 735.
+Joe Sifferman (Order #46323384)

@@ -1,0 +1,303 @@
+{
+  "generatedAt": "2026-05-30T19:46:54.640Z",
+  "workflowStep": "analyze-schema (phase 1 of prepare; loop with apply-schema until ready)",
+  "schemaTopLevelKeys": [
+    "id",
+    "name",
+    "tableCategory",
+    "gameSystems",
+    "sources",
+    "description",
+    "statModifiers",
+    "progressionModifiers",
+    "naturalAr",
+    "saveModifiers",
+    "mobility",
+    "survivalTraits",
+    "sensory",
+    "skillModifiers",
+    "damageAffinities",
+    "magicInteractionModifiers",
+    "weaponClassBonuses",
+    "heightModifier",
+    "weightModifier",
+    "naturalWeapons",
+    "limbDurability",
+    "subTraitChoicesBudget",
+    "handCapacityConstraints",
+    "companionBlueprint",
+    "isPolymorphicTemplate",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "disabledNaturalAttackTags",
+    "activatedAbilities",
+    "specialCombatInterceptions",
+    "customOneOffs",
+    "entryRole",
+    "variantPercentiles",
+    "independentSubRolls",
+    "crossTableRoll",
+    "morphusRules",
+    "appearanceConstraints",
+    "combatContextModifiers",
+    "recoveryBehaviors",
+    "conditionalPenalties",
+    "atWillAbilities",
+    "playerChoices",
+    "tableWorkflow",
+    "livingWeaponRules",
+    "skillContextModifiers",
+    "disguiseLimits"
+  ],
+  "traitCount": 13,
+  "perTrait": [
+    {
+      "percent": "01-05%",
+      "name": "Bloody Ooze",
+      "pageNumber": 134,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "06-10%",
+      "name": "Corpse-Like",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "11-15%",
+      "name": "Stitches",
+      "pageNumber": 134,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "16-23%",
+      "name": "Nails",
+      "pageNumber": 134,
+      "patterns": [],
+      "suggestedTopLevelKeys": []
+    },
+    {
+      "percent": "24-31%",
+      "name": "Razor Blades",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "bite_damage",
+          "schemaPaths": [
+            "naturalWeapons",
+            "statModifiers.bonusHthDamage"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "naturalWeapons"
+      ]
+    },
+    {
+      "percent": "32-39%",
+      "name": "Broken Glass",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "40-47%",
+      "name": "Barbed Wire/Razor Wire",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "48-55%",
+      "name": "Eternal Wounds",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "56-63%",
+      "name": "Missing Skin",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "64-71%",
+      "name": "Leatherboy/girl",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "72-79%",
+      "name": "Boils or Sores",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        },
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    },
+    {
+      "percent": "80-85%",
+      "name": "Zippers",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "sdc_dice",
+          "schemaPaths": [
+            "statModifiers.sdc"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers"
+      ]
+    },
+    {
+      "percent": "86-90%",
+      "name": "Bones",
+      "pageNumber": 134,
+      "patterns": [
+        {
+          "patternId": "horror_factor",
+          "schemaPaths": [
+            "statModifiers.hf",
+            "customOneOffs"
+          ],
+          "severity": "info",
+          "note": null
+        }
+      ],
+      "suggestedTopLevelKeys": [
+        "statModifiers",
+        "customOneOffs"
+      ]
+    }
+  ],
+  "targetAudit": null,
+  "edgeCases": [],
+  "schemaActions": [
+    {
+      "priority": "ready",
+      "action": "Schema covers detected book mechanics. Proceed: npm run morphus:ingest -- build <table>"
+    },
+    {
+      "priority": "info",
+      "action": "Optional schema fields not detected in this table: progressionModifiers, naturalAr, saveModifiers, mobility, survivalTraits, sensory, skillModifiers, damageAffinities, magicInteractionModifiers, weaponClassBonuses, heightModifier, weightModifier, limbDurability, subTraitChoicesBudget, handCapacityConstraints, companionBlueprint, isPolymorphicTemplate, gimmickInventory, gimmickToySwitches, disabledNaturalAttackTags, activatedAbilities, specialCombatInterceptions, entryRole, variantPercentiles, independentSubRolls, crossTableRoll, morphusRules, appearanceConstraints, combatContextModifiers, recoveryBehaviors, conditionalPenalties, atWillAbilities, playerChoices, tableWorkflow, livingWeaponRules, skillContextModifiers, disguiseLimits"
+    }
+  ],
+  "blocking": [],
+  "readyToTranscribe": true,
+  "tableId": "stigmata"
+}

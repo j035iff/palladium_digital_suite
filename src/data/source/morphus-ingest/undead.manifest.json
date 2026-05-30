@@ -1,0 +1,21 @@
+{
+  "id": "undead",
+  "displayName": "Undead",
+  "tableCategory": "Undead",
+  "tableHeading": "Undead Table",
+  "targetJson": "src/data/content/morphus/tables/undead.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Undead Table\nThis",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

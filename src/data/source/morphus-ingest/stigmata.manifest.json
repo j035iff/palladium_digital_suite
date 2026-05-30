@@ -1,0 +1,54 @@
+{
+  "id": "stigmata",
+  "displayName": "Stigmata",
+  "tableCategory": "Stigmata I",
+  "tableHeading": "Stigmata Table I",
+  "targetJson": "src/data/content/morphus/tables/stigmata.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "descriptionAuthorityNote": "Stigmata Table I from Dark Designs (matches core RPG). Stigmata Table II from Dark Designs. Stigmata Table III from Survival Guide.",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Stigmata Table I\nMockingly",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane® RPG (core rulebook)",
+      "tableHeading": "Stigmata Table \nMockingly",
+      "authoritative": false,
+      "required": true
+    },
+    {
+      "key": "dark_designs_ii",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Stigmata Table II\nWhen determining",
+      "authoritative": false,
+      "required": true
+    },
+    {
+      "key": "between_the_shadows",
+      "pdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+      "reference": "Nightbane® Between the Shadows (WB1)",
+      "tableHeading": "Stigmata Table II ------\nWhen determining",
+      "authoritative": false,
+      "required": true
+    },
+    {
+      "key": "stigmata_iii",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Stigmata Table III\nMockingly",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

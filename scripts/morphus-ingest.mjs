@@ -459,6 +459,33 @@ function inferTraitTableCategory(trait, manifest) {
     }
     return 'Plant Life'
   }
+  if (manifest.id === 'mineral') {
+    if (bookKeys.has('mineral_ii')) {
+      return 'Mineral II'
+    }
+    return 'Mineral'
+  }
+  if (manifest.id === 'stigmata') {
+    if (bookKeys.has('stigmata_iii')) {
+      return 'Stigmata III'
+    }
+    if (bookKeys.has('dark_designs_ii') || bookKeys.has('between_the_shadows')) {
+      return 'Stigmata II'
+    }
+    return 'Stigmata I'
+  }
+  if (manifest.id === 'unnatural_limbs') {
+    if (bookKeys.has('appendages')) {
+      return 'Unnatural Appendages & Limbs'
+    }
+    return 'Unnatural Limbs'
+  }
+  if (manifest.id === 'unusual_facial_features') {
+    if (bookKeys.has('facial_features_ii')) {
+      return 'Unusual Facial Features II'
+    }
+    return 'Unusual Facial Features'
+  }
   return manifest.tableCategory ?? manifest.displayName
 }
 

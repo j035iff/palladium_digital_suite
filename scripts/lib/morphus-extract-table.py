@@ -52,6 +52,8 @@ NON_PLAYABLE_NAME_RES = [
     re.compile(r"^disproportionate\s", re.I),
     re.compile(r"^roll (?:on|again|twice|percentile)\b", re.I),
     re.compile(r"^combination of two\b", re.I),
+    re.compile(r"^two\b", re.I),
+    re.compile(r"^three\b", re.I),
 ]
 
 CROSS_TABLE_ROUTER_BODY_RES = [
@@ -81,10 +83,25 @@ def clean_trait_name(name: str) -> str:
     return cleaned
 
 
+def expand_compound_trait_name(name: str, body_start: str) -> str:
+    """Lines like '51-60% Iron: Hematite: Appears…' split the header at the first colon."""
+    if ":" in name:
+        return name
+    m = re.match(
+        r"^([A-Za-z][A-Za-z0-9'-]{1,28}):\s+(?!Bonuses|Penalties|The|Note|When|If)\b",
+        body_start,
+    )
+    if m:
+        return f"{name}: {m.group(1).strip()}"
+    return name
+
+
 def is_valid_trait_name(name: str) -> bool:
     if not name or len(name) < 2:
         return False
     if name.lstrip().startswith(":"):
+        return False
+    if name.lstrip()[0].islower():
         return False
     if "%" in name or re.search(r"\d{2}-\d{2}\s*%", name):
         return False
@@ -98,6 +115,8 @@ def norm_trait_alias(name: str) -> str:
         "chain saw arms": "chainsaw arms",
         "metal head camera eyes": "metal head & camera eyes",
         "searchlight(s)": "searchlight/headlights",
+        "antenna": "antennae",
+        "no face!": "no face",
     }
     return aliases.get(key, key)
 
@@ -135,12 +154,98 @@ def sanitize_trait_body(text: str) -> str:
     return re.sub(r"\s{2,}", " ", text).strip()
 
 
+def join_multiline_trait_headers(text: str) -> str:
+    """Join PDF line breaks inside trait titles (e.g. '91-00%\\nAdditional\\nArms\\n...\\nPlaces:')."""
+    lines = text.split("\n")
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        pct_only = re.match(r"^(\d{2}-\d{2}\s*%)\s*$", line.strip())
+        pct_partial = re.match(r"^(\d{2}-\d{2}\s*%)\s+(.+)$", line.strip())
+        if pct_only:
+            pct = pct_only.group(1)
+            name_parts: list[str] = []
+            i += 1
+            while i < len(lines):
+                cur = lines[i].strip()
+                if not cur:
+                    i += 1
+                    continue
+                if ":" in cur:
+                    before, _, after = cur.partition(":")
+                    if before.strip():
+                        name_parts.append(before.strip())
+                    out.append(f"{pct} {' '.join(name_parts)}: {after.strip()}")
+                    i += 1
+                    break
+                if len(cur.split()) <= 4 and "." not in cur:
+                    name_parts.append(cur)
+                    i += 1
+                    continue
+                out.append(f"{pct} {' '.join(name_parts)}".rstrip())
+                break
+            else:
+                if name_parts:
+                    out.append(f"{pct} {' '.join(name_parts)}")
+            continue
+        if pct_partial and ":" not in pct_partial.group(2):
+            pct = pct_partial.group(1)
+            name_parts = [pct_partial.group(2).strip()]
+            i += 1
+            while i < len(lines):
+                cur = lines[i].strip()
+                if not cur:
+                    i += 1
+                    continue
+                if ":" in cur:
+                    before, _, after = cur.partition(":")
+                    if before.strip():
+                        name_parts.append(before.strip())
+                    out.append(f"{pct} {' '.join(name_parts)}: {after.strip()}")
+                    i += 1
+                    break
+                if len(cur.split()) <= 4 and "." not in cur:
+                    name_parts.append(cur)
+                    i += 1
+                    continue
+                out.append(f"{pct} {' '.join(name_parts)}")
+                break
+            else:
+                if name_parts:
+                    out.append(f"{pct} {' '.join(name_parts)}")
+            continue
+        out.append(line)
+        i += 1
+    return "\n".join(out)
+
+
+def fix_page_glued_percentiles(text: str) -> str:
+    """Repair footer folio digits swallowed into percentile (e.g. page 97 + 71-80% -> 97-80%)."""
+
+    def repl(m: re.Match[str]) -> str:
+        g1, g2, rest = m.groups()
+        hi_page, lo = int(g1), int(g2)
+        if hi_page >= 90 and hi_page > lo:
+            band_start = (hi_page % 10) * 10 + 1
+            if band_start < lo and lo - band_start <= 19:
+                return f"{band_start}-{g2}%{rest}"
+        return m.group(0)
+
+    return re.sub(r"(?<=\n)(\d{2,3})-(\d{2})%(\s+)", repl, text)
+
+
 def sanitize_table_text(table_text: str) -> str:
     """Clean raw PDF table extract before writing extracted/*.txt."""
     text = _GEAR_HEAD_MID_TABLE_RE.sub(", and ", table_text)
     text = re.sub(r"-?\s*Joe Sifferman \(Order #\d+\)\s*\n?\s*\d+\s*", "", text, flags=re.I)
     text = re.sub(r"([a-z]{2,})-\s+([a-z])", r"\1\2", text, flags=re.I)
+    text = re.sub(r"(\d{2})-(\d{2})\s+%", r"\1-\2%", text)
+    text = fix_page_glued_percentiles(text)
+    # Percentile rows glued to prior sentence (e.g. "...135 kg).51-65% Living Statue:").
+    text = re.sub(r"(?<=[.)])\s*(\d{2}-\d{2}\s*%)", r"\n\1", text)
     text = join_broken_trait_headers(text)
+    text = join_multiline_trait_headers(text)
     return text
 
 
@@ -237,6 +342,9 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
         other_m = re.search(r"\n\d{2}-\d{2}% Other:", rest)
         if other_m:
             rest = rest[: other_m.start()]
+        combo_m = re.search(r"\n\d{2}-\d{2}%\s*:?\s*Combination of Two:", rest)
+        if combo_m:
+            rest = rest[: combo_m.start()]
     if _is_gear_head_extract(heading):
         boundary_patterns = [r"\nHobbyist Table\b"]
     else:
@@ -248,6 +356,7 @@ def slice_table_body(full_text: str, start: int, heading: str, *, trim_at_other:
             r"|Mythical Creature"
             r"|Video Games \(powers\)"
             r")\b",
+            r"\nUnnatural Appendages\b",
             r"\nGear-Head Table\b",
             r"\njust such a bond in a new, physical way",
         ]
@@ -311,11 +420,25 @@ def page_at(page_by_char: list[int], index: int) -> int:
     return page_by_char[index]
 
 
+def trait_name_from_match(table_text: str, m: re.Match[str]) -> str:
+    name = clean_trait_name(m.group(3))
+    body_start = table_text[m.end() : m.end() + 240]
+    return expand_compound_trait_name(name, body_start)
+
+
+def is_subroll_trait_header(raw_name: str) -> bool:
+    """Skip in-trait percentile sub-rolls (e.g. Metal Head '01-25% robotic face and head')."""
+    stripped = raw_name.strip()
+    return not stripped or stripped[0].islower()
+
+
 def trait_bodies(table_text: str, table_start: int) -> dict[str, str]:
     matches = list(TRAIT_RE.finditer(table_text))
     bodies: dict[str, str] = {}
     for i, m in enumerate(matches):
-        name = clean_trait_name(m.group(3))
+        if is_subroll_trait_header(m.group(3)):
+            continue
+        name = trait_name_from_match(table_text, m)
         if not is_valid_trait_name(name):
             continue
         end = matches[i + 1].start() if i + 1 < len(matches) else len(table_text)
@@ -401,7 +524,9 @@ def extract_book(
     traits: list[dict] = []
     matches = list(TRAIT_RE.finditer(table_text))
     for i, m in enumerate(matches):
-        name = clean_trait_name(m.group(3))
+        if is_subroll_trait_header(m.group(3)):
+            continue
+        name = trait_name_from_match(table_text, m)
         if not is_valid_trait_name(name):
             continue
         end = matches[i + 1].start() if i + 1 < len(matches) else len(table_text)

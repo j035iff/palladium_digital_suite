@@ -1,0 +1,38 @@
+{
+  "id": "unusual_facial_features",
+  "displayName": "Unusual Facial Features",
+  "tableCategory": "Unusual Facial Features",
+  "tableHeading": "Unusual Facial Features Table",
+  "targetJson": "src/data/content/morphus/tables/unusual_facial_features.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "descriptionAuthorityNote": "Facial Features Table from Dark Designs (matches core Unusual Facial Features Table). Unusual Facial Features Table II from Survival Guide only.",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Facial Features Table\nMany Nightbane appear completely normal",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane® RPG (core rulebook)",
+      "tableHeading": "Unusual Facial Features Table \nMany Nightbane appear",
+      "authoritative": false,
+      "required": true
+    },
+    {
+      "key": "facial_features_ii",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Unusual Facial\nFeatures Table II\nMore faces",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

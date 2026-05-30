@@ -42,6 +42,12 @@ const MECHANIC_PATTERNS = [
     severity: 'info',
   },
   {
+    id: 'stat_increased_by',
+    re: /(?:is|are)\s+(?:raised|increased)\s+by\s+\d+|Increase\s+P\.(?:B|S|E|A|M)\./i,
+    schemaPaths: ['statModifiers'],
+    severity: 'info',
+  },
+  {
     id: 'stat_flat_attribute',
     re: /[+-]\d+\s+to\s+the\s+(?:P\.E\.|I\.Q\.|P\.P\.|P\.S\.|M\.E\.|M\.A\.|P\.B\.)\s+attribut/i,
     schemaPaths: ['statModifiers'],

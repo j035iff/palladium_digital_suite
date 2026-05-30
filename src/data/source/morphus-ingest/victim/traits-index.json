@@ -1,0 +1,193 @@
+{
+  "tableId": "victim",
+  "tableHeading": "Victim Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane\u00ae Survival Guide (WB5)",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 11,
+  "traits": [
+    {
+      "name": "Beaten",
+      "percent": "28-36%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "28-36%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Broken Body",
+      "percent": "19-27%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "19-27%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Child",
+      "percent": "64-73%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "64-73%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Dead Man Walking",
+      "percent": "74-82%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "74-82%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Escaped Captivity",
+      "percent": "46-54%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "46-54%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Face of Comedy and Tragedy",
+      "percent": "92-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 101,
+          "percent": "92-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Faceless Victim",
+      "percent": "83-91%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "83-91%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Filthy",
+      "percent": "10-18%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "10-18%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Frail",
+      "percent": "37-45%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "37-45%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Hollow Eyes",
+      "percent": "55-63%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 100,
+          "percent": "55-63%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Horribly Burned",
+      "percent": "01-09%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 99,
+          "percent": "01-09%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}

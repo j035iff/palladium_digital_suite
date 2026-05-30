@@ -3,6 +3,425 @@
   "kind": "morphus_trait_table",
   "displayName": "Victim",
   "parentTable": null,
-  "description": "Victim Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Victim Morphus table (Survival Guide only). Nightbane who felt abused, tortured, neglected, helpless, or unwanted — Morphus forms appear frail and wounded whether or not the character truly is. Roll 01–00% on this table only (no cross-table routers).",
+  "entries": [
+    {
+      "id": "victim_beaten",
+      "name": "Beaten",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "The Morphus is that of someone covered in scars and bruises, the fingers are gnarled from having been broken many times, and limbs are crooked and lumpy from where broken bones have knitted back together improperly. Any clothing is likely to be torn or tattered. Bonuses: +3D6+6 Hit Points, +2 to P.E. and +1 to dodge. Highly resistant to pain and interrogation (interrogators suffer a -35% skill penalty against this character), suffers half the normal penalties for physical pain, any spell or power that causes pain has absolutely no effect, and the ‘Bane heals at double the normal rate. Penalties: Reduces Spd by 1D4x10%, -2 from P.B., -1 from P.E., and -5% to Prowl, Disguise and Undercover Ops.",
+      "statModifiers": {
+        "pe": {
+          "flat": 2
+        },
+        "dodge": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -5
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_broken_body",
+      "name": "Broken Body",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "The Morphus is of someone so badly beaten that his hands are gnarled, limbs bent and twisted, and the spine so damaged and deformed that the Nightbane stands hunched over, has a short, thick neck, and walks with a severe and noticeable limp. Bonuses: +4D4x10 to S.D.C., +1D4 to P.S., +1D4 to I.Q., M.E. and M.A., +1 on Perception Rolls, +5% on all R.C.C. Skills, and +2 to Horror Factor; the body may be broken, but the mind is as sharp as ever. Penalties: Reduce speed by 30%, -1 on initiative, leaping height and distance is half, -20% to any and all Physical skills, and Disguise and Undercover Ops are impossible.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "iq": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "4D4x10"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_child",
+      "name": "Child",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "The Nightbane appears to be a youngster 1D6+9 years old. Height and weight are reduced appropriately. Except for any injuries from other Morphus features, he appears healthy. However, voice is weak and the character is timid and shy until attacked or provoked. On the good side, people usually trust the character, but on the down side they treat him like a child, even if they know he is an adult. Bonuses: +1 on initiative, +3 to M.A., +1 to P.B., +4 to Spd, +3D6 to P.P.E. base. Penalties: Reduce Spd, P.S. and P.P by 10%, and needs children’s clothes.",
+      "statModifiers": {
+        "ma": {
+          "flat": 3
+        },
+        "pb": {
+          "flat": 1
+        },
+        "spd": {
+          "flat": 4
+        },
+        "ppe": {
+          "dice": "3D6"
+        }
+      }
+    },
+    {
+      "id": "victim_dead_man_walking",
+      "name": "Dead Man Walking",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "The Morphus is someone who appears to be an animated corpse of a murder victim. He is splattered or covered in blood, obvious wounds (bullet holes, cuts, crushed skull, etc.), and when applicable, the murder weapon is apparent (a hammer or hatchet stuck in the skull, noose around the neck, a knife in the belly or neck, etc.). Bonuses: +5D6+5 S.D.C., +1 to Perception Rolls, resistant to the magic of the Nightlords (half damage, duration and effect), +1 to Horror Factor, and +10% to all skills involving surveillance, tailing and investigation. Penalties: Obsessed with solving and stopping murders, injury cannot be easily concealed and the murder weapon, if present, cannot be removed, -40% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "5D6+5"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tailing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_escaped_captivity",
+      "name": "Escaped Captivity",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "This Morphus is of someone with long dirty hair, a few noticeable scars, and a dirt smudged face. Manacles are clamped around the wrists and ankles, and a 1D4 foot (0.3 to 1.2 m) length of heavy iron chains hangs from the manacles. The manacles cannot be removed, and the Nightbane doesn’t even try. Instead, he uses the chain lengths around his wrists as weapons (a chain whip attack does 2D6 damage plus Supernatural P.S. punch damage). Bonuses: +6D6 S.D.C., +2 to P.S., +1 to strike, parry and entangle with the chains, +5% to Climbing, and is impervious to the magic of Night Princes and Nightlords. Penalties: -30% to Prowl and Swimming, -15% to all skills involving appearance, including Disguise and Seduction, and the character has a phobia (terror) of being chained up again, or locked in a confined space or jail cell.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "6D6"
+        }
+      },
+      "saveModifiers": {
+        "immunities": [
+          "nightlordMagic"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -15
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_face_of_comedy_and_tragedy",
+      "name": "Face of Comedy and Tragedy",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 101
+        }
+      ],
+      "description": "This Morphus has two faces made of the porcelain masks used to represent film and entertainment. One is the face, one is the back of his head, but their position (front or back) can reverse depending on the mood of the Nightbane or the situation he faces. The character’s back is covered in blood and there will be a gaping wound or a knife sticking in it. This Morphus represents the victims of treachery, lies, deception and betrayal. Bonuses: +1D4x10 S.D.C., +2 to M.A. and M.E., +1 to Perception Rolls, +3 to Perception Rolls involving lies, deception, and traps, impervious to Seduction, impervious to magic and psionic charms, automatically gets the skill I.D. Undercover Agent at 90%, and +1 to Horror Factor. Penalties: Distrusts strangers, the Guardians, and authority figures, hates the Nightlords, and Disguise and Undercover Ops are impossible. New Talents",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        }
+      },
+      "saveModifiers": {
+        "immunities": [
+          "magic",
+          "psionics"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_faceless_victim",
+      "name": "Faceless Victim",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "A Morphus without a face – no eyes, mouth or any facial features (but can still see and talk), just a blank face. There are also ligature marks around the neck, wrists and ankles. This Morphus represents the multitude of people who simply vanish and victims of crimes that are never solved, as well as so-called victimless crimes. Tends to be an avenger and protector of the innocent. Bonuses: +1D4x10 Hit Points, +1D6 to P.S., +1 attack per melee round (+2 against the 100 Joe Sifferman (Order #46323384) Nightlords and Night Princes), fatigues at half the usual rate, and and illusions. Penalties: Reduce I.Q. and S.D.C. by 10%.",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D6"
+        }
+      }
+    },
+    {
+      "id": "victim_filthy",
+      "name": "Filthy",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The Morphus of an emaciated human covered with filth – dirt, grime, old food, and dried blood. The hair is matted and has stuff sticking out of it, and any clothing is 99 Joe Sifferman (Order #46323384) similarly filthy, crumpled and unkempt. Bonuses: +2 to P.E., +1 to M.E., +1 to Horror Factor. Penalties: -1D4 to P.B. and -25% to all skills involving appearance and performance, including Disguise and Seduction.",
+      "statModifiers": {
+        "pe": {
+          "flat": 2
+        },
+        "me": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -25
+          }
+        ]
+      }
+    },
+    {
+      "id": "victim_frail",
+      "name": "Frail",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "The Morphus is an emaciated human, all skin and bones, frail and starving. Most opponents will underestimate the ‘Bane in combat, discounting him as a real threat. Bonuses: +1 on initiative, +1 attack per melee round, impervious to spoiled and rotten food, +1 to save vs poison and drugs, and +2 to Horror Factor. Penalties: Reduce weight by 50%, S.D.C. by 20%, -2 from P.E., -1D6 from P.S. and Spd, and -25% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      },
+      "saveModifiers": {
+        "poison": 1
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -25
+          }
+        ]
+      },
+      "weightModifier": {
+        "percent": -50
+      }
+    },
+    {
+      "id": "victim_hollow_eyes",
+      "name": "Hollow Eyes",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 100
+        }
+      ],
+      "description": "Also called the thousand yard stare, the Nightbane’s eyes are vacant. It’s as though they are staring at something off in the distance even when looking directly at someone or something, which most people find quite unnerving. Bonuses: Hawk-like vision, enabling him to read small signs or identify a face 2 miles (3.2 km) away, doubles the range of him night vision, and +1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "victim_horribly_burned",
+      "name": "Horribly Burned",
+      "tableCategory": "Victim",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The Morphus is a humanoid with 90% of the body scarred and covered in third-degree burns. The face looks as if it was melted, there is only a hole for a nose and there are no lips, ears, or facial hair. Bonuses: +1D6x10+6 S.D.C., +2 to P.E., fire and heat resistant (half damage), +1D4 to Horror Factor. Penalties: -2 from M.A., -1D4 from P.B.",
+      "statModifiers": {
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D6x10+6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    }
+  ]
 }

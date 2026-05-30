@@ -1,0 +1,140 @@
+{
+  "tableId": "undead",
+  "generatedAt": "2026-05-30T19:55:47.554Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
+    "companionBlueprint",
+    "conditionalPenalties",
+    "crossTableRoll",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "independentSubRolls",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "livingWeaponRules",
+    "magicInteractionModifiers",
+    "mobility",
+    "morphusRules",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "playerChoices",
+    "progressionModifiers",
+    "recoveryBehaviors",
+    "saveModifiers",
+    "sensory",
+    "skillContextModifiers",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "survivalTraits",
+    "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 5,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "undead_nosferatu_vampire",
+        "name": "Nosferatu Vampire",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R.",
+          "skill overrides",
+          "appearance constraints"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "undead_partial_skeleton_form",
+        "name": "Partial Skeleton Form",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "undead_vampiric_nature",
+        "name": "Vampiric Nature",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R.",
+          "save modifiers",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "undead_walking_corpse",
+        "name": "Walking Corpse",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "undead_walking_mummy",
+        "name": "Walking Mummy",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "natural A.R."
+        ],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 5,
+    "ids": [
+      "undead_nosferatu_vampire",
+      "undead_partial_skeleton_form",
+      "undead_vampiric_nature",
+      "undead_walking_corpse",
+      "undead_walking_mummy"
+    ]
+  },
+  "bookIndex": {
+    "total": 5,
+    "included": 5,
+    "skippedNonPlayable": 0,
+    "skippedOther": 0,
+    "names": [
+      "Nosferatu Vampire",
+      "Partial Skeleton Form",
+      "Vampiric Nature",
+      "Walking Corpse",
+      "Walking Mummy"
+    ],
+    "authoritativeBookKey": "survival_guide",
+    "books": [
+      {
+        "key": "survival_guide",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": true
+      }
+    ],
+    "multiSourceTraits": 0
+  },
+  "recommendations": []
+}

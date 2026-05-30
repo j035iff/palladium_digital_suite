@@ -1,0 +1,53 @@
+{
+  "tableId": "undead",
+  "entries": [
+    {
+      "id": "undead_nosferatu_vampire",
+      "name": "Nosferatu Vampire",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "undead_partial_skeleton_form",
+      "name": "Partial Skeleton Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "undead_vampiric_nature",
+      "name": "Vampiric Nature",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "undead_walking_corpse",
+      "name": "Walking Corpse",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "undead_walking_mummy",
+      "name": "Walking Mummy",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R."
+      ],
+      "notesOnly": false
+    }
+  ]
+}

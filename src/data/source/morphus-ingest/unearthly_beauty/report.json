@@ -1,0 +1,175 @@
+{
+  "tableId": "unearthly_beauty",
+  "generatedAt": "2026-05-30T20:03:25.033Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
+    "companionBlueprint",
+    "conditionalPenalties",
+    "crossTableRoll",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "independentSubRolls",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "livingWeaponRules",
+    "magicInteractionModifiers",
+    "mobility",
+    "morphusRules",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "playerChoices",
+    "progressionModifiers",
+    "recoveryBehaviors",
+    "saveModifiers",
+    "sensory",
+    "skillContextModifiers",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "survivalTraits",
+    "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 5,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "unearthly_beauty_animal_magnetism",
+        "name": "Animal Magnetism",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "unearthly_beauty_doll_like_appearance",
+        "name": "Doll-Like Appearance",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "unearthly_beauty_elfin_features",
+        "name": "Elfin Features",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "appearance constraints"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "unearthly_beauty_fallen_angel",
+        "name": "Fallen Angel",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "unearthly_beauty_physical_perfection",
+        "name": "Physical Perfection",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 5,
+    "ids": [
+      "unearthly_beauty_animal_magnetism",
+      "unearthly_beauty_doll_like_appearance",
+      "unearthly_beauty_elfin_features",
+      "unearthly_beauty_fallen_angel",
+      "unearthly_beauty_physical_perfection"
+    ]
+  },
+  "bookIndex": {
+    "total": 5,
+    "included": 5,
+    "skippedNonPlayable": 0,
+    "skippedOther": 0,
+    "names": [
+      "Animal Magnetism",
+      "Doll-Like Appearance",
+      "Elfin Features",
+      "Fallen Angel",
+      "Physical Perfection"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      },
+      {
+        "key": "core",
+        "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+        "reference": "Nightbane® RPG (core rulebook)",
+        "authoritative": false
+      }
+    ],
+    "multiSourceTraits": 5
+  },
+  "recommendations": [
+    "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json"
+  ],
+  "descriptionCompare": {
+    "differences": [
+      {
+        "trait": "Doll-Like Appearance",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Animal Magnetism",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Elfin Features",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Physical Perfection",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Fallen Angel",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "core",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      }
+    ]
+  }
+}

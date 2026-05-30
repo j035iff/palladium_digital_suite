@@ -1,0 +1,187 @@
+{
+  "tableId": "unusual_facial_features",
+  "entries": [
+    {
+      "id": "unusual_facial_features_alien_features",
+      "name": "Alien Features",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_angel_face",
+      "name": "Angel Face",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_chest_face",
+      "name": "Chest Face",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_cyclops",
+      "name": "Cyclops",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_extra_eyes",
+      "name": "Extra Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_facial_tentacles",
+      "name": "Facial Tentacles",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_glowing_eyes",
+      "name": "Glowing Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_heat_pits",
+      "name": "Heat Pits",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_large_horns",
+      "name": "Large Horns",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_masked_face",
+      "name": "Masked Face",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_metal_head",
+      "name": "Metal Head",
+      "hooks": [],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_misshapen_facial_features",
+      "name": "Misshapen Facial Features",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_multiple_faces",
+      "name": "Multiple Faces",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_no_face",
+      "name": "No Face",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_oversized_carnivorous_mouth",
+      "name": "Oversized Carnivorous Mouth",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_robotic_face_and_head",
+      "name": "Robotic Face And Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_sharp_teeth",
+      "name": "Sharp Teeth",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_skull_face",
+      "name": "Skull Face",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_small_horns",
+      "name": "Small Horns",
+      "hooks": [
+        "stat modifiers / A.R. shift"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_snake_worm_or_millipede_for_a_tongue",
+      "name": "Snake, Worm, or Millipede for a Tongue",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_strange_ears",
+      "name": "Strange Ears",
+      "hooks": [
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "unusual_facial_features_worm_face",
+      "name": "Worm Face",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

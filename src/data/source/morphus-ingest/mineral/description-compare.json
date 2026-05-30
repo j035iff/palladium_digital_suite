@@ -1,0 +1,46 @@
+{
+  "differences": [
+    {
+      "trait": "Rough Metal Body",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Metal Statue",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Rough Stone Body",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Living Statue",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Part Inorganic",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Part Inorganic with Weapons",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Horns, Spines or Spikes",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "nightlands",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

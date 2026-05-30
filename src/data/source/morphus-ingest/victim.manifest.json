@@ -1,0 +1,21 @@
+{
+  "id": "victim",
+  "displayName": "Victim",
+  "tableCategory": "Victim",
+  "tableHeading": "Victim Table",
+  "targetJson": "src/data/content/morphus/tables/victim.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Victim Table\nMost of these Nightbane were",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

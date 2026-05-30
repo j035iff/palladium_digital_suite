@@ -1,0 +1,30 @@
+{
+  "id": "unearthly_beauty",
+  "displayName": "Unearthly Beauty",
+  "tableCategory": "Unearthly Beauty",
+  "tableHeading": "Unearthly Beauty Table",
+  "targetJson": "src/data/content/morphus/tables/unearthly_beauty.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "descriptionAuthorityNote": "Transcribe from Dark Designs when wording differs from core RPG.",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Unearthly Beauty Table\nNot all",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane® RPG (core rulebook)",
+      "tableHeading": "Unearthly Beauty Table \nNot all",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

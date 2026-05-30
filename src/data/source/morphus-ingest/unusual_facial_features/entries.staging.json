@@ -1,0 +1,633 @@
+{
+  "entries": [
+    {
+      "id": "unusual_facial_features_alien_features",
+      "name": "Alien Features",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 103
+        }
+      ],
+      "description": "The Nightbane looks inhuman and alien. The head may be over-sized with large (or small), black almond-shaped eyes, a tiny nose or nose holes, no facial hair, dark or pale complexion and other inhuman features (fangs, skin patterns, horns, etc.). Bonus: +2 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_angel_face",
+      "name": "Angel Face",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The Morphus is an innocent and exquisite beauty (male or female) with warm eyes, and metallic gold hair. Bonuses: +2D6 S.D.C., +1D4 to M.A., +1D4+4 to P.B., and +15% to evoke trust and automatically gets the Seduction skill at 72% proficiency (+1% per level of experience). Penalties: Everyone notices this character which makes him or her -20% to Disguise, Prowl, Undercover Ops, Palm, Concealment and Escape Artist.",
+      "statModifiers": {
+        "pb": {
+          "flat": 4,
+          "dice": "1D4+4"
+        },
+        "ma": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "unusual_facial_features_chest_face",
+      "name": "Chest Face",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 98
+        }
+      ],
+      "description": "The Morphus is such that the Nightbane appears to have no head! Instead the face either, 01-50% is set in the center of the chest, or 51-00% appears to be stretched and nailed or hooked to the chest, stomach or across the chest and stomach. The face is different from that of the Facade. Bonuses: +6D6 to S.D.C., +1 to save vs toxic gases, and +1D4 to Horror Factor. Penalties: -2 from P.B., -1 to Perception Rolls, the Nightbane must turn his entire body in order to look 98 Joe Sifferman (Order #46323384) around, the face is vulnerable to stomach strikes, and Disguise and Undercover Ops are impossible.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "6D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "unusual_facial_features_cyclops",
+      "name": "Cyclops",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The character only has one large eye in the middle of his forehead. Bonuses: Perfect 20/20 vision and +2 to the Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      },
+      "sensory": {
+        "sharpVision": true
+      }
+    },
+    {
+      "id": "unusual_facial_features_extra_eyes",
+      "name": "Extra Eyes",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The Nightbane has 1D4 additional eyes (roll or choose from 1-6 total eyes). They are arranged in two or three rows, and they can be human-sized or slightly smaller. Bonuses: +2 to Perception Rolls involving sight and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_facial_tentacles",
+      "name": "Facial Tentacles",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 103
+        }
+      ],
+      "description": "Writhing tentacles protrude from the face of the Nightbane! They can be situated anywhere in the face; some examples include the chin for a “living beard” look, between the nose and mouth for a Lovecraftian appearance, or instead of hair for a Medusa-like look. Bonuses: +2D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_glowing_eyes",
+      "name": "Glowing Eyes",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The Nightbane’s eyes glow with unnatural light, so bright that they can faintly illuminate a dark area! Normal sunglasses will not be able to hide the glowing eyes, but mirror shades will. Bonuses: The Nightbane has enhanced Nightvision able to see in total darkness at a range of 2,000 feet (610 m), and +1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_heat_pits",
+      "name": "Heat Pits",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 98
+        }
+      ],
+      "description": "This ‘Bane has a sunken, discolored area in each cheek, just below where the eyes would normally be (even if he doesn’t have eyes). These pits are receptive to heat, similar to the type of snake known as a pit viper. Bonuses: Allows the Nightbane thermal vision at a range of 500 feet (152 m) and +2 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_large_horns",
+      "name": "Large Horns",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 103
+        }
+      ],
+      "description": "Large horns, often similar to a ram’s or deer’s. Bonuses: +2 to Horror Factor, and a head butt inflicts 3D6 damage addition to normal punch damage. Note: The horns are so large that it is impossible to hide them.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_masked_face",
+      "name": "Masked Face",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The structure of the Nightbane’s face is such that it looks like the character is wearing an artificial mask made of leather, fabric, ceramics/porcelain, or plastic. The “mask” can look like just about anything and may have no discernable features (a blank face), distorted features (huge nose, large pointed ears, bird’s wings for ears, etc.), horns, spikes, metal studs, feathers, and so forth. Bonuses: The artificial appearance of the Masked Face means unless the character has some other deformity or weird feature, most bystanders will assume he or she is an ordinary person in a store bought mask (and maybe likewise assume any other monstrous aspect of the character is a Halloween costume), not a Nightbane or monster. +2D6 S.D.C. and the mask cannot be removed by any means. Penalties: Disguise and Undercover Ops are impossible.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "unusual_facial_features_metal_head",
+      "name": "Metal Head",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The Morphus gives the Nightbane a face, neck and head that appears to be one of the following:"
+    },
+    {
+      "id": "unusual_facial_features_misshapen_facial_features",
+      "name": "Misshapen Facial Features",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "Some possibilities: The eyes are in the wrong place, the nose is flat or missing, the mouth is where the eyes should be and vice-versa, the creature has more than one mouth, and other bizarre features. Bonus: +1D4 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_multiple_faces",
+      "name": "Multiple Faces",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 98
+        }
+      ],
+      "description": "The Nightbane only has one head with 1D4 additional faces on it. Each face points in a different direction and each looks different (none look like his human Facade). Bonuses: +2D6 S.D.C., +1 to Perception Rolls for each additional face, can see in the back of his head and cannot be surprised by attacks from behind or from the side, +1 to parry, +2 to automatic dodge, and +2 to Horror Factor.",
+      "statModifiers": {
+        "perception": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_no_face",
+      "name": "No Face",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 103
+        }
+      ],
+      "description": "The Nightbane has a perfectly smooth face: no eyes, mouth, or nose are visible. The creature can speak, but the voice seems to be coming from inside the smooth surface, and may have an inhuman quality, or simply sound muffled; player’s choice. The lack of eyes does not impair the Nightbane’s senses; he can see, smell and hear perfectly. To eat, food is seemingly pushed through the skin, like a soft membrane, where the mouth should be. Bonus: +1D4 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_oversized_carnivorous_mouth",
+      "name": "Oversized Carnivorous Mouth",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The Nightbane has supernaturally strong jaw muscles. Bonuses: +1 to Horror Factor. Bite attack does 2D6 damage and the character can hold on and continue biting (no strike roll is necessary), but inflicts normal bite damage once at the beginning and once at the end of the melee round until his victim is dislodged or he lets go. Note: No other combat actions are possible while using this attack).",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      },
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required"
+      }
+    },
+    {
+      "id": "unusual_facial_features_sharp_teeth",
+      "name": "Sharp Teeth",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The Nightbane has long, fang-like teeth. Bonuses: Bite inflicts 3D6 damage, and +2 to Horror Factor whenever the teeth are displayed, in a smile, for example.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_skull_face",
+      "name": "Skull Face",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 102
+        }
+      ],
+      "description": "The character’s head is a fleshless skull (players may opt to let hair grow on the skull, or leave it bare). The skeletal head is sometimes surrounded by a nimbus of light or flames (1-30%), but is completely without flesh and bare and grotesquely protrudes from a flesh neck (31-60%). This gives the head more of a bony helmet or mask appearance than a real head (61-90%), or has a different, unusual look (91-00%, the player may roll again for unusual facial features that further deform the skull, like small horns, and additional eye sockets), roll or pick one. Bonuses: +2D6 to S.D.C. and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_small_horns",
+      "name": "Small Horns",
+      "tableCategory": "Unusual Facial Features",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 103
+        }
+      ],
+      "description": "The Nightbane has small, vestigial horns, typically similar to a goat’s or a ram’s. The horns can be disguised with a hat or other head covering. Bonuses: Head butt does 1D6 S.D.C. damge in addition to Supernatural P.S. damage and +1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6"
+        }
+      }
+    },
+    {
+      "id": "unusual_facial_features_snake_worm_or_millipede_for_a_tongue",
+      "name": "Snake, Worm, or Millipede for a Tongue",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "The Morphus gives the Nightbane a weird, distorted looking face and a long tongue that appears to be a snake, large worm or millipede. While this is disgusting to look at, it does not interfere with the ability to speak. Bonuses: Voice is distorted and is either deep and ominous or lyrical, in either case it is different from his Facade voice, +2 to Horror Factor when the mouth is open or the tongue is out. Penalties: -1 from M.A. and P.B., Disguise and Undercover Ops are impossible (at least the minute the ‘Bane opens his mouth to speak).",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "unusual_facial_features_strange_ears",
+      "name": "Strange Ears",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "This Nightbane’s ears are not those of a normal human, but any of the following: 01-20% large canine-like, 21-40% large and pointed, 41-60% pointed and has 1D6+4 peircings, 61-80% tiny, flat and noticeable only when one looks closely, 81-00% literally elephant ears or something large and alien looking (covered in spikes or spines, unusual shape, etc.). Regardless of their appearance, they provide exceptional hearing, roughly equal to that of a dog. Bonuses: +4 on Perception Rolls involving sound and +1 on initiative. Penalties: -1 from P.B., -20% to Disguise and Undercover Ops, and high-pitched sound hurts the ears (-2 on initiative and no Perception Roll bonus).",
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "unusual_facial_features_worm_face",
+      "name": "Worm Face",
+      "tableCategory": "Unusual Facial Features II",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 99
+        }
+      ],
+      "description": "2D6+13 worms or short tentacles (under one foot/0.3 m) seem to grow from the flesh around the mouth, chin and lower jaw, or across the forehead and around the eyes. All squirm and writhe constantly. Any that are killed or cut off grow back in 1D4 hours. Bonuses: +2D6 S.D.C., +1 on Perception Rolls, understands all languages at 60%, and +1D4 to Horror Factor. Distracting and disturbing to others who are close enough to see them and such people are -5% to skill performance and -1 to strike the Nightbane. Penalties: -1 to M.A., -1D4 to P.B., and Disguise and Undercover Ops are impossible.",
+      "statModifiers": {
+        "strike": {
+          "flat": -1
+        },
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    }
+  ]
+}

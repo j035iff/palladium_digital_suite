@@ -1,0 +1,14 @@
+{
+  "tableId": "victim",
+  "generatedAt": "2026-05-30T20:29:49.751Z",
+  "fillOnly": true,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 11
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

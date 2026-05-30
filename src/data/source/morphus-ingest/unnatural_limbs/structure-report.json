@@ -1,0 +1,14 @@
+{
+  "tableId": "unnatural_limbs",
+  "generatedAt": "2026-05-30T20:13:44.163Z",
+  "fillOnly": true,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 19
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

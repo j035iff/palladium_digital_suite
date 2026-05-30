@@ -1,0 +1,14 @@
+{
+  "tableId": "infernal",
+  "generatedAt": "2026-05-30T18:36:05.191Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 10
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

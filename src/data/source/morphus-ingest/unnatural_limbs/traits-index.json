@@ -1,0 +1,434 @@
+{
+  "tableId": "unnatural_limbs",
+  "tableHeading": "Unnatural Limbs Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane\u00ae RPG (core rulebook)",
+      "authoritative": false
+    },
+    {
+      "key": "appendages",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 19,
+  "traits": [
+    {
+      "name": "2D4 Pairs of Tiny Arms and Hands",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "41-50%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "41-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Additional Arms in Unusual Places",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 98,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Antennae",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "91-00%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 105,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Articulated Spikes",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "81-90%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Chains",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Dual Forearms and Hands on Each Arm",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "61-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Elephant Trunk",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Eye Stalks",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Flexible Limbs",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "51-60%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Four Arms",
+      "percent": "51-65%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "51-65%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "51-65%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Long, Sensitive Fingers",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "31-40%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Mandibles",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "41-50%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Prehensile Hair",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Prehensile Tail",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "01-10%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Pseudopods",
+      "percent": "66-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "66-80%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "66-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Snake Body",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 97,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Spider Legs",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "appendages",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 98,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "appendages"
+      ]
+    },
+    {
+      "name": "Spiked Prehensile Tail",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "11-20%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Tentacles",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136,
+          "percent": "21-30%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 104,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    }
+  ]
+}

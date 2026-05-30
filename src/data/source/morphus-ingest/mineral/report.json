@@ -1,0 +1,345 @@
+{
+  "tableId": "mineral",
+  "generatedAt": "2026-05-30T18:47:05.403Z",
+  "schemaKeys": [
+    "activatedAbilities",
+    "appearanceConstraints",
+    "atWillAbilities",
+    "combatContextModifiers",
+    "companionBlueprint",
+    "conditionalPenalties",
+    "crossTableRoll",
+    "customOneOffs",
+    "damageAffinities",
+    "description",
+    "disabledNaturalAttackTags",
+    "disguiseLimits",
+    "entryRole",
+    "gameSystems",
+    "gimmickInventory",
+    "gimmickToySwitches",
+    "handCapacityConstraints",
+    "heightModifier",
+    "id",
+    "independentSubRolls",
+    "isPolymorphicTemplate",
+    "limbDurability",
+    "livingWeaponRules",
+    "magicInteractionModifiers",
+    "mobility",
+    "morphusRules",
+    "name",
+    "naturalAr",
+    "naturalWeapons",
+    "playerChoices",
+    "progressionModifiers",
+    "recoveryBehaviors",
+    "saveModifiers",
+    "sensory",
+    "skillContextModifiers",
+    "skillModifiers",
+    "sources",
+    "specialCombatInterceptions",
+    "statModifiers",
+    "subTraitChoicesBudget",
+    "survivalTraits",
+    "tableCategory",
+    "tableWorkflow",
+    "variantPercentiles",
+    "weaponClassBonuses",
+    "weightModifier"
+  ],
+  "staging": {
+    "entryCount": 18,
+    "unknownKeys": [],
+    "aggregation": [
+      {
+        "id": "mineral_amethyst_crystal",
+        "name": "Amethyst Crystal",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_arsenic",
+        "name": "Arsenic",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "skill overrides",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_clear_crystal_quartz",
+        "name": "Clear Crystal/Quartz",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "skill overrides",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_crystalline_body",
+        "name": "Crystalline Body",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_emerald_tourmaline",
+        "name": "Emerald/Tourmaline",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_gold",
+        "name": "Gold",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_horns_spines_or_spikes",
+        "name": "Horns, Spines or Spikes",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_iron_hematite",
+        "name": "Iron: Hematite",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_iron_magnetite",
+        "name": "Iron: Magnetite",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_living_statue",
+        "name": "Living Statue",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_metal_statue",
+        "name": "Metal Statue",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_orpiment",
+        "name": "Orpiment",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "skill overrides",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_part_inorganic",
+        "name": "Part Inorganic",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_part_inorganic_with_weapons",
+        "name": "Part Inorganic with Weapons",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_rough_metal_body",
+        "name": "Rough Metal Body",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "save modifiers",
+          "damage affinities"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_rough_stone_body",
+        "name": "Rough Stone Body",
+        "hooks": [
+          "stat modifiers / A.R. shift"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_silver",
+        "name": "Silver",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      },
+      {
+        "id": "mineral_uraninite",
+        "name": "Uraninite",
+        "hooks": [
+          "stat modifiers / A.R. shift",
+          "skill overrides"
+        ],
+        "notesOnly": false
+      }
+    ]
+  },
+  "target": {
+    "entryCount": 18,
+    "ids": [
+      "mineral_amethyst_crystal",
+      "mineral_arsenic",
+      "mineral_clear_crystal_quartz",
+      "mineral_crystalline_body",
+      "mineral_emerald_tourmaline",
+      "mineral_gold",
+      "mineral_horns_spines_or_spikes",
+      "mineral_iron_hematite",
+      "mineral_iron_magnetite",
+      "mineral_living_statue",
+      "mineral_metal_statue",
+      "mineral_orpiment",
+      "mineral_part_inorganic",
+      "mineral_part_inorganic_with_weapons",
+      "mineral_rough_metal_body",
+      "mineral_rough_stone_body",
+      "mineral_silver",
+      "mineral_uraninite"
+    ]
+  },
+  "bookIndex": {
+    "total": 18,
+    "included": 18,
+    "skippedNonPlayable": 0,
+    "skippedOther": 0,
+    "names": [
+      "Amethyst Crystal",
+      "Arsenic",
+      "Clear Crystal/Quartz",
+      "Crystalline Body",
+      "Emerald/Tourmaline",
+      "Gold",
+      "Horns, Spines or Spikes",
+      "Iron: Hematite",
+      "Iron: Magnetite",
+      "Living Statue",
+      "Metal Statue",
+      "Orpiment",
+      "Part Inorganic",
+      "Part Inorganic with Weapons",
+      "Rough Metal Body",
+      "Rough Stone Body",
+      "Silver",
+      "Uraninite"
+    ],
+    "authoritativeBookKey": "dark_designs",
+    "books": [
+      {
+        "key": "dark_designs",
+        "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "authoritative": true
+      },
+      {
+        "key": "nightlands",
+        "pdf": "src/data/reference/nightbane/WB2-Nightlands.pdf",
+        "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+        "authoritative": false
+      },
+      {
+        "key": "mineral_ii",
+        "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+        "reference": "Nightbane® Survival Guide (WB5)",
+        "authoritative": false
+      }
+    ],
+    "multiSourceTraits": 7
+  },
+  "recommendations": [
+    "Description conflicts detected — use extracted-authoritative.txt (dark_designs); see description-compare.json"
+  ],
+  "descriptionCompare": {
+    "differences": [
+      {
+        "trait": "Rough Metal Body",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Metal Statue",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Rough Stone Body",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Living Statue",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Part Inorganic",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Part Inorganic with Weapons",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      },
+      {
+        "trait": "Horns, Spines or Spikes",
+        "authoritativeBookKey": "dark_designs",
+        "otherBookKey": "nightlands",
+        "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+      }
+    ]
+  }
+}

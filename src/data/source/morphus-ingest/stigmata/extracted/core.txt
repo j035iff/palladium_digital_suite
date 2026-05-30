@@ -1,0 +1,98 @@
+Stigmata Table 
+Mockingly named after the "sacred wounds" said to appear 
+on saintly people, stigmata are among the most disturbing de­
+fonnities among the Nightbane. The common characteristic of 
+all stigmata is that the Nightbane appears to be injured. The 
+wound can be an open cut, blister, sore or a foreign object im­
+bedded in the flesh. From time to time, the wound oozes with 
+blood, puss, or other fluid. These wounds never heal, and are 
+often a source of discomfort and pain to the character. 
+What do these marks represent? Are they an embodiment of 
+the guilt, fears and psychic pain of the Nightbane? In times past, 
+many religious people called Nightbane stigmata a sign of the 
+devil and "the witches' mark." Modem thinkers believe them to 
+be a reflection of psychological traumas. In a few cases, the stig­
+mata are the result of terrible wounds suffered by the Nightbane 
+just before his transfonnation. For example: 600 years ago when 
+a young Nightbane first manifested his powers, he was under at­
+tack by soldiers. He had been stabbed and slashed repeatedly 
+when the Becoming began, and as a result, his Morphus bore 
+those wounds and they have never healed. Another example is 
+Burger-face (see the Campaign Section), who first manifested 
+when he was trapped in a burning building, and whose face has a 
+horrible burned and mangled appearance. 
+Roll percentile dice to detennine a stigmata.
+01-05 % Bloody Ooze: Covered in a slimy, blood-like liquid, 
+making his skin slippery (add +2 to parry/dodge pins or grap­
+pling attacks). Add ID4 to Horror Factor. 
+101 
+06-10% Corpse-Like: The Nightbane's skin is grayish­
+green, his eyes are sunken, and he looks like a days-old corpse, 
+complete with the odor of death and signs of decay. Reduce P.B. 
+by 25%, add 3D6 to S.D.C. and add ID4 to Horror Factor.
+11-15 % Stitches: A crisscrossing of stitches at several points 
+in the skin, gives the Nightbane the appearance of a "rebuilt" 
+corpse. Sometimes, the limbs and body may not quite match. For 
+example, the "sewn-on" limbs might belong to an animal, while 
+the torso and head are human-like! This is particularly appropri­
+ate for lycanthrope Nightbane who bear stigmata. Add 3D6 to 
+S.D.C. and I D4 to Horror Factor.
+16-23 % Nails: Metal nails, pins, spikes or screws protrude 
+from the character's skin. They can be localized to a few small 
+areas on the body (around the eyes, on the forehead, hands, 
+shoulders, torso, etc.), or they can completely cover the charac­
+ter (player's choice). Add 4D6 to S.D.C. and, if completely cov­
+ered, a body slam inflicts 2D6 plus nonnal punch damage.
+24-31 % Razor Blades: Razor blades are unnaturally attached 
+to the Nightbane. They may have replaced teeth or fingernails, 
+or even cover the character like a porcupine's quills. Add ID4+ 1 
+to H.F. The character gains +4D6 to S.D.C., and inflicts an addi­
+tional 1 D6 S.D.C. in hand to hand combat if the fingernails have 
+been replaced with razors. Or a bite inflicts 2D6 S.D.C. if the ra­
+zor blades appear in the mouth. If the blades are on the skin, 
+body slams do 2D6 S.D.C. plus nonnal punch damage.
+32-39% Broken Glass: Jagged pieces of glass are imbedded 
+in the character's flesh. They can be located in small specific ar­
+eas or cover the body. Same damage as razor blades above. Add 
+3D6 to S.D.C., and 1 D4 to Horror Factor.-47 % Barbed Wire/Razor Wire: Part of the character's 
+limbs head, neck or torso are wrapped in barbed or razor wire, 
+causing bloody wounds that never heal. Same damage as razor 
+blades above. Add 4D6 to S.D.C. and I D4 to horror factor.
+48-55 % Eternal Wounds: The Nightbane bears horrible 
+wounds that never heal. Most often, the wounds are clearly vis­
+ible and may appear to be deadly, including gaping chest 
+wounds, gashes in the skull, cuts, gouges and other grotesquer­
+ies. The wounds cover any clothes the character wears with 
+bloody patches in a matter of minutes, soaking through bandages 
+and dressings after a while. Add 3D6 to S.D.C. and ID4 to Hor­
+ror Factor.
+56-63 % Missing Skin: Patches of skin or even the whole skin 
+(player's choice) are missing, revealing bare muscle and bones. 
+Add 3D6 to S.D.C. and ID4+ 1 to Horror Factor.
+64-71 % Leatherboy/girl: Portions (or all) of the Night­
+bane's skin seems to have been replaced with shiny, polished 
+leather, belts, bodysuits, and the like. S&M gear like hoods and 
+straps are not uncommon, all grafted to the skin and flesh of the 
+character. Metal studs, chains and other "decorations" finish the 
+grotesque design. Add 5D6 to S.D.C. and ID4 to Horror Factor.
+72-79% Boils or Sores: Areas of the character's body are 
+covered in open sores or festering boils. Add 3D6 to S.D.C. and 
+2 points to Horror Factor.
+80-85 % Zippers: Zippers close horrible wounds in the char­
+acter's body. Add 3D6 to S.D.C., and 1 to Horror Factor. The 
+Horror Factor is increased by 3 if the Nightbane opens the zipper 
+to reveal the pulsing flesh or organs underneath! 
+86-90% Bones: Some (or even all) of the Nightbane's body 
+has been stripped of flesh and muscle to reveal bare bone. Add 
+5D6xl O  to S.D.C. and ID4+ 1 to Horror Factor.
+91-96 % Biomechanical: Roll on the Biomechanical Table, 
+but any modifications will appear to make bloody wounds or 
+sores where the mechanics are attached or placed in the charac­
+ter! For example, if Armorgraft (see below) was rolled, the ar­
+mor would appear to have been nailed or hammered into the 
+flesh of the Nightbane, and its edges would have a patina of 
+fresh blood! Add 1 point to the normal Horror Factor associated 
+with that Biomechanical characteristic.
+97-00% Combination of Two: Roll two times (ignore and re­
+roll any roll of 97% or higher) and combine the two charac­
+teristics and Horror Factor points. 

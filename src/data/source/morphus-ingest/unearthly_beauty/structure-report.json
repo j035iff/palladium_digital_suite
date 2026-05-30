@@ -1,0 +1,14 @@
+{
+  "tableId": "unearthly_beauty",
+  "generatedAt": "2026-05-30T20:03:24.730Z",
+  "fillOnly": false,
+  "files": [
+    {
+      "path": "entries.staging.json",
+      "changed": 0,
+      "entryCount": 5
+    }
+  ],
+  "unmatched": [],
+  "totalChanged": 0
+}

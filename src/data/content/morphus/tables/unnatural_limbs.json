@@ -3,6 +3,639 @@
   "kind": "morphus_trait_table",
   "displayName": "Unnatural Limbs",
   "parentTable": null,
-  "description": "Unnatural Limbs Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Unnatural limb Morphus tables. Table I (Unnatural Limbs) from Nightbane RPG / Dark Designs — extra tails, tentacles, arms, pseudopods, and similar limb mutations (01–00%, no cross-table routers). Table II (Unnatural Appendages & Limbs) from Survival Guide only — chains, eye stalks, snake body, spider legs, and other appendage forms (01–00%).",
+  "entries": [
+    {
+      "id": "unnatural_limbs_2d4_pairs_of_tiny_arms_and_hands",
+      "name": "2D4 Pairs of Tiny Arms and Hands",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The character has several tiny arms about one third the size of a normal arm, usually located along the length of his forearm(s) or clustered at the shoulder(s). Each has a P.S. of only 1D6 and inflicts only one point of damage in combat (and then only if a foe gets close enough). However, they can grab and carry small and/or light objects or wield razor blades, small knives, or ice picks (1D4 damage each). Bonus: +1D4 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_additional_arms_in_unusual_places",
+      "name": "Additional Arms in Unusual Places",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 98
+        }
+      ],
+      "description": "The Nightbane has an extra pair of arms, but they are attached in an unusual place such as on his chest, back, legs or similar odd place. Bonuses: +1 to parry and entangle, and +2 to Horror Factor. Penalties: -1 to P.B., impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "unnatural_limbs_antennae",
+      "name": "Antennae",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 105
+        }
+      ],
+      "description": "A pair of antennae are located on the character’s head. Each can move like an arm, independent of each other and can dodge attacks (+3 to dodge; each has 15 S.D.C., and regenerate within 72 hours). They can look like any variety of insect or crustacean antennae and are typically, thin, whip-like limbs that extend 1D4 feet (0.3-1.2 m) in length. Bonuses: These sensitive “feelers” enable the Nightbane to move around in total darkness, can measure and detect changes in the air temperature and humidity (automatic), wind movement and direction (automatic), detect and identify common odors (66% proficiency), track by smell (50%), and sense an approaching rainstorm (70%; storm will arrive within 2D6x10 minutes), and +1 to Horror Factor.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 3
+        },
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_articulated_spikes",
+      "name": "Articulated Spikes",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The character has four spikes or spines that resembles the spine or legs of an insect. Each is about the size of a survival knife, but can extend to twice that length in an instant. They are distributed along the side of each forearm (two on each arm) or on the chest, or sides of the body. These slim, chitinous limbs end in sharp points, and can move independent of each like tiny, stiff arms and even rotate 360 degrees. They are used to parry an enemy’s hand to hand attacks (+2 to parry) and to stab or slash opponents who come within arm’s length. Bonuses: The four spikes provide +1 attack per melee round, inflict 2D6 damage, but they cannot grab or manipulate objects, and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "parry": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_chains",
+      "name": "Chains",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus has 1D4+1 chains made of metal, vertebrae bones, sinew, intestines, or plant vines. 01-50% the chains are attached to the character’s flesh by hooks and pins, or"
+    },
+    {
+      "id": "unnatural_limbs_dual_forearms_and_hands_on_each_arm",
+      "name": "Dual Forearms and Hands on Each Arm",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus causes the Nightbane’s arms to split at the elbow into two separate forearms. This does not grant an additional attack due to their unusual configuration, but it does allow the character to simultaneously strike a single opponent with a two-handed weapon, use two light one-handed weapons or perform tasks that require two hands with one. For example, the Nightbane could fire two revolvers, strike with two short swords, or use a computer keyboard with one arm. Bonuses: +2D6 S.D.C., automatically gets the W.P. Paired Weapons skill, +1 on initiative, +2 to entangle, and +10% to Climbing. Penalties: -1 to P.B., impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "statModifiers": {
+        "entangle": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 10
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "unnatural_limbs_elephant_trunk",
+      "name": "Elephant Trunk",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus is a human with leathery gray skin and an elephant’s trunk somewhere on the body: 01-25% on the face in place of the nose, 26-50% on the side or back of the head,"
+    },
+    {
+      "id": "unnatural_limbs_eye_stalks",
+      "name": "Eye Stalks",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus has 2D4 eye stalks protruding from the shoulders, neck, head, or back. The stalks are prehensile but only 1D4+6 inches (17 to 25 cm) in length. The stalks can look around 360 degrees at any given moment making surprise attacks difficult. Each stalk has only 2D6+4 S.D.C., but if one is cut off, it will completely grow back within six hours. Each has perfect, color vision. Bonuses: +1 on initiative, +1D4 on Perception Rolls, +1 to parry and dodge, +1 to Horror Factor, and cannot be surprised as long as he can see around him. Penalties: Cannot see in the dark nor possess any other special optics, -2 to P.B., and -40% to Disguise and Undercover Ops, and cannot see (no bonuses apply) if they are covered up.",
+      "statModifiers": {
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D6+4"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "sensory": {
+        "sharpVision": true
+      }
+    },
+    {
+      "id": "unnatural_limbs_flexible_limbs",
+      "name": "Flexible Limbs",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Nightbane’s arms, hands, fingers and legs are able to bend and twist as if they were made out of rubber or like the body of a snake. This enables him to bend in impossible ways. Bonuses: Automatically gets the Escape Artist skill at 80% proficiency (+2% per level of experience), +5% to Pick Locks, Palming and Concealment skills (as applicable), can parry attacks behind his back as long as he can see them coming. Penalties: Walks in a bobbing and swaying fashion, reminiscent of an ape, -10% to Disguise and Undercover Ops.",
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_locks",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_palming",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
+      }
+    },
+    {
+      "id": "unnatural_limbs_four_arms",
+      "name": "Four Arms",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The Nightbane has an extra pair of arms and hands. Bonuses: +1 attack per melee round, the arms and hands are ambidextrous and double-jointed, and +1D4 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_long_sensitive_fingers",
+      "name": "Long, Sensitive Fingers",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The fingers on the hands are three times longer than normal. Bonuses: Fingers are delicate and sensitive, providing a bonus of +5% to the following skills or skill categories: Medical (all), Demolitions (all), Electronics (all), Climbing, Computers (all), Forgery, Palming, Pick Locks, Pick Pockets, and Safecracking.",
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_forgery",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_palming",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_locks",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_pockets",
+            "modifierPercent": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "unnatural_limbs_mandibles",
+      "name": "Mandibles",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The mouth is replaced with a pair of mandibles like those of a giant ant or termite. Bite attacks do 3D6 damage (to a living opponent or inanimate objects/doors), and the character can chew through wood, plaster, fabric, rubber and plastic with relative ease. Bonuses: +1 attack per melee, +2 to strike with bite attacks, and +1 to Horror Factor. Penalties: Impossible to Disguise or engage in Undercover Ops, -2 to P.B., has a poor sense of taste, and can NOT damage or chew through metal, stone, concrete or ballistic material.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    },
+    {
+      "id": "unnatural_limbs_prehensile_hair",
+      "name": "Prehensile Hair",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus gives the Nightbane thick, long (1D4+2 feet/0.9 to 1.8 m) hair. The character has complete control over his hair and is able to section it off into as many as three clumps or braids, and use them as if they were tentacle-like limbs. Hair-limbs have a P.S. and P.P. of 10 and can be used to pick up and carry items, open doors, flip switches, climb, entangle and even wield a melee weapon to strike or parry though with a penalty of -2. Bonuses: +1 action/attack per melee, +2 to entangle, +10% to Climbing. Penalties: Increase weight by 5%, hair cannot use modern weapons/guns, or a bow and arrow, and -20% to Disguise and Undercover Ops.",
+      "statModifiers": {
+        "entangle": {
+          "flat": 2
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      }
+    },
+    {
+      "id": "unnatural_limbs_prehensile_tail",
+      "name": "Prehensile Tail",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The Nightbane has a prehensile tail, which can be used to grasp and carry things or help climb. The tail is very strong, able to support the character’s full body weight when suspended above the ground. However, it can only carry the equivalent of one third of the character’s body weight (typically about 60 lbs\\27 kg). Bonuses: +20% to Acrobatics (balance) and Climbing when the tail is used, +1 attack per melee and +1 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_pseudopods",
+      "name": "Pseudopods",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "At will, the Nightbane can extend 1D4+1 tentacle-like limbs from his flesh, much like an amoeba can extend pseudopods. The process of extending these limbs is utterly horrible to a human being, because these fleshy limbs break through the skin as if an unwholesome parasites were climbing out of the character’s body! Treat the pseudopods as tentacles (see above). Bonuses: +1 attack pe melee for each pair, each limb has 22 S.D.C., and +1D4+2 to Horror Factor whenever the pseudopods are extended.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2,
+          "dice": "1D4+2"
+        }
+      }
+    },
+    {
+      "id": "unnatural_limbs_snake_body",
+      "name": "Snake Body",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 97
+        }
+      ],
+      "description": "The Morphus turns the character’s lower body and legs into a long, prehensile serpent’s body – 2D4+6 feet (2.4 to 4.3 m) long. Bonuses: +1D6x10 S.D.C., +2 to Horror Factor, moves like a snake and can rise up on its tail like a cobra to tower over normal humans – +1 on initiative, +1 to strike, +2 to automatic dodge when this is done, and is +10% to climb trees and similarly shaped constructs. Penalties: -1 to P.B., reduce Spd 20%, reduce Spd by half when crawling across a smooth surface such as a polished floor, glass or ice, impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "unnatural_limbs_spider_legs",
+      "name": "Spider Legs",
+      "tableCategory": "Unnatural Appendages & Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 98
+        }
+      ],
+      "description": "The Morphus turns the Nightbane’s legs and lower torso into eight large, hairy spider legs. Bonuses: +3D6 S.D.C. and +2 to Horror Factor. The legs are about as long as the character’s normal legs and enables him to walk up the sides of walls and upside down on ceilings, as well as walk along rope and wires with ease; automatically gets Acrobatics and Climbing skill at 80% proficiency (+2% per level of experience), but only applicable in Morphus form. Penalties: -1D4 to P.B., reduce Spd 10%, reduce Spd by half when crawling across a smooth surface, cannot climb smooth surfaces such as a polished floor or enamal painted walls, glass/windows, or ice, and impossible to Disguise or engage in Undercover Ops.",
+      "statModifiers": {
+        "hf": {
+          "flat": 2
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "3D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "unnatural_limbs_spiked_prehensile_tail",
+      "name": "Spiked Prehensile Tail",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "Same as above, except that the tail ends in a spike, blade, stinger or club with 2D4 small spikes at the end. Strikes with the tail inflict 2D6 damage."
+    },
+    {
+      "id": "unnatural_limbs_tentacles",
+      "name": "Tentacles",
+      "tableCategory": "Unnatural Limbs",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "pageNumber": 136
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® RPG (core rulebook)",
+          "pageNumber": 104
+        }
+      ],
+      "description": "The character has two tentacles in addition to his arms! These tentacles are very difficult to conceal (need at least a trench coat, cape or cloak). The limbs can grab and carry objects, but are unable to use firearms or other tools requiring fingers. A pair of tentacle strikes do 1D6 in addition to normal hand to hand damage, and provide one additional attack/ action per melee round. Bonus: +1D4 to Horror Factor.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      }
+    }
+  ]
 }
