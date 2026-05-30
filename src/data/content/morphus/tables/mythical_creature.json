@@ -180,7 +180,9 @@
         {
           "limbName": "Wing (each)",
           "quantity": 2,
-          "sdc": 60,
+          "sdc": {
+            "flat": 60
+          },
           "calledShotPenalty": -3
         }
       ],
@@ -301,7 +303,9 @@
         {
           "limbName": "Hair Serpent",
           "quantity": 1,
-          "sdc": 12,
+          "sdc": {
+            "flat": 12
+          },
           "calledShotPenalty": -3
         }
       ],
@@ -410,7 +414,9 @@
         {
           "limbName": "Wing (each)",
           "quantity": 2,
-          "sdc": 40
+          "sdc": {
+            "flat": 40
+          }
         }
       ],
       "skillModifiers": {
@@ -493,7 +499,9 @@
         {
           "limbName": "Wing (each)",
           "quantity": 2,
-          "sdc": 40
+          "sdc": {
+            "flat": 40
+          }
         }
       ],
       "skillModifiers": {

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Extraterrestrial",
   "parentTable": null,
-  "description": "Extraterrestrial Morphus table (Nightbane Survival Guide, WB5, printed pp. 89–90). Sci-fi fan or dreamer whose Morphus appears as a being from beyond Earth.",
+  "description": "Extraterrestrial Morphus table (Nightbane Survival Guide, WB5, printed pp. 89–90). Sci-fi fan or dreamer whose Morphus appears as a being from beyond Earth[cite: 1].",
   "entries": [
     {
       "id": "extraterrestrial_roswell_gray",
@@ -15,14 +15,20 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus appears to be one of the little gray aliens associated with the supposed Roswell flying saucer crash: Small, thin, pasty gray skin, a frail-looking body with thin arms and legs, no hair and a huge, bulbous head and large, black, almond-shaped eyes, tiny nose, no apparent ears and a slit for a mouth. Bonuses: +1D4 to I.Q. and M.E., +10% to Prowl, +20% to all computer and medical skills, +2 to Horror Factor. Penalties: Reduce size and weight by 20%, -1D4 to P.S. and Spd and -1 to P.E. and P.B.",
+      "description": "The Morphus appears to be one of the little gray aliens associated with the supposed Roswell flying saucer crash: Small, thin, pasty gray skin, a frail-looking body with thin arms and legs, no hair and a huge, bulbous head and large, black, almond-shaped eyes, tiny nose, no apparent ears and a slit for a mouth[cite: 8].",
       "statModifiers": {
-        "hf": {
-          "flat": 2
+        "iq": {
+          "dice": "1D4"
+        },
+        "me": {
+          "dice": "1D4"
+        },
+        "ps": {
+          "dice": "-1D4"
         },
         "pe": {
           "flat": -1
@@ -30,54 +36,34 @@
         "pb": {
           "flat": -1
         },
-        "iq": {
-          "dice": "1D4"
-        },
-        "ps": {
+        "spd": {
           "dice": "-1D4"
+        },
+        "hf": {
+          "flat": 2
         }
       },
-      "heightModifier": {
+      "weightModifier": {
         "percent": -20
       },
-      "weightModifier": {
+      "heightModifier": {
         "percent": -20
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "prowl",
             "modifierPercent": 10
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_computer_operation",
+            "targetType": "category",
+            "targetValue": "computer",
             "modifierPercent": 20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_computer_programming",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_computer_hacking",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_first_aid",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_paramedic",
-            "modifierPercent": 20
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_medical_doctor",
+            "targetType": "category",
+            "targetValue": "medical",
             "modifierPercent": 20
           }
         ]
@@ -93,26 +79,26 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus is what’s fondly known in the trade as a “Bug-Eyed Monster.” Head: Always oversized, bald, bulbous with large, round, black “bug eyes” (or large cat-like eyes, sometimes large glowing eyes) with insect or fish-like facial features. Hands: 01-25% have clawed for hands, 26-50% have lobster pincers for at least one hand, 51-75% have an extra finger and delicate hands, 76-00% have an extra pair of arms and hands. Body Type: 01-20% have a hulking, shaggy, animal-like body, 21-40% have a weird, thick skin that is lumpy and bumpy, 41-60% are small and have an insect-like body, 61-80% have a tall, thin humanoid body, 81-90% have a robot/android body, and 91-00% is a hot babe with a body and face to die for; may have feline features and usually scantily clad. Note: Fifty percent of alien bodies have a rubbery quality and resemble a man in a rubber suit. Optional Features (pick two): Pair of antennae (insect or mechanical), tentacles instead of arms and hands, robotic hands or mechanical pincer hands, robot/artificial looking face, insect-looking face, ape-like face, vestigial bat wings, spacesuit (space helmet optional), tinted goggles that cover the eyes, air/gas mask-like breather, pointed ears, large pointed ears, feline eyes, small horns, strange skin color (red, blue, green, etc.), scaly reptilian skin, and snake tongue. Bonuses: 2D4x10+12 S.D.C., -1D4 I.Q. and M.E. for savage “monster aliens” or +1D4 to I.Q. and M.E. for “intelligent/evil mastermind aliens,” +1D6 to P.S., +2 to P.E., +3 to damage (+6 for claws, +2D6 for pincers or robot hands), +2 to Perception Rolls and +1D4 to Horror Factor. Penalties: -1D4 to M.A. and P.B., reduce Spd by 20%, and probably impossible to disguise or pass for human.",
+      "description": "The Morphus is what's fondly known in the trade as a 'Bug-Eyed Monster.' The head is always oversized, bald, bulbous with large, round, black 'bug eyes' (or large cat-like eyes, sometimes large glowing eyes) with insect or fish-like facial features[cite: 8].",
       "statModifiers": {
-        "pe": {
-          "flat": 2
-        },
-        "perception": {
-          "flat": 2
-        },
-        "iq": {
-          "dice": "1D4"
-        },
         "ps": {
           "dice": "1D6"
         },
+        "pe": {
+          "flat": 2
+        },
         "ma": {
           "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "percent": -20
         },
         "sdc": {
           "dice": "2D4x10+12"
@@ -120,8 +106,8 @@
         "hf": {
           "dice": "1D4"
         },
-        "spd": {
-          "percent": -20
+        "perception": {
+          "flat": 2
         },
         "bonusHthDamage": {
           "flat": 3
@@ -131,44 +117,130 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           }
         ]
       },
-      "playerChoices": [
+      "independentSubRolls": [
         {
-          "label": "Optional features (pick two)",
-          "timing": "character_creation",
+          "tableName": "Hands",
           "options": [
-            "Pair of antennae (insect or mechanical)",
-            "Tentacles instead of arms and hands",
-            "Robotic or mechanical pincer hands",
-            "Robot/artificial looking face",
-            "Insect-looking face",
-            "Ape-like face",
-            "Vestigial bat wings",
-            "Spacesuit (space helmet optional)",
-            "Tinted goggles covering the eyes",
-            "Air/gas mask-like breather",
-            "Pointed ears",
-            "Large pointed ears",
-            "Feline eyes",
-            "Small horns",
-            "Strange skin color (red, blue, green, etc.)",
-            "Scaly reptilian skin",
-            "Snake tongue"
+            {
+              "roll": "01-25%",
+              "label": "Clawed hands",
+              "description": "Have clawed hands[cite: 8].",
+              "naturalWeapons": [
+                {
+                  "limbType": "claws",
+                  "label": "Alien Claws",
+                  "damageFormula": "6",
+                  "isAdditiveToHth": true
+                }
+              ]
+            },
+            {
+              "roll": "26-50%",
+              "label": "Lobster pincers",
+              "description": "Have lobster pincers for at least one hand[cite: 8].",
+              "naturalWeapons": [
+                {
+                  "limbType": "pincers",
+                  "label": "Alien Pincers",
+                  "damageFormula": "2D6",
+                  "isAdditiveToHth": true
+                }
+              ]
+            },
+            {
+              "roll": "51-75%",
+              "label": "Extra finger and delicate hands",
+              "description": "Have an extra finger and delicate hands[cite: 8]."
+            },
+            {
+              "roll": "76-00%",
+              "label": "Extra pair of arms and hands",
+              "description": "Have an extra pair of arms and hands[cite: 8].",
+              "statModifiers": {
+                "apm": {
+                  "flat": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tableName": "Body Type",
+          "options": [
+            {
+              "roll": "01-20%",
+              "label": "Hulking, shaggy, animal-like",
+              "description": "Hulking, shaggy, animal-like body[cite: 8]."
+            },
+            {
+              "roll": "21-40%",
+              "label": "Weird, thick skin",
+              "description": "Weird, thick skin that is lumpy and bumpy[cite: 8]."
+            },
+            {
+              "roll": "41-60%",
+              "label": "Small and insect-like",
+              "description": "Small and have an insect-like body[cite: 8]."
+            },
+            {
+              "roll": "61-80%",
+              "label": "Tall, thin humanoid",
+              "description": "Tall, thin humanoid body[cite: 8]."
+            },
+            {
+              "roll": "81-90%",
+              "label": "Robot/android",
+              "description": "Robot/android body[cite: 8]."
+            },
+            {
+              "roll": "91-00%",
+              "label": "Hot babe",
+              "description": "Hot babe with a body and face to die for; may have feline features and usually scantily clad[cite: 8]."
+            }
           ]
         }
       ],
-      "customOneOffs": [
-        "I.Q. and M.E.: -1D4 for savage \"monster aliens\" or +1D4 for \"intelligent/evil mastermind\" aliens (player picks variant).",
-        "Hand-to-hand damage: +6 for claws, +2D6 for pincers or robot hands.",
-        "Sub-rolls for hands, body type, and optional features are in the book text."
+      "playerChoices": [
+        {
+          "label": "Alien Intelligence",
+          "options": [
+            "Savage 'monster aliens' (-1D4 I.Q. and M.E.)[cite: 8]",
+            "Intelligent/evil mastermind aliens (+1D4 I.Q. and M.E.)[cite: 8]"
+          ],
+          "timing": "character_creation"
+        },
+        {
+          "label": "Optional Features (pick two)",
+          "options": [
+            "Pair of antennae (insect or mechanical)[cite: 8]",
+            "Tentacles instead of arms and hands[cite: 8]",
+            "Robotic hands or mechanical pincer hands[cite: 8]",
+            "Robot/artificial looking face[cite: 8]",
+            "Insect-looking face[cite: 8]",
+            "Ape-like face[cite: 8]",
+            "Vestigial bat wings[cite: 8]",
+            "Spacesuit (space helmet optional)[cite: 8]",
+            "Tinted goggles that cover the eyes[cite: 8]",
+            "Air/gas mask-like breather[cite: 8]",
+            "Pointed ears[cite: 8]",
+            "Large pointed ears[cite: 8]",
+            "Feline eyes[cite: 8]",
+            "Small horns[cite: 8]",
+            "Strange skin color (red, blue, green, etc.)[cite: 8]",
+            "Scaly reptilian skin[cite: 8]",
+            "Snake tongue[cite: 8]"
+          ],
+          "timing": "character_creation"
+        }
       ],
-      "appearanceConstraints": {
-        "clothingFit": "oversized_required"
-      }
+      "customOneOffs": [
+        "Fifty percent of alien bodies have a rubbery quality and resemble a man in a rubber suit[cite: 8]."
+      ]
     },
     {
       "id": "extraterrestrial_parasitic_alien",
@@ -180,15 +252,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus Nightbane appears to be a normal human under the control of an icky, slimy, alien parasite. The eyes are blank and lifeless or solid black or solid red, speaks in an even, monotone voice even when excited or shouting, and possesses superhuman strength. The alien parasite is a hideous thing (large leech, worm, insect, crustacean, tentacle thingy, or something else repugnant) attached to the base or side of the neck, spinal cord between the shoulder blades, chest, belly, side of the head, or even over part of the face (mouth or eyes), or under the skin, but the skin can be seen moving and undulating on a regular basis. Killing or removing the parasite means killing the Nightbane! Bonuses: +1D6x10+6 S.D.C., +1D6 to P.S., +1 to P.E., +4 to save vs possession, and +1D4 to Horror Factor. Penalties: -1 to I.Q. and M.A., and reduce speed by 10%.",
+      "description": "The Morphus appears to be a normal human under the control of an icky, slimy, alien parasite. The eyes are blank and lifeless or solid black or solid red, speaks in an even, monotone voice even when excited or shouting, and possesses superhuman strength[cite: 8].",
       "statModifiers": {
-        "pe": {
-          "flat": 1
-        },
         "iq": {
           "flat": -1
         },
@@ -198,6 +267,12 @@
         "ps": {
           "dice": "1D6"
         },
+        "pe": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        },
         "sdc": {
           "dice": "1D6x10+6"
         },
@@ -206,8 +281,13 @@
         }
       },
       "saveModifiers": {
+        "mindControl": 4,
         "possession": 4
-      }
+      },
+      "customOneOffs": [
+        "The alien parasite is a hideous thing (large leech, worm, insect, crustacean, tentacle thingy, or something else repugnant) attached to the body or under the skin[cite: 8].",
+        "Killing or removing the parasite means killing the Nightbane![cite: 8]"
+      ]
     },
     {
       "id": "extraterrestrial_energy_being",
@@ -219,11 +299,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus appears to be a humanoid that glows brightly with energy or light, or has light glowing from inside the body and hovers six inches above the ground instead of using the legs to walk. Bonuses: 1D6x10 S.D.C., takes half damage from all forms of physical attacks and lasers, +1 to I.Q., P.P., P.B., and Spd, moves silently, and hovers above bodies of water. Penalties: Electricity, fire and other forms of energy do full damage, magic energy does double damage, magic weapons do their normal damage, hovers above the waves but cannot swim or be immersed in water (takes 2D6 damage per melee round under water, rain slows Spd by half), and impossible to disguise, Prowl or hide in dim lighting or darkness unless completely covered by a thick, heavy fabric (but then the character can’t see).",
+      "description": "The Morphus appears to be a humanoid that glows brightly with energy or light, or has light glowing from inside the body and hovers six inches above the ground instead of using the legs to walk[cite: 8].",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -234,33 +314,51 @@
         "pb": {
           "flat": 1
         },
+        "spd": {
+          "flat": 1
+        },
         "sdc": {
           "dice": "1D6x10"
         }
       },
       "damageAffinities": {
+        "physical": 0.5,
+        "lasers": 0.5,
         "magicEnergy": 2
       },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "float"
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "submersion",
+          "target": "self",
+          "damagePerRound": "2D6",
+          "note": "Takes 2D6 damage per melee round under water[cite: 8]."
+        }
+      ],
+      "conditionalPenalties": [
+        {
+          "trigger": "rain_or_water_exposure",
+          "spdMultiplier": 0.5,
+          "note": "Rain slows Spd by half[cite: 8]."
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "swimming",
             "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Hovers six inches above the ground; hovers above bodies of water. Moves silently.",
-        "Half damage from physical attacks and lasers; electricity, fire, and other energy attacks do full damage (magic energy ×2 in damageAffinities).",
-        "Cannot swim or be immersed in water (2D6 damage per melee round underwater); rain halves Spd.",
-        "Cannot Prowl or hide in dim light or darkness unless fully covered by thick fabric (then cannot see)."
-      ],
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      }
+        "Moves silently and hovers above bodies of water[cite: 8].",
+        "Impossible to disguise, Prowl or hide in dim lighting or darkness unless completely covered by a thick, heavy fabric (but then the character can't see)[cite: 8]."
+      ]
     },
     {
       "id": "extraterrestrial_alien_robotic_body",
@@ -272,79 +370,126 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 89
         }
       ],
-      "description": "01-50% the Morphus appears as a small humanoid robot with two arms and legs, or as a robotic upper torso on a tracked machine body or robotic spider body with 1D6+2 legs; stands 4-5 feet (1.2 to 1.5 m) tall. 51-00% the character appears as a large, bulky alien robot with a humanoid body, thick arms and legs, with a retractable forearm blade in one arm and a retractable drill or cutting torch (like a welder’s torch); both weapons inflict 3D6 damage. Whether small or large, the robot has no human facial appearance, it looks alien, weird and inhuman/mechanical. Bonuses: Small alien robot: +2D6x10+30 to S.D.C., a Natural A.R. of 15, +1D6+6 to Spd, +1 to save vs magic, and +1 to Horror Factor. 89 Joe Sifferman (Order #46323384) Large alien robot: +3D6x10+30 to S.D.C. and a Natural A.R. of 16, +1D4 to P.S., resistant to cold and heat (half damage), and +2 to Horror Factor. Small or large, they do not need to breathe and can function in a vacuum; depth tolerance is one mile (1.6 km) underwater. Penalties: Double the character’s weight in Morphus, -1D4 to P.B., disguise is impossible, cannot swim (sinks like a rock), and -30% to Acrobatics, Gymnastics, Cimbing and Prowl skills.",
+      "description": "The character appears as an alien robot or android. Whether small or large, the robot has no human facial appearance, it looks alien, weird and inhuman/mechanical[cite: 8].",
       "statModifiers": {
-        "spd": {
-          "flat": 6
-        },
-        "hf": {
-          "flat": 2
-        },
-        "ps": {
-          "dice": "1D4"
-        },
         "pb": {
           "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "3D6x10+30"
         }
       },
-      "naturalAr": 15,
-      "damageAffinities": {
-        "cold": 0.5,
-        "heat": 0.5
+      "weightModifier": {
+        "percent": 100
       },
-      "saveModifiers": {
-        "magic": 1
+      "survivalTraits": {
+        "noBreathingRequired": true
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "depthToleranceFeet": 5280,
+          "buoyancy": "sink"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
             "modifierPercent": -30
           }
         ]
       },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Retractable forearm blade or cutting torch",
-          "damageFormula": "3D6",
-          "isAdditiveToHth": false
-        }
-      ],
       "variantPercentiles": [
         {
           "roll": "01-50%",
-          "label": "Small alien robot",
-          "description": "+2D6×10+30 S.D.C., Natural A.R. 15, +1D6+6 Spd, +1 save vs magic, +1 Horror Factor."
+          "label": "Small Alien Robot",
+          "description": "Appears as a small humanoid robot with two arms and legs, or as a robotic upper torso on a tracked machine body or robotic spider body with 1D6+2 legs; stands 4-5 feet (1.2 to 1.5 m) tall[cite: 8].",
+          "statModifiers": {
+            "ar": {
+              "flat": 15,
+              "isOverride": true
+            },
+            "spd": {
+              "dice": "1D6+6"
+            },
+            "sdc": {
+              "dice": "2D6x10+30"
+            },
+            "hf": {
+              "flat": 1
+            }
+          },
+          "customOneOffs": [
+            "+1 to save vs magic[cite: 8]."
+          ]
         },
         {
           "roll": "51-00%",
-          "label": "Large alien robot",
-          "description": "+3D6×10+30 S.D.C., Natural A.R. 16, +1D4 P.S., half damage from cold and heat, +2 Horror Factor; retractable blade or torch (3D6)."
+          "label": "Large Alien Robot",
+          "description": "Appears as a large, bulky alien robot with a humanoid body, thick arms and legs, with a retractable forearm blade in one arm and a retractable drill or cutting torch[cite: 8].",
+          "statModifiers": {
+            "ar": {
+              "flat": 16,
+              "isOverride": true
+            },
+            "ps": {
+              "dice": "1D4"
+            },
+            "sdc": {
+              "dice": "3D6x10+30"
+            },
+            "hf": {
+              "flat": 2
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "misc_limbs",
+              "label": "Retractable Forearm Blade",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "misc_limbs",
+              "label": "Drill/Cutting Torch",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Resistant to cold and heat (half damage)[cite: 8]."
+          ]
         }
       ],
       "customOneOffs": [
-        "Weight is doubled in Morphus.",
-        "Functions in vacuum; depth tolerance one mile (5280 ft) underwater.",
-        "Apply small-robot or large-robot bonuses per sub-roll (see variantPercentiles)."
+        "Do not need to breathe and can function in a vacuum[cite: 8]."
       ]
     },
     {
@@ -357,16 +502,13 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide",
           "pageNumber": 90
         }
       ],
-      "description": "The Nightbane is not shaped like a human, but is actually a large floating sphere, 1D4+2 feet (0.9 to 1.8 m) in diameter. 01-50% organic body with human facial features that cover the surface of the front of the sphere, plus a pair of humanoid arms, hands, legs and feet. 51-00% entirely mechanical features, no legs, but has a pair of mechanical arms on the sides. The method of flight is undeterminable (Anti-gravity? Magic?); maximum altitude is 12 feet (3.6 m) off the ground and can float about the surface of water; and speed is ponderous. Bonuses: +2D4x10 to S.D.C., +1 to Natural A.R., +1 to I.Q., +1D4 to M.E., +2 on Perception Rolls, +5% to Tracking skills, +20% to Prowl, and +1 to Horror Factor. Penalties: Reduce Spd by half, -1D4 to P.B., disguise as a human is impossible, hovers above water and can also float on water (cannot sink), but is -10% on all skills that require the use of hands.",
+      "description": "The Nightbane is not shaped like a human, but is actually a large floating sphere, 1D4+2 feet (0.9 to 1.8 m) in diameter[cite: 8].",
       "statModifiers": {
         "iq": {
-          "flat": 1
-        },
-        "hf": {
           "flat": 1
         },
         "me": {
@@ -375,53 +517,69 @@
         "pb": {
           "dice": "-1D4"
         },
+        "spd": {
+          "percent": -50
+        },
         "sdc": {
           "dice": "2D4x10"
+        },
+        "ar": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxAltitudeFeet": 12
+        },
+        "aquaticTraits": {
+          "buoyancy": "float"
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
+            "targetValue": "tracking",
+            "modifierPercent": 5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
+            "targetValue": "prowl",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_tracking",
-            "modifierPercent": 5
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_trait",
-            "targetValue": "requires_dexterity",
+            "targetValue": "requires_hands",
             "modifierPercent": -10
           }
         ]
       },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "float"
-        }
-      },
-      "customOneOffs": [
-        "+1 to Natural A.R. Maximum flight/hover altitude 12 feet (3.6 m)."
-      ],
       "variantPercentiles": [
         {
           "roll": "01-50%",
-          "label": "Organic spheroid",
-          "description": "Human facial features on the sphere front; humanoid arms, hands, legs, and feet."
+          "label": "Organic Spheroid",
+          "description": "Organic body with human facial features that cover the surface of the front of the sphere, plus a pair of humanoid arms, hands, legs and feet[cite: 8]."
         },
         {
           "roll": "51-00%",
-          "label": "Mechanical spheroid",
-          "description": "Entirely mechanical features; no legs; mechanical arms on the sides."
+          "label": "Mechanical Spheroid",
+          "description": "Entirely mechanical features, no legs, but has a pair of mechanical arms on the sides[cite: 8]."
         }
+      ],
+      "customOneOffs": [
+        "The method of flight is undeterminable (Anti-gravity? Magic?); speed is ponderous[cite: 8].",
+        "Hovers above water and can also float on water (cannot sink)[cite: 8]."
       ]
     }
   ]

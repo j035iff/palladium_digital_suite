@@ -773,7 +773,9 @@
         {
           "limbName": "Flytrap Head/Maw",
           "quantity": 1,
-          "sdc": 64,
+          "sdc": {
+            "flat": 64
+          },
           "calledShotPenalty": -3
         }
       ],

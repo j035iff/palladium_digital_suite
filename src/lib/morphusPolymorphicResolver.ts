@@ -16,6 +16,15 @@ export function evaluatePolymorphicDice(notation: string): number {
   return neg ? -rolled : rolled
 }
 
+/** Human-readable label for UI (dice formula or flat value). */
+export function formatPolymorphicModifier(mod?: MorphusPolymorphicModifier): string {
+  if (!mod) return '—'
+  if (mod.dice) return mod.dice
+  if (mod.flat != null) return String(mod.flat)
+  if (mod.percent != null) return `${mod.percent >= 0 ? '+' : ''}${mod.percent}%`
+  return '—'
+}
+
 export function hasPolymorphicPayload(mod?: MorphusPolymorphicModifier): boolean {
   if (!mod) return false
   return (

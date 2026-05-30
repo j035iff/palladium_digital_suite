@@ -6,8 +6,8 @@
   "description": "Fantasy Morphus table. Add characteristic rows from the book.",
   "entries": [
     {
-      "id": "fantasy_aura_of_magical_power",
-      "name": "Aura of Magical Power",
+      "id": "fantasy_wizard_robes",
+      "name": "Wizard Robes",
       "tableCategory": "Fantasy",
       "gameSystems": [
         "nightbane"
@@ -19,147 +19,52 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is a character whose eyes and body glow with magical energy. The color of the magic energy varies with the individual and can be shades of white, yellow, orange, red, green, blue, purple and even black. The face of the character is different from that of his Facade, and may be more attractive, alien or demonic in appearance. Bonuses: +1D6+6 to Hit Points, +1D6x10 to P.P.E. +3 P.P.E. per level of experience, +2 to save vs magic, the effects and duration of magic cast against him are half, his own aura cannot be read, +5 to save vs possession, +4 to save vs magic cast by a Night Prince or Nightlord, +1 to M.A., and +1D4 to Awe/Horror Factor. Penalties: The glow cannot be disguised (the character glows right through clothing), making Prowl and Undercover Ops impossible. Furthermore, the character attracts considerable attention and is likely to be one of the first attacked in combat. Beings who can sense magic can sense this character’s presence at double their usual range.",
+      "description": "The Morphus is the classic wizard, complete with flowing grey or white beard, bushy eyebrows, tall pointed hat and a hooded robe[cite: 10]. The robe is made of a rich fabric and decorated in colorful magic symbols, runes, gemstones, and inscriptions along the edges of the sleeves, hem, collar and hood[cite: 10].",
       "statModifiers": {
-        "hp": {
-          "dice": "1D6+6"
+        "spd": {
+          "percent": -10
         },
-        "ma": {
-          "flat": 1
+        "sdc": {
+          "dice": "3D6"
         },
         "ppe": {
-          "dice": "1D6x10"
+          "dice": "3D6"
         },
         "hf": {
-          "dice": "1D4"
+          "flat": 1
         }
       },
       "saveModifiers": {
-        "magic": 2,
-        "possession": 5,
-        "nightlordMagic": 4
-      },
-      "progressionModifiers": {
-        "ppePerLevel": {
-          "flat": 3
-        }
-      },
-      "magicInteractionModifiers": {
-        "incomingMagic": {
-          "effectMultiplier": 0.5,
-          "durationMultiplier": 0.5
-        }
-      }
-    },
-    {
-      "id": "fantasy_branded_with_magic_symbols",
-      "name": "Branded with Magic Symbols",
-      "tableCategory": "Fantasy",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
-          "pageNumber": 90
-        }
-      ],
-      "description": "The Morphus is a muscular humanoid with dark skin (gray, brown, red, or purple), and a face covered in magic symbols and runes. Every inch of the body, from head to toe, is covered with the symbols. All are raised as if branded onto his skin. The symbols faintly glow whenever a Night Prince, Nightlord, or spell caster is within 100 feet (30.5 m) of the character, and they also glow when he is locked in combat. Bonuses: +6D6+6 to S.D.C., +1 to M.E. and P.E., +1 to Perception Rolls, impervious to possession and the bite/controlling powers of the vampire, +2 to save vs magic cast by a Night Prince or Nightlord, and +1D4 to Horror Factor. Penalties: -30% to Disguise and Undercover Ops.",
-      "statModifiers": {
-        "me": {
-          "flat": 1
-        },
-        "pe": {
-          "flat": 1
-        },
-        "perception": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "6D6+6"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
+        "magic": 1,
+        "possession": 2
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
+            "targetValue": "acrobatics",
+            "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -30
-          }
-        ]
-      },
-      "saveModifiers": {
-        "nightlordMagic": 2,
-        "immunities": [
-          "possession"
-        ]
-      }
-    },
-    {
-      "id": "fantasy_dragon_lord",
-      "name": "Dragon Lord",
-      "tableCategory": "Fantasy",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
-          "pageNumber": 91
-        }
-      ],
-      "description": "This Morphus is a large humanoid body covered in scales, with the neck and head of a dragon and a pair of large, leathery wings! Bonuses: +2D6x10 to S.D.C., Natural A.R. 12 (or +1D4 to and existing A.R.), +1 to Perception Rolls, +2D6 to Spd, +2 to Horror Factor, can breathe fire (30 foot/9.1 m range, each fiery blast counts as one melee attack and does 3D6 damage; double damage to Night Princes and Nightlords), can hover in mid-air, flying speed is triple the Spd attribute number, maximum altitude is 25,000 feet (7620 m), +1 to dodge in flight, and each wing has 1D6x10+50 S.D.C. (an attacker must make a “Called Shot” at a penalty of -2 to hit a wing). Penalties: Triple the character’s weight in Morphus, increase size by 20%, disguise is impossible, cannot swim (flounders for 1D6 minutes then sinks like a brick), and -50% to Acrobatics, Gymnastics, Climbing and Prowl skills. Wings fold up, but the character still cannot fit inside a car.",
-      "statModifiers": {
-        "perception": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 2
-        },
-        "dodge": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "2D6x10"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
+            "targetValue": "climbing",
+            "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -50
+            "targetValue": "gymnastics",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -5
           }
         ]
       },
-      "mobility": {
-        "aquaticTraits": {
-          "buoyancy": "sink"
-        }
-      },
-      "limbDurability": [
-        {
-          "limbName": "Wings",
-          "quantity": 2,
-          "sdc": 85
-        }
-      ],
-      "naturalAr": 12
+      "customOneOffs": [
+        "Adds +1 to Spell Strength if the character is a Mystic or Sorcerer[cite: 10]."
+      ]
     },
     {
       "id": "fantasy_enchanted_knight_armor",
@@ -175,8 +80,15 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is wearing of a suit of plate armor complete with helmet, however, the armor may have a demonic, monstrous or distorted features or proportions, as well as glowing eyes visible from behind the visor or from the eye slits, horns, spikes, and so on. Bonuses: +2D6x10+45 to S.D.C., Natural A.R. 14, +1 on initiative, +1 to parry and disarm, resistant to magic energy blasts including magic fire (half damage), +2 to save vs magic cast by a Night Prince or Nightlord, the armor cannot be forcibly removed, there is no movement penalty for the enchanted armor (no penalty to skills like Acrobatics, Climb, Prowl, etc.), and +1 to Horror Factor. Penalties: Double the character’s weight, increase height by 10%, -25% to Swimming due to weight, and cannot be disguised or easily concealed in Morphus (the armor is part of the character).",
+      "description": "The Morphus is wearing a suit of plate armor complete with helmet, however, the armor may have demonic, monstrous or distorted features or proportions, as well as glowing eyes visible from behind the visor or from the eye slits, horns, spikes, and so on[cite: 10].",
+      "naturalAr": 14,
       "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10+45"
+        },
+        "initiative": {
+          "flat": 1
+        },
         "parry": {
           "flat": 1
         },
@@ -185,14 +97,300 @@
         },
         "hf": {
           "flat": 1
-        },
-        "sdc": {
-          "dice": "2D6x10+45"
         }
       },
-      "naturalAr": 14,
       "saveModifiers": {
         "nightlordMagic": 2
+      },
+      "damageAffinities": {
+        "magicEnergy": 0.5
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "heightModifier": {
+        "percent": 10
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required",
+        "customClothingNote": "Cannot be disguised or easily concealed in Morphus (the armor is part of the character)[cite: 10]."
+      },
+      "customOneOffs": [
+        "Resistant to magic energy blasts including magic fire (half damage)[cite: 10].",
+        "The armor cannot be forcibly removed, there is no movement penalty for the enchanted armor[cite: 10]."
+      ]
+    },
+    {
+      "id": "fantasy_aura_of_magical_power",
+      "name": "Aura of Magical Power",
+      "tableCategory": "Fantasy",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90
+        }
+      ],
+      "description": "The Morphus is a character whose eyes and body glow with magical energy. The color of the magic energy varies with the individual and can be shades of white, yellow, orange, red, green, blue, purple and even black[cite: 10].",
+      "statModifiers": {
+        "ma": {
+          "flat": 1
+        },
+        "sdc": {
+          "flat": 0
+        },
+        "hp": {
+          "dice": "1D6+6"
+        },
+        "ppe": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "progressionModifiers": {
+        "ppePerLevel": {
+          "flat": 3
+        }
+      },
+      "saveModifiers": {
+        "magic": 2,
+        "possession": 5,
+        "nightlordMagic": 4
+      },
+      "magicInteractionModifiers": {
+        "incomingMagic": {
+          "effectMultiplier": 0.5,
+          "durationMultiplier": 0.5
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "His own aura cannot be read[cite: 10].",
+        "The glow cannot be disguised (the character glows right through clothing)[cite: 10].",
+        "Beings who can sense magic can sense this character's presence at double their usual range[cite: 10]."
+      ]
+    },
+    {
+      "id": "fantasy_branded_with_magic_symbols",
+      "name": "Branded with Magic Symbols",
+      "tableCategory": "Fantasy",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 90
+        }
+      ],
+      "description": "The Morphus is a muscular humanoid with dark skin (gray, brown, red, or purple), and a face covered in magic symbols and runes. Every inch of the body, from head to toe, is covered with the symbols. All are raised as if branded onto his skin[cite: 10].",
+      "statModifiers": {
+        "me": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "6D6+6"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "perception": {
+          "flat": 1
+        }
+      },
+      "saveModifiers": {
+        "nightlordMagic": 2,
+        "immunities": [
+          "possession",
+          "mindControl"
+        ]
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The symbols faintly glow whenever a Night Prince, Nightlord, or spell caster is within 100 feet (30.5 m) of the character, and they also glow when he is locked in combat[cite: 10].",
+        "Impervious to the bite and controlling powers of the vampire[cite: 10]."
+      ]
+    },
+    {
+      "id": "fantasy_prince_princess",
+      "name": "Prince/Princess",
+      "tableCategory": "Fantasy",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91
+        }
+      ],
+      "description": "The Morphus is an attractive human dressed in rich clothing, a flowing cape or cloak, and adorned with a crown, tiara, or gold wreath worn on the head[cite: 10].",
+      "statModifiers": {
+        "ma": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The character seems out of place in our modern world and cannot remove his crown[cite: 10].",
+        "Looked down upon by other Nightbane as a 'Ken' or 'Barbie'[cite: 10]."
+      ]
+    },
+    {
+      "id": "fantasy_stone_like_flesh",
+      "name": "Stone-Like Flesh",
+      "tableCategory": "Fantasy",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91
+        }
+      ],
+      "description": "The Morphus has a hide of rough stone more reminiscent of a Golem than a sculpted statue. Facial features are rough hewn and abstract, and the color of the stone can range from black or gray to browns, reds, yellows and marbled[cite: 10].",
+      "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "sdc": {
+          "dice": "2D4x10+22"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "heightModifier": {
+        "percent": 10
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -209,36 +407,154 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Nightbane has a pair of colorful or translucent insect-like wings on his back. The wings can be like those of a butterfly, dragonfly, wasps, or some weird, stylized faerie wing unlike anything found in nature. Bonuses: +2D6 to S.D.C., +1 to P.P., +1D6 to Spd, can hover in mid-air, flying speed is double the Spd attribute number, maximum altitude is 15,000 feet (4572 m), +2 to dodge in flight, and each wing has 1D6x10+11 S.D.C. (an attacker must make a “Called Shot” at a penalty of -3 to hit a wing). Penalties: Impossible to disguise, difficult to conceal wings, can not sit inside a vehicle without crushing wings, and custom clothing may be required.",
+      "description": "The Nightbane has a pair of colorful or translucent insect-like wings on his back. The wings can be like those of a butterfly, dragonfly, wasps, or some weird, stylized faerie wing unlike anything found in nature[cite: 10].",
       "statModifiers": {
         "pp": {
           "flat": 1
         },
-        "dodge": {
-          "flat": 2
+        "spd": {
+          "dice": "1D6"
         },
         "sdc": {
           "dice": "2D6"
+        }
+      },
+      "mobility": {
+        "flightEngine": {
+          "maxAltitudeFeet": 15000,
+          "flightCombatBonuses": {
+            "dodge": {
+              "flat": 2
+            }
+          }
+        }
+      },
+      "limbDurability": [
+        {
+          "limbName": "Faerie Wings",
+          "quantity": 2,
+          "sdc": {
+            "dice": "1D6x10+11"
+          },
+          "calledShotPenalty": -3
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required",
+        "customClothingNote": "Cannot sit inside a vehicle without crushing wings[cite: 10]."
+      },
+      "customOneOffs": [
+        "Can hover in mid-air[cite: 10].",
+        "Flying speed is double the Spd attribute number[cite: 10]."
+      ]
+    },
+    {
+      "id": "fantasy_wee_folk",
+      "name": "Wee Folk",
+      "tableCategory": "Fantasy",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 91
+        }
+      ],
+      "description": "The Morphus is like a fairy tale book elf or leprechaun. The build is human, but slight and delicate, the ears pointed, the face attractive and cute, the clothing like that of a fantasy ranger or jester, complete with a Robin Hood style hat, feather and all[cite: 10].",
+      "statModifiers": {
+        "ma": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "ppe": {
+          "dice": "4D6"
+        },
+        "dodge": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "-1D4"
+        }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "percent": 200
+          },
+          "runningHeight": {
+            "percent": 200
+          }
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "acrobatics",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "escape_artist",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "palming",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "pick_locks",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           }
         ]
       },
       "appearanceConstraints": {
-        "clothingFit": "custom_required"
+        "clothingFit": "custom_required",
+        "narrowOpeningAccess": "enhanced",
+        "customClothingNote": "Custom clothing, children's or even doll clothing are necessary to change the character's appearance[cite: 10]."
       },
-      "limbDurability": [
-        {
-          "limbName": "Wings",
-          "quantity": 2,
-          "sdc": 46
-        }
+      "customOneOffs": [
+        "Weight is 15 pounds (6.75 kg) per foot (0.3 m) of height in Morphus[cite: 10].",
+        "P.S. punch and kick damage (Supernatural or not) does half[cite: 10].",
+        "Can leap three times his height[cite: 10]."
       ]
     },
     {
@@ -255,7 +571,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus is an ogre clad in a loincloth and leather straps, a pair of gauntlets and armed with a large, wicked looking melee weapon that glows of magic (a battle axe, sword, morning star, mace, or club are most common; regardless of what it is, the weapon does 4D6 damage). This weapon may be lent to others, dropped, or stolen, but it will disappear when the ‘Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time. The weapon is a living part of the character. Bonuses: +2D4x10 to S.D.C., +2 to P.S., +1 to P.E., increase size by 20%, +1 to Horror Factor, and the weapon does double damage to Night Princes, Nightlords and demons. Penalties: Very tall, double weight, -1 to P.B., the face and voice is that of a brutish Ogre, all of which make disguise and Undercover Ops impossible. Prefers the use of his magic weapon and feels naked without it.",
+      "description": "The Morphus is an ogre clad in a loincloth and leather straps, a pair of gauntlets and armed with a large, wicked looking melee weapon that glows of magic[cite: 10].",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -263,64 +579,65 @@
         "pe": {
           "flat": 1
         },
-        "hf": {
-          "flat": 1
-        },
         "pb": {
           "flat": -1
         },
         "sdc": {
           "dice": "2D4x10"
-        }
-      }
-    },
-    {
-      "id": "fantasy_prince_princess",
-      "name": "Prince/Princess",
-      "tableCategory": "Fantasy",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
-          "pageNumber": 90
-        }
-      ],
-      "description": "The Morphus is an attractive human dressed in rich clothing, a flowing cape or cloak, and adorned with a crown, tiara, or gold wreath worn on the head. This character looks very much like a prince (or princess) from a book of fairy tales. Bonuses: +2D6 to S.D.C., +1 to M.A., +1D4 to P.B., and +1 to P.P. Penalties: The character seems out of place in our modern world and cannot remove his crown; -30% to Disguise and Undercover Ops skills. Looked down upon by other ‘Bane as a “Ken” or “Barbie.”",
-      "statModifiers": {
-        "ma": {
+        },
+        "hf": {
           "flat": 1
-        },
-        "pp": {
-          "flat": 1
-        },
-        "pb": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "2D6"
         }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "heightModifier": {
+        "percent": 20
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -30
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -30
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
-      }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Magic Weapon",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": true,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "nightlords",
+                "night_princes",
+                "demons"
+              ],
+              "damageMultiplier": 2
+            }
+          ]
+        }
+      ],
+      "livingWeaponRules": {
+        "preferredWeapon": true
+      },
+      "customOneOffs": [
+        "This weapon may be lent to others, dropped, or stolen, but it will disappear when the 'Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time[cite: 10].",
+        "The face and voice is that of a brutish Ogre[cite: 10]."
+      ]
     },
     {
-      "id": "fantasy_stone_like_flesh",
-      "name": "Stone-Like Flesh",
+      "id": "fantasy_dragon_lord",
+      "name": "Dragon Lord",
       "tableCategory": "Fantasy",
       "gameSystems": [
         "nightbane"
@@ -332,130 +649,115 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus has a hide of rough stone more reminiscent of a Golem than a sculpted statue. Facial features are rough hewn and abstract, and the color of the stone can range from black or gray to browns, reds, yellows and marbled. Bonuses: +2D4x10+22 to S.D.C., +1D4 to P.S., and +1 to Horror Factor. Penalties: Triple the character’s weight in Morphus, increase size by 10%, -1D4 to P.B., disguise is impossible, cannot swim (sinks like a brick), and -50% to Acrobatics, Gymnastics, Climbing and Prowl skills.",
+      "description": "This Morphus is a large humanoid body covered in scales, with the neck and head of a dragon and a pair of large, leathery wings[cite: 10].",
+      "naturalAr": 12,
       "statModifiers": {
-        "hf": {
-          "flat": 1
-        },
-        "ps": {
-          "dice": "1D4"
-        },
-        "pb": {
-          "dice": "-1D4"
+        "spd": {
+          "dice": "2D6"
         },
         "sdc": {
-          "dice": "2D4x10+22"
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 1
         }
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -50
-          }
-        ]
+      "weightModifier": {
+        "percent": 200
+      },
+      "heightModifier": {
+        "percent": 20
       },
       "mobility": {
+        "flightEngine": {
+          "maxAltitudeFeet": 25000,
+          "flightCombatBonuses": {
+            "dodge": {
+              "flat": 1
+            }
+          }
+        },
         "aquaticTraits": {
           "buoyancy": "sink"
         }
-      }
-    },
-    {
-      "id": "fantasy_wee_folk",
-      "name": "Wee Folk",
-      "tableCategory": "Fantasy",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
-          "pageNumber": 91
-        }
-      ],
-      "description": "The Morphus is like a fairy tale book elf or leprechaun. The build is human, but slight and delicate, the ears pointed, the face attractive and cute, the clothing like that of a fantasy ranger or jester, complete with a Robin Hood style hat, feather and all. Weight is 15 pounds (6.75 kg) per foot (0.3 m) of height in Morphus, and the Nightbane might be mistaken for a doll or a child. There are no faerie wings, but the Morphus is very nimble and fast. Bonuses: +1 to M.A., +1 to P.P., +1D6 to Spd, +4D6 to P.P.E., +2 dodge, can leap three times his height, can slip through small openings, and +15% to Acrobatics, Climb, Escape Artist, Gymnastics, Palming, Pick Lock and Prowl skills. Penalties: -1D4 to Horror Factor, P.S. punch and kick damage (Supernatural or not) does half, disguise is impossible, and custom clothing, children’s or even doll clothing are necessary to change the character’s appearance.",
-      "statModifiers": {
-        "ma": {
-          "flat": 1
-        },
-        "pp": {
-          "flat": 1
-        },
-        "ppe": {
-          "dice": "4D6"
-        },
-        "hf": {
-          "dice": "-1D4"
-        }
       },
+      "limbDurability": [
+        {
+          "limbName": "Dragon Wings",
+          "quantity": 2,
+          "sdc": {
+            "dice": "1D6x10+50"
+          },
+          "calledShotPenalty": -2
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "acrobatics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": 15
+            "targetValue": "swimming",
+            "impossibleInMorphus": true
           }
         ]
       },
-      "appearanceConstraints": {
-        "clothingFit": "custom_required"
-      }
-    },
-    {
-      "id": "fantasy_wizard_robes",
-      "name": "Wizard Robes",
-      "tableCategory": "Fantasy",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "naturalWeapons": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
-          "pageNumber": 90
+          "limbType": "misc_limbs",
+          "label": "Fire Breath",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false,
+          "rangeFeet": 30,
+          "conditionalTargetModifiers": [
+            {
+              "targetEnemies": [
+                "nightlords",
+                "night_princes"
+              ],
+              "damageMultiplier": 2
+            }
+          ]
         }
       ],
-      "description": "The Morphus is the classic wizard, complete with flowing grey or white beard, bushy eyebrows, tall pointed hat and a hooded robe. The robe is made of a rich fabric and decorated in colorful magic symbols, runes, gemstones, and inscriptions along the edges of the sleeves, hem, collar and hood. The hat is similarly decorated. While the colors, design, style and decorations may differ greatly from one character to another, there is no mistaking the occult nature of the garment. Bonuses: +3D6 to S.D.C., +1 to Spell Strength if the character is a Mystic or Sorcerer, +3D6 to P.P.E. base, +1 to save vs magic, +2 to save vs possession, and +1 to Awe/Horror Factor. Penalties: The robe reduces Spd by 10% and -5% to all Physical skills that require considerable freedom of movement and flexibility, such as Acrobatics, Climbing, Gymnastics, and Swimming (no penalty to Prowl).",
-      "statModifiers": {
-        "ppe": {
-          "dice": "3D6"
-        },
-        "sdc": {
-          "dice": "3D6"
-        },
-        "hf": {
-          "flat": 1
-        },
-        "spd": {
-          "percent": -10
-        }
+      "appearanceConstraints": {
+        "clothingFit": "oversized_required",
+        "narrowOpeningAccess": "restricted",
+        "customClothingNote": "Wings fold up, but the character still cannot fit inside a car[cite: 10]."
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "category",
-            "targetValue": "physical",
-            "modifierPercent": -5
-          }
-        ]
-      },
-      "saveModifiers": {
-        "magic": 1,
-        "possession": 2
-      }
+      "customOneOffs": [
+        "Adds +1D4 to an existing A.R. instead of establishing a base of 12[cite: 10].",
+        "Can hover in mid-air[cite: 10].",
+        "Flying speed is triple the Spd attribute number[cite: 10].",
+        "Cannot swim (flounders for 1D6 minutes then sinks like a brick)[cite: 10].",
+        "Each blast of fire breath counts as one melee attack[cite: 10]."
+      ]
     }
   ]
 }

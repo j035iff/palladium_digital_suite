@@ -17,7 +17,7 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "custom one-offs (notes only)",
-        "appearance constraints",
+        "independent sub-rolls",
         "player choices"
       ],
       "notesOnly": false
@@ -27,7 +27,8 @@
       "name": "Parasitic Alien",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "save modifiers"
+        "save modifiers",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
@@ -38,7 +39,9 @@
         "stat modifiers / A.R. shift",
         "skill overrides",
         "damage affinities",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "combat context modifiers",
+        "conditional penalties"
       ],
       "notesOnly": false
     },
@@ -47,11 +50,7 @@
       "name": "Alien Robotic Body",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "natural A.R.",
-        "save modifiers",
         "skill overrides",
-        "natural weapons",
-        "damage affinities",
         "custom one-offs (notes only)",
         "variant percentiles (notes)"
       ],
@@ -63,6 +62,7 @@
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
+        "flight engine",
         "custom one-offs (notes only)",
         "variant percentiles (notes)"
       ],

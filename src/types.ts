@@ -587,8 +587,8 @@ export type MorphusLimbDestructionConditionOverrides = {
 export type MorphusLimbDurability = {
   limbName: string
   quantity: number
-  sdc: number
-  hp?: number
+  sdc: MorphusPolymorphicModifier
+  hp?: MorphusPolymorphicModifier
   ar?: number
   calledShotPenalty?: number
   requiresCalledShot?: boolean
@@ -1102,6 +1102,8 @@ export type MorphusCharacteristic = {
   entryRole?: 'trait' | 'table_router' | 'subtable_header'
   /** Inner percentile bands inside one trait row (Junk Golem body type, Mirror Man style, etc.). */
   variantPercentiles?: readonly MorphusVariantPercentile[]
+  /** Multiple independent sub-table axes (e.g. B-Movie Alien Hands + Body Type). */
+  independentSubRolls?: readonly MorphusIndependentSubRoll[]
   /** Roll on another Morphus table (e.g. Stuffed Animal → animal_form). */
   crossTableRoll?: MorphusCrossTableRoll
   /** @deprecated Prefer typed capability fields; kept for legacy rows. */
@@ -1129,6 +1131,11 @@ export type MorphusVariantPercentile = {
   naturalWeapons?: readonly MorphusNaturalWeapon[]
   weightModifier?: MorphusPolymorphicModifier
   customOneOffs?: readonly string[]
+}
+
+export type MorphusIndependentSubRoll = {
+  tableName: string
+  options: readonly MorphusVariantPercentile[]
 }
 
 export type MorphusCrossTableRoll = {
@@ -1177,6 +1184,7 @@ export type MorphusCombatContextCondition =
   | 'grapple_defense'
   | 'physical_contact'
   | 'visual_engagement'
+  | 'submersion'
 
 export type MorphusCombatContextModifier = {
   condition: MorphusCombatContextCondition
@@ -1211,7 +1219,10 @@ export type MorphusRecoveryBehavior = {
   note?: string
 }
 
-export type MorphusConditionalPenaltyTrigger = 'cold_attack' | 'freezing_temperature'
+export type MorphusConditionalPenaltyTrigger =
+  | 'cold_attack'
+  | 'freezing_temperature'
+  | 'rain_or_water_exposure'
 
 export type MorphusConditionalPenalty = {
   trigger: MorphusConditionalPenaltyTrigger

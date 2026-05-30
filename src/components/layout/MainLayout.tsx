@@ -17,6 +17,7 @@ import {
   formatMorphusDamageAffinityMultiplier,
   GIMMICK_TOY_SWITCH_LOCATION_LABELS,
 } from '../../lib/morphusCharacteristicAggregation'
+import { formatPolymorphicModifier } from '../../lib/morphusPolymorphicResolver'
 import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
@@ -833,7 +834,8 @@ function MorphusTraitsPanel({
             >
               <span className="font-medium">{limb.limbName}</span>
               {' — '}
-              S.D.C. {limb.sdc}
+              S.D.C. {formatPolymorphicModifier(limb.sdc)}
+              {limb.hp != null ? ` · H.P. ${formatPolymorphicModifier(limb.hp)}` : ''}
               {limb.ar != null ? ` · A.R. ${limb.ar}` : ''}
               {limb.calledShotPenalty != null
                 ? ` · called shot ${limb.calledShotPenalty}`

@@ -44,6 +44,7 @@ const TS_TOP_LEVEL_FIELDS = {
   customOneOffs: 'customOneOffs?: readonly string[]',
   entryRole: "entryRole?: 'trait' | 'table_router' | 'subtable_header'",
   variantPercentiles: 'variantPercentiles?: readonly MorphusVariantPercentile[]',
+  independentSubRolls: 'independentSubRolls?: readonly MorphusIndependentSubRoll[]',
   crossTableRoll: 'crossTableRoll?: MorphusCrossTableRoll',
   morphusRules: 'morphusRules?: readonly MorphusEdgeCaseRule[]',
   appearanceConstraints: 'appearanceConstraints?: MorphusAppearanceConstraints',

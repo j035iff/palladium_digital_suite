@@ -298,7 +298,9 @@
         {
           "limbName": "Water Cooler Tank",
           "quantity": 1,
-          "sdc": 40
+          "sdc": {
+            "flat": 40
+          }
         }
       ],
       "naturalWeapons": [

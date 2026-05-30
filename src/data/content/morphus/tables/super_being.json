@@ -276,7 +276,9 @@
         {
           "limbName": "Cape",
           "quantity": 1,
-          "sdc": 0,
+          "sdc": {
+            "dice": "1D6x10+40"
+          },
           "ar": 14
         }
       ],
@@ -542,8 +544,12 @@
             {
               "limbName": "Glider Wing",
               "quantity": 2,
-              "sdc": 50,
-              "hp": 0
+              "sdc": {
+                "flat": 50
+              },
+              "hp": {
+                "flat": 0
+              }
             }
           ],
           "statModifiers": {

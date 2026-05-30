@@ -328,7 +328,9 @@
         {
           "limbName": "Neck",
           "quantity": 1,
-          "sdc": 0,
+          "sdc": {
+            "flat": 0
+          },
           "calledShotPenalty": -1
         }
       ]
@@ -518,7 +520,9 @@
         {
           "limbName": "Head",
           "quantity": 1,
-          "sdc": 0,
+          "sdc": {
+            "flat": 0
+          },
           "requiresCalledShot": true,
           "calledShotPenalty": -3
         }

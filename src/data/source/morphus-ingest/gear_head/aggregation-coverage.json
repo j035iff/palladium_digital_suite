@@ -18,9 +18,11 @@
       "name": "Coolant Tubes/Radiator",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "save modifiers",
         "damage affinities",
         "limb durability components",
-        "custom one-offs (notes only)"
+        "custom one-offs (notes only)",
+        "recovery behaviors"
       ],
       "notesOnly": false
     },
@@ -31,7 +33,7 @@
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
-        "damage affinities",
+        "natural weapons",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
@@ -59,10 +61,11 @@
       "notesOnly": false
     },
     {
-      "id": "gear_head_shocks_struts",
+      "id": "gear_head_shocks_and_struts",
       "name": "Shocks & Struts",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "terrain Spd multipliers",
         "skill overrides",
         "damage affinities",
         "custom one-offs (notes only)"
@@ -74,23 +77,26 @@
       "name": "Air Horn",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "natural weapons",
+        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "gear_head_searchlight_headlights",
-      "name": "Searchlight/Headlights",
+      "id": "gear_head_searchlights",
+      "name": "Searchlight(s)",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
+        "nightvision bonus",
         "combat interceptions",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "gear_head_winch_cable",
+      "id": "gear_head_winch_and_cable",
       "name": "Winch and Cable",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -105,12 +111,8 @@
       "name": "Chrome Job",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "natural A.R.",
         "skill overrides",
-        "natural weapons",
-        "damage affinities",
         "combat interceptions",
-        "limb durability components",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false

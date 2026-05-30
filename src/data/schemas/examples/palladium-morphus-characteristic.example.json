@@ -3,7 +3,9 @@
   "id": "morphus_example_winged_predator",
   "name": "Winged Predator (example)",
   "tableCategory": "Animal",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -40,7 +42,9 @@
   "saveModifiers": {
     "poison": 2,
     "mindControl": 2,
-    "immunities": ["mindControl"],
+    "immunities": [
+      "mindControl"
+    ],
     "comaDeath": {
       "percent": -10
     }
@@ -63,7 +67,9 @@
     },
     "conditionalTerrainModifiers": [
       {
-        "surfaceTypes": ["hard_flat"],
+        "surfaceTypes": [
+          "hard_flat"
+        ],
         "spdMultiplier": 2,
         "skillModifiers": {
           "specificSkillOverrides": [
@@ -76,7 +82,9 @@
         }
       },
       {
-        "surfaceTypes": ["rough_uneven"],
+        "surfaceTypes": [
+          "rough_uneven"
+        ],
         "spdMultiplier": 0.5
       }
     ],
@@ -114,7 +122,10 @@
     ],
     "burrowingEngine": {
       "feetPerMeleeRound": 3,
-      "allowedSubstrates": ["soil_dirt", "solid_rock"]
+      "allowedSubstrates": [
+        "soil_dirt",
+        "solid_rock"
+      ]
     }
   },
   "survivalTraits": {
@@ -169,14 +180,20 @@
     "cold": 2,
     "physical": 0.5,
     "sonic": 0.5,
-    "bypassesSdcAndArmor": ["silver", "magic"]
+    "bypassesSdcAndArmor": [
+      "silver",
+      "magic"
+    ]
   },
   "weaponClassBonuses": {
     "melee": {
       "flat": 1
     }
   },
-  "disabledNaturalAttackTags": ["kick", "bite"],
+  "disabledNaturalAttackTags": [
+    "kick",
+    "bite"
+  ],
   "gimmickInventory": [
     {
       "itemName": "Seltzer Bottle (example)",
@@ -184,7 +201,10 @@
       "usageLimit": 6,
       "regenerationRule": "per_transformation",
       "effectFormula": "1D4 irritant",
-      "traitFlags": ["infinite_ammo", "fragile"]
+      "traitFlags": [
+        "infinite_ammo",
+        "fragile"
+      ]
     },
     {
       "itemName": "Squirt Flower (example)",
@@ -196,7 +216,9 @@
         "resourceType": "hp",
         "value": 1
       },
-      "traitFlags": ["infinite_ammo"],
+      "traitFlags": [
+        "infinite_ammo"
+      ],
       "customOneOffs": [
         "Spend activation cost to squirt blood, kerosene, or mace instead of water."
       ]
@@ -208,7 +230,9 @@
       "label": "Raptor Talons",
       "damageFormula": "3D6",
       "isAdditiveToHth": true,
-      "weaponTraits": ["disarm_immune"],
+      "weaponTraits": [
+        "disarm_immune"
+      ],
       "damageModifier": {
         "percent": 50
       },
@@ -224,11 +248,18 @@
       "rangeFeet": 30,
       "conditionalTargetModifiers": [
         {
-          "targetEnemies": ["nightlords", "demons", "undead", "creatures_of_magic"],
+          "targetEnemies": [
+            "nightlords",
+            "demons",
+            "undead",
+            "creatures_of_magic"
+          ],
           "damageFlat": 14
         },
         {
-          "targetEnemies": ["creatures_of_magic"],
+          "targetEnemies": [
+            "creatures_of_magic"
+          ],
           "damageMultiplier": 0.5
         }
       ]
@@ -261,7 +292,9 @@
     {
       "limbName": "Wings",
       "quantity": 2,
-      "sdc": 40,
+      "sdc": {
+        "dice": "1D6x10+50"
+      },
       "ar": 8,
       "calledShotPenalty": -3,
       "destructionConditionOverrides": {
@@ -335,7 +368,9 @@
         {
           "limbName": "Forearm Plates",
           "quantity": 2,
-          "sdc": 15
+          "sdc": {
+            "flat": 15
+          }
         }
       ],
       "naturalWeapons": [
@@ -365,7 +400,65 @@
       }
     }
   ],
+  "independentSubRolls": [
+    {
+      "tableName": "Hands",
+      "options": [
+        {
+          "roll": "01-50%",
+          "label": "Clawed hands",
+          "naturalWeapons": [
+            {
+              "limbType": "claws",
+              "label": "Alien Claws",
+              "damageFormula": "2D6",
+              "isAdditiveToHth": true
+            }
+          ]
+        },
+        {
+          "roll": "51-00%",
+          "label": "Tentacle hands",
+          "statModifiers": {
+            "entangle": {
+              "flat": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tableName": "Body Type",
+      "options": [
+        {
+          "roll": "01-50%",
+          "label": "Blob",
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D6x10"
+            }
+          }
+        },
+        {
+          "roll": "51-00%",
+          "label": "Insectoid",
+          "statModifiers": {
+            "ar": {
+              "flat": 14,
+              "isOverride": true
+            }
+          }
+        }
+      ]
+    }
+  ],
   "combatContextModifiers": [
+    {
+      "condition": "submersion",
+      "target": "self",
+      "damagePerRound": "1D6",
+      "note": "Example: Extraterrestrial environmental damage while submerged."
+    },
     {
       "condition": "visual_engagement",
       "target": "opponent",
@@ -391,6 +484,13 @@
       "skillId": "skill_intimidation",
       "modifierPercent": 10,
       "context": "costumed"
+    }
+  ],
+  "conditionalPenalties": [
+    {
+      "trigger": "rain_or_water_exposure",
+      "spdMultiplier": 0.5,
+      "note": "Example: Extraterrestrial Morphus penalty when exposed to rain or standing water."
     }
   ],
   "customOneOffs": [

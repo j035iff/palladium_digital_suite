@@ -9,17 +9,21 @@
       "id": "gear_head_engine_block",
       "name": "Engine Block",
       "tableCategory": "Gear-Head",
-      "description": "Either replacing or built into the chest of this Nightbane is an entire engine block. This might be a min- iaturized car or truck engine, a motorcycle engine, etc. When sta- tionary, the engine constantly idles, but when the Nightbane is running or engaged in strenuous activity, it revs up just like the real thing. Bonuses: +3 to the P.S. attribute, +3D6+10 to Spd, +2D6x10 to S.D.C. with a base Natural A.R. of 10 (or +1 to an existing A.R. that is greater than 10), +2 to Horror Factor and +10% to all piloting skills that involve a motor. Penalties: -3 to the P.P. and P.B. attributes. Electrical and fire attacks inflict 50% more damage and the character will drown within 1D4+2 melee rounds if dropped into deep water in Morphus form (can’t hold breath or swim, too heavy). -30% to Climbing and Tailing. Skills like Acrobatics, Disguise, Gymnastics, Prowl, and Undercover Ops are impossible in this Morphus.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 33
+        }
+      ],
+      "description": "Either replacing or built into the chest of this Nightbane is an entire engine block. This might be a miniaturized car or truck engine, a motorcycle engine, etc. When stationary, the engine constantly idles, but when the Nightbane is running or engaged in strenuous activity, it revs up just like the real thing.",
       "naturalAr": 10,
       "statModifiers": {
         "ps": {
           "flat": 3
-        },
-        "spd": {
-          "flat": 10
-        },
-        "hf": {
-          "flat": 2
         },
         "pp": {
           "flat": -3
@@ -27,74 +31,92 @@
         "pb": {
           "flat": -3
         },
+        "spd": {
+          "dice": "3D6+10"
+        },
         "sdc": {
           "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "damageAffinities": {
         "electricity": 1.5,
         "fire": 1.5
       },
+      "mobility": {
+        "aquaticTraits": {
+          "buoyancy": "sink"
+        }
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
+            "targetType": "category",
+            "targetValue": "piloting",
+            "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "climbing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_tailing",
+            "targetValue": "tailing",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Drowns within 1D4+2 melee rounds if dropped into deep water in Morphus (cannot hold breath or swim).",
-        "Acrobatics, Disguise, Gymnastics, Prowl, and Undercover Ops are impossible in this Morphus."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
-        }
+        "Adds +1 to an existing A.R. that is greater than 10.",
+        "The character will drown within 1D4+2 melee rounds if dropped into deep water in Morphus form (can't hold breath or swim, too heavy)."
       ]
     },
     {
       "id": "gear_head_coolant_tubes_radiator",
       "name": "Coolant Tubes/Radiator",
       "tableCategory": "Gear-Head",
-      "description": "In place of veins, this character has transparent or translucent plastic tubes filled with blue or green liquid. In truth, this is ethylene glycol (antifreeze) and water, and the tubes all connect to a central radiator that juts from the abdomen or back. This radiator has 1D4x10+20 S.D.C. and an A.R. of 9, but is a relatively small target that requires a Called Shot at -3 to hit. Bonuses: +2 to the P.E. attribute, +2D6+10 to S.D.C. +1 to Horror Factor, the Nightbane is imper- vious to poisons/toxins as well as diseases that affect the blood, his blood is toxic to vampires (4D6 damage per sip) and cold, heat and fire (even magical) do half damage. Penalties: -2 to the P.B. and Spd attributes, and -1D6 P.P.E. If the radiator is ever completely destroyed, it will not regenerate as normal unless the Nightbane returns to Facade form for at least 1D4 hours. Without the radiator, the Morphus form takes double damage from fire and cold-based attacks and heals at half the normal rate (usually 5 S.D.C./H.P. per melee). Also, the leaking antifreeze makes the Nightbane much easier to track (+20% bonus to those tracking him).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 33
+        }
+      ],
+      "description": "In place of veins, this character has transparent or translucent plastic tubes filled with blue or green liquid. In truth, this is ethylene glycol (antifreeze) and water, and the tubes all connect to a central radiator that juts from the abdomen or back.",
       "statModifiers": {
         "pe": {
           "flat": 2
-        },
-        "hf": {
-          "flat": 1
         },
         "pb": {
           "flat": -2
@@ -104,25 +126,39 @@
         },
         "sdc": {
           "dice": "2D6+10"
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "hf": {
+          "flat": 1
         }
       },
+      "saveModifiers": {
+        "immunities": [
+          "disease",
+          "poison"
+        ]
+      },
       "damageAffinities": {
-        "fire": 2
+        "cold": 0.5,
+        "heat": 0.5,
+        "fire": 0.5
+      },
+      "sensory": {
+        "opponentTrackingBonusPercent": 20
       },
       "limbDurability": [
         {
-          "limbName": "Radiator",
+          "limbName": "Central Radiator",
           "quantity": 1,
-          "sdc": 30,
-          "hp": 0,
+          "sdc": {
+            "dice": "1D4x10+20"
+          },
           "ar": 9,
+          "requiresCalledShot": true,
           "calledShotPenalty": -3,
           "destructionConditionOverrides": {
-            "statModifiers": {
-              "spd": {
-                "percent": -10
-              }
-            },
             "damageAffinities": {
               "fire": 2,
               "cold": 2
@@ -130,102 +166,119 @@
           }
         }
       ],
-      "customOneOffs": [
-        "Radiator has 1D4x10+20 S.D.C. (localized component; default 30 in calculations).",
-        "Impervious to poisons/toxins and bloodborne diseases; blood is toxic to vampires (4D6 damage per sip).",
-        "If the radiator is destroyed it will not regenerate unless the Nightbane returns to Facade for at least 1D4 hours; Morphus then takes double fire/cold damage and heals at half rate (usually 5 S.D.C./H.P. per melee).",
-        "Leaking antifreeze grants pursuers +20% to Tracking."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
+      "recoveryBehaviors": [
         {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 33
+          "trigger": "destruction",
+          "lockoutHoursDice": "1D4",
+          "note": "Without the radiator, heals at half the normal rate (usually 5 S.D.C./H.P. per melee)."
         }
+      ],
+      "customOneOffs": [
+        "His blood is toxic to vampires (4D6 damage per sip).",
+        "The immunity to poisons, toxins, and diseases strictly applies to those that affect the blood."
       ]
     },
     {
       "id": "gear_head_exhaust_pipes",
       "name": "Exhaust Pipes",
       "tableCategory": "Gear-Head",
-      "description": "One or more metal pipes protrude from the shoulders or back of the Nightbane, releasing a steady stream of exhaust vapor. This exhaust is indistinguishable from vehicle exhaust (gas or diesel), though it contains carbon dioxide rather than carbon monoxide. The pipes themselves may look like any car, truck, or motorcycle exhaust, with or without a mufflerand are hot to the touch. Bonuses: +1 to the P.E. attribute, +3D6 to S.D.C., impervious to poisonous/toxic gas or fumes, including smoke, tear gas and knockout gas, and +1 to Horror Factor. Pen- alties: The Nightbane is much easier to locate due to the smell of the exhaust, heat of the pipes, and larger visual profile; -20% to the Prowl skill. The exhaust also hampers the character’s own sense of smell, so there is a -5 penalty to any Perception Rolls relying upon olfactory senses.",
-      "statModifiers": {
-        "pe": {
-          "flat": 1
-        },
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "3D6"
-        }
-      },
-      "damageAffinities": {
-        "poison": 0
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -20
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Impervious to poisonous/toxic gas or fumes, including smoke, tear gas, and knockout gas.",
-        "Easier to locate due to exhaust smell, heat, and larger profile (-20% Prowl).",
-        "Perception penalty applies only to olfactory senses."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 33
         }
       ],
+      "description": "One or more metal pipes protrude from the shoulders or back of the Nightbane, releasing a steady stream of exhaust vapor. The pipes themselves may look like any car, truck, or motorcycle exhaust, with or without a muffler, and are hot to the touch.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
       "saveModifiers": {
         "immunities": [
-          "gas",
-          "horrorFactor"
+          "gas"
         ]
-      }
+      },
+      "sensory": {
+        "perceptionSpecialties": {
+          "smell": -5
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Smoke Screen",
+          "damageFormula": "0",
+          "isAdditiveToHth": false,
+          "rangeFeet": 20,
+          "poison": {
+            "saveType": "gas",
+            "failDamageFormula": "Blindness and choking (-2 strike/parry/dodge)",
+            "passDamageFormula": "None"
+          }
+        }
+      ],
+      "customOneOffs": [
+        "The Nightbane is much easier to locate due to the smell of the exhaust, heat of the pipes, and larger visual profile."
+      ]
     },
     {
       "id": "gear_head_nitrous_bottles",
       "name": "Nitrous Bottles",
       "tableCategory": "Gear-Head",
-      "description": "Nitrous oxide is sometimes used in amateur street-racing and thrill-ride experiences. When injected into the engine it provides a short boost of power and speed at the risk of destroying the engine. This Morphus feature adds small nitrous tanks or “bottles” to the Nightbane’s back, body or upper legs to give him temporary speed boosts and the ability to leap 12 feet (3.7 m) high and up to 40 feet (12.2 m) across! Bonuses: Four times per hour, the character can hit the nitrous to enjoy a rocketing +70 Spd bonus (that’s a bonus of 50 mph/80 km added to his usual Spd). The speed boost lasts for 1D6 minutes at a time. During this period the Nightbane is +2 on initiative, +2 to dodge, and +3 to roll with impact. Penalties: -2 to the P.E. attribute, -1D6 to his base P.P.E., and the character is a speed-freak and/or thrill seeker who tends to be a daredevil who likes to take risks.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 34
+        }
+      ],
+      "description": "Small nitrous tanks or 'bottles' are grafted to the Nightbane's back, body or upper legs to give him temporary speed boosts.",
       "statModifiers": {
-        "dodge": {
-          "flat": 2
-        },
-        "rollWithPunch": {
-          "flat": 3
-        },
         "pe": {
           "flat": -2
+        },
+        "ppe": {
+          "dice": "-1D6"
         }
       },
       "mobility": {
         "jumpModifiers": {
           "standingHeight": {
-            "flat": 12
+            "flat": 12,
+            "isOverride": true
           },
           "standingDistance": {
-            "flat": 40
+            "flat": 40,
+            "isOverride": true
           }
         }
       },
       "activatedAbilities": [
         {
-          "abilityName": "Nitrous Oxide Injection",
+          "abilityName": "Nitrous Speed Boost",
           "chargesPerPeriod": 4,
           "resetPeriod": "hourly",
           "durationFormula": "1D6 minutes",
@@ -246,43 +299,47 @@
         }
       ],
       "customOneOffs": [
-        "Can leap 12 feet (3.7 m) high and up to 40 feet (12.2 m) across.",
-        "If a canister is ruptured with a Called Shot at -4, it explodes for 3D6 damage to the Nightbane."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 34
-        }
+        "The character is a speed-freak and/or thrill seeker who tends to be a daredevil who likes to take risks."
       ]
     },
     {
       "id": "gear_head_hydraulics",
       "name": "Hydraulics",
       "tableCategory": "Gear-Head",
-      "description": "The Morphus has hydraulic struts at- tached to his limbs, which are extendable. Arms and legs can stretch an additional three feet (0.9 m). Bonuses: Has an extend- ed reach, can perform power punches without using up two at- tacks, counts as one attack, can leap 10 feet (3 m) high or 20 feet (6.1 m) across, +1D6 to the Spd attribute, +1 to roll with impact, and +4D6 S.D.C. Penalties: -2 to dodge, and -20% to Acrobatics, Dance, Disguise, Gymnastics, and Undercover Ops.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 34
+        }
+      ],
+      "description": "The Morphus has hydraulic struts attached to his limbs, which are extendable. Arms and legs can stretch an additional three feet (0.9 m).",
       "statModifiers": {
-        "rollWithPunch": {
-          "flat": 1
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "4D6"
         },
         "dodge": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "4D6"
+        "rollWithPunch": {
+          "flat": 1
         }
       },
       "mobility": {
         "jumpModifiers": {
           "standingHeight": {
-            "flat": 10
+            "flat": 10,
+            "isOverride": true
           },
           "standingDistance": {
-            "flat": 20
+            "flat": 20,
+            "isOverride": true
           }
         }
       },
@@ -290,110 +347,190 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "dance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
-        "Extended reach; power punches count as one attack instead of two.",
-        "Can leap 10 feet (3 m) high or 20 feet (6.1 m) across."
-      ],
+        "Arms and legs can stretch an additional three feet (0.9 m).",
+        "Can perform power punches without using up two attacks, counts as one attack."
+      ]
+    },
+    {
+      "id": "gear_head_shocks_and_struts",
+      "name": "Shocks & Struts",
+      "tableCategory": "Gear-Head",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 34
         }
-      ]
-    },
-    {
-      "id": "gear_head_shocks_struts",
-      "name": "Shocks & Struts",
-      "tableCategory": "Gear-Head",
-      "description": "The Nightbane’s legs incorporate heavy-duty automotive shocks and struts capable of reducing the impact from falls and running. For Morphus forms with wheels in the place of legs, they are able to handle rough terrain without any difficulty and enjoy a 10% speed bonus. Bonuses: +3 to the Spd attribute, can drop from heights as great as 200 feet (61 m) and land on his feet without injury (only loses two melee attacks; no penalty if the drop or fall was from 60 feet/18.3 m or shorter), and is +4 to roll with falls and impact (half damage). Penalties: -1 to P.P. and P.B. attributes, -15% to skills like Acrobatics, Dance, Disguise, Gymnastics, and Undercover Ops.",
+      ],
+      "description": "The Nightbane's legs incorporate heavy-duty automotive shocks and struts capable of reducing the impact from falls and running.",
       "statModifiers": {
-        "spd": {
-          "flat": 3
-        },
         "pp": {
           "flat": -1
         },
         "pb": {
           "flat": -1
+        },
+        "spd": {
+          "flat": 3
+        },
+        "rollWithPunch": {
+          "flat": 4
         }
       },
       "damageAffinities": {
-        "falling": 0
+        "falling": 0.5
+      },
+      "mobility": {
+        "conditionalTerrainModifiers": [
+          {
+            "surfaceTypes": [
+              "rough_uneven"
+            ],
+            "spdMultiplier": 1.1
+          }
+        ]
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "dance",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -15
           }
         ]
       },
       "customOneOffs": [
-        "Can drop from up to 200 feet (61 m) and land on his feet without injury (loses two melee attacks; no penalty from 60 feet/18.3 m or less).",
-        "Morphus forms with wheels for legs enjoy +10% speed on rough terrain."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 34
-        }
+        "Can drop from heights as great as 200 feet (61 m) and land on his feet without injury (only loses two melee attacks; no penalty if the drop or fall was from 60 feet/18.3 m or shorter)."
       ]
     },
     {
       "id": "gear_head_air_horn",
       "name": "Air Horn",
       "tableCategory": "Gear-Head",
-      "description": "Incorporated into the character’s Morphus form is a large air horn similar to those used on eighteen-wheelers and locomotives. This horn is usually visible as several flared tubes sticking out of the Nightbane’s back, neck or shoulders. This horn can be heard for one mile (1.6 km) and can be used as a warning or signal. At close range, its blare is powerful enough to temporarily deafen anyone unprotected within a 25 foot (7.6 m) radius of the Nightbane). The deafness lasts for 1D4 melee rounds (15-60 seconds). Those affected are temporarily unable to hear sounds and are -4 on initiative and -2 to all combat rolls. Note that the character is unable to choose who is or isn’t af- fected. Everyone in the radius of effect is impacted; only the Nightbane himself is not affected. Bonuses: +1 to the P.E. at- tribute, +1D6 to S.D.C., impervious to loud sounds that would otherwise deafen other people. Penalties: -1D4 to base P.P.E., and the Nightbane is a bit hard of hearing, incurring a penalty of -3 to Perception Rolls involving sound, identifying and follow- ing/tracking sounds, and cannot hear whisper level sounds; -1 on initiative and may mishear/misunderstand something that could be important or lead to a misunderstanding/brawl or mistake on his part.",
-      "statModifiers": {
-        "pe": {
-          "flat": 1
-        },
-        "perception": {
-          "flat": -3
-        },
-        "sdc": {
-          "dice": "1D6"
-        }
-      },
-      "customOneOffs": [
-        "Horn audible up to one mile (1.6 km); within 25 feet (7.6 m) unprotected targets are deafened 1D4 melee rounds (-4 initiative, -2 to all combat rolls). Everyone in radius is affected except the Nightbane.",
-        "Impervious to loud sounds that would otherwise deafen others.",
-        "Cannot hear whispers; may mishear important sounds. Perception penalty applies to hearing, identifying, and tracking by sound."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 34
         }
+      ],
+      "description": "Incorporated into the character's Morphus form is a large air horn similar to those used on eighteen-wheelers and locomotives.",
+      "statModifiers": {
+        "pe": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6"
+        },
+        "ppe": {
+          "dice": "-1D4"
+        },
+        "initiative": {
+          "flat": -1
+        }
+      },
+      "damageAffinities": {
+        "sonic": 0
+      },
+      "sensory": {
+        "perceptionSpecialties": {
+          "sound": -3
+        },
+        "whisperHearingRangeFeet": 0
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Deafening Blare",
+          "damageFormula": "0",
+          "isAdditiveToHth": false,
+          "rangeFeet": 25,
+          "poison": {
+            "saveType": "poison",
+            "failDamageFormula": "Deafness (-4 init, -2 combat rolls for 1D4 rounds)",
+            "passDamageFormula": "None"
+          }
+        }
+      ],
+      "customOneOffs": [
+        "The horn can be heard for one mile (1.6 km) and can be used as a warning or signal.",
+        "May mishear/misunderstand something that could be important or lead to a misunderstanding."
       ]
     },
     {
-      "id": "gear_head_searchlight_headlights",
-      "name": "Searchlight/Headlights",
+      "id": "gear_head_searchlights",
+      "name": "Searchlight(s)",
       "tableCategory": "Gear-Head",
-      "description": "The character has 1D4 high-powered lights built into his torso, head, upper arms, or forearms near the wrist. These lights are capable of swiveling up to 30 degrees (or points where the arm points when in the forearms or where the head turns when in the head), and have the benefit of being able to penetrate even magical darkness, though at half their usual range and intensity. Bonuses: The searchlights can be engaged to see in the dark and through any magically created darkness as well as used to attempt to “parry” incoming Shadow or Darkness-based attacks (-3 to parry such attacks). If the parry is successful, the light completely negates them. Penalties: -1D6 base P.P.E. When any of the lights are on, Prowling is impossible. When off, the Nightbane is -10% to skills like Disguise and Undercover Ops.",
-      "statModifiers": {
-        "parry": {
-          "flat": -3
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 35
         }
+      ],
+      "description": "The character has 1D4 high-powered lights built into his torso, head, upper arms, or forearms near the wrist. These lights are capable of swiveling up to 30 degrees.",
+      "statModifiers": {
+        "ppe": {
+          "dice": "-1D6"
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 500
       },
       "specialCombatInterceptions": [
         {
@@ -405,158 +542,159 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "prowl",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -10
           }
         ]
       },
       "customOneOffs": [
-        "Lights engaged: see in the dark and through magically created darkness; Prowl is impossible.",
-        "Lights off: -10% to Disguise and Undercover Ops.",
-        "Successful parry with the lights completely negates Shadow or Darkness-based attacks."
-      ],
+        "The searchlights can be engaged to see in the dark and through any magically created darkness (at half their usual range and intensity).",
+        "If a parry against a Shadow/Darkness attack is successful, the light completely negates it.",
+        "The penalty to Disguise and Undercover Ops applies when the lights are off."
+      ]
+    },
+    {
+      "id": "gear_head_winch_and_cable",
+      "name": "Winch and Cable",
+      "tableCategory": "Gear-Head",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 34
+          "reference": "Dark Designs",
+          "pageNumber": 35
         }
-      ]
-    },
-    {
-      "id": "gear_head_winch_cable",
-      "name": "Winch and Cable",
-      "tableCategory": "Gear-Head",
-      "description": "This is a 50 foot (15 m) length of cable attached to a motorized spool, or winch. The winch may be built into the back, shoulder, or abdomen of the Nightbane Morphus or the ‘Bane may have cable coiled around his arms and torso. To unleash the cable, it can be fired or released from the Nightbane’s hands or wrists. Shooting out at its target as if they had a life of their own. The cable(s) automatically wrap and tie themselves to an inanimate object like a tree, lamppost, flag- pole, ledge or vehicle, with the other end remaining tethered to the Nightbane. This can be used to secure himself to particular location, to pull out a vehicle or person trapped in mud or water, etc., or to climb by having the cable snare a ledge or outcropping and using the winch to pull the ‘Bane to that location (or to lower him to the ground). Maximum range/length of cable is 50 feet (15.2 m) +1 foot (0.3 m) per level of experience. Against a live opponent, the Winch and Cable Morphus en- ables the Nightbane to unspool a 5-10 foot (1.5 to 3 m) length of cable he can use as a whip (one in each hand even), that inflicts 2D6 damage or can be used to try to disarm an opponent. Or the ‘Bane can entangle the legs or pin one or both arms of an oppo- nent with the cables (maximum one from each hand). The cables shooting out as if they were alive. Opponents can try to parry or dodge such attacks. Bonuses: +2 to the P.S. attribute, +2D6+8 to S.D.C., +1 to strike with cable, +2 to disarm, entangle or pin, +15% to the Climbing skill. The winch is capable of pulling twice the Nightbane’s maximum carry weight. Penalties: -1D6 to P.P.E. base, -1D6 to the Spd attribute, and -1 to dodge.",
+      ],
+      "description": "This is a 50 foot (15 m) length of cable attached to a motorized spool, or winch.",
       "statModifiers": {
         "ps": {
           "flat": 2
         },
-        "strike": {
-          "flat": 1
-        },
-        "disarm": {
-          "flat": 2
-        },
-        "entangle": {
-          "flat": 2
-        },
-        "dodge": {
-          "flat": -1
-        },
-        "ppe": {
+        "spd": {
           "dice": "-1D6"
         },
         "sdc": {
           "dice": "2D6+8"
+        },
+        "ppe": {
+          "dice": "-1D6"
+        },
+        "dodge": {
+          "flat": -1
+        },
+        "entangle": {
+          "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": 15
+          }
+        ]
       },
       "naturalWeapons": [
         {
           "limbType": "misc_limbs",
           "label": "Cable Whip",
           "damageFormula": "2D6",
-          "isAdditiveToHth": true
+          "isAdditiveToHth": false,
+          "strikeBonus": 1,
+          "disarmBonus": 2,
+          "rangeFeet": 50
         }
       ],
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": 15
-          }
-        ]
-      },
       "customOneOffs": [
-        "Cable can wrap inanimate objects or entangle/disarm/pin opponents (5–10 foot/1.5–3 m reach per cable).",
-        "Winch can pull twice the Nightbane's maximum carry weight."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 35
-        }
+        "Maximum range/length of cable is 50 feet (15.2 m) +1 foot (0.3 m) per level of experience.",
+        "The winch is capable of pulling twice the Nightbane's maximum carry weight.",
+        "Can pin one or both arms of an opponent (+2 to pin)."
       ]
     },
     {
       "id": "gear_head_chrome_job",
       "name": "Chrome Job",
       "tableCategory": "Gear-Head",
-      "description": "A Nightbane with this Morphus fea- ture has several metal accents incorporated into his physical form. These take the shape of bolt-heads, grilles, tanks, shielding on the side of the forearms and legs, and other such details, but all are polished chrome and gleam in the light. The Nightbane might even have a chrome head (+20 S.D.C. to the head) or chrome hands (+1D4 damage and can parry melee weapons with bare hands). Whether the bits are plain, ornate, or even futuristic, the end result is the same. Bonuses: +2D6+10 to S.D.C., +1 to Natu- ral A.R., +2 to roll with impact and +1 to Awe/Horror Factor. The character can also attempt to parry light-based attacks such as those from Guardians or high-tech laser weapons with only a -3 penalty to parry. Penalties: -10% to Prowl, -5% to Swimming, -20% to Disguise, Impersonation and Undercover Ops, and the Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per melee round).",
-      "naturalAr": 11,
-      "statModifiers": {
-        "rollWithPunch": {
-          "flat": 2
-        },
-        "sdc": {
-          "dice": "2D6+10"
-        },
-        "hf": {
-          "flat": 1
-        }
-      },
-      "damageAffinities": {
-        "lasers": 0.5,
-        "energy": 0.5
-      },
-      "specialCombatInterceptions": [
-        {
-          "interceptAction": "bare_handed_melee_parry",
-          "modifierFlat": 0
-        },
-        {
-          "interceptAction": "parry_lasers_light",
-          "modifierFlat": -3
-        }
-      ],
-      "limbDurability": [
-        {
-          "limbName": "Chrome Head",
-          "quantity": 1,
-          "sdc": 20,
-          "hp": 0,
-          "ar": 14,
-          "calledShotPenalty": -2
-        }
-      ],
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Chrome Hands",
-          "damageFormula": "1D4",
-          "isAdditiveToHth": true
-        }
-      ],
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -10
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Optional chrome head adds +20 S.D.C. to the head.",
-        "Heals 6 S.D.C./Hit Point per melee round (slower than usual 8/10)."
-      ],
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 35
         }
+      ],
+      "description": "A Nightbane with this Morphus feature has several metal accents incorporated into his physical form. These take the shape of bolt-heads, grilles, tanks, shielding on the side of the forearms and legs, and other such details, but all are polished chrome and gleam in the light.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6+10"
+        },
+        "ar": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "specialCombatInterceptions": [
+        {
+          "interceptAction": "parry_lasers_light",
+          "modifierFlat": -3
+        },
+        {
+          "interceptAction": "bare_handed_melee_parry",
+          "modifierFlat": 0
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "swimming",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The Nightbane might even have a chrome head (+20 S.D.C. to the head) or chrome hands (+1D4 damage).",
+        "The Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per melee round)."
       ]
     }
   ]

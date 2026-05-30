@@ -277,7 +277,9 @@
         {
           "limbName": "Torso Spine",
           "quantity": 1,
-          "sdc": 20,
+          "sdc": {
+            "flat": 20
+          },
           "calledShotPenalty": -3
         }
       ],

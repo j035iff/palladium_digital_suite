@@ -166,7 +166,9 @@
         {
           "limbName": "Flight Pack",
           "quantity": 1,
-          "sdc": 100,
+          "sdc": {
+            "flat": 100
+          },
           "calledShotPenalty": -3
         }
       ],

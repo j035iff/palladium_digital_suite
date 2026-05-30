@@ -64,7 +64,9 @@
         {
           "limbName": "Wing (each)",
           "quantity": 2,
-          "sdc": 50
+          "sdc": {
+            "dice": "1D6x10+50"
+          }
         }
       ],
       "mobility": {
@@ -276,7 +278,9 @@
         {
           "limbName": "Living Holy Weapon",
           "quantity": 1,
-          "sdc": 40
+          "sdc": {
+            "flat": 40
+          }
         }
       ],
       "livingWeaponRules": {
@@ -325,7 +329,9 @@
         {
           "limbName": "Living Holy Shield",
           "quantity": 1,
-          "sdc": 100
+          "sdc": {
+            "flat": 100
+          }
         }
       ],
       "livingWeaponRules": {

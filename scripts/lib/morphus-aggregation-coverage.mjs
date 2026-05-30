@@ -32,6 +32,7 @@ const HOOKS = [
   { path: 'conditionalStanceModifiers', label: 'stance modifiers' },
   { path: 'customOneOffs', label: 'custom one-offs (notes only)' },
   { path: 'variantPercentiles', label: 'variant percentiles (notes)' },
+  { path: 'independentSubRolls', label: 'independent sub-rolls' },
   { path: 'crossTableRoll', label: 'cross-table roll' },
   { path: 'entryRole', label: 'entry role (router/header)' },
   { path: 'appearanceConstraints', label: 'appearance constraints' },

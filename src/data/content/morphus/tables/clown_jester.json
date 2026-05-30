@@ -441,7 +441,9 @@
         {
           "limbName": "Balloons",
           "quantity": 11,
-          "sdc": 1,
+          "sdc": {
+            "flat": 1
+          },
           "requiresCalledShot": true
         }
       ],
