@@ -2,7 +2,7 @@
   "tableId": "occupation",
   "entries": [
     {
-      "id": "occupation_suit",
+      "id": "morphus_occupation_suit_consummate_professional",
       "name": "A Suit/Consummate Professional",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -12,48 +12,46 @@
       "notesOnly": false
     },
     {
-      "id": "occupation_uniform",
+      "id": "morphus_occupation_uniform_official",
       "name": "Uniform/Official",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides"
+        "skill overrides",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_hazardous_duty",
+      "id": "morphus_occupation_hazardous_duty",
       "name": "Hazardous Duty",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "save modifiers",
-        "custom one-offs (notes only)"
+        "save modifiers"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_communications",
+      "id": "morphus_occupation_communications",
       "name": "Communications",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "damage affinities",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_tools_trade",
+      "id": "morphus_occupation_tools_of_the_trade",
       "name": "Tools of the Trade",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_time_clock",
+      "id": "morphus_occupation_time_clock",
       "name": "Time Clock or Timepiece",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -63,54 +61,43 @@
       "notesOnly": false
     },
     {
-      "id": "occupation_water_cooler",
+      "id": "morphus_occupation_water_cooler",
       "name": "Water Cooler",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "natural weapons",
-        "limb durability components",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_mechanic",
+      "id": "morphus_occupation_mechanic",
       "name": "Mechanic/Mechanical",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "skill overrides"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_electrician",
+      "id": "morphus_occupation_electrician",
       "name": "Electrician/Electronic Devices",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural A.R.",
-        "skill overrides",
-        "damage affinities"
+        "damage affinities",
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "occupation_workaholic",
+      "id": "morphus_occupation_workaholic",
       "name": "Workaholic",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
         "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "occupation_other",
-      "name": "Other",
-      "hooks": [
-        "custom one-offs (notes only)",
-        "entry role (router/header)"
       ],
       "notesOnly": false
     }

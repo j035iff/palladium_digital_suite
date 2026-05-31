@@ -63,6 +63,10 @@
     "saveModifiers": {
       "$ref": "#/$defs/saveModifiers"
     },
+    "mentalTrauma": {
+      "$ref": "#/$defs/mentalTrauma",
+      "description": "Psychological consequences, phobias, and insanity rolls inflicted by this Morphus trait."
+    },
     "mobility": {
       "$ref": "#/$defs/mobility"
     },
@@ -931,6 +935,30 @@
         },
         "comaDeath": {
           "$ref": "#/$defs/polymorphicModifier"
+        }
+      }
+    },
+    "mentalTrauma": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "specificInsanities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Hardcoded psychological traumas granted automatically, e.g., 'phobia_heights'."
+        },
+        "randomPhobiaRolls": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of rolls the player must make on the Palladium Phobia table during character creation."
+        },
+        "randomInsanityRolls": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of rolls the player must make on the Palladium Random Insanity tables during character creation."
         }
       }
     },

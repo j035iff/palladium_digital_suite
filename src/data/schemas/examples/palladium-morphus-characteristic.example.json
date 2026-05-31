@@ -49,6 +49,13 @@
       "percent": -10
     }
   },
+  "mentalTrauma": {
+    "specificInsanities": [
+      "phobia_heights"
+    ],
+    "randomPhobiaRolls": 1,
+    "randomInsanityRolls": 1
+  },
   "mobility": {
     "flightEngine": {
       "flySpdAttribute": {

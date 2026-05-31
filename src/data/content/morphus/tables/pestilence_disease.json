@@ -6,10 +6,20 @@
   "description": "Pestilence & Disease Morphus table (Dark Designs pp. 46–47). Sickly, infectious, or disease-haunted forms.",
   "entries": [
     {
-      "id": "pestilence_disease_typhoid_mary_patient_zero",
+      "id": "morphus_pestilence_typhoid_mary",
       "name": "Typhoid Mary/Patient Zero",
       "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus is con- stantly sweaty, has sallow skin (a pasty yellow or pale brown color), rheumy eyes (rimmed in red), and raspy, labored breath- ing. Rattling coughs frequently rack the Nightbane’s body, which may appear slightly underweight, and thick mucus dribbles from the nose. Any clothing is usually disheveled and stained with un- identifiable bodily fluids. In short, the character always appears seriously ill, but otherwise functions just fine. Bonuses: +2 to the M.E. and P.E. attributes, +2D6 S.D.C. +4 to save vs disease, +1 to save vs possession and insanity and +1 to Horror Factor. Pen- alties: -1 to the M.A., -2 to P.B. and Spd attributes, -10% to skills like Disguise, Impersonation, Seduction and Undercover Ops.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 46
+        }
+      ],
+      "description": "The Morphus is constantly sweaty, has sallow skin (a pasty yellow or pale brown color), rheumy eyes (rimmed in red), and raspy, labored breathing. Rattling coughs frequently rack the Nightbane's body, which may appear slightly underweight, and thick mucus dribbles from the nose. Any clothing is usually disheveled and stained with unidentifiable bodily fluids. In short, the character always appears seriously ill, but otherwise functions just fine.",
       "statModifiers": {
         "me": {
           "flat": 2
@@ -17,8 +27,8 @@
         "pe": {
           "flat": 2
         },
-        "hf": {
-          "flat": 1
+        "sdc": {
+          "dice": "2D6"
         },
         "ma": {
           "flat": -1
@@ -29,8 +39,8 @@
         "spd": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "2D6"
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
@@ -42,36 +52,48 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -10
           }
         ]
-      },
+      }
+    },
+    {
+      "id": "morphus_pestilence_ebola",
+      "name": "Ebola/Bleeding",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 46
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_ebola_bleeding",
-      "name": "Ebola/Bleeding",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane’s cloth- ing or armor. When the ‘Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time. Bonuses: +1 to M.E. attribute, +2D6 S.D.C., +3 to Perception Rolls regarding disease, blood loss and vampires, +1 to save vs possession, and +2 to Horror Factor. A character with this feature can take the Blood- bath Elite Talent (see Nightbane® RPG, page 113, or the Talent Appendix in this book) at double the range and duration and use it without taking damage. Penalties: -2 to M.A., P.B. and Spd attri- butes, -20% to skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus and know the Nightbane is approaching long before he is seen. Likewise, the constantly oozing blood is likely to leave a blood trail that can be tracked (+15% to Tracking skill); the blood does NOT have the same DNA as the Facade. Some Nightbane with this Morphus develop a taste for blood and may drink the blood of their enemies.",
+      ],
+      "description": "The Morphus has a sickly pallor, hair is wet from sweat and plastered down on the head or head and neck, and blood oozes from the eyes, nose, and ears, with streams of blood that have dripped down the Nightbane's clothing or armor. When the 'Bane speaks, blood bubbles out from the corners of his mouth and makes a gurgling sound that may garble his words from time to time.",
       "statModifiers": {
         "me": {
           "flat": 1
         },
-        "perception": {
-          "flat": 3
-        },
-        "hf": {
-          "flat": 2
+        "sdc": {
+          "dice": "2D6"
         },
         "ma": {
           "flat": -2
@@ -82,60 +104,75 @@
         "spd": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "2D6"
+        "hf": {
+          "flat": 2
         }
       },
       "saveModifiers": {
-        "possession": 1
+        "possession": 1,
+        "mindControl": 1
+      },
+      "sensory": {
+        "opponentTrackingBonusPercent": 25
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "disguise",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_tracking",
-            "modifierPercent": 15
+            "targetValue": "impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
-        "+3 to Perception Rolls regarding disease, blood loss, and vampires.",
-        ".",
-        "Bloodbath Elite Talent at double range/duration without damage cost.",
-        "Vampires and blood-scent creatures +25% to track; blood trail +15% Tracking (blood DNA differs from Facade).",
-        "-20% Performance skills (not separately cataloged).",
-        "Some develop a taste for enemy blood."
-      ],
+        "+3 to Perception Rolls regarding disease, blood loss and vampires.",
+        "Can take the Bloodbath Elite Talent at double the range and duration and use it without taking damage.",
+        "Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus.",
+        "Constantly oozing blood leaves a blood trail (+15% to opponents' Tracking skill).",
+        "Some develop a taste for blood and may drink the blood of their enemies."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_anthrax",
+      "name": "Anthrax",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 46
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_anthrax",
-      "name": "Anthrax",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus is a human covered in red and white blisters, dark scabs, and scratch marks surrounded by redness and ulcers. The skin glistens from sweat due to fever, so the character feels hot to the touch, burning up with fever. The Nightbane has a persistent cough, wheezes when physically ac- tive and has a raspy voice when he or she speaks, like he has a sore throat. Bonuses: +1 to P.S. attribute, +3D6 S.D.C., +3 to Perception Rolls to recognize disease, +2 to save vs fever and il- lusions, and +1 to Horror Factor. Penalties: -2 to M.A., P.B. and Spd attributes, -15% to skills like Disguise, Impersonation, Per- formance, Prowl, Seduction and Undercover Ops, and a penalty of -5% to all other skills.",
+      ],
+      "description": "The Morphus is a human covered in red and white blisters, dark scabs, and scratch marks surrounded by redness and ulcers. The skin glistens from sweat due to fever, so the character feels hot to the touch, burning up with fever. The Nightbane has a persistent cough, wheezes when physically active and has a raspy voice when he or she speaks, like he has a sore throat.",
       "statModifiers": {
         "ps": {
           "flat": 1
         },
-        "perception": {
-          "flat": 3
-        },
-        "hf": {
-          "flat": 1
+        "sdc": {
+          "dice": "3D6"
         },
         "ma": {
           "flat": -2
@@ -146,44 +183,68 @@
         "spd": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "3D6"
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
+        "disease": 2,
         "illusions": 2
       },
       "skillModifiers": {
+        "globalSkillModifier": -5,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -15
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -10
           }
         ]
       },
       "customOneOffs": [
-        "+3 to Perception Rolls to recognize disease.",
-        "+2 to save vs fever (not a separate save type in schema).",
-        "-15% to Disguise, Impersonation, Performance, Prowl, Seduction, and Undercover Ops (-10% with global -5%); -5% to all other skills.",
-        "-15% Performance (not separately cataloged)."
-      ],
+        "+3 to Perception Rolls to recognize disease."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_creeping_crud",
+      "name": "Creeping Crud",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 46
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_creeping_crud",
-      "name": "Creeping Crud",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus is fairly normal look- ing, though he or she may be a different gender than the Facade, and the body is covered in some sort of crusty or scabby-looking crud that covers half the face, neck, hands, arms and chest. The crusty material can be black, white, grey, red, yellow, green or just about any color, and actually provides a bit of armor-like protection. In the alternative, the crud can be a slime or goo that resembles snot/mucus that seems to either ooze from the body or from open wounds to coat part of the body. Bonuses: +1 to P.S. and M.E. attributes +1D6x10+30 S.D.C., resistant to fire (half damage), and +2 to Horror Factor. Penalties: -2 to M.A. and P.B. attributes, -20% to skills like Barter, Disguise, Impersonation, Performance, Seduction and Undercover Ops.",
+      ],
+      "description": "The Morphus is fairly normal looking, though he or she may be a different gender than the Facade, and the body is covered in some sort of crusty or scabby-looking crud that covers half the face, neck, hands, arms and chest. The crusty material can be black, white, grey, red, yellow, green or just about any color, and actually provides a bit of armor-like protection. In the alternative, the crud can be a slime or goo that resembles snot/mucus that seems to either ooze from the body or from open wounds to coat part of the body.",
       "statModifiers": {
         "ps": {
           "flat": 1
@@ -191,8 +252,8 @@
         "me": {
           "flat": 1
         },
-        "hf": {
-          "flat": 2
+        "sdc": {
+          "dice": "1D6x10+30"
         },
         "ma": {
           "flat": -2
@@ -200,49 +261,72 @@
         "pb": {
           "flat": -2
         },
-        "sdc": {
-          "dice": "1D6x10+30"
+        "hf": {
+          "flat": 2
         }
       },
       "damageAffinities": {
-        "fire": 0.5,
-        "heat": 0.5
+        "fire": 0.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "barter",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
-        "May appear as a different gender than the Facade.",
-        "-20% Performance (not separately cataloged)."
-      ],
+        "Morphus may be a different gender than the Facade."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_bugs",
+      "name": "Pestilence/Bugs/Parasite Infestation",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 46
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_pestilence_bugs_parasite_infestation",
-      "name": "Pestilence/Bugs/Parasite Infestation",
-      "tableCategory": "Pestilence & Disease",
-      "description": "Half the face, neck, hands, arms, chest, back and legs are covered in maggots, worms, mites or other insects that seem to be eating through the Nightbane’s skin from the inside out, or he may be partially cov- ered in leeches or lamprey-like things and similar parasitic crea- tures. The Nightbane doesn’t seem to notice but most people will be revolted by this Morphus. The infestation provides a bit of armor-like protection. Bonuses: +1 to P.S. attribute, +5D6+20 S.D.C., +2 to save vs disease/infection, is impervious to the ven- om of insects, and +2 to Horror Factor. Penalties: -3 to M.A. and P.B. attributes, -30% to skills like Barter, Disguise, Imperson- ation, Performance, Seduction and Undercover Ops.",
+      ],
+      "description": "Half the face, neck, hands, arms, chest, back and legs are covered in maggots, worms, mites or other insects that seem to be eating through the Nightbane's skin from the inside out, or he may be partially covered in leeches or lamprey-like things and similar parasitic creatures. The Nightbane doesn't seem to notice but most people will be revolted by this Morphus. The infestation provides a bit of armor-like protection.",
       "statModifiers": {
         "ps": {
           "flat": 1
         },
-        "hf": {
-          "flat": 2
+        "sdc": {
+          "dice": "5D6+20"
         },
         "ma": {
           "flat": -3
@@ -250,48 +334,75 @@
         "pb": {
           "flat": -3
         },
-        "sdc": {
-          "dice": "5D6+20"
+        "hf": {
+          "flat": 2
         }
       },
       "saveModifiers": {
-        "disease": 2,
-        "immunities": [
-          "horrorFactor"
-        ]
+        "disease": 2
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "barter",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -30
           }
         ]
       },
       "customOneOffs": [
-        "Impervious to insect venom.",
-        "-30% Performance (not separately cataloged)."
-      ],
+        "Impervious to the venom of insects."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_life_support",
+      "name": "Life Support/Coma Victim",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 46
+          "reference": "Dark Designs",
+          "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_life_support_coma_victim",
-      "name": "Life Support/Coma Victim",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The Nightbane is dressed in a hospital gown with a number of tubes and wires at- tached to the body of the Morphus. Some are identifiable as I.V. lines, catheters, heart monitor leads, etc. There is also an oxy- gen mask or breathing tube that is easily visible, but the opposite ends of these lines are not attached to any machinery, leaving them dangling or floating in midair. To make things even more eerie, the sound of the missing machinery can still be faintly heard when close to the Nightbane (requires a Perception Roll of 12 or better), beeping, whirring, and hissing away. The figure looks gaunt, and somewhat zombie-like with sunken eyes and cheeks, and poor pallor. Bonuses: +3D6 to Hit Points, +1D4x10 to S.D.C. +20% to save vs coma and death, +2 to roll vs impact, +1 to save vs disease, +1 to Horror Factor and the Nightbane does not need air to breathe and can swim or remain underwater indefinitely! Penalties: -2 to the M.A., P.B. and Spd attributes, -2D6 from base P.P.E., -10% penalty on skills like Acrobatics, Climbing, Gymnastics, and Prowl, and -20% to Disguise, Imper- sonation, Performance, Seduction and Undercover Ops.",
+      ],
+      "description": "The Nightbane is dressed in a hospital gown with a number of tubes and wires attached to the body of the Morphus. Some are identifiable as I.V. lines, catheters, heart monitor leads, etc. There is also an oxygen mask or breathing tube that is easily visible, but the opposite ends of these lines are not attached to any machinery, leaving them dangling or floating in midair. To make things even more eerie, the sound of the missing machinery can still be faintly heard when close to the Nightbane, beeping, whirring, and hissing away. The figure looks gaunt, and somewhat zombie-like with sunken eyes and cheeks, and poor pallor.",
       "statModifiers": {
-        "hf": {
-          "flat": 1
+        "hp": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "rollWithPunch": {
+          "flat": 2
         },
         "ma": {
           "flat": -2
@@ -302,19 +413,21 @@
         "spd": {
           "flat": -2
         },
-        "hp": {
-          "dice": "3D6"
-        },
-        "sdc": {
-          "dice": "1D4x10"
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
+        "comaDeath": {
+          "percent": 20
+        },
         "disease": 1
+      },
+      "survivalTraits": {
+        "noBreathingRequired": true
       },
       "mobility": {
         "aquaticTraits": {
-          "noBreathingRequired": true,
           "canBreatheUnderwater": true
         }
       },
@@ -322,35 +435,82 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "performance",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
-        "+20% to save vs coma and death (partially in saveModifiers.comaDeath).",
-        "Faint beeping/whirring of missing machinery when within close range.",
-        "-20% Performance (not separately cataloged)."
-      ],
+        "Reduce base P.P.E. by 2D6 points."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_madness",
+      "name": "Madness/Mad Cow/Brain Worm",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 46
+          "reference": "Dark Designs",
+          "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_madness_mad_cow_brain_worm",
-      "name": "Madness/Mad Cow/Brain Worm",
-      "tableCategory": "Pestilence & Disease",
-      "description": "Much more com- mon in olden days or in countries that hold onto outdated views of mental illness, this feature occurs most often in those afraid that madness is contagious or caused by a parasite or disease. In modern, developed nations it may still be seen in those afraid of losing control of themselves due to illnesses such as dementia. This manifests with the Morphus having wide-open, bloodshot eyes, frazzled and unclean hair, a twitch and a generally unkempt appearance. The Nightbane foams at the mouth like a rabid dog when angry or upset, and may mutter or giggle to himself without realizing it. Bonuses: +1D4 to the P.S. and P.E. attributes, +1D6 to Spd, +5D6 to S.D.C., +3 to save vs insanity, and +1 to Horror Factor. Penalties: -3 to the M.E. attribute, -1 to M.A. and -5% on the performance of all skills. The character may be a bit absent- minded and forgetful.",
+      ],
+      "description": "Much more common in olden days or in countries that hold onto outdated views of mental illness, this feature occurs most often in those afraid that madness is contagious or caused by a parasite or disease. This manifests with the Morphus having wide-open, bloodshot eyes, frazzled and unclean hair, a twitch and a generally unkempt appearance. The Nightbane foams at the mouth like a rabid dog when angry or upset, and may mutter or giggle to himself without realizing it.",
       "statModifiers": {
-        "hf": {
-          "flat": 1
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "5D6"
         },
         "me": {
           "flat": -3
@@ -358,42 +518,38 @@
         "ma": {
           "flat": -1
         },
-        "ps": {
-          "dice": "1D4"
-        },
-        "sdc": {
-          "dice": "5D6"
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
         "insanity": 3
       },
       "skillModifiers": {
-        "globalSkillModifier": -5,
-        "specificSkillOverrides": []
+        "globalSkillModifier": -5
       },
       "customOneOffs": [
-        "Absent-minded and forgetful."
-      ],
+        "The character may be a bit absentminded and forgetful."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_swelling",
+      "name": "Swelling/Bloating",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 46
+          "reference": "Dark Designs",
+          "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_swelling_bloating",
-      "name": "Swelling/Bloating",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The Morphus’ limbs, abdomen, neck, and face are severely swollen and discolored. The abdomen is so distended that it makes the character appear overweight, and the neck is almost as wide as the head. Such is the circumfer- ence of the arms and legs that they almost appear to be missing the joints. All of the swelling takes on a dark purple, brown, or yellow cast and feels squishy to the touch. Bonuses: +3D6+12 S.D.C. Reduce all damage from falls, punches, kicks and blunt attacks by half. +1 to save vs disease, +1 to Horror Factor. Penal- ties: -1 to the P.P. and P.B. attributes, -1D4 to Spd, and a -10% penalty on skills like Acrobatics, Climbing, Gymnastics, Dis- guise, Impersonation, Swimming, Tailing and Undercover Ops.",
+      ],
+      "description": "The Morphus' limbs, abdomen, neck, and face are severely swollen and discolored. The abdomen is so distended that it makes the character appear overweight, and the neck is almost as wide as the head. Such is the circumference of the arms and legs that they almost appear to be missing the joints. All of the swelling takes on a dark purple, brown, or yellow cast and feels squishy to the touch.",
       "statModifiers": {
-        "hf": {
-          "flat": 1
+        "sdc": {
+          "dice": "3D6+12"
         },
         "pp": {
           "flat": -1
@@ -401,84 +557,89 @@
         "pb": {
           "flat": -1
         },
-        "sdc": {
-          "dice": "3D6+12"
+        "hf": {
+          "flat": 1
         }
+      },
+      "damageAffinities": {
+        "falling": 0.5,
+        "kinetic": 0.5,
+        "blunt": 0.5
       },
       "saveModifiers": {
         "disease": 1
-      },
-      "damageAffinities": {
-        "blunt": 0.5,
-        "falling": 0.5,
-        "kinetic": 0.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_acrobatics",
+            "targetValue": "acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_climbing",
+            "targetValue": "climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_gymnastics",
+            "targetValue": "gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
+            "targetValue": "impersonation",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_swim",
+            "targetValue": "swimming",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_tailing",
+            "targetValue": "tailing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "undercover_ops",
             "modifierPercent": -10
           }
         ]
       },
       "customOneOffs": [
-        "Half damage from falls, punches, kicks, and blunt attacks (partially in damageAffinities).",
-        "-10% Physical skills (partially modeled above)."
-      ],
+        "Reduce Spd attribute by 1D4."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_growths",
+      "name": "Malignant Growths",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_malignant_growths",
-      "name": "Malignant Growths",
-      "tableCategory": "Pestilence & Disease",
-      "description": "There are masses that distort the figure of the Morphus form. These may be very large, smooth lumps or clusters of smaller, irregular lumps and tumors. At least one of these masses disfigures the face while the rest are scattered over the rest of the body. These lumps may be dark brown or black melanoma-type masses or appear to be subcutaneous and just alter the shape of the body part. Bonuses: +1 to the M.E. at- tribute, +3D6 S.D.C, and +1 to Natural A.R. Penalties: -2 to the P.E. and P.B. attributes and -10% on Physical skills as well as Disguise, Impersonation, and Undercover Ops.",
+      ],
+      "description": "There are masses that distort the figure of the Morphus form. These may be very large, smooth lumps or clusters of smaller, irregular lumps and tumors. At least one of these masses disfigures the face while the rest are scattered over the rest of the body. These lumps may be dark brown or black melanoma-type masses or appear to be subcutaneous and just alter the shape of the body part.",
       "statModifiers": {
         "me": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "ar": {
           "flat": 1
         },
         "pe": {
@@ -489,34 +650,47 @@
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -10,
-        "specificSkillOverrides": []
-      },
-      "customOneOffs": [
-        "+1 Natural A.R. (modeled as statModifiers.ar flat +1).",
-        "-10% on Physical skills as well as Disguise, Impersonation, and Undercover Ops (global -10%)."
-      ],
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "impersonation",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -10
+          }
+        ]
+      }
+    },
+    {
+      "id": "morphus_pestilence_oozing_rash",
+      "name": "Oozing Rash",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_oozing_rash",
-      "name": "Oozing Rash",
-      "tableCategory": "Pestilence & Disease",
-      "description": "At least half of the Nightbane’s body, including parts of the face, is covered with a nasty, red rash. This rash constantly seeps clear pus and/or blood and there may be patches where the skin appears to have sloughed off, revealing raw, pink flesh beneath. Though it looks as if the rash would itch like crazy, it actually does not bother the Nightbane. Bonuses: +2 to the M.E. attribute, impervious to infection, and +2 to Horror Factor. If an opponent attempts to grapple with the character, he must first roll to save vs a Horror Factor of 16 regardless of the standard Horror Factor of the Nightbane. If this additional roll is failed, the opponent is disgusted by the ooze, hanging flesh and open sores and cannot bring himself to touch the Nightbane. Penalties: -2 to the M.A. and P.B. attributes, -1 to all Perception Rolls, -5% on all skills, -20% penalty on skills like Disguise, Im- personation, Performance, Seduction and Undercover Ops.",
+      ],
+      "description": "At least half of the Nightbane's body, including parts of the face, is covered with a nasty, red rash. This rash constantly seeps clear pus and/or blood and there may be patches where the skin appears to have sloughed off, revealing raw, pink flesh beneath. Though it looks as if the rash would itch like crazy, it actually does not bother the Nightbane.",
       "statModifiers": {
         "me": {
-          "flat": 2
-        },
-        "hf": {
           "flat": 2
         },
         "ma": {
@@ -524,6 +698,12 @@
         },
         "pb": {
           "flat": -2
+        },
+        "perception": {
+          "flat": -1
+        },
+        "hf": {
+          "flat": 2
         }
       },
       "skillModifiers": {
@@ -531,52 +711,58 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "modifierPercent": -20
+            "targetValue": "disguise",
+            "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
-            "modifierPercent": -20
+            "targetValue": "impersonation",
+            "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "modifierPercent": -20
+            "targetValue": "performance",
+            "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "modifierPercent": -20
+            "targetValue": "seduction",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
+            "modifierPercent": -15
           }
         ]
       },
-      "customOneOffs": [
-        "Impervious to infection.",
-        "Grapplers must save vs Horror Factor 16 or refuse to touch the Nightbane.",
-        "-20% Performance (not separately cataloged)."
+      "combatContextModifiers": [
+        {
+          "condition": "grappling",
+          "target": "opponent",
+          "horrorFactorFlat": 16,
+          "note": "Opponent must save vs Horror Factor 16 or be disgusted, losing one melee attack, initiative, and unable to touch the Nightbane."
+        }
       ],
+      "customOneOffs": [
+        "Impervious to infection."
+      ]
+    },
+    {
+      "id": "morphus_pestilence_infected_lesions",
+      "name": "Infected Lesions",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 47
         }
       ],
-      "saveModifiers": {
-        "immunities": [
-          "horrorFactor"
-        ]
-      }
-    },
-    {
-      "id": "pestilence_disease_infected_lesions",
-      "name": "Infected Lesions",
-      "tableCategory": "Pestilence & Disease",
-      "description": "The skin of the Morphus is dot- ted and crisscrossed with suppurating wounds. These are actu- ally deep holes and splits in the skin that look to be infected to the point of being gangrenous. This means that the tissue in the wounds is a sickly yellow or greenish color and smells terrible. The immediate area around each wound is an angry red color with streaks of red following the track of veins. A small num- ber of these lesions are severe enough to bleed continuously, and bone, cartilage, and other connective tissue may be visible at the bottom of the wound. Bonuses: +1 to the M.E. attribute, +1 to P.E., +2D6 to Hit Points, +2D6 S.D.C., +2 to save vs disease and poison, and +2 to Horror Factor. Penalties: -1 to the M.A. attri- bute, -2 to P.S. and P.B., and -20% penalty on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.",
+      "description": "The skin of the Morphus is dotted and crisscrossed with suppurating wounds. These are actually deep holes and splits in the skin that look to be infected to the point of being gangrenous. This means that the tissue in the wounds is a sickly yellow or greenish color and smells terrible. The immediate area around each wound is an angry red color with streaks of red following the track of veins. A small number of these lesions are severe enough to bleed continuously, and bone, cartilage, and other connective tissue may be visible at the bottom of the wound.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -584,8 +770,11 @@
         "pe": {
           "flat": 1
         },
-        "hf": {
-          "flat": 2
+        "hp": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "2D6"
         },
         "ma": {
           "flat": -1
@@ -596,11 +785,8 @@
         "pb": {
           "flat": -2
         },
-        "hp": {
-          "dice": "2D6"
-        },
-        "sdc": {
-          "dice": "2D6"
+        "hf": {
+          "flat": 2
         }
       },
       "saveModifiers": {
@@ -611,51 +797,50 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_disguise",
+            "targetValue": "disguise",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_impersonation",
+            "targetValue": "impersonation",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_seduction",
+            "targetValue": "performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "undercover_ops",
             "modifierPercent": -20
           }
         ]
-      },
-      "customOneOffs": [
-        "-20% Performance (not separately cataloged)."
-      ],
+      }
+    },
+    {
+      "id": "morphus_pestilence_buzzing_pests",
+      "name": "Buzzing Pests",
+      "tableCategory": "Pestilence & Disease",
       "gameSystems": [
         "nightbane"
       ],
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs",
           "pageNumber": 47
         }
-      ]
-    },
-    {
-      "id": "pestilence_disease_buzzing_pests",
-      "name": "Buzzing Pests",
-      "tableCategory": "Pestilence & Disease",
-      "description": "A small swarm or cloud of flying in- sects constantly circle or enshroud the Nightbane. Most common are biting pests such as mosquitoes and horseflies that are capable of spreading diseases, but the insects could be flies, gnats, tiny moths, and flying ants or other insects. While they alight on the Nightbane and anything or anyone nearby, strangely they never seem to actually bite. Swatting or otherwise killing any number of them has no effect either, as the bodies disappear and are im- mediately replaced within the swarm. Opponents trying to engage the Nightbane in hand to hand combat must deal with the insects flying into their eyes, ears, nose, and open mouth, making talk- ing difficult and imposing a -2 penalty on all combat rolls such as initiative, strike, parry, dodge, disarm, etc. 01-50% chance that trying to speak or cast a spell within a 3 foot (0.9 m) radius around the Nightbane causes the person to choke and cough on the insects that fly into the mouth, preventing the spell from be- ing finished. No loss of P.P.E., but no spell either. Bonuses: +3 to the M.E. attribute, +2 to save vs disease, resistant to insect venom (half damage, penalties and duration), and +1 to Horror Factor. Penalties: -3 to the M.A. attribute and -1 to P.B., -2 to base P.P.E., -3 to Perception Rolls, and -10% to Prowl. Skills such as Disguise and Undercover Ops are impossible.",
+      ],
+      "description": "A small swarm or cloud of flying insects constantly circle or enshroud the Nightbane. Most common are biting pests such as mosquitoes and horseflies that are capable of spreading diseases, but the insects could be flies, gnats, tiny moths, and flying ants or other insects. While they alight on the Nightbane and anything or anyone nearby, strangely they never seem to actually bite. Swatting or otherwise killing any number of them has no effect either, as the bodies disappear and are immediately replaced within the swarm.",
       "statModifiers": {
         "me": {
           "flat": 3
-        },
-        "hf": {
-          "flat": 1
         },
         "ma": {
           "flat": -3
@@ -665,40 +850,48 @@
         },
         "perception": {
           "flat": -3
+        },
+        "ppe": {
+          "flat": -2
+        },
+        "hf": {
+          "flat": 1
         }
       },
       "saveModifiers": {
         "disease": 2
       },
+      "combatContextModifiers": [
+        {
+          "condition": "physical_contact",
+          "target": "opponent",
+          "strike": -2,
+          "parry": -2,
+          "dodge": -2,
+          "note": "Insects fly into the opponent's eyes, ears, nose, and mouth, making talking difficult and penalizing combat rolls. 50% chance that trying to speak or cast a spell within a 3 foot radius causes coughing, interrupting the spell (no P.P.E. lost)."
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
+            "targetValue": "prowl",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -10
+            "targetValue": "undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Resistant to insect venom (half damage, penalties, and duration).",
-        "Opponents in hand-to-hand: -2 initiative, strike, parry, dodge, disarm, etc.; talking difficult.",
-        "01–50% chance speech or spellcasting within 3 ft fails (coughing on insects; no P.P.E. lost).",
-        "Disguise and Undercover Ops impossible."
-      ],
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
-          "pageNumber": 47
-        }
+        "Resistant to insect venom (half damage, penalties, and duration)."
       ]
     }
   ]

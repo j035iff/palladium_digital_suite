@@ -3,10 +3,10 @@
   "kind": "morphus_trait_table",
   "displayName": "Occupation",
   "parentTable": null,
-  "description": "Occupation Morphus table (Dark Designs pp. 43–45). Dream career or profession manifests as permanent Morphus features.",
+  "description": "Occupation Morphus table (Dark Designs pp. 43–45). Dream career or profession manifests as permanent Morphus features.[cite: 10]",
   "entries": [
     {
-      "id": "occupation_suit",
+      "id": "morphus_occupation_suit_consummate_professional",
       "name": "A Suit/Consummate Professional",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -19,7 +19,7 @@
           "pageNumber": 43
         }
       ],
-      "description": "Dressed in business attire, from khakis to designer suits. Moves with self-confidence and a sense of purpose.",
+      "description": "The Nightbane is dressed in business attire. Whether that's khakis and a polo shirt, designer dress/skirt and blouse, or top quality three-piece suit, in the absence of other Morphus features the character would not look out of place on Wall Street, Silicon Valley or any cubicle farm in the business world. The 'Bane also moves with a speed and deliberateness that bespeaks a great degree of self-confidence and sense of purpose. The character is a power-player and knows it.[cite: 10]",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -54,16 +54,20 @@
             "targetType": "category",
             "targetValue": "technical",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "modifierPercent": -5
           }
         ]
       },
       "customOneOffs": [
-        "Character is a power-player[cite: 3].",
-        "No Secondary Skills permitted[cite: 3]."
+        "No Secondary Skills as the character is focused only on his career.[cite: 10]"
       ]
     },
     {
-      "id": "occupation_uniform",
+      "id": "morphus_occupation_uniform_official",
       "name": "Uniform/Official",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -76,7 +80,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "Dressed as a medical professional, fireman, police, guard, pilot, mechanic, etc. The uniform is a symbol of authority and point of pride.",
+      "description": "The character's identity is tied to a specific service profession that is represented by its uniform. Medical professionals, firemen, police, guards, airline pilot, mechanic, and others have a highly visible style of dress that sets them apart from the public, and may be a symbol of authority, and often serves as a point of pride. The Nightbane's Morphus is dressed as one such profession, whether all the details of that uniform are accurate or even made up.[cite: 10]",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -97,7 +101,7 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_trait",
+            "targetType": "skill_id",
             "targetValue": "invoke_trust_intimidate",
             "modifierPercent": 5
           },
@@ -117,10 +121,13 @@
             "modifierPercent": -10
           }
         ]
-      }
+      },
+      "customOneOffs": [
+        "The Nightbane is unlikely to be fully trusted by criminals like the majority of the Warlords faction.[cite: 10]"
+      ]
     },
     {
-      "id": "occupation_hazardous_duty",
+      "id": "morphus_occupation_hazardous_duty",
       "name": "Hazardous Duty",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -133,11 +140,13 @@
           "pageNumber": 44
         }
       ],
-      "description": "Decked out in protective gear (e.g., bullet-proof vest, riot gear, Hazmat suit, heat-resistant suit).",
-      "naturalAr": 8,
+      "description": "The Morphus form is decked out in some kind of protective gear from one of a number of jobs. Examples of this include a bullet-proof vest, riot gear, construction (hard hat, heavy gloves and overalls), reflective clothes, Hazmat suit (full environmental), \"clean\" room gear (jumpsuit, hairnet, surgical gloves, surgical mask or re-breather) or even a heat-resistant \"volcano\" suit. Despite the wide variety of appearances possible with this feature, all provide the same bonuses.[cite: 10]",
       "statModifiers": {
         "pe": {
           "flat": 1
+        },
+        "sdc": {
+          "dice": "4D6"
         },
         "pp": {
           "dice": "-1D4"
@@ -145,22 +154,19 @@
         "spd": {
           "dice": "-1D6"
         },
-        "sdc": {
-          "dice": "4D6"
-        },
         "perception": {
           "flat": -1
         }
       },
+      "naturalAr": 8,
       "saveModifiers": {
-        "disease": 2
-      },
-      "customOneOffs": [
-        "Armor provides no protection against damage from disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers[cite: 3]."
-      ]
+        "disease": 2,
+        "gas": 2,
+        "poison": 2
+      }
     },
     {
-      "id": "occupation_communications",
+      "id": "morphus_occupation_communications",
       "name": "Communications",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -173,20 +179,14 @@
           "pageNumber": 44
         }
       ],
-      "description": "Has earplugs/headphones and radio equipment built into the body. Communicates across networks and systems (cellular, GPS, internet).",
+      "description": "The character has ear plugs or headphones or some similar device for his ears and some audio communication device such as a walkie-talkie, cell phone, electronic notepad or old-style telephone or CB radio type device built somewhere into his body and another in his pocket or in a case on his belt. This grants the Nightbane the ability to communicate with any type of wireless communications device and radios over a number of different types of networks and systems.[cite: 10]",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
         "ppe": {
           "dice": "-2D4"
         },
         "perception": {
-          "flat": -1
+          "dice": "-1D4"
         }
-      },
-      "damageAffinities": {
-        "electricity": 1.5
       },
       "skillModifiers": {
         "specificSkillOverrides": [
@@ -198,12 +198,12 @@
         ]
       },
       "customOneOffs": [
-        "Communications devices are untraceable by modern methods[cite: 3].",
-        "Can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range[cite: 3]."
+        "The Nightbane's own communications and devices are untraceable by modern methods. And did we mention there are no roaming charges?[cite: 10]",
+        "This character can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range.[cite: 10]"
       ]
     },
     {
-      "id": "occupation_tools_trade",
+      "id": "morphus_occupation_tools_of_the_trade",
       "name": "Tools of the Trade",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -216,7 +216,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "Gains 1D4+3 items critical to chosen profession. May be handheld or grafted/replaced fingers.",
+      "description": "The Nightbane has a handful of items when the Morphus form is assumed. These 1D4+3 items are devices or tools of critical importance to the character's chosen profession. For example, a mechanic might have a large wrench, socket set, pair of screwdrivers, pliers, a hammer and a voltmeter.[cite: 10]",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -231,22 +231,15 @@
           "dice": "-1D6"
         }
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_trait",
-            "targetValue": "occupational_tools",
-            "modifierPercent": 5
-          }
-        ]
-      },
       "customOneOffs": [
-        "Conjure 1D4+3 profession items (1 P.P.E. per item) by visualizing what is needed[cite: 3].",
-        "Tools reload/recharge every hour with a full payload[cite: 3]."
+        "Any Tools of the Trade function and behave the same as normal, but only have 3D6 S.D.C. each and disappear for 24 hours when lost or destroyed.[cite: 10]",
+        "Those tools or devices that require batteries never run low, and ammunition or similar supplies start fully loaded and (magically?) reload/recharge every hour with a full payload.[cite: 10]",
+        "+5% to all O.C.C. Skills that relate to the tools and the trade, like mechanical or electrical repair, maintenance, etc.[cite: 10]",
+        "Some tools may be suitable as weapons, but the vast majority only deal 1D4 to 1D6 damage.[cite: 10]"
       ]
     },
     {
-      "id": "occupation_time_clock",
+      "id": "morphus_occupation_time_clock",
       "name": "Time Clock or Timepiece",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -259,16 +252,16 @@
           "pageNumber": 44
         }
       ],
-      "description": "Built-in time clock or electronic scanner displays current time accurately.",
+      "description": "Built into the chest of the Morphus is a boxy device used by many employers to track the attendance of hourly workers. This might be an older \"punch\" device or a newer electronic scanner. Either type accurately displays the current time to the second.[cite: 10]",
       "statModifiers": {
         "pe": {
           "flat": 2
         },
-        "ma": {
-          "flat": -2
-        },
         "sdc": {
           "dice": "2D4"
+        },
+        "ma": {
+          "flat": -2
         },
         "perception": {
           "flat": -1
@@ -278,7 +271,6 @@
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": 5,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -287,18 +279,30 @@
           },
           {
             "targetType": "skill_id",
+            "targetValue": "dance",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
             "targetValue": "performance",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "math",
             "modifierPercent": 5
           }
         ]
       },
       "customOneOffs": [
-        "Speed penalty listed in book (-2 Spd) is offset by bonus (+2 Spd), resulting in net 0 Spd change[cite: 3].",
-        "Always on time, but anxiety-prone regarding punctuality[cite: 3]."
+        "Spd modifiers sum to zero (+2 from mechanics, -2 from penalties).[cite: 10]",
+        "The character is able to accurately sense the exact time and the passage of time while in Morphus form.[cite: 10]",
+        "Provides a +5% bonus to skills related to time and timing such as Demolitions, Dance, Mathematical calculations, Performance, etc., including time anomalies.[cite: 10]",
+        "The character is always on time, though a bit anxiety prone and overly concerned with punctuality.[cite: 10]"
       ]
     },
     {
-      "id": "occupation_water_cooler",
+      "id": "morphus_occupation_water_cooler",
       "name": "Water Cooler",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -311,7 +315,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "Large, translucent tank (usually on back) connected to a spigot dispensing potable drink. Character has an affable, easy-going air.",
+      "description": "The Nightbane has a large, multi-gallon, plastic or glass tank incorporated into his body, usually mounted on the back. This tank is translucent, revealing water, coffee, or another drink as its contents. It is connected to a small spigot that can be used to indefinitely dispense the potable drink. In addition, the Nightbane seems to have an affable, easy-going air in casual situations and is often given to lengthy discussions or gossip.[cite: 10]",
       "statModifiers": {
         "ma": {
           "dice": "1D4+2"
@@ -325,9 +329,6 @@
         "spd": {
           "dice": "-1D4"
         },
-        "sdc": {
-          "dice": "2D6+10"
-        },
         "dodge": {
           "flat": -1
         },
@@ -335,17 +336,6 @@
           "flat": -2
         }
       },
-      "limbDurability": [
-        {
-          "limbName": "Water Tank",
-          "quantity": {
-            "flat": 1
-          },
-          "sdc": {
-            "flat": 40
-          }
-        }
-      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {
@@ -375,28 +365,14 @@
           }
         ]
       },
-      "naturalWeapons": [
-        {
-          "limbType": "misc_limbs",
-          "label": "Water Blast",
-          "damageFormula": "2D6",
-          "isAdditiveToHth": false,
-          "conditionalTargetModifiers": [
-            {
-              "targetEnemies": [
-                "vampires"
-              ],
-              "damageMultiplier": 1
-            }
-          ]
-        }
-      ],
       "customOneOffs": [
-        "Never thirsty; immune to dehydration[cite: 3]."
+        "The character does not require any hydration while in Morphus form and is never thirsty.[cite: 10]",
+        "Can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container.[cite: 10]",
+        "The tank has 40 S.D.C. and is always two-thirds full and weighs 25 pounds (11 kg), which causes sloshing that penalizes physical skills.[cite: 10]"
       ]
     },
     {
-      "id": "occupation_mechanic",
+      "id": "morphus_occupation_mechanic",
       "name": "Mechanic/Mechanical",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -409,65 +385,34 @@
           "pageNumber": 45
         }
       ],
-      "description": "Gears, springs, pulleys, nuts and bolts built into the body. Good with hands, loves to build or take things apart.",
-      "naturalAr": 10,
+      "description": "The Nightbane's profession involves making and/or repairing machines, whether it is clocks or toasters to air conditioners and automobiles/vehicle engines. This 'Bane is good with his hands and likes to build or take things apart. His Morphus has gears, springs, pulleys, nuts and bolts either built right into his body or as a sort of weird piecemeal armor bolted to parts of his body.[cite: 10]",
       "statModifiers": {
         "ps": {
           "flat": 2
         },
         "pp": {
-          "flat": 1
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D6x10+20"
         },
         "pb": {
           "flat": -1
         },
         "spd": {
-          "dice": "-1D6"
-        },
-        "sdc": {
-          "dice": "1D6x10+40"
-        },
-        "perception": {
-          "flat": 1
+          "dice": "-1D4"
         }
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "category",
-            "targetValue": "mechanical",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "acrobatics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "prowl",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "swimming",
-            "modifierPercent": -10
-          }
-        ]
-      }
+      "naturalAr": 10,
+      "customOneOffs": [
+        "+2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it.[cite: 10]",
+        "-2 on all Perception Rolls when caught up in examining or working on machines.[cite: 10]",
+        "+10% bonus to skills related to mechanics and mechanical repair.[cite: 10]",
+        "The character tends to enjoy working on machines than hanging out with people.[cite: 10]"
+      ]
     },
     {
-      "id": "occupation_electrician",
+      "id": "morphus_occupation_electrician",
       "name": "Electrician/Electronic Devices",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -480,45 +425,34 @@
           "pageNumber": 45
         }
       ],
-      "description": "Wires, microchips and circuit boards built into the body. Eyes probably dim LED lights.",
-      "naturalAr": 9,
+      "description": "The Nightbane's profession involves making and/or repairing cell phones, computers, and electronic devices, or he is an electrician who rewires entire houses and electrical systems. This 'Bane is good with his hands and likes to build or take part electrical devices. His Morphus has wires, microchips and circuit boards built right into his body or as a sort of weird piecemeal armor attached to or coming out of his body. Eyes are probably dim LED lights.[cite: 10]",
       "statModifiers": {
         "pp": {
           "flat": 2
+        },
+        "sdc": {
+          "dice": "4D6+6"
         },
         "pe": {
           "flat": -1
         },
         "spd": {
           "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "4D6+6"
-        },
-        "perception": {
-          "flat": 1
         }
       },
+      "naturalAr": 9,
       "damageAffinities": {
         "electricity": 0.5
       },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "category",
-            "targetValue": "electrical",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "category",
-            "targetValue": "computer",
-            "modifierPercent": 5
-          }
-        ]
-      }
+      "customOneOffs": [
+        "+2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them.[cite: 10]",
+        "-3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices.[cite: 10]",
+        "+5% bonus to skills related to electronics and electrical repair and computers.[cite: 10]",
+        "The character tends to lose himself in electronic devices, losing track of time and the things going on around him.[cite: 10]"
+      ]
     },
     {
-      "id": "occupation_workaholic",
+      "id": "morphus_occupation_workaholic",
       "name": "Workaholic",
       "tableCategory": "Occupation",
       "gameSystems": [
@@ -531,7 +465,7 @@
           "pageNumber": 45
         }
       ],
-      "description": "Haggard, disheveled look, bloodshot eyes, dark circles/bags underneath/around the eyes, pale complexion.",
+      "description": "The character's Morphus form has a haggard, disheveled look with bloodshot eyes and dark circles and bags underneath/around the eyes, a pale complexion, messy hair, and wrinkled or sweat-stained clothes, all of which speak to a long period of hard work without sleep. Males may also have a five o'clock shadow while all genders may also carry a tea or coffee mug or can of soda with them - or as the Morphus, have a device built into their body with tubes that pump caffeine into their bodies.[cite: 10]",
       "statModifiers": {
         "me": {
           "flat": 2
@@ -543,10 +477,7 @@
           "flat": -2
         },
         "spd": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "1D4x10"
+          "flat": -2
         },
         "perception": {
           "flat": -2
@@ -565,41 +496,41 @@
             "modifierPercent": -5
           },
           {
-            "targetType": "skill_id",
+            "targetType": "category",
             "targetValue": "piloting",
             "modifierPercent": -5
           },
           {
+            "targetType": "category",
+            "targetValue": "electrical",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "mechanical",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "category",
+            "targetValue": "medical",
+            "modifierPercent": -5
+          },
+          {
             "targetType": "skill_id",
-            "targetValue": "demolitions",
+            "targetValue": "military",
+            "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "wilderness",
             "modifierPercent": -5
           }
         ]
       },
       "customOneOffs": [
-        "Needs only half the amount of sleep as a normal person[cite: 3].",
-        "Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty[cite: 3].",
-        "01-50% chance of falling asleep on guard duty or as a lookout[cite: 3]."
-      ]
-    },
-    {
-      "id": "occupation_other",
-      "name": "Other",
-      "tableCategory": "Occupation",
-      "entryRole": "table_router",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs",
-          "pageNumber": 45
-        }
-      ],
-      "description": "Random roll or choose another table and relate the result to the character's actual or fantasy occupation.",
-      "customOneOffs": [
-        "Likely alternatives include Biomechanical, Artificial Appearance, or Animal tables[cite: 3]."
+        "The Nightbane needs only half the amount of sleep as a normal person.[cite: 10]",
+        "-5% penalty to skills that require focus and brain power. Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty.[cite: 10]",
+        "01-50% chance of falling asleep on guard duty or as a lookout.[cite: 10]"
       ]
     }
   ]

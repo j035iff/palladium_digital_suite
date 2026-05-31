@@ -2,7 +2,7 @@
   "tableId": "sci-fi",
   "entries": [
     {
-      "id": "sci_fi_light_sci_fi_armor",
+      "id": "morphus_sci_fi_light_armor",
       "name": "Light Sci-Fi Armor",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -14,7 +14,7 @@
       "notesOnly": false
     },
     {
-      "id": "sci_fi_heavy_sci_fi_armor",
+      "id": "morphus_sci_fi_heavy_armor",
       "name": "Heavy Sci-Fi Armor",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -27,7 +27,7 @@
       "notesOnly": false
     },
     {
-      "id": "sci_fi_flight_pack_thrusters",
+      "id": "morphus_sci_fi_flight_pack",
       "name": "Flight Pack/Thrusters",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -38,17 +38,8 @@
       "notesOnly": false
     },
     {
-      "id": "sci_fi_energy_blaster",
+      "id": "morphus_sci_fi_energy_blaster",
       "name": "Energy Blaster",
-      "hooks": [
-        "stat modifiers / A.R. shift",
-        "custom one-offs (notes only)"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "sci_fi_melee_weapons",
-      "name": "Sci-Fi Melee Weapon(s)",
       "hooks": [
         "stat modifiers / A.R. shift",
         "natural weapons",
@@ -57,7 +48,16 @@
       "notesOnly": false
     },
     {
-      "id": "sci_fi_universal_translator",
+      "id": "morphus_sci_fi_melee_weapons",
+      "name": "Sci-Fi Melee Weapon(s)",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "morphus_sci_fi_universal_translator",
       "name": "Universal Translator",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -67,37 +67,39 @@
       "notesOnly": false
     },
     {
-      "id": "sci_fi_optics",
+      "id": "morphus_sci_fi_optics",
       "name": "Sci-Fi Optics",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "nightvision bonus",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "sci_fi_personal_scanner_sensors",
+      "id": "morphus_sci_fi_personal_scanner",
       "name": "Personal Scanner/Sensors",
       "hooks": [
         "stat modifiers / A.R. shift",
-        "skill overrides",
+        "gimmick inventory",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "sci_fi_hologram_projector",
+      "id": "morphus_sci_fi_hologram_projector",
       "name": "Hologram Projector",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
         "skill overrides",
+        "activated abilities (burst)",
         "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "sci_fi_force_field_array",
+      "id": "morphus_sci_fi_force_field_array",
       "name": "Force Field Array",
       "hooks": [
         "stat modifiers / A.R. shift",

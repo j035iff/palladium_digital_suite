@@ -2,7 +2,7 @@
   "tableId": "nightmare",
   "entries": [
     {
-      "id": "nightmare_floating",
+      "id": "morphus_nightmare_floating",
       "name": "Floating",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -12,18 +12,17 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_contorted_body",
+      "id": "morphus_nightmare_contorted_body",
       "name": "Contorted Body",
       "hooks": [
         "stat modifiers / A.R. shift",
         "skill overrides",
-        "custom one-offs (notes only)",
-        "appearance constraints"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "nightmare_gnarled_limbs",
+      "id": "morphus_nightmare_gnarled_limbs",
       "name": "Gnarled Limbs",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -34,7 +33,7 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_spines",
+      "id": "morphus_nightmare_spines",
       "name": "Spines",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -47,7 +46,7 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_pulsating_skin",
+      "id": "morphus_nightmare_pulsating_skin",
       "name": "Pulsating Skin",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -58,7 +57,7 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_straight_jacket",
+      "id": "morphus_nightmare_straight_jacket",
       "name": "Straight-Jacket",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -70,7 +69,7 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_torture_mask",
+      "id": "morphus_nightmare_torture_mask",
       "name": "Torture Mask",
       "hooks": [
         "stat modifiers / A.R. shift",
@@ -80,35 +79,26 @@
       "notesOnly": false
     },
     {
-      "id": "nightmare_massive_maw",
+      "id": "morphus_nightmare_massive_maw",
       "name": "Massive Maw",
       "hooks": [
         "stat modifiers / A.R. shift",
         "save modifiers",
+        "skill overrides",
         "natural weapons",
-        "custom one-offs (notes only)",
-        "combat context modifiers"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     },
     {
-      "id": "nightmare_gruesome_weapon",
+      "id": "morphus_nightmare_gruesome_weapon",
       "name": "Gruesome Weapon",
       "hooks": [
         "stat modifiers / A.R. shift",
+        "skill overrides",
         "natural weapons",
         "limb durability components",
-        "custom one-offs (notes only)",
-        "living weapon rules"
-      ],
-      "notesOnly": false
-    },
-    {
-      "id": "nightmare_other",
-      "name": "Other",
-      "hooks": [
-        "custom one-offs (notes only)",
-        "entry role (router/header)"
+        "custom one-offs (notes only)"
       ],
       "notesOnly": false
     }
