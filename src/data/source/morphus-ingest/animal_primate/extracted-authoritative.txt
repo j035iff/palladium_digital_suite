@@ -1,0 +1,123 @@
+Primate Table
+Humanity’s closest cousins, primates are some of the most 
+intelligent animals on Earth. With the wide variety found in the 
+size, shape, and abilities of primates, there are a great number 
+of things to admire about them. Reasons behind a Nightbane’s 
+primate features could be as simple as having a Capuchin as abeloved pet to as complex as an attraction to the notion of unleashing one’s more primal nature or the brute force of a gorilla 
+or the savagery of a baboon. All Nightbane with at least one of 
+these features automatically gain the Climbing skill at a base ability of 50%.
+Roll percentile dice once for random determination, or pick 
+one.
+01-14% Monkey: While real monkeys vary drastically in size 
+and appearance, the common conception is what is reflected in 
+this Morphus form. A monkey Morphus form is typically half the 
+size and weight of the Facade, covered in fur, and the hands, feet, 
+and tail are all prehensile. The tail is as long or longer than the 
+body, with 3 feet (0.9 m) being the average length. Bonuses: +1 
+to I.Q., +1 to M.E. and M.A., +2 to P.P., and +1D6+2 to the Spd 
+attributes. Can climb, jump, and swing through trees, and even 
+dense urban settings with many poles, pipes, and ledges, at twice 
+the normal running speed, and +20% to the Climbing skill. +2 to 
+Perception Rolls, +1 on initiative, and +3 to roll with punch/fall/
+impact, and Auto-Dodge (use only the bonuses from the R.C.C. 
+and high P.P. attribute). Bite attack deals 2D4 damage. Penalties: 
+Reduce the total S.D.C. (but not Hit Points) by half when in the 
+Morphus form.
+15-26% Baboon: While baboons are technically monkeys, 
+their unique appearance, non-prehensile tail, large fangs and 
+different name distinguishes them from the rest of their cousins 
+swinging through trees. Size varies between 2-3 feet (0.6-0.9 m) 
+for the body and 1.5-2 feet (0.5-0.6 m) for the non-prehensile tail. 
+Weight averages roughly 33-82 pounds (15-37 kg). Unlike their 
+tree-dwelling relatives, baboons are largely terrestrial. They have 
+small claws, large, sharp canine teeth, and may have brightlycolored facial features and buttocks. Bonuses: +1 to I.Q., +2 to 
+M.E., +1D4 to P.S., +1 to P.E., and +1D4+1 to the Spd attribute. 
++1 attack per melee, +2 on Perception Rolls, +1 on initiative, +1 
+to dodge, and +1 to roll with punch/fall/impact. Bite attack deals 
+2D6 damage. Penalties: -3 to the P.B. attribute. The Spd attribute 
+reflects the speed of the Morphus when running on all fours or 
+jumping from perch to perch. Reduce running speed by half if 
+trying to move in an upright position.
+27-38% Chimpanzee: Next to humankind, chimps are likely 
+the most intelligent beings on planet Earth. These close relatives 
+of man form intricate social bonds, use tools, and have even been 
+taught to communicate with humans on a limited basis. Chimpanzees have dark hair that covers most of the body, almost nonexistent tails, and prehensile hands and feet. Standing about 4 to 
+5.5 feet (1.2 to 1.7 m) tall and weighing approximately 70-130 
+pounds (32 to 59 kg), a chimp Morphus isn’t much smaller than 
+most Facades. Bonuses: +2 to I.Q., +1 to M.E., +2 to M.A., and 
++1D6 to the P.S. attribute. +1D4x10 S.D.C. +2 on Perception 
+rolls, +1 to strike and parry (may parry with legs/feet) and +2 to 
+roll with punch/fall/impact, and +10% to the Climbing skill. Bite 
+attack deals 2D4 damage. Penalties: -2 to the P.B. attribute. The 
+Spd attribute reflects the speed of the Morphus when running on 
+all-fours. Reduce running speed by half if trying to move in an 
+upright position.
+39-50% Orangutan: Orangutans are long-armed, largely arboreal great apes with long, reddish-brown hair covering all but 
+the face, hands, and prehensile feet. The size of the Morphus is 
+slightly shorter than the Facade (reduce height by 1D6 inches/2.5 
+to 15.2 cm) and averages between 100 and 260 lbs. (45 to 117 
+kg), but the arms are elongated, so add one foot (0.3 m) to the 
+character’s reach. Bonuses: +1 to I.Q., +1 to M.E., +1D4+2 to 
+P.S., and +1 to the P.E. attribute. +1D4x10+25 S.D.C., +1 attack 
+per melee, +1 on Perception Rolls, +2 to parry (+1 using the legs/
+feet), +2 to roll with punch/fall/impact, +1 to entangle and disarm, and +10% to the Climbing skill. Bite attack deals 2D4 damage. Penalties: -3 to the P.B. attribute. The Spd attribute reflects 
+the speed of the Morphus when climbing and swinging from tree 
+to tree or building to building. Short and bowed legs reduce running speed by half when moving across flat ground.
+51-64% Gorilla: The largest of the great apes, gorillas are 
+intelligent, powerfully built, and awe-inspiring. The upper body 
+appears slightly more developed than the lower and is coveredin dark hair which is usually black, gray, or dark brown. Despite 
+being primarily herbivores, gorillas do have a number of large, 
+sharp teeth that can savage anything unfortunate enough to be 
+on the receiving end of a bite. This Morphus is roughly the same 
+height as the Facade, but weight is increased to 3D6x10+300 lbs 
+(149 to 216 kg). The Nightbane can stand and walk on two legs, 
+though running is done on all-fours in a loping fashion. Bonuses: 
++2 to I.Q., +1 to M.A., +1D6+5 to P.S., and +2 to the P.E. attribute. +1D6x10+50 S.D.C. +1 to Perception Rolls, +1 to strike, 
+parry, and roll with punch/fall/impact. Bite attack deals 2D6+3 
+damage. Penalties: -2 to the P.B. attribute. The Spd attribute reflects the speed of the Morphus running on all fours. Reduce running speed by half if trying to move in an upright position.
+65-76% Missing Link: The Nightbane appears to be a cross 
+between one of the great apes and a Neanderthal. The body is 
+covered in short, dark hair, the powerful arms are slightly elongated, and the Nightbane has a hunched posture even when running. Facial features are somewhat similar to normal humans, but 
+with a pronounced brow-ridge, strong jaw, and wide nose. The 
+canine teeth are slightly pronounced and speech is somewhat guttural. Bonuses: +1D4+3 to P.S., +2 to P.P., and +1 to the P.E. attribute, +2D4x10 S.D.C., +1 on initiative, +1 to strike, parry, and 
+dodge, and +1 to roll with punch/fall/impact. Penalties: It’s hard 
+for most not to think of the Nightbane as a dull-witted caveman. 
+-2 to the M.A. and P.B. attributes. -10% to all Communications 
+skills.
+77-88% Prehensile Feet: A Morphus with this feature is able 
+to grasp objects like branches and weapons with dexterous feet 
+similar to many primates. Bonuses: +1 attack per melee, +1 to 
+parry using the legs/feet, and +10% to the Climbing skill. Penalties: Since the feet are built for dexterity instead of running, 
+reduce the Nightbane’s Spd attribute by half.
+89-00% Other, but Related: Roll on the short table below for 
+random determination or choose one of the following:
+01-25% Sharp Teeth: The Nightbane has long, fang-like teeth. 
+Bonuses: The character’s bite inflicts 3D6 damage and +1 to 
+Horror Factor whenever the teeth are displayed, in a smile, for 
+example. Penalties: -1 M.A. and -2 to P.B., -10% to Disguise and 
+Undercover Ops skills unless prosthetic teeth are used to cover 
+the pointed teeth.
+26-50% Prehensile Tail: The Nightbane has a prehensile tail, 
+which can be used to grasp and carry things or help climb. Bonuses: The tail is very strong, and able to support the character’s 
+full body weight when suspended above the ground. However, 
+it can only carry the equivalent of one third of the character’s 
+body weight (typically about 60 lbs/27 kg). Add +20% to Climbing and balance when the tail is used, and it adds one additional 
+melee attack/action. Penalties: The character has a furry (or not) 
+monkey tail! -1 to M.A. and -2 to P.B. attributes. Easy to conceal 
+tucked in clothing.
+51-75% Shaggy Hair: The Nightbane’s body is covered by 
+thick, shaggy hair. The hair can be any color the player desires, 
+even unnatural colors like green or blue. The hair covers every 
+part of the Nightbane’s body except the palms of the hands and 
+the soles of the feet. It may even cover the face and hang over 
+the eyes unless it is moved aside, or the face may be more like 
+an orangutan, hairy everywhere but on the face around the eyes, 
+nose and mouth. Bonuses: +4D6 S.D.C., +10% to the Concealment skill, and +1 to Horror Factor. Penalties: Hair may leave 
+clearly discernable trace evidence, -30% to Disguise and Undercover Ops skills and may get in the way from time to time.
+76-00% Elongated Arms: The character has long upper and 
+lower arms reminiscent to a gorilla or ape. The character looks 
+out of proportion, but has an extended reach (20% longer than 
+usual), and is +1 to parry, disarm and entangle. Penalties: -2 to 
+P.B., -20% to Disguise and Undercover Ops skills and requires 
+custom clothing for the Morphus form, otherwise shirts, jackets, 
+etc., look too short/small in the arms.

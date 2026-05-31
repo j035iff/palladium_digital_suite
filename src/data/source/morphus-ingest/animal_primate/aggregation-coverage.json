@@ -1,0 +1,122 @@
+{
+  "tableId": "animal_primate",
+  "entries": [
+    {
+      "id": "animal_primate_monkey",
+      "name": "Monkey",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_baboon",
+      "name": "Baboon",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_chimpanzee",
+      "name": "Chimpanzee",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_orangutan",
+      "name": "Orangutan",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_gorilla",
+      "name": "Gorilla",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_missing_link",
+      "name": "Missing Link",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_prehensile_feet",
+      "name": "Prehensile Feet",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_sharp_teeth",
+      "name": "Sharp Teeth",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_prehensile_tail",
+      "name": "Prehensile Tail",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_shaggy_hair",
+      "name": "Shaggy Hair",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_primate_elongated_arms",
+      "name": "Elongated Arms",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "appearance constraints",
+        "reach bonus"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

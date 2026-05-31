@@ -1,0 +1,193 @@
+{
+  "tableId": "animal_primate",
+  "tableHeading": "Primate Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 11,
+  "traits": [
+    {
+      "name": "Baboon",
+      "percent": "15-26%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 24,
+          "percent": "15-26%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Chimpanzee",
+      "percent": "27-38%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 24,
+          "percent": "27-38%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Elongated Arms",
+      "percent": "76-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "76-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Gorilla",
+      "percent": "51-64%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 24,
+          "percent": "51-64%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Missing Link",
+      "percent": "65-76%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "65-76%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Monkey",
+      "percent": "01-14%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 24,
+          "percent": "01-14%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Orangutan",
+      "percent": "39-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 24,
+          "percent": "39-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Prehensile Feet",
+      "percent": "77-88%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "77-88%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Prehensile Tail",
+      "percent": "26-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "26-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Shaggy Hair",
+      "percent": "51-75%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "51-75%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Sharp Teeth",
+      "percent": "01-25%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 25,
+          "percent": "01-25%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    }
+  ]
+}
