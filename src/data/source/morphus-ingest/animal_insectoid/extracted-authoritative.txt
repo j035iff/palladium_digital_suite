@@ -1,0 +1,75 @@
+Insectoid Table
+Insect-looking Nightbane became much more common after 
+Dark Day than before. It is believed that the “new generation” of 
+Nightbane feel alienated enough from the world that they subconsciously picked such alien shapes for themselves. Insect shapes 
+range from the beautiful to the grotesque, but most are strange 
+and intimidating. All insect Nightbane instinctively know how to 
+swim at a base proficiency of 50%, and have Acrobatics at 50% 
+and Climbing at 60% (unless stated otherwise), as well as +1 to 
+roll with fall or impact. In most cases, Disguise and Undercover 
+Ops are impossible.
+As usual, the players select the insect species for his or 
+character. If desired, Game Masters may modify the bonuses 
+listed below to better represent the insect species picked by 
+the player.
+01-15% Giant Insect: The Nightbane becomes a giant insect 
+at least six feet (1.8 m) in length (spiders and scorpions are not 
+insects; ants, bees, wasp, flies, dragonflies, mosquitoes, beetles, 
+praying mantis, butterflies, and moths are some common insect 
+types). Most giant insect forms have at least one or two forms of 
+attack, be it pincers and bite or claws and stingers. Many can fly 
+(with wings that lay on the back of the body like flies or protrude 
+like butterflies) and others can run at great speeds.
+Bonuses: +10 to P.S., +3 to P.P., +4 to P.E., and either 
++1D4x10 to running speed OR a flying speed of 2D4x10. Bonuses: +3 on initiative, +3 to all Perception Rolls, +4D6x10 S.D.C. 
+to hard body insects like ants and beetles, or 2D6x10 S.D.C. for 
+soft body insects like flies and butterflies, +1D6 to Horror Factor.
+Claws add 1D6 to hand to damage, pincers 2D6, small insect 
+mandibles 2D4 from bite attacks, medium 2D6 and large (like 
+ants and beetles) 4D6 points of damage. Stingers like those of the 
+wasp or bee inflict 2D6 damage from the stabbing attack and an 
+additional 1D6 damage from poison, plus victims of the poison 
+feel woozy and are -2 on initiative and -1 to strike, parry and 
+dodge unless they successfully save vs non-lethal poison. The 
+stinger does not fall off and the creature can sting repeatedly. 
+The Nightbane will be unable to use tools or weapons or perform 
+complex skills (-40% on skill performance that requires human 
+hands and dexterity).
+16-35% Were-Insect: A bipedal combination of human and 
+insect, with two pair of clawed, spindly arms, hands and legs, 
+vaguely humanoid shape, and insectoid head complete with antennae, pincer-like mandibles and multi-faceted eyes. Bonuses: 
++6 to P.S., +3 to P.P., +3 to P.E., and either +5D6 to running 
+speed or a flying speed of 2D4x10, +2 on initiative, +3 to all Perception Rolls, +1D6 to Horror Factor, +3D6x10 to S.D.C. to hard 
+body insects like ants and beetles, or 2D4x10 S.D.C. for soft body 
+insects like flies and butterflies. Claws add 1D6 to hand to hand 
+damage, and extra arms add one attack/action per melee round. 
+Mouth mandibles inflicts 3D6 points of damage.
+36-55% Humanoid-Insectoid: The Nightbane’s Morphus is 
+basically human-like, with an extra pair of arms and a number 
+of insectoid characteristics. The head is human, except for large, 
+round, multi-faceted eyes and antennae. The skin is covered with 
+a chitinous exoskeleton that provides 2D6x10 to S.D.C. to hard 
+body insects or 1D6x10 S.D.C. for soft body insects. The character may have insect wings, but otherwise has no other unusual 
+limbs. Bonuses: +4 to P.S., +2 to P.P., +2 to P.E., and either 
++3D6 to running speed or a flying speed of 1D4x10, +1 on initiative, +2 to all Perception Rolls, and +1D4 to Horror Factor. 
+Claws add 1D6 to hand to hand damage, and the pair of extra 
+arms add one attack/action per melee round.
+56-70% Insect Wings: The Nightbane has an otherwise-normal body, except for the insect wings protruding from his back. 
+Bonuses: 3D6 to S.D.C. and can fly with a speed 1D4x10+20, 
+and +1 to dodge when flying and +1 to Horror Factor.
+71-80% Insect Head: An ordinary-looking human, except for 
+the full insect head. Bonuses: 2D6 to S.D.C., +2 on initiative, +3 
+to all Perception rolls, and+1D4 to Horror Factor. The mandibles 
+bite for 4D6 damage.
+81-90% Insect Eyes: The character has multi-faceted eyes. 
+Bonuses: Polarized vision (works like sunglasses to reduce 
+glare), can see in the ultraviolet and infrared spectrum of light, 
+is +2 to all Perception Rolls, and +2 to Horror Factor. Unless the 
+eyes are covered with sunglasses or mirror goggles.
+91-00% Insectoid Centauroid: The Nightbane has the upper body of an insect-like humanoid with insect mandibles, eyes 
+and antennae, and the lower body of a six-legged, giant insect; 
+the insect body may also have wings. Bonuses: +6 to P.S., +2 
+to P.P., +2 to P.E., +5D6 to running speed, plus 1D6x10 flying 
+speed if it has wings, +1 on initiative, +3 to all Perception Rolls 
+and +1D4 to Horror Factor. Clawed hands add 1D6 to hand to 
+hand damage, and mouth mandibles inflicts 3D6 points of damage.

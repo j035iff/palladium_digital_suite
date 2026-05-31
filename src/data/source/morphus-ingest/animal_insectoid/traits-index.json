@@ -1,0 +1,384 @@
+{
+  "tableId": "animal_insectoid",
+  "tableHeading": "Insectoid Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane\u00ae RPG (core rulebook)",
+      "authoritative": false
+    },
+    {
+      "key": "dark_designs_ii",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 17,
+  "traits": [
+    {
+      "name": "Bioluminescence",
+      "percent": "66-75%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 23,
+          "percent": "66-75%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Bombardier Chamber",
+      "percent": "41-45%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 22,
+          "percent": "41-45%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Camouflage Markings",
+      "percent": "86-95%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 23,
+          "percent": "86-95%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Climbing Filaments",
+      "percent": "56-65%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 23,
+          "percent": "56-65%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Danger Markings",
+      "percent": "76-85%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 23,
+          "percent": "76-85%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Giant Insect",
+      "percent": "01-15%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "01-15%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 98,
+          "percent": "01-15%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Goo Glands",
+      "percent": "46-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 23,
+          "percent": "46-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Humanoid-Insectoid",
+      "percent": "36-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "36-55%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 99,
+          "percent": "36-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Insect Eyes",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "81-90%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 99,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Insect Head",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "71-80%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 99,
+          "percent": "71-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Insect Wings",
+      "percent": "56-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "56-70%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 99,
+          "percent": "56-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Insectoid Centauroid",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "91-00%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 99,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Mantis Arms",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 21,
+          "percent": "01-10%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Proboscis",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 22,
+          "percent": "21-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Spiracles",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 22,
+          "percent": "11-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Stinger",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs_ii",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 22,
+          "percent": "31-40%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "dark_designs_ii"
+      ]
+    },
+    {
+      "name": "Were-Insect",
+      "percent": "16-35%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 131,
+          "percent": "16-35%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 98,
+          "percent": "16-35%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    }
+  ]
+}

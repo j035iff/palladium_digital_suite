@@ -1,0 +1,18 @@
+---
+description: Morphus table ingest — skip router/non-trait rows; manifests use excludeOther
+globs: src/data/content/morphus/**/*.json,src/data/source/morphus-ingest/**/*
+alwaysApply: false
+---
+
+# Morphus table ingest
+
+When ingesting or editing Morphus trait tables:
+
+- **Do not add JSON entries** for cross-table routers or meta rows, including:
+  - `Other` / roll on another table
+  - `Roll twice` / `Combination of Two` / `Combination of Three`
+  - `Step One` / `Step Two` disproportion routers
+  - Any row whose body only directs rolling elsewhere without its own bonuses/penalties
+- **Manifests:** keep `"excludeOther": true` and `"excludeNonPlayable": true` so PDF extract skips these rows.
+- **Playable traits only:** each entry must be an explicit Morphus characteristic with real mechanics (stats, weapons, skills, etc.), not a pointer to another table.
+- If the book lists an "Other" band, omit it from `entries[]`; document roll-or-mix behavior in the table `description` when useful.

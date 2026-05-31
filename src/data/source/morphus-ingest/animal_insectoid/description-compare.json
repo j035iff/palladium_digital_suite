@@ -1,0 +1,46 @@
+{
+  "differences": [
+    {
+      "trait": "Giant Insect",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Were-Insect",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Humanoid-Insectoid",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Insect Wings",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Insect Head",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Insect Eyes",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Insectoid Centauroid",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+Insectoid Table II
+Those Nightbane with insect features typically “have a thing 
+for bugs,” collecting, studying, and reading about them on a regular basis, and maybe even eating them! Of course, there are some 
+Nightbane who view themselves as social outcasts having more 
+in common with insects than human beings and may keep them as 
+pets/friends, and/or respect them more than people.
+01-10% Mantis Arms: One pair of arms is replaced by long, 
+slender, chitinous limbs with sharpened barbs that line the inner 
+edges. These limbs are much longer than equivalent human-like 
+arms and fold inward toward the body of the Nightbane. This enables the character to grab and hold opponents just like the prey 
+of a mantis. The grip is powerful and requires a Supernatural P.S.greater than the Mantis Nightbane’s own (see below) to break 
+free. Bonuses: +5 to the P.S. attribute, +2 to strike, +2 to pull 
+punch, +4 to entangle, +2 to Horror Factor, +15% to Climbing/
+Rappelling, and any target successfully entangled by the Nightbane needs a Supernatural P.S. twice that of the Nightbane to 
+break free. A slash with the barbed arms inflicts damage equal 
+to Supernatural P.S. punch damage +1D6+3. Penalties: Without 
+digits or opposable thumbs, most skills requiring manual dexterity are difficult in the extreme, -60% skill penalty to perform. The 
+use of tools and simple melee weapons is impossible – cannot be 
+held or used properly – though keyboards, steering wheels, doorknobs, large buttons, light switches and levers can be used with a 
+little effort and care.
+11-20% Spiracles: In place of lungs, the Nightbane has several small holes located all over the abdomen, back and neck 
+through which he breathes. These spiracles are often concealed 
+and hard to spot (a Perception Roll of 18 or better is needed to 
+notice them with casual inspection). Bonuses: +3D6 Hit Points 
+and +2D6 S.D.C. Cannot be choked or strangled by cutting off 
+air in the neck/throat. Al spiracles would need to be blocked to 
+choke this Nightbane, such as burying him up to his chin. Penalties: The Nightbane cannot speak or smell. Holding one’s breath 
+is also impossible without lungs.
+21-30% Proboscis: In the place of a mouth, a long, needlelike protrusion or flexible tube allows the Nightbane to ingest 
+only liquids similar to drinking through a long straw, only this 
+straw is part of his body. Bonuses: +1 to Horror Factor. A needlelike proboscis can be jabbed into soft targets to inflict one point of 
+damage. On a successful strike roll of 16 or higher, this attack can 
+then be used to draw out vital fluids like blood from the victim. 
+For each attack spent draining the target, 1D6 damage is dealt 
+directly to Hit Points! Penalties: -4 to the P.B. attribute and the 
+proboscis only has two S.D.C. per 20 S.D.C. of the Nightbane, 
+but will regrow completely in a matter of 5D6 minutes if severed, 
+damaged or destroyed.
+31-40% Stinger: A retractable stinger is housed somewhere 
+in the Nightbane’s body. This could be a scorpion tail-like appendage or the stinger could extend from the forearm or wrist like 
+a long knitting needle or spike. The stinger inflicts 2D6 damage 
+(2D6+2 if barbed) for a stabbing attack and an additional 1D4 
+damage if the victim fails to save versus non-lethal poison (needs 
+16 or higher to save), and is affected by the poison the stinger 
+releases. Poison: Victims are -2 on all combat rolls for 1D6 melee 
+rounds due to swelling and muscle pain and a bit of a woozy sensation. A barbed stinger lodges in the victim and tears free from 
+the Nightbane, doing 1D6 damage direct to the Nightbane’s own 
+Hit Points. However, the stinger inside its victim continues to 
+excrete its poison for 1D4 minutes or until removed. Poison does 
+3D6 damage per melee round and removal of a barbed stinger 
+by anyone other than a surgeon does an additional 3D6 damage. 
+The Nightbane re-grows any lost stinger in 8 hours. Bonuses: 
++2D6 S.D.C., +1 to strike and parry with the stinger, +2 to save 
+vs poison and drugs, and the Nightbane gets a +1 to his Horror 
+Factor when the stinger is extended. Penalties: -1 to the P.E. and 
+P.B. attributes.
+41-45% Bombardier Chamber: Separate internal glands 
+house two different chemicals that, when combined in a protected 
+chamber inside the body, produce a volatile reaction similar to 
+expelling napalm. This stream of viscous, superheated fluid deals 
+5D6 damage to anyone in a 30 degree cone of effect up to 50 feet 
+(15.2 m) away. Body armor only absorbs half this damage unless 
+it is made to protect against hazardous chemicals, in which case 
+protection is 100%. Those without natural armor struck by this attack must save vs pain at 15 or higher, including any bonuses for 
+a high M.E. attribute. Failure to save causes the victim to drop to 
+the ground and writhe in agony for the next 1D4+1 melee rounds. 
+During this time they can do nothing except defend themselves 
+against other incoming attacks and crawl at a speed of 3. Note: 
+The chemical “payload” is limited to one attack per every 4 P.E. 
+points of the Morphus. It regenerates at a rate of one attack’s 
+worth every hour. Bonuses: +2 to strike and the chemical may 
+be expelled from the Nightbane’s mouth or from an opening in 
+his wrist (pick one). Penalties: The Nightbane is a potential timebomb! Any single attack that does more than 40% of the Morphus’s Hit Points has a 25% chance of breaching the chemical 
+glands and causing the character to explode. The explosion does 
+half the damage the remaining bombardier attacks would have inflicted to a 20 foot (6.1 m) radius. Under most circumstances the 
+Nightbane is killed, though individual G.M.s can decide if some 
+feature of the Morphus (like a plasmoid form) may prevent this 
+or a split-second healing spell, activation of a Talent (like Swarm 
+Self), or shift to Facade form might prevent the explosion.
+46-55% Goo Glands: This Morphus has a number of exterior glands that are capable of secreting a sticky, foul-smelling 
+substance that functions similar to tear gas. Anyone other than 
+the Nightbane within 10 feet (3 m) of just a handful of this goo 
+must roll to save vs non-lethal poison (16 or higher to save), to 
+keep their eyes from tearing up and themselves from gagging. 
+Those who fail lose one melee attack and are -3 on initiative and 
+-4 to strike, parry, and dodge for 1D6+1 melee rounds. If at any 
+time someone ingests this substance, they immediately lose all 
+attacks for the entire round (15 seconds) to violent vomiting. The 
+substance is also extremely difficult to wash off. The Nightbane 
+can secrete up to 12 handfuls of goo per hour. However, the stuff 
+only retains its irritant properties for 5 minutes. After that, it just 
+smells bad, no penalties. Bonuses: The Nightbane is +4 to save 
+vs tear gas and any other chemical irritant. Penalties: After this 
+ability is used even once, the Nightbane smells terrible until he 
+switches back to Facade form. This prevents any attempt to hide 
+or Prowl within 30 feet (9 m) of anything with a nose. The smell 
+does not win any friends, causing a temporary -5 to the M.A. attribute.
+56-65% Climbing Filaments: Tiny, needle-like hairs cover 
+the Nightbane’s palms and soles. This improves climbing ability 
+and even allows the Morphus to cling to sheer surfaces as long as 
+it is not completely smooth and featureless, like glass windows 
+or polished chrome. Bonuses: +20% to the Climbing/Rappelling 
+skill. Also, assailants are -2 to disarm the Nightbane as long as 
+the weapon or object he holds is something the filaments can grip 
+onto, like wood, leather, soft rubber, rope, etc.
+66-75% Bioluminescence: One or more sections of the body 
+glow with a soft light when in Morphus. While green, light blue 
+and violet are the most common colors, any color is theoretically 
+possible. Just like a firefly, this light is internally produced and 
+can be controlled by the Nightbane to shine with different intensities and rhythms.
+This Morphus feature can be used to illuminate a space for 
+himself or others, see details in darkness, flash as a signal, attract 
+prey, cause a distraction, and even flash Morse code messages. 
+Perhaps most amazing of all is that, by temporarily sacrificing 
+one Hit Point per melee round, the Nightbane can radiate the 
+equivalent of magical sunlight like that from the spell Globe of 
+Daylight. This drives vampires and other creatures vulnerable to 
+sunlight out of the area filled with light produced by the bioluminescence. The maximum radius for such light is 5 feet (1.5 m) 
+per level of the Nightbane. While no one is sure how the light can 
+have this effect, some theorize that since it’s biologically created, 
+the light symbolizes life and thus hurts and drives undead away 
+the same as sunlight. This bright light completely illuminates the 
+area enough to read a book or map, or see details on walls, doors, 
+etc. Bonuses: +2D6 to S.D.C., +2 to the P.B. and M.A. attributes. 
+Penalties: Unless covered in some way, the glow makes Prowling in dark environs difficult; -30% to the Prowl skill in such 
+instances.
+76-85% Danger Markings: In normal insects, these markings 
+consist of brightly colored patterns that serve to warn predators 
+away from trying to eat them. As part of a Nightbane Morphus, 
+the markings are likely to be things that make the character seem 
+scarier, stranger and more dangerous. Such as traditional bands 
+and marks that look like lightning bolts or tiger stripes, false eyes, 
+fangs, mandibles, horns, claw marks, claws, dark shadows to emphasize sunken or empty eye sockets or give the Nightbane an 
+animalistic or skeletal appearance, etc. However, these markings 
+can also take the form of recognized danger symbols like those 
+for biohazard or radiation, black on yellow caution markings, racing stripes, a death’s head/skull/death mask, clenched fist, spider 
+shape(s), barbed wire, and so on. Whatever the form or color, the 
+message is the same: “Back off, pal. Don’t mess with me. I’m 
+trouble.” Bonuses: +2 to Horror Factor and any creature with an 
+animal I.Q. will avoid attacking the Nightbane unless attacked 
+first, otherwise agitated or threatened, or commanded to do so by 
+its master or leader. Penalties: Unless covered in some way, the 
+markings may scare and intimidate potential allies and associates; -1D4 to M.A. and P.B. attributes and the Nightbane finds 
+it difficult to blend in with ordinary looking people or disguise 
+himself.
+86-95% Camouflage Markings: These markings are designed to help the insect to blend in with its surroundings to hide 
+from predators. While for normal insects this benefit is usually 
+only for a certain number of environments, for the Nightbane the 
+markings somehow seem to function equally well in most outdoor settings, actually changing and adjusting to fit his current 
+environment. Bonuses: +10% to Prowl skill and ability to hide 
+unseen when outdoors among forest and vegetation, rocks and 
+desert and other natural environments. Penalties: The markings 
+are a bit odd-looking, -1 to M.A. and P.B. attributes.

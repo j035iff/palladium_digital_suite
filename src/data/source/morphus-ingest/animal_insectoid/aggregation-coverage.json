@@ -1,0 +1,191 @@
+{
+  "tableId": "animal_insectoid",
+  "entries": [
+    {
+      "id": "animal_insectoid_giant_insect",
+      "name": "Giant Insect",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_were_insect",
+      "name": "Were-Insect",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_humanoid_insectoid",
+      "name": "Humanoid-Insectoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_insect_wings",
+      "name": "Insect Wings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "flight engine"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_insect_head",
+      "name": "Insect Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_insect_eyes",
+      "name": "Insect Eyes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_centauroid",
+      "name": "Insectoid Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_mantis_arms",
+      "name": "Mantis Arms",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_spiracles",
+      "name": "Spiracles",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_proboscis",
+      "name": "Proboscis",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_stinger",
+      "name": "Stinger",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_bombardier_chamber",
+      "name": "Bombardier Chamber",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_goo_glands",
+      "name": "Goo Glands",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "save modifiers",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_climbing_filaments",
+      "name": "Climbing Filaments",
+      "hooks": [
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_bioluminescence",
+      "name": "Bioluminescence",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_danger_markings",
+      "name": "Danger Markings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_camouflage_markings",
+      "name": "Camouflage Markings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_insectoid_ii_other",
+      "name": "Other",
+      "hooks": [
+        "cross-table roll"
+      ],
+      "notesOnly": false
+    }
+  ]
+}
