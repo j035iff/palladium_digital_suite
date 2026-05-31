@@ -1,0 +1,67 @@
+{
+  "tableId": "animal_rodent",
+  "entries": [
+    {
+      "id": "animal_rodent_full",
+      "name": "Full Rodent",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_rodent_were_rat",
+      "name": "Were-Rat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_rodent_humanoid",
+      "name": "Humanoid Rodent",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_rodent_head",
+      "name": "Rodent Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_rodent_centauroid",
+      "name": "Rodent Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "tableId": "animal_snake",
+  "entries": [
+    {
+      "id": "animal_snake_full",
+      "name": "Full Snake Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_snake_limbed",
+      "name": "Limbed Snake",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_snake_humanoid",
+      "name": "Humanoid Snake",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_snake_scaly_skin",
+      "name": "Scaly Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_snake_half_man",
+      "name": "Half-Man, Half-Snake",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_snake_head",
+      "name": "Snake's Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

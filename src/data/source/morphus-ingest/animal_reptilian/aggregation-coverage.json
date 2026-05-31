@@ -1,0 +1,61 @@
+{
+  "tableId": "animal_reptilian",
+  "entries": [
+    {
+      "id": "animal_reptilian_giant",
+      "name": "Giant Reptile",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_reptilian_were",
+      "name": "Were-Reptile",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_reptilian_humanoid",
+      "name": "Humanoid-Reptilian",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_reptilian_head",
+      "name": "Reptile's Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_reptilian_centauroid",
+      "name": "Reptilian Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

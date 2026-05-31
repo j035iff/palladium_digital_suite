@@ -1,0 +1,29 @@
+{
+  "id": "animal_snake",
+  "displayName": "Snake",
+  "tableCategory": "Animal: Snake",
+  "tableHeading": "Snake Table",
+  "targetJson": "src/data/content/morphus/tables/animal_snake.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Snake Table\nA traditional subject",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane® RPG (core rulebook)",
+      "tableHeading": "Snake Table -------\nA traditional subject",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

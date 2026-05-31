@@ -1,0 +1,44 @@
+Rodent Table
+This category includes all types of rats (the most common), 
+mice, shrews, squirrels, chipmunks, rabbits, moles, and similar 
+animals, whether or not they are actual true rodents, zoologically 
+speaking. Rat-like Nightbane are very common in cities, and their 
+shape often represents a will to survive at all costs, or a desire to 
+hide in the shadows from the dangers of the world. In most cases, 
+Disguise and Undercover Ops are impossible.
+01-20% Full Rodent: The Nightbane’s Morphus has the 
+shape of a giant rat, roughly the size of a small bear or mountain 
+lion. The creature is so large that nobody (not even New Yorkers) will confuse it for a normal animal. Bonuses: +2D6x10 to 
+S.D.C., +4 to P.S and +4 to P.P., +5 to P.E., +4D6 to Speed, are 
++10 to climb (if no Climbing skill is known the creature can instinctively climb at a base skill of 30%) and can leap 10 feet (3 m) 
+high or lengthwise. The creature’s acute senses add +1 to initiative and +3 to all Perception Rolls. Nightvision is 1,000 feet (305 
+m). The giant rat can use tools or weapons but very poorly (-6 to 
+strike or -30% on skill performance); they cannot punch or kick 
+effectively, but can parry and slash with their claws: 1D6 damage 
+from a claw strike, 3D6 S.D.C. from a bite and a body slam or 
+jump kick does 2D6 damage. Add +1D4 to Horror Factor.
+21-45% Were-Rat: A vaguely humanoid rat-creature able 
+to stand on two feet, with a long tail, fairly short arms, clawed 
+hands, and a full rat’s head. It is almost impossible to disguise 
+the inhuman nature of the Nightbane, even with heavy clothing. 
+Bonuses: +3 to P.S., +3 to P.P., +4 to P.E., +3D6 to Spd and 
+1D6x10 to S.D.C. Bite inflicts 3D6 S.D.C., and claws add 1D6 
+to hand to hand damage. The creature’s acute senses add +1 on 
+initiative and +2 to all Perception Rolls. Nightvision is 1,000 feet 
+(305 m). Add 1D6 to Horror Factor.
+46-70% Humanoid Rodent: A fur-covered humanoid; the 
+head is mostly human-like, but it tends to project forward more 
+than normal, giving the Nightbane “weasel” or “rat” features. The 
+creature has no tail and the fur is sparse enough near the face and 
+hands to allow the character to pass for a normal human in bad 
+light. Bonuses: +2 to P.S., +2 to P.P. +2 to P.E., +2D6 to Spd, 
++4D6 to S.D.C., +1 to all Perception Rolls, Nightvision is 500 
+feet (152 m), and +2 to Horror Factor. Bite inflicts 2D6 damage, 
+claws add 1D4 damage to Supernatural P.S. punch..
+71-90% Rodent Head: The Nightbane’s body is a normal human, but the head is that of a giant rat or other rodent! Bonuses: 
++1 to initiative, +2 to all Perception Rolls, Nightvision is 1,000 
+feet (305 m), and +1D4 to Horror Factor. Bite inflicts 2D6 damage.
+91-00% Rodent Centauroid: The Nightbane has the lower 
+body of a giant rat, and the upper body of a humanoid. Bonuses: +4 to P.S., +5 to P.E., +2 to P.P., +4D6 to Spd, +3D6x10 toS.D.C., +1 to initiative, +3 to all Perception Rolls, Nightvision is 
+500 feet (152 m), and +1D4 to Horror Factor. Bite inflicts 3D6 
+S.D.C., and claws add 1D4 to hand to hand damage.
