@@ -81,6 +81,9 @@
           "percent": -20
         }
       },
+      "weightModifier": {
+        "percent": 100
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {

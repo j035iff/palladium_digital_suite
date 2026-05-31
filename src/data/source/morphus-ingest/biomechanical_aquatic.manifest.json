@@ -1,0 +1,21 @@
+{
+  "id": "biomechanical_aquatic",
+  "displayName": "Biomechanical Aquatic",
+  "tableCategory": "Biomechanical: Aquatic",
+  "tableHeading": "Biomechanical: Aquatic Table",
+  "targetJson": "src/data/content/morphus/tables/biomechanical_aquatic.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Biomechanical: Aquatic Table",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

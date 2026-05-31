@@ -3,6 +3,716 @@
   "kind": "morphus_trait_table",
   "displayName": "Biomechanical Aquatic",
   "parentTable": null,
-  "description": "Biomechanical Aquatic Morphus table. Add characteristic rows from the book.",
-  "entries": []
+  "description": "Biomechanical: Aquatic Morphus table (Nightbane Survival Guide, WB5, pp. 83–84). Nightbane with this feature often feel a need to explore the world, especially beneath the waves. All rows grant Swimming at 80%, underwater breathing for 2D6+20 minutes per immersion (with or without air tanks present), and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "entries": [
+    {
+      "id": "biomechanical_aquatic_deep_sea_diving_suit",
+      "name": "Deep Sea Diving Suit Skin",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "The body is completely covered in an old-style deep sea diving suit complete with a large metal helmet with glass view ports, heavy, lead-weighted boots, a severed air hose and tow line, and breathes heavily (think Darth Vader).",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": -1
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "4D6+60"
+          },
+          "depthToleranceFeet": 3000
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Air supply lasts 4D6+60 minutes per immersion.",
+        "Speed is halved on land and in the water."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_flippers",
+      "name": "Flippers",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "The Nightbane has large, plastic swimming flippers permanently attached to his feet. Walking on land is difficult, but manageable.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        },
+        "swimSpeedBonus": {
+          "percent": 100
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Double Spd when swimming."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_spear_gun_limb",
+      "name": "Spear Gun Limb",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "One hand and forearm is either replaced by a spear gun, or has one incorporated into the forearm. When the 'Bane assumes Morphus form, the gun is loaded. However, it takes one melee action to reload the gun after firing it, and additional ammunition must be carried with the Nightbane.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Spear Gun",
+          "damageFormula": "2D6+2",
+          "isAdditiveToHth": false,
+          "strikeBonus": 2,
+          "rangeFeet": 300
+        }
+      ],
+      "variantPercentiles": [
+        {
+          "roll": "01-50%",
+          "label": "Replaced Hand and Forearm",
+          "description": "One hand and forearm is replaced by a spear gun.",
+          "skillModifiers": {
+            "globalSkillModifier": -15
+          }
+        },
+        {
+          "roll": "51-00%",
+          "label": "Incorporated Spear Gun",
+          "description": "A spear gun is incorporated into the forearm."
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Special rounds may include explosive-tipped (double damage), tranquilizer dart (1D4 damage plus knockout for 2D4+2 minutes), etc."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_propellers",
+      "name": "Propellers",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "The Morphus has two propellers protruding from the back and two small ones attached to the legs. Speed on or under water is 35 mph (56 km/h), and the use of propellers does not tire the 'Bane.",
+      "naturalAr": 12,
+      "statModifiers": {
+        "sdc": {
+          "dice": "1D6x10+10"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -30
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Propeller travel does not cause fatigue."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_sonar_screen",
+      "name": "Sonar Screen",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "The Nightbane has a large, circular, glass screen in his chest which constantly pings and registers all movement within 1,000 feet (305 m) underwater.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "weightModifier": {
+        "percent": 30
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 2000
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "submersion",
+          "target": "self",
+          "parry": 1,
+          "dodge": 2,
+          "note": "When underwater: +1 to initiative, +1 to parry, +1D4 to dodge, and surprise attacks are impossible. Sonar also registers depth."
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          }
+        ]
+      },
+      "customOneOffs": [
+        "The sonar unit continues to ping, making hiding difficult."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_hydrofoil_engine",
+      "name": "Hydrofoil Engine",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 83
+        }
+      ],
+      "description": "The Nightbane has wide forearms, large hands, and a jet engine pointing down towards the legs. Travels on water like a hydrofoil and underwater like a torpedo.",
+      "naturalAr": 10,
+      "statModifiers": {
+        "sdc": {
+          "dice": "6D6+12"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -40
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "When leaning forward in a prone push-up posture on water, hydrofoils across the surface at up to 60 mph (96 km/h) +5 mph (8 km/h) per level of experience; half that speed underwater.",
+        "The engine cannot be used to fly, but can make short leaps of up to 15 feet (4.6 m) high and 30 feet (9.1 m) across."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_fins",
+      "name": "Fins",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 84
+        }
+      ],
+      "description": "Two large metal fins, like those on a submarine, protrude from the back, while two smaller ones are in the arms and lower legs. They make the Nightbane more maneuverable when underwater.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "parry": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "submersion",
+          "target": "self",
+          "parry": 1,
+          "dodge": 2,
+          "note": "Additional +1 to parry and +2 to dodge when in or under the water."
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Can use arms to block melee weapons without injury."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_catch_of_the_day",
+      "name": "Catch of the Day",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 84
+        }
+      ],
+      "description": "The Morphus appears to have been caught in fishing nets but able to break free. The whole body is clad in a skin diving wet suit that has heavy-duty netting imbedded into, and sticking out of, his upper torso (front and back), with shredded bits hanging from his arms and legs, and net marks impressed across his limbs and body; he may even have a few (1D6) small buoys tied to the netting.",
+      "naturalAr": 9,
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_escape_artist",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "customOneOffs": [
+        "If Escape Artist is already known, apply a +10% bonus instead of the automatic 60% grant.",
+        "Enables the character to take Talents that require a Stigmata trait."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_torpedo_tubes",
+      "name": "Torpedo Tubes",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 84
+        }
+      ],
+      "description": "The Morphus has 1D4 miniature torpedo tubes built into each shoulder, or forearm, or the back. While each tube is fully loaded with four torpedoes when the Nightbane assumes his Morphus, there is no way to reload them externally. Instead, each tube regenerates one round per hour.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "spd": {
+          "percent": -30
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "misc_limbs",
+          "label": "Miniature Torpedo",
+          "damageFormula": "1D6x10",
+          "isAdditiveToHth": false,
+          "strikeBonus": 3,
+          "rangeFeet": 1000
+        }
+      ],
+      "playerChoices": [
+        {
+          "label": "Torpedo tube location",
+          "options": [
+            "shoulder",
+            "forearm",
+            "back"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Roll 1D4 for the number of torpedo tubes.",
+        "Each tube holds four torpedoes when Morphus is assumed; tubes regenerate one torpedo per hour with no external reload.",
+        "The Nightbane must permanently sacrifice 6 P.P.E. per torpedo tube.",
+        "Torpedo blast affects a five foot (1.5 m) radius; range is 1,000 feet (305 m) +100 feet (30.5 m) per level of experience.",
+        "Torpedoes are only useful underwater."
+      ]
+    },
+    {
+      "id": "biomechanical_aquatic_scuba_gear",
+      "name": "Scuba Gear",
+      "tableCategory": "Biomechanical: Aquatic",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 84
+        }
+      ],
+      "description": "This Morphus is in complete S.C.U.B.A. gear, with wet suit, air tanks, removable breather unit, air hose, goggles and flippers.",
+      "naturalAr": 9,
+      "statModifiers": {
+        "sdc": {
+          "dice": "6D6"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "2D6+20"
+          },
+          "depthToleranceFeet": 1000
+        },
+        "swimSpeedBonus": {
+          "percent": 20
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 80
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Underwater swimming speed is increased by 20%."
+      ]
+    }
+  ]
 }

@@ -6,6 +6,128 @@
   "description": "Disproportionate Legs & Feet (WB5 p. 88). Roll percentile on this sub-table after Step One selects legs and feet.",
   "entries": [
     {
+      "id": "disproportion_huge_legs",
+      "name": "Huge Legs",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Large, thick, muscular upper legs reminiscent of a frog's legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
+      "statModifiers": {
+        "ps": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "1D6+6"
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "jumpMultiplier": 2,
+        "minimumJumpFeet": 12
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      }
+    },
+    {
+      "id": "disproportion_long_thin_legs",
+      "name": "Long, Thin Legs",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Increase length/height by 10%, straight legs like a board, +1 to dodge, +1 to kick damage, and +1D4 to Spd attribute. Penalties: -1 to P.E. attribute.",
+      "statModifiers": {
+        "dodge": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": -1
+        }
+      },
+      "heightModifier": {
+        "percent": 10
+      },
+      "customOneOffs": [
+        "+1 to kick damage."
+      ]
+    },
+    {
+      "id": "disproportion_short_legs",
+      "name": "Short Legs",
+      "tableCategory": "Disproportion",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane® Survival Guide (WB5)",
+          "pageNumber": 88
+        }
+      ],
+      "description": "Short, stubby legs like those of a gorilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Factor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage.",
+      "statModifiers": {
+        "ps": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -10
+        }
+      },
+      "mobility": {
+        "balanceModifierPercent": 5
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Short Legs Kick",
+          "damageFormula": "Base",
+          "isAdditiveToHth": true,
+          "damageModifier": {
+            "percent": -50
+          }
+        }
+      ]
+    },
+    {
       "id": "disproportion_huge_feet",
       "name": "Huge Feet",
       "tableCategory": "Disproportion",
@@ -29,6 +151,9 @@
         }
       },
       "mobility": {
+        "swimSpeedBonus": {
+          "percent": 5
+        },
         "balanceModifierPercent": 10
       },
       "skillModifiers": {
@@ -46,158 +171,10 @@
         ]
       },
       "appearanceConstraints": {
-        "clothingFit": "custom_required",
         "customFootwearRequired": true
       },
-      "naturalWeapons": [
-        {
-          "limbType": "kick",
-          "label": "Natural kick",
-          "damageFormula": "1D8",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "flat": 2
-          }
-        },
-        {
-          "limbType": "stomp",
-          "label": "Natural stomp",
-          "damageFormula": "1D8",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "flat": 2
-          }
-        }
-      ]
-    },
-    {
-      "id": "disproportion_huge_legs",
-      "name": "Huge Legs",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 88
-        }
-      ],
-      "description": "Large, thick, muscular upper legs reminiscent of a frog’s legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
-      "statModifiers": {
-        "ps": {
-          "flat": 2
-        },
-        "spd": {
-          "dice": "1D6+6"
-        },
-        "hf": {
-          "flat": 1
-        }
-      },
-      "mobility": {
-        "jumpMultiplier": 2,
-        "minimumJumpFeet": 12
-      },
-      "appearanceConstraints": {
-        "clothingFit": "custom_required"
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_climbing",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "modifierPercent": -5
-          }
-        ]
-      }
-    },
-    {
-      "id": "disproportion_long_thin_legs",
-      "name": "Long, Thin Legs",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 88
-        }
-      ],
-      "description": "Increase length/height by 10%, straight legs like a board, +1 to dodge, +1 to kick damage, and +1D4 to Spd attribute. Penalties: -1 to P.E. attribute.",
-      "statModifiers": {
-        "dodge": {
-          "flat": 1
-        },
-        "pe": {
-          "flat": -1
-        },
-        "spd": {
-          "dice": "1D4"
-        }
-      },
-      "heightModifier": {
-        "percent": 10
-      },
-      "naturalWeapons": [
-        {
-          "limbType": "kick",
-          "label": "Natural kick",
-          "damageFormula": "1D8",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "flat": 1
-          }
-        }
-      ]
-    },
-    {
-      "id": "disproportion_short_legs",
-      "name": "Short Legs",
-      "tableCategory": "Disproportion",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
-          "pageNumber": 88
-        }
-      ],
-      "description": "Short, stubby legs like those of a gorilla; +1 to P.S., +5% to sense of balance, and +1 to Horror Factor. Penalties: Reduce Spd attribute by 10% and kick attacks do half damage.",
-      "statModifiers": {
-        "ps": {
-          "flat": 1
-        },
-        "spd": {
-          "percent": -10
-        },
-        "hf": {
-          "flat": 1
-        }
-      },
-      "mobility": {
-        "balanceModifierPercent": 5
-      },
-      "naturalWeapons": [
-        {
-          "limbType": "kick",
-          "label": "Natural kick",
-          "damageFormula": "1D8",
-          "isAdditiveToHth": true,
-          "damageModifier": {
-            "percent": -50
-          }
-        }
+      "customOneOffs": [
+        "+2 to kick and stomp damage."
       ]
     },
     {

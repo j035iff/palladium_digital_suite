@@ -1,0 +1,123 @@
+{
+  "tableId": "biomechanical_aquatic",
+  "entries": [
+    {
+      "id": "biomechanical_aquatic_deep_sea_diving_suit",
+      "name": "Deep Sea Diving Suit Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_flippers",
+      "name": "Flippers",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "swim speed bonus",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_spear_gun_limb",
+      "name": "Spear Gun Limb",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_propellers",
+      "name": "Propellers",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_sonar_screen",
+      "name": "Sonar Screen",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "combat context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_hydrofoil_engine",
+      "name": "Hydrofoil Engine",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_fins",
+      "name": "Fins",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "combat context modifiers"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_catch_of_the_day",
+      "name": "Catch of the Day",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_torpedo_tubes",
+      "name": "Torpedo Tubes",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "biomechanical_aquatic_scuba_gear",
+      "name": "Scuba Gear",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "swim speed bonus",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

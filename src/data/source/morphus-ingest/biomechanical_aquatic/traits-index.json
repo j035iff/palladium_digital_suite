@@ -1,0 +1,177 @@
+{
+  "tableId": "biomechanical_aquatic",
+  "tableHeading": "Biomechanical: Aquatic Table",
+  "authoritativeBookKey": "survival_guide",
+  "authoritativeReference": "Nightbane\u00ae Survival Guide (WB5)",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane\u00ae Survival Guide (WB5)",
+      "authoritative": true
+    }
+  ],
+  "traitCount": 10,
+  "traits": [
+    {
+      "name": "Catch of the Day",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 83,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Deep Sea Diving Suit Skin",
+      "percent": "01-10%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "01-10%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Fins",
+      "percent": "61-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 83,
+          "percent": "61-70%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Flippers",
+      "percent": "11-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "11-20%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Hydrofoil Engine",
+      "percent": "51-60%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "51-60%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Propellers",
+      "percent": "31-40%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "31-40%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Scuba Gear",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 83,
+          "percent": "91-00%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Sonar Screen",
+      "percent": "41-50%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "41-50%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Spear Gun Limb",
+      "percent": "21-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 82,
+          "percent": "21-30%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Torpedo Tubes",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "survival_guide",
+          "reference": "Nightbane\u00ae Survival Guide (WB5)",
+          "pageNumber": 83,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "survival_guide",
+      "alsoPublishedIn": []
+    }
+  ]
+}
