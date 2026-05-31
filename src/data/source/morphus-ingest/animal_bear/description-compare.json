@@ -1,0 +1,28 @@
+{
+  "differences": [
+    {
+      "trait": "Full Ursinoid",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "between_the_shadows",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Were-Bear",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "between_the_shadows",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Bear Humanoid",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "between_the_shadows",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Bear Head",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "between_the_shadows",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

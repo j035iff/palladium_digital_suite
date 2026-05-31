@@ -1,0 +1,60 @@
+{
+  "tableId": "animal_bear",
+  "entries": [
+    {
+      "id": "animal_bear_full_ursinoid",
+      "name": "Full Ursinoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bear_were",
+      "name": "Were-Bear",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bear_humanoid",
+      "name": "Bear Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bear_centauroid",
+      "name": "Bear Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bear_head",
+      "name": "Bear Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

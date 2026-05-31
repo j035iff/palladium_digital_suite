@@ -1,0 +1,30 @@
+{
+  "id": "animal_bear",
+  "displayName": "Bear",
+  "tableCategory": "Animal: Bear",
+  "tableHeading": "Bear Form Table",
+  "targetJson": "src/data/content/morphus/tables/animal_bear.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "descriptionAuthorityNote": "Bear Form table from Dark Designs (reprinted from Between the Shadows).",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Bear Form Table\nBears are",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "between_the_shadows",
+      "pdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+      "reference": "Nightbane® Between the Shadows (WB1)",
+      "tableHeading": "Bear Form Table ------\nBears are",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

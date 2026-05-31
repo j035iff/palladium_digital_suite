@@ -3,6 +3,263 @@
   "kind": "morphus_trait_table",
   "displayName": "Amphibian",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Amphibian Morphus table (Nightbane® Dark Designs, WB6, pp. 138–139; originally Between the Shadows, WB1, pp. 130–131). Covers frogs, toads, and salamanders. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
+  "entries": [
+    {
+      "id": "animal_amphibian_full",
+      "name": "Full Amphibian",
+      "tableCategory": "Animal: Amphibian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 139 },
+        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+      ],
+      "description": "The Nightbane is shaped like a giant toad, frog, or salamander, typically with the same length as his/her human Facade's height. The creature cannot be confused for a normal member of the species due to its enormous size.",
+      "playerChoices": [
+        {
+          "label": "Amphibian species",
+          "options": ["toad", "frog", "salamander"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 4 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "2D6x10" },
+        "hf": { "flat": 3 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": { "dice": "3D4" }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "toad",
+          "label": "Toad",
+          "customOneOffs": [
+            "Can jump 30 feet (9 m) from a standing position.",
+            "Swimming speed is the same as running speed."
+          ]
+        },
+        {
+          "roll": "frog",
+          "label": "Frog",
+          "customOneOffs": [
+            "Can jump 80 feet (24.4 m) from a standing position.",
+            "Swimming speed is double the running speed."
+          ]
+        },
+        {
+          "roll": "salamander",
+          "label": "Salamander",
+          "statModifiers": {
+            "spd": { "dice": "1D6" }
+          },
+          "customOneOffs": [
+            "Swimming speed is double the running speed."
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Most creatures have a long, prehensile tongue that can reach targets up to 20 feet (6 m) away.",
+        "10% chance of poisonous glands covering the skin with a contact poison. Exposure (bare skin touch) inflicts a red rash and 3D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D6 damage."
+      ]
+    },
+    {
+      "id": "animal_amphibian_were",
+      "name": "Were-Amphibian",
+      "tableCategory": "Animal: Amphibian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 139 },
+        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+      ],
+      "description": "A barely humanoid frog-man/amphibian, with overlong fingers and smooth, moist skin (dry and lumpy if a toad). The head is that of a full frog, toad, or salamander.",
+      "playerChoices": [
+        {
+          "label": "Amphibian species",
+          "options": ["toad", "frog", "salamander"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 3 },
+        "pp": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "2D4x10" },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": { "dice": "2D4" }
+        },
+        "jumpModifiers": {
+          "standingDistance": { "flat": 30, "isOverride": true },
+          "runningDistance": { "flat": 40, "isOverride": true }
+        },
+        "swimSpeedBonus": { "percent": 100 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Long, prehensile tongue can reach targets up to 15 feet (4.6 m) away.",
+        "10% chance of poisonous glands covering the skin with a contact poison. Exposure inflicts a red rash and 2D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D4 damage."
+      ]
+    },
+    {
+      "id": "animal_amphibian_humanoid",
+      "name": "Amphibian Humanoid",
+      "tableCategory": "Animal: Amphibian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 139 },
+        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+      ],
+      "description": "The Nightbane has humanoid features and a roughly human basic shape, so the character might hide deformities under bulky clothing and head covering. The leg shape is impossibly bow-legged, fingers and toes are webbed, and the character has a crouched posture most of the time as if getting ready to leap — all of this will inevitably attract attention.",
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 1 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "flat": 2 }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": { "dice": "1D6" }
+        },
+        "jumpModifiers": {
+          "standingDistance": { "flat": 15, "isOverride": true }
+        },
+        "swimSpeedBonus": { "percent": 50 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Swims at 50% faster than running speed."
+      ]
+    },
+    {
+      "id": "animal_amphibian_centauroid",
+      "name": "Amphibian Centauroid",
+      "tableCategory": "Animal: Amphibian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 139 },
+        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+      ],
+      "description": "The Nightbane has the upper torso of a humanoid-shaped frog, toad, or salamander, and the lower body of a salamander, including four legs and a long tail.",
+      "playerChoices": [
+        {
+          "label": "Amphibian species",
+          "options": ["toad", "frog", "salamander"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 4 },
+        "pp": { "flat": 1 },
+        "pe": { "flat": 2 },
+        "sdc": { "dice": "2D6x10" },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": { "dice": "2D4" }
+        },
+        "swimSpeedBonus": { "percent": 100 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Long, prehensile tongue can reach targets up to 10 feet (3 m) away.",
+        "10% chance of poisonous glands covering the skin with a contact poison. Exposure inflicts a red rash and 2D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D4 damage."
+      ]
+    },
+    {
+      "id": "animal_amphibian_head",
+      "name": "Amphibian Head",
+      "tableCategory": "Animal: Amphibian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 139 },
+        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+      ],
+      "description": "A normal looking human with the head of a frog, toad, or salamander.",
+      "playerChoices": [
+        {
+          "label": "Amphibian species",
+          "options": ["toad", "frog", "salamander"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "hf": { "flat": 1 }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": { "dice": "1D4" }
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Long, prehensile tongue can reach targets up to 15 feet (4.6 m) away."
+      ]
+    }
+  ]
 }

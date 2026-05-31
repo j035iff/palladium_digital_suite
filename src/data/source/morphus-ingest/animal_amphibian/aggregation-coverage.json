@@ -1,0 +1,68 @@
+{
+  "tableId": "animal_amphibian",
+  "entries": [
+    {
+      "id": "animal_amphibian_full",
+      "name": "Full Amphibian",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_amphibian_were",
+      "name": "Were-Amphibian",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_amphibian_humanoid",
+      "name": "Amphibian Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "swim speed bonus",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_amphibian_centauroid",
+      "name": "Amphibian Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_amphibian_head",
+      "name": "Amphibian Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

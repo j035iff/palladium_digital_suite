@@ -1,0 +1,139 @@
+{
+  "tableId": "animal_bear",
+  "tableHeading": "Bear Form Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "between_the_shadows",
+      "pdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+      "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 5,
+  "traits": [
+    {
+      "name": "Bear Centauroid",
+      "percent": "71-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 2,
+          "percent": "71-80%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Bear Head",
+      "percent": "81-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 2,
+          "percent": "81-00%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 131,
+          "percent": "81-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows"
+      ]
+    },
+    {
+      "name": "Bear Humanoid",
+      "percent": "46-70%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 2,
+          "percent": "46-70%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 130,
+          "percent": "46-70%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows"
+      ]
+    },
+    {
+      "name": "Full Ursinoid",
+      "percent": "01-20%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 1,
+          "percent": "01-20%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 130,
+          "percent": "01-20%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows"
+      ]
+    },
+    {
+      "name": "Were-Bear",
+      "percent": "21-45%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 1,
+          "percent": "21-45%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "between_the_shadows",
+          "reference": "Nightbane\u00ae Between the Shadows (WB1)",
+          "pageNumber": 130,
+          "percent": "21-45%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "between_the_shadows"
+      ]
+    }
+  ]
+}
