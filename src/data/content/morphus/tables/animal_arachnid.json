@@ -3,6 +3,390 @@
   "kind": "morphus_trait_table",
   "displayName": "Arachnid",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Arachnid Morphus table (Nightbane RPG p. 94; Dark Designs pp. 127–128). Spiders and scorpions symbolize alienness and danger. All arachnid Nightbane instinctively Climb at 55% and Prowl at 25% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects spider or scorpion where a row offers both.",
+  "entries": [
+    {
+      "id": "animal_arachnid_full",
+      "name": "Full Arachnid",
+      "tableCategory": "Animal: Arachnid",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 128 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 94 }
+      ],
+      "description": "The Nightbane's Morphus is a giant spider or scorpion.",
+      "playerChoices": [
+        {
+          "label": "Arachnid type",
+          "options": ["spider", "scorpion"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 4 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "spd": { "dice": "1D4x10" },
+        "sdc": { "dice": "3D6x10" },
+        "perception": { "flat": 1 },
+        "initiative": { "flat": 2 },
+        "hf": { "flat": 6 }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 20, "isOverride": true }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 55 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 25 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "spider",
+          "label": "Spider",
+          "naturalWeapons": [
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "2D4",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Can spin and shoot webbing (range 60 feet / 18.3 m, 4D6 S.D.C. per length/application).",
+            "Bite injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
+          ]
+        },
+        {
+          "roll": "scorpion",
+          "label": "Scorpion",
+          "statModifiers": {
+            "apm": { "flat": 1 }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "pincers",
+              "label": "Pincers",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "misc_limbs",
+              "label": "Stinger",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Pincers add one attack per melee round.",
+            "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animal_arachnid_were",
+      "name": "Were-Arachnid",
+      "tableCategory": "Animal: Arachnid",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 128 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 94 }
+      ],
+      "description": "A vaguely humanoid creature—two legs and six arms if a spider, or two legs, two arms, two pincer arms, and a tail/stinger if a scorpion. Inhuman head with four to six eyes, pincer-mouth, and chitin or spider-fur instead of skin.",
+      "playerChoices": [
+        {
+          "label": "Arachnid type",
+          "options": ["spider", "scorpion"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "spd": { "dice": "2D6" },
+        "sdc": { "dice": "2D4x10" },
+        "apm": { "flat": 1 },
+        "initiative": { "flat": 1 },
+        "perception": { "flat": 1 },
+        "hf": { "dice": "1D4+2" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 10, "isOverride": true }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 55 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 25 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Extra limbs add one attack/action per melee round."
+      ],
+      "variantPercentiles": [
+        {
+          "roll": "spider",
+          "label": "Spider",
+          "naturalWeapons": [
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "1D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Can spin and shoot webbing (range 60 feet / 18.3 m, 3D6 S.D.C. per application).",
+            "Bite injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
+          ]
+        },
+        {
+          "roll": "scorpion",
+          "label": "Scorpion",
+          "naturalWeapons": [
+            {
+              "limbType": "pincers",
+              "label": "Pincers",
+              "damageFormula": "2D6",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "misc_limbs",
+              "label": "Stinger",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animal_arachnid_humanoid",
+      "name": "Humanoid-Arachnid",
+      "tableCategory": "Animal: Arachnid",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 128 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 94 }
+      ],
+      "description": "A man-spider or man-scorpion with a mostly humanoid shape, chitin or hair-covered skin, clawed hands, and either two additional spider arms or a scorpion stinger.",
+      "playerChoices": [
+        {
+          "label": "Arachnid type",
+          "options": ["spider", "scorpion"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 1 },
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "1D6x10" },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 6, "isOverride": true }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 55 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 25 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "spider",
+          "label": "Spider",
+          "statModifiers": {
+            "apm": { "flat": 1 }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "claws",
+              "label": "Extra Spider Arms",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Extra spider arms add one attack/action per melee round."
+          ]
+        },
+        {
+          "roll": "scorpion",
+          "label": "Scorpion",
+          "statModifiers": {
+            "apm": { "flat": 1 }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "misc_limbs",
+              "label": "Stinger",
+              "damageFormula": "2D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Stinger adds one attack/action per melee round.",
+            "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animal_arachnid_pincers_or_limbs",
+      "name": "Scorpion Pincers/Spider Limbs",
+      "tableCategory": "Animal: Arachnid",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 128 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 94 }
+      ],
+      "description": "Normal human shape except hands tipped by pincers or bony, hair-covered claw fingers; face has a predator's sizing-up prey look.",
+      "playerChoices": [
+        {
+          "label": "Arachnid type",
+          "options": ["spider", "scorpion"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pe": { "flat": 1 },
+        "sdc": { "dice": "3D6" },
+        "hf": { "flat": 1 },
+        "strike": { "flat": -5 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 55 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 25 },
+          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -30 }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "scorpion",
+          "label": "Scorpion Pincers",
+          "naturalWeapons": [
+            {
+              "limbType": "pincers",
+              "label": "Pincers",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            }
+          ]
+        },
+        {
+          "roll": "spider",
+          "label": "Spider Claws",
+          "naturalWeapons": [
+            {
+              "limbType": "claws",
+              "label": "Spider Claws",
+              "damageFormula": "2D6",
+              "isAdditiveToHth": false
+            }
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Hands cannot grasp tools and weapons properly (-5 to use them)."
+      ]
+    },
+    {
+      "id": "animal_arachnid_centauroid",
+      "name": "Spider/Scorpion Centauroid",
+      "tableCategory": "Animal: Arachnid",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 94 }
+      ],
+      "description": "Lower body of a spider or scorpion and upper body of a humanoid-arachnid. Much taller and heavier than a normal human; difficult to fit into vehicles and enclosed spaces.",
+      "playerChoices": [
+        {
+          "label": "Arachnid type",
+          "options": ["spider", "scorpion"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 1 },
+        "spd": { "dice": "3D6" },
+        "sdc": { "dice": "3D6x10" },
+        "hf": { "dice": "1D6" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 12, "isOverride": true }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 55 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 25 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "spider",
+          "label": "Spider",
+          "naturalWeapons": [
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "2D4",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Can spin and shoot webbing.",
+            "Bite injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds), same as giant spider."
+          ]
+        },
+        {
+          "roll": "scorpion",
+          "label": "Scorpion",
+          "naturalWeapons": [
+            {
+              "limbType": "pincers",
+              "label": "Pincers",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "misc_limbs",
+              "label": "Stinger",
+              "damageFormula": "3D6",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds), same as giant spider."
+          ]
+        }
+      ]
+    }
+  ]
 }

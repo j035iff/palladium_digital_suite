@@ -1,0 +1,95 @@
+{
+  "tableId": "animal_avian",
+  "entries": [
+    {
+      "id": "animal_avian_full_bird",
+      "name": "Full Bird Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_were_bird",
+      "name": "Were-Bird",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_man_bird",
+      "name": "Man-Bird",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_bird_head",
+      "name": "Bird Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_bird_face",
+      "name": "Bird Face",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_talons",
+      "name": "Talons",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_feather_hair",
+      "name": "Feather \"Hair\"",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_avian_winged_human",
+      "name": "Winged Human",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "flight engine",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

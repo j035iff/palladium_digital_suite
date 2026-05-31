@@ -1,0 +1,62 @@
+{
+  "tableId": "animal_canine",
+  "entries": [
+    {
+      "id": "animal_canine_full",
+      "name": "Full Canine",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_canine_were",
+      "name": "Were-Canine",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_canine_humanoid",
+      "name": "Canine Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_canine_centauroid",
+      "name": "Canine Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_canine_head",
+      "name": "Canine Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

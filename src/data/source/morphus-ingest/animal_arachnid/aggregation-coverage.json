@@ -1,0 +1,66 @@
+{
+  "tableId": "animal_arachnid",
+  "entries": [
+    {
+      "id": "animal_arachnid_full",
+      "name": "Full Arachnid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_arachnid_were",
+      "name": "Were-Arachnid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_arachnid_humanoid",
+      "name": "Humanoid-Arachnid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_arachnid_pincers_or_limbs",
+      "name": "Scorpion Pincers/Spider Limbs",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_arachnid_centauroid",
+      "name": "Spider/Scorpion Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

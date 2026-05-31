@@ -1,0 +1,232 @@
+{
+  "tableId": "animal_avian",
+  "tableHeading": "Avian/Bird Table",
+  "authoritativeBookKey": "dark_designs",
+  "authoritativeReference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+      "authoritative": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane\u00ae RPG (core rulebook)",
+      "authoritative": false
+    }
+  ],
+  "traitCount": 9,
+  "traits": [
+    {
+      "name": "Bird Face",
+      "percent": "56-66%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "56-66%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 95,
+          "percent": "56-66%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Bird Head",
+      "percent": "46-55%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "46-55%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 95,
+          "percent": "46-55%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Feather \"Hair\"",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 95,
+          "percent": "81-90%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Feather \u201cHair\u201d",
+      "percent": "81-90%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "81-90%",
+          "authoritative": true
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": []
+    },
+    {
+      "name": "Full Bird Form",
+      "percent": "01-15%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "01-15%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 94,
+          "percent": "01-15%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Man-Bird",
+      "percent": "31-45%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "31-45%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 94,
+          "percent": "31-45%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Talons",
+      "percent": "67-80%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "67-80%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 95,
+          "percent": "67-80%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Were-Bird",
+      "percent": "16-30%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "16-30%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 94,
+          "percent": "16-30%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    },
+    {
+      "name": "Winged Human",
+      "percent": "91-00%",
+      "skip": false,
+      "sources": [
+        {
+          "bookKey": "dark_designs",
+          "reference": "Nightbane\u00ae Dark Designs Sourcebook (WB6)",
+          "pageNumber": 128,
+          "percent": "91-00%",
+          "authoritative": true
+        },
+        {
+          "bookKey": "core",
+          "reference": "Nightbane\u00ae RPG (core rulebook)",
+          "pageNumber": 95,
+          "percent": "91-00%",
+          "authoritative": false
+        }
+      ],
+      "descriptionAuthority": "dark_designs",
+      "alsoPublishedIn": [
+        "core"
+      ]
+    }
+  ]
+}

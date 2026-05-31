@@ -3,6 +3,283 @@
   "kind": "morphus_trait_table",
   "displayName": "Bat",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Bat Morphus table (Nightbane RPG pp. 95–96; Dark Designs pp. 129–130). Bat-like Nightbane are often confused with vampires and demons. Vampire bats dominate, but all bat species are possible. All bat characters instinctively Climb at 45% and Prowl at 20% in Morphus. In most cases, Disguise and Undercover Ops are impossible.",
+  "entries": [
+    {
+      "id": "animal_bat_full",
+      "name": "Full Bat",
+      "tableCategory": "Animal: Bat",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+      ],
+      "description": "Giant bat shape, typically with a wingspan over seven feet (2.1 m). Arms are giant leathery wings with hands at the middle joint.",
+      "playerChoices": [
+        {
+          "label": "Bat species",
+          "options": ["vampire_bat", "fruit_bat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "pp": { "flat": 4 },
+        "sdc": { "dice": "2D4x10" },
+        "initiative": { "flat": 3 },
+        "strike": { "flat": -6 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D6x10+20" }
+        }
+      },
+      "sensory": {
+        "sonarHearing": true,
+        "seeInvisible": true,
+        "perceptionSpecialties": { "sound": 4 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Clawed Feet",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
+          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -35 }
+        ]
+      },
+      "customOneOffs": [
+        "Unlike true bats, vision is not impaired (same as a human's).",
+        "Screeching radar/sonar senses invisible figures and obstacles in total darkness, fog, or smoke (range 500 feet / 152 m).",
+        "Can carry small objects in hands or large items or people in prehensile clawed feet.",
+        "Tool and weapon use is impossible while flying."
+      ]
+    },
+    {
+      "id": "animal_bat_were",
+      "name": "Were-Bat",
+      "tableCategory": "Animal: Bat",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+      ],
+      "description": "More human-like but predominantly bestial; fur-covered with an animalistic snout, oversized ears, and full bat-wings ending in large clawed hands.",
+      "playerChoices": [
+        {
+          "label": "Bat species",
+          "options": ["vampire_bat", "fruit_bat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 3 },
+        "pp": { "flat": 3 },
+        "pe": { "flat": 3 },
+        "sdc": { "dice": "1D6x10" },
+        "initiative": { "flat": 1 },
+        "strike": { "flat": -3 },
+        "hf": { "dice": "1D6" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D6x10" }
+        }
+      },
+      "sensory": {
+        "sonarHearing": true,
+        "seeInvisible": true,
+        "perceptionSpecialties": { "sound": 3 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
+          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -15 }
+        ]
+      },
+      "customOneOffs": [
+        "Unlike true bats, vision is not impaired.",
+        "Screeching radar/sonar senses invisible figures and sees through obscured vision (range 200 feet / 61 m).",
+        "Tool and weapon use is impossible while flying."
+      ]
+    },
+    {
+      "id": "animal_bat_humanoid",
+      "name": "Humanoid Bat",
+      "tableCategory": "Animal: Bat",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Sparsely furred skin; mostly humanoid face with pointy ears and sharp fangs. Small bat-wings extend from beneath the arms.",
+      "playerChoices": [
+        {
+          "label": "Bat species",
+          "options": ["vampire_bat", "fruit_bat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 1 },
+        "sdc": { "dice": "1D4x10" },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D4x10" }
+        }
+      },
+      "sensory": {
+        "perceptionSpecialties": { "sound": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Wings can be folded but this restricts movement; normal clothing is very uncomfortable.",
+        "Does not have the bat's sonar sense."
+      ]
+    },
+    {
+      "id": "animal_bat_wings",
+      "name": "Bat Wings",
+      "tableCategory": "Animal: Bat",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Perfectly normal human except for bat wings protruding from the back, giving a demonic appearance.",
+      "playerChoices": [
+        {
+          "label": "Bat species",
+          "options": ["vampire_bat", "fruit_bat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "hf": { "flat": 2 }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D6x10" },
+          "flightCombatBonuses": { "dodge": { "flat": 1 } }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_bat_head",
+      "name": "Bat Head",
+      "tableCategory": "Animal: Bat",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Normal human body topped by a perfect bat's head.",
+      "playerChoices": [
+        {
+          "label": "Bat species",
+          "options": ["vampire_bat", "fruit_bat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "initiative": { "flat": 2 },
+        "hf": { "flat": 2 }
+      },
+      "sensory": {
+        "sonarHearing": true,
+        "seeInvisible": true,
+        "perceptionSpecialties": { "sound": 4 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Unlike true bats, vision is not impaired.",
+        "Screeching radar senses invisible figures and sees in total darkness, fog, or smoke (range 500 feet / 152 m)."
+      ]
+    }
+  ]
 }

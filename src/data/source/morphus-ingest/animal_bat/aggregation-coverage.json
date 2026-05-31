@@ -1,0 +1,71 @@
+{
+  "tableId": "animal_bat",
+  "entries": [
+    {
+      "id": "animal_bat_full",
+      "name": "Full Bat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "see invisible",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bat_were",
+      "name": "Were-Bat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "see invisible",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bat_humanoid",
+      "name": "Humanoid Bat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "flight engine",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bat_wings",
+      "name": "Bat Wings",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "flight engine",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_bat_head",
+      "name": "Bat Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "see invisible",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "animal_canine",
+  "displayName": "Canine",
+  "tableCategory": "Animal: Canine",
+  "tableHeading": "Canine Table",
+  "targetJson": "src/data/content/morphus/tables/animal_canine.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "dark_designs",
+  "books": [
+    {
+      "key": "dark_designs",
+      "pdf": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+      "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+      "tableHeading": "Canine Table\nThe choice of specific",
+      "authoritative": true,
+      "required": true
+    },
+    {
+      "key": "core",
+      "pdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane® RPG (core rulebook)",
+      "tableHeading": "Canine Table \nThe choice",
+      "authoritative": false,
+      "required": true
+    }
+  ]
+}

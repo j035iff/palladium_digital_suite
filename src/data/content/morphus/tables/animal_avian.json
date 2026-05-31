@@ -3,6 +3,321 @@
   "kind": "morphus_trait_table",
   "displayName": "Avian",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Avian/Bird Morphus table (Nightbane RPG pp. 95–96; Dark Designs pp. 128–129). Predatory or scavenger birds are common, but any species is possible. Avian Nightbane are often wanderers or those who covet the freedom to fly away from problems. Player selects bird species.",
+  "entries": [
+    {
+      "id": "animal_avian_full_bird",
+      "name": "Full Bird Form",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+      ],
+      "description": "Almost no humanoid features; appears as a giant bird of the player's choice.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "pp": { "flat": 3 },
+        "sdc": { "dice": "3D6" },
+        "initiative": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "2D6x10" }
+        }
+      },
+      "sensory": {
+        "hawkLikeDayVision": true,
+        "perceptionSpecialties": { "vision": 3 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "beak",
+          "label": "Beak Slash/Peck",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "kick",
+          "label": "Talons",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -40 }
+        ]
+      },
+      "customOneOffs": [
+        "Exceptional vision: can see a rabbit or read a sign two miles (3.2 km) away.",
+        "Cannot manipulate guns and normal weapons (arms replaced by wings)."
+      ]
+    },
+    {
+      "id": "animal_avian_were_bird",
+      "name": "Were-Bird",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+      ],
+      "description": "Bird-man or bird-woman with hands at the end of the wings, a full bird's head, clawed feet, and a feather-covered body.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "3D6" },
+        "initiative": { "flat": 2 },
+        "strike": { "flat": -4 },
+        "hf": { "dice": "1D6" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "2D4x10" }
+        }
+      },
+      "sensory": {
+        "hawkLikeDayVision": true,
+        "perceptionSpecialties": { "vision": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "beak",
+          "label": "Beak Slash/Peck",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "kick",
+          "label": "Talons",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -25 }
+        ]
+      },
+      "customOneOffs": [
+        "Exceptional vision.",
+        "Guns and hand weapons are at -4 to strike."
+      ]
+    },
+    {
+      "id": "animal_avian_man_bird",
+      "name": "Man-Bird",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 95 }
+      ],
+      "description": "Separate wings and arms with fully developed clawed hands; feather-covered body and a small, nearly useless combat beak.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "sdc": { "dice": "3D6" },
+        "initiative": { "flat": 1 },
+        "hf": { "dice": "1D6" }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D6x10" }
+        }
+      },
+      "sensory": {
+        "hawkLikeDayVision": true,
+        "perceptionSpecialties": { "vision": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "beak",
+          "label": "Beak Bite",
+          "damageFormula": "1D4",
+          "isAdditiveToHth": false
+        }
+      ],
+      "customOneOffs": [
+        "Exceptional vision."
+      ]
+    },
+    {
+      "id": "animal_avian_bird_head",
+      "name": "Bird Head",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Normal human body except the head is that of a bird.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "initiative": { "flat": 1 },
+        "hf": { "dice": "1D6" }
+      },
+      "sensory": {
+        "hawkLikeDayVision": true,
+        "perceptionSpecialties": { "vision": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "beak",
+          "label": "Beak Slash",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "customOneOffs": [
+        "Exceptional vision."
+      ]
+    },
+    {
+      "id": "animal_avian_bird_face",
+      "name": "Bird Face",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Humanoid except for large round eyes and an oversized beak where the mouth and nose would be.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "initiative": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "beak",
+          "label": "Beak Slash",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": true
+        }
+      ]
+    },
+    {
+      "id": "animal_avian_talons",
+      "name": "Talons",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Hands and feet turn into oversized bird-like talons.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Talons",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -10 }
+        ]
+      },
+      "customOneOffs": [
+        "Normal shoes and gloves are uncomfortable and painful to wear; reduce Spd by 30% when wearing them."
+      ]
+    },
+    {
+      "id": "animal_avian_feather_hair",
+      "name": "Feather \"Hair\"",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Feathers cover the head instead of hair; small feather growths appear throughout the body.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "hf": { "flat": 1 }
+      }
+    },
+    {
+      "id": "animal_avian_winged_human",
+      "name": "Winged Human",
+      "tableCategory": "Animal: Avian",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 129 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 96 }
+      ],
+      "description": "Normal-looking human except for wings protruding from the back; wings can belong to any bird species.",
+      "playerChoices": [
+        {
+          "label": "Bird species",
+          "options": ["hawk", "eagle", "vulture", "owl", "crow", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "pb": { "flat": 1 }
+      },
+      "mobility": {
+        "flightEngine": {
+          "flySpdAttribute": { "dice": "1D4x10" }
+        }
+      }
+    }
+  ]
 }

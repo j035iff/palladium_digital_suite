@@ -1,0 +1,49 @@
+Avian/Bird Table
+The player get to select the bird’s species. Nightbane tend to 
+become predatory or scavenger birds, such as hawks, eagles and 
+vultures, although all kinds are possible. Avian Nightbane are 
+often wanderers by heart, or those who covet the freedom to fly 
+away from one’s problems.
+01-15% Full Bird Form: The character has almost no humanoid features, and basically appears as a giant bird of the 
+player’s choice. +1 P.S., +3 P.P., +3D6 S.D.C., Speed flying is 
+2D6x10. Exceptional vision (can see a rabbit or read a sign two 
+miles/3.2 km away): +2 to initiative, +3 to all Perception Rolls 
+using sight, and +1D4 to Horror Factor. Beak slash/peck does 
+3D6 S.D.C. plus P.S. bonus. Feet claws add 1D6 S.D.C. to kick 
+damage. While in this form, the Nightbane cannot manipulate 
+guns and normal weapons (arms have been replaced by wings); 
+most skills requiring manual dexterity will be at -40%.
+16-30% Were-Bird: The Nightbane is a bird-man (or woman), with hands at the end of the wings, a full bird’s head, clawed 
+feet, and a feather-covered body. +2 P.S., +2 P.P., +3D6 S.D.C. 
+Speed flying is 2D4x10. Exceptional vision: +2 to initiative, +2 to 
+all Perception Rolls using sight, and +1D6 to Horror Factor. Beak 
+slash/peck does 2D6 S.D.C. plus P.S. bonus. Feet claws add 1D6 
+S.D.C. to kick damage. Penalties: While in this form, guns and 
+hand weapons are at -4 to strike. Skills requiring manual dexterity 
+will be at -25%.
+31-45% Man-Bird: The character has separate wings and 
+arms, and fully developed hands ending in claws. The body is still 
+covered by feathers, and the character has a small beak, nearly 
+useless in combat. +2 P.S., +2 P.P., +3D6 S.D.C. Exceptional 
+vision: +1 on initiative, +2 to all Perception Rolls using sight, 
+and +1D6 to Horror Factor. Beak bite does 1D4 S.D.C. (no P.S. 
+bonus). Speed flying is 1D6x10.
+46-55% Bird Head: The character looks like a normal human 
+except for his head, which is that of a bird. Beak slash inflicts 
+3D6 S.D.C. plus Supernatural P.S. punch damage. Bonuses: Exceptional vision, +1 on initiative +2 to all Perception Rolls using 
+sight, and +1D6 to Horror Factor.
+56-66% Bird Face: The Nightbane looks like a normal humanoid, except for large, round eyes and an oversized beak protruding from where his mouth and nose would be! Beak slash 
+does 3D6 S.D.C. plus P.S. bonus. Add 1D4 to Horror Factor and 
++1 on initiative.
+67-80% Talons: The character’s hands and feet turn into 
+oversized bird-like talons. Bonus: +1 to P.S. Claws add 2D4 to 
+punch and kick damage. Add 1D4 to Horror Factor. Penalties: 
+Normal shoes and gloves are uncomfortable and painful to wear, 
+reduce Spd by 30% and skills requiring a delicate touch are -10%.
+81-90% Feather “Hair”: Instead of hair, the character’s head 
+is covered by feathers. Small feather growths appear throughout 
+the body. Bonuses: 2D6 to S.D.C. and +1 to Horror Factor,
+91-00% Winged Human: A normal-looking human, except 
+for the wings protruding from the back. The wings can belong 
+to any bird species. Bonuses: 2D6 to S.D.C., +1 to P.B., and the 
+character can fly at a speed of 1D4x10.
