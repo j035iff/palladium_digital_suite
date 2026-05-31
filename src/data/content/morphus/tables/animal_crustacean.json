@@ -3,6 +3,475 @@
   "kind": "morphus_trait_table",
   "displayName": "Crustacean",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Aquatic: Crustacean Morphus table (Nightbane Survival Guide, WB5, pp. 76–77). The character has an affinity for crustaceans reflected in the Morphus. All Crustacean Nightbane swim at 85%, breathe underwater indefinitely, and breathe air normally.",
+  "entries": [
+    {
+      "id": "animal_crustacean_giant",
+      "name": "Giant Crustacean",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 76
+        }
+      ],
+      "description": "The Nightbane is a giant, talking crab, lobster, crayfish, or similar creature with an armored, humanoid head. The overall body looks completely like the animal, with body shape, ridges, spines, multiple legs, pincer claws, and eye stalks. Typically 6–8 feet (1.8 to 2.4 m) long with no human hands—arms and hands are the two pincer-limbs.",
+      "naturalAr": 15,
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6x10"
+        },
+        "ps": {
+          "dice": "1D4",
+          "flat": 4
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 3
+        },
+        "hf": {
+          "flat": 3
+        }
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 15840
+        },
+        "swimSpeedBonus": {
+          "dice": "3D6"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "pincers",
+          "label": "Pincer Claws",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -70
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Depth tolerance: three miles (4.8 km).",
+        "Difficult to hide; transportation may be a problem (e.g. cannot fit inside a vehicle, but can cling to the roof).",
+        "Skills requiring manual dexterity and fingers are often impossible (-70% to skill performance)."
+      ]
+    },
+    {
+      "id": "animal_crustacean_were",
+      "name": "Were-Crustacean",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 76
+        }
+      ],
+      "description": "The Morphus is a humanoid shape with an armor-plated humanoid head and body, a pair of large humanoid arms with claw hands, four legs, a tail, antennae and eye stalks. The face resembles both a humanoid and a crustacean.",
+      "naturalAr": 13,
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10+20"
+        },
+        "ps": {
+          "dice": "1D4",
+          "flat": 1
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "weightModifier": {
+        "percent": 100
+      },
+      "damageAffinities": {
+        "silver": 2
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 10560
+        },
+        "swimSpeedBonus": {
+          "dice": "2D6"
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "pincers",
+          "label": "Claws",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Depth tolerance: two miles (3.2 km).",
+        "Difficult to hide; transportation may be a problem (e.g. can fit inside a vehicle, but takes up two spaces).",
+        "All were-beasts are vulnerable to silver (double damage)."
+      ]
+    },
+    {
+      "id": "animal_crustacean_humanoid",
+      "name": "Humanoid Crustacean",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 76
+        }
+      ],
+      "description": "The body is completely humanoid, though covered in a light exoskeleton. The face is roughly human-like with normal eyes, an impression of a nose, and a small mouth, but the Nightbane would not pass for a human under close inspection—only from a distance or in shadows.",
+      "naturalAr": 11,
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D4x10+8"
+        },
+        "ps": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 5280
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "pincers",
+          "label": "Claw Attack",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "globalSkillModifier": -5,
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Depth tolerance: one mile (1.6 km).",
+        "Difficult to hide."
+      ]
+    },
+    {
+      "id": "animal_crustacean_lobster_claws",
+      "name": "Lobster Claws",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 76
+        }
+      ],
+      "description": "One or both hands have been replaced with large lobster claws. The claws are limited in usage, as skills requiring manual dexterity are often impossible, but the arms are armored and very strong. The claw can be used as a weapon, and both arms can be used to parry other weapons without injury.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6"
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pp": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 2
+        },
+        "disarm": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 2000
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "pincers",
+          "label": "Lobster Claw",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "playerChoices": [
+        {
+          "label": "Claw replacement",
+          "options": [
+            "one hand",
+            "both hands"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Depth tolerance: 2,000 feet (610 m).",
+        "Arms can parry melee weapons without injury."
+      ]
+    },
+    {
+      "id": "animal_crustacean_shell",
+      "name": "Crustacean Shell",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 77
+        }
+      ],
+      "description": "The Morphus is completely human looking, except for the exoskeleton that covers the body. Some are segmented shells like a lobster's; others are a single-piece shell like that of a horseshoe crab.",
+      "naturalAr": 14,
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 5280
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -15
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Depth tolerance: one mile (1.6 km)."
+      ]
+    },
+    {
+      "id": "animal_crustacean_lobster_centauroid",
+      "name": "Lobster Centauroid",
+      "tableCategory": "Animal: Crustacean",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 77
+        }
+      ],
+      "description": "The upper torso is completely human, but the lower body has been replaced by that of a crustacean, complete with six legs and tail for quick, watery escapes. The Nightbane can still walk on land easily, but makes a clattering sound when moving.",
+      "naturalAr": 13,
+      "statModifiers": {
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 2
+        }
+      },
+      "weightModifier": {
+        "percent": 200
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 2000
+        },
+        "swimSpeedBonus": {
+          "dice": "2D6",
+          "flat": 6
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_gymnastics",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Lower body has Natural A.R. 13.",
+        "Depth tolerance: 2,000 feet (610 m).",
+        "Clattering movement on land (-30% to Prowl).",
+        "Difficult to hide; transportation may be a problem (e.g. cramped in a vehicle back seat).",
+        "Triple weight."
+      ]
+    }
+  ]
 }

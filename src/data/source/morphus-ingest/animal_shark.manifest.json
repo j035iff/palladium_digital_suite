@@ -1,0 +1,21 @@
+{
+  "id": "animal_shark",
+  "displayName": "Shark",
+  "tableCategory": "Animal: Shark",
+  "tableHeading": "Aquatic: Shark Table",
+  "targetJson": "src/data/content/morphus/tables/animal_shark.json",
+  "gameSystem": "nightbane",
+  "excludeOther": true,
+  "excludeNonPlayable": true,
+  "authoritativeBookKey": "survival_guide",
+  "books": [
+    {
+      "key": "survival_guide",
+      "pdf": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+      "reference": "Nightbane® Survival Guide (WB5)",
+      "tableHeading": "Aquatic: Shark Table",
+      "authoritative": true,
+      "required": true
+    }
+  ]
+}

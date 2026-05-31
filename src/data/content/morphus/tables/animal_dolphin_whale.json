@@ -3,6 +3,696 @@
   "kind": "morphus_trait_table",
   "displayName": "Dolphin/Whale",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Aquatic: Dolphin/Whale (Cetacean) Morphus table (Nightbane Survival Guide, WB5, pp. 77–78). Cetaceans are mammals and must breathe air. All rows grant Swimming at 90%, hold breath for 1D6+6 minutes, echolocation (operate perfectly in darkness or when blinded), and swimming speed equal to land Spd plus 50% unless a row states otherwise.",
+  "entries": [
+    {
+      "id": "animal_dolphin_whale_full_cetacean",
+      "name": "Full Cetacean",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 77
+        }
+      ],
+      "description": "The Nightbane is fully dolphin- or whale-shaped with a long, tube-shaped rubbery body, flipper arms, and a tail instead of legs. Exact size, shape, and coloration depend on the species chosen.",
+      "playerChoices": [
+        {
+          "label": "Cetacean species",
+          "options": [
+            "dolphin",
+            "whale"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          },
+          "depthToleranceFeet": 10560
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -50
+          }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "dolphin",
+          "label": "Dolphin",
+          "description": "Typically 5–7 feet (1.5 to 2.1 m) long.",
+          "statModifiers": {
+            "sdc": {
+              "dice": "1D6x10+6"
+            },
+            "iq": {
+              "dice": "1D4"
+            },
+            "ma": {
+              "dice": "1D4"
+            },
+            "ps": {
+              "flat": 4
+            },
+            "pp": {
+              "flat": 4
+            },
+            "spd": {
+              "dice": "3D6"
+            },
+            "perception": {
+              "flat": 2
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "head_butt",
+              "label": "Head-Butt or Tail Strike",
+              "damageFormula": "1D8",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "1D4",
+              "isAdditiveToHth": false
+            }
+          ]
+        },
+        {
+          "roll": "whale",
+          "label": "Whale",
+          "description": "Typically 9–20 feet (2.7 to 6.1 m) long; about the size of a killer whale.",
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D6x10+12"
+            },
+            "iq": {
+              "dice": "1D4"
+            },
+            "ma": {
+              "flat": 1
+            },
+            "ps": {
+              "flat": 8
+            },
+            "pe": {
+              "dice": "1D4"
+            },
+            "pp": {
+              "flat": 1
+            },
+            "spd": {
+              "dice": "2D6"
+            },
+            "perception": {
+              "flat": 2
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "head_butt",
+              "label": "Head-Butt or Tail Strike",
+              "damageFormula": "2D8",
+              "isAdditiveToHth": true
+            },
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "2D4",
+              "isAdditiveToHth": false
+            }
+          ],
+          "customOneOffs": [
+            "Triple the character's weight and add 20 pounds (9 kg) and 2D6 S.D.C. for every two feet (0.6 m) larger than 8 feet (2.4 m)."
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Depth tolerance: two miles (3.2 km).",
+        "Helpless on land (attacks per melee round, P.S., P.P., and Spd are all reduced to two) unless another means of locomotion exists.",
+        "Can manipulate objects with the mouth in a pinch (-50% to delicate skills, -5 to strike or parry with melee weapons, cannot use modern weapons).",
+        "Transportation on land may be a problem for these large, heavy characters."
+      ]
+    },
+    {
+      "id": "animal_dolphin_whale_were_cetacean",
+      "name": "Were-Cetacean",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 77
+        }
+      ],
+      "description": "Essentially a dolphin 6–7 feet (1.8–2.1 m) tall/long, or whale 9–12 feet (2.7–3.6 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a stubby tail. The head is fully animal, though it may face forward when walking upright.",
+      "playerChoices": [
+        {
+          "label": "Cetacean species",
+          "options": [
+            "dolphin",
+            "whale"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "apm": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -50
+        }
+      },
+      "damageAffinities": {
+        "silver": 2
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          }
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "dolphin",
+          "label": "Were-Dolphin",
+          "statModifiers": {
+            "sdc": {
+              "dice": "1D6x10+8"
+            },
+            "iq": {
+              "flat": 2
+            },
+            "ma": {
+              "flat": 1
+            },
+            "ps": {
+              "flat": 2
+            },
+            "pe": {
+              "flat": 2
+            },
+            "spd": {
+              "dice": "2D6"
+            },
+            "perception": {
+              "flat": 1
+            },
+            "hf": {
+              "flat": 1
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "1D6",
+              "isAdditiveToHth": false
+            },
+            {
+              "limbType": "tail",
+              "label": "Tail Strike",
+              "damageFormula": "4",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Depth tolerance: one mile (1.6 km).",
+            "Double weight."
+          ]
+        },
+        {
+          "roll": "whale",
+          "label": "Were-Whale",
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D6x10+16"
+            },
+            "iq": {
+              "flat": 1
+            },
+            "ma": {
+              "flat": 2
+            },
+            "ps": {
+              "dice": "1D4",
+              "flat": 2
+            },
+            "pe": {
+              "dice": "1D4",
+              "flat": 2
+            },
+            "spd": {
+              "dice": "1D6"
+            },
+            "perception": {
+              "flat": 1
+            },
+            "hf": {
+              "dice": "1D4",
+              "flat": 1
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "bite",
+              "label": "Bite",
+              "damageFormula": "2D6",
+              "isAdditiveToHth": false
+            },
+            {
+              "limbType": "tail",
+              "label": "Tail Strike",
+              "damageFormula": "8",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Depth tolerance: two miles (3.2 km).",
+            "+4 to damage.",
+            "Quadruple weight."
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Speed on land is half.",
+        "Weight and size may be a problem on land and for transportation.",
+        "All were-beasts are vulnerable to silver (double damage)."
+      ]
+    },
+    {
+      "id": "animal_dolphin_whale_humanoid",
+      "name": "Humanoid Dolphin or Whale",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 77
+        }
+      ],
+      "description": "Humanoid shape with webbed legs and feet, webbed arms and hands, and an animal-like pug head with a dorsal fin on the back. Size is six feet (1.8 m) for a dolphin and eight feet (2.4 m) for a whale. Skin is thick, smooth, and rubbery.",
+      "playerChoices": [
+        {
+          "label": "Cetacean species",
+          "options": [
+            "dolphin",
+            "whale"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "spd": {
+          "percent": -20
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          },
+          "depthToleranceFeet": 5280
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "dolphin",
+          "label": "Humanoid Dolphin",
+          "statModifiers": {
+            "sdc": {
+              "dice": "1D4x10+4"
+            },
+            "iq": {
+              "flat": 1
+            },
+            "ma": {
+              "flat": 1
+            },
+            "ps": {
+              "flat": 2
+            },
+            "pp": {
+              "flat": 2
+            },
+            "spd": {
+              "dice": "1D6"
+            },
+            "hf": {
+              "flat": 1
+            },
+            "perception": {
+              "flat": 2
+            },
+            "initiative": {
+              "flat": 1
+            },
+            "dodge": {
+              "flat": 2
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "head_butt",
+              "label": "Head-Butt",
+              "damageFormula": "2",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Double weight."
+          ]
+        },
+        {
+          "roll": "whale",
+          "label": "Humanoid Whale",
+          "statModifiers": {
+            "sdc": {
+              "dice": "1D6x10+6"
+            },
+            "iq": {
+              "flat": 1
+            },
+            "ma": {
+              "flat": 1
+            },
+            "ps": {
+              "dice": "1D4"
+            },
+            "pp": {
+              "flat": 1
+            },
+            "spd": {
+              "dice": "1D6"
+            },
+            "hf": {
+              "flat": 2
+            },
+            "perception": {
+              "flat": 1
+            },
+            "strike": {
+              "flat": 1
+            }
+          },
+          "naturalWeapons": [
+            {
+              "limbType": "head_butt",
+              "label": "Head-Butt",
+              "damageFormula": "4",
+              "isAdditiveToHth": true
+            }
+          ],
+          "customOneOffs": [
+            "Triple weight."
+          ]
+        }
+      ],
+      "customOneOffs": [
+        "Depth tolerance: one mile (1.6 km).",
+        "Weight and size may be a problem on land and for transportation."
+      ]
+    },
+    {
+      "id": "animal_dolphin_whale_finned_humanoid",
+      "name": "Finned Humanoid",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 78
+        }
+      ],
+      "description": "Relatively human, with rubbery pale grey skin and white underbelly, triangular fins on each forearm and lower leg, a dorsal fin on the back, webbed fingers and toes, no visible ears, and hair that is black, blue, blue-gray, or white. Bonuses are the same for dolphin or whale coloration.",
+      "playerChoices": [
+        {
+          "label": "Cetacean coloration",
+          "options": [
+            "dolphin",
+            "whale"
+          ],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6+4"
+        },
+        "ps": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "weightModifier": {
+        "percent": 30
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          },
+          "depthToleranceFeet": 5280
+        },
+        "swimSpeedBonus": {
+          "dice": "2D6",
+          "flat": 3
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "customOneOffs": [
+        "Depth tolerance: one mile (1.6 km)."
+      ]
+    },
+    {
+      "id": "animal_dolphin_whale_aquatic_humanoid",
+      "name": "Aquatic Humanoid",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 78
+        }
+      ],
+      "description": "Appears almost entirely human with firm tanned skin, small ears, slightly webbed fingers and toes, round inviting eyes, and hair that is black, blue-black, silver/gray, or white. Can easily pass for human.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "3D6+3"
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "2D4"
+        },
+        "perception": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          },
+          "depthToleranceFeet": 4500
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Depth tolerance: 4,500 feet (1,371.6 m)."
+      ]
+    },
+    {
+      "id": "animal_dolphin_whale_mermaid_merman",
+      "name": "Mermaid/Merman",
+      "tableCategory": "Animal: Dolphin/Whale",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 78
+        }
+      ],
+      "description": "From the waist up, an attractive human with long lustrous hair of any color; from the waist down, a long dolphin-like tail slightly longer than the upper body (about 7–9 feet / 2.1 to 2.7 m total).",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6+8"
+        },
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pb": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "3D6"
+        },
+        "initiative": {
+          "flat": 1
+        }
+      },
+      "mobility": {
+        "aquaticTraits": {
+          "holdBreathDuration": {
+            "dice": "1D6+6"
+          },
+          "depthToleranceFeet": 5280
+        }
+      },
+      "sensory": {
+        "sonarHearing": true
+      },
+      "combatContextModifiers": [
+        {
+          "condition": "submersion",
+          "target": "self",
+          "strike": 1,
+          "dodge": 1,
+          "note": "+1 to strike and dodge underwater."
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 90
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Depth tolerance: one mile (1.6 km).",
+        "On land, speed is limited to crawling on the hands or slithering.",
+        "The lower aquatic torso can be concealed with a blanket; mobility on land may require a wheelchair, the Air Swim Talent, or other means."
+      ]
+    }
+  ]
 }

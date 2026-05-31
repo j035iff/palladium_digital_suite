@@ -3,6 +3,249 @@
   "kind": "morphus_trait_table",
   "displayName": "Fish",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Aquatic: Fish Morphus table (Nightbane Survival Guide, WB5, pp. 78–79). Nightbane with a Fish Morphus have an affinity for fish or fishing. All rows grant Swimming at 98%, indefinite underwater breathing, labored breathing of air on land, and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "entries": [
+    {
+      "id": "animal_fish_full_form",
+      "name": "Full Fish Form",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 78 }],
+      "description": "The Morphus is a large fish of any species, 6–9 feet (1.8 to 2.7 m) long, with full fish features, and flops on dry land without hands, arms, legs, or feet.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "sdc": { "dice": "1D6x10" },
+        "ps": { "dice": "1D4" },
+        "pe": { "flat": 1 },
+        "spd": { "dice": "5D6" },
+        "dodge": { "flat": 1 },
+        "hf": { "flat": 1 }
+      },
+      "weightModifier": { "percent": 100 },
+      "damageAffinities": { "cold": 0.5 },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 15840 }
+      },
+      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Helpless on land (attacks per melee round, P.P., and Spd are all reduced to two) unless another means of locomotion exists.",
+        "Cannot manipulate objects even with the mouth.",
+        "Transportation on land may be a problem for this cold, slippery, large, heavy character."
+      ]
+    },
+    {
+      "id": "animal_fish_fish_man",
+      "name": "Fish Man",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 78 }],
+      "description": "A humanoid Morphus with arms, hands, legs, and feet, but a fish head with gills and large round eyes, a scaled body, and a large dorsal fin. Color may vary from dull freshwater tones to brilliant tropical patterns.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "sdc": { "dice": "6D6+4" },
+        "ps": { "flat": 2 },
+        "spd": { "dice": "2D6" },
+        "hf": { "flat": 2 }
+      },
+      "weightModifier": { "percent": 100 },
+      "damageAffinities": { "cold": 0.5 },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 10560 }
+      },
+      "sensory": { "nightvisionRangeFlatBonus": 1000 },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -10 }
+        ]
+      },
+      "customOneOffs": [
+        "Speed on land is half.",
+        "Weight and size may be a problem on land and for transportation."
+      ]
+    },
+    {
+      "id": "animal_fish_bioluminescence",
+      "name": "Bioluminescence",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 78 }],
+      "description": "Looks entirely human at first glance, but closer inspection shows fine scales and translucent skin with visible veins. The character can glow like a deep-sea fish. Glow radiates from the hands, arms, neck, and chest, or from small globes on 1D4 short stalks above the head. Glow radius is 20 feet (6.1 m).",
+      "statModifiers": {
+        "sdc": { "dice": "2D6" },
+        "ma": { "flat": 1 },
+        "hf": { "flat": 1 }
+      },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 1000 }
+      },
+      "sensory": { "nightvisionRangeFlatBonus": 1000 },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 }
+        ]
+      },
+      "variantPercentiles": [
+        {
+          "roll": "01-50%",
+          "label": "Uncontrolled Glow",
+          "description": "The character glows the entire time in Morphus form.",
+          "skillModifiers": {
+            "specificSkillOverrides": [
+              { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+              { "targetType": "skill_id", "targetValue": "skill_prowl", "impossibleInMorphus": true }
+            ]
+          },
+          "customOneOffs": [
+            "Prowling and hiding in the dark are impossible."
+          ]
+        },
+        {
+          "roll": "51-00%",
+          "label": "Controlled Glow",
+          "description": "Can turn the glow on and off and control intensity from a soft glow to mild bright light.",
+          "customOneOffs": [
+            "Prowling is impossible while glowing unless concealed."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animal_fish_scaly_skin",
+      "name": "Scaly Skin",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "description": "Otherwise human looking, but covered in fish scales. Color may vary from dull freshwater tones to brilliant tropical patterns. Small ears; otherwise human in appearance.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "sdc": { "dice": "4D6" },
+        "pb": { "flat": -1 },
+        "hf": { "flat": 1 },
+        "spd": { "percent": -10 }
+      },
+      "weightModifier": { "percent": 20 },
+      "damageAffinities": { "cold": 0.5 },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 3000 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+        ]
+      },
+      "appearanceConstraints": { "clothingFit": "custom_required" },
+      "variantPercentiles": [
+        { "roll": "01-50%", "label": "Hair", "description": "The character has hair on the head." },
+        { "roll": "51-00%", "label": "Bald", "description": "The character is bald." }
+      ],
+      "customOneOffs": [
+        "+1 to escape from wrestling holds and entanglement attacks."
+      ]
+    },
+    {
+      "id": "animal_fish_puffer_fish_skin",
+      "name": "Puffer Fish Skin",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "description": "Loose skin covered with small spines that lay harmlessly against the skin when not in use. The Nightbane can inflate the torso, arms, hands, neck, and head like a puffer fish, tripling size (maximum 10 feet / 3 m) and exposing cutting spines.",
+      "statModifiers": {
+        "sdc": { "dice": "4D6+4" },
+        "hf": { "flat": 2 },
+        "spd": { "percent": -10 }
+      },
+      "weightModifier": { "percent": 20 },
+      "damageAffinities": { "cold": 0.5 },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 1000 }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 }
+        ]
+      },
+      "customOneOffs": [
+        "Spiny punch does normal punch damage +6.",
+        "Puffer defense does 3D6 damage per action in which someone attacks, touches, or tries to move the character.",
+        "+2 to Horror Factor only when the skin is inflated.",
+        "Must remove clothing from the upper torso when inflating."
+      ]
+    },
+    {
+      "id": "animal_fish_gills",
+      "name": "Gills",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "description": "Looks almost entirely human except for a large pair of gills under the jaw line, making the face appear slightly monstrous.",
+      "statModifiers": {
+        "pe": { "flat": 1 },
+        "pb": { "flat": -1 },
+        "spd": { "percent": -10 }
+      },
+      "damageAffinities": { "cold": 0.5 },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 10560 }
+      },
+      "sensory": { "nightvisionRangeFlatBonus": 100 },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -5 }
+        ]
+      },
+      "customOneOffs": [
+        "Gills are easy to conceal with a scarf or high collar."
+      ]
+    },
+    {
+      "id": "animal_fish_piranha_jaws",
+      "name": "Piranha Jaws (and Nature)",
+      "tableCategory": "Animal: Fish",
+      "gameSystems": ["nightbane"],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "description": "Wide, oversized mouth without lips and a mouth full of narrow, jagged teeth (twice as many as a normal human). Enjoys the taste of blood and raw meat.",
+      "statModifiers": {
+        "pe": { "dice": "1D4" },
+        "ma": { "flat": -1 },
+        "me": { "flat": -1 },
+        "pb": { "flat": -1 },
+        "spd": { "percent": -10 },
+        "apm": { "flat": 1 },
+        "perception": { "flat": 1 },
+        "strike": { "flat": 1 },
+        "pullPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 1000 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 98 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -5 }
+        ]
+      },
+      "customOneOffs": [
+        "Tends to be a bit jumpy."
+      ]
+    }
+  ]
 }

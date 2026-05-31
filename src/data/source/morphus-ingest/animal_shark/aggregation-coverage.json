@@ -1,0 +1,71 @@
+{
+  "tableId": "animal_shark",
+  "entries": [
+    {
+      "id": "animal_shark_full_form",
+      "name": "Full Shark Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_shark_were",
+      "name": "Were-Shark",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_shark_humanoid",
+      "name": "Humanoid Shark",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_shark_eyes_and_senses",
+      "name": "Shark Eyes & Senses",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_shark_head",
+      "name": "Shark Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

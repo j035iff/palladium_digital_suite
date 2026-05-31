@@ -1,0 +1,75 @@
+{
+  "tableId": "animal_dolphin_whale",
+  "entries": [
+    {
+      "id": "animal_dolphin_whale_full_cetacean",
+      "name": "Full Cetacean",
+      "hooks": [
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_dolphin_whale_were_cetacean",
+      "name": "Were-Cetacean",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_dolphin_whale_humanoid",
+      "name": "Humanoid Dolphin or Whale",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_dolphin_whale_finned_humanoid",
+      "name": "Finned Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "swim speed bonus",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_dolphin_whale_aquatic_humanoid",
+      "name": "Aquatic Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_dolphin_whale_mermaid_merman",
+      "name": "Mermaid/Merman",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "combat context modifiers"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "tableId": "animal_crustacean",
+  "entries": [
+    {
+      "id": "animal_crustacean_giant",
+      "name": "Giant Crustacean",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_crustacean_were",
+      "name": "Were-Crustacean",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "swim speed bonus",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_crustacean_humanoid",
+      "name": "Humanoid Crustacean",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_crustacean_lobster_claws",
+      "name": "Lobster Claws",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "appearance constraints",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_crustacean_shell",
+      "name": "Crustacean Shell",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_crustacean_lobster_centauroid",
+      "name": "Lobster Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "swim speed bonus",
+        "skill overrides",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

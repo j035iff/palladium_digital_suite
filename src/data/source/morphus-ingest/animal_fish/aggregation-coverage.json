@@ -1,0 +1,90 @@
+{
+  "tableId": "animal_fish",
+  "entries": [
+    {
+      "id": "animal_fish_full_form",
+      "name": "Full Fish Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_fish_man",
+      "name": "Fish Man",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_bioluminescence",
+      "name": "Bioluminescence",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "nightvision bonus",
+        "variant percentiles (notes)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_scaly_skin",
+      "name": "Scaly Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "natural A.R.",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_puffer_fish_skin",
+      "name": "Puffer Fish Skin",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_gills",
+      "name": "Gills",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "nightvision bonus",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_fish_piranha_jaws",
+      "name": "Piranha Jaws (and Nature)",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

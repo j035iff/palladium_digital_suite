@@ -1,0 +1,69 @@
+{
+  "tableId": "animal_octopus_squid",
+  "entries": [
+    {
+      "id": "animal_octopus_squid_giant",
+      "name": "Giant Octopus/Squid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_octopus_squid_were",
+      "name": "Were-Octopus/Squid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "variant percentiles (notes)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_octopus_squid_humanoid",
+      "name": "Humanoid Octopus/Squid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_octopus_squid_head",
+      "name": "Octopus/Squid Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_octopus_squid_centauroid",
+      "name": "Octopus/Squid Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "damage affinities",
+        "custom one-offs (notes only)",
+        "appearance constraints"
+      ],
+      "notesOnly": false
+    }
+  ]
+}
