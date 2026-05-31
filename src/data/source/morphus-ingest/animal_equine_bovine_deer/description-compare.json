@@ -1,0 +1,22 @@
+{
+  "differences": [
+    {
+      "trait": "Humanoid Shape",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Centaur/Beast-Man",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    },
+    {
+      "trait": "Equine/Bovine Head",
+      "authoritativeBookKey": "dark_designs",
+      "otherBookKey": "core",
+      "note": "Use authoritative book for description and mechanics; see extracted/<bookKey>.txt for alternate wording."
+    }
+  ]
+}

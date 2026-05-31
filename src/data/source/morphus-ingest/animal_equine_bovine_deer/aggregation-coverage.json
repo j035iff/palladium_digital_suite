@@ -1,0 +1,61 @@
+{
+  "tableId": "animal_equine_bovine_deer",
+  "entries": [
+    {
+      "id": "animal_equine_full_form",
+      "name": "Full Horse/Bovine/Deer Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_equine_minotaur",
+      "name": "Half-Man Half-Animal/Were-Animal/Minotaur",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_equine_humanoid",
+      "name": "Humanoid Shape",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_equine_centaur",
+      "name": "Centaur/Beast-Man",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_equine_head",
+      "name": "Equine/Bovine Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}

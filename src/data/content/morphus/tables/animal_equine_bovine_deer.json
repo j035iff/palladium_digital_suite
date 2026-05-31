@@ -3,6 +3,222 @@
   "kind": "morphus_trait_table",
   "displayName": "Equine/Bovine/Deer",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Equine/Bovine/Deer Morphus table (Nightbane RPG pp. 97–98; Dark Designs pp. 130–131). Covers four-legged herbivores from cattle and horses to deer, bison, and antelope. Centaur and minotaur shapes are common. All rows instinctively get Swimming at 65% and Climbing at 30% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Unless otherwise noted, kicks and head butts inflict double damage (typically 2D6 + P.S. bonus) and jump/leap kicks do triple damage; horned or antlered creatures can head-butt for 4D6 damage.",
+  "entries": [
+    {
+      "id": "animal_equine_full_form",
+      "name": "Full Horse/Bovine/Deer Form",
+      "tableCategory": "Animal: Equine/Bovine/Deer",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Huge creature of the chosen species; may pass as a normal, although bigger-than-average animal with a mean or tough appearance.",
+      "playerChoices": [
+        {
+          "label": "Herbivore species",
+          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 12 },
+        "pp": { "flat": 3 },
+        "pe": { "flat": 6 },
+        "spd": { "dice": "1D6x10" },
+        "sdc": { "dice": "3D6x10" },
+        "initiative": { "flat": 1 },
+        "perception": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": { "flat": 10, "isOverride": true },
+          "standingDistance": { "flat": 15, "isOverride": true }
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Automatic dodge (works like a parry and does not use up a melee attack/action).",
+        "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
+        "Horned or antlered species can head-butt for 4D6 damage.",
+        "Cannot use any weapons or tools; likely too large to fit into most vehicles."
+      ]
+    },
+    {
+      "id": "animal_equine_minotaur",
+      "name": "Half-Man Half-Animal/Were-Animal/Minotaur",
+      "tableCategory": "Animal: Equine/Bovine/Deer",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Muscle-bound biped covered in fur with hoofed or cloven feet, a tail, and the head of a horse, bull, deer, or similar animal (the bull is the traditional minotaur).",
+      "playerChoices": [
+        {
+          "label": "Herbivore species",
+          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 6 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 4 },
+        "spd": { "dice": "4D6" },
+        "sdc": { "dice": "2D6x10" },
+        "initiative": { "flat": 2 },
+        "hf": { "dice": "1D4+2" }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "kick",
+          "label": "Kick",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "head_butt",
+          "label": "Horn/Antler Attack",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Kicks and horn attacks inflict an additional 2D6 damage.",
+        "Kicks and head butts otherwise inflict double damage; jump and leap kicks do triple damage."
+      ]
+    },
+    {
+      "id": "animal_equine_humanoid",
+      "name": "Humanoid Shape",
+      "tableCategory": "Animal: Equine/Bovine/Deer",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Basically human form with fur-covered legs, hoofed or cloven feet, and a mostly humanoid head likely bearing horns or antlers and animal features (large eyes, long face, large flat teeth). May have inspired myths of satyrs and Pan.",
+      "playerChoices": [
+        {
+          "label": "Herbivore species",
+          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 4 },
+        "pp": { "flat": 1 },
+        "pe": { "flat": 2 },
+        "spd": { "dice": "2D6" },
+        "sdc": { "dice": "1D6x10" },
+        "initiative": { "flat": 1 },
+        "perception": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
+        "Horned or antlered species can head-butt for 4D6 damage."
+      ]
+    },
+    {
+      "id": "animal_equine_centaur",
+      "name": "Centaur/Beast-Man",
+      "tableCategory": "Animal: Equine/Bovine/Deer",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Lower body of a horse, deer, moose, bull, or similar animal and the upper body of a normal man with horns or antlers crowning the head. Body may be too big for vehicles or to maneuver well indoors.",
+      "playerChoices": [
+        {
+          "label": "Herbivore species",
+          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 6 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 5 },
+        "spd": { "dice": "5D6" },
+        "sdc": { "dice": "3D6x10" },
+        "initiative": { "flat": 2 },
+        "perception": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
+        "Horned or antlered species can head-butt for 4D6 damage."
+      ]
+    },
+    {
+      "id": "animal_equine_head",
+      "name": "Equine/Bovine Head",
+      "tableCategory": "Animal: Equine/Bovine/Deer",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Normal-looking human body with a full animal head.",
+      "playerChoices": [
+        {
+          "label": "Herbivore species",
+          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 1 },
+        "spd": { "dice": "1D6" },
+        "sdc": { "dice": "3D6" },
+        "initiative": { "flat": 1 },
+        "perception": { "flat": 1 },
+        "hf": { "dice": "1D4" }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    }
+  ]
 }

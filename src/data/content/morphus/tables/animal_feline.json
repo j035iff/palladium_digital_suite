@@ -3,6 +3,424 @@
   "kind": "morphus_trait_table",
   "displayName": "Feline",
   "parentTable": "animal",
-  "description": "Roll or pick traits on this Animal sub-table; add characteristic rows from the book.",
-  "entries": []
+  "description": "Feline Morphus table (Nightbane RPG pp. 98–99; Dark Designs pp. 131–132). Any feline from sabertooth tigers to household tabbies is possible. All feline characters get +2 to roll with punch/fall/impact and instinctively Climb at 45%, Swim at 40%, and Prowl at 20% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects cat species and features.",
+  "entries": [
+    {
+      "id": "animal_feline_full",
+      "name": "Full Feline Form",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Large (or giant, for household cats) version of the chosen feline species.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 6 },
+        "pp": { "flat": 3 },
+        "pe": { "flat": 3 },
+        "spd": { "dice": "1D6x10" },
+        "sdc": { "dice": "3D6x10" },
+        "initiative": { "flat": 2 },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 30, "isOverride": true },
+          "runningDistance": { "flat": 60, "isOverride": true }
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "perceptionSpecialties": { "sound": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Cannot use any weapons, tools, or vehicles."
+      ]
+    },
+    {
+      "id": "animal_feline_were_cat",
+      "name": "Were-Cat",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Humanoid feline creature covered in fur with a full feline-shaped head and tail.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 4 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 2 },
+        "spd": { "dice": "1D4x10" },
+        "sdc": { "dice": "2D4x10" },
+        "initiative": { "flat": 2 },
+        "strike": { "flat": -4 },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D6" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 20, "isOverride": true },
+          "runningDistance": { "flat": 40, "isOverride": true }
+        }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 1000,
+        "perceptionSpecialties": { "sound": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
+          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -20 }
+        ]
+      },
+      "customOneOffs": [
+        "Paws make weapons and tools difficult: -4 to strike with guns and -20% (or -4) to weapons, tools, or skills requiring manual dexterity."
+      ]
+    },
+    {
+      "id": "animal_feline_fur_humanoid",
+      "name": "Fur-Covered Humanoid",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Could pass for human in bad light; fur-covered skin, feline ears near the top of the head, sharp fangs, a long furry tail, and eyes with vertical slits.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 2 },
+        "pp": { "flat": 2 },
+        "spd": { "dice": "3D6" },
+        "sdc": { "dice": "1D6x10" },
+        "initiative": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 800,
+        "perceptionSpecialties": { "sound": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_feline_cat_like",
+      "name": "Cat-like",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Appears normal except for vertical-slit eyes, unnaturally long sharp teeth, and retractable claws in the hands and feet.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "pp": { "flat": 1 },
+        "spd": { "dice": "1D6" },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 800,
+        "perceptionSpecialties": { "sound": 1 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Retractable Claws",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_feline_centauroid",
+      "name": "Feline Centauroid",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Lower body of a giant cat and the upper body of a were-cat. Almost as big as a horse; cannot fit in most regular vehicles, elevators, or some doorways.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "ps": { "flat": 6 },
+        "pp": { "flat": 2 },
+        "pe": { "flat": 4 },
+        "spd": { "dice": "1D6x10" },
+        "sdc": { "dice": "3D6x10" },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "mobility": {
+        "jumpModifiers": {
+          "standingDistance": { "flat": 30, "isOverride": true },
+          "runningDistance": { "flat": 60, "isOverride": true }
+        }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Claws",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_feline_cat_claws",
+      "name": "Cat Claws",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Retractable claws in the hands and feet.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "rollWithPunch": { "flat": 2 }
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "claws",
+          "label": "Retractable Claws",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": true
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45, "modifierPercent": 5 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_feline_cat_head",
+      "name": "Cat's Head",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+      ],
+      "description": "Normal humanoid body with a fully feline head.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "initiative": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 },
+        "hf": { "dice": "1D4" }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 600
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "4D6",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      }
+    },
+    {
+      "id": "animal_feline_features",
+      "name": "Feline Features",
+      "tableCategory": "Animal: Feline",
+      "gameSystems": ["nightbane"],
+      "sources": [
+        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
+        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+      ],
+      "description": "Lesser form of Cat's Head: sharp teeth, cat's eyes with vertical slits, and furry pointed ears near the top of the head.",
+      "playerChoices": [
+        {
+          "label": "Feline species",
+          "options": ["sabertooth", "tiger", "lion", "leopard", "house_cat", "other"],
+          "timing": "character_creation"
+        }
+      ],
+      "statModifiers": {
+        "perception": { "flat": 1 },
+        "rollWithPunch": { "flat": 2 }
+      },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 500
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D8",
+          "isAdditiveToHth": false
+        }
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 45 },
+          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 40 },
+          { "targetType": "skill_id", "targetValue": "skill_prowl", "grantUnlearnedValue": 20 },
+          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
+          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+        ]
+      },
+      "customOneOffs": [
+        "Keen hearing."
+      ]
+    }
+  ]
 }

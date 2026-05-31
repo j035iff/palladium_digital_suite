@@ -1,0 +1,105 @@
+{
+  "tableId": "animal_feline",
+  "entries": [
+    {
+      "id": "animal_feline_full",
+      "name": "Full Feline Form",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_were_cat",
+      "name": "Were-Cat",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_fur_humanoid",
+      "name": "Fur-Covered Humanoid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_cat_like",
+      "name": "Cat-like",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_centauroid",
+      "name": "Feline Centauroid",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "jump modifiers",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_cat_claws",
+      "name": "Cat Claws",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_cat_head",
+      "name": "Cat's Head",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "player choices"
+      ],
+      "notesOnly": false
+    },
+    {
+      "id": "animal_feline_features",
+      "name": "Feline Features",
+      "hooks": [
+        "stat modifiers / A.R. shift",
+        "skill overrides",
+        "natural weapons",
+        "nightvision bonus",
+        "custom one-offs (notes only)",
+        "player choices"
+      ],
+      "notesOnly": false
+    }
+  ]
+}
