@@ -58,7 +58,8 @@
           "limbType": "bite",
           "label": "Bite",
           "damageFormula": "2D6",
-          "isAdditiveToHth": false
+          "isAdditiveToHth": false,
+          "reachFeet": 20
         }
       ],
       "mobility": {
@@ -92,11 +93,14 @@
           "roll": "toad",
           "label": "Toad",
           "mobility": {
-            "swimSpeedBaseSource": "land_spd"
+            "swimSpeedBaseSource": "land_spd",
+            "jumpModifiers": {
+              "standingDistance": {
+                "flat": 30
+              }
+            }
           },
-          "customOneOffs": [
-            "Can jump 30 feet (9 m) from a standing position."
-          ]
+          "customOneOffs": []
         },
         {
           "roll": "frog",
@@ -105,11 +109,14 @@
             "swimSpeedBaseSource": "land_spd",
             "swimSpeedBonus": {
               "percent": 100
+            },
+            "jumpModifiers": {
+              "standingDistance": {
+                "flat": 80
+              }
             }
           },
-          "customOneOffs": [
-            "Can jump 80 feet (24.4 m) from a standing position."
-          ]
+          "customOneOffs": []
         },
         {
           "roll": "salamander",
@@ -127,10 +134,17 @@
           }
         }
       ],
-      "customOneOffs": [
-        "Most creatures have a long, prehensile tongue that can reach targets up to 20 feet (6 m) away.",
-        "10% chance of poisonous glands covering the skin with a contact poison. Exposure (bare skin touch) inflicts a red rash and 3D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D6 damage."
-      ]
+      "customOneOffs": [],
+      "combatEffects": {
+        "contactPoison": {
+          "saveType": "poison",
+          "failDamageFormula": "3D6",
+          "passDamageFormula": "1D6",
+          "trigger": "skin_contact",
+          "chancePercent": 10,
+          "note": "Exposure causes a painful rash."
+        }
+      }
     },
     {
       "id": "animal_amphibian_were",
@@ -203,7 +217,8 @@
           "limbType": "bite",
           "label": "Bite",
           "damageFormula": "2D4",
-          "isAdditiveToHth": false
+          "isAdditiveToHth": false,
+          "reachFeet": 15
         }
       ],
       "skillModifiers": {
@@ -225,10 +240,17 @@
           }
         ]
       },
-      "customOneOffs": [
-        "Long, prehensile tongue can reach targets up to 15 feet (4.6 m) away.",
-        "10% chance of poisonous glands covering the skin with a contact poison. Exposure inflicts a red rash and 2D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D4 damage."
-      ]
+      "customOneOffs": [],
+      "combatEffects": {
+        "contactPoison": {
+          "saveType": "poison",
+          "failDamageFormula": "2D6",
+          "passDamageFormula": "1D4",
+          "trigger": "skin_contact",
+          "chancePercent": 10,
+          "note": "Exposure causes a painful rash."
+        }
+      }
     },
     {
       "id": "animal_amphibian_humanoid",
@@ -356,7 +378,8 @@
           "limbType": "bite",
           "label": "Bite",
           "damageFormula": "2D4",
-          "isAdditiveToHth": false
+          "isAdditiveToHth": false,
+          "reachFeet": 10
         }
       ],
       "skillModifiers": {
@@ -378,10 +401,17 @@
           }
         ]
       },
-      "customOneOffs": [
-        "Long, prehensile tongue can reach targets up to 10 feet (3 m) away.",
-        "10% chance of poisonous glands covering the skin with a contact poison. Exposure inflicts a red rash and 2D6 S.D.C. unless a save versus lethal poison succeeds; on a successful save, a small rash and only 1D4 damage."
-      ]
+      "customOneOffs": [],
+      "combatEffects": {
+        "contactPoison": {
+          "saveType": "poison",
+          "failDamageFormula": "2D6",
+          "passDamageFormula": "1D4",
+          "trigger": "skin_contact",
+          "chancePercent": 10,
+          "note": "Exposure causes a painful rash."
+        }
+      }
     },
     {
       "id": "animal_amphibian_head",
@@ -431,12 +461,11 @@
           "limbType": "bite",
           "label": "Bite",
           "damageFormula": "3D6",
-          "isAdditiveToHth": false
+          "isAdditiveToHth": false,
+          "reachFeet": 15
         }
       ],
-      "customOneOffs": [
-        "Long, prehensile tongue can reach targets up to 15 feet (4.6 m) away."
-      ]
+      "customOneOffs": []
     }
   ]
 }

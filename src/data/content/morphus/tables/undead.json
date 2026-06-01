@@ -34,6 +34,11 @@
           "dice": "6D6"
         }
       },
+      "damageAffinities": {
+        "wood": 2,
+        "silver": 2,
+        "holyWeapons": 2
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
@@ -137,6 +142,11 @@
       },
       "saveModifiers": {
         "magic": 5
+      },
+      "damageAffinities": {
+        "wood": 2,
+        "silver": 2,
+        "holyWeapons": 2
       },
       "skillModifiers": {
         "specificSkillOverrides": [

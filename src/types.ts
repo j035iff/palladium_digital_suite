@@ -539,6 +539,7 @@ export type MorphusNaturalWeapon = {
   label?: string
   damageFormula: string
   isAdditiveToHth: boolean
+  reachFeet?: number
   weaponTraits?: readonly MorphusWeaponTrait[]
   damageModifier?: MorphusWeaponDamageModifier
   activationCost?: MorphusWeaponActivationCost
@@ -773,6 +774,7 @@ export type MorphusMobility = {
   swimSpeedBonus?: MorphusPolymorphicModifier
   aquaticTraits?: MorphusAquaticTraits
   flightEngine?: MorphusFlightEngine
+  landLocomotion?: MorphusLandLocomotion
   conditionalTerrainModifiers?: readonly MorphusConditionalTerrainModifier[]
   conditionalStanceModifiers?: readonly MorphusConditionalStanceModifier[]
   burrowingEngine?: MorphusBurrowingEngine
@@ -781,6 +783,35 @@ export type MorphusMobility = {
   jumpMultiplier?: number
   minimumJumpFeet?: number
   waterlogMinutesDice?: string
+}
+
+export type MorphusLandLocomotion = {
+  /** Scale land movement speed (e.g. 0.5 for half speed). */
+  spdMultiplier?: number
+  /** Fixed land movement speed while constrained. */
+  spdOverride?: number
+  /** Scale P.P. while on land. */
+  ppMultiplier?: number
+  /** Fixed P.P. while on land. */
+  ppOverride?: number
+  /** Fixed APM while on land. */
+  apmOverride?: number
+  /** Optional movement mode label (e.g. crawl, slither). */
+  mode?: 'normal' | 'crawl' | 'slither'
+  note?: string
+}
+
+export type MorphusContactPoison = {
+  saveType: 'poison' | 'gas'
+  failDamageFormula: string
+  passDamageFormula: string
+  trigger: 'skin_contact'
+  chancePercent?: number
+  note?: string
+}
+
+export type MorphusCombatEffects = {
+  contactPoison?: MorphusContactPoison
 }
 
 export type MorphusPerceptionSpecialties = {
@@ -1102,6 +1133,7 @@ export type MorphusCharacteristic = {
   disabledNaturalAttackTags?: readonly MorphusDisabledNaturalAttackTag[]
   activatedAbilities?: readonly MorphusActivatedAbility[]
   specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]
+  combatEffects?: MorphusCombatEffects
   customOneOffs?: readonly string[]
   /** Step-One router or section header — not a final Morphus look by itself. */
   entryRole?: 'trait' | 'table_router' | 'subtable_header'
@@ -1133,6 +1165,7 @@ export type MorphusVariantPercentile = {
   skillModifiers?: MorphusSkillModifiers
   sensory?: MorphusSensory
   mobility?: MorphusMobility
+  combatEffects?: MorphusCombatEffects
   limbDurability?: readonly MorphusLimbDurability[]
   naturalWeapons?: readonly MorphusNaturalWeapon[]
   weightModifier?: MorphusPolymorphicModifier

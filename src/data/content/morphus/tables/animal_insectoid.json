@@ -9,37 +9,79 @@
       "id": "animal_insectoid_giant_insect",
       "name": "Giant Insect",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "The Nightbane becomes a giant insect at least six feet (1.8 m) in length. Ants, bees, wasps, flies, dragonflies, mosquitoes, beetles, praying mantis, butterflies, and moths are common types; spiders and scorpions are not insects.",
       "playerChoices": [
         {
           "label": "Insect species",
-          "options": ["ant", "bee", "wasp", "fly", "dragonfly", "mosquito", "beetle", "mantis", "butterfly", "moth", "other"],
+          "options": [
+            "ant",
+            "bee",
+            "wasp",
+            "fly",
+            "dragonfly",
+            "mosquito",
+            "beetle",
+            "mantis",
+            "butterfly",
+            "moth",
+            "other"
+          ],
           "timing": "character_creation"
         },
         {
           "label": "Body type",
-          "options": ["hard_body", "soft_body"],
+          "options": [
+            "hard_body",
+            "soft_body"
+          ],
           "timing": "character_creation"
         },
         {
           "label": "Locomotion",
-          "options": ["running", "flying"],
+          "options": [
+            "running",
+            "flying"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 10 },
-        "pp": { "flat": 3 },
-        "pe": { "flat": 4 },
-        "initiative": { "flat": 3 },
-        "perception": { "flat": 3 },
-        "hf": { "dice": "1D6" },
-        "rollWithPunch": { "flat": 1 }
+        "ps": {
+          "flat": 10
+        },
+        "pp": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 4
+        },
+        "initiative": {
+          "flat": 3
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "dice": "1D6"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -63,19 +105,47 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -40 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -40
+          }
         ]
       },
       "variantPercentiles": [
         {
           "roll": "hard_body",
           "label": "Hard Body",
-          "statModifiers": { "sdc": { "dice": "4D6x10" } },
+          "statModifiers": {
+            "sdc": {
+              "dice": "4D6x10"
+            }
+          },
           "naturalWeapons": [
             {
               "limbType": "bite",
@@ -88,7 +158,11 @@
         {
           "roll": "soft_body",
           "label": "Soft Body",
-          "statModifiers": { "sdc": { "dice": "2D6x10" } },
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D6x10"
+            }
+          },
           "naturalWeapons": [
             {
               "limbType": "bite",
@@ -101,12 +175,22 @@
         {
           "roll": "running",
           "label": "Running",
-          "statModifiers": { "spd": { "dice": "1D4x10" } }
+          "statModifiers": {
+            "spd": {
+              "dice": "1D4x10"
+            }
+          }
         },
         {
           "roll": "flying",
           "label": "Flying",
-          "customOneOffs": ["Flying speed of 2D4x10."]
+          "mobility": {
+            "flightEngine": {
+              "flySpdAttribute": {
+                "dice": "2D4X10"
+              }
+            }
+          }
         }
       ],
       "customOneOffs": [
@@ -118,38 +202,79 @@
       "id": "animal_insectoid_were_insect",
       "name": "Were-Insect",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "A bipedal combination of human and insect, with two pairs of clawed, spindly arms, hands and legs, vaguely humanoid shape, and insectoid head complete with antennae, pincer-like mandibles, and multi-faceted eyes.",
       "playerChoices": [
         {
           "label": "Insect species",
-          "options": ["ant", "bee", "wasp", "fly", "dragonfly", "beetle", "mantis", "other"],
+          "options": [
+            "ant",
+            "bee",
+            "wasp",
+            "fly",
+            "dragonfly",
+            "beetle",
+            "mantis",
+            "other"
+          ],
           "timing": "character_creation"
         },
         {
           "label": "Body type",
-          "options": ["hard_body", "soft_body"],
+          "options": [
+            "hard_body",
+            "soft_body"
+          ],
           "timing": "character_creation"
         },
         {
           "label": "Locomotion",
-          "options": ["running", "flying"],
+          "options": [
+            "running",
+            "flying"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pp": { "flat": 3 },
-        "pe": { "flat": 3 },
-        "apm": { "flat": 1 },
-        "initiative": { "flat": 2 },
-        "perception": { "flat": 3 },
-        "hf": { "dice": "1D6" },
-        "rollWithPunch": { "flat": 1 }
+        "ps": {
+          "flat": 6
+        },
+        "pp": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 3
+        },
+        "apm": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "dice": "1D6"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -167,33 +292,71 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "variantPercentiles": [
         {
           "roll": "hard_body",
           "label": "Hard Body",
-          "statModifiers": { "sdc": { "dice": "3D6x10" } }
+          "statModifiers": {
+            "sdc": {
+              "dice": "3D6x10"
+            }
+          }
         },
         {
           "roll": "soft_body",
           "label": "Soft Body",
-          "statModifiers": { "sdc": { "dice": "2D4x10" } }
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D4x10"
+            }
+          }
         },
         {
           "roll": "running",
           "label": "Running",
-          "statModifiers": { "spd": { "dice": "5D6" } }
+          "statModifiers": {
+            "spd": {
+              "dice": "5D6"
+            }
+          }
         },
         {
           "roll": "flying",
           "label": "Flying",
-          "customOneOffs": ["Flying speed of 2D4x10."]
+          "mobility": {
+            "flightEngine": {
+              "flySpdAttribute": {
+                "dice": "2D4X10"
+              }
+            }
+          }
         }
       ],
       "customOneOffs": [
@@ -204,33 +367,65 @@
       "id": "animal_insectoid_humanoid_insectoid",
       "name": "Humanoid-Insectoid",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "Basically human-like, with an extra pair of arms and insectoid characteristics. The head is human except for large, round, multi-faceted eyes and antennae. Skin is covered with a chitinous exoskeleton. The character may have insect wings but otherwise has no other unusual limbs.",
       "playerChoices": [
         {
           "label": "Body type",
-          "options": ["hard_body", "soft_body"],
+          "options": [
+            "hard_body",
+            "soft_body"
+          ],
           "timing": "character_creation"
         },
         {
           "label": "Locomotion",
-          "options": ["running", "flying"],
+          "options": [
+            "running",
+            "flying"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "apm": { "flat": 1 },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D4" },
-        "rollWithPunch": { "flat": 1 }
+        "ps": {
+          "flat": 4
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "apm": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -242,31 +437,61 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          }
         ]
       },
       "variantPercentiles": [
         {
           "roll": "hard_body",
           "label": "Hard Body Exoskeleton",
-          "statModifiers": { "sdc": { "dice": "2D6x10" } }
+          "statModifiers": {
+            "sdc": {
+              "dice": "2D6x10"
+            }
+          }
         },
         {
           "roll": "soft_body",
           "label": "Soft Body Exoskeleton",
-          "statModifiers": { "sdc": { "dice": "1D6x10" } }
+          "statModifiers": {
+            "sdc": {
+              "dice": "1D6x10"
+            }
+          }
         },
         {
           "roll": "running",
           "label": "Running",
-          "statModifiers": { "spd": { "dice": "3D6" } }
+          "statModifiers": {
+            "spd": {
+              "dice": "3D6"
+            }
+          }
         },
         {
           "roll": "flying",
           "label": "Flying",
-          "customOneOffs": ["Flying speed of 1D4x10."]
+          "mobility": {
+            "flightEngine": {
+              "flySpdAttribute": {
+                "dice": "1D4X10"
+              }
+            }
+          }
         }
       ],
       "customOneOffs": [
@@ -277,28 +502,62 @@
       "id": "animal_insectoid_insect_wings",
       "name": "Insect Wings",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "An otherwise normal body, except for insect wings protruding from the back.",
       "statModifiers": {
-        "sdc": { "dice": "3D6" },
-        "hf": { "flat": 1 },
-        "rollWithPunch": { "flat": 1 }
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "mobility": {
         "flightEngine": {
-          "flySpdAttribute": { "dice": "1D4x10+20" },
-          "flightCombatBonuses": { "dodge": { "flat": 1 } }
+          "flySpdAttribute": {
+            "dice": "1D4x10+20"
+          },
+          "flightCombatBonuses": {
+            "dodge": {
+              "flat": 1
+            }
+          }
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          }
         ]
       }
     },
@@ -306,18 +565,38 @@
       "id": "animal_insectoid_insect_head",
       "name": "Insect Head",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "An ordinary-looking human, except for the full insect head.",
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "initiative": { "flat": 2 },
-        "perception": { "flat": 3 },
-        "hf": { "dice": "1D4" },
-        "rollWithPunch": { "flat": 1 }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -329,11 +608,31 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -341,22 +640,50 @@
       "id": "animal_insectoid_insect_eyes",
       "name": "Insect Eyes",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "The character has multi-faceted eyes.",
       "statModifiers": {
-        "perception": { "flat": 2 },
-        "hf": { "flat": 2 },
-        "rollWithPunch": { "flat": 1 }
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          }
         ]
       },
       "customOneOffs": [
@@ -369,21 +696,47 @@
       "id": "animal_insectoid_centauroid",
       "name": "Insectoid Centauroid",
       "tableCategory": "Animal: Insectoid",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 132 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 99 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 132
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 99
+        }
       ],
       "description": "The upper body of an insect-like humanoid with insect mandibles, eyes, and antennae, and the lower body of a six-legged giant insect; the insect body may also have wings.",
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "spd": { "dice": "5D6" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 3 },
-        "hf": { "dice": "1D4" },
-        "rollWithPunch": { "flat": 1 }
+        "ps": {
+          "flat": 6
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "5D6"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -401,11 +754,31 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_acrobatics", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -416,17 +789,33 @@
       "id": "animal_insectoid_ii_mantis_arms",
       "name": "Mantis Arms",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 22 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 22
+        }
       ],
       "description": "One pair of arms is replaced by long, slender, chitinous limbs with sharpened barbs lining the inner edges. These limbs fold inward toward the body and enable the character to grab and hold opponents like mantis prey.",
       "statModifiers": {
-        "ps": { "flat": 5 },
-        "strike": { "flat": 2 },
-        "pullPunch": { "flat": 2 },
-        "entangle": { "flat": 4 },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 5
+        },
+        "strike": {
+          "flat": 2
+        },
+        "pullPunch": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 4
+        },
+        "hf": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -438,8 +827,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 15 },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -60 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -60
+          }
         ]
       },
       "customOneOffs": [
@@ -451,14 +848,24 @@
       "id": "animal_insectoid_ii_spiracles",
       "name": "Spiracles",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 22 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 22
+        }
       ],
       "description": "In place of lungs, the Nightbane has several small holes located all over the abdomen, back, and neck through which he breathes. Spiracles are often concealed and hard to spot (Perception Roll 18+ to notice with casual inspection).",
       "statModifiers": {
-        "hp": { "dice": "3D6" },
-        "sdc": { "dice": "2D6" }
+        "hp": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
       },
       "customOneOffs": [
         "Cannot be choked or strangled by cutting off air in the neck/throat; all spiracles would need to be blocked (e.g. burying him up to the chin).",
@@ -469,14 +876,24 @@
       "id": "animal_insectoid_ii_proboscis",
       "name": "Proboscis",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 22 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 22
+        }
       ],
       "description": "In place of a mouth, a long, needle-like protrusion or flexible tube allows the Nightbane to ingest only liquids, similar to drinking through a long straw that is part of his body.",
       "statModifiers": {
-        "pb": { "flat": -4 },
-        "hf": { "flat": 1 }
+        "pb": {
+          "flat": -4
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -495,18 +912,36 @@
       "id": "animal_insectoid_ii_stinger",
       "name": "Stinger",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 22 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 22
+        }
       ],
       "description": "A retractable stinger housed somewhere in the body—possibly a scorpion tail-like appendage or extending from the forearm or wrist like a long knitting needle or spike.",
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "pe": { "flat": -1 },
-        "pb": { "flat": -1 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "hf": { "flat": 1 }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "pe": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "saveModifiers": {
         "poison": 2
@@ -530,13 +965,21 @@
       "id": "animal_insectoid_ii_bombardier_chamber",
       "name": "Bombardier Chamber",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "Separate internal glands house two chemicals that, when combined in a protected chamber, produce a volatile reaction similar to expelling napalm in a 30-degree cone up to 50 feet (15.2 m) away.",
       "statModifiers": {
-        "strike": { "flat": 2 }
+        "strike": {
+          "flat": 2
+        }
       },
       "customOneOffs": [
         "Attack deals 5D6 damage in a 30-degree cone up to 50 feet (15.2 m). Body armor absorbs half unless chemical-hazard rated (then 100%). Targets without natural armor must save vs pain 15+ or drop and writhe for 1D4+1 melee rounds (may only defend and crawl at Spd 3).",
@@ -549,13 +992,21 @@
       "id": "animal_insectoid_ii_goo_glands",
       "name": "Goo Glands",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "Exterior glands secrete a sticky, foul-smelling substance functioning similar to tear gas.",
       "statModifiers": {
-        "ma": { "flat": -5 }
+        "ma": {
+          "flat": -5
+        }
       },
       "saveModifiers": {
         "gas": 4
@@ -571,14 +1022,24 @@
       "id": "animal_insectoid_ii_climbing_filaments",
       "name": "Climbing Filaments",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "Tiny, needle-like hairs cover the palms and soles, improving climbing and allowing the Morphus to cling to sheer surfaces that are not completely smooth and featureless.",
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 20 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 20
+          }
         ]
       },
       "customOneOffs": [
@@ -589,19 +1050,35 @@
       "id": "animal_insectoid_ii_bioluminescence",
       "name": "Bioluminescence",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "One or more body sections glow with soft, controllable bioluminescent light—most commonly green, light blue, or violet.",
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "pb": { "flat": 2 },
-        "ma": { "flat": 2 }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "pb": {
+          "flat": 2
+        },
+        "ma": {
+          "flat": 2
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": -30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -30
+          }
         ]
       },
       "customOneOffs": [
@@ -614,15 +1091,27 @@
       "id": "animal_insectoid_ii_danger_markings",
       "name": "Danger Markings",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "Brightly colored warning patterns—lightning bolts, tiger stripes, false eyes, biohazard symbols, skulls, barbed wire, and similar markings that signal danger.",
       "statModifiers": {
-        "hf": { "flat": 2 },
-        "ma": { "dice": "-1D4" },
-        "pb": { "dice": "-1D4" }
+        "hf": {
+          "flat": 2
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
       },
       "customOneOffs": [
         "Creatures with animal I.Q. avoid attacking unless provoked, agitated, threatened, or commanded.",
@@ -633,18 +1122,32 @@
       "id": "animal_insectoid_ii_camouflage_markings",
       "name": "Camouflage Markings",
       "tableCategory": "Animal: Insectoid II",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 23 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 23
+        }
       ],
       "description": "Markings that adjust to fit outdoor environments, helping the Nightbane blend among forest, vegetation, rocks, desert, and similar natural settings.",
       "statModifiers": {
-        "ma": { "flat": -1 },
-        "pb": { "flat": -1 }
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [

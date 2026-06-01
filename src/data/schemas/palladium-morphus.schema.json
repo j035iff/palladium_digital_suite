@@ -160,6 +160,9 @@
       },
       "description": "Specialized parry/intercept rules (shadow, lasers, bare-handed melee)."
     },
+    "combatEffects": {
+      "$ref": "#/$defs/combatEffects"
+    },
     "customOneOffs": {
       "type": "array",
       "items": {
@@ -534,6 +537,11 @@
           "type": "integer",
           "minimum": 0,
           "description": "Maximum effective range of the weapon/attack in feet."
+        },
+        "reachFeet": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Melee reach in feet for this natural weapon."
         },
         "poison": {
           "$ref": "#/$defs/poison"
@@ -1076,6 +1084,39 @@
         }
       }
     },
+    "landLocomotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "spdMultiplier": {
+          "type": "number",
+          "minimum": 0
+        },
+        "spdOverride": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ppMultiplier": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ppOverride": {
+          "type": "number",
+          "minimum": 0
+        },
+        "apmOverride": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["normal", "crawl", "slither"]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
     "conditionalTerrainModifier": {
       "type": "object",
       "additionalProperties": false,
@@ -1186,6 +1227,9 @@
         "flightEngine": {
           "$ref": "#/$defs/flightEngine"
         },
+        "landLocomotion": {
+          "$ref": "#/$defs/landLocomotion"
+        },
         "conditionalTerrainModifiers": {
           "type": "array",
           "items": {
@@ -1226,6 +1270,46 @@
           "type": "string",
           "minLength": 1,
           "description": "Minutes until buoyant Morphus sinks after waterlogging (Stuffed Animal)."
+        }
+      }
+    },
+    "contactPoison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["saveType", "failDamageFormula", "passDamageFormula", "trigger"],
+      "properties": {
+        "saveType": {
+          "type": "string",
+          "enum": ["poison", "gas"]
+        },
+        "failDamageFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "passDamageFormula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trigger": {
+          "type": "string",
+          "enum": ["skin_contact"]
+        },
+        "chancePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "combatEffects": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contactPoison": {
+          "$ref": "#/$defs/contactPoison"
         }
       }
     },
@@ -1985,6 +2069,9 @@
         },
         "mobility": {
           "$ref": "#/$defs/mobility"
+        },
+        "combatEffects": {
+          "$ref": "#/$defs/combatEffects"
         },
         "limbDurability": {
           "type": "array",

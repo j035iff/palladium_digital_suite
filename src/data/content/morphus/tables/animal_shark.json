@@ -9,33 +9,72 @@
       "id": "animal_shark_full_form",
       "name": "Full Shark Form",
       "tableCategory": "Animal: Shark",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 80 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
       "description": "The Morphus is a large shark of any species, 8–12 feet (2.4 to 3.6 m) long, with full shark features, thrashing on dry land without hands, arms, legs, or feet.",
       "playerChoices": [
         {
           "label": "Shark species",
-          "options": ["great white", "hammerhead", "tiger", "mako", "other"],
+          "options": [
+            "great white",
+            "hammerhead",
+            "tiger",
+            "mako",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "sdc": { "dice": "2D6x10" },
-        "ps": { "dice": "1D6" },
-        "pe": { "dice": "1D6" },
-        "pp": { "flat": 3 },
-        "spd": { "dice": "2D6" },
-        "perception": { "flat": 3 },
-        "hf": { "flat": 2 }
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "pe": {
+          "dice": "1D6"
+        },
+        "pp": {
+          "flat": 3
+        },
+        "spd": {
+          "dice": "2D6"
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "flat": 2
+        }
       },
-      "weightModifier": { "percent": 200 },
-      "damageAffinities": { "cold": 0.5 },
+      "weightModifier": {
+        "percent": 200
+      },
+      "damageAffinities": {
+        "cold": 0.5
+      },
       "mobility": {
         "swimSpeedBaseSource": "land_spd",
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 15840 },
-        "swimSpeedBonus": { "percent": 100 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 15840
+        },
+        "swimSpeedBonus": {
+          "percent": 100
+        }
       },
-      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -53,8 +92,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 96 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 96
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -68,35 +115,82 @@
       "id": "animal_shark_were",
       "name": "Were-Shark",
       "tableCategory": "Animal: Shark",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 80 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
       "description": "Essentially a shark 7–8 feet (2.1 to 2.4 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a short tail. The head is completely that of a shark, though it may face forward when walking upright.",
       "playerChoices": [
         {
           "label": "Shark species",
-          "options": ["great white", "hammerhead", "tiger", "mako", "other"],
+          "options": [
+            "great white",
+            "hammerhead",
+            "tiger",
+            "mako",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "sdc": { "dice": "1D6x10+6" },
-        "ps": { "dice": "1D6" },
-        "pp": { "dice": "1D4" },
-        "pe": { "dice": "1D4" },
-        "spd": { "dice": "2D6", "percent": -50 },
-        "apm": { "flat": 1 },
-        "initiative": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "hf": { "dice": "1D4" },
-        "ma": { "dice": "-1D4" },
-        "pb": { "dice": "-1D4" }
+        "sdc": {
+          "dice": "1D6x10+6"
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "pp": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "dice": "1D4"
+        },
+        "spd": {
+          "dice": "2D6",
+          "percent": -50
+        },
+        "apm": {
+          "flat": 1
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
       },
-      "weightModifier": { "percent": 200 },
-      "damageAffinities": { "cold": 0, "silver": 2 },
+      "weightModifier": {
+        "percent": 200
+      },
+      "damageAffinities": {
+        "cold": 0,
+        "silver": 2
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 10560 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 10560
+        }
       },
-      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -114,43 +208,92 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 96 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 96
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -10
+          }
         ]
       },
       "customOneOffs": [
         "Impervious to cold (no damage).",
         "Can detect blood up to one mile (1.6 km) away underwater; half that on dry land.",
-        "Weight and size may be a problem on land and for transportation.",
-        "All were-beasts are vulnerable to silver (double damage)."
+        "Weight and size may be a problem on land and for transportation."
       ]
     },
     {
       "id": "animal_shark_humanoid",
       "name": "Humanoid Shark",
       "tableCategory": "Animal: Shark",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 80 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
       "description": "Humanoid shape with webbed legs and feet, webbed arms and hands, and a pug shark-like head with a dorsal fin on the back. About seven feet (2.1 m) tall with thick, smooth, rubbery skin.",
       "statModifiers": {
-        "sdc": { "dice": "1D6x10" },
-        "iq": { "flat": 1 },
-        "ps": { "dice": "1D4" },
-        "pp": { "flat": 1 },
-        "spd": { "dice": "1D6", "percent": -30 },
-        "initiative": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "hf": { "dice": "1D4" },
-        "ma": { "dice": "-1D4" },
-        "pb": { "dice": "-1D4" }
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "iq": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pp": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D6",
+          "percent": -30
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        }
       },
-      "weightModifier": { "percent": 100 },
-      "damageAffinities": { "cold": 0.5 },
+      "weightModifier": {
+        "percent": 100
+      },
+      "damageAffinities": {
+        "cold": 0.5
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 5280 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 5280
+        }
       },
-      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -167,9 +310,21 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 96 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -5 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 96
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
+          }
         ]
       },
       "customOneOffs": [
@@ -181,24 +336,53 @@
       "id": "animal_shark_eyes_and_senses",
       "name": "Shark Eyes & Senses",
       "tableCategory": "Animal: Shark",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 81 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 81
+        }
+      ],
       "description": "Looks nearly human except for a flat pointed nose, large round nearly black eyes, and slightly pointed teeth.",
       "statModifiers": {
-        "perception": { "flat": 2 },
-        "initiative": { "flat": 1 },
-        "hf": { "flat": 1 },
-        "ma": { "dice": "-1D4" },
-        "pb": { "flat": -1 },
-        "spd": { "percent": -10 }
+        "perception": {
+          "flat": 2
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "flat": -1
+        },
+        "spd": {
+          "percent": -10
+        }
       },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 3000 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 3000
+        }
       },
-      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000
+      },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 96 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 96
+          }
         ]
       },
       "customOneOffs": [
@@ -209,24 +393,55 @@
       "id": "animal_shark_head",
       "name": "Shark Head",
       "tableCategory": "Animal: Shark",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 81 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 81
+        }
+      ],
       "description": "Completely human body with the head of a shark.",
       "statModifiers": {
-        "sdc": { "dice": "4D6" },
-        "initiative": { "flat": 2 },
-        "strike": { "flat": 1 },
-        "hf": { "dice": "1D4" },
-        "ma": { "dice": "-1D4" },
-        "pb": { "dice": "-1D4" },
-        "spd": { "percent": -20 }
+        "sdc": {
+          "dice": "4D6"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "ma": {
+          "dice": "-1D4"
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
+        "spd": {
+          "percent": -20
+        }
       },
-      "weightModifier": { "percent": 30 },
-      "damageAffinities": { "cold": 0.5 },
+      "weightModifier": {
+        "percent": 30
+      },
+      "damageAffinities": {
+        "cold": 0.5
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 3000 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 3000
+        }
       },
-      "sensory": { "nightvisionRangeFlatBonus": 2000 },
+      "sensory": {
+        "nightvisionRangeFlatBonus": 2000
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -238,8 +453,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 96 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 96
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [

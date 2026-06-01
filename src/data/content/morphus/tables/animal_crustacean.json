@@ -85,7 +85,6 @@
         ]
       },
       "customOneOffs": [
-        "Depth tolerance: three miles (4.8 km).",
         "Difficult to hide; transportation may be a problem (e.g. cannot fit inside a vehicle, but can cling to the roof).",
         "Skills requiring manual dexterity and fingers are often impossible (-70% to skill performance)."
       ]
@@ -176,9 +175,7 @@
         ]
       },
       "customOneOffs": [
-        "Depth tolerance: two miles (3.2 km).",
-        "Difficult to hide; transportation may be a problem (e.g. can fit inside a vehicle, but takes up two spaces).",
-        "All were-beasts are vulnerable to silver (double damage)."
+        "Difficult to hide; transportation may be a problem (e.g. can fit inside a vehicle, but takes up two spaces)."
       ]
     },
     {
@@ -241,7 +238,6 @@
         "clothingFit": "custom_required"
       },
       "customOneOffs": [
-        "Depth tolerance: one mile (1.6 km).",
         "Difficult to hide."
       ]
     },
@@ -324,7 +320,6 @@
         "clothingFit": "custom_required"
       },
       "customOneOffs": [
-        "Depth tolerance: 2,000 feet (610 m).",
         "Arms can parry melee weapons without injury."
       ]
     },
@@ -389,10 +384,7 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
-      },
-      "customOneOffs": [
-        "Depth tolerance: one mile (1.6 km)."
-      ]
+      }
     },
     {
       "id": "animal_crustacean_lobster_centauroid",
@@ -467,7 +459,6 @@
       },
       "customOneOffs": [
         "Lower body has Natural A.R. 13.",
-        "Depth tolerance: 2,000 feet (610 m).",
         "Clattering movement on land (-30% to Prowl).",
         "Difficult to hide; transportation may be a problem (e.g. cramped in a vehicle back seat).",
         "Triple weight."

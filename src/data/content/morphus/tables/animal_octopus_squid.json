@@ -9,35 +9,94 @@
       "id": "animal_octopus_squid_giant",
       "name": "Giant Octopus/Squid",
       "tableCategory": "Animal: Octopus/Squid",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 79
+        }
+      ],
       "description": "A giant octopus or squid with eight tentacles, a hooked parrot-like beak, and a pliable body roughly three feet (0.9 m) in diameter with 10–12 foot (3 to 3.6 m) tentacles. Can function on land at reduced speed and agility.",
       "statModifiers": {
-        "sdc": { "dice": "2D4x10+10" },
-        "ps": { "dice": "1D6", "flat": 4 },
-        "pe": { "flat": 1 },
-        "pp": { "flat": 3 },
-        "spd": { "dice": "2D6", "percent": -50 },
-        "apm": { "flat": 2 },
-        "strike": { "flat": 2 },
-        "parry": { "flat": 4 },
-        "entangle": { "flat": 4 },
-        "hf": { "dice": "1D4" }
+        "sdc": {
+          "dice": "2D4x10+10"
+        },
+        "ps": {
+          "dice": "1D6",
+          "flat": 4
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 3
+        },
+        "spd": {
+          "dice": "2D6",
+          "percent": -50
+        },
+        "apm": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 4
+        },
+        "entangle": {
+          "flat": 4
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
-      "weightModifier": { "percent": 50 },
-      "damageAffinities": { "cold": 0.5, "fire": 2 },
+      "weightModifier": {
+        "percent": 50
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 2
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 15840 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 15840
+        }
       },
       "naturalWeapons": [
-        { "limbType": "bite", "label": "Beak Bite", "damageFormula": "3D6", "isAdditiveToHth": false }
+        {
+          "limbType": "bite",
+          "label": "Beak Bite",
+          "damageFormula": "3D6",
+          "isAdditiveToHth": false
+        }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 85 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 30
+          }
         ]
       },
       "customOneOffs": [
@@ -53,47 +112,109 @@
       "id": "animal_octopus_squid_were",
       "name": "Were-Octopus/Squid",
       "tableCategory": "Animal: Octopus/Squid",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 79
+        }
+      ],
       "description": "A were-form combining humanoid body structure with octopus or squid features, beak mouth, and color-changing skin.",
       "statModifiers": {
-        "apm": { "flat": 1 },
-        "strike": { "flat": 2 },
-        "parry": { "flat": 3 },
-        "entangle": { "flat": 3 },
-        "spd": { "percent": -50 }
+        "apm": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 2
+        },
+        "parry": {
+          "flat": 3
+        },
+        "entangle": {
+          "flat": 3
+        },
+        "spd": {
+          "percent": -50
+        }
       },
-      "damageAffinities": { "cold": 0.5, "fire": 2 },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 2
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 15840 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 15840
+        },
+        "landLocomotion": {
+          "spdMultiplier": 0.5
+        }
       },
       "naturalWeapons": [
-        { "limbType": "bite", "label": "Beak Bite", "damageFormula": "2D4", "isAdditiveToHth": false }
+        {
+          "limbType": "bite",
+          "label": "Beak Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 85 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
         ]
       },
-      "appearanceConstraints": { "clothingFit": "custom_required" },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "variantPercentiles": [
         {
           "roll": "01-75%",
           "label": "Head Tentacles",
           "description": "Humanoid body with arms, hands, legs, and feet, but an octopus head with 1D4+4 tentacles (1.5 to 2.4 m) protruding from the neck/head region and a beak mouth.",
           "statModifiers": {
-            "sdc": { "dice": "1D6x10" },
-            "ps": { "dice": "1D6" },
-            "pp": { "flat": 2 },
-            "spd": { "dice": "2D4" },
-            "hf": { "dice": "1D4" }
+            "sdc": {
+              "dice": "1D6x10"
+            },
+            "ps": {
+              "dice": "1D6"
+            },
+            "pp": {
+              "flat": 2
+            },
+            "spd": {
+              "dice": "2D4"
+            },
+            "hf": {
+              "dice": "1D4"
+            }
           },
-          "weightModifier": { "percent": 30 },
+          "weightModifier": {
+            "percent": 30
+          },
           "skillModifiers": {
             "specificSkillOverrides": [
-              { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
-              { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 20 }
+              {
+                "targetType": "skill_id",
+                "targetValue": "skill_prowl",
+                "modifierPercent": 20
+              },
+              {
+                "targetType": "skill_id",
+                "targetValue": "skill_climbing",
+                "modifierPercent": 20
+              }
             ]
           }
         },
@@ -102,16 +223,32 @@
           "label": "Tentacle Arms",
           "description": "Same as the head-tentacle form except arms and hands are replaced by a pair of large tentacles 12 feet (3.6 m) long.",
           "statModifiers": {
-            "sdc": { "dice": "1D6x10" },
-            "ps": { "dice": "1D6" },
-            "pp": { "flat": 2 },
-            "spd": { "dice": "2D4" },
-            "hf": { "dice": "1D4" }
+            "sdc": {
+              "dice": "1D6x10"
+            },
+            "ps": {
+              "dice": "1D6"
+            },
+            "pp": {
+              "flat": 2
+            },
+            "spd": {
+              "dice": "2D4"
+            },
+            "hf": {
+              "dice": "1D4"
+            }
           },
-          "weightModifier": { "percent": 30 },
+          "weightModifier": {
+            "percent": 30
+          },
           "skillModifiers": {
             "specificSkillOverrides": [
-              { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -15 }
+              {
+                "targetType": "skill_trait",
+                "targetValue": "requires_dexterity",
+                "modifierPercent": -15
+              }
             ]
           }
         }
@@ -119,120 +256,265 @@
       "customOneOffs": [
         "Each crush/squeeze attack inflicts Supernatural P.S. punch damage.",
         "Color change (one melee action) grants +20% to Prowl or hide and +20% to Climb; includes mottled gray or black in dim light.",
-        "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half.",
-        "On land, reduce Spd by half."
+        "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half."
       ]
     },
     {
       "id": "animal_octopus_squid_humanoid",
       "name": "Humanoid Octopus/Squid",
       "tableCategory": "Animal: Octopus/Squid",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 79 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 79
+        }
+      ],
       "description": "Human body with normal limbs; human-like head with small beak-like mouth (overbite), thin or bald head hair, no body hair, and saggy skin under the neck. One six-foot (1.8 m) tentacle lies under each normal arm; tentacles have twice the Nightbane's P.S.",
       "statModifiers": {
-        "sdc": { "dice": "5D6" },
-        "ps": { "dice": "1D4" },
-        "pe": { "flat": 1 },
-        "pp": { "flat": 1 },
-        "spd": { "dice": "1D6", "percent": -50 },
-        "apm": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 2 },
-        "entangle": { "flat": 2 },
-        "hf": { "flat": 2 }
+        "sdc": {
+          "dice": "5D6"
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D6",
+          "percent": -50
+        },
+        "apm": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 2
+        }
       },
-      "weightModifier": { "percent": 20 },
-      "damageAffinities": { "cold": 0.5, "fire": 1.5 },
+      "weightModifier": {
+        "percent": 20
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 1.5
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 10560 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 10560
+        },
+        "landLocomotion": {
+          "spdMultiplier": 0.5
+        }
       },
       "naturalWeapons": [
-        { "limbType": "bite", "label": "Beak Bite", "damageFormula": "1D6", "isAdditiveToHth": false }
+        {
+          "limbType": "bite",
+          "label": "Beak Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": false
+        }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 85 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
         ]
       },
-      "appearanceConstraints": { "clothingFit": "custom_required" },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "customOneOffs": [
         "Each crush/squeeze attack inflicts Supernatural P.S. punch damage.",
         "Tentacles have twice the P.S. attribute of the Nightbane.",
-        "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half.",
-        "On land, reduce Spd by half."
+        "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half."
       ]
     },
     {
       "id": "animal_octopus_squid_head",
       "name": "Octopus/Squid Head",
       "tableCategory": "Animal: Octopus/Squid",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 80 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
       "description": "Completely human body with a full-grown octopus or squid head, eight tentacles (each 1D4+2 feet / 0.9 to 1.8 m long), and a central beak.",
       "statModifiers": {
-        "sdc": { "dice": "3D6" },
-        "hf": { "dice": "1D4" },
-        "perception": { "flat": 2 },
-        "initiative": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "entangle": { "flat": 2 },
-        "spd": { "percent": -25 }
+        "sdc": {
+          "dice": "3D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        },
+        "perception": {
+          "flat": 2
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 2
+        },
+        "spd": {
+          "percent": -25
+        }
       },
-      "weightModifier": { "percent": 20 },
-      "damageAffinities": { "cold": 0.5, "fire": 1.5 },
+      "weightModifier": {
+        "percent": 20
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 1.5
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 1000 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 1000
+        },
+        "landLocomotion": {
+          "spdMultiplier": 0.75
+        }
       },
       "naturalWeapons": [
-        { "limbType": "bite", "label": "Beak Bite", "damageFormula": "2D4", "isAdditiveToHth": false }
+        {
+          "limbType": "bite",
+          "label": "Beak Bite",
+          "damageFormula": "2D4",
+          "isAdditiveToHth": false
+        }
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 85 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          }
         ]
       },
-      "appearanceConstraints": { "clothingFit": "custom_required" },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "customOneOffs": [
         "Each crush/squeeze attack inflicts half Supernatural P.S. punch damage.",
-        "Can use tentacles to manipulate objects and wield melee weapons, but the strike bonus is half.",
-        "On land, reduce Spd by 25%."
+        "Can use tentacles to manipulate objects and wield melee weapons, but the strike bonus is half."
       ]
     },
     {
       "id": "animal_octopus_squid_centauroid",
       "name": "Octopus/Squid Centauroid",
       "tableCategory": "Animal: Octopus/Squid",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane Survival Guide", "pageNumber": 80 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide",
+          "pageNumber": 80
+        }
+      ],
       "description": "Human head and upper torso with normal arms and hands, but the legs are replaced by eight 12-foot (3.6 m) tentacles. Can crawl and climb at half Spd, and manipulate objects or wield melee weapons with tentacles (strike bonus halved).",
       "statModifiers": {
-        "sdc": { "dice": "5D6" },
-        "pp": { "flat": 2 },
-        "spd": { "dice": "2D6", "percent": -50 },
-        "hf": { "dice": "1D4" }
+        "sdc": {
+          "dice": "5D6"
+        },
+        "pp": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "2D6",
+          "percent": -50
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
-      "weightModifier": { "percent": 40 },
-      "damageAffinities": { "cold": 0.5, "fire": 2 },
+      "weightModifier": {
+        "percent": 40
+      },
+      "damageAffinities": {
+        "cold": 0.5,
+        "fire": 2
+      },
       "mobility": {
-        "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 3000 }
+        "aquaticTraits": {
+          "canBreatheUnderwater": true,
+          "depthToleranceFeet": 3000
+        },
+        "landLocomotion": {
+          "spdMultiplier": 0.5
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 85 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_prowl", "modifierPercent": 20 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "modifierPercent": 30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 85
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 30
+          }
         ]
       },
-      "appearanceConstraints": { "clothingFit": "custom_required" },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
       "customOneOffs": [
         "Tentacles have +8 P.S. (tentacles only).",
         "Can scale smooth surfaces and climb vertical walls.",
-        "Tentacles can operate computers and other machinery at halved strike bonuses.",
-        "On land, reduce Spd by half."
+        "Tentacles can operate computers and other machinery at halved strike bonuses."
       ]
     }
   ]

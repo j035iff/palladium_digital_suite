@@ -40,6 +40,12 @@
         },
         "swimSpeedBonus": {
           "percent": 50
+        },
+        "landLocomotion": {
+          "spdOverride": 2,
+          "ppOverride": 2,
+          "apmOverride": 2,
+          "note": "Helpless on land unless alternative locomotion exists."
         }
       },
       "sensory": {
@@ -157,8 +163,6 @@
         }
       ],
       "customOneOffs": [
-        "Depth tolerance: two miles (3.2 km).",
-        "Helpless on land (attacks per melee round, P.S., P.P., and Spd are all reduced to two) unless another means of locomotion exists.",
         "Can manipulate objects with the mouth in a pinch (-50% to delicate skills, -5 to strike or parry with melee weapons, cannot use modern weapons).",
         "Transportation on land may be a problem for these large, heavy characters."
       ]
@@ -208,6 +212,9 @@
         },
         "swimSpeedBonus": {
           "percent": 50
+        },
+        "landLocomotion": {
+          "spdMultiplier": 0.5
         }
       },
       "sensory": {
@@ -272,9 +279,13 @@
             }
           ],
           "customOneOffs": [
-            "Depth tolerance: one mile (1.6 km).",
             "Double weight."
-          ]
+          ],
+          "mobility": {
+            "aquaticTraits": {
+              "depthToleranceFeet": 5280
+            }
+          }
         },
         {
           "roll": "whale",
@@ -323,16 +334,18 @@
             }
           ],
           "customOneOffs": [
-            "Depth tolerance: two miles (3.2 km).",
             "+4 to damage.",
             "Quadruple weight."
-          ]
+          ],
+          "mobility": {
+            "aquaticTraits": {
+              "depthToleranceFeet": 10560
+            }
+          }
         }
       ],
       "customOneOffs": [
-        "Speed on land is half.",
-        "Weight and size may be a problem on land and for transportation.",
-        "All were-beasts are vulnerable to silver (double damage)."
+        "Weight and size may be a problem on land and for transportation."
       ]
     },
     {
@@ -488,7 +501,6 @@
         }
       ],
       "customOneOffs": [
-        "Depth tolerance: one mile (1.6 km).",
         "Weight and size may be a problem on land and for transportation."
       ]
     },
@@ -571,10 +583,7 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
-      },
-      "customOneOffs": [
-        "Depth tolerance: one mile (1.6 km)."
-      ]
+      }
     },
     {
       "id": "animal_dolphin_whale_aquatic_humanoid",
@@ -636,10 +645,7 @@
             "modifierPercent": -5
           }
         ]
-      },
-      "customOneOffs": [
-        "Depth tolerance: 4,500 feet (1,371.6 m)."
-      ]
+      }
     },
     {
       "id": "animal_dolphin_whale_mermaid_merman",
@@ -685,6 +691,10 @@
         },
         "swimSpeedBonus": {
           "percent": 50
+        },
+        "landLocomotion": {
+          "mode": "slither",
+          "note": "Land movement is limited to crawling/slithering."
         }
       },
       "sensory": {
@@ -709,8 +719,6 @@
         ]
       },
       "customOneOffs": [
-        "Depth tolerance: one mile (1.6 km).",
-        "On land, speed is limited to crawling on the hands or slithering.",
         "The lower aquatic torso can be concealed with a blanket; mobility on land may require a wheelchair, the Air Swim Talent, or other means."
       ]
     }
