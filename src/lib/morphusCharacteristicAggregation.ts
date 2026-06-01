@@ -641,6 +641,11 @@ export type MorphusAggregatedJumpBonuses = {
   runningDistance: number
 }
 
+export type MorphusAggregatedSwimSpeedModifiers = {
+  flat: number
+  percent: number
+}
+
 export function aggregateMorphusJumpBonuses(
   traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
 ): MorphusAggregatedJumpBonuses {
@@ -665,16 +670,30 @@ export function aggregateMorphusJumpBonuses(
 export function aggregateMorphusSwimSpeedBonus(
   traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
 ): number {
-  let total = 0
+  return aggregateMorphusSwimSpeedModifiers(traits).flat
+}
+
+/** Swim speed modifier buckets for movement engine: additive flat then percent. */
+export function aggregateMorphusSwimSpeedModifiers(
+  traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
+): MorphusAggregatedSwimSpeedModifiers {
+  let flat = 0
+  let percent = 0
   for (const t of traits) {
     const block = t.mobility?.swimSpeedBonus
     if (!block) continue
-    total += polymorphicDeltaFromBase(0, [block])
+    if (typeof block.flat === 'number') flat += block.flat
+    if (typeof block.percent === 'number') percent += block.percent
+    if (block.dice) {
+      // Dice modifiers are resolved by existing polymorphic resolver.
+      flat += polymorphicDeltaFromBase(0, [{ dice: block.dice }])
+    }
   }
-  return total
+  return { flat, percent }
 }
 
 export type MorphusAggregatedFlightEngine = {
+  flySpdAttribute: number
   maxSpeedMph: number
   maxAltitudeFeet?: number
   strikeBonus: number
@@ -686,6 +705,7 @@ export type MorphusAggregatedFlightEngine = {
 export function aggregateMorphusFlightEngine(
   traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
 ): MorphusAggregatedFlightEngine | null {
+  let flySpdAttribute = 0
   let maxSpeedMph = 0
   let maxAltitudeFeet: number | undefined
   let strikeBonus = 0
@@ -695,6 +715,12 @@ export function aggregateMorphusFlightEngine(
   for (const t of traits) {
     const engine = t.mobility?.flightEngine
     if (!engine) continue
+    if (engine.flySpdAttribute) {
+      flySpdAttribute = Math.max(
+        flySpdAttribute,
+        polymorphicDeltaFromBase(0, [engine.flySpdAttribute]),
+      )
+    }
     if (engine.maxSpeedMph != null && engine.maxSpeedMph > maxSpeedMph) {
       maxSpeedMph = engine.maxSpeedMph
     }
@@ -708,6 +734,7 @@ export function aggregateMorphusFlightEngine(
   }
 
   if (
+    flySpdAttribute === 0 &&
     maxSpeedMph === 0 &&
     maxAltitudeFeet == null &&
     strikeBonus === 0 &&
@@ -718,6 +745,7 @@ export function aggregateMorphusFlightEngine(
   }
 
   return {
+    flySpdAttribute,
     maxSpeedMph,
     maxAltitudeFeet,
     strikeBonus,

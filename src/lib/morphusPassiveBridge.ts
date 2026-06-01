@@ -22,10 +22,12 @@ import {
   collectMorphusTraitNotes,
   aggregateMorphusJumpBonuses,
   aggregateMorphusSwimSpeedBonus,
+  aggregateMorphusSwimSpeedModifiers,
   aggregateMorphusFlightEngine,
   aggregateMorphusSensoryFlags,
   type MorphusAggregatedFlightEngine,
   type MorphusAggregatedSensoryFlags,
+  type MorphusAggregatedSwimSpeedModifiers,
   collectMorphusDamageAffinityNotes,
   collectMorphusVariableScaleNotes,
   collectPolymorphicTemplateTraits,
@@ -118,6 +120,7 @@ export type MorphusPassiveBundle = {
   disabledNaturalAttackTags: readonly MorphusDisabledNaturalAttackTag[]
   variableScaleNotes: readonly MorphusVariableScaleNote[]
   jumpBonuses: MorphusAggregatedJumpBonuses
+  swimSpeedModifiers: MorphusAggregatedSwimSpeedModifiers
   swimSpeedBonus: number
   damageAffinityNotes: readonly MorphusDamageAffinityNote[]
   limbComponents: readonly MorphusDerivedLimbComponent[]
@@ -152,6 +155,7 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'disabledNaturalAttackTags'
   | 'variableScaleNotes'
   | 'jumpBonuses'
+  | 'swimSpeedModifiers'
   | 'swimSpeedBonus'
   | 'damageAffinityNotes'
   | 'limbComponents'
@@ -293,6 +297,7 @@ export function buildMorphusPassiveBundle(
     polymorphicTemplates: collectPolymorphicTemplateTraits(traits),
     variableScaleNotes: collectMorphusVariableScaleNotes(traits),
     jumpBonuses: aggregateMorphusJumpBonuses(traits),
+    swimSpeedModifiers: aggregateMorphusSwimSpeedModifiers(traits),
     swimSpeedBonus: aggregateMorphusSwimSpeedBonus(traits),
     damageAffinityNotes: collectMorphusDamageAffinityNotes(traits),
     limbComponents: flattenMorphusLimbComponents(traits),

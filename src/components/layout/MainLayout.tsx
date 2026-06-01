@@ -49,6 +49,7 @@ export function MainLayout() {
     activeForm,
     activeFormState: form,
     activeStats,
+    movementDerived,
     supportsDualForm,
     strengthCapacities,
     toggleForm,
@@ -377,6 +378,50 @@ export function MainLayout() {
           </div>
         </section>
 
+        <section
+          aria-labelledby="movement-heading"
+          className={`rounded-lg border px-4 py-3 ${
+            morphusActive
+              ? 'border-violet-800/60 bg-violet-950/30'
+              : 'border-blue-200 bg-sky-50/70'
+          }`}
+        >
+          <h2
+            id="movement-heading"
+            className="mb-2 text-sm font-semibold uppercase tracking-wide"
+            style={{ color: morphusActive ? '#c4b5fd' : '#1e40af' }}
+          >
+            Movement
+          </h2>
+          <div className="grid gap-2 text-sm sm:grid-cols-2">
+            <p className={morphusActive ? 'text-violet-100/95' : 'text-slate-800'}>
+              <strong>Ground:</strong> Spd {movementDerived.ground.attributeValue} ·{' '}
+              {movementDerived.ground.yardsPerMelee} yd/melee · {movementDerived.ground.mph} mph
+            </p>
+            <p className={morphusActive ? 'text-violet-100/95' : 'text-slate-800'}>
+              <strong>Swim:</strong>{' '}
+              {movementDerived.swim
+                ? `Spd ${movementDerived.swim.attributeValue} · ${movementDerived.swim.yardsPerMelee} yd/melee · ${movementDerived.swim.mph} mph`
+                : 'N/A'}
+            </p>
+            <p className={morphusActive ? 'text-violet-100/95' : 'text-slate-800'}>
+              <strong>Fly:</strong>{' '}
+              {movementDerived.fly
+                ? `Spd ${movementDerived.fly.attributeValue} · ${movementDerived.fly.yardsPerMelee} yd/melee · ${movementDerived.fly.mph} mph`
+                : 'N/A'}
+            </p>
+          </div>
+          <p
+            className={`mt-2 text-xs ${
+              morphusActive ? 'text-violet-200/90' : 'text-slate-600'
+            }`}
+          >
+            <strong>Leaping:</strong> Standing H {movementDerived.leap.standingHorizontal} ·
+            V {movementDerived.leap.standingVertical} | Running H{' '}
+            {movementDerived.leap.runningHorizontal} · V {movementDerived.leap.runningVertical}
+          </p>
+        </section>
+
         {morphusActive && morphusDerived ? (
           <>
             <MorphusCapabilitiesPanel
@@ -674,7 +719,8 @@ function MorphusTraitsPanel({
   const flight = derived.flightEngine
   const hasFlight =
     flight != null &&
-    (flight.maxSpeedMph > 0 ||
+    (flight.flySpdAttribute > 0 ||
+      flight.maxSpeedMph > 0 ||
       flight.maxAltitudeFeet != null ||
       flight.strikeBonus !== 0 ||
       flight.parryBonus !== 0 ||
@@ -800,6 +846,7 @@ function MorphusTraitsPanel({
       {hasFlight && flight ? (
         <p className="mb-2 text-xs text-violet-200/90">
           Flight
+          {flight.flySpdAttribute > 0 ? ` Spd ${flight.flySpdAttribute}` : ''}
           {flight.maxSpeedMph > 0 ? ` up to ${flight.maxSpeedMph} mph` : ''}
           {flight.maxAltitudeFeet != null
             ? ` · max altitude ${flight.maxAltitudeFeet} ft`

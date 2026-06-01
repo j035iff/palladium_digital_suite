@@ -97,6 +97,10 @@ import {
   type MorphusDerivedSheetSlice,
 } from '../lib/morphusPassiveBridge'
 import {
+  deriveMovementStats,
+  type DerivedMovementStats,
+} from '../lib/movementDerivation'
+import {
   morphusBlocksTwoHandedWeapon,
   stackNaturalArmorFromTraits,
 } from '../lib/morphusCharacteristicAggregation'
@@ -240,6 +244,8 @@ type CharacterContextValue = {
   sheetPassiveModifiers: FeatureModifiers
   /** Sheet-first saving throw targets + Horror Factor for the active form. */
   saveProfileDerived: SaveProfileDerived
+  /** Derived movement payload (ground/swim/fly/leap) from movement engine spec. */
+  movementDerived: DerivedMovementStats
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
   /** Psychic Gate tier (psychic_gate.md); drives save target & skill tax. */
@@ -837,6 +843,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       disabledNaturalAttackTags: morphusPassiveBundle.disabledNaturalAttackTags,
       variableScaleNotes: morphusPassiveBundle.variableScaleNotes,
       jumpBonuses: morphusPassiveBundle.jumpBonuses,
+      swimSpeedModifiers: morphusPassiveBundle.swimSpeedModifiers,
       swimSpeedBonus: morphusPassiveBundle.swimSpeedBonus,
       damageAffinityNotes: morphusPassiveBundle.damageAffinityNotes,
       limbComponents: morphusPassiveBundle.limbComponents,
@@ -929,6 +936,32 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const saveProfileDerived = useMemo(
     () => computeSaveProfile(character, sheetActiveForm, saveVsPsionicsTarget),
     [character, sheetActiveForm, saveVsPsionicsTarget],
+  )
+
+  const movementDerived = useMemo(
+    () =>
+      deriveMovementStats({
+        landSpdAttribute: sheetDisplayScalars.spd,
+        ps: activeFormState.attributes.ps.score,
+        skills: activeFormState.skills,
+        isMorphusActive: sheetActiveForm === 'morphus',
+        canSwimPhysically:
+          sheetActiveForm !== 'morphus' ||
+          !morphusTraitRows.some((t) => t.mobility?.aquaticTraits?.buoyancy === 'sink'),
+        swimSpeedModifiers: morphusPassiveBundle?.swimSpeedModifiers,
+        jumpBonuses: morphusPassiveBundle?.jumpBonuses,
+        jumpMultiplier: morphusPassiveBundle?.jumpMultiplier,
+        minimumJumpFeet: morphusPassiveBundle?.minimumJumpFeet,
+        flightEngine: morphusPassiveBundle?.flightEngine,
+      }),
+    [
+      sheetDisplayScalars.spd,
+      activeFormState.attributes.ps.score,
+      activeFormState.skills,
+      sheetActiveForm,
+      morphusTraitRows,
+      morphusPassiveBundle,
+    ],
   )
 
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -1696,6 +1729,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetDisplayScalars,
       sheetPassiveModifiers,
       saveProfileDerived,
+      movementDerived,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -1793,6 +1827,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetDisplayScalars,
       sheetPassiveModifiers,
       saveProfileDerived,
+      movementDerived,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
