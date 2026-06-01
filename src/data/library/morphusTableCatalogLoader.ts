@@ -19,6 +19,45 @@ const characteristicById = new Map<string, MorphusCharacteristic>()
 for (const table of MORPHUS_TABLE_CATALOG) {
   for (const entry of table.entries) {
     characteristicById.set(entry.id, entry)
+    for (const variant of entry.variantPercentiles ?? []) {
+      const merged = mergeVariantIntoCharacteristic(entry, variant)
+      characteristicById.set(`${entry.id}::variant:${variant.roll}`, merged)
+      characteristicById.set(`${entry.id}::variant:${variant.label}`, merged)
+    }
+  }
+}
+
+function mergeVariantIntoCharacteristic(
+  entry: MorphusCharacteristic,
+  variant: NonNullable<MorphusCharacteristic['variantPercentiles']>[number],
+): MorphusCharacteristic {
+  return {
+    ...entry,
+    name: `${entry.name} (${variant.label})`,
+    description: variant.description ?? entry.description,
+    statModifiers: {
+      ...(entry.statModifiers ?? {}),
+      ...(variant.statModifiers ?? {}),
+    },
+    skillModifiers: {
+      ...(entry.skillModifiers ?? {}),
+      ...(variant.skillModifiers ?? {}),
+    },
+    sensory: {
+      ...(entry.sensory ?? {}),
+      ...(variant.sensory ?? {}),
+    },
+    mobility: {
+      ...(entry.mobility ?? {}),
+      ...(variant.mobility ?? {}),
+    },
+    limbDurability: variant.limbDurability ?? entry.limbDurability,
+    naturalWeapons: variant.naturalWeapons ?? entry.naturalWeapons,
+    weightModifier: variant.weightModifier ?? entry.weightModifier,
+    customOneOffs: [
+      ...(entry.customOneOffs ?? []),
+      ...(variant.customOneOffs ?? []),
+    ],
   }
 }
 

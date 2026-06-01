@@ -642,6 +642,7 @@ export type MorphusAggregatedJumpBonuses = {
 }
 
 export type MorphusAggregatedSwimSpeedModifiers = {
+  baseSource: 'ps' | 'land_spd'
   flat: number
   percent: number
 }
@@ -677,9 +678,13 @@ export function aggregateMorphusSwimSpeedBonus(
 export function aggregateMorphusSwimSpeedModifiers(
   traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
 ): MorphusAggregatedSwimSpeedModifiers {
+  let baseSource: 'ps' | 'land_spd' = 'ps'
   let flat = 0
   let percent = 0
   for (const t of traits) {
+    if (t.mobility?.swimSpeedBaseSource === 'land_spd') {
+      baseSource = 'land_spd'
+    }
     const block = t.mobility?.swimSpeedBonus
     if (!block) continue
     if (typeof block.flat === 'number') flat += block.flat
@@ -689,7 +694,7 @@ export function aggregateMorphusSwimSpeedModifiers(
       flat += polymorphicDeltaFromBase(0, [{ dice: block.dice }])
     }
   }
-  return { flat, percent }
+  return { baseSource, flat, percent }
 }
 
 export type MorphusAggregatedFlightEngine = {

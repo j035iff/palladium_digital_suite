@@ -31,11 +31,15 @@
         }
       ],
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6+6"
           },
           "depthToleranceFeet": 10560
+        },
+        "swimSpeedBonus": {
+          "percent": 50
         }
       },
       "sensory": {
@@ -196,10 +200,14 @@
         "silver": 2
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6+6"
           }
+        },
+        "swimSpeedBonus": {
+          "percent": 50
         }
       },
       "sensory": {
@@ -358,11 +366,15 @@
         }
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6+6"
           },
           "depthToleranceFeet": 5280
+        },
+        "swimSpeedBonus": {
+          "percent": 50
         }
       },
       "sensory": {
@@ -523,6 +535,7 @@
         "percent": 30
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6+6"
@@ -596,11 +609,15 @@
         }
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6+6"
           },
           "depthToleranceFeet": 4500
+        },
+        "swimSpeedBonus": {
+          "percent": 50
         }
       },
       "sensory": {
@@ -665,6 +682,9 @@
             "dice": "1D6+6"
           },
           "depthToleranceFeet": 5280
+        },
+        "swimSpeedBonus": {
+          "percent": 50
         }
       },
       "sensory": {

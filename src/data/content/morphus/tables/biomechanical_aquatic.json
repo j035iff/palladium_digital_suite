@@ -114,6 +114,7 @@
         }
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "2D6+20"
@@ -158,9 +159,7 @@
           }
         ]
       },
-      "customOneOffs": [
-        "Double Spd when swimming."
-      ]
+      "customOneOffs": []
     },
     {
       "id": "biomechanical_aquatic_spear_gun_limb",
@@ -710,9 +709,7 @@
           }
         ]
       },
-      "customOneOffs": [
-        "Underwater swimming speed is increased by 20%."
-      ]
+      "customOneOffs": []
     }
   ]
 }

@@ -162,6 +162,16 @@
           }
         ]
       },
+      "mobility": {
+        "jumpModifiers": {
+          "standingHeight": {
+            "flat": 10
+          },
+          "standingDistance": {
+            "flat": 15
+          }
+        }
+      },
       "naturalAr": 10
     },
     {

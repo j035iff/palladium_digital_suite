@@ -768,6 +768,8 @@ export type MorphusBurrowingEngine = {
 
 export type MorphusMobility = {
   jumpModifiers?: MorphusJumpModifiers
+  /** Swim base source: default P.S.-derived, or explicit land-Spd-derived override. */
+  swimSpeedBaseSource?: 'ps' | 'land_spd'
   swimSpeedBonus?: MorphusPolymorphicModifier
   aquaticTraits?: MorphusAquaticTraits
   flightEngine?: MorphusFlightEngine
@@ -1130,6 +1132,7 @@ export type MorphusVariantPercentile = {
   statModifiers?: MorphusStatModifiers
   skillModifiers?: MorphusSkillModifiers
   sensory?: MorphusSensory
+  mobility?: MorphusMobility
   limbDurability?: readonly MorphusLimbDurability[]
   naturalWeapons?: readonly MorphusNaturalWeapon[]
   weightModifier?: MorphusPolymorphicModifier

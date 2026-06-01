@@ -189,6 +189,23 @@ Final: `resolveSpeedProfile({ type: 'attribute', value: 28 })` → mph and yards
 3. **Cannot swim physically** (e.g. `mobility.aquaticTraits.buoyancy === "sink"`):  
    `DerivedMovementStats.swim = null` (UI shows N/A).
 
+### Explicit land-speed override rule
+
+Default swim derivation is P.S.-based.  
+If Morphus text explicitly states swimming speed as a modifier of **land Spd** (for example: "swimming speed equal to land Spd +50%" or "double Spd for swimming"), that explicit rule **overrides** the default P.S. base.
+
+Implementation signal:
+
+- Set `mobility.swimSpeedBaseSource = "land_spd"` on the matching trait row.
+- Keep using `mobility.swimSpeedBonus` for additive/percent modifiers.
+
+Examples:
+
+- Shark full form: `swimSpeedBaseSource: "land_spd"` + `swimSpeedBonus.percent: 100`  
+  → `Swim Spd = Land Spd × 2`
+- Dolphin/Whale rows using table rule: `swimSpeedBaseSource: "land_spd"` + `swimSpeedBonus.percent: 50`  
+  → `Swim Spd = Land Spd × 1.5`
+
 ### Morphus swim modifiers
 
 After the base Swim Spd attribute is determined for the active form:
@@ -203,13 +220,17 @@ Morphus traits that grant Swimming skill affect whether the skilled vs unskilled
 ```typescript
 const calculateSwimProfile = (
   activePs: number,
+  activeLandSpd: number,
   hasSwimmingSkill: boolean,
+  swimBaseSource: 'ps' | 'land_spd' = 'ps',
   morphusSwimFlat: number = 0,
   morphusSwimPercent: number = 0,
 ): SpeedProfile => {
-  const baseSwimAttribute = hasSwimmingSkill
+  const psBase = hasSwimmingSkill
     ? Math.round(activePs * (3 / 5))
     : Math.round(activePs * (3 / 10));
+  const baseSwimAttribute =
+    swimBaseSource === 'land_spd' ? activeLandSpd : psBase;
 
   return resolveSpeedProfile({
     type: 'attribute',

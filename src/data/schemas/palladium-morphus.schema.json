@@ -1172,6 +1172,14 @@
         "swimSpeedBonus": {
           "$ref": "#/$defs/polymorphicModifier"
         },
+        "swimSpeedBaseSource": {
+          "type": "string",
+          "enum": [
+            "ps",
+            "land_spd"
+          ],
+          "description": "Base source for swim-speed derivation. Default is P.S.-derived; use land_spd when book text explicitly defines swimming as a modifier of land speed."
+        },
         "aquaticTraits": {
           "$ref": "#/$defs/aquaticTraits"
         },
@@ -1974,6 +1982,9 @@
         },
         "sensory": {
           "$ref": "#/$defs/sensory"
+        },
+        "mobility": {
+          "$ref": "#/$defs/mobility"
         },
         "limbDurability": {
           "type": "array",

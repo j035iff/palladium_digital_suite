@@ -30,7 +30,7 @@ describe('deriveMovementStats', () => {
   it('derives swim speed from P.S. and applies flat+percent after base', () => {
     const derived = deriveMovementStats({
       ...BASE_INPUT,
-      swimSpeedModifiers: { flat: 3, percent: 50 },
+      swimSpeedModifiers: { baseSource: 'ps', flat: 3, percent: 50 },
     })
     expect(derived.swim?.attributeValue).toBe(23)
     expect(derived.swim?.yardsPerMelee).toBe(115)
@@ -51,6 +51,15 @@ describe('deriveMovementStats', () => {
       canSwimPhysically: false,
     })
     expect(derived.swim).toBeNull()
+  })
+
+  it('uses land speed as swim base when explicitly overridden', () => {
+    const derived = deriveMovementStats({
+      ...BASE_INPUT,
+      landSpdAttribute: 28,
+      swimSpeedModifiers: { baseSource: 'land_spd', flat: 0, percent: 100 },
+    })
+    expect(derived.swim?.attributeValue).toBe(56)
   })
 
   it('uses fly speed attribute when present', () => {

@@ -204,13 +204,17 @@ function deriveLeapProfile(input: MovementDerivationInput): LeapProfile {
 export function deriveMovementStats(input: MovementDerivationInput): DerivedMovementStats {
   const ground = resolveSpeedProfile({ type: 'attribute', value: input.landSpdAttribute })
   const hasSwimmingSkill = hasSkill(input.skills, 'skill_swimming', 'swimming')
+  const swimBaseSource = input.swimSpeedModifiers?.baseSource ?? 'ps'
+  const baseSwimFromPs = hasSwimmingSkill
+    ? Math.round(input.ps * (3 / 5))
+    : Math.round(input.ps * (3 / 10))
+  const baseSwimAttribute =
+    swimBaseSource === 'land_spd' ? input.landSpdAttribute : baseSwimFromPs
 
   const swim = input.canSwimPhysically
     ? resolveSpeedProfile({
         type: 'attribute',
-        value: hasSwimmingSkill
-          ? Math.round(input.ps * (3 / 5))
-          : Math.round(input.ps * (3 / 10)),
+        value: baseSwimAttribute,
         modifiers: {
           flat: input.swimSpeedModifiers?.flat ?? 0,
           percent: input.swimSpeedModifiers?.percent ?? 0,

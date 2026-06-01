@@ -91,17 +91,24 @@
         {
           "roll": "toad",
           "label": "Toad",
+          "mobility": {
+            "swimSpeedBaseSource": "land_spd"
+          },
           "customOneOffs": [
-            "Can jump 30 feet (9 m) from a standing position.",
-            "Swimming speed is the same as running speed."
+            "Can jump 30 feet (9 m) from a standing position."
           ]
         },
         {
           "roll": "frog",
           "label": "Frog",
+          "mobility": {
+            "swimSpeedBaseSource": "land_spd",
+            "swimSpeedBonus": {
+              "percent": 100
+            }
+          },
           "customOneOffs": [
-            "Can jump 80 feet (24.4 m) from a standing position.",
-            "Swimming speed is double the running speed."
+            "Can jump 80 feet (24.4 m) from a standing position."
           ]
         },
         {
@@ -112,9 +119,12 @@
               "dice": "1D6"
             }
           },
-          "customOneOffs": [
-            "Swimming speed is double the running speed."
-          ]
+          "mobility": {
+            "swimSpeedBaseSource": "land_spd",
+            "swimSpeedBonus": {
+              "percent": 100
+            }
+          }
         }
       ],
       "customOneOffs": [
@@ -258,6 +268,7 @@
         }
       },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": {
           "holdBreathDuration": {
             "dice": "1D6"
@@ -280,9 +291,7 @@
           "isAdditiveToHth": false
         }
       ],
-      "customOneOffs": [
-        "Swims at 50% faster than running speed."
-      ]
+      "customOneOffs": []
     },
     {
       "id": "animal_amphibian_centauroid",

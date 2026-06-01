@@ -31,6 +31,7 @@
       "weightModifier": { "percent": 200 },
       "damageAffinities": { "cold": 0.5 },
       "mobility": {
+        "swimSpeedBaseSource": "land_spd",
         "aquaticTraits": { "canBreatheUnderwater": true, "depthToleranceFeet": 15840 },
         "swimSpeedBonus": { "percent": 100 }
       },
@@ -57,7 +58,6 @@
         ]
       },
       "customOneOffs": [
-        "Double Spd attribute for swimming speed.",
         "Can detect blood in water up to two miles (3.2 km) away; half that range on dry land.",
         "Helpless on land (attacks per melee round, P.P., and Spd reduced to two) unless another means of locomotion exists.",
         "Cannot manipulate objects even with the mouth.",
