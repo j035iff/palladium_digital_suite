@@ -460,20 +460,16 @@
         },
         "jumpModifiers": {
           "standingDistance": {
-            "flat": 20,
-            "isOverride": true
+            "flat": 20
           },
           "standingHeight": {
-            "flat": 20,
-            "isOverride": true
+            "flat": 20
           },
           "runningDistance": {
-            "flat": 40,
-            "isOverride": true
+            "flat": 40
           },
           "runningHeight": {
-            "flat": 40,
-            "isOverride": true
+            "flat": 40
           }
         }
       },
@@ -608,20 +604,16 @@
         },
         "jumpModifiers": {
           "standingDistance": {
-            "flat": 30,
-            "isOverride": true
+            "flat": 30
           },
           "standingHeight": {
-            "flat": 30,
-            "isOverride": true
+            "flat": 30
           },
           "runningDistance": {
-            "flat": 60,
-            "isOverride": true
+            "flat": 60
           },
           "runningHeight": {
-            "flat": 60,
-            "isOverride": true
+            "flat": 60
           }
         }
       },
@@ -737,20 +729,16 @@
       "mobility": {
         "jumpModifiers": {
           "standingDistance": {
-            "flat": 20,
-            "isOverride": true
+            "flat": 20
           },
           "standingHeight": {
-            "flat": 10,
-            "isOverride": true
+            "flat": 10
           },
           "runningDistance": {
-            "flat": 20,
-            "isOverride": true
+            "flat": 20
           },
           "runningHeight": {
-            "flat": 10,
-            "isOverride": true
+            "flat": 10
           }
         }
       },

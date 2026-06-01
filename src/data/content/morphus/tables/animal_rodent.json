@@ -9,34 +9,73 @@
       "id": "animal_rodent_full",
       "name": "Full Rodent",
       "tableCategory": "Animal: Rodent",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 101
+        }
       ],
       "description": "Giant rat roughly the size of a small bear or mountain lion—too large to pass for a normal animal.",
       "playerChoices": [
         {
           "label": "Rodent species",
-          "options": ["rat", "mouse", "squirrel", "rabbit", "mole", "other"],
+          "options": [
+            "rat",
+            "mouse",
+            "squirrel",
+            "rabbit",
+            "mole",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pp": { "flat": 4 },
-        "pe": { "flat": 5 },
-        "spd": { "dice": "4D6" },
-        "sdc": { "dice": "2D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 3 },
-        "strike": { "flat": -6 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 4
+        },
+        "pp": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 5
+        },
+        "spd": {
+          "dice": "4D6"
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 3
+        },
+        "strike": {
+          "flat": -6
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "mobility": {
         "jumpModifiers": {
-          "standingHeight": { "flat": 10, "isOverride": true },
-          "standingDistance": { "flat": 10, "isOverride": true }
+          "standingHeight": {
+            "flat": 10
+          },
+          "standingDistance": {
+            "flat": 10
+          }
         }
       },
       "sensory": {
@@ -58,10 +97,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30, "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_dexterity", "modifierPercent": -30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30,
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
+            "modifierPercent": -30
+          }
         ]
       },
       "customOneOffs": [
@@ -74,28 +130,61 @@
       "id": "animal_rodent_were_rat",
       "name": "Were-Rat",
       "tableCategory": "Animal: Rodent",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 101
+        }
       ],
       "description": "Vaguely humanoid rat-creature with a long tail, short arms, clawed hands, and a full rat's head. Almost impossible to disguise even with heavy clothing.",
       "playerChoices": [
         {
           "label": "Rodent species",
-          "options": ["rat", "mouse", "squirrel", "rabbit", "mole", "other"],
+          "options": [
+            "rat",
+            "mouse",
+            "squirrel",
+            "rabbit",
+            "mole",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 3 },
-        "pp": { "flat": 3 },
-        "pe": { "flat": 4 },
-        "spd": { "dice": "3D6" },
-        "sdc": { "dice": "1D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D6" }
+        "ps": {
+          "flat": 3
+        },
+        "pp": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 4
+        },
+        "spd": {
+          "dice": "3D6"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D6"
+        }
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 1000
@@ -116,8 +205,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -125,27 +222,58 @@
       "id": "animal_rodent_humanoid",
       "name": "Humanoid Rodent",
       "tableCategory": "Animal: Rodent",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 101
+        }
       ],
       "description": "Fur-covered humanoid with a forward-projecting head giving weasel or rat features; no tail. Sparse fur near face and hands allows passing for human in bad light.",
       "playerChoices": [
         {
           "label": "Rodent species",
-          "options": ["rat", "mouse", "squirrel", "rabbit", "mole", "other"],
+          "options": [
+            "rat",
+            "mouse",
+            "squirrel",
+            "rabbit",
+            "mole",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 2 },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "spd": { "dice": "2D6" },
-        "sdc": { "dice": "4D6" },
-        "perception": { "flat": 1 },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "4D6"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        }
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 500
@@ -166,8 +294,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -175,23 +311,46 @@
       "id": "animal_rodent_head",
       "name": "Rodent Head",
       "tableCategory": "Animal: Rodent",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 101
+        }
       ],
       "description": "Normal human body with the head of a giant rat or other rodent.",
       "playerChoices": [
         {
           "label": "Rodent species",
-          "options": ["rat", "mouse", "squirrel", "rabbit", "mole", "other"],
+          "options": [
+            "rat",
+            "mouse",
+            "squirrel",
+            "rabbit",
+            "mole",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D4" }
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 1000
@@ -206,8 +365,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -215,28 +382,61 @@
       "id": "animal_rodent_centauroid",
       "name": "Rodent Centauroid",
       "tableCategory": "Animal: Rodent",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 101
+        }
       ],
       "description": "Lower body of a giant rat and the upper body of a humanoid.",
       "playerChoices": [
         {
           "label": "Rodent species",
-          "options": ["rat", "mouse", "squirrel", "rabbit", "mole", "other"],
+          "options": [
+            "rat",
+            "mouse",
+            "squirrel",
+            "rabbit",
+            "mole",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pe": { "flat": 5 },
-        "pp": { "flat": 2 },
-        "spd": { "dice": "4D6" },
-        "sdc": { "dice": "3D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 3 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 5
+        },
+        "pp": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "4D6"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "sensory": {
         "nightvisionRangeFlatBonus": 500
@@ -257,8 +457,16 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     }

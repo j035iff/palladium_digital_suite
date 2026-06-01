@@ -23,7 +23,7 @@ Numbers highlight in Green/Red if "Current Value" differs from "Base Value."
 Tap-to-Expand: Shows the specific bonuses provided by that attribute (e.g., P.P. 20 shows +3 to Strike/Parry/Dodge).
 
 B. Physical Feats & Socials Panel
-Movement Hub: Displays Speed in MPH, Yards per Melee, and Feet per Second. Also includes calculated Leaping distances (Long/High).
+Movement Hub: Displays ground, swim, and fly speed (MPH and Yards per Melee per `docs/movement_engine_spec.md`). Also includes calculated leaping distances (standing/running, horizontal/vertical).
 Social Dashboard: Percentages for Trust/Intimidate (M.A. based) and Charm/Impress (P.B. based).
 Lifting/Carrying: Max weight capacities based on P.S. and P.E.
 3. The Active Zone: State 2 (Combat / Action)

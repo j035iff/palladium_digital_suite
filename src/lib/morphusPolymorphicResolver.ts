@@ -2,7 +2,7 @@ import type { MorphusPolymorphicModifier } from '../types'
 import { rollDiceNotation } from './diceNotation'
 
 /**
- * Evaluate one Morphus polymorphic block (flat / dice / percent / override).
+ * Evaluate one Morphus polymorphic block (flat / dice / percent).
  * Dice strings support Palladium forms and leading minus (e.g. "-1D6", "2D4x10+40").
  */
 export function evaluatePolymorphicDice(notation: string): number {
@@ -46,7 +46,9 @@ export function resolveStatWithPolymorphicModifiers(
 ): number {
   if (!modifiers.length) return base
 
-  const overrides = modifiers.filter((m) => m.isOverride === true && hasPolymorphicPayload(m))
+  const overrides = modifiers.filter(
+    (m) => m.isOverride === true && hasPolymorphicPayload(m),
+  )
   if (overrides.length > 0) {
     return resolveOverrideValue(base, overrides[overrides.length - 1]!, rollDice)
   }
@@ -58,9 +60,10 @@ export function resolveStatWithPolymorphicModifiers(
     if (typeof m.flat === 'number') flatSum += m.flat
     if (typeof m.percent === 'number') percentSum += m.percent
   }
+
   value += flatSum
   if (percentSum !== 0) {
-    value = Math.floor(value * (1 + percentSum / 100))
+    value = Math.round(value * (1 + percentSum / 100))
   }
   for (const m of modifiers) {
     if (m.dice) value += rollDice(m.dice)
@@ -76,7 +79,7 @@ function resolveOverrideValue(
   if (mod.dice) return rollDice(mod.dice)
   if (typeof mod.flat === 'number') return mod.flat
   if (typeof mod.percent === 'number') {
-    return Math.floor(base * (1 + mod.percent / 100))
+    return Math.round(base * (1 + mod.percent / 100))
   }
   return base
 }

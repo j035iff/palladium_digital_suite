@@ -14,7 +14,7 @@ const MECHANIC_PATTERNS = [
   {
     id: 'spd_override',
     re: /Spd attribute is replaced|replaces?(?:\s+with)?\s+\d+D/i,
-    schemaPaths: ['statModifiers.spd.isOverride', 'statModifiers.spd.dice'],
+    schemaPaths: ['statModifiers.spd.dice', 'statModifiers.spd.isOverride'],
     severity: 'info',
   },
   {

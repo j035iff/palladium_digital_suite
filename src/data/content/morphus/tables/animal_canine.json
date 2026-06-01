@@ -9,28 +9,59 @@
       "id": "animal_canine_full",
       "name": "Full Canine",
       "tableCategory": "Animal: Canine",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 97 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 130
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 97
+        }
       ],
       "description": "Large canine, commonly a huge wolf or dog that can pass for a normal member of the species unless other Nightbane characteristics apply.",
       "playerChoices": [
         {
           "label": "Canine species",
-          "options": ["wolf", "dog", "fox", "other"],
+          "options": [
+            "wolf",
+            "dog",
+            "fox",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 5 },
-        "pp": { "flat": 1 },
-        "pe": { "flat": 3 },
-        "spd": { "flat": 12 },
-        "sdc": { "dice": "2D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 3 },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 5
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 3
+        },
+        "spd": {
+          "flat": 12
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 3
+        },
+        "hf": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -42,10 +73,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_tracking", "grantUnlearnedValue": 40, "modifierPercent": 15 },
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 40,
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -58,28 +106,59 @@
       "id": "animal_canine_were",
       "name": "Were-Canine",
       "tableCategory": "Animal: Canine",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 97 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 130
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 97
+        }
       ],
       "description": "Humanoid-canine with full dog/wolf features, covered in fur, with a tail, and bigger than a normal human.",
       "playerChoices": [
         {
           "label": "Canine species",
-          "options": ["wolf", "dog", "fox", "other"],
+          "options": [
+            "wolf",
+            "dog",
+            "fox",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pp": { "flat": 1 },
-        "pe": { "flat": 3 },
-        "spd": { "flat": 6 },
-        "sdc": { "dice": "2D4x10" },
-        "initiative": { "flat": 2 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D4+1" }
+        "ps": {
+          "flat": 4
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 3
+        },
+        "spd": {
+          "flat": 6
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4+1"
+        }
       },
       "naturalWeapons": [
         {
@@ -97,10 +176,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_tracking", "grantUnlearnedValue": 55, "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 55,
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -108,31 +204,62 @@
       "id": "animal_canine_humanoid",
       "name": "Canine Humanoid",
       "tableCategory": "Animal: Canine",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 97 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 130
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 97
+        }
       ],
       "description": "Classical wolf-man appearance: no snout or tail, but covered in fur with fangs. Heavy clothing could disguise the appearance to some degree.",
       "playerChoices": [
         {
           "label": "Canine species",
-          "options": ["wolf", "dog", "fox", "other"],
+          "options": [
+            "wolf",
+            "dog",
+            "fox",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 2 },
-        "pe": { "flat": 2 },
-        "spd": { "flat": 3 },
-        "sdc": { "dice": "1D4x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 1 },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "flat": 3
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 2
+        }
       },
       "mobility": {
         "jumpModifiers": {
-          "standingDistance": { "flat": 12, "isOverride": true }
+          "standingDistance": {
+            "flat": 12
+          }
         }
       },
       "naturalWeapons": [
@@ -151,10 +278,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_tracking", "grantUnlearnedValue": 40 },
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -162,27 +305,56 @@
       "id": "animal_canine_centauroid",
       "name": "Canine Centauroid",
       "tableCategory": "Animal: Canine",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 97 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 130
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 97
+        }
       ],
       "description": "Upper body of a were-canine and the lower body of a wolf. Too big for most automobiles, elevators, and other confined spaces.",
       "playerChoices": [
         {
           "label": "Canine species",
-          "options": ["wolf", "dog", "fox", "other"],
+          "options": [
+            "wolf",
+            "dog",
+            "fox",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pe": { "flat": 4 },
-        "spd": { "flat": 4 },
-        "sdc": { "dice": "2D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 6
+        },
+        "pe": {
+          "flat": 4
+        },
+        "spd": {
+          "flat": 4
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "naturalWeapons": [
         {
@@ -200,10 +372,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_tracking", "grantUnlearnedValue": 40 },
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -211,23 +399,44 @@
       "id": "animal_canine_head",
       "name": "Canine Head",
       "tableCategory": "Animal: Canine",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 130 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 97 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 130
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 97
+        }
       ],
       "description": "Normal-looking human with the head of a wolf or dog.",
       "playerChoices": [
         {
           "label": "Canine species",
-          "options": ["wolf", "dog", "fox", "other"],
+          "options": [
+            "wolf",
+            "dog",
+            "fox",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "flat": 1 }
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -239,10 +448,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_tracking", "grantUnlearnedValue": 40 },
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_tracking",
+            "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     }

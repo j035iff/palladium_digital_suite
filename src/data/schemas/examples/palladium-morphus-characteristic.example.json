@@ -456,8 +456,7 @@
           "label": "Insectoid",
           "statModifiers": {
             "ar": {
-              "flat": 14,
-              "isOverride": true
+              "flat": 14
             }
           }
         }

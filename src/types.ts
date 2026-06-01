@@ -489,7 +489,10 @@ export type MorphusPolymorphicModifier = {
   flat?: number
   dice?: string
   percent?: number
-  /** When true, replaces base value instead of additive stacking (middleware). */
+  /**
+   * When true, the resolver replaces the underlying base value entirely
+   * instead of additive stacking.
+   */
   isOverride?: boolean
   /** Conditional tier notes (e.g. floating balloon count penalties). */
   variableScaleConditions?: readonly string[]

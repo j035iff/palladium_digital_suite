@@ -433,8 +433,7 @@
           "description": "Appears as a small humanoid robot with two arms and legs, or as a robotic upper torso on a tracked machine body or robotic spider body with 1D6+2 legs; stands 4-5 feet (1.2 to 1.5 m) tall[cite: 8].",
           "statModifiers": {
             "ar": {
-              "flat": 15,
-              "isOverride": true
+              "flat": 15
             },
             "spd": {
               "dice": "1D6+6"
@@ -456,8 +455,7 @@
           "description": "Appears as a large, bulky alien robot with a humanoid body, thick arms and legs, with a retractable forearm blade in one arm and a retractable drill or cutting torch[cite: 8].",
           "statModifiers": {
             "ar": {
-              "flat": 16,
-              "isOverride": true
+              "flat": 16
             },
             "ps": {
               "dice": "1D4"

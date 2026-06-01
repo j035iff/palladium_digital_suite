@@ -169,7 +169,6 @@ export function sumRelativeArShiftFromTraits(
   for (const t of traits) {
     const ar = t.statModifiers?.ar
     if (!ar) continue
-    if (ar.isOverride === true) continue
     if (typeof ar.flat === 'number') total += ar.flat
     if (typeof ar.percent === 'number' && typeof ar.dice !== 'string') {
       /* percent on A.R. shift is uncommon — treat as flat equivalent omitted */

@@ -42,8 +42,8 @@
         {
           "patternId": "spd_override",
           "schemaPaths": [
-            "statModifiers.spd.isOverride",
-            "statModifiers.spd.dice"
+            "statModifiers.spd.dice",
+            "statModifiers.spd.isOverride"
           ],
           "severity": "info",
           "note": null

@@ -34,8 +34,7 @@
           "flat": 1
         },
         "ar": {
-          "dice": "1D4+10",
-          "isOverride": true
+          "dice": "1D4+10"
         }
       },
       "saveModifiers": {

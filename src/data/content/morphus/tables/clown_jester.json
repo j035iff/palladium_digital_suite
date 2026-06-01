@@ -259,19 +259,15 @@
         },
         "jumpModifiers": {
           "standingDistance": {
-            "isOverride": true,
             "flat": 0
           },
           "standingHeight": {
-            "isOverride": true,
             "flat": 0
           },
           "runningDistance": {
-            "isOverride": true,
             "flat": 0
           },
           "runningHeight": {
-            "isOverride": true,
             "flat": 0
           }
         }
@@ -404,12 +400,10 @@
       "mobility": {
         "jumpModifiers": {
           "standingDistance": {
-            "flat": 30,
-            "isOverride": true
+            "flat": 30
           },
           "standingHeight": {
-            "flat": 30,
-            "isOverride": true
+            "flat": 30
           }
         }
       },

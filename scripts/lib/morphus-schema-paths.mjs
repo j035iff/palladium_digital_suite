@@ -32,7 +32,7 @@ function resolveRef(root, node) {
 
 /**
  * Walk schema from characteristic root; return whether dotted path exists.
- * @param {string} path - e.g. "mobility.burrowingEngine" or "statModifiers.spd.isOverride"
+ * @param {string} path - e.g. "mobility.burrowingEngine" or "statModifiers.spd.dice"
  */
 /** Map ingest shorthand paths to canonical schema locations. */
 export function normalizeMorphusSchemaPath(path) {

@@ -9,41 +9,95 @@
       "id": "animal_equine_full_form",
       "name": "Full Horse/Bovine/Deer Form",
       "tableCategory": "Animal: Equine/Bovine/Deer",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "Huge creature of the chosen species; may pass as a normal, although bigger-than-average animal with a mean or tough appearance.",
       "playerChoices": [
         {
           "label": "Herbivore species",
-          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "options": [
+            "horse",
+            "bull",
+            "deer",
+            "bison",
+            "antelope",
+            "moose",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 12 },
-        "pp": { "flat": 3 },
-        "pe": { "flat": 6 },
-        "spd": { "dice": "1D6x10" },
-        "sdc": { "dice": "3D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 12
+        },
+        "pp": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 6
+        },
+        "spd": {
+          "dice": "1D6x10"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "mobility": {
         "jumpModifiers": {
-          "standingHeight": { "flat": 10, "isOverride": true },
-          "standingDistance": { "flat": 15, "isOverride": true }
+          "standingHeight": {
+            "flat": 10
+          },
+          "standingDistance": {
+            "flat": 15
+          }
         }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 65
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -57,27 +111,59 @@
       "id": "animal_equine_minotaur",
       "name": "Half-Man Half-Animal/Were-Animal/Minotaur",
       "tableCategory": "Animal: Equine/Bovine/Deer",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "Muscle-bound biped covered in fur with hoofed or cloven feet, a tail, and the head of a horse, bull, deer, or similar animal (the bull is the traditional minotaur).",
       "playerChoices": [
         {
           "label": "Herbivore species",
-          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "options": [
+            "horse",
+            "bull",
+            "deer",
+            "bison",
+            "antelope",
+            "moose",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 4 },
-        "spd": { "dice": "4D6" },
-        "sdc": { "dice": "2D6x10" },
-        "initiative": { "flat": 2 },
-        "hf": { "dice": "1D4+2" }
+        "ps": {
+          "flat": 6
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 4
+        },
+        "spd": {
+          "dice": "4D6"
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "hf": {
+          "dice": "1D4+2"
+        }
       },
       "naturalWeapons": [
         {
@@ -95,10 +181,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 65
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -110,35 +212,85 @@
       "id": "animal_equine_humanoid",
       "name": "Humanoid Shape",
       "tableCategory": "Animal: Equine/Bovine/Deer",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "Basically human form with fur-covered legs, hoofed or cloven feet, and a mostly humanoid head likely bearing horns or antlers and animal features (large eyes, long face, large flat teeth). May have inspired myths of satyrs and Pan.",
       "playerChoices": [
         {
           "label": "Herbivore species",
-          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "options": [
+            "horse",
+            "bull",
+            "deer",
+            "bison",
+            "antelope",
+            "moose",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pp": { "flat": 1 },
-        "pe": { "flat": 2 },
-        "spd": { "dice": "2D6" },
-        "sdc": { "dice": "1D6x10" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 1 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 4
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 65
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -150,35 +302,85 @@
       "id": "animal_equine_centaur",
       "name": "Centaur/Beast-Man",
       "tableCategory": "Animal: Equine/Bovine/Deer",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "Lower body of a horse, deer, moose, bull, or similar animal and the upper body of a normal man with horns or antlers crowning the head. Body may be too big for vehicles or to maneuver well indoors.",
       "playerChoices": [
         {
           "label": "Herbivore species",
-          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "options": [
+            "horse",
+            "bull",
+            "deer",
+            "bison",
+            "antelope",
+            "moose",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 5 },
-        "spd": { "dice": "5D6" },
-        "sdc": { "dice": "3D6x10" },
-        "initiative": { "flat": 2 },
-        "perception": { "flat": 1 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 6
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 5
+        },
+        "spd": {
+          "dice": "5D6"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "initiative": {
+          "flat": 2
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 65
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -190,33 +392,79 @@
       "id": "animal_equine_head",
       "name": "Equine/Bovine Head",
       "tableCategory": "Animal: Equine/Bovine/Deer",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 131 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 98 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs",
+          "pageNumber": 131
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane RPG",
+          "pageNumber": 98
+        }
       ],
       "description": "Normal-looking human body with a full animal head.",
       "playerChoices": [
         {
           "label": "Herbivore species",
-          "options": ["horse", "bull", "deer", "bison", "antelope", "moose", "other"],
+          "options": [
+            "horse",
+            "bull",
+            "deer",
+            "bison",
+            "antelope",
+            "moose",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 1 },
-        "spd": { "dice": "1D6" },
-        "sdc": { "dice": "3D6" },
-        "initiative": { "flat": 1 },
-        "perception": { "flat": 1 },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "3D6"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 65 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 30 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 65
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     }

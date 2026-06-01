@@ -290,20 +290,16 @@
       "mobility": {
         "jumpModifiers": {
           "standingDistance": {
-            "flat": 12,
-            "isOverride": true
+            "flat": 12
           },
           "standingHeight": {
-            "flat": 12,
-            "isOverride": true
+            "flat": 12
           },
           "runningDistance": {
-            "flat": 24,
-            "isOverride": true
+            "flat": 24
           },
           "runningHeight": {
-            "flat": 24,
-            "isOverride": true
+            "flat": 24
           }
         }
       },
