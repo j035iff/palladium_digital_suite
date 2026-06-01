@@ -19,7 +19,7 @@
           "pageNumber": 77
         }
       ],
-      "description": "The Nightbane is fully dolphin- or whale-shaped with a long, tube-shaped rubbery body, flipper arms, and a tail instead of legs. Exact size, shape, and coloration depend on the species chosen.",
+      "description": "The Nightbane is fully dolphinor whale-shaped with a long, tube-shaped rubbery body, flipper arms, and a tail instead of legs. Exact size, shape, and coloration depend on the species chosen.",
       "playerChoices": [
         {
           "label": "Cetacean species",
@@ -66,6 +66,11 @@
           {
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
+            "modifierPercent": -50
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_dexterity",
             "modifierPercent": -50
           }
         ]
@@ -163,7 +168,7 @@
         }
       ],
       "customOneOffs": [
-        "Can manipulate objects with the mouth in a pinch (-50% to delicate skills, -5 to strike or parry with melee weapons, cannot use modern weapons).",
+        "Can manipulate objects with the mouth in a pinch (, -5 to strike or parry with melee weapons, cannot use modern weapons).",
         "Transportation on land may be a problem for these large, heavy characters."
       ]
     },

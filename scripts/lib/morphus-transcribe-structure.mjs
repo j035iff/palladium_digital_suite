@@ -11,6 +11,11 @@ import {
   parseTraitAndImpossibleSkillModifiers,
   SKILL_TRAIT_DEXTERITY,
   SKILL_TRAIT_LIGHT_TOUCH,
+  SKILL_TRAIT_ELECTRICAL,
+  SKILL_TRAIT_REPAIR,
+  SKILL_TRAIT_MECHANICS,
+  SKILL_TRAIT_TIMING,
+  SKILL_TRAIT_FOCUS,
 } from './morphus-skill-modifier-parse.mjs'
 import {
   sanitizeMorphusEntryForNightbane,
@@ -508,6 +513,46 @@ function parseSkillModifiers(body, out) {
         overrides.push({
           targetType: 'skill_trait',
           targetValue: SKILL_TRAIT_LIGHT_TOUCH,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/electronics|electrical repair|electrical/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_ELECTRICAL,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/mechanics|mechanical repair|mechanical/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_MECHANICS,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/\brepair\b/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_REPAIR,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/timing/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_TIMING,
+          modifierPercent: pct,
+        })
+        continue
+      }
+      if (/focus|concentration/i.test(name)) {
+        overrides.push({
+          targetType: 'skill_trait',
+          targetValue: SKILL_TRAIT_FOCUS,
           modifierPercent: pct,
         })
         continue

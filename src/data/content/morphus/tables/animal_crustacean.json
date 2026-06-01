@@ -438,7 +438,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
-            "modifierPercent": -50
+            "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
@@ -459,7 +459,7 @@
       },
       "customOneOffs": [
         "Lower body has Natural A.R. 13.",
-        "Clattering movement on land (-30% to Prowl).",
+        "Clattering movement on land ( ).",
         "Difficult to hide; transportation may be a problem (e.g. cramped in a vehicle back seat).",
         "Triple weight."
       ]

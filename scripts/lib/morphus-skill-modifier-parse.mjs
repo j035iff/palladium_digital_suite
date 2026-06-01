@@ -3,11 +3,29 @@
  * Trait membership lists: src/data/source/skill_trait_lists/*.txt (applied via apply:skill-traits).
  */
 
-export const SKILL_TRAIT_DEXTERITY = 'requires_dexterity'
-export const SKILL_TRAIT_LIGHT_TOUCH = 'requires_light_touch'
+export {
+  SKILL_TRAIT_DEXTERITY,
+  SKILL_TRAIT_LIGHT_TOUCH,
+  SKILL_TRAIT_ELECTRICAL,
+  SKILL_TRAIT_REPAIR,
+  SKILL_TRAIT_MECHANICS,
+  SKILL_TRAIT_TIMING,
+  SKILL_TRAIT_FOCUS,
+  ALL_SKILL_TRAIT_IDS,
+} from './skill-trait-constants.mjs'
 
-/** Book phrasing → skill_trait registry id (lists in skills_requiring_*.txt). */
-const TRAIT_PERCENT_PATTERNS = [
+import {
+  SKILL_TRAIT_DEXTERITY,
+  SKILL_TRAIT_LIGHT_TOUCH,
+  SKILL_TRAIT_ELECTRICAL,
+  SKILL_TRAIT_REPAIR,
+  SKILL_TRAIT_MECHANICS,
+  SKILL_TRAIT_TIMING,
+  SKILL_TRAIT_FOCUS,
+} from './skill-trait-constants.mjs'
+
+/** Book phrasing → skill_trait registry id (lists in skills_*.txt). */
+export const TRAIT_PERCENT_PATTERNS = [
   {
     re: /([+-])(\d+)%\s+to\s+all\s+manual\s+dexterity\s+related\s+skills/i,
     traitId: SKILL_TRAIT_DEXTERITY,
@@ -15,6 +33,34 @@ const TRAIT_PERCENT_PATTERNS = [
   {
     re: /([+-])(\d+)%\s+to\s+(?:the\s+)?delicate\s+skills/i,
     traitId: SKILL_TRAIT_DEXTERITY,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:bonus\s+to\s+)?skills?\s+related\s+to\s+electronics(?:\s+and\s+electrical\s+repair(?:\s+and\s+computers)?)?/i,
+    traitId: SKILL_TRAIT_ELECTRICAL,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:bonus\s+to\s+)?skills?\s+related\s+to\s+mechanics(?:\s+and\s+mechanical\s+repair)?/i,
+    traitId: SKILL_TRAIT_MECHANICS,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:bonus\s+to\s+)?skills?\s+related\s+to\s+(?:electrical|mechanical)\s+repair/i,
+    traitId: SKILL_TRAIT_REPAIR,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:bonus\s+to\s+)?skills?\s+related\s+to\s+repair/i,
+    traitId: SKILL_TRAIT_REPAIR,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:to\s+)?skills?\s+requiring\s+timing/i,
+    traitId: SKILL_TRAIT_TIMING,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:bonus\s+to\s+)?skills?\s+related\s+to\s+time\s+and\s+timing/i,
+    traitId: SKILL_TRAIT_TIMING,
+  },
+  {
+    re: /([+-])(\d+)%\s+(?:to\s+)?skills?\s+requiring\s+(?:focus|concentration)/i,
+    traitId: SKILL_TRAIT_FOCUS,
   },
   {
     re: /([+-])(\d+)%\s+skill\s+penalty\s+on\s+those\s+requiring\s+delicate\s+work\s+or\s+a\s+light\s+touch/i,
@@ -51,6 +97,8 @@ const TRAIT_PERCENT_PATTERNS = [
   {
     re: /(?:any\s+)?skills?\s+requiring\s+delicate\s+finger\s+control\s+(?:is\s+)?at\s+([+-])(\d+)%/i,
     traitId: SKILL_TRAIT_DEXTERITY,
+    signGroup: 1,
+    valueGroup: 2,
   },
   {
     re: /([+-])(\d+)%\s+to\s+perform\s+any\s+skills?\s+that\s+require\s+a\s+delicate\s+touch/i,
@@ -67,14 +115,15 @@ export function parseTraitAndImpossibleSkillModifiers(body, findSkillId) {
   const normalizedBody = String(body).replace(/([A-Za-z])-\s+([A-Za-z])/g, '$1$2')
   const overrides = []
 
-  for (const { re, traitId } of TRAIT_PERCENT_PATTERNS) {
+  for (const pattern of TRAIT_PERCENT_PATTERNS) {
+    const { re, traitId, signGroup = 1, valueGroup = 2 } = pattern
     const m = normalizedBody.match(re)
     if (!m) continue
-    const sign = m[1] === '-' ? -1 : 1
+    const sign = m[signGroup] === '-' ? -1 : 1
     overrides.push({
       targetType: 'skill_trait',
       targetValue: traitId,
-      modifierPercent: sign * Number(m[2]),
+      modifierPercent: sign * Number(m[valueGroup]),
     })
   }
 

@@ -47,7 +47,7 @@ Common mappings from book prose:
 | +1 to Horror Factor | `statModifiers.hf.flat` |
 | +5 to roll with impact | `statModifiers.rollWithPunch.flat` |
 | -20% to Disguise | `skillModifiers.specificSkillOverrides` → `skill_disguise` |
-| -5% to skills requiring dexterity / light touch | `specificSkillOverrides` with `targetType`: `skill_trait`, `targetValue`: `requires_dexterity` or `requires_light_touch` (lists in `src/data/source/skill_trait_lists/`) |
+| -5% to skills requiring dexterity / light touch / focus / timing, or related to electrical / repair / mechanics | `specificSkillOverrides` with `targetType`: `skill_trait` and a registry id (`requires_dexterity`, `requires_light_touch`, `related_to_electrical`, `related_to_repair`, `related_to_mechanics`, `requires_timing`, `requires_focus`) — membership lists in `src/data/source/skill_trait_lists/` |
 | Disguise impossible in Morphus | `specificSkillOverrides` with `impossibleInMorphus`: true (sheet shows **Impossible**) |
 | impervious to cold / half damage from fire | `damageAffinities` (0 = none, 0.5 = half, 2 = double) |
 | cannot swim / floats on water | `mobility.aquaticTraits.buoyancy`: `sink` / `float` |
@@ -137,11 +137,13 @@ npm run morphus:ingest -- structure-entries my_table --target --force
 
 Extend parsers in `scripts/lib/morphus-transcribe-structure.mjs`, `scripts/lib/morphus-skill-modifier-parse.mjs`, and `MECHANIC_PATTERNS` in `morphus-schema-analysis.mjs` when new book phrasing appears. Goal: **zero or minimal `customOneOffs`** per trait.
 
-**Skill trait lists:** Dexterity- and light-touch-dependent skills are defined in `skills_requiring_dexterity.txt` and `skills_requiring_light_touch.txt`. Run `npm run apply:skill-traits` after editing those files so `palladiumSkills.json` carries `skillTraits`. Ingest maps book phrases like “manual dexterity related skills” / “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids.
+**Skill trait lists:** Trait membership is defined in `src/data/source/skill_trait_lists/*.txt` (dexterity, light touch, electrical, repair, mechanics, timing, focus). Run `npm run apply:skill-traits` after editing any list so `palladiumSkills.json` carries `skillTraits`. Registry ids live in `src/data/content/skill_trait_registry.json`. Ingest maps book phrases like “manual dexterity related skills”, “skills related to electronics”, or “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids.
 
 **Impossible skills:** Use `impossibleInMorphus: true` on a `specificSkillOverrides` row (not `isNegated`). Conditional impossibility (“Prowl impossible while music plays”) stays in `description` / `skillContextModifiers` until modeled; `structure-entries` skips “is impossible while …” for auto-flagging.
 
 **Bulk normalize existing tables:** `npm run migrate:morphus-skills` (add `--dry-run` to preview). Re-run after editing trait list files or ingest parsers.
+
+**Strip duplicate skill prose:** After migration, run `npm run dedupe:morphus-skill-prose` to remove `% to … skill` clauses from `description` / `customOneOffs` when the same rule exists in `skillModifiers`.
 
 ## Do not
 

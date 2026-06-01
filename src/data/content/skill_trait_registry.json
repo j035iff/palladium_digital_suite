@@ -12,10 +12,41 @@
       "name": "Skills requiring a light touch",
       "description": "Fine manipulation and careful handling — separate book list from dexterity skills.",
       "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "related_to_electrical",
+      "name": "Skills related to electrical work",
+      "description": "Electronics, electrical repair, computers, and related technical skills (see skills_related_to_electrical.txt).",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "related_to_repair",
+      "name": "Skills related to repair",
+      "description": "General repair, jury-rig, and maintenance skills (see skills_related_to_repair.txt).",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "related_to_mechanics",
+      "name": "Skills related to mechanics",
+      "description": "Mechanical engineering, vehicle/aircraft mechanics, and related trade skills (see skills_related_to_mechanics.txt).",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "requires_timing",
+      "name": "Skills requiring timing",
+      "description": "Performance, demolitions, and other skills where precise timing matters (see skills_requiring_timing.txt).",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "requires_focus",
+      "name": "Skills requiring focus",
+      "description": "Skills that demand sustained concentration or mental focus (see skills_requiring_focus.txt).",
+      "gameSystems": ["nightbane", "megaversal"]
     }
   ],
   "membershipNotes": {
-    "locksmith": "Listed in the dexterity source file but not yet present in palladiumSkills.json; add skillTraits when the catalog row exists.",
+    "basicElectronics": "Referenced in prerequisites and trait lists; add catalog row or alias when ingested.",
+    "performance": "Listed in skills_requiring_timing.txt; no Nightbane catalog row (intentionally omitted).",
     "facadePpPenalties": "Optional low facade P.P. penalties map to requires_dexterity / requires_light_touch via facadePpSkillTraitPenalties.ts (ported from v0 highManualDexterity / otherManualDexterity)."
   }
 }

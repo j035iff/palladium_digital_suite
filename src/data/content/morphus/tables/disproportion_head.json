@@ -19,7 +19,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "1D4 times larger than is common; +1D4 to Perception Rolls dealing with sound. Penalties: -2 to P.B. and -20% to Disguise and Undercover Ops skills.",
+      "description": "1D4 times larger than is common; +1D4 to Perception Rolls dealing with sound. Penalties: -2 to P.B.",
       "statModifiers": {
         "pb": {
           "flat": -2
@@ -85,7 +85,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and -20% to Disguise and Undercover skills.",
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and and Undercover skills.",
       "statModifiers": {
         "pb": {
           "flat": -1

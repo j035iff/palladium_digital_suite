@@ -1084,7 +1084,7 @@
       "customOneOffs": [
         "Can illuminate darkness, signal, distract, or flash Morse code.",
         "By sacrificing one Hit Point per melee round, radiate magical sunlight equivalent to Globe of Daylight (5 feet/1.5 m radius per level), driving sunlight-vulnerable undead from the area.",
-        "Unless covered, -30% to Prowl in dark environments."
+        "Unless covered, in dark environments."
       ]
     },
     {
@@ -1151,7 +1151,7 @@
         ]
       },
       "customOneOffs": [
-        "+10% to Prowl and ability to hide unseen outdoors among natural environments."
+        "and ability to hide unseen outdoors among natural environments."
       ]
     }
   ]

@@ -223,6 +223,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
           }
         ]
       },
@@ -250,7 +260,7 @@
       "id": "substance_abuse_rolling_paper_leafy_skin",
       "name": "Rolling Paper or Leafy Skin",
       "tableCategory": "Substance Abuse",
-      "description": "The skin of the Morphus form is composed of overlapping green or brown leaves, or a paper similar to that used to hand-roll cigarettes. At various points on the body the skin may appear to be yellowing and the eyes resemble a lit, smoldering cigarette. Small wisps of smoke sometimes issue forth from the eyes, nostrils and mouth, especially when excited or agitated, and the breath smells of cigarettes. Bonuses: +5D6 to S.D.C. Heat and fire do half damage (even magic fire), smoke has no adverse effect while in Morphus form, and +1 to Horror Factor. Penalties: -3 to the M.A. and P.E. attribute, and a persistent cough imposes a -30% to Prowl, Performance and Public Speaking skills.",
+      "description": "The skin of the Morphus form is composed of overlapping green or brown leaves, or a paper similar to that used to hand-roll cigarettes. At various points on the body the skin may appear to be yellowing and the eyes resemble a lit, smoldering cigarette. Small wisps of smoke sometimes issue forth from the eyes, nostrils and mouth, especially when excited or agitated, and the breath smells of cigarettes. Bonuses: +5D6 to S.D.C. Heat and fire do half damage (even magic fire), smoke has no adverse effect while in Morphus form, and +1 to Horror Factor. Penalties: -3 to the M.A. and P.E. attribute, and a persistent cough imposes a, Performance and Public Speaking skills.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -462,7 +472,7 @@
       "id": "substance_abuse_speed_freak",
       "name": "Speed Freak",
       "tableCategory": "Substance Abuse",
-      "description": "The Morphus form is gaunt and unhealthy looking. Dark circles ring the eyes, cheeks are hollow, rib bones are visible beneath the skin, and the Nightbane’s hand and body shake slightly with nervous energy. It is as if the character hasn’t slept or eaten in days. Bonuses: +1 to all Perception Rolls, +3 on initiative, +1 to parry and dodge, +10% to all Piloting skills, and talks fast, lives hard, and is +2 to save vs Horror Factor. Penalties: -1D4 to M.A., -10% on all skills that require a delicate touch due to trembling, and takes risks and tends to be a daredevil and death defying thrill-junkie who is sometimes a danger to himself and to those around him. Loves action, danger and speed.",
+      "description": "The Morphus form is gaunt and unhealthy looking. Dark circles ring the eyes, cheeks are hollow, rib bones are visible beneath the skin, and the Nightbane’s hand and body shake slightly with nervous energy. It is as if the character hasn’t slept or eaten in days. Bonuses: +1 to all Perception Rolls, +3 on initiative, +1 to parry and dodge, +10% to all Piloting skills, and talks fast, lives hard, and is +2 to save vs Horror Factor. Penalties: -1D4 to M.A., due to trembling, and takes risks and tends to be a daredevil and death defying thrill-junkie who is sometimes a danger to himself and to those around him. Loves action, danger and speed.",
       "statModifiers": {
         "parry": {
           "flat": 1

@@ -19,7 +19,7 @@
           "pageNumber": 40
         }
       ],
-      "description": "Nightmares of falling are an almost universal human experience. As a response to this nightmare, the Nightbane floats in midair. The character is limited to a floating height of 1-3 feet (0.3 to 0.9 m) off the ground. He cannot fly but rather hovers and floats about. The Morphus is that of a person who looks to be in a constant state of fright, his face contorted into a grimace or scream, and his hair and clothing fluttering in the wind whether there is an actual wind or not.[cite: 9]",
+      "description": "Nightmares of falling are an almost universal human experience. As a response to this nightmare, the Nightbane floats in midair. The character is limited to a floating height of 1-3 feet (0.3 to 0.9 m) off the ground. He cannot fly but rather hovers and floats about. The Morphus is that of a person who looks to be in a constant state of fright, his face contorted into a grimace or scream, and his hair and clothing fluttering in the wind whether there is an actual wind or not.",
       "statModifiers": {
         "me": {
           "dice": "-1D4"
@@ -62,9 +62,9 @@
         ]
       },
       "customOneOffs": [
-        "Hovering and floating a few feet above the ground is the natural state of being. Does not take damage from falls, leaves no footprints or tracks, and does not set off pressure plates.[cite: 9]",
-        "Maximum Spd is equal to the Spd attribute, but halved due to floating speed.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "Hovering and floating a few feet above the ground is the natural state of being. Does not take damage from falls, leaves no footprints or tracks, and does not set off pressure plates.",
+        "Maximum Spd is equal to the Spd attribute, but halved due to floating speed.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -81,7 +81,7 @@
           "pageNumber": 41
         }
       ],
-      "description": "The body of this Nightbane is twisted far out of normal shape. The spine might be twisted so that the torso faces the opposite way, hunched over, or doubled backward so that the legs straddle the abdomen, and/or curled forward with the legs wrapping around the head, forcing the character to walk on his or her hands. The character does not move normally, waddling, crab-walking, crawling, or even tumbling to get around.[cite: 9]",
+      "description": "The body of this Nightbane is twisted far out of normal shape. The spine might be twisted so that the torso faces the opposite way, hunched over, or doubled backward so that the legs straddle the abdomen, and/or curled forward with the legs wrapping around the head, forcing the character to walk on his or her hands. The character does not move normally, waddling, crab-walking, crawling, or even tumbling to get around.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -142,7 +142,7 @@
         ]
       },
       "customOneOffs": [
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -159,7 +159,7 @@
           "pageNumber": 41
         }
       ],
-      "description": "Arms, legs, and any other limbs of the Morphus are deformed. The arms and legs might be juxtaposed, or elongated or too short, or twisted and deformed, or marred by odd knots, grooves, and holes. Musculature is also abnormal, with more or less muscle than normal in odd configurations.[cite: 9]",
+      "description": "Arms, legs, and any other limbs of the Morphus are deformed. The arms and legs might be juxtaposed, or elongated or too short, or twisted and deformed, or marred by odd knots, grooves, and holes. Musculature is also abnormal, with more or less muscle than normal in odd configurations.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -241,8 +241,8 @@
         "clothingFit": "custom_required"
       },
       "customOneOffs": [
-        "The Nightbane is double-jointed in all limbs.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "The Nightbane is double-jointed in all limbs.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -259,7 +259,7 @@
           "pageNumber": 41
         }
       ],
-      "description": "The Nightbane has 1D4+2 articulated spines protruding from the sides of his upper torso in addition to his arms and legs, which may be normal or slightly deformed. While not able to grasp tools or weapons, these appendages are made of bone or metal and end in very sharp points. This makes the spines suitable as close-quarters weapons useful for parrying, stabbing, raking, or bludgeoning opponents.[cite: 9]",
+      "description": "The Nightbane has 1D4+2 articulated spines protruding from the sides of his upper torso in addition to his arms and legs, which may be normal or slightly deformed. While not able to grasp tools or weapons, these appendages are made of bone or metal and end in very sharp points. This makes the spines suitable as close-quarters weapons useful for parrying, stabbing, raking, or bludgeoning opponents.",
       "statModifiers": {
         "apm": {
           "flat": 1
@@ -328,10 +328,10 @@
         "clothingFit": "custom_required"
       },
       "customOneOffs": [
-        "Spines have a reach equal to that of the Nightbane's arms (roughly 3 feet/0.9 m on average).[cite: 9]",
-        "The character can attack with one or two spines in a single melee attack (roll a single strike even if using two spines).[cite: 9]",
-        "Destroyed spines will completely regrow in an hour.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "Spines have a reach equal to that of the Nightbane's arms (roughly 3 feet/0.9 m on average).",
+        "The character can attack with one or two spines in a single melee attack (roll a single strike even if using two spines).",
+        "Destroyed spines will completely regrow in an hour.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -348,7 +348,7 @@
           "pageNumber": 41
         }
       ],
-      "description": "The skin of the Morphus is an unnatural color, or pale and mottled with dark patches of blue and purplish spider-webbed veins or large veins that seem to move like snakes or pulsate. Or the flesh may be lumpy or ordinary looking but seems to glow and pulsate as if there were lights located under the skin. Whatever the case, the skin moves, ripples, crawls, and/or pulsates as if there is something alive and moving beneath it.[cite: 9]",
+      "description": "The skin of the Morphus is an unnatural color, or pale and mottled with dark patches of blue and purplish spider-webbed veins or large veins that seem to move like snakes or pulsate. Or the flesh may be lumpy or ordinary looking but seems to glow and pulsate as if there were lights located under the skin. Whatever the case, the skin moves, ripples, crawls, and/or pulsates as if there is something alive and moving beneath it.",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -407,7 +407,7 @@
         ]
       },
       "customOneOffs": [
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -424,7 +424,7 @@
           "pageNumber": 42
         }
       ],
-      "description": "The Nightbane is wrapped in what looks like a straight-jacket. The material this covering is made of may be leather, canvas, or some other resilient fabric. What is consistent is that the long sleeves and body of the jacket are fitted with belts and fasteners that restrict the movement of the arms. The arms may be held pinned at the sides or crossed over the chest or secured behind the character's back.[cite: 9]",
+      "description": "The Nightbane is wrapped in what looks like a straight-jacket. The material this covering is made of may be leather, canvas, or some other resilient fabric. What is consistent is that the long sleeves and body of the jacket are fitted with belts and fasteners that restrict the movement of the arms. The arms may be held pinned at the sides or crossed over the chest or secured behind the character's back.",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -483,11 +483,11 @@
         "blocksTwoHandedWeapons": true
       },
       "customOneOffs": [
-        "P.P. modifiers sum to zero (+2 from bonuses, -2 from penalties).[cite: 9]",
-        "A leather or cage-like mask may also be part of the Morphus, obscuring the face and acting as a muzzle to prevent biting.[cite: 9]",
-        "A body block/ramming attack is the same as a power punch (counts as two attacks to perform).[cite: 9]",
-        "The arms are immobilized; the Nightbane is unable to use tools and weapons, cannot parry attacks, nor perform skills that require the use of hands and arms (like Climbing and Swimming). However, he is able to tread water with the legs to stay afloat.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "P.P. modifiers sum to zero (+2 from bonuses, -2 from penalties).",
+        "A leather or cage-like mask may also be part of the Morphus, obscuring the face and acting as a muzzle to prevent biting.",
+        "A body block/ramming attack is the same as a power punch (counts as two attacks to perform).",
+        "The arms are immobilized; the Nightbane is unable to use tools and weapons, cannot parry attacks, nor perform skills that require the use of hands and arms (like Climbing and Swimming). However, he is able to tread water with the legs to stay afloat.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -550,7 +550,7 @@
           "pageNumber": 42
         }
       ],
-      "description": "The mouth of the Nightbane becomes a giant, devouring maw unlike anything from the natural world. The exact look of the head and mouth is up to the player. Common versions include a set of insect-like multi-segmented mandibles, a maw that opens impossibly large, a widely stretching oral cavity filled with unending darkness, or a mouth filled with pointed or razor-sharp teeth that splits the cheeks back to the hinge of the jaw.[cite: 9]",
+      "description": "The mouth of the Nightbane becomes a giant, devouring maw unlike anything from the natural world. The exact look of the head and mouth is up to the player. Common versions include a set of insect-like multi-segmented mandibles, a maw that opens impossibly large, a widely stretching oral cavity filled with unending darkness, or a mouth filled with pointed or razor-sharp teeth that splits the cheeks back to the hinge of the jaw.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -584,11 +584,11 @@
         }
       ],
       "customOneOffs": [
-        "Only P.P. bonuses can be added to the massive maw strike attack.[cite: 9]",
-        "Impervious to spoiled food and disease (can eat raw and rotting meat without getting ill).[cite: 9]",
-        "Can latch onto an opponent; target needs a Supernatural P.S. twice that of the Nightbane to pry free.[cite: 9]",
-        "Can gnaw through a wood fence, crate, door or other barrier in 1D4+2 melee rounds.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "Only P.P. bonuses can be added to the massive maw strike attack.",
+        "Impervious to spoiled food and disease (can eat raw and rotting meat without getting ill).",
+        "Can latch onto an opponent; target needs a Supernatural P.S. twice that of the Nightbane to pry free.",
+        "Can gnaw through a wood fence, crate, door or other barrier in 1D4+2 melee rounds.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     },
     {
@@ -605,7 +605,7 @@
           "pageNumber": 43
         }
       ],
-      "description": "Either held in the hand or grafted to one or more limbs is a nightmarish weapon. These weapons are most often unconventional and especially frightening. Examples include monstrous and gnarled claws, a bone spike or blade(s) at least the size of a short sword that extends and retracts from the forearm, or a handheld sword, scythe, sickle, pitchfork, cleaver, meat hook, nail-studded club, etc.[cite: 9]",
+      "description": "Either held in the hand or grafted to one or more limbs is a nightmarish weapon. These weapons are most often unconventional and especially frightening. Examples include monstrous and gnarled claws, a bone spike or blade(s) at least the size of a short sword that extends and retracts from the forearm, or a handheld sword, scythe, sickle, pitchfork, cleaver, meat hook, nail-studded club, etc.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -648,12 +648,12 @@
         }
       ],
       "customOneOffs": [
-        "The Gruesome Weapon is the Nightbane's signature weapon, always with him and never lent to others.[cite: 9]",
-        "Weapon combat bonuses (+1 attack, +2 strike, parry, disarm, and pull punch) apply ONLY when using the Gruesome Weapon.[cite: 9]",
-        "Other weapons can be used but are -2 to strike and parry.[cite: 9]",
-        "The weapon has 45 S.D.C. +5 S.D.C. per level. It only takes damage if targeted via Called Shot.[cite: 9]",
-        "If the weapon S.D.C. is reduced to zero, it crumbles to dust and does not reappear until all of the character's personal S.D.C. are restored to full capacity. Without this weapon, the Nightbane's other combat bonuses are all reduced by half, and he is -1 attack per melee round.[cite: 9]",
-        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
+        "The Gruesome Weapon is the Nightbane's signature weapon, always with him and never lent to others.",
+        "Weapon combat bonuses (+1 attack, +2 strike, parry, disarm, and pull punch) apply ONLY when using the Gruesome Weapon.",
+        "Other weapons can be used but are -2 to strike and parry.",
+        "The weapon has 45 S.D.C. +5 S.D.C. per level. It only takes damage if targeted via Called Shot.",
+        "If the weapon S.D.C. is reduced to zero, it crumbles to dust and does not reappear until all of the character's personal S.D.C. are restored to full capacity. Without this weapon, the Nightbane's other combat bonuses are all reduced by half, and he is -1 attack per melee round.",
+        "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
       ]
     }
   ]

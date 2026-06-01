@@ -19,7 +19,7 @@
           "pageNumber": 35
         }
       ],
-      "description": "The Morphus appears with a very large, oversized backpack or duffle bag[cite: 7]. This bag is much tougher than usual and can usually only be struck from behind[cite: 7]. The large backpack, despite its size, does not seem to encumber the Nightbane too much and is somewhat larger inside than what it appears[cite: 7].",
+      "description": "The Morphus appears with a very large, oversized backpack or duffle bag. This bag is much tougher than usual and can usually only be struck from behind. The large backpack, despite its size, does not seem to encumber the Nightbane too much and is somewhat larger inside than what it appears.",
       "statModifiers": {
         "ps": {
           "flat": 1
@@ -90,7 +90,7 @@
         ]
       },
       "customOneOffs": [
-        "Capable of storing up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience[cite: 7]."
+        "Capable of storing up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience."
       ]
     },
     {
@@ -364,7 +364,7 @@
           "pageNumber": 36
         }
       ],
-      "description": "One or more panes of glass are incorporated into this character's Morphus form. Underneath each one is any variety of collectible objects from toy cars to butterflies[cite: 7]. These built-in display cases may be opened by the Nightbane and even used to carry other small objects, though they are easily seen[cite: 7].",
+      "description": "One or more panes of glass are incorporated into this character's Morphus form. Underneath each one is any variety of collectible objects from toy cars to butterflies. These built-in display cases may be opened by the Nightbane and even used to carry other small objects, though they are easily seen.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -420,7 +420,7 @@
         ]
       },
       "customOneOffs": [
-        "The Barter bonus applies only when buying or trading for the collection[cite: 7]."
+        "The Barter bonus applies only when buying or trading for the collection."
       ]
     },
     {
@@ -437,7 +437,7 @@
           "pageNumber": 36
         }
       ],
-      "description": "The skin of the Nightbane is actually made of well-worn leather like that of an old book[cite: 7]. Small belts and buckles may be incorporated as well, though things like spikes, studs, and zippers are rare[cite: 7].",
+      "description": "The skin of the Nightbane is actually made of well-worn leather like that of an old book. Small belts and buckles may be incorporated as well, though things like spikes, studs, and zippers are rare.",
       "naturalAr": 8,
       "statModifiers": {
         "sdc": {
@@ -505,7 +505,7 @@
         ]
       },
       "customOneOffs": [
-        "-2 to Perception Rolls involving the sense of touch[cite: 7]."
+        "-2 to Perception Rolls involving the sense of touch."
       ]
     },
     {
@@ -522,7 +522,7 @@
           "pageNumber": 36
         }
       ],
-      "description": "In Morphus, the character may have a cowboy esthetic to his appearance and has a riding saddle either draped over one shoulder or worn on his own back, fastened to him with straps of rawhide or belts[cite: 7]. Any Nightbane capable of running on all fours can let other people ride in the saddle[cite: 7].",
+      "description": "In Morphus, the character may have a cowboy esthetic to his appearance and has a riding saddle either draped over one shoulder or worn on his own back, fastened to him with straps of rawhide or belts. Any Nightbane capable of running on all fours can let other people ride in the saddle.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -550,7 +550,7 @@
         ]
       },
       "customOneOffs": [
-        "Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted combat[cite: 7]."
+        "Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted combat."
       ]
     },
     {
@@ -567,7 +567,7 @@
           "pageNumber": 37
         }
       ],
-      "description": "The Nightbane's Morphus has a set of magnifying lenses that replace one or more of his eyes[cite: 7]. The apparatus may be inset into the skull or protrude up to 2 feet (0.6 m) from the character's face[cite: 7].",
+      "description": "The Nightbane's Morphus has a set of magnifying lenses that replace one or more of his eyes. The apparatus may be inset into the skull or protrude up to 2 feet (0.6 m) from the character's face.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -609,13 +609,23 @@
             "targetType": "category",
             "targetValue": "medical",
             "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_computer_operation",
+            "modifierPercent": -15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_pick_locks",
+            "modifierPercent": -15
           }
         ]
       },
       "customOneOffs": [
-        "These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet[cite: 7].",
-        "Characters with nightvision can see as if they have a passive nightvision scope[cite: 7].",
-        "-15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc[cite: 7]."
+        "These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet.",
+        "Characters with nightvision can see as if they have a passive nightvision scope.",
+        "-15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc."
       ]
     },
     {

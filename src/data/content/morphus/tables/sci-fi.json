@@ -80,12 +80,17 @@
             "targetType": "skill_id",
             "targetValue": "pick_pockets",
             "modifierPercent": -5
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -5
           }
         ]
       },
       "customOneOffs": [
         "The armor is environmentally sealed so the 'Bane does not need air to breathe and is immune to airborne irritants, toxins, and poisonous gases.",
-        "-5% to skills that require a delicate touch or precision (like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
+        "(like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
       ]
     },
     {
@@ -173,12 +178,17 @@
             "targetType": "skill_id",
             "targetValue": "pick_pockets",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -20
           }
         ]
       },
       "customOneOffs": [
         "The armor is environmentally sealed so the 'Bane does not need air to breathe and is immune to airborne irritants, toxins, and poisonous gases.",
-        "-20% to skills that require a delicate touch or precision (like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
+        "(like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
       ]
     },
     {

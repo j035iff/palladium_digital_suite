@@ -11,8 +11,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   parseTraitAndImpossibleSkillModifiers,
-  SKILL_TRAIT_DEXTERITY,
-  SKILL_TRAIT_LIGHT_TOUCH,
+  ALL_SKILL_TRAIT_IDS,
 } from './lib/morphus-skill-modifier-parse.mjs'
 import {
   loadSkillNameIndex,
@@ -27,11 +26,11 @@ const dryRun = process.argv.includes('--dry-run')
 const skills = JSON.parse(readFileSync(skillsPath, 'utf8'))
 const skillTraitsById = new Map(skills.map((s) => [s.id, new Set(s.skillTraits ?? [])]))
 
-const dexIds = new Set(
-  skills.filter((s) => s.skillTraits?.includes(SKILL_TRAIT_DEXTERITY)).map((s) => s.id),
-)
-const lightIds = new Set(
-  skills.filter((s) => s.skillTraits?.includes(SKILL_TRAIT_LIGHT_TOUCH)).map((s) => s.id),
+const traitMemberIds = new Map(
+  ALL_SKILL_TRAIT_IDS.map((traitId) => [
+    traitId,
+    new Set(skills.filter((s) => s.skillTraits?.includes(traitId)).map((s) => s.id)),
+  ]),
 )
 
 const findSkillId = (phrase) => loadSkillNameIndex().get(normalizeSkillName(phrase)) ?? null
@@ -118,23 +117,20 @@ function consolidateTraitClusters(overrides) {
   const add = []
 
   for (const [pct, ids] of byPct) {
-    const dexHits = ids.filter((id) => dexIds.has(id))
-    const lightHits = ids.filter((id) => lightIds.has(id))
-    if (dexHits.length >= 5 && dexHits.length === ids.length) {
-      add.push({
-        targetType: 'skill_trait',
-        targetValue: SKILL_TRAIT_DEXTERITY,
-        modifierPercent: pct,
-      })
-      dexHits.forEach((id) => dropIds.add(id))
-    }
-    if (lightHits.length >= 3 && lightHits.length === ids.length) {
-      add.push({
-        targetType: 'skill_trait',
-        targetValue: SKILL_TRAIT_LIGHT_TOUCH,
-        modifierPercent: pct,
-      })
-      lightHits.forEach((id) => dropIds.add(id))
+    for (const traitId of ALL_SKILL_TRAIT_IDS) {
+      const members = traitMemberIds.get(traitId)
+      if (!members?.size) continue
+      const hits = ids.filter((id) => members.has(id))
+      const minHits = Math.min(3, members.size)
+      if (hits.length >= minHits && hits.length === ids.length) {
+        add.push({
+          targetType: 'skill_trait',
+          targetValue: traitId,
+          modifierPercent: pct,
+        })
+        hits.forEach((id) => dropIds.add(id))
+        break
+      }
     }
   }
 
@@ -165,16 +161,30 @@ function stripFalseDisguiseGrants(overrides) {
   )
 }
 
+function entryProseForSkillParse(entry) {
+  const chunks = []
+  if (entry.description && !/TODO: transcribe/i.test(entry.description)) {
+    chunks.push(entry.description)
+  }
+  if (Array.isArray(entry.customOneOffs)) {
+    for (const line of entry.customOneOffs) {
+      chunks.push(String(line).replace(/\[cite:\s*\d+\]/gi, '').trim())
+    }
+  }
+  return chunks.filter(Boolean).join(' ')
+}
+
 export function migrateEntrySkillModifiers(entry) {
   const existing = entry.skillModifiers?.specificSkillOverrides ?? []
   let overrides = stripFalseDisguiseGrants(existing.map(migrateOverride))
 
-  if (entry.description && !/TODO: transcribe/i.test(entry.description)) {
-    const fromDesc = [
-      ...parseTraitAndImpossibleSkillModifiers(entry.description, findSkillId),
-      ...parseDescriptionSkillModifiers(entry.description, entry.name),
+  const prose = entryProseForSkillParse(entry)
+  if (prose) {
+    const fromProse = [
+      ...parseTraitAndImpossibleSkillModifiers(prose, findSkillId),
+      ...parseDescriptionSkillModifiers(prose, entry.name),
     ].map(migrateOverride)
-    overrides = dedupeOverrides([...overrides, ...fromDesc])
+    overrides = dedupeOverrides([...overrides, ...fromProse])
   }
 
   overrides = dropSubsumedSkillIds(overrides)

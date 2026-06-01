@@ -19,7 +19,7 @@
           "pageNumber": 43
         }
       ],
-      "description": "The Nightbane is dressed in business attire. Whether that's khakis and a polo shirt, designer dress/skirt and blouse, or top quality three-piece suit, in the absence of other Morphus features the character would not look out of place on Wall Street, Silicon Valley or any cubicle farm in the business world. The 'Bane also moves with a speed and deliberateness that bespeaks a great degree of self-confidence and sense of purpose. The character is a power-player and knows it.[cite: 10]",
+      "description": "The Nightbane is dressed in business attire. Whether that's khakis and a polo shirt, designer dress/skirt and blouse, or top quality three-piece suit, in the absence of other Morphus features the character would not look out of place on Wall Street, Silicon Valley or any cubicle farm in the business world. The 'Bane also moves with a speed and deliberateness that bespeaks a great degree of self-confidence and sense of purpose. The character is a power-player and knows it.",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -63,7 +63,7 @@
         ]
       },
       "customOneOffs": [
-        "No Secondary Skills as the character is focused only on his career.[cite: 10]"
+        "No Secondary Skills as the character is focused only on his career."
       ]
     },
     {
@@ -80,7 +80,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "The character's identity is tied to a specific service profession that is represented by its uniform. Medical professionals, firemen, police, guards, airline pilot, mechanic, and others have a highly visible style of dress that sets them apart from the public, and may be a symbol of authority, and often serves as a point of pride. The Nightbane's Morphus is dressed as one such profession, whether all the details of that uniform are accurate or even made up.[cite: 10]",
+      "description": "The character's identity is tied to a specific service profession that is represented by its uniform. Medical professionals, firemen, police, guards, airline pilot, mechanic, and others have a highly visible style of dress that sets them apart from the public, and may be a symbol of authority, and often serves as a point of pride. The Nightbane's Morphus is dressed as one such profession, whether all the details of that uniform are accurate or even made up.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -123,7 +123,7 @@
         ]
       },
       "customOneOffs": [
-        "The Nightbane is unlikely to be fully trusted by criminals like the majority of the Warlords faction.[cite: 10]"
+        "The Nightbane is unlikely to be fully trusted by criminals like the majority of the Warlords faction."
       ]
     },
     {
@@ -179,7 +179,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "The character has ear plugs or headphones or some similar device for his ears and some audio communication device such as a walkie-talkie, cell phone, electronic notepad or old-style telephone or CB radio type device built somewhere into his body and another in his pocket or in a case on his belt. This grants the Nightbane the ability to communicate with any type of wireless communications device and radios over a number of different types of networks and systems.[cite: 10]",
+      "description": "The character has ear plugs or headphones or some similar device for his ears and some audio communication device such as a walkie-talkie, cell phone, electronic notepad or old-style telephone or CB radio type device built somewhere into his body and another in his pocket or in a case on his belt. This grants the Nightbane the ability to communicate with any type of wireless communications device and radios over a number of different types of networks and systems.",
       "statModifiers": {
         "ppe": {
           "dice": "-2D4"
@@ -198,8 +198,8 @@
         ]
       },
       "customOneOffs": [
-        "The Nightbane's own communications and devices are untraceable by modern methods. And did we mention there are no roaming charges?[cite: 10]",
-        "This character can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range.[cite: 10]"
+        "The Nightbane's own communications and devices are untraceable by modern methods. And did we mention there are no roaming charges?",
+        "This character can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range."
       ]
     },
     {
@@ -252,7 +252,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "Built into the chest of the Morphus is a boxy device used by many employers to track the attendance of hourly workers. This might be an older \"punch\" device or a newer electronic scanner. Either type accurately displays the current time to the second.[cite: 10]",
+      "description": "Built into the chest of the Morphus is a boxy device used by many employers to track the attendance of hourly workers. This might be an older \"punch\" device or a newer electronic scanner. Either type accurately displays the current time to the second.",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -273,32 +273,16 @@
       "skillModifiers": {
         "specificSkillOverrides": [
           {
-            "targetType": "skill_id",
-            "targetValue": "demolitions",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "dance",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "performance",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "category",
-            "targetValue": "math",
+            "targetType": "skill_trait",
+            "targetValue": "requires_timing",
             "modifierPercent": 5
           }
         ]
       },
       "customOneOffs": [
-        "Spd modifiers sum to zero (+2 from mechanics, -2 from penalties).[cite: 10]",
-        "The character is able to accurately sense the exact time and the passage of time while in Morphus form.[cite: 10]",
-        "Provides a +5% bonus to skills related to time and timing such as Demolitions, Dance, Mathematical calculations, Performance, etc., including time anomalies.[cite: 10]",
-        "The character is always on time, though a bit anxiety prone and overly concerned with punctuality.[cite: 10]"
+        "Spd modifiers sum to zero (+2 from mechanics, -2 from penalties).",
+        "The character is able to accurately sense the exact time and the passage of time while in Morphus form.",
+        "The character is always on time, though a bit anxiety prone and overly concerned with punctuality."
       ]
     },
     {
@@ -315,7 +299,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "The Nightbane has a large, multi-gallon, plastic or glass tank incorporated into his body, usually mounted on the back. This tank is translucent, revealing water, coffee, or another drink as its contents. It is connected to a small spigot that can be used to indefinitely dispense the potable drink. In addition, the Nightbane seems to have an affable, easy-going air in casual situations and is often given to lengthy discussions or gossip.[cite: 10]",
+      "description": "The Nightbane has a large, multi-gallon, plastic or glass tank incorporated into his body, usually mounted on the back. This tank is translucent, revealing water, coffee, or another drink as its contents. It is connected to a small spigot that can be used to indefinitely dispense the potable drink. In addition, the Nightbane seems to have an affable, easy-going air in casual situations and is often given to lengthy discussions or gossip.",
       "statModifiers": {
         "ma": {
           "dice": "1D4+2"
@@ -366,9 +350,9 @@
         ]
       },
       "customOneOffs": [
-        "The character does not require any hydration while in Morphus form and is never thirsty.[cite: 10]",
-        "Can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container.[cite: 10]",
-        "The tank has 40 S.D.C. and is always two-thirds full and weighs 25 pounds (11 kg), which causes sloshing that penalizes physical skills.[cite: 10]"
+        "The character does not require any hydration while in Morphus form and is never thirsty.",
+        "Can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container.",
+        "The tank has 40 S.D.C. and is always two-thirds full and weighs 25 pounds (11 kg), which causes sloshing that penalizes physical skills."
       ]
     },
     {
@@ -385,7 +369,7 @@
           "pageNumber": 45
         }
       ],
-      "description": "The Nightbane's profession involves making and/or repairing machines, whether it is clocks or toasters to air conditioners and automobiles/vehicle engines. This 'Bane is good with his hands and likes to build or take things apart. His Morphus has gears, springs, pulleys, nuts and bolts either built right into his body or as a sort of weird piecemeal armor bolted to parts of his body.[cite: 10]",
+      "description": "The Nightbane's profession involves making and/or repairing machines, whether it is clocks or toasters to air conditioners and automobiles/vehicle engines. This 'Bane is good with his hands and likes to build or take things apart. His Morphus has gears, springs, pulleys, nuts and bolts either built right into his body or as a sort of weird piecemeal armor bolted to parts of his body.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -404,11 +388,19 @@
         }
       },
       "naturalAr": 10,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_mechanics",
+            "modifierPercent": 10
+          }
+        ]
+      },
       "customOneOffs": [
-        "+2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it.[cite: 10]",
-        "-2 on all Perception Rolls when caught up in examining or working on machines.[cite: 10]",
-        "+10% bonus to skills related to mechanics and mechanical repair.[cite: 10]",
-        "The character tends to enjoy working on machines than hanging out with people.[cite: 10]"
+        "+2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it.",
+        "-2 on all Perception Rolls when caught up in examining or working on machines.",
+        "The character tends to enjoy working on machines than hanging out with people."
       ]
     },
     {
@@ -425,7 +417,7 @@
           "pageNumber": 45
         }
       ],
-      "description": "The Nightbane's profession involves making and/or repairing cell phones, computers, and electronic devices, or he is an electrician who rewires entire houses and electrical systems. This 'Bane is good with his hands and likes to build or take part electrical devices. His Morphus has wires, microchips and circuit boards built right into his body or as a sort of weird piecemeal armor attached to or coming out of his body. Eyes are probably dim LED lights.[cite: 10]",
+      "description": "The Nightbane's profession involves making and/or repairing cell phones, computers, and electronic devices, or he is an electrician who rewires entire houses and electrical systems. This 'Bane is good with his hands and likes to build or take part electrical devices. His Morphus has wires, microchips and circuit boards built right into his body or as a sort of weird piecemeal armor attached to or coming out of his body. Eyes are probably dim LED lights.",
       "statModifiers": {
         "pp": {
           "flat": 2
@@ -444,11 +436,19 @@
       "damageAffinities": {
         "electricity": 0.5
       },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_electrical",
+            "modifierPercent": 5
+          }
+        ]
+      },
       "customOneOffs": [
-        "+2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them.[cite: 10]",
-        "-3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices.[cite: 10]",
-        "+5% bonus to skills related to electronics and electrical repair and computers.[cite: 10]",
-        "The character tends to lose himself in electronic devices, losing track of time and the things going on around him.[cite: 10]"
+        "+2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them.",
+        "-3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices.",
+        "The character tends to lose himself in electronic devices, losing track of time and the things going on around him."
       ]
     },
     {
@@ -465,7 +465,7 @@
           "pageNumber": 45
         }
       ],
-      "description": "The character's Morphus form has a haggard, disheveled look with bloodshot eyes and dark circles and bags underneath/around the eyes, a pale complexion, messy hair, and wrinkled or sweat-stained clothes, all of which speak to a long period of hard work without sleep. Males may also have a five o'clock shadow while all genders may also carry a tea or coffee mug or can of soda with them - or as the Morphus, have a device built into their body with tubes that pump caffeine into their bodies.[cite: 10]",
+      "description": "The character's Morphus form has a haggard, disheveled look with bloodshot eyes and dark circles and bags underneath/around the eyes, a pale complexion, messy hair, and wrinkled or sweat-stained clothes, all of which speak to a long period of hard work without sleep. Males may also have a five o'clock shadow while all genders may also carry a tea or coffee mug or can of soda with them - or as the Morphus, have a device built into their body with tubes that pump caffeine into their bodies.",
       "statModifiers": {
         "me": {
           "flat": 2
@@ -528,9 +528,9 @@
         ]
       },
       "customOneOffs": [
-        "The Nightbane needs only half the amount of sleep as a normal person.[cite: 10]",
-        "-5% penalty to skills that require focus and brain power. Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty.[cite: 10]",
-        "01-50% chance of falling asleep on guard duty or as a lookout.[cite: 10]"
+        "The Nightbane needs only half the amount of sleep as a normal person.",
+        "-5% penalty to skills that require focus and brain power. Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty.",
+        "01-50% chance of falling asleep on guard duty or as a lookout."
       ]
     }
   ]

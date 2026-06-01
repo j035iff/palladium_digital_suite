@@ -309,7 +309,7 @@
           "pageNumber": 145
         }
       ],
-      "description": "The body looks like it is made of crystal[cite: 63]. The shape is not unattractive but very inhuman[cite: 64].",
+      "description": "The body looks like it is made of crystal. The shape is not unattractive but very inhuman.",
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10"
@@ -339,10 +339,10 @@
         }
       ],
       "customOneOffs": [
-        "The crystalline body has many sharp edges, and will tear through clothing after a few hours of wear and tear[cite: 64].",
-        "Laser resistant (half damage)[cite: 65].",
+        "The crystalline body has many sharp edges, and will tear through clothing after a few hours of wear and tear.",
+        "Laser resistant (half damage).",
         "The hands are not as articulated and have trouble holding on to things, resulting in a -10% on all skills that require the use of hands[cite: 66, 67].",
-        "The crystalline hands and fingers act like claws, inflicting an additional 1D6 points of damage on punches[cite: 65]."
+        "The crystalline hands and fingers act like claws, inflicting an additional 1D6 points of damage on punches."
       ]
     },
     {
@@ -359,7 +359,7 @@
           "pageNumber": 93
         }
       ],
-      "description": "The character appears to be a sleek humanoid composed of purple, translucent and prismatic amethyst crystal[cite: 1064]. Facial features are obscured as the face appears to have been cut from one or more giant gemstones[cite: 1065].",
+      "description": "The character appears to be a sleek humanoid composed of purple, translucent and prismatic amethyst crystal. Facial features are obscured as the face appears to have been cut from one or more giant gemstones.",
       "statModifiers": {
         "sdc": {
           "dice": "1D4x10+26"
@@ -415,9 +415,9 @@
         ]
       },
       "customOneOffs": [
-        "Among mages and healers, amethyst is said to have a property to improve powers of intuition[cite: 1066].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1069]."
+        "Among mages and healers, amethyst is said to have a property to improve powers of intuition.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock."
       ]
     },
     {
@@ -434,7 +434,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "Appears as a thick, bulky humanoid that seems to be made of living rock formed from hundreds of porous, metallic balls fused together, giving the surface a lumpy, bumpy texture; brownish-gray to gray in color[cite: 1070].",
+      "description": "Appears as a thick, bulky humanoid that seems to be made of living rock formed from hundreds of porous, metallic balls fused together, giving the surface a lumpy, bumpy texture; brownish-gray to gray in color.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -508,12 +508,12 @@
         ]
       },
       "customOneOffs": [
-        "A Nightbane made of arsenic is impervious to poison, +3 to save vs toxins and drugs, and resistant to fire and heat (does half damage)[cite: 1075].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1077].",
-        "When heated, the character exudes the smell of garlic which is repugnant to vampires, Wampyrs, were-beasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane[cite: 1076].",
-        "Clawing, biting and any attack by the Nightbane that cuts or stabs an opponent with the character's mineral body does the usual damage plus 2D6 damage from poison[cite: 1072].",
-        "The 'Bane can scrape grains of arsenic off his body to use as ingested poison, typically mixed into food or drink[cite: 1073]."
+        "A Nightbane made of arsenic is impervious to poison, +3 to save vs toxins and drugs, and resistant to fire and heat (does half damage).",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
+        "When heated, the character exudes the smell of garlic which is repugnant to vampires, Wampyrs, were-beasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane.",
+        "Clawing, biting and any attack by the Nightbane that cuts or stabs an opponent with the character's mineral body does the usual damage plus 2D6 damage from poison.",
+        "The 'Bane can scrape grains of arsenic off his body to use as ingested poison, typically mixed into food or drink."
       ]
     },
     {
@@ -530,7 +530,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "The character appears to be a sleek humanoid composed of rich green, translucent emerald or tourmaline crystal[cite: 1078]. Facial features are obscured as the face appears to have been cut from one giant gemstone or made up of several[cite: 1079].",
+      "description": "The character appears to be a sleek humanoid composed of rich green, translucent emerald or tourmaline crystal. Facial features are obscured as the face appears to have been cut from one giant gemstone or made up of several.",
       "statModifiers": {
         "pe": {
           "dice": "1D4"
@@ -587,9 +587,9 @@
         }
       ],
       "customOneOffs": [
-        "When the healing touch is used, the emerald hand glows as if there were a light inside the palm and radiates through the forearm[cite: 1083].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1084].",
+        "When the healing touch is used, the emerald hand glows as if there were a light inside the palm and radiates through the forearm.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
         "Can heal others, restoring 4D6+6 S.D.C. or Hit Points twice per 24 hours, or completely negate poison (restoring all lost H.P./S.D.C. from poison)[cite: 1081, 1082]."
       ]
     },
@@ -607,7 +607,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "Appears to be a man made of solid metallic gold[cite: 1085]. The body is sleek, smooth, lustrous gold[cite: 1086]. Facial features are smoothed out and unidentifiable[cite: 1087].",
+      "description": "Appears to be a man made of solid metallic gold. The body is sleek, smooth, lustrous gold. Facial features are smoothed out and unidentifiable.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -666,12 +666,12 @@
         ]
       },
       "customOneOffs": [
-        "Bullets and projectiles become imbedded in the soft gold mineral, but can be easily plucked out without any additional damage[cite: 1088].",
-        "A few minutes after being removed, the indentation smooths over to leave no mark/scar of any kind[cite: 1088].",
-        "Fire and heat do full damage[cite: 1089].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a lead weight[cite: 1089].",
-        "+6 to punch and kick damage (in addition to P.S. bonus)[cite: 1088]."
+        "Bullets and projectiles become imbedded in the soft gold mineral, but can be easily plucked out without any additional damage.",
+        "A few minutes after being removed, the indentation smooths over to leave no mark/scar of any kind.",
+        "Fire and heat do full damage.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a lead weight.",
+        "+6 to punch and kick damage (in addition to P.S. bonus)."
       ]
     },
     {
@@ -688,7 +688,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "Appears to be a man made of a rich lemon yellow, prismatic crystal that resembles amber with many fine fracture lines running through it[cite: 1090]. The body is sleek, chiseled, smooth, lustrous, facial features are smoothed out and unidentifiable/nondescript[cite: 1091].",
+      "description": "Appears to be a man made of a rich lemon yellow, prismatic crystal that resembles amber with many fine fracture lines running through it. The body is sleek, chiseled, smooth, lustrous, facial features are smoothed out and unidentifiable/nondescript.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10+6"
@@ -746,10 +746,10 @@
       },
       "customOneOffs": [
         "A sulfide mineral, the Orpiment Morphus is impervious to the effects of stench and other powerful odors, and airborne toxins[cite: 1092, 1093].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1094].",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
         "Impervious to stench.",
-        "When heated, smells of garlic, which is repugnant to vampires, wampyres, werebeasts and select other supernatural beings, holding them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane[cite: 1092]."
+        "When heated, smells of garlic, which is repugnant to vampires, wampyres, werebeasts and select other supernatural beings, holding them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane."
       ]
     },
     {
@@ -766,7 +766,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "Appears to me made of smooth gray, black or brownish-red iron[cite: 1095]. Facial features are smoothed out and unidentifiable/nondescript[cite: 1097].",
+      "description": "Appears to me made of smooth gray, black or brownish-red iron. Facial features are smoothed out and unidentifiable/nondescript.",
       "statModifiers": {
         "sdc": {
           "dice": "3D6x10+66"
@@ -836,11 +836,11 @@
         ]
       },
       "customOneOffs": [
-        "Bullets and projectiles bounce off the iron body[cite: 1099].",
-        "The character can parry weapons and fiery torches with his bare hands[cite: 1100].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1101].",
-        "+4 to punch and kick damage (in addition to P.S. bonus)[cite: 1098]."
+        "Bullets and projectiles bounce off the iron body.",
+        "The character can parry weapons and fiery torches with his bare hands.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
+        "+4 to punch and kick damage (in addition to P.S. bonus)."
       ]
     },
     {
@@ -857,7 +857,7 @@
           "pageNumber": 94
         }
       ],
-      "description": "Appears to be a man made of either smooth, dark gray metal/iron or a grainy black rock with flecks of bronze crystals and/or streaks[cite: 1102]. Facial features are smoothed out and unidentifiable[cite: 1104].",
+      "description": "Appears to be a man made of either smooth, dark gray metal/iron or a grainy black rock with flecks of bronze crystals and/or streaks. Facial features are smoothed out and unidentifiable.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6x10+40"
@@ -930,16 +930,16 @@
         ]
       },
       "customOneOffs": [
-        "Bullets and projectiles bounce off the iron body[cite: 1107].",
-        "The character can parry weapons and fiery torches with his bare hands[cite: 1108].",
-        "Any iron or steel weapon or object that touches his body is held fast to it and requires a P.S. of 24 or greater to pull it free[cite: 1109].",
-        "The Nightbane can momentarily cancel the magnetic field to release any metal object attached to him, and can make any metal object within 6 feet (1.8 m) come to him, and one can be made to fly right into his hand (maximum weight 20 lbs/9 kg per object, and it must have sufficient iron/steel content)[cite: 1110].",
-        "The character can affix himself to iron/steel, enabling him to stand, walk and hold onto vehicles, boxcars, and even rockets or the hull of ships[cite: 1111].",
-        "This enables him to scale such structures or affix himself to them with such force that a combined P.S. of 50 is necessary to pry him loose[cite: 1112].",
-        "Always knows where north is located[cite: 1113].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1114].",
-        "+3 to punch and kick damage (in addition to P.S. bonus)[cite: 1106]."
+        "Bullets and projectiles bounce off the iron body.",
+        "The character can parry weapons and fiery torches with his bare hands.",
+        "Any iron or steel weapon or object that touches his body is held fast to it and requires a P.S. of 24 or greater to pull it free.",
+        "The Nightbane can momentarily cancel the magnetic field to release any metal object attached to him, and can make any metal object within 6 feet (1.8 m) come to him, and one can be made to fly right into his hand (maximum weight 20 lbs/9 kg per object, and it must have sufficient iron/steel content).",
+        "The character can affix himself to iron/steel, enabling him to stand, walk and hold onto vehicles, boxcars, and even rockets or the hull of ships.",
+        "This enables him to scale such structures or affix himself to them with such force that a combined P.S. of 50 is necessary to pry him loose.",
+        "Always knows where north is located.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
+        "+3 to punch and kick damage (in addition to P.S. bonus)."
       ]
     },
     {
@@ -956,7 +956,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Appears to be made of a sleek, lustrous, metallic silver[cite: 1115]. Facial features are smoothed out and unidentifiable[cite: 1115].",
+      "description": "Appears to be made of a sleek, lustrous, metallic silver. Facial features are smoothed out and unidentifiable.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6x10+6"
@@ -1015,13 +1015,13 @@
         ]
       },
       "customOneOffs": [
-        "Bullets and projectiles bounce off his body, and the character can parry weapons with his bare hands[cite: 1116].",
-        "Fire and heat do full damage[cite: 1117].",
-        "Such beings (vampires/werebeasts) view him with apprehension and fear, giving the silver character +2 on initiative and +1 to strike, parry and disarm when battling such creatures[cite: 1118].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1119].",
-        "+3 to punch and kick damage (in addition to P.S. bonus)[cite: 1116].",
-        "Punches, kicks and other attacks from a Nightbane made of silver inflict double damage to vampires, werebeasts and other beings vulnerable to silver[cite: 1117]."
+        "Bullets and projectiles bounce off his body, and the character can parry weapons with his bare hands.",
+        "Fire and heat do full damage.",
+        "Such beings (vampires/werebeasts) view him with apprehension and fear, giving the silver character +2 on initiative and +1 to strike, parry and disarm when battling such creatures.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
+        "+3 to punch and kick damage (in addition to P.S. bonus).",
+        "Punches, kicks and other attacks from a Nightbane made of silver inflict double damage to vampires, werebeasts and other beings vulnerable to silver."
       ]
     },
     {
@@ -1038,7 +1038,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "The character's body appears to be covered in clear, translucent crystal rods sticking out of his flesh, face and skull, or he may appear to be made entirely of cut, clear crystal[cite: 1120]. He may also have a crown, horns or mane of crystals on his head instead of hair, and the face is covered and distorted by crystals as to conceal his human identity[cite: 1121].",
+      "description": "The character's body appears to be covered in clear, translucent crystal rods sticking out of his flesh, face and skull, or he may appear to be made entirely of cut, clear crystal. He may also have a crown, horns or mane of crystals on his head instead of hair, and the face is covered and distorted by crystals as to conceal his human identity.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10+30"
@@ -1113,15 +1113,15 @@
         ]
       },
       "customOneOffs": [
-        "Resistant to fire and heat, and the character can parry weapons with his bare hands[cite: 1122].",
-        "+2 to Horror Factor if rods stick out of flesh, +1 if made entirely of cut crystal[cite: 1120].",
-        "Blunt and projectile attacks do full damage[cite: 1124].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1127].",
-        "+3 to damage[cite: 1123].",
-        "The Clear Crystal Morphus can see and attack Astral Beings, the clear crystals of his body able to inflict damage to Astral Being with punches, kicks, and any crystalline weapon[cite: 1124].",
+        "Resistant to fire and heat, and the character can parry weapons with his bare hands.",
+        "+2 to Horror Factor if rods stick out of flesh, +1 if made entirely of cut crystal.",
+        "Blunt and projectile attacks do full damage.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
+        "+3 to damage.",
+        "The Clear Crystal Morphus can see and attack Astral Beings, the clear crystals of his body able to inflict damage to Astral Being with punches, kicks, and any crystalline weapon.",
         "Can form one crystalline weapon from his hand, typically a rod or sword-like weapon that does 2D6 damage[cite: 1125, 1126].",
-        "Does +1D6 to Astral Beings[cite: 1126]."
+        "Does +1D6 to Astral Beings."
       ]
     },
     {
@@ -1138,7 +1138,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Appears as a normal sized humanoid that seems to be made of living rock formed from hundreds of granular habits/balls fused into stone, giving the surface a lumpy, bumpy texture; a dark, charred grey or black color with a few small specks of yellow that look like chip marks[cite: 1128, 1129]. Highly radioactive[cite: 1129].",
+      "description": "Appears as a normal sized humanoid that seems to be made of living rock formed from hundreds of granular habits/balls fused into stone, giving the surface a lumpy, bumpy texture; a dark, charred grey or black color with a few small specks of yellow that look like chip marks[cite: 1128, 1129]. Highly radioactive.",
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10"
@@ -1209,13 +1209,13 @@
         ]
       },
       "customOneOffs": [
-        "Resistant to fire and heat (half damage) and can parry weapons and fiery torches with bare hands[cite: 1130].",
-        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control[cite: 1063].",
-        "Cannot swim; sinks like a rock[cite: 1134].",
+        "Resistant to fire and heat (half damage) and can parry weapons and fiery torches with bare hands.",
+        "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
+        "Cannot swim; sinks like a rock.",
         "Impervious to radiation.",
-        "+4 to punch and kick damage (in addition to P.S. bonus)[cite: 1131].",
-        "No flame but radiates heat from the hands to inflict 2D6 damage per attack[cite: 1131].",
-        "Can fire heat blast up to 20 feet (6.1 m) inflicting 2D6 damage[cite: 1132]."
+        "+4 to punch and kick damage (in addition to P.S. bonus).",
+        "No flame but radiates heat from the hands to inflict 2D6 damage per attack.",
+        "Can fire heat blast up to 20 feet (6.1 m) inflicting 2D6 damage."
       ]
     }
   ]

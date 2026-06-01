@@ -830,6 +830,11 @@
             "targetType": "skill_id",
             "targetValue": "prowl",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "impossibleInMorphus": true
           }
         ]
       },

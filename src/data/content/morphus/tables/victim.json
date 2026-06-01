@@ -19,7 +19,7 @@
           "pageNumber": 100
         }
       ],
-      "description": "The Morphus is that of someone covered in scars and bruises, the fingers are gnarled from having been broken many times, and limbs are crooked and lumpy from where broken bones have knitted back together improperly. Any clothing is likely to be torn or tattered. Bonuses: +3D6+6 Hit Points, +2 to P.E. and +1 to dodge. Highly resistant to pain and interrogation (interrogators suffer a -35% skill penalty against this character), suffers half the normal penalties for physical pain, any spell or power that causes pain has absolutely no effect, and the ‘Bane heals at double the normal rate. Penalties: Reduces Spd by 1D4x10%, -2 from P.B., -1 from P.E., and -5% to Prowl, Disguise and Undercover Ops.",
+      "description": "The Morphus is that of someone covered in scars and bruises, the fingers are gnarled from having been broken many times, and limbs are crooked and lumpy from where broken bones have knitted back together improperly. Any clothing is likely to be torn or tattered. Bonuses: +3D6+6 Hit Points, +2 to P.E. and +1 to dodge. Highly resistant to pain and interrogation (interrogators suffer a -35% skill penalty against this character), suffers half the normal penalties for physical pain, any spell or power that causes pain has absolutely no effect, and the ‘Bane heals at double the normal rate. Penalties: Reduces Spd by 1D4x10%, -2 from P.B., -1 from P.E., and, Disguise and Undercover Ops.",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -141,7 +141,7 @@
           "pageNumber": 100
         }
       ],
-      "description": "The Morphus is someone who appears to be an animated corpse of a murder victim. He is splattered or covered in blood, obvious wounds (bullet holes, cuts, crushed skull, etc.), and when applicable, the murder weapon is apparent (a hammer or hatchet stuck in the skull, noose around the neck, a knife in the belly or neck, etc.). Bonuses: +5D6+5 S.D.C., +1 to Perception Rolls, resistant to the magic of the Nightlords (half damage, duration and effect), +1 to Horror Factor, and +10% to all skills involving surveillance, tailing and investigation. Penalties: Obsessed with solving and stopping murders, injury cannot be easily concealed and the murder weapon, if present, cannot be removed, -40% to Disguise and Undercover Ops.",
+      "description": "The Morphus is someone who appears to be an animated corpse of a murder victim. He is splattered or covered in blood, obvious wounds (bullet holes, cuts, crushed skull, etc.), and when applicable, the murder weapon is apparent (a hammer or hatchet stuck in the skull, noose around the neck, a knife in the belly or neck, etc.). Bonuses: +5D6+5 S.D.C., +1 to Perception Rolls, resistant to the magic of the Nightlords (half damage, duration and effect), +1 to Horror Factor, and +10% to all skills involving surveillance, tailing and investigation. Penalties: Obsessed with solving and stopping murders, injury cannot be easily concealed and the murder weapon, if present, cannot be removed, and Undercover Ops.",
       "statModifiers": {
         "perception": {
           "flat": 1
@@ -187,7 +187,7 @@
           "pageNumber": 100
         }
       ],
-      "description": "This Morphus is of someone with long dirty hair, a few noticeable scars, and a dirt smudged face. Manacles are clamped around the wrists and ankles, and a 1D4 foot (0.3 to 1.2 m) length of heavy iron chains hangs from the manacles. The manacles cannot be removed, and the Nightbane doesn’t even try. Instead, he uses the chain lengths around his wrists as weapons (a chain whip attack does 2D6 damage plus Supernatural P.S. punch damage). Bonuses: +6D6 S.D.C., +2 to P.S., +1 to strike, parry and entangle with the chains, +5% to Climbing, and is impervious to the magic of Night Princes and Nightlords. Penalties: -30% to Prowl and Swimming, -15% to all skills involving appearance, including Disguise and Seduction, and the character has a phobia (terror) of being chained up again, or locked in a confined space or jail cell.",
+      "description": "This Morphus is of someone with long dirty hair, a few noticeable scars, and a dirt smudged face. Manacles are clamped around the wrists and ankles, and a 1D4 foot (0.3 to 1.2 m) length of heavy iron chains hangs from the manacles. The manacles cannot be removed, and the Nightbane doesn’t even try. Instead, he uses the chain lengths around his wrists as weapons (a chain whip attack does 2D6 damage plus Supernatural P.S. punch damage). Bonuses: +6D6 S.D.C., +2 to P.S., +1 to strike, parry and entangle with the chains, and is impervious to the magic of Night Princes and Nightlords. Penalties: and Swimming, -15% to all skills involving appearance, including Disguise and Seduction, and the character has a phobia (terror) of being chained up again, or locked in a confined space or jail cell.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -348,7 +348,7 @@
           "pageNumber": 100
         }
       ],
-      "description": "The Morphus is an emaciated human, all skin and bones, frail and starving. Most opponents will underestimate the ‘Bane in combat, discounting him as a real threat. Bonuses: +1 on initiative, +1 attack per melee round, impervious to spoiled and rotten food, +1 to save vs poison and drugs, and +2 to Horror Factor. Penalties: Reduce weight by 50%, S.D.C. by 20%, -2 from P.E., -1D6 from P.S. and Spd, and -25% to Disguise and Undercover Ops.",
+      "description": "The Morphus is an emaciated human, all skin and bones, frail and starving. Most opponents will underestimate the ‘Bane in combat, discounting him as a real threat. Bonuses: +1 on initiative, +1 attack per melee round, impervious to spoiled and rotten food, +1 to save vs poison and drugs, and +2 to Horror Factor. Penalties: Reduce weight by 50%, S.D.C. by 20%, -2 from P.E., -1D6 from P.S. and Spd, and and Undercover Ops.",
       "statModifiers": {
         "hf": {
           "flat": 2

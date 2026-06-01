@@ -45,7 +45,7 @@
           "pageNumber": 98
         }
       ],
-      "description": "The Nightbane has an extra pair of arms, but they are attached in an unusual place such as on his chest, back, legs or similar odd place. Bonuses: +1 to parry and entangle, and +2 to Horror Factor. Penalties: -1 to P.B., impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "description": "The Nightbane has an extra pair of arms, but they are attached in an unusual place such as on his chest, back, legs or similar odd place. Bonuses: +1 to parry and entangle, and +2 to Horror Factor. Penalties: -1 to P.B., and requires custom-made clothing.",
       "statModifiers": {
         "parry": {
           "flat": 1
@@ -161,7 +161,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus causes the Nightbane’s arms to split at the elbow into two separate forearms. This does not grant an additional attack due to their unusual configuration, but it does allow the character to simultaneously strike a single opponent with a two-handed weapon, use two light one-handed weapons or perform tasks that require two hands with one. For example, the Nightbane could fire two revolvers, strike with two short swords, or use a computer keyboard with one arm. Bonuses: +2D6 S.D.C., automatically gets the W.P. Paired Weapons skill, +1 on initiative, +2 to entangle, and +10% to Climbing. Penalties: -1 to P.B., impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "description": "The Morphus causes the Nightbane’s arms to split at the elbow into two separate forearms. This does not grant an additional attack due to their unusual configuration, but it does allow the character to simultaneously strike a single opponent with a two-handed weapon, use two light one-handed weapons or perform tasks that require two hands with one. For example, the Nightbane could fire two revolvers, strike with two short swords, or use a computer keyboard with one arm. Bonuses: +2D6 S.D.C., automatically gets the W.P. Paired Weapons skill, +1 on initiative, +2 to entangle. Penalties: -1 to P.B., and requires custom-made clothing.",
       "statModifiers": {
         "entangle": {
           "flat": 2
@@ -178,6 +178,11 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           },
           {
@@ -221,7 +226,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus has 2D4 eye stalks protruding from the shoulders, neck, head, or back. The stalks are prehensile but only 1D4+6 inches (17 to 25 cm) in length. The stalks can look around 360 degrees at any given moment making surprise attacks difficult. Each stalk has only 2D6+4 S.D.C., but if one is cut off, it will completely grow back within six hours. Each has perfect, color vision. Bonuses: +1 on initiative, +1D4 on Perception Rolls, +1 to parry and dodge, +1 to Horror Factor, and cannot be surprised as long as he can see around him. Penalties: Cannot see in the dark nor possess any other special optics, -2 to P.B., and -40% to Disguise and Undercover Ops, and cannot see (no bonuses apply) if they are covered up.",
+      "description": "The Morphus has 2D4 eye stalks protruding from the shoulders, neck, head, or back. The stalks are prehensile but only 1D4+6 inches (17 to 25 cm) in length. The stalks can look around 360 degrees at any given moment making surprise attacks difficult. Each stalk has only 2D6+4 S.D.C., but if one is cut off, it will completely grow back within six hours. Each has perfect, color vision. Bonuses: +1 on initiative, +1D4 on Perception Rolls, +1 to parry and dodge, +1 to Horror Factor, and cannot be surprised as long as he can see around him. Penalties: Cannot see in the dark nor possess any other special optics, -2 to P.B., and and Undercover Ops, and cannot see (no bonuses apply) if they are covered up.",
       "statModifiers": {
         "parry": {
           "flat": 1
@@ -271,7 +276,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Nightbane’s arms, hands, fingers and legs are able to bend and twist as if they were made out of rubber or like the body of a snake. This enables him to bend in impossible ways. Bonuses: Automatically gets the Escape Artist skill at 80% proficiency (+2% per level of experience), +5% to Pick Locks, Palming and Concealment skills (as applicable), can parry attacks behind his back as long as he can see them coming. Penalties: Walks in a bobbing and swaying fashion, reminiscent of an ape, -10% to Disguise and Undercover Ops.",
+      "description": "The Nightbane’s arms, hands, fingers and legs are able to bend and twist as if they were made out of rubber or like the body of a snake. This enables him to bend in impossible ways. Bonuses: Automatically gets the Escape Artist skill at 80% proficiency (+2% per level of experience), Palming and Concealment skills (as applicable), can parry attacks behind his back as long as he can see them coming. Penalties: Walks in a bobbing and swaying fashion, reminiscent of an ape, and Undercover Ops.",
       "skillModifiers": {
         "specificSkillOverrides": [
           {
@@ -374,6 +379,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_pick_pockets",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_electrical",
+            "modifierPercent": 5
           }
         ]
       }
@@ -392,7 +402,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The mouth is replaced with a pair of mandibles like those of a giant ant or termite. Bite attacks do 3D6 damage (to a living opponent or inanimate objects/doors), and the character can chew through wood, plaster, fabric, rubber and plastic with relative ease. Bonuses: +1 attack per melee, +2 to strike with bite attacks, and +1 to Horror Factor. Penalties: Impossible to Disguise or engage in Undercover Ops, -2 to P.B., has a poor sense of taste, and can NOT damage or chew through metal, stone, concrete or ballistic material.",
+      "description": "The mouth is replaced with a pair of mandibles like those of a giant ant or termite. Bite attacks do 3D6 damage (to a living opponent or inanimate objects/doors), and the character can chew through wood, plaster, fabric, rubber and plastic with relative ease. Bonuses: +1 attack per melee, +2 to strike with bite attacks, and +1 to Horror Factor. Penalties: -2 to P.B., has a poor sense of taste, and can NOT damage or chew through metal, stone, concrete or ballistic material.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -433,7 +443,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus gives the Nightbane thick, long (1D4+2 feet/0.9 to 1.8 m) hair. The character has complete control over his hair and is able to section it off into as many as three clumps or braids, and use them as if they were tentacle-like limbs. Hair-limbs have a P.S. and P.P. of 10 and can be used to pick up and carry items, open doors, flip switches, climb, entangle and even wield a melee weapon to strike or parry though with a penalty of -2. Bonuses: +1 action/attack per melee, +2 to entangle, +10% to Climbing. Penalties: Increase weight by 5%, hair cannot use modern weapons/guns, or a bow and arrow, and -20% to Disguise and Undercover Ops.",
+      "description": "The Morphus gives the Nightbane thick, long (1D4+2 feet/0.9 to 1.8 m) hair. The character has complete control over his hair and is able to section it off into as many as three clumps or braids, and use them as if they were tentacle-like limbs. Hair-limbs have a P.S. and P.P. of 10 and can be used to pick up and carry items, open doors, flip switches, climb, entangle and even wield a melee weapon to strike or parry though with a penalty of -2. Bonuses: +1 action/attack per melee, +2 to entangle,. Penalties: Increase weight by 5%, hair cannot use modern weapons/guns, or a bow and arrow, and and Undercover Ops.",
       "statModifiers": {
         "entangle": {
           "flat": 2
@@ -526,7 +536,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus turns the character’s lower body and legs into a long, prehensile serpent’s body - 2D4+6 feet (2.4 to 4.3 m) long. Bonuses: +1D6x10 S.D.C., +2 to Horror Factor, moves like a snake and can rise up on its tail like a cobra to tower over normal humans - +1 on initiative, +1 to strike, +2 to automatic dodge when this is done, and is +10% to climb trees and similarly shaped constructs. Penalties: -1 to P.B., reduce Spd 20%, reduce Spd by half when crawling across a smooth surface such as a polished floor, glass or ice, impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "description": "The Morphus turns the character’s lower body and legs into a long, prehensile serpent’s body - 2D4+6 feet (2.4 to 4.3 m) long. Bonuses: +1D6x10 S.D.C., +2 to Horror Factor, moves like a snake and can rise up on its tail like a cobra to tower over normal humans - +1 on initiative, +1 to strike, +2 to automatic dodge when this is done, and is +10% to climb trees and similarly shaped constructs. Penalties: -1 to P.B., reduce Spd 20%, reduce Spd by half when crawling across a smooth surface such as a polished floor, glass or ice, and requires custom-made clothing.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -568,7 +578,7 @@
           "pageNumber": 98
         }
       ],
-      "description": "The Morphus turns the Nightbane’s legs and lower torso into eight large, hairy spider legs. Bonuses: +3D6 S.D.C. and +2 to Horror Factor. The legs are about as long as the character’s normal legs and enables him to walk up the sides of walls and upside down on ceilings, as well as walk along rope and wires with ease; automatically gets Acrobatics and Climbing skill at 80% proficiency (+2% per level of experience), but only applicable in Morphus form. Penalties: -1D4 to P.B., reduce Spd 10%, reduce Spd by half when crawling across a smooth surface, cannot climb smooth surfaces such as a polished floor or enamal painted walls, glass/windows, or ice, and impossible to Disguise or engage in Undercover Ops.",
+      "description": "The Morphus turns the Nightbane’s legs and lower torso into eight large, hairy spider legs. Bonuses: +3D6 S.D.C. and +2 to Horror Factor. The legs are about as long as the character’s normal legs and enables him to walk up the sides of walls and upside down on ceilings, as well as walk along rope and wires with ease; automatically gets Acrobatics and Climbing skill at 80% proficiency (+2% per level of experience), but only applicable in Morphus form. Penalties: -1D4 to P.B., reduce Spd 10%, reduce Spd by half when crawling across a smooth surface, cannot climb smooth surfaces such as a polished floor or enamal painted walls, glass/windows, or ice.",
       "statModifiers": {
         "hf": {
           "flat": 2

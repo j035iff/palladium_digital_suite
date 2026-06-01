@@ -45,7 +45,7 @@
           "pageNumber": 99
         }
       ],
-      "description": "The Morphus is an innocent and exquisite beauty (male or female) with warm eyes, and metallic gold hair. Bonuses: +2D6 S.D.C., +1D4 to M.A., +1D4+4 to P.B., and +15% to evoke trust and automatically gets the Seduction skill at 72% proficiency (+1% per level of experience). Penalties: Everyone notices this character which makes him or her -20% to Disguise, Prowl, Undercover Ops, Palm, Concealment and Escape Artist.",
+      "description": "The Morphus is an innocent and exquisite beauty (male or female) with warm eyes, and metallic gold hair. Bonuses: +2D6 S.D.C., +1D4 to M.A., +1D4+4 to P.B., and +15% to evoke trust and automatically gets the Seduction skill at 72% proficiency (+1% per level of experience). Penalties: Everyone notices this character which makes him or her, Prowl, Undercover Ops, Palm, Concealment and Escape Artist.",
       "statModifiers": {
         "pb": {
           "flat": 4,
@@ -351,6 +351,11 @@
             "targetType": "skill_id",
             "targetValue": "undercover_ops",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       }
@@ -599,7 +604,7 @@
           "pageNumber": 99
         }
       ],
-      "description": "This Nightbane’s ears are not those of a normal human, but any of the following: 01-20% large canine-like, 21-40% large and pointed, 41-60% pointed and has 1D6+4 peircings, 61-80% tiny, flat and noticeable only when one looks closely, 81-00% literally elephant ears or something large and alien looking (covered in spikes or spines, unusual shape, etc.). Regardless of their appearance, they provide exceptional hearing, roughly equal to that of a dog. Bonuses: +4 on Perception Rolls involving sound and +1 on initiative. Penalties: -1 from P.B., -20% to Disguise and Undercover Ops, and high-pitched sound hurts the ears (-2 on initiative and no Perception Roll bonus).",
+      "description": "This Nightbane’s ears are not those of a normal human, but any of the following: 01-20% large canine-like, 21-40% large and pointed, 41-60% pointed and has 1D6+4 peircings, 61-80% tiny, flat and noticeable only when one looks closely, 81-00% literally elephant ears or something large and alien looking (covered in spikes or spines, unusual shape, etc.). Regardless of their appearance, they provide exceptional hearing, roughly equal to that of a dog. Bonuses: +4 on Perception Rolls involving sound and +1 on initiative. Penalties: -1 from P.B., and Undercover Ops, and high-pitched sound hurts the ears (-2 on initiative and no Perception Roll bonus).",
       "skillModifiers": {
         "specificSkillOverrides": [
           {

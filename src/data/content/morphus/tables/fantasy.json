@@ -19,7 +19,7 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is the classic wizard, complete with flowing grey or white beard, bushy eyebrows, tall pointed hat and a hooded robe[cite: 10]. The robe is made of a rich fabric and decorated in colorful magic symbols, runes, gemstones, and inscriptions along the edges of the sleeves, hem, collar and hood[cite: 10].",
+      "description": "The Morphus is the classic wizard, complete with flowing grey or white beard, bushy eyebrows, tall pointed hat and a hooded robe. The robe is made of a rich fabric and decorated in colorful magic symbols, runes, gemstones, and inscriptions along the edges of the sleeves, hem, collar and hood.",
       "statModifiers": {
         "spd": {
           "percent": -10
@@ -63,7 +63,7 @@
         ]
       },
       "customOneOffs": [
-        "Adds +1 to Spell Strength if the character is a Mystic or Sorcerer[cite: 10]."
+        "Adds +1 to Spell Strength if the character is a Mystic or Sorcerer."
       ]
     },
     {
@@ -80,7 +80,7 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is wearing a suit of plate armor complete with helmet, however, the armor may have demonic, monstrous or distorted features or proportions, as well as glowing eyes visible from behind the visor or from the eye slits, horns, spikes, and so on[cite: 10].",
+      "description": "The Morphus is wearing a suit of plate armor complete with helmet, however, the armor may have demonic, monstrous or distorted features or proportions, as well as glowing eyes visible from behind the visor or from the eye slits, horns, spikes, and so on.",
       "naturalAr": 14,
       "statModifiers": {
         "sdc": {
@@ -135,8 +135,8 @@
         "customClothingNote": "Cannot be disguised or easily concealed in Morphus (the armor is part of the character)[cite: 10]."
       },
       "customOneOffs": [
-        "Resistant to magic energy blasts including magic fire (half damage)[cite: 10].",
-        "The armor cannot be forcibly removed, there is no movement penalty for the enchanted armor[cite: 10]."
+        "Resistant to magic energy blasts including magic fire (half damage).",
+        "The armor cannot be forcibly removed, there is no movement penalty for the enchanted armor."
       ]
     },
     {
@@ -153,7 +153,7 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is a character whose eyes and body glow with magical energy. The color of the magic energy varies with the individual and can be shades of white, yellow, orange, red, green, blue, purple and even black[cite: 10].",
+      "description": "The Morphus is a character whose eyes and body glow with magical energy. The color of the magic energy varies with the individual and can be shades of white, yellow, orange, red, green, blue, purple and even black.",
       "statModifiers": {
         "ma": {
           "flat": 1
@@ -207,9 +207,9 @@
         ]
       },
       "customOneOffs": [
-        "His own aura cannot be read[cite: 10].",
-        "The glow cannot be disguised (the character glows right through clothing)[cite: 10].",
-        "Beings who can sense magic can sense this character's presence at double their usual range[cite: 10]."
+        "His own aura cannot be read.",
+        "The glow cannot be disguised (the character glows right through clothing).",
+        "Beings who can sense magic can sense this character's presence at double their usual range."
       ]
     },
     {
@@ -226,7 +226,7 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Morphus is a muscular humanoid with dark skin (gray, brown, red, or purple), and a face covered in magic symbols and runes. Every inch of the body, from head to toe, is covered with the symbols. All are raised as if branded onto his skin[cite: 10].",
+      "description": "The Morphus is a muscular humanoid with dark skin (gray, brown, red, or purple), and a face covered in magic symbols and runes. Every inch of the body, from head to toe, is covered with the symbols. All are raised as if branded onto his skin.",
       "statModifiers": {
         "me": {
           "flat": 1
@@ -266,8 +266,8 @@
         ]
       },
       "customOneOffs": [
-        "The symbols faintly glow whenever a Night Prince, Nightlord, or spell caster is within 100 feet (30.5 m) of the character, and they also glow when he is locked in combat[cite: 10].",
-        "Impervious to the bite and controlling powers of the vampire[cite: 10]."
+        "The symbols faintly glow whenever a Night Prince, Nightlord, or spell caster is within 100 feet (30.5 m) of the character, and they also glow when he is locked in combat.",
+        "Impervious to the bite and controlling powers of the vampire."
       ]
     },
     {
@@ -284,7 +284,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus is an attractive human dressed in rich clothing, a flowing cape or cloak, and adorned with a crown, tiara, or gold wreath worn on the head[cite: 10].",
+      "description": "The Morphus is an attractive human dressed in rich clothing, a flowing cape or cloak, and adorned with a crown, tiara, or gold wreath worn on the head.",
       "statModifiers": {
         "ma": {
           "flat": 1
@@ -314,8 +314,8 @@
         ]
       },
       "customOneOffs": [
-        "The character seems out of place in our modern world and cannot remove his crown[cite: 10].",
-        "Looked down upon by other Nightbane as a 'Ken' or 'Barbie'[cite: 10]."
+        "The character seems out of place in our modern world and cannot remove his crown.",
+        "Looked down upon by other Nightbane as a 'Ken' or 'Barbie'."
       ]
     },
     {
@@ -332,7 +332,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus has a hide of rough stone more reminiscent of a Golem than a sculpted statue. Facial features are rough hewn and abstract, and the color of the stone can range from black or gray to browns, reds, yellows and marbled[cite: 10].",
+      "description": "The Morphus has a hide of rough stone more reminiscent of a Golem than a sculpted statue. Facial features are rough hewn and abstract, and the color of the stone can range from black or gray to browns, reds, yellows and marbled.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -407,7 +407,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Nightbane has a pair of colorful or translucent insect-like wings on his back. The wings can be like those of a butterfly, dragonfly, wasps, or some weird, stylized faerie wing unlike anything found in nature[cite: 10].",
+      "description": "The Nightbane has a pair of colorful or translucent insect-like wings on his back. The wings can be like those of a butterfly, dragonfly, wasps, or some weird, stylized faerie wing unlike anything found in nature.",
       "statModifiers": {
         "pp": {
           "flat": 1
@@ -455,8 +455,8 @@
         "customClothingNote": "Cannot sit inside a vehicle without crushing wings[cite: 10]."
       },
       "customOneOffs": [
-        "Can hover in mid-air[cite: 10].",
-        "Flying speed is double the Spd attribute number[cite: 10]."
+        "Can hover in mid-air.",
+        "Flying speed is double the Spd attribute number."
       ]
     },
     {
@@ -473,7 +473,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus is like a fairy tale book elf or leprechaun. The build is human, but slight and delicate, the ears pointed, the face attractive and cute, the clothing like that of a fantasy ranger or jester, complete with a Robin Hood style hat, feather and all[cite: 10].",
+      "description": "The Morphus is like a fairy tale book elf or leprechaun. The build is human, but slight and delicate, the ears pointed, the face attractive and cute, the clothing like that of a fantasy ranger or jester, complete with a Robin Hood style hat, feather and all.",
       "statModifiers": {
         "ma": {
           "flat": 1
@@ -554,9 +554,9 @@
         "customClothingNote": "Custom clothing, children's or even doll clothing are necessary to change the character's appearance[cite: 10]."
       },
       "customOneOffs": [
-        "Weight is 15 pounds (6.75 kg) per foot (0.3 m) of height in Morphus[cite: 10].",
-        "P.S. punch and kick damage (Supernatural or not) does half[cite: 10].",
-        "Can leap three times his height[cite: 10]."
+        "Weight is 15 pounds (6.75 kg) per foot (0.3 m) of height in Morphus.",
+        "P.S. punch and kick damage (Supernatural or not) does half.",
+        "Can leap three times his height."
       ]
     },
     {
@@ -573,7 +573,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "The Morphus is an ogre clad in a loincloth and leather straps, a pair of gauntlets and armed with a large, wicked looking melee weapon that glows of magic[cite: 10].",
+      "description": "The Morphus is an ogre clad in a loincloth and leather straps, a pair of gauntlets and armed with a large, wicked looking melee weapon that glows of magic.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -633,8 +633,8 @@
         "preferredWeapon": true
       },
       "customOneOffs": [
-        "This weapon may be lent to others, dropped, or stolen, but it will disappear when the 'Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time[cite: 10].",
-        "The face and voice is that of a brutish Ogre[cite: 10]."
+        "This weapon may be lent to others, dropped, or stolen, but it will disappear when the 'Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time.",
+        "The face and voice is that of a brutish Ogre."
       ]
     },
     {
@@ -651,7 +651,7 @@
           "pageNumber": 91
         }
       ],
-      "description": "This Morphus is a large humanoid body covered in scales, with the neck and head of a dragon and a pair of large, leathery wings[cite: 10].",
+      "description": "This Morphus is a large humanoid body covered in scales, with the neck and head of a dragon and a pair of large, leathery wings.",
       "naturalAr": 12,
       "statModifiers": {
         "spd": {
@@ -756,11 +756,11 @@
         "customClothingNote": "Wings fold up, but the character still cannot fit inside a car[cite: 10]."
       },
       "customOneOffs": [
-        "Adds +1D4 to an existing A.R. instead of establishing a base of 12[cite: 10].",
-        "Can hover in mid-air[cite: 10].",
-        "Flying speed is triple the Spd attribute number[cite: 10].",
-        "Cannot swim (flounders for 1D6 minutes then sinks like a brick)[cite: 10].",
-        "Each blast of fire breath counts as one melee attack[cite: 10]."
+        "Adds +1D4 to an existing A.R. instead of establishing a base of 12.",
+        "Can hover in mid-air.",
+        "Flying speed is triple the Spd attribute number.",
+        "Cannot swim (flounders for 1D6 minutes then sinks like a brick).",
+        "Each blast of fire breath counts as one melee attack."
       ]
     }
   ]

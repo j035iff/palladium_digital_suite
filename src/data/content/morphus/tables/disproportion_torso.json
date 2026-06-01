@@ -19,7 +19,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character’s overall body is stout with a thick, short waist and muscular, barrel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch, -15% to Disguise and Undercover Ops skills, and wearing tight clothing is impossible, unless custom made, otherwise clothing must be loose or a bit oversized.",
+      "description": "The character’s overall body is stout with a thick, short waist and muscular, barrel-chested upper body like a bear or gorilla; +3D6 S.D.C., +2D6 to P.S., and +1 to P.E. Penalties: Reduce Spd by 5%, -1 to pull punch and wearing tight clothing is impossible, unless custom made, otherwise clothing must be loose or a bit oversized.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -69,7 +69,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and -10% to Disguise and Undercover Ops skills.",
+      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -143,7 +143,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body looks like the proverbial 90 pound weakling or an emaciated concentration camp victim; skin and bones; +10% to Escape Artist and Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
+      "description": "The upper body looks like the proverbial 90 pound weakling or an emaciated concentration camp victim; skin and bones; Prowl skills, +2 to Horror Factor. Penalties: Reduce weight by 50%, -4D6 from S.D.C., and -1 from P.E. and P.B.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -190,7 +190,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and -10% to Disguise and Undercover Ops skills.",
+      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and.",
       "statModifiers": {
         "dodge": {
           "flat": 1

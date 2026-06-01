@@ -50,7 +50,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Hands are two or three times the size of normal. +1 to P.S., +1 to entangle and disarm, +2 to damage, +1D4 to S.D.C. and +1 to Horror Factor. Penalties: -1 to P.P., -1 to pull punch, -5% to delicate skills, and makes wearing tight clothing and long sleeves impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
+      "description": "Hands are two or three times the size of normal. +1 to P.S., +1 to entangle and disarm, +2 to damage, +1D4 to S.D.C. and +1 to Horror Factor. Penalties: -1 to P.P., -1 to pull punch, and makes wearing tight clothing and long sleeves impossible, unless very loose and oversized. Furthermore, the character has trouble fitting his arms through narrow openings and tight spaces.",
       "statModifiers": {
         "ps": {
           "flat": 1
@@ -165,7 +165,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Are small and delicate, like those of a small child; +1 to P.P., +5% to all manual dexterity related skills (Forgery, Palming, Pick Locks, Sewing, etc.) and +10% to Escape Artist skill. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, -5% to Disguise and Undercover Ops skills, and hands always look odd and disturbing.",
+      "description": "Are small and delicate, like those of a small child; +1 to P.P. Penalties: -2 to damage from punches and claw attacks, -2 to entangle and disarm, and hands always look odd and disturbing.",
       "statModifiers": {
         "pp": {
           "flat": 1
@@ -219,7 +219,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Can fit through small, narrow spaces, +5% to Escape Artist skill. Penalties: -5% to Disguise skill and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed.",
+      "description": "Can fit through small, narrow spaces,. Penalties: and makes even tight clothing seem loose, baggy, and frumpy; needs custom clothing and padded shoulders to look normal and well dressed.",
       "appearanceConstraints": {
         "clothingFit": "custom_required"
       },
@@ -252,7 +252,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces, +2% to Escape Artist skill. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even normal hands may look oversized and disproportionate.",
+      "description": "Spindly, pipe-cleaner arms. Can easily fit through small openings and narrow spaces,. Penalties: -1D4 to P.S. and may look weak and vulnerable. Clothing looks baggy in the arms and even normal hands may look oversized and disproportionate.",
       "statModifiers": {
         "ps": {
           "dice": "-1D4"
@@ -285,7 +285,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The character has long upper and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B., -20% to Disguise and Undercover Ops skills and requires custom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
+      "description": "The character has long upper and lower arms reminiscent to a gorilla or ape. The character looks out of proportion, but has an extended reach (20% longer than usual), +1 to parry and entangle. Penalties: -1 to P.B. and requires custom clothing, otherwise shirts, jackets, etc., look too short/small in the arms.",
       "statModifiers": {
         "parry": {
           "flat": 1

@@ -224,7 +224,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Some part of the Morphus looks like it has been crushed beneath a heavy weight or vehicle. The crushed portion of the body is flat or mangled, has broken and shattered bones sticking out through the skin at several spots, and cuts and tears in the skin are constantly dripping blood and 95 Joe Sifferman (Order #46323384) ooze. Bonuses: +6D6 S.D.C., +1D4 to roll with impact, and +1D4 to Horror Factor. Penalties: -1 to P.B., and -40% to Disguise and Undercover Ops. If a leg or foot is crushed, the character walks with a limp and reduce Spd by 20%. If a hand or arm is crushed, reduce all combat bonuses (for that limb) by half; likewise, skill performance for all requiring the use of a hand is reduced by half.",
+      "description": "Some part of the Morphus looks like it has been crushed beneath a heavy weight or vehicle. The crushed portion of the body is flat or mangled, has broken and shattered bones sticking out through the skin at several spots, and cuts and tears in the skin are constantly dripping blood and 95 Joe Sifferman (Order #46323384) ooze. Bonuses: +6D6 S.D.C., +1D4 to roll with impact, and +1D4 to Horror Factor. Penalties: -1 to P.B., and and Undercover Ops. If a leg or foot is crushed, the character walks with a limp and reduce Spd by 20%. If a hand or arm is crushed, reduce all combat bonuses (for that limb) by half; likewise, skill performance for all requiring the use of a hand is reduced by half.",
       "statModifiers": {
         "pb": {
           "flat": -1
@@ -268,7 +268,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "The abdomen appears to have been slashed open, causing some of the intestines to spill out and dangle from the grievous wound. The wound and the intestines constantly drip blood, leaving a highly visible trail wherever the Nightbane goes. Only enough, though uncomfortable and gruesome looking, the ‘Bane does not suffer blood loss or pain. Bonuses: 2D6 S.D.C., +1 to P.E., +1 to Horror Factor, and the ‘Bane can actually use his intestines to entangle or strangle an adversary, using them like a rope, or to climb (+5% skill bonus). Penalties: Reduce Spd by 10%, and -30% to Disguise, Prowl and Undercover Ops.",
+      "description": "The abdomen appears to have been slashed open, causing some of the intestines to spill out and dangle from the grievous wound. The wound and the intestines constantly drip blood, leaving a highly visible trail wherever the Nightbane goes. Only enough, though uncomfortable and gruesome looking, the ‘Bane does not suffer blood loss or pain. Bonuses: 2D6 S.D.C., +1 to P.E., +1 to Horror Factor, and the ‘Bane can actually use his intestines to entangle or strangle an adversary, using them like a rope, or to climb (+5% skill bonus). Penalties: Reduce Spd by 10%, and, Prowl and Undercover Ops.",
       "statModifiers": {
         "pe": {
           "flat": 1
@@ -375,7 +375,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "The worst acne you have ever seen. The Nightbane’s face, neck and most of his body is covered in thousands of large, infected zits that pop and ooze pus or blood whenever bumped, struck or scratched. Otherwise the skin is pockmarked and lumpy. Bonuses: +2D6 to S.D.C. and +1D4 to save vs disease/infection. Penalties: -1 to P.B., -40% to Disguise and Undercover Ops.",
+      "description": "The worst acne you have ever seen. The Nightbane’s face, neck and most of his body is covered in thousands of large, infected zits that pop and ooze pus or blood whenever bumped, struck or scratched. Otherwise the skin is pockmarked and lumpy. Bonuses: +2D6 to S.D.C. and +1D4 to save vs disease/infection. Penalties: -1 to P.B., and Undercover Ops.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -571,7 +571,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Roll once on the Animal Form Table, or choose a common type of animal for this Stigmata. Dogs, cats, rats/rodents, birds, toads and snakes are all common. The head and/or head and front half of the body appears to grow out from the neck, shoulder or chest of the Nightbane. The animal is often (01-66%) without fur, adding to the grisly appearance and acts and reacts like a living independent animal. It growls, barks, hisses, squawks, and snaps at adversaries as if it were a loyal pet or attack animal. Get too close and you’ll get hurt. Bonuses: +4D6 S.D.C., +1 attack per melee, +1 on initiative and +1D4 to Horror Factor. The animal’s bite/attack does 2D6+2 damage. The animal is +3 to strike, dodge and pull punch/bite (these do not apply to the character’s combat bonuses). Penalties: -2 from P.B., -25% to Prowl and Swim, Disguise and Undercover Ops are impossible, custom-made clothing may be required.",
+      "description": "Roll once on the Animal Form Table, or choose a common type of animal for this Stigmata. Dogs, cats, rats/rodents, birds, toads and snakes are all common. The head and/or head and front half of the body appears to grow out from the neck, shoulder or chest of the Nightbane. The animal is often (01-66%) without fur, adding to the grisly appearance and acts and reacts like a living independent animal. It growls, barks, hisses, squawks, and snaps at adversaries as if it were a loyal pet or attack animal. Get too close and you’ll get hurt. Bonuses: +4D6 S.D.C., +1 attack per melee, +1 on initiative and +1D4 to Horror Factor. The animal’s bite/attack does 2D6+2 damage. The animal is +3 to strike, dodge and pull punch/bite (these do not apply to the character’s combat bonuses). Penalties: -2 from P.B., and Swim, Disguise and Undercover Ops are impossible, custom-made clothing may be required.",
       "statModifiers": {
         "strike": {
           "flat": 3
@@ -627,7 +627,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Every blood vessel that would normally be an inch under the character’s skin is seen just under the surface of his pale skin. Countless lines of blue and purple veins cover the body from head to toe, pulsing with every heartbeat. Bonuses: +3D6 S.D.C. and +1 to Horror Factor. Penalties: -2 from P.B., -20% to Disguise and Undercover Ops.",
+      "description": "Every blood vessel that would normally be an inch under the character’s skin is seen just under the surface of his pale skin. Countless lines of blue and purple veins cover the body from head to toe, pulsing with every heartbeat. Bonuses: +3D6 S.D.C. and +1 to Horror Factor. Penalties: -2 from P.B., and Undercover Ops.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -665,7 +665,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "This Nightbane appears to have no skin, revealing bare, raw muscle. Cold and wet to the touch, and sweats a mixture of blood and ooze; makes a disgusting squishing sound when pushed/slapped/struck. Bonuses: +3D6 S.D.C., +1D4 to P.S. and +1D4 to Horror Factor. Penalties: -1D4 to P.B., Disguise and Undercover Ops are impossible (makeup won’t stick and causes irritation), the moist blood and ooze slowly stains any clothing until they are saturated, and -10% to Climbing and Prowl.",
+      "description": "This Nightbane appears to have no skin, revealing bare, raw muscle. Cold and wet to the touch, and sweats a mixture of blood and ooze; makes a disgusting squishing sound when pushed/slapped/struck. Bonuses: +3D6 S.D.C., +1D4 to P.S. and +1D4 to Horror Factor. Penalties: -1D4 to P.B., Disguise and Undercover Ops are impossible (makeup won’t stick and causes irritation), the moist blood and ooze slowly stains any clothing until they are saturated, and and Prowl.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -874,7 +874,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "A third eye is located in the center of the forehead, it weeps silent tears whenever it witnesses acts, or the results, of torture, disfigurement and cruelty. Bonuses: Nightvision +1000 feet (305 m), +2 to Perception Rolls, +10% to Tracking and Tailing skills, and the ‘Bane can see the invisible (as per the psionic power) at will. Penalties: -1 from P.B. and -30% to Disguise and Undercover Ops.",
+      "description": "A third eye is located in the center of the forehead, it weeps silent tears whenever it witnesses acts, or the results, of torture, disfigurement and cruelty. Bonuses: Nightvision +1000 feet (305 m), +2 to Perception Rolls, and Tailing skills, and the ‘Bane can see the invisible (as per the psionic power) at will. Penalties: -1 from P.B. and and Undercover Ops.",
       "statModifiers": {
         "perception": {
           "flat": 2

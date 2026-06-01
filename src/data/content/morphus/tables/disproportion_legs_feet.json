@@ -19,7 +19,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Large, thick, muscular upper legs reminiscent of a frog's legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), +5% to Climbing skill, and +1 to Horror Factor. Penalties: -5% to Prowl and may need custom clothing.",
+      "description": "Large, thick, muscular upper legs reminiscent of a frog's legs; +2 to P.S., +1D6+6 to Spd, can jump twice the usual distance and height for that character (12 feet/3.6 m minimum), and +1 to Horror Factor. Penalties: and may need custom clothing.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -141,7 +141,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+5% to Swimming skill and swimming speed, +2 kick and stomp damage, +10% to balance, and +1 to Horror Factor. Penalties: Reduce Speed by 10%, -5% to Prowl, and may need custom shoes.",
+      "description": "and swimming speed, +2 kick and stomp damage, +10% to balance, and +1 to Horror Factor. Penalties: Reduce Speed by 10%, and may need custom shoes.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -191,7 +191,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance and -10% to Climbing skill.",
+      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance and.",
       "statModifiers": {
         "initiative": {
           "flat": 1

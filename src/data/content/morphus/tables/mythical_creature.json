@@ -19,7 +19,7 @@
           "pageNumber": 37
         }
       ],
-      "description": "The Sasquatch-type Morphus is a tall humanoid with thick, shaggy fur covering most of the body[cite: 5]. The facial features are reminiscent to primates such as chimpanzees, as are the long, powerful limbs[cite: 5]. The legs and feet, however, are better suited for walking and running than climbing through trees, and shaped more like a modern human's[cite: 5].",
+      "description": "The Sasquatch-type Morphus is a tall humanoid with thick, shaggy fur covering most of the body. The facial features are reminiscent to primates such as chimpanzees, as are the long, powerful limbs. The legs and feet, however, are better suited for walking and running than climbing through trees, and shaped more like a modern human's.",
       "statModifiers": {
         "iq": {
           "flat": -1
@@ -83,6 +83,16 @@
             "targetType": "skill_id",
             "targetValue": "undercover_ops",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": 20
           }
         ]
       },
@@ -90,11 +100,11 @@
         "clothingFit": "custom_required"
       },
       "customOneOffs": [
-        "Bigfoot Nightbane are 7-8 feet (2.1 to 2.4 m) tall and weigh 300-350 pounds (136.5 to 157.5 kg)[cite: 5].",
-        "+2 on Perception Rolls especially regarding ambushes, hiding and tracking in the wilderness[cite: 5].",
-        "+20% to the Prowl, Camouflage and Climbing skills in wooded environments, and +10% to all Wilderness skills[cite: 5].",
-        "Automatically starts with the Leave No Trace Talent[cite: 5].",
-        "They also tend to eschew high-tech 'gadgets' like cell phones and computers[cite: 5]."
+        "Bigfoot Nightbane are 7-8 feet (2.1 to 2.4 m) tall and weigh 300-350 pounds (136.5 to 157.5 kg).",
+        "+2 on Perception Rolls especially regarding ambushes, hiding and tracking in the wilderness.",
+        ", Camouflage and Climbing skills in wooded environments, and +10% to all Wilderness skills.",
+        "Automatically starts with the Leave No Trace Talent.",
+        "They also tend to eschew high-tech 'gadgets' like cell phones and computers."
       ]
     },
     {
@@ -111,7 +121,7 @@
           "pageNumber": 37
         }
       ],
-      "description": "This Nightbane's Morphus is visible and solid, though it is surrounded by a veil of swirling mist, smoke or heat vapors that partially obscure the body from the chest down, so at a quick glance, the character appears to be fading in and out or looks insubstantial[cite: 5].",
+      "description": "This Nightbane's Morphus is visible and solid, though it is surrounded by a veil of swirling mist, smoke or heat vapors that partially obscure the body from the chest down, so at a quick glance, the character appears to be fading in and out or looks insubstantial.",
       "naturalAr": 10,
       "statModifiers": {
         "ma": {
@@ -166,8 +176,8 @@
         ]
       },
       "customOneOffs": [
-        "The eyes glow like hot coals and brighten or dim with the character's mood[cite: 5].",
-        "Note on Prowl: The text provides +10% to Prowl in the bonuses section, but also lists a -10% to Prowl in the penalties section[cite: 5]."
+        "The eyes glow like hot coals and brighten or dim with the character's mood.",
+        "Note on Prowl: The text provides in the bonuses section, but also lists a -10% to Prowl in the penalties section."
       ]
     },
     {
@@ -184,7 +194,7 @@
           "pageNumber": 37
         }
       ],
-      "description": "A miniaturized version of fabled dragons, 9-12 feet (2.7-3.7 m) in length from snout to tip of the tail. Wingspan usually matches or exceeds body length by an extra 1D4+2 feet (0.9 to 1.8 m)[cite: 5].",
+      "description": "A miniaturized version of fabled dragons, 9-12 feet (2.7-3.7 m) in length from snout to tip of the tail. Wingspan usually matches or exceeds body length by an extra 1D4+2 feet (0.9 to 1.8 m).",
       "naturalAr": 14,
       "statModifiers": {
         "ps": {
@@ -285,11 +295,11 @@
         }
       ],
       "customOneOffs": [
-        "Adds +1 to Spell Strength if a magic user[cite: 5].",
-        "The character does not get a breath weapon, but can select the Fire Breather Talent at half the normal cost and double the normal damage to Nightlords and the denizens of the Nightlands[cite: 5].",
-        "The -2 penalty to dodge applies only when not airborne[cite: 5].",
-        "Too large to fit in ordinary vehicles and may have trouble negotiating hallways and staircases inside buildings[cite: 5].",
-        "All magic and enchanted weapons, including Dark Blades, ignore the character's Natural A.R. and inflict full damage. Dragon slaying weapons do double damage[cite: 5]."
+        "Adds +1 to Spell Strength if a magic user.",
+        "The character does not get a breath weapon, but can select the Fire Breather Talent at half the normal cost and double the normal damage to Nightlords and the denizens of the Nightlands.",
+        "The -2 penalty to dodge applies only when not airborne.",
+        "Too large to fit in ordinary vehicles and may have trouble negotiating hallways and staircases inside buildings.",
+        "All magic and enchanted weapons, including Dark Blades, ignore the character's Natural A.R. and inflict full damage. Dragon slaying weapons do double damage."
       ]
     },
     {
@@ -306,7 +316,7 @@
           "pageNumber": 38
         }
       ],
-      "description": "The Nightbane's skin is covered in fine scales, the tongue forked like a snake's, and the hair replaced by a coil of 2D6+10 writhing snakes, each three feet (0.9 m) long[cite: 5].",
+      "description": "The Nightbane's skin is covered in fine scales, the tongue forked like a snake's, and the hair replaced by a coil of 2D6+10 writhing snakes, each three feet (0.9 m) long.",
       "naturalAr": 10,
       "statModifiers": {
         "iq": {
@@ -394,10 +404,10 @@
         }
       ],
       "customOneOffs": [
-        "Automatically starts with the Gorgon's Touch Elite Talent or one extra Talent[cite: 5].",
-        "Attacks from behind are detected by the snakes and conveyed to the Nightbane, so surprise attacks are nearly impossible when the crown of serpents is not covered by a hood[cite: 5].",
-        "Snake Attack: 1D4+1 snakes strike at the same target at a time, each doing 1D4 damage per bite. This provides an extra five attacks per melee round, but only against those who come within striking distance (3 feet/0.9 m)[cite: 5].",
-        "Averages 17 snakes (2D6+10). Each has its own S.D.C. pool and will grow back in a single day if destroyed[cite: 5]."
+        "Automatically starts with the Gorgon's Touch Elite Talent or one extra Talent.",
+        "Attacks from behind are detected by the snakes and conveyed to the Nightbane, so surprise attacks are nearly impossible when the crown of serpents is not covered by a hood.",
+        "Snake Attack: 1D4+1 snakes strike at the same target at a time, each doing 1D4 damage per bite. This provides an extra five attacks per melee round, but only against those who come within striking distance (3 feet/0.9 m).",
+        "Averages 17 snakes (2D6+10). Each has its own S.D.C. pool and will grow back in a single day if destroyed."
       ]
     },
     {
@@ -414,7 +424,7 @@
           "pageNumber": 39
         }
       ],
-      "description": "This Morphus gives the Nightbane the head of a hawk or eagle, hands that more resemble talons, the mane, fur and tail of an African lion, and the wings of an eagle[cite: 5].",
+      "description": "This Morphus gives the Nightbane the head of a hawk or eagle, hands that more resemble talons, the mane, fur and tail of an African lion, and the wings of an eagle.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -547,9 +557,9 @@
         }
       ],
       "customOneOffs": [
-        "Can turn his head 180 degrees[cite: 5].",
-        "Diving/swooping attacks inflict double damage but count as two attacks[cite: 5].",
-        "In Morphus form the taloned hands/forelegs make it very difficult to use tools or weapons[cite: 5]."
+        "Can turn his head 180 degrees.",
+        "Diving/swooping attacks inflict double damage but count as two attacks.",
+        "In Morphus form the taloned hands/forelegs make it very difficult to use tools or weapons."
       ]
     },
     {
@@ -566,7 +576,7 @@
           "pageNumber": 39
         }
       ],
-      "description": "The mythological Sphinx has the body of a lion with a humanoid head and pair of feathered wings[cite: 5]. Height (or length if animal form) is nine feet (2.7 m), with a majestic wingspan of 16-20 feet (4.9 to 6.1 m)[cite: 5].",
+      "description": "The mythological Sphinx has the body of a lion with a humanoid head and pair of feathered wings. Height (or length if animal form) is nine feet (2.7 m), with a majestic wingspan of 16-20 feet (4.9 to 6.1 m).",
       "statModifiers": {
         "iq": {
           "dice": "1D4"
@@ -674,9 +684,9 @@
         "customClothingNote": "Too large to fit inside most automobiles, needs a mini-van with back seats down or larger vehicles. Hates confined spaces[cite: 5]."
       },
       "customOneOffs": [
-        "Adds +1 to Spell Strength if a magic user[cite: 5].",
-        "In Morphus form, the Nightbane is completely unable to use tools or weapons[cite: 5].",
-        "Diving/swooping attacks inflict double damage but count as two melee attacks[cite: 5]."
+        "Adds +1 to Spell Strength if a magic user.",
+        "In Morphus form, the Nightbane is completely unable to use tools or weapons.",
+        "Diving/swooping attacks inflict double damage but count as two melee attacks."
       ]
     },
     {
@@ -693,7 +703,7 @@
           "pageNumber": 39
         }
       ],
-      "description": "The body is a beautiful, sleek, light horse with a single, conical horn in the middle of the forehead[cite: 5]. It is also possible for the 'unicorn' to have a centaur-like form, with the lower body of a horse and the upper body of an incredibly attractive human[cite: 5].",
+      "description": "The body is a beautiful, sleek, light horse with a single, conical horn in the middle of the forehead. It is also possible for the 'unicorn' to have a centaur-like form, with the lower body of a horse and the upper body of an incredibly attractive human.",
       "statModifiers": {
         "ma": {
           "dice": "1D6"
@@ -817,9 +827,9 @@
         "customClothingNote": "Too large to fit inside most conventional vehicles, not even mini-vans and pickup trucks[cite: 5]."
       },
       "customOneOffs": [
-        "Gains the Auto-Dodge ability (use only the bonuses from the R.C.C. and high P.P. attribute)[cite: 5].",
-        "In Morphus form the Nightbane is completely unable to use tools or weapons (unless a Unicorn Centaur)[cite: 5].",
-        "Hates confined spaces and does not like to let people ride on its back, with the exception of children and the innocent[cite: 5]."
+        "Gains the Auto-Dodge ability (use only the bonuses from the R.C.C. and high P.P. attribute).",
+        "In Morphus form the Nightbane is completely unable to use tools or weapons (unless a Unicorn Centaur).",
+        "Hates confined spaces and does not like to let people ride on its back, with the exception of children and the innocent."
       ]
     },
     {
@@ -836,7 +846,7 @@
           "pageNumber": 40
         }
       ],
-      "description": "This Nightbane is lithe and attractive and adorned with semi-transparent gossamer wings that resemble a dragonfly or colorful butterfly wings[cite: 5].",
+      "description": "This Nightbane is lithe and attractive and adorned with semi-transparent gossamer wings that resemble a dragonfly or colorful butterfly wings.",
       "statModifiers": {
         "ma": {
           "dice": "1D6"
@@ -945,8 +955,8 @@
         "customClothingNote": "Cannot fit inside most vehicles, because the wings are too large[cite: 5]."
       },
       "customOneOffs": [
-        "Hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane[cite: 5].",
-        "-10% to any skills related to combat or destruction[cite: 5]."
+        "Hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane.",
+        "-10% to any skills related to combat or destruction."
       ]
     },
     {
@@ -963,7 +973,7 @@
           "pageNumber": 40
         }
       ],
-      "description": "This Nightbane Morphus is that of a hulking, brutish man-monster (or giant Amazon-like woman), 10-12 feet (3 to 3.7 m) tall, muscular, barrel-chested, and with one large eye in the center of his forehead[cite: 5].",
+      "description": "This Nightbane Morphus is that of a hulking, brutish man-monster (or giant Amazon-like woman), 10-12 feet (3 to 3.7 m) tall, muscular, barrel-chested, and with one large eye in the center of his forehead.",
       "naturalAr": 10,
       "statModifiers": {
         "ps": {
@@ -1035,6 +1045,11 @@
             "targetType": "skill_id",
             "targetValue": "undercover_ops",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -25
           }
         ]
       },
@@ -1044,9 +1059,9 @@
         "customClothingNote": "The large size makes fitting inside most vehicles difficult and uncomfortable to impossible. Hates confined spaces[cite: 5]."
       },
       "customOneOffs": [
-        "In the alternative, the eye can be in the back of the Nightbane's head. It has the same sight capabilities, but also prevents the character from being surprised from attacks from behind[cite: 5].",
-        "-25% to all skills that require a delicate touch and human-sized fingers/hands[cite: 5].",
-        "Using conventional modern weapons/guns and devices like cell phones and keyboards are difficult to impossible to use[cite: 5]."
+        "In the alternative, the eye can be in the back of the Nightbane's head. It has the same sight capabilities, but also prevents the character from being surprised from attacks from behind.",
+        "-25% to all skills that require a delicate touch and human-sized fingers/hands.",
+        "Using conventional modern weapons/guns and devices like cell phones and keyboards are difficult to impossible to use."
       ]
     },
     {

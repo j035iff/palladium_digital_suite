@@ -19,7 +19,7 @@
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus appears to be one of the little gray aliens associated with the supposed Roswell flying saucer crash: Small, thin, pasty gray skin, a frail-looking body with thin arms and legs, no hair and a huge, bulbous head and large, black, almond-shaped eyes, tiny nose, no apparent ears and a slit for a mouth[cite: 8].",
+      "description": "The Morphus appears to be one of the little gray aliens associated with the supposed Roswell flying saucer crash: Small, thin, pasty gray skin, a frail-looking body with thin arms and legs, no hair and a huge, bulbous head and large, black, almond-shaped eyes, tiny nose, no apparent ears and a slit for a mouth.",
       "statModifiers": {
         "iq": {
           "dice": "1D4"
@@ -83,7 +83,7 @@
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus is what's fondly known in the trade as a 'Bug-Eyed Monster.' The head is always oversized, bald, bulbous with large, round, black 'bug eyes' (or large cat-like eyes, sometimes large glowing eyes) with insect or fish-like facial features[cite: 8].",
+      "description": "The Morphus is what's fondly known in the trade as a 'Bug-Eyed Monster.' The head is always oversized, bald, bulbous with large, round, black 'bug eyes' (or large cat-like eyes, sometimes large glowing eyes) with insect or fish-like facial features.",
       "statModifiers": {
         "ps": {
           "dice": "1D6"
@@ -239,7 +239,7 @@
         }
       ],
       "customOneOffs": [
-        "Fifty percent of alien bodies have a rubbery quality and resemble a man in a rubber suit[cite: 8]."
+        "Fifty percent of alien bodies have a rubbery quality and resemble a man in a rubber suit."
       ]
     },
     {
@@ -303,7 +303,7 @@
           "pageNumber": 89
         }
       ],
-      "description": "The Morphus appears to be a humanoid that glows brightly with energy or light, or has light glowing from inside the body and hovers six inches above the ground instead of using the legs to walk[cite: 8].",
+      "description": "The Morphus appears to be a humanoid that glows brightly with energy or light, or has light glowing from inside the body and hovers six inches above the ground instead of using the legs to walk.",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -352,12 +352,17 @@
             "targetType": "skill_id",
             "targetValue": "swimming",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
           }
         ]
       },
       "customOneOffs": [
-        "Moves silently and hovers above bodies of water[cite: 8].",
-        "Impossible to disguise, Prowl or hide in dim lighting or darkness unless completely covered by a thick, heavy fabric (but then the character can't see)[cite: 8]."
+        "Moves silently and hovers above bodies of water.",
+        "Impossible to disguise, Prowl or hide in dim lighting or darkness unless completely covered by a thick, heavy fabric (but then the character can't see)."
       ]
     },
     {
@@ -374,7 +379,7 @@
           "pageNumber": 89
         }
       ],
-      "description": "The character appears as an alien robot or android. Whether small or large, the robot has no human facial appearance, it looks alien, weird and inhuman/mechanical[cite: 8].",
+      "description": "The character appears as an alien robot or android. Whether small or large, the robot has no human facial appearance, it looks alien, weird and inhuman/mechanical.",
       "statModifiers": {
         "pb": {
           "dice": "-1D4"
@@ -487,7 +492,7 @@
         }
       ],
       "customOneOffs": [
-        "Do not need to breathe and can function in a vacuum[cite: 8]."
+        "Do not need to breathe and can function in a vacuum."
       ]
     },
     {
@@ -504,7 +509,7 @@
           "pageNumber": 90
         }
       ],
-      "description": "The Nightbane is not shaped like a human, but is actually a large floating sphere, 1D4+2 feet (0.9 to 1.8 m) in diameter[cite: 8].",
+      "description": "The Nightbane is not shaped like a human, but is actually a large floating sphere, 1D4+2 feet (0.9 to 1.8 m) in diameter.",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -576,8 +581,8 @@
         }
       ],
       "customOneOffs": [
-        "The method of flight is undeterminable (Anti-gravity? Magic?); speed is ponderous[cite: 8].",
-        "Hovers above water and can also float on water (cannot sink)[cite: 8]."
+        "The method of flight is undeterminable (Anti-gravity? Magic?); speed is ponderous.",
+        "Hovers above water and can also float on water (cannot sink)."
       ]
     }
   ]
