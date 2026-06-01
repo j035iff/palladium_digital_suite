@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Hobbyist",
   "parentTable": null,
-  "description": "Hobbyist Morphus table (Nightbane® Dark Designs Sourcebook, pp. 35–37).",
+  "description": "Hobbyist Morphus table (Dark Designs (WB6), pp. 35-37).",
   "entries": [
     {
       "id": "hobbyist_backpack",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],
@@ -103,7 +103,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],
@@ -155,7 +155,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],
@@ -320,7 +320,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 36
         }
       ],
@@ -360,7 +360,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 36
         }
       ],
@@ -433,7 +433,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 36
         }
       ],
@@ -518,7 +518,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 36
         }
       ],
@@ -563,7 +563,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 37
         }
       ],
@@ -629,7 +629,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 37
         }
       ],

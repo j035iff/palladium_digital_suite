@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Biomechanical Aquatic",
   "parentTable": null,
-  "description": "Biomechanical: Aquatic Morphus table (Nightbane Survival Guide, WB5, pp. 83–84). Nightbane with this feature often feel a need to explore the world, especially beneath the waves. All rows grant Swimming at 80%, underwater breathing for 2D6+20 minutes per immersion (with or without air tanks present), and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "description": "Biomechanical Aquatic Morphus table (Nightbane Survival Guide (WB5), pp. 83-84). Nightbane with this feature often feel a need to explore the world, especially beneath the waves. All rows grant Swimming at 80%, underwater breathing for 2D6+20 minutes per immersion (with or without air tanks present), and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
   "entries": [
     {
       "id": "biomechanical_aquatic_deep_sea_diving_suit",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -96,7 +96,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -170,7 +170,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -250,7 +250,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -309,7 +309,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -374,7 +374,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 83
         }
       ],
@@ -434,7 +434,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 84
         }
       ],
@@ -501,7 +501,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 84
         }
       ],
@@ -560,7 +560,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 84
         }
       ],
@@ -643,7 +643,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 84
         }
       ],

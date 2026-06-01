@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Stigmata",
   "parentTable": null,
-  "description": "Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs): the Nightbane appears injured—open wounds, embedded objects, oozing blood or pus that never heal. Stigmata II (Dark Designs / Between the Shadows): alternate stigmata list; -20% to Disguise, Seduction, and Undercover Ops unless a trait says otherwise (may combine with Table I). Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91–96% Biomechanical and 97–00% Combination of Two on Table I are cross-table routers, not standalone traits.",
+  "description": "Stigmata Morphus tables (Nightbane Core Rulebook, pp. 101-102; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), p. 95; Dark Designs (WB6), pp. 134, 140). Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs (WB6)): the Nightbane appears injured-open wounds, embedded objects, oozing blood or pus that never heal. Stigmata II (Dark Designs (WB6) / Between the Shadows (WB1)): alternate stigmata list; -20% to Disguise, Seduction, and Undercover Ops unless a trait says otherwise (may combine with Table I). Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91-96% Biomechanical and 97-00% Combination of Two on Table I are cross-table routers, not standalone traits.",
   "entries": [
     {
       "id": "stigmata_barbed_wire_razor_wire",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         }
       ],
@@ -39,12 +39,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -71,12 +71,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
@@ -100,12 +100,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -129,12 +129,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -159,12 +159,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -188,12 +188,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -220,7 +220,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -264,7 +264,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -313,12 +313,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -342,12 +342,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
@@ -371,7 +371,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -406,12 +406,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
@@ -455,12 +455,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -484,7 +484,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -511,12 +511,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -541,12 +541,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -567,7 +567,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -623,7 +623,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -661,7 +661,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -715,12 +715,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -752,7 +752,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -779,16 +779,16 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
-      "description": "The Nightbane’s Morphus is always shifting uncontrollably, with characteristics from both stigmata tables appearing at random. So, for example, a tiny head might appear in the character’s chest, linger for 1D6 minutes, and then disappear, replaced by open wounds, protruding nails or similarly disgusting traits. The new feature stays on for 1D6 minutes (1- 50%) or 1D4 hours (51-00%), and then is replaced by something else. Also roll or select a new stigmata every time the character switches to the Facade and then back to Morphus; roll randomly to see what new feature appears on his body. However, the character does not gain any of the bonuses that normally accompany those stigmata, except for the Horror Factor. Bonuses: Instead the character gets +1D4x10 S.D.C., +1 on Perception Rolls, and +1 on initiative. Horror Factor is determined by the stigmata of the moment. Morphus Tables from Nightlands™ Sourcebook",
+      "description": "The Nightbane’s Morphus is always shifting uncontrollably, with characteristics from both stigmata tables appearing at random. So, for example, a tiny head might appear in the character’s chest, linger for 1D6 minutes, and then disappear, replaced by open wounds, protruding nails or similarly disgusting traits. The new feature stays on for 1D6 minutes (1- 50%) or 1D4 hours (51-00%), and then is replaced by something else. Also roll or select a new stigmata every time the character switches to the Facade and then back to Morphus; roll randomly to see what new feature appears on his body. However, the character does not gain any of the bonuses that normally accompany those stigmata, except for the Horror Factor. Bonuses: Instead the character gets +1D4x10 S.D.C., +1 on Perception Rolls, and +1 on initiative. Horror Factor is determined by the stigmata of the moment. Morphus tables from Nightlands (WB2).",
       "statModifiers": {
         "sdc": {
           "dice": "1D4x10"
@@ -805,7 +805,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -841,12 +841,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 101
         }
       ],
@@ -870,7 +870,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -910,12 +910,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
@@ -939,12 +939,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Between the Shadows (WB1)",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 140
         }
       ],
@@ -968,12 +968,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],

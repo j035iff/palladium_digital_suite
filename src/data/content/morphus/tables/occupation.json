@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Occupation",
   "parentTable": null,
-  "description": "Occupation Morphus table (Dark Designs pp. 43–45). Dream career or profession manifests as permanent Morphus features.[cite: 10]",
+  "description": "Occupation Morphus table (Dark Designs (WB6), pp. 43-45). Dream career or profession manifests as permanent Morphus features.[cite: 10]",
   "entries": [
     {
       "id": "morphus_occupation_suit_consummate_professional",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 43
         }
       ],
@@ -76,7 +76,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -136,7 +136,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -175,7 +175,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -212,7 +212,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -248,7 +248,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -311,7 +311,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 44
         }
       ],
@@ -381,7 +381,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 45
         }
       ],
@@ -421,7 +421,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 45
         }
       ],
@@ -461,7 +461,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 45
         }
       ],

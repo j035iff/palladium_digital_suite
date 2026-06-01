@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Clown/Jester",
   "parentTable": null,
-  "description": "Nightbane with a substantial interest in clowns, jesters, or circus performance may manifest garish, unsettling, or darkly humorous Morphus features. Anyone afraid of clowns treats these Morphus forms as Horror Factor 18 (WB6 pp. 30–32).",
+  "description": "Clown/Jester Morphus table (Dark Designs (WB6), pp. 30-32). Nightbane with a substantial interest in clowns, jesters, or circus performance may manifest garish, unsettling, or darkly humorous Morphus features. Anyone afraid of clowns treats these Morphus forms as Horror Factor 18 (WB6 pp. 30-32).",
   "entries": [
     {
       "id": "clown_nose",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 30
         }
       ],
@@ -76,7 +76,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 30
         }
       ],
@@ -135,7 +135,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 30
         }
       ],
@@ -233,7 +233,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 30
         }
       ],
@@ -316,7 +316,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 30
         }
       ],
@@ -380,7 +380,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 31
         }
       ],
@@ -459,7 +459,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 31
         }
       ],
@@ -666,7 +666,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 32
         }
       ],
@@ -693,7 +693,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 32
         }
       ],
@@ -729,7 +729,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 32
         }
       ],

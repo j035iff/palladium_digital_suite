@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Nightmare",
   "parentTable": null,
-  "description": "Nightmare Morphus table (Dark Designs pp. 40–43). Morphus forms conjured from the darkest depths of the Dreamstream, resulting from vivid nightmares or psychological trauma.[cite: 9]",
+  "description": "Nightmare Morphus table (Dark Designs (WB6), pp. 40-43). Morphus forms conjured from the darkest depths of the Dreamstream, resulting from vivid nightmares or psychological trauma.[cite: 9]",
   "entries": [
     {
       "id": "morphus_nightmare_floating",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 40
         }
       ],
@@ -77,7 +77,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 41
         }
       ],
@@ -155,7 +155,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 41
         }
       ],
@@ -255,7 +255,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 41
         }
       ],
@@ -344,7 +344,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 41
         }
       ],
@@ -420,7 +420,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 42
         }
       ],
@@ -500,7 +500,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 42
         }
       ],
@@ -546,7 +546,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 42
         }
       ],
@@ -601,7 +601,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 43
         }
       ],

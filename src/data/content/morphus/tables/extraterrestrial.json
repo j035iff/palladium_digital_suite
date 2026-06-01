@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Extraterrestrial",
   "parentTable": null,
-  "description": "Extraterrestrial Morphus table (Nightbane Survival Guide, WB5, printed pp. 89–90). Sci-fi fan or dreamer whose Morphus appears as a being from beyond Earth[cite: 1].",
+  "description": "Extraterrestrial Morphus table (Nightbane Survival Guide (WB5), pp. 89-90). Sci-fi fan or dreamer whose Morphus appears as a being from beyond Earth[cite: 1].",
   "entries": [
     {
       "id": "extraterrestrial_roswell_gray",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 89
         }
       ],
@@ -79,7 +79,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 89
         }
       ],
@@ -252,7 +252,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 89
         }
       ],
@@ -299,7 +299,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 89
         }
       ],
@@ -370,7 +370,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 89
         }
       ],
@@ -500,7 +500,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 90
         }
       ],

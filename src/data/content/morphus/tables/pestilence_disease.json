@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Pestilence & Disease",
   "parentTable": null,
-  "description": "Pestilence & Disease Morphus table (Dark Designs pp. 46–47). Sickly, infectious, or disease-haunted forms.",
+  "description": "Pestilence & Disease Morphus table (Dark Designs (WB6), pp. 46-47). Sickly, infectious, or disease-haunted forms.",
   "entries": [
     {
       "id": "morphus_pestilence_typhoid_mary",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 46
         }
       ],
@@ -83,7 +83,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 46
         }
       ],
@@ -162,7 +162,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 46
         }
       ],
@@ -240,7 +240,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 46
         }
       ],
@@ -316,7 +316,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 46
         }
       ],
@@ -389,7 +389,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -494,7 +494,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -542,7 +542,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -627,7 +627,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -684,7 +684,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -758,7 +758,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],
@@ -833,7 +833,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ],

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Mythical Creature",
   "parentTable": null,
-  "description": "Mythical Creature Morphus table (Dark Designs pp. 37–41). Forms inspired by legends and modern reimaginings of mythical beings; distinct from the Fantasy table.",
+  "description": "Mythical Creature Morphus table (Dark Designs (WB6), pp. 37-40). Forms inspired by legends and modern reimaginings of mythical beings; distinct from the Fantasy table.",
   "entries": [
     {
       "id": "mythical_creature_bigfoot",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 37
         }
       ],
@@ -107,7 +107,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 37
         }
       ],
@@ -180,7 +180,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 37
         }
       ],
@@ -302,7 +302,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 38
         }
       ],
@@ -388,7 +388,7 @@
           "isAdditiveToHth": false,
           "poison": {
             "saveType": "poison",
-            "failDamageFormula": "Spd and attacks per melee reduced by half. Combat bonuses and skill performance reduced by half. Duration: 2 melee rounds per failed bite. Double damage and double duration to Nightlords and denizens of the Nightlands.",
+            "failDamageFormula": "Spd and attacks per melee reduced by half. Combat bonuses and skill performance reduced by half. Duration: 2 melee rounds per failed bite. Double damage and double duration to Nightlords and denizens of the Nightlands (WB2).",
             "passDamageFormula": "Half damage from bite, and none of the penalties."
           }
         }
@@ -410,7 +410,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 39
         }
       ],
@@ -562,7 +562,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 39
         }
       ],
@@ -689,7 +689,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 39
         }
       ],
@@ -832,7 +832,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 40
         }
       ],
@@ -959,7 +959,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 40
         }
       ],
@@ -1060,7 +1060,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 40
         }
       ],

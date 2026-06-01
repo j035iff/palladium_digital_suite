@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Octopus/Squid",
   "parentTable": "animal",
-  "description": "Aquatic: Octopus/Squid Morphus table (Nightbane Survival Guide, WB5, pp. 79–80). All rows grant Swimming at 85%, indefinite underwater breathing and normal air breathing, cold resistance (half damage), and depth tolerance of 1,000 feet (305 m) unless stated otherwise.",
+  "description": "Octopus/Squid Morphus table (Nightbane Survival Guide (WB5), pp. 79-80). Aquatic: All rows grant Swimming at 85%, indefinite underwater breathing and normal air breathing, cold resistance (half damage), and depth tolerance of 1,000 feet (305 m) unless stated otherwise.",
   "entries": [
     {
       "id": "animal_octopus_squid_giant",
@@ -15,11 +15,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
-      "description": "A giant octopus or squid with eight tentacles, a hooked parrot-like beak, and a pliable body roughly three feet (0.9 m) in diameter with 10–12 foot (3 to 3.6 m) tentacles. Can function on land at reduced speed and agility.",
+      "description": "A giant octopus or squid with eight tentacles, a hooked parrot-like beak, and a pliable body roughly three feet (0.9 m) in diameter with 10-12 foot (3 to 3.6 m) tentacles. Can function on land at reduced speed and agility.",
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10+10"
@@ -118,7 +118,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
@@ -269,7 +269,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
@@ -364,7 +364,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
@@ -448,7 +448,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],

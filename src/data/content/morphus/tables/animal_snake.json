@@ -3,38 +3,77 @@
   "kind": "morphus_trait_table",
   "displayName": "Snake",
   "parentTable": "animal",
-  "description": "Snake Morphus table (Nightbane RPG pp. 101–102; Dark Designs pp. 134–135). Symbols of temptation, hunting, and subtlety; cobra shapes often appear among ambitious Nightbane. All snake Nightbane instinctively Swim at 55% and Climb at 40% in Morphus unless a row states otherwise. In most cases, Disguise and Undercover Ops are impossible. Player selects poisonous or constrictor serpent where applicable.",
+  "description": "Snake Morphus tables (Nightbane Core Rulebook, pp. 101-102; Dark Designs (WB6), p. 134). Symbols of temptation, hunting, and subtlety; cobra shapes often appear among ambitious Nightbane. All snake Nightbane instinctively Swim at 55% and Climb at 40% in Morphus unless a row states otherwise. In most cases, Disguise and Undercover Ops are impossible. Player selects poisonous or constrictor serpent where applicable.",
   "entries": [
     {
       "id": "animal_snake_full",
       "name": "Full Snake Form",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 101
+        }
       ],
       "description": "Giant snake at least six feet (1.8 m) long; typically add 1D6 feet (0.3 to 1.8 m) to the Nightbane's Facade height/length.",
       "playerChoices": [
         {
           "label": "Snake type",
-          "options": ["poisonous", "constrictor"],
+          "options": [
+            "poisonous",
+            "constrictor"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 6 },
-        "pe": { "flat": 3 },
-        "pp": { "flat": 2 },
-        "sdc": { "dice": "2D6x10" },
-        "hf": { "flat": 3 }
+        "ps": {
+          "flat": 6
+        },
+        "pe": {
+          "flat": 3
+        },
+        "pp": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "flat": 3
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 60 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -44,7 +83,11 @@
         {
           "roll": "poisonous",
           "label": "Poisonous Serpent",
-          "statModifiers": { "hf": { "flat": 1 } },
+          "statModifiers": {
+            "hf": {
+              "flat": 1
+            }
+          },
           "naturalWeapons": [
             {
               "limbType": "bite",
@@ -63,7 +106,11 @@
           "label": "Constrictor",
           "skillModifiers": {
             "specificSkillOverrides": [
-              { "targetType": "skill_id", "targetValue": "skill_wrestling", "grantUnlearnedValue": 50 }
+              {
+                "targetType": "skill_id",
+                "targetValue": "skill_wrestling",
+                "grantUnlearnedValue": 50
+              }
             ]
           },
           "customOneOffs": [
@@ -77,33 +124,75 @@
       "id": "animal_snake_limbed",
       "name": "Limbed Snake",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 101
+        }
       ],
       "description": "Scaly human-like arms, hands, and legs on a long snake-like body with an overlong neck and snake's head. Torso bends with serpent flexibility; limbs are double-jointed and ambidextrous.",
       "playerChoices": [
         {
           "label": "Snake type",
-          "options": ["poisonous", "constrictor"],
+          "options": [
+            "poisonous",
+            "constrictor"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pe": { "flat": 2 },
-        "pp": { "flat": 2 },
-        "sdc": { "dice": "2D4x10" },
-        "apm": { "flat": 1 },
-        "hf": { "flat": 1 }
+        "ps": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "apm": {
+          "flat": 1
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 40, "modifierPercent": 15 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 40,
+            "modifierPercent": 15
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "variantPercentiles": [
@@ -127,7 +216,11 @@
           "label": "Constrictor",
           "skillModifiers": {
             "specificSkillOverrides": [
-              { "targetType": "skill_id", "targetValue": "skill_wrestling", "grantUnlearnedValue": 50 }
+              {
+                "targetType": "skill_id",
+                "targetValue": "skill_wrestling",
+                "grantUnlearnedValue": 50
+              }
             ]
           },
           "customOneOffs": [
@@ -141,26 +234,51 @@
       "id": "animal_snake_humanoid",
       "name": "Humanoid Snake",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 101 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 101
+        }
       ],
       "description": "Basic human build with colorful scales, snake head and neck, long prehensile tail, sharp fangs, and clawed hands and feet.",
       "playerChoices": [
         {
           "label": "Snake type",
-          "options": ["poisonous", "constrictor"],
+          "options": [
+            "poisonous",
+            "constrictor"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 3 },
-        "pe": { "flat": 2 },
-        "pp": { "flat": 1 },
-        "sdc": { "dice": "1D6x10" },
-        "apm": { "flat": 1 },
-        "hf": { "dice": "1D4+1" }
+        "ps": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 1
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "apm": {
+          "flat": 1
+        },
+        "hf": {
+          "dice": "1D4+1"
+        }
       },
       "naturalWeapons": [
         {
@@ -172,10 +290,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 40, "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 40,
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -215,22 +350,52 @@
       "id": "animal_snake_scaly_skin",
       "name": "Scaly Skin",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 102 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 102
+        }
       ],
       "description": "Normal human body and features except for scale-covered skin and snake-like eyes.",
       "statModifiers": {
-        "sdc": { "dice": "1D6x10" },
-        "hf": { "dice": "1D4" }
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 40 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -238,39 +403,83 @@
       "id": "animal_snake_half_man",
       "name": "Half-Man, Half-Snake",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 102 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 102
+        }
       ],
       "description": "Scale-covered human torso with arms and a human head atop a long snake-like lower body and tail. No legs; must crawl or climb with the lower body. Upper torso and limbs are double-jointed and ambidextrous.",
       "playerChoices": [
         {
           "label": "Snake type",
-          "options": ["poisonous", "constrictor"],
+          "options": [
+            "poisonous",
+            "constrictor"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pe": { "flat": 2 },
-        "pp": { "flat": 3 },
-        "sdc": { "dice": "1D6x10+10" },
-        "apm": { "flat": 1 }
+        "ps": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 3
+        },
+        "sdc": {
+          "dice": "1D6x10+10"
+        },
+        "apm": {
+          "flat": 1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 40, "modifierPercent": 20 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 40,
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "variantPercentiles": [
         {
           "roll": "poisonous",
           "label": "Poisonous Serpent",
-          "statModifiers": { "hf": { "dice": "1D6" } },
+          "statModifiers": {
+            "hf": {
+              "dice": "1D6"
+            }
+          },
           "naturalWeapons": [
             {
               "limbType": "bite",
@@ -288,7 +497,11 @@
           "label": "Constrictor",
           "skillModifiers": {
             "specificSkillOverrides": [
-              { "targetType": "skill_id", "targetValue": "skill_wrestling", "grantUnlearnedValue": 50 }
+              {
+                "targetType": "skill_id",
+                "targetValue": "skill_wrestling",
+                "grantUnlearnedValue": 50
+              }
             ]
           },
           "customOneOffs": [
@@ -302,22 +515,39 @@
       "id": "animal_snake_head",
       "name": "Snake's Head",
       "tableCategory": "Animal: Snake",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 134 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 102 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 102
+        }
       ],
       "description": "Normal human body topped by a giant snake's head.",
       "playerChoices": [
         {
           "label": "Snake type",
-          "options": ["poisonous", "constrictor"],
+          "options": [
+            "poisonous",
+            "constrictor"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "hf": { "dice": "1D4" }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "naturalWeapons": [
         {
@@ -329,10 +559,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 55 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 40 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 55
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "variantPercentiles": [

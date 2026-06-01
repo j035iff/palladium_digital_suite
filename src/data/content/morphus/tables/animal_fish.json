@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Fish",
   "parentTable": "animal",
-  "description": "Aquatic: Fish Morphus table (Nightbane Survival Guide, WB5, pp. 78–79). Nightbane with a Fish Morphus have an affinity for fish or fishing. All rows grant Swimming at 98%, indefinite underwater breathing, labored breathing of air on land, and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "description": "Fish Morphus table (Nightbane Survival Guide (WB5), pp. 78-79). Aquatic: Nightbane with a Fish Morphus have an affinity for fish or fishing. All rows grant Swimming at 98%, indefinite underwater breathing, labored breathing of air on land, and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
   "entries": [
     {
       "id": "animal_fish_full_form",
@@ -15,11 +15,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
-      "description": "The Morphus is a large fish of any species, 6–9 feet (1.8 to 2.7 m) long, with full fish features, and flops on dry land without hands, arms, legs, or feet.",
+      "description": "The Morphus is a large fish of any species, 6-9 feet (1.8 to 2.7 m) long, with full fish features, and flops on dry land without hands, arms, legs, or feet.",
       "naturalAr": 8,
       "statModifiers": {
         "sdc": {
@@ -91,7 +91,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
@@ -157,7 +157,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
@@ -234,7 +234,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
@@ -309,7 +309,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
@@ -368,7 +368,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],
@@ -424,7 +424,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 79
         }
       ],

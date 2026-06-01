@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unearthly Beauty",
   "parentTable": null,
-  "description": "Unearthly Beauty Morphus table (Nightbane RPG / Dark Designs). Not all Morphus forms are horrible—some inspire fascination and awe. These Nightbane are often nicknamed \"Barbie\" or \"Ken\" by others. Table I rolls 01–90%; 91–95% Combination of Two and 96–00% Other are cross-table routers (not listed as traits).",
+  "description": "Unearthly Beauty Morphus tables (Nightbane Core Rulebook, p. 93; Dark Designs (WB6), p. 126). Not all Morphus forms are horrible-some inspire fascination and awe. These Nightbane are often nicknamed \"Barbie\" or \"Ken\" by others. Table I rolls 01-90%; 91-95% Combination of Two and 96-00% Other are cross-table routers (not listed as traits).",
   "entries": [
     {
       "id": "unearthly_beauty_animal_magnetism",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 126
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 93
         }
       ],
@@ -48,12 +48,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 126
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 93
         }
       ],
@@ -77,12 +77,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 126
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 93
         }
       ],
@@ -112,12 +112,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 126
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 93
         }
       ],
@@ -151,12 +151,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 126
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 93
         }
       ],

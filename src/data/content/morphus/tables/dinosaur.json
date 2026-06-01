@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Dinosaur",
   "parentTable": null,
-  "description": "Dinosaur Morphus table (top-level, not an Animal hub sub-table). Add characteristic rows from the book.",
+  "description": "Dinosaur Morphus table (Nightbane Survival Guide (WB5), pp. 85-86). Add characteristic rows from the book.",
   "entries": [
     {
       "id": "dinosaur_sauropod_humanoid",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 85
         }
       ],
@@ -79,7 +79,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 85
         }
       ],
@@ -152,7 +152,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -239,7 +239,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -319,7 +319,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -405,7 +405,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -534,7 +534,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -619,7 +619,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],
@@ -690,7 +690,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 86
         }
       ],

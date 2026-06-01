@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Insectoid",
   "parentTable": "animal",
-  "description": "Insectoid Morphus tables. Table I (Nightbane RPG pp. 98–99; Dark Designs pp. 131–132): insect-looking Nightbane became more common after Dark Day. All insect Nightbane instinctively Swim at 50%, have Acrobatics at 50% and Climbing at 60% (unless a row states otherwise), and +1 to roll with fall or impact. In most cases, Disguise and Undercover Ops are impossible. Table II (Dark Designs pp. 22–23): supplemental insect features—roll Table I, Table II, or mix per GM.",
+  "description": "Insectoid Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 22-23, 131-132). Insectoid Morphus tables. Table I (Nightbane Core Rulebook pp. 98-99; Dark Designs (WB6) pp. 131-132): insect-looking Nightbane became more common after Dark Day. All insect Nightbane instinctively Swim at 50%, have Acrobatics at 50% and Climbing at 60% (unless a row states otherwise), and +1 to roll with fall or impact. In most cases, Disguise and Undercover Ops are impossible. Table II (Dark Designs (WB6) pp. 22-23): supplemental insect features-roll Table I, Table II, or mix per GM.",
   "entries": [
     {
       "id": "animal_insectoid_giant_insect",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 131
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 98
         }
       ],
@@ -208,12 +208,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 131
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -373,12 +373,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 131
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -508,12 +508,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 131
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -571,12 +571,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -646,12 +646,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -702,12 +702,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 132
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 99
         }
       ],
@@ -795,7 +795,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 22
         }
       ],
@@ -854,7 +854,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 22
         }
       ],
@@ -882,7 +882,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 22
         }
       ],
@@ -918,11 +918,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 22
         }
       ],
-      "description": "A retractable stinger housed somewhere in the body—possibly a scorpion tail-like appendage or extending from the forearm or wrist like a long knitting needle or spike.",
+      "description": "A retractable stinger housed somewhere in the body-possibly a scorpion tail-like appendage or extending from the forearm or wrist like a long knitting needle or spike.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -971,7 +971,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],
@@ -998,7 +998,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],
@@ -1028,7 +1028,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],
@@ -1056,11 +1056,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],
-      "description": "One or more body sections glow with soft, controllable bioluminescent light—most commonly green, light blue, or violet.",
+      "description": "One or more body sections glow with soft, controllable bioluminescent light-most commonly green, light blue, or violet.",
       "statModifiers": {
         "sdc": {
           "dice": "2D6"
@@ -1097,11 +1097,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],
-      "description": "Brightly colored warning patterns—lightning bolts, tiger stripes, false eyes, biohazard symbols, skulls, barbed wire, and similar markings that signal danger.",
+      "description": "Brightly colored warning patterns-lightning bolts, tiger stripes, false eyes, biohazard symbols, skulls, barbed wire, and similar markings that signal danger.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -1128,7 +1128,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 23
         }
       ],

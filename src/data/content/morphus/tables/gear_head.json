@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Gear-Head",
   "parentTable": null,
-  "description": "Nightbane whose identity ties to automobiles, engines, and vehicular culture may manifest automotive machinery in Morphus form (WB6 pp. 33–35).",
+  "description": "Gear-Head Morphus table (Dark Designs (WB6), pp. 33-35). Nightbane whose identity ties to automobiles, engines, and vehicular culture may manifest automotive machinery in Morphus form (WB6 pp. 33-35).",
   "entries": [
     {
       "id": "gear_head_engine_block",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 33
         }
       ],
@@ -109,7 +109,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 33
         }
       ],
@@ -190,7 +190,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 33
         }
       ],
@@ -253,7 +253,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 34
         }
       ],
@@ -312,7 +312,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 34
         }
       ],
@@ -385,7 +385,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 34
         }
       ],
@@ -460,7 +460,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 34
         }
       ],
@@ -517,7 +517,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],
@@ -571,7 +571,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],
@@ -632,7 +632,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 35
         }
       ],

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Ancient Warrior",
   "parentTable": null,
-  "description": "Morphus features reflecting aspects of ancient warfare, foreign cultures, and historical warrior castes.",
+  "description": "Ancient Warrior Morphus table (Dark Designs (WB6), pp. 19-20). Morphus features reflecting aspects of ancient warfare, foreign cultures, and historical warrior castes.",
   "entries": [
     {
       "id": "ancient_warrior_infantry",

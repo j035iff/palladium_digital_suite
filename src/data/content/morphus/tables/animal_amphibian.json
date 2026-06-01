@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Amphibian",
   "parentTable": "animal",
-  "description": "Amphibian Morphus table (Nightbane® Dark Designs, WB6, pp. 138–139; originally Between the Shadows, WB1, pp. 130–131). Covers frogs, toads, and salamanders. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
+  "description": "Amphibian Morphus tables (Between the Shadows (WB1), p. 131; Dark Designs (WB6), p. 139). Covers frogs, toads, and salamanders. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
   "entries": [
     {
       "id": "animal_amphibian_full",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 139
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 131
         }
       ],
@@ -156,12 +156,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 139
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 131
         }
       ],
@@ -262,16 +262,16 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 139
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 131
         }
       ],
-      "description": "The Nightbane has humanoid features and a roughly human basic shape, so the character might hide deformities under bulky clothing and head covering. The leg shape is impossibly bow-legged, fingers and toes are webbed, and the character has a crouched posture most of the time as if getting ready to leap — all of this will inevitably attract attention.",
+      "description": "The Nightbane has humanoid features and a roughly human basic shape, so the character might hide deformities under bulky clothing and head covering. The leg shape is impossibly bow-legged, fingers and toes are webbed, and the character has a crouched posture most of the time as if getting ready to leap - all of this will inevitably attract attention.",
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -325,12 +325,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 139
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 131
         }
       ],
@@ -423,12 +423,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 139
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Between the Shadows",
+          "reference": "Between the Shadows (WB1)",
           "pageNumber": 131
         }
       ],

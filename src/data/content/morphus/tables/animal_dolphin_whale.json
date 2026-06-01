@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Dolphin/Whale",
   "parentTable": "animal",
-  "description": "Aquatic: Dolphin/Whale (Cetacean) Morphus table (Nightbane Survival Guide, WB5, pp. 77–78). Cetaceans are mammals and must breathe air. All rows grant Swimming at 90%, hold breath for 1D6+6 minutes, echolocation (operate perfectly in darkness or when blinded), and swimming speed equal to land Spd plus 50% unless a row states otherwise.",
+  "description": "Dolphin/Whale Morphus table (Nightbane Survival Guide (WB5), pp. 77-78). Aquatic: Dolphin/Whale (Cetacean) Cetaceans are mammals and must breathe air. All rows grant Swimming at 90%, hold breath for 1D6+6 minutes, echolocation (operate perfectly in darkness or when blinded), and swimming speed equal to land Spd plus 50% unless a row states otherwise.",
   "entries": [
     {
       "id": "animal_dolphin_whale_full_cetacean",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 77
         }
       ],
@@ -74,7 +74,7 @@
         {
           "roll": "dolphin",
           "label": "Dolphin",
-          "description": "Typically 5–7 feet (1.5 to 2.1 m) long.",
+          "description": "Typically 5-7 feet (1.5 to 2.1 m) long.",
           "statModifiers": {
             "sdc": {
               "dice": "1D6x10+6"
@@ -116,7 +116,7 @@
         {
           "roll": "whale",
           "label": "Whale",
-          "description": "Typically 9–20 feet (2.7 to 6.1 m) long; about the size of a killer whale.",
+          "description": "Typically 9-20 feet (2.7 to 6.1 m) long; about the size of a killer whale.",
           "statModifiers": {
             "sdc": {
               "dice": "2D6x10+12"
@@ -177,11 +177,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 77
         }
       ],
-      "description": "Essentially a dolphin 6–7 feet (1.8–2.1 m) tall/long, or whale 9–12 feet (2.7–3.6 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a stubby tail. The head is fully animal, though it may face forward when walking upright.",
+      "description": "Essentially a dolphin 6-7 feet (1.8-2.1 m) tall/long, or whale 9-12 feet (2.7-3.6 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a stubby tail. The head is fully animal, though it may face forward when walking upright.",
       "playerChoices": [
         {
           "label": "Cetacean species",
@@ -358,7 +358,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 77
         }
       ],
@@ -514,7 +514,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
@@ -595,7 +595,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
@@ -657,11 +657,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 78
         }
       ],
-      "description": "From the waist up, an attractive human with long lustrous hair of any color; from the waist down, a long dolphin-like tail slightly longer than the upper body (about 7–9 feet / 2.1 to 2.7 m total).",
+      "description": "From the waist up, an attractive human with long lustrous hair of any color; from the waist down, a long dolphin-like tail slightly longer than the upper body (about 7-9 feet / 2.1 to 2.7 m total).",
       "statModifiers": {
         "sdc": {
           "dice": "4D6+8"

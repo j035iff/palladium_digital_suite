@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unnatural Limbs",
   "parentTable": null,
-  "description": "Unnatural limb Morphus tables. Table I (Unnatural Limbs) from Nightbane RPG / Dark Designs — extra tails, tentacles, arms, pseudopods, and similar limb mutations (01–00%, no cross-table routers). Table II (Unnatural Appendages & Limbs) from Survival Guide only — chains, eye stalks, snake body, spider legs, and other appendage forms (01–00%).",
+  "description": "Unnatural Limbs Morphus tables (Nightbane Core Rulebook, pp. 104-105; Nightbane Survival Guide (WB5), pp. 97-98; Dark Designs (WB6), p. 136). Unnatural limb Morphus tables. Table I (Unnatural Limbs) from Nightbane Core Rulebook / Dark Designs (WB6) - extra tails, tentacles, arms, pseudopods, and similar limb mutations (01-00%, no cross-table routers). Table II (Unnatural Appendages & Limbs) from Survival Guide only - chains, eye stalks, snake body, spider legs, and other appendage forms (01-00%).",
   "entries": [
     {
       "id": "unnatural_limbs_2d4_pairs_of_tiny_arms_and_hands",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -41,7 +41,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 98
         }
       ],
@@ -83,12 +83,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 105
         }
       ],
@@ -112,12 +112,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -141,7 +141,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -157,7 +157,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -201,7 +201,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -217,7 +217,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -267,7 +267,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -312,12 +312,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -338,12 +338,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -388,7 +388,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -429,7 +429,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
@@ -469,12 +469,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -495,12 +495,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -522,11 +522,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus turns the character’s lower body and legs into a long, prehensile serpent’s body – 2D4+6 feet (2.4 to 4.3 m) long. Bonuses: +1D6x10 S.D.C., +2 to Horror Factor, moves like a snake and can rise up on its tail like a cobra to tower over normal humans – +1 on initiative, +1 to strike, +2 to automatic dodge when this is done, and is +10% to climb trees and similarly shaped constructs. Penalties: -1 to P.B., reduce Spd 20%, reduce Spd by half when crawling across a smooth surface such as a polished floor, glass or ice, impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
+      "description": "The Morphus turns the character’s lower body and legs into a long, prehensile serpent’s body - 2D4+6 feet (2.4 to 4.3 m) long. Bonuses: +1D6x10 S.D.C., +2 to Horror Factor, moves like a snake and can rise up on its tail like a cobra to tower over normal humans - +1 on initiative, +1 to strike, +2 to automatic dodge when this is done, and is +10% to climb trees and similarly shaped constructs. Penalties: -1 to P.B., reduce Spd 20%, reduce Spd by half when crawling across a smooth surface such as a polished floor, glass or ice, impossible to Disguise or engage in Undercover Ops, and requires custom-made clothing.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -564,7 +564,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 98
         }
       ],
@@ -600,12 +600,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],
@@ -621,12 +621,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 136
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 104
         }
       ],

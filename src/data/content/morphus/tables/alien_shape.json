@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Alien Shape",
   "parentTable": null,
-  "description": "Alien Shape Morphus tables (Nightbane RPG, pp. 103-104; Dark Designs, pp. 135-136; Nightbane Survival Guide, pp. 72-73). Encompasses bizarre, non-humanoid forms, structural aberrations, and physical anomalies.",
+  "description": "Alien Shape Morphus tables (Nightbane Core Rulebook, p. 103; Nightbane Survival Guide (WB5), p. 72; Dark Designs (WB6), pp. 135-136). Encompasses bizarre, non-humanoid forms, structural aberrations, and physical anomalies.",
   "entries": [
     {
       "id": "alien_shape_plasmoid",

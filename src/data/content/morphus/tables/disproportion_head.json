@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Head",
   "parentTable": "disproportion",
-  "description": "Disproportionate Head (WB5 p. 87). Roll percentile on this sub-table after Step One selects the head.",
+  "description": "Head Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Roll percentile on this sub-table after Step One selects the head.",
   "entries": [
     {
       "id": "disproportion_huge_ears",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -53,11 +53,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
-      "description": "Perfect vision, excellent peripheral vision (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive – sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Perception Rolls involving vision in well lit areas and daytime.",
+      "description": "Perfect vision, excellent peripheral vision (can see 180 degrees) and Nightvision (1,000 feet/305 m; increase range an extra 1000 feet if the character already has Nightvision), and +1 to Perception Rolls involving vision in the dark and in dim lighting. Penalties: Light sensitive - sunlight and other bright lights hurt the eyes, cause the character to squint, reduce normal (daylight) vision by half, and -2 to Perception Rolls involving vision in well lit areas and daytime.",
       "sensory": {
         "nightvisionRangeFlatBonus": 1000,
         "sharpVision": true,
@@ -81,7 +81,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -133,7 +133,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -163,7 +163,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -195,7 +195,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -228,7 +228,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -263,7 +263,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -287,7 +287,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -311,7 +311,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -347,7 +347,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -368,7 +368,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -412,7 +412,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -436,7 +436,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -470,7 +470,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],
@@ -502,7 +502,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 87
         }
       ],

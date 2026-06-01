@@ -3,32 +3,60 @@
   "kind": "morphus_trait_table",
   "displayName": "Reptilian",
   "parentTable": "animal",
-  "description": "Reptilian Morphus table (Nightbane RPG pp. 100–101; Dark Designs pp. 133–134). Lizards of all kinds; dragon legends may originate from reptilian Nightbane. All reptilians instinctively Swim at 45% and Climb at 35% in Morphus. In most cases, Disguise and Undercover Ops are impossible.",
+  "description": "Reptilian Morphus tables (Nightbane Core Rulebook, p. 100; Dark Designs (WB6), p. 133). Lizards of all kinds; dragon legends may originate from reptilian Nightbane. All reptilians instinctively Swim at 45% and Climb at 35% in Morphus. In most cases, Disguise and Undercover Ops are impossible.",
   "entries": [
     {
       "id": "animal_reptilian_giant",
       "name": "Giant Reptile",
       "tableCategory": "Animal: Reptilian",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 100 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 100
+        }
       ],
       "description": "Giant lizard over seven feet (2.1 m) tall counting the tail; add 1D6 feet (0.3 to 1.8 m) to the character's Facade height for total Morphus length. May be mistaken for Komodo dragons, crocodiles, and similar large reptilians.",
       "playerChoices": [
         {
           "label": "Reptile species",
-          "options": ["komodo", "crocodile", "monitor", "iguana", "other"],
+          "options": [
+            "komodo",
+            "crocodile",
+            "monitor",
+            "iguana",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 3 },
-        "pe": { "flat": 4 },
-        "pp": { "flat": 3 },
-        "spd": { "dice": "4D6" },
-        "sdc": { "dice": "3D6x10" },
-        "hf": { "flat": 3 }
+        "ps": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 4
+        },
+        "pp": {
+          "flat": 3
+        },
+        "spd": {
+          "dice": "4D6"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "flat": 3
+        }
       },
       "naturalWeapons": [
         {
@@ -46,10 +74,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 45 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 35 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 45
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 35
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -61,26 +105,54 @@
       "id": "animal_reptilian_were",
       "name": "Were-Reptile",
       "tableCategory": "Animal: Reptilian",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 100 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 100
+        }
       ],
       "description": "Bipedal mixture of man and reptile with reptilian features predominating; fully animal-like head with incredibly strong, razor-sharp claws on underdeveloped arms and legs.",
       "playerChoices": [
         {
           "label": "Reptile species",
-          "options": ["komodo", "crocodile", "monitor", "iguana", "other"],
+          "options": [
+            "komodo",
+            "crocodile",
+            "monitor",
+            "iguana",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 5 },
-        "pe": { "flat": 3 },
-        "pp": { "flat": 2 },
-        "spd": { "dice": "2D6" },
-        "sdc": { "dice": "2D6x10" },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 5
+        },
+        "pe": {
+          "flat": 3
+        },
+        "pp": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "2D6"
+        },
+        "sdc": {
+          "dice": "2D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "naturalWeapons": [
         {
@@ -98,10 +170,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 45 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 35, "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 45
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 35,
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -109,26 +198,54 @@
       "id": "animal_reptilian_humanoid",
       "name": "Humanoid-Reptilian",
       "tableCategory": "Animal: Reptilian",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 100 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 100
+        }
       ],
       "description": "Human-shaped and scale-covered; can pass for human in heavy clothing, from a distance, or in shadow.",
       "playerChoices": [
         {
           "label": "Reptile species",
-          "options": ["komodo", "crocodile", "monitor", "iguana", "other"],
+          "options": [
+            "komodo",
+            "crocodile",
+            "monitor",
+            "iguana",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 3 },
-        "pe": { "flat": 2 },
-        "pp": { "flat": 2 },
-        "spd": { "dice": "1D6" },
-        "sdc": { "dice": "2D4x10" },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 3
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pp": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "hf": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -146,10 +263,27 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 45 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 35, "modifierPercent": 5 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 45
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 35,
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -157,22 +291,42 @@
       "id": "animal_reptilian_head",
       "name": "Reptile's Head",
       "tableCategory": "Animal: Reptilian",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 100 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 100
+        }
       ],
       "description": "Human body except for a fully reptilian head.",
       "playerChoices": [
         {
           "label": "Reptile species",
-          "options": ["komodo", "crocodile", "monitor", "iguana", "other"],
+          "options": [
+            "komodo",
+            "crocodile",
+            "monitor",
+            "iguana",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "sdc": { "dice": "2D6" },
-        "hf": { "flat": 1 }
+        "sdc": {
+          "dice": "2D6"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -184,10 +338,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 45 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 35 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 45
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 35
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     },
@@ -195,26 +365,54 @@
       "id": "animal_reptilian_centauroid",
       "name": "Reptilian Centauroid",
       "tableCategory": "Animal: Reptilian",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 133 },
-        { "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 100 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 133
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 100
+        }
       ],
       "description": "Lower body of a four-legged reptile with tail; upper body is a scale-covered humanoid torso with a human-like head. Hard-pressed to fit in a vehicle or small room.",
       "playerChoices": [
         {
           "label": "Reptile species",
-          "options": ["komodo", "crocodile", "monitor", "iguana", "other"],
+          "options": [
+            "komodo",
+            "crocodile",
+            "monitor",
+            "iguana",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 5 },
-        "pe": { "flat": 3 },
-        "pp": { "flat": 3 },
-        "spd": { "dice": "4D6" },
-        "sdc": { "dice": "3D6x10" },
-        "hf": { "dice": "1D4" }
+        "ps": {
+          "flat": 5
+        },
+        "pe": {
+          "flat": 3
+        },
+        "pp": {
+          "flat": 3
+        },
+        "spd": {
+          "dice": "4D6"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
       },
       "naturalWeapons": [
         {
@@ -232,10 +430,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_swimming", "grantUnlearnedValue": 45 },
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 35 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_swimming",
+            "grantUnlearnedValue": 45
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 35
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       }
     }

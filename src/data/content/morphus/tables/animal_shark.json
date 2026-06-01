@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Shark",
   "parentTable": "animal",
-  "description": "Aquatic: Shark Morphus table (Nightbane Survival Guide, WB5, pp. 80–81). Shark Morphus Nightbane tend to be aggressive and quick to fight. All rows grant Swimming at 96%, indefinite underwater breathing and normal air breathing, and depth tolerance of 3,000 feet (914 m) unless stated otherwise.",
+  "description": "Shark Morphus table (Nightbane Survival Guide (WB5), pp. 80-81). Aquatic: Shark Morphus Nightbane tend to be aggressive and quick to fight. All rows grant Swimming at 96%, indefinite underwater breathing and normal air breathing, and depth tolerance of 3,000 feet (914 m) unless stated otherwise.",
   "entries": [
     {
       "id": "animal_shark_full_form",
@@ -15,11 +15,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
-      "description": "The Morphus is a large shark of any species, 8–12 feet (2.4 to 3.6 m) long, with full shark features, thrashing on dry land without hands, arms, legs, or feet.",
+      "description": "The Morphus is a large shark of any species, 8-12 feet (2.4 to 3.6 m) long, with full shark features, thrashing on dry land without hands, arms, legs, or feet.",
       "playerChoices": [
         {
           "label": "Shark species",
@@ -121,11 +121,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
-      "description": "Essentially a shark 7–8 feet (2.1 to 2.4 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a short tail. The head is completely that of a shark, though it may face forward when walking upright.",
+      "description": "Essentially a shark 7-8 feet (2.1 to 2.4 m) long/tall with two short, thick arms and legs with webbed fingers and toes, no neck, and a short tail. The head is completely that of a shark, though it may face forward when walking upright.",
       "playerChoices": [
         {
           "label": "Shark species",
@@ -241,7 +241,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
@@ -342,7 +342,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -399,7 +399,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],

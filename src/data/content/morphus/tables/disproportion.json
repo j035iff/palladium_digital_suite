@@ -3,7 +3,7 @@
   "kind": "category_hub",
   "displayName": "Disproportion",
   "parentTable": null,
-  "description": "Disproportion Morphus table (Nightbane Survival Guide, WB5, printed pp. 87–88). Body image has always been one of the most common fears throughout time. People thinking they are too fat, too skinny, have huge feet or ears, etc., leading to fear that one’s body is ugly and malformed. Perhaps this character obsessed about such things, and now has a Morphus body that is grossly out of proportion (2–3 times larger or smaller than normal). Step One (percentile): 01–20% Head, 21–50% Arms & Hands, 51–70% Torso, 71–90% Legs & Feet, 91–00% roll Step One twice for two disproportions. Step Two: roll on the matching sub-table below.",
+  "description": "Disproportion Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Body image has always been one of the most common fears throughout time. People thinking they are too fat, too skinny, have huge feet or ears, etc., leading to fear that one's body is ugly and malformed. Perhaps this character obsessed about such things, and now has a Morphus body that is grossly out of proportion (2-3 times larger or smaller than normal). Step One (percentile): 01-20% Head, 21-50% Arms & Hands, 51-70% Torso, 71-90% Legs & Feet, 91-00% roll Step One twice for two disproportions. Step Two: roll on the matching sub-table below.",
   "subtables": [
     {
       "id": "disproportion_head",

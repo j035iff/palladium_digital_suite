@@ -3,27 +3,55 @@
   "kind": "morphus_trait_table",
   "displayName": "Primate",
   "parentTable": "animal",
-  "description": "Primate Morphus table (Nightbane® Dark Designs, WB6, pp. 24–25). Humanity's closest cousins. All Nightbane with at least one primate feature automatically gain Climbing at a base ability of 50%. Main table: 01–14% Monkey, 15–26% Baboon, 27–38% Chimpanzee, 39–50% Orangutan, 51–64% Gorilla, 65–76% Missing Link, 77–88% Prehensile Feet, 89–00% then roll or pick Sharp Teeth (01–25%), Prehensile Tail (26–50%), Shaggy Hair (51–75%), or Elongated Arms (76–00%).",
+  "description": "Primate Morphus table (Dark Designs (WB6), pp. 24-25). Humanity's closest cousins. All Nightbane with at least one primate feature automatically gain Climbing at a base ability of 50%. Main table: 01-14% Monkey, 15-26% Baboon, 27-38% Chimpanzee, 39-50% Orangutan, 51-64% Gorilla, 65-76% Missing Link, 77-88% Prehensile Feet, 89-00% then roll or pick Sharp Teeth (01-25%), Prehensile Tail (26-50%), Shaggy Hair (51-75%), or Elongated Arms (76-00%).",
   "entries": [
     {
       "id": "animal_primate_monkey",
       "name": "Monkey",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 24 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 24
+        }
+      ],
       "description": "Typically half the size and weight of the Facade, covered in fur, with prehensile hands, feet, and tail. Tail is as long or longer than the body (about 3 feet / 0.9 m on average).",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "me": { "flat": 1 },
-        "ma": { "flat": 1 },
-        "pp": { "flat": 2 },
-        "spd": { "dice": "1D6+2" },
-        "perception": { "flat": 2 },
-        "initiative": { "flat": 1 },
-        "rollWithPunch": { "flat": 3 },
-        "sdc": { "percent": -50 }
+        "iq": {
+          "flat": 1
+        },
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 1
+        },
+        "pp": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "1D6+2"
+        },
+        "perception": {
+          "flat": 2
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 3
+        },
+        "sdc": {
+          "percent": -50
+        }
       },
-      "weightModifier": { "percent": -50 },
+      "weightModifier": {
+        "percent": -50
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -34,7 +62,12 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50, "modifierPercent": 20 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50,
+            "modifierPercent": 20
+          }
         ]
       },
       "customOneOffs": [
@@ -47,21 +80,51 @@
       "id": "animal_primate_baboon",
       "name": "Baboon",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 24 }],
-      "description": "Body 2–3 feet (0.6–0.9 m), non-prehensile tail 1.5–2 feet (0.5–0.6 m), largely terrestrial with small claws, large sharp canine teeth, and brightly colored facial features and buttocks. Weight averages 33–82 pounds (15–37 kg).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 24
+        }
+      ],
+      "description": "Body 2-3 feet (0.6-0.9 m), non-prehensile tail 1.5-2 feet (0.5-0.6 m), largely terrestrial with small claws, large sharp canine teeth, and brightly colored facial features and buttocks. Weight averages 33-82 pounds (15-37 kg).",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "me": { "flat": 2 },
-        "ps": { "dice": "1D4" },
-        "pe": { "flat": 1 },
-        "spd": { "dice": "1D4+1" },
-        "pb": { "flat": -3 },
-        "apm": { "flat": 1 },
-        "perception": { "flat": 2 },
-        "initiative": { "flat": 1 },
-        "dodge": { "flat": 1 },
-        "rollWithPunch": { "flat": 1 }
+        "iq": {
+          "flat": 1
+        },
+        "me": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "spd": {
+          "dice": "1D4+1"
+        },
+        "pb": {
+          "flat": -3
+        },
+        "apm": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 2
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -73,7 +136,11 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          }
         ]
       },
       "customOneOffs": [
@@ -84,20 +151,48 @@
       "id": "animal_primate_chimpanzee",
       "name": "Chimpanzee",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 24 }],
-      "description": "Dark hair covering most of the body, almost nonexistent tail, prehensile hands and feet. Standing about 4 to 5.5 feet (1.2 to 1.7 m) tall and weighing approximately 70–130 pounds (32–59 kg).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 24
+        }
+      ],
+      "description": "Dark hair covering most of the body, almost nonexistent tail, prehensile hands and feet. Standing about 4 to 5.5 feet (1.2 to 1.7 m) tall and weighing approximately 70-130 pounds (32-59 kg).",
       "statModifiers": {
-        "iq": { "flat": 2 },
-        "me": { "flat": 1 },
-        "ma": { "flat": 2 },
-        "ps": { "dice": "1D6" },
-        "pb": { "flat": -2 },
-        "sdc": { "dice": "1D4x10" },
-        "perception": { "flat": 2 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "rollWithPunch": { "flat": 2 }
+        "iq": {
+          "flat": 2
+        },
+        "me": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": 2
+        },
+        "ps": {
+          "dice": "1D6"
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "1D4x10"
+        },
+        "perception": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 2
+        }
       },
       "naturalWeapons": [
         {
@@ -109,7 +204,12 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50, "modifierPercent": 10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50,
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [
@@ -121,24 +221,58 @@
       "id": "animal_primate_orangutan",
       "name": "Orangutan",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 24 }],
-      "description": "Long-armed, largely arboreal great ape with long reddish-brown hair covering all but the face, hands, and prehensile feet. Morphus is slightly shorter than the Facade and averages 100–260 lbs (45–117 kg); arms are elongated.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 24
+        }
+      ],
+      "description": "Long-armed, largely arboreal great ape with long reddish-brown hair covering all but the face, hands, and prehensile feet. Morphus is slightly shorter than the Facade and averages 100-260 lbs (45-117 kg); arms are elongated.",
       "statModifiers": {
-        "iq": { "flat": 1 },
-        "me": { "flat": 1 },
-        "ps": { "dice": "1D4+2" },
-        "pe": { "flat": 1 },
-        "pb": { "flat": -3 },
-        "sdc": { "dice": "1D4x10+25" },
-        "apm": { "flat": 1 },
-        "perception": { "flat": 1 },
-        "parry": { "flat": 2 },
-        "rollWithPunch": { "flat": 2 },
-        "entangle": { "flat": 1 },
-        "disarm": { "flat": 1 }
+        "iq": {
+          "flat": 1
+        },
+        "me": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "1D4+2"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -3
+        },
+        "sdc": {
+          "dice": "1D4x10+25"
+        },
+        "apm": {
+          "flat": 1
+        },
+        "perception": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 2
+        },
+        "rollWithPunch": {
+          "flat": 2
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 1
+        }
       },
-      "heightModifier": { "dice": "-1D6" },
+      "heightModifier": {
+        "dice": "-1D6"
+      },
       "naturalWeapons": [
         {
           "limbType": "bite",
@@ -149,7 +283,12 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50, "modifierPercent": 10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50,
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [
@@ -161,20 +300,48 @@
       "id": "animal_primate_gorilla",
       "name": "Gorilla",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "The largest great ape—intelligent, powerfully built, with dark hair (usually black, gray, or dark brown) and large sharp teeth. Roughly Facade height; can stand and walk on two legs though running is on all fours in a loping fashion.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "The largest great ape-intelligent, powerfully built, with dark hair (usually black, gray, or dark brown) and large sharp teeth. Roughly Facade height; can stand and walk on two legs though running is on all fours in a loping fashion.",
       "statModifiers": {
-        "iq": { "flat": 2 },
-        "ma": { "flat": 1 },
-        "ps": { "dice": "1D6+5" },
-        "pe": { "flat": 2 },
-        "pb": { "flat": -2 },
-        "sdc": { "dice": "1D6x10+50" },
-        "perception": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "rollWithPunch": { "flat": 1 }
+        "iq": {
+          "flat": 2
+        },
+        "ma": {
+          "flat": 1
+        },
+        "ps": {
+          "dice": "1D6+5"
+        },
+        "pe": {
+          "flat": 2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "1D6x10+50"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -186,7 +353,11 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          }
         ]
       },
       "customOneOffs": [
@@ -198,25 +369,59 @@
       "id": "animal_primate_missing_link",
       "name": "Missing Link",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "A cross between a great ape and a Neanderthal—short dark hair, slightly elongated powerful arms, hunched posture, pronounced brow ridge, strong jaw, wide nose, and guttural speech.",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "A cross between a great ape and a Neanderthal-short dark hair, slightly elongated powerful arms, hunched posture, pronounced brow ridge, strong jaw, wide nose, and guttural speech.",
       "statModifiers": {
-        "ps": { "dice": "1D4+3" },
-        "pp": { "flat": 2 },
-        "pe": { "flat": 1 },
-        "ma": { "flat": -2 },
-        "pb": { "flat": -2 },
-        "sdc": { "dice": "2D4x10" },
-        "initiative": { "flat": 1 },
-        "strike": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "dodge": { "flat": 1 },
-        "rollWithPunch": { "flat": 1 }
+        "ps": {
+          "dice": "1D4+3"
+        },
+        "pp": {
+          "flat": 2
+        },
+        "pe": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -2
+        },
+        "pb": {
+          "flat": -2
+        },
+        "sdc": {
+          "dice": "2D4x10"
+        },
+        "initiative": {
+          "flat": 1
+        },
+        "strike": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "dodge": {
+          "flat": 1
+        },
+        "rollWithPunch": {
+          "flat": 1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          }
         ]
       },
       "customOneOffs": [
@@ -227,17 +432,36 @@
       "id": "animal_primate_prehensile_feet",
       "name": "Prehensile Feet",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
       "description": "Dexterous feet able to grasp branches and weapons similar to many primates.",
       "statModifiers": {
-        "apm": { "flat": 1 },
-        "parry": { "flat": 1 },
-        "spd": { "percent": -50 }
+        "apm": {
+          "flat": 1
+        },
+        "parry": {
+          "flat": 1
+        },
+        "spd": {
+          "percent": -50
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50, "modifierPercent": 10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50,
+            "modifierPercent": 10
+          }
         ]
       },
       "customOneOffs": [
@@ -249,13 +473,27 @@
       "id": "animal_primate_sharp_teeth",
       "name": "Sharp Teeth",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "Long, fang-like teeth. Reached from the main table 89–00% band (inner roll 01–25%).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "Long, fang-like teeth. Reached from the main table 89-00% band (inner roll 01-25%).",
       "statModifiers": {
-        "ma": { "flat": -1 },
-        "pb": { "flat": -2 },
-        "hf": { "flat": 1 }
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -2
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -267,9 +505,21 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -10 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -10 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -10
+          }
         ]
       },
       "customOneOffs": [
@@ -281,17 +531,36 @@
       "id": "animal_primate_prehensile_tail",
       "name": "Prehensile Tail",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "A prehensile tail that can grasp and carry things or assist climbing. Reached from the main table 89–00% band (inner roll 26–50%).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "A prehensile tail that can grasp and carry things or assist climbing. Reached from the main table 89-00% band (inner roll 26-50%).",
       "statModifiers": {
-        "apm": { "flat": 1 },
-        "ma": { "flat": -1 },
-        "pb": { "flat": -2 }
+        "apm": {
+          "flat": 1
+        },
+        "ma": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -2
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50, "modifierPercent": 20 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50,
+            "modifierPercent": 20
+          }
         ]
       },
       "customOneOffs": [
@@ -304,19 +573,47 @@
       "id": "animal_primate_shaggy_hair",
       "name": "Shaggy Hair",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "Thick shaggy hair covering the body except palms and soles; any color including unnatural tones. Reached from the main table 89–00% band (inner roll 51–75%).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "Thick shaggy hair covering the body except palms and soles; any color including unnatural tones. Reached from the main table 89-00% band (inner roll 51-75%).",
       "statModifiers": {
-        "sdc": { "dice": "4D6" },
-        "hf": { "flat": 1 }
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_concealment", "modifierPercent": 10 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -30 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -30 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_concealment",
+            "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          }
         ]
       },
       "customOneOffs": [
@@ -327,14 +624,30 @@
       "id": "animal_primate_elongated_arms",
       "name": "Elongated Arms",
       "tableCategory": "Animal: Primate",
-      "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 25 }],
-      "description": "Long upper and lower arms reminiscent of a gorilla or ape. Reached from the main table 89–00% band (inner roll 76–00%).",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 25
+        }
+      ],
+      "description": "Long upper and lower arms reminiscent of a gorilla or ape. Reached from the main table 89-00% band (inner roll 76-00%).",
       "statModifiers": {
-        "parry": { "flat": 1 },
-        "disarm": { "flat": 1 },
-        "entangle": { "flat": 1 },
-        "pb": { "flat": -2 }
+        "parry": {
+          "flat": 1
+        },
+        "disarm": {
+          "flat": 1
+        },
+        "entangle": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -2
+        }
       },
       "mobility": {
         "reachPercentBonus": 20
@@ -344,9 +657,21 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_climbing", "grantUnlearnedValue": 50 },
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "modifierPercent": -20 },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "modifierPercent": -20 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
         ]
       }
     }

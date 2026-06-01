@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Athlete",
   "parentTable": null,
-  "description": "Athlete Morphus table (Nightbane® Dark Designs Sourcebook, pp. 28–29). Nightbane with substantial interest or investment in athletics—from recreational play to Olympic-level training.",
+  "description": "Athlete Morphus table (Dark Designs (WB6), pp. 28-29). Nightbane with substantial interest or investment in athletics-from recreational play to Olympic-level training.",
   "entries": [
     {
       "id": "athlete_streamlined",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -69,7 +69,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -129,7 +129,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -200,7 +200,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -238,7 +238,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -288,7 +288,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 28
         }
       ],
@@ -326,7 +326,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 29
         }
       ],
@@ -395,7 +395,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 29
         }
       ],
@@ -450,7 +450,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 29
         }
       ],

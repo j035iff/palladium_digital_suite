@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Artisan",
   "parentTable": null,
-  "description": "Artistic Nightbane and those who share a great appreciation for art may find their Morphus forms reflect creative identity through painterly, sculptural, literary, costume, metalwork, musical, or body-art features (WB6 pp. 26–27).",
+  "description": "Artisan Morphus table (Dark Designs (WB6), pp. 26-27). Artistic Nightbane and those who share a great appreciation for art may find their Morphus forms reflect creative identity through painterly, sculptural, literary, costume, metalwork, musical, or body-art features (WB6 pp. 26-27).",
   "entries": [
     {
       "id": "artisan_paint_palette",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 26
         }
       ],
@@ -81,7 +81,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 26
         }
       ],
@@ -138,7 +138,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 26
         }
       ],
@@ -191,7 +191,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 26
         }
       ],
@@ -249,7 +249,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 26
         }
       ],
@@ -308,7 +308,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 27
         }
       ],
@@ -389,7 +389,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 27
         }
       ],
@@ -437,7 +437,7 @@
             "targetType": "skill_id",
             "targetValue": "swimming",
             "modifierPercent": -10
-        }
+          }
         ]
       },
       "playerChoices": [
@@ -470,7 +470,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 27
         }
       ],
@@ -562,7 +562,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 27
         }
       ],

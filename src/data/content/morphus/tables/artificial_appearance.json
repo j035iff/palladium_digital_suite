@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Artificial Appearance",
   "parentTable": null,
-  "description": "Artificial Appearance Morphus table (Nightbane Survival Guide, WB5, printed pp. 80-82). Nightbane who appear artificial or man-made—mannequins, dummies, scarecrows, porcelain, junk, glass, clay, wood, mirrors, or stuffed animals.",
+  "description": "Artificial Appearance Morphus table (Nightbane Survival Guide (WB5), pp. 80-81). Nightbane who appear artificial or man-made-mannequins, dummies, scarecrows, porcelain, junk, glass, clay, wood, mirrors, or stuffed animals.",
   "entries": [
     {
       "id": "artificial_appearance_store_mannequin",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
@@ -96,7 +96,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
@@ -147,7 +147,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 80
         }
       ],
@@ -230,7 +230,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -289,7 +289,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -385,7 +385,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -443,7 +443,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -530,7 +530,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -606,7 +606,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],
@@ -699,7 +699,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 81
         }
       ],

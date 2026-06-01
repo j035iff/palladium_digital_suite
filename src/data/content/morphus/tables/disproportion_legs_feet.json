@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Legs & Feet",
   "parentTable": "disproportion",
-  "description": "Disproportionate Legs & Feet (WB5 p. 88). Roll percentile on this sub-table after Step One selects legs and feet.",
+  "description": "Legs & Feet Morphus table (Nightbane Survival Guide (WB5), p. 88). Roll percentile on this sub-table after Step One selects legs and feet.",
   "entries": [
     {
       "id": "disproportion_huge_legs",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -63,7 +63,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -96,7 +96,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -137,7 +137,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -187,7 +187,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],

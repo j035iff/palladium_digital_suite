@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Crustacean",
   "parentTable": "animal",
-  "description": "Aquatic: Crustacean Morphus table (Nightbane Survival Guide, WB5, pp. 76–77). The character has an affinity for crustaceans reflected in the Morphus. All Crustacean Nightbane swim at 85%, breathe underwater indefinitely, and breathe air normally.",
+  "description": "Crustacean Morphus table (Nightbane Survival Guide (WB5), pp. 76-77). Aquatic: The character has an affinity for crustaceans reflected in the Morphus. All Crustacean Nightbane swim at 85%, breathe underwater indefinitely, and breathe air normally.",
   "entries": [
     {
       "id": "animal_crustacean_giant",
@@ -15,11 +15,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 76
         }
       ],
-      "description": "The Nightbane is a giant, talking crab, lobster, crayfish, or similar creature with an armored, humanoid head. The overall body looks completely like the animal, with body shape, ridges, spines, multiple legs, pincer claws, and eye stalks. Typically 6–8 feet (1.8 to 2.4 m) long with no human hands—arms and hands are the two pincer-limbs.",
+      "description": "The Nightbane is a giant, talking crab, lobster, crayfish, or similar creature with an armored, humanoid head. The overall body looks completely like the animal, with body shape, ridges, spines, multiple legs, pincer claws, and eye stalks. Typically 6-8 feet (1.8 to 2.4 m) long with no human hands-arms and hands are the two pincer-limbs.",
       "naturalAr": 15,
       "statModifiers": {
         "sdc": {
@@ -99,7 +99,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 76
         }
       ],
@@ -188,11 +188,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 76
         }
       ],
-      "description": "The body is completely humanoid, though covered in a light exoskeleton. The face is roughly human-like with normal eyes, an impression of a nose, and a small mouth, but the Nightbane would not pass for a human under close inspection—only from a distance or in shadows.",
+      "description": "The body is completely humanoid, though covered in a light exoskeleton. The face is roughly human-like with normal eyes, an impression of a nose, and a small mouth, but the Nightbane would not pass for a human under close inspection-only from a distance or in shadows.",
       "naturalAr": 11,
       "statModifiers": {
         "sdc": {
@@ -251,7 +251,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 76
         }
       ],
@@ -333,7 +333,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 77
         }
       ],
@@ -396,7 +396,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 77
         }
       ],

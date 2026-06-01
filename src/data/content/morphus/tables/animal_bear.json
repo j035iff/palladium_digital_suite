@@ -3,32 +3,60 @@
   "kind": "morphus_trait_table",
   "displayName": "Bear",
   "parentTable": "animal",
-  "description": "Bear Form Morphus table (Nightbane® Dark Designs, WB6, pp. 138–139; originally Between the Shadows, WB1, pp. 130–131). Bears are respected for strength and raw power. Common shapes include grizzly, polar, black, and brown bears. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
+  "description": "Bear Morphus tables (Between the Shadows (WB1), pp. 130-131; Dark Designs (WB6), p. 138). Bears are respected for strength and raw power. Common shapes include grizzly, polar, black, and brown bears. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
   "entries": [
     {
       "id": "animal_bear_full_ursinoid",
       "name": "Full Ursinoid",
       "tableCategory": "Animal: Bear",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 138 },
-        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 130 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 138
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows (WB1)",
+          "pageNumber": 130
+        }
       ],
       "description": "The Nightbane's Morphus is a large bear, typically close to the largest normal size for the species, and easily confused for the real thing unless other Nightbane characteristics make that impossible.",
       "playerChoices": [
         {
           "label": "Bear species",
-          "options": ["grizzly", "polar", "black", "brown", "other"],
+          "options": [
+            "grizzly",
+            "polar",
+            "black",
+            "brown",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 12 },
-        "pp": { "flat": 1 },
-        "pe": { "flat": 6 },
-        "spd": { "dice": "1D6" },
-        "sdc": { "dice": "4D6x10" },
-        "hf": { "flat": 1 }
+        "ps": {
+          "flat": 12
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 6
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "4D6x10"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {
@@ -46,9 +74,21 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
         ]
       },
       "customOneOffs": [
@@ -59,28 +99,58 @@
       "id": "animal_bear_were",
       "name": "Were-Bear",
       "tableCategory": "Animal: Bear",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 138 },
-        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 130 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 138
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows (WB1)",
+          "pageNumber": 130
+        }
       ],
       "description": "A mixture of man and beast, with the beast predominating. Since bears can stand on their hind legs, it is easy to confuse the Nightbane with a normal bear under bad light, but when clearly seen it is obvious the creature is not natural. This animal form can manipulate objects with its hands/paws, but with some limitations.",
       "playerChoices": [
         {
           "label": "Bear species",
-          "options": ["grizzly", "polar", "black", "brown", "other"],
+          "options": [
+            "grizzly",
+            "polar",
+            "black",
+            "brown",
+            "other"
+          ],
           "timing": "character_creation"
         }
       ],
       "statModifiers": {
-        "ps": { "flat": 8 },
-        "pe": { "flat": 3 },
-        "sdc": { "dice": "3D4x10" },
-        "hf": { "flat": 2 },
-        "strike": { "flat": -2 },
-        "parry": { "flat": -2 }
+        "ps": {
+          "flat": 8
+        },
+        "pe": {
+          "flat": 3
+        },
+        "sdc": {
+          "dice": "3D4x10"
+        },
+        "hf": {
+          "flat": 2
+        },
+        "strike": {
+          "flat": -2
+        },
+        "parry": {
+          "flat": -2
+        }
       },
-      "weightModifier": { "percent": 35 },
+      "weightModifier": {
+        "percent": 35
+      },
       "naturalWeapons": [
         {
           "limbType": "claws",
@@ -97,10 +167,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -15 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -15
+          }
         ]
       },
       "customOneOffs": [
@@ -114,19 +200,39 @@
       "id": "animal_bear_humanoid",
       "name": "Bear Humanoid",
       "tableCategory": "Animal: Bear",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 138 },
-        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 130 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 138
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows (WB1)",
+          "pageNumber": 130
+        }
       ],
       "description": "A more human-like creature with a basic human shape, except it is covered with fur and the head and facial features still seem bear-like. A cloak, large trench coat and hat or other bulky clothing might hide its appearance at a distance and in the dark, but not for long. The creature will be very tall, at least six feet (1.8 m) or more.",
       "statModifiers": {
-        "ps": { "flat": 4 },
-        "pe": { "flat": 2 },
-        "sdc": { "dice": "1D6x10" },
-        "hf": { "flat": 2 }
+        "ps": {
+          "flat": 4
+        },
+        "pe": {
+          "flat": 2
+        },
+        "sdc": {
+          "dice": "1D6x10"
+        },
+        "hf": {
+          "flat": 2
+        }
       },
-      "heightModifier": { "flat": 6 },
+      "heightModifier": {
+        "flat": 6
+      },
       "naturalWeapons": [
         {
           "limbType": "claws",
@@ -149,23 +255,51 @@
       "id": "animal_bear_centauroid",
       "name": "Bear Centauroid",
       "tableCategory": "Animal: Bear",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 138 },
-        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 138
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows (WB1)",
+          "pageNumber": 131
+        }
       ],
       "description": "The Nightbane has the upper torso of a were-bear and the lower body of a full bear, complete with four legs. This creature is far larger than a normal bear, and will not fit any small, enclosed space, including most vehicles, indoor locations, and small elevators.",
       "statModifiers": {
-        "ps": { "flat": 10 },
-        "pp": { "flat": 1 },
-        "pe": { "flat": 2 },
-        "spd": { "dice": "1D6" },
-        "sdc": { "dice": "3D6x10" },
-        "hf": { "dice": "1D4+1" },
-        "strike": { "flat": -2 },
-        "parry": { "flat": -2 }
+        "ps": {
+          "flat": 10
+        },
+        "pp": {
+          "flat": 1
+        },
+        "pe": {
+          "flat": 2
+        },
+        "spd": {
+          "dice": "1D6"
+        },
+        "sdc": {
+          "dice": "3D6x10"
+        },
+        "hf": {
+          "dice": "1D4+1"
+        },
+        "strike": {
+          "flat": -2
+        },
+        "parry": {
+          "flat": -2
+        }
       },
-      "weightModifier": { "percent": 100 },
+      "weightModifier": {
+        "percent": 100
+      },
       "naturalWeapons": [
         {
           "limbType": "claws",
@@ -182,10 +316,26 @@
       ],
       "skillModifiers": {
         "specificSkillOverrides": [
-          { "targetType": "skill_id", "targetValue": "skill_disguise", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_seduction", "impossibleInMorphus": true },
-          { "targetType": "skill_id", "targetValue": "skill_undercover_ops", "impossibleInMorphus": true },
-          { "targetType": "skill_trait", "targetValue": "requires_light_touch", "modifierPercent": -15 }
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": -15
+          }
         ]
       },
       "customOneOffs": [
@@ -198,15 +348,29 @@
       "id": "animal_bear_head",
       "name": "Bear Head",
       "tableCategory": "Animal: Bear",
-      "gameSystems": ["nightbane"],
+      "gameSystems": [
+        "nightbane"
+      ],
       "sources": [
-        { "gameSystem": "nightbane", "reference": "Dark Designs", "pageNumber": 138 },
-        { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 131 }
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 138
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Between the Shadows (WB1)",
+          "pageNumber": 131
+        }
       ],
       "description": "A normal looking human with the head of a bear.",
       "statModifiers": {
-        "sdc": { "dice": "5D6" },
-        "hf": { "flat": 1 }
+        "sdc": {
+          "dice": "5D6"
+        },
+        "hf": {
+          "flat": 1
+        }
       },
       "naturalWeapons": [
         {

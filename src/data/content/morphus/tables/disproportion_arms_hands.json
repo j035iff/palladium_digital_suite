@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Arms & Hands",
   "parentTable": "disproportion",
-  "description": "Disproportionate Arms & Hands (WB5 pp. 87–88). Roll percentile on this sub-table after Step One selects arms and hands.",
+  "description": "Arms & Hands Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Roll percentile on this sub-table after Step One selects arms and hands.",
   "entries": [
     {
       "id": "disproportion_huge_forearms",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -46,7 +46,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -101,7 +101,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -131,7 +131,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -161,7 +161,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -215,7 +215,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -248,7 +248,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],
@@ -281,7 +281,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 88
         }
       ],

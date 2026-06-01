@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Angelic",
   "parentTable": null,
-  "description": "Angelic Morphus table (Nightbane Survival Guide, p. 73). Nightbane who believe they were chosen for a holy purpose—appearance varies by faith; many other Nightbane find them arrogant.",
+  "description": "Nightbane who believe they were chosen for a holy purpose-appearance varies by faith; many other Nightbane find them arrogant.",
   "entries": [
     {
       "id": "angelic_inner_light",

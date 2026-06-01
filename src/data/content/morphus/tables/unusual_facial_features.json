@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unusual Facial Features",
   "parentTable": null,
-  "description": "Unusual facial Morphus tables. Table I (Facial Features / Unusual Facial Features) from Nightbane RPG and Dark Designs — distorted faces, horns, tentacles, and alien features (01–95%; 86–90% Biomechanical and 96–00% Two/Three are cross-table routers). Table II (Unusual Facial Features Table II) from Survival Guide only — heat pits, chest face, metal head, worm face, and similar (01–00%). Dark Designs applies -40% to Disguise, Seduction, and Undercover Ops for most Table I results.",
+  "description": "Unusual Facial Features Morphus tables (Nightbane Core Rulebook, pp. 102-103; Nightbane Survival Guide (WB5), pp. 98-99; Dark Designs (WB6), pp. 134-135). Unusual facial Morphus tables. Table I (Facial Features / Unusual Facial Features) from Nightbane Core Rulebook and Dark Designs (WB6) - distorted faces, horns, tentacles, and alien features (01-95%; 86-90% Biomechanical and 96-00% Two/Three are cross-table routers). Table II (Unusual Facial Features Table II) from Survival Guide only - heat pits, chest face, metal head, worm face, and similar (01-00%). Dark Designs (WB6) applies -40% to Disguise, Seduction, and Undercover Ops for most Table I results.",
   "entries": [
     {
       "id": "unusual_facial_features_alien_features",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 103
         }
       ],
@@ -41,7 +41,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
@@ -98,7 +98,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 98
         }
       ],
@@ -131,12 +131,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -160,12 +160,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -189,12 +189,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 103
         }
       ],
@@ -218,12 +218,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -244,7 +244,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 98
         }
       ],
@@ -265,12 +265,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 103
         }
       ],
@@ -291,7 +291,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
@@ -326,11 +326,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
-      "description": "The Morphus gives the Nightbane a face, neck and head that appears to be one of the following: 01–25% robotic face and head; 26–50% metal plates bolted or fused seamlessly to the skin and bone of the face, head and neck; 51–75% the man in the iron mask — an iron helmet clamped around his head and locked tight; 76–00% a polished metal face plate reminiscent of samurai armor (gold, silver, or black, optionally ornate). Bonuses: Face and head have 1D6×10+60 S.D.C., +1 to save vs psionic attacks and possession; the mask cannot be removed by any means. Penalties: Disguise and Undercover Ops are impossible.",
+      "description": "The Morphus gives the Nightbane a face, neck and head that appears to be one of the following: 01-25% robotic face and head; 26-50% metal plates bolted or fused seamlessly to the skin and bone of the face, head and neck; 51-75% the man in the iron mask - an iron helmet clamped around his head and locked tight; 76-00% a polished metal face plate reminiscent of samurai armor (gold, silver, or black, optionally ornate). Bonuses: Face and head have 1D6×10+60 S.D.C., +1 to save vs psionic attacks and possession; the mask cannot be removed by any means. Penalties: Disguise and Undercover Ops are impossible.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10+60"
@@ -365,12 +365,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -391,7 +391,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 98
         }
       ],
@@ -421,12 +421,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 103
         }
       ],
@@ -447,12 +447,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 134
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -476,12 +476,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -502,12 +502,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 102
         }
       ],
@@ -531,12 +531,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 135
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® RPG (core rulebook)",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 103
         }
       ],
@@ -560,7 +560,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
@@ -595,7 +595,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
@@ -625,7 +625,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],

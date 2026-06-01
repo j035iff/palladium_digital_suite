@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Victim",
   "parentTable": null,
-  "description": "Victim Morphus table (Survival Guide only). Nightbane who felt abused, tortured, neglected, helpless, or unwanted — Morphus forms appear frail and wounded whether or not the character truly is. Roll 01–00% on this table only (no cross-table routers).",
+  "description": "Victim Morphus table (Nightbane Survival Guide (WB5), pp. 99-101). Nightbane who felt abused, tortured, neglected, helpless, or unwanted - Morphus forms appear frail and wounded whether or not the character truly is. Roll 01-00% on this table only (no cross-table routers).",
   "entries": [
     {
       "id": "victim_beaten",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -58,7 +58,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -107,7 +107,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -137,7 +137,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -183,7 +183,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -245,7 +245,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 101
         }
       ],
@@ -284,11 +284,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
-      "description": "A Morphus without a face – no eyes, mouth or any facial features (but can still see and talk), just a blank face. There are also ligature marks around the neck, wrists and ankles. This Morphus represents the multitude of people who simply vanish and victims of crimes that are never solved, as well as so-called victimless crimes. Tends to be an avenger and protector of the innocent. Bonuses: +1D4x10 Hit Points, +1D6 to P.S., +1 attack per melee round (+2 against the 100 Joe Sifferman (Order #46323384) Nightlords and Night Princes), fatigues at half the usual rate, and and illusions. Penalties: Reduce I.Q. and S.D.C. by 10%.",
+      "description": "A Morphus without a face - no eyes, mouth or any facial features (but can still see and talk), just a blank face. There are also ligature marks around the neck, wrists and ankles. This Morphus represents the multitude of people who simply vanish and victims of crimes that are never solved, as well as so-called victimless crimes. Tends to be an avenger and protector of the innocent. Bonuses: +1D4x10 Hit Points, +1D6 to P.S., +1 attack per melee round (+2 against the 100 Joe Sifferman (Order #46323384) Nightlords and Night Princes), fatigues at half the usual rate, and and illusions. Penalties: Reduce I.Q. and S.D.C. by 10%.",
       "statModifiers": {
         "ps": {
           "dice": "1D6"
@@ -305,11 +305,11 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],
-      "description": "The Morphus of an emaciated human covered with filth – dirt, grime, old food, and dried blood. The hair is matted and has stuff sticking out of it, and any clothing is 99 Joe Sifferman (Order #46323384) similarly filthy, crumpled and unkempt. Bonuses: +2 to P.E., +1 to M.E., +1 to Horror Factor. Penalties: -1D4 to P.B. and -25% to all skills involving appearance and performance, including Disguise and Seduction.",
+      "description": "The Morphus of an emaciated human covered with filth - dirt, grime, old food, and dried blood. The hair is matted and has stuff sticking out of it, and any clothing is 99 Joe Sifferman (Order #46323384) similarly filthy, crumpled and unkempt. Bonuses: +2 to P.E., +1 to M.E., +1 to Horror Factor. Penalties: -1D4 to P.B. and -25% to all skills involving appearance and performance, including Disguise and Seduction.",
       "statModifiers": {
         "pe": {
           "flat": 2
@@ -344,7 +344,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -385,7 +385,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 100
         }
       ],
@@ -406,7 +406,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Survival Guide (WB5)",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 99
         }
       ],

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Mineral",
   "parentTable": null,
-  "description": "Mineral and Mineral II Morphus tables. Mineral Table I (Dark Designs / Nightlands): inorganic stone, metal, or crystal bodies.",
+  "description": "Mineral Morphus tables (Nightlands (WB2), pp. 144-145; Nightbane Survival Guide (WB5), pp. 93-95). Mineral and Mineral II Morphus tables. Mineral Table I (Dark Designs (WB6) / Nightlands (WB2)): inorganic stone, metal, or crystal bodies.",
   "entries": [
     {
       "id": "mineral_1_rough_metal_body",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -61,7 +61,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -110,7 +110,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -158,7 +158,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -207,7 +207,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -237,7 +237,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -270,7 +270,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 144
         }
       ],
@@ -305,7 +305,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightlands",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 145
         }
       ],
@@ -355,7 +355,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 93
         }
       ],
@@ -430,7 +430,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -526,7 +526,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -603,7 +603,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -684,7 +684,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -762,7 +762,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -853,7 +853,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 94
         }
       ],
@@ -952,7 +952,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -1034,7 +1034,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],
@@ -1134,7 +1134,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 95
         }
       ],

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Infernal",
   "parentTable": null,
-  "description": "Infernal Morphus table (Nightbane Survival Guide, pp. 91–93). Nightbane drawn to demonic myth, cursed self-image, or a dark path—may struggle with evil, fight it, or embrace it. When this table is selected, the player may elect Anarchist, Aberrant, or Miscreant alignment. Holy Weapons inflict 50% more damage to all Infernal-table characters; they tend to avoid churches and sacred places.",
+  "description": "Infernal Morphus table (Nightbane Survival Guide (WB5), pp. 92-93). Nightbane drawn to demonic myth, cursed self-image, or a dark path-may struggle with evil, fight it, or embrace it. When this table is selected, the player may elect Anarchist, Aberrant, or Miscreant alignment. Holy Weapons inflict 50% more damage to all Infernal-table characters; they tend to avoid churches and sacred places.",
   "entries": [
     {
       "id": "infernal_demon_claw",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -97,7 +97,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -179,7 +179,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -265,7 +265,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -342,7 +342,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -404,7 +404,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -477,7 +477,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -534,7 +534,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 92
         }
       ],
@@ -604,7 +604,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 93
         }
       ],
@@ -666,7 +666,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide",
+          "reference": "Nightbane Survival Guide (WB5)",
           "pageNumber": 93
         }
       ],

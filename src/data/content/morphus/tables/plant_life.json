@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Plant Life",
   "parentTable": null,
-  "description": "Plant Life and Plant Life II Morphus tables. Plant traits are universally vulnerable to fire/heat (double damage) and resistant to cold/ice (half damage). Plant Life II entries also inherit the table rule that defoliants/herbicides act as lethal poison.",
+  "description": "Plant Life Morphus tables (Nightlands (WB2), p. 143; Dark Designs (WB6), pp. 47-50, 142). Plant Life and Plant Life II Morphus tables. Plant traits are universally vulnerable to fire/heat (double damage) and resistant to cold/ice (half damage). Plant Life II entries also inherit the table rule that defoliants/herbicides act as lethal poison.",
   "entries": [
     {
       "id": "plant_life_humanoid_tree",
@@ -57,12 +57,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -114,12 +114,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -171,12 +171,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -225,12 +225,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -279,12 +279,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -320,12 +320,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -358,12 +358,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -419,12 +419,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 142
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Sourcebook 2: Nightlands (WB2)",
+          "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
       ]
@@ -433,7 +433,7 @@
       "id": "plant_life_ii_fern_fronds",
       "name": "Fern Fronds",
       "tableCategory": "Plant Life II",
-      "description": "Growing from the head, shoulders, and back of the Morphus form are long stems with tiny leaves. These fronds cascade down the sides of the head and the back like long, flowing hair. The most common colors are green, brown, yellow, and blue. Bonuses: The fronds allow the Nightbane to subsist completely on sunlight and water. As long as the charac- ter gets at least 14 hours of sunlight per week, no other food is needed. If less sunlight exposure is obtained, it must be supple- mented with solid food. The foliage also makes pretty good cam- Joe Sifferman (Order #46319524) 48 ouflage in wooded environments, adding a +5% bonus to Prowl, and +1 to Awe/Horror Factor. Penalties: The character must get at least two hours of sunlight per week. Every week without it reduces the P.S. and P.E. attributes by three and the S.D.C. of the Morphus form by 30. If any of these stats reaches zero, the Mor- phus becomes unavailable until there is sunlight to be had. This need for sunlight does not apply while in the Nightlands. -20% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.",
+      "description": "Growing from the head, shoulders, and back of the Morphus form are long stems with tiny leaves. These fronds cascade down the sides of the head and the back like long, flowing hair. The most common colors are green, brown, yellow, and blue. Bonuses: The fronds allow the Nightbane to subsist completely on sunlight and water. As long as the charac- ter gets at least 14 hours of sunlight per week, no other food is needed. If less sunlight exposure is obtained, it must be supple- mented with solid food. The foliage also makes pretty good cam- Joe Sifferman (Order #46319524) 48 ouflage in wooded environments, adding a +5% bonus to Prowl, and +1 to Awe/Horror Factor. Penalties: The character must get at least two hours of sunlight per week. Every week without it reduces the P.S. and P.E. attributes by three and the S.D.C. of the Morphus form by 30. If any of these stats reaches zero, the Mor- phus becomes unavailable until there is sunlight to be had. This need for sunlight does not apply while in the Nightlands (WB2). -20% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -485,7 +485,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
       ]
@@ -546,7 +546,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
       ]
@@ -595,7 +595,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
       ]
@@ -604,7 +604,7 @@
       "id": "plant_life_ii_itch_weed",
       "name": "Itch-Weed",
       "tableCategory": "Plant Life II",
-      "description": "The skin of the Nightbane’s Morphus form is green and has a waxy sheen to it. Part of this sheen is the chemical irritant constantly secreted by the character. This ir- ritant is essentially a powerful version of the substance produced by plants such as Poison Ivy and Poison Oak. Bonuses: +1 to Horror Factor, resistant to poison (half damage, duration and pen- alties on a failed saving throw), and -15% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Poisonous Skin (special): Within 1D4 melee rounds of contact with exposed skin (and a failed save vs non-lethal poison of 16 or greater is necessary), any place an opponent has been touched by the Nightbane turns a bright red and begins to itch and burn. This causes victims to lose 2 attacks per melee round and imposes a -2 penalty on all combat rolls and a -10% penalty to all skills. These effects last for 2D6 minutes. Double the penalties and duration against the Nightlords and the denizens of the Nightlands. Penal- ties: -1 to the M.A. attribute, -2D6 S.D.C., and -1D6 base P.P.E.",
+      "description": "The skin of the Nightbane’s Morphus form is green and has a waxy sheen to it. Part of this sheen is the chemical irritant constantly secreted by the character. This ir- ritant is essentially a powerful version of the substance produced by plants such as Poison Ivy and Poison Oak. Bonuses: +1 to Horror Factor, resistant to poison (half damage, duration and pen- alties on a failed saving throw), and -15% on skills like Disguise, Impersonation, Performance, Seduction and Undercover Ops. Poisonous Skin (special): Within 1D4 melee rounds of contact with exposed skin (and a failed save vs non-lethal poison of 16 or greater is necessary), any place an opponent has been touched by the Nightbane turns a bright red and begins to itch and burn. This causes victims to lose 2 attacks per melee round and imposes a -2 penalty on all combat rolls and a -10% penalty to all skills. These effects last for 2D6 minutes. Double the penalties and duration against the Nightlords and the denizens of the Nightlands (WB2). Penal- ties: -1 to the M.A. attribute, -2D6 S.D.C., and -1D6 base P.P.E.",
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -663,7 +663,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
       ]
@@ -714,7 +714,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
       ]
@@ -723,7 +723,7 @@
       "id": "plant_life_ii_venus_flytrap",
       "name": "Venus Flytrap",
       "tableCategory": "Plant Life II",
-      "description": "The Venus flytrap is a small, carnivorous plant that survives by catching insects in a wide, mouth-like opening and dissolving them for food. This Night- bane is essentially a giant version of the normal plant (think “Little Shop of Horrors”). Legs and feet are replaced by bun- dles of roots that form 4-8 appendages and provide locomotion. Likewise, rudimentary hands and arms are formed out of leafy vines. The body becomes a relatively thin stalk which has sev- eral leafy offshoots. The head of the plant Morphus with its giant maw is the de- fining feature of this Morphus form, as it is the part that opens Joe Sifferman (Order #46319524) 49 up to snap up and hold prey. When closed, the plant head is relatively thin, and appears to be two curved leaves with spiny edges that curl together to form the massive maw. The whole “head” opens up to reveal the mouth. This mouth can open 180 degrees so that the spines or “teeth” all face the same direction and is large enough to easily swallow animals as big as a large dog or wolf, a child, or half of a man. There are no visible eyes, ears, or nose, but the Nightbane is able to see, hear, and smell. In addition, the inside of the mouth is equipped with motion-sensitive fibers that are fine-tuned enough to pick up movement within 20 feet (6.1 m) of the Nightbane, so penal- ties for darkness/blindness are only -2 (not -10). Bonuses: +2 to the M.E. and P.S. attributes, +1 on initiative, +2 to strike/ bite, +1 to parry and entangles with vine arms, +4 to save vs gas attacks, +2 to Horror Factor, and +1D6x10 to S.D.C. (Note: The giant plant head/maw/flytrap has 4D6+50 S.D.C. all by itself, and if destroyed, forces the Nightbane to turn back into his Facade. The head/flytrap regrows completely af- ter 1D4+1 hours. The head takes damage only when targeted with a Called Shot.) Bite Attack: 3D6 damage per bite, each bite counts as one melee attack. What makes the bite attack so dangerous is that the Venus flytrap, holds its prey (or part of him) inside the maw where it secretes digestive acid to kill and dissolve it! The powerful bite holds its prey tight in a vise- like grip that requires twice the flytrap’s Supernatural P.S. to pry open. (Reducing the Nightbane’s Hit Points to three or less causes the flytrap head to open and release its prey.) The mouth can also hold prey, covering up to half of a human- sized target, while digestive juices inflict 2D6 damage per melee round (15 seconds)! Double damage to Nightlords and the denizens of the Nightlands. Penalties: -3 to the M.A. attri- bute, -4 to P.B., and -6 to Spd. The use of ranged weapons and most machinery is impossible and -30% to any skill requiring the use of hands (Art, Climbing, Computer Operation, Pick Locks, etc.). Skills like Acrobatics, Disguise, Impersonation, Performance, Prowl, Seduction, Undercover Ops, Piloting/ driving, etc., are impossible to use in this Morphus. While the character is unable to swim as a giant plant, it does float on the surface of water indefinitely unless weighed down.",
+      "description": "The Venus flytrap is a small, carnivorous plant that survives by catching insects in a wide, mouth-like opening and dissolving them for food. This Night- bane is essentially a giant version of the normal plant (think “Little Shop of Horrors”). Legs and feet are replaced by bun- dles of roots that form 4-8 appendages and provide locomotion. Likewise, rudimentary hands and arms are formed out of leafy vines. The body becomes a relatively thin stalk which has sev- eral leafy offshoots. The head of the plant Morphus with its giant maw is the de- fining feature of this Morphus form, as it is the part that opens Joe Sifferman (Order #46319524) 49 up to snap up and hold prey. When closed, the plant head is relatively thin, and appears to be two curved leaves with spiny edges that curl together to form the massive maw. The whole “head” opens up to reveal the mouth. This mouth can open 180 degrees so that the spines or “teeth” all face the same direction and is large enough to easily swallow animals as big as a large dog or wolf, a child, or half of a man. There are no visible eyes, ears, or nose, but the Nightbane is able to see, hear, and smell. In addition, the inside of the mouth is equipped with motion-sensitive fibers that are fine-tuned enough to pick up movement within 20 feet (6.1 m) of the Nightbane, so penal- ties for darkness/blindness are only -2 (not -10). Bonuses: +2 to the M.E. and P.S. attributes, +1 on initiative, +2 to strike/ bite, +1 to parry and entangles with vine arms, +4 to save vs gas attacks, +2 to Horror Factor, and +1D6x10 to S.D.C. (Note: The giant plant head/maw/flytrap has 4D6+50 S.D.C. all by itself, and if destroyed, forces the Nightbane to turn back into his Facade. The head/flytrap regrows completely af- ter 1D4+1 hours. The head takes damage only when targeted with a Called Shot.) Bite Attack: 3D6 damage per bite, each bite counts as one melee attack. What makes the bite attack so dangerous is that the Venus flytrap, holds its prey (or part of him) inside the maw where it secretes digestive acid to kill and dissolve it! The powerful bite holds its prey tight in a vise- like grip that requires twice the flytrap’s Supernatural P.S. to pry open. (Reducing the Nightbane’s Hit Points to three or less causes the flytrap head to open and release its prey.) The mouth can also hold prey, covering up to half of a human- sized target, while digestive juices inflict 2D6 damage per melee round (15 seconds)! Double damage to Nightlords and the denizens of the Nightlands (WB2). Penalties: -3 to the M.A. attri- bute, -4 to P.B., and -6 to Spd. The use of ranged weapons and most machinery is impossible and -30% to any skill requiring the use of hands (Art, Climbing, Computer Operation, Pick Locks, etc.). Skills like Acrobatics, Disguise, Impersonation, Performance, Prowl, Seduction, Undercover Ops, Piloting/ driving, etc., are impossible to use in this Morphus. While the character is unable to swim as a giant plant, it does float on the surface of water indefinitely unless weighed down.",
       "statModifiers": {
         "me": {
           "flat": 2
@@ -820,7 +820,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
       ]
@@ -887,7 +887,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
       ]
@@ -958,7 +958,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
       ]
@@ -1035,7 +1035,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
       ]
@@ -1089,7 +1089,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 50
         }
       ]

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Arachnid",
   "parentTable": "animal",
-  "description": "Arachnid Morphus table (Nightbane RPG p. 94; Dark Designs pp. 127–128). Spiders and scorpions symbolize alienness and danger. All arachnid Nightbane instinctively Climb at 55% and Prowl at 25% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects spider or scorpion where a row offers both.",
+  "description": "Arachnid Morphus tables (Nightbane Core Rulebook, p. 94; Dark Designs (WB6), pp. 128-129). Spiders and scorpions symbolize alienness and danger. All arachnid Nightbane instinctively Climb at 55% and Prowl at 25% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects spider or scorpion where a row offers both.",
   "entries": [
     {
       "id": "animal_arachnid_full",
@@ -15,12 +15,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 128
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 94
         }
       ],
@@ -148,16 +148,16 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 128
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 94
         }
       ],
-      "description": "A vaguely humanoid creature—two legs and six arms if a spider, or two legs, two arms, two pincer arms, and a tail/stinger if a scorpion. Inhuman head with four to six eyes, pincer-mouth, and chitin or spider-fur instead of skin.",
+      "description": "A vaguely humanoid creature-two legs and six arms if a spider, or two legs, two arms, two pincer arms, and a tail/stinger if a scorpion. Inhuman head with four to six eyes, pincer-mouth, and chitin or spider-fur instead of skin.",
       "playerChoices": [
         {
           "label": "Arachnid type",
@@ -278,12 +278,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 128
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 94
         }
       ],
@@ -400,12 +400,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 128
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 94
         }
       ],
@@ -496,12 +496,12 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 129
         },
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane RPG",
+          "reference": "Nightbane Core Rulebook",
           "pageNumber": 94
         }
       ],

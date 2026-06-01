@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Modern Soldier",
   "parentTable": null,
-  "description": "Modern Soldier Morphus table (Dark Designs pp. 53–55). Military gear and tactics; weapons, helmets, and armor may be biomechanical. With any Modern Soldier feature: +1 to save vs Horror Factor and +1 to Perception Rolls to recognize ambushes, booby-traps, military weapons, and explosive devices.",
+  "description": "Modern Soldier Morphus table (Dark Designs (WB6), pp. 53-55). Military gear and tactics; weapons, helmets, and armor may be biomechanical. With any Modern Soldier feature: +1 to save vs Horror Factor and +1 to Perception Rolls to recognize ambushes, booby-traps, military weapons, and explosive devices.",
   "entries": [
     {
       "id": "modern_soldier_body_armor",
@@ -15,7 +15,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 53
         }
       ],
@@ -98,7 +98,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 53
         }
       ],
@@ -171,7 +171,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 53
         }
       ],
@@ -237,7 +237,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 53
         }
       ],
@@ -307,7 +307,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 54
         }
       ],
@@ -374,7 +374,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 54
         }
       ],
@@ -419,7 +419,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 54
         }
       ],
@@ -478,7 +478,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 54
         }
       ],
@@ -544,7 +544,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 55
         }
       ],
@@ -658,7 +658,7 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Dark Designs",
+          "reference": "Dark Designs (WB6)",
           "pageNumber": 55
         }
       ],
