@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Canine",
   "parentTable": "animal",
-  "description": "Canine Morphus tables (Nightbane Core Rulebook, p. 97; Dark Designs (WB6), p. 130). Wolves are most common, but dogs of all types, foxes, and other canines are possible. All canine characters instinctively get Tracking at 40% and Swimming at 50% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects specific canine species.",
+  "description": "Canine Morphus tables (Nightbane Core Rulebook, p. 97; Dark Designs (WB6), p. 130). Wolves are most common, but dogs of all types, foxes, and other canines are possible. All canine characters instinctively get Tracking at 40% and Swimming at 50% in Morphus. Player selects specific canine species.",
   "entries": [
     {
       "id": "animal_canine_full",

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Insectoid",
   "parentTable": "animal",
-  "description": "Insectoid Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 22-23, 131-132). Insectoid Morphus tables. Table I (Nightbane Core Rulebook pp. 98-99; Dark Designs (WB6) pp. 131-132): insect-looking Nightbane became more common after Dark Day. All insect Nightbane instinctively Swim at 50%, have Acrobatics at 50% and Climbing at 60% (unless a row states otherwise), and +1 to roll with fall or impact. In most cases, Disguise and Undercover Ops are impossible. Table II (Dark Designs (WB6) pp. 22-23): supplemental insect features-roll Table I, Table II, or mix per GM.",
+  "description": "Insectoid Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 22-23, 131-132). Insectoid Morphus tables. Table I (Nightbane Core Rulebook pp. 98-99; Dark Designs (WB6) pp. 131-132): insect-looking Nightbane became more common after Dark Day. All insect Nightbane instinctively Swim at 50%, have Acrobatics at 50% and Climbing at 60% (unless a row states otherwise), and +1 to roll with fall or impact. Table II (Dark Designs (WB6) pp. 22-23): supplemental insect features-roll Table I, Table II, or mix per GM.",
   "entries": [
     {
       "id": "animal_insectoid_giant_insect",
@@ -451,6 +451,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -557,6 +567,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       }
@@ -683,6 +703,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "grantUnlearnedValue": 60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -836,6 +866,16 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": -60
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -870,7 +910,21 @@
       "customOneOffs": [
         "Cannot be choked or strangled by cutting off air in the neck/throat; all spiracles would need to be blocked (e.g. burying him up to the chin).",
         "Cannot speak or smell. Holding one's breath is impossible without lungs."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_proboscis",
@@ -906,7 +960,21 @@
       "customOneOffs": [
         "On a successful strike roll of 16 or higher, the proboscis can drain vital fluids; each attack spent draining deals 1D6 damage directly to Hit Points.",
         "Proboscis has two S.D.C. per 20 S.D.C. of the Nightbane; regrows completely in 5D6 minutes if severed, damaged, or destroyed."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_stinger",
@@ -959,7 +1027,21 @@
         "Barbed stinger variant: 2D6+2 damage; lodges in victim and tears free, doing 1D6 damage direct to the Nightbane's Hit Points; lodged stinger excretes poison for 1D4 minutes (3D6 damage per melee round until removed; non-surgical removal does 3D6 additional damage). Re-grows in 8 hours.",
         "Poison: failed save vs non-lethal poison (16+) causes -2 on all combat rolls for 1D6 melee rounds from swelling, muscle pain, and wooziness; +1D4 poison damage on successful sting.",
         "+1 to Horror Factor when the stinger is extended."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_bombardier_chamber",
@@ -986,7 +1068,21 @@
         "Payload limited to one attack per every 4 P.E. points of the Morphus; regenerates one attack per hour.",
         "May be expelled from the mouth or wrist opening (pick one).",
         "Any single attack doing more than 40% of Morphus Hit Points has 25% chance of breaching glands and exploding for half remaining bombardier damage in a 20-foot (6.1 m) radius; usually kills the Nightbane."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_goo_glands",
@@ -1016,7 +1112,21 @@
         "Ingestion causes loss of all attacks for the round to violent vomiting.",
         "Can secrete up to 12 handfuls per hour; irritant properties last 5 minutes, then only smells bad.",
         "After use, smells terrible until returning to Facade form; cannot hide or Prowl within 30 feet (9 m) of anything with a nose."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_climbing_filaments",
@@ -1039,6 +1149,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1078,6 +1198,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1116,7 +1246,21 @@
       "customOneOffs": [
         "Creatures with animal I.Q. avoid attacking unless provoked, agitated, threatened, or commanded.",
         "Unless covered, markings intimidate potential allies; difficult to disguise or blend in with ordinary people."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_insectoid_ii_camouflage_markings",
@@ -1147,6 +1291,16 @@
             "targetType": "skill_id",
             "targetValue": "skill_prowl",
             "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },

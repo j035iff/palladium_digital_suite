@@ -143,7 +143,7 @@ Extend parsers in `scripts/lib/morphus-transcribe-structure.mjs`, `scripts/lib/m
 
 **Bulk normalize existing tables:** `npm run migrate:morphus-skills` (add `--dry-run` to preview). Re-run after editing trait list files or ingest parsers.
 
-**Strip duplicate skill prose:** After migration, run `npm run dedupe:morphus-skill-prose` to remove `% to … skill` clauses from `description` / `customOneOffs` when the same rule exists in `skillModifiers`.
+**Strip duplicate skill prose:** After migration, run `npm run dedupe:morphus-skill-prose` to remove `% to … skill` clauses from entry `description` / `customOneOffs` when the same rule exists in `skillModifiers`, and to trim table-level header `description` when **every** entry already encodes those rules (animal table grants, impossible Disguise/Undercover Ops, etc.). Humanoid/head rows missing impossible flags get them synced when the header or `customOneOffs` already say disguise is not viable.
 
 ## Do not
 

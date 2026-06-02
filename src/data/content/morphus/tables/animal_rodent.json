@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Rodent",
   "parentTable": "animal",
-  "description": "Rodent Morphus tables (Nightbane Core Rulebook, p. 101; Dark Designs (WB6), pp. 133-134). Rats, mice, squirrels, rabbits, and similar animals. Rat-like Nightbane are common in cities. In most cases, Disguise and Undercover Ops are impossible.",
+  "description": "Rodent Morphus tables (Nightbane Core Rulebook, p. 101; Dark Designs (WB6), pp. 133-134). Rats, mice, squirrels, rabbits, and similar animals. Rat-like Nightbane are common in cities.",
   "entries": [
     {
       "id": "animal_rodent_full",

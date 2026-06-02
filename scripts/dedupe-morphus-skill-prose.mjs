@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dedupeEntrySkillProse, repairEntryProseArtifacts } from './lib/morphus-skill-prose-dedupe.mjs'
+import { dedupeTableHeaderSkillProse } from './lib/morphus-table-header-skill-dedupe.mjs'
 
 const root = join(fileURLToPath(import.meta.url), '..')
 const tablesDir = join(root, '../src/data/content/morphus/tables')
@@ -28,6 +29,7 @@ function hasTraitData(table) {
 const files = readdirSync(tablesDir).filter((f) => f.endsWith('.json'))
 let filesTouched = 0
 let entriesTouched = 0
+let headersTouched = 0
 
 for (const file of files.sort()) {
   const path = join(tablesDir, file)
@@ -35,6 +37,14 @@ for (const file of files.sort()) {
   if (!hasTraitData(table)) continue
 
   let fileChanged = false
+
+  if (table.kind === 'morphus_trait_table' && table.description) {
+    const { changed: headerChanged } = dedupeTableHeaderSkillProse(table)
+    if (headerChanged) {
+      headersTouched++
+      fileChanged = true
+    }
+  }
   for (const entry of table.entries) {
     const deduped = dedupeEntrySkillProse(entry, skillsById)
     const repaired = repairEntryProseArtifacts(entry)
@@ -54,5 +64,5 @@ for (const file of files.sort()) {
 }
 
 console.log(
-  `${dryRun ? 'Dry run:' : 'Done:'} ${filesTouched} file(s), ${entriesTouched} entr(ies) prose stripped.`,
+  `${dryRun ? 'Dry run:' : 'Done:'} ${filesTouched} file(s), ${entriesTouched} entr(ies) prose stripped, ${headersTouched} table header(s) trimmed.`,
 )

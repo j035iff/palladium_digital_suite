@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Bat",
   "parentTable": "animal",
-  "description": "Bat Morphus tables (Nightbane Core Rulebook, pp. 95-96; Dark Designs (WB6), pp. 129-130). Bat-like Nightbane are often confused with vampires and demons. Vampire bats dominate, but all bat species are possible. All bat characters instinctively Climb at 45% and Prowl at 20% in Morphus. In most cases, Disguise and Undercover Ops are impossible.",
+  "description": "Bat Morphus tables (Nightbane Core Rulebook, pp. 95-96; Dark Designs (WB6), pp. 129-130). Bat-like Nightbane are often confused with vampires and demons. Vampire bats dominate, but all bat species are possible.",
   "entries": [
     {
       "id": "animal_bat_full",

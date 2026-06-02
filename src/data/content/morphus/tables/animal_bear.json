@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Bear",
   "parentTable": "animal",
-  "description": "Bear Morphus tables (Between the Shadows (WB1), pp. 130-131; Dark Designs (WB6), p. 138). Bears are respected for strength and raw power. Common shapes include grizzly, polar, black, and brown bears. In most cases, Disguise, Seduction, and Undercover Ops skills are impossible.",
+  "description": "Bear Morphus tables (Between the Shadows (WB1), pp. 130-131; Dark Designs (WB6), p. 138). Bears are respected for strength and raw power. Common shapes include grizzly, polar, black, and brown bears.",
   "entries": [
     {
       "id": "animal_bear_full_ursinoid",
@@ -249,7 +249,26 @@
       ],
       "customOneOffs": [
         "Cannot be disguised or easily concealed for long."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "animal_bear_centauroid",
@@ -382,7 +401,26 @@
       ],
       "customOneOffs": [
         "Cannot be disguised or easily concealed."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     }
   ]
 }

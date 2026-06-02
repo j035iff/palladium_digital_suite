@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Reptilian",
   "parentTable": "animal",
-  "description": "Reptilian Morphus tables (Nightbane Core Rulebook, p. 100; Dark Designs (WB6), p. 133). Lizards of all kinds; dragon legends may originate from reptilian Nightbane. All reptilians instinctively Swim at 45% and Climb at 35% in Morphus. In most cases, Disguise and Undercover Ops are impossible.",
+  "description": "Reptilian Morphus tables (Nightbane Core Rulebook, p. 100; Dark Designs (WB6), p. 133). Lizards of all kinds; dragon legends may originate from reptilian Nightbane.",
   "entries": [
     {
       "id": "animal_reptilian_giant",

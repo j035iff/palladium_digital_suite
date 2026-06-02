@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Arachnid",
   "parentTable": "animal",
-  "description": "Arachnid Morphus tables (Nightbane Core Rulebook, p. 94; Dark Designs (WB6), pp. 128-129). Spiders and scorpions symbolize alienness and danger. All arachnid Nightbane instinctively Climb at 55% and Prowl at 25% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects spider or scorpion where a row offers both.",
+  "description": "Arachnid Morphus tables (Nightbane Core Rulebook, p. 94; Dark Designs (WB6), pp. 128-129). Spiders and scorpions symbolize alienness and danger. Player selects spider or scorpion where a row offers both.",
   "entries": [
     {
       "id": "animal_arachnid_full",
@@ -453,6 +453,16 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Snake",
   "parentTable": "animal",
-  "description": "Snake Morphus tables (Nightbane Core Rulebook, pp. 101-102; Dark Designs (WB6), p. 134). Symbols of temptation, hunting, and subtlety; cobra shapes often appear among ambitious Nightbane. All snake Nightbane instinctively Swim at 55% and Climb at 40% in Morphus unless a row states otherwise. In most cases, Disguise and Undercover Ops are impossible. Player selects poisonous or constrictor serpent where applicable.",
+  "description": "Snake Morphus tables (Nightbane Core Rulebook, pp. 101-102; Dark Designs (WB6), p. 134). Symbols of temptation, hunting, and subtlety; cobra shapes often appear among ambitious Nightbane. All snake Nightbane instinctively Swim at 55% and Climb at 40% in Morphus unless a row states otherwise. Player selects poisonous or constrictor serpent where applicable.",
   "entries": [
     {
       "id": "animal_snake_full",

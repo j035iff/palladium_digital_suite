@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Equine/Bovine/Deer",
   "parentTable": "animal",
-  "description": "Equine/Bovine/Deer Morphus tables (Nightbane Core Rulebook, p. 98; Dark Designs (WB6), p. 131). Covers four-legged herbivores from cattle and horses to deer, bison, and antelope. Centaur and minotaur shapes are common. All rows instinctively get Swimming at 65% and Climbing at 30% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Unless otherwise noted, kicks and head butts inflict double damage (typically 2D6 + P.S. bonus) and jump/leap kicks do triple damage; horned or antlered creatures can head-butt for 4D6 damage.",
+  "description": "Equine/Bovine/Deer Morphus tables (Nightbane Core Rulebook, p. 98; Dark Designs (WB6), p. 131). Covers four-legged herbivores from cattle and horses to deer, bison, and antelope. Centaur and minotaur shapes are common. Unless otherwise noted, kicks and head butts inflict double damage (typically 2D6 + P.S. bonus) and jump/leap kicks do triple damage; horned or antlered creatures can head-butt for 4D6 damage.",
   "entries": [
     {
       "id": "animal_equine_full_form",

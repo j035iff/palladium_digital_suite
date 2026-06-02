@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Feline",
   "parentTable": "animal",
-  "description": "Feline Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 131-132). Any feline from sabertooth tigers to household tabbies is possible. All feline characters get +2 to roll with punch/fall/impact and instinctively Climb at 45%, Swim at 40%, and Prowl at 20% in Morphus. In most cases, Disguise and Undercover Ops are impossible. Player selects cat species and features.",
+  "description": "Feline Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 131-132). Any feline from sabertooth tigers to household tabbies is possible. Player selects cat species and features.",
   "entries": [
     {
       "id": "animal_feline_full",
