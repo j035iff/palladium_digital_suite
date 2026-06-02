@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unusual Facial Features",
   "parentTable": null,
-  "description": "Unusual Facial Features Morphus tables (Nightbane Core Rulebook, pp. 102-103; Nightbane Survival Guide (WB5), pp. 98-99; Dark Designs (WB6), pp. 134-135). Unusual facial Morphus tables. Table I (Facial Features / Unusual Facial Features) from Nightbane Core Rulebook and Dark Designs (WB6) - distorted faces, horns, tentacles, and alien features (01-95%; 86-90% Biomechanical and 96-00% Two/Three are cross-table routers). Table II (Unusual Facial Features Table II) from Survival Guide only - heat pits, chest face, metal head, worm face, and similar (01-00%). Dark Designs (WB6) applies -40% to Disguise, Seduction, and Undercover Ops for most Table I results.",
+  "description": "Unusual Facial Features Morphus tables (Nightbane Core Rulebook, pp. 102-103; Nightbane Survival Guide (WB5), pp. 98-99; Dark Designs (WB6), pp. 134-135). Unusual facial Morphus tables. Table I (Facial Features / Unusual Facial Features) from Nightbane Core Rulebook and Dark Designs (WB6) - distorted faces, horns, tentacles, and alien features (01-95%; 86-90% Biomechanical and 96-00% Two/Three are cross-table routers). Table II (Unusual Facial Features Table II) from Survival Guide only - heat pits, chest face, metal head, worm face, and similar (01-00%).",
   "entries": [
     {
       "id": "unusual_facial_features_alien_features",
@@ -29,6 +29,25 @@
         "hf": {
           "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -102,7 +121,7 @@
           "pageNumber": 98
         }
       ],
-      "description": "The Morphus is such that the Nightbane appears to have no head! Instead the face either, 01-50% is set in the center of the chest, or 51-00% appears to be stretched and nailed or hooked to the chest, stomach or across the chest and stomach. The face is different from that of the Facade. Bonuses: +6D6 to S.D.C., +1 to save vs toxic gases, and +1D4 to Horror Factor. Penalties: -2 from P.B., -1 to Perception Rolls, the Nightbane must turn his entire body in order to look 98 Joe Sifferman (Order #46323384) around, the face is vulnerable to stomach strikes, and Disguise and Undercover Ops are impossible.",
+      "description": "The Morphus is such that the Nightbane appears to have no head! Instead the face either, 01-50% is set in the center of the chest, or 51-00% appears to be stretched and nailed or hooked to the chest, stomach or across the chest and stomach. The face is different from that of the Facade. Bonuses: +6D6 to S.D.C., +1 to save vs toxic gases, and +1D4 to Horror Factor. Penalties: -2 from P.B., -1 to Perception Rolls, the Nightbane must turn his entire body in order to look 9around, the face is vulnerable to stomach strikes, and Disguise and Undercover Ops are impossible.",
       "statModifiers": {
         "sdc": {
           "dice": "6D6"
@@ -148,6 +167,25 @@
       },
       "sensory": {
         "sharpVision": true
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -177,6 +215,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -206,6 +263,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -232,6 +308,25 @@
         "hf": {
           "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -279,6 +374,25 @@
         "hf": {
           "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -384,6 +498,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -440,6 +573,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -469,6 +621,25 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -495,6 +666,25 @@
         "hf": {
           "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -524,6 +714,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {
@@ -553,6 +762,25 @@
         "sdc": {
           "dice": "1D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -40
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -40
+          }
+        ]
       }
     },
     {

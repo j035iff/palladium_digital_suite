@@ -616,8 +616,8 @@
             "modifierPercent": -15
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "skill_pick_locks",
+            "targetType": "skill_trait",
+            "targetValue": "requires_focus",
             "modifierPercent": -15
           }
         ]
@@ -625,7 +625,7 @@
       "customOneOffs": [
         "These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet.",
         "Characters with nightvision can see as if they have a passive nightvision scope.",
-        "-15% to any skill that requires seeing fine detail up close like reading, surgery, Computer Operation, Pick Locks, etc."
+        "like reading, surgery, Computer Operation, Pick Locks, etc."
       ]
     },
     {

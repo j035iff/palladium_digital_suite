@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Biomechanical",
   "parentTable": null,
-  "description": "Biomechanical Morphus tables (Nightbane Core Rulebook, pp. 105-106; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), pp. 83-85). Table I: Dark Designs (WB6), pp. 138-139; Nightbane Core Rulebook, pp. 106-107. Table II: Dark Designs (WB6), pp. 140-141; Between the Shadows (WB1), pp. 132-133 (roll Table I, II, or mix). Table III: Nightbane Survival Guide (WB5), pp. 83-85. Components are living Morphus tissue—not cybernetic prosthetics—and heal at the Nightbane's normal rate. In most cases, Disguise, Seduction, and Undercover Ops are impossible (Table II repeats this note).",
+  "description": "Biomechanical Morphus tables (Nightbane Core Rulebook, pp. 105-106; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), pp. 83-85). Table I: Dark Designs (WB6), pp. 138-139; Nightbane Core Rulebook, pp. 106-107. Table II: Dark Designs (WB6), pp. 140-141; Between the Shadows (WB1), pp. 132-133 (roll Table I, II, or mix). Table III: Nightbane Survival Guide (WB5), pp. 83-85. Components are living Morphus tissue—not cybernetic prosthetics—and heal at the Nightbane's normal rate.",
   "entries": [
     {
       "id": "biomechanical_armorgraft",
@@ -27,6 +27,25 @@
         "hf": {
           "flat": 2
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -54,7 +73,26 @@
       },
       "customOneOffs": [
         "If the skin coverings are made up of transparent plastic, revealing internal organs, the Horror Factor becomes 1D6."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_rocket_jets",
@@ -90,6 +128,21 @@
           {
             "targetType": "skill_id",
             "targetValue": "prowl",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -132,7 +185,26 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_metal_endoskeleton",
@@ -162,6 +234,25 @@
         "hf": {
           "dice": "1D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -198,7 +289,26 @@
       },
       "customOneOffs": [
         "These limbs do not bleed when struck; instead a sort of oil or grease may ooze out or wires and metal components are revealed."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_weapon_hand",
@@ -233,7 +343,26 @@
           "strikeBonus": 1,
           "parryBonus": 1
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_metal_exoskeleton",
@@ -263,6 +392,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
       }
     },
     {
@@ -292,7 +440,26 @@
       "customOneOffs": [
         "The camera eyes have polarized filters.",
         "The Nightbane can turn his eyes into movie projectors, showing 2D silent moving pictures of anything he remembers (exactly as seen by his eyes)."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_wheels_or_treads",
@@ -328,7 +495,26 @@
       },
       "customOneOffs": [
         "The Nightbane may find it difficult to operate indoors or in confined spaces."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_gun_limbs",
@@ -361,7 +547,26 @@
       "customOneOffs": [
         "Requires a permanent P.P.E. sacrifice: 1 P.P.E. per die of damage, and 2 P.P.E. if the gun is an automatic weapon (fires bursts).",
         "Must find bullets for the gun. A max of 100 bullets can be 'stored' inside the body by shoving them into the flesh (inflicts 1D6 S.D.C. per 10 bullets)."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_screen_face",
@@ -385,7 +590,26 @@
       },
       "customOneOffs": [
         "Screen images may show written messages, animated cartoon faces, test patterns, or electronic snow. Images can reflect moods or be changed at will."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_speakers",
@@ -413,7 +637,26 @@
       "customOneOffs": [
         "A frightened or intimidated victim (failed save vs Horror Factor or intimidation) is -2 on initiative and -5% on all skill performance.",
         "Range for the sound transmission is roughly 100 feet (30.5 m)."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_tool_hands",
@@ -441,6 +684,21 @@
             "targetType": "skill_trait",
             "targetValue": "requires_light_touch",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -482,7 +740,26 @@
       },
       "customOneOffs": [
         "Monitors may act like life sign monitors jumping at a heartbeat, waves reacting to voice/emotions, psychedelic light shows, or flashing green/violet light."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_chain_saw_arms",
@@ -505,7 +782,24 @@
         }
       },
       "skillModifiers": {
-        "globalSkillModifier": -70
+        "globalSkillModifier": -70,
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
       },
       "naturalWeapons": [
         {
@@ -556,6 +850,21 @@
             "targetType": "skill_id",
             "targetValue": "computer_hacking",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -591,7 +900,26 @@
           "strikeBonus": 2,
           "rangeFeet": 300
         }
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_batteries",
@@ -633,6 +961,21 @@
             "targetType": "skill_id",
             "targetValue": "disguise",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -694,6 +1037,21 @@
           {
             "targetType": "skill_id",
             "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -1071,6 +1429,21 @@
             "targetType": "skill_id",
             "targetValue": "palming",
             "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       }
@@ -1124,6 +1497,21 @@
             "targetType": "category",
             "targetValue": "computer",
             "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1186,6 +1574,21 @@
             "targetType": "skill_id",
             "targetValue": "undercover_ops",
             "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1244,6 +1647,21 @@
             "targetType": "skill_id",
             "targetValue": "prowl",
             "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1288,6 +1706,21 @@
             "targetType": "skill_id",
             "targetValue": "gymnastics",
             "modifierPercent": 10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1333,6 +1766,21 @@
             "targetType": "skill_id",
             "targetValue": "disguise",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
           }
         ]
       },
@@ -1376,7 +1824,26 @@
         "Once connected, the Nightbane can control and manipulate the device, turn it on or off, etc.",
         "Does not bypass passwords or function as Telemechanics. Only allows hands-free use.",
         "If the Nightbane has an onboard computer and computer skills, he may be able to send to and download from the memory of the linked device."
-      ]
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          }
+        ]
+      }
     },
     {
       "id": "biomechanical_heavy_plating",
@@ -1442,6 +1909,21 @@
           {
             "targetType": "skill_id",
             "targetValue": "disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]

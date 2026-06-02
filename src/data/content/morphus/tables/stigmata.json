@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Stigmata",
   "parentTable": null,
-  "description": "Stigmata Morphus tables (Nightbane Core Rulebook, pp. 101-102; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), p. 95; Dark Designs (WB6), pp. 134, 140). Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs (WB6)): the Nightbane appears injured-open wounds, embedded objects, oozing blood or pus that never heal. Stigmata II (Dark Designs (WB6) / Between the Shadows (WB1)): alternate stigmata list; -20% to Disguise, Seduction, and Undercover Ops unless a trait says otherwise (may combine with Table I). Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91-96% Biomechanical and 97-00% Combination of Two on Table I are cross-table routers, not standalone traits.",
+  "description": "Stigmata Morphus tables (Nightbane Core Rulebook, pp. 101-102; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), p. 95; Dark Designs (WB6), pp. 134, 140). Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs (WB6)): the Nightbane appears injured-open wounds, embedded objects, oozing blood or pus that never heal. Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91-96% Biomechanical and 97-00% Combination of Two on Table I are cross-table routers, not standalone traits.",
   "entries": [
     {
       "id": "stigmata_barbed_wire_razor_wire",
@@ -88,6 +88,25 @@
         "hf": {
           "dice": "1D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -224,7 +243,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "Some part of the Morphus looks like it has been crushed beneath a heavy weight or vehicle. The crushed portion of the body is flat or mangled, has broken and shattered bones sticking out through the skin at several spots, and cuts and tears in the skin are constantly dripping blood and 95 Joe Sifferman (Order #46323384) ooze. Bonuses: +6D6 S.D.C., +1D4 to roll with impact, and +1D4 to Horror Factor. Penalties: -1 to P.B., and and Undercover Ops. If a leg or foot is crushed, the character walks with a limp and reduce Spd by 20%. If a hand or arm is crushed, reduce all combat bonuses (for that limb) by half; likewise, skill performance for all requiring the use of a hand is reduced by half.",
+      "description": "Some part of the Morphus looks like it has been crushed beneath a heavy weight or vehicle. The crushed portion of the body is flat or mangled, has broken and shattered bones sticking out through the skin at several spots, and cuts and tears in the skin are constantly dripping blood and 9ooze. Bonuses: +6D6 S.D.C., +1D4 to roll with impact, and +1D4 to Horror Factor. Penalties: -1 to P.B., and Undercover Ops. If a leg or foot is crushed, the character walks with a limp and reduce Spd by 20%. If a hand or arm is crushed, reduce all combat bonuses (for that limb) by half; likewise, skill performance for all requiring the use of a hand is reduced by half.",
       "statModifiers": {
         "pb": {
           "flat": -1
@@ -359,6 +378,25 @@
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -594,8 +632,7 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "impossibleInMorphus": true,
-            "modifierPercent": -25
+            "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
@@ -665,7 +702,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "This Nightbane appears to have no skin, revealing bare, raw muscle. Cold and wet to the touch, and sweats a mixture of blood and ooze; makes a disgusting squishing sound when pushed/slapped/struck. Bonuses: +3D6 S.D.C., +1D4 to P.S. and +1D4 to Horror Factor. Penalties: -1D4 to P.B., Disguise and Undercover Ops are impossible (makeup won’t stick and causes irritation), the moist blood and ooze slowly stains any clothing until they are saturated, and and Prowl.",
+      "description": "This Nightbane appears to have no skin, revealing bare, raw muscle. Cold and wet to the touch, and sweats a mixture of blood and ooze; makes a disgusting squishing sound when pushed/slapped/struck. Bonuses: +3D6 S.D.C., +1D4 to P.S. and +1D4 to Horror Factor. Penalties: -1D4 to P.B., Disguise and Undercover Ops are impossible (makeup won’t stick and causes irritation), the moist blood and ooze slowly stains any clothing until they are saturated, and Prowl.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -793,6 +830,25 @@
         "sdc": {
           "dice": "1D4x10"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -874,7 +930,7 @@
           "pageNumber": 95
         }
       ],
-      "description": "A third eye is located in the center of the forehead, it weeps silent tears whenever it witnesses acts, or the results, of torture, disfigurement and cruelty. Bonuses: Nightvision +1000 feet (305 m), +2 to Perception Rolls, and Tailing skills, and the ‘Bane can see the invisible (as per the psionic power) at will. Penalties: -1 from P.B. and and Undercover Ops.",
+      "description": "A third eye is located in the center of the forehead, it weeps silent tears whenever it witnesses acts, or the results, of torture, disfigurement and cruelty. Bonuses: Nightvision +1000 feet (305 m), +2 to Perception Rolls, and Tailing skills, and the ‘Bane can see the invisible (as per the psionic power) at will. Penalties: -1 from P.B. and Undercover Ops.",
       "statModifiers": {
         "perception": {
           "flat": 2
@@ -927,6 +983,25 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {
@@ -956,6 +1031,25 @@
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_seduction",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "modifierPercent": -20
+          }
+        ]
       }
     },
     {

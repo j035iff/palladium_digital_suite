@@ -216,7 +216,7 @@
           "pageNumber": 44
         }
       ],
-      "description": "The Nightbane has a handful of items when the Morphus form is assumed. These 1D4+3 items are devices or tools of critical importance to the character's chosen profession. For example, a mechanic might have a large wrench, socket set, pair of screwdrivers, pliers, a hammer and a voltmeter.[cite: 10]",
+      "description": "The Nightbane has a handful of items when the Morphus form is assumed. These 1D4+3 items are devices or tools of critical importance to the character's chosen profession. For example, a mechanic might have a large wrench, socket set, pair of screwdrivers, pliers, a hammer and a voltmeter.",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -232,11 +232,34 @@
         }
       },
       "customOneOffs": [
-        "Any Tools of the Trade function and behave the same as normal, but only have 3D6 S.D.C. each and disappear for 24 hours when lost or destroyed.[cite: 10]",
-        "Those tools or devices that require batteries never run low, and ammunition or similar supplies start fully loaded and (magically?) reload/recharge every hour with a full payload.[cite: 10]",
-        "+5% to all O.C.C. Skills that relate to the tools and the trade, like mechanical or electrical repair, maintenance, etc.[cite: 10]",
-        "Some tools may be suitable as weapons, but the vast majority only deal 1D4 to 1D6 damage.[cite: 10]"
-      ]
+        "Any Tools of the Trade function and behave the same as normal, but only have 3D6 S.D.C. each and disappear for 24 hours when lost or destroyed.",
+        "Those tools or devices that require batteries never run low, and ammunition or similar supplies start fully loaded and (magically?) reload/recharge every hour with a full payload.",
+        "Some tools may be suitable as weapons, but the vast majority only deal 1D4 to 1D6 damage."
+      ],
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "category",
+            "targetValue": "occ",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_mechanics",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_electrical",
+            "modifierPercent": 5
+          },
+          {
+            "targetType": "skill_trait",
+            "targetValue": "related_to_repair",
+            "modifierPercent": 5
+          }
+        ]
+      }
     },
     {
       "id": "morphus_occupation_time_clock",

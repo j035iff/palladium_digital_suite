@@ -65,7 +65,7 @@
       "id": "super_being_super_fast",
       "name": "Super-Fast",
       "tableCategory": "Superbeing",
-      "description": "The legs of the Morphus may be exceptionally strong and muscular, and surrounded by an odd energy and may have special boots, and wings or lightning bolt design elements. Biomechanical Nightbane will be beautifully streamlined and aerodynamic. However this feature manifests, the Nightbane can move with blinding speed whether running, swimming, or flying. Bonuses: Multiply the character’s initial Spd attribute number x10 and +1 extra attack per melee round! +2 damage to physical attacks, punches, kicks, body blocks, and strikes with a melee weapon per 20 mph (32 kph) above 40 mph (64 kph) the Nightbane is traveling. Even running at maximum speed does NOT fatigue the Nightbane in any way, and +3 to roll with punch, fall or impact. Penalties: -2D6+6 from the permanent P.P.E. base, -3 on Perception Rolls due to moving so fast and being distracted or bored, and -2 to save vs magic and illusions. High metabolism requiring the Nightbane to eat three times more than an average human being. Without enough food, double the Perception penalty, reduce speed and S.D.C. by half, -1 melee attack, and -15% on the performance of all skills.",
+      "description": "The legs of the Morphus may be exceptionally strong and muscular, and surrounded by an odd energy and may have special boots, and wings or lightning bolt design elements. Biomechanical Nightbane will be beautifully streamlined and aerodynamic. However this feature manifests, the Nightbane can move with blinding speed whether running, swimming, or flying. Bonuses: Multiply the character’s initial Spd attribute number x10 and +1 extra attack per melee round! +2 damage to physical attacks, punches, kicks, body blocks, and strikes with a melee weapon per 20 mph (32 kph) above 40 mph (64 kph) the Nightbane is traveling. Even running at maximum speed does NOT fatigue the Nightbane in any way, and +3 to roll with punch, fall or impact. Penalties: -2D6+6 from the permanent P.P.E. base, -3 on Perception Rolls due to moving so fast and being distracted or bored, and -2 to save vs magic and illusions. High metabolism requiring the Nightbane to eat three times more than an average human being. Without enough food, double the Perception penalty, reduce speed and S.D.C. by half, -1 melee attack,.",
       "statModifiers": {
         "ppe": {
           "dice": "-(2D6+6)"
@@ -99,13 +99,16 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 59
         }
-      ]
+      ],
+      "skillModifiers": {
+        "globalSkillModifier": -15
+      }
     },
     {
       "id": "super_being_super_strong",
       "name": "Super-Strong",
       "tableCategory": "Superbeing",
-      "description": "The musculature of the Morphus form is exaggerated like many comic book heroes. The upper body may even seem slightly out of proportion to the lower body just due to the sheer muscle mass packed into the chest, shoulders, and arms. With this overabundance of brawn, the raw physical power of the Nightbane is drastically increased. Some level of comic-style physics does seem to be at work, though, as the lifting and carrying capacity skyrockets. Bonuses: +1D4+10 to the P.S. attribute (and resulting Supernatural P.S. damage), handsome with a square chin and thick flowing hair, and punches and physical attacks do 50% greater damage to Nightlords, their demonic minions and all denizens of the Nightlands (WB2). The hero is able to lift and carry triple the normal weight as well as throw objects three times farther than normal. +1D6x10 to S.D.C. and +2 to Awe/Horror Factor. Penalties: -1 to the P.P. attribute and -1D4+2 to Spd, -1D6 from permanent P.P.E. base, and -30% to skills like Disguise, Impersonation and Undercover Ops.",
+      "description": "The musculature of the Morphus form is exaggerated like many comic book heroes. The upper body may even seem slightly out of proportion to the lower body just due to the sheer muscle mass packed into the chest, shoulders, and arms. With this overabundance of brawn, the raw physical power of the Nightbane is drastically increased. Some level of comic-style physics does seem to be at work, though, as the lifting and carrying capacity skyrockets. Bonuses: +1D4+10 to the P.S. attribute (and resulting Supernatural P.S. damage), handsome with a square chin and thick flowing hair, and punches and physical attacks do 50% greater damage to Nightlords, their demonic minions and all denizens of the Nightlands (WB2). The hero is able to lift and carry triple the normal weight as well as throw objects three times farther than normal. +1D6x10 to S.D.C. and +2 to Awe/Horror Factor. Penalties: -1 to the P.P. attribute and -1D4+2 to Spd, -1D6 from permanent P.P.E. base, and",
       "statModifiers": {
         "ps": {
           "flat": 10,
@@ -134,6 +137,11 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -30
           }
         ]
@@ -204,7 +212,7 @@
       "id": "super_being_super_costume",
       "name": "Super-Costume",
       "tableCategory": "Superbeing",
-      "description": "The Morphus is clad in a dynamic costume befitting a cartoon or comic book super-hero. This might be the ubiquitous spandex body-suit that may or may not cover the head and face, and could display a host of different styles, with and without a flowing cape. A crest, symbol or emblem is likely to be worn on the chest of his costume and or belt buckle. Whatever the individual looks like, the suit marks the Nightbane as a crusading hero and typically draws attention. Bonuses: +2 to the M.A. and P.B. attributes, +2D4x10 to S.D.C., +2 to Natural A.R., and +1 to Awe/Horror Factor. It also completely regenerates damage at the same rate as the Nightbane heals. Penalties: and -20% to skills such as Camouflage, Disguise, Impersonation, Tailing and Undercover Ops in Morphus form unless the costume can somehow be concealed.",
+      "description": "The Morphus is clad in a dynamic costume befitting a cartoon or comic book super-hero. This might be the ubiquitous spandex body-suit that may or may not cover the head and face, and could display a host of different styles, with and without a flowing cape. A crest, symbol or emblem is likely to be worn on the chest of his costume and or belt buckle. Whatever the individual looks like, the suit marks the Nightbane as a crusading hero and typically draws attention. Bonuses: +2 to the M.A. and P.B. attributes, +2D4x10 to S.D.C., +2 to Natural A.R., and +1 to Awe/Horror Factor. It also completely regenerates damage at the same rate as the Nightbane heals. Penalties: and",
       "statModifiers": {
         "ma": {
           "flat": 2
@@ -229,17 +237,27 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_disguise",
-            "modifierPercent": -10
+            "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_tailing",
-            "modifierPercent": -10
+            "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
-            "modifierPercent": -10
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_camouflage",
+            "modifierPercent": -20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
+            "modifierPercent": -20
           }
         ]
       },
@@ -391,7 +409,7 @@
       "id": "super_being_technonaut_cyborg",
       "name": "Technonaut or Cyborg",
       "tableCategory": "Superbeing",
-      "description": "The Morphus is that of a half-man, half-machine monster with bionic or Biomechanical or bio-engineered (could be chitinous or bone) body parts and living armor that is part of the head, face, neck, shoulders, arms, hands, thighs and lower legs. Whatever the material - metal, ceramic, resin, bone, chitinous shell, etc. - it is a living part of the Nightbane’s body. This may have grown out of the fact that the character loves technology and/or science fiction, or the idea of humanalien hybrids or cyborg-like characters such as Mr. Spock, Mr. Data, the Borg, Cylons, Darth Vader, Terminator, etc. Bonuses: +1D6 to P.S. and +2D6 to Spd, +1D6x10+80 to S.D.C., Natural A.R. 14, +1 to Horror, Factor and has one of the items listed under 81-90% Gadgeteer, below, with double the range (where applicable). The mechanical or non-flesh and blood components of the Morphus self-repair and completely regenerate at twice the rate that the Nightbane heals. Penalties: -2 to M.A., M.E. and P.B. attributes, -2D6 from permanent P.P.E. base, -30% to skills like Disguise, Impersonation, Prowl, Seduction and Undercover Ops in Morphus form, and -3D6 P.P.E. points from the permanent P.P.E. base.",
+      "description": "The Morphus is that of a half-man, half-machine monster with bionic or Biomechanical or bio-engineered (could be chitinous or bone) body parts and living armor that is part of the head, face, neck, shoulders, arms, hands, thighs and lower legs. Whatever the material - metal, ceramic, resin, bone, chitinous shell, etc. - it is a living part of the Nightbane’s body. This may have grown out of the fact that the character loves technology and/or science fiction, or the idea of humanalien hybrids or cyborg-like characters such as Mr. Spock, Mr. Data, the Borg, Cylons, Darth Vader, Terminator, etc. Bonuses: +1D6 to P.S. and +2D6 to Spd, +1D6x10+80 to S.D.C., Natural A.R. 14, +1 to Horror, Factor and has one of the items listed under 81-90% Gadgeteer, below, with double the range (where applicable). The mechanical or non-flesh and blood components of the Morphus self-repair and completely regenerate at twice the rate that the Nightbane heals. Penalties: -2 to M.A., M.E. and P.B. attributes, -2D6 from permanent P.P.E. base, P.E. points from the permanent P.P.E. base.",
       "naturalAr": 14,
       "statModifiers": {
         "ma": {
@@ -430,6 +448,11 @@
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -30
           }
         ]
@@ -662,7 +685,7 @@
       "id": "super_being_mutant_or_alien",
       "name": "Mutant or Alien",
       "tableCategory": "Superbeing",
-      "description": "The superbeing has muscles and chiseled features, wears a super-hero costume and/or cape, but has an unearthly skin color (blue, green, red, orange, white like snow, black like pitch, etc.) and inhuman features - think Star Trek aliens or the X-Men. Bonuses: +1 attack per melee, +1 to I.Q., +1D6 to P.P. or P.S. (pick one), +2 to M.A. attribute, +1D6x10+12 to S.D.C., +1 to Horror Factor, and +10% to Public Speaking and Seduction (though no true hero would do the latter). Penalties: -2 to the M.E. attribute, -3D6 to the permanent P.P.E. base, -10% on the performance of all skills, and may underestimate his opponent and overestimate his own abilities.",
+      "description": "The superbeing has muscles and chiseled features, wears a super-hero costume and/or cape, but has an unearthly skin color (blue, green, red, orange, white like snow, black like pitch, etc.) and inhuman features - think Star Trek aliens or the X-Men. Bonuses: +1 attack per melee, +1 to I.Q., +1D6 to P.P. or P.S. (pick one), +2 to M.A. attribute, +1D6x10+12 to S.D.C., +1 to Horror Factor, and +10% to Public Speaking and Seduction (though no true hero would do the latter). Penalties: -2 to the M.E. attribute, -3D6 to the permanent P.P.E. base, and may underestimate his opponent and overestimate his own abilities.",
       "statModifiers": {
         "iq": {
           "flat": 1
@@ -684,6 +707,7 @@
         }
       },
       "skillModifiers": {
+        "globalSkillModifier": -10,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
@@ -748,13 +772,7 @@
         }
       ],
       "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_prowl",
-            "impossibleInMorphus": true
-          }
-        ]
+        "globalSkillModifier": -15
       }
     }
   ]

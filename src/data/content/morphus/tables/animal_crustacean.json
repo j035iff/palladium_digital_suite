@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Crustacean",
   "parentTable": "animal",
-  "description": "Crustacean Morphus table (Nightbane Survival Guide (WB5), pp. 76-77). Aquatic: The character has an affinity for crustaceans reflected in the Morphus. All Crustacean Nightbane swim at 85%, breathe underwater indefinitely, and breathe air normally.",
+  "description": "Crustacean Morphus table (Nightbane Survival Guide (WB5), pp. 76-77). Aquatic: The character has an affinity for crustaceans reflected in the Morphus.",
   "entries": [
     {
       "id": "animal_crustacean_giant",
@@ -85,8 +85,7 @@
         ]
       },
       "customOneOffs": [
-        "Difficult to hide; transportation may be a problem (e.g. cannot fit inside a vehicle, but can cling to the roof).",
-        "Skills requiring manual dexterity and fingers are often impossible (-70% to skill performance)."
+        "Difficult to hide; transportation may be a problem (e.g. cannot fit inside a vehicle, but can cling to the roof)."
       ]
     },
     {

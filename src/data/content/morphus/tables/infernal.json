@@ -374,6 +374,7 @@
         "holyWeapons": 1.5
       },
       "skillModifiers": {
+        "globalSkillModifier": -10,
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",

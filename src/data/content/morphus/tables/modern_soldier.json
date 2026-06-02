@@ -144,7 +144,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -5
           },
           {
@@ -225,7 +225,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -551,8 +551,11 @@
         "The Nightbane has a bonus of +2 to strike and +1 to parry with any weapons from this feature.",
         "All such weapons do an extra +2D6 damage against the Nightlords, their demonic minions, and all denizens of the Nightlands.",
         "Expended rounds are replenished every 24 hours.",
-        "-5% on the performance of all skills except W.P.s, Military, Physical, and Espionage skills."
-      ]
+        "except W.P.s, Military, Physical, and Espionage skills."
+      ],
+      "skillModifiers": {
+        "globalSkillModifier": -5
+      }
     },
     {
       "id": "modern_soldier_heavy_firepower",

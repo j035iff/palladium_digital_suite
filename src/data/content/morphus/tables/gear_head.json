@@ -680,7 +680,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {

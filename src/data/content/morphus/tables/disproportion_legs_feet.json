@@ -191,7 +191,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance and.",
+      "description": "+1 on initiative, +1 to P.P. Penalties: -10% to sense of balance.",
       "statModifiers": {
         "initiative": {
           "flat": 1

@@ -57,7 +57,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -10
           },
           {
@@ -124,7 +124,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {
@@ -201,7 +201,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -10
           },
           {
@@ -282,7 +282,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {
@@ -355,7 +355,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -30
           },
           {
@@ -460,7 +460,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {
@@ -593,7 +593,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -10
           },
           {
@@ -663,7 +663,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -10
           },
           {
@@ -716,7 +716,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -15
           },
           {
@@ -802,7 +802,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {

@@ -51,7 +51,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -20
           },
           {
@@ -114,7 +114,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "grantUnlearnedValue": 62,
             "perLevelIncrement": 2
           }
@@ -358,7 +358,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           }
         ]
@@ -679,8 +679,21 @@
           "flat": -1
         }
       },
-      "customOneOffs": [
-        "+5% to any single Espionage skill and +5% to any single Rogue skill (player's choice)."
+      "playerChoices": [
+        {
+          "label": "Espionage skill bonus",
+          "options": [
+            "Any single Espionage skill (+5% in Morphus)"
+          ],
+          "timing": "character_creation"
+        },
+        {
+          "label": "Rogue skill bonus",
+          "options": [
+            "Any single Rogue skill (+5% in Morphus)"
+          ],
+          "timing": "character_creation"
+        }
       ]
     },
     {

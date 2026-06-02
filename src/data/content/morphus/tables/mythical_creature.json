@@ -76,7 +76,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -30
           },
           {
@@ -165,7 +165,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "modifierPercent": -30
           },
           {
@@ -267,7 +267,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -374,7 +374,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -514,7 +514,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -936,7 +936,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -948,6 +948,16 @@
             "targetType": "skill_id",
             "targetValue": "swimming",
             "impossibleInMorphus": true
+          },
+          {
+            "targetType": "category",
+            "targetValue": "combat",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "category",
+            "targetValue": "destruction",
+            "modifierPercent": -10
           }
         ]
       },
@@ -955,8 +965,7 @@
         "customClothingNote": "Cannot fit inside most vehicles, because the wings are too large[cite: 5]."
       },
       "customOneOffs": [
-        "Hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane.",
-        "-10% to any skills related to combat or destruction."
+        "Hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane."
       ]
     },
     {
@@ -1033,7 +1042,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "impersonation",
+            "targetValue": "skill_impersonation",
             "impossibleInMorphus": true
           },
           {
@@ -1060,7 +1069,7 @@
       },
       "customOneOffs": [
         "In the alternative, the eye can be in the back of the Nightbane's head. It has the same sight capabilities, but also prevents the character from being surprised from attacks from behind.",
-        "-25% to all skills that require a delicate touch and human-sized fingers/hands.",
+        ".",
         "Using conventional modern weapons/guns and devices like cell phones and keyboards are difficult to impossible to use."
       ]
     },

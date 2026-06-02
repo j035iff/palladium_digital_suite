@@ -11,6 +11,8 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   parseTraitAndImpossibleSkillModifiers,
+  parseExtendedSkillModifierProse,
+  parseContextualMorphusFields,
   ALL_SKILL_TRAIT_IDS,
 } from './lib/morphus-skill-modifier-parse.mjs'
 import {
@@ -49,6 +51,9 @@ function overrideKey(o) {
 
 function migrateOverride(o) {
   const next = { ...o }
+  if (next.targetType === 'category' && typeof next.targetValue === 'string') {
+    next.targetValue = next.targetValue.toLowerCase()
+  }
   if (
     next.isNegated === true &&
     next.modifierPercent == null &&
@@ -78,7 +83,14 @@ function dedupeOverrides(list) {
       perLevelIncrement: o.perLevelIncrement ?? prev.perLevelIncrement,
     })
   }
-  return [...seen.values()]
+  return [...seen.values()].map((o) => {
+    if (!o.impossibleInMorphus) return o
+    const next = { ...o }
+    delete next.modifierPercent
+    delete next.grantUnlearnedValue
+    delete next.perLevelIncrement
+    return next
+  })
 }
 
 /** Remove skill_id % rows covered by an identical skill_trait row. */
@@ -161,6 +173,27 @@ function stripFalseDisguiseGrants(overrides) {
   )
 }
 
+/** Drop global impossible flags when prose only forbids the skill conditionally. */
+function pruneConditionalImpossibleOverrides(overrides, prose, findSkillIdFn) {
+  if (!prose) return overrides
+  const conditionalIds = new Set()
+  for (const m of prose.matchAll(
+    /\b([A-Za-z][A-Za-z /]+?)\s+is\s+impossible\s+(?:while|when|unless)\b/gi,
+  )) {
+    const id = findSkillIdFn(m[1].trim())
+    if (id) conditionalIds.add(id)
+  }
+  if (!conditionalIds.size) return overrides
+  return overrides.filter(
+    (o) =>
+      !(
+        o.targetType === 'skill_id' &&
+        o.impossibleInMorphus &&
+        conditionalIds.has(o.targetValue)
+      ),
+  )
+}
+
 function entryProseForSkillParse(entry) {
   const chunks = []
   if (entry.description && !/TODO: transcribe/i.test(entry.description)) {
@@ -176,13 +209,22 @@ function entryProseForSkillParse(entry) {
 
 export function migrateEntrySkillModifiers(entry) {
   const existing = entry.skillModifiers?.specificSkillOverrides ?? []
+  const existingGlobal = entry.skillModifiers?.globalSkillModifier
+  const existingContext = JSON.stringify(entry.skillContextModifiers ?? [])
+  const existingChoices = JSON.stringify(entry.playerChoices ?? [])
   let overrides = stripFalseDisguiseGrants(existing.map(migrateOverride))
 
   const prose = entryProseForSkillParse(entry)
+  let globalFromProse = undefined
+  let contextual = {}
   if (prose) {
+    const extended = parseExtendedSkillModifierProse(prose, findSkillId)
+    globalFromProse = extended.globalSkillModifier
+    contextual = parseContextualMorphusFields(prose)
     const fromProse = [
       ...parseTraitAndImpossibleSkillModifiers(prose, findSkillId),
       ...parseDescriptionSkillModifiers(prose, entry.name),
+      ...extended.specificSkillOverrides,
     ].map(migrateOverride)
     overrides = dedupeOverrides([...overrides, ...fromProse])
   }
@@ -190,24 +232,39 @@ export function migrateEntrySkillModifiers(entry) {
   overrides = dropSubsumedSkillIds(overrides)
   overrides = consolidateTraitClusters(overrides)
   overrides = dedupeOverrides(overrides)
+  overrides = pruneConditionalImpossibleOverrides(overrides, prose, findSkillId)
 
-  if (!overrides.length && entry.skillModifiers?.globalSkillModifier == null) {
+  const nextGlobal = globalFromProse ?? existingGlobal
+  if (!overrides.length && nextGlobal == null) {
     if (entry.skillModifiers) delete entry.skillModifiers
-    return { changed: existing.length > 0 }
+  } else {
+    const customSystemRolls = entry.skillModifiers?.customSystemRolls
+    entry.skillModifiers = {
+      ...(nextGlobal != null ? { globalSkillModifier: nextGlobal } : {}),
+      ...(customSystemRolls?.length ? { customSystemRolls } : {}),
+      ...(overrides.length ? { specificSkillOverrides: overrides } : {}),
+    }
+    if (Object.keys(entry.skillModifiers).length === 0) delete entry.skillModifiers
   }
 
-  const globalSkillModifier = entry.skillModifiers?.globalSkillModifier
-  const customSystemRolls = entry.skillModifiers?.customSystemRolls
-  entry.skillModifiers = {
-    ...(globalSkillModifier != null ? { globalSkillModifier } : {}),
-    ...(customSystemRolls?.length ? { customSystemRolls } : {}),
-    specificSkillOverrides: overrides,
+  if (contextual.skillContextModifiers?.length) {
+    const merged = [...(entry.skillContextModifiers ?? [])]
+    for (const row of contextual.skillContextModifiers) {
+      const key = `${row.skillId}:${row.context}`
+      if (!merged.some((m) => `${m.skillId}:${m.context}` === key)) merged.push(row)
+    }
+    entry.skillContextModifiers = merged
   }
-  if (Object.keys(entry.skillModifiers).length === 0) delete entry.skillModifiers
+  if (contextual.playerChoices?.length && !entry.playerChoices?.length) {
+    entry.playerChoices = contextual.playerChoices
+  }
 
-  const before = JSON.stringify(existing)
-  const after = JSON.stringify(overrides)
-  return { changed: before !== after }
+  const changed =
+    JSON.stringify(existing) !== JSON.stringify(entry.skillModifiers?.specificSkillOverrides ?? []) ||
+    existingGlobal !== entry.skillModifiers?.globalSkillModifier ||
+    existingContext !== JSON.stringify(entry.skillContextModifiers ?? []) ||
+    existingChoices !== JSON.stringify(entry.playerChoices ?? [])
+  return { changed }
 }
 
 function hasTraitData(table) {

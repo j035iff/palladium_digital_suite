@@ -30,6 +30,7 @@ const files = readdirSync(tablesDir).filter((f) => f.endsWith('.json'))
 let filesTouched = 0
 let entriesTouched = 0
 let headersTouched = 0
+let entriesSynced = 0
 
 for (const file of files.sort()) {
   const path = join(tablesDir, file)
@@ -39,11 +40,13 @@ for (const file of files.sort()) {
   let fileChanged = false
 
   if (table.kind === 'morphus_trait_table' && table.description) {
-    const { changed: headerChanged } = dedupeTableHeaderSkillProse(table)
-    if (headerChanged) {
-      headersTouched++
+    const { changed: headerWork, entriesSynced: synced, headerChanged } =
+      dedupeTableHeaderSkillProse(table)
+    if (headerWork) {
       fileChanged = true
     }
+    if (headerChanged) headersTouched++
+    if (synced) entriesSynced += synced
   }
   for (const entry of table.entries) {
     const deduped = dedupeEntrySkillProse(entry, skillsById)
@@ -64,5 +67,5 @@ for (const file of files.sort()) {
 }
 
 console.log(
-  `${dryRun ? 'Dry run:' : 'Done:'} ${filesTouched} file(s), ${entriesTouched} entr(ies) prose stripped, ${headersTouched} table header(s) trimmed.`,
+  `${dryRun ? 'Dry run:' : 'Done:'} ${filesTouched} file(s), ${entriesTouched} entr(ies) prose stripped, ${headersTouched} table header(s) trimmed, ${entriesSynced} entr(ies) synced from table-wide rules.`,
 )

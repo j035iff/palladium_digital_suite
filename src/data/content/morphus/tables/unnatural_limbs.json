@@ -226,7 +226,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus has 2D4 eye stalks protruding from the shoulders, neck, head, or back. The stalks are prehensile but only 1D4+6 inches (17 to 25 cm) in length. The stalks can look around 360 degrees at any given moment making surprise attacks difficult. Each stalk has only 2D6+4 S.D.C., but if one is cut off, it will completely grow back within six hours. Each has perfect, color vision. Bonuses: +1 on initiative, +1D4 on Perception Rolls, +1 to parry and dodge, +1 to Horror Factor, and cannot be surprised as long as he can see around him. Penalties: Cannot see in the dark nor possess any other special optics, -2 to P.B., and and Undercover Ops, and cannot see (no bonuses apply) if they are covered up.",
+      "description": "The Morphus has 2D4 eye stalks protruding from the shoulders, neck, head, or back. The stalks are prehensile but only 1D4+6 inches (17 to 25 cm) in length. The stalks can look around 360 degrees at any given moment making surprise attacks difficult. Each stalk has only 2D6+4 S.D.C., but if one is cut off, it will completely grow back within six hours. Each has perfect, color vision. Bonuses: +1 on initiative, +1D4 on Perception Rolls, +1 to parry and dodge, +1 to Horror Factor, and cannot be surprised as long as he can see around him. Penalties: Cannot see in the dark nor possess any other special optics, -2 to P.B., and Undercover Ops, and cannot see (no bonuses apply) if they are covered up.",
       "statModifiers": {
         "parry": {
           "flat": 1
@@ -352,7 +352,7 @@
           "pageNumber": 104
         }
       ],
-      "description": "The fingers on the hands are three times longer than normal. Bonuses: Fingers are delicate and sensitive, providing a bonus of +5% to the following skills or skill categories: Medical (all), Demolitions (all), Electronics (all), Climbing, Computers (all), Forgery, Palming, Pick Locks, Pick Pockets, and Safecracking.",
+      "description": "The fingers on the hands are three times longer than normal. Bonuses: Fingers are delicate and sensitive, providing a bonus of",
       "skillModifiers": {
         "specificSkillOverrides": [
           {
@@ -443,7 +443,7 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus gives the Nightbane thick, long (1D4+2 feet/0.9 to 1.8 m) hair. The character has complete control over his hair and is able to section it off into as many as three clumps or braids, and use them as if they were tentacle-like limbs. Hair-limbs have a P.S. and P.P. of 10 and can be used to pick up and carry items, open doors, flip switches, climb, entangle and even wield a melee weapon to strike or parry though with a penalty of -2. Bonuses: +1 action/attack per melee, +2 to entangle,. Penalties: Increase weight by 5%, hair cannot use modern weapons/guns, or a bow and arrow, and and Undercover Ops.",
+      "description": "The Morphus gives the Nightbane thick, long (1D4+2 feet/0.9 to 1.8 m) hair. The character has complete control over his hair and is able to section it off into as many as three clumps or braids, and use them as if they were tentacle-like limbs. Hair-limbs have a P.S. and P.P. of 10 and can be used to pick up and carry items, open doors, flip switches, climb, entangle and even wield a melee weapon to strike or parry though with a penalty of -2. Bonuses: +1 action/attack per melee, +2 to entangle,. Penalties: Increase weight by 5%, hair cannot use modern weapons/guns, or a bow and arrow, and Undercover Ops.",
       "statModifiers": {
         "entangle": {
           "flat": 2
@@ -488,11 +488,25 @@
           "pageNumber": 104
         }
       ],
-      "description": "The Nightbane has a prehensile tail, which can be used to grasp and carry things or help climb. The tail is very strong, able to support the character’s full body weight when suspended above the ground. However, it can only carry the equivalent of one third of the character’s body weight (typically about 60 lbs\\27 kg). Bonuses: +20% to Acrobatics (balance) and Climbing when the tail is used, +1 attack per melee and +1 to Horror Factor.",
+      "description": "The Nightbane has a prehensile tail, which can be used to grasp and carry things or help climb. The tail is very strong, able to support the character’s full body weight when suspended above the ground. However, it can only carry the equivalent of one third of the character’s body weight (typically about 60 lbs\\27 kg). Bonuses: (balance) and Climbing when the tail is used, +1 attack per melee and +1 to Horror Factor.",
       "statModifiers": {
         "hf": {
           "flat": 1
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_acrobatics",
+            "modifierPercent": 20
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_climbing",
+            "modifierPercent": 20
+          }
+        ]
       }
     },
     {

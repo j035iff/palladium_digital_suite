@@ -421,6 +421,11 @@
             "targetType": "skill_id",
             "targetValue": "skill_climbing",
             "grantUnlearnedValue": 50
+          },
+          {
+            "targetType": "category",
+            "targetValue": "communications",
+            "modifierPercent": -10
           }
         ]
       },

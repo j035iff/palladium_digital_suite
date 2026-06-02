@@ -1,17 +1,49 @@
 /**
  * Strip Morphus description / customOneOffs clauses already represented in skillModifiers.
  */
-import { TRAIT_PERCENT_PATTERNS } from './morphus-skill-modifier-parse.mjs'
+import {
+  TRAIT_PERCENT_PATTERNS,
+  repairPdfWatermarkProse,
+} from './morphus-skill-modifier-parse.mjs'
+
+function stripSkillsLikeImpossibleBlock(text) {
+  const start = text.search(/\bSkills like\s+/i)
+  if (start < 0) return text
+  const prefix = text.slice(start).match(/\bSkills like\s+/i)[0]
+  const listStart = start + prefix.length
+  const tail = text.slice(listStart)
+  const endRel = tail.search(/\s+are impossible to use in this Morphus\b/i)
+  if (endRel < 0) return text
+  const end = listStart + endRel + ' are impossible to use in this Morphus'.length
+  let out = `${text.slice(0, start)} ${text.slice(end)}`
+  const punct = out.slice(start).match(/^\s*([.;])/)
+  if (punct) {
+    out = `${out.slice(0, start)}${punct[1]}${out.slice(start + punct[0].length)}`
+  }
+  return out
+}
 function escapeRe(s) {
   return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+/** Printed names in Morphus prose that differ from catalog `name`. */
+const SKILL_PROSE_ALIASES = {
+  skill_impersonation: ['Impersonation'],
+}
+
+function proseNamesForSkill(sk, skillId) {
+  const names = new Set([sk?.name, ...(SKILL_PROSE_ALIASES[skillId] ?? [])].filter(Boolean))
+  return [...names]
+}
+
 function normalizeProse(text) {
-  return String(text)
-    .replace(/\[cite:\s*\d+\]/gi, '')
-    .replace(/([A-Za-z])-\s+([A-Za-z])/g, '$1$2')
-    .replace(/\s+/g, ' ')
-    .trim()
+  return repairPdfWatermarkProse(
+    String(text)
+      .replace(/\[cite:\s*\d+\]/gi, '')
+      .replace(/([A-Za-z])-\s+([A-Za-z])/g, '$1$2')
+      .replace(/\s+/g, ' ')
+      .trim(),
+  )
 }
 
 function cleanupProse(text) {
@@ -19,6 +51,10 @@ function cleanupProse(text) {
     text
       .replace(/\s+([,.;:])/g, '$1')
       .replace(/(?:Bonuses|Penalties):\s*(?:,\s*)?(?=[.;]|$)/gi, '')
+      .replace(/,\s+adding a Penalties:/gi, '. Penalties:')
+      .replace(/\band and\b/gi, 'and')
+      .replace(/\.\s+and\.\s*$/gi, '.')
+      .replace(/\s+and\.\s*$/gi, '.')
       .replace(/\(\s*(?:Forgery|Palming|Pick Locks|Sewing)[^)]*\)\s*(?:and\.?)?/gi, '')
       .replace(/,?\s*and\s+any\s+Espionage\s+or\s+Rogue\s+skills,?\s*/gi, ' ')
       .replace(/,?\s*and\s+Undercover\s+Ops\s+skills,?\s*/gi, ' ')
@@ -31,6 +67,7 @@ function cleanupProse(text) {
       .replace(/,\s*,/g, ',')
       .replace(/,\s+and\s+([.;])/g, '$1')
       .replace(/;\s*;/g, ';')
+      .replace(/\.\.+/g, '.')
       .replace(/\s{2,}/g, ' ')
       .trim()
   )
@@ -40,10 +77,12 @@ function cleanupProse(text) {
 export function repairEntryProseArtifacts(entry) {
   const beforeDesc = entry.description ?? ''
   const beforeOneOffs = JSON.stringify(entry.customOneOffs ?? [])
-  if (entry.description) entry.description = cleanupProse(entry.description)
+  if (entry.description) {
+    entry.description = cleanupProse(repairPdfWatermarkProse(entry.description))
+  }
   if (Array.isArray(entry.customOneOffs)) {
     entry.customOneOffs = entry.customOneOffs
-      .map((line) => cleanupProse(String(line)))
+      .map((line) => cleanupProse(repairPdfWatermarkProse(String(line))))
       .filter((line) => line.length > 0)
     if (!entry.customOneOffs.length) delete entry.customOneOffs
   }
@@ -70,7 +109,12 @@ function overridesCoverParsed(existing, parsed) {
 /** Build removal patterns from structured overrides (conservative). */
 export function buildSkillProseStripPatterns(entry, skillsById) {
   const overrides = entry.skillModifiers?.specificSkillOverrides ?? []
-  if (!overrides.length && entry.skillModifiers?.globalSkillModifier == null) return []
+  const hasStructuredSkillRules =
+    overrides.length > 0 ||
+    entry.skillModifiers?.globalSkillModifier != null ||
+    (entry.playerChoices?.length ?? 0) > 0 ||
+    (entry.skillContextModifiers?.length ?? 0) > 0
+  if (!hasStructuredSkillRules) return []
 
   const patterns = []
   const byPct = new Map()
@@ -96,22 +140,25 @@ export function buildSkillProseStripPatterns(entry, skillsById) {
 
     if (o.targetType === 'skill_id') {
       const sk = skillsById.get(o.targetValue)
-      const name = sk?.name ?? o.targetValue.replace(/^skill_/, '').replace(/_/g, ' ')
-      const nameRe = escapeRe(name)
-      patterns.push(
-        new RegExp(
-          `${signRe}${abs}%\\s+to\\s+(?:the\\s+)?${nameRe}(?:\\s+skills?)?`,
-          'gi',
-        ),
-      )
-      patterns.push(
-        new RegExp(
-          `${signRe}${abs}%\\s+to\\s+[^.;]{0,120}?\\b${nameRe}\\b[^.;]{0,40}?\\s+skills?`,
-          'gi',
-        ),
-      )
+      const names = proseNamesForSkill(sk, o.targetValue)
+      const primaryName = names[0] ?? o.targetValue.replace(/^skill_/, '').replace(/_/g, ' ')
+      for (const name of names) {
+        const nameRe = escapeRe(name)
+        patterns.push(
+          new RegExp(
+            `${signRe}${abs}%\\s+to\\s+(?:the\\s+)?${nameRe}(?:\\s+skills?)?`,
+            'gi',
+          ),
+        )
+        patterns.push(
+          new RegExp(
+            `${signRe}${abs}%\\s+to\\s+[^.;]{0,120}?\\b${nameRe}\\b[^.;]{0,40}?\\s+skills?`,
+            'gi',
+          ),
+        )
+      }
       if (!byPct.has(pct)) byPct.set(pct, [])
-      byPct.get(pct).push({ type: 'skill_id', id: o.targetValue, name })
+      byPct.get(pct).push({ type: 'skill_id', id: o.targetValue, name: primaryName, aliases: names })
       continue
     }
 
@@ -125,17 +172,54 @@ export function buildSkillProseStripPatterns(entry, skillsById) {
       )
       patterns.push(
         new RegExp(
+          `${signRe}${abs}%\\s+to\\s+all\\s+skills\\s+involving\\s+${cat}[^.]{0,80}`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
           `${signRe}${abs}%\\s+to\\s+skills?\\s+such\\s+as\\s+[^.;]{0,200}\\b${cat}\\b[^.;]{0,80}`,
           'gi',
         ),
       )
+      if (o.targetValue === 'combat') {
+        patterns.push(
+          new RegExp(
+            `${signRe}${abs}%\\s+to\\s+any\\s+skills\\s+related\\s+to\\s+combat\\s+or\\s+destruction\\.?`,
+            'gi',
+          ),
+        )
+      }
+      if (o.targetValue === 'appearance') {
+        patterns.push(
+          new RegExp(
+            `${signRe}${abs}%\\s+to\\s+all\\s+skills\\s+involving\\s+appearance(?:\\s+and\\s+performance)?,\\s+including[^.]*\\.?`,
+            'gi',
+          ),
+        )
+      }
+      if (o.targetValue === 'occ') {
+        patterns.push(new RegExp(`\\+${abs}%\\s+on\\s+all\\s+R\\.C\\.C\\.\\s+Skills`, 'gi'))
+      }
+      if (o.targetValue === 'espionage') {
+        patterns.push(
+          new RegExp(
+            `${signRe}${abs}%\\s+to\\s+all\\s+skills\\s+involving\\s+surveillance,\\s+tailing\\s+and\\s+investigation`,
+            'gi',
+          ),
+        )
+      }
     }
   }
 
   for (const [pct, items] of byPct) {
     const signRe = pct < 0 ? '-' : '\\+'
     const abs = Math.abs(pct)
-    const names = items.map((i) => escapeRe(i.name))
+    const names = [
+      ...new Set(
+        items.flatMap((i) => [i.name, ...(i.aliases ?? [])].map((n) => escapeRe(n))),
+      ),
+    ]
     if (names.length >= 2) {
       const list = names.slice(0, -1).join(',\\s*') + `(?:,\\s*)?and\\s+${names[names.length - 1]}`
       patterns.push(new RegExp(`${signRe}${abs}%\\s+to\\s+${list}\\s+skills?`, 'gi'))
@@ -143,7 +227,37 @@ export function buildSkillProseStripPatterns(entry, skillsById) {
     if (names.length >= 2 && pct < 0) {
       patterns.push(
         new RegExp(
+          `${signRe}${abs}%\\s+(?:penalty )?on skills like [^.]*\\.?\\s*`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
+          `${signRe}${abs}%\\s+to\\s+skills\\s+like\\s+[^.;]+\\.\\s*`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
+          `${signRe}${abs}%\\s+(?:penalty )?on skills like ${names.join(',\\s*')}(?:\\s+and\\s+${names[names.length - 1]})?[^.]*\\.?\\s*`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
           `${signRe}${abs}%\\s+to\\s+skills\\s+like\\s+${names.join(',\\s*')}(?:\\s+and\\s+${names[names.length - 1]})?[^.]*\\.\\s*`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
+          `${signRe}${abs}%\\s+to\\s+skills\\s+such\\s+as\\s+[^.;]+\\.\\s*`,
+          'gi',
+        ),
+      )
+      patterns.push(
+        new RegExp(
+          `${signRe}${abs}%\\s+to\\s+the\\s+Disguise\\s+and\\s+Impersonation\\s+skills?\\.?\\s*`,
           'gi',
         ),
       )
@@ -156,6 +270,9 @@ export function buildSkillProseStripPatterns(entry, skillsById) {
     const abs = Math.abs(g)
     patterns.push(
       new RegExp(`${signRe}${abs}%\\s+to\\s+ALL\\s+skills\\s+when\\s+in\\s+Morphus`, 'gi'),
+    )
+    patterns.push(
+      new RegExp(`reduce skill performance by ${abs}%`, 'gi'),
     )
     patterns.push(
       new RegExp(`${signRe}${abs}%\\s+on\\s+the\\s+performance\\s+of\\s+all\\s+(?:other\\s+)?skills`, 'gi'),
@@ -190,12 +307,46 @@ export function buildSkillProseStripPatterns(entry, skillsById) {
     /\+\d+%\s+bonus\s+to\s+skills\s+related\s+to\s+electronics[^.]*\.\s*/gi,
   )
 
+  patterns.push(/reduce skill performance by \d+%\.?\s*/gi)
+  patterns.push(/\+(\d+)% to the following skills or skill categories:[^.]*\.?\s*/gi)
+  patterns.push(/\+(\d+)% to Acrobatics \(balance\) and Climbing when[^.]*\.?\s*/gi)
+  patterns.push(/-(\d+)% to any skill requiring the use of hands[^.]*\.?\s*/gi)
+  patterns.push(/Skills like [^.]+ are impossible to use in this Morphus\.?\s*/gi)
+  patterns.push(
+    /Skills requiring manual dexterity and fingers are often impossible \(-\d+% to skill performance\)\.?/gi,
+  )
+  patterns.push(
+    /Color change \(one melee action\) grants \+\d+% to Prowl or hide and \+\d+% to Climb[^.]*\.?\s*/gi,
+  )
+  patterns.push(
+    /\+\d+% to any single Espionage skill and \+\d+% to any single Rogue skill \(player's choice\)\.?/gi,
+  )
+  patterns.push(
+    /\+\d+% to all O\.C\.C\. Skills that relate to the tools and the trade[^.]*\.?\s*/gi,
+  )
+
+  for (const row of entry.skillContextModifiers ?? []) {
+    if (row.context === 'color_change') {
+      patterns.push(
+        /Color change \(one melee action\) grants \+\d+% to Prowl or hide and \+\d+% to Climb[^.]*\.?\s*/gi,
+      )
+    }
+  }
+
+  if ((entry.playerChoices?.length ?? 0) > 0) {
+    patterns.push(
+      /\+\d+% to any single Espionage skill and \+\d+% to any single Rogue skill \(player's choice\)\.?/gi,
+    )
+  }
+
   return patterns
 }
 
 export function stripSkillModifierProse(text, patterns) {
-  if (!text || !patterns.length) return text
+  if (!text) return text
   let out = normalizeProse(text)
+  out = stripSkillsLikeImpossibleBlock(out)
+  if (!patterns.length) return cleanupProse(out)
   for (const re of patterns) {
     out = out.replace(re, ' ')
   }
@@ -204,7 +355,12 @@ export function stripSkillModifierProse(text, patterns) {
 
 export function dedupeEntrySkillProse(entry, skillsById) {
   const overrides = entry.skillModifiers?.specificSkillOverrides ?? []
-  if (!overrides.length && entry.skillModifiers?.globalSkillModifier == null) {
+  const hasStructuredSkillRules =
+    overrides.length > 0 ||
+    entry.skillModifiers?.globalSkillModifier != null ||
+    (entry.playerChoices?.length ?? 0) > 0 ||
+    (entry.skillContextModifiers?.length ?? 0) > 0
+  if (!hasStructuredSkillRules) {
     return { changed: false }
   }
 

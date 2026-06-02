@@ -85,7 +85,7 @@
           "pageNumber": 87
         }
       ],
-      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and and Undercover skills.",
+      "description": "+1D6 damage with bite attacks, can hold onto rope with teeth with the same strength and grip as his hands without injury to the neck, and +1 to Horror Factor. Penalties: -1 to P.B. and Undercover skills.",
       "statModifiers": {
         "pb": {
           "flat": -1

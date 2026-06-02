@@ -255,8 +255,19 @@
       ],
       "customOneOffs": [
         "Each crush/squeeze attack inflicts Supernatural P.S. punch damage.",
-        "Color change (one melee action) grants +20% to Prowl or hide and +20% to Climb; includes mottled gray or black in dim light.",
         "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half."
+      ],
+      "skillContextModifiers": [
+        {
+          "skillId": "skill_prowl",
+          "modifierPercent": 20,
+          "context": "color_change"
+        },
+        {
+          "skillId": "skill_climbing",
+          "modifierPercent": 20,
+          "context": "color_change"
+        }
       ]
     },
     {

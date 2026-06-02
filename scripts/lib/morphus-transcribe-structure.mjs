@@ -16,6 +16,7 @@ import {
   SKILL_TRAIT_MECHANICS,
   SKILL_TRAIT_TIMING,
   SKILL_TRAIT_FOCUS,
+  parseExtendedSkillModifierProse,
 } from './morphus-skill-modifier-parse.mjs'
 import {
   sanitizeMorphusEntryForNightbane,
@@ -60,6 +61,9 @@ export function loadSkillNameIndex() {
     skillsByName.set(normalizeSkillName(s.name), s.id)
   }
   skillsByName.set('undercover ops', 'skill_undercover_ops')
+  skillsByName.set('impersonation', 'skill_impersonation')
+  skillsByName.set('imitate voices', 'skill_impersonation')
+  skillsByName.set('imitate voices and impersonation', 'skill_impersonation')
   skillsByName.set('wardrobe grooming', 'skill_wardrobe_and_grooming')
   skillsByName.set('wardrobe and grooming', 'skill_wardrobe_and_grooming')
   skillsByName.set('escape artist', 'skill_escape_artist')
@@ -599,6 +603,18 @@ function parseSkillModifiers(body, out) {
   }
   if (overrides.length) {
     out.skillModifiers = { specificSkillOverrides: dedupeOverrides(overrides) }
+  }
+  const extended = parseExtendedSkillModifierProse(body, findSkillId)
+  if (extended.globalSkillModifier != null) {
+    out.skillModifiers = out.skillModifiers ?? {}
+    out.skillModifiers.globalSkillModifier = extended.globalSkillModifier
+  }
+  if (extended.specificSkillOverrides.length) {
+    out.skillModifiers = out.skillModifiers ?? { specificSkillOverrides: [] }
+    out.skillModifiers.specificSkillOverrides = dedupeOverrides([
+      ...(out.skillModifiers.specificSkillOverrides ?? []),
+      ...extended.specificSkillOverrides,
+    ])
   }
 }
 

@@ -538,6 +538,72 @@
     ]
   },
   {
+    "id": "skill_impersonation",
+    "name": "Imitate Voices & Impersonation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": {
+      "splitBaseTracks": [
+        {
+          "trackId": "regional_accent",
+          "label": "Regional accent, inflection, and expression",
+          "basePercent": 36
+        },
+        {
+          "trackId": "specific_person_voice",
+          "label": "Specific person's voice, inflection, and attitude",
+          "basePercent": 16
+        }
+      ]
+    },
+    "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to imitate the voice, accent and expressions of another person or regional dialect. This skill is common among thieves and assassins, as well as demons and other villains. The first number indicates the character's ability to change his voice and imitate accents, inflections and expressions from other regions. A successful roll means s/he has disguised his normal/true speaking voice and accent, and convincingly sounds like s/he is from another region or part of the world. The second number indicates the character's ability to accurately imitate the voice, inflections and attitude of a specific person! This is much more difficult, and the character will either need to know the person being imitated very well, or have spent hours studying him/her. Base Skill: 36%/16% +4% per level of experience. Impersonation Note: When combined with the disguise and intelligence skills, the character is able to completely impersonate a specific person or person of a particular occupation (soldier, knight, wizard, priest, etc.). This is likely to include knowledge of the subject being impersonated, military procedure, dress, heraldry/rank, and will usually require speaking the language fluently. This means the character can convincingly impersonate a general type of person/soldier/advisor with an accurate disguise, proper action, and language. Base Skill: 16% +4% per level of experience for a regional disguise of an average local person (farmer, laborer, vagabond, etc.), +12% +4% to impersonate a person in a specific occupation (sheriff, guard, inspector, messenger, merchant, priest, etc.), and 10% +4% per level of experience to impersonate a specific, known person.",
+    "subTasks": [
+      {
+        "name": "Regional disguise of an average local person (farmer, laborer, vagabond, etc.)",
+        "basePercent": 16,
+        "percentPerLevel": 4
+      },
+      {
+        "name": "Impersonate a person in a specific occupation (sheriff, guard, inspector, messenger, merchant, priest, etc.)",
+        "basePercent": 12,
+        "percentPerLevel": 4
+      },
+      {
+        "name": "Impersonate a specific, known person",
+        "basePercent": 10,
+        "percentPerLevel": 4
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "The impersonation sub-tasks (average local, occupation, or known person) require Disguise and Intelligence in addition to this skill; voice mimicry alone uses the split base tracks above.",
+        "relatedSkillIds": [
+          "skill_disguise",
+          "skill_intelligence"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "failureResults": "A failed impersonation roll (with Disguise and Intelligence) means some element of the impersonation is flawed—most likely incorrect behavior or a character trait, or lack of information about the person being impersonated (\"Tell me again what you said that night,\" etc.). Such holes will give the character away sooner or later; the longer the character remains under scrutiny, the more likely something reveals the impostor.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 9
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
     "id": "skill_intelligence",
     "name": "Intelligence",
     "gameSystems": [

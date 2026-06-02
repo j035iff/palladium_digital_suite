@@ -69,7 +69,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20% and.",
+      "description": "Double the character’s weight; +4D6+6 S.D.C. and +1D4 to P.S. Penalty: Reduce Spd by 20%.",
       "statModifiers": {
         "ps": {
           "dice": "1D4"
@@ -190,7 +190,7 @@
           "pageNumber": 88
         }
       ],
-      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10% and.",
+      "description": "The upper body is narrow and long waisted, not spindly or puny, but tall and narrow like a board; increase height 2D4 inches (5-20 cm); +1 to dodge and entangle, +1 to Horror Factor. Penalty: Reduce Spd by 10%.",
       "statModifiers": {
         "dodge": {
           "flat": 1

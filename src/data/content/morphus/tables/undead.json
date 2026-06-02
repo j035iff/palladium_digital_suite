@@ -19,7 +19,7 @@
           "pageNumber": 3
         }
       ],
-      "description": "The Morphus is a demonic vampire with an ugly face, oversized cranium, large pointed ears, sunken eyes, pale skin with a yellow or green hue, long, slender fingers that end in long, claw-like fingernails, and a thin body, like a desiccated corpse. Bonuses: +2D4x10+36 S.D.C., Natural A.R. 12, +2D4 to P.S., +2 on Perception Rolls, Nightvision 2,000 feet (610 m), detect the scent of blood up to 3,000 feet (914 m) away and can track it to its source (82% skill 96 Joe Sifferman (Order #46323384) proficiency), Escape Artist, Prowl and Seduction skills (as is applicable) in darkness, +2D6 to claw strike plus Supernatural P.S. damage, bite attack does 2D6 damage, and +2 to Horror Factor. Penalties: -3 to M.E., weapons made of wood, silver or Holy Weapons inflict double damage, being impaled through the heart puts the character in a coma (stasis), hates water (it stings the flesh), especially large bodies of water (cannot swim), hates sunlight which hurts the eyes and blisters unprotected skin, can only see 100 feet (30.5 m) in daylight (double distance with sunglasses). Note: Craves blood just like a real vampire. Drinking 8 ounces of fresh, warm blood restores 1D6 Hit Points or 2D6 S.D.C. (6 ounces of blood from a Night Prince or Nightlord restores 2D6 Hit Points and 6D6 S.D.C.!). Whether one considers this ability a bonus or a curse/penalty varies with the individual and alignment. Cannot turn into a bat or wolf, nor create and command other vampires, nor mind control people.",
+      "description": "The Morphus is a demonic vampire with an ugly face, oversized cranium, large pointed ears, sunken eyes, pale skin with a yellow or green hue, long, slender fingers that end in long, claw-like fingernails, and a thin body, like a desiccated corpse. Bonuses: +2D4x10+36 S.D.C., Natural A.R. 12, +2D4 to P.S., +2 on Perception Rolls, Nightvision 2,000 feet (610 m), detect the scent of blood up to 3,000 feet (914 m) away and can track it to its source (82% skill 9proficiency), Escape Artist, Prowl and Seduction skills (as is applicable) in darkness, +2D6 to claw strike plus Supernatural P.S. damage, bite attack does 2D6 damage, and +2 to Horror Factor. Penalties: -3 to M.E., weapons made of wood, silver or Holy Weapons inflict double damage, being impaled through the heart puts the character in a coma (stasis), hates water (it stings the flesh), especially large bodies of water (cannot swim), hates sunlight which hurts the eyes and blisters unprotected skin, can only see 100 feet (30.5 m) in daylight (double distance with sunglasses). Note: Craves blood just like a real vampire. Drinking 8 ounces of fresh, warm blood restores 1D6 Hit Points or 2D6 S.D.C. (6 ounces of blood from a Night Prince or Nightlord restores 2D6 Hit Points and 6D6 S.D.C.!). Whether one considers this ability a bonus or a curse/penalty varies with the individual and alignment. Cannot turn into a bat or wolf, nor create and command other vampires, nor mind control people.",
       "statModifiers": {
         "hf": {
           "flat": 2
@@ -198,7 +198,7 @@
           "pageNumber": 2
         }
       ],
-      "description": "The Morphus is the classic zombie - a human that looks dead and half decayed, with putrefied flesh, sunken eyes, and a body in any state of advanced decomposition. Tattered clothing is optional. Bonuses: +1D6x10 S.D.C., the ‘Bane takes half damage from bullets and other piercing attacks. In addition, if a limb is severed it can be reattached simply by placing it back on the body. If the head is decapitated or destroyed, the Nightbane dies. +1D4 to Horror Factor. Penalties: Has a craving for brains (animal or human), reduce Spd by 30%, -15% to Prowl (shuffling walk), -1D4 on initiative, -1 from I.Q. and -1D4 from P.B.",
+      "description": "The Morphus is the classic zombie - a human that looks dead and half decayed, with putrefied flesh, sunken eyes, and a body in any state of advanced decomposition. Tattered clothing is optional. Bonuses: +1D6x10 S.D.C., the ‘Bane takes half damage from bullets and other piercing attacks. In addition, if a limb is severed it can be reattached simply by placing it back on the body. If the head is decapitated or destroyed, the Nightbane dies. +1D4 to Horror Factor. Penalties: Has a craving for brains (animal or human), reduce Spd by 30%, (shuffling walk), -1D4 on initiative, -1 from I.Q. and -1D4 from P.B.",
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10"
@@ -209,6 +209,15 @@
         "spd": {
           "percent": -30
         }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -15
+          }
+        ]
       }
     },
     {
@@ -225,7 +234,7 @@
           "pageNumber": 2
         }
       ],
-      "description": "The Morphus is a human body that is wrapped in linen strips of cloth, leaving only a slit for the eyes and mouth. Under the linen wrapping is a shriveled, desiccated corpse. Bonuses: +2D4x10 S.D.C., Natural A.R. 11, +1 to P.S., never hungers, thirsts, or fatigues, +1 to Horror Factor. Penalties: Reduce Spd by 10%, -10% to Prowl (shuffling walk), and fire does 50% greater damage.",
+      "description": "The Morphus is a human body that is wrapped in linen strips of cloth, leaving only a slit for the eyes and mouth. Under the linen wrapping is a shriveled, desiccated corpse. Bonuses: +2D4x10 S.D.C., Natural A.R. 11, +1 to P.S., never hungers, thirsts, or fatigues, +1 to Horror Factor. Penalties: Reduce Spd by 10%, (shuffling walk), and fire does 50% greater damage.",
       "statModifiers": {
         "ps": {
           "flat": 1
@@ -240,7 +249,16 @@
           "percent": -10
         }
       },
-      "naturalAr": 11
+      "naturalAr": 11,
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_prowl",
+            "modifierPercent": -10
+          }
+        ]
+      }
     }
   ]
 }
