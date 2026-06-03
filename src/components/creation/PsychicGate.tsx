@@ -63,8 +63,8 @@ export function PsychicGate() {
       >
         Choose psionic potential (psychic_gate.md). I.S.P. on the active form is set to{' '}
         <strong>M.E. + 1d6</strong> when a tier other than None is confirmed. Major tier applies a{' '}
-        <strong>0.5×</strong> multiplier to O.C.C. related skill slots (floor at selection time in
-        the Skill Engine).
+        <strong>0.5×</strong> multiplier to O.C.C. related skill slots and O.C.C. skill bonus % (floor
+        at selection time in the Skill Engine).
       </p>
 
       {bypassed ? (
@@ -198,7 +198,7 @@ export function PsychicGate() {
                 <strong className="font-mono">{skillSlotMultiplier}</strong>
                 {psychicTier === 'major' ? (
                   <span className="block text-xs opacity-75">
-                    Major: O.C.C. related skills ×0.5 (floor when counting slots; psychic_gate.md §2).
+                    Major: related slots ×0.5 and O.C.C. skill bonus % ×0.5 (floor; psychic_gate.md §2).
                   </span>
                 ) : null}
               </p>

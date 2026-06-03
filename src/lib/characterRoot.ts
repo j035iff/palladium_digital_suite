@@ -11,7 +11,7 @@ const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
 
 function blankFormState(): Character['facade'] {
   return {
-    alignment: 'Unprincipled',
+    alignment: '',
     hitPoints: { current: 0, maximum: 0, scaling: 'sdc_hp' },
     structuralDamageCapacity: {
       current: 0,

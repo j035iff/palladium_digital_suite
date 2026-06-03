@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { getLibraryOccById } from '../data/library/registry'
 import { projectCreationSkillsToSheet, applySpawnSheetHandoff } from './spawnSheetHandoff'
+import { rawOccSkillBonusPercent } from './creationPsychicSkills'
 import { createBlankCharacterForGenre } from './characterRoot'
 import { patchCharacterCreationFromOcc, applyOccStartingSkillPicks } from './occCreationDerivation'
 import { snapshotOccForCharacter } from '../data/occDefinitions'
@@ -55,5 +56,45 @@ describe('spawnSheetHandoff', () => {
     expect(finalized.facade.skills.length).toBeGreaterThan(0)
     expect(finalized.morphus.skills.length).toBe(finalized.facade.skills.length)
     expect(finalized.facade.skills[0]?.name).not.toMatch(/^skill_/)
+  })
+
+  it('halves O.C.C. related skill bonus % for Major psychic on spawn', () => {
+    const occLib = getLibraryOccById('occ_ex_government_agent')
+    const occView = getOccById('occ_ex_government_agent')
+    expect(occLib).toBeDefined()
+
+    let root = createBlankCharacterForGenre('nightbane')
+    root = {
+      ...root,
+      occ: snapshotOccForCharacter(occView!),
+      creationPsychicTier: 'major',
+    }
+    root = applyOccStartingSkillPicks(
+      patchCharacterCreationFromOcc(root, occLib!),
+      occLib!,
+    )
+    root = {
+      ...root,
+      creationRelatedSkillIds: ['skill_pick_locks'],
+    }
+
+    const rawBonus = rawOccSkillBonusPercent(
+      occLib,
+      'skill_pick_locks',
+      new Set(['skill_pick_locks']),
+    )
+    expect(rawBonus).toBeGreaterThan(0)
+
+    const noneRows = projectCreationSkillsToSheet(root, occLib, 'facade', 'none')
+    const majorRows = projectCreationSkillsToSheet(root, occLib, 'facade', 'major')
+    const nonePick = noneRows.find((r) => r.id === 'skill_pick_locks')
+    const majorPick = majorRows.find((r) => r.id === 'skill_pick_locks')
+    expect(nonePick).toBeDefined()
+    expect(majorPick).toBeDefined()
+    if (!nonePick || !majorPick) return
+    const nonePct = nonePick.basePercent ?? 0
+    const majorPct = majorPick.basePercent ?? 0
+    expect(majorPct).toBeLessThan(nonePct)
+    expect(majorPct).toBe(nonePct - (rawBonus - Math.floor(rawBonus * 0.5)))
   })
 })

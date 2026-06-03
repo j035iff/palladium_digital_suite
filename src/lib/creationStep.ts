@@ -1,7 +1,8 @@
 import type { Character, PalladiumOcc, Race } from '../types'
 import { creationNeedsAbilitySelection, creationShowsPsychicGate } from './creationPhases'
 import { listOccVariableBonusTasks, occVariableBonusTasksComplete } from './occVariableBonus'
-import { isOccAllowedForRace, raceCanPickOcc, raceLineageFromDefinition } from './raceEngine'
+import { raceCanPickOcc, raceLineageFromDefinition } from './raceEngine'
+import { assessConfiguratorPairConflict } from './configuratorMatrix'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 
@@ -52,6 +53,7 @@ export function buildCreationFlowContext(
       character.creationAbilityBudget,
       creationGenreId,
     ),
+    // Nightbane Phase II.5 — stub UI until MORPHUS_FORGE_IMPLEMENTED (morphusForgeStub.ts)
     showMorphusPhase: raceLineageFromDefinition(race) === 'nightbane',
     hasOccVariableBonus: tasks.length > 0,
   }
@@ -138,8 +140,13 @@ export function assessConfiguratorBlockers(
   if (picksOcc) {
     if (!character.occ?.id || !character.occ?.xpTable?.floors?.length) {
       blockers.push('Select an O.C.C.')
-    } else if (occ && !isOccAllowedForRace(race, occ)) {
-      blockers.push('Chosen O.C.C. is not allowed for this race.')
+    } else if (occ) {
+      const pair = assessConfiguratorPairConflict(
+        race,
+        occ,
+        character.facade.alignment,
+      )
+      if (pair) blockers.push(pair)
     }
     if (occ?.specializations?.length && !character.occSpecializationId) {
       blockers.push('Select an O.C.C. specialization.')

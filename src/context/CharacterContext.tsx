@@ -150,6 +150,7 @@ import {
   resolvePsychicGateBypassed,
 } from '../lib/creationPhases'
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
+import { resolveCreationPsychicTier } from '../lib/creationPsychicSkills'
 import type { CreationPhase } from '../lib/creationStep'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
 import { computeSpawnVitalityFromResolutions } from '../lib/spawnVitalityManual'
@@ -606,6 +607,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const branch = getFormState(prev, form)
       return {
         ...prev,
+        creationPsychicTier: 'master',
         [form]: applyPsychicTierToFormState(branch, 'master'),
       }
     })
@@ -672,6 +674,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setRawCharacter(
       hydrated.creationVitalityCommitted ? hydrated : syncRaceOccFacadeSdc(hydrated),
     )
+    setPsychicTierState(resolveCreationPsychicTier(hydrated))
     setViewport('sheet')
     setActiveForm('facade')
     setXpHistory(loadXpHistory(hydrated.name))
@@ -1409,6 +1412,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         const branch = getFormState(prev, form)
         return {
           ...prev,
+          creationPsychicTier: tier,
           [form]: applyPsychicTierToFormState(branch, tier),
         }
       })
@@ -1427,6 +1431,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const branch = getFormState(prev, form)
       return {
         ...prev,
+        creationPsychicTier: tier,
         [form]: applyPsychicTierToFormState(branch, tier),
       }
     })
@@ -1502,6 +1507,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
               [form]: nextBranch,
               occ: snapshotOccForCharacter(def),
               occSpecializationId: undefined,
+              creationPsychicTier: tier,
             },
             lib,
           ),
@@ -1750,8 +1756,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [psychicTier])
 
   const finalizeCharacter = useCallback(() => {
-    setRawCharacter((prev) => applySpawnSheetHandoff(prev))
-  }, [])
+    setRawCharacter((prev) =>
+      applySpawnSheetHandoff(prev, { psychicTier: resolveCreationPsychicTier(prev, psychicTier) }),
+    )
+  }, [psychicTier])
 
   const addSelectedAbility = useCallback(
     (id: string) => {

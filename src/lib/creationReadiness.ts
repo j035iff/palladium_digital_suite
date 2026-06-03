@@ -3,7 +3,10 @@ import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { creationNeedsAbilitySelection } from './creationPhases'
 import type { CharacterRootState } from '../types'
-import { occCreationAbilityBudget } from './occCreationDerivation'
+import {
+  occCreationAbilityBudget,
+  occRelatedSkillSlotBudget,
+} from './occCreationDerivation'
 import { raceCanPickOcc } from './raceEngine'
 import {
   assessAttributesBlockers,
@@ -14,6 +17,10 @@ import {
   listPendingDiceEntries,
   pendingDiceResolutionsComplete,
 } from './pendingDiceLedger'
+import {
+  assessRelatedSkillSlotBlockers,
+  resolveCreationPsychicTier,
+} from './creationPsychicSkills'
 
 function attrsPlausible(attrs: {
   iq: number
@@ -68,6 +75,21 @@ export function assessCreationReviewBlockers(
   const occSkills = character.creationOccSkillIds ?? []
   if (picksOcc && occSkills.length < 1) {
     blockers.push('Select at least one O.C.C. skill.')
+  }
+
+  if (picksOcc && occLib) {
+    const relatedBase =
+      character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occLib)
+    const relatedSelected = character.creationRelatedSkillIds ?? []
+    const psychicTier = resolveCreationPsychicTier(character)
+    blockers.push(
+      ...assessRelatedSkillSlotBlockers(
+        relatedSelected.length,
+        relatedBase,
+        psychicTier,
+        occLib,
+      ),
+    )
   }
 
   const abilityBudget = occLib

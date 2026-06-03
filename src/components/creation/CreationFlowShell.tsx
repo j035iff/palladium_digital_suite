@@ -21,24 +21,7 @@ import {
   type CreationPhase,
 } from '../../lib/creationStep'
 import { assessCreationReviewBlockers } from '../../lib/creationReadiness'
-
-function MorphusPlaceholder() {
-  return (
-    <section aria-labelledby="morphus-phase-heading">
-      <h2
-        id="morphus-phase-heading"
-        className="mb-2 text-sm font-semibold uppercase tracking-wide text-violet-300"
-      >
-        Phase II.5: Morphus Forge
-      </h2>
-      <p className="max-w-2xl text-sm text-violet-200/90">
-        Nightbane Morphus generation is handled by a dedicated subsystem (see morphus
-        spec). Continue when your table picks are ready — full forge UI ships in a
-        follow-up stream.
-      </p>
-    </section>
-  )
-}
+import { MorphusForgeStub } from './MorphusForgeStub'
 
 function PhaseBody({ phase }: { phase: CreationPhase }) {
   switch (phase) {
@@ -53,7 +36,7 @@ function PhaseBody({ phase }: { phase: CreationPhase }) {
     case 'skills':
       return <SkillEngine />
     case 'morphus':
-      return <MorphusPlaceholder />
+      return <MorphusForgeStub />
     case 'abilities':
       return <AbilitySelection />
     case 'review':

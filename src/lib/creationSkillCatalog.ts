@@ -128,6 +128,19 @@ export function catalogEntryToEngineSkillDef(
           physicalStaging[key] = val
           isPhysical = true
         }
+      } else if (
+        val &&
+        typeof val === 'object' &&
+        typeof (val as { value?: unknown }).value === 'number'
+      ) {
+        const n = (val as { value: number }).value
+        if (
+          Number.isFinite(n) &&
+          (key === 'sdc' || key === 'ps' || key === 'pp' || key === 'pe' || key === 'spd')
+        ) {
+          physicalStaging[key] = n
+          isPhysical = true
+        }
       }
     }
   }

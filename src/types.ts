@@ -1696,6 +1696,8 @@ export type Character = {
   lineage?: 'nightbane' | 'megaversal'
   /** After Spawn — creation chrome hidden; persisted (character_creation.md §5). */
   isFinalized?: boolean
+  /** Psychic Gate tier chosen during creation (psychic_gate.md). */
+  creationPsychicTier?: PsychicTier
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
   /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */

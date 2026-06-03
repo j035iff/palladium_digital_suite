@@ -19,6 +19,11 @@ import {
   formatOccCoreSkillEntry,
   occGrantsDefaultHandToHand,
 } from '../../lib/occComposition'
+import {
+  applyPsychicOccSkillBonusPercent,
+  rawOccSkillBonusPercent,
+  resolveOccSkillBonusPercent,
+} from '../../lib/creationPsychicSkills'
 
 const CATEGORIES: Array<SkillCategory | 'All'> = [
   'All',
@@ -35,6 +40,7 @@ const EMPTY_SKILL_IDS: string[] = []
 function buildEquationInput(
   def: EngineSkillDef,
   selectedIds: ReadonlySet<string>,
+  occBonus: number,
 ): SkillEquationSkill {
   let synergy = def.synergyBonuses ?? 0
   if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
@@ -44,7 +50,7 @@ function buildEquationInput(
     basePercent: def.basePercent,
     perLevel: def.perLevel,
     acquisitionLevel: def.acquisitionLevel,
-    occBonus: def.occBonus,
+    occBonus,
     synergyBonuses: synergy,
     scaledAttBonuses: def.scaledAttBonuses,
     statusModifiers: def.statusModifiers,
@@ -72,6 +78,7 @@ export function SkillEngine() {
     supportsDualForm,
     skillSlotMultiplier,
     morphusSurfaceType,
+    psychicTier,
     setCreationSkillPicks,
     hostGenreId,
   } = useCharacter()
@@ -102,6 +109,8 @@ export function SkillEngine() {
     () => new Set([...occSelected, ...relatedSelected]),
     [occSelected, relatedSelected],
   )
+
+  const relatedSet = useMemo(() => new Set(relatedSelected), [relatedSelected])
 
   const attrs = activeFormState.attributes
   const iqBonus = useMemo(
@@ -203,8 +212,8 @@ export function SkillEngine() {
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
         Master Skill Equation, slot budgets, and dependency gates (skill_selection.md). Major
-        psychics apply <strong>skillSlotMultiplier</strong> to O.C.C. related capacity (floor;
-        psychic_gate.md §2).
+        psychics apply <strong>0.5×</strong> to O.C.C. related skill slots and O.C.C. skill bonus
+        % (floor; psychic_gate.md §2).
       </p>
 
       {effectiveOcc?.occSkillsCore.length ? (
@@ -247,18 +256,33 @@ export function SkillEngine() {
             Related skill category rules
           </p>
           <ul className="mt-1 list-inside list-disc space-y-0.5 font-mono">
-            {effectiveOcc.occRelatedSkills.categoryRules.map((r) => (
+            {effectiveOcc.occRelatedSkills.categoryRules.map((r) => {
+              const rawBonus = r.bonusPercent
+              const effectiveBonus = applyPsychicOccSkillBonusPercent(
+                rawBonus,
+                psychicTier,
+              )
+              const halved =
+                psychicTier === 'major' && effectiveBonus !== rawBonus
+              return (
               <li key={r.categoryName}>
-                {r.categoryName}: {r.accessType} (+{r.bonusPercent}%)
+                {r.categoryName}: {r.accessType} (+{halved ? effectiveBonus : rawBonus}%
+                {halved ? ` — book +${rawBonus}% halved for Major psychic` : ''})
                 {r.skillSpecificOverrides &&
                 Object.keys(r.skillSpecificOverrides).length > 0
                   ? ` · overrides: ${Object.entries(r.skillSpecificOverrides)
-                      .map(([id, pct]) => `${id} +${pct}%`)
+                      .map(([id, pct]) => {
+                        const eff = applyPsychicOccSkillBonusPercent(pct, psychicTier)
+                        return halved && eff !== pct
+                          ? `${id} +${eff}% (book +${pct}%)`
+                          : `${id} +${pct}%`
+                      })
                       .join(', ')}`
                   : ''}
                 {r.exceptions?.length ? ` (exceptions: ${r.exceptions.join(', ')})` : ''}
               </li>
-            ))}
+              )
+            })}
           </ul>
         </div>
       ) : null}
@@ -511,7 +535,20 @@ export function SkillEngine() {
               {[...occSelected, ...relatedSelected].map((id) => {
                 const def = getSkillById(id)
                 if (!def) return null
-                const input = buildEquationInput(def, allSelected)
+                const occBonus = resolveOccSkillBonusPercent(
+                  effectiveOcc,
+                  id,
+                  relatedSet,
+                  psychicTier,
+                  character.occSpecializationId,
+                )
+                const rawBonus = rawOccSkillBonusPercent(
+                  effectiveOcc,
+                  id,
+                  relatedSet,
+                  character.occSpecializationId,
+                )
+                const input = buildEquationInput(def, allSelected, occBonus)
                 const resolved = resolveSkillPercent(
                   { ...input, id: def.id },
                   skillPercentCtx,
@@ -519,6 +556,11 @@ export function SkillEngine() {
                 return (
                   <li key={id} className="border-b border-white/10 pb-2 last:border-0">
                     <div className="font-semibold">{def.name}</div>
+                    {rawBonus > 0 && psychicTier === 'major' && occBonus !== rawBonus ? (
+                      <p className="text-[10px] opacity-70">
+                        O.C.C. bonus +{occBonus}% (book +{rawBonus}%, Major halved)
+                      </p>
+                    ) : null}
                     <div className="font-mono tabular-nums opacity-90">
                       {resolved.impossibleInMorphus ? (
                         <>
