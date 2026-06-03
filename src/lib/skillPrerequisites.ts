@@ -5,6 +5,9 @@ export function prerequisiteSatisfied(
   selectedIds: ReadonlySet<string>,
 ): boolean {
   if (!prereq) return true
+  if ('allOf' in prereq) {
+    return prereq.allOf.every((p) => prerequisiteSatisfied(p, selectedIds))
+  }
   if (prereq.gate === 'and') {
     return prereq.skillIds.every((id) => selectedIds.has(id))
   }
@@ -17,6 +20,13 @@ export function missingPrerequisiteMessage(
 ): string | null {
   if (!prereq) return null
   if (prerequisiteSatisfied(prereq, selectedIds)) return null
+
+  if ('allOf' in prereq) {
+    const parts = prereq.allOf
+      .map((p) => missingPrerequisiteMessage(p, selectedIds))
+      .filter((m): m is string => m != null)
+    return parts.length ? parts.join(' ') : null
+  }
 
   if (prereq.gate === 'and') {
     const missing = prereq.skillIds.filter((id) => !selectedIds.has(id))

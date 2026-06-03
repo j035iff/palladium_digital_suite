@@ -1,7 +1,7 @@
 import type { Race } from '../../types'
-import palladiumRaces from '../content/palladiumRaces.json'
+import { PALLADIUM_RACE_CATALOG } from './raceCatalogLoader'
 
-/** Race / R.C.C. catalog — top-level array in `src/data/content/palladiumRaces.json`. */
+/** Full race catalog — merged from `content/races/*.json` pools. */
 export function loadRacesFromJson(): Race[] {
-  return Array.isArray(palladiumRaces) ? (palladiumRaces as Race[]) : []
+  return [...PALLADIUM_RACE_CATALOG]
 }

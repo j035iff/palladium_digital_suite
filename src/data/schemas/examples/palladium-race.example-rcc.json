@@ -3,6 +3,7 @@
   "id": "example_rcc_guardian_pattern",
   "name": "Example: Guardian R.C.C. (pattern)",
   "description": "Illustrates canPickOcc: false, innate I.S.P. formula with attribute anchor, and flat S.D.C. dice.",
+  "raceAudience": "player",
   "gameSystems": [
     "nightbane"
   ],

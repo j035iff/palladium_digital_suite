@@ -183,29 +183,64 @@ if (!validateProgressionDoc(progressionJson)) {
   console.log('OK  standard_modern_weapon_progression.json — document validates')
 }
 
-const palladiumRaces = loadJson(join(contentDir, 'palladiumRaces.json'))
-if (!Array.isArray(palladiumRaces)) {
-  failed = true
-  console.error('ERR palladiumRaces.json — expected top-level array')
-} else {
-  let raceBad = 0
-  for (const row of palladiumRaces) {
-    if (!validateRaceRow(row)) {
-      raceBad++
-      if (raceBad <= 5) {
+const racesDir = join(contentDir, 'races')
+const RACE_POOL_FILES = ['player.json', 'npc.json', 'gm_approval.json']
+const POOL_AUDIENCE = {
+  'player.json': 'player',
+  'npc.json': 'npc',
+  'gm_approval.json': 'gm_approval',
+}
+let raceTotal = 0
+const raceIds = new Set()
+try {
+  for (const file of RACE_POOL_FILES) {
+    const poolPath = join(racesDir, file)
+    const rows = loadJson(poolPath)
+    if (!Array.isArray(rows)) {
+      failed = true
+      console.error(`ERR races/${file} — expected top-level array`)
+      continue
+    }
+    const expectedAudience = POOL_AUDIENCE[file]
+    let raceBad = 0
+    for (const row of rows) {
+      if (row?.id) {
+        if (raceIds.has(row.id)) {
+          failed = true
+          console.error(`ERR races — duplicate id "${row.id}" (e.g. ${file})`)
+        }
+        raceIds.add(row.id)
+      }
+      if (row?.raceAudience && row.raceAudience !== expectedAudience) {
+        failed = true
         console.error(
-          `ERR palladiumRaces.json id=${row?.id ?? '?'}:`,
-          validateRaceRow.errors,
+          `ERR races/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
         )
       }
+      if (!validateRaceRow(row)) {
+        raceBad++
+        if (raceBad <= 3) {
+          console.error(
+            `ERR races/${file} id=${row?.id ?? '?'}:`,
+            validateRaceRow.errors,
+          )
+        }
+      }
+    }
+    raceTotal += rows.length
+    if (raceBad > 0) {
+      failed = true
+      console.error(`ERR races/${file} — ${raceBad} row(s) failed schema validation`)
+    } else {
+      console.log(`OK  races/${file} — ${rows.length} row(s) validate`)
     }
   }
-  if (raceBad === 0) {
-    console.log(`OK  palladiumRaces.json — ${palladiumRaces.length} rows validate`)
-  } else {
-    failed = true
-    console.error(`ERR palladiumRaces.json — ${raceBad} row(s) failed schema validation`)
+  if (!failed) {
+    console.log(`OK  races — ${raceTotal} total row(s) across ${RACE_POOL_FILES.length} pools`)
   }
+} catch (e) {
+  failed = true
+  console.error('ERR races — directory or pool file missing', e?.message ?? e)
 }
 
 const occsDir = join(contentDir, 'occs')

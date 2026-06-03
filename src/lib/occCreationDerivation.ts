@@ -1,5 +1,5 @@
 import type {
-  Character,
+  CharacterRootState,
   Feature,
   OccSupernaturalProgressionStep,
   PalladiumOcc,
@@ -8,10 +8,13 @@ import { featureBudgetCategory } from './featureEngine'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/registry'
 import {
   occCoreSkillSlotWeight,
-  occPsychicGateBypassed,
   occStartingOccSkillIds,
   occStartingRelatedSkillIds,
 } from './occCatalogEngine'
+import {
+  resolvePsychicGateBypassed,
+} from './creationPhases'
+import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 
 export type OccCreationAbilityBudget = {
@@ -300,14 +303,24 @@ export function abilityPassesOccSupernaturalRules(
 
 /** Budgets, caps, and gate flags from O.C.C. engines (safe on hydrate). */
 export function patchCharacterCreationFromOcc(
-  prev: Character,
+  prev: CharacterRootState,
   occ: PalladiumOcc,
-): Character {
+): CharacterRootState {
   const derived = deriveOccCreation(occ, prev.occSpecializationId)
+  const mundaneGenre = isGenreSupernaturalAbilitiesDisallowed(prev.creationGenreId)
+  const abilityBudget = mundaneGenre
+    ? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
+    : derived.abilityBudget
+
   return {
     ...prev,
-    psychicGateBypassed: occPsychicGateBypassed(occ) || prev.psychicGateBypassed,
-    creationAbilityBudget: derived.abilityBudget,
+    psychicGateBypassed: resolvePsychicGateBypassed(
+      prev.raceId,
+      occ,
+      prev.creationGenreId,
+    ),
+    creationAbilityBudget: abilityBudget,
+    selectedAbilities: mundaneGenre ? [] : prev.selectedAbilities,
     startingSpellLevelCap: derived.startingSpellLevelCap,
     occSkillSlotBudget: derived.occSkillSlotBudget,
     occRelatedSkillSlotBudget: derived.occRelatedSkillSlotBudget,
@@ -316,9 +329,9 @@ export function patchCharacterCreationFromOcc(
 
 /** Bootstrap Skill Engine picks when the player selects an O.C.C. in Step 0. */
 export function applyOccStartingSkillPicks(
-  prev: Character,
+  prev: CharacterRootState,
   occ: PalladiumOcc,
-): Character {
+): CharacterRootState {
   const specId = prev.occSpecializationId
   const effective = resolveEffectivePalladiumOcc(occ, specId)
   return {

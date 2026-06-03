@@ -9,6 +9,7 @@
     "id",
     "name",
     "description",
+    "raceAudience",
     "gameSystems",
     "sources",
     "canPickOcc",
@@ -40,6 +41,11 @@
       "type": "string",
       "minLength": 1,
       "description": "Player-facing summary of the race or R.C.C."
+    },
+    "raceAudience": {
+      "type": "string",
+      "enum": ["player", "npc", "gm_approval"],
+      "description": "Catalog pool and creation eligibility. **player** — `races/player.json`, selectable in character creation when whitelisted for host genre. **npc** — `races/npc.json`, monsters and NPC-only builds (not in player creation). **gm_approval** — `races/gm_approval.json`, playable only after GM approval (not in default creation list)."
     },
     "gameSystems": {
       "type": "array",

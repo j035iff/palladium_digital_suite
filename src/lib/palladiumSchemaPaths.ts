@@ -67,8 +67,21 @@ export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_ID =
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumSkills.json` as const
 
+/** Merged player + npc + gm_approval race pools. */
+export const PALLADIUM_RACES_DIR = `${PALLADIUM_CONTENT_DIR}/races` as const
+
+export const PALLADIUM_RACE_PLAYER_JSON_PATH =
+  `${PALLADIUM_RACES_DIR}/player.json` as const
+
+export const PALLADIUM_RACE_NPC_JSON_PATH =
+  `${PALLADIUM_RACES_DIR}/npc.json` as const
+
+export const PALLADIUM_RACE_GM_APPROVAL_JSON_PATH =
+  `${PALLADIUM_RACES_DIR}/gm_approval.json` as const
+
+/** @deprecated Use {@link PALLADIUM_RACES_DIR} — legacy single-file path. */
 export const PALLADIUM_RACE_CATALOG_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/palladiumRaces.json` as const
+  PALLADIUM_RACE_PLAYER_JSON_PATH
 
 /** One JSON array per source book (same slug as `progression/xp_tables/`). */
 export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const

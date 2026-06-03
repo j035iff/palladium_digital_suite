@@ -10,7 +10,11 @@ import {
 } from 'react'
 import { characterFixture } from '../data/characterFixture'
 import { initialInventoryItems } from '../data/inventoryFixture'
-import { getFeatureById, getRaceById } from '../data/library/registry'
+import {
+  getFeatureById,
+  getRaceById,
+  raceAllowedInCharacterCreation,
+} from '../data/library/registry'
 import { getLibraryOccById } from '../data/occDefinitions'
 import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
 import { effectiveStructuralPool } from '../lib/effectiveVitality'
@@ -139,10 +143,13 @@ import {
   raceLineageFromDefinition,
   raceStrengthCategoryLabel,
 } from '../lib/raceEngine'
+import { occSkillSlotPolicy } from '../lib/occCatalogEngine'
+import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import {
-  occPsychicGateBypassed,
-  occSkillSlotPolicy,
-} from '../lib/occCatalogEngine'
+  creationNeedsAbilitySelection,
+  resolvePsychicGateBypassed,
+} from '../lib/creationPhases'
+import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -200,6 +207,8 @@ type CharacterContextValue = {
   /** Immutable save-shaped record (mutations write here). */
   rawCharacter: CharacterRootState
   readonly creationGenreId: string
+  /** From genre manifest — mundane-only creation (no Psychic Gate or supernatural picks). */
+  genreSupernaturalAbilitiesDisallowed: boolean
   hostGenreId: string
   setHostGenreId: (genreId: string) => void
   derivedInventoryItems: DerivedInventoryItem[]
@@ -443,10 +452,14 @@ const INITIAL_CHARACTER_SNAPSHOT: CharacterRootState = (() => {
 
 /** Returns updated character if the pick is legal; otherwise null. */
 function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): CharacterRootState | null {
+  if (isGenreSupernaturalAbilitiesDisallowed(prev.creationGenreId)) return null
   const def = getFeatureById(id)
   if (!def) return null
   const selected = prev.selectedAbilities ?? []
   if (selected.includes(id)) return null
+  if (!creationNeedsAbilitySelection(prev.creationAbilityBudget, prev.creationGenreId)) {
+    return null
+  }
 
   const occRow = getLibraryOccById(prev.occ.id)
   const spellCap = occRow
@@ -466,9 +479,9 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
   const b = occRow
     ? occCreationAbilityBudget(occRow)
     : (prev.creationAbilityBudget ?? {
-        spellSlots: 8,
-        psionicSlots: 6,
-        talentSlots: 4,
+        spellSlots: 0,
+        psionicSlots: 0,
+        talentSlots: 0,
       })
   const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
     selected.filter((x) => {
@@ -607,6 +620,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const creationGenreId = rawCharacter.creationGenreId
   const hostGenreId = rawCharacter.hostGenreId
+  const genreSupernaturalAbilitiesDisallowed = isGenreSupernaturalAbilitiesDisallowed(
+    creationGenreId,
+  )
 
   const character = useMemo(
     () =>
@@ -1458,10 +1474,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
         const branch = getFormState(prev, form)
-        const nextBranch =
-          prev.psychicGateBypassed === true || occPsychicGateBypassed(lib)
-            ? branch
-            : applyPsychicTierToFormState(branch, tier)
+        const gateBypassed = resolvePsychicGateBypassed(
+          prev.raceId,
+          lib,
+          prev.creationGenreId,
+        )
+        const nextBranch = gateBypassed
+          ? branch
+          : applyPsychicTierToFormState(branch, tier)
         const withOcc = applyOccStartingSkillPicks(
           patchCharacterCreationFromOcc(
             {
@@ -1506,17 +1526,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setRaceId = useCallback((raceId: string | null) => {
     const id = raceId ?? DEFAULT_RACE_ID
     const race = getRaceById(id)
+    if (
+      !race ||
+      !raceAllowedInCharacterCreation(race, rawCharacter.hostGenreId)
+    ) {
+      return
+    }
     const lineage = raceLineageFromDefinition(race)
     const psTier = race ? mapRaceStrengthToPsTier(race.strengthCategory) : undefined
-    const psionicNone = race?.psionics.capabilityType === 'none'
     setActiveForm('facade')
     setRawCharacter((prev) => {
+      const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
       const withRace = syncRaceOccFacadeSdc({
         ...prev,
         raceId: id,
         lineage,
-        psychicGateBypassed:
-          psionicNone === true ? true : prev.psychicGateBypassed,
+        psychicGateBypassed: resolvePsychicGateBypassed(
+          id,
+          occRow,
+          prev.creationGenreId,
+        ),
       })
       if (!psTier) return withRace
       const applyTier = (attrs: Character['facade']['attributes']) => ({
@@ -1535,7 +1564,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         },
       }
     })
-  }, [])
+  }, [rawCharacter.hostGenreId])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setRawCharacter((prev) => {
@@ -1566,7 +1595,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const finalizeCharacter = useCallback(() => {
-    setRawCharacter((prev) => ({ ...prev, isFinalized: true }))
+    setRawCharacter((prev) => applySpawnSheetHandoff(prev))
   }, [])
 
   const addSelectedAbility = useCallback(
@@ -1690,6 +1719,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       character,
       rawCharacter,
       creationGenreId,
+      genreSupernaturalAbilitiesDisallowed,
       hostGenreId,
       setHostGenreId,
       derivedInventoryItems,
@@ -1793,6 +1823,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       character,
       rawCharacter,
       creationGenreId,
+      genreSupernaturalAbilitiesDisallowed,
       hostGenreId,
       setHostGenreId,
       derivedInventoryItems,

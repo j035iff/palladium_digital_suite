@@ -1,4 +1,10 @@
-import { useEffect, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+} from 'react'
 import { AttributeForge } from '../creation/AttributeForge'
 import { PsychicGate } from '../creation/PsychicGate'
 import { AbilitySelection } from '../creation/AbilitySelection'
@@ -11,6 +17,11 @@ import { IdentityXpBar } from '../live/IdentityXpBar'
 import { Inventory } from '../live/Inventory'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { useCharacter } from '../../context/CharacterContext'
+import {
+  creationNeedsAbilityPhase,
+  creationShowsPsychicGate,
+} from '../../lib/creationPhases'
+import { getLibraryOccById } from '../../data/library/registry'
 import type { MorphusDerivedSheetSlice } from '../../lib/morphusPassiveBridge'
 import { MorphusCapabilitiesPanel } from '../live/MorphusCapabilitiesPanel'
 import {
@@ -60,6 +71,25 @@ export function MainLayout() {
 
   const morphusActive = supportsDualForm && activeForm === 'morphus'
   const showCreation = character.isFinalized !== true
+
+  const occLib = useMemo(
+    () => (character.occ?.id ? getLibraryOccById(character.occ.id) : undefined),
+    [character.occ?.id],
+  )
+
+  const showPsychicGate = useMemo(
+    () => creationShowsPsychicGate(character, occLib, creationGenreId),
+    [character, occLib, creationGenreId],
+  )
+
+  const showAbilitySelection = useMemo(
+    () =>
+      creationNeedsAbilityPhase(
+        character.creationAbilityBudget ?? undefined,
+        creationGenreId,
+      ),
+    [character.creationAbilityBudget, creationGenreId],
+  )
 
   /** Split + fixed-width sidebar only at md+; drives inline width (Tailwind var alone was unreliable). */
   const [splitLayout, setSplitLayout] = useState(false)
@@ -465,11 +495,11 @@ export function MainLayout() {
 
             <AttributeForge />
 
-            <PsychicGate />
+            {showPsychicGate ? <PsychicGate /> : null}
 
             <SkillEngine />
 
-            <AbilitySelection />
+            {showAbilitySelection ? <AbilitySelection /> : null}
 
             <CharacterSpawn
               runFinalize={(finalize) => {

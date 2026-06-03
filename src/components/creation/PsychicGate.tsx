@@ -74,8 +74,8 @@ export function PsychicGate() {
         >
           <strong className="uppercase tracking-wide">Gate bypassed</strong>
           <p className="mt-2 opacity-90">
-            This build skips the Psychic Gate for setting integrity (e.g. incompatible race such
-            as Nightbane; psychic_gate.md §1).
+            This race or O.C.C. explicitly forbids Psychic Gate rolls (race psionics set to
+            none or innate, or O.C.C. progression marks the gate bypassed).
           </p>
         </div>
       ) : (

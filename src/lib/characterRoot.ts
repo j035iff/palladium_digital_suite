@@ -1,6 +1,37 @@
 import type { GenreId } from '../data/genres'
-import { characterFixture } from '../data/characterFixture'
-import type { Character, CharacterRootState } from '../types'
+import { resolvePsychicGateBypassed } from './creationPhases'
+import type { Character, CharacterOcc, CharacterRootState } from '../types'
+
+const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
+  id: '',
+  name: '— Select O.C.C. —',
+  category: 'standard',
+  xpTable: { floors: [] },
+}
+
+function blankFormState(): Character['facade'] {
+  return {
+    alignment: 'Unprincipled',
+    hitPoints: { current: 0, maximum: 0, scaling: 'sdc_hp' },
+    structuralDamageCapacity: {
+      current: 0,
+      maximum: 0,
+      scaling: 'sdc_hp',
+    },
+    isp: { current: 0, maximum: 0 },
+    attributes: {
+      iq: 10,
+      me: 10,
+      ma: 10,
+      ps: { score: 10, tier: 'standard' },
+      pp: 10,
+      pe: 10,
+      pb: 10,
+      spd: 10,
+    },
+    skills: [],
+  }
+}
 
 export function newCharacterId(): string {
   return `char_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`
@@ -23,15 +54,33 @@ export function toCharacterRoot(
 }
 
 export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootState {
-  const base = structuredClone(characterFixture)
+  const facade = blankFormState()
   return toCharacterRoot(
     {
-      ...base,
       name: 'New Character',
-      isFinalized: false,
-      creationVitalityCommitted: false,
       level: 1,
       xp: 0,
+      ppe: { current: 0, maximum: 0 },
+      occ: CREATION_PLACEHOLDER_OCC,
+      raceId: 'race_human',
+      lineage: 'megaversal',
+      psychicGateBypassed: resolvePsychicGateBypassed(
+        'race_human',
+        undefined,
+        genreId,
+      ),
+      isFinalized: false,
+      creationVitalityCommitted: false,
+      selectedAbilities: [],
+      creationAbilityBudget: {
+        spellSlots: 0,
+        psionicSlots: 0,
+        talentSlots: 0,
+      },
+      creationOccSkillIds: [],
+      creationRelatedSkillIds: [],
+      facade,
+      morphus: structuredClone(facade),
     },
     { creationGenreId: genreId, hostGenreId: genreId },
   )

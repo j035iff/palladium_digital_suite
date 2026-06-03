@@ -1,4 +1,5 @@
 import type { SkillEquationSkill } from '../lib/skillEquation'
+import { getEngineSkillDefFromCatalog } from '../lib/creationSkillCatalog'
 
 export type SkillCategory =
   | 'Technical'
@@ -11,6 +12,7 @@ export type SkillCategory =
 export type SkillPrerequisite =
   | { gate: 'and'; skillIds: string[] }
   | { gate: 'or'; skillIds: string[] }
+  | { allOf: SkillPrerequisite[] }
 
 /**
  * Sheet-facing skill row (skill equation + creation metadata). Narrow engine subset of the
@@ -299,9 +301,12 @@ export function getSkillById(id: string): EngineSkillDef | undefined {
   if (direct) return direct
   const prefixed = id.startsWith('skill_') ? id : `skill_${id}`
   if (prefixed !== id) {
-    return SKILL_LIBRARY.find((s) => s.id === prefixed)
+    const fromPrefix = SKILL_LIBRARY.find((s) => s.id === prefixed)
+    if (fromPrefix) return fromPrefix
   }
-  return undefined
+  return (
+    getEngineSkillDefFromCatalog(id) ?? getEngineSkillDefFromCatalog(prefixed)
+  )
 }
 
 export {

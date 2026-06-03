@@ -1,6 +1,9 @@
 import type { Character } from '../types'
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
+import { creationNeedsAbilitySelection } from './creationPhases'
+import type { CharacterRootState } from '../types'
+import { occCreationAbilityBudget } from './occCreationDerivation'
 import { raceCanPickOcc } from './raceEngine'
 
 function attrsPlausible(attrs: {
@@ -29,7 +32,9 @@ function attrsPlausible(attrs: {
 /**
  * Pillar 8 — radical visibility: block Spawn until the mirrored build is coherent.
  */
-export function assessCreationSpawnBlockers(character: Character): string[] {
+export function assessCreationSpawnBlockers(
+  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
+): string[] {
   const blockers: string[] = []
 
   const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
@@ -72,11 +77,16 @@ export function assessCreationSpawnBlockers(character: Character): string[] {
     )
   }
 
-  const abs = character.selectedAbilities ?? []
-  if (abs.length < 1) {
-    blockers.push(
-      'No supernatural abilities selected — pick at least one power in Step 4.',
-    )
+  const abilityBudget = occLib
+    ? occCreationAbilityBudget(occLib)
+    : character.creationAbilityBudget
+  if (creationNeedsAbilitySelection(abilityBudget, character.creationGenreId)) {
+    const abs = character.selectedAbilities ?? []
+    if (abs.length < 1) {
+      blockers.push(
+        'No supernatural abilities selected — pick at least one power in Step 4.',
+      )
+    }
   }
 
   return blockers

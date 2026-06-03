@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
-import { RACE_REGISTRY } from '../../data/library/registry'
+import {
+  listRacesForCharacterCreation,
+  RACE_REGISTRY,
+} from '../../data/library/registry'
 import { DEFAULT_RACE_ID } from '../../lib/raceFormPolicy'
 import { occMatchesAllTags } from '../../lib/genreGating'
 import { formatPalladiumSources } from '../../lib/formatPalladiumSources'
@@ -73,6 +76,11 @@ export function OccSelector() {
   const { tier1, tier2 } = useMemo(
     () => splitOccPool(occPool, activeTags),
     [occPool, activeTags],
+  )
+
+  const playerRaces = useMemo(
+    () => listRacesForCharacterCreation(RACE_REGISTRY, hostGenreId),
+    [hostGenreId],
   )
 
   const toggleTag = (tag: string) => {
@@ -161,7 +169,7 @@ export function OccSelector() {
         >
           Race (library)
         </p>
-        {RACE_REGISTRY.map((race) => {
+        {playerRaces.map((race) => {
           const selected = (character.raceId ?? DEFAULT_RACE_ID) === race.id
           const citation = formatPalladiumSources(race.sources)
           return (

@@ -9,6 +9,11 @@ export type GenreManifestEntry = {
   playable?: boolean
   /** Emoji / symbol for launcher menu rows. */
   icon?: string
+  /**
+   * When true, creation omits the Psychic Gate and excludes magic/psionic/supernatural
+   * O.C.C.s and ability picks (mundane-only campaigns).
+   */
+  genreSupernaturalAbilitiesDisallowed?: boolean
 }
 
 /** Playable settings for new character creation (Setting-First gate). */
@@ -19,6 +24,7 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     description: 'Dark fantasy modern — Facade and Morphus forms, psychic matrices.',
     playable: true,
     icon: '🌙',
+    genreSupernaturalAbilitiesDisallowed: false,
   },
   {
     id: 'rifts',
@@ -26,6 +32,7 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     description: 'Post-apocalyptic megaversal — M.D.C. scaling and techno-wizardry.',
     playable: true,
     icon: '🎲',
+    genreSupernaturalAbilitiesDisallowed: false,
   },
   {
     id: 'palladium_fantasy',
@@ -33,6 +40,7 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     description: 'Classic fantasy O.C.C.s, skills, and percentile systems.',
     playable: true,
     icon: '🐉',
+    genreSupernaturalAbilitiesDisallowed: false,
   },
 ] as const
 
@@ -82,4 +90,9 @@ export function getGenreManifest(id: string): GenreManifestEntry | undefined {
 
 export function isGenreId(value: string): value is GenreId {
   return GENRE_MANIFEST.some((g) => g.id === value)
+}
+
+/** Genre manifest flag — mundane-only creation (no Psychic Gate, supernatural O.C.C.s, or Step 4 picks). */
+export function isGenreSupernaturalAbilitiesDisallowed(genreId: string): boolean {
+  return getGenreManifest(genreId)?.genreSupernaturalAbilitiesDisallowed === true
 }

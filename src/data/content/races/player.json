@@ -3,6 +3,7 @@
     "id": "race_human",
     "name": "Human",
     "description": "Standard baseline humanity across the Megaverse.",
+    "raceAudience": "player",
     "gameSystems": [
       "nightbane",
       "rifts"

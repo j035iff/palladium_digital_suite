@@ -18,6 +18,7 @@ export type PalladiumSkillCatalogEntry = {
   sources?: readonly PalladiumSourceRef[]
   basePercent?: number
   percentPerLevel?: number
+  /** Legacy catalog id superseded by this row. */
   replaces?: string
   allowedAsSecondarySkill?: boolean
   requiresSpecialization?: boolean

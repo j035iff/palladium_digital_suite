@@ -1,6 +1,8 @@
 import type { PalladiumOcc } from '../../types'
+import { isGenreSupernaturalAbilitiesDisallowed } from '../genres'
 import { isWhitelistedForHostGenre } from '../../lib/genreGating'
 import { normalizePalladiumOcc } from '../../lib/occCatalogEngine'
+import { occOffersSupernaturalCreation } from '../../lib/occSupernatural'
 
 const occModules = import.meta.glob('../content/occs/*.json', {
   eager: true,
@@ -45,10 +47,12 @@ export function listPalladiumOccsForCreation(
   hostGenreId: string,
 ): readonly PalladiumOcc[] {
   const creation = creationGenreId.toLowerCase()
+  const mundaneOnly = isGenreSupernaturalAbilitiesDisallowed(creationGenreId)
   return PALLADIUM_OCC_CATALOG.filter(
     (o) =>
       o.gameSystems.some((x) => x.toLowerCase() === creation) &&
-      isWhitelistedForHostGenre(o, hostGenreId),
+      isWhitelistedForHostGenre(o, hostGenreId) &&
+      (!mundaneOnly || !occOffersSupernaturalCreation(o)),
   ).sort((a, b) => a.name.localeCompare(b.name))
 }
 

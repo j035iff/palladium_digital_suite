@@ -246,13 +246,18 @@ export type RaceDemographics = {
   excludedAlignments?: readonly string[]
 }
 
+/** Which catalog pool owns this row (`content/races/*.json`). */
+export type RaceAudience = 'player' | 'npc' | 'gm_approval'
+
 /**
- * Library race / R.C.C. row in `content/palladiumRaces.json` (palladium-race.schema.json).
+ * Library race / R.C.C. row in `content/races/*.json` (palladium-race.schema.json).
  */
 export type Race = {
   id: string
   name: string
   description: string
+  /** player = creation UI; npc = bestiary only; gm_approval = GM sign-off required. */
+  raceAudience: RaceAudience
   /** Host-genre whitelist (falls back to {@link gameSystems} when omitted in JSON). */
   genresAvailable?: readonly string[]
   gameSystems: readonly string[]
@@ -1657,7 +1662,7 @@ export type Character = {
   ppe: { current: number; maximum: number }
   /** O.C.C. / R.C.C. package: display name, psychic lock, and fixed XP thresholds. */
   occ: CharacterOcc
-  /** Library race id — `src/data/content/palladiumRaces.json` and the race registry. */
+  /** Library race id — `src/data/content/races/*.json` and the race registry. */
   raceId?: string
   /**
    * When true, the Psychic Gate step is bypassed for setting integrity (e.g. Nightbane; psychic_gate.md §1).

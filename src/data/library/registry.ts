@@ -109,6 +109,19 @@ export {
 } from './talentCatalogLoader'
 
 export {
+  PALLADIUM_RACE_CATALOG,
+  getPalladiumRaceById,
+} from './raceCatalogLoader'
+
+export {
+  listRacesForCharacterCreation,
+  listNpcRaces,
+  listGmApprovalRaces,
+  raceAllowedInCharacterCreation,
+  type RaceAudience,
+} from '../../lib/raceCatalog'
+
+export {
   MORPHUS_TABLE_CATALOG,
   getMorphusTableById,
   getMorphusCharacteristicById,

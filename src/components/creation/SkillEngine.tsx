@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import type { EngineSkillDef, SkillCategory } from '../../data/library/skills'
-import { SKILL_LIBRARY, getSkillById } from '../../data/library/skills'
+import { getSkillById } from '../../data/library/skills'
+import { listCreationSkillLibrary } from '../../lib/creationSkillCatalog'
 import { aggregateSkillModifiers } from '../../lib/skillModifiers'
 import { maPbScaledBonuses, type SkillEquationSkill } from '../../lib/skillEquation'
 import {
@@ -72,6 +73,7 @@ export function SkillEngine() {
     skillSlotMultiplier,
     morphusSurfaceType,
     setCreationSkillPicks,
+    hostGenreId,
   } = useCharacter()
 
   const morphus = supportsDualForm && activeForm === 'morphus'
@@ -125,9 +127,14 @@ export function SkillEngine() {
     [allSelected],
   )
 
+  const skillLibrary = useMemo(
+    () => listCreationSkillLibrary(hostGenreId),
+    [hostGenreId],
+  )
+
   const filteredLibrary = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return SKILL_LIBRARY.filter((s) => {
+    return skillLibrary.filter((s) => {
       const catOk = category === 'All' || s.category === category
       const nameOk =
         q === '' ||
@@ -135,7 +142,7 @@ export function SkillEngine() {
         s.id.toLowerCase().includes(q)
       return catOk && nameOk
     })
-  }, [search, category])
+  }, [search, category, skillLibrary])
 
   const panelStyle = morphus
     ? 'border-violet-700 bg-slate-950/80 text-violet-50'
@@ -467,8 +474,8 @@ export function SkillEngine() {
             Mirror — equation & staging
           </h3>
           <p className="text-xs opacity-75">
-            Physical skill <strong>modifiers</strong> blocks (Boxing, Wrestling, etc.) stay{' '}
-            <strong>Pending</strong> until Spawn commit (skill_selection.md §4).
+            Physical skill <strong>modifiers</strong> (Boxing, Wrestling, etc.) apply to
+            attributes and S.D.C. on <strong>Spawn</strong> (skill_selection.md §4).
           </p>
 
           <div className={`rounded-md border p-3 text-sm ${subStyle}`}>
@@ -480,7 +487,7 @@ export function SkillEngine() {
               <li>P.E. +{pendingPhysical.pe}</li>
               <li>Spd +{pendingPhysical.spd}</li>
             </ul>
-            <p className="mt-2 text-xs opacity-60">Not applied to the live sheet yet.</p>
+            <p className="mt-2 text-xs opacity-60">Preview — committed when you Spawn.</p>
           </div>
 
           <div className={`rounded-md border p-3 text-sm ${subStyle}`}>
