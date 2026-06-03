@@ -47,3 +47,69 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 | **Non-Lethal Poison** | 16+ |
 | **Magic (Standard)** | 12+ |
 | **Magic (Ritual)** | 16+ |
+
+
+## 5. Damage Multiplier Stacking
+
+This rule is **universal** for all damage multiplier stacking (outgoing attack modifiers, incoming damage affinities, critical strikes, from-behind bonuses, weapon doublers, and any other ×N damage factor).
+
+**Outgoing** and **incoming** damage are resolved in two separate passes. Outgoing damage is calculated first; that result is then modified by incoming bonuses and penalties.
+
+### 5.1 Combining multipliers greater than 1
+
+Only multipliers **strictly greater than 1** participate in this step. Ignore multipliers of exactly **1** (no effect).
+
+1. Take the **highest** multiplier among all sources greater than 1 as the **base**.
+2. For every **other** multiplier greater than 1, add its **bonus portion**: `(multiplier − 1)`.
+3. The stacked multiplier is: **base + Σ(bonus portions from the other sources > 1)**.
+
+Equivalently: sort all multipliers > 1, use the largest as the base, and add `(m − 1)` for each remaining value.
+
+| Sources (all > 1) | Calculation | Result |
+| :--- | :--- | :--- |
+| ×2 + ×2 | 2 + (2−1) | **×3** |
+| ×2 + ×1.5 | 2 + (1.5−1) | **×2.5** |
+| ×2 + ×2 + ×3 | 3 + (2−1) + (2−1) | **×5** |
+| ×4 + ×3 + ×2 + ×2 | 4 + (3−1) + (2−1) + (2−1) | **×8** |
+
+### 5.2 Multipliers less than 1
+
+After §5.1, apply every multiplier **less than 1** by **multiplying** the result (same treatment as fractional damage affinities). They do not add bonus portions in §5.1.
+
+| Sources | Step 1 (> 1) | Step 2 (< 1) | Result |
+| :--- | :--- | :--- | :--- |
+| ×2 + ×0.5 | ×2 | ×2 × 0.5 | **×1** |
+| ×4 + ×3 + ×2 + ×2 + ×0.5 | ×8 | ×8 × 0.5 | **×4** |
+
+### 5.3 Incoming damage affinities
+
+The same §5.1 / §5.2 rules apply to **incoming** damage (e.g. Morphus `damageAffinities` on the defender). When multiple affinities for the **same damage type** are greater than 1, stack them with §5.1—not by multiplying ×2 × ×2 = ×4.
+
+Example: one trait gives ×2 fire damage taken and another gives ×2 fire → **×3** fire incoming (2 + 1), not ×4.
+
+### 5.4 Resolution order (full hit)
+
+1. **Roll base damage** — dice plus flat bonuses (P.S., Hand-to-Hand damage, weapon flats, etc.).
+2. **Outgoing multiplier** — collect all outgoing damage multipliers for this attack; apply §5.1 then §5.2 → `outgoingMultiplier`.
+3. **Outgoing damage** — `outgoingDamage = round(baseDamage × outgoingMultiplier)`.
+4. **Incoming multiplier** — collect defender incoming modifiers for this damage type (affinities, vulnerabilities, resistances); apply §5.1 then §5.2 → `incomingMultiplier`.
+5. **Final damage** — `finalDamage = round(outgoingDamage × incomingMultiplier)`.
+6. **Vitality** — apply `finalDamage` through M.D./S.D.C. rules (§1).
+
+### 5.5 Worked example
+
+A player deals **fire** damage, scores a **natural 20** on a **critical strike from behind** (two ×2 outgoing sources → **×3** outgoing). They roll **10** base damage.
+
+- Outgoing: 10 × 3 = **30**
+
+If the target **takes double damage from fire** (×2 incoming):
+
+- Final: 30 × 2 = **60**
+
+If the target **takes half damage from fire** (×0.5 incoming; no §5.1 step):
+
+- Final: 30 × 0.5 = **15**
+
+### 5.6 Flat bonuses (unchanged)
+
+Strike, parry, dodge, and **flat** damage bonuses still **add**; this section applies only to **multiplicative** (×N) damage factors, not to +N dice or +N flat damage.
