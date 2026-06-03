@@ -150,6 +150,9 @@ import {
   resolvePsychicGateBypassed,
 } from '../lib/creationPhases'
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
+import type { CreationPhase } from '../lib/creationStep'
+import type { ForgeAttrKey } from '../lib/attributeKeys'
+import { computeSpawnVitalityFromResolutions } from '../lib/spawnVitalityManual'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -315,6 +318,16 @@ type CharacterContextValue = {
   commitSpawnVitalityRolls: (rolls: SpawnVitalityRolls) => void
   /** Locks the sheet and hides creation UI (character_creation.md §5). */
   finalizeCharacter: () => void
+  /** Creation state machine — active phase. */
+  setCreationPhase: (phase: CreationPhase) => void
+  setCreationAttributePoolSlot: (index: number, value: number | null) => void
+  setCreationAttributeAssignment: (attr: ForgeAttrKey, value: number) => void
+  clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
+  setCreationOccVariableResolution: (taskId: string, value: number) => void
+  setCreationPendingDiceResolution: (entryId: string, value: number) => void
+  setAlignment: (alignment: string) => void
+  /** Phase IV — apply manual dice resolutions to vitality pools (no auto-roll). */
+  commitVitalityFromPendingDice: () => void
   /** Live combat — A.P.M. tracker (combat_logic.md §3). */
   attacksPerMelee: AttacksPerMeleeState
   spendCombatAction: (amount?: number) => void
@@ -1594,6 +1607,148 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const setCreationPhase = useCallback((phase: CreationPhase) => {
+    setRawCharacter((prev) => ({ ...prev, creationPhase: phase }))
+  }, [])
+
+  const setCreationAttributePoolSlot = useCallback(
+    (index: number, value: number | null) => {
+      if (index < 0 || index > 7) return
+      setRawCharacter((prev) => {
+        const pool = [...(prev.creationAttributePool ?? Array(8).fill(null))]
+        pool[index] =
+          value != null && Number.isFinite(value) ? Math.round(value) : null
+        return { ...prev, creationAttributePool: pool }
+      })
+    },
+    [],
+  )
+
+  const syncAttrToForm = useCallback(
+    (
+      prev: CharacterRootState,
+      attr: ForgeAttrKey,
+      value: number,
+      form: ActiveForm,
+    ): CharacterRootState => {
+      const path =
+        attr === 'ps'
+          ? `${form}.attributes.ps.score`
+          : `${form}.attributes.${attr}`
+      const parsed = parseAttributePath(path, form)
+      if (!parsed) return prev
+      const branch = prev[parsed.formKey]
+      const nextAttrs = applyAttributeTail(branch.attributes, parsed.tail, value)
+      if (!nextAttrs) return prev
+      const withAttrs = { ...branch, attributes: nextAttrs }
+      const merged = mergeVitalityFromAttributes(withAttrs, nextAttrs)
+      let next: CharacterRootState = { ...prev, [parsed.formKey]: merged }
+      if (attr === 'pe' || attr === 'ps') {
+        next = syncRaceOccFacadeSdc(next)
+      }
+      return next
+    },
+    [],
+  )
+
+  const setCreationAttributeAssignment = useCallback(
+    (attr: ForgeAttrKey, value: number) => {
+      setRawCharacter((prev) => {
+        const assignments = {
+          ...(prev.creationAttributeAssignments ?? {}),
+          [attr]: value,
+        }
+        const synced = syncAttrToForm(prev, attr, value, activeForm)
+        return {
+          ...synced,
+          creationAttributeAssignments: assignments,
+        }
+      })
+    },
+    [syncAttrToForm, activeForm],
+  )
+
+  const clearCreationAttributeAssignment = useCallback(
+    (attr: ForgeAttrKey) => {
+      setRawCharacter((prev) => {
+        const assignments = { ...(prev.creationAttributeAssignments ?? {}) }
+        delete assignments[attr]
+        return { ...prev, creationAttributeAssignments: assignments }
+      })
+    },
+    [],
+  )
+
+  const setCreationOccVariableResolution = useCallback(
+    (taskId: string, value: number) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        creationOccVariableResolutions: {
+          ...(prev.creationOccVariableResolutions ?? {}),
+          [taskId]: value,
+        },
+      }))
+    },
+    [],
+  )
+
+  const setCreationPendingDiceResolution = useCallback(
+    (entryId: string, value: number) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        creationPendingDiceResolutions: {
+          ...(prev.creationPendingDiceResolutions ?? {}),
+          [entryId]: value,
+        },
+      }))
+    },
+    [],
+  )
+
+  const setAlignment = useCallback((alignment: string) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      facade: { ...prev.facade, alignment },
+      morphus: { ...prev.morphus, alignment },
+    }))
+  }, [])
+
+  const commitVitalityFromPendingDice = useCallback(() => {
+    setRawCharacter((prev) => {
+      const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+      const occ = getLibraryOccById(prev.occ.id)
+      const dual = characterHasDualForms(prev)
+      const tier = prev.psychicGateBypassed ? 'none' : psychicTier
+      const rolls = computeSpawnVitalityFromResolutions(
+        prev,
+        race,
+        occ,
+        prev.creationPendingDiceResolutions ?? {},
+        { supportsDualForm: dual, psychicTier: tier },
+      )
+      const pairs: [string, number][] = [
+        ['facade.hitPoints.maximum', rolls.facadeHp],
+        ['facade.hitPoints.current', rolls.facadeHp],
+        ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
+        ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+        ['morphus.hitPoints.maximum', rolls.morphusHp],
+        ['morphus.hitPoints.current', rolls.morphusHp],
+        ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
+        ['morphus.structuralDamageCapacity.current', rolls.morphusSdc],
+        ['ppe.maximum', rolls.ppeMax],
+        ['ppe.current', rolls.ppeMax],
+        ['morphus.isp.maximum', rolls.morphusIspMax],
+        ['morphus.isp.current', rolls.morphusIspMax],
+      ]
+      let next: CharacterRootState = prev
+      for (const [path, v] of pairs) {
+        const applied = tryApplyNumericSheetPath(next, path, v)
+        next = applied ? retainCharacterRoot(prev, applied) : next
+      }
+      return { ...next, creationVitalityCommitted: true }
+    })
+  }, [psychicTier])
+
   const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => applySpawnSheetHandoff(prev))
   }, [])
@@ -1778,6 +1933,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,
+      setCreationPhase,
+      setCreationAttributePoolSlot,
+      setCreationAttributeAssignment,
+      clearCreationAttributeAssignment,
+      setCreationOccVariableResolution,
+      setCreationPendingDiceResolution,
+      setAlignment,
+      commitVitalityFromPendingDice,
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,
@@ -1877,6 +2040,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRaceId,
       commitSpawnVitalityRolls,
       finalizeCharacter,
+      setCreationPhase,
+      setCreationAttributePoolSlot,
+      setCreationAttributeAssignment,
+      clearCreationAttributeAssignment,
+      setCreationOccVariableResolution,
+      setCreationPendingDiceResolution,
+      setAlignment,
+      commitVitalityFromPendingDice,
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,

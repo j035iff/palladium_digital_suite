@@ -113,6 +113,25 @@ export function catalogEntryToEngineSkillDef(
   const perLevel =
     typeof entry.percentPerLevel === 'number' ? entry.percentPerLevel : 5
 
+  const physicalRaw = (
+    entry as { physicalSkillBonuses?: Record<string, unknown> }
+  ).physicalSkillBonuses
+  const physicalStaging: EngineSkillDef['physicalStaging'] = {}
+  let isPhysical = false
+  if (physicalRaw && typeof physicalRaw === 'object') {
+    for (const [key, val] of Object.entries(physicalRaw)) {
+      if (key === 'strike' || key === 'parry' || key === 'dodge' || key === 'rollWithImpact') {
+        continue
+      }
+      if (typeof val === 'number' && Number.isFinite(val)) {
+        if (key === 'sdc' || key === 'ps' || key === 'pp' || key === 'pe' || key === 'spd') {
+          physicalStaging[key] = val
+          isPhysical = true
+        }
+      }
+    }
+  }
+
   return {
     id: entry.id,
     name: entry.name,
@@ -125,6 +144,7 @@ export function catalogEntryToEngineSkillDef(
     prerequisite: parseCatalogPrerequisites(
       entry.prerequisites as readonly unknown[] | undefined,
     ),
+    ...(isPhysical ? { isPhysical: true, physicalStaging } : {}),
   }
 }
 

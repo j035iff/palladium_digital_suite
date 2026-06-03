@@ -5,6 +5,15 @@ import { creationNeedsAbilitySelection } from './creationPhases'
 import type { CharacterRootState } from '../types'
 import { occCreationAbilityBudget } from './occCreationDerivation'
 import { raceCanPickOcc } from './raceEngine'
+import {
+  assessAttributesBlockers,
+  assessConfiguratorBlockers,
+  assessOccVariableBlockers,
+} from './creationStep'
+import {
+  listPendingDiceEntries,
+  pendingDiceResolutionsComplete,
+} from './pendingDiceLedger'
 
 function attrsPlausible(attrs: {
   iq: number
@@ -30,51 +39,35 @@ function attrsPlausible(attrs: {
 }
 
 /**
- * Pillar 8 — radical visibility: block Spawn until the mirrored build is coherent.
+ * Pillar 8 — enable Review & Finalize once mandatory gates through abilities are done.
+ * Pending vitality dice are resolved on the Review screen itself.
  */
-export function assessCreationSpawnBlockers(
+export function assessCreationReviewBlockers(
   character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
 ): string[] {
   const blockers: string[] = []
-
   const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
   const picksOcc = raceCanPickOcc(race)
-
-  if (picksOcc && (!character.occ?.id || !character.occ?.xpTable?.floors?.length)) {
-    blockers.push('Choose an O.C.C. (Step 0 — O.C.C. selection).')
-  }
-
   const occLib = picksOcc ? getLibraryOccById(character.occ.id) : undefined
-  if (
-    picksOcc &&
-    occLib?.specializations?.length &&
-    !character.occSpecializationId
-  ) {
-    blockers.push('Choose an O.C.C. specialization (Step 0 — sub-class branch).')
-  }
+
+  blockers.push(...assessConfiguratorBlockers(character, race, occLib))
+  blockers.push(...assessAttributesBlockers(character, occLib))
+  blockers.push(...assessOccVariableBlockers(character, occLib))
 
   if (!attrsPlausible(character.facade.attributes)) {
     blockers.push(
-      'Facade attributes look incomplete or invalid — finish the Attribute Forge (all stats ≥ 1).',
+      'Facade attributes look incomplete or invalid — finish attribute allocation.',
     )
   }
   if (!attrsPlausible(character.morphus.attributes)) {
     blockers.push(
-      'Morphus attributes look incomplete or invalid — finish the Attribute Forge.',
+      'Morphus attributes look incomplete or invalid — finish attribute allocation.',
     )
   }
 
-  const occ = character.creationOccSkillIds ?? []
-  if (picksOcc && occ.length < 1) {
-    blockers.push(
-      'Select at least one O.C.C. skill (Step 3 — Skill Engine).',
-    )
-  }
-
-  if (!character.creationVitalityCommitted) {
-    blockers.push(
-      'Roll and commit final H.P., S.D.C., P.P.E., and I.S.P. pools (Spawn panel).',
-    )
+  const occSkills = character.creationOccSkillIds ?? []
+  if (picksOcc && occSkills.length < 1) {
+    blockers.push('Select at least one O.C.C. skill.')
   }
 
   const abilityBudget = occLib
@@ -83,10 +76,39 @@ export function assessCreationSpawnBlockers(
   if (creationNeedsAbilitySelection(abilityBudget, character.creationGenreId)) {
     const abs = character.selectedAbilities ?? []
     if (abs.length < 1) {
-      blockers.push(
-        'No supernatural abilities selected — pick at least one power in Step 4.',
-      )
+      blockers.push('Pick at least one supernatural ability.')
     }
+  }
+
+  return blockers
+}
+
+/**
+ * Pillar 8 — radical visibility: block Spawn until the mirrored build is coherent.
+ */
+export function assessCreationSpawnBlockers(
+  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
+  opts?: { psychicTier?: string; supportsDualForm?: boolean },
+): string[] {
+  const blockers = assessCreationReviewBlockers(character)
+
+  const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+  const occLib = getLibraryOccById(character.occ.id)
+  const pending = listPendingDiceEntries(character, race, occLib, {
+    supportsDualForm: opts?.supportsDualForm ?? false,
+    psychicTier: opts?.psychicTier ?? 'none',
+  })
+  if (
+    !pendingDiceResolutionsComplete(
+      pending,
+      character.creationPendingDiceResolutions ?? {},
+    )
+  ) {
+    blockers.push('Enter all pending dice results on the Review screen.')
+  }
+
+  if (!character.creationVitalityCommitted) {
+    blockers.push('Commit vitality pools on the Review screen.')
   }
 
   return blockers

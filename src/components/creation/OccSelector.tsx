@@ -15,6 +15,7 @@ import {
 } from '../../lib/occCatalogEngine'
 import { getOccXpTableDisplayName } from '../../data/library/registry'
 import type { PalladiumOcc } from '../../types'
+import { PALLADIUM_ALIGNMENTS } from '../../lib/creationStep'
 
 function splitOccPool(
   pool: readonly PalladiumOcc[],
@@ -50,6 +51,7 @@ export function OccSelector() {
     supportsDualForm,
     creationGenreId,
     hostGenreId,
+    setAlignment,
   } = useCharacter()
 
   const [activeTags, setActiveTags] = useState<string[]>([])
@@ -106,16 +108,14 @@ export function OccSelector() {
         className="mb-1 text-sm font-semibold uppercase tracking-wide"
         style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
       >
-        Step 0: Choose O.C.C.
+        Step 2: Race, O.C.C. &amp; Alignment
       </h2>
       <p
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
-        Classes are pooled from all book data for{' '}
-        <span className="font-mono font-semibold">{creationGenreId}</span>, filtered
-        for host <span className="font-mono font-semibold">{hostGenreId}</span>. Toggle
-        tag pills to bubble AND matches to the top.
+        Tri-directional matrix — race, O.C.C., and optional alignment. When ready,
+        use <strong>Determine attributes</strong> below (character_creation.md Step 2).
       </p>
 
       {tagPills.length > 0 ? (
@@ -213,6 +213,29 @@ export function OccSelector() {
             </button>
           )
         })}
+      </div>
+
+      <div className={`mb-4 rounded-lg border-2 p-4 ${panel}`}>
+        <label className="flex flex-col gap-1 text-sm">
+          <span className="text-xs font-semibold uppercase tracking-wide opacity-80">
+            Alignment (optional)
+          </span>
+          <select
+            value={character.facade.alignment}
+            onChange={(e) => setAlignment(e.target.value)}
+            className={`rounded border px-2 py-1.5 font-mono text-sm ${
+              morphus
+                ? 'border-violet-700 bg-slate-900 text-violet-100'
+                : 'border-slate-300 bg-white text-slate-900'
+            }`}
+          >
+            {PALLADIUM_ALIGNMENTS.map((a) => (
+              <option key={a} value={a}>
+                {a}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       {!raceCanPickOcc ? (

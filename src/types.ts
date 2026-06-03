@@ -3,6 +3,9 @@
  * Grounded in docs/srs.md (Total Reconfiguration) and docs/combat_logic.md (scaling + P.S. tiers).
  */
 
+import type { CreationPhase } from './lib/creationStep'
+import type { ForgeAttrKey } from './lib/attributeKeys'
+
 /** Facade vs Morphus toggle drives which FormState is authoritative for mechanical values. */
 export type ActiveForm = 'facade' | 'morphus'
 
@@ -1699,6 +1702,16 @@ export type Character = {
   creationOccSkillIds?: string[]
   /** Step 3 — O.C.C. related skill ids. */
   creationRelatedSkillIds?: string[]
+  /** Active creation phase (character_creation.md state machine). */
+  creationPhase?: CreationPhase
+  /** Phase I — eight manually entered pool values (physical dice). */
+  creationAttributePool?: readonly (number | null)[]
+  /** Phase I — rolled value slotted per attribute. */
+  creationAttributeAssignments?: Partial<Record<ForgeAttrKey, number>>
+  /** Phase I.2 — resolved O.C.C. variable dice (key = task id). */
+  creationOccVariableResolutions?: Readonly<Record<string, number>>
+  /** Phase IV — manual dice results keyed by pending-dice id. */
+  creationPendingDiceResolutions?: Readonly<Record<string, number>>
   /**
    * Active Morphus characteristic ids (Nightbane) — drives Morphus skill % modifiers
    * via `skillPercentResolution.ts`.
