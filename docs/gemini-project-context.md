@@ -83,9 +83,9 @@ The UI theme shifts when Morphus is active (dark violet gradient vs light facade
 ## Application flow
 
 ```
-App Launch (AppLauncher)
+App Launch (AppLauncher) — docs/app_viewport_launcher.md
   ├─ Open Character → load JSON → genreTransformer → CharacterContext → MainLayout
-  └─ Create Character → pick genre → wizard (O.C.C., Attribute Forge, Psychic Gate, Skills, Abilities) → spawn
+  └─ Create Character → pick genre → Forge (docs/forge-character_creation.md) → spawn (docs/character_spawn_handoff.md)
 
 MainLayout (live sheet)
   ├─ Identity / XP / form toggle
@@ -215,7 +215,10 @@ Reference PDFs live in `src/data/reference/nightbane/` (not committed).
 | `docs/vision.md` | Product philosophy, pillars, AI interaction protocol |
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
+| `docs/app_viewport_launcher.md` | Gate Check — Open vs Create, genre manifest, viewports |
 | `docs/forge-character_creation.md` | Character Creation Forge — 7-tab sequence & state |
+| `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
+| `docs/character_creation.md` | Documentation map (links above + configurator tiers) |
 | `docs/universal_forge_navigation_engine.md` | Universal Forge Navigation Engine (tabs, Continue, colors) |
 | `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage |
 | `docs/morphus_authoring.md` | How to encode Morphus traits for the engine |

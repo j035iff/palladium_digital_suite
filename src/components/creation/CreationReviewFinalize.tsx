@@ -2,7 +2,15 @@ import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
 import { getSkillById } from '../../data/skillLibrary'
-import { assessCreationSpawnBlockers } from '../../lib/creationReadiness'
+import {
+  assessTab7SpawnBlockers,
+  buildCharacterCreationForgeContext,
+} from '../../lib/forgeNavigation/characterCreationForge'
+import { PALLADIUM_ALIGNMENTS } from '../../lib/creationStep'
+import {
+  configuratorAlignmentLabel,
+  effectiveConfiguratorAlignment,
+} from '../../lib/configuratorMatrix'
 import {
   listPendingDiceEntries,
   pendingDiceResolutionsComplete,
@@ -75,6 +83,7 @@ export function CreationReviewFinalize({
 }) {
   const {
     character,
+    rawCharacter,
     activeRace,
     effectiveOcc,
     psychicTier,
@@ -82,6 +91,7 @@ export function CreationReviewFinalize({
     setCreationPendingDiceResolution,
     commitVitalityFromPendingDice,
     finalizeCharacter,
+    setAlignment,
   } = useCharacter()
 
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -97,14 +107,23 @@ export function CreationReviewFinalize({
 
   const resolutions = character.creationPendingDiceResolutions ?? {}
 
-  const blockers = useMemo(
+  const forgeCtx = useMemo(
     () =>
-      assessCreationSpawnBlockers(character, {
+      buildCharacterCreationForgeContext(
+        { ...character, creationGenreId: rawCharacter.creationGenreId },
+        activeRace,
+        effectiveOcc ?? undefined,
         psychicTier,
-        supportsDualForm,
-      }),
-    [character, psychicTier, supportsDualForm],
+      ),
+    [character, rawCharacter.creationGenreId, activeRace, effectiveOcc, psychicTier],
   )
+
+  const blockers = useMemo(
+    () => assessTab7SpawnBlockers(forgeCtx),
+    [forgeCtx],
+  )
+
+  const currentAlignment = effectiveConfiguratorAlignment(character.facade.alignment)
 
   const diceComplete = pendingDiceResolutionsComplete(pending, resolutions)
   const preview = useMemo(
@@ -164,6 +183,37 @@ export function CreationReviewFinalize({
         Resolve every pending dice from your Live Ledger, commit vitality pools, then
         spawn to lock the record (forge-character_creation.md Tab 7).
       </p>
+
+      <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
+        <h3 className="mb-2 text-xs font-bold uppercase opacity-80">
+          Alignment (required to spawn)
+        </h3>
+        <p className="mb-3 text-xs text-slate-600">
+          Tab 1 alignment is optional for Continue; you must choose one here before
+          spawning.
+        </p>
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {PALLADIUM_ALIGNMENTS.map((alignment) => {
+            const selected = currentAlignment === alignment
+            return (
+              <li key={alignment}>
+                <button
+                  type="button"
+                  onClick={() => setAlignment(alignment)}
+                  className={`w-full rounded-lg border-2 px-3 py-2 text-left text-sm font-semibold transition ${
+                    selected
+                      ? 'border-blue-600 bg-blue-50 text-blue-900'
+                      : 'border-slate-200 bg-white text-slate-800 hover:border-blue-300'
+                  }`}
+                  aria-pressed={selected}
+                >
+                  {configuratorAlignmentLabel(alignment)}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
         <h3 className="mb-2 text-xs font-bold uppercase opacity-80">Summary</h3>

@@ -152,6 +152,13 @@ import {
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
 import { resolveCreationPsychicTier } from '../lib/creationPsychicSkills'
 import type { CreationPhase } from '../lib/creationStep'
+import type { CharacterCreationForgeTabId } from '../types'
+import {
+  buildCharacterCreationForgeContext,
+  completeForgeTab,
+  forgeTabToLegacyPhase,
+  legacyPhaseToForgeTab,
+} from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
 import { computeSpawnVitalityFromResolutions } from '../lib/spawnVitalityManual'
 import {
@@ -328,6 +335,11 @@ type CharacterContextValue = {
   finalizeCharacter: () => void
   /** Creation state machine — active phase. */
   setCreationPhase: (phase: CreationPhase) => void
+  /** Universal Forge — active tab (seven-tab creation flow). */
+  setCreationForgeTab: (tabId: CharacterCreationForgeTabId) => void
+  /** Mark tab Green after explicit Continue (no viewport change). */
+  markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void
+  setTraitForgeStubComplete: (complete: boolean) => void
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, value: number) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
@@ -1421,6 +1433,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         return {
           ...prev,
           creationPsychicTier: tier,
+          creationPsychicTierChosen: true,
           [form]: applyPsychicTierToFormState(branch, tier),
         }
       })
@@ -1440,6 +1453,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       return {
         ...prev,
         creationPsychicTier: tier,
+        creationPsychicTierChosen: true,
         [form]: applyPsychicTierToFormState(branch, tier),
       }
     })
@@ -1514,6 +1528,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           occ: snapshotOccForCharacter(def),
           occSpecializationId: undefined,
           creationPsychicTier: tier,
+          creationPsychicTierChosen: false,
         }
         const withOcc = applyOccStartingSkillPicks(
           patchCharacterCreationFromOcc(invalidated, lib),
@@ -1630,7 +1645,47 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const setCreationPhase = useCallback((phase: CreationPhase) => {
-    setRawCharacter((prev) => ({ ...prev, creationPhase: phase }))
+    setRawCharacter((prev) => ({
+      ...prev,
+      creationPhase: phase,
+      creationForgeTab: legacyPhaseToForgeTab(phase),
+    }))
+  }, [])
+
+  const setCreationForgeTab = useCallback((tabId: CharacterCreationForgeTabId) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      creationForgeTab: tabId,
+      creationPhase: forgeTabToLegacyPhase(tabId),
+    }))
+  }, [])
+
+  const markCreationForgeTabComplete = useCallback(
+    (tabId: CharacterCreationForgeTabId) => {
+      setRawCharacter((prev) => {
+        const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+        const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+        const tier = resolveCreationPsychicTier(prev, psychicTier)
+        const ctx = buildCharacterCreationForgeContext(
+          { ...prev, creationGenreId: prev.creationGenreId },
+          race,
+          occLib,
+          tier,
+        )
+        return {
+          ...prev,
+          ...completeForgeTab(prev, tabId, ctx),
+        }
+      })
+    },
+    [psychicTier],
+  )
+
+  const setTraitForgeStubComplete = useCallback((complete: boolean) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      creationTraitForgeStubComplete: complete,
+    }))
   }, [])
 
   const setCreationAttributePoolSlot = useCallback(
@@ -1967,6 +2022,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       commitSpawnVitalityRolls,
       finalizeCharacter,
       setCreationPhase,
+      setCreationForgeTab,
+      markCreationForgeTabComplete,
+      setTraitForgeStubComplete,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
@@ -2075,6 +2133,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       commitSpawnVitalityRolls,
       finalizeCharacter,
       setCreationPhase,
+      setCreationForgeTab,
+      markCreationForgeTabComplete,
+      setTraitForgeStubComplete,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,

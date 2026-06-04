@@ -12,6 +12,16 @@ export type ActiveForm = 'facade' | 'morphus'
 /** Psychic Gate tier (psychic_gate.md). */
 export type PsychicTier = 'none' | 'minor' | 'major' | 'master'
 
+/** Character Creation Forge tabs (forge-character_creation.md). */
+export type CharacterCreationForgeTabId =
+  | 'tab1_configurator'
+  | 'tab2_attributes'
+  | 'tab3_psionic'
+  | 'tab4_skills'
+  | 'tab5_traits'
+  | 'tab6_abilities'
+  | 'tab7_review'
+
 /**
  * Damage / durability scaling tier (docs/combat_logic.md §1).
  * Drives UI treatment: S.D.C./H.P. vs M.D.C. (100× rule, invulnerability flags at runtime).
@@ -1698,6 +1708,19 @@ export type Character = {
   isFinalized?: boolean
   /** Psychic Gate tier chosen during creation (psychic_gate.md). */
   creationPsychicTier?: PsychicTier
+  /** True after player explicitly picks a tier on Tab 3 (Forge gate). */
+  creationPsychicTierChosen?: boolean
+  /** Universal Forge — tab completion (Continue clicked). */
+  creationForgeCompleted?: Readonly<
+    Partial<Record<CharacterCreationForgeTabId, true>>
+  >
+  /** Snapshots at Continue for upstream conflict (yellow) detection. */
+  creationForgeSnapshots?: Readonly<
+    Partial<Record<CharacterCreationForgeTabId, string>>
+  >
+  creationForgeTab?: CharacterCreationForgeTabId
+  /** Tab 5 trait sub-forge stub acknowledged. */
+  creationTraitForgeStubComplete?: boolean
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
   /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */
