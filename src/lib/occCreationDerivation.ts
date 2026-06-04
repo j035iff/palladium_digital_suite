@@ -16,6 +16,7 @@ import {
 } from './creationPhases'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { resolveEffectivePalladiumOcc } from './occComposition'
+import { initialOccCoreVoucherPicks } from './creationInvalidate'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -336,6 +337,7 @@ export function applyOccStartingSkillPicks(
   const effective = resolveEffectivePalladiumOcc(occ, specId)
   return {
     ...prev,
+    creationOccCoreVoucherPicks: initialOccCoreVoucherPicks(prev, occ),
     creationOccSkillIds: occStartingOccSkillIds(occ, specId),
     creationRelatedSkillIds: occStartingRelatedSkillIds(effective),
   }

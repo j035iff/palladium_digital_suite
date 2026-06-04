@@ -2,6 +2,11 @@ import { useCallback, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from '../../lib/attributeKeys'
 import { resolveEffectivePalladiumOcc } from '../../lib/occComposition'
+import {
+  raceAttrNotation,
+  valueFitsRaceNotation,
+} from '../../lib/creationAttributeSync'
+import { diceNotationBounds } from '../../lib/diceNotationBounds'
 
 const ATTR_LABELS: Record<ForgeAttrKey, string> = {
   iq: 'I.Q.',
@@ -80,6 +85,14 @@ export function AttributeForge() {
         )
         return
       }
+      const notation = raceAttrNotation(attrFormulas, attr)
+      if (!valueFitsRaceNotation(value, notation)) {
+        const { min: nMin, max: nMax } = diceNotationBounds(notation)
+        setDropError(
+          `${value} is outside ${notation} range (${nMin}–${nMax}) for ${ATTR_LABELS[attr]}.`,
+        )
+        return
+      }
       const prevIndex = poolIndexForAttr(assignments, pool, attr)
       if (prevIndex >= 0 && prevIndex !== poolIndex) {
         // swap handled by reassignment
@@ -96,6 +109,7 @@ export function AttributeForge() {
       pool,
       assignments,
       occMin,
+      attrFormulas,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
     ],

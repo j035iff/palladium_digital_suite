@@ -1712,6 +1712,8 @@ export type Character = {
   creationAttributeAssignments?: Partial<Record<ForgeAttrKey, number>>
   /** Phase I.2 — resolved O.C.C. variable dice (key = task id). */
   creationOccVariableResolutions?: Readonly<Record<string, number>>
+  /** Phase II — resolved O.C.C. core skill choice vouchers (voucher id → skill ids). */
+  creationOccCoreVoucherPicks?: Readonly<Record<string, readonly string[]>>
   /** Phase IV — manual dice results keyed by pending-dice id. */
   creationPendingDiceResolutions?: Readonly<Record<string, number>>
   /**

@@ -21,6 +21,9 @@ import {
   assessRelatedSkillSlotBlockers,
   resolveCreationPsychicTier,
 } from './creationPsychicSkills'
+import { assessOccCoreVoucherBlockers } from './occCoreSkillVouchers'
+import { raceLineageFromDefinition } from './raceEngine'
+import { creationAttributesBlockerLabel } from './creationFormLabels'
 
 function attrsPlausible(attrs: {
   iq: number
@@ -61,15 +64,13 @@ export function assessCreationReviewBlockers(
   blockers.push(...assessAttributesBlockers(character, occLib))
   blockers.push(...assessOccVariableBlockers(character, occLib))
 
+  const supportsDualForm = raceLineageFromDefinition(race) === 'nightbane'
+
   if (!attrsPlausible(character.facade.attributes)) {
-    blockers.push(
-      'Facade attributes look incomplete or invalid — finish attribute allocation.',
-    )
+    blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'human'))
   }
-  if (!attrsPlausible(character.morphus.attributes)) {
-    blockers.push(
-      'Morphus attributes look incomplete or invalid — finish attribute allocation.',
-    )
+  if (supportsDualForm && !attrsPlausible(character.morphus.attributes)) {
+    blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'morphus'))
   }
 
   const occSkills = character.creationOccSkillIds ?? []
@@ -78,6 +79,14 @@ export function assessCreationReviewBlockers(
   }
 
   if (picksOcc && occLib) {
+    blockers.push(
+      ...assessOccCoreVoucherBlockers(
+        occLib,
+        character.occSpecializationId,
+        character.creationOccCoreVoucherPicks ?? {},
+      ),
+    )
+
     const relatedBase =
       character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occLib)
     const relatedSelected = character.creationRelatedSkillIds ?? []

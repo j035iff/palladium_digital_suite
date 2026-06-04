@@ -168,6 +168,13 @@ import {
 } from '../lib/occComposition'
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
+import { syncCreationAttributeBranches } from '../lib/creationAttributeSync'
+import {
+  creationInvalidationPatch,
+} from '../lib/creationInvalidate'
+import {
+  mergeOccSkillIdsWithVouchers,
+} from '../lib/occCoreSkillVouchers'
 
 export type AppViewport = 'launcher' | 'sheet'
 
@@ -325,6 +332,7 @@ type CharacterContextValue = {
   setCreationAttributeAssignment: (attr: ForgeAttrKey, value: number) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
+  setCreationOccCoreVoucherPick: (voucherId: string, skillIds: readonly string[]) => void
   setCreationPendingDiceResolution: (entryId: string, value: number) => void
   setAlignment: (alignment: string) => void
   /** Phase IV — apply manual dice resolutions to vitality pools (no auto-roll). */
@@ -1491,30 +1499,32 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setPsychicTierState(tier)
       setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
-        const branch = getFormState(prev, form)
         const gateBypassed = resolvePsychicGateBypassed(
           prev.raceId,
           lib,
           prev.creationGenreId,
         )
         const nextBranch = gateBypassed
-          ? branch
-          : applyPsychicTierToFormState(branch, tier)
+          ? getFormState(prev, form)
+          : applyPsychicTierToFormState(getFormState(prev, form), tier)
+        const invalidated = {
+          ...prev,
+          ...creationInvalidationPatch(prev, 'occ'),
+          [form]: nextBranch,
+          occ: snapshotOccForCharacter(def),
+          occSpecializationId: undefined,
+          creationPsychicTier: tier,
+        }
         const withOcc = applyOccStartingSkillPicks(
-          patchCharacterCreationFromOcc(
-            {
-              ...prev,
-              [form]: nextBranch,
-              occ: snapshotOccForCharacter(def),
-              occSpecializationId: undefined,
-              creationPsychicTier: tier,
-            },
-            lib,
-          ),
+          patchCharacterCreationFromOcc(invalidated, lib),
           lib,
         )
+        const occRow = lib
         return syncRaceOccFacadeSdc(
-          retainCharacterRoot(prev, withOcc),
+          syncCreationAttributeBranches(
+            retainCharacterRoot(prev, withOcc),
+            occRow,
+          ),
         )
       })
     },
@@ -1528,15 +1538,19 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (!getOccSpecialization(lib, specializationId)) return prev
       const withSpec: CharacterRootState = {
         ...prev,
+        ...creationInvalidationPatch(prev, 'specialization'),
         occSpecializationId: specializationId,
       }
       return syncRaceOccFacadeSdc(
-        retainCharacterRoot(
-          prev,
-          applyOccStartingSkillPicks(
-            patchCharacterCreationFromOcc(withSpec, lib),
-            lib,
+        syncCreationAttributeBranches(
+          retainCharacterRoot(
+            prev,
+            applyOccStartingSkillPicks(
+              patchCharacterCreationFromOcc(withSpec, lib),
+              lib,
+            ),
           ),
+          lib,
         ),
       )
     })
@@ -1558,6 +1572,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
       const withRace = syncRaceOccFacadeSdc({
         ...prev,
+        ...creationInvalidationPatch(prev, 'race'),
         raceId: id,
         lineage,
         psychicGateBypassed: resolvePsychicGateBypassed(
@@ -1566,20 +1581,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           prev.creationGenreId,
         ),
       })
-      if (!psTier) return withRace
+      let next = syncCreationAttributeBranches(withRace, occRow ?? undefined)
+      if (!psTier) return next
       const applyTier = (attrs: Character['facade']['attributes']) => ({
         ...attrs,
         ps: { ...attrs.ps, tier: psTier },
       })
       return {
-        ...withRace,
+        ...next,
         facade: {
-          ...withRace.facade,
-          attributes: applyTier(withRace.facade.attributes),
+          ...next.facade,
+          attributes: applyTier(next.facade.attributes),
         },
         morphus: {
-          ...withRace.morphus,
-          attributes: applyTier(withRace.morphus.attributes),
+          ...next.morphus,
+          attributes: applyTier(next.morphus.attributes),
         },
       }
     })
@@ -1630,33 +1646,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [],
   )
 
-  const syncAttrToForm = useCallback(
-    (
-      prev: CharacterRootState,
-      attr: ForgeAttrKey,
-      value: number,
-      form: ActiveForm,
-    ): CharacterRootState => {
-      const path =
-        attr === 'ps'
-          ? `${form}.attributes.ps.score`
-          : `${form}.attributes.${attr}`
-      const parsed = parseAttributePath(path, form)
-      if (!parsed) return prev
-      const branch = prev[parsed.formKey]
-      const nextAttrs = applyAttributeTail(branch.attributes, parsed.tail, value)
-      if (!nextAttrs) return prev
-      const withAttrs = { ...branch, attributes: nextAttrs }
-      const merged = mergeVitalityFromAttributes(withAttrs, nextAttrs)
-      let next: CharacterRootState = { ...prev, [parsed.formKey]: merged }
-      if (attr === 'pe' || attr === 'ps') {
-        next = syncRaceOccFacadeSdc(next)
-      }
-      return next
-    },
-    [],
-  )
-
   const setCreationAttributeAssignment = useCallback(
     (attr: ForgeAttrKey, value: number) => {
       setRawCharacter((prev) => {
@@ -1664,14 +1653,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           ...(prev.creationAttributeAssignments ?? {}),
           [attr]: value,
         }
-        const synced = syncAttrToForm(prev, attr, value, activeForm)
-        return {
-          ...synced,
+        const occ = getLibraryOccById(prev.occ.id) ?? undefined
+        const withAssignments = {
+          ...prev,
           creationAttributeAssignments: assignments,
         }
+        return syncRaceOccFacadeSdc(
+          syncCreationAttributeBranches(withAssignments, occ),
+        )
       })
     },
-    [syncAttrToForm, activeForm],
+    [],
   )
 
   const clearCreationAttributeAssignment = useCallback(
@@ -1679,7 +1671,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRawCharacter((prev) => {
         const assignments = { ...(prev.creationAttributeAssignments ?? {}) }
         delete assignments[attr]
-        return { ...prev, creationAttributeAssignments: assignments }
+        const occ = getLibraryOccById(prev.occ.id) ?? undefined
+        return syncCreationAttributeBranches(
+          { ...prev, creationAttributeAssignments: assignments },
+          occ,
+        )
       })
     },
     [],
@@ -1687,13 +1683,42 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
-      setRawCharacter((prev) => ({
-        ...prev,
-        creationOccVariableResolutions: {
-          ...(prev.creationOccVariableResolutions ?? {}),
-          [taskId]: value,
-        },
-      }))
+      setRawCharacter((prev) => {
+        const occ = getLibraryOccById(prev.occ.id) ?? undefined
+        const withResolution = {
+          ...prev,
+          creationOccVariableResolutions: {
+            ...(prev.creationOccVariableResolutions ?? {}),
+            [taskId]: value,
+          },
+        }
+        return syncRaceOccFacadeSdc(
+          syncCreationAttributeBranches(withResolution, occ),
+        )
+      })
+    },
+    [],
+  )
+
+  const setCreationOccCoreVoucherPick = useCallback(
+    (voucherId: string, skillIds: readonly string[]) => {
+      setRawCharacter((prev) => {
+        const occ = getLibraryOccById(prev.occ.id) ?? undefined
+        const voucherPicks = {
+          ...(prev.creationOccCoreVoucherPicks ?? {}),
+          [voucherId]: skillIds,
+        }
+        return {
+          ...prev,
+          creationOccCoreVoucherPicks: voucherPicks,
+          creationOccSkillIds: mergeOccSkillIdsWithVouchers(
+            occ,
+            prev.occSpecializationId,
+            prev.creationOccSkillIds ?? [],
+            voucherPicks,
+          ),
+        }
+      })
     },
     [],
   )
@@ -1946,6 +1971,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
       setCreationOccVariableResolution,
+      setCreationOccCoreVoucherPick,
       setCreationPendingDiceResolution,
       setAlignment,
       commitVitalityFromPendingDice,
@@ -2053,6 +2079,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
       setCreationOccVariableResolution,
+      setCreationOccCoreVoucherPick,
       setCreationPendingDiceResolution,
       setAlignment,
       commitVitalityFromPendingDice,

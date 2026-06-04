@@ -1,6 +1,12 @@
 import type { Character, PalladiumOcc, Race } from '../types'
 import { deriveSdcHpMaximums } from './derivedVitality'
 import type { SpawnVitalityRolls } from './spawnFinalVitality'
+import { occFlatVitalBonus } from './creationOccBonuses'
+import {
+  creationHpLabel,
+  creationIspLabel,
+  creationSdcLabel,
+} from './creationFormLabels'
 
 /**
  * Build final vitality pools from manually entered dice results (Pillar 5 — no auto-roll).
@@ -23,18 +29,25 @@ export function computeSpawnVitalityFromResolutions(
   const hpDie = resolutions['vitality.facade_hp_die'] ?? 0
   const facadeHp = Math.max(4, pe + hpDie)
 
+  const ppeDie = resolutions['vitality.ppe_die'] ?? 0
+  const ppeMax = Math.max(0, me + pe + ppeDie)
+
+  const occSdcBonus = occFlatVitalBonus(
+    _occ,
+    character.occSpecializationId,
+    'sdc',
+    character.creationOccVariableResolutions ?? {},
+  )
+
   let facadeSdc: number
   const sdcRoll = resolutions['vitality.facade_sdc']
   if (sdcRoll != null && race?.vitals?.sdc != null) {
-    facadeSdc = Math.max(4, sdcRoll)
+    facadeSdc = Math.max(4, sdcRoll + occSdcBonus)
   } else {
     const sdcDie = resolutions['vitality.facade_sdc_die'] ?? 0
     const base = deriveSdcHpMaximums(f).sdcMaximum
-    facadeSdc = Math.max(4, base + sdcDie)
+    facadeSdc = Math.max(4, base + sdcDie + occSdcBonus)
   }
-
-  const ppeDie = resolutions['vitality.ppe_die'] ?? 0
-  const ppeMax = Math.max(0, me + pe + ppeDie)
 
   const showIsp =
     opts.psychicTier !== 'none' || character.psychicGateBypassed === true
@@ -80,19 +93,38 @@ export function vitalityPreviewLines(
     resolutions,
     opts,
   )
+  const dual = opts.supportsDualForm
   const lines = [
-    { label: 'Facade H.P. max', value: String(rolls.facadeHp) },
-    { label: 'Facade S.D.C. max', value: String(rolls.facadeSdc) },
+    {
+      label: `${creationHpLabel(dual, 'human')} max`,
+      value: String(rolls.facadeHp),
+    },
+    {
+      label: `${creationSdcLabel(dual, 'human')} max`,
+      value: String(rolls.facadeSdc),
+    },
     { label: 'P.P.E. max', value: String(rolls.ppeMax) },
   ]
   if (opts.supportsDualForm) {
     lines.push(
-      { label: 'Morphus H.P. max', value: String(rolls.morphusHp) },
-      { label: 'Morphus S.D.C. max', value: String(rolls.morphusSdc) },
-      { label: 'Morphus I.S.P. max', value: String(rolls.morphusIspMax) },
+      {
+        label: `${creationHpLabel(true, 'morphus')} max`,
+        value: String(rolls.morphusHp),
+      },
+      {
+        label: `${creationSdcLabel(true, 'morphus')} max`,
+        value: String(rolls.morphusSdc),
+      },
+      {
+        label: `${creationIspLabel(true)} max`,
+        value: String(rolls.morphusIspMax),
+      },
     )
   } else if (rolls.morphusIspMax > 0) {
-    lines.push({ label: 'I.S.P. max', value: String(rolls.morphusIspMax) })
+    lines.push({
+      label: `${creationIspLabel(false)} max`,
+      value: String(rolls.morphusIspMax),
+    })
   }
   return lines
 }

@@ -25,6 +25,7 @@ import {
   resolveCreationPsychicTier,
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
+import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
 
 function buildSkillEquationInput(
   def: EngineSkillDef,
@@ -55,7 +56,14 @@ export function projectCreationSkillsToSheet(
 ): SheetSkill[] {
   const occIds = character.creationOccSkillIds ?? []
   const relatedIds = character.creationRelatedSkillIds ?? []
-  const allIds = [...new Set([...occIds, ...relatedIds])]
+  const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
+  const resolvedOccIds = resolveCreationOccSkillIds(
+    occ,
+    character.occSpecializationId,
+    occIds,
+    voucherPicks,
+  )
+  const allIds = [...new Set([...resolvedOccIds, ...relatedIds])]
   if (!allIds.length) return []
 
   const relatedSet = new Set(relatedIds)
@@ -174,7 +182,12 @@ export function applySpawnSheetHandoff(
   const tier = opts?.psychicTier ?? resolveCreationPsychicTier(prev)
   const skillIds = [
     ...new Set([
-      ...(prev.creationOccSkillIds ?? []),
+      ...resolveCreationOccSkillIds(
+        occ,
+        prev.occSpecializationId,
+        prev.creationOccSkillIds ?? [],
+        prev.creationOccCoreVoucherPicks ?? {},
+      ),
       ...(prev.creationRelatedSkillIds ?? []),
     ]),
   ]

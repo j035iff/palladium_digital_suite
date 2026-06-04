@@ -115,10 +115,17 @@ export function AbilitySelection() {
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
-        Pick spells, psionics, and (for Nightbane) Talents within your O.C.C.
+        Pick spells, psionics
+        {supportsDualForm ? ' and (for Nightbane) Talents' : ''} within your O.C.C.
         budgets. Starting spell level is capped (Pillar 8); higher levels stay
-        locked. Use <strong>Become Morphus</strong> in the header to reveal
-        Morphus-only Talents.
+        locked.
+        {supportsDualForm ? (
+          <>
+            {' '}
+            Use <strong>Become Morphus</strong> in the header to reveal
+            Morphus-only Talents.
+          </>
+        ) : null}
       </p>
 
       {isNightbane ? (

@@ -3,6 +3,8 @@ import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalog
 import { calculateBaseSdc } from '../utils/vitalsCalculator'
 import { diceNotationBounds, isDiceNotation, singleDieBounds } from './diceNotationBounds'
 import { listOccVariableBonusTasks } from './occVariableBonus'
+import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import { creationHpLabel, creationSdcLabel } from './creationFormLabels'
 
 export type PendingDiceEntry = {
   id: string
@@ -44,11 +46,12 @@ export function listPendingDiceEntries(
 ): PendingDiceEntry[] {
   const entries: PendingDiceEntry[] = []
   const pe = character.facade.attributes.pe
+  const dual = opts?.supportsDualForm === true
 
   const hpDie = singleDieBounds('1D6')
   entries.push({
     id: 'vitality.facade_hp_die',
-    label: 'Facade base H.P. die',
+    label: `${creationHpLabel(dual, 'human')} base die`,
     notation: '1D6',
     min: hpDie.min,
     max: hpDie.max,
@@ -60,7 +63,7 @@ export function listPendingDiceEntries(
     const bounds = diceNotationBounds(sdcFormula)
     entries.push({
       id: 'vitality.facade_sdc',
-      label: 'Facade S.D.C.',
+      label: creationSdcLabel(dual, 'human'),
       notation: sdcFormula,
       min: bounds.min,
       max: bounds.max,
@@ -68,7 +71,7 @@ export function listPendingDiceEntries(
   } else {
     entries.push({
       id: 'vitality.facade_sdc_die',
-      label: 'Facade S.D.C. die',
+      label: `${creationSdcLabel(dual, 'human')} die`,
       notation: '1D6',
       min: 1,
       max: 6,
@@ -120,21 +123,23 @@ export function listPendingDiceEntries(
   }
 
   for (const task of listOccVariableBonusTasks(occ, character.occSpecializationId)) {
-    if (task.section === 'vitals') {
-      entries.push({
-        id: `occ.${task.id}`,
-        label: `O.C.C. ${task.label}`,
-        notation: task.notation,
-        min: task.min,
-        max: task.max,
-      })
-    }
+    if (task.section !== 'vitals') continue
+    if (character.creationOccVariableResolutions?.[task.id] != null) continue
+    entries.push({
+      id: `occ.${task.id}`,
+      label: `O.C.C. ${task.label}`,
+      notation: task.notation,
+      min: task.min,
+      max: task.max,
+    })
   }
 
-  const skillIds = [
-    ...(character.creationOccSkillIds ?? []),
-    ...(character.creationRelatedSkillIds ?? []),
-  ]
+  const skillIds = resolveCreationOccSkillIds(
+    occ,
+    character.occSpecializationId,
+    character.creationOccSkillIds ?? [],
+    character.creationOccCoreVoucherPicks ?? {},
+  ).concat(character.creationRelatedSkillIds ?? [])
   entries.push(...skillDiceFromSelection(skillIds))
 
   return entries

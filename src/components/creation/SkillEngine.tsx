@@ -24,6 +24,8 @@ import {
   rawOccSkillBonusPercent,
   resolveOccSkillBonusPercent,
 } from '../../lib/creationPsychicSkills'
+import { resolveCreationOccSkillIds } from '../../lib/occCoreSkillVouchers'
+import { OccCoreSkillVoucherPanel } from './OccCoreSkillVoucherPanel'
 
 const CATEGORIES: Array<SkillCategory | 'All'> = [
   'All',
@@ -89,6 +91,18 @@ export function SkillEngine() {
 
   const occSelected = character.creationOccSkillIds ?? EMPTY_SKILL_IDS
   const relatedSelected = character.creationRelatedSkillIds ?? EMPTY_SKILL_IDS
+  const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
+
+  const resolvedOccSkillIds = useMemo(
+    () =>
+      resolveCreationOccSkillIds(
+        effectiveOcc,
+        character.occSpecializationId,
+        occSelected,
+        voucherPicks,
+      ),
+    [effectiveOcc, character.occSpecializationId, occSelected, voucherPicks],
+  )
 
   const setOccSelected = (next: string[]) => {
     setCreationSkillPicks(next, relatedSelected)
@@ -106,8 +120,8 @@ export function SkillEngine() {
   const relatedCap = Math.floor(relatedBase * skillSlotMultiplier)
 
   const allSelected = useMemo(
-    () => new Set([...occSelected, ...relatedSelected]),
-    [occSelected, relatedSelected],
+    () => new Set([...resolvedOccSkillIds, ...relatedSelected]),
+    [resolvedOccSkillIds, relatedSelected],
   )
 
   const relatedSet = useMemo(() => new Set(relatedSelected), [relatedSelected])
@@ -286,6 +300,8 @@ export function SkillEngine() {
           </ul>
         </div>
       ) : null}
+
+      <OccCoreSkillVoucherPanel />
 
       <div
         className={`mb-4 grid gap-3 rounded-lg border p-4 sm:grid-cols-2 ${panelStyle}`}
@@ -532,7 +548,7 @@ export function SkillEngine() {
               </span>
             </p>
             <ul className="mt-2 max-h-48 space-y-2 overflow-y-auto text-xs">
-              {[...occSelected, ...relatedSelected].map((id) => {
+              {[...resolvedOccSkillIds, ...relatedSelected].map((id) => {
                 const def = getSkillById(id)
                 if (!def) return null
                 const occBonus = resolveOccSkillBonusPercent(

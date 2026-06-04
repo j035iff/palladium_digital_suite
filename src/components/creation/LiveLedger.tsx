@@ -1,49 +1,86 @@
-import { useMemo } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import {
-  computeCombatMirrorBonuses,
-  computeLiveBonuses,
-} from '../../lib/characterDerived'
-import { listPendingDiceEntries } from '../../lib/pendingDiceLedger'
-import { listOccVariableBonusTasks } from '../../lib/occVariableBonus'
+import { buildCreationLiveLedgerSnapshot } from '../../lib/creationLiveLedger'
+
+function LedgerSection({
+  title,
+  children,
+}: {
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <div className="mt-4 border-t border-slate-200 pt-3 dark:border-white/10">
+      <p className="mb-2 text-[10px] font-bold uppercase tracking-wide opacity-70">
+        {title}
+      </p>
+      {children}
+    </div>
+  )
+}
+
+function LedgerGrid({ lines }: { lines: { label: string; value: string; hint?: string }[] }) {
+  return (
+    <dl className="space-y-1 text-xs">
+      {lines.map((line) => (
+        <div key={line.label} className="flex flex-col gap-0.5">
+          <div className="flex justify-between gap-2">
+            <dt className="opacity-80">{line.label}</dt>
+            <dd className="shrink-0 text-right font-mono font-semibold tabular-nums">
+              {line.value}
+            </dd>
+          </div>
+          {line.hint ? (
+            <dd className="text-[10px] opacity-60">{line.hint}</dd>
+          ) : null}
+        </div>
+      ))}
+    </dl>
+  )
+}
 
 export function LiveLedger() {
   const {
     character,
     activeFormState,
+    activeForm,
     activeRace,
     effectiveOcc,
     supportsDualForm,
     psychicTier,
     strengthCapacities,
+    handToHandCombatProfile,
+    saveProfileDerived,
   } = useCharacter()
   const attrs = activeFormState.attributes
-  const combatMirror = useMemo(
-    () => computeCombatMirrorBonuses(attrs),
-    [attrs],
-  )
-  const iqPreview = useMemo(() => computeLiveBonuses(attrs), [attrs])
 
-  const pendingDice = useMemo(
+  const ledger = useMemo(
     () =>
-      listPendingDiceEntries(character, activeRace, effectiveOcc ?? undefined, {
+      buildCreationLiveLedgerSnapshot({
+        character,
+        attrs,
+        race: activeRace,
+        occ: effectiveOcc ?? undefined,
         supportsDualForm,
         psychicTier,
+        activeForm,
+        strengthCapacities,
+        handToHand: handToHandCombatProfile.accumulated,
+        horrorFactorTotal: saveProfileDerived.horrorFactor.total,
       }),
-    [character, activeRace, effectiveOcc, supportsDualForm, psychicTier],
+    [
+      character,
+      attrs,
+      activeForm,
+      activeRace,
+      effectiveOcc,
+      supportsDualForm,
+      psychicTier,
+      strengthCapacities,
+      handToHandCombatProfile.accumulated,
+      saveProfileDerived.horrorFactor.total,
+    ],
   )
-
-  const occVarTasks = useMemo(
-    () =>
-      listOccVariableBonusTasks(
-        effectiveOcc ?? undefined,
-        character.occSpecializationId,
-      ),
-    [effectiveOcc, character.occSpecializationId],
-  )
-
-  const resolved = character.creationPendingDiceResolutions ?? {}
-  const occResolved = character.creationOccVariableResolutions ?? {}
 
   const panel =
     'rounded-lg border p-4 border-blue-200 bg-white text-slate-900 dark:border-violet-700 dark:bg-slate-950/80 dark:text-violet-50'
@@ -54,87 +91,72 @@ export function LiveLedger() {
         Live Ledger
       </h3>
       <p className="mb-3 text-xs opacity-75">
-        Derived combat and pending physical dice (character_creation.md Phase I).
-      </p>
-      <dl className="space-y-2 font-mono text-sm tabular-nums">
-        <div className="flex justify-between gap-2">
-          <dt>Strike</dt>
-          <dd className="font-semibold text-emerald-700 dark:text-emerald-400">
-            +{combatMirror.strike}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-2">
-          <dt>Parry</dt>
-          <dd className="font-semibold text-emerald-700 dark:text-emerald-400">
-            +{combatMirror.parry}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-2">
-          <dt>Dodge</dt>
-          <dd className="font-semibold text-emerald-700 dark:text-emerald-400">
-            +{combatMirror.dodge}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-2 border-t border-slate-200 pt-2 dark:border-white/10">
-          <dt>H2H dmg</dt>
-          <dd className="font-semibold text-amber-700 dark:text-amber-300">
-            {strengthCapacities.handToHandDamage.kind === 'supernatural' ? (
-              <span className="text-[11px]">
-                {strengthCapacities.handToHandDamage.fullStrengthPunch}
-              </span>
-            ) : (
-              <>+{combatMirror.handToHandDamage}</>
-            )}
-          </dd>
-        </div>
-      </dl>
-      <p className="mt-3 text-xs opacity-70">
-        I.Q. O.C.C. % preview:{' '}
-        <span className="font-mono font-semibold">
-          {iqPreview.iqOccSkillPercent >= 0 ? '+' : ''}
-          {iqPreview.iqOccSkillPercent}%
-        </span>
+        Full build mirror — attributes, vitals, saves, and combat update as you
+        configure.
       </p>
 
-      {occVarTasks.length > 0 ? (
-        <div className="mt-4 border-t border-slate-200 pt-3 dark:border-white/10">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-wide opacity-70">
-            O.C.C. variable dice
-          </p>
-          <ul className="space-y-1 text-xs">
-            {occVarTasks.map((t) => {
-              const v = occResolved[t.id]
-              const done = v != null && v >= t.min && v <= t.max
-              return (
-                <li key={t.id} className={done ? 'opacity-60' : ''}>
-                  <span className="font-mono">{t.notation}</span> — {t.label}
-                  {done ? ` ✓ (${v})` : ' — pending'}
+      <LedgerSection title="Attributes">
+        <LedgerGrid lines={ledger.attributes} />
+      </LedgerSection>
+
+      <LedgerSection title="Exceptional bonuses">
+        <LedgerGrid lines={ledger.exceptional} />
+      </LedgerSection>
+
+      <LedgerSection title="Vitals">
+        <LedgerGrid lines={ledger.vitals} />
+      </LedgerSection>
+
+      <LedgerSection title="Save vs">
+        <LedgerGrid lines={ledger.saves} />
+      </LedgerSection>
+
+      <LedgerSection title="Combat bonuses">
+        <LedgerGrid lines={ledger.combat} />
+      </LedgerSection>
+
+      {ledger.physical.lines.length > 0 || ledger.physical.pendingDiceLines.length > 0 ? (
+        <LedgerSection title="Skill physical staging (on Spawn)">
+          <LedgerGrid lines={ledger.physical.lines} />
+          {ledger.physical.pendingDiceLines.length > 0 ? (
+            <ul className="mt-2 space-y-1 border-t border-slate-200 pt-2 text-xs dark:border-white/10">
+              {ledger.physical.pendingDiceLines.map((line) => (
+                <li key={line.label}>
+                  <span className="font-mono font-semibold">{line.value}</span>{' '}
+                  {line.label}
+                  {line.hint ? (
+                    <span className="block text-[10px] opacity-60">{line.hint}</span>
+                  ) : null}
                 </li>
-              )
-            })}
-          </ul>
-        </div>
+              ))}
+            </ul>
+          ) : null}
+        </LedgerSection>
       ) : null}
 
-      {pendingDice.length > 0 ? (
-        <div className="mt-4 border-t border-slate-200 pt-3 dark:border-white/10">
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-wide opacity-70">
-            Spawn dice checklist
-          </p>
-          <ul className="max-h-40 space-y-1 overflow-y-auto text-xs">
-            {pendingDice.map((e) => {
-              const v = resolved[e.id]
-              const done = v != null && v >= e.min && v <= e.max
+      {ledger.occVariable.length > 0 ? (
+        <LedgerSection title="O.C.C. variable dice">
+          <LedgerGrid lines={ledger.occVariable} />
+        </LedgerSection>
+      ) : null}
+
+      {ledger.spawnDice.length > 0 ? (
+        <LedgerSection title="Spawn dice checklist">
+          <ul className="max-h-48 space-y-1 overflow-y-auto text-xs">
+            {ledger.spawnDice.map((e) => {
+              const done = e.hint === 'Resolved'
               return (
-                <li key={e.id} className={done ? 'text-emerald-600' : ''}>
-                  <span className="font-mono font-semibold">{e.notation}</span>{' '}
+                <li key={e.label} className={done ? 'text-emerald-600' : ''}>
+                  <span className="font-mono font-semibold">{e.value}</span>{' '}
                   {e.label}
-                  {done ? ` → ${v}` : ''}
+                  {e.hint && e.hint !== 'Resolved' ? (
+                    <span className="block text-[10px] opacity-60">{e.hint}</span>
+                  ) : null}
                 </li>
               )
             })}
           </ul>
-        </div>
+        </LedgerSection>
       ) : null}
     </aside>
   )

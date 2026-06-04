@@ -83,6 +83,7 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       creationAttributePool: Array.from({ length: 8 }, () => null),
       creationAttributeAssignments: {},
       creationOccVariableResolutions: {},
+      creationOccCoreVoucherPicks: {},
       creationPendingDiceResolutions: {},
       facade,
       morphus: structuredClone(facade),
