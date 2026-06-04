@@ -47,6 +47,41 @@ describe('deriveForgeNavigation', () => {
     expect(nav.continueEnabled).toBe(false)
   })
 
+  it('uses blue only on progress frontier while viewed tab gets isViewing', () => {
+    const defs = tabs({
+      a: () => ({ ok: true, blockers: [] }),
+      b: () => ({ ok: true, blockers: [] }),
+      c: () => ({ ok: true, blockers: [] }),
+    })
+    const completion = markForgeTabComplete<TabId>('a', 'snap-a', {
+      completed: {},
+      snapshots: {},
+    })
+    const nav = deriveForgeNavigation(defs, 'a', completion)
+    const aView = nav.tabs.find((t) => t.id === 'a')
+    const bView = nav.tabs.find((t) => t.id === 'b')
+    expect(aView?.visual).toBe('complete')
+    expect(aView?.isViewing).toBe(true)
+    expect(bView?.visual).toBe('active')
+    expect(bView?.isViewing).toBe(false)
+    expect(nav.progressFrontierTabId).toBe('b')
+  })
+
+  it('shows green on the active tab after Continue marks it complete', () => {
+    const defs = tabs({
+      a: () => ({ ok: true, blockers: [] }),
+      b: () => ({ ok: true, blockers: [] }),
+      c: () => ({ ok: true, blockers: [] }),
+    })
+    const completion = markForgeTabComplete<TabId>('a', 'snap-a', {
+      completed: {},
+      snapshots: {},
+    })
+    const nav = deriveForgeNavigation(defs, 'a', completion)
+    const aView = nav.tabs.find((t) => t.id === 'a')
+    expect(aView?.visual).toBe('complete')
+  })
+
   it('optional continue hint when validation ok', () => {
     const defs = tabs({
       a: () => ({ ok: true, blockers: [] }),

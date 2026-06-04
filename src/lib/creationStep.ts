@@ -25,15 +25,7 @@ export type CreationFlowContext = {
   hasOccVariableBonus: boolean
 }
 
-export const PALLADIUM_ALIGNMENTS = [
-  'Principled',
-  'Scrupulous',
-  'Unprincipled',
-  'Anarchist',
-  'Miscreant',
-  'Aberrant',
-  'Diabolic',
-] as const
+export { PALLADIUM_ALIGNMENT_VALUES as PALLADIUM_ALIGNMENTS } from './configuratorMatrix'
 
 export function buildCreationFlowContext(
   character: Pick<

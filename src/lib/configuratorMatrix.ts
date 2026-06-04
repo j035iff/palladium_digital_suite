@@ -1,6 +1,119 @@
 import type { PalladiumOcc, Race } from '../types'
+import type { ForgeAttrKey } from './attributeKeys'
+import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 import { occMatchesAllTags } from './genreGating'
 import { isOccAllowedForRace } from './raceEngine'
+
+const ATTR_LABELS: Record<ForgeAttrKey, string> = {
+  iq: 'I.Q.',
+  me: 'M.E.',
+  ma: 'M.A.',
+  ps: 'P.S.',
+  pp: 'P.P.',
+  pe: 'P.E.',
+  pb: 'P.B.',
+  spd: 'Spd',
+}
+
+export const CONFIGURATOR_PLACEHOLDER_KEY = '__configurator_placeholder__'
+
+export const CONFIGURATOR_SELECT_RACE_LABEL = 'Select Race'
+export const CONFIGURATOR_SELECT_OCC_LABEL = 'Select O.C.C.'
+
+export function isConfiguratorRaceSelected(raceId: string | undefined | null): boolean {
+  return Boolean(raceId?.trim())
+}
+
+export function isConfiguratorOccSelected(occId: string | undefined | null): boolean {
+  return Boolean(occId?.trim())
+}
+
+/** Human-readable O.C.C. minimum attributes for configurator descriptions. */
+export function formatOccAttributeRequirements(occ: PalladiumOcc): string | null {
+  const reqs = occ.attributeRequirements
+  if (!reqs) return null
+  const parts: string[] = []
+  for (const key of FORGE_ATTRIBUTE_KEYS) {
+    const attrKey = key === 'ps' ? 'ps' : key
+    const min = reqs[attrKey as keyof typeof reqs]
+    if (min != null && min > 0) {
+      parts.push(`${ATTR_LABELS[key]} ${min}+`)
+    }
+  }
+  return parts.length > 0 ? `Requires: ${parts.join(', ')}` : null
+}
+
+export type ConfiguratorListRow<T extends { id: string }> =
+  | { kind: 'placeholder'; key: string; label: string }
+  | { kind: 'item'; key: string; item: T; filterMismatch: boolean }
+
+/**
+ * Placeholder first, then the current selection (always pinned), then the rest in tier sort order.
+ * Amber styling when the pinned row is tier ≠ 1 (filters / matrix mismatch).
+ */
+export function buildConfiguratorColumnRows<T extends { id: string }>(
+  sortedItems: readonly T[],
+  tierOf: (item: T) => ConfiguratorTierResult,
+  selectedId: string | undefined | null,
+  placeholderLabel: string,
+): ConfiguratorListRow<T>[] {
+  const rows: ConfiguratorListRow<T>[] = [
+    { kind: 'placeholder', key: CONFIGURATOR_PLACEHOLDER_KEY, label: placeholderLabel },
+  ]
+  const id = selectedId?.trim()
+  const selected = id ? sortedItems.find((i) => i.id === id) : undefined
+
+  if (selected) {
+    const filterMismatch = tierOf(selected).tier !== 1
+    rows.push({
+      kind: 'item',
+      key: selected.id,
+      item: selected,
+      filterMismatch,
+    })
+    for (const item of sortedItems) {
+      if (item.id === selected.id) continue
+      rows.push({ kind: 'item', key: item.id, item, filterMismatch: false })
+    }
+    return rows
+  }
+
+  for (const item of sortedItems) {
+    rows.push({ kind: 'item', key: item.id, item, filterMismatch: false })
+  }
+  return rows
+}
+
+export type ConfiguratorScrollLayout<T> = {
+  placeholderLabel: string
+  /** Current pick — frozen above the scroll region (race / O.C.C. columns). */
+  pinned: { item: T; filterMismatch: boolean } | null
+  /** Remaining options (excludes pinned id). */
+  scrollItems: readonly T[]
+}
+
+/** Race / O.C.C. lists: placeholder + pinned selection + scrollable remainder. */
+export function buildConfiguratorScrollLayout<T extends { id: string }>(
+  sortedItems: readonly T[],
+  tierOf: (item: T) => ConfiguratorTierResult,
+  selectedId: string | undefined | null,
+  placeholderLabel: string,
+): ConfiguratorScrollLayout<T> {
+  const id = selectedId?.trim()
+  const selected = id ? sortedItems.find((i) => i.id === id) : undefined
+  return {
+    placeholderLabel,
+    pinned: selected
+      ? {
+          item: selected,
+          filterMismatch: tierOf(selected).tier !== 1,
+        }
+      : null,
+    scrollItems: selected
+      ? sortedItems.filter((i) => i.id !== selected.id)
+      : sortedItems,
+  }
+}
 
 /** Configurator list tier (forge-character_creation.md Tab 1). */
 export type ConfiguratorTier = 1 | 2 | 3
@@ -229,10 +342,39 @@ export const CONFIGURATOR_ALIGNMENT_OPTIONS = [
   'Diabolic',
 ] as const
 
-export function configuratorAlignmentLabel(alignment: string): string {
-  if (!alignment.trim()) return 'Undecided (optional)'
-  return alignment
+const ALIGNMENT_DISPLAY_LABELS: Record<string, string> = {
+  [CONFIGURATOR_ALIGNMENT_UNDECIDED]: 'Select Alignment',
+  Principled: 'Good - Principled',
+  Scrupulous: 'Good - Scrupulous',
+  Unprincipled: 'Selfish - Unprincipled',
+  Anarchist: 'Selfish - Anarchist',
+  Miscreant: 'Evil - Miscreant',
+  Aberrant: 'Evil - Aberrant',
+  Diabolic: 'Evil - Diabolic',
 }
+
+export function configuratorAlignmentLabel(alignment: string): string {
+  return ALIGNMENT_DISPLAY_LABELS[alignment] ?? alignment
+}
+
+/** Playable alignments (excludes undecided placeholder). */
+export const PALLADIUM_ALIGNMENT_VALUES: readonly [
+  'Principled',
+  'Scrupulous',
+  'Unprincipled',
+  'Anarchist',
+  'Miscreant',
+  'Aberrant',
+  'Diabolic',
+] = [
+  'Principled',
+  'Scrupulous',
+  'Unprincipled',
+  'Anarchist',
+  'Miscreant',
+  'Aberrant',
+  'Diabolic',
+]
 
 export function effectiveConfiguratorAlignment(
   facadeAlignment: string | undefined,

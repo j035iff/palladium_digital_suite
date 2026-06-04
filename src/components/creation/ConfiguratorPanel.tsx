@@ -6,7 +6,6 @@ import {
   RACE_REGISTRY,
   getOccXpTableDisplayName,
 } from '../../data/library/registry'
-import { DEFAULT_RACE_ID } from '../../lib/raceFormPolicy'
 import { formatPalladiumSources } from '../../lib/formatPalladiumSources'
 import {
   occBaseStatsDice,
@@ -18,13 +17,20 @@ import {
   assessAlignmentConfiguratorTier,
   assessOccConfiguratorTier,
   assessRaceConfiguratorTier,
+  buildConfiguratorScrollLayout,
   CONFIGURATOR_ALIGNMENT_OPTIONS,
+  CONFIGURATOR_SELECT_OCC_LABEL,
+  CONFIGURATOR_SELECT_RACE_LABEL,
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
+  formatOccAttributeRequirements,
+  isConfiguratorOccSelected,
+  isConfiguratorRaceSelected,
   sortConfiguratorEntries,
   type ConfiguratorMatrixContext,
 } from '../../lib/configuratorMatrix'
 import { ConfiguratorListItem } from './ConfiguratorListItem'
+import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
 
 /**
  * Step 2 — tri-directional Race / O.C.C. / Alignment matrix with three-tier rendering.
@@ -73,7 +79,7 @@ export function ConfiguratorPanel() {
   const matrixCtx: ConfiguratorMatrixContext = useMemo(
     () => ({
       activeOccTags: activeTags,
-      selectedRaceId: character.raceId ?? DEFAULT_RACE_ID,
+      selectedRaceId: character.raceId ?? null,
       selectedOccId: character.occ?.id || null,
       selectedAlignment: effectiveConfiguratorAlignment(
         character.facade.alignment,
@@ -107,21 +113,34 @@ export function ConfiguratorPanel() {
     [occPool, matrixCtx, raceById],
   )
 
-  const sortedAlignments = useMemo(
-    () =>
-      sortConfiguratorEntries(
-        [...CONFIGURATOR_ALIGNMENT_OPTIONS],
-        (alignment) =>
-          assessAlignmentConfiguratorTier(
-            alignment,
-            matrixCtx,
-            raceById,
-            occById,
-          ),
-        (alignment) => configuratorAlignmentLabel(alignment),
-      ),
-    [matrixCtx, raceById, occById],
+  const currentAlignment = effectiveConfiguratorAlignment(
+    character.facade.alignment,
   )
+
+  const raceLayout = useMemo(
+    () =>
+      buildConfiguratorScrollLayout(
+        sortedRaces,
+        (race) => assessRaceConfiguratorTier(race, matrixCtx, occById),
+        character.raceId,
+        CONFIGURATOR_SELECT_RACE_LABEL,
+      ),
+    [sortedRaces, matrixCtx, occById, character.raceId],
+  )
+
+  const occLayout = useMemo(
+    () =>
+      buildConfiguratorScrollLayout(
+        sortedOccs,
+        (occ) => assessOccConfiguratorTier(occ, matrixCtx, raceById),
+        character.occ.id,
+        CONFIGURATOR_SELECT_OCC_LABEL,
+      ),
+    [sortedOccs, matrixCtx, raceById, character.occ.id],
+  )
+
+  const racePlaceholderSelected = !isConfiguratorRaceSelected(character.raceId)
+  const occPlaceholderSelected = !isConfiguratorOccSelected(character.occ.id)
 
   const tagPills = useMemo(() => {
     const tokens = new Set<string>()
@@ -174,6 +193,9 @@ export function ConfiguratorPanel() {
         <span className="rounded border border-slate-400/50 bg-slate-100 px-2 py-0.5 text-slate-600 dark:bg-slate-900 dark:text-slate-400">
           Tier 3 — tag mismatch
         </span>
+        <span className="rounded border border-amber-500/60 bg-amber-50 px-2 py-0.5 text-amber-950 dark:bg-amber-950 dark:text-amber-200">
+          Amber — selection vs filters
+        </span>
       </div>
 
       {tagPills.length > 0 && raceCanPickOcc ? (
@@ -224,61 +246,99 @@ export function ConfiguratorPanel() {
       ) : null}
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <ConfiguratorColumn title="Race" panel={panel} headingColor={headingColor}>
-          {sortedRaces.map((race) => (
+        <ConfiguratorPinScrollColumn
+          panel={panel}
+          morphus={morphus}
+          ariaLabel="Race"
+          placeholderLabel={raceLayout.placeholderLabel}
+          placeholderSelected={racePlaceholderSelected}
+          onSelectPlaceholder={() => setRaceId(null)}
+          pinned={
+            raceLayout.pinned ? (
+              <RaceRow
+                race={raceLayout.pinned.item}
+                morphus={morphus}
+                selected
+                tierResult={assessRaceConfiguratorTier(
+                  raceLayout.pinned.item,
+                  matrixCtx,
+                  occById,
+                )}
+                filterMismatch={raceLayout.pinned.filterMismatch}
+                onSelect={() => setRaceId(raceLayout.pinned!.item.id)}
+              />
+            ) : null
+          }
+          scrollItems={raceLayout.scrollItems}
+          renderScrollItem={(race) => (
             <RaceRow
               key={race.id}
               race={race}
               morphus={morphus}
-              selected={(character.raceId ?? DEFAULT_RACE_ID) === race.id}
+              selected={false}
               tierResult={assessRaceConfiguratorTier(race, matrixCtx, occById)}
               onSelect={() => setRaceId(race.id)}
             />
-          ))}
-        </ConfiguratorColumn>
+          )}
+        />
 
         {raceCanPickOcc ? (
-          <ConfiguratorColumn title="O.C.C." panel={panel} headingColor={headingColor}>
-            {sortedOccs.map((def) => (
+          <ConfiguratorPinScrollColumn
+            panel={panel}
+            morphus={morphus}
+            ariaLabel="O.C.C."
+            placeholderLabel={occLayout.placeholderLabel}
+            placeholderSelected={occPlaceholderSelected}
+            onSelectPlaceholder={() => setSelectedOcc('')}
+            pinned={
+              occLayout.pinned ? (
+                <OccRow
+                  def={occLayout.pinned.item}
+                  morphus={morphus}
+                  selected
+                  tierResult={assessOccConfiguratorTier(
+                    occLayout.pinned.item,
+                    matrixCtx,
+                    raceById,
+                  )}
+                  filterMismatch={occLayout.pinned.filterMismatch}
+                  onSelect={() => setSelectedOcc(occLayout.pinned!.item.id)}
+                />
+              ) : null
+            }
+            scrollItems={occLayout.scrollItems}
+            emptyScrollMessage={
+              occPool.length === 0 ? (
+                <p className="text-sm opacity-80">
+                  No O.C.C. rows for this creation / host genre.
+                </p>
+              ) : null
+            }
+            renderScrollItem={(def) => (
               <OccRow
                 key={def.id}
                 def={def}
                 morphus={morphus}
-                selected={character.occ.id === def.id}
+                selected={false}
                 tierResult={assessOccConfiguratorTier(def, matrixCtx, raceById)}
                 onSelect={() => setSelectedOcc(def.id)}
               />
-            ))}
-            {occPool.length === 0 ? (
-              <p className="text-sm opacity-80">
-                No O.C.C. rows for this creation / host genre.
-              </p>
-            ) : null}
-          </ConfiguratorColumn>
+            )}
+          />
         ) : (
           <div className={`rounded-lg border-2 p-4 ${panel}`}>
-            <p className="text-xs font-bold uppercase tracking-wide opacity-80">
-              O.C.C.
-            </p>
-            <p className="mt-2 text-sm opacity-90">
+            <p className="text-sm opacity-90">
               {activeRace?.name ?? 'This race'} is an R.C.C. — no separate O.C.C.
             </p>
           </div>
         )}
 
-        <ConfiguratorColumn
-          title="Alignment (optional)"
-          panel={panel}
-          headingColor={headingColor}
-        >
-          {sortedAlignments.map((alignment) => (
+        <ConfiguratorListColumn panel={panel} ariaLabel="Alignment">
+          {CONFIGURATOR_ALIGNMENT_OPTIONS.map((alignment) => (
             <ConfiguratorListItem
               key={alignment || '__undecided__'}
               morphus={morphus}
-              selected={
-                effectiveConfiguratorAlignment(character.facade.alignment) ===
-                alignment
-              }
+              selected={currentAlignment === alignment}
               tierResult={assessAlignmentConfiguratorTier(
                 alignment,
                 matrixCtx,
@@ -292,7 +352,7 @@ export function ConfiguratorPanel() {
               </span>
             </ConfiguratorListItem>
           ))}
-        </ConfiguratorColumn>
+        </ConfiguratorListColumn>
       </div>
 
       {raceCanPickOcc && specializationBranches.length > 0 ? (
@@ -336,25 +396,20 @@ export function ConfiguratorPanel() {
   )
 }
 
-function ConfiguratorColumn({
-  title,
+function ConfiguratorListColumn({
   panel,
-  headingColor,
   children,
+  ariaLabel,
 }: {
-  title: string
   panel: string
-  headingColor: string
   children: ReactNode
+  ariaLabel?: string
 }) {
   return (
-    <div className={`flex flex-col gap-2 rounded-lg border-2 p-3 ${panel}`}>
-      <p
-        className="text-xs font-semibold uppercase tracking-wide opacity-80"
-        style={{ color: headingColor }}
-      >
-        {title}
-      </p>
+    <div
+      className={`flex flex-col rounded-lg border-2 p-3 ${panel}`}
+      aria-label={ariaLabel}
+    >
       <div className="flex max-h-[28rem] flex-col gap-2 overflow-y-auto pr-1">
         {children}
       </div>
@@ -367,12 +422,14 @@ function RaceRow({
   morphus,
   selected,
   tierResult,
+  filterMismatch,
   onSelect,
 }: {
   race: Race
   morphus: boolean
   selected: boolean
   tierResult: ReturnType<typeof assessRaceConfiguratorTier>
+  filterMismatch?: boolean
   onSelect: () => void
 }) {
   const citation = formatPalladiumSources(race.sources)
@@ -381,6 +438,7 @@ function RaceRow({
       morphus={morphus}
       selected={selected}
       tierResult={tierResult}
+      filterMismatch={filterMismatch}
       onSelect={onSelect}
     >
       <span className="flex flex-wrap items-center gap-1.5 text-sm font-semibold">
@@ -413,12 +471,14 @@ function OccRow({
   morphus,
   selected,
   tierResult,
+  filterMismatch,
   onSelect,
 }: {
   def: PalladiumOcc
   morphus: boolean
   selected: boolean
   tierResult: ReturnType<typeof assessOccConfiguratorTier>
+  filterMismatch?: boolean
   onSelect: () => void
 }) {
   const xpLabel = getOccXpTableDisplayName(def)
@@ -429,12 +489,14 @@ function OccRow({
       : null
   const base = occBaseStatsDice(def)
   const occCat = occCharacterCategory(def)
+  const attrReqs = formatOccAttributeRequirements(def)
 
   return (
     <ConfiguratorListItem
       morphus={morphus}
       selected={selected}
       tierResult={tierResult}
+      filterMismatch={filterMismatch}
       onSelect={onSelect}
       className="p-3"
     >
@@ -459,6 +521,11 @@ function OccRow({
         XP: {xpLabel}
         {slotNote ? ` · ${slotNote}` : ''}
       </p>
+      {attrReqs ? (
+        <p className="mt-1 text-[11px] font-semibold leading-snug text-rose-700 dark:text-rose-300">
+          {attrReqs}
+        </p>
+      ) : null}
     </ConfiguratorListItem>
   )
 }

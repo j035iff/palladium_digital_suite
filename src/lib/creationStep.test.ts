@@ -31,9 +31,8 @@ describe('creationStep', () => {
 
   it('blocks configurator until O.C.C. is chosen', () => {
     const character = createBlankCharacterForGenre('nightbane')
-    const race = getRaceById('race_human')
-    const blockers = assessConfiguratorBlockers(character, race, undefined)
-    expect(blockers.some((b) => b.includes('O.C.C.'))).toBe(true)
+    const blockers = assessConfiguratorBlockers(character, undefined, undefined)
+    expect(blockers.some((b) => /Select a race/i.test(b))).toBe(true)
   })
 
   it('blocks attributes until pool is filled and assigned', () => {
@@ -50,6 +49,7 @@ describe('creationStep', () => {
     const occ = getOccById('occ_ex_government_agent')!
     const withOcc = {
       ...character,
+      raceId: 'race_human',
       occ: snapshotOccForCharacter(occ),
     }
     const blockers = assessConfiguratorBlockers(withOcc, race, occLib)

@@ -38,6 +38,49 @@ function repairState<TId extends string>(
   return 'ok'
 }
 
+/** Status color before applying progress frontier (blue). */
+function resolveTabStatusVisual(
+  repair: 'ok' | 'incomplete' | 'conflict' | 'pending',
+  markedComplete: boolean,
+): ForgeTabVisualState {
+  if (repair === 'conflict') return 'conflict'
+  if (repair === 'incomplete') return 'incomplete'
+  if (markedComplete && repair === 'ok') return 'complete'
+  return 'available'
+}
+
+function applyProgressFrontierVisual<TId extends string>(
+  tabDefs: readonly ForgeTabDefinition<TId>[],
+  tabs: ForgeTabView[],
+  unlockThrough: number,
+  firstRepairIndex: number | null,
+): string | null {
+  const startIndex =
+    firstRepairIndex != null ? firstRepairIndex : unlockThrough + 1
+
+  for (let i = startIndex; i < tabDefs.length; i++) {
+    const view = tabs[i]
+    if (!view || view.visual === 'na' || !view.clickable) continue
+    if (view.visual === 'available') {
+      tabs[i] = { ...view, visual: 'active' }
+    }
+    return view.id
+  }
+
+  for (let i = tabDefs.length - 1; i >= 0; i--) {
+    const view = tabs[i]
+    if (!view?.clickable || view.visual === 'na' || view.visual === 'locked') {
+      continue
+    }
+    if (view.visual === 'available') {
+      tabs[i] = { ...view, visual: 'active' }
+    }
+    return view.id
+  }
+
+  return null
+}
+
 /**
  * Derive per-tab visual state and Continue affordances for a linear Forge.
  */
@@ -95,12 +138,7 @@ export function deriveForgeNavigation<TId extends string>(
 
     if (firstRepairIndex != null) {
       if (i < firstRepairIndex) {
-        const visual: ForgeTabVisualState =
-          tab.id === activeTabId
-            ? 'active'
-            : repair === 'ok'
-              ? 'complete'
-              : 'active'
+        const visual = resolveTabStatusVisual(repair, completed[tab.id] === true)
         return {
           id: tab.id,
           label: tab.label,
@@ -116,14 +154,7 @@ export function deriveForgeNavigation<TId extends string>(
         }
       }
       if (i === firstRepairIndex) {
-        const visual: ForgeTabVisualState =
-          tab.id === activeTabId
-            ? 'active'
-            : repair === 'conflict'
-              ? 'conflict'
-              : repair === 'incomplete'
-                ? 'incomplete'
-                : 'active'
+        const visual = resolveTabStatusVisual(repair, completed[tab.id] === true)
         return {
           id: tab.id,
           label: tab.label,
@@ -155,9 +186,7 @@ export function deriveForgeNavigation<TId extends string>(
       }
     }
 
-    const isComplete = completed[tab.id] === true && repair === 'ok'
-    let visual: ForgeTabVisualState = isComplete ? 'complete' : 'active'
-    if (tab.id === activeTabId) visual = 'active'
+    const visual = resolveTabStatusVisual(repair, completed[tab.id] === true)
 
     return {
       id: tab.id,
@@ -167,6 +196,13 @@ export function deriveForgeNavigation<TId extends string>(
       blockers: validation.blockers,
     }
   })
+
+  let progressFrontierTabId = applyProgressFrontierVisual(
+    tabDefs,
+    tabs,
+    unlockThrough,
+    firstRepairIndex,
+  )
 
   const activeTab = tabDefs.find((t) => t.id === activeTabId) ?? tabDefs[0]!
   const activeValidation = activeTab.validate()
@@ -208,18 +244,38 @@ export function deriveForgeNavigation<TId extends string>(
     tabDefs.every((t) => isEffectiveComplete(t, completed))
 
   if (terminalId) {
-    const terminalView = tabs.find((t) => t.id === terminalId)!
-    terminalView.clickable = terminalAccessible
-    terminalView.visual = terminalAccessible
-      ? terminalId === activeTabId
-        ? 'active'
-        : 'complete'
-      : 'locked'
+    const terminalIdx = tabs.findIndex((t) => t.id === terminalId)
+    if (terminalIdx >= 0) {
+      if (terminalAccessible) {
+        for (let j = 0; j < tabs.length; j++) {
+          if (j !== terminalIdx && tabs[j]!.visual === 'active') {
+            tabs[j] = { ...tabs[j]!, visual: 'available' }
+          }
+        }
+        tabs[terminalIdx] = {
+          ...tabs[terminalIdx]!,
+          clickable: true,
+          visual: 'active',
+        }
+        progressFrontierTabId = terminalId
+      } else {
+        tabs[terminalIdx] = {
+          ...tabs[terminalIdx]!,
+          clickable: false,
+          visual: 'locked',
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < tabs.length; i++) {
+    tabs[i] = { ...tabs[i]!, isViewing: tabs[i]!.id === activeTabId }
   }
 
   return {
     tabs,
     activeTabId,
+    progressFrontierTabId,
     firstRepairTabId,
     showContinue: !isTerminal && !activeNa,
     continueEnabled,

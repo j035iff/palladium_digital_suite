@@ -89,6 +89,7 @@ import {
 import { serializeCharacterRootForSave } from '../lib/characterSave'
 import {
   createBlankCharacterForGenre,
+  CREATION_PLACEHOLDER_OCC,
   ensureCharacterRoot,
   retainCharacterRoot,
 } from '../lib/characterRoot'
@@ -726,7 +727,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const activeRace = useMemo(
-    () => getRaceById(character.raceId ?? DEFAULT_RACE_ID),
+    () =>
+      character.raceId?.trim() ? getRaceById(character.raceId) : undefined,
     [character.raceId],
   )
 
@@ -1503,10 +1505,28 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setSelectedOcc = useCallback(
     (occId: string) => {
+      if (!occId.trim()) {
+        setPsychicTierState('none')
+        setRawCharacter((prev) => {
+          const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+          return syncRaceOccFacadeSdc({
+            ...prev,
+            ...creationInvalidationPatch(prev, 'occ'),
+            occ: CREATION_PLACEHOLDER_OCC,
+            occSpecializationId: undefined,
+            creationPsychicTier: 'none',
+            creationPsychicTierChosen: false,
+            [form]: getFormState(prev, form),
+          })
+        })
+        return
+      }
       const def = getOccById(occId)
       const lib = getLibraryOccById(occId)
       if (!def || !lib) return
-      const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+      const race = character.raceId?.trim()
+        ? getRaceById(character.raceId)
+        : undefined
       if (!raceAllowsOccPick(race)) return
       if (!isOccAllowedForRace(race, lib)) return
       const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
@@ -1572,8 +1592,28 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const setRaceId = useCallback((raceId: string | null) => {
-    const id = raceId ?? DEFAULT_RACE_ID
-    const race = getRaceById(id)
+    if (!raceId?.trim()) {
+      setActiveForm('facade')
+      setRawCharacter((prev) => {
+        const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+        return syncCreationAttributeBranches(
+          syncRaceOccFacadeSdc({
+            ...prev,
+            ...creationInvalidationPatch(prev, 'race'),
+            raceId: undefined,
+            lineage: 'megaversal',
+            psychicGateBypassed: resolvePsychicGateBypassed(
+              undefined,
+              occRow,
+              prev.creationGenreId,
+            ),
+          }),
+          occRow ?? undefined,
+        )
+      })
+      return
+    }
+    const race = getRaceById(raceId)
     if (
       !race ||
       !raceAllowedInCharacterCreation(race, rawCharacter.hostGenreId)
@@ -1581,17 +1621,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       return
     }
     const lineage = raceLineageFromDefinition(race)
-    const psTier = race ? mapRaceStrengthToPsTier(race.strengthCategory) : undefined
+    const psTier = mapRaceStrengthToPsTier(race.strengthCategory)
     setActiveForm('facade')
     setRawCharacter((prev) => {
       const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
       const withRace = syncRaceOccFacadeSdc({
         ...prev,
         ...creationInvalidationPatch(prev, 'race'),
-        raceId: id,
+        raceId: race.id,
         lineage,
         psychicGateBypassed: resolvePsychicGateBypassed(
-          id,
+          race.id,
           occRow,
           prev.creationGenreId,
         ),

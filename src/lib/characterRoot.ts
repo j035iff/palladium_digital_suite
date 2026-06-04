@@ -2,9 +2,10 @@ import type { GenreId } from '../data/genres'
 import { resolvePsychicGateBypassed } from './creationPhases'
 import type { Character, CharacterOcc, CharacterRootState } from '../types'
 
-const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
+/** Configurator Tab 1 — no O.C.C. chosen (`occ.id` empty). */
+export const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
   id: '',
-  name: '— Select O.C.C. —',
+  name: 'Select O.C.C.',
   category: 'standard',
   xpTable: { floors: [] },
 }
@@ -62,13 +63,9 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       xp: 0,
       ppe: { current: 0, maximum: 0 },
       occ: CREATION_PLACEHOLDER_OCC,
-      raceId: 'race_human',
+      raceId: undefined,
       lineage: 'megaversal',
-      psychicGateBypassed: resolvePsychicGateBypassed(
-        'race_human',
-        undefined,
-        genreId,
-      ),
+      psychicGateBypassed: resolvePsychicGateBypassed(undefined, undefined, genreId),
       isFinalized: false,
       creationVitalityCommitted: false,
       selectedAbilities: [],

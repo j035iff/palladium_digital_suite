@@ -51,7 +51,6 @@ export function CreationFlowShell({
   onSpawnFinalize?: (finalize: () => void) => void
 }) {
   const {
-    character,
     rawCharacter,
     activeRace,
     effectiveOcc,
@@ -63,12 +62,12 @@ export function CreationFlowShell({
   const forgeCtx = useMemo(
     () =>
       buildCharacterCreationForgeContext(
-        { ...character, creationGenreId: rawCharacter.creationGenreId },
+        rawCharacter,
         activeRace,
         effectiveOcc ?? undefined,
         psychicTier,
       ),
-    [character, rawCharacter.creationGenreId, activeRace, effectiveOcc, psychicTier],
+    [rawCharacter, activeRace, effectiveOcc, psychicTier],
   )
 
   const activeTabId = resolveActiveForgeTab(rawCharacter)
@@ -135,6 +134,7 @@ export function CreationFlowShell({
       {nav.showContinue ? (
         <ForgeContinueGate
           enabled={nav.continueEnabled}
+          validated={activeView?.visual === 'complete'}
           tooltip={nav.continueTooltip}
           blockers={activeBlockers}
           onContinue={handleContinue}

@@ -28,13 +28,21 @@ const TIER_STYLES = {
     morphus:
       'cursor-not-allowed border-slate-600/50 bg-slate-900/30 text-slate-400 opacity-50 line-through',
   },
+  filterMismatch: {
+    light:
+      'border-amber-500 bg-amber-50 text-amber-950 shadow-[0_0_0_2px_rgba(245,158,11,0.35)]',
+    morphus:
+      'border-amber-400 bg-amber-950/50 text-amber-100 shadow-[0_0_0_2px_rgba(251,191,36,0.4)]',
+  },
 } as const
 
 function tierStyleKey(
   tier: ConfiguratorTier,
   selected: boolean,
   selectable: boolean,
+  filterMismatch: boolean,
 ): keyof typeof TIER_STYLES {
+  if (filterMismatch && selected) return 'filterMismatch'
   if (selected && selectable) return 'active'
   if (tier === 2) return 'tier2'
   if (tier === 3) return 'tier3'
@@ -48,6 +56,7 @@ export function ConfiguratorListItem({
   onSelect,
   children,
   className = '',
+  filterMismatch = false,
 }: {
   morphus: boolean
   selected: boolean
@@ -55,11 +64,21 @@ export function ConfiguratorListItem({
   onSelect: () => void
   children: ReactNode
   className?: string
+  /** Selected row pinned while active filters / matrix disagree (amber). */
+  filterMismatch?: boolean
 }) {
-  const selectable = isConfiguratorSelectable(tierResult)
+  const selectable = isConfiguratorSelectable(tierResult) || filterMismatch
   const theme = morphus ? 'morphus' : 'light'
-  const key = tierStyleKey(tierResult.tier, selected, selectable)
-  const tooltip = configuratorTierTooltip(tierResult)
+  const key = tierStyleKey(
+    tierResult.tier,
+    selected,
+    selectable,
+    filterMismatch && selected,
+  )
+  const tooltip =
+    filterMismatch && selected
+      ? 'Current selection does not match active filters or matrix constraints.'
+      : configuratorTierTooltip(tierResult)
 
   return (
     <button
@@ -75,6 +94,11 @@ export function ConfiguratorListItem({
       {tierResult.tier === 2 && tierResult.conflictReason ? (
         <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-rose-600 dark:text-rose-300">
           {tierResult.conflictReason}
+        </p>
+      ) : null}
+      {filterMismatch && selected ? (
+        <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-amber-700 dark:text-amber-200">
+          Does not match current filters
         </p>
       ) : null}
       {tierResult.tier === 3 && tierResult.tagMismatchReason ? (

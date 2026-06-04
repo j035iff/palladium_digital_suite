@@ -3,7 +3,6 @@ import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { getRaceById } from '../data/library/registry'
 import { occPsychicGateBypassed } from './occCatalogEngine'
 import type { OccCreationAbilityBudget } from './occCreationDerivation'
-import { DEFAULT_RACE_ID } from './raceFormPolicy'
 
 export function sumCreationAbilityBudget(
   budget: OccCreationAbilityBudget | undefined | null,
@@ -40,7 +39,7 @@ export function resolvePsychicGateBypassed(
   if (creationGenreId && isGenreSupernaturalAbilitiesDisallowed(creationGenreId)) {
     return true
   }
-  const race = getRaceById(raceId ?? DEFAULT_RACE_ID)
+  const race = raceId?.trim() ? getRaceById(raceId) : undefined
   if (raceExplicitlyBypassesPsychicGate(race)) return true
   if (occ && occPsychicGateBypassed(occ)) return true
   return false

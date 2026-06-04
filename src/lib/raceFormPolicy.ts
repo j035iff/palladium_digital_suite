@@ -10,6 +10,7 @@ export const DEFAULT_RACE_ID = 'race_human' as const
 export function characterHasDualForms(
   c: Pick<Character, 'raceId'>,
 ): boolean {
-  const id = c.raceId ?? DEFAULT_RACE_ID
+  const id = c.raceId?.trim()
+  if (!id) return false
   return id === NIGHTBANE_DUAL_FORM_RACE_ID
 }

@@ -6,7 +6,7 @@ import {
   assessTab7SpawnBlockers,
   buildCharacterCreationForgeContext,
 } from '../../lib/forgeNavigation/characterCreationForge'
-import { PALLADIUM_ALIGNMENTS } from '../../lib/creationStep'
+import { PALLADIUM_ALIGNMENT_VALUES } from '../../lib/configuratorMatrix'
 import {
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
@@ -193,7 +193,7 @@ export function CreationReviewFinalize({
           spawning.
         </p>
         <ul className="grid gap-2 sm:grid-cols-2">
-          {PALLADIUM_ALIGNMENTS.map((alignment) => {
+          {PALLADIUM_ALIGNMENT_VALUES.map((alignment) => {
             const selected = currentAlignment === alignment
             return (
               <li key={alignment}>

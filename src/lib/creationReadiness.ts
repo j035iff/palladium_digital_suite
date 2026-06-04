@@ -1,6 +1,5 @@
 import type { Character } from '../types'
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
-import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { creationNeedsAbilitySelection } from './creationPhases'
 import type { CharacterRootState } from '../types'
 import {
@@ -56,7 +55,9 @@ export function assessCreationReviewBlockers(
   character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
 ): string[] {
   const blockers: string[] = []
-  const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+  const race = character.raceId?.trim()
+    ? getRaceById(character.raceId)
+    : undefined
   const picksOcc = raceCanPickOcc(race)
   const occLib = picksOcc ? getLibraryOccById(character.occ.id) : undefined
 
@@ -123,7 +124,9 @@ export function assessCreationSpawnBlockers(
 ): string[] {
   const blockers = assessCreationReviewBlockers(character)
 
-  const race = getRaceById(character.raceId ?? DEFAULT_RACE_ID)
+  const race = character.raceId?.trim()
+    ? getRaceById(character.raceId)
+    : undefined
   const occLib = getLibraryOccById(character.occ.id)
   const pending = listPendingDiceEntries(character, race, occLib, {
     supportsDualForm: opts?.supportsDualForm ?? false,
