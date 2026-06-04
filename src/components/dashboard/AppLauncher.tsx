@@ -49,7 +49,7 @@ function CharacterPortraitCard({
 }
 
 /**
- * Gate Check viewport (character_creation.md §1, image_82889b reference layout).
+ * Gate Check viewport (Create Character — genre manifest).
  */
 export function AppLauncher() {
   const {

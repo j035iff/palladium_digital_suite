@@ -155,7 +155,7 @@ export function AttributeForge() {
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
         Physical dice priority — enter your rolled totals in the pool, then drag each value
-        onto an attribute. The engine does not roll for you (character_creation.md Phase I).
+        onto an attribute. The engine does not roll for you (forge-character_creation.md Tab 2).
       </p>
 
       <div className={`space-y-4 rounded-lg border p-4 ${panelStyle}`}>

@@ -6,7 +6,7 @@ import { assessConfiguratorPairConflict } from './configuratorMatrix'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 
-/** Navigable creation phases (character_creation.md Step 2–3). */
+/** Navigable creation phases (forge-character_creation.md). */
 export type CreationPhase =
   | 'configurator'
   | 'attributes'

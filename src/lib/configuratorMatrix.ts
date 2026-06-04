@@ -2,7 +2,7 @@ import type { PalladiumOcc, Race } from '../types'
 import { occMatchesAllTags } from './genreGating'
 import { isOccAllowedForRace } from './raceEngine'
 
-/** Step 2 list tier (character_creation.md — Three-Tier Prioritized Rendering). */
+/** Configurator list tier (forge-character_creation.md Tab 1). */
 export type ConfiguratorTier = 1 | 2 | 3
 
 export type ConfiguratorTierResult = {

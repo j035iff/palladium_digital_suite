@@ -1694,7 +1694,7 @@ export type Character = {
   startingSpellLevelCap?: number
   /** Nightbane-only: Talent costs and supernatural pick UX; mirrors `raceId` nightbane in the library. */
   lineage?: 'nightbane' | 'megaversal'
-  /** After Spawn — creation chrome hidden; persisted (character_creation.md §5). */
+  /** After Spawn — creation chrome hidden; persisted (forge-character_creation.md Tab 7). */
   isFinalized?: boolean
   /** Psychic Gate tier chosen during creation (psychic_gate.md). */
   creationPsychicTier?: PsychicTier
@@ -1704,7 +1704,7 @@ export type Character = {
   creationOccSkillIds?: string[]
   /** Step 3 — O.C.C. related skill ids. */
   creationRelatedSkillIds?: string[]
-  /** Active creation phase (character_creation.md state machine). */
+  /** Active creation phase (forge-character_creation.md / Forge engine). */
   creationPhase?: CreationPhase
   /** Phase I — eight manually entered pool values (physical dice). */
   creationAttributePool?: readonly (number | null)[]

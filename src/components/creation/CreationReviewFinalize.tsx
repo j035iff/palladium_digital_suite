@@ -162,7 +162,7 @@ export function CreationReviewFinalize({
       </h2>
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
         Resolve every pending dice from your Live Ledger, commit vitality pools, then
-        spawn to lock the record (character_creation.md Phase IV).
+        spawn to lock the record (forge-character_creation.md Tab 7).
       </p>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">

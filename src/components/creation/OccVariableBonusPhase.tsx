@@ -52,7 +52,7 @@ export function OccVariableBonusPhase() {
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}
       >
         Roll each required die physically and enter the result. Values must fall within
-        the notation bounds (character_creation.md Phase I.2).
+        the notation bounds (forge-character_creation.md Tab 2).
       </p>
       <ul className={`space-y-3 rounded-lg border p-4 ${panel}`}>
         {tasks.map((task) => {

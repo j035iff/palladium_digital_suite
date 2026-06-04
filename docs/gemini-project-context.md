@@ -215,7 +215,8 @@ Reference PDFs live in `src/data/reference/nightbane/` (not committed).
 | `docs/vision.md` | Product philosophy, pillars, AI interaction protocol |
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
-| `docs/character_creation.md` | Creation wizard, O.C.C. pooling, tag filters |
+| `docs/forge-character_creation.md` | Character Creation Forge — 7-tab sequence & state |
+| `docs/universal_forge_navigation_engine.md` | Universal Forge Navigation Engine (tabs, Continue, colors) |
 | `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage |
 | `docs/morphus_authoring.md` | How to encode Morphus traits for the engine |
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
