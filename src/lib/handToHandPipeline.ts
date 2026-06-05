@@ -12,6 +12,7 @@ import {
 } from '../utils/combatCalculator'
 import { occGrantsDefaultHandToHand } from './occComposition'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import { handToHandCatalogIdForCreationTier } from './creationHandToHandChoice'
 import type { ActiveForm } from '../types'
 
 /** Combat catalog tier order (fallback when multiple HtH skills are unlocked). */
@@ -103,6 +104,14 @@ export function resolveActiveHandToHandSkillId(
 
   const hasCatalog = (sheetSkillId: string) =>
     catalogIds.has(mapSheetSkillIdToHandToHandCatalogId(sheetSkillId))
+
+  if (
+    !character.isFinalized &&
+    character.creationHandToHandTier &&
+    character.creationHandToHandTier !== 'none'
+  ) {
+    return handToHandCatalogIdForCreationTier(character.creationHandToHandTier)
+  }
 
   if (occ?.handToHandRules) {
     const { defaultSkillId, upgradePaths } = occ.handToHandRules

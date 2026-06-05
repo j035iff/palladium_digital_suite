@@ -5,7 +5,7 @@ import type {
   PalladiumOcc,
 } from '../types'
 import { featureBudgetCategory } from './featureEngine'
-import { getPalladiumSkillCatalogEntryById } from '../data/library/registry'
+import { getSkillBookCategories } from './creationSkillCatalog'
 import {
   occCoreSkillSlotWeight,
   occStartingOccSkillIds,
@@ -17,6 +17,7 @@ import {
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { initialOccCoreVoucherPicks } from './creationInvalidate'
+import { occStartingHandToHandTier } from './creationHandToHandChoice'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -166,9 +167,9 @@ export function isOccRelatedSkillAllowed(
   const rules = occ.occRelatedSkills.categoryRules
   if (!rules.length) return true
 
-  const catalog = getPalladiumSkillCatalogEntryById(skillId)
-  const categories = catalog?.categories?.length
-    ? [...catalog.categories]
+  const bookCategories = getSkillBookCategories(skillId)
+  const categories = bookCategories.length
+    ? [...bookCategories]
     : engineCategory
       ? [engineCategory]
       : []
@@ -190,6 +191,21 @@ export function isSecondarySkillCategoryAllowed(
 ): boolean {
   const forbidden = occ.secondarySkills.forbiddenCategories ?? []
   return !forbidden.some((f) => f.toLowerCase() === categoryName.toLowerCase())
+}
+
+/** Whether a skill may be taken as a secondary pick (same category access as O.C.C. related). */
+export function isSecondarySkillAllowed(
+  occ: PalladiumOcc,
+  skillId: string,
+  engineCategory?: string,
+  specializationId?: string | null,
+): boolean {
+  return isOccRelatedSkillAllowed(
+    occ,
+    skillId,
+    engineCategory,
+    specializationId,
+  )
 }
 
 function buildSupernaturalSummary(occ: PalladiumOcc): string[] {
@@ -339,6 +355,13 @@ export function applyOccStartingSkillPicks(
     ...prev,
     creationOccCoreVoucherPicks: initialOccCoreVoucherPicks(prev, occ),
     creationOccSkillIds: occStartingOccSkillIds(occ, specId),
-    creationRelatedSkillIds: occStartingRelatedSkillIds(effective),
+    creationRelatedSkillPicks: occStartingRelatedSkillIds(effective).map((id) => ({
+      instanceId: id,
+      skillId: id,
+    })),
+    creationSecondarySkillPicks: [],
+    creationRelatedSkillIds: undefined,
+    creationSecondarySkillIds: undefined,
+    creationHandToHandTier: occStartingHandToHandTier(effective),
   }
 }

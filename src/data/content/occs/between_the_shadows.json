@@ -174,15 +174,15 @@
       "upgradePaths": [
         {
           "targetSkillId": "hand_to_hand_expert",
-          "electiveSlotCost": 1
+          "electiveSlotCost": 2
         },
         {
           "targetSkillId": "hand_to_hand_martial_arts",
-          "electiveSlotCost": 2
+          "electiveSlotCost": 3
         },
         {
           "targetSkillId": "hand_to_hand_assassin",
-          "electiveSlotCost": 2
+          "electiveSlotCost": 3
         }
       ]
     },
@@ -506,8 +506,21 @@
       "forbiddenWps": []
     },
     "handToHandRules": {
-      "defaultSkillId": null,
-      "upgradePaths": []
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hand_to_hand_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 2
+        }
+      ]
     },
     "specializations": [
       {
@@ -548,8 +561,21 @@
           "forbiddenWps": []
         },
         "handToHandRules": {
-          "defaultSkillId": "hand_to_hand_martial_arts",
-          "upgradePaths": []
+          "defaultSkillId": "hand_to_hand_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hand_to_hand_expert",
+              "electiveSlotCost": 1
+            },
+            {
+              "targetSkillId": "hand_to_hand_martial_arts",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hand_to_hand_assassin",
+              "electiveSlotCost": 2
+            }
+          ]
         },
         "staticBonuses": {
           "vitals": {
@@ -597,8 +623,13 @@
           "forbiddenWps": []
         },
         "handToHandRules": {
-          "defaultSkillId": "hand_to_hand_assassin",
-          "upgradePaths": []
+          "defaultSkillId": null,
+          "upgradePaths": [
+            {
+              "targetSkillId": "hand_to_hand_assassin",
+              "electiveSlotCost": 2
+            }
+          ]
         },
         "staticBonuses": {
           "vitals": {
@@ -652,15 +683,19 @@
           "forbiddenWps": []
         },
         "handToHandRules": {
-          "defaultSkillId": "hand_to_hand_expert",
+          "defaultSkillId": "hand_to_hand_basic",
           "upgradePaths": [
             {
-              "targetSkillId": "hand_to_hand_martial_arts",
+              "targetSkillId": "hand_to_hand_expert",
               "electiveSlotCost": 1
             },
             {
+              "targetSkillId": "hand_to_hand_martial_arts",
+              "electiveSlotCost": 2
+            },
+            {
               "targetSkillId": "hand_to_hand_assassin",
-              "electiveSlotCost": 1
+              "electiveSlotCost": 2
             }
           ]
         },
@@ -829,6 +864,14 @@
         {
           "targetSkillId": "hand_to_hand_expert",
           "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 3
+        },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3
         }
       ]
     },

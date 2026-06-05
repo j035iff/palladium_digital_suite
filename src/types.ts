@@ -5,6 +5,7 @@
 
 import type { CreationPhase } from './lib/creationStep'
 import type { ForgeAttrKey } from './lib/attributeKeys'
+import type { CreationHandToHandTier } from './lib/creationHandToHandChoice'
 
 /** Facade vs Morphus toggle drives which FormState is authoritative for mechanical values. */
 export type ActiveForm = 'facade' | 'morphus'
@@ -1578,6 +1579,17 @@ export type HostGenreRuntimeFlags = {
   isHostGenreLocked?: boolean
 }
 
+/** One related or secondary skill selection during character creation. */
+export type CreationSkillPick = {
+  /** Stable instance id (unique per pick, including multiple Language instances). */
+  instanceId: string
+  skillId: string
+  /** User-defined language, instrument, literacy script, etc. (min 1 char when required). */
+  specialization?: string
+  /** Second skill slot spent for professional / tailoring tier (+category or rank bonus). */
+  professionalQuality?: boolean
+}
+
 export type SheetSkill = {
   id: string
   name: string
@@ -1725,8 +1737,22 @@ export type Character = {
   creationVitalityCommitted?: boolean
   /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */
   creationOccSkillIds?: string[]
-  /** Step 3 — O.C.C. related skill ids. */
+  /**
+   * Step 3 — O.C.C. related skill picks (specialization + professional quality).
+   * @deprecated Use {@link creationRelatedSkillPicks}; migrated on read.
+   */
   creationRelatedSkillIds?: string[]
+  /**
+   * Step 3 — secondary skill picks (no O.C.C. category % bonus).
+   * @deprecated Use {@link creationSecondarySkillPicks}; migrated on read.
+   */
+  creationSecondarySkillIds?: string[]
+  /** Step 3 — O.C.C. related skill picks with optional specialization / professional tier. */
+  creationRelatedSkillPicks?: readonly CreationSkillPick[]
+  /** Step 3 — secondary skill picks with optional specialization / professional tier. */
+  creationSecondarySkillPicks?: readonly CreationSkillPick[]
+  /** O.C.C. core — Hand-to-Hand fighting style (defaults to none). */
+  creationHandToHandTier?: CreationHandToHandTier
   /** Active creation phase (forge-character_creation.md / Forge engine). */
   creationPhase?: CreationPhase
   /** Phase I — eight manually entered pool values (physical dice). */
@@ -1737,8 +1763,15 @@ export type Character = {
   creationAttributePoolSlots?: Partial<Record<ForgeAttrKey, number>>
   /** Phase I.2 — resolved O.C.C. variable dice (key = task id). */
   creationOccVariableResolutions?: Readonly<Record<string, number>>
-  /** Phase II — resolved O.C.C. core skill choice vouchers (voucher id → skill ids). */
-  creationOccCoreVoucherPicks?: Readonly<Record<string, readonly string[]>>
+  /**
+   * Phase II — O.C.C. core voucher picks (voucher task id → slot picks).
+   * Legacy saves may store plain skill id strings; migrated on read.
+   */
+  creationOccCoreVoucherPicks?: Readonly<
+    Record<string, readonly (CreationSkillPick | string | null)[]>
+  >
+  /** Parameterized fixed O.C.C. core grants (skill id → pick with specialization). */
+  creationOccGrantPickDetails?: Readonly<Record<string, CreationSkillPick>>
   /** Phase IV — manual dice results keyed by pending-dice id. */
   creationPendingDiceResolutions?: Readonly<Record<string, number>>
   /**

@@ -2,6 +2,10 @@ import type { ActiveForm, Character } from '../types'
 import { aggregateAllPassiveModifiers, listApplyingFeatures } from './featureEngine'
 import { computeDisplayScalars } from './sheetBonuses'
 import { getSkillById } from '../data/skillLibrary'
+import {
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
 import { DEFAULT_HORROR_FACTOR_BY_FORM, SAVING_THROW_REGISTRY } from '../data/constants'
 import { getMeBonuses, getPeBonuses } from './attributeBonuses'
 
@@ -81,7 +85,8 @@ function attributionForKeys(
 
   const skillIds = new Set<string>([
     ...(character.creationOccSkillIds ?? []),
-    ...(character.creationRelatedSkillIds ?? []),
+    ...getCreationRelatedPicks(character).map((p) => p.skillId),
+    ...getCreationSecondaryPicks(character).map((p) => p.skillId),
   ])
   for (const sid of skillIds) {
     const sk = getSkillById(sid)

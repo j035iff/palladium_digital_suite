@@ -18,9 +18,23 @@ import {
 } from './pendingDiceLedger'
 import {
   assessRelatedSkillSlotBlockers,
+  creationRelatedSkillCap,
   resolveCreationPsychicTier,
 } from './creationPsychicSkills'
-import { assessOccCoreVoucherBlockers } from './occCoreSkillVouchers'
+import {
+  assessOccCoreVoucherBlockers,
+  resolveOccCoreSkillPicks,
+} from './occCoreSkillVouchers'
+import {
+  getCreationRelatedPicks,
+  sumRelatedPoolSlotUsage,
+} from './creationSkillPicks'
+import { resolveEffectivePalladiumOcc } from './occComposition'
+import {
+  assessHandToHandBlockers,
+  creationHandToHandElectiveSlotCost,
+} from './creationHandToHandChoice'
+import { occSkillSlotPolicy } from './occCatalogEngine'
 import { raceLineageFromDefinition } from './raceEngine'
 import { creationAttributesBlockerLabel } from './creationFormLabels'
 
@@ -74,30 +88,60 @@ export function assessCreationReviewBlockers(
     blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'morphus'))
   }
 
-  const occSkills = character.creationOccSkillIds ?? []
-  if (picksOcc && occSkills.length < 1) {
-    blockers.push('Select at least one O.C.C. skill.')
-  }
-
   if (picksOcc && occLib) {
     blockers.push(
       ...assessOccCoreVoucherBlockers(
         occLib,
         character.occSpecializationId,
         character.creationOccCoreVoucherPicks ?? {},
+        character.creationOccGrantPickDetails,
+        character,
       ),
     )
 
+    const effectiveOcc = resolveEffectivePalladiumOcc(
+      occLib,
+      character.occSpecializationId,
+    )
     const relatedBase =
       character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occLib)
-    const relatedSelected = character.creationRelatedSkillIds ?? []
+    const relatedPicks = getCreationRelatedPicks(character)
+    const occPicks = resolveOccCoreSkillPicks(
+      occLib,
+      character.occSpecializationId,
+      character.creationOccCoreVoucherPicks ?? {},
+      character.creationOccGrantPickDetails,
+    )
     const psychicTier = resolveCreationPsychicTier(character)
+    const relatedCap = creationRelatedSkillCap(
+      relatedBase,
+      psychicTier,
+      occSkillSlotPolicy(occLib),
+    )
+    const handToHandReserved = creationHandToHandElectiveSlotCost(
+      effectiveOcc,
+      character.creationHandToHandTier,
+    )
+    const relatedSelected = sumRelatedPoolSlotUsage(
+      relatedPicks,
+      occPicks,
+      handToHandReserved,
+    )
+    blockers.push(
+      ...assessHandToHandBlockers(
+        effectiveOcc,
+        character.creationHandToHandTier,
+        relatedCap,
+        relatedSelected - handToHandReserved,
+      ),
+    )
     blockers.push(
       ...assessRelatedSkillSlotBlockers(
-        relatedSelected.length,
+        relatedSelected,
         relatedBase,
         psychicTier,
         occLib,
+        handToHandReserved,
       ),
     )
   }

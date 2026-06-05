@@ -5,6 +5,7 @@ import type {
   ActiveForm,
   CharacterAttributes,
   CharacterRootState,
+  CreationSkillPick,
   FormState,
   PalladiumOcc,
   PsychicTier,
@@ -25,17 +26,32 @@ import {
   resolveCreationPsychicTier,
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
-import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import {
+  resolveCreationOccSkillIds,
+  resolveOccCoreSkillPicks,
+} from './occCoreSkillVouchers'
+import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
+import {
+  creationSkillIdsSet,
+  flattenCreationSkillIds,
+  formatCreationSkillPickLabel,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+  migrateSkillIdToPick,
+  resolveProfessionalPercentBonus,
+} from './creationSkillPicks'
 
 function buildSkillEquationInput(
   def: EngineSkillDef,
   selectedIds: ReadonlySet<string>,
   occBonus: number,
+  pick?: CreationSkillPick,
 ): SkillEquationSkill {
   let synergy = def.synergyBonuses ?? 0
   if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
     synergy += 10
   }
+  synergy += resolveProfessionalPercentBonus(def.id, pick)
   return {
     basePercent: def.basePercent,
     perLevel: def.perLevel,
@@ -55,7 +71,8 @@ export function projectCreationSkillsToSheet(
   psychicTier?: PsychicTier,
 ): SheetSkill[] {
   const occIds = character.creationOccSkillIds ?? []
-  const relatedIds = character.creationRelatedSkillIds ?? []
+  const relatedPicks = getCreationRelatedPicks(character)
+  const secondaryPicks = getCreationSecondaryPicks(character)
   const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
   const resolvedOccIds = resolveCreationOccSkillIds(
     occ,
@@ -63,11 +80,35 @@ export function projectCreationSkillsToSheet(
     occIds,
     voucherPicks,
   )
-  const allIds = [...new Set([...resolvedOccIds, ...relatedIds])]
-  if (!allIds.length) return []
+  const hthId = sheetSkillIdForCreationHandToHandTier(
+    character.creationHandToHandTier,
+  )
 
-  const relatedSet = new Set(relatedIds)
-  const selectedSet = new Set(allIds)
+  const occCorePicks = resolveOccCoreSkillPicks(
+    occ,
+    character.occSpecializationId,
+    voucherPicks,
+    character.creationOccGrantPickDetails,
+  )
+
+  type PickEntry = { pick: CreationSkillPick; tier: 'occ' | 'related' | 'secondary' }
+  const entries: PickEntry[] = [
+    ...occCorePicks.map((pick) => ({ pick, tier: 'occ' as const })),
+    ...relatedPicks.map((pick) => ({ pick, tier: 'related' as const })),
+    ...secondaryPicks.map((pick) => ({ pick, tier: 'secondary' as const })),
+  ]
+  if (hthId) {
+    entries.push({ pick: migrateSkillIdToPick(hthId), tier: 'occ' })
+  }
+  if (!entries.length) return []
+
+  const relatedSet = new Set(flattenCreationSkillIds(relatedPicks))
+  const selectedSet = creationSkillIdsSet(
+    resolvedOccIds,
+    relatedPicks,
+    secondaryPicks,
+  )
+  if (hthId) selectedSet.add(hthId)
   const branch = activeForm === 'morphus' ? character.morphus : character.facade
   const attrs = branch.attributes
   const tier = psychicTier ?? resolveCreationPsychicTier(character)
@@ -83,18 +124,22 @@ export function projectCreationSkillsToSheet(
   )
 
   const rows: SheetSkill[] = []
-  for (const id of allIds) {
-    const def = getSkillById(id)
+  for (const { pick, tier: pickTier } of entries) {
+    const def = getSkillById(pick.skillId)
     if (!def) continue
 
+    const relatedForBonus =
+      pickTier === 'related'
+        ? new Set([...relatedSet, pick.skillId])
+        : relatedSet
     const occBonus = resolveOccSkillBonusPercent(
       occ,
-      id,
-      relatedSet,
+      pick.skillId,
+      relatedForBonus,
       tier,
       character.occSpecializationId,
     )
-    const equation = buildSkillEquationInput(def, selectedSet, occBonus)
+    const equation = buildSkillEquationInput(def, selectedSet, occBonus, pick)
     const resolved = resolveSkillPercent({ ...equation, id: def.id }, ctx)
 
     const prereqOk = prerequisiteSatisfied(def.prerequisite, selectedSet)
@@ -111,8 +156,8 @@ export function projectCreationSkillsToSheet(
     }
 
     rows.push({
-      id: def.id,
-      name: def.name,
+      id: pick.instanceId,
+      name: formatCreationSkillPickLabel(pick, def.name),
       restricted,
       restrictionReason,
       basePercent: restricted ? equation.basePercent : resolved.total,
@@ -188,7 +233,14 @@ export function applySpawnSheetHandoff(
         prev.creationOccSkillIds ?? [],
         prev.creationOccCoreVoucherPicks ?? {},
       ),
-      ...(prev.creationRelatedSkillIds ?? []),
+      ...flattenCreationSkillIds(getCreationRelatedPicks(prev)),
+      ...flattenCreationSkillIds(getCreationSecondaryPicks(prev)),
+      ...(() => {
+        const id = sheetSkillIdForCreationHandToHandTier(
+          prev.creationHandToHandTier,
+        )
+        return id ? [id] : []
+      })(),
     ]),
   ]
 

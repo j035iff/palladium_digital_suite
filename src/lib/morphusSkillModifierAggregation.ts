@@ -1,4 +1,9 @@
-import type { MorphusCharacteristic, MorphusSkillOverride } from '../types'
+import type {
+  MorphusCharacteristic,
+  MorphusSkillOverride,
+  MorphusSurfaceType,
+} from '../types'
+import { collectMorphusSkillOverridesForSurface } from './morphusCharacteristicAggregation'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import {
   isMorphusSkillImpossible,
@@ -37,6 +42,8 @@ export function sumMorphusSkillPercentForCatalogSkill(
   options?: {
     characterLevel?: number
     extraOverrides?: readonly MorphusSkillOverride[]
+    /** When set, uses base + terrain-isolated overrides once (avoids double-counting). */
+    surfaceType?: MorphusSurfaceType
   },
 ): {
   global: number
@@ -46,10 +53,13 @@ export function sumMorphusSkillPercentForCatalogSkill(
   impossible: boolean
 } {
   const global = sumGlobalMorphusSkillModifier(traits)
-  const overrides = [
-    ...collectMorphusSkillOverrides(traits),
-    ...(options?.extraOverrides ?? []),
-  ]
+  const overrides =
+    options?.surfaceType != null
+      ? collectMorphusSkillOverridesForSurface(traits, options.surfaceType)
+      : [
+          ...collectMorphusSkillOverrides(traits),
+          ...(options?.extraOverrides ?? []),
+        ]
   const impossible = isMorphusSkillImpossible(skill, overrides)
   if (impossible) {
     return { global: 0, specific: 0, grantFloor: null, total: 0, impossible: true }

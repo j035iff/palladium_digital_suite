@@ -22,6 +22,27 @@ export type PalladiumSkillCatalogEntry = {
   replaces?: string
   allowedAsSecondarySkill?: boolean
   requiresSpecialization?: boolean
+  specialization?: {
+    kind: string
+    prompt: string
+    examples?: readonly string[]
+    allowsMultipleInstances?: boolean
+    notes?: string
+  }
+  repeatSelection?: {
+    summary: string
+    trackScope?: 'skill' | 'specialization_instance'
+    ranks?: readonly {
+      selectionNumber: number
+      label?: string
+      effect: string
+      skillPercentBonus?: number
+    }[]
+    categoryTrackInteraction?: { mode: string; summary?: string }
+  }
+  categoryMechanicsInheritance?: {
+    repeatSelection?: { mode: string; summary?: string }
+  }
   /** Cross-cutting tags for Morphus / penalties (`skill_trait_registry.json`). */
   skillTraits?: readonly string[]
 }

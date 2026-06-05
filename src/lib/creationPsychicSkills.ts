@@ -90,11 +90,24 @@ export function creationRelatedSkillCap(
   return Math.floor(relatedBase * mult)
 }
 
+export function assessSecondarySkillSlotBlockers(
+  secondarySelectedCount: number,
+  secondaryBase: number,
+  occ?: PalladiumOcc,
+): string[] {
+  if (!occ || secondaryBase <= 0) return []
+  if (secondarySelectedCount >= secondaryBase) return []
+  return [
+    `Fill all secondary skill slots (${secondarySelectedCount} / ${secondaryBase}).`,
+  ]
+}
+
 export function assessRelatedSkillSlotBlockers(
   relatedSelectedCount: number,
   relatedBase: number,
   psychicTier: PsychicTier,
   occ?: PalladiumOcc,
+  handToHandReservedSlots = 0,
 ): string[] {
   if (!occ || relatedBase <= 0) return []
   const cap = creationRelatedSkillCap(
@@ -103,8 +116,13 @@ export function assessRelatedSkillSlotBlockers(
     occSkillSlotPolicy(occ),
   )
   if (cap <= 0) return []
-  if (relatedSelectedCount >= cap) return []
+  const used = relatedSelectedCount + handToHandReservedSlots
+  if (used >= cap) return []
+  const hthNote =
+    handToHandReservedSlots > 0
+      ? ` — ${handToHandReservedSlots} reserved for Hand-to-Hand`
+      : ''
   return [
-    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
+    `Fill all O.C.C. related skill slots (${used} / ${cap}${hthNote}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
   ]
 }

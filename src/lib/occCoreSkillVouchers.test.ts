@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import type { PalladiumOcc } from '../types'
+import type { CreationSkillPick, PalladiumOcc } from '../types'
+import { migrateSkillIdToPick } from './creationSkillPicks'
 import {
+  listEligibleVoucherSkillIds,
   listOccCoreVoucherTasks,
   occCoreVoucherPicksComplete,
   resolveCreationOccSkillIds,
 } from './occCoreSkillVouchers'
+import { listCreationSkillLibrary } from './creationSkillCatalog'
 
 const occ = {
   id: 'occ_voucher_test',
@@ -32,7 +35,7 @@ describe('occCoreSkillVouchers', () => {
       occ,
       null,
       ['skill_extra'],
-      { core_voucher_1: ['skill_b'] },
+      { core_voucher_1: [migrateSkillIdToPick('skill_b')] },
     )
     expect(ids).toContain('skill_a')
     expect(ids).toContain('skill_b')
@@ -43,7 +46,27 @@ describe('occCoreSkillVouchers', () => {
     const tasks = listOccCoreVoucherTasks(occ, null)
     expect(occCoreVoucherPicksComplete(tasks, {})).toBe(false)
     expect(
-      occCoreVoucherPicksComplete(tasks, { core_voucher_1: ['skill_b'] }),
+      occCoreVoucherPicksComplete(tasks, {
+        core_voucher_1: [migrateSkillIdToPick('skill_b')],
+      }),
     ).toBe(true)
+  })
+
+  it('lists all weapon proficiencies for W.P. of choice vouchers', () => {
+    const catalogIds = listCreationSkillLibrary('nightbane').map((s) => s.id)
+    const wpIds = catalogIds.filter((id) => id.startsWith('wp_'))
+    expect(wpIds.length).toBeGreaterThan(0)
+
+    const eligible = listEligibleVoucherSkillIds(
+      {
+        choiceCount: 1,
+        bonusPercent: 0,
+        allowedCategories: ['Weapon Proficiencies'],
+        label: 'W.P. of choice',
+      },
+      'nightbane',
+      catalogIds,
+    )
+    expect(eligible).toEqual(wpIds)
   })
 })

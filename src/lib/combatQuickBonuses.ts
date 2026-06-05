@@ -1,6 +1,12 @@
 import type { Character } from '../types'
 import { getFormState } from '../types'
 import { computeCombatMirrorBonuses } from './characterDerived'
+import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
+import {
+  flattenCreationSkillIds,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
 
 /** Sheet skills that grant melee combat modifiers (until full H2H module). */
 export const SKILL_MELEE: Record<
@@ -49,9 +55,16 @@ export function collectUnlockedSkillIds(
   for (const id of character.creationOccSkillIds ?? []) {
     ids.add(id)
   }
-  for (const id of character.creationRelatedSkillIds ?? []) {
+  for (const id of [
+    ...flattenCreationSkillIds(getCreationRelatedPicks(character)),
+    ...flattenCreationSkillIds(getCreationSecondaryPicks(character)),
+  ]) {
     ids.add(id)
   }
+  const hthId = sheetSkillIdForCreationHandToHandTier(
+    character.creationHandToHandTier,
+  )
+  if (hthId) ids.add(hthId)
   return ids
 }
 

@@ -11,6 +11,10 @@ import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { racePassiveModifiers } from './raceEngine'
 import { getSkillById } from '../data/skillLibrary'
 import {
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
+import {
   buildMorphusPassiveBundle,
   mergeMorphusIntoPassive,
 } from './morphusPassiveBridge'
@@ -45,7 +49,8 @@ export function aggregateCreationSkillModifiers(character: Character): FeatureMo
   const out: FeatureModifiers = {}
   const ids = new Set<string>([
     ...(character.creationOccSkillIds ?? []),
-    ...(character.creationRelatedSkillIds ?? []),
+    ...getCreationRelatedPicks(character).map((p) => p.skillId),
+    ...getCreationSecondaryPicks(character).map((p) => p.skillId),
   ])
   for (const id of ids) {
     const s = getSkillById(id)

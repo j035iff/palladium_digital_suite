@@ -1,4 +1,4 @@
-import type { CharacterRootState } from '../types'
+import type { CharacterRootState, CreationSkillPick } from '../types'
 import { listOccCoreVoucherTasks } from './occCoreSkillVouchers'
 import { invalidateForgeFromConfiguratorChange } from './forgeNavigation/characterCreationForge'
 
@@ -34,11 +34,11 @@ export function creationInvalidationPatch(
 export function initialOccCoreVoucherPicks(
   prev: CharacterRootState,
   occ: Parameters<typeof listOccCoreVoucherTasks>[0],
-): Record<string, readonly string[]> {
+): Record<string, readonly (CreationSkillPick | null)[]> {
   const tasks = listOccCoreVoucherTasks(occ, prev.occSpecializationId)
-  const out: Record<string, readonly string[]> = {}
+  const out: Record<string, readonly (CreationSkillPick | null)[]> = {}
   for (const t of tasks) {
-    out[t.id] = []
+    out[t.id] = Array.from({ length: t.entry.choiceCount }, () => null)
   }
   return out
 }

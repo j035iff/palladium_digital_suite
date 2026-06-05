@@ -24,8 +24,12 @@ export type EngineSkillDef = SkillEquationSkill & {
   id: string
   name: string
   category: SkillCategory
-  /** O.C.C. vs O.C.C. related slot (skill_selection / creation flow). */
+  /** Book categories from catalog JSON (filters + O.C.C. category rules). */
+  bookCategories?: readonly string[]
+  /** O.C.C. elective vs O.C.C. related slot (skill_selection / creation flow). */
   slotKind: 'occ' | 'occ_related'
+  /** May be purchased with secondary skill slots (no category % bonus). */
+  secondaryEligible?: boolean
   prerequisite?: SkillPrerequisite
   /** Physical skills stage S.D.C. / attribute bumps (skill_selection.md §4). */
   isPhysical?: boolean
@@ -297,16 +301,16 @@ export function resolveWeaponProficiencySkillId(
 }
 
 export function getSkillById(id: string): EngineSkillDef | undefined {
+  const prefixed = id.startsWith('skill_') ? id : `skill_${id}`
+  const fromCatalog =
+    getEngineSkillDefFromCatalog(id) ?? getEngineSkillDefFromCatalog(prefixed)
+  if (fromCatalog) return fromCatalog
   const direct = SKILL_LIBRARY.find((s) => s.id === id)
   if (direct) return direct
-  const prefixed = id.startsWith('skill_') ? id : `skill_${id}`
   if (prefixed !== id) {
-    const fromPrefix = SKILL_LIBRARY.find((s) => s.id === prefixed)
-    if (fromPrefix) return fromPrefix
+    return SKILL_LIBRARY.find((s) => s.id === prefixed)
   }
-  return (
-    getEngineSkillDefFromCatalog(id) ?? getEngineSkillDefFromCatalog(prefixed)
-  )
+  return undefined
 }
 
 export {

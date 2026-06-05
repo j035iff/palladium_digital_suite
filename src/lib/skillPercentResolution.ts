@@ -6,9 +6,7 @@ import {
   calculateSkillPercent,
   type SkillEquationSkill,
 } from './skillEquation'
-import { sumFacadePpTraitPenaltiesForSkill } from './facadePpSkillTraitPenalties'
 import { sumMorphusSkillPercentForCatalogSkill } from './morphusSkillModifierAggregation'
-import { collectMorphusSkillOverridesForSurface } from './morphusCharacteristicAggregation'
 import type { MorphusSurfaceType } from '../types'
 
 export type SkillPercentBreakdownLine = {
@@ -58,8 +56,6 @@ export type SkillPercentResolutionContext = {
   activeMorphusCharacteristics?: readonly MorphusCharacteristic[]
   /** Terrain surface for Morphus mobility-isolated skill rows (default hard_flat). */
   morphusSurfaceType?: MorphusSurfaceType
-  /** Apply optional low-P.P. trait penalties (default true). */
-  applyFacadePpTraitPenalties?: boolean
 }
 
 function clampResolvedSkillPercent(n: number): number {
@@ -94,24 +90,6 @@ export function resolveSkillPercent(
   )
 
   const lines: SkillPercentBreakdownLine[] = []
-  const applyPp =
-    ctx.applyFacadePpTraitPenalties !== false && catalog?.skillTraits?.length
-
-  if (applyPp) {
-    const ppPenalty = sumFacadePpTraitPenaltiesForSkill(
-      catalog.skillTraits,
-      ctx.facadePp,
-    )
-    if (ppPenalty !== 0) {
-      lines.push({
-        label:
-          ppPenalty <= -50
-            ? 'Facade P.P. (dexterity skills — impaired)'
-            : 'Facade P.P. (dexterity / light touch)',
-        value: ppPenalty,
-      })
-    }
-  }
 
   if (
     ctx.activeForm === 'morphus' &&
@@ -119,16 +97,12 @@ export function resolveSkillPercent(
     catalog
   ) {
     const surface = ctx.morphusSurfaceType ?? 'hard_flat'
-    const terrainOverrides = collectMorphusSkillOverridesForSurface(
-      ctx.activeMorphusCharacteristics,
-      surface,
-    )
     const morphus = sumMorphusSkillPercentForCatalogSkill(
       catalog,
       ctx.activeMorphusCharacteristics,
       {
         characterLevel: ctx.characterLevel,
-        extraOverrides: terrainOverrides,
+        surfaceType: surface,
       },
     )
     if (morphus.impossible) {
@@ -151,19 +125,10 @@ export function resolveSkillPercent(
         value: 0,
       })
     }
-    const ppModifier = lines
-      .filter((l) => l.label.startsWith('Facade P.P.'))
-      .reduce((s, l) => s + l.value, 0)
-    const morphusLines = lines.filter((l) => !l.label.startsWith('Facade P.P.'))
     return {
       equationPercent,
-      lines: [
-        ...lines.filter((l) => l.label.startsWith('Facade P.P.')),
-        ...morphusLines,
-      ],
-      total: clampResolvedSkillPercent(
-        equationPercent + ppModifier + morphus.total,
-      ),
+      lines,
+      total: clampResolvedSkillPercent(equationPercent + morphus.total),
     }
   }
 

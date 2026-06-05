@@ -117,6 +117,7 @@ import type {
   AttacksPerMeleeState,
   Character,
   CharacterRootState,
+  CreationSkillPick,
   CombatVitalityChange,
   DerivedActiveState,
   DerivedInventoryItem,
@@ -177,6 +178,7 @@ import {
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 import { syncCreationAttributeBranches } from '../lib/creationAttributeSync'
+import type { CreationHandToHandTier } from '../lib/creationHandToHandChoice'
 import {
   creationInvalidationPatch,
 } from '../lib/creationInvalidate'
@@ -303,7 +305,12 @@ type CharacterContextValue = {
   addSelectedAbility: (id: string) => void
   removeSelectedAbility: (id: string) => void
   /** Step 3 — persist O.C.C. / related skill picks on the character record. */
-  setCreationSkillPicks: (occ: string[], related: string[]) => void
+  setCreationSkillPicks: (
+    occ: string[],
+    related: CreationSkillPick[],
+    secondary?: CreationSkillPick[],
+  ) => void
+  setCreationHandToHandTier: (tier: CreationHandToHandTier) => void
   /** Step 0 — O.C.C. package: fixed XP table, psychic category, and starting skill ids. */
   setSelectedOcc: (occId: string) => void
   /** Step 0 — sub-class branch when the O.C.C. defines {@link PalladiumOcc.specializations}. */
@@ -347,7 +354,14 @@ type CharacterContextValue = {
   /** Dev-only — rolls and assigns all eight attributes in one update. */
   devAutoRollAndAssignAllAttributes?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
-  setCreationOccCoreVoucherPick: (voucherId: string, skillIds: readonly string[]) => void
+  setCreationOccCoreVoucherPick: (
+    voucherId: string,
+    picks: readonly (CreationSkillPick | null)[],
+  ) => void
+  setCreationOccGrantPickDetail: (
+    skillId: string,
+    pick: CreationSkillPick | null,
+  ) => void
   setCreationPendingDiceResolution: (entryId: string, value: number) => void
   setAlignment: (alignment: string) => void
   /** Phase IV — apply manual dice resolutions to vitality pools (no auto-roll). */
@@ -1496,15 +1510,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const setCreationSkillPicks = useCallback(
-    (occ: string[], related: string[]) => {
+    (occ: string[], related: CreationSkillPick[], secondary?: CreationSkillPick[]) => {
       setRawCharacter((prev) => ({
         ...prev,
         creationOccSkillIds: occ,
-        creationRelatedSkillIds: related,
+        creationRelatedSkillPicks: related,
+        creationRelatedSkillIds: undefined,
+        ...(secondary !== undefined
+          ? {
+              creationSecondarySkillPicks: secondary,
+              creationSecondarySkillIds: undefined,
+            }
+          : {}),
       }))
     },
     [],
   )
+
+  const setCreationHandToHandTier = useCallback((tier: CreationHandToHandTier) => {
+    setRawCharacter((prev) => ({ ...prev, creationHandToHandTier: tier }))
+  }, [])
 
   const setSelectedOcc = useCallback(
     (occId: string) => {
@@ -1840,12 +1865,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const setCreationOccCoreVoucherPick = useCallback(
-    (voucherId: string, skillIds: readonly string[]) => {
+    (voucherId: string, picks: readonly (CreationSkillPick | null)[]) => {
       setRawCharacter((prev) => {
         const occ = getLibraryOccById(prev.occ.id) ?? undefined
         const voucherPicks = {
           ...(prev.creationOccCoreVoucherPicks ?? {}),
-          [voucherId]: skillIds,
+          [voucherId]: picks,
         }
         return {
           ...prev,
@@ -1856,6 +1881,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             prev.creationOccSkillIds ?? [],
             voucherPicks,
           ),
+        }
+      })
+    },
+    [],
+  )
+
+  const setCreationOccGrantPickDetail = useCallback(
+    (skillId: string, pick: CreationSkillPick | null) => {
+      setRawCharacter((prev) => {
+        const current = { ...(prev.creationOccGrantPickDetails ?? {}) }
+        if (pick == null) {
+          delete current[skillId]
+        } else {
+          current[skillId] = pick
+        }
+        return {
+          ...prev,
+          creationOccGrantPickDetails: current,
         }
       })
     },
@@ -2100,6 +2143,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addSelectedAbility,
       removeSelectedAbility,
       setCreationSkillPicks,
+      setCreationHandToHandTier,
       setSelectedOcc,
       setOccSpecializationId,
       setRaceId,
@@ -2117,6 +2161,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
+      setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,
       commitVitalityFromPendingDice,
@@ -2214,6 +2259,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addSelectedAbility,
       removeSelectedAbility,
       setCreationSkillPicks,
+      setCreationHandToHandTier,
       setSelectedOcc,
       setOccSpecializationId,
       setRaceId,
@@ -2229,6 +2275,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoRollAndAssignAllAttributes,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
+      setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,
       commitVitalityFromPendingDice,

@@ -16,6 +16,11 @@ import { creationHpLabel, creationSdcLabel, creationIspLabel } from './creationF
 import { listPendingDiceEntries } from './pendingDiceLedger'
 import { listOccVariableAttributeBonusTasks } from './occVariableBonus'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import {
+  flattenCreationSkillIds,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
 import { isDiceNotation, diceNotationBounds } from './diceNotationBounds'
 import { formatBonus } from './combatQuickBonuses'
 import { computeMaxApm } from './meleeCombat'
@@ -137,7 +142,8 @@ function resolveCreationSkillIds(
       character.creationOccSkillIds ?? [],
       character.creationOccCoreVoucherPicks ?? {},
     ),
-    ...(character.creationRelatedSkillIds ?? []),
+    ...flattenCreationSkillIds(getCreationRelatedPicks(character)),
+    ...flattenCreationSkillIds(getCreationSecondaryPicks(character)),
   ]
 }
 

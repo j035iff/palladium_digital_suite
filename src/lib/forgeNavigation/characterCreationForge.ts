@@ -17,11 +17,31 @@ import {
   creationNeedsAbilitySelection,
   creationShowsPsychicGate,
 } from '../creationPhases'
-import { assessRelatedSkillSlotBlockers } from '../creationPsychicSkills'
-import { assessOccCoreVoucherBlockers } from '../occCoreSkillVouchers'
+import {
+  assessRelatedSkillSlotBlockers,
+  assessSecondarySkillSlotBlockers,
+  creationRelatedSkillCap,
+} from '../creationPsychicSkills'
+import {
+  assessOccCoreVoucherBlockers,
+  resolveOccCoreSkillPicks,
+} from '../occCoreSkillVouchers'
+import { resolveEffectivePalladiumOcc } from '../occComposition'
+import {
+  assessHandToHandBlockers,
+  creationHandToHandElectiveSlotCost,
+} from '../creationHandToHandChoice'
+import {
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+  sumCreationSkillPickSlots,
+  sumRelatedPoolSlotUsage,
+} from '../creationSkillPicks'
+import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
   occCreationAbilityBudget,
   occRelatedSkillSlotBudget,
+  occSecondarySkillSlots,
 } from '../occCreationDerivation'
 import { raceCanPickOcc, raceLineageFromDefinition } from '../raceEngine'
 import { getAbilityById } from '../../data/abilityLibrary'
@@ -114,7 +134,9 @@ function tab3Snapshot(c: Character): string {
 function tab4Snapshot(c: Character): string {
   return stableJson({
     occSkills: c.creationOccSkillIds,
-    related: c.creationRelatedSkillIds,
+    related: c.creationRelatedSkillPicks ?? c.creationRelatedSkillIds,
+    secondary: c.creationSecondarySkillPicks ?? c.creationSecondarySkillIds,
+    handToHand: c.creationHandToHandTier,
     vouchers: c.creationOccCoreVoucherPicks,
     tier: c.creationPsychicTier,
     raceId: c.raceId,
@@ -253,25 +275,65 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
   const { character, race, occ } = ctx
   const picksOcc = raceCanPickOcc(race)
 
-  if (picksOcc && (character.creationOccSkillIds ?? []).length < 1) {
-    blockers.push('Select at least one O.C.C. skill.')
-  }
-
   if (picksOcc && occ) {
+    const effectiveOcc = resolveEffectivePalladiumOcc(
+      occ,
+      character.occSpecializationId,
+    )
     blockers.push(
       ...assessOccCoreVoucherBlockers(
         occ,
         character.occSpecializationId,
         character.creationOccCoreVoucherPicks ?? {},
+        character.creationOccGrantPickDetails,
+        character,
       ),
     )
     const relatedBase =
       character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occ)
+    const relatedPicks = getCreationRelatedPicks(character)
+    const occPicks = resolveOccCoreSkillPicks(
+      occ,
+      character.occSpecializationId,
+      character.creationOccCoreVoucherPicks ?? {},
+      character.creationOccGrantPickDetails,
+    )
+    const relatedCap = creationRelatedSkillCap(
+      relatedBase,
+      ctx.psychicTier,
+      occSkillSlotPolicy(occ),
+    )
+    const handToHandReserved = creationHandToHandElectiveSlotCost(
+      effectiveOcc,
+      character.creationHandToHandTier,
+    )
+    const relatedSelected = sumRelatedPoolSlotUsage(
+      relatedPicks,
+      occPicks,
+      handToHandReserved,
+    )
+    blockers.push(
+      ...assessHandToHandBlockers(
+        effectiveOcc,
+        character.creationHandToHandTier,
+        relatedCap,
+        relatedSelected - handToHandReserved,
+      ),
+    )
     blockers.push(
       ...assessRelatedSkillSlotBlockers(
-        (character.creationRelatedSkillIds ?? []).length,
+        relatedSelected,
         relatedBase,
         ctx.psychicTier,
+        occ,
+        handToHandReserved,
+      ),
+    )
+    const secondaryBase = occSecondarySkillSlots(occ)
+    blockers.push(
+      ...assessSecondarySkillSlotBlockers(
+        sumCreationSkillPickSlots(getCreationSecondaryPicks(character)),
+        secondaryBase,
         occ,
       ),
     )

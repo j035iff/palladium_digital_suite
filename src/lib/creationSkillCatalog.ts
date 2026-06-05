@@ -1,10 +1,45 @@
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
+import type { WeaponProficiencyCatalogEntry } from '../data/library/catalogTypes'
 import {
   PALLADIUM_SKILL_CATALOG,
   getPalladiumSkillCatalogEntryById,
 } from '../data/library/skillsCatalogLoader'
+import { WEAPON_PROFICIENCY_CATALOG } from '../data/library/weaponProficienciesCatalogLoader'
 import type { EngineSkillDef, SkillCategory, SkillPrerequisite } from '../data/skillLibrary'
 import { isWhitelistedForHostGenre } from './genreGating'
+
+/** Filter dropdown order (W.P. composite categories last, after Wilderness). */
+export const CREATION_SKILL_FILTER_CATEGORY_ORDER: readonly string[] = [
+  'Communications',
+  'Domestic',
+  'Electrical',
+  'Espionage',
+  'Mechanical',
+  'Medical',
+  'Military',
+  'Physical',
+  'Pilot',
+  'Pilot Related',
+  'Rogue',
+  'Science',
+  'Technical',
+  'Wilderness',
+  'WP: Ancient',
+  'WP: Modern',
+]
+
+/** Pinned to the top of the Technical filter in the creation skill library. */
+export const TECHNICAL_PINNED_SKILL_IDS: readonly string[] = [
+  'skill_language',
+  'skill_literacy',
+]
+
+/** Palladium Electrical category — only these three skills (not the broader related_to_electrical trait). */
+export const ELECTRICAL_CATEGORY_SKILL_IDS: ReadonlySet<string> = new Set([
+  'skill_basic_electronics',
+  'skill_computer_repair',
+  'skill_electrical_engineer',
+])
 
 const BOOK_CATEGORY_TO_ENGINE: Readonly<Record<string, SkillCategory>> = {
   Communications: 'Technical',
@@ -17,6 +52,7 @@ const BOOK_CATEGORY_TO_ENGINE: Readonly<Record<string, SkillCategory>> = {
   Military: 'Technical',
   Physical: 'Physical',
   Pilot: 'Pilot',
+  'Pilot Related': 'Pilot',
   Piloting: 'Pilot',
   Rogue: 'Espionage',
   Science: 'Technical',
@@ -145,11 +181,22 @@ export function catalogEntryToEngineSkillDef(
     }
   }
 
+  const bookCategories = [...(entry.categories ?? [])]
+  if (
+    ELECTRICAL_CATEGORY_SKILL_IDS.has(entry.id) &&
+    !bookCategories.includes('Electrical')
+  ) {
+    bookCategories.push('Electrical')
+  }
+  const occOnly = entry.allowedAsSecondarySkill === false
+
   return {
     id: entry.id,
     name: entry.name,
-    category: mapBookCategoryToEngine(entry.categories),
-    slotKind: entry.allowedAsSecondarySkill === false ? 'occ' : 'occ_related',
+    category: mapBookCategoryToEngine(bookCategories),
+    bookCategories,
+    slotKind: occOnly ? 'occ' : 'occ_related',
+    secondaryEligible: !occOnly,
     basePercent,
     perLevel,
     acquisitionLevel: 1,
@@ -161,15 +208,47 @@ export function catalogEntryToEngineSkillDef(
   }
 }
 
+function weaponProficiencyToEngineSkillDef(
+  entry: WeaponProficiencyCatalogEntry,
+): EngineSkillDef {
+  const bookCategories = [
+    entry.weaponProficiencyCategory === 'ancient' ? 'WP: Ancient' : 'WP: Modern',
+  ]
+  return {
+    id: entry.id,
+    name: entry.name,
+    category: 'Weapon',
+    bookCategories,
+    slotKind: 'occ_related',
+    secondaryEligible: true,
+    basePercent: 0,
+    perLevel: 3,
+    acquisitionLevel: 1,
+    occBonus: 0,
+  }
+}
+
 const REPLACED_SKILL_IDS = new Set(
   PALLADIUM_SKILL_CATALOG.map((s) => s.replaces).filter((id): id is string => !!id),
 )
 
 const engineDefCache = new Map<string, EngineSkillDef>()
+const supplementalDefs = new Map<string, EngineSkillDef>()
+
+function registerSupplemental(def: EngineSkillDef) {
+  supplementalDefs.set(def.id, def)
+}
+
+for (const wp of WEAPON_PROFICIENCY_CATALOG) {
+  registerSupplemental(weaponProficiencyToEngineSkillDef(wp))
+}
 
 export function getEngineSkillDefFromCatalog(
   skillId: string,
 ): EngineSkillDef | undefined {
+  const supplemental = supplementalDefs.get(skillId)
+  if (supplemental) return supplemental
+
   const entry = getPalladiumSkillCatalogEntryById(skillId)
   if (!entry) return undefined
   let cached = engineDefCache.get(entry.id)
@@ -180,13 +259,81 @@ export function getEngineSkillDefFromCatalog(
   return cached
 }
 
+/** Book categories for O.C.C. related / secondary gating (palladium, W.P., HtH). */
+/** Map legacy / O.C.C. voucher category names to creation catalog skills. */
+export function voucherAllowedCategoryMatches(
+  allowedCategory: string,
+  skillId: string,
+  bookCategories: readonly string[],
+): boolean {
+  if (allowedCategory === 'Weapon Proficiencies') {
+    return skillId.startsWith('wp_')
+  }
+  return bookCategories.includes(allowedCategory)
+}
+
+export function getSkillBookCategories(skillId: string): readonly string[] {
+  const def = getEngineSkillDefFromCatalog(skillId)
+  if (def?.bookCategories?.length) return def.bookCategories
+  const catalog = getPalladiumSkillCatalogEntryById(skillId)
+  if (catalog?.categories?.length) return catalog.categories
+  return []
+}
+
 /** Genre-gated skill rows for the creation Skill Engine (Pillar 8 — full catalog visibility). */
 export function listCreationSkillLibrary(hostGenreId: string): EngineSkillDef[] {
-  return PALLADIUM_SKILL_CATALOG.filter(
-    (entry) =>
-      isWhitelistedForHostGenre(entry, hostGenreId) &&
-      !REPLACED_SKILL_IDS.has(entry.id),
-  )
-    .map(catalogEntryToEngineSkillDef)
-    .sort((a, b) => a.name.localeCompare(b.name))
+  const byId = new Map<string, EngineSkillDef>()
+
+  for (const entry of PALLADIUM_SKILL_CATALOG) {
+    if (!isWhitelistedForHostGenre(entry, hostGenreId)) continue
+    if (REPLACED_SKILL_IDS.has(entry.id)) continue
+    byId.set(entry.id, catalogEntryToEngineSkillDef(entry))
+  }
+
+  for (const wp of WEAPON_PROFICIENCY_CATALOG) {
+    if (!isWhitelistedForHostGenre(wp, hostGenreId)) continue
+    const def = weaponProficiencyToEngineSkillDef(wp)
+    byId.set(def.id, def)
+  }
+
+  return [...byId.values()].sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export function matchesSkillBookCategoryFilter(
+  def: EngineSkillDef,
+  filterCategory: string,
+): boolean {
+  if (filterCategory === 'All') return true
+  return (def.bookCategories ?? []).includes(filterCategory)
+}
+
+const TECHNICAL_PINNED_INDEX = new Map(
+  TECHNICAL_PINNED_SKILL_IDS.map((id, index) => [id, index]),
+)
+
+/** Apply category-specific ordering (e.g. Language / Literacy first in Technical). */
+export function sortCreationSkillLibraryResults(
+  skills: readonly EngineSkillDef[],
+  filterCategory: string,
+): EngineSkillDef[] {
+  const rows = [...skills]
+  if (filterCategory !== 'Technical') {
+    return rows.sort((a, b) => a.name.localeCompare(b.name))
+  }
+  return rows.sort((a, b) => {
+    const aPin = TECHNICAL_PINNED_INDEX.get(a.id)
+    const bPin = TECHNICAL_PINNED_INDEX.get(b.id)
+    if (aPin != null && bPin != null) return aPin - bPin
+    if (aPin != null) return -1
+    if (bPin != null) return 1
+    return a.name.localeCompare(b.name)
+  })
+}
+
+/** Ordered filter categories for creation skill browsing (fixed book taxonomy). */
+export function listCreationSkillBookCategories(
+  _hostGenreId?: string,
+  _occCategoryNames: readonly string[] = [],
+): string[] {
+  return [...CREATION_SKILL_FILTER_CATEGORY_ORDER]
 }

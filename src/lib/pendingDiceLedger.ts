@@ -4,6 +4,11 @@ import { calculateBaseSdc } from '../utils/vitalsCalculator'
 import { diceNotationBounds, isDiceNotation, singleDieBounds } from './diceNotationBounds'
 import { listOccVariableBonusTasks } from './occVariableBonus'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import {
+  flattenCreationSkillIds,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
 import { creationHpLabel, creationSdcLabel } from './creationFormLabels'
 
 export type PendingDiceEntry = {
@@ -139,7 +144,9 @@ export function listPendingDiceEntries(
     character.occSpecializationId,
     character.creationOccSkillIds ?? [],
     character.creationOccCoreVoucherPicks ?? {},
-  ).concat(character.creationRelatedSkillIds ?? [])
+  )
+    .concat(flattenCreationSkillIds(getCreationRelatedPicks(character)))
+    .concat(flattenCreationSkillIds(getCreationSecondaryPicks(character)))
   entries.push(...skillDiceFromSelection(skillIds))
 
   return entries

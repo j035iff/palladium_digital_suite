@@ -18,6 +18,11 @@ import {
 import { vitalityPreviewLines } from '../../lib/spawnVitalityManual'
 import { validateOccVariableResolution } from '../../lib/occVariableBonus'
 import { listOccVariableBonusTasks } from '../../lib/occVariableBonus'
+import {
+  formatCreationSkillPickLabel,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from '../../lib/creationSkillPicks'
 
 function tierLabel(t: string): string {
   if (t === 'none') return 'None'
@@ -146,7 +151,8 @@ export function CreationReviewFinalize({
   )
 
   const occIds = character.creationOccSkillIds ?? []
-  const relIds = character.creationRelatedSkillIds ?? []
+  const relPicks = getCreationRelatedPicks(character)
+  const secPicks = getCreationSecondaryPicks(character)
   const abilityIds = character.selectedAbilities ?? []
 
   const handleCommitVitality = () => {
@@ -225,7 +231,21 @@ export function CreationReviewFinalize({
           <div>
             <dt className="text-xs font-semibold uppercase opacity-70">Related skills</dt>
             <dd className="text-xs">
-              {relIds.map((id) => getSkillById(id)?.name ?? id).join(', ') || '—'}
+              {relPicks
+                .map((p) =>
+                  formatCreationSkillPickLabel(p, getSkillById(p.skillId)?.name),
+                )
+                .join(', ') || '—'}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs font-semibold uppercase opacity-70">Secondary skills</dt>
+            <dd className="text-xs">
+              {secPicks
+                .map((p) =>
+                  formatCreationSkillPickLabel(p, getSkillById(p.skillId)?.name),
+                )
+                .join(', ') || '—'}
             </dd>
           </div>
           <div>

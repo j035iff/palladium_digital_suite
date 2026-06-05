@@ -29,7 +29,10 @@ export const characterFixture: Character = {
     'skill_radio_basic',
     'skill_cryptography',
   ],
-  creationRelatedSkillIds: ['skill_electronics', 'skill_wp_handguns'],
+  creationRelatedSkillPicks: [
+    { instanceId: 'skill_electronics', skillId: 'skill_electronics' },
+    { instanceId: 'skill_wp_handguns', skillId: 'skill_wp_handguns' },
+  ],
   selectedAbilities: ['energy_bolt'],
   creationAbilityBudget: {
     spellSlots: 0,
@@ -56,7 +59,7 @@ export const characterFixture: Character = {
       spd: 10,
     },
     skills: [
-      { id: 'skill_literacy', name: 'Literacy: American', restricted: false, basePercent: 30 },
+      { id: 'skill_literacy', name: 'Literacy', restricted: false, basePercent: 30 },
       {
         id: 'skill_mech_eng',
         name: 'Mechanical Engineering',
