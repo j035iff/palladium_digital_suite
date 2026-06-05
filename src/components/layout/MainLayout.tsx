@@ -167,14 +167,18 @@ export function MainLayout() {
             >
               O.C.C. {character.occ.name}
             </p>
-            <p
-              className="text-sm font-medium"
-              style={{ color: morphusActive ? '#a78bfa' : '#334155' }}
-              title={`Progression: ${character.occ.name} Table`}
-            >
-              Level {character.level}
-            </p>
-            <IdentityXpBar />
+            {!showCreation ? (
+              <>
+                <p
+                  className="text-sm font-medium"
+                  style={{ color: morphusActive ? '#a78bfa' : '#334155' }}
+                  title={`Progression: ${character.occ.name} Table`}
+                >
+                  Level {character.level}
+                </p>
+                <IdentityXpBar />
+              </>
+            ) : null}
             <p
               className="mt-1 font-mono text-[10px] uppercase tracking-wide opacity-70"
               style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
@@ -290,61 +294,65 @@ export function MainLayout() {
         />
       ) : null}
 
-      <section
-        className={`border-b-2 px-4 py-3 transition-[box-shadow,background-color] duration-300 ${
-          vitalityFlash === 'damage'
-            ? 'pds-vitality-flash-damage'
-            : vitalityFlash === 'heal'
-              ? 'pds-vitality-flash-heal'
-              : ''
-        }`}
-        style={{
-          borderColor: morphusActive ? '#6d28d9' : '#2563eb',
-          backgroundColor: morphusActive ? '#1e1b4b' : '#eff6ff',
-        }}
-        aria-label="Vitality: hit points, structural damage, and mental pools"
-        data-vitality-presentation="sdc"
-      >
-        <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <VitalityStat
-            label="HP"
-            current={activeStats.hitPoints.current}
-            max={activeStats.hitPoints.maximum}
-            scaling={activeStats.hitPoints.scaling}
-            morphus={morphusActive}
-            accent="hp"
-            sdcPresentation
-          />
-          <VitalityStat
-            label="SDC"
-            current={activeStats.structuralDamageCapacity.current}
-            max={activeStats.structuralDamageCapacity.maximum}
-            scaling={activeStats.structuralDamageCapacity.scaling}
-            morphus={morphusActive}
-            accent="sdc"
-            sdcPresentation
-          />
-          <VitalityStat
-            label="PPE"
-            current={character.ppe.current}
-            max={character.ppe.maximum}
-            scaling="sdc_hp"
-            morphus={morphusActive}
-            accent="ppe"
-          />
-          <VitalityStat
-            label="ISP"
-            current={form.isp.current}
-            max={form.isp.maximum}
-            scaling="sdc_hp"
-            morphus={morphusActive}
-            accent="isp"
-          />
-        </div>
-      </section>
+      {!showCreation ? (
+        <section
+          className={`border-b-2 px-4 py-3 transition-[box-shadow,background-color] duration-300 ${
+            vitalityFlash === 'damage'
+              ? 'pds-vitality-flash-damage'
+              : vitalityFlash === 'heal'
+                ? 'pds-vitality-flash-heal'
+                : ''
+          }`}
+          style={{
+            borderColor: morphusActive ? '#6d28d9' : '#2563eb',
+            backgroundColor: morphusActive ? '#1e1b4b' : '#eff6ff',
+          }}
+          aria-label="Vitality: hit points, structural damage, and mental pools"
+          data-vitality-presentation="sdc"
+        >
+          <div className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <VitalityStat
+              label="HP"
+              current={activeStats.hitPoints.current}
+              max={activeStats.hitPoints.maximum}
+              scaling={activeStats.hitPoints.scaling}
+              morphus={morphusActive}
+              accent="hp"
+              sdcPresentation
+            />
+            <VitalityStat
+              label="SDC"
+              current={activeStats.structuralDamageCapacity.current}
+              max={activeStats.structuralDamageCapacity.maximum}
+              scaling={activeStats.structuralDamageCapacity.scaling}
+              morphus={morphusActive}
+              accent="sdc"
+              sdcPresentation
+            />
+            <VitalityStat
+              label="PPE"
+              current={character.ppe.current}
+              max={character.ppe.maximum}
+              scaling="sdc_hp"
+              morphus={morphusActive}
+              accent="ppe"
+            />
+            <VitalityStat
+              label="ISP"
+              current={form.isp.current}
+              max={form.isp.maximum}
+              scaling="sdc_hp"
+              morphus={morphusActive}
+              accent="isp"
+            />
+          </div>
+        </section>
+      ) : null}
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col md:h-full md:min-h-0 md:flex-row">
         <main className="mx-auto flex min-h-0 w-full min-w-0 max-w-6xl flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 text-left md:mx-0 md:max-w-none md:pr-2">
+        {!showCreation ? (
+        <>
         <section aria-labelledby="attrs-heading">
           <h2
             id="attrs-heading"
@@ -458,6 +466,8 @@ export function MainLayout() {
             iq={form.attributes.iq}
           />
         </section>
+        </>
+        ) : null}
 
         {showCreation ? (
           <CreationFlowShell

@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import type { CharacterAttributes, PalladiumOcc } from '../types'
 import {
+  attrForPoolSlot,
   buildCreationAttributes,
+  getEffectivePoolSlots,
   valueFitsRaceNotation,
 } from './creationAttributeSync'
 
@@ -26,12 +28,29 @@ const occ = {
 } as unknown as PalladiumOcc
 
 describe('creationAttributeSync', () => {
-  it('validates pool values against race notation bounds', () => {
+  it('validates pool values against race notation bounds with exceptional cap', () => {
     expect(valueFitsRaceNotation(10, '3D6')).toBe(true)
     expect(valueFitsRaceNotation(3, '3D6')).toBe(true)
     expect(valueFitsRaceNotation(18, '3D6')).toBe(true)
-    expect(valueFitsRaceNotation(19, '3D6')).toBe(false)
+    expect(valueFitsRaceNotation(24, '3D6')).toBe(true)
+    expect(valueFitsRaceNotation(30, '3D6')).toBe(true)
+    expect(valueFitsRaceNotation(31, '3D6')).toBe(false)
+    expect(valueFitsRaceNotation(17, '2D6')).toBe(true)
+    expect(valueFitsRaceNotation(18, '2D6')).toBe(true)
+    expect(valueFitsRaceNotation(19, '2D6')).toBe(false)
     expect(valueFitsRaceNotation(1, '2D6')).toBe(false)
+    expect(valueFitsRaceNotation(25, '4D6')).toBe(false)
+    expect(valueFitsRaceNotation(21, '3D6+2')).toBe(false)
+  })
+
+  it('tracks duplicate pool values by slot index', () => {
+    const pool = [14, 10, 12, 14, 11, 9, 15, 13]
+    const assignments = { iq: 14, me: 14, ma: 10 }
+    const slots = { iq: 0, me: 3, ma: 1 }
+    expect(attrForPoolSlot(slots, 0)).toBe('iq')
+    expect(attrForPoolSlot(slots, 3)).toBe('me')
+    expect(attrForPoolSlot(slots, 1)).toBe('ma')
+    expect(getEffectivePoolSlots(pool, assignments, slots)).toEqual(slots)
   })
 
   it('applies flat O.C.C. bonuses and variable dice resolutions', () => {

@@ -6,7 +6,7 @@ import type {
 } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
-import { diceNotationBounds } from './diceNotationBounds'
+import { attributePoolNotationBounds } from './diceNotationBounds'
 import type { RaceAttributeFormulas } from '../types'
 import { mergeVitalityFromAttributes } from './derivedVitality'
 import { listOccVariableBonusTasks } from './occVariableBonus'
@@ -24,8 +24,140 @@ export function raceAttrNotation(
 /** Pool value must fall within the race dice notation bounds for the target attribute. */
 export function valueFitsRaceNotation(value: number, notation: string): boolean {
   if (!Number.isFinite(value)) return false
-  const { min, max } = diceNotationBounds(notation)
+  const { min, max } = attributePoolNotationBounds(notation)
   return value >= min && value <= max
+}
+
+export function poolIndexForAttr(
+  slots: Partial<Record<ForgeAttrKey, number>>,
+  attr: ForgeAttrKey,
+): number {
+  const idx = slots[attr]
+  return typeof idx === 'number' && idx >= 0 && idx <= 7 ? idx : -1
+}
+
+export function attrForPoolSlot(
+  slots: Partial<Record<ForgeAttrKey, number>>,
+  slotIndex: number,
+): ForgeAttrKey | undefined {
+  return FORGE_ATTRIBUTE_KEYS.find((a) => slots[a] === slotIndex)
+}
+
+/** Resolve slot map; rebuild greedily from values when legacy saves lack slots. */
+export function getEffectivePoolSlots(
+  pool: readonly (number | null)[],
+  assignments: Partial<Record<ForgeAttrKey, number>>,
+  storedSlots: Partial<Record<ForgeAttrKey, number>> | undefined,
+): Partial<Record<ForgeAttrKey, number>> {
+  const stored = storedSlots ?? {}
+  const used = new Set<number>()
+  let slotsValid = true
+
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const v = assignments[attr]
+    if (v == null) continue
+    const idx = stored[attr]
+    if (
+      typeof idx !== 'number' ||
+      idx < 0 ||
+      idx > 7 ||
+      pool[idx] !== v ||
+      used.has(idx)
+    ) {
+      slotsValid = false
+      break
+    }
+    used.add(idx)
+  }
+
+  if (slotsValid && used.size > 0) return stored
+
+  const rebuilt: Partial<Record<ForgeAttrKey, number>> = {}
+  const usedRebuild = new Set<number>()
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const v = assignments[attr]
+    if (v == null) continue
+    for (let i = 0; i < pool.length; i++) {
+      if (pool[i] === v && !usedRebuild.has(i)) {
+        rebuilt[attr] = i
+        usedRebuild.add(i)
+        break
+      }
+    }
+  }
+  return rebuilt
+}
+
+export function assessPoolSlotIssue(
+  value: number | null,
+  slotIndex: number,
+  slots: Partial<Record<ForgeAttrKey, number>>,
+  pool: readonly (number | null)[],
+  formulas: RaceAttributeFormulas | undefined,
+  occMinFor: (attr: ForgeAttrKey) => number | undefined,
+): string | null {
+  if (value == null || !Number.isFinite(value)) return null
+
+  const assignedAttr = attrForPoolSlot(slots, slotIndex)
+
+  if (assignedAttr) {
+    const min = occMinFor(assignedAttr)
+    if (min != null && value < min) {
+      return `Below O.C.C. minimum ${min} for ${assignedAttr.toUpperCase()}`
+    }
+    const notation = raceAttrNotation(formulas, assignedAttr)
+    if (!valueFitsRaceNotation(value, notation)) {
+      const { min: nMin, max: nMax } = attributePoolNotationBounds(notation)
+      return `Outside ${notation} (${nMin}–${nMax}) for ${assignedAttr.toUpperCase()}`
+    }
+    return null
+  }
+
+  const fitsAny = FORGE_ATTRIBUTE_KEYS.some((attr) =>
+    valueFitsRaceNotation(value, raceAttrNotation(formulas, attr)),
+  )
+  if (!fitsAny) {
+    return 'Out of range for every attribute on this race'
+  }
+  return null
+}
+
+export const CREATION_POOL_DRAG_MIME = 'application/x-pds-pool-index'
+
+/** Validate assigning a pool slot to an attribute (does not mutate state). */
+export function validatePoolRollAssignment(
+  attr: ForgeAttrKey,
+  poolIndex: number,
+  pool: readonly (number | null)[],
+  formulas: RaceAttributeFormulas | undefined,
+  occMinFor: (attr: ForgeAttrKey) => number | undefined,
+): string | null {
+  const value = pool[poolIndex]
+  if (value == null || !Number.isFinite(value)) {
+    return 'Pool slot is empty.'
+  }
+  const issue = assessAttributeAssignmentIssue(attr, value, formulas, occMinFor)
+  if (issue) return issue
+  return null
+}
+
+export function assessAttributeAssignmentIssue(
+  attr: ForgeAttrKey,
+  value: number | undefined,
+  formulas: RaceAttributeFormulas | undefined,
+  occMinFor: (attr: ForgeAttrKey) => number | undefined,
+): string | null {
+  if (value == null || !Number.isFinite(value)) return null
+  const min = occMinFor(attr)
+  if (min != null && value < min) {
+    return `Below O.C.C. minimum ${min}`
+  }
+  const notation = raceAttrNotation(formulas, attr)
+  if (!valueFitsRaceNotation(value, notation)) {
+    const { min: nMin, max: nMax } = attributePoolNotationBounds(notation)
+    return `Outside ${notation} (${nMin}–${nMax})`
+  }
+  return null
 }
 
 function readScalar(attrs: CharacterAttributes, attr: ForgeAttrKey): number {

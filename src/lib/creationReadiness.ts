@@ -62,7 +62,7 @@ export function assessCreationReviewBlockers(
   const occLib = picksOcc ? getLibraryOccById(character.occ.id) : undefined
 
   blockers.push(...assessConfiguratorBlockers(character, race, occLib))
-  blockers.push(...assessAttributesBlockers(character, occLib))
+  blockers.push(...assessAttributesBlockers(character, occLib, race))
   blockers.push(...assessOccVariableBlockers(character, occLib))
 
   const supportsDualForm = raceLineageFromDefinition(race) === 'nightbane'

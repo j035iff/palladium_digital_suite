@@ -60,6 +60,20 @@ export const CHARACTER_CREATION_TAB_LABELS: Record<
   tab7_review: 'Review & Spawn',
 }
 
+/** In-tab page heading (paired with Continue in the top-right). */
+export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
+  CharacterCreationForgeTabId,
+  string
+> = {
+  tab1_configurator: 'Step 2: Race, O.C.C. & Alignment',
+  tab2_attributes: 'Phase I: Attribute Pool & Allocation',
+  tab3_psionic: 'Step 2.5: Psychic Gate',
+  tab4_skills: 'Step 3: Skill Engine',
+  tab5_traits: 'Character Trait Forge (stub)',
+  tab6_abilities: 'Step 4: Supernatural Abilities',
+  tab7_review: 'Phase IV: Review & Spawn',
+}
+
 export type CharacterCreationForgeContext = {
   character: Character & Pick<CharacterRootState, 'creationGenreId'>
   race: Race | undefined
@@ -84,6 +98,7 @@ function tab2Snapshot(c: Character): string {
   return stableJson({
     pool: c.creationAttributePool,
     assignments: c.creationAttributeAssignments,
+    poolSlots: c.creationAttributePoolSlots,
     occVar: c.creationOccVariableResolutions,
   })
 }
@@ -291,7 +306,7 @@ function buildTabDefinitions(
           isNa: () => false,
           validate: () => {
             const blockers = [
-              ...assessAttributesBlockers(character, occ),
+              ...assessAttributesBlockers(character, occ, race),
               ...assessOccVariableBlockers(character, occ),
             ]
             return { ok: blockers.length === 0, blockers }

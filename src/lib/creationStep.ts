@@ -1,6 +1,14 @@
 import type { Character, PalladiumOcc, Race } from '../types'
 import { creationNeedsAbilitySelection, creationShowsPsychicGate } from './creationPhases'
-import { listOccVariableBonusTasks, occVariableBonusTasksComplete } from './occVariableBonus'
+import {
+  listOccVariableAttributeBonusTasks,
+  occVariableBonusTasksComplete,
+} from './occVariableBonus'
+import {
+  getEffectivePoolSlots,
+  raceAttrNotation,
+  valueFitsRaceNotation,
+} from './creationAttributeSync'
 import { raceCanPickOcc, raceLineageFromDefinition } from './raceEngine'
 import { assessConfiguratorPairConflict } from './configuratorMatrix'
 import type { ForgeAttrKey } from './attributeKeys'
@@ -37,7 +45,10 @@ export function buildCreationFlowContext(
   creationGenreId: string,
 ): CreationFlowContext {
   const picksOcc = raceCanPickOcc(race)
-  const tasks = listOccVariableBonusTasks(occ, character.occSpecializationId)
+  const tasks = listOccVariableAttributeBonusTasks(
+    occ,
+    character.occSpecializationId,
+  )
   return {
     raceCanPickOcc: picksOcc,
     showPsychicGate: creationShowsPsychicGate(character, occ, creationGenreId),
@@ -160,10 +171,17 @@ function occMinForAttr(
 export function assessAttributesBlockers(
   character: Character,
   occ: PalladiumOcc | undefined,
+  race?: Race,
 ): string[] {
   const blockers: string[] = []
   const assignments = character.creationAttributeAssignments ?? {}
   const pool = character.creationAttributePool ?? []
+  const poolSlots = getEffectivePoolSlots(
+    pool,
+    assignments,
+    character.creationAttributePoolSlots,
+  )
+  const formulas = race?.attributes
 
   for (const attr of FORGE_ATTRIBUTE_KEYS) {
     const v = assignments[attr]
@@ -177,6 +195,12 @@ export function assessAttributesBlockers(
         `${attr.toUpperCase()} ${v} is below O.C.C. minimum ${min}.`,
       )
     }
+    const notation = raceAttrNotation(formulas, attr)
+    if (!valueFitsRaceNotation(v, notation)) {
+      blockers.push(
+        `${attr.toUpperCase()} ${v} is outside race dice ${notation} for this attribute.`,
+      )
+    }
   }
 
   const filledPool = pool.filter((n) => n != null && Number.isFinite(n)).length
@@ -184,17 +208,13 @@ export function assessAttributesBlockers(
     blockers.push('Enter all eight rolled values in the attribute pool.')
   }
 
-  const usedValues = FORGE_ATTRIBUTE_KEYS.map((a) => assignments[a]).filter(
-    (n) => n != null,
+  const usedSlotIndices = FORGE_ATTRIBUTE_KEYS.map((a) => poolSlots[a]).filter(
+    (i): i is number => typeof i === 'number',
   )
-  const poolValues = pool.filter((n): n is number => n != null)
-  if (usedValues.length === 8 && poolValues.length === 8) {
-    const sortedUsed = [...usedValues].sort((a, b) => a - b)
-    const sortedPool = [...poolValues].sort((a, b) => a - b)
-    const mismatch = sortedUsed.some((v, i) => v !== sortedPool[i])
-    if (mismatch) {
+  if (usedSlotIndices.length === 8) {
+    if (new Set(usedSlotIndices).size !== 8) {
       blockers.push(
-        'Assigned attributes must match the eight pool values (each roll used once).',
+        'Each pool roll may only be assigned to one attribute.',
       )
     }
   }
@@ -206,7 +226,10 @@ export function assessOccVariableBlockers(
   character: Character,
   occ: PalladiumOcc | undefined,
 ): string[] {
-  const tasks = listOccVariableBonusTasks(occ, character.occSpecializationId)
+  const tasks = listOccVariableAttributeBonusTasks(
+    occ,
+    character.occSpecializationId,
+  )
   if (!tasks.length) return []
   if (
     occVariableBonusTasksComplete(
@@ -234,8 +257,8 @@ export function canAdvanceFromPhase(
       }
     case 'attributes':
       return {
-        ok: assessAttributesBlockers(character, occ).length === 0,
-        blockers: assessAttributesBlockers(character, occ),
+        ok: assessAttributesBlockers(character, occ, race).length === 0,
+        blockers: assessAttributesBlockers(character, occ, race),
       }
     case 'occVariableBonus':
       return {

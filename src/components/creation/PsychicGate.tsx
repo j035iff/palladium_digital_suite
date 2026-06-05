@@ -46,17 +46,7 @@ export function PsychicGate() {
     : 'border-slate-200 bg-slate-50'
 
   return (
-    <section
-      className="mt-8 w-full border-t-2 border-dashed pt-8"
-      aria-labelledby="psychic-gate-heading"
-    >
-      <h2
-        id="psychic-gate-heading"
-        className="mb-1 text-sm font-semibold uppercase tracking-wide"
-        style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
-      >
-        Step 2.5: Psychic Gate
-      </h2>
+    <section className="w-full" aria-labelledby="forge-tab-page-heading">
       <p
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}

@@ -12,8 +12,10 @@ import { useCharacter } from '../../context/CharacterContext'
 import { MorphusForgeStub } from './MorphusForgeStub'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import { ForgeContinueGate } from '../forge/ForgeContinueGate'
+import { ForgeTabPageHeader } from '../forge/ForgeTabPageHeader'
 import {
   buildCharacterCreationForgeContext,
+  CHARACTER_CREATION_TAB_PAGE_TITLES,
   deriveCharacterCreationForgeNavigation,
   resolveActiveForgeTab,
   type CharacterCreationForgeTabId,
@@ -26,6 +28,7 @@ function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
     case 'tab2_attributes':
       return (
         <>
+          <CreationAttributeHeader />
           <AttributeForge />
           <OccVariableBonusPhase />
         </>
@@ -86,8 +89,10 @@ export function CreationFlowShell({
   }
 
   return (
-    <div className="space-y-6">
-      <CreationAttributeHeader />
+    <div className="flex min-h-0 flex-col gap-4">
+      <div className="max-h-[min(40vh,20rem)] overflow-y-auto overscroll-contain">
+        <LiveLedger />
+      </div>
 
       <ForgeNavigationBar
         tabs={nav.tabs}
@@ -115,35 +120,51 @@ export function CreationFlowShell({
         </p>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          {activeTabId === 'tab7_review' ? (
+      <div className="space-y-4">
+        <ForgeTabPageHeader
+          title={CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]}
+          actions={
+            nav.showContinue ? (
+              <ForgeContinueGate
+                inline
+                showBlockers={false}
+                enabled={nav.continueEnabled}
+                validated={activeView?.visual === 'complete'}
+                tooltip={nav.continueTooltip}
+                blockers={activeBlockers}
+                onContinue={handleContinue}
+              />
+            ) : null
+          }
+        />
+
+        {nav.showContinue && !nav.continueEnabled && activeBlockers.length > 0 ? (
+          <ul
+            className="rounded-lg border border-amber-500/50 bg-amber-50 px-3 py-2 text-xs text-amber-950 dark:bg-amber-950/30 dark:text-amber-100"
+            role="status"
+          >
+            {activeBlockers.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
+        ) : null}
+
+        {activeTabId === 'tab7_review' ? (
+          <>
             <CreationReviewFinalize
               onSpawnConfirm={(finalize) => {
                 if (onSpawnFinalize) onSpawnFinalize(finalize)
                 else finalize()
               }}
             />
-          ) : (
-            <ForgeTabBody tabId={activeTabId} />
-          )}
-        </div>
-        <LiveLedger />
+            <p className="text-xs text-slate-500">
+              Review is the terminal gate — resolve pending dice and spawn when ready.
+            </p>
+          </>
+        ) : (
+          <ForgeTabBody tabId={activeTabId} />
+        )}
       </div>
-
-      {nav.showContinue ? (
-        <ForgeContinueGate
-          enabled={nav.continueEnabled}
-          validated={activeView?.visual === 'complete'}
-          tooltip={nav.continueTooltip}
-          blockers={activeBlockers}
-          onContinue={handleContinue}
-        />
-      ) : activeTabId !== 'tab7_review' ? null : (
-        <p className="text-xs text-slate-500">
-          Review is the terminal gate — resolve pending dice and spawn when ready.
-        </p>
-      )}
     </div>
   )
 }

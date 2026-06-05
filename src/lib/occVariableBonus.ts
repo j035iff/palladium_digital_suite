@@ -34,7 +34,20 @@ function collectDiceTasksFromMap(
   return out
 }
 
-/** Phase I.2 — dice-valued entries in O.C.C. staticBonuses (merged specialization). */
+/** Phase I.2 — O.C.C. attribute dice only (merged specialization). */
+export function listOccVariableAttributeBonusTasks(
+  occ: PalladiumOcc | undefined,
+  specializationId?: string | null,
+): OccVariableBonusTask[] {
+  if (!occ) return []
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  return collectDiceTasksFromMap(
+    'attributes',
+    effective.staticBonuses?.attributes,
+  )
+}
+
+/** All dice-valued O.C.C. staticBonuses (attributes resolved in Phase I.2; vitals at spawn). */
 export function listOccVariableBonusTasks(
   occ: PalladiumOcc | undefined,
   specializationId?: string | null,
@@ -44,7 +57,7 @@ export function listOccVariableBonusTasks(
   const bonuses = effective.staticBonuses
   if (!bonuses) return []
   return [
-    ...collectDiceTasksFromMap('attributes', bonuses.attributes),
+    ...listOccVariableAttributeBonusTasks(occ, specializationId),
     ...collectDiceTasksFromMap('vitals', bonuses.vitals),
     ...collectDiceTasksFromMap('combat', bonuses.combat),
     ...collectDiceTasksFromMap('saves', bonuses.saves),

@@ -7,17 +7,11 @@ export function MorphusForgeStub() {
   const done = character.creationTraitForgeStubComplete === true
 
   return (
-    <section aria-labelledby="morphus-phase-heading">
-      <h2
-        id="morphus-phase-heading"
-        className="mb-2 text-sm font-semibold uppercase tracking-wide text-violet-300"
-      >
-        Character Trait Forge (stub)
-      </h2>
+    <section aria-labelledby="forge-tab-page-heading">
       <p className="max-w-2xl text-sm text-violet-200/90">
         Full Morphus / trait generation will plug in here as a nested Sub-Forge.
-        For now, acknowledge this placeholder so Tab 5 can validate — then use the
-        section <strong>Continue</strong> below the tab content.
+        For now, acknowledge this placeholder so Tab 5 can validate — then use{' '}
+        <strong>Continue</strong> at the top right.
       </p>
       {!MORPHUS_FORGE_IMPLEMENTED ? (
         <p className="mt-3 text-xs uppercase tracking-wide text-violet-400/80">

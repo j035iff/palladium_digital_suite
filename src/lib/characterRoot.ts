@@ -84,6 +84,7 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       creationTraitForgeStubComplete: false,
       creationAttributePool: Array.from({ length: 8 }, () => null),
       creationAttributeAssignments: {},
+      creationAttributePoolSlots: {},
       creationOccVariableResolutions: {},
       creationOccCoreVoucherPicks: {},
       creationPendingDiceResolutions: {},

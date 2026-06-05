@@ -70,3 +70,13 @@ describe('diceNotationBounds', () => {
     expect(diceNotationBounds('1D4*10')).toEqual({ min: 10, max: 40 })
   })
 })
+
+describe('attributePoolNotationBounds', () => {
+  it('extends only flat 2D6 and 3D6 for exceptional totals', async () => {
+    const { attributePoolNotationBounds } = await import('./diceNotationBounds')
+    expect(attributePoolNotationBounds('3D6')).toEqual({ min: 3, max: 30 })
+    expect(attributePoolNotationBounds('2D6')).toEqual({ min: 2, max: 18 })
+    expect(attributePoolNotationBounds('4D6')).toEqual({ min: 4, max: 24 })
+    expect(attributePoolNotationBounds('3D6+2')).toEqual({ min: 5, max: 20 })
+  })
+})

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import {
-  listOccVariableBonusTasks,
+  listOccVariableAttributeBonusTasks,
   validateOccVariableResolution,
 } from '../../lib/occVariableBonus'
 
@@ -17,7 +17,7 @@ export function OccVariableBonusPhase() {
   const morphus = supportsDualForm && activeForm === 'morphus'
   const tasks = useMemo(
     () =>
-      listOccVariableBonusTasks(
+      listOccVariableAttributeBonusTasks(
         effectiveOcc ?? undefined,
         character.occSpecializationId,
       ),

@@ -1733,6 +1733,8 @@ export type Character = {
   creationAttributePool?: readonly (number | null)[]
   /** Phase I — rolled value slotted per attribute. */
   creationAttributeAssignments?: Partial<Record<ForgeAttrKey, number>>
+  /** Phase I — pool index (0–7) assigned per attribute (disambiguates duplicate rolls). */
+  creationAttributePoolSlots?: Partial<Record<ForgeAttrKey, number>>
   /** Phase I.2 — resolved O.C.C. variable dice (key = task id). */
   creationOccVariableResolutions?: Readonly<Record<string, number>>
   /** Phase II — resolved O.C.C. core skill choice vouchers (voucher id → skill ids). */

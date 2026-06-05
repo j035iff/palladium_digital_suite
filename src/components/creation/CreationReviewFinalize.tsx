@@ -172,13 +172,7 @@ export function CreationReviewFinalize({
   }
 
   return (
-    <section aria-labelledby="review-heading">
-      <h2
-        id="review-heading"
-        className="mb-1 text-sm font-semibold uppercase tracking-wide text-blue-800"
-      >
-        Phase IV: Review &amp; Spawn
-      </h2>
+    <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
         Resolve every pending dice from your Live Ledger, commit vitality pools, then
         spawn to lock the record (forge-character_creation.md Tab 7).

@@ -86,13 +86,13 @@ export function LiveLedger() {
     'rounded-lg border p-4 border-blue-200 bg-white text-slate-900 dark:border-violet-700 dark:bg-slate-950/80 dark:text-violet-50'
 
   return (
-    <aside className={`h-fit ${panel}`} aria-label="Live creation ledger">
+    <aside className={panel} aria-label="Live creation ledger">
       <h3 className="mb-2 text-xs font-bold uppercase tracking-wide opacity-80">
         Live Ledger
       </h3>
       <p className="mb-3 text-xs opacity-75">
-        Full build mirror — attributes, vitals, saves, and combat update as you
-        configure.
+        Build mirror — attributes, vitals, saves, and combat update as you work
+        through each tab below.
       </p>
 
       <LedgerSection title="Attributes">

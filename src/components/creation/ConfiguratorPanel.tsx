@@ -165,15 +165,8 @@ export function ConfiguratorPanel() {
   return (
     <section
       className="mt-0 w-full border-b-2 border-dashed pb-8"
-      aria-labelledby="configurator-heading"
+      aria-labelledby="forge-tab-page-heading"
     >
-      <h2
-        id="configurator-heading"
-        className="mb-1 text-sm font-semibold uppercase tracking-wide"
-        style={{ color: headingColor }}
-      >
-        Step 2: Race, O.C.C. &amp; Alignment
-      </h2>
       <p
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}

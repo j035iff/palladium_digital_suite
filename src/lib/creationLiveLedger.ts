@@ -14,7 +14,7 @@ import { computeCombatMirrorBonuses, computeLiveBonuses } from './characterDeriv
 import { creationVitalityPreview } from './creationVitalityPreview'
 import { creationHpLabel, creationSdcLabel, creationIspLabel } from './creationFormLabels'
 import { listPendingDiceEntries } from './pendingDiceLedger'
-import { listOccVariableBonusTasks } from './occVariableBonus'
+import { listOccVariableAttributeBonusTasks } from './occVariableBonus'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
 import { isDiceNotation, diceNotationBounds } from './diceNotationBounds'
 import { formatBonus } from './combatQuickBonuses'
@@ -517,7 +517,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
   const resolutions = opts.character.creationPendingDiceResolutions ?? {}
   const occResolved = opts.character.creationOccVariableResolutions ?? {}
 
-  const occVariable = listOccVariableBonusTasks(
+  const occVariable = listOccVariableAttributeBonusTasks(
     opts.occ,
     opts.character.occSpecializationId,
   ).map((t) => {

@@ -342,7 +342,7 @@ type CharacterContextValue = {
   markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void
   setTraitForgeStubComplete: (complete: boolean) => void
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
-  setCreationAttributeAssignment: (attr: ForgeAttrKey, value: number) => void
+  setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (voucherId: string, skillIds: readonly string[]) => void
@@ -1742,16 +1742,31 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const setCreationAttributeAssignment = useCallback(
-    (attr: ForgeAttrKey, value: number) => {
+    (attr: ForgeAttrKey, poolIndex: number) => {
+      if (poolIndex < 0 || poolIndex > 7) return
       setRawCharacter((prev) => {
+        const pool = prev.creationAttributePool ?? []
+        const value = pool[poolIndex]
+        if (value == null || !Number.isFinite(value)) return prev
+
         const assignments = {
           ...(prev.creationAttributeAssignments ?? {}),
           [attr]: value,
         }
+        const poolSlots = { ...(prev.creationAttributePoolSlots ?? {}) }
+        for (const key of Object.keys(poolSlots) as ForgeAttrKey[]) {
+          if (key !== attr && poolSlots[key] === poolIndex) {
+            delete assignments[key]
+            delete poolSlots[key]
+          }
+        }
+        poolSlots[attr] = poolIndex
+
         const occ = getLibraryOccById(prev.occ.id) ?? undefined
         const withAssignments = {
           ...prev,
           creationAttributeAssignments: assignments,
+          creationAttributePoolSlots: poolSlots,
         }
         return syncRaceOccFacadeSdc(
           syncCreationAttributeBranches(withAssignments, occ),
@@ -1766,9 +1781,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRawCharacter((prev) => {
         const assignments = { ...(prev.creationAttributeAssignments ?? {}) }
         delete assignments[attr]
+        const poolSlots = { ...(prev.creationAttributePoolSlots ?? {}) }
+        delete poolSlots[attr]
         const occ = getLibraryOccById(prev.occ.id) ?? undefined
         return syncCreationAttributeBranches(
-          { ...prev, creationAttributeAssignments: assignments },
+          {
+            ...prev,
+            creationAttributeAssignments: assignments,
+            creationAttributePoolSlots: poolSlots,
+          },
           occ,
         )
       })
