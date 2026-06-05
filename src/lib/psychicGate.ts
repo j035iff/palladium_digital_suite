@@ -1,13 +1,12 @@
 import type { FormState, PsychicTier } from '../types'
 
-/** Standard-entry d100 bands (psychic_gate.md §1 example: 01–10 Master, 11–25 Major, …). */
+/** Standard-entry d100 bands — Master is O.C.C.-only, never from this roll (psychic_gate.md §1). */
 export const STANDARD_PSYCHIC_TEST_BANDS: ReadonlyArray<{
   max: number
   tier: PsychicTier
 }> = [
-  { max: 10, tier: 'master' },
-  { max: 25, tier: 'major' },
-  { max: 50, tier: 'minor' },
+  { max: 9, tier: 'major' },
+  { max: 25, tier: 'minor' },
   { max: 100, tier: 'none' },
 ]
 

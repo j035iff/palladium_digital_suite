@@ -7,7 +7,6 @@ import { isDiceNotation } from '../../lib/diceNotationBounds'
 import {
   assessAttributeAssignmentIssue,
   CREATION_POOL_DRAG_MIME,
-  getEffectivePoolSlots,
   validatePoolRollAssignment,
 } from '../../lib/creationAttributeSync'
 
@@ -42,15 +41,6 @@ export function CreationAttributeHeader() {
   const morphus = supportsDualForm && activeForm === 'morphus'
   const pool = character.creationAttributePool ?? Array.from({ length: 8 }, () => null)
   const assignments = character.creationAttributeAssignments ?? {}
-  const poolSlots = useMemo(
-    () =>
-      getEffectivePoolSlots(
-        pool,
-        assignments,
-        character.creationAttributePoolSlots,
-      ),
-    [pool, assignments, character.creationAttributePoolSlots],
-  )
 
   const [dropError, setDropError] = useState<string | null>(null)
   const [dragOverAttr, setDragOverAttr] = useState<ForgeAttrKey | null>(null)

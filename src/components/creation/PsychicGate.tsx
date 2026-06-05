@@ -18,6 +18,9 @@ const TIER_LABEL: Record<PsychicTier, string> = {
 const OCC_LOCK_TOOLTIP =
   'Psychic-class O.C.C. (e.g. Mind Melter): tier is locked to Master (psychic_gate.md §1).'
 
+const MASTER_OCC_ONLY_TOOLTIP =
+  'Master psionic — only available with a psychic-class O.C.C.'
+
 export function PsychicGate() {
   const {
     activeForm,
@@ -34,6 +37,7 @@ export function PsychicGate() {
   const morphus = supportsDualForm && activeForm === 'morphus'
   const bypassed = character.psychicGateBypassed === true
   const occLocked = character.occ.category === 'psychic'
+  const tierChosen = character.creationPsychicTierChosen === true
   const [lastTestRoll, setLastTestRoll] = useState<number | null>(null)
 
   const bandRows = useMemo(() => getStandardPsychicTestBandRows(), [])
@@ -86,14 +90,21 @@ export function PsychicGate() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {TIERS.map((tier) => {
-                  const locked = occLocked && tier !== 'master'
-                  const active = psychicTier === tier
+                  const locked =
+                    tier === 'master' ? !occLocked : occLocked
+                  const lockReason =
+                    tier === 'master' && !occLocked
+                      ? MASTER_OCC_ONLY_TOOLTIP
+                      : occLocked && tier !== 'master'
+                        ? OCC_LOCK_TOOLTIP
+                        : undefined
+                  const active = tierChosen && psychicTier === tier
                   return (
                     <button
                       key={tier}
                       type="button"
                       disabled={locked}
-                      title={locked ? OCC_LOCK_TOOLTIP : undefined}
+                      title={lockReason}
                       onClick={() => setPsychicTier(tier)}
                       className={`rounded-md border-2 px-3 py-2 text-sm font-semibold transition ${
                         locked
@@ -151,7 +162,8 @@ export function PsychicGate() {
               >
                 {bandRows.map((row) => (
                   <li key={row.hi}>
-                    {String(row.lo).padStart(2, '0')}–{String(row.hi).padStart(2, '0')}:{' '}
+                    {String(row.lo).padStart(2, '0')}–
+                    {row.hi === 100 ? '00' : String(row.hi).padStart(2, '0')}:{' '}
                     {TIER_LABEL[row.tier]}
                   </li>
                 ))}
@@ -181,7 +193,9 @@ export function PsychicGate() {
             >
               <p>
                 Current tier:{' '}
-                <strong className="capitalize">{psychicTier}</strong>
+                <strong className="capitalize">
+                  {tierChosen ? psychicTier : '—'}
+                </strong>
               </p>
               <p className="mt-1">
                 Skill engine slot multiplier:{' '}

@@ -4,7 +4,7 @@ This document defines the logic for determining psionic potential during charact
 The Psychic Gate utilizes three primary entry triggers to ensure setting accuracy.
 Psychic O.C.C. (Force Master): If Step 1 contains a Psychic-class O.C.C., the tier is locked to Master.
 Incompatible Race (Auto-Skip): If Step 1 contains a race like Nightbane, the Psychic Gate is bypassed to maintain setting integrity.
-Standard Entry: Users can manually select a tier or utilize a randomized roll (e.g., 01-10% Master, 11-25% Major, etc., based on setting).
+Standard Entry: Users can manually select a tier (except Master) or roll 1d100: 01–09 Major, 10–25 Minor, 26–00 None. Master is never rolled — only psychic-class O.C.C.s lock to Master.
 2. The "Skill Tax" Engine
 The system enforces the Palladium "Skill Penalty" for high-potential psychics who are not in psychic-specific O.C.C.s.
 Psychic Tier

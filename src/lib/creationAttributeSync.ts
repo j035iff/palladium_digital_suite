@@ -92,7 +92,7 @@ export function assessPoolSlotIssue(
   value: number | null,
   slotIndex: number,
   slots: Partial<Record<ForgeAttrKey, number>>,
-  pool: readonly (number | null)[],
+  _pool: readonly (number | null)[],
   formulas: RaceAttributeFormulas | undefined,
   occMinFor: (attr: ForgeAttrKey) => number | undefined,
 ): string | null {

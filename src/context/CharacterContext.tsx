@@ -344,6 +344,8 @@ type CharacterContextValue = {
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
+  /** Dev-only — rolls and assigns all eight attributes in one update. */
+  devAutoRollAndAssignAllAttributes?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (voucherId: string, skillIds: readonly string[]) => void
   setCreationPendingDiceResolution: (entryId: string, value: number) => void
@@ -1427,6 +1429,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     (tier: PsychicTier) => {
       if (gateBypassed) return
       if (occPsychicLocked && tier !== 'master') return
+      if (!occPsychicLocked && tier === 'master') return
 
       setPsychicTierState(tier)
       setRawCharacter((prev) => {
@@ -1797,6 +1800,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [],
   )
 
+  const devAutoRollAndAssignAllAttributes = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devAutoAssignCreationAttributes').then(
+      ({ buildDevAutoAttributeCreationState }) => {
+        setRawCharacter((prev) => {
+          const occ = getLibraryOccById(prev.occ.id) ?? undefined
+          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const withPool = buildDevAutoAttributeCreationState(
+            prev,
+            race?.attributes,
+            occ,
+          )
+          return syncRaceOccFacadeSdc(
+            syncCreationAttributeBranches(withPool, occ),
+          )
+        })
+      },
+    )
+  }, [])
+
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
       setRawCharacter((prev) => {
@@ -2089,6 +2112,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
+      devAutoRollAndAssignAllAttributes: import.meta.env.DEV
+        ? devAutoRollAndAssignAllAttributes
+        : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationPendingDiceResolution,
@@ -2200,6 +2226,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
+      devAutoRollAndAssignAllAttributes,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationPendingDiceResolution,
