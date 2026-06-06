@@ -1,10 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useCharacter } from '../../context/CharacterContext'
 
 import type { EngineSkillDef } from '../../data/library/skills'
-
-import type { PsychicTier } from '../../types'
 
 import { getSkillById } from '../../data/library/skills'
 
@@ -16,9 +14,19 @@ import {
 
   matchesSkillBookCategoryFilter,
 
-  sortCreationSkillLibraryResults,
+  sortCreationSkillLibraryWithSelectableFirst,
 
 } from '../../lib/creationSkillCatalog'
+
+import { resolveCreationLibrarySkillPreview } from '../../lib/skillDisplayDetails'
+
+import {
+  appendCreationSkillPickWithConditionalGrants,
+  grantedBySkillLabel,
+  hasConditionalGrantForSkill,
+  removeCreationSkillPickWithConditionalCascade,
+  replaceConditionalGrantWithPaidPick,
+} from '../../lib/conditionalRelatedSkills'
 
 import { maPbScaledBonuses } from '../../lib/skillEquation'
 
@@ -35,20 +43,6 @@ import {
 import { computeLiveBonuses } from '../../lib/characterDerived'
 
 import {
-
-  isOccRelatedSkillAllowed,
-
-  isSecondarySkillAllowed,
-
-} from '../../lib/occCreationDerivation'
-
-import {
-
-  applyPsychicOccSkillBonusPercent,
-
-} from '../../lib/creationPsychicSkills'
-
-import {
   collectAllCreationSkillPicks,
   findOccCoreVoucherSlotForPick,
   isOccCoreGrantSkillPick,
@@ -56,17 +50,16 @@ import {
   resolveOccCoreSkillPicks,
 } from '../../lib/occCoreSkillVouchers'
 
-import { creationHandToHandElectiveSlotCost } from '../../lib/creationHandToHandChoice'
+import {
+  canAffordHandToHandTier,
+  creationHandToHandElectiveSlotCost,
+  listOccHandToHandOptions,
+  type CreationHandToHandTier,
+} from '../../lib/creationHandToHandChoice'
 
 import {
 
-  resolveSelectionTier,
-
   resolveSkillCreationDisplay,
-
-  skillAddDisabledReason,
-
-  skillRelatedVsSecondaryPreviewDiffers,
 
   type SkillPickDisplayTier,
 
@@ -74,6 +67,7 @@ import {
 
 import {
   buildCreationSkillPick,
+  creationLibrarySkillAddState,
   creationSkillIdsSet,
   creationSkillPickHasEditableSpecialization,
   downgradePickToStandard,
@@ -81,9 +75,10 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
   getOccCoreVoucherSlotPicks,
-  isCreationSkillFullySelected,
+  isCreationLibrarySkillSelectable,
   isCreationSkillIdentityTaken,
   professionalQualityLabel,
+  resolveCreationLibrarySkillBlockReason,
   skillNeedsPickDialog,
   skillSupportsProfessionalQuality,
   sumCreationSkillPickSlots,
@@ -91,93 +86,23 @@ import {
   upgradePickToProfessional,
 } from '../../lib/creationSkillPicks'
 
-import { OccCoreSkillVoucherPanel } from './OccCoreSkillVoucherPanel'
+import { SelectedOccCoreSkills } from './SelectedOccCoreSkills'
 
 import { SkillPickAddDialog, type SkillPickAddDialogState } from './SkillPickAddDialog'
 
 import { SkillSpecializationEditDialog } from './SkillSpecializationEditDialog'
 
 import { SkillStatLines } from './SkillStatLines'
+import { SkillSelectedPercentBlock } from './SkillSelectedPercentBlock'
 
 import type { CreationSkillPick } from '../../types'
 
-
-
-function formatCategoryRuleLine(
-
-  r: {
-
-    categoryName: string
-
-    accessType: string
-
-    bonusPercent: number
-
-    skillSpecificOverrides?: Readonly<Record<string, number>>
-
-    exceptions?: readonly string[]
-
-  },
-
-  psychicTier: PsychicTier,
-
-): string {
-
-  const rawBonus = r.bonusPercent
-
-  const effectiveBonus = applyPsychicOccSkillBonusPercent(rawBonus, psychicTier)
-
-  const halved = psychicTier === 'major' && effectiveBonus !== rawBonus
-
-  const showBonus = r.accessType !== 'none' && rawBonus > 0
-
-
-
-  let line = `${r.categoryName}: ${r.accessType}`
-
-  if (showBonus) {
-
-    line += ` (+${halved ? effectiveBonus : rawBonus}%`
-
-    if (halved) line += ` — book +${rawBonus}% halved for Major psychic`
-
-    line += ')'
-
-  }
-
-
-
-  if (r.skillSpecificOverrides && Object.keys(r.skillSpecificOverrides).length > 0) {
-
-    const overrides = Object.entries(r.skillSpecificOverrides)
-
-      .map(([id, pct]) => {
-
-        const eff = applyPsychicOccSkillBonusPercent(pct, psychicTier)
-
-        return halved && eff !== pct
-
-          ? `${id} +${eff}% (book +${pct}%)`
-
-          : `${id} +${pct}%`
-
-      })
-
-      .join(', ')
-
-    line += ` · overrides: ${overrides}`
-
-  }
-
-  if (r.exceptions?.length) {
-
-    line += ` (exceptions: ${r.exceptions.join(', ')})`
-
-  }
-
-  return line
-
-}
+import {
+  formatOccCategoryRuleDropdown,
+  formatOccCategoryRuleHeader,
+  occCategoryRuleToneClass,
+  resolveOccCategoryRuleForFilter,
+} from '../../lib/occCategoryRuleDisplay'
 
 
 
@@ -209,6 +134,8 @@ export function SkillEngine() {
 
     setCreationOccGrantPickDetail,
 
+    setCreationHandToHandTier,
+
     hostGenreId,
 
   } = useCharacter()
@@ -220,6 +147,10 @@ export function SkillEngine() {
   const [search, setSearch] = useState('')
 
   const [category, setCategory] = useState<string>('')
+
+  const [categoryOpen, setCategoryOpen] = useState(false)
+
+  const categorySelectRef = useRef<HTMLDivElement>(null)
 
   const [pickDialog, setPickDialog] = useState<SkillPickAddDialogState | null>(null)
 
@@ -353,6 +284,20 @@ export function SkillEngine() {
 
   const secondaryCap = occCreationDerived?.secondarySkillSlots ?? 0
 
+  const handToHandTier = character.creationHandToHandTier ?? 'none'
+
+  const handToHandOptions = useMemo(
+    () => (effectiveOcc ? listOccHandToHandOptions(effectiveOcc) : []),
+    [effectiveOcc],
+  )
+
+  const handToHandInputClass = morphus
+    ? 'border-violet-700 bg-slate-900 text-violet-100'
+    : 'border-slate-300 bg-white text-slate-900'
+
+  const relatedSectionClass = morphus ? 'text-violet-400' : 'text-violet-600'
+  const secondarySectionClass = morphus ? 'text-emerald-400' : 'text-emerald-700'
+
 
 
   const bookCategories = useMemo(
@@ -362,6 +307,32 @@ export function SkillEngine() {
     [hostGenreId],
 
   )
+
+  const occCategoryRules = effectiveOcc?.occRelatedSkills.categoryRules ?? []
+
+  const selectedCategoryRule = useMemo(
+    () => resolveOccCategoryRuleForFilter(category, occCategoryRules),
+    [category, occCategoryRules],
+  )
+
+  const selectedCategoryRuleDisplay = useMemo(
+    () => formatOccCategoryRuleHeader(selectedCategoryRule),
+    [selectedCategoryRule],
+  )
+
+  useEffect(() => {
+    if (!categoryOpen) return
+    function handlePointerDown(event: MouseEvent) {
+      if (
+        categorySelectRef.current &&
+        !categorySelectRef.current.contains(event.target as Node)
+      ) {
+        setCategoryOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handlePointerDown)
+    return () => document.removeEventListener('mousedown', handlePointerDown)
+  }, [categoryOpen])
 
 
 
@@ -447,6 +418,8 @@ export function SkillEngine() {
 
       maPbBonus,
 
+      allPicks: allCreationPicks,
+
     }),
 
     [
@@ -469,6 +442,8 @@ export function SkillEngine() {
 
       maPbBonus,
 
+      allCreationPicks,
+
     ],
 
   )
@@ -487,7 +462,32 @@ export function SkillEngine() {
 
   const libraryPopulated = category === 'All' ? search.trim().length > 0 : category !== ''
 
-
+  const libraryContext = useMemo(
+    () => ({
+      effectiveOcc,
+      specializationId: character.occSpecializationId,
+      relatedSlotsUsed,
+      relatedSkillCap,
+      secondaryPickSlots,
+      secondaryCap,
+      occPicks: resolvedOccPicks,
+      relatedPicks: relatedSelected,
+      secondaryPicks: secondarySelected,
+      activeFilterCategory: category,
+    }),
+    [
+      effectiveOcc,
+      character.occSpecializationId,
+      relatedSlotsUsed,
+      relatedSkillCap,
+      secondaryPickSlots,
+      secondaryCap,
+      resolvedOccPicks,
+      relatedSelected,
+      secondarySelected,
+      category,
+    ],
+  )
 
   const filteredLibrary = useMemo(() => {
 
@@ -513,9 +513,10 @@ export function SkillEngine() {
 
     })
 
-    return sortCreationSkillLibraryResults(filtered, category)
-
-  }, [search, category, skillLibrary, libraryPopulated])
+    return sortCreationSkillLibraryWithSelectableFirst(filtered, category, (s) =>
+      isCreationLibrarySkillSelectable(s, libraryContext),
+    )
+  }, [search, category, skillLibrary, libraryPopulated, libraryContext])
 
 
 
@@ -639,6 +640,57 @@ export function SkillEngine() {
     )
   }
 
+  function renderHandToHandRow() {
+    if (!effectiveOcc || handToHandOptions.length === 0) return null
+
+    return (
+      <li className={`rounded border px-2 py-1.5 text-sm ${subStyle}`}>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <p className="font-medium">Hand-to-Hand</p>
+            <select
+              value={
+                handToHandTier === 'none' ||
+                handToHandOptions.some((o) => o.tier === handToHandTier)
+                  ? handToHandTier
+                  : 'none'
+              }
+              onChange={(e) => {
+                setCreationHandToHandTier(
+                  e.target.value as CreationHandToHandTier,
+                )
+              }}
+              className={`mt-1 w-full max-w-md rounded border px-2 py-1.5 text-sm ${handToHandInputClass}`}
+            >
+              <option value="none">None</option>
+              {handToHandOptions.map((opt) => {
+                const affordable = canAffordHandToHandTier(
+                  effectiveOcc,
+                  opt.tier,
+                  relatedCap,
+                  relatedSlotsUsed - handToHandReserved,
+                )
+                const isCurrent = opt.tier === handToHandTier
+                return (
+                  <option
+                    key={opt.tier}
+                    value={opt.tier}
+                    disabled={!affordable && !isCurrent}
+                  >
+                    {opt.label}
+                    {!affordable && !isCurrent
+                      ? ' — insufficient related slots'
+                      : ''}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        </div>
+      </li>
+    )
+  }
+
   function renderSelectedRow(
 
     pick: CreationSkillPick,
@@ -646,6 +698,8 @@ export function SkillEngine() {
     tier: SkillPickDisplayTier,
 
     onRemove?: (instanceId: string) => void,
+
+    removeLabel = 'Remove',
 
   ) {
 
@@ -659,7 +713,10 @@ export function SkillEngine() {
 
     const canEdit = creationSkillPickHasEditableSpecialization(pick)
 
-    const canTogglePro = skillSupportsProfessionalQuality(pick.skillId)
+    const canTogglePro =
+      skillSupportsProfessionalQuality(pick.skillId) && !pick.grantedBySkillId
+
+    const grantSource = grantedBySkillLabel(pick)
 
     const proSlotsRemaining =
       tier === 'secondary'
@@ -695,33 +752,56 @@ export function SkillEngine() {
 
           <div className="min-w-0 flex-1">
 
-            <p className="font-medium">
+            <div className="flex items-start justify-between gap-3">
 
-              {formatCreationSkillPickLabel(pick, def.name)}
+              <p className="font-bold text-slate-900">
 
-              {bad ? (
+                {formatCreationSkillPickLabel(pick, def.name)}
 
-                <span
+                {bad ? (
 
-                  className="ml-1 text-amber-500"
+                  <span
 
-                  title={
+                    className="ml-1 text-amber-500"
 
-                    missingPrerequisiteMessage(def.prerequisite, allSelected) ?? ''
+                    title={
 
-                  }
+                      missingPrerequisiteMessage(def.prerequisite, allSelected) ?? ''
 
-                >
+                    }
 
-                  ⚠
+                  >
 
-                </span>
+                    ⚠
 
+                  </span>
+
+                ) : null}
+
+              </p>
+
+              {display.percentSummary ? (
+                <SkillSelectedPercentBlock
+                  summary={display.percentSummary}
+                  impossibleInMorphus={display.impossibleInMorphus}
+                  morphus={morphus}
+                />
               ) : null}
 
-            </p>
+            </div>
 
-            <SkillStatLines display={display} />
+            {grantSource ? (
+              <p className="mt-0.5 text-xs italic text-slate-500">
+                Provided by {grantSource}
+              </p>
+            ) : null}
+
+            {display.isWeaponProficiency || !display.percentSummary ? (
+              <SkillStatLines display={display} />
+            ) : display.physicalBonusSummary ||
+              display.subPercentLines.length > 0 ? (
+              <SkillStatLines display={display} />
+            ) : null}
 
           </div>
 
@@ -767,7 +847,7 @@ export function SkillEngine() {
               )
             ) : null}
 
-            {onRemove ? (
+            {onRemove && !pick.grantedBySkillId ? (
 
               <button
 
@@ -779,7 +859,7 @@ export function SkillEngine() {
 
               >
 
-                Remove
+                {removeLabel}
 
               </button>
 
@@ -819,7 +899,54 @@ export function SkillEngine() {
 
 
 
+  function commitSkillPickAdd(
+    pick: CreationSkillPick,
+    tier: 'related' | 'secondary',
+  ) {
+    if (
+      hasConditionalGrantForSkill(
+        pick.skillId,
+        relatedSelected,
+        secondarySelected,
+      )
+    ) {
+      const next = replaceConditionalGrantWithPaidPick(
+        pick,
+        tier,
+        relatedSelected,
+        secondarySelected,
+      )
+      setCreationSkillPicks(occSkillIds, next.related, next.secondary)
+      return
+    }
+
+    const selectedBeforeAdd = creationSkillIdsSet(
+      resolvedOccSkillIds,
+      relatedSelected,
+      secondarySelected,
+    )
+    const next = appendCreationSkillPickWithConditionalGrants(
+      pick,
+      tier,
+      selectedBeforeAdd,
+      relatedSelected,
+      secondarySelected,
+    )
+    setCreationSkillPicks(occSkillIds, next.related, next.secondary)
+  }
+
+
+
   function handleSkillAdd(skillId: string, action: 'related' | 'secondary') {
+    const def = getSkillById(skillId)
+    if (def) {
+      const { canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
+        def,
+        libraryContext,
+      )
+      if (action === 'related' && !canAddRelated) return
+      if (action === 'secondary' && !canAddSecondary) return
+    }
 
     const existingPicks = action === 'related' ? relatedSelected : secondarySelected
 
@@ -829,18 +956,9 @@ export function SkillEngine() {
 
       const pick = buildCreationSkillPick(skillId, { professionalQuality: false })
 
-      if (action === 'related') {
-
-        setRelatedSelected([...relatedSelected, pick])
-
-      } else {
-
-        setSecondarySelected([...secondarySelected, pick])
-
-      }
+      commitSkillPickAdd(pick, action)
 
       return
-
     }
 
     openPickDialog(skillId, action)
@@ -908,376 +1026,75 @@ export function SkillEngine() {
 
     })
 
-    setTarget([...target, pick])
+    commitSkillPickAdd(pick, variant)
 
   }
 
 
 
   function renderLibrarySkill(s: EngineSkillDef) {
-
-    const picked = isCreationSkillFullySelected(
-
-      s.id,
-
-      resolvedOccPicks,
-
-      relatedSelected,
-
-      secondarySelected,
-
+    const { canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
+      s,
+      libraryContext,
     )
+    const selectable = canAddRelated || canAddSecondary
 
-    const selectionTier = resolveSelectionTier(
-
-      s.id,
-
-      resolvedOccSkillIds,
-
-      relatedSelected,
-
-      secondarySelected,
-
-    )
-
-    const prereqOk = prerequisiteSatisfied(s.prerequisite, allSelected)
-
-    const warn = picked && !prereqOk
-
-    const relFull = relatedSlotsUsed >= relatedSkillCap
-
-    const secFull = secondaryPickSlots >= secondaryCap
-
-    const relatedBlocked =
-
-      s.slotKind === 'occ_related' &&
-
-      effectiveOcc != null &&
-
-      !isOccRelatedSkillAllowed(
-
-        effectiveOcc,
-
-        s.id,
-
-        s.category,
-
-        character.occSpecializationId,
-
+    if (!selectable) {
+      const blockReason = resolveCreationLibrarySkillBlockReason(s, libraryContext)
+      return (
+        <li
+          key={s.id}
+          className={`rounded-md border p-2 ${subStyle} opacity-60`}
+        >
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <span className="font-medium">{s.name}</span>
+            {blockReason ? (
+              <span className="text-xs font-semibold text-red-500">{blockReason}</span>
+            ) : null}
+          </div>
+        </li>
       )
+    }
 
-    const secondaryBlocked =
-
-      s.secondaryEligible &&
-
-      effectiveOcc != null &&
-
-      !isSecondarySkillAllowed(
-
-        effectiveOcc,
-
-        s.id,
-
-        s.category,
-
-        character.occSpecializationId,
-
-      )
-
-    const canAddRelated =
-
-      s.slotKind === 'occ_related' && !picked && !relFull && !relatedBlocked
-
-    const canAddSecondary =
-
-      s.secondaryEligible && !picked && !secFull && !secondaryBlocked
-
-
-
-    const relatedDisabledReason = skillAddDisabledReason('related', {
-
-      picked,
-
-      slotsFull: relFull,
-
-      categoryBlocked: relatedBlocked,
-
-      actionAvailable: s.slotKind === 'occ_related',
-
-    })
-
-    const secondaryDisabledReason = skillAddDisabledReason('secondary', {
-
-      picked,
-
-      slotsFull: secFull,
-
-      categoryBlocked: secondaryBlocked,
-
-      actionAvailable: s.secondaryEligible,
-
-    })
-
-
-
-    const showRelatedPreview = !picked && s.slotKind === 'occ_related'
-
-    const showSecondaryPreview = !picked && s.secondaryEligible
-
-    const previewRelatedDisplay = showRelatedPreview
-
-      ? resolveDisplay(s, 'preview_related')
-
-      : null
-
-    const previewSecondaryDisplay = showSecondaryPreview
-
-      ? resolveDisplay(s, 'preview_secondary')
-
-      : null
-
-    const previewsDiffer =
-
-      previewRelatedDisplay &&
-
-      previewSecondaryDisplay &&
-
-      skillRelatedVsSecondaryPreviewDiffers(
-
-        previewRelatedDisplay,
-
-        previewSecondaryDisplay,
-
-      )
-
-    const unifiedPreviewDisplay =
-
-      previewSecondaryDisplay ?? previewRelatedDisplay
-
-    const bookCatLabel = (s.bookCategories ?? []).join(', ')
-
-
+    const { physicalBonusSummary, subSkillNames, grantedSkillNames } =
+      resolveCreationLibrarySkillPreview(s)
 
     return (
-
-      <li
-
-        key={s.id}
-
-        className={`rounded-md border p-2 ${subStyle} ${
-
-          picked ? 'opacity-50' : ''
-
-        } ${warn ? 'border-amber-500/70 ring-1 ring-amber-500/40' : ''}`}
-
-      >
-
+      <li key={s.id} className={`rounded-md border p-2 ${subStyle}`}>
         <div className="font-medium">{s.name}</div>
-
-        <div className="text-xs opacity-60">{bookCatLabel || s.category}</div>
-
-        {picked && selectionTier ? (
-
-          <p className="mt-1 text-xs font-semibold text-slate-500">
-
-            Already selected (
-
-            {selectionTier === 'occ'
-
-              ? 'O.C.C. skills'
-
-              : selectionTier === 'related'
-
-                ? 'O.C.C. related'
-
-                : 'secondary'}
-
-            )
-
+        {physicalBonusSummary ? (
+          <p className="mt-1 font-mono text-xs opacity-80">{physicalBonusSummary}</p>
+        ) : null}
+        {subSkillNames.length > 0 ? (
+          <p className="mt-1 text-xs opacity-80">{subSkillNames.join(', ')}</p>
+        ) : null}
+        {grantedSkillNames.length > 0 ? (
+          <p className="mt-1 text-xs opacity-70">
+            Also grants: {grantedSkillNames.join(', ')}
           </p>
-
         ) : null}
-
-        {!picked && previewsDiffer && previewRelatedDisplay ? (
-
-          <div className="mt-1">
-
-            <p className="text-[10px] uppercase tracking-wide opacity-60">
-
-              If taken as O.C.C. related
-
-            </p>
-
-            <SkillStatLines display={previewRelatedDisplay} compact />
-
-          </div>
-
-        ) : null}
-
-        {!picked && previewsDiffer && previewSecondaryDisplay ? (
-
-          <div className="mt-1">
-
-            <p className="text-[10px] uppercase tracking-wide opacity-60">
-
-              If taken as secondary
-
-            </p>
-
-            <SkillStatLines display={previewSecondaryDisplay} compact />
-
-          </div>
-
-        ) : null}
-
-        {!picked && !previewsDiffer && unifiedPreviewDisplay ? (
-
-          <div className="mt-1">
-
-            <SkillStatLines display={unifiedPreviewDisplay} compact />
-
-          </div>
-
-        ) : null}
-
-        {picked && selectionTier ? (
-
-          <div className="mt-1">
-
-            <SkillStatLines
-
-              display={resolveDisplay(
-
-                s,
-
-                selectionTier === 'occ'
-
-                  ? 'occ'
-
-                  : selectionTier === 'related'
-
-                    ? 'related'
-
-                    : 'secondary',
-
-              )}
-
-              compact
-
-            />
-
-          </div>
-
-        ) : null}
-
-        {warn ? (
-
-          <p
-
-            className="mt-1 text-xs font-semibold text-amber-500"
-
-            title={missingPrerequisiteMessage(s.prerequisite, allSelected) ?? ''}
-
-          >
-
-            Missing Prerequisite — still visible (Pillar 8).
-
-          </p>
-
-        ) : null}
-
-        <div className="mt-2 flex flex-wrap items-center gap-1">
-
-          {s.slotKind === 'occ_related' ? (
-
-            <>
-
-              <button
-
-                type="button"
-
-                disabled={!canAddRelated}
-
-                title={relatedDisabledReason ?? undefined}
-
-                className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
-
-                onClick={() => {
-
-                  if (!canAddRelated) return
-
-                  handleSkillAdd(s.id, 'related')
-
-                }}
-
-              >
-
-                + Related
-
-              </button>
-
-              {relatedDisabledReason ? (
-
-                <span className="text-[10px] text-rose-500">
-
-                  {relatedDisabledReason}
-
-                </span>
-
-              ) : null}
-
-            </>
-
+        <div className="mt-2 flex flex-wrap gap-1">
+          {canAddRelated ? (
+            <button
+              type="button"
+              className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white"
+              onClick={() => handleSkillAdd(s.id, 'related')}
+            >
+              + Related
+            </button>
           ) : null}
-
-          {s.secondaryEligible ? (
-
-            <>
-
-              <button
-
-                type="button"
-
-                disabled={!canAddSecondary}
-
-                title={secondaryDisabledReason ?? undefined}
-
-                className="rounded bg-emerald-700 px-2 py-1 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
-
-                onClick={() => {
-
-                  if (!canAddSecondary) return
-
-                  handleSkillAdd(s.id, 'secondary')
-
-                }}
-
-              >
-
-                + Secondary
-
-              </button>
-
-              {secondaryDisabledReason ? (
-
-                <span className="text-[10px] text-rose-500">
-
-                  {secondaryDisabledReason}
-
-                </span>
-
-              ) : null}
-
-            </>
-
+          {canAddSecondary ? (
+            <button
+              type="button"
+              className="rounded bg-emerald-700 px-2 py-1 text-xs font-semibold text-white"
+              onClick={() => handleSkillAdd(s.id, 'secondary')}
+            >
+              + Secondary
+            </button>
           ) : null}
-
         </div>
-
       </li>
-
     )
-
   }
 
 
@@ -1294,57 +1111,15 @@ export function SkillEngine() {
 
       >
 
-        O.C.C. core skill choices (Hand-to-Hand and vouchers) are resolved above.
+        O.C.C. core grants, vouchers, and parameterized skills are chosen in the
 
-        Pick <strong>O.C.C. related</strong> skills (category % bonuses apply) and{' '}
+        selected skills list below. Pick <strong>O.C.C. related</strong> skills
 
-        <strong>secondary</strong> skills (same category access as related, no
+        (category % bonuses apply) and <strong>secondary</strong> skills (same
 
-        category % bonuses).
+        category access as related, no category % bonuses).
 
       </p>
-
-
-
-      {effectiveOcc?.occRelatedSkills.categoryRules.length ? (
-
-        <div
-
-          className={`mb-4 rounded-lg border px-3 py-2 text-[10px] ${
-
-            morphus ? 'border-violet-800 text-violet-200' : 'border-slate-600'
-
-          }`}
-
-        >
-
-          <p className="font-bold uppercase tracking-wide opacity-80">
-
-            Related & secondary skill category rules
-
-          </p>
-
-          <ul className="mt-1 list-inside list-disc space-y-0.5 font-mono">
-
-            {effectiveOcc.occRelatedSkills.categoryRules.map((r) => (
-
-              <li key={r.categoryName}>
-
-                {formatCategoryRuleLine(r, psychicTier)}
-
-              </li>
-
-            ))}
-
-          </ul>
-
-        </div>
-
-      ) : null}
-
-
-
-      <OccCoreSkillVoucherPanel />
 
 
 
@@ -1362,13 +1137,20 @@ export function SkillEngine() {
 
           <ul className="space-y-1">
 
-            {resolvedOccPicks.map((pick) => renderSelectedRow(pick, 'occ'))}
-
-            {resolvedOccPicks.length === 0 ? (
-
-              <li className="text-xs opacity-50">None yet.</li>
-
-            ) : null}
+            <SelectedOccCoreSkills
+              subStyle={subStyle}
+              inputClass={handToHandInputClass}
+              morphus={morphus}
+              onEditPick={(pick) => setEditPick({ pick, tier: 'occ' })}
+              renderOccSkillRow={(pick, onClear) =>
+                renderSelectedRow(
+                  pick,
+                  'occ',
+                  onClear ? () => onClear() : undefined,
+                  'Clear',
+                )
+              }
+            />
 
           </ul>
 
@@ -1376,25 +1158,37 @@ export function SkillEngine() {
 
         <div>
 
-          <p className="mb-1 text-xs font-semibold opacity-70">O.C.C. related</p>
+          <p className={`mb-1 text-sm font-bold ${relatedSectionClass}`}>
+            O.C.C. Related{' '}
+            {relatedCap > 0 ? (
+              <span className="tabular-nums">
+                {relatedSlotsUsed}/{relatedCap}
+              </span>
+            ) : null}
+          </p>
 
           <ul className="space-y-1">
+
+            {renderHandToHandRow()}
 
             {relatedSelected.map((pick) =>
 
               renderSelectedRow(pick, 'related', (instanceId) =>
 
-                setRelatedSelected(
-
-                  relatedSelected.filter((p) => p.instanceId !== instanceId),
-
+                setCreationSkillPicks(
+                  occSkillIds,
+                  removeCreationSkillPickWithConditionalCascade(
+                    relatedSelected,
+                    instanceId,
+                  ),
+                  secondarySelected,
                 ),
 
               ),
 
             )}
 
-            {relatedSelected.length === 0 ? (
+            {relatedSelected.length === 0 && handToHandOptions.length === 0 ? (
 
               <li className="text-xs opacity-50">None selected.</li>
 
@@ -1406,7 +1200,14 @@ export function SkillEngine() {
 
         <div>
 
-          <p className="mb-1 text-xs font-semibold opacity-70">Secondary</p>
+          <p className={`mb-1 text-sm font-bold ${secondarySectionClass}`}>
+            Secondary{' '}
+            {secondaryCap > 0 ? (
+              <span className="tabular-nums">
+                {secondaryPickSlots}/{secondaryCap}
+              </span>
+            ) : null}
+          </p>
 
           <ul className="space-y-1">
 
@@ -1414,10 +1215,13 @@ export function SkillEngine() {
 
               renderSelectedRow(pick, 'secondary', (instanceId) =>
 
-                setSecondarySelected(
-
-                  secondarySelected.filter((p) => p.instanceId !== instanceId),
-
+                setCreationSkillPicks(
+                  occSkillIds,
+                  relatedSelected,
+                  removeCreationSkillPickWithConditionalCascade(
+                    secondarySelected,
+                    instanceId,
+                  ),
                 ),
 
               ),
@@ -1438,109 +1242,147 @@ export function SkillEngine() {
 
 
 
-      <div
-
-        className={`mb-4 grid gap-3 rounded-lg border p-4 sm:grid-cols-2 ${panelStyle}`}
-
-        aria-label="Skill slot tracker"
-
-      >
-
-        <div>
-
-          <p className="text-xs font-bold uppercase tracking-wide opacity-70">
-
-            O.C.C. related skills
-
-          </p>
-
-          <p className="mt-1 font-mono text-2xl font-bold tabular-nums">
-
-            {relatedSlotsUsed} / {relatedCap}
-
-          </p>
-
-          <p className="text-xs opacity-75">
-
-            Category % bonuses apply · base {relatedBase} × {skillSlotMultiplier}
-
-            {skillSlotMultiplier < 1 ? ' (Major psychic)' : ''}
-
-            {handToHandReserved > 0
-
-              ? ` · ${handToHandReserved} reserved for Hand-to-Hand`
-
-              : ''}
-
-          </p>
-
-        </div>
-
-        <div>
-
-          <p className="text-xs font-bold uppercase tracking-wide opacity-70">
-
-            Secondary skills
-
-          </p>
-
-          <p className="mt-1 font-mono text-2xl font-bold tabular-nums">
-
-            {secondaryPickSlots} / {secondaryCap}
-
-          </p>
-
-          <p className="text-xs opacity-75">
-
-            Same category access as related · no category % bonuses.
-
-          </p>
-
-        </div>
-
-      </div>
-
-
-
       <div className="mb-4 flex flex-wrap items-center gap-3">
 
         <label className="flex items-center gap-2 text-sm">
 
           <span className="opacity-70">Category</span>
 
-          <select
+          <div ref={categorySelectRef} className="relative min-w-[14rem]">
 
-            value={category}
+            <button
 
-            onChange={(e) => setCategory(e.target.value)}
+              type="button"
 
-            className={`min-w-[10rem] rounded-md border px-2 py-2 text-sm ${
+              aria-haspopup="listbox"
 
-              morphus
+              aria-expanded={categoryOpen}
 
-                ? 'border-violet-700 bg-slate-900 text-violet-50'
+              onClick={() => setCategoryOpen((open) => !open)}
 
-                : 'border-slate-300 bg-white'
+              className={`flex w-full items-center justify-between gap-2 rounded-md border px-2 py-2 text-left text-sm ${
 
-            }`}
+                morphus
 
-          >
+                  ? 'border-violet-700 bg-slate-900 text-violet-50'
 
-            <option value="">— select category —</option>
+                  : 'border-slate-300 bg-white text-slate-900'
 
-            <option value="All">All (search only)</option>
+              }`}
 
-            {bookCategories.map((c) => (
+            >
 
-              <option key={c} value={c}>
+              <span>
 
-                {c}
+                {category === ''
 
-              </option>
+                  ? '— select category —'
 
-            ))}
+                  : category === 'All'
 
-          </select>
+                    ? 'All (search only)'
+
+                    : category}
+
+              </span>
+
+              <span className="text-xs opacity-60" aria-hidden>
+
+                ▾
+
+              </span>
+
+            </button>
+
+            {categoryOpen ? (
+
+              <ul
+
+                role="listbox"
+
+                className={`absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-md border py-1 shadow-lg ${
+
+                  morphus
+
+                    ? 'border-violet-700 bg-slate-900 text-violet-50'
+
+                    : 'border-slate-300 bg-white text-slate-900'
+
+                }`}
+
+              >
+
+                {[
+
+                  { value: '', label: '— select category —', rule: null as const },
+
+                  { value: 'All', label: 'All (search only)', rule: null as const },
+
+                  ...bookCategories.map((c) => ({
+
+                    value: c,
+
+                    label: c,
+
+                    rule: formatOccCategoryRuleDropdown(
+
+                      resolveOccCategoryRuleForFilter(c, occCategoryRules),
+
+                    ),
+
+                  })),
+
+                ].map((item) => (
+
+                  <li key={item.value || '__empty'} role="option">
+
+                    <button
+
+                      type="button"
+
+                      className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-slate-100 ${
+
+                        morphus ? 'hover:bg-violet-950' : ''
+
+                      } ${category === item.value ? (morphus ? 'bg-violet-950' : 'bg-sky-50') : ''}`}
+
+                      onClick={() => {
+
+                        setCategory(item.value)
+
+                        setCategoryOpen(false)
+
+                      }}
+
+                    >
+
+                      <span>{item.label}</span>
+
+                      {item.rule ? (
+
+                        <span
+
+                          className={`shrink-0 text-xs font-medium ${occCategoryRuleToneClass(item.rule.tone, morphus)}`}
+
+                        >
+
+                          {item.rule.label}
+
+                        </span>
+
+                      ) : null}
+
+                    </button>
+
+                  </li>
+
+                ))}
+
+              </ul>
+
+            ) : null}
+
+          </div>
 
         </label>
 
@@ -1574,11 +1416,37 @@ export function SkillEngine() {
 
       <div className={`space-y-2 rounded-lg border p-3 ${panelStyle}`}>
 
-        <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+        {category !== '' && category !== 'All' ? (
 
-          Library
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
 
-        </h3>
+            <h3 className="text-sm font-bold uppercase tracking-wide">
+
+              {category}
+
+            </h3>
+
+            <span
+
+              className={`text-sm font-medium ${occCategoryRuleToneClass(selectedCategoryRuleDisplay.tone, morphus)}`}
+
+            >
+
+              {selectedCategoryRuleDisplay.label}
+
+            </span>
+
+          </div>
+
+        ) : (
+
+          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+
+            Library
+
+          </h3>
+
+        )}
 
         {!libraryPopulated ? (
 

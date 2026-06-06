@@ -13,6 +13,10 @@ export type SkillCatalogDisplayDetails = {
   physicalBonusSummary: string | null
   weaponBonusSummary: string | null
   subPercentLines: readonly SkillSubPercentLine[]
+  /** Sub-task / sub-skill names only (no %), for creation library preview. */
+  subSkillNames: readonly string[]
+  /** Skills granted via conditionalRelatedSkills when the character lacks them. */
+  grantedSkillNames: readonly string[]
   /** Show the primary Base % · +%/level → total line (not sub-tasks). */
   showMainPercentLine: boolean
 }
@@ -129,6 +133,60 @@ function listSubPercentLines(
   return lines
 }
 
+export function listCatalogSubSkillNames(
+  entry: Record<string, unknown> | undefined,
+): string[] {
+  if (!entry) return []
+  const names: string[] = []
+
+  const subTasks = entry.subTasks as Array<{ name?: string }> | undefined
+  for (const task of subTasks ?? []) {
+    const name = task.name?.trim()
+    if (name) names.push(name)
+  }
+
+  const subSkills = entry.subSkills as Array<{ name?: string }> | undefined
+  for (const sub of subSkills ?? []) {
+    const name = sub.name?.trim()
+    if (name) names.push(name)
+  }
+
+  return names
+}
+
+export function listCatalogConditionalGrantedSkillNames(
+  entry: Record<string, unknown> | undefined,
+): string[] {
+  if (!entry) return []
+  const grants = entry.conditionalRelatedSkills as
+    | Array<{ skillId?: string }>
+    | undefined
+  return (grants ?? [])
+    .map((grant) => getPalladiumSkillCatalogEntryById(grant.skillId ?? '')?.name)
+    .filter((name): name is string => !!name)
+}
+
+/** Stat bonuses + sub-skill names for the creation skill library (no % lines). */
+export function resolveCreationLibrarySkillPreview(
+  def: EngineSkillDef,
+): Pick<
+  SkillCatalogDisplayDetails,
+  'physicalBonusSummary' | 'subSkillNames' | 'grantedSkillNames'
+> {
+  const entry = getPalladiumSkillCatalogEntryById(def.id) as
+    | Record<string, unknown>
+    | undefined
+  const physicalRaw = entry?.physicalSkillBonuses as
+    | Record<string, unknown>
+    | undefined
+
+  return {
+    physicalBonusSummary: formatPhysicalSkillBonusSummary(physicalRaw),
+    subSkillNames: listCatalogSubSkillNames(entry),
+    grantedSkillNames: listCatalogConditionalGrantedSkillNames(entry),
+  }
+}
+
 function formatWpBonusesAtLevel(
   wp: {
     levelTiers?: readonly Record<string, unknown>[]
@@ -186,6 +244,8 @@ export function resolveSkillCatalogDisplayDetails(
         ? formatWpBonusesAtLevel(wp, characterLevel)
         : null,
       subPercentLines: [],
+      subSkillNames: [],
+      grantedSkillNames: [],
       showMainPercentLine: false,
     }
   }
@@ -204,6 +264,8 @@ export function resolveSkillCatalogDisplayDetails(
     physicalBonusSummary,
     weaponBonusSummary: null,
     subPercentLines,
+    subSkillNames: listCatalogSubSkillNames(entry),
+    grantedSkillNames: listCatalogConditionalGrantedSkillNames(entry),
     showMainPercentLine: def.basePercent > 0,
   }
 }

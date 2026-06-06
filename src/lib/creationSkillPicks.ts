@@ -1,4 +1,11 @@
+import type { EngineSkillDef } from '../data/library/skills'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import type { PalladiumOcc } from '../types'
+import {
+  isOccRelatedSkillAllowed,
+  isSecondarySkillAllowed,
+} from './occCreationDerivation'
+import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
 import type { CreationSkillPick } from '../types'
 
 export function newCreationSkillPickInstanceId(): string {
@@ -53,6 +60,7 @@ type CharacterRootStateLike = {
 }
 
 export function creationSkillPickSlotWeight(pick: CreationSkillPick): number {
+  if (pick.grantedBySkillId) return 0
   return pick.professionalQuality ? 2 : 1
 }
 
@@ -99,6 +107,15 @@ export function skillAllowsMultipleInstances(skillId: string): boolean {
 export function getSpecializationPrompt(skillId: string): string {
   const row = getPalladiumSkillCatalogEntryById(skillId)
   return row?.specialization?.prompt ?? 'Specify type'
+}
+
+/** Placeholder shown on parameterized O.C.C. grants before a type is chosen. */
+export function occGrantSelectionPlaceholder(skillId: string): string {
+  if (skillId === 'skill_language' || skillId === 'skill_literacy') {
+    return 'Select Language'
+  }
+  const name = getPalladiumSkillCatalogEntryById(skillId)?.name ?? 'type'
+  return `Select ${name}`
 }
 
 export function skillSupportsProfessionalQuality(skillId: string): boolean {
@@ -173,21 +190,28 @@ export function findMatchingCreationSkillPick(
   })
 }
 
-/** Same skill + specialization already chosen anywhere on the character. */
+export function findConditionalGrantPick(
+  picks: readonly CreationSkillPick[],
+  skillId: string,
+): CreationSkillPick | undefined {
+  return picks.find((p) => p.skillId === skillId && p.grantedBySkillId)
+}
+
+/** Same skill + specialization already chosen (ignores conditional grant placeholders). */
 export function isCreationSkillIdentityTaken(
   allPicks: readonly CreationSkillPick[],
   skillId: string,
   specialization?: string,
   excludeInstanceIds?: readonly string[],
 ): boolean {
-  return (
-    findMatchingCreationSkillPick(
-      allPicks,
-      skillId,
-      specialization,
-      excludeInstanceIds,
-    ) != null
+  const match = findMatchingCreationSkillPick(
+    allPicks,
+    skillId,
+    specialization,
+    excludeInstanceIds,
   )
+  if (!match) return false
+  return match.grantedBySkillId == null
 }
 
 export function findDuplicateSkillIdentityKeys(
@@ -215,6 +239,7 @@ export function isCreationSkillFullySelected(
   const allPicks = [...occPicks, ...relatedPicks, ...secondaryPicks]
   const existing = findMatchingCreationSkillPick(allPicks, skillId)
   if (!existing) return false
+  if (existing.grantedBySkillId) return false
   if (skillSupportsProfessionalQuality(skillId) && !existing.professionalQuality) {
     return false
   }
@@ -359,4 +384,141 @@ export function creationSkillPickHasEditableSpecialization(
 ): boolean {
   if (!skillRequiresSpecialization(pick.skillId)) return false
   return validateSpecializationInput(pick.specialization ?? '')
+}
+
+export type CreationLibrarySkillContext = {
+  effectiveOcc: PalladiumOcc | null | undefined
+  specializationId: string | null | undefined
+  relatedSlotsUsed: number
+  relatedSkillCap: number
+  secondaryPickSlots: number
+  secondaryCap: number
+  occPicks: readonly CreationSkillPick[]
+  relatedPicks: readonly CreationSkillPick[]
+  secondaryPicks: readonly CreationSkillPick[]
+  /** Active library category filter — gates availability per category. */
+  activeFilterCategory?: string
+  /** When set, skills blocked for the active race surface this reason. */
+  raceBlocked?: boolean
+}
+
+export function creationLibrarySkillAddState(
+  def: EngineSkillDef,
+  opts: CreationLibrarySkillContext,
+): {
+  picked: boolean
+  canAddRelated: boolean
+  canAddSecondary: boolean
+} {
+  const picked = isCreationSkillFullySelected(
+    def.id,
+    opts.occPicks,
+    opts.relatedPicks,
+    opts.secondaryPicks,
+  )
+  const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
+  const secFull = opts.secondaryPickSlots >= opts.secondaryCap
+  const relatedBlocked =
+    def.slotKind === 'occ_related' &&
+    opts.effectiveOcc != null &&
+    !isOccRelatedSkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      opts.activeFilterCategory,
+    )
+  const secondaryBlocked =
+    def.secondaryEligible &&
+    opts.effectiveOcc != null &&
+    !isSecondarySkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      opts.activeFilterCategory,
+    )
+  const raceBlocked = opts.raceBlocked === true
+  const canAddRelated =
+    def.slotKind === 'occ_related' &&
+    !picked &&
+    !relFull &&
+    !relatedBlocked &&
+    !raceBlocked
+  const canAddSecondary =
+    def.secondaryEligible &&
+    !picked &&
+    !secFull &&
+    !secondaryBlocked &&
+    !raceBlocked
+  return { picked, canAddRelated, canAddSecondary }
+}
+
+export function isCreationLibrarySkillSelectable(
+  def: EngineSkillDef,
+  opts: CreationLibrarySkillContext,
+): boolean {
+  const { canAddRelated, canAddSecondary } = creationLibrarySkillAddState(def, opts)
+  return canAddRelated || canAddSecondary
+}
+
+export function resolveCreationLibrarySkillBlockReason(
+  def: EngineSkillDef,
+  opts: CreationLibrarySkillContext,
+): string {
+  const { picked, canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
+    def,
+    opts,
+  )
+  if (canAddRelated || canAddSecondary) return ''
+
+  if (picked) return 'Already selected'
+  if (opts.raceBlocked) return 'Not available to Race'
+
+  if (
+    isActiveFilterCategoryOccBlocked(opts.activeFilterCategory, opts.effectiveOcc)
+  ) {
+    return ''
+  }
+
+  const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
+  const secFull = opts.secondaryPickSlots >= opts.secondaryCap
+  const hasRelated = def.slotKind === 'occ_related'
+  const hasSecondary = def.secondaryEligible
+  const relatedBlocked =
+    hasRelated &&
+    opts.effectiveOcc != null &&
+    !isOccRelatedSkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      opts.activeFilterCategory,
+    )
+  const secondaryBlocked =
+    hasSecondary &&
+    opts.effectiveOcc != null &&
+    !isSecondarySkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      opts.activeFilterCategory,
+    )
+
+  if (
+    (hasRelated && relatedBlocked && (!hasSecondary || secondaryBlocked)) ||
+    (hasSecondary && secondaryBlocked && (!hasRelated || relatedBlocked))
+  ) {
+    return 'Not available to O.C.C.'
+  }
+
+  if (hasRelated && relFull && (!hasSecondary || secFull)) {
+    return 'No O.C.C. related slots available'
+  }
+  if (hasSecondary && secFull && (!hasRelated || relFull)) {
+    return 'No secondary slots available'
+  }
+
+  return 'Not available'
 }

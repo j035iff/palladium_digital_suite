@@ -1588,6 +1588,10 @@ export type CreationSkillPick = {
   specialization?: string
   /** Second skill slot spent for professional / tailoring tier (+category or rank bonus). */
   professionalQuality?: boolean
+  /** Source skill that granted this pick free via conditionalRelatedSkills. */
+  grantedBySkillId?: string
+  /** Starting % from grantIfMissing (replaces book base for initial acquisition). */
+  conditionalGrantStartingPercent?: number
 }
 
 export type SheetSkill = {

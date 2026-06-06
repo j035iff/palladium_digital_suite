@@ -6,6 +6,8 @@ import type {
 } from '../types'
 import { featureBudgetCategory } from './featureEngine'
 import { getSkillBookCategories } from './creationSkillCatalog'
+import { mapFilterCategoryToOccCategory } from './occCategoryRuleDisplay'
+import { normalizeCatalogSkillId } from '../data/library/skillsCatalogLoader'
 import {
   occCoreSkillSlotWeight,
   occStartingOccSkillIds,
@@ -153,15 +155,47 @@ function categoryAccessAllowed(
   }
 }
 
+function skillIdInRuleExceptions(
+  skillId: string,
+  exceptions: readonly string[] | undefined,
+): boolean {
+  if (!exceptions?.length) return false
+  const normalized = normalizeCatalogSkillId(skillId)
+  return exceptions.some(
+    (ex) => ex === skillId || normalizeCatalogSkillId(ex) === normalized,
+  )
+}
+
+/** Whether a skill is allowed under one book category's O.C.C. rule. */
+export function occRelatedSkillAllowedInCategory(
+  occ: PalladiumOcc,
+  skillId: string,
+  categoryName: string,
+  specializationId?: string | null,
+): boolean {
+  occ = resolveEffectivePalladiumOcc(occ, specializationId)
+  const rules = occ.occRelatedSkills.categoryRules
+  if (!rules.length) return true
+
+  const occCategory = mapFilterCategoryToOccCategory(categoryName)
+  const rule = rules.find((r) => r.categoryName === occCategory)
+  if (!rule) return true
+
+  const inExceptions = skillIdInRuleExceptions(skillId, rule.exceptions)
+  return categoryAccessAllowed(rule.accessType, inExceptions)
+}
+
 /**
  * Whether a skill id may be taken as an O.C.C. related pick per categoryRules.
- * Uses palladiumSkills.json categories when available; falls back to engine category label.
+ * When {@link activeFilterCategory} is set, only that browse category's rule applies.
+ * Otherwise the skill is allowed if any of its book categories permit it.
  */
 export function isOccRelatedSkillAllowed(
   occ: PalladiumOcc,
   skillId: string,
   engineCategory?: string,
   specializationId?: string | null,
+  activeFilterCategory?: string,
 ): boolean {
   occ = resolveEffectivePalladiumOcc(occ, specializationId)
   const rules = occ.occRelatedSkills.categoryRules
@@ -176,13 +210,23 @@ export function isOccRelatedSkillAllowed(
 
   if (!categories.length) return true
 
-  for (const rule of rules) {
-    if (!categories.includes(rule.categoryName)) continue
-    const inExceptions = rule.exceptions?.includes(skillId) ?? false
-    return categoryAccessAllowed(rule.accessType, inExceptions)
+  if (
+    activeFilterCategory &&
+    activeFilterCategory !== '' &&
+    activeFilterCategory !== 'All'
+  ) {
+    if (!categories.includes(activeFilterCategory)) return true
+    return occRelatedSkillAllowedInCategory(
+      occ,
+      skillId,
+      activeFilterCategory,
+      specializationId,
+    )
   }
 
-  return true
+  return categories.some((cat) =>
+    occRelatedSkillAllowedInCategory(occ, skillId, cat, specializationId),
+  )
 }
 
 export function isSecondarySkillCategoryAllowed(
@@ -199,12 +243,14 @@ export function isSecondarySkillAllowed(
   skillId: string,
   engineCategory?: string,
   specializationId?: string | null,
+  activeFilterCategory?: string,
 ): boolean {
   return isOccRelatedSkillAllowed(
     occ,
     skillId,
     engineCategory,
     specializationId,
+    activeFilterCategory,
   )
 }
 

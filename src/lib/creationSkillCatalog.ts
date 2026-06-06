@@ -330,6 +330,22 @@ export function sortCreationSkillLibraryResults(
   })
 }
 
+/** Keep selectable library rows first; blocked rows sink to the bottom. */
+export function sortCreationSkillLibraryWithSelectableFirst(
+  skills: readonly EngineSkillDef[],
+  filterCategory: string,
+  isSelectable: (def: EngineSkillDef) => boolean,
+): EngineSkillDef[] {
+  const sorted = sortCreationSkillLibraryResults(skills, filterCategory)
+  const selectable: EngineSkillDef[] = []
+  const blocked: EngineSkillDef[] = []
+  for (const skill of sorted) {
+    if (isSelectable(skill)) selectable.push(skill)
+    else blocked.push(skill)
+  }
+  return [...selectable, ...blocked]
+}
+
 /** Ordered filter categories for creation skill browsing (fixed book taxonomy). */
 export function listCreationSkillBookCategories(
   _hostGenreId?: string,

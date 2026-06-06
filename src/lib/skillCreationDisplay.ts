@@ -1,6 +1,14 @@
 import type { EngineSkillDef } from '../data/skillLibrary'
+import {
+  resolveConditionalRelatedSynergyLines,
+  resolvePickBasePercentAtLevel,
+} from './conditionalRelatedSkills'
 import type { CreationSkillPick, PalladiumOcc, PsychicTier } from '../types'
-import { resolveProfessionalPercentBonus } from './creationSkillPicks'
+import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import {
+  formatCreationSkillPickLabel,
+  resolveProfessionalPercentBonus,
+} from './creationSkillPicks'
 import {
   resolveSkillPercent,
   type SkillPercentBreakdownLine,
@@ -11,6 +19,7 @@ import {
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
 import { listOccCoreVoucherTasks } from './occCoreSkillVouchers'
+import { getOccCoreVoucherPicks } from './creationSkillPicks'
 import {
   resolveSkillCatalogDisplayDetails,
   type SkillCatalogDisplayDetails,
@@ -28,6 +37,25 @@ export type SkillBonusLine = {
   value: number
 }
 
+export type SkillPercentBreakdownPartKind =
+  | 'base'
+  | 'iq'
+  | 'occ'
+  | 'synergy'
+  | 'penalty'
+
+export type SkillPercentBreakdownPart = {
+  kind: SkillPercentBreakdownPartKind
+  text: string
+}
+
+export type SkillPercentSummary = {
+  baseAtLevel: number
+  perLevel: number
+  total: number
+  parts: readonly SkillPercentBreakdownPart[]
+}
+
 export type SkillCreationDisplayInfo = SkillCatalogDisplayDetails & {
   basePercent: number
   perLevel: number
@@ -35,6 +63,158 @@ export type SkillCreationDisplayInfo = SkillCatalogDisplayDetails & {
   impossibleInMorphus?: boolean
   equationBonuses: readonly SkillBonusLine[]
   contextBonuses: readonly SkillBonusLine[]
+  percentSummary?: SkillPercentSummary
+}
+
+function effectiveSkillLevel(
+  acquisitionLevel: number,
+  characterLevel: number,
+): number {
+  return Math.max(1, characterLevel - acquisitionLevel + 1)
+}
+
+export function skillBasePercentAtLevel(
+  def: Pick<EngineSkillDef, 'basePercent' | 'perLevel' | 'acquisitionLevel'>,
+  characterLevel: number,
+): number {
+  const eff = effectiveSkillLevel(def.acquisitionLevel, characterLevel)
+  return def.basePercent + def.perLevel * Math.max(0, eff - 1)
+}
+
+export type ActiveSynergyBonusLine = {
+  label: string
+  value: number
+}
+
+export function resolveActiveSynergyBonusLines(
+  def: EngineSkillDef,
+  selectedIds: ReadonlySet<string>,
+  picks: readonly CreationSkillPick[],
+  pick?: CreationSkillPick,
+): ActiveSynergyBonusLine[] {
+  const lines: ActiveSynergyBonusLine[] = []
+
+  const proBonus = resolveProfessionalPercentBonus(def.id, pick)
+  if (proBonus !== 0) {
+    lines.push({ label: 'Professional quality', value: proBonus })
+  }
+
+  if (def.synergyBonuses != null && def.synergyBonuses !== 0) {
+    lines.push({ label: 'Synergy', value: def.synergyBonuses })
+  }
+
+  if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
+    lines.push({
+      label: formatSourceSkillLabel('skill_math_advanced', picks),
+      value: 10,
+    })
+  }
+
+  const catalog = getPalladiumSkillCatalogEntryById(def.id)
+  for (const raw of catalog?.synergies ?? []) {
+    if (!raw || typeof raw !== 'object') continue
+    const row = raw as { skillId?: string; bonusPercent?: number }
+    if (typeof row.skillId !== 'string' || typeof row.bonusPercent !== 'number') {
+      continue
+    }
+    if (!selectedIds.has(row.skillId)) continue
+    lines.push({
+      label: formatSourceSkillLabel(row.skillId, picks),
+      value: row.bonusPercent,
+    })
+  }
+
+  for (const line of resolveConditionalRelatedSynergyLines(
+    def.id,
+    selectedIds,
+    picks,
+    pick,
+  )) {
+    lines.push(line)
+  }
+
+  return lines.filter((line) => line.value !== 0)
+}
+
+function formatSourceSkillLabel(
+  skillId: string,
+  picks: readonly CreationSkillPick[],
+): string {
+  const pick = picks.find((p) => p.skillId === skillId)
+  const baseName =
+    getPalladiumSkillCatalogEntryById(skillId)?.name ?? skillId
+  return pick ? formatCreationSkillPickLabel(pick, baseName) : baseName
+}
+
+function sumSynergyBonuses(lines: readonly ActiveSynergyBonusLine[]): number {
+  return lines.reduce((sum, line) => sum + line.value, 0)
+}
+
+function buildPercentBreakdownParts(
+  baseAtLevel: number,
+  iqBonus: number,
+  maPbBonus: number,
+  occBonus: number,
+  synergyLines: readonly ActiveSynergyBonusLine[],
+  contextBonuses: readonly SkillBonusLine[],
+  scaledAttSkill: number,
+  statusMod: number,
+): SkillPercentBreakdownPart[] {
+  const parts: SkillPercentBreakdownPart[] = [
+    { kind: 'base', text: `Base ${baseAtLevel}` },
+  ]
+
+  if (iqBonus !== 0) {
+    parts.push({
+      kind: 'iq',
+      text: `${iqBonus > 0 ? '+' : ''}${iqBonus} IQ`,
+    })
+  }
+
+  if (maPbBonus !== 0) {
+    parts.push({
+      kind: 'iq',
+      text: `${maPbBonus > 0 ? '+' : ''}${maPbBonus} M.A. / P.B.`,
+    })
+  }
+
+  if (occBonus !== 0) {
+    parts.push({
+      kind: 'occ',
+      text: `${occBonus > 0 ? '+' : ''}${occBonus} OCC`,
+    })
+  }
+
+  for (const line of synergyLines) {
+    parts.push({
+      kind: 'synergy',
+      text: `${line.value > 0 ? '+' : ''}${line.value}% ${line.label}`,
+    })
+  }
+
+  if (scaledAttSkill < 0) {
+    parts.push({
+      kind: 'penalty',
+      text: `${scaledAttSkill}% Attribute (skill)`,
+    })
+  }
+
+  if (statusMod < 0) {
+    parts.push({
+      kind: 'penalty',
+      text: `${statusMod}% Status`,
+    })
+  }
+
+  for (const line of contextBonuses) {
+    if (line.value >= 0) continue
+    parts.push({
+      kind: 'penalty',
+      text: `${line.value}% ${line.label}`,
+    })
+  }
+
+  return parts
 }
 
 function buildEquationInput(
@@ -42,20 +222,33 @@ function buildEquationInput(
   selectedIds: ReadonlySet<string>,
   occBonus: number,
   pick?: CreationSkillPick,
+  allPicks: readonly CreationSkillPick[] = [],
+  characterLevel = 1,
 ) {
-  let synergy = def.synergyBonuses ?? 0
-  if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
-    synergy += 10
-  }
-  synergy += resolveProfessionalPercentBonus(def.id, pick)
+  const synergyLines = resolveActiveSynergyBonusLines(
+    def,
+    selectedIds,
+    allPicks,
+    pick,
+  )
+  const synergy = sumSynergyBonuses(synergyLines)
+  const baseAtLevel = resolvePickBasePercentAtLevel(def, pick, characterLevel)
+  const basePercentForEquation =
+    pick?.conditionalGrantStartingPercent != null
+      ? pick.conditionalGrantStartingPercent
+      : def.basePercent
   return {
-    basePercent: def.basePercent,
-    perLevel: def.perLevel,
-    acquisitionLevel: def.acquisitionLevel,
-    occBonus,
-    synergyBonuses: synergy,
-    scaledAttBonuses: def.scaledAttBonuses,
-    statusModifiers: def.statusModifiers,
+    synergyLines,
+    input: {
+      basePercent: basePercentForEquation,
+      perLevel: def.perLevel,
+      acquisitionLevel: def.acquisitionLevel,
+      occBonus,
+      synergyBonuses: synergy,
+      scaledAttBonuses: def.scaledAttBonuses,
+      statusModifiers: def.statusModifiers,
+    },
+    baseAtLevel,
   }
 }
 
@@ -77,30 +270,17 @@ function collectEquationBonusLines(
   iqBonus: number,
   maPbBonus: number,
   tier: SkillPickDisplayTier,
-  selectedIds: ReadonlySet<string>,
-  pick?: CreationSkillPick,
+  synergyLines: readonly ActiveSynergyBonusLine[],
 ): SkillBonusLine[] {
   const lines: SkillBonusLine[] = []
-  const proBonus = resolveProfessionalPercentBonus(def.id, pick)
-  if (proBonus !== 0) {
-    lines.push({ label: 'Professional quality', value: proBonus })
+  for (const line of synergyLines) {
+    lines.push({ label: line.label, value: line.value })
   }
   if (occBonus !== 0) {
     lines.push({ label: occBonusLabel(tier), value: occBonus })
   }
   if (iqBonus !== 0) {
     lines.push({ label: 'I.Q.', value: iqBonus })
-  }
-  let synergy = def.synergyBonuses ?? 0
-  if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
-    synergy += 10
-  }
-  if (synergy !== 0) {
-    const label =
-      def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')
-        ? 'Synergy (Advanced Math)'
-        : 'Synergy'
-    lines.push({ label, value: synergy })
   }
   const skillScaled = def.scaledAttBonuses ?? 0
   if (skillScaled !== 0) {
@@ -120,12 +300,13 @@ function resolveVoucherOccBonus(
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
   skillId: string,
-  voucherPicks: Readonly<Record<string, readonly string[]>>,
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
   psychicTier: PsychicTier,
 ): number {
   if (!occ) return 0
   for (const task of listOccCoreVoucherTasks(occ, specializationId)) {
-    if ((voucherPicks[task.id] ?? []).includes(skillId)) {
+    const picks = getOccCoreVoucherPicks(voucherPicks, task.id)
+    if (picks.some((pick) => pick.skillId === skillId)) {
       return applyPsychicOccSkillBonusPercent(
         task.entry.bonusPercent ?? 0,
         psychicTier,
@@ -142,7 +323,7 @@ function resolveOccBonusForTier(
   relatedIds: ReadonlySet<string>,
   psychicTier: PsychicTier,
   specializationId: string | null | undefined,
-  voucherPicks: Readonly<Record<string, readonly string[]>>,
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
 ): number {
   if (tier === 'secondary' || tier === 'preview_secondary') return 0
   if (tier === 'occ') {
@@ -184,13 +365,15 @@ export function resolveSkillCreationDisplay(
     allSelectedIds: ReadonlySet<string>
     psychicTier: PsychicTier
     specializationId?: string | null
-    voucherPicks: Readonly<Record<string, readonly string[]>>
+    voucherPicks: Readonly<Record<string, unknown>> | undefined
     skillPercentCtx: SkillPercentResolutionContext
     iqBonus: number
     maPbBonus: number
     pick?: CreationSkillPick
+    allPicks?: readonly CreationSkillPick[]
   },
 ): SkillCreationDisplayInfo {
+  const allPicks = opts.allPicks ?? (opts.pick ? [opts.pick] : [])
   const occBonus = resolveOccBonusForTier(
     def.id,
     tier,
@@ -200,7 +383,14 @@ export function resolveSkillCreationDisplay(
     opts.specializationId,
     opts.voucherPicks,
   )
-  const input = buildEquationInput(def, opts.allSelectedIds, occBonus, opts.pick)
+  const { synergyLines, input, baseAtLevel } = buildEquationInput(
+    def,
+    opts.allSelectedIds,
+    occBonus,
+    opts.pick,
+    allPicks,
+    opts.skillPercentCtx.characterLevel,
+  )
   const resolved = resolveSkillPercent({ ...input, id: def.id }, opts.skillPercentCtx)
   const equationBonuses = collectEquationBonusLines(
     def,
@@ -208,8 +398,7 @@ export function resolveSkillCreationDisplay(
     opts.iqBonus,
     opts.maPbBonus,
     tier,
-    opts.allSelectedIds,
-    opts.pick,
+    synergyLines,
   )
   const contextBonuses: SkillBonusLine[] = resolved.lines.map(
     (line: SkillPercentBreakdownLine) => ({
@@ -223,6 +412,25 @@ export function resolveSkillCreationDisplay(
     opts.skillPercentCtx.characterLevel,
   )
 
+  const percentSummary: SkillPercentSummary | undefined =
+    catalogDetails.showMainPercentLine && !catalogDetails.isWeaponProficiency
+      ? {
+          baseAtLevel,
+          perLevel: def.perLevel,
+          total: resolved.total,
+          parts: buildPercentBreakdownParts(
+            baseAtLevel,
+            opts.iqBonus,
+            opts.maPbBonus,
+            occBonus,
+            synergyLines,
+            contextBonuses,
+            def.scaledAttBonuses ?? 0,
+            def.statusModifiers ?? 0,
+          ),
+        }
+      : undefined
+
   return {
     ...catalogDetails,
     basePercent: def.basePercent,
@@ -231,6 +439,7 @@ export function resolveSkillCreationDisplay(
     impossibleInMorphus: resolved.impossibleInMorphus,
     equationBonuses: catalogDetails.isWeaponProficiency ? [] : equationBonuses,
     contextBonuses: catalogDetails.isWeaponProficiency ? [] : contextBonuses,
+    percentSummary,
   }
 }
 
@@ -270,11 +479,11 @@ export function skillAddDisabledReason(
   if (opts.picked) return 'Already selected'
   if (action === 'related') {
     if (opts.slotsFull) return 'No O.C.C. related slots available'
-    if (opts.categoryBlocked) return 'Blocked by O.C.C. category rules'
+    if (opts.categoryBlocked) return 'Not available to O.C.C.'
   }
   if (action === 'secondary') {
     if (opts.slotsFull) return 'No secondary slots available'
-    if (opts.categoryBlocked) return 'Blocked by O.C.C. category rules'
+    if (opts.categoryBlocked) return 'Not available to O.C.C.'
   }
   return null
 }
