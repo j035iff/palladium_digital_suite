@@ -1,6 +1,7 @@
 import { useMemo, type ReactNode } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { buildCreationLiveLedgerSnapshot } from '../../lib/creationLiveLedger'
+import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 
 function LedgerSection({
   title,
@@ -39,7 +40,7 @@ function LedgerGrid({ lines }: { lines: { label: string; value: string; hint?: s
   )
 }
 
-export function LiveLedger() {
+export function LiveLedger({ variant = 'card' }: { variant?: 'card' | 'sidebar' }) {
   const {
     character,
     activeFormState,
@@ -83,7 +84,9 @@ export function LiveLedger() {
   )
 
   const panel =
-    'rounded-lg border p-4 border-blue-200 bg-white text-slate-900 dark:border-violet-700 dark:bg-slate-950/80 dark:text-violet-50'
+    variant === 'sidebar'
+      ? 'h-full p-3 text-slate-900 dark:text-violet-50'
+      : 'rounded-lg border border-blue-200 bg-white p-4 text-slate-900 dark:border-violet-700 dark:bg-slate-950/80 dark:text-violet-50'
 
   return (
     <aside className={panel} aria-label="Live creation ledger">
@@ -91,8 +94,9 @@ export function LiveLedger() {
         Live Ledger
       </h3>
       <p className="mb-3 text-xs opacity-75">
-        Build mirror — attributes, vitals, saves, and combat update as you work
-        through each tab below.
+        {variant === 'sidebar'
+          ? 'Build mirror — updates as you work through each forge tab.'
+          : 'Build mirror — attributes, vitals, saves, and combat update as you work through each tab below.'}
       </p>
 
       <LedgerSection title="Attributes">
@@ -140,7 +144,11 @@ export function LiveLedger() {
         </LedgerSection>
       ) : null}
 
-      {ledger.spawnDice.length > 0 ? (
+      {ledger.spawnDice.length > 0 && !character.creationVitalityCommitted ? (
+        <LedgerSection title="Spawn dice — enter physical rolls">
+          <PendingDiceResolutionPanel variant="compact" />
+        </LedgerSection>
+      ) : ledger.spawnDice.length > 0 ? (
         <LedgerSection title="Spawn dice checklist">
           <ul className="max-h-48 space-y-1 overflow-y-auto text-xs">
             {ledger.spawnDice.map((e) => {

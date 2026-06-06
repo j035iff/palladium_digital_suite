@@ -116,13 +116,12 @@ export function assessRelatedSkillSlotBlockers(
     occSkillSlotPolicy(occ),
   )
   if (cap <= 0) return []
-  const used = relatedSelectedCount + handToHandReservedSlots
-  if (used >= cap) return []
+  if (relatedSelectedCount >= cap) return []
   const hthNote =
     handToHandReservedSlots > 0
       ? ` — ${handToHandReservedSlots} reserved for Hand-to-Hand`
       : ''
   return [
-    `Fill all O.C.C. related skill slots (${used} / ${cap}${hthNote}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
+    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${hthNote}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
   ]
 }

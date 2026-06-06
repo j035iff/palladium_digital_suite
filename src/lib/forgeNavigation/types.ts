@@ -15,6 +15,12 @@ export type ForgeTabValidation = {
   blockers: string[]
 }
 
+export type ForgeTabRequirement = {
+  id: string
+  label: string
+  satisfied: boolean
+}
+
 export type ForgeTabView = {
   id: string
   label: string

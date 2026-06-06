@@ -189,4 +189,26 @@ describe('creationSkillPicks', () => {
     expect(sumRelatedPoolSlotUsage(related, occCore, 0)).toBe(2)
     expect(sumRelatedPoolSlotUsage(related, occCore, 2)).toBe(4)
   })
+
+  it('counts hand-to-hand upgrade cost only in pool usage, not by shrinking the cap', () => {
+    const relatedCap = 8
+    const handToHandReserved = 2
+    const related: CreationSkillPick[] = []
+    const occCore: CreationSkillPick[] = []
+
+    const used = sumRelatedPoolSlotUsage(related, occCore, handToHandReserved)
+    expect(used).toBe(2)
+    expect(relatedCap - used).toBe(6)
+
+    const withSixSkills = Array.from({ length: 6 }, () =>
+      buildCreationSkillPick('skill_detect_concealment', {}),
+    )
+    const usedAfterSkills = sumRelatedPoolSlotUsage(
+      withSixSkills,
+      occCore,
+      handToHandReserved,
+    )
+    expect(usedAfterSkills).toBe(8)
+    expect(relatedCap - usedAfterSkills).toBe(0)
+  })
 })

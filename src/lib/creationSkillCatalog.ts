@@ -3,6 +3,7 @@ import type { WeaponProficiencyCatalogEntry } from '../data/library/catalogTypes
 import {
   PALLADIUM_SKILL_CATALOG,
   getPalladiumSkillCatalogEntryById,
+  resolveCatalogSkillId,
 } from '../data/library/skillsCatalogLoader'
 import { WEAPON_PROFICIENCY_CATALOG } from '../data/library/weaponProficienciesCatalogLoader'
 import type { EngineSkillDef, SkillCategory, SkillPrerequisite } from '../data/skillLibrary'
@@ -128,6 +129,18 @@ function parsePrerequisiteEntry(entry: unknown): SkillPrerequisite | undefined {
   return undefined
 }
 
+function normalizePrerequisiteSkillIds(
+  prereq: SkillPrerequisite,
+): SkillPrerequisite {
+  if ('allOf' in prereq) {
+    return { allOf: prereq.allOf.map(normalizePrerequisiteSkillIds) }
+  }
+  return {
+    gate: prereq.gate,
+    skillIds: prereq.skillIds.map(resolveCatalogSkillId),
+  }
+}
+
 export function parseCatalogPrerequisites(
   prerequisites: readonly unknown[] | undefined,
 ): SkillPrerequisite | undefined {
@@ -135,6 +148,7 @@ export function parseCatalogPrerequisites(
   const parts = prerequisites
     .map(parsePrerequisiteEntry)
     .filter((p): p is SkillPrerequisite => p != null)
+    .map(normalizePrerequisiteSkillIds)
   if (!parts.length) return undefined
   if (parts.length === 1) return parts[0]
   return { allOf: parts }
@@ -330,20 +344,74 @@ export function sortCreationSkillLibraryResults(
   })
 }
 
-/** Keep selectable library rows first; blocked rows sink to the bottom. */
+export type CreationSkillLibraryPartitions = {
+  /** Already chosen in this category — pinned above the scrollable browse list. */
+  selected: EngineSkillDef[]
+  /** Remaining rows; unconditionally excluded skills sink to the bottom. */
+  browse: EngineSkillDef[]
+}
+
+function compareLibrarySelectedSkills(
+  a: EngineSkillDef,
+  b: EngineSkillDef,
+  selectionTier: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
+): number {
+  const tierRank = (tier: 'occ' | 'related' | 'secondary' | undefined) =>
+    tier === 'occ' ? 0 : tier === 'related' ? 1 : tier === 'secondary' ? 2 : 3
+  const tierDelta =
+    tierRank(selectionTier(a.id)) - tierRank(selectionTier(b.id))
+  if (tierDelta !== 0) return tierDelta
+  return a.name.localeCompare(b.name)
+}
+
+/** Split chosen skills (top/pinned) from the scrollable browse list. */
+export function partitionCreationSkillLibrary(
+  skills: readonly EngineSkillDef[],
+  filterCategory: string,
+  isUnconditionallyExcluded: (def: EngineSkillDef) => boolean,
+  isChosen: (def: EngineSkillDef) => boolean,
+  selectionTier?: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
+): CreationSkillLibraryPartitions {
+  const sorted = sortCreationSkillLibraryResults(skills, filterCategory)
+  const selected: EngineSkillDef[] = []
+  const main: EngineSkillDef[] = []
+  const excluded: EngineSkillDef[] = []
+
+  for (const skill of sorted) {
+    if (isChosen(skill)) {
+      selected.push(skill)
+    } else if (isUnconditionallyExcluded(skill)) {
+      excluded.push(skill)
+    } else {
+      main.push(skill)
+    }
+  }
+
+  if (selectionTier) {
+    selected.sort((a, b) => compareLibrarySelectedSkills(a, b, selectionTier))
+  } else {
+    selected.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  return { selected, browse: [...main, ...excluded] }
+}
+
+/** Flat list: chosen first, then browse rows (excluded last). */
 export function sortCreationSkillLibraryWithSelectableFirst(
   skills: readonly EngineSkillDef[],
   filterCategory: string,
-  isSelectable: (def: EngineSkillDef) => boolean,
+  isUnconditionallyExcluded: (def: EngineSkillDef) => boolean,
+  isChosen?: (def: EngineSkillDef) => boolean,
+  selectionTier?: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
 ): EngineSkillDef[] {
-  const sorted = sortCreationSkillLibraryResults(skills, filterCategory)
-  const selectable: EngineSkillDef[] = []
-  const blocked: EngineSkillDef[] = []
-  for (const skill of sorted) {
-    if (isSelectable(skill)) selectable.push(skill)
-    else blocked.push(skill)
-  }
-  return [...selectable, ...blocked]
+  const { selected, browse } = partitionCreationSkillLibrary(
+    skills,
+    filterCategory,
+    isUnconditionallyExcluded,
+    isChosen ?? (() => false),
+    selectionTier,
+  )
+  return [...selected, ...browse]
 }
 
 /** Ordered filter categories for creation skill browsing (fixed book taxonomy). */

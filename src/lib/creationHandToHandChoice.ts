@@ -1,6 +1,9 @@
 import type { PalladiumOcc } from '../types'
 
-import { mapSheetSkillIdToHandToHandCatalogId } from './handToHandPipeline'
+import {
+  HTH_NONE_CATALOG_ID,
+  mapSheetSkillIdToHandToHandCatalogId,
+} from './handToHandPipeline'
 
 import { occGrantsDefaultHandToHand } from './occComposition'
 
@@ -120,7 +123,7 @@ export function creationHandToHandTierFromSkillId(
 
 ): CreationHandToHandTier {
 
-  if (!skillId) return 'none'
+  if (!skillId || skillId === HTH_NONE_CATALOG_ID) return 'none'
 
   const normalized = skillId.replace(/^hand_to_hand_/, 'skill_hand_to_hand_')
 
@@ -184,7 +187,7 @@ export function formatHandToHandOptionLabel(
 
 ): string {
 
-  if (tier === 'none') return 'None'
+  if (tier === 'none') return isDefault ? 'None (included)' : 'None'
 
   const base = TIER_LABELS[tier]
 
@@ -202,6 +205,15 @@ export function formatHandToHandOptionLabel(
 
 /** Selectable Hand-to-Hand tiers for an effective O.C.C. (default + upgrade paths). */
 
+function occOffersUntrainedHandToHandDefault(occ: PalladiumOcc): boolean {
+  const defaultId = occ.handToHandRules.defaultSkillId
+  return (
+    defaultId == null ||
+    defaultId === HTH_NONE_CATALOG_ID ||
+    creationHandToHandTierFromSkillId(defaultId) === 'none'
+  )
+}
+
 export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption[] {
 
   const rules = occ.handToHandRules
@@ -212,7 +224,21 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
 
   const options: OccHandToHandOption[] = []
 
+  const upgradePaths = rules.upgradePaths ?? []
 
+  if (
+    grantedTier === 'none' &&
+    occOffersUntrainedHandToHandDefault(occ) &&
+    (upgradePaths.length > 1 ||
+      rules.defaultSkillId === HTH_NONE_CATALOG_ID)
+  ) {
+    seen.add('none')
+    options.push({
+      tier: 'none',
+      label: formatHandToHandOptionLabel('none', 0, true),
+      electiveSlotCost: 0,
+    })
+  }
 
   if (grantedTier !== 'none') {
 
@@ -232,7 +258,7 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
 
 
 
-  for (const path of rules.upgradePaths ?? []) {
+  for (const path of upgradePaths) {
 
     const tier = creationHandToHandTierFromSkillId(path.targetSkillId)
 
@@ -294,7 +320,7 @@ export function creationHandToHandRequiresSelection(occ: PalladiumOcc): boolean 
 
     occ.handToHandRules.defaultSkillId == null &&
 
-    (occ.handToHandRules.upgradePaths?.length ?? 0) > 0
+    occ.handToHandRules.upgradePaths?.length === 1
 
   )
 

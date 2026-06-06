@@ -3,6 +3,7 @@ import type { PalladiumOcc } from '../types'
 import { getLibraryOccById } from '../data/library/registry'
 import {
   applyPsychicOccSkillBonusPercent,
+  assessRelatedSkillSlotBlockers,
   rawOccSkillBonusPercent,
   resolveOccSkillBonusPercent,
   creationRelatedSkillCap,
@@ -54,5 +55,14 @@ describe('creationPsychicSkills', () => {
   it('halves related slot cap for Major psychic', () => {
     expect(creationRelatedSkillCap(6, 'none')).toBe(6)
     expect(creationRelatedSkillCap(6, 'major')).toBe(3)
+  })
+
+  it('does not double-count hand-to-hand slots in related readiness blockers', () => {
+    expect(
+      assessRelatedSkillSlotBlockers(2, 8, 'none', occ, 2),
+    ).toEqual([
+      'Fill all O.C.C. related skill slots (2 / 8 — 2 reserved for Hand-to-Hand).',
+    ])
+    expect(assessRelatedSkillSlotBlockers(8, 8, 'none', occ, 2)).toEqual([])
   })
 })

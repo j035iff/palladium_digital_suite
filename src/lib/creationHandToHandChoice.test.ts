@@ -44,7 +44,7 @@ const pandoraOcc = {
 
   handToHandRules: {
 
-    defaultSkillId: null,
+    defaultSkillId: 'hth_none',
 
     upgradePaths: [
 
@@ -136,9 +136,39 @@ describe('creationHandToHandChoice', () => {
 
 
 
-  it('blocks when purchasable Hand-to-Hand is unselected', () => {
+  it('lists untrained None as an included option when upgrades are elective', () => {
 
-    expect(assessHandToHandBlockers(pandoraOcc, 'none')).toEqual([
+    const options = listOccHandToHandOptions(pandoraOcc)
+
+    expect(options.map((o) => o.tier)).toEqual(['none', 'basic', 'expert'])
+
+    expect(options[0]?.label).toBe('None (included)')
+
+    expect(assessHandToHandBlockers(pandoraOcc, 'none')).toEqual([])
+
+  })
+
+
+
+  it('blocks when a mandatory single-path Hand-to-Hand style is unselected', () => {
+
+    const assassinSpec = {
+
+      handToHandRules: {
+
+        defaultSkillId: null,
+
+        upgradePaths: [
+
+          { targetSkillId: 'hand_to_hand_assassin', electiveSlotCost: 2 },
+
+        ],
+
+      },
+
+    } as PalladiumOcc
+
+    expect(assessHandToHandBlockers(assassinSpec, 'none')).toEqual([
 
       'Select a Hand-to-Hand fighting style.',
 

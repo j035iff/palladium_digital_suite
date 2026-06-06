@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div
-      className={`flex min-h-svh flex-col ${themeClass}`}
+      className={`flex h-svh min-h-0 flex-col overflow-hidden ${themeClass}`}
       data-active-form={supportsDualForm ? activeForm : 'facade'}
     >
       <MainLayout />

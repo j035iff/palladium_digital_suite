@@ -2,10 +2,15 @@ import { describe, expect, it } from 'vitest'
 import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { migrateSkillIdToPick } from './creationSkillPicks'
 import {
+  canAddSkillViaOccCoreVoucher,
+  catalogSkillIdsMatch,
+  findOpenOccCoreVoucherSlot,
   listEligibleVoucherSkillIds,
   listOccCoreVoucherTasks,
   occCoreVoucherPicksComplete,
+  resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
+  voucherUsesDedicatedPickerUi,
 } from './occCoreSkillVouchers'
 import { listCreationSkillLibrary } from './creationSkillCatalog'
 
@@ -68,5 +73,80 @@ describe('occCoreSkillVouchers', () => {
       catalogIds,
     )
     expect(eligible).toEqual(wpIds)
+  })
+
+  it('routes category vouchers to the library picker, not the dropdown', () => {
+    expect(
+      voucherUsesDedicatedPickerUi({
+        choiceCount: 2,
+        bonusPercent: 20,
+        allowedCategories: ['Medical', 'Science', 'Technical'],
+      }),
+    ).toBe(false)
+    expect(
+      voucherUsesDedicatedPickerUi({
+        choiceCount: 1,
+        bonusPercent: 0,
+        allowedCategories: ['Weapon Proficiencies'],
+      }),
+    ).toBe(true)
+  })
+
+  it('finds an open voucher slot for eligible skills', () => {
+    const tasks = listOccCoreVoucherTasks(occ, null)
+    const catalogIds = ['skill_a', 'skill_b', 'skill_c']
+    const open = findOpenOccCoreVoucherSlot(
+      'skill_b',
+      tasks,
+      {},
+      'nightbane',
+      catalogIds,
+    )
+    expect(open).toEqual({
+      taskId: 'core_voucher_1',
+      slot: 0,
+      choiceCount: 1,
+    })
+  })
+
+  it('matches legacy occ skill ids to canonical catalog ids', () => {
+    expect(
+      catalogSkillIdsMatch('skill_math_basic', 'skill_mathematics_basic'),
+    ).toBe(true)
+    expect(
+      resolveCreationLibrarySkillTier('skill_mathematics_basic', {
+        relatedPicks: [],
+        secondaryPicks: [],
+        resolvedOccPicks: [migrateSkillIdToPick('skill_math_basic')],
+        voucherTasks: [],
+        voucherPicks: {},
+      }),
+    ).toBe('occ')
+  })
+
+  it('blocks duplicate voucher picks', () => {
+    const tasks = listOccCoreVoucherTasks(occ, null)
+    const catalogIds = ['skill_a', 'skill_b', 'skill_c']
+    const picks = { core_voucher_1: [migrateSkillIdToPick('skill_b')] }
+    expect(
+      canAddSkillViaOccCoreVoucher(
+        'skill_b',
+        tasks,
+        picks,
+        'nightbane',
+        catalogIds,
+        [migrateSkillIdToPick('skill_b')],
+      ),
+    ).toBe(false)
+    expect(
+      canAddSkillViaOccCoreVoucher(
+        'skill_c',
+        tasks,
+        picks,
+        'nightbane',
+        catalogIds,
+        [migrateSkillIdToPick('skill_b')],
+      ),
+    ).toBe(false)
   })
 })

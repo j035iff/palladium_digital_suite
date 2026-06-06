@@ -94,6 +94,51 @@ describe('deriveForgeNavigation', () => {
     expect(nav.continueEnabled).toBe(true)
     expect(nav.continueTooltip).toContain('Optional picks remain')
   })
+
+  it('unlocks terminal tab when preceding tabs are complete (terminal not marked yet)', () => {
+    type TabId = 'a' | 'b' | 'c' | 'terminal'
+    const defs: ForgeTabDefinition<TabId>[] = [
+      {
+        id: 'a',
+        label: 'a',
+        isNa: () => false,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-a',
+      },
+      {
+        id: 'b',
+        label: 'b',
+        isNa: () => true,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-b',
+      },
+      {
+        id: 'c',
+        label: 'c',
+        isNa: () => true,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-c',
+      },
+      {
+        id: 'terminal',
+        label: 'terminal',
+        isNa: () => false,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-terminal',
+      },
+    ]
+    const completion = markForgeTabComplete<TabId>('a', 'snap-a', {
+      completed: {},
+      snapshots: {},
+    })
+    const nav = deriveForgeNavigation(defs, 'a', completion, {
+      terminalTabId: 'terminal',
+    })
+    const terminal = nav.tabs.find((t) => t.id === 'terminal')
+    expect(nav.terminalAccessible).toBe(true)
+    expect(terminal?.clickable).toBe(true)
+    expect(terminal?.visual).toBe('active')
+  })
 })
 
 describe('invalidateForgeCompletionFrom', () => {

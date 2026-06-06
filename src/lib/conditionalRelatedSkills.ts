@@ -2,8 +2,10 @@ import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalog
 import type { EngineSkillDef } from '../data/skillLibrary'
 import type { CreationSkillPick } from '../types'
 import {
+  type CreationSkillAvailabilityContext,
   findConditionalGrantPick,
   formatCreationSkillPickLabel,
+  isCreationSkillExcludedFromOccOrRace,
   newCreationSkillPickInstanceId,
 } from './creationSkillPicks'
 
@@ -49,6 +51,7 @@ export function resolveConditionalRelatedSynergyLines(
   selectedIds: ReadonlySet<string>,
   picks: readonly CreationSkillPick[],
   pick?: CreationSkillPick,
+  availability?: CreationSkillAvailabilityContext,
 ): ConditionalSynergyBonusLine[] {
   if (pick?.grantedBySkillId) return []
 
@@ -56,6 +59,13 @@ export function resolveConditionalRelatedSynergyLines(
 
   for (const sourceId of selectedIds) {
     if (sourceId === targetSkillId) continue
+    if (
+      availability &&
+      (availability.effectiveOcc || availability.raceBlocked) &&
+      isCreationSkillExcludedFromOccOrRace(sourceId, availability)
+    ) {
+      continue
+    }
     for (const rule of listConditionalRelatedSkillRules(sourceId)) {
       if (rule.skillId !== targetSkillId) continue
       const bonus = rule.bonusIfAlreadyHave?.skillPercentBonus

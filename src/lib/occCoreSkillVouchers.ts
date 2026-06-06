@@ -15,20 +15,200 @@ import {
   getCreationSecondaryPicks,
   getOccCoreVoucherPicks,
   getOccCoreVoucherSlotPicks,
+  isCreationSkillIdentityTaken,
   migrateSkillIdToPick,
   occGrantPickComplete,
   skillRequiresSpecialization,
 } from './creationSkillPicks'
+import { resolveCatalogSkillId } from '../data/library/skillsCatalogLoader'
 import {
   isOccCoreSkillChoiceVoucher,
   resolveEffectivePalladiumOcc,
 } from './occComposition'
 import { occStartingOccSkillIds } from './occCatalogEngine'
+import { resolveCreationLibrarySkillSelectionTier } from './creationSkillPicks'
 
 export type OccCoreVoucherTask = {
   id: string
   voucherIndex: number
   entry: OccCoreSkillChoiceVoucher
+}
+
+const WEAPON_PROFICIENCIES_VOUCHER_CATEGORY = 'Weapon Proficiencies'
+
+/** Dropdown picker in the selected panel (W.P. vouchers). Category vouchers use the library + O.C.C. button. */
+export function voucherUsesDedicatedPickerUi(
+  entry: OccCoreSkillChoiceVoucher,
+): boolean {
+  return (
+    entry.allowedCategories?.length === 1 &&
+    entry.allowedCategories[0] === WEAPON_PROFICIENCIES_VOUCHER_CATEGORY
+  )
+}
+
+export function formatOccCoreVoucherCategoryScope(
+  entry: OccCoreSkillChoiceVoucher,
+): string {
+  if (entry.allowedCategories?.length) {
+    return entry.allowedCategories.join(', ')
+  }
+  if (entry.label) return entry.label
+  if (entry.allowedSkillIds?.length) {
+    return entry.allowedSkillIds.join(' or ')
+  }
+  return 'O.C.C. choices'
+}
+
+export function formatOccCoreVoucherGroupHeader(
+  entry: OccCoreSkillChoiceVoucher,
+  filledCount: number,
+): string {
+  const bonus =
+    entry.bonusPercent != null && entry.bonusPercent !== 0
+      ? ` +${entry.bonusPercent}%`
+      : ''
+  return `${formatOccCoreVoucherCategoryScope(entry)}${bonus} ${filledCount}/${entry.choiceCount}`
+}
+
+export function countFilledOccCoreVoucherSlots(
+  task: OccCoreVoucherTask,
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
+): number {
+  return getOccCoreVoucherSlotPicks(
+    voucherPicks,
+    task.id,
+    task.entry.choiceCount,
+  ).filter((pick): pick is CreationSkillPick => pick != null).length
+}
+
+export function catalogSkillIdsMatch(a: string, b: string): boolean {
+  return resolveCatalogSkillId(a) === resolveCatalogSkillId(b)
+}
+
+export function isOccCorePickForLibrarySkill(
+  librarySkillId: string,
+  pick: CreationSkillPick,
+): boolean {
+  return (
+    pick.grantedBySkillId == null &&
+    catalogSkillIdsMatch(pick.skillId, librarySkillId)
+  )
+}
+
+export function findOccCoreVoucherPickForSkillId(
+  skillId: string,
+  tasks: readonly OccCoreVoucherTask[],
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
+): {
+  task: OccCoreVoucherTask
+  slot: number
+  pick: CreationSkillPick
+} | null {
+  for (const task of tasks) {
+    const slots = getOccCoreVoucherSlotPicks(
+      voucherPicks,
+      task.id,
+      task.entry.choiceCount,
+    )
+    for (let slot = 0; slot < slots.length; slot++) {
+      const pick = slots[slot]
+      if (pick && catalogSkillIdsMatch(pick.skillId, skillId)) {
+        return { task, slot, pick }
+      }
+    }
+  }
+  return null
+}
+
+export function resolveCreationLibrarySkillTier(
+  librarySkillId: string,
+  opts: {
+    relatedPicks: readonly CreationSkillPick[]
+    secondaryPicks: readonly CreationSkillPick[]
+    resolvedOccPicks: readonly CreationSkillPick[]
+    voucherTasks: readonly OccCoreVoucherTask[]
+    voucherPicks: Readonly<Record<string, unknown>> | undefined
+  },
+): 'occ' | 'related' | 'secondary' | undefined {
+  const userTier = resolveCreationLibrarySkillSelectionTier(librarySkillId, opts)
+  if (userTier) return userTier
+  if (
+    findOccCoreVoucherPickForSkillId(
+      librarySkillId,
+      opts.voucherTasks,
+      opts.voucherPicks,
+    )
+  ) {
+    return 'occ'
+  }
+  if (
+    opts.resolvedOccPicks.some((pick) =>
+      isOccCorePickForLibrarySkill(librarySkillId, pick),
+    )
+  ) {
+    return 'occ'
+  }
+  return undefined
+}
+
+export function findOpenOccCoreVoucherSlot(
+  skillId: string,
+  tasks: readonly OccCoreVoucherTask[],
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
+  hostGenreId: string,
+  catalogSkillIds: readonly string[],
+): { taskId: string; slot: number; choiceCount: number } | null {
+  for (const task of tasks) {
+    if (voucherUsesDedicatedPickerUi(task.entry)) continue
+    if (
+      !listEligibleVoucherSkillIds(
+        task.entry,
+        hostGenreId,
+        catalogSkillIds,
+      ).includes(skillId)
+    ) {
+      continue
+    }
+    const slots = getOccCoreVoucherSlotPicks(
+      voucherPicks,
+      task.id,
+      task.entry.choiceCount,
+    )
+    const slot = slots.findIndex((pick) => pick == null)
+    if (slot >= 0) {
+      return {
+        taskId: task.id,
+        slot,
+        choiceCount: task.entry.choiceCount,
+      }
+    }
+  }
+  return null
+}
+
+export function canAddSkillViaOccCoreVoucher(
+  skillId: string,
+  tasks: readonly OccCoreVoucherTask[],
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
+  hostGenreId: string,
+  catalogSkillIds: readonly string[],
+  allPicks: readonly CreationSkillPick[],
+): boolean {
+  if (findOccCoreVoucherPickForSkillId(skillId, tasks, voucherPicks) != null) {
+    return false
+  }
+  if (
+    findOpenOccCoreVoucherSlot(
+      skillId,
+      tasks,
+      voucherPicks,
+      hostGenreId,
+      catalogSkillIds,
+    ) == null
+  ) {
+    return false
+  }
+  return !isCreationSkillIdentityTaken(allPicks, skillId)
 }
 
 export function listOccCoreVoucherTasks(

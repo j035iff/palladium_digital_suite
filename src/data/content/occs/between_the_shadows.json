@@ -855,7 +855,7 @@
       ]
     },
     "handToHandRules": {
-      "defaultSkillId": null,
+      "defaultSkillId": "hth_none",
       "upgradePaths": [
         {
           "targetSkillId": "hand_to_hand_basic",

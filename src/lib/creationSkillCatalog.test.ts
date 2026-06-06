@@ -1,9 +1,63 @@
 import { describe, expect, it } from 'vitest'
+import type { PalladiumOcc } from '../types'
 import {
+  getEngineSkillDefFromCatalog,
   listCreationSkillLibrary,
   matchesSkillBookCategoryFilter,
   sortCreationSkillLibraryResults,
+  partitionCreationSkillLibrary,
+  sortCreationSkillLibraryWithSelectableFirst,
 } from './creationSkillCatalog'
+import {
+  type CreationLibrarySkillContext,
+  isCreationLibrarySkillUnconditionallyExcluded,
+  resolveCreationLibrarySkillSelectionTier,
+} from './creationSkillPicks'
+
+const occWithPickLocksBlocked: PalladiumOcc = {
+  id: 'occ_test',
+  name: 'Test',
+  description: '',
+  gameSystems: ['nightbane'],
+  occType: 'scholar_civilian',
+  occSkillsCore: [],
+  occRelatedSkills: {
+    initialSlotsCount: 4,
+    categoryRules: [
+      {
+        categoryName: 'Espionage',
+        accessType: 'except',
+        exceptions: ['pick_locks'],
+        bonusPercent: 0,
+      },
+    ],
+  },
+  secondarySkills: { initialSlotsCount: 4 },
+  wpRules: { allowedCategories: [] },
+  handToHandRules: {},
+  staticBonuses: {},
+  attributeRequirements: {},
+  finances: {},
+  startingEquipment: {},
+}
+
+function libraryContext(
+  overrides: Partial<CreationLibrarySkillContext> = {},
+): CreationLibrarySkillContext {
+  return {
+    effectiveOcc: occWithPickLocksBlocked,
+    specializationId: null,
+    relatedSlotsUsed: 0,
+    relatedSkillCap: 4,
+    secondaryPickSlots: 0,
+    secondaryCap: 4,
+    occPicks: [],
+    relatedPicks: [],
+    secondaryPicks: [],
+    activeFilterCategory: 'Espionage',
+    ...overrides,
+  }
+}
 
 describe('creationSkillCatalog electrical category', () => {
   it('only maps Basic Electronics, Computer Repair, and Electrical Engineer to Electrical', () => {
@@ -23,6 +77,64 @@ describe('creationSkillCatalog electrical category', () => {
     const compOp = lib.find((s) => s.id === 'skill_computer_operation')
     expect(compOp).toBeDefined()
     expect(matchesSkillBookCategoryFilter(compOp!, 'Electrical')).toBe(false)
+  })
+})
+
+describe('creationSkillCatalog library sort', () => {
+  it('sinks only unconditionally excluded skills to the bottom', () => {
+    const pickLocks = getEngineSkillDefFromCatalog('skill_pick_locks')!
+    const cook = getEngineSkillDefFromCatalog('skill_cook')!
+    const ctx = libraryContext({ activeFilterCategory: 'Espionage' })
+    const sorted = sortCreationSkillLibraryWithSelectableFirst(
+      [pickLocks, cook],
+      'Espionage',
+      (skill) => isCreationLibrarySkillUnconditionallyExcluded(skill, ctx),
+    )
+    expect(sorted.map((s) => s.id)).toEqual(['skill_cook', 'skill_pick_locks'])
+  })
+
+  it('partitions chosen skills into the pinned selected bucket', () => {
+    const cook = getEngineSkillDefFromCatalog('skill_cook')!
+    const carpentry = getEngineSkillDefFromCatalog('skill_carpentry')!
+    const ctx = libraryContext({
+      activeFilterCategory: 'Wilderness',
+      relatedPicks: [{ instanceId: 'carpentry-1', skillId: 'skill_carpentry' }],
+    })
+    const tier = (skillId: string) =>
+      resolveCreationLibrarySkillSelectionTier(skillId, ctx)
+    const isChosen = (skill: { id: string }) => tier(skill.id) != null
+    const { selected, browse } = partitionCreationSkillLibrary(
+      [carpentry, cook],
+      'Wilderness',
+      (skill) => isCreationLibrarySkillUnconditionallyExcluded(skill, ctx),
+      isChosen,
+      tier,
+    )
+    expect(selected.map((s) => s.id)).toEqual(['skill_carpentry'])
+    expect(browse.map((s) => s.id)).toEqual(['skill_cook'])
+  })
+
+  it('orders chosen skills related before secondary in the pinned bucket', () => {
+    const cook = getEngineSkillDefFromCatalog('skill_cook')!
+    const carpentry = getEngineSkillDefFromCatalog('skill_carpentry')!
+    const ctx = libraryContext({
+      activeFilterCategory: 'Wilderness',
+      relatedPicks: [{ instanceId: 'carpentry-1', skillId: 'skill_carpentry' }],
+      secondaryPicks: [{ instanceId: 'cook-1', skillId: 'skill_cook' }],
+    })
+    const tier = (skillId: string) =>
+      resolveCreationLibrarySkillSelectionTier(skillId, ctx)
+    const { selected } = partitionCreationSkillLibrary(
+      [cook, carpentry],
+      'Wilderness',
+      (skill) => isCreationLibrarySkillUnconditionallyExcluded(skill, ctx),
+      (skill) => tier(skill.id) != null,
+      tier,
+    )
+    expect(selected.map((s) => s.id)).toEqual([
+      'skill_carpentry',
+      'skill_cook',
+    ])
   })
 })
 

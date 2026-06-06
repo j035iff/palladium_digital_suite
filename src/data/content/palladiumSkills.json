@@ -1027,7 +1027,7 @@
       },
       {
         "type": "skill_any_of",
-        "label": "Basic or Advanced Mathematics",
+        "label": "Basic or Advanced Math",
         "skillIds": [
           "skill_mathematics_basic",
           "skill_mathematics_advanced"
@@ -2637,7 +2637,7 @@
   },
   {
     "id": "skill_mathematics_basic",
-    "name": "Mathematics: Basic",
+    "name": "Math: Basic",
     "gameSystems": [
       "nightbane"
     ],
@@ -2662,7 +2662,7 @@
   },
   {
     "id": "skill_mathematics_advanced",
-    "name": "Mathematics: Advanced",
+    "name": "Math: Advanced",
     "gameSystems": [
       "nightbane"
     ],
@@ -4617,7 +4617,7 @@
       {
         "skillId": "skill_mathematics_basic",
         "bonusPercent": 2,
-        "description": "+2% bonus to Barter when the character has Mathematics: Basic."
+        "description": "+2% bonus to Barter when the character has Math: Basic."
       },
       {
         "skillId": "skill_literacy",

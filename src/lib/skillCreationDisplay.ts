@@ -4,9 +4,15 @@ import {
   resolvePickBasePercentAtLevel,
 } from './conditionalRelatedSkills'
 import type { CreationSkillPick, PalladiumOcc, PsychicTier } from '../types'
-import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
+  getPalladiumSkillCatalogEntryById,
+  PALLADIUM_SKILL_CATALOG,
+} from '../data/library/skillsCatalogLoader'
+import { resolveSkillDisplayName } from './skillDisplayNames'
+import {
+  type CreationSkillAvailabilityContext,
   formatCreationSkillPickLabel,
+  isCreationSkillExcludedFromOccOrRace,
   resolveProfessionalPercentBonus,
 } from './creationSkillPicks'
 import {
@@ -29,6 +35,7 @@ export type SkillPickDisplayTier =
   | 'occ'
   | 'related'
   | 'secondary'
+  | 'preview_occ'
   | 'preview_related'
   | 'preview_secondary'
 
@@ -86,11 +93,20 @@ export type ActiveSynergyBonusLine = {
   value: number
 }
 
+function synergyPartnerAvailable(
+  skillId: string,
+  availability?: CreationSkillAvailabilityContext,
+): boolean {
+  if (!availability?.effectiveOcc && !availability?.raceBlocked) return true
+  return !isCreationSkillExcludedFromOccOrRace(skillId, availability)
+}
+
 export function resolveActiveSynergyBonusLines(
   def: EngineSkillDef,
   selectedIds: ReadonlySet<string>,
   picks: readonly CreationSkillPick[],
   pick?: CreationSkillPick,
+  availability?: CreationSkillAvailabilityContext,
 ): ActiveSynergyBonusLine[] {
   const lines: ActiveSynergyBonusLine[] = []
 
@@ -103,7 +119,11 @@ export function resolveActiveSynergyBonusLines(
     lines.push({ label: 'Synergy', value: def.synergyBonuses })
   }
 
-  if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
+  if (
+    def.id === 'skill_astronomy' &&
+    selectedIds.has('skill_math_advanced') &&
+    synergyPartnerAvailable('skill_math_advanced', availability)
+  ) {
     lines.push({
       label: formatSourceSkillLabel('skill_math_advanced', picks),
       value: 10,
@@ -118,6 +138,7 @@ export function resolveActiveSynergyBonusLines(
       continue
     }
     if (!selectedIds.has(row.skillId)) continue
+    if (!synergyPartnerAvailable(row.skillId, availability)) continue
     lines.push({
       label: formatSourceSkillLabel(row.skillId, picks),
       value: row.bonusPercent,
@@ -129,8 +150,24 @@ export function resolveActiveSynergyBonusLines(
     selectedIds,
     picks,
     pick,
+    availability,
   )) {
     lines.push(line)
+  }
+
+  for (const raw of PALLADIUM_SKILL_CATALOG) {
+    if (!synergyPartnerAvailable(raw.id, availability)) continue
+    if (!selectedIds.has(raw.id)) continue
+    const synergies = (
+      raw as { synergies?: Array<{ skillId?: string; bonusPercent?: number }> }
+    ).synergies
+    for (const row of synergies ?? []) {
+      if (row.skillId !== def.id || typeof row.bonusPercent !== 'number') continue
+      lines.push({
+        label: formatSourceSkillLabel(raw.id, picks),
+        value: row.bonusPercent,
+      })
+    }
   }
 
   return lines.filter((line) => line.value !== 0)
@@ -141,8 +178,7 @@ function formatSourceSkillLabel(
   picks: readonly CreationSkillPick[],
 ): string {
   const pick = picks.find((p) => p.skillId === skillId)
-  const baseName =
-    getPalladiumSkillCatalogEntryById(skillId)?.name ?? skillId
+  const baseName = resolveSkillDisplayName(skillId)
   return pick ? formatCreationSkillPickLabel(pick, baseName) : baseName
 }
 
@@ -224,12 +260,14 @@ function buildEquationInput(
   pick?: CreationSkillPick,
   allPicks: readonly CreationSkillPick[] = [],
   characterLevel = 1,
+  availability?: CreationSkillAvailabilityContext,
 ) {
   const synergyLines = resolveActiveSynergyBonusLines(
     def,
     selectedIds,
     allPicks,
     pick,
+    availability,
   )
   const synergy = sumSynergyBonuses(synergyLines)
   const baseAtLevel = resolvePickBasePercentAtLevel(def, pick, characterLevel)
@@ -371,6 +409,7 @@ export function resolveSkillCreationDisplay(
     maPbBonus: number
     pick?: CreationSkillPick
     allPicks?: readonly CreationSkillPick[]
+    synergyAvailability?: CreationSkillAvailabilityContext
   },
 ): SkillCreationDisplayInfo {
   const allPicks = opts.allPicks ?? (opts.pick ? [opts.pick] : [])
@@ -390,6 +429,7 @@ export function resolveSkillCreationDisplay(
     opts.pick,
     allPicks,
     opts.skillPercentCtx.characterLevel,
+    opts.synergyAvailability,
   )
   const resolved = resolveSkillPercent({ ...input, id: def.id }, opts.skillPercentCtx)
   const equationBonuses = collectEquationBonusLines(

@@ -353,6 +353,8 @@ type CharacterContextValue = {
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
   /** Dev-only — rolls and assigns all eight attributes in one update. */
   devAutoRollAndAssignAllAttributes?: () => void
+  /** Dev-only — fills vouchers, related, secondary, and Hand-to-Hand picks. */
+  devAutoFillAllSkillSelections?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (
     voucherId: string,
@@ -1845,6 +1847,25 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [])
 
+  const devAutoFillAllSkillSelections = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devAutoFillCreationSkills').then(
+      ({ buildDevAutoFillCreationSkillsState }) => {
+        setRawCharacter((prev) => {
+          const occ = getLibraryOccById(prev.occ.id)
+          if (!occ) return prev
+          const tier = resolveCreationPsychicTier(prev, psychicTier)
+          return buildDevAutoFillCreationSkillsState(
+            prev,
+            occ,
+            prev.hostGenreId ?? prev.creationGenreId,
+            tier,
+          )
+        })
+      },
+    )
+  }, [psychicTier])
+
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
       setRawCharacter((prev) => {
@@ -2159,6 +2180,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoRollAndAssignAllAttributes: import.meta.env.DEV
         ? devAutoRollAndAssignAllAttributes
         : undefined,
+      devAutoFillAllSkillSelections: import.meta.env.DEV
+        ? devAutoFillAllSkillSelections
+        : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccGrantPickDetail,
@@ -2273,6 +2297,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
       devAutoRollAndAssignAllAttributes,
+      devAutoFillAllSkillSelections,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccGrantPickDetail,

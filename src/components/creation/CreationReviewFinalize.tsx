@@ -11,13 +11,9 @@ import {
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
 } from '../../lib/configuratorMatrix'
-import {
-  listPendingDiceEntries,
-  pendingDiceResolutionsComplete,
-} from '../../lib/pendingDiceLedger'
-import { vitalityPreviewLines } from '../../lib/spawnVitalityManual'
 import { validateOccVariableResolution } from '../../lib/occVariableBonus'
 import { listOccVariableBonusTasks } from '../../lib/occVariableBonus'
+import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 import {
   formatCreationSkillPickLabel,
   getCreationRelatedPicks,
@@ -92,25 +88,11 @@ export function CreationReviewFinalize({
     activeRace,
     effectiveOcc,
     psychicTier,
-    supportsDualForm,
-    setCreationPendingDiceResolution,
-    commitVitalityFromPendingDice,
     finalizeCharacter,
     setAlignment,
   } = useCharacter()
 
   const [confirmOpen, setConfirmOpen] = useState(false)
-
-  const pending = useMemo(
-    () =>
-      listPendingDiceEntries(character, activeRace, effectiveOcc ?? undefined, {
-        supportsDualForm,
-        psychicTier,
-      }),
-    [character, activeRace, effectiveOcc, supportsDualForm, psychicTier],
-  )
-
-  const resolutions = character.creationPendingDiceResolutions ?? {}
 
   const forgeCtx = useMemo(
     () =>
@@ -130,41 +112,20 @@ export function CreationReviewFinalize({
 
   const currentAlignment = effectiveConfiguratorAlignment(character.facade.alignment)
 
-  const diceComplete = pendingDiceResolutionsComplete(pending, resolutions)
-  const preview = useMemo(
-    () =>
-      diceComplete
-        ? vitalityPreviewLines(character, activeRace, effectiveOcc ?? undefined, resolutions, {
-            supportsDualForm,
-            psychicTier,
-          })
-        : [],
-    [
-      diceComplete,
-      character,
-      activeRace,
-      effectiveOcc,
-      resolutions,
-      supportsDualForm,
-      psychicTier,
-    ],
-  )
-
   const occIds = character.creationOccSkillIds ?? []
   const relPicks = getCreationRelatedPicks(character)
   const secPicks = getCreationSecondaryPicks(character)
   const abilityIds = character.selectedAbilities ?? []
 
-  const handleCommitVitality = () => {
-    if (!diceComplete) return
+  const validateBeforeVitalityCommit = () => {
     for (const task of listOccVariableBonusTasks(
       effectiveOcc ?? undefined,
       character.occSpecializationId,
     )) {
       const v = character.creationOccVariableResolutions?.[task.id]
-      if (v != null && !validateOccVariableResolution(task, v)) return
+      if (v != null && !validateOccVariableResolution(task, v)) return false
     }
-    commitVitalityFromPendingDice()
+    return true
   }
 
   const handleSpawnClick = () => {
@@ -180,9 +141,16 @@ export function CreationReviewFinalize({
   return (
     <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
-        Resolve every pending dice from your Live Ledger, commit vitality pools, then
+        Enter your physical die results, commit vitality pools, choose alignment, then
         spawn to lock the record (forge-character_creation.md Tab 7).
       </p>
+
+      <div className="mb-4">
+        <PendingDiceResolutionPanel
+          showCommit
+          onBeforeCommit={validateBeforeVitalityCommit}
+        />
+      </div>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
         <h3 className="mb-2 text-xs font-bold uppercase opacity-80">
@@ -255,74 +223,6 @@ export function CreationReviewFinalize({
             </dd>
           </div>
         </dl>
-      </div>
-
-      <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
-        <h3 className="mb-2 text-xs font-bold uppercase opacity-80">
-          Manual dice resolution
-        </h3>
-        <ul className="space-y-3">
-          {pending.map((entry) => {
-            const v = resolutions[entry.id]
-            const invalid =
-              v != null && (v < entry.min || v > entry.max || !Number.isFinite(v))
-            return (
-              <li
-                key={entry.id}
-                className="flex flex-wrap items-end gap-3 border-b border-slate-100 pb-3 last:border-0"
-              >
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium">{entry.label}</p>
-                  <p className="font-mono text-xs text-slate-600">
-                    {entry.notation} ({entry.min}–{entry.max})
-                  </p>
-                  {entry.hint ? (
-                    <p className="text-[10px] text-slate-500">{entry.hint}</p>
-                  ) : null}
-                </div>
-                <input
-                  type="number"
-                  min={entry.min}
-                  max={entry.max}
-                  value={v ?? ''}
-                  onChange={(e) => {
-                    const raw = e.target.value
-                    if (raw === '') return
-                    const n = Number(raw)
-                    if (Number.isFinite(n)) {
-                      setCreationPendingDiceResolution(entry.id, n)
-                    }
-                  }}
-                  className={`w-24 rounded border px-2 py-1.5 font-mono text-sm ${
-                    invalid ? 'border-rose-500' : 'border-slate-300'
-                  }`}
-                />
-              </li>
-            )
-          })}
-        </ul>
-        {preview.length > 0 ? (
-          <div className="mt-4 grid gap-1 font-mono text-xs sm:grid-cols-2">
-            {preview.map((line) => (
-              <p key={line.label}>
-                {line.label}: <strong>{line.value}</strong>
-              </p>
-            ))}
-          </div>
-        ) : null}
-        <button
-          type="button"
-          disabled={!diceComplete}
-          onClick={handleCommitVitality}
-          className="mt-4 rounded-md bg-teal-600 px-4 py-2 text-sm font-bold text-white hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Commit vitality to character
-        </button>
-        {character.creationVitalityCommitted ? (
-          <p className="mt-2 text-xs font-semibold text-teal-600">
-            Vitality committed — ready to spawn when all checks pass.
-          </p>
-        ) : null}
       </div>
 
       {blockers.length > 0 ? (

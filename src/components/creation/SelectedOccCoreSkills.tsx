@@ -15,6 +15,7 @@ import {
   collectAllCreationSkillPicks,
   listOccCoreVoucherTasks,
   listEligibleVoucherSkillIds,
+  voucherUsesDedicatedPickerUi,
 } from '../../lib/occCoreSkillVouchers'
 
 import { occStartingOccSkillIds } from '../../lib/occCatalogEngine'
@@ -36,6 +37,8 @@ import {
 } from './SkillPickAddDialog'
 
 import type { CreationSkillPick } from '../../types'
+
+import { OccCoreVoucherGroupPanel } from './OccCoreVoucherGroupPanel'
 
 type PendingVoucherSlot = {
   taskId: string
@@ -66,7 +69,6 @@ export function SelectedOccCoreSkills({
     effectiveOcc,
     hostGenreId,
     setCreationOccCoreVoucherPick,
-    setCreationOccGrantPickDetail,
   } = useCharacter()
 
   const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
@@ -177,10 +179,6 @@ export function SelectedOccCoreSkills({
     setSlotDrafts((prev) => ({ ...prev, [slotKey(taskId, slot)]: '' }))
   }
 
-  function handleGrantClear(skillId: string) {
-    setCreationOccGrantPickDetail(skillId, null)
-  }
-
   function handleVoucherDialogConfirm(result: {
     specialization?: string
     professionalQuality: boolean
@@ -209,8 +207,113 @@ export function SelectedOccCoreSkills({
     return <li className="text-xs opacity-50">None yet.</li>
   }
 
+  const libraryVoucherTasks = tasks.filter(
+    (task) => !voucherUsesDedicatedPickerUi(task.entry),
+  )
+  const dedicatedPickerVoucherTasks = tasks.filter((task) =>
+    voucherUsesDedicatedPickerUi(task.entry),
+  )
+
   return (
     <>
+      {libraryVoucherTasks.map((task) => (
+        <OccCoreVoucherGroupPanel
+          key={task.id}
+          task={task}
+          voucherPicks={voucherPicks}
+          morphus={morphus}
+          renderOccSkillRow={renderOccSkillRow}
+          onClearSlot={(slot) =>
+            handleVoucherClear(task.id, slot, task.entry.choiceCount)
+          }
+        />
+      ))}
+
+      {dedicatedPickerVoucherTasks
+        .map((task) => {
+          const entry = task.entry
+          const label = isOccCoreSkillChoiceVoucher(entry)
+            ? formatOccCoreSkillEntry(entry)
+            : task.id
+          const eligible = listEligibleVoucherSkillIds(
+            entry,
+            hostGenreId,
+            catalogIds,
+          )
+          const slotPicks = getOccCoreVoucherSlotPicks(
+            voucherPicks,
+            task.id,
+            entry.choiceCount,
+          )
+          const slots = Array.from({ length: entry.choiceCount }, (_, i) => i)
+
+          return slots.map((slot) => {
+            const pick = slotPicks[slot]
+            const draft = slotDrafts[slotKey(task.id, slot)] ?? ''
+            const slotLabel =
+              entry.choiceCount > 1 ? `${label} · Pick ${slot + 1}` : label
+
+            if (pick) {
+              return (
+                <Fragment key={`${task.id}-${slot}`}>
+                  {renderOccSkillRow(pick, () =>
+                    handleVoucherClear(task.id, slot, entry.choiceCount),
+                  )}
+                </Fragment>
+              )
+            }
+
+            return (
+              <li
+                key={`${task.id}-${slot}`}
+                className={`rounded border px-2 py-1.5 text-sm ${subStyle}`}
+              >
+                <div className="flex flex-col gap-1">
+                  <p className="text-xs font-medium opacity-80">{slotLabel}</p>
+                  <select
+                    value={draft}
+                    onChange={(e) => {
+                      setVoucherError(null)
+                      setSlotDrafts((prev) => ({
+                        ...prev,
+                        [slotKey(task.id, slot)]: e.target.value,
+                      }))
+                    }}
+                    className={`w-full max-w-md rounded border px-2 py-1.5 text-sm ${inputClass}`}
+                  >
+                    <option value="">— select —</option>
+                    {eligible.map((id) => (
+                      <option key={id} value={id}>
+                        {getSkillById(id)?.name ?? id}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    disabled={!draft}
+                    className="w-fit rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+                    onClick={() =>
+                      handleVoucherAdd(
+                        task.id,
+                        slot,
+                        draft,
+                        entry.choiceCount,
+                      )
+                    }
+                  >
+                    Add
+                  </button>
+                  {eligible.length === 0 ? (
+                    <p className="text-xs text-amber-600">
+                      No eligible skills in catalog for this voucher.
+                    </p>
+                  ) : null}
+                </div>
+              </li>
+            )
+          })
+        })}
+
       {fixedGrantIds.map((skillId) => {
         const pick =
           grantDetails[skillId] ?? migrateSkillIdToPick(skillId)
@@ -229,120 +332,34 @@ export function SelectedOccCoreSkills({
           validateSpecializationInput(locked.specialization ?? '')
 
         if (isComplete && locked) {
-          return renderOccSkillRow(locked, () => handleGrantClear(skillId))
+          return renderOccSkillRow(locked)
         }
 
         const stubPick: CreationSkillPick = {
           instanceId: skillId,
           skillId,
         }
+        const placeholder = occGrantSelectionPlaceholder(skillId)
 
         return (
           <li
             key={`grant-${skillId}`}
             className={`rounded border px-2 py-1.5 text-sm ${subStyle}`}
           >
-            <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0 flex-1">
-                <p className="font-medium">{def?.name ?? skillId}</p>
-                <p className="text-xs italic opacity-60">
-                  {occGrantSelectionPlaceholder(skillId)}
-                </p>
-              </div>
+            <div className="min-w-0">
+              <p className="font-medium">{def?.name ?? skillId}</p>
               <button
                 type="button"
-                className="shrink-0 text-xs text-violet-500 hover:underline"
+                className={`mt-0.5 text-xs italic hover:underline ${
+                  morphus ? 'text-amber-300' : 'text-amber-950'
+                }`}
                 onClick={() => onEditPick(stubPick)}
               >
-                Edit
+                {placeholder}
               </button>
             </div>
           </li>
         )
-      })}
-
-      {tasks.map((task) => {
-        const entry = task.entry
-        const label = isOccCoreSkillChoiceVoucher(entry)
-          ? formatOccCoreSkillEntry(entry)
-          : task.id
-        const eligible = listEligibleVoucherSkillIds(
-          entry,
-          hostGenreId,
-          catalogIds,
-        )
-        const slotPicks = getOccCoreVoucherSlotPicks(
-          voucherPicks,
-          task.id,
-          entry.choiceCount,
-        )
-        const slots = Array.from({ length: entry.choiceCount }, (_, i) => i)
-
-        return slots.map((slot) => {
-          const pick = slotPicks[slot]
-          const draft = slotDrafts[slotKey(task.id, slot)] ?? ''
-          const slotLabel =
-            entry.choiceCount > 1 ? `${label} · Pick ${slot + 1}` : label
-
-          if (pick) {
-            return (
-              <Fragment key={`${task.id}-${slot}`}>
-                {renderOccSkillRow(pick, () =>
-                  handleVoucherClear(task.id, slot, entry.choiceCount),
-                )}
-              </Fragment>
-            )
-          }
-
-          return (
-            <li
-              key={`${task.id}-${slot}`}
-              className={`rounded border px-2 py-1.5 text-sm ${subStyle}`}
-            >
-              <div className="flex flex-col gap-1">
-                <p className="text-xs font-medium opacity-80">{slotLabel}</p>
-                <select
-                  value={draft}
-                  onChange={(e) => {
-                    setVoucherError(null)
-                    setSlotDrafts((prev) => ({
-                      ...prev,
-                      [slotKey(task.id, slot)]: e.target.value,
-                    }))
-                  }}
-                  className={`w-full max-w-md rounded border px-2 py-1.5 text-sm ${inputClass}`}
-                >
-                  <option value="">— select —</option>
-                  {eligible.map((id) => (
-                    <option key={id} value={id}>
-                      {getSkillById(id)?.name ?? id}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  disabled={!draft}
-                  className="w-fit rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
-                  onClick={() =>
-                    handleVoucherAdd(
-                      task.id,
-                      slot,
-                      draft,
-                      entry.choiceCount,
-                    )
-                  }
-                >
-                  Add
-                </button>
-                {eligible.length === 0 ? (
-                  <p className="text-xs text-amber-600">
-                    No eligible skills in catalog for this voucher.
-                  </p>
-                ) : null}
-              </div>
-            </li>
-          )
-        })
       })}
 
       {voucherError ? (

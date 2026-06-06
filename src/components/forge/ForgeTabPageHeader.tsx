@@ -1,28 +1,66 @@
 import type { ReactNode } from 'react'
-import { useCharacter } from '../../context/CharacterContext'
+import type {
+  ForgeTabRequirement,
+  ForgeTabVisualState,
+} from '../../lib/forgeNavigation/types'
+import { forgeTabVisualTheme } from '../../lib/forgeNavigation/forgeTabVisual'
+import { ForgeTabRequirementsChecklist } from './ForgeTabRequirementsChecklist'
 
 export const FORGE_TAB_PAGE_HEADING_ID = 'forge-tab-page-heading'
+
+function NaHeaderWatermark() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-0 flex items-center justify-end overflow-hidden pr-4"
+    >
+      <span className="select-none font-black uppercase tracking-tighter text-red-500/20 dark:text-red-400/25">
+        N/A
+      </span>
+    </span>
+  )
+}
 
 export function ForgeTabPageHeader({
   title,
   actions,
+  requirements,
+  visual = 'active',
 }: {
   title: string
   actions?: ReactNode
+  requirements?: readonly ForgeTabRequirement[]
+  visual?: ForgeTabVisualState
 }) {
-  const { activeForm, supportsDualForm } = useCharacter()
-  const morphus = supportsDualForm && activeForm === 'morphus'
+  const theme = forgeTabVisualTheme(visual)
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-      <h2
-        id={FORGE_TAB_PAGE_HEADING_ID}
-        className="min-w-0 text-sm font-semibold uppercase tracking-wide"
-        style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
-      >
-        {title}
-      </h2>
-      {actions ? <div className="shrink-0">{actions}</div> : null}
+    <div
+      className={`relative overflow-hidden rounded-lg px-4 py-2.5 ${theme.headerBar}`}
+    >
+      {visual === 'na' ? <NaHeaderWatermark /> : null}
+      <div className="relative z-[1] flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="min-w-0 flex-1">
+          <h2
+            id={FORGE_TAB_PAGE_HEADING_ID}
+            className={`text-sm font-semibold uppercase tracking-wide ${theme.headerTitle}`}
+          >
+            {title}
+          </h2>
+          {requirements && requirements.length > 0 ? (
+            <ForgeTabRequirementsChecklist
+              requirements={requirements}
+              morphus={
+                visual === 'active' ||
+                visual === 'complete' ||
+                visual === 'incomplete' ||
+                visual === 'conflict'
+              }
+            />
+          ) : null}
+        </div>
+        {actions ? <div className="shrink-0 pt-0.5">{actions}</div> : null}
+      </div>
     </div>
   )
 }

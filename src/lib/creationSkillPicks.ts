@@ -1,12 +1,79 @@
 import type { EngineSkillDef } from '../data/library/skills'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import type { PalladiumOcc } from '../types'
+import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
   isOccRelatedSkillAllowed,
   isSecondarySkillAllowed,
 } from './occCreationDerivation'
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
 import type { CreationSkillPick } from '../types'
+
+/** OCC / race context for synergy partner availability (no active browse category). */
+export type CreationSkillAvailabilityContext = {
+  effectiveOcc: PalladiumOcc | null | undefined
+  specializationId: string | null | undefined
+  raceBlocked?: boolean
+}
+
+function isSkillExcludedFromOccOrRace(
+  def: EngineSkillDef,
+  opts: CreationSkillAvailabilityContext,
+  activeFilterCategory?: string,
+): boolean {
+  if (opts.raceBlocked) return true
+
+  if (
+    activeFilterCategory &&
+    isActiveFilterCategoryOccBlocked(activeFilterCategory, opts.effectiveOcc)
+  ) {
+    return true
+  }
+
+  const hasRelated = def.slotKind === 'occ_related'
+  const hasSecondary = def.secondaryEligible
+  if (!hasRelated && !hasSecondary) return true
+
+  const relatedBlocked =
+    hasRelated &&
+    opts.effectiveOcc != null &&
+    !isOccRelatedSkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      activeFilterCategory,
+    )
+  const secondaryBlocked =
+    hasSecondary &&
+    opts.effectiveOcc != null &&
+    !isSecondarySkillAllowed(
+      opts.effectiveOcc,
+      def.id,
+      def.category,
+      opts.specializationId,
+      activeFilterCategory,
+    )
+
+  if (hasRelated && relatedBlocked && (!hasSecondary || secondaryBlocked)) {
+    return true
+  }
+  if (hasSecondary && secondaryBlocked && (!hasRelated || relatedBlocked)) {
+    return true
+  }
+
+  return false
+}
+
+/** Whether a skill can never be selected for this O.C.C. / race (any category). */
+export function isCreationSkillExcludedFromOccOrRace(
+  skillId: string,
+  opts: CreationSkillAvailabilityContext,
+): boolean {
+  const def = getEngineSkillDefFromCatalog(skillId)
+  if (!def) return false
+  return isSkillExcludedFromOccOrRace(def, opts)
+}
 
 export function newCreationSkillPickInstanceId(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -462,6 +529,26 @@ export function isCreationLibrarySkillSelectable(
   return canAddRelated || canAddSecondary
 }
 
+/** OCC / race / category rules that permanently block this skill in the library. */
+export function isCreationLibrarySkillUnconditionallyExcluded(
+  def: EngineSkillDef,
+  opts: CreationLibrarySkillContext,
+): boolean {
+  return isSkillExcludedFromOccOrRace(def, opts, opts.activeFilterCategory)
+}
+
+/** Related vs secondary tier when the skill is already on the character sheet. */
+export function resolveCreationLibrarySkillSelectionTier(
+  skillId: string,
+  opts: Pick<CreationLibrarySkillContext, 'relatedPicks' | 'secondaryPicks'>,
+): 'related' | 'secondary' | undefined {
+  const isUserPick = (p: CreationSkillPick) =>
+    p.skillId === skillId && p.grantedBySkillId == null
+  if (opts.relatedPicks.some(isUserPick)) return 'related'
+  if (opts.secondaryPicks.some(isUserPick)) return 'secondary'
+  return undefined
+}
+
 export function resolveCreationLibrarySkillBlockReason(
   def: EngineSkillDef,
   opts: CreationLibrarySkillContext,
@@ -478,7 +565,7 @@ export function resolveCreationLibrarySkillBlockReason(
   if (
     isActiveFilterCategoryOccBlocked(opts.activeFilterCategory, opts.effectiveOcc)
   ) {
-    return ''
+    return 'Not available to O.C.C.'
   }
 
   const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap

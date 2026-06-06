@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useCharacter } from '../../context/CharacterContext'
 
@@ -14,7 +14,7 @@ import {
 
   matchesSkillBookCategoryFilter,
 
-  sortCreationSkillLibraryWithSelectableFirst,
+  partitionCreationSkillLibrary,
 
 } from '../../lib/creationSkillCatalog'
 
@@ -43,11 +43,16 @@ import {
 import { computeLiveBonuses } from '../../lib/characterDerived'
 
 import {
+  canAddSkillViaOccCoreVoucher,
   collectAllCreationSkillPicks,
   findOccCoreVoucherSlotForPick,
+  findOpenOccCoreVoucherSlot,
   isOccCoreGrantSkillPick,
+  listOccCoreVoucherTasks,
+  resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
   resolveOccCoreSkillPicks,
+  voucherUsesDedicatedPickerUi,
 } from '../../lib/occCoreSkillVouchers'
 
 import {
@@ -59,11 +64,20 @@ import {
 
 import {
 
+  resolveActiveSynergyBonusLines,
+
   resolveSkillCreationDisplay,
 
   type SkillPickDisplayTier,
 
 } from '../../lib/skillCreationDisplay'
+
+import {
+  formatSkillPrerequisiteSummary,
+  listSkillSynergyHints,
+  skillPickRowSurfaceClass,
+} from '../../lib/skillBlockDisplay'
+import { SkillPrerequisiteMeta, SkillSynergyMeta } from './SkillSelectionMeta'
 
 import {
   buildCreationSkillPick,
@@ -75,18 +89,20 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
   getOccCoreVoucherSlotPicks,
-  isCreationLibrarySkillSelectable,
+  isCreationLibrarySkillUnconditionallyExcluded,
   isCreationSkillIdentityTaken,
   professionalQualityLabel,
   resolveCreationLibrarySkillBlockReason,
   skillNeedsPickDialog,
+  skillNeedsVoucherPickDialog,
+  skillRequiresSpecialization,
   skillSupportsProfessionalQuality,
   sumCreationSkillPickSlots,
   sumRelatedPoolSlotUsage,
   upgradePickToProfessional,
 } from '../../lib/creationSkillPicks'
 
-import { SelectedOccCoreSkills } from './SelectedOccCoreSkills'
+import { CreationSelectedSkillsPanel } from './CreationSelectedSkillsPanel'
 
 import { SkillPickAddDialog, type SkillPickAddDialogState } from './SkillPickAddDialog'
 
@@ -96,6 +112,14 @@ import { SkillStatLines } from './SkillStatLines'
 import { SkillSelectedPercentBlock } from './SkillSelectedPercentBlock'
 
 import type { CreationSkillPick } from '../../types'
+
+const DevAutoFillSkillsButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevAutoFillSkillsButton').then((m) => ({
+        default: m.DevAutoFillSkillsButton,
+      })),
+    )
+  : null
 
 import {
   formatOccCategoryRuleDropdown,
@@ -153,6 +177,13 @@ export function SkillEngine() {
   const categorySelectRef = useRef<HTMLDivElement>(null)
 
   const [pickDialog, setPickDialog] = useState<SkillPickAddDialogState | null>(null)
+
+  const [pendingOccVoucherSlot, setPendingOccVoucherSlot] = useState<{
+    taskId: string
+    slot: number
+    choiceCount: number
+    skillId: string
+  } | null>(null)
 
   const [editPick, setEditPick] = useState<{
     pick: CreationSkillPick
@@ -270,7 +301,7 @@ export function SkillEngine() {
 
     : 0
 
-  const relatedSkillCap = Math.max(0, relatedCap - handToHandReserved)
+  const relatedSkillCap = relatedCap
 
   const relatedPickSlots = sumCreationSkillPickSlots(relatedSelected)
 
@@ -295,6 +326,7 @@ export function SkillEngine() {
     ? 'border-violet-700 bg-slate-900 text-violet-100'
     : 'border-slate-300 bg-white text-slate-900'
 
+  const occSectionClass = morphus ? 'text-amber-300' : 'text-amber-950'
   const relatedSectionClass = morphus ? 'text-violet-400' : 'text-violet-600'
   const secondarySectionClass = morphus ? 'text-emerald-400' : 'text-emerald-700'
 
@@ -396,6 +428,14 @@ export function SkillEngine() {
 
 
 
+  const synergyAvailability = useMemo(
+    () => ({
+      effectiveOcc,
+      specializationId: character.occSpecializationId,
+    }),
+    [effectiveOcc, character.occSpecializationId],
+  )
+
   const displayOpts = useMemo(
 
     () => ({
@@ -419,6 +459,8 @@ export function SkillEngine() {
       maPbBonus,
 
       allPicks: allCreationPicks,
+
+      synergyAvailability,
 
     }),
 
@@ -444,6 +486,8 @@ export function SkillEngine() {
 
       allCreationPicks,
 
+      synergyAvailability,
+
     ],
 
   )
@@ -458,7 +502,20 @@ export function SkillEngine() {
 
   )
 
+  const catalogSkillIds = useMemo(
+    () => skillLibrary.map((s) => s.id),
+    [skillLibrary],
+  )
 
+  const voucherTasks = useMemo(
+    () => listOccCoreVoucherTasks(effectiveOcc, character.occSpecializationId),
+    [effectiveOcc, character.occSpecializationId],
+  )
+
+  const hasLibraryOccVouchers = useMemo(
+    () => voucherTasks.some((task) => !voucherUsesDedicatedPickerUi(task.entry)),
+    [voucherTasks],
+  )
 
   const libraryPopulated = category === 'All' ? search.trim().length > 0 : category !== ''
 
@@ -489,34 +546,68 @@ export function SkillEngine() {
     ],
   )
 
-  const filteredLibrary = useMemo(() => {
-
-    if (!libraryPopulated) return []
+  const libraryPartitions = useMemo(() => {
+    if (!libraryPopulated) {
+      return { selected: [] as EngineSkillDef[], browse: [] as EngineSkillDef[] }
+    }
 
     const q = search.trim().toLowerCase()
 
-    const filtered = skillLibrary.filter((s) => {
+    const libraryTierOpts = {
+      relatedPicks: relatedSelected,
+      secondaryPicks: secondarySelected,
+      resolvedOccPicks,
+      voucherTasks,
+      voucherPicks,
+    }
 
-      if (s.slotKind !== 'occ_related' && !s.secondaryEligible) return false
+    const librarySelectionTier = (skillId: string) =>
+      resolveCreationLibrarySkillTier(skillId, libraryTierOpts)
 
+    const matchesLibraryQuery = (s: EngineSkillDef) => {
       const catOk = matchesSkillBookCategoryFilter(s, category)
-
       const nameOk =
-
         q === '' ||
-
         s.name.toLowerCase().includes(q) ||
-
         s.id.toLowerCase().includes(q)
-
       return catOk && nameOk
+    }
 
+    const filtered = skillLibrary.filter((s) => {
+      if (librarySelectionTier(s.id) === 'occ') {
+        return matchesLibraryQuery(s)
+      }
+      if (s.slotKind !== 'occ_related' && !s.secondaryEligible) return false
+      return matchesLibraryQuery(s)
     })
 
-    return sortCreationSkillLibraryWithSelectableFirst(filtered, category, (s) =>
-      isCreationLibrarySkillSelectable(s, libraryContext),
+    const filteredIds = new Set(filtered.map((s) => s.id))
+    const occPinnedExtras = skillLibrary.filter(
+      (s) =>
+        !filteredIds.has(s.id) &&
+        matchesLibraryQuery(s) &&
+        librarySelectionTier(s.id) === 'occ',
     )
-  }, [search, category, skillLibrary, libraryPopulated, libraryContext])
+
+    return partitionCreationSkillLibrary(
+      [...filtered, ...occPinnedExtras],
+      category,
+      (s) => isCreationLibrarySkillUnconditionallyExcluded(s, libraryContext),
+      (s) => librarySelectionTier(s.id) != null,
+      librarySelectionTier,
+    )
+  }, [
+    search,
+    category,
+    skillLibrary,
+    libraryPopulated,
+    libraryContext,
+    voucherTasks,
+    voucherPicks,
+    resolvedOccPicks,
+    relatedSelected,
+    secondarySelected,
+  ])
 
 
 
@@ -644,7 +735,9 @@ export function SkillEngine() {
     if (!effectiveOcc || handToHandOptions.length === 0) return null
 
     return (
-      <li className={`rounded border px-2 py-1.5 text-sm ${subStyle}`}>
+      <li
+        className={`rounded border px-2 py-1.5 text-sm ${skillPickRowSurfaceClass('related', morphus)}`}
+      >
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             <p className="font-medium">Hand-to-Hand</p>
@@ -662,7 +755,6 @@ export function SkillEngine() {
               }}
               className={`mt-1 w-full max-w-md rounded border px-2 py-1.5 text-sm ${handToHandInputClass}`}
             >
-              <option value="none">None</option>
               {handToHandOptions.map((opt) => {
                 const affordable = canAffordHandToHandTier(
                   effectiveOcc,
@@ -732,7 +824,19 @@ export function SkillEngine() {
           ? 'Not enough skill slots (professional quality costs 1 additional slot)'
           : 'Not enough skill slots (professional quality costs 1 additional slot)'
 
-
+    const prerequisiteSummary = formatSkillPrerequisiteSummary(def.prerequisite)
+    const synergyHints = listSkillSynergyHints(def, synergyAvailability)
+    const displayedSynergyHints = synergyHints.filter((hint) => {
+      if (hint.direction === 'outgoing') return true
+      return !allSelected.has(hint.sourceSkillId)
+    })
+    const activeSynergyLines = resolveActiveSynergyBonusLines(
+      def,
+      allSelected,
+      allCreationPicks,
+      pick,
+      synergyAvailability,
+    )
 
     return (
 
@@ -740,7 +844,7 @@ export function SkillEngine() {
 
         key={`${tier}-${pick.instanceId}`}
 
-        className={`rounded border px-2 py-1.5 text-sm ${subStyle} ${
+        className={`rounded border px-2 py-1.5 text-sm ${skillPickRowSurfaceClass(tier, morphus)} ${
 
           bad ? 'border-amber-500/60' : ''
 
@@ -762,7 +866,7 @@ export function SkillEngine() {
 
                   <span
 
-                    className="ml-1 text-amber-500"
+                    className="ml-1 text-red-800 dark:text-red-300"
 
                     title={
 
@@ -795,6 +899,18 @@ export function SkillEngine() {
                 Provided by {grantSource}
               </p>
             ) : null}
+
+            {prerequisiteSummary ? (
+              <SkillPrerequisiteMeta
+                summary={prerequisiteSummary}
+                satisfied={!bad}
+              />
+            ) : null}
+
+            <SkillSynergyMeta
+              hints={displayedSynergyHints}
+              activeLines={activeSynergyLines}
+            />
 
             {display.isWeaponProficiency || !display.percentSummary ? (
               <SkillStatLines display={display} />
@@ -937,9 +1053,67 @@ export function SkillEngine() {
 
 
 
+  function setOccVoucherSlotPick(
+    taskId: string,
+    slot: number,
+    pick: CreationSkillPick | null,
+    choiceCount: number,
+  ) {
+    const next = getOccCoreVoucherSlotPicks(voucherPicks, taskId, choiceCount)
+    next[slot] = pick
+    setCreationOccCoreVoucherPick(taskId, next)
+  }
+
+  function commitOccVoucherPick(
+    taskId: string,
+    slot: number,
+    skillId: string,
+    choiceCount: number,
+    specialization?: string,
+  ) {
+    if (
+      isCreationSkillIdentityTaken(allCreationPicks, skillId, specialization)
+    ) {
+      return
+    }
+    setOccVoucherSlotPick(
+      taskId,
+      slot,
+      buildCreationSkillPick(skillId, { specialization }),
+      choiceCount,
+    )
+  }
+
+  function handleOccVoucherAdd(skillId: string) {
+    const def = getSkillById(skillId)
+    if (def && !prerequisiteSatisfied(def.prerequisite, allSelected)) return
+
+    const openSlot = findOpenOccCoreVoucherSlot(
+      skillId,
+      voucherTasks,
+      voucherPicks,
+      hostGenreId,
+      catalogSkillIds,
+    )
+    if (!openSlot) return
+
+    if (skillNeedsVoucherPickDialog(skillId)) {
+      setPendingOccVoucherSlot({ ...openSlot, skillId })
+      return
+    }
+
+    commitOccVoucherPick(
+      openSlot.taskId,
+      openSlot.slot,
+      skillId,
+      openSlot.choiceCount,
+    )
+  }
+
   function handleSkillAdd(skillId: string, action: 'related' | 'secondary') {
     const def = getSkillById(skillId)
     if (def) {
+      if (!prerequisiteSatisfied(def.prerequisite, allSelected)) return
       const { canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
         def,
         libraryContext,
@@ -1033,35 +1207,114 @@ export function SkillEngine() {
 
 
   function renderLibrarySkill(s: EngineSkillDef) {
-    const { canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
+    const { picked, canAddRelated, canAddSecondary } = creationLibrarySkillAddState(
       s,
       libraryContext,
     )
-    const selectable = canAddRelated || canAddSecondary
+    const unconditionallyExcluded = isCreationLibrarySkillUnconditionallyExcluded(
+      s,
+      libraryContext,
+    )
+    const selectionTier = resolveCreationLibrarySkillTier(s.id, {
+      relatedPicks: relatedSelected,
+      secondaryPicks: secondarySelected,
+      resolvedOccPicks,
+      voucherTasks,
+      voucherPicks,
+    })
+    const alreadyChosen = selectionTier != null || picked
+    const identityTaken = isCreationSkillIdentityTaken(allCreationPicks, s.id)
+    const prereqOk = prerequisiteSatisfied(s.prerequisite, allSelected)
+    const canAddOcc =
+      hasLibraryOccVouchers &&
+      canAddSkillViaOccCoreVoucher(
+        s.id,
+        voucherTasks,
+        voucherPicks,
+        hostGenreId,
+        catalogSkillIds,
+        allCreationPicks,
+      ) &&
+      prereqOk
+    const prereqBlocked =
+      !unconditionallyExcluded &&
+      !prereqOk &&
+      (canAddRelated || canAddSecondary || canAddOcc) &&
+      !identityTaken &&
+      !picked
 
-    if (!selectable) {
-      const blockReason = resolveCreationLibrarySkillBlockReason(s, libraryContext)
-      return (
-        <li
-          key={s.id}
-          className={`rounded-md border p-2 ${subStyle} opacity-60`}
-        >
-          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <span className="font-medium">{s.name}</span>
-            {blockReason ? (
-              <span className="text-xs font-semibold text-red-500">{blockReason}</span>
-            ) : null}
-          </div>
-        </li>
-      )
+    const showOccButton =
+      hasLibraryOccVouchers && canAddOcc && !identityTaken
+    const showRelatedButton = canAddRelated && prereqOk && !identityTaken
+    const showSecondaryButton = canAddSecondary && prereqOk && !identityTaken
+    const showAddButtons =
+      showOccButton || showRelatedButton || showSecondaryButton
+
+    const showMeta = !unconditionallyExcluded
+    const prerequisiteSummary = showMeta
+      ? formatSkillPrerequisiteSummary(s.prerequisite)
+      : null
+    const synergyHints = showMeta
+      ? listSkillSynergyHints(s, synergyAvailability)
+      : []
+
+    let statusLabel = ''
+    if (unconditionallyExcluded) {
+      statusLabel = resolveCreationLibrarySkillBlockReason(s, libraryContext)
+    } else if (alreadyChosen || picked) {
+      statusLabel = 'Already selected'
+    } else if (!prereqBlocked && !showAddButtons) {
+      statusLabel = resolveCreationLibrarySkillBlockReason(s, libraryContext)
     }
 
-    const { physicalBonusSummary, subSkillNames, grantedSkillNames } =
-      resolveCreationLibrarySkillPreview(s)
+    const rowSurface = unconditionallyExcluded
+      ? `${subStyle} opacity-60`
+      : selectionTier
+        ? skillPickRowSurfaceClass(
+            selectionTier === 'occ' ? 'preview_occ' : selectionTier,
+            morphus,
+          )
+        : subStyle
+
+    const { physicalBonusSummary, subSkillNames, grantedSkillNames } = showAddButtons
+      ? resolveCreationLibrarySkillPreview(s)
+      : {
+          physicalBonusSummary: undefined as string | undefined,
+          subSkillNames: [] as string[],
+          grantedSkillNames: [] as string[],
+        }
 
     return (
-      <li key={s.id} className={`rounded-md border p-2 ${subStyle}`}>
-        <div className="font-medium">{s.name}</div>
+      <li key={s.id} className={`rounded-md border p-2 ${rowSurface}`}>
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="font-medium">{s.name}</span>
+          {prereqBlocked ? (
+            <span
+              className="text-red-800 dark:text-red-300"
+              title={missingPrerequisiteMessage(s.prerequisite, allSelected) ?? ''}
+            >
+              ⚠
+            </span>
+          ) : null}
+          {statusLabel ? (
+            <span
+              className={`text-xs font-semibold ${
+                alreadyChosen || picked
+                  ? 'text-slate-500 dark:text-slate-400'
+                  : 'text-red-500'
+              }`}
+            >
+              {statusLabel}
+            </span>
+          ) : null}
+        </div>
+        {prerequisiteSummary ? (
+          <SkillPrerequisiteMeta
+            summary={prerequisiteSummary}
+            satisfied={prereqOk}
+          />
+        ) : null}
+        <SkillSynergyMeta hints={synergyHints} />
         {physicalBonusSummary ? (
           <p className="mt-1 font-mono text-xs opacity-80">{physicalBonusSummary}</p>
         ) : null}
@@ -1073,26 +1326,37 @@ export function SkillEngine() {
             Also grants: {grantedSkillNames.join(', ')}
           </p>
         ) : null}
-        <div className="mt-2 flex flex-wrap gap-1">
-          {canAddRelated ? (
-            <button
-              type="button"
-              className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white"
-              onClick={() => handleSkillAdd(s.id, 'related')}
-            >
-              + Related
-            </button>
-          ) : null}
-          {canAddSecondary ? (
-            <button
-              type="button"
-              className="rounded bg-emerald-700 px-2 py-1 text-xs font-semibold text-white"
-              onClick={() => handleSkillAdd(s.id, 'secondary')}
-            >
-              + Secondary
-            </button>
-          ) : null}
-        </div>
+        {showAddButtons ? (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {showOccButton ? (
+              <button
+                type="button"
+                className="rounded bg-amber-900 px-2 py-1 text-xs font-semibold text-white hover:bg-amber-950"
+                onClick={() => handleOccVoucherAdd(s.id)}
+              >
+                + O.C.C.
+              </button>
+            ) : null}
+            {showRelatedButton ? (
+              <button
+                type="button"
+                className="rounded bg-violet-600 px-2 py-1 text-xs font-semibold text-white"
+                onClick={() => handleSkillAdd(s.id, 'related')}
+              >
+                + Related
+              </button>
+            ) : null}
+            {showSecondaryButton ? (
+              <button
+                type="button"
+                className="rounded bg-emerald-700 px-2 py-1 text-xs font-semibold text-white"
+                onClick={() => handleSkillAdd(s.id, 'secondary')}
+              >
+                + Secondary
+              </button>
+            ) : null}
+          </div>
+        ) : null}
       </li>
     )
   }
@@ -1101,7 +1365,13 @@ export function SkillEngine() {
 
   return (
 
-    <section className="w-full" aria-labelledby="forge-tab-page-heading">
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+
+      <section
+        className="flex min-h-0 min-w-0 flex-1 flex-col"
+        aria-labelledby="forge-tab-page-heading"
+      >
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
 
       <p
 
@@ -1111,136 +1381,21 @@ export function SkillEngine() {
 
       >
 
-        O.C.C. core grants, vouchers, and parameterized skills are chosen in the
+        Use <strong>+ O.C.C.</strong> in the library for category voucher picks; filled
 
-        selected skills list below. Pick <strong>O.C.C. related</strong> skills
+        choices appear grouped in the selected panel. Language, literacy, and weapon
 
-        (category % bonuses apply) and <strong>secondary</strong> skills (same
+        proficiencies stay in the panel. Pick <strong>related</strong> and{' '}
 
-        category access as related, no category % bonuses).
+        <strong>secondary</strong> skills with the matching buttons.
 
       </p>
 
-
-
-      <div className={`mb-4 space-y-3 rounded-lg border p-3 ${panelStyle}`}>
-
-        <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
-
-          Selected skills
-
-        </h3>
-
-        <div>
-
-          <p className="mb-1 text-xs font-semibold opacity-70">O.C.C. skills</p>
-
-          <ul className="space-y-1">
-
-            <SelectedOccCoreSkills
-              subStyle={subStyle}
-              inputClass={handToHandInputClass}
-              morphus={morphus}
-              onEditPick={(pick) => setEditPick({ pick, tier: 'occ' })}
-              renderOccSkillRow={(pick, onClear) =>
-                renderSelectedRow(
-                  pick,
-                  'occ',
-                  onClear ? () => onClear() : undefined,
-                  'Clear',
-                )
-              }
-            />
-
-          </ul>
-
-        </div>
-
-        <div>
-
-          <p className={`mb-1 text-sm font-bold ${relatedSectionClass}`}>
-            O.C.C. Related{' '}
-            {relatedCap > 0 ? (
-              <span className="tabular-nums">
-                {relatedSlotsUsed}/{relatedCap}
-              </span>
-            ) : null}
-          </p>
-
-          <ul className="space-y-1">
-
-            {renderHandToHandRow()}
-
-            {relatedSelected.map((pick) =>
-
-              renderSelectedRow(pick, 'related', (instanceId) =>
-
-                setCreationSkillPicks(
-                  occSkillIds,
-                  removeCreationSkillPickWithConditionalCascade(
-                    relatedSelected,
-                    instanceId,
-                  ),
-                  secondarySelected,
-                ),
-
-              ),
-
-            )}
-
-            {relatedSelected.length === 0 && handToHandOptions.length === 0 ? (
-
-              <li className="text-xs opacity-50">None selected.</li>
-
-            ) : null}
-
-          </ul>
-
-        </div>
-
-        <div>
-
-          <p className={`mb-1 text-sm font-bold ${secondarySectionClass}`}>
-            Secondary{' '}
-            {secondaryCap > 0 ? (
-              <span className="tabular-nums">
-                {secondaryPickSlots}/{secondaryCap}
-              </span>
-            ) : null}
-          </p>
-
-          <ul className="space-y-1">
-
-            {secondarySelected.map((pick) =>
-
-              renderSelectedRow(pick, 'secondary', (instanceId) =>
-
-                setCreationSkillPicks(
-                  occSkillIds,
-                  relatedSelected,
-                  removeCreationSkillPickWithConditionalCascade(
-                    secondarySelected,
-                    instanceId,
-                  ),
-                ),
-
-              ),
-
-            )}
-
-            {secondarySelected.length === 0 ? (
-
-              <li className="text-xs opacity-50">None selected.</li>
-
-            ) : null}
-
-          </ul>
-
-        </div>
-
-      </div>
-
-
+      {DevAutoFillSkillsButton ? (
+        <Suspense fallback={null}>
+          <DevAutoFillSkillsButton />
+        </Suspense>
+      ) : null}
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
 
@@ -1458,27 +1613,108 @@ export function SkillEngine() {
 
           </p>
 
+        ) : libraryPartitions.selected.length === 0 &&
+          libraryPartitions.browse.length === 0 ? (
+
+          <p className="text-sm opacity-60">No skills match this filter.</p>
+
         ) : (
 
-          <ul className="max-h-[480px] space-y-2 overflow-y-auto text-sm">
+          <div className="flex max-h-[480px] min-h-0 flex-col gap-2 text-sm">
 
-            {filteredLibrary.length === 0 ? (
+            {libraryPartitions.selected.length > 0 ? (
+              <div
+                className={`shrink-0 rounded-md border p-2 ${
+                  morphus
+                    ? 'border-violet-600/70 bg-violet-950/45'
+                    : 'border-slate-300 bg-slate-50/90'
+                }`}
+              >
+                <p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-80">
+                  Selected in{' '}
+                  {category === 'All' ? 'search results' : category}
+                </p>
+                <ul className="max-h-40 space-y-2 overflow-y-auto">
+                  {libraryPartitions.selected.map((s) => renderLibrarySkill(s))}
+                </ul>
+              </div>
+            ) : null}
 
-              <li className="text-sm opacity-60">No skills match this filter.</li>
+            <ul className="min-h-0 flex-1 space-y-2 overflow-y-auto">
+              {libraryPartitions.browse.length === 0 ? (
+                <li className="text-sm opacity-60">
+                  No other skills in this category.
+                </li>
+              ) : (
+                libraryPartitions.browse.map((s) => renderLibrarySkill(s))
+              )}
+            </ul>
 
-            ) : (
-
-              filteredLibrary.map((s) => renderLibrarySkill(s))
-
-            )}
-
-          </ul>
+          </div>
 
         )}
 
       </div>
 
+        </div>
+      </section>
 
+      <CreationSelectedSkillsPanel
+        morphus={morphus}
+        panelStyle={panelStyle}
+        subStyle={subStyle}
+        handToHandInputClass={handToHandInputClass}
+        occSectionClass={occSectionClass}
+        relatedSectionClass={relatedSectionClass}
+        secondarySectionClass={secondarySectionClass}
+        relatedCap={relatedCap}
+        relatedSlotsUsed={relatedSlotsUsed}
+        secondaryCap={secondaryCap}
+        secondaryPickSlots={secondaryPickSlots}
+        relatedSelected={relatedSelected}
+        secondarySelected={secondarySelected}
+        hasHandToHandOptions={handToHandOptions.length > 0}
+        onEditOccPick={(pick) => setEditPick({ pick, tier: 'occ' })}
+        renderOccSkillRow={(pick, onClear) => {
+          const parameterizedOccGrant =
+            isOccCoreGrantSkillPick(
+              pick,
+              effectiveOcc,
+              character.occSpecializationId,
+            ) && skillRequiresSpecialization(pick.skillId)
+          return renderSelectedRow(
+            pick,
+            'occ',
+            parameterizedOccGrant || !onClear ? undefined : () => onClear(),
+            'Clear',
+          )
+        }}
+        renderHandToHandRow={renderHandToHandRow}
+        renderRelatedRow={(pick) =>
+          renderSelectedRow(pick, 'related', (instanceId) =>
+            setCreationSkillPicks(
+              occSkillIds,
+              removeCreationSkillPickWithConditionalCascade(
+                relatedSelected,
+                instanceId,
+              ),
+              secondarySelected,
+            ),
+          )
+        }
+        renderSecondaryRow={(pick) =>
+          renderSelectedRow(pick, 'secondary', (instanceId) =>
+            setCreationSkillPicks(
+              occSkillIds,
+              relatedSelected,
+              removeCreationSkillPickWithConditionalCascade(
+                secondarySelected,
+                instanceId,
+              ),
+            ),
+          )
+        }
+      />
 
       <SkillPickAddDialog
 
@@ -1498,6 +1734,32 @@ export function SkillEngine() {
 
         }}
 
+      />
+
+      <SkillPickAddDialog
+        state={
+          pendingOccVoucherSlot
+            ? {
+                skillId: pendingOccVoucherSlot.skillId,
+                variant: 'voucher',
+                existingPicks: allCreationPicks,
+              }
+            : null
+        }
+        morphus={morphus}
+        onCancel={() => setPendingOccVoucherSlot(null)}
+        onConfirm={(result) => {
+          if (!pendingOccVoucherSlot) return
+          const { taskId, slot, choiceCount, skillId } = pendingOccVoucherSlot
+          commitOccVoucherPick(
+            taskId,
+            slot,
+            skillId,
+            choiceCount,
+            result.specialization,
+          )
+          setPendingOccVoucherSlot(null)
+        }}
       />
 
 
@@ -1538,7 +1800,7 @@ export function SkillEngine() {
 
       />
 
-    </section>
+    </div>
 
   )
 

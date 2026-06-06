@@ -241,7 +241,9 @@ export function deriveForgeNavigation<TId extends string>(
   const terminalAccessible =
     terminalId != null &&
     firstRepairTabId == null &&
-    tabDefs.every((t) => isEffectiveComplete(t, completed))
+    tabDefs
+      .filter((t) => t.id !== terminalId)
+      .every((t) => isEffectiveComplete(t, completed))
 
   if (terminalId) {
     const terminalIdx = tabs.findIndex((t) => t.id === terminalId)
