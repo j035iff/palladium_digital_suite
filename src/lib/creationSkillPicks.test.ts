@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   additionalSlotsForSkillAdd,
   buildCreationSkillPick,
+  creationLibrarySkillAddState,
   creationSkillPickHasEditableSpecialization,
   creationSkillPickSlotWeight,
   downgradePickToStandard,
@@ -23,8 +24,10 @@ import {
   upgradePickToProfessional,
   validateSpecializationInput,
 } from './creationSkillPicks'
-import type { CreationSkillPick } from '../types'
+import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { getSkillById } from '../data/skillLibrary'
+import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
+import type { CreationLibrarySkillContext } from './creationSkillPicks'
 
 describe('creationSkillPicks', () => {
   it('migrates legacy string ids to picks', () => {
@@ -188,6 +191,35 @@ describe('creationSkillPicks', () => {
     expect(sumOccCoreProfessionalRelatedSlotSurcharges(occCore)).toBe(1)
     expect(sumRelatedPoolSlotUsage(related, occCore, 0)).toBe(2)
     expect(sumRelatedPoolSlotUsage(related, occCore, 2)).toBe(4)
+  })
+
+  it('allows related but not secondary for allowedAsSecondarySkill false catalog rows', () => {
+    const boxing = getEngineSkillDefFromCatalog('skill_boxing')!
+    const occPhysicalAny = {
+      id: 'occ_test_physical',
+      occRelatedSkills: {
+        initialSlotsCount: 4,
+        categoryRules: [
+          { categoryName: 'Physical', accessType: 'any', bonusPercent: 0 },
+        ],
+      },
+      secondarySkills: { initialSlotsCount: 4 },
+    } as PalladiumOcc
+    const ctx: CreationLibrarySkillContext = {
+      effectiveOcc: occPhysicalAny,
+      specializationId: null,
+      relatedSlotsUsed: 0,
+      relatedSkillCap: 4,
+      secondaryPickSlots: 0,
+      secondaryCap: 4,
+      occPicks: [],
+      relatedPicks: [],
+      secondaryPicks: [],
+      activeFilterCategory: 'Physical',
+    }
+    const state = creationLibrarySkillAddState(boxing, ctx)
+    expect(state.canAddRelated).toBe(true)
+    expect(state.canAddSecondary).toBe(false)
   })
 
   it('counts hand-to-hand upgrade cost only in pool usage, not by shrinking the cap', () => {

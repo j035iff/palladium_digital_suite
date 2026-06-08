@@ -37,7 +37,8 @@ export function PsychicGate() {
   const morphus = supportsDualForm && activeForm === 'morphus'
   const bypassed = character.psychicGateBypassed === true
   const occLocked = character.occ.category === 'psychic'
-  const tierChosen = character.creationPsychicTierChosen === true
+  const tierChosen =
+    character.creationPsychicTierChosen === true || occLocked
   const [lastTestRoll, setLastTestRoll] = useState<number | null>(null)
 
   const bandRows = useMemo(() => getStandardPsychicTestBandRows(), [])

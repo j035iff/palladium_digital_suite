@@ -353,6 +353,8 @@ type CharacterContextValue = {
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
   /** Dev-only — rolls and assigns all eight attributes in one update. */
   devAutoRollAndAssignAllAttributes?: () => void
+  /** Dev-only — sets one attribute to an exceptional pool value (17–30). */
+  devMakeAttributeExceptional?: (attr: ForgeAttrKey) => void
   /** Dev-only — fills vouchers, related, secondary, and Hand-to-Hand picks. */
   devAutoFillAllSkillSelections?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
@@ -1006,8 +1008,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const saveProfileDerived = useMemo(
-    () => computeSaveProfile(character, sheetActiveForm, saveVsPsionicsTarget),
-    [character, sheetActiveForm, saveVsPsionicsTarget],
+    () =>
+      computeSaveProfile(
+        character,
+        sheetActiveForm,
+        saveVsPsionicsTarget,
+        supportsDualForm,
+      ),
+    [character, sheetActiveForm, saveVsPsionicsTarget, supportsDualForm],
   )
 
   const movementDerived = useMemo(
@@ -1559,7 +1567,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined
       if (!raceAllowsOccPick(race)) return
       if (!isOccAllowedForRace(race, lib)) return
-      const tier: PsychicTier = def.category === 'psychic' ? 'master' : 'none'
+      const isPsychicOcc = def.category === 'psychic'
+      const tier: PsychicTier = isPsychicOcc ? 'master' : 'none'
       setPsychicTierState(tier)
       setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
@@ -1578,7 +1587,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           occ: snapshotOccForCharacter(def),
           occSpecializationId: undefined,
           creationPsychicTier: tier,
-          creationPsychicTierChosen: false,
+          creationPsychicTierChosen: isPsychicOcc && !gateBypassed,
         }
         const withOcc = applyOccStartingSkillPicks(
           patchCharacterCreationFromOcc(invalidated, lib),
@@ -1841,6 +1850,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           )
           return syncRaceOccFacadeSdc(
             syncCreationAttributeBranches(withPool, occ),
+          )
+        })
+      },
+    )
+  }, [])
+
+  const devMakeAttributeExceptional = useCallback((attr: ForgeAttrKey) => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devMakeAttributeExceptional').then(
+      ({ buildDevExceptionalAttributeState }) => {
+        setRawCharacter((prev) => {
+          const occ = getLibraryOccById(prev.occ.id) ?? undefined
+          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const withAttr = buildDevExceptionalAttributeState(
+            prev,
+            attr,
+            race?.attributes,
+          )
+          return syncRaceOccFacadeSdc(
+            syncCreationAttributeBranches(withAttr, occ),
           )
         })
       },
@@ -2180,6 +2209,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoRollAndAssignAllAttributes: import.meta.env.DEV
         ? devAutoRollAndAssignAllAttributes
         : undefined,
+      devMakeAttributeExceptional: import.meta.env.DEV
+        ? devMakeAttributeExceptional
+        : undefined,
       devAutoFillAllSkillSelections: import.meta.env.DEV
         ? devAutoFillAllSkillSelections
         : undefined,
@@ -2297,6 +2329,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
       devAutoRollAndAssignAllAttributes,
+      devMakeAttributeExceptional,
       devAutoFillAllSkillSelections,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,

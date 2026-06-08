@@ -4,12 +4,9 @@ import {
   aggregateAllPassiveModifiers,
   listApplyingFeatures,
 } from './featureEngine'
-import {
-  SKILL_MELEE,
-  collectUnlockedSkillIds,
-} from './combatQuickBonuses'
-import { getSkillById } from '../data/skillLibrary'
+import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import { getPpBonuses } from './attributeBonuses'
+import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
 import type { AccumulatedHandToHandBonuses } from '../types'
 
 export type SheetBonusLine = { label: string; amount: number }
@@ -127,9 +124,11 @@ export function computeSheetCombatDerived(
     skillName: string | null
     accumulated: AccumulatedHandToHandBonuses
   },
+  opts?: { extraSkillIds?: readonly string[] },
 ): SheetCombatDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
   const unlocked = collectUnlockedSkillIds(character, activeForm)
+  for (const id of opts?.extraSkillIds ?? []) unlocked.add(id)
   const displayed = computeDisplayScalars(character, activeForm, passive)
   const ppBonus = meleeNaturalBonusFromDisplayedPp(displayed.pp)
 
@@ -137,14 +136,15 @@ export function computeSheetCombatDerived(
   const parryLines: SheetBonusLine[] = [{ label: 'P.P. natural', amount: ppBonus }]
   const dodgeLines: SheetBonusLine[] = [{ label: 'P.P. natural', amount: ppBonus }]
 
-  for (const id of unlocked) {
-    const row = SKILL_MELEE[id]
-    if (!row) continue
-    const def = getSkillById(id)
-    const nm = def?.name ?? id
-    if (row.strike) strikeLines.push({ label: `Skill (${nm})`, amount: row.strike })
-    if (row.parry) parryLines.push({ label: `Skill (${nm})`, amount: row.parry })
-    if (row.dodge) dodgeLines.push({ label: `Skill (${nm})`, amount: row.dodge })
+  const physical = aggregatePhysicalSkillCombatBonuses([...unlocked])
+  for (const key of ['strike', 'parry', 'dodge'] as const) {
+    const amt = physical.combat[key] ?? 0
+    if (!amt) continue
+    const names = physical.sources.get(key)?.join(', ') ?? 'Physical skill'
+    const line = { label: `Skill (${names})`, amount: amt }
+    if (key === 'strike') strikeLines.push(line)
+    if (key === 'parry') parryLines.push(line)
+    if (key === 'dodge') dodgeLines.push(line)
   }
 
   const applyingFeatures = listApplyingFeatures(
@@ -178,6 +178,8 @@ export function computeSheetCombatDerived(
     { label: 'P.E. (÷10)', amount: peDiv },
   ]
   if (initExtra) initiativeLines.push({ label: 'Passive initiative', amount: initExtra })
+  const ppInit = getPpBonuses(displayed.pp).initiative
+  if (ppInit) initiativeLines.push({ label: 'P.P. (31+)', amount: ppInit })
 
   appendHandToHandLines(
     handToHand?.accumulated,
@@ -196,6 +198,13 @@ export function computeSheetCombatDerived(
     ...dodgeLines.map((l) => ({ ...l, label: `Dodge ← ${l.label}` })),
     { label: 'P.E. (÷10)', amount: peDiv },
   ]
+  if (physical.combat.rollWithImpact) {
+    const names = physical.sources.get('rollWithImpact')?.join(', ') ?? 'Physical skill'
+    rollLines.push({
+      label: `Skill (${names})`,
+      amount: physical.combat.rollWithImpact,
+    })
+  }
 
   const hth = handToHand?.accumulated
   const rollHth = (hth?.rollWithPunch ?? 0) + (hth?.pullPunch ?? 0)

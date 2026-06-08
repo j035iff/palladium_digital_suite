@@ -20,7 +20,7 @@ export type SkillListProps = {
 /**
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
- * Quick Roll (vision.md — speed): d100 target = base + level bonus + I.Q. O.C.C. %.
+ * Quick Roll (vision.md — speed): d100 target = base + level bonus + I.Q. skill bonus.
  */
 export function SkillList({
   skills,
@@ -35,7 +35,7 @@ export function SkillList({
   const rootRef = useRef<HTMLUListElement>(null)
 
   const iqBonus = useMemo(
-    () => computeLiveBonuses(activeFormState.attributes).iqOccSkillPercent,
+    () => computeLiveBonuses(activeFormState.attributes).iqSkillBonus,
     [activeFormState.attributes],
   )
   const maPbBonus = useMemo(

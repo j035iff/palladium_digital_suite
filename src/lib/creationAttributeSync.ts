@@ -3,13 +3,15 @@ import type {
   CharacterRootState,
   FormState,
   PalladiumOcc,
+  Race,
 } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
-import { attributePoolNotationBounds } from './diceNotationBounds'
+import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import { attributePoolNotationBounds, isDiceNotation } from './diceNotationBounds'
 import type { RaceAttributeFormulas } from '../types'
 import { mergeVitalityFromAttributes } from './derivedVitality'
-import { listOccVariableBonusTasks } from './occVariableBonus'
+import { listOccVariableAttributeBonusTasks } from './occVariableBonus'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { occFlatVitalBonus } from './creationOccBonuses'
 
@@ -19,6 +21,80 @@ export function raceAttrNotation(
 ): string {
   const key = attr === 'ps' ? 'ps' : attr
   return formulas?.[key]?.toString() ?? '3D6'
+}
+
+function formatOccAttributeBonus(raw: number | string): string | null {
+  if (typeof raw === 'number') {
+    if (raw === 0) return null
+    return `${raw >= 0 ? '+' : ''}${raw}(OCC)`
+  }
+  if (isDiceNotation(raw)) return `+${raw}(OCC)`
+  const trimmed = raw.trim()
+  return trimmed.length > 0 ? `${trimmed}(OCC)` : null
+}
+
+function occAttributeBonusHint(
+  occ: PalladiumOcc,
+  attr: ForgeAttrKey,
+  specializationId?: string | null,
+): string | null {
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  const key = attr === 'ps' ? 'ps' : attr
+  return formatOccAttributeBonus(effective.staticBonuses?.attributes?.[key] ?? 0)
+}
+
+function grantedSkillAttributeBonusHints(
+  attr: ForgeAttrKey,
+  grantedSkillIds: readonly string[],
+): string[] {
+  const key = attr === 'ps' ? 'ps' : attr
+  const hints: string[] = []
+  for (const skillId of grantedSkillIds) {
+    const entry = getPalladiumSkillCatalogEntryById(skillId)
+    const name = entry?.name ?? skillId
+    const raw = (
+      entry as { physicalSkillBonuses?: Record<string, number | string> }
+    )?.physicalSkillBonuses?.[key]
+    if (raw == null) continue
+    if (typeof raw === 'number' && raw !== 0) {
+      hints.push(`${raw >= 0 ? '+' : ''}${raw}(${name})`)
+    } else if (typeof raw === 'string' && isDiceNotation(raw)) {
+      hints.push(`+${raw}(${name})`)
+    }
+  }
+  return hints
+}
+
+/** Race dice, O.C.C., and granted core-skill bonuses — each part is independent. */
+export function creationAttributeRollHint(
+  race: Race | undefined,
+  attr: ForgeAttrKey,
+  occ?: PalladiumOcc,
+  specializationId?: string | null,
+  grantedSkillIds: readonly string[] = [],
+): string | undefined {
+  const parts: string[] = []
+  if (race) parts.push(raceAttrNotation(race.attributes, attr))
+  if (occ?.id?.trim()) {
+    const occBonus = occAttributeBonusHint(occ, attr, specializationId)
+    if (occBonus) parts.push(occBonus)
+  }
+  parts.push(...grantedSkillAttributeBonusHints(attr, grantedSkillIds))
+  return parts.length > 0 ? parts.join(' ') : undefined
+}
+
+/** O.C.C. minimum attribute requirement for the Live Ledger label (e.g. `12+`). */
+export function occAttributeRequirementSuffix(
+  occ: PalladiumOcc | undefined,
+  attr: ForgeAttrKey,
+  specializationId?: string | null,
+): string | undefined {
+  if (!occ?.id?.trim()) return undefined
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  const key = attr === 'ps' ? 'ps' : attr
+  const min = effective.attributeRequirements?.[key]
+  if (typeof min === 'number' && min > 0) return `${min}+`
+  return undefined
 }
 
 /** Pool value must fall within the race dice notation bounds for the target attribute. */
@@ -206,8 +282,7 @@ export function buildCreationAttributes(
     }
   }
 
-  for (const task of listOccVariableBonusTasks(occ, specializationId)) {
-    if (task.section !== 'attributes') continue
+  for (const task of listOccVariableAttributeBonusTasks(occ, specializationId)) {
     const resolved = occVariableResolutions[task.id]
     if (resolved == null || !Number.isFinite(resolved)) continue
     const forge = task.statKey as ForgeAttrKey

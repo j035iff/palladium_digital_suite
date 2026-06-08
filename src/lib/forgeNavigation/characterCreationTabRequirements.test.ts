@@ -50,6 +50,20 @@ describe('listCharacterCreationTabRequirements', () => {
     expect(done[0]?.satisfied).toBe(true)
   })
 
+  it('skips psychic gate requirements for natural psychic O.C.C.s', () => {
+    const psychicOcc = {
+      ...pandoraOcc,
+      id: 'occ_pab_psychic_agent',
+      occType: 'psychic',
+      ispEngine: { baseFormula: 'ME + 5D6', perLevelFormula: '2D4' },
+    } as CharacterCreationForgeContext['occ']
+    const requirements = listCharacterCreationTabRequirements('tab3_psionic', {
+      ...ctx({ creationPsychicTierChosen: false }),
+      occ: psychicOcc,
+    })
+    expect(requirements).toHaveLength(0)
+  })
+
   it('lists skill tab requirements with live satisfaction state', () => {
     const requirements = listCharacterCreationTabRequirements('tab4_skills', ctx())
     expect(requirements.some((r) => r.id === 'occ-vouchers' && !r.satisfied)).toBe(

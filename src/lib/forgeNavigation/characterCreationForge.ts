@@ -15,7 +15,8 @@ import {
 import { assessCreationSpawnBlockers } from '../creationReadiness'
 import {
   creationNeedsAbilitySelection,
-  creationShowsPsychicGate,
+  creationPsychicGateRequiresTierChoice,
+  isCreationPsychicTierComplete,
 } from '../creationPhases'
 import {
   assessRelatedSkillSlotBlockers,
@@ -226,10 +227,13 @@ export function forgeTabToLegacyPhase(
 }
 
 function assessPsychicTabBlockers(ctx: CharacterCreationForgeContext): string[] {
-  if (!creationShowsPsychicGate(ctx.character, ctx.occ, ctx.character.creationGenreId)) {
-    return []
-  }
-  if (ctx.character.creationPsychicTierChosen !== true) {
+  if (
+    !isCreationPsychicTierComplete(
+      ctx.character,
+      ctx.occ,
+      ctx.character.creationGenreId,
+    )
+  ) {
     return ['Explicitly select None, Minor, or Major psionic potential.']
   }
   return []
@@ -380,7 +384,11 @@ function buildTabDefinitions(
           id,
           label,
           isNa: () =>
-            !creationShowsPsychicGate(character, occ, character.creationGenreId),
+            !creationPsychicGateRequiresTierChoice(
+              character,
+              occ,
+              character.creationGenreId,
+            ),
           validate: () => {
             const blockers = assessPsychicTabBlockers(ctx)
             return { ok: blockers.length === 0, blockers }

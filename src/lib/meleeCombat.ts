@@ -5,13 +5,11 @@ import type { CharacterAttributes } from '../types'
  * `hthAttackBonus` — extra attacks from accumulated Hand-to-Hand progression.
  */
 export function computeMaxApm(
-  attrs: CharacterAttributes,
+  _attrs: CharacterAttributes,
   level: number,
   hthAttackBonus = 0,
 ): number {
-  const spd = attrs.spd
-  const pp = attrs.pp
-  const base = 2 + Math.floor((spd + pp) / 18)
+  const base = 2
   const levelBump = Math.min(3, Math.floor(level / 4))
   const hth = Math.max(0, Math.round(hthAttackBonus))
   return Math.min(12, Math.max(2, base + levelBump + hth))

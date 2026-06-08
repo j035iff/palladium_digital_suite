@@ -9,6 +9,16 @@ import {
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
 import type { CreationSkillPick } from '../types'
 
+/** May be taken as an O.C.C. related pick when category rules allow. */
+export function skillEligibleAsRelatedPick(def: EngineSkillDef): boolean {
+  return def.slotKind === 'occ_related'
+}
+
+/** May be taken as a secondary pick (catalog `allowedAsSecondarySkill`). */
+export function skillEligibleAsSecondaryPick(def: EngineSkillDef): boolean {
+  return def.secondaryEligible === true
+}
+
 /** OCC / race context for synergy partner availability (no active browse category). */
 export type CreationSkillAvailabilityContext = {
   effectiveOcc: PalladiumOcc | null | undefined
@@ -30,8 +40,8 @@ function isSkillExcludedFromOccOrRace(
     return true
   }
 
-  const hasRelated = def.slotKind === 'occ_related'
-  const hasSecondary = def.secondaryEligible
+  const hasRelated = skillEligibleAsRelatedPick(def)
+  const hasSecondary = skillEligibleAsSecondaryPick(def)
   if (!hasRelated && !hasSecondary) return true
 
   const relatedBlocked =
@@ -486,7 +496,7 @@ export function creationLibrarySkillAddState(
   const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
   const secFull = opts.secondaryPickSlots >= opts.secondaryCap
   const relatedBlocked =
-    def.slotKind === 'occ_related' &&
+    skillEligibleAsRelatedPick(def) &&
     opts.effectiveOcc != null &&
     !isOccRelatedSkillAllowed(
       opts.effectiveOcc,
@@ -496,7 +506,7 @@ export function creationLibrarySkillAddState(
       opts.activeFilterCategory,
     )
   const secondaryBlocked =
-    def.secondaryEligible &&
+    skillEligibleAsSecondaryPick(def) &&
     opts.effectiveOcc != null &&
     !isSecondarySkillAllowed(
       opts.effectiveOcc,
@@ -507,13 +517,13 @@ export function creationLibrarySkillAddState(
     )
   const raceBlocked = opts.raceBlocked === true
   const canAddRelated =
-    def.slotKind === 'occ_related' &&
+    skillEligibleAsRelatedPick(def) &&
     !picked &&
     !relFull &&
     !relatedBlocked &&
     !raceBlocked
   const canAddSecondary =
-    def.secondaryEligible &&
+    skillEligibleAsSecondaryPick(def) &&
     !picked &&
     !secFull &&
     !secondaryBlocked &&
@@ -570,8 +580,8 @@ export function resolveCreationLibrarySkillBlockReason(
 
   const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
   const secFull = opts.secondaryPickSlots >= opts.secondaryCap
-  const hasRelated = def.slotKind === 'occ_related'
-  const hasSecondary = def.secondaryEligible
+  const hasRelated = skillEligibleAsRelatedPick(def)
+  const hasSecondary = skillEligibleAsSecondaryPick(def)
   const relatedBlocked =
     hasRelated &&
     opts.effectiveOcc != null &&
@@ -605,6 +615,9 @@ export function resolveCreationLibrarySkillBlockReason(
   }
   if (hasSecondary && secFull && (!hasRelated || relFull)) {
     return 'No secondary slots available'
+  }
+  if (hasRelated && !hasSecondary && relatedBlocked) {
+    return 'Not available as a related skill for this O.C.C.'
   }
 
   return 'Not available'

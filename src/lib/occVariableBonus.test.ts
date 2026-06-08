@@ -28,4 +28,18 @@ describe('occVariableBonus', () => {
     expect(all.some((t) => t.section === 'attributes')).toBe(true)
     expect(all.some((t) => t.section === 'vitals')).toBe(true)
   })
+
+  it('excludes Spd from Phase I.2 attribute dice tasks', () => {
+    const withSpd = {
+      id: 'occ_pab_psychic_agent',
+      staticBonuses: {
+        attributes: { ps: 1, spd: '1D6' },
+      },
+      occSkillsCore: [],
+      occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
+    } as unknown as PalladiumOcc
+    const attrTasks = listOccVariableAttributeBonusTasks(withSpd, null)
+    expect(attrTasks.some((t) => t.statKey === 'spd')).toBe(false)
+    expect(attrTasks.some((t) => t.statKey === 'ps')).toBe(false)
+  })
 })

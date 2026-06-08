@@ -1,5 +1,8 @@
 import type { Character, PalladiumOcc, Race } from '../types'
-import { creationNeedsAbilitySelection, creationShowsPsychicGate } from './creationPhases'
+import {
+  creationNeedsAbilitySelection,
+  creationPsychicGateRequiresTierChoice,
+} from './creationPhases'
 import {
   listOccVariableAttributeBonusTasks,
   occVariableBonusTasksComplete,
@@ -51,7 +54,11 @@ export function buildCreationFlowContext(
   )
   return {
     raceCanPickOcc: picksOcc,
-    showPsychicGate: creationShowsPsychicGate(character, occ, creationGenreId),
+    showPsychicGate: creationPsychicGateRequiresTierChoice(
+      character,
+      occ,
+      creationGenreId,
+    ),
     showAbilitySelection: creationNeedsAbilitySelection(
       character.creationAbilityBudget,
       creationGenreId,

@@ -7,7 +7,10 @@ import {
 } from '../data/library/occCatalogLoader'
 import {
   creationNeedsAbilitySelection,
+  creationPsychicGateRequiresTierChoice,
   creationShowsPsychicGate,
+  isCreationPsychicTierComplete,
+  occIsNaturalPsychicClass,
   resolvePsychicGateBypassed,
 } from './creationPhases'
 import { occOffersSupernaturalCreation } from './occSupernatural'
@@ -59,5 +62,52 @@ describe('genreSupernaturalAbilitiesDisallowed', () => {
     expect(
       resolvePsychicGateBypassed('race_human', mundaneOcc, 'nightbane'),
     ).toBe(false)
+  })
+
+  it('auto-completes psychic gate for natural psychic O.C.C.s', () => {
+    vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
+    const psychicOcc = getPalladiumOccById('occ_pab_psychic_agent')
+    expect(psychicOcc).toBeDefined()
+    expect(occIsNaturalPsychicClass(psychicOcc)).toBe(true)
+    expect(
+      creationPsychicGateRequiresTierChoice(
+        { raceId: 'race_human' },
+        psychicOcc,
+        'nightbane',
+      ),
+    ).toBe(false)
+    expect(
+      isCreationPsychicTierComplete(
+        { raceId: 'race_human', creationPsychicTierChosen: false },
+        psychicOcc,
+        'nightbane',
+      ),
+    ).toBe(true)
+  })
+
+  it('requires tier choice for mundane O.C.C. on psionic-capable race', () => {
+    vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
+    const mundaneOcc = getPalladiumOccById('occ_ex_government_agent')
+    expect(
+      creationPsychicGateRequiresTierChoice(
+        { raceId: 'race_human' },
+        mundaneOcc,
+        'nightbane',
+      ),
+    ).toBe(true)
+    expect(
+      isCreationPsychicTierComplete(
+        { raceId: 'race_human', creationPsychicTierChosen: false },
+        mundaneOcc,
+        'nightbane',
+      ),
+    ).toBe(false)
+    expect(
+      isCreationPsychicTierComplete(
+        { raceId: 'race_human', creationPsychicTierChosen: true },
+        mundaneOcc,
+        'nightbane',
+      ),
+    ).toBe(true)
   })
 })

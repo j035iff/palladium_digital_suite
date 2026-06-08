@@ -138,6 +138,17 @@ describe('creationSkillCatalog library sort', () => {
   })
 })
 
+describe('creationSkillCatalog related-only skills', () => {
+  it('includes Boxing in the nightbane library as related-eligible but not secondary', () => {
+    const lib = listCreationSkillLibrary('nightbane')
+    const boxing = lib.find((s) => s.id === 'skill_boxing')
+    expect(boxing).toBeDefined()
+    expect(boxing?.slotKind).toBe('occ_related')
+    expect(boxing?.secondaryEligible).toBe(false)
+    expect(matchesSkillBookCategoryFilter(boxing!, 'Physical')).toBe(true)
+  })
+})
+
 describe('creationSkillCatalog technical pinning', () => {
   it('pins Language and Literacy to the top of Technical results', () => {
     const lib = listCreationSkillLibrary('nightbane')

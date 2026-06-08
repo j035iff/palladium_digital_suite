@@ -1,4 +1,4 @@
-import type { ActiveForm, Character } from '../types'
+import type { ActiveForm, Character, FeatureModifiers } from '../types'
 import { aggregateAllPassiveModifiers, listApplyingFeatures } from './featureEngine'
 import { computeDisplayScalars } from './sheetBonuses'
 import { getSkillById } from '../data/skillLibrary'
@@ -39,7 +39,8 @@ export type SaveRollEntry = {
 }
 
 export type HorrorFactorProfile = {
-  total: number
+  /** `null` when the race / form has no Horror Factor aura (display N/A). */
+  total: number | null
   contributions: SaveDeductionLine[]
   tooltipEquation: string
 }
@@ -59,7 +60,7 @@ function passiveSumForKeys(passive: Record<string, number>, keys: readonly strin
 }
 
 /** Per-feature/-skill attribution for modifiers matching registry keys on this row. */
-function attributionForKeys(
+export function saveModifierAttribution(
   keys: readonly string[],
   character: Character,
   activeForm: ActiveForm,
@@ -113,7 +114,67 @@ function clampTarget(n: number): number {
   return Math.max(MIN_EFFECTIVE_SAVE_TARGET, Math.round(n))
 }
 
-const HF_MODIFIER_KEYS = ['horror_factor', 'save_horror'] as const
+/** Passive keys that add to the character's Horror Factor aura (not save vs HF). */
+const HF_AURA_MODIFIER_KEYS = ['horror_factor'] as const
+
+function horrorFactorMorphusBaseline(
+  supportsDualForm: boolean,
+  activeForm: ActiveForm,
+): number {
+  if (supportsDualForm && activeForm === 'morphus') {
+    return DEFAULT_HORROR_FACTOR_BY_FORM.morphus
+  }
+  return 0
+}
+
+/**
+ * Horror Factor aura — N/A for most races unless Morphus baseline or explicit `horror_factor` mods apply.
+ * `save_horror` / `save_horror_factor` are save bonuses only (Save vs block), not aura.
+ */
+export function computeHorrorFactorAura(
+  character: Character,
+  activeForm: ActiveForm,
+  passive: FeatureModifiers,
+  supportsDualForm: boolean,
+): HorrorFactorProfile {
+  const explicitBase =
+    typeof passive.horror_factor_base === 'number' && passive.horror_factor_base > 0
+      ? passive.horror_factor_base
+      : null
+  const morphusBaseline = horrorFactorMorphusBaseline(supportsDualForm, activeForm)
+  const baseline = explicitBase ?? morphusBaseline
+
+  const hfAttr = saveModifierAttribution(
+    [...HF_AURA_MODIFIER_KEYS],
+    character,
+    activeForm,
+  )
+  const passiveAura = passiveSumForKeys(passive, HF_AURA_MODIFIER_KEYS)
+  const hfAttributed = hfAttr.reduce((s, l) => s + l.amount, 0)
+  const hfOrphan = passiveAura - hfAttributed
+
+  const hfContributions: SaveDeductionLine[] = [...hfAttr]
+  if (hfOrphan !== 0) {
+    hfContributions.push({ label: 'Other modifiers', amount: hfOrphan })
+  }
+
+  const hasMorphusAura = supportsDualForm && activeForm === 'morphus'
+  const hasExplicitAura = explicitBase != null || passiveAura !== 0
+
+  if (!hasMorphusAura && !hasExplicitAura) {
+    return { total: null, contributions: [], tooltipEquation: '' }
+  }
+
+  const total = Math.max(0, Math.round(baseline + passiveAura))
+  const baselineLine: SaveDeductionLine[] =
+    baseline > 0 ? [{ label: `${activeForm} baseline`, amount: baseline }] : []
+
+  return {
+    total,
+    contributions: [...baselineLine, ...hfContributions],
+    tooltipEquation: formatHorrorTooltip(baseline, hfContributions, total),
+  }
+}
 
 function formatHorrorTooltip(
   baseline: number,
@@ -135,6 +196,7 @@ export function computeSaveProfile(
   character: Character,
   activeForm: ActiveForm,
   psionicSaveTarget: number,
+  supportsDualForm = false,
 ): SaveProfileDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
   const display = computeDisplayScalars(character, activeForm, passive)
@@ -156,7 +218,7 @@ export function computeSaveProfile(
       }
     }
 
-    const attrLines = attributionForKeys(row.featureModifierKeys, character, activeForm)
+    const attrLines = saveModifierAttribution(row.featureModifierKeys, character, activeForm)
     reductions.push(...attrLines)
 
     const passiveTotal = passiveSumForKeys(passive, row.featureModifierKeys)
@@ -180,26 +242,12 @@ export function computeSaveProfile(
     }
   })
 
-  const hfBaseline =
-    typeof passive.horror_factor_base === 'number' && passive.horror_factor_base > 0
-      ? passive.horror_factor_base
-      : DEFAULT_HORROR_FACTOR_BY_FORM[activeForm]
-
-  const hfAttr = attributionForKeys([...HF_MODIFIER_KEYS], character, activeForm)
-  const passiveHf = passiveSumForKeys(passive, HF_MODIFIER_KEYS)
-  const hfAttributed = hfAttr.reduce((s, l) => s + l.amount, 0)
-  const hfOrphan = passiveHf - hfAttributed
-
-  const hfContributions: SaveDeductionLine[] = [...hfAttr]
-  if (hfOrphan !== 0) hfContributions.push({ label: 'Other modifiers', amount: hfOrphan })
-
-  const totalHF = Math.max(0, Math.round(hfBaseline + passiveHf))
-
-  const horrorFactor: HorrorFactorProfile = {
-    total: totalHF,
-    contributions: [{ label: `${activeForm} baseline`, amount: hfBaseline }, ...hfContributions],
-    tooltipEquation: formatHorrorTooltip(hfBaseline, hfContributions, totalHF),
-  }
+  const horrorFactor = computeHorrorFactorAura(
+    character,
+    activeForm,
+    passive,
+    supportsDualForm,
+  )
 
   return { saves, horrorFactor }
 }

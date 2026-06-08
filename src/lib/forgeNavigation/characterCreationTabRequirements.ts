@@ -13,7 +13,10 @@ import {
   listOccHandToHandOptions,
 } from '../creationHandToHandChoice'
 import { creationNeedsAbilitySelection } from '../creationPhases'
-import { creationShowsPsychicGate } from '../creationPhases'
+import {
+  creationPsychicGateRequiresTierChoice,
+  isCreationPsychicTierComplete,
+} from '../creationPhases'
 import {
   assessRelatedSkillSlotBlockers,
   assessSecondarySkillSlotBlockers,
@@ -173,7 +176,11 @@ function tab2Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
 
 function tab3Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
   if (
-    !creationShowsPsychicGate(ctx.character, ctx.occ, ctx.character.creationGenreId)
+    !creationPsychicGateRequiresTierChoice(
+      ctx.character,
+      ctx.occ,
+      ctx.character.creationGenreId,
+    )
   ) {
     return []
   }
@@ -181,7 +188,11 @@ function tab3Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     {
       id: 'psychic-tier',
       label: 'Select None, Minor, or Major psionic potential',
-      satisfied: ctx.character.creationPsychicTierChosen === true,
+      satisfied: isCreationPsychicTierComplete(
+        ctx.character,
+        ctx.occ,
+        ctx.character.creationGenreId,
+      ),
     },
   ]
 }

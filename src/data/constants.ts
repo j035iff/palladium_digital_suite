@@ -3,10 +3,10 @@
  * Psionics save targets follow Psychic Gate tier (psychic_gate.md); numeric bases match standard Palladium-style rows.
  */
 
-/** Baseline Horror Factor aura when no custom base modifier is supplied (Nightbane-relevant silhouette). */
+/** Morphus Horror Factor aura baseline (Nightbane lineage only; facade / most races have none). */
 export const DEFAULT_HORROR_FACTOR_BY_FORM = {
-  facade: 8,
-  morphus: 12,
+  facade: 0,
+  morphus: 6,
 } as const
 
 /** Row definition for aggregate save engine (@see ../lib/saveProfile.ts). */

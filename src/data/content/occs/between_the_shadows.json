@@ -902,6 +902,26 @@
     "attributeRequirements": {
       "me": 12
     },
+    "staticBonuses": {
+      "attributes": {
+        "ps": 1,
+        "spd": "1D6"
+      },
+      "vitals": {
+        "sdc": "2D6"
+      },
+      "combat": {
+        "initiative": 1,
+        "parry": 1,
+        "dodge": 1,
+        "rollWithPunch": 1
+      },
+      "saves": {
+        "save_psionics": 1,
+        "save_mind_control": 1,
+        "save_horror": 3
+      }
+    },
     "occSkillsCore": [
       {
         "skillId": "skill_intelligence",

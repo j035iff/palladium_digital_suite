@@ -394,7 +394,7 @@ export function SkillEngine() {
 
   const iqBonus = useMemo(
 
-    () => computeLiveBonuses(attrs).iqOccSkillPercent,
+    () => computeLiveBonuses(attrs).iqSkillBonus,
 
     [attrs],
 
@@ -573,13 +573,7 @@ export function SkillEngine() {
       return catOk && nameOk
     }
 
-    const filtered = skillLibrary.filter((s) => {
-      if (librarySelectionTier(s.id) === 'occ') {
-        return matchesLibraryQuery(s)
-      }
-      if (s.slotKind !== 'occ_related' && !s.secondaryEligible) return false
-      return matchesLibraryQuery(s)
-    })
+    const filtered = skillLibrary.filter((s) => matchesLibraryQuery(s))
 
     const filteredIds = new Set(filtered.map((s) => s.id))
     const occPinnedExtras = skillLibrary.filter(

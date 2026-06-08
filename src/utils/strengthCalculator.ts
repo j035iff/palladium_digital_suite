@@ -22,9 +22,9 @@ const THROW_OBJECT_LABELS: Record<ThrowObjectKind, string> = {
   sword: 'Sword',
 }
 
-/** P.S. attribute bonus added to normal damage (P.S. 16+ → score − 15). */
+/** P.S. attribute bonus added to normal damage (P.S. 17+ → score − 15). */
 export function psAttributeDamageBonus(psScore: number): number {
-  if (psScore >= 16) return psScore - 15
+  if (psScore >= 17) return psScore - 15
   return 0
 }
 

@@ -202,15 +202,13 @@ export function catalogEntryToEngineSkillDef(
   ) {
     bookCategories.push('Electrical')
   }
-  const occOnly = entry.allowedAsSecondarySkill === false
-
   return {
     id: entry.id,
     name: entry.name,
     category: mapBookCategoryToEngine(bookCategories),
     bookCategories,
-    slotKind: occOnly ? 'occ' : 'occ_related',
-    secondaryEligible: !occOnly,
+    slotKind: 'occ_related',
+    secondaryEligible: entry.allowedAsSecondarySkill !== false,
     basePercent,
     perLevel,
     acquisitionLevel: 1,

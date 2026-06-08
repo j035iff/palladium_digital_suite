@@ -7,16 +7,7 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
-
-/** Sheet skills that grant melee combat modifiers (until full H2H module). */
-export const SKILL_MELEE: Record<
-  string,
-  { strike?: number; parry?: number; dodge?: number }
-> = {
-  boxing: { strike: 1, parry: 1 },
-  wrestling: { parry: 1 },
-  acrobat: { dodge: 1 },
-}
+import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
 
 export type QuickActionTotals = {
   strike: number
@@ -30,17 +21,12 @@ function skillMeleeBonusFromIds(ids: Iterable<string>): {
   parry: number
   dodge: number
 } {
-  let strike = 0
-  let parry = 0
-  let dodge = 0
-  for (const id of ids) {
-    const b = SKILL_MELEE[id]
-    if (!b) continue
-    strike += b.strike ?? 0
-    parry += b.parry ?? 0
-    dodge += b.dodge ?? 0
+  const agg = aggregatePhysicalSkillCombatBonuses([...ids])
+  return {
+    strike: agg.combat.strike ?? 0,
+    parry: agg.combat.parry ?? 0,
+    dodge: agg.combat.dodge ?? 0,
   }
-  return { strike, parry, dodge }
 }
 
 export function collectUnlockedSkillIds(

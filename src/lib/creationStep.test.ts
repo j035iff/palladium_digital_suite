@@ -42,6 +42,14 @@ describe('creationStep', () => {
     expect(blockers.length).toBeGreaterThan(0)
   })
 
+  it('omits psychic gate phase for natural psychic O.C.C.s', () => {
+    const character = createBlankCharacterForGenre('nightbane')
+    const race = getRaceById('race_human')
+    const occLib = getPalladiumOccById('occ_pab_psychic_agent')!
+    const ctx = buildCreationFlowContext(character, race, occLib, 'nightbane')
+    expect(orderedCreationPhases(ctx)).not.toContain('psychicGate')
+  })
+
   it('advances from configurator to attributes when valid', () => {
     const character = createBlankCharacterForGenre('nightbane')
     const race = getRaceById('race_human')

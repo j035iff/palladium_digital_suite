@@ -1,25 +1,20 @@
 import type { CharacterAttributes, FormState } from '../types'
-import { getPpBonuses, getPsBonuses } from './attributeBonuses'
+import { getIqBonuses, getPpBonuses, getPsBonuses } from './attributeBonuses'
 
 /** Vitality header scale per combat_logic.md §1 (M.D.C. vs S.D.C./H.P.). */
 export type VitalityCombatScale = 'MDC' | 'SDC'
 
-/** I.Q. → signed % to O.C.C. / O.C.C. related skills (sheet skill engine). */
-function iqOccSkillPercentModifier(iq: number): number {
-  if (iq <= 15) return 0
-  return Math.floor((iq - 14) / 2) * 5
-}
-
 export type LiveBonuses = {
   /** Same value applied to Strike, Parry, Dodge per attribute_and_stat.md §1. */
   ppStrikeParryDodge: number
-  iqOccSkillPercent: number
+  /** I.Q. exceptional bonus table: +% to all skills (16+; e.g. 17 → +3%). */
+  iqSkillBonus: number
 }
 
 export function computeLiveBonuses(attrs: CharacterAttributes): LiveBonuses {
   return {
     ppStrikeParryDodge: getPpBonuses(attrs.pp).strike,
-    iqOccSkillPercent: iqOccSkillPercentModifier(attrs.iq),
+    iqSkillBonus: getIqBonuses(attrs.iq).skillBonus,
   }
 }
 

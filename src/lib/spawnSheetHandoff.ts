@@ -113,7 +113,7 @@ export function projectCreationSkillsToSheet(
   const attrs = branch.attributes
   const tier = psychicTier ?? resolveCreationPsychicTier(character)
 
-  const iqBonus = computeLiveBonuses(attrs).iqOccSkillPercent
+  const iqBonus = computeLiveBonuses(attrs).iqSkillBonus
   const maPbBonus = maPbScaledBonuses(attrs.ma, attrs.pb)
   const ctx = buildSkillPercentContext(
     character,

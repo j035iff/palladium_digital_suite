@@ -17,7 +17,7 @@ export type SkillEquationSkill = {
 /**
  * @param skill — numeric inputs for the equation (per-skill row).
  * @param characterLevel — current character level.
- * @param iqBonus — I.Q. O.C.C. related % modifier (signed), already derived from attributes.
+ * @param iqBonus — I.Q. exceptional skill % modifier (signed), already derived from attributes.
  */
 export function calculateSkillPercent(
   skill: SkillEquationSkill,

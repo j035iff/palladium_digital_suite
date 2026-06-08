@@ -92,20 +92,23 @@ export function SavingThrowsPanel() {
               morphus ? 'text-amber-400' : 'text-orange-950'
             }`}
           >
-            {hf.total}
+            {hf.total ?? 'N/A'}
           </p>
           <p className={`mt-1 text-[11px] font-medium ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-            Broadcast aura / presence — Morphus traits and passive modifiers merge here (
-            <code className="font-mono text-[10px]">horror_factor</code>, <code className="font-mono text-[10px]">save_horror</code>).
+            {hf.total != null
+              ? 'Broadcast aura / presence — Nightbane Morphus baseline and `horror_factor` modifiers.'
+              : 'Most races have no Horror Factor aura — only Nightbane Morphus (and explicit `horror_factor` traits).'}
           </p>
-          <div
-            role="tooltip"
-            className={`pointer-events-none invisible absolute left-0 top-full z-30 mt-2 max-h-40 w-[min(100%,22rem)] overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-xl transition-opacity group-hover:visible group-hover:opacity-100 ${
-              morphus ? 'border-amber-500/70 bg-black/93 text-amber-100' : 'border-orange-900/40 bg-white text-orange-950'
-            }`}
-          >
-            {hf.tooltipEquation}
-          </div>
+          {hf.tooltipEquation ? (
+            <div
+              role="tooltip"
+              className={`pointer-events-none invisible absolute left-0 top-full z-30 mt-2 max-h-40 w-[min(100%,22rem)] overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-xl transition-opacity group-hover:visible group-hover:opacity-100 ${
+                morphus ? 'border-amber-500/70 bg-black/93 text-amber-100' : 'border-orange-900/40 bg-white text-orange-950'
+              }`}
+            >
+              {hf.tooltipEquation}
+            </div>
+          ) : null}
         </div>
       </div>
 

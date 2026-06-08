@@ -1,6 +1,10 @@
 import type { OccStaticBonusValue, PalladiumOcc } from '../types'
+import type { ForgeAttrKey } from './attributeKeys'
+import { OCC_VARIABLE_PHASE_ATTRIBUTE_KEYS } from './attributeKeys'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { diceNotationBounds, isDiceNotation } from './diceNotationBounds'
+
+const OCC_VARIABLE_PHASE_ATTR_SET = new Set<string>(OCC_VARIABLE_PHASE_ATTRIBUTE_KEYS)
 
 export type OccVariableBonusTask = {
   id: string
@@ -44,7 +48,22 @@ export function listOccVariableAttributeBonusTasks(
   return collectDiceTasksFromMap(
     'attributes',
     effective.staticBonuses?.attributes,
+  ).filter((task) => OCC_VARIABLE_PHASE_ATTR_SET.has(task.statKey))
+}
+
+/** Resolved Phase I.2 dice bonus for one attribute (0 when not rolled or not applicable). */
+export function occVariableAttributeResolution(
+  attr: ForgeAttrKey,
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  resolutions: Readonly<Record<string, number>>,
+): number {
+  const task = listOccVariableAttributeBonusTasks(occ, specializationId).find(
+    (t) => t.statKey === attr,
   )
+  if (!task) return 0
+  const v = resolutions[task.id]
+  return v != null && Number.isFinite(v) ? v : 0
 }
 
 /** All dice-valued O.C.C. staticBonuses (attributes resolved in Phase I.2; vitals at spawn). */

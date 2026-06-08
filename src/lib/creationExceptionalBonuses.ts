@@ -1,5 +1,6 @@
 import type { CharacterAttributes } from '../types'
 import {
+  EXCEPTIONAL_ATTRIBUTE_MIN,
   getIqBonuses,
   getMaBonuses,
   getMeBonuses,
@@ -14,70 +15,76 @@ export type ExceptionalBonusLine = {
   value: string
 }
 
-/** Rulebook 16+ attribute bonuses for the Live Ledger (forge-character_creation.md Tab 2). */
+/** Rulebook 17+ attribute bonuses for the Live Ledger (forge-character_creation.md Tab 2). */
 export function listExceptionalAttributeBonusLines(
   attrs: CharacterAttributes,
 ): ExceptionalBonusLine[] {
   const lines: ExceptionalBonusLine[] = []
 
   const iq = getIqBonuses(attrs.iq)
-  if (attrs.iq >= 16) {
-    if (iq.skillBonus) lines.push({ label: 'I.Q. skill bonus', value: `+${iq.skillBonus}%` })
-    if (iq.perceptionBonus) {
-      lines.push({ label: 'I.Q. perception', value: `+${iq.perceptionBonus}%` })
+  if (attrs.iq >= EXCEPTIONAL_ATTRIBUTE_MIN) {
+    if (iq.skillBonusStandard) {
+      lines.push({ label: 'I.Q. skill bonus', value: `+${iq.skillBonusStandard}%` })
     }
-    if (iq.saveIllusion) {
-      lines.push({ label: 'Save vs illusion', value: `+${iq.saveIllusion}` })
+    if (iq.perceptionStandard) {
+      lines.push({
+        label: 'I.Q. perception bonus',
+        value: `+${iq.perceptionStandard}`,
+      })
     }
   }
 
   const me = getMeBonuses(attrs.me)
-  if (attrs.me >= 16) {
-    if (me.savePsionics) {
-      lines.push({ label: 'Save vs psionics (M.E.)', value: `+${me.savePsionics}` })
-    }
-    if (me.saveInsanity) {
-      lines.push({ label: 'Save vs insanity', value: `+${me.saveInsanity}` })
-    }
-    if (me.savePossession) {
-      lines.push({ label: 'Save vs possession', value: `+${me.savePossession}` })
-    }
+  if (attrs.me >= EXCEPTIONAL_ATTRIBUTE_MIN && me.saveStandard) {
+    lines.push({
+      label: 'M.E. save vs psionic / insanity',
+      value: `+${me.saveStandard}`,
+    })
   }
 
   const ma = getMaBonuses(attrs.ma)
-  if (attrs.ma >= 16 && ma.trustIntimidate) {
-    lines.push({ label: 'M.A. trust / intimidate', value: `${ma.trustIntimidate}%` })
+  if (attrs.ma >= EXCEPTIONAL_ATTRIBUTE_MIN && ma.trustStandard) {
+    lines.push({
+      label: 'M.A. trust / intimidate',
+      value: `${ma.trustStandard}%`,
+    })
   }
 
   const ps = getPsBonuses(attrs.ps.score)
-  if (attrs.ps.score >= 16 && ps.damageBonus) {
-    lines.push({ label: 'P.S. damage', value: `+${ps.damageBonus}` })
+  if (attrs.ps.score >= EXCEPTIONAL_ATTRIBUTE_MIN && ps.damageBonus) {
+    lines.push({ label: 'P.S. HtH combat damage', value: `+${ps.damageBonus}` })
   }
 
   const pp = getPpBonuses(attrs.pp)
-  if (attrs.pp >= 16) {
-    if (pp.strike) {
-      lines.push({ label: 'P.P. strike/parry/dodge', value: `+${pp.strike}` })
-    }
-    if (pp.initiative) {
-      lines.push({ label: 'P.P. initiative', value: `+${pp.initiative}` })
-    }
+  if (attrs.pp >= EXCEPTIONAL_ATTRIBUTE_MIN && pp.combatStandard) {
+    lines.push({
+      label: 'P.P. strike / parry / dodge',
+      value: `+${pp.combatStandard}`,
+    })
   }
 
   const pe = getPeBonuses(attrs.pe)
-  if (attrs.pe >= 16) {
-    if (pe.saveMagic) lines.push({ label: 'Save vs magic (P.E.)', value: `+${pe.saveMagic}` })
-    if (pe.savePoison) lines.push({ label: 'Save vs poison', value: `+${pe.savePoison}` })
-    if (pe.comaDeathPercent) {
-      lines.push({ label: 'Coma / death', value: `${pe.comaDeathPercent}%` })
+  if (attrs.pe >= EXCEPTIONAL_ATTRIBUTE_MIN) {
+    if (pe.saveStandard) {
+      lines.push({
+        label: 'P.E. save vs magic / poisons',
+        value: `+${pe.saveStandard}`,
+      })
     }
-    if (pe.halfFatigue) lines.push({ label: 'Fatigue', value: '½ rate' })
-    if (pe.imperviousDisease) lines.push({ label: 'Disease', value: 'Impervious' })
+    if (pe.comaDeathStandard) {
+      lines.push({
+        label: 'P.E. save vs coma / death',
+        value: `${pe.comaDeathStandard}%`,
+      })
+    }
   }
 
   const pb = getPbBonuses(attrs.pb)
-  if (attrs.pb >= 16 && pb.charmImpress) {
-    lines.push({ label: 'P.B. charm / impress', value: `${pb.charmImpress}%` })
+  if (attrs.pb >= EXCEPTIONAL_ATTRIBUTE_MIN && pb.charmStandard) {
+    lines.push({
+      label: 'P.B. charm / impress',
+      value: `${pb.charmStandard}%`,
+    })
   }
 
   return lines

@@ -14,6 +14,9 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
+import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import { occStartingOccSkillIds } from './occCatalogEngine'
+import type { PalladiumOcc } from '../types'
 import {
   buildMorphusPassiveBundle,
   mergeMorphusIntoPassive,
@@ -44,11 +47,35 @@ export function aggregateFeatureModifiers(
   return out
 }
 
+function creationLedgerOccSkillIds(
+  character: Character,
+  occ: PalladiumOcc | undefined,
+): readonly string[] {
+  const stored = character.creationOccSkillIds ?? []
+  const occIds =
+    stored.length > 0
+      ? stored
+      : occ
+        ? occStartingOccSkillIds(occ, character.occSpecializationId)
+        : []
+  return occ
+    ? resolveCreationOccSkillIds(
+        occ,
+        character.occSpecializationId,
+        occIds,
+        character.creationOccCoreVoucherPicks ?? {},
+      )
+    : occIds
+}
+
 /** Physical / passive modifiers from Skill Engine picks (modifiers block on sheet skills). */
-export function aggregateCreationSkillModifiers(character: Character): FeatureModifiers {
+export function aggregateCreationSkillModifiers(
+  character: Character,
+  occ?: PalladiumOcc,
+): FeatureModifiers {
   const out: FeatureModifiers = {}
   const ids = new Set<string>([
-    ...(character.creationOccSkillIds ?? []),
+    ...creationLedgerOccSkillIds(character, occ),
     ...getCreationRelatedPicks(character).map((p) => p.skillId),
     ...getCreationSecondaryPicks(character).map((p) => p.skillId),
   ])
@@ -73,9 +100,10 @@ export function aggregateAllPassiveModifiers(
   character: Character,
   activeForm: ActiveForm,
   morphusOptions: MorphusPassiveOptions = {},
+  occ?: PalladiumOcc,
 ): FeatureModifiers {
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
-  const sk = aggregateCreationSkillModifiers(character)
+  const sk = aggregateCreationSkillModifiers(character, occ)
   const race = racePassiveModifiers(
     getRaceById(character.raceId ?? DEFAULT_RACE_ID),
   )

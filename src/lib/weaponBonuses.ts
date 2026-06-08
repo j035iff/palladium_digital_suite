@@ -48,16 +48,16 @@ export type WeaponProfileBonuses = {
   wpSkillDisplayName: string | null
 }
 
-function iqOccSkillBonus(character: Character, activeForm: ActiveForm): number {
+function iqSkillBonus(character: Character, activeForm: ActiveForm): number {
   const attrs = getFormState(character, activeForm).attributes
-  return computeLiveBonuses(attrs).iqOccSkillPercent
+  return computeLiveBonuses(attrs).iqSkillBonus
 }
 
 function wpPercentBonusForSkill(skillId: string, character: Character, activeForm: ActiveForm): number {
   const def = getSkillById(skillId)
   if (!def) return 0
   const attrs = getFormState(character, activeForm).attributes
-  const iq = iqOccSkillBonus(character, activeForm)
+  const iq = iqSkillBonus(character, activeForm)
   const resolved = resolveSkillPercent(
     { ...def, id: def.id },
     buildSkillPercentContext(

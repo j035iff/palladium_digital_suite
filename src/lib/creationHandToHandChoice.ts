@@ -83,6 +83,13 @@ export type OccHandToHandOption = {
 
 
 
+export function creationHandToHandTierLabel(
+  tier: CreationHandToHandTier | undefined,
+): string | null {
+  if (!tier || tier === 'none') return null
+  return TIER_LABELS[tier]
+}
+
 export function sheetSkillIdForCreationHandToHandTier(
 
   tier: CreationHandToHandTier | undefined,

@@ -3,6 +3,8 @@ import type { CharacterAttributes, PalladiumOcc } from '../types'
 import {
   attrForPoolSlot,
   buildCreationAttributes,
+  creationAttributeRollHint,
+  occAttributeRequirementSuffix,
   getEffectivePoolSlots,
   valueFitsRaceNotation,
 } from './creationAttributeSync'
@@ -27,7 +29,38 @@ const occ = {
   occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
 } as unknown as PalladiumOcc
 
+const humanRace = {
+  id: 'race_human',
+  attributes: {
+    iq: '3D6',
+    me: '3D6',
+    ma: '3D6',
+    ps: '3D6',
+    pp: '3D6',
+    pe: '3D6',
+    pb: '3D6',
+    spd: '3D6',
+  },
+} as const
+
 describe('creationAttributeSync', () => {
+  it('formats attribute roll hints with O.C.C. bonuses', () => {
+    expect(creationAttributeRollHint(humanRace, 'ps', occ)).toBe('3D6 +1(OCC)')
+    expect(creationAttributeRollHint(humanRace, 'pe', occ)).toBe('3D6 +1D4(OCC)')
+    expect(creationAttributeRollHint(humanRace, 'iq', occ)).toBe('3D6')
+    expect(creationAttributeRollHint(undefined, 'ps', occ)).toBe('+1(OCC)')
+    expect(creationAttributeRollHint(humanRace, 'iq')).toBe('3D6')
+  })
+
+  it('formats O.C.C. attribute minimum suffixes', () => {
+    const occWithReq = {
+      ...occ,
+      attributeRequirements: { iq: 12 },
+    } as PalladiumOcc
+    expect(occAttributeRequirementSuffix(occWithReq, 'iq')).toBe('12+')
+    expect(occAttributeRequirementSuffix(occWithReq, 'me')).toBeUndefined()
+  })
+
   it('validates pool values against race notation bounds with exceptional cap', () => {
     expect(valueFitsRaceNotation(10, '3D6')).toBe(true)
     expect(valueFitsRaceNotation(3, '3D6')).toBe(true)

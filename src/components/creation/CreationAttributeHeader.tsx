@@ -36,6 +36,7 @@ export function CreationAttributeHeader() {
     supportsDualForm,
     activeForm,
     setCreationAttributeAssignment,
+    devMakeAttributeExceptional,
   } = useCharacter()
 
   const morphus = supportsDualForm && activeForm === 'morphus'
@@ -209,6 +210,21 @@ export function CreationAttributeHeader() {
                 <p className="mt-0.5 text-center text-[9px] font-semibold leading-tight text-rose-500">
                   {assignIssue}
                 </p>
+              ) : null}
+
+              {import.meta.env.DEV && devMakeAttributeExceptional ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    devMakeAttributeExceptional(attr)
+                    setDropError(null)
+                  }}
+                  className="mt-1 w-full rounded border border-amber-600/80 bg-amber-50 px-1 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-900 hover:bg-amber-100 dark:border-amber-500 dark:bg-amber-950/50 dark:text-amber-100 dark:hover:bg-amber-900/60"
+                  title="Dev only — random 17–30 (capped by race dice)"
+                >
+                  Make exceptional
+                </button>
               ) : null}
             </div>
           )

@@ -1,7 +1,7 @@
 import type { Character, PalladiumOcc, Race } from '../types'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { getRaceById } from '../data/library/registry'
-import { occPsychicGateBypassed } from './occCatalogEngine'
+import { occCharacterCategory, occPsychicGateBypassed } from './occCatalogEngine'
 import type { OccCreationAbilityBudget } from './occCreationDerivation'
 
 export function sumCreationAbilityBudget(
@@ -51,6 +51,39 @@ export function creationShowsPsychicGate(
   creationGenreId: string,
 ): boolean {
   return !resolvePsychicGateBypassed(character.raceId, occ, creationGenreId)
+}
+
+/** Psychic-class O.C.C. (e.g. Mind Melter) — tier is locked to Master. */
+export function occIsNaturalPsychicClass(occ: PalladiumOcc | undefined): boolean {
+  if (!occ) return false
+  return occCharacterCategory(occ) === 'psychic'
+}
+
+/**
+ * Player must pick None / Minor / Major on Psychic Gate — only when the race allows
+ * psionics and the O.C.C. is not a natural psychic class.
+ */
+export function creationPsychicGateRequiresTierChoice(
+  character: Pick<Character, 'raceId'>,
+  occ: PalladiumOcc | undefined,
+  creationGenreId: string,
+): boolean {
+  return (
+    creationShowsPsychicGate(character, occ, creationGenreId) &&
+    !occIsNaturalPsychicClass(occ)
+  )
+}
+
+/** Psychic Gate step is satisfied (hidden, bypassed, or natural psychic auto-complete). */
+export function isCreationPsychicTierComplete(
+  character: Pick<Character, 'raceId' | 'creationPsychicTierChosen'>,
+  occ: PalladiumOcc | undefined,
+  creationGenreId: string,
+): boolean {
+  if (!creationPsychicGateRequiresTierChoice(character, occ, creationGenreId)) {
+    return true
+  }
+  return character.creationPsychicTierChosen === true
 }
 
 /** Phase III: ability picker when genre and O.C.C. allow supernatural picks. */
