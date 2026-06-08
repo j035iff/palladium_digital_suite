@@ -28,10 +28,7 @@ import {
   resolveOccCoreSkillPicks,
 } from '../occCoreSkillVouchers'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
-import {
-  assessHandToHandBlockers,
-  creationHandToHandElectiveSlotCost,
-} from '../creationHandToHandChoice'
+import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
 import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
@@ -307,22 +304,14 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
       ctx.psychicTier,
       occSkillSlotPolicy(occ),
     )
-    const handToHandReserved = creationHandToHandElectiveSlotCost(
+    const handToHandReserved = creationHandToHandReservedRelatedSlots(
       effectiveOcc,
-      character.creationHandToHandTier,
+      character,
     )
     const relatedSelected = sumRelatedPoolSlotUsage(
       relatedPicks,
       occPicks,
       handToHandReserved,
-    )
-    blockers.push(
-      ...assessHandToHandBlockers(
-        effectiveOcc,
-        character.creationHandToHandTier,
-        relatedCap,
-        relatedSelected - handToHandReserved,
-      ),
     )
     blockers.push(
       ...assessRelatedSkillSlotBlockers(

@@ -190,8 +190,12 @@ describe('creation OCC live ledger integration', () => {
     expect(combat.find((l) => l.label === 'Parry')?.value).toBe('+1')
     expect(combat.find((l) => l.label === 'Dodge')?.value).toBe('+1')
     expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value).toBe(
-      '+5',
+      '+3',
     )
+    expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.hint).toBe(
+      'OCC: +1 · HtH Basic: +2',
+    )
+    expect(combat.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
   })
 
   it('shows granted physical skill dice on attributes for Team Epsilon Trooper', () => {

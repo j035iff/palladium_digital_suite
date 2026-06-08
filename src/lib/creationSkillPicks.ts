@@ -8,6 +8,11 @@ import {
 } from './occCreationDerivation'
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
 import type { CreationSkillPick } from '../types'
+import {
+  hasPairedWeaponSupportWp,
+  isPairedWeaponsSkillId,
+  pairedWeaponsSupportBlockReason,
+} from './pairedWeaponSupport'
 
 /** May be taken as an O.C.C. related pick when category rules allow. */
 export function skillEligibleAsRelatedPick(def: EngineSkillDef): boolean {
@@ -479,6 +484,22 @@ export type CreationLibrarySkillContext = {
   raceBlocked?: boolean
 }
 
+function librarySelectedSkillIds(opts: CreationLibrarySkillContext): string[] {
+  return [
+    ...opts.occPicks.map((p) => p.skillId),
+    ...opts.relatedPicks.map((p) => p.skillId),
+    ...opts.secondaryPicks.map((p) => p.skillId),
+  ]
+}
+
+function pairedWeaponsSupportBlocked(
+  skillId: string,
+  opts: CreationLibrarySkillContext,
+): boolean {
+  if (!isPairedWeaponsSkillId(skillId)) return false
+  return !hasPairedWeaponSupportWp(librarySelectedSkillIds(opts))
+}
+
 export function creationLibrarySkillAddState(
   def: EngineSkillDef,
   opts: CreationLibrarySkillContext,
@@ -516,18 +537,21 @@ export function creationLibrarySkillAddState(
       opts.activeFilterCategory,
     )
   const raceBlocked = opts.raceBlocked === true
+  const pairedBlocked = pairedWeaponsSupportBlocked(def.id, opts)
   const canAddRelated =
     skillEligibleAsRelatedPick(def) &&
     !picked &&
     !relFull &&
     !relatedBlocked &&
-    !raceBlocked
+    !raceBlocked &&
+    !pairedBlocked
   const canAddSecondary =
     skillEligibleAsSecondaryPick(def) &&
     !picked &&
     !secFull &&
     !secondaryBlocked &&
-    !raceBlocked
+    !raceBlocked &&
+    !pairedBlocked
   return { picked, canAddRelated, canAddSecondary }
 }
 
@@ -618,6 +642,11 @@ export function resolveCreationLibrarySkillBlockReason(
   }
   if (hasRelated && !hasSecondary && relatedBlocked) {
     return 'Not available as a related skill for this O.C.C.'
+  }
+
+  const pairedReason = pairedWeaponsSupportBlockReason(librarySelectedSkillIds(opts))
+  if (isPairedWeaponsSkillId(def.id) && pairedReason) {
+    return pairedReason
   }
 
   return 'Not available'

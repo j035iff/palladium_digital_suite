@@ -6,12 +6,7 @@ import {
   valueFitsRaceNotation,
 } from '../creationAttributeSync'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from '../attributeKeys'
-import {
-  assessHandToHandBlockers,
-  creationHandToHandElectiveSlotCost,
-  creationHandToHandRequiresSelection,
-  listOccHandToHandOptions,
-} from '../creationHandToHandChoice'
+import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
 import { creationNeedsAbilitySelection } from '../creationPhases'
 import {
   creationPsychicGateRequiresTierChoice,
@@ -219,9 +214,9 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     ctx.psychicTier,
     occSkillSlotPolicy(occ),
   )
-  const handToHandReserved = creationHandToHandElectiveSlotCost(
+  const handToHandReserved = creationHandToHandReservedRelatedSlots(
     effectiveOcc,
-    character.creationHandToHandTier,
+    character,
   )
   const relatedSelected = sumRelatedPoolSlotUsage(
     relatedPicks,
@@ -233,7 +228,6 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     getCreationSecondaryPicks(character),
   )
   const allPicks = collectAllCreationSkillPicks(character, occ)
-  const handToHandOptions = listOccHandToHandOptions(effectiveOcc)
 
   const requirements: ForgeTabRequirement[] = []
 
@@ -258,23 +252,6 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
         character.occSpecializationId,
         grantDetails,
       ),
-    })
-  }
-
-  if (handToHandOptions.length > 0) {
-    const handToHandBlockers = assessHandToHandBlockers(
-      effectiveOcc,
-      character.creationHandToHandTier,
-      relatedCap,
-      relatedSelected - handToHandReserved,
-    )
-    const needsMandatoryPick = creationHandToHandRequiresSelection(effectiveOcc)
-    requirements.push({
-      id: 'hand-to-hand',
-      label: needsMandatoryPick
-        ? 'Select a Hand-to-Hand fighting style'
-        : 'Resolve Hand-to-Hand choice',
-      satisfied: handToHandBlockers.length === 0,
     })
   }
 

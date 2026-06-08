@@ -52,7 +52,7 @@ export type VitalAttrFlatBundle = {
   terms: VitalAttrFlatTerm[]
 }
 
-function splitFormulaTerms(formula: string): string[] {
+export function splitFormulaTerms(formula: string): string[] {
   return formula
     .split('+')
     .map((part) => part.trim())
@@ -230,6 +230,23 @@ export function buildAttrFormulaLedgerFields(
 }
 
 /** Race + O.C.C. P.P.E. formula (e.g. `2D6 + PEx10 + 2D6`). */
+/** Non-attribute dice terms from a vital formula (e.g. `2D6`, `1D4*10`). */
+export function diceTermsFromAttrFormula(
+  formula: string,
+): Array<{ notation: string; label: string }> {
+  const out: Array<{ notation: string; label: string }> = []
+  for (const term of splitFormulaTerms(formula)) {
+    if (parseVitalFormulaAttrTerm(term)) continue
+    const norm = term.trim()
+    if (!norm || !isDiceNotation(norm)) continue
+    out.push({
+      notation: norm,
+      label: normalizeDiceDisplay(norm),
+    })
+  }
+  return out
+}
+
 export function resolvePpeCreationFormula(
   race: Race | undefined,
   occ: PalladiumOcc | undefined,

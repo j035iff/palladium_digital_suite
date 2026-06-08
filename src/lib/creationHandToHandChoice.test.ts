@@ -4,11 +4,13 @@ import type { PalladiumOcc } from '../types'
 
 import {
 
-  assessHandToHandBlockers,
-
   canAffordHandToHandTier,
 
   creationHandToHandElectiveSlotCost,
+
+  creationHandToHandReservedRelatedSlots,
+
+  effectiveCreationHandToHandTier,
 
   listOccHandToHandOptions,
 
@@ -94,6 +96,15 @@ describe('creationHandToHandChoice', () => {
 
     expect(creationHandToHandElectiveSlotCost(assassinSpec, 'assassin')).toBe(2)
 
+    expect(effectiveCreationHandToHandTier({ creationHandToHandTier: 'none' }, assassinSpec)).toBe(
+      'assassin',
+    )
+    expect(effectiveCreationHandToHandTier({}, assassinSpec)).toBe('assassin')
+    expect(
+      creationHandToHandReservedRelatedSlots(assassinSpec, { creationHandToHandTier: 'none' }),
+    ).toBe(2)
+    expect(creationHandToHandReservedRelatedSlots(assassinSpec, {})).toBe(2)
+
   })
 
 
@@ -144,36 +155,6 @@ describe('creationHandToHandChoice', () => {
 
     expect(options[0]?.label).toBe('None (included)')
 
-    expect(assessHandToHandBlockers(pandoraOcc, 'none')).toEqual([])
-
-  })
-
-
-
-  it('blocks when a mandatory single-path Hand-to-Hand style is unselected', () => {
-
-    const assassinSpec = {
-
-      handToHandRules: {
-
-        defaultSkillId: null,
-
-        upgradePaths: [
-
-          { targetSkillId: 'hand_to_hand_assassin', electiveSlotCost: 2 },
-
-        ],
-
-      },
-
-    } as PalladiumOcc
-
-    expect(assessHandToHandBlockers(assassinSpec, 'none')).toEqual([
-
-      'Select a Hand-to-Hand fighting style.',
-
-    ])
-
   })
 
 
@@ -183,12 +164,6 @@ describe('creationHandToHandChoice', () => {
     expect(canAffordHandToHandTier(exGovernmentOcc, 'expert', 8, 7)).toBe(false)
 
     expect(canAffordHandToHandTier(exGovernmentOcc, 'expert', 8, 6)).toBe(true)
-
-    expect(
-
-      assessHandToHandBlockers(exGovernmentOcc, 'expert', 8, 7).length,
-
-    ).toBeGreaterThan(0)
 
   })
 

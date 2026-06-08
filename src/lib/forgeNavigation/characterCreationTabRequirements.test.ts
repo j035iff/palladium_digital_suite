@@ -69,8 +69,6 @@ describe('listCharacterCreationTabRequirements', () => {
     expect(requirements.some((r) => r.id === 'occ-vouchers' && !r.satisfied)).toBe(
       true,
     )
-    expect(
-      requirements.some((r) => r.id === 'hand-to-hand' && r.satisfied),
-    ).toBe(true)
+    expect(requirements.some((r) => r.id === 'hand-to-hand')).toBe(false)
   })
 })

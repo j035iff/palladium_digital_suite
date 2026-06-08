@@ -9,11 +9,16 @@ import {
   buildCreationSavesBlock,
   LEDGER_NA,
   LEDGER_UNASSIGNED,
+  resolveLedgerEffectiveAttributes,
 } from './creationLiveLedger'
 import { characterFixture } from '../data/characterFixture'
 import { getRaceById } from '../data/library/registry'
 import { getLibraryOccById } from '../data/library/registry'
-import { createEmptyAccumulatedHandToHandBonuses } from '../utils/combatCalculator'
+import {
+  accumulateHandToHandBonuses,
+  createEmptyAccumulatedHandToHandBonuses,
+} from '../utils/combatCalculator'
+import { getHandToHandSkillById } from '../data/library/handToHandCatalogLoader'
 
 describe('creationLiveLedger', () => {
   it('aggregates boxing combat and staging bonuses', () => {
@@ -28,14 +33,14 @@ describe('creationLiveLedger', () => {
     expect(physical.pendingDiceLines.some((l) => l.value === '3D6')).toBe(true)
   })
 
-  it('merges roll w/ punch into roll w/ punch, fall, impact', () => {
+  it('keeps pull punch separate from roll w/ punch, fall, impact', () => {
     const attrs = characterFixture.facade.attributes
     const hth = createEmptyAccumulatedHandToHandBonuses()
     hth.pullPunch = 2
     hth.rollWithPunch = 3
     const combat = buildCreationCombatLedger(attrs, [], 1, hth)
     expect(combat.pullPunch).toBe(2)
-    expect(combat.rollWithPunchFallImpact).toBe(5)
+    expect(combat.rollWithPunchFallImpact).toBe(3)
 
     const character = {
       ...characterFixture,
@@ -53,10 +58,11 @@ describe('creationLiveLedger', () => {
     )
     const rollLine = block.find((l) => l.label === 'Roll w/ punch, fall, impact')
     expect(rollLine).toBeDefined()
-    expect(block.find((l) => l.label === 'Roll w/ punch')).toBeUndefined()
+    expect(block.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
     expect(block.find((l) => l.label === 'Attacks / melee')?.hint).toContain('Base: 2')
     expect(block.find((l) => l.label === 'Initiative')?.value).toBe(LEDGER_NA)
-    expect(block.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value).toBe('+5')
+    expect(rollLine?.value).toBe('+3')
+    expect(rollLine?.hint).toContain('HtH Basic')
   })
 
   it('starts attacks per melee at 2 with no bonuses', () => {
@@ -111,6 +117,42 @@ describe('creationLiveLedger', () => {
     expect(partial.find((l) => l.label === 'M.E.')?.value).toBe(LEDGER_UNASSIGNED)
   })
 
+  it('shows full attribute breakdown on hover when bonuses apply', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const block = buildCreationAttributeBlock(
+      characterFixture.facade.attributes,
+      { ps: 10 },
+      human,
+      occ,
+      undefined,
+      [],
+      {},
+    )
+    const ps = block.find((line) => line.label === 'P.S.')
+    expect(ps?.value).toBe('11')
+    expect(ps?.valueModified).toBe(true)
+    expect(ps?.valueTooltip).toBe('(Roll 10, O.C.C. +1)')
+  })
+
+  it('exceptional P.E. bonuses use effective attribute total', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const effective = resolveLedgerEffectiveAttributes(
+      characterFixture.facade.attributes,
+      { pe: 18 },
+      human,
+      occ,
+      undefined,
+      ['skill_running'],
+      {},
+    )
+    expect(effective.pe).toBe(19)
+    const exceptional = buildCreationExceptionalStandardBlock(effective)
+    const coma = exceptional.find((line) => line.label === 'P.E. save vs coma / death')
+    expect(coma?.value).toBe('8%')
+  })
+
   it('shows O.C.C. flat bonuses in the value and dice under grouped rows', () => {
     const attrs = characterFixture.facade.attributes
     const human = getRaceById('race_human')
@@ -151,6 +193,34 @@ describe('creationLiveLedger', () => {
     expect(high.find((l) => l.label === 'I.Q. perception bonus')?.value).toBe('+1')
   })
 
+  it('HtH basic roll w/ punch does not double-count pull punch', () => {
+    const basic = getHandToHandSkillById('hth_basic')
+    expect(basic).toBeDefined()
+    const hth = accumulateHandToHandBonuses(basic!, 1)
+    expect(hth.rollWithPunch).toBe(2)
+    expect(hth.pullPunch).toBe(2)
+
+    const attrs = characterFixture.facade.attributes
+    const combat = buildCreationCombatLedger(attrs, [], 1, hth)
+    expect(combat.rollWithPunchFallImpact).toBe(2)
+    expect(combat.pullPunch).toBe(2)
+
+    const block = buildCreationCombatBlock(
+      { ...characterFixture, creationHandToHandTier: 'basic' as const },
+      'facade',
+      attrs,
+      combat,
+      [],
+      1,
+      {},
+      hth,
+    )
+    expect(
+      block.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value,
+    ).toBe('+2')
+    expect(block.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
+  })
+
   it('shows boxing parry in combat breakdown with catalog attribution', () => {
     const attrs = characterFixture.facade.attributes
     const combat = buildCreationCombatLedger(attrs, ['skill_boxing'], 1)
@@ -165,7 +235,117 @@ describe('creationLiveLedger', () => {
     )
     const parry = block.find((l) => l.label === 'Parry')
     expect(parry?.value).toBe('+2')
-    expect(parry?.hint).toContain('Boxing')
+    expect(parry?.hint).toBe('Skills: +2')
+    expect(parry?.skillDetailTooltip).toBe('Boxing: +2')
+    expect(parry?.valueTooltip).toBe('(Boxing +2)')
+  })
+
+  it('aggregates multiple skill sources into one Skills line with hover detail', () => {
+    const attrs = characterFixture.facade.attributes
+    const combat = buildCreationCombatLedger(
+      attrs,
+      ['skill_boxing', 'skill_athletics_general'],
+      1,
+    )
+    const block = buildCreationCombatBlock(
+      characterFixture,
+      'facade',
+      attrs,
+      combat,
+      ['skill_boxing', 'skill_athletics_general'],
+      1,
+      {},
+    )
+    const parry = block.find((l) => l.label === 'Parry')
+    expect(parry?.value).toBe('+3')
+    expect(parry?.hint).toBe('Skills: +3')
+    expect(parry?.skillDetailTooltip).toBe(
+      'Boxing: +2 · Athletics (general): +1',
+    )
+    expect(parry?.valueTooltip).toBe('(Boxing +2, Athletics (general) +1)')
+  })
+
+  it('includes effective P.S. in hand-to-hand damage', () => {
+    const attrs = characterFixture.facade.attributes
+    const belowThreshold = buildCreationCombatLedger(
+      attrs,
+      [],
+      1,
+      undefined,
+      undefined,
+      { effectivePs: 16 },
+    )
+    const atThreshold = buildCreationCombatLedger(
+      attrs,
+      [],
+      1,
+      undefined,
+      undefined,
+      { effectivePs: 17 },
+    )
+    const withSkillBoost = buildCreationCombatLedger(
+      attrs,
+      ['skill_body_building_weight_lifting'],
+      1,
+      undefined,
+      undefined,
+      { effectivePs: 19 },
+    )
+    expect(belowThreshold.handToHandDamage).toBe(0)
+    expect(atThreshold.handToHandDamage).toBe(2)
+    expect(withSkillBoost.handToHandDamage).toBe(4)
+
+    const block = buildCreationCombatBlock(
+      {
+        ...characterFixture,
+        creationAttributeAssignments: { ps: 17 },
+      },
+      'facade',
+      attrs,
+      withSkillBoost,
+      ['skill_body_building_weight_lifting'],
+      1,
+      {},
+      undefined,
+      undefined,
+      undefined,
+      19,
+    )
+    const damageLine = block.find((l) => l.label === 'Hand-to-hand damage (P.S.)')
+    expect(damageLine?.value).toBe('+4')
+    expect(damageLine?.hint).toContain('P.S.')
+  })
+
+  it('includes hand-to-hand damage bonuses in the combat ledger total', () => {
+    const attrs = characterFixture.facade.attributes
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    hth.damage = 2
+    const combat = buildCreationCombatLedger(
+      attrs,
+      [],
+      7,
+      hth,
+      undefined,
+      { effectivePs: 18 },
+    )
+    expect(combat.handToHandDamage).toBe(5)
+
+    const block = buildCreationCombatBlock(
+      characterFixture,
+      'facade',
+      attrs,
+      combat,
+      [],
+      7,
+      {},
+      hth,
+      undefined,
+      undefined,
+      18,
+    )
+    const damageLine = block.find((l) => l.label === 'Hand-to-hand damage (P.S.)')
+    expect(damageLine?.value).toBe('+5')
+    expect(damageLine?.hint).toContain('Hand-to-hand')
   })
 
   it('only shows 31+ exceptional groups for attributes above 30', () => {

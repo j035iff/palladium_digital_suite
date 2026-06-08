@@ -57,7 +57,8 @@ import {
 
 import {
   canAffordHandToHandTier,
-  creationHandToHandElectiveSlotCost,
+  creationHandToHandReservedRelatedSlots,
+  effectiveCreationHandToHandTier,
   listOccHandToHandOptions,
   type CreationHandToHandTier,
 } from '../../lib/creationHandToHandChoice'
@@ -290,15 +291,7 @@ export function SkillEngine() {
   const relatedCap = Math.floor(relatedBase * skillSlotMultiplier)
 
   const handToHandReserved = effectiveOcc
-
-    ? creationHandToHandElectiveSlotCost(
-
-        effectiveOcc,
-
-        character.creationHandToHandTier,
-
-      )
-
+    ? creationHandToHandReservedRelatedSlots(effectiveOcc, character)
     : 0
 
   const relatedSkillCap = relatedCap
@@ -315,7 +308,9 @@ export function SkillEngine() {
 
   const secondaryCap = occCreationDerived?.secondarySkillSlots ?? 0
 
-  const handToHandTier = character.creationHandToHandTier ?? 'none'
+  const handToHandTier = effectiveOcc
+    ? effectiveCreationHandToHandTier(character, effectiveOcc)
+    : (character.creationHandToHandTier ?? 'none')
 
   const handToHandOptions = useMemo(
     () => (effectiveOcc ? listOccHandToHandOptions(effectiveOcc) : []),

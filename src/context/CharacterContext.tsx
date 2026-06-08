@@ -163,6 +163,8 @@ import {
 } from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
 import { computeSpawnVitalityFromResolutions } from '../lib/spawnVitalityManual'
+import { applyPendingAttributeDiceToForms } from '../lib/creationAttributeSync'
+import { buildPendingDiceBlocks } from '../lib/spawnDiceBlocks'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -1982,11 +1984,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const occ = getLibraryOccById(prev.occ.id)
       const dual = characterHasDualForms(prev)
       const tier = prev.psychicGateBypassed ? 'none' : psychicTier
+      const resolutions = prev.creationPendingDiceResolutions ?? {}
+      const pendingBlocks = buildPendingDiceBlocks(prev, race, occ, {
+        supportsDualForm: dual,
+        psychicTier: tier,
+      })
       const rolls = computeSpawnVitalityFromResolutions(
         prev,
         race,
         occ,
-        prev.creationPendingDiceResolutions ?? {},
+        resolutions,
         { supportsDualForm: dual, psychicTier: tier },
       )
       const pairs: [string, number][] = [
@@ -2008,6 +2015,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         const applied = tryApplyNumericSheetPath(next, path, v)
         next = applied ? retainCharacterRoot(prev, applied) : next
       }
+      next = applyPendingAttributeDiceToForms(next, pendingBlocks, resolutions)
       return { ...next, creationVitalityCommitted: true }
     })
   }, [psychicTier])

@@ -5,6 +5,8 @@ import type {
   PalladiumOcc,
   Race,
 } from '../types'
+import type { PendingDiceBlock } from './spawnDiceBlocks'
+import { sumPendingAttributeDiceBonuses } from './spawnDiceBlocks'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
@@ -324,6 +326,42 @@ export function applyCreationAttributesToForm(
     }
   }
 
+  return next
+}
+
+/** Apply Review-tab attribute dice (skill Spd, post-strip O.C.C. Spd, etc.) onto sheet attributes. */
+export function applySpawnAttributeDiceBonuses(
+  attrs: CharacterAttributes,
+  bonuses: Partial<Record<ForgeAttrKey, number>>,
+): CharacterAttributes {
+  let next = { ...attrs, ps: { ...attrs.ps } }
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const bonus = bonuses[attr]
+    if (bonus == null || !Number.isFinite(bonus) || bonus === 0) continue
+    next = writeScalar(next, attr, readScalar(next, attr) + bonus)
+  }
+  return next
+}
+
+export function applyPendingAttributeDiceToForms(
+  prev: CharacterRootState,
+  blocks: readonly PendingDiceBlock[],
+  resolutions: Readonly<Record<string, number>>,
+  forms: readonly ('facade' | 'morphus')[] = ['facade', 'morphus'],
+): CharacterRootState {
+  const bonuses = sumPendingAttributeDiceBonuses(blocks, resolutions)
+  if (Object.keys(bonuses).length === 0) return prev
+  let next = prev
+  for (const key of forms) {
+    const branch = next[key]
+    next = {
+      ...next,
+      [key]: {
+        ...branch,
+        attributes: applySpawnAttributeDiceBonuses(branch.attributes, bonuses),
+      },
+    }
+  }
   return next
 }
 

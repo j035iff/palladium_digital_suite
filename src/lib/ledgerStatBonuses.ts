@@ -157,6 +157,37 @@ function collectOccAttributeFlat(
   return []
 }
 
+export function buildForgeAttributeStatBonusDetails(
+  attr: ForgeAttrKey,
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  skillIds: readonly string[],
+): {
+  flatTotal: number
+  flatBreakdown: LedgerFlatContribution[]
+  diceGroups: LedgerStatDiceGroupDetail[]
+} {
+  const key = attr === 'ps' ? 'ps' : attr
+  const skill = collectSkillBonuses(key, skillIds)
+  const occDice = occ?.id?.trim() ? collectOccAttributeDice(occ, attr, specializationId) : []
+  const occFlat = occ?.id?.trim() ? collectOccAttributeFlat(occ, attr, specializationId) : []
+
+  const diceGroups: LedgerStatDiceGroupDetail[] = []
+  const occGroup = buildDiceGroup('occ', occDice)
+  if (occGroup) {
+    diceGroups.push({ ...occGroup, contributions: [...occDice] })
+  }
+  const skillGroup = buildDiceGroup('skills', skill.dice)
+  if (skillGroup) {
+    diceGroups.push({ ...skillGroup, contributions: [...skill.dice] })
+  }
+
+  const flatBreakdown = [...occFlat, ...skill.flat]
+  const flatTotal = flatBreakdown.reduce((s, f) => s + f.amount, 0)
+
+  return { flatTotal, flatBreakdown, diceGroups }
+}
+
 export function buildForgeAttributeStatBonuses(
   attr: ForgeAttrKey,
   race: Race | undefined,
@@ -164,25 +195,22 @@ export function buildForgeAttributeStatBonuses(
   specializationId: string | null | undefined,
   skillIds: readonly string[],
 ): LedgerStatBonusBundle {
-  const key = attr === 'ps' ? 'ps' : attr
-  const skill = collectSkillBonuses(key, skillIds)
-  const occDice = occ?.id?.trim() ? collectOccAttributeDice(occ, attr, specializationId) : []
-  const occFlat = occ?.id?.trim() ? collectOccAttributeFlat(occ, attr, specializationId) : []
-
-  const diceGroups: LedgerStatDiceGroup[] = []
-  const occGroup = buildDiceGroup('occ', occDice)
-  if (occGroup) diceGroups.push(occGroup)
-  const skillGroup = buildDiceGroup('skills', skill.dice)
-  if (skillGroup) diceGroups.push(skillGroup)
-
-  const flatBreakdown = [...occFlat, ...skill.flat]
-  const flatTotal = flatBreakdown.reduce((s, f) => s + f.amount, 0)
+  const details = buildForgeAttributeStatBonusDetails(
+    attr,
+    occ,
+    specializationId,
+    skillIds,
+  )
 
   return {
     inlineRaceRoll: race ? raceAttrNotation(race.attributes, attr) : undefined,
-    diceGroups,
-    flatTotal,
-    flatBreakdown,
+    diceGroups: details.diceGroups.map(({ kind, display, tooltip }) => ({
+      kind,
+      display,
+      tooltip,
+    })),
+    flatTotal: details.flatTotal,
+    flatBreakdown: details.flatBreakdown,
   }
 }
 
@@ -193,6 +221,57 @@ export function buildSdcStatBonuses(
   skillIds: readonly string[],
   resolutions: Readonly<Record<string, number>>,
 ): LedgerStatBonusBundle {
+  const details = buildSdcStatBonusDetails(
+    race,
+    occ,
+    specializationId,
+    skillIds,
+    resolutions,
+  )
+  return {
+    diceGroups: details.diceGroups,
+    flatTotal: details.flatTotal,
+    flatBreakdown: details.flatBreakdown,
+  }
+}
+
+export function formatFlatValueTooltip(
+  breakdown: readonly LedgerFlatContribution[],
+): string | undefined {
+  if (breakdown.length === 0) return undefined
+  return `(${breakdown.map((f) => `${f.label} ${f.amount >= 0 ? '+' : ''}${f.amount}`).join(', ')})`
+}
+
+export function formatAttributeValueTooltip(
+  poolRoll: number | null,
+  flatBreakdown: readonly LedgerFlatContribution[],
+  variableBonus = 0,
+): string | undefined {
+  const parts: string[] = []
+  if (poolRoll != null) parts.push(`Roll ${poolRoll}`)
+  for (const item of flatBreakdown) {
+    parts.push(`${item.label} ${item.amount >= 0 ? '+' : ''}${item.amount}`)
+  }
+  if (variableBonus > 0) parts.push(`O.C.C. dice +${variableBonus}`)
+  if (parts.length === 0) return undefined
+  return `(${parts.join(', ')})`
+}
+
+export type LedgerStatDiceGroupDetail = LedgerStatDiceGroup & {
+  contributions: LedgerDiceContribution[]
+}
+
+export function buildSdcStatBonusDetails(
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  skillIds: readonly string[],
+  resolutions: Readonly<Record<string, number>>,
+): {
+  flatTotal: number
+  flatBreakdown: LedgerFlatContribution[]
+  diceGroups: LedgerStatDiceGroupDetail[]
+} {
   const skill = collectSkillBonuses('sdc', skillIds)
   const occDice: LedgerDiceContribution[] = []
   const occFlat: LedgerFlatContribution[] = []
@@ -215,22 +294,21 @@ export function buildSdcStatBonuses(
     if (bonusDice) occDice.push({ notation: bonusDice, label: 'OCC bonus' })
   }
 
-  const diceGroups: LedgerStatDiceGroup[] = []
+  const diceGroups: LedgerStatDiceGroupDetail[] = []
   const occGroup = buildDiceGroup('occ', occDice)
-  if (occGroup) diceGroups.push(occGroup)
+  if (occGroup) {
+    diceGroups.push({ ...occGroup, contributions: [...occDice] })
+  }
   const skillGroup = buildDiceGroup('skills', skill.dice)
-  if (skillGroup) diceGroups.push(skillGroup)
+  if (skillGroup) {
+    diceGroups.push({ ...skillGroup, contributions: [...skill.dice] })
+  }
 
   const flatBreakdown = [...occFlat, ...skill.flat]
-  const flatTotal = flatBreakdown.reduce((s, f) => s + f.amount, 0)
-
-  return { diceGroups, flatTotal, flatBreakdown }
-}
-
-export function formatFlatValueTooltip(
-  breakdown: readonly LedgerFlatContribution[],
-): string | undefined {
-  if (breakdown.length === 0) return undefined
-  return `(${breakdown.map((f) => `${f.label} ${f.amount >= 0 ? '+' : ''}${f.amount}`).join(', ')})`
+  return {
+    flatTotal: flatBreakdown.reduce((sum, item) => sum + item.amount, 0),
+    flatBreakdown,
+    diceGroups,
+  }
 }
 

@@ -1,71 +1,80 @@
 import type { Character, PalladiumOcc, Race } from '../types'
-import { deriveSdcHpMaximums } from './derivedVitality'
 import type { SpawnVitalityRolls } from './spawnFinalVitality'
-import { occFlatVitalBonus } from './creationOccBonuses'
 import {
   creationHpLabel,
   creationIspLabel,
   creationSdcLabel,
 } from './creationFormLabels'
+import {
+  buildPendingDiceBlocks,
+  pendingDiceBlockRunningTotal,
+  type PendingDiceBlock,
+} from './spawnDiceBlocks'
 
 /**
  * Build final vitality pools from manually entered dice results (Pillar 5 — no auto-roll).
  */
+function blockById(
+  blocks: readonly PendingDiceBlock[],
+): Record<string, PendingDiceBlock> {
+  return Object.fromEntries(blocks.map((block) => [block.id, block]))
+}
+
 export function computeSpawnVitalityFromResolutions(
   character: Character,
   race: Race | undefined,
-  _occ: PalladiumOcc | undefined,
+  occ: PalladiumOcc | undefined,
   resolutions: Readonly<Record<string, number>>,
   opts: {
     supportsDualForm: boolean
     psychicTier: string
   },
 ): SpawnVitalityRolls {
-  const f = character.facade.attributes
-  const m = character.morphus.attributes
-  const pe = f.pe
-  const me = f.me
-
-  const hpDie = resolutions['vitality.facade_hp_die'] ?? 0
-  const facadeHp = Math.max(4, pe + hpDie)
-
-  const ppeDie = resolutions['vitality.ppe_die'] ?? 0
-  const ppeMax = Math.max(0, me + pe + ppeDie)
-
-  const occSdcBonus = occFlatVitalBonus(
-    _occ,
-    character.occSpecializationId,
-    'sdc',
-    character.creationOccVariableResolutions ?? {},
-  )
-
-  let facadeSdc: number
-  const sdcRoll = resolutions['vitality.facade_sdc']
-  if (sdcRoll != null && race?.vitals?.sdc != null) {
-    facadeSdc = Math.max(4, sdcRoll + occSdcBonus)
-  } else {
-    const sdcDie = resolutions['vitality.facade_sdc_die'] ?? 0
-    const base = deriveSdcHpMaximums(f).sdcMaximum
-    facadeSdc = Math.max(4, base + sdcDie + occSdcBonus)
-  }
-
+  const blocks = buildPendingDiceBlocks(character, race, occ, opts)
+  const byId = blockById(blocks)
   const showIsp =
     opts.psychicTier !== 'none' || character.psychicGateBypassed === true
-  const ispDie = showIsp ? (resolutions['vitality.isp_die'] ?? 0) : 0
-  const morphusIspMax = showIsp ? Math.max(0, me + ispDie) : 0
+
+  const facadeHp = Math.max(
+    4,
+    byId.hp
+      ? pendingDiceBlockRunningTotal(byId.hp, resolutions)
+      : character.facade.attributes.pe,
+  )
+  const facadeSdc = Math.max(
+    4,
+    byId.sdc
+      ? pendingDiceBlockRunningTotal(byId.sdc, resolutions)
+      : 0,
+  )
+  const ppeMax = Math.max(
+    0,
+    byId.ppe ? pendingDiceBlockRunningTotal(byId.ppe, resolutions) : 0,
+  )
+  const facadeIsp = showIsp && byId.isp
+    ? Math.max(0, pendingDiceBlockRunningTotal(byId.isp, resolutions))
+    : 0
 
   if (opts.supportsDualForm) {
-    const morphHpDie = resolutions['vitality.morphus_hp_die'] ?? 0
-    const morphSdcDie = resolutions['vitality.morphus_sdc_die'] ?? 0
-    const morphusHp = Math.max(10, m.pe * 3 + morphHpDie * 4)
-    const morphusSdc = Math.max(20, m.pe * 4 + m.ps.score * 2 + morphSdcDie * 8)
+    const morphusHp = Math.max(
+      10,
+      byId.morphus_hp
+        ? pendingDiceBlockRunningTotal(byId.morphus_hp, resolutions)
+        : 0,
+    )
+    const morphusSdc = Math.max(
+      20,
+      byId.morphus_sdc
+        ? pendingDiceBlockRunningTotal(byId.morphus_sdc, resolutions)
+        : 0,
+    )
     return {
       facadeHp,
       facadeSdc,
       morphusHp,
       morphusSdc,
       ppeMax,
-      morphusIspMax: showIsp ? Math.max(0, m.me + ispDie) : 0,
+      morphusIspMax: facadeIsp,
     }
   }
 
@@ -75,7 +84,7 @@ export function computeSpawnVitalityFromResolutions(
     morphusHp: facadeHp,
     morphusSdc: facadeSdc,
     ppeMax,
-    morphusIspMax: morphusIspMax,
+    morphusIspMax: facadeIsp,
   }
 }
 

@@ -13,6 +13,7 @@ import {
 import { occGrantsDefaultHandToHand } from './occComposition'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import { handToHandCatalogIdForCreationTier } from './creationHandToHandChoice'
+import { hasPairedWeaponSupportWp } from './pairedWeaponSupport'
 import type { ActiveForm } from '../types'
 
 /** Combat catalog tier order (fallback when multiple HtH skills are unlocked). */
@@ -66,22 +67,42 @@ export type HandToHandCombatProfile = {
   attackApmCost: number
 }
 
+function applyPairedWeaponSupportGate(
+  accumulated: AccumulatedHandToHandBonuses,
+  character: Character,
+  activeForm: ActiveForm,
+): AccumulatedHandToHandBonuses {
+  if (!accumulated.pairedWeapons) return accumulated
+  const unlocked = collectUnlockedSkillIds(character, activeForm)
+  if (hasPairedWeaponSupportWp(unlocked)) return accumulated
+  return { ...accumulated, pairedWeapons: false }
+}
+
 function buildCombatProfile(
   skill: HandToHandSkill,
-  characterLevel: number,
+  character: Character,
+  activeForm: ActiveForm,
 ): HandToHandCombatProfile {
+  const accumulated = applyPairedWeaponSupportGate(
+    accumulateHandToHandBonuses(skill, character.level),
+    character,
+    activeForm,
+  )
   return {
     skillId: skill.id,
     skillName: skill.name,
-    accumulated: accumulateHandToHandBonuses(skill, characterLevel),
+    accumulated,
     attackApmCost: handToHandAttackApmCost(skill),
   }
 }
 
-function emptyProfile(): HandToHandCombatProfile {
+function emptyProfile(
+  character: Character,
+  activeForm: ActiveForm,
+): HandToHandCombatProfile {
   const none = getHandToHandSkillById(HTH_NONE_CATALOG_ID)
   if (none) {
-    return buildCombatProfile(none, 1)
+    return buildCombatProfile(none, character, activeForm)
   }
   return {
     skillId: null,
@@ -144,8 +165,8 @@ export function resolveHandToHandCombatProfile(
   const trainedId = resolveActiveHandToHandSkillId(character, activeForm, occ)
   const catalogId = trainedId ?? HTH_NONE_CATALOG_ID
   const skill = getHandToHandSkillById(catalogId)
-  if (!skill) return emptyProfile()
-  return buildCombatProfile(skill, character.level)
+  if (!skill) return emptyProfile(character, activeForm)
+  return buildCombatProfile(skill, character, activeForm)
 }
 
 export function occRequiresHandToHandPurchase(occ: PalladiumOcc | undefined): boolean {

@@ -3,6 +3,7 @@ import type { PalladiumOcc } from '../types'
 import {
   listOccVariableAttributeBonusTasks,
   listOccVariableBonusTasks,
+  listSpawnPhaseOccAttributeBonusTasks,
 } from './occVariableBonus'
 
 const occ = {
@@ -27,6 +28,21 @@ describe('occVariableBonus', () => {
     const all = listOccVariableBonusTasks(occ, null)
     expect(all.some((t) => t.section === 'attributes')).toBe(true)
     expect(all.some((t) => t.section === 'vitals')).toBe(true)
+  })
+
+  it('routes Spd O.C.C. dice to spawn-phase attribute tasks', () => {
+    const withSpd = {
+      id: 'occ_pab_psychic_agent',
+      staticBonuses: {
+        attributes: { ps: 1, spd: '1D6' },
+      },
+      occSkillsCore: [],
+      occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
+    } as unknown as PalladiumOcc
+    const spawnTasks = listSpawnPhaseOccAttributeBonusTasks(withSpd, null)
+    expect(spawnTasks).toHaveLength(1)
+    expect(spawnTasks[0]?.statKey).toBe('spd')
+    expect(spawnTasks[0]?.notation).toBe('1D6')
   })
 
   it('excludes Spd from Phase I.2 attribute dice tasks', () => {

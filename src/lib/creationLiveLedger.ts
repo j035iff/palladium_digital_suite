@@ -16,6 +16,7 @@ import { occVariableAttributeResolution } from './occVariableBonus'
 import {
   buildForgeAttributeStatBonuses,
   buildSdcStatBonuses,
+  formatAttributeValueTooltip,
   formatFlatValueTooltip,
   type LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
@@ -50,20 +51,19 @@ import {
 } from './attributeBonuses'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import { saveModifierAttribution, type SaveDeductionLine } from './saveProfile'
-import {
-  computeSheetCombatDerived,
-  formatSheetBonusEquation,
-  type SheetBonusLine,
-} from './sheetBonuses'
+import { formatSheetBonusEquation, type SheetBonusLine } from './sheetBonuses'
 import {
   creationHandToHandTierLabel,
-  occStartingHandToHandTier,
+  effectiveCreationHandToHandTier,
   sheetSkillIdForCreationHandToHandTier,
 } from './creationHandToHandChoice'
 import { occStartingOccSkillIds } from './occCatalogEngine'
 import { occStaticNumericBonus } from './creationOccBonuses'
 import { getSkillById } from '../data/skillLibrary'
-import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
+import {
+  aggregatePhysicalSkillCombatBonuses,
+  type PhysicalCombatBonusKey,
+} from './skillPhysicalBonuses'
 import {
   FORGE_ATTRIBUTE_KEYS,
   type ForgeAttrKey,
@@ -87,6 +87,8 @@ export type CreationLedgerLine = {
   valueModified?: boolean
   /** Hover breakdown for flat bonuses baked into {@link value}. */
   valueTooltip?: string
+  /** Per-skill detail for the aggregated Skills segment in {@link hint}. */
+  skillDetailTooltip?: string
 }
 
 export type CreationLedgerGroup = {
@@ -218,9 +220,7 @@ function hthLedgerDisplayName(
   if (catalogName) {
     return catalogName.replace(/^Hand-to-Hand:\s*/i, 'Hand to Hand: ')
   }
-  const tier =
-    character.creationHandToHandTier ??
-    (occ ? occStartingHandToHandTier(occ) : 'none')
+  const tier = effectiveCreationHandToHandTier(character, occ)
   const label = creationHandToHandTierLabel(tier)
   return label ? `Hand to Hand: ${label}` : null
 }
@@ -249,7 +249,117 @@ function occCombatLedgerPart(
     statKey,
     resolutions,
   )
-  return amount ? { label: 'O.C.C.', amount } : null
+  return amount ? { label: 'OCC', amount } : null
+}
+
+function perSkillCombatContributions(
+  skillIds: readonly string[],
+  key: PhysicalCombatBonusKey,
+): readonly { name: string; amount: number }[] {
+  const out: { name: string; amount: number }[] = []
+  for (const skillId of skillIds) {
+    const entry = getPalladiumSkillCatalogEntryById(skillId)
+    const raw = (
+      entry as { physicalSkillBonuses?: Record<string, number> }
+    )?.physicalSkillBonuses?.[key]
+    if (typeof raw === 'number' && raw !== 0) {
+      out.push({ name: entry?.name ?? skillId, amount: raw })
+    }
+  }
+  return out
+}
+
+function formatSkillSourcesTooltip(
+  entries: readonly { name: string; amount: number }[],
+): string | undefined {
+  if (entries.length === 0) return undefined
+  return entries.map((e) => `${e.name}: ${formatBonus(e.amount)}`).join(' · ')
+}
+
+function formatCombatValueTooltip(
+  parts: readonly SaveDeductionLine[],
+  skillEntries: readonly { name: string; amount: number }[],
+): string | undefined {
+  const detailParts: string[] = []
+  for (const part of parts) {
+    if (part.amount === 0) continue
+    if (part.label === 'Skills' && skillEntries.length > 0) {
+      for (const entry of skillEntries) {
+        detailParts.push(`${entry.name} ${formatBonus(entry.amount)}`)
+      }
+      continue
+    }
+    detailParts.push(`${part.label} ${formatBonus(part.amount)}`)
+  }
+  if (detailParts.length === 0) return undefined
+  return `(${detailParts.join(', ')})`
+}
+
+type OrderedCombatBonusInput = {
+  attribute?: { label: string; amount: number }
+  occ?: PalladiumOcc
+  specializationId?: string | null
+  occStatKey?: string
+  occResolutions?: Readonly<Record<string, number>>
+  passiveOcc?: number
+  hth?: number
+  hthShort?: string | null
+  skillIds: readonly string[]
+  skill: SkillBonusAgg
+  skillKey: PhysicalCombatBonusKey
+}
+
+function buildOrderedCombatBonusParts(
+  input: OrderedCombatBonusInput,
+): {
+  parts: SaveDeductionLine[]
+  skillEntries: readonly { name: string; amount: number }[]
+} {
+  const parts: SaveDeductionLine[] = []
+
+  if (input.attribute?.amount) {
+    parts.push({ label: input.attribute.label, amount: input.attribute.amount })
+  }
+
+  const occStatic =
+    input.occStatKey && input.occ
+      ? occStaticNumericBonus(
+          input.occ,
+          input.specializationId,
+          'combat',
+          input.occStatKey,
+          input.occResolutions ?? {},
+        )
+      : 0
+  const occTotal = occStatic + (input.passiveOcc ?? 0)
+  if (occTotal) parts.push({ label: 'OCC', amount: occTotal })
+
+  if (input.hth && input.hthShort) {
+    parts.push({ label: `HtH ${input.hthShort}`, amount: input.hth })
+  }
+
+  const skillAmt = input.skill.combat[input.skillKey] ?? 0
+  const skillEntries = perSkillCombatContributions(input.skillIds, input.skillKey)
+  if (skillAmt) {
+    parts.push({ label: 'Skills', amount: skillAmt })
+  }
+
+  return { parts, skillEntries }
+}
+
+function combatLedgerLineFromParts(
+  label: string,
+  parts: readonly SaveDeductionLine[],
+  skillEntries: readonly { name: string; amount: number }[] = [],
+): CreationLedgerLine {
+  const line = ledgerFromParts(parts)
+  const skillDetailTooltip = formatSkillSourcesTooltip(skillEntries)
+  return {
+    ...line,
+    label,
+    valueTooltip: formatCombatValueTooltip(parts, skillEntries),
+    skillDetailTooltip,
+  }
 }
 
 function occSaveLedgerParts(
@@ -297,6 +407,50 @@ const ATTR_LEDGER_LABELS: Record<ForgeAttrKey, string> = {
   spd: 'Spd',
 }
 
+/** Attribute totals with O.C.C. / skill / variable dice — used for exceptional bonus rows. */
+export function resolveLedgerEffectiveAttributes(
+  template: CharacterAttributes,
+  assignments: Partial<Record<ForgeAttrKey, number>> = {},
+  race?: Race,
+  occ?: PalladiumOcc,
+  specializationId?: string | null,
+  grantedSkillIds: readonly string[] = [],
+  occVariableResolutions: Readonly<Record<string, number>> = {},
+): CharacterAttributes {
+  let attrs = { ...template, ps: { ...template.ps } }
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const assigned = assignments[attr]
+    const bundle = buildForgeAttributeStatBonuses(
+      attr,
+      race,
+      occ,
+      specializationId,
+      grantedSkillIds,
+    )
+    const poolRoll =
+      assigned != null && Number.isFinite(assigned) ? assigned : null
+    const variableBonus = occVariableAttributeResolution(
+      attr,
+      occ,
+      specializationId,
+      occVariableResolutions,
+    )
+    const total =
+      poolRoll != null
+        ? poolRoll + bundle.flatTotal + variableBonus
+        : bundle.flatTotal > 0
+          ? bundle.flatTotal
+          : null
+    if (total == null) continue
+    if (attr === 'ps') {
+      attrs = { ...attrs, ps: { ...attrs.ps, score: total } }
+    } else {
+      attrs = { ...attrs, [attr]: total }
+    }
+  }
+  return attrs
+}
+
 /** All eight attributes — dash until a pool roll is assigned on the attribute strip. */
 export function buildCreationAttributeBlock(
   _attrs: CharacterAttributes,
@@ -331,13 +485,18 @@ export function buildCreationAttributeBlock(
           ? bundle.flatTotal
           : null
 
+    const hasBonuses = bundle.flatTotal > 0 || variableBonus > 0
     return {
       label: ATTR_LEDGER_LABELS[attr],
       inlineRaceRoll: bundle.inlineRaceRoll,
       labelSuffix: occAttributeRequirementSuffix(occ, attr, specializationId),
       value: total != null ? String(total) : LEDGER_UNASSIGNED,
-      valueModified: bundle.flatTotal > 0 && total != null,
-      valueTooltip: formatFlatValueTooltip(bundle.flatBreakdown),
+      valueModified: hasBonuses && total != null,
+      valueTooltip: formatAttributeValueTooltip(
+        poolRoll,
+        bundle.flatBreakdown,
+        variableBonus,
+      ),
       diceGroups: bundle.diceGroups.length > 0 ? bundle.diceGroups : undefined,
     }
   })
@@ -763,12 +922,21 @@ export type CreationCombatLedger = {
   handToHandDamage: number
 }
 
+export type CreationCombatDamageContext = {
+  effectivePs?: number
+  occ?: PalladiumOcc
+  specializationId?: string | null
+  occResolutions?: Readonly<Record<string, number>>
+  passive?: FeatureModifiers
+}
+
 export function buildCreationCombatLedger(
   attrs: CharacterAttributes,
   skillIds: readonly string[],
   level: number,
   handToHand?: AccumulatedHandToHandBonuses,
   strengthCapacities?: StrengthCapacities,
+  damageCtx?: CreationCombatDamageContext,
 ): CreationCombatLedger {
   const mirror = computeCombatMirrorBonuses(attrs)
   const skill = aggregateSkillPhysicalBonuses(skillIds)
@@ -779,13 +947,26 @@ export function buildCreationCombatLedger(
   const dodge = mirror.dodge + (skill.combat.dodge ?? 0) + hth.dodge
   const pullPunch = (skill.combat.pullPunch ?? 0) + hth.pullPunch
   const rollWithPunchFallImpact =
-    (skill.combat.rollWithImpact ?? 0) + pullPunch + hth.rollWithPunch
+    (skill.combat.rollWithImpact ?? 0) + hth.rollWithPunch
   const initiative = hth.initiative
   const attacksPerMelee =
     computeMaxApm(attrs, level, handToHandAttackBonus(hth)) +
     (skill.combat.apm ?? 0)
 
-  let handToHandDamage = mirror.handToHandDamage + hth.damage
+  const psScore = damageCtx?.effectivePs ?? attrs.ps.score
+  const psDamage = getPsBonuses(psScore).damageBonus
+  const occDamage = damageCtx?.occ
+    ? occStaticNumericBonus(
+        damageCtx.occ,
+        damageCtx.specializationId,
+        'combat',
+        'damage',
+        damageCtx.occResolutions ?? {},
+      )
+    : 0
+  const passiveDamage = damageCtx?.passive?.bonusHthDamage ?? 0
+
+  let handToHandDamage = psDamage + hth.damage + occDamage + passiveDamage
   if (strengthCapacities?.handToHandDamage.kind === 'supernatural') {
     handToHandDamage = 0
   }
@@ -842,19 +1023,53 @@ function buildCreationInitiativeLine(
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
   const parts: SaveDeductionLine[] = []
+  const occAmt =
+    occStaticNumericBonus(occ, specializationId, 'combat', 'initiative', resolutions) +
+    (passive.initiative ?? 0)
+  if (occAmt) parts.push({ label: 'OCC', amount: occAmt })
   if (handToHand?.initiative && hthShort) {
     parts.push({ label: `HtH ${hthShort}`, amount: handToHand.initiative })
-  }
-  const occPart = occCombatLedgerPart(occ, specializationId, 'initiative', resolutions)
-  if (occPart) parts.push(occPart)
-  if (passive.initiative) {
-    parts.push({ label: 'O.C.C. / features', amount: passive.initiative })
   }
   const line = ledgerFromParts(parts)
   return { ...line, label: 'Initiative' }
 }
 
+type CreationCombatStatKey = 'strike' | 'parry' | 'dodge'
+
+function buildCreationCombatStatLine(
+  label: string,
+  statKey: CreationCombatStatKey,
+  attrs: CharacterAttributes,
+  skillIds: readonly string[],
+  skill: SkillBonusAgg,
+  handToHand: AccumulatedHandToHandBonuses | undefined,
+  hthShort: string | null,
+  passive: FeatureModifiers,
+  occ?: PalladiumOcc,
+  specializationId?: string | null,
+  resolutions: Readonly<Record<string, number>> = {},
+): CreationLedgerLine {
+  const pp = getPpBonuses(attrs.pp)
+  const ppAmt =
+    statKey === 'strike' ? pp.strike : statKey === 'parry' ? pp.parry : pp.dodge
+  const { parts, skillEntries } = buildOrderedCombatBonusParts({
+    attribute: ppAmt ? { label: 'P.P.', amount: ppAmt } : undefined,
+    occ,
+    specializationId,
+    occStatKey: statKey,
+    occResolutions: resolutions,
+    passiveOcc: passive[statKey] ?? 0,
+    hth: handToHand?.[statKey] ?? 0,
+    hthShort,
+    skillIds,
+    skill,
+    skillKey: statKey,
+  })
+  return combatLedgerLineFromParts(label, parts, skillEntries)
+}
+
 function buildCreationRollLine(
+  skillIds: readonly string[],
   skill: SkillBonusAgg,
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
@@ -862,25 +1077,47 @@ function buildCreationRollLine(
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
-  const parts: SaveDeductionLine[] = []
-  const rollSkill = skill.combat.rollWithImpact ?? 0
-  if (rollSkill) {
-    const names = skill.sources.get('rollWithImpact')?.join(', ') ?? 'Physical skill'
-    parts.push({ label: names, amount: rollSkill })
-  }
-  const rollHth = (handToHand?.rollWithPunch ?? 0) + (handToHand?.pullPunch ?? 0)
-  if (rollHth && hthShort) {
-    parts.push({ label: `HtH ${hthShort}`, amount: rollHth })
-  }
-  const occRoll = occCombatLedgerPart(occ, specializationId, 'rollWithPunch', resolutions)
-  if (occRoll) parts.push(occRoll)
-  const line = ledgerFromParts(parts)
-  return { ...line, label: 'Roll w/ punch, fall, impact' }
+  const { parts, skillEntries } = buildOrderedCombatBonusParts({
+    occ,
+    specializationId,
+    occStatKey: 'rollWithPunch',
+    occResolutions: resolutions,
+    hth: handToHand?.rollWithPunch ?? 0,
+    hthShort,
+    skillIds,
+    skill,
+    skillKey: 'rollWithImpact',
+  })
+  return combatLedgerLineFromParts('Roll w/ punch, fall, impact', parts, skillEntries)
+}
+
+function buildCreationPullPunchLine(
+  skillIds: readonly string[],
+  skill: SkillBonusAgg,
+  handToHand: AccumulatedHandToHandBonuses | undefined,
+  hthShort: string | null,
+  occ?: PalladiumOcc,
+  specializationId?: string | null,
+  resolutions: Readonly<Record<string, number>> = {},
+): CreationLedgerLine {
+  const { parts, skillEntries } = buildOrderedCombatBonusParts({
+    occ,
+    specializationId,
+    occStatKey: 'pullPunch',
+    occResolutions: resolutions,
+    hth: handToHand?.pullPunch ?? 0,
+    hthShort,
+    skillIds,
+    skill,
+    skillKey: 'pullPunch',
+  })
+  return combatLedgerLineFromParts('Pull punch', parts, skillEntries)
 }
 
 function buildHandToHandDamageLine(
   combat: CreationCombatLedger,
-  attrs: CharacterAttributes,
+  damageCtx: CreationCombatDamageContext | undefined,
+  effectivePs: number,
   handToHand?: AccumulatedHandToHandBonuses,
   strengthCapacities?: StrengthCapacities,
 ): CreationLedgerLine {
@@ -893,10 +1130,21 @@ function buildHandToHandDamageLine(
     }
   }
 
-  const psPart = getPsBonuses(attrs.ps.score).damageBonus
+  const psPart = getPsBonuses(effectivePs).damageBonus
   const hthPart = handToHand?.damage ?? 0
+  const occStatic = damageCtx?.occ
+    ? occStaticNumericBonus(
+        damageCtx.occ,
+        damageCtx.specializationId,
+        'combat',
+        'damage',
+        damageCtx.occResolutions ?? {},
+      )
+    : 0
+  const occPart = occStatic + (damageCtx?.passive?.bonusHthDamage ?? 0)
   const parts: SaveDeductionLine[] = []
   if (psPart) parts.push({ label: 'P.S.', amount: psPart })
+  if (occPart) parts.push({ label: 'OCC', amount: occPart })
   if (hthPart) parts.push({ label: 'Hand-to-hand', amount: hthPart })
 
   return {
@@ -921,10 +1169,9 @@ export function buildCreationCombatBlock(
   handToHand?: AccumulatedHandToHandBonuses,
   strengthCapacities?: StrengthCapacities,
   occ?: PalladiumOcc,
+  effectivePs?: number,
 ): CreationLedgerLine[] {
-  const hthTier =
-    character.creationHandToHandTier ??
-    (occ ? occStartingHandToHandTier(occ) : 'none')
+  const hthTier = effectiveCreationHandToHandTier(character, occ)
   const hthId = sheetSkillIdForCreationHandToHandTier(hthTier)
   const hthDef = hthId ? getSkillById(hthId) : undefined
   const hthDisplay = hthLedgerDisplayName(hthDef?.name ?? null, character, occ)
@@ -934,46 +1181,26 @@ export function buildCreationCombatBlock(
   )
   const occResolutions = character.creationOccVariableResolutions ?? {}
   const specId = character.occSpecializationId
-  const sheetCombat = computeSheetCombatDerived(
-    character,
-    activeForm,
-    {
-      skillName: hthDef?.name ?? null,
-      accumulated: handToHand ?? createEmptyAccumulatedHandToHandBonuses(),
-    },
-    { extraSkillIds: skillIds },
-  )
 
   const skill = aggregateSkillPhysicalBonuses(skillIds)
   const hthApm = handToHandAttackBonus(handToHand ?? createEmptyAccumulatedHandToHandBonuses())
   const skillApm = skill.combat.apm ?? 0
   const passiveApm = passive.apm ?? 0
 
-  const pullParts: SaveDeductionLine[] = []
-  if (skill.combat.pullPunch) {
-    pullParts.push({ label: 'Skills', amount: skill.combat.pullPunch })
-  }
-  if (handToHand?.pullPunch) {
-    pullParts.push({ label: 'Hand-to-hand', amount: handToHand.pullPunch })
-  }
-
   const entangleParts: SaveDeductionLine[] = []
-  if (handToHand?.entangle) {
-    entangleParts.push({ label: 'Hand-to-hand', amount: handToHand.entangle })
+  if (handToHand?.entangle && hthShort) {
+    entangleParts.push({ label: `HtH ${hthShort}`, amount: handToHand.entangle })
   }
 
   const disarmParts: SaveDeductionLine[] = []
-  if (handToHand?.disarm) {
-    disarmParts.push({ label: 'Hand-to-hand', amount: handToHand.disarm })
+  if (handToHand?.disarm && hthShort) {
+    disarmParts.push({ label: `HtH ${hthShort}`, amount: handToHand.disarm })
   }
 
-  const pullLine = ledgerFromParts(pullParts)
   const entangleLine = ledgerFromParts(entangleParts)
   const disarmLine = ledgerFromParts(disarmParts)
 
-  const occStrike = occCombatLedgerPart(occ, specId, 'strike', occResolutions)
-  const occParry = occCombatLedgerPart(occ, specId, 'parry', occResolutions)
-  const occDodge = occCombatLedgerPart(occ, specId, 'dodge', occResolutions)
+  const psForDamage = effectivePs ?? attrs.ps.score
 
   return [
     {
@@ -989,22 +1216,47 @@ export function buildCreationCombatBlock(
       specId,
       occResolutions,
     ),
-    ledgerFromSheetDetailWithParts(
+    buildCreationCombatStatLine(
       'Strike',
-      sheetCombat.strike,
-      occStrike ? [occStrike] : [],
+      'strike',
+      attrs,
+      skillIds,
+      skill,
+      handToHand,
+      hthShort,
+      passive,
+      occ,
+      specId,
+      occResolutions,
     ),
-    ledgerFromSheetDetailWithParts(
+    buildCreationCombatStatLine(
       'Parry',
-      sheetCombat.parry,
-      occParry ? [occParry] : [],
+      'parry',
+      attrs,
+      skillIds,
+      skill,
+      handToHand,
+      hthShort,
+      passive,
+      occ,
+      specId,
+      occResolutions,
     ),
-    ledgerFromSheetDetailWithParts(
+    buildCreationCombatStatLine(
       'Dodge',
-      sheetCombat.dodge,
-      occDodge ? [occDodge] : [],
+      'dodge',
+      attrs,
+      skillIds,
+      skill,
+      handToHand,
+      hthShort,
+      passive,
+      occ,
+      specId,
+      occResolutions,
     ),
     buildCreationRollLine(
+      skillIds,
       skill,
       handToHand,
       hthShort,
@@ -1012,10 +1264,29 @@ export function buildCreationCombatBlock(
       specId,
       occResolutions,
     ),
-    { ...pullLine, label: 'Pull punch' },
+    buildCreationPullPunchLine(
+      skillIds,
+      skill,
+      handToHand,
+      hthShort,
+      occ,
+      specId,
+      occResolutions,
+    ),
     { ...entangleLine, label: 'Entangle' },
     { ...disarmLine, label: 'Disarm' },
-    buildHandToHandDamageLine(combat, attrs, handToHand, strengthCapacities),
+    buildHandToHandDamageLine(
+      combat,
+      {
+        occ,
+        specializationId: specId,
+        occResolutions,
+        passive,
+      },
+      psForDamage,
+      handToHand,
+      strengthCapacities,
+    ),
   ]
 }
 
@@ -1101,15 +1372,33 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       opts.supportsDualForm,
     ).total
 
+  const effectiveAttrs = resolveLedgerEffectiveAttributes(
+    opts.attrs,
+    opts.character.creationAttributeAssignments,
+    opts.race,
+    opts.occ,
+    opts.character.occSpecializationId,
+    skillIds,
+    opts.character.creationOccVariableResolutions ?? {},
+  )
+
+  const damageCtx: CreationCombatDamageContext = {
+    effectivePs: effectiveAttrs.ps.score,
+    occ: opts.occ,
+    specializationId: opts.character.occSpecializationId,
+    occResolutions: opts.character.creationOccVariableResolutions ?? {},
+    passive,
+  }
+
   const combatLedger = buildCreationCombatLedger(
     opts.attrs,
     skillIds,
     opts.character.level,
     opts.handToHand,
     opts.strengthCapacities,
+    damageCtx,
   )
-
-  const exceptionalSuper = buildCreationExceptionalSuperGroups(opts.attrs)
+  const exceptionalSuper = buildCreationExceptionalSuperGroups(effectiveAttrs)
 
   return {
     attributes: buildCreationAttributeBlock(
@@ -1121,7 +1410,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       skillIds,
       opts.character.creationOccVariableResolutions ?? {},
     ),
-    exceptional: buildCreationExceptionalStandardBlock(opts.attrs),
+    exceptional: buildCreationExceptionalStandardBlock(effectiveAttrs),
     exceptionalSuper,
     vitals: buildCreationVitalsBlock({
       character: opts.character,
@@ -1153,6 +1442,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       opts.handToHand,
       opts.strengthCapacities,
       opts.occ,
+      effectiveAttrs.ps.score,
     ),
   }
 }

@@ -30,10 +30,7 @@ import {
   sumRelatedPoolSlotUsage,
 } from './creationSkillPicks'
 import { resolveEffectivePalladiumOcc } from './occComposition'
-import {
-  assessHandToHandBlockers,
-  creationHandToHandElectiveSlotCost,
-} from './creationHandToHandChoice'
+import { creationHandToHandReservedRelatedSlots } from './creationHandToHandChoice'
 import { occSkillSlotPolicy } from './occCatalogEngine'
 import { raceLineageFromDefinition } from './raceEngine'
 import { creationAttributesBlockerLabel } from './creationFormLabels'
@@ -118,22 +115,14 @@ export function assessCreationReviewBlockers(
       psychicTier,
       occSkillSlotPolicy(occLib),
     )
-    const handToHandReserved = creationHandToHandElectiveSlotCost(
+    const handToHandReserved = creationHandToHandReservedRelatedSlots(
       effectiveOcc,
-      character.creationHandToHandTier,
+      character,
     )
     const relatedSelected = sumRelatedPoolSlotUsage(
       relatedPicks,
       occPicks,
       handToHandReserved,
-    )
-    blockers.push(
-      ...assessHandToHandBlockers(
-        effectiveOcc,
-        character.creationHandToHandTier,
-        relatedCap,
-        relatedSelected - handToHandReserved,
-      ),
     )
     blockers.push(
       ...assessRelatedSkillSlotBlockers(

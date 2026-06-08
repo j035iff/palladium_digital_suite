@@ -38,6 +38,19 @@ function collectDiceTasksFromMap(
   return out
 }
 
+/** Spawn / Review — O.C.C. attribute dice resolved after the attribute strip (e.g. Spd). */
+export function listSpawnPhaseOccAttributeBonusTasks(
+  occ: PalladiumOcc | undefined,
+  specializationId?: string | null,
+): OccVariableBonusTask[] {
+  if (!occ) return []
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  return collectDiceTasksFromMap(
+    'attributes',
+    effective.staticBonuses?.attributes,
+  ).filter((task) => !OCC_VARIABLE_PHASE_ATTR_SET.has(task.statKey))
+}
+
 /** Phase I.2 — O.C.C. attribute dice only (merged specialization). */
 export function listOccVariableAttributeBonusTasks(
   occ: PalladiumOcc | undefined,

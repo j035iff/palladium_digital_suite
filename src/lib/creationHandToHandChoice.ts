@@ -1,4 +1,4 @@
-import type { PalladiumOcc } from '../types'
+import type { Character, PalladiumOcc } from '../types'
 
 import {
   HTH_NONE_CATALOG_ID,
@@ -293,6 +293,33 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
 
 
 
+/**
+ * Active Hand-to-Hand tier for creation UI and slot accounting.
+ * Falls back to the O.C.C. bootstrap tier when the stored pick is missing or invalid
+ * (e.g. A.D.A. Assassination Specialist requires Assassin before the player opens the dropdown).
+ */
+export function effectiveCreationHandToHandTier(
+  character: Pick<Character, 'creationHandToHandTier'>,
+  occ: PalladiumOcc | undefined,
+): CreationHandToHandTier {
+  if (!occ) return character.creationHandToHandTier ?? 'none'
+  const stored = character.creationHandToHandTier
+  const allowed = new Set(listOccHandToHandOptions(occ).map((o) => o.tier))
+  if (stored && allowed.has(stored)) return stored
+  return occStartingHandToHandTier(occ)
+}
+
+/** O.C.C. related slots reserved by the effective Hand-to-Hand choice. */
+export function creationHandToHandReservedRelatedSlots(
+  occ: PalladiumOcc,
+  character: Pick<Character, 'creationHandToHandTier'>,
+): number {
+  return creationHandToHandElectiveSlotCost(
+    occ,
+    effectiveCreationHandToHandTier(character, occ),
+  )
+}
+
 /** O.C.C. related slots consumed by the chosen tier above the O.C.C. default. */
 
 export function creationHandToHandElectiveSlotCost(
@@ -321,20 +348,6 @@ export function creationHandToHandElectiveSlotCost(
 
 
 
-export function creationHandToHandRequiresSelection(occ: PalladiumOcc): boolean {
-
-  return (
-
-    occ.handToHandRules.defaultSkillId == null &&
-
-    occ.handToHandRules.upgradePaths?.length === 1
-
-  )
-
-}
-
-
-
 export function canAffordHandToHandTier(
 
   occ: PalladiumOcc,
@@ -350,72 +363,6 @@ export function canAffordHandToHandTier(
   const cost = creationHandToHandElectiveSlotCost(occ, tier)
 
   return relatedSelectedCount + cost <= relatedCap
-
-}
-
-
-
-export function assessHandToHandBlockers(
-
-  occ: PalladiumOcc | undefined,
-
-  tier: CreationHandToHandTier | undefined,
-
-  relatedCap = 0,
-
-  relatedSelectedCount = 0,
-
-): string[] {
-
-  if (!occ) return []
-
-  const options = listOccHandToHandOptions(occ)
-
-  if (options.length === 0) return []
-
-
-
-  const effective = tier ?? 'none'
-
-  if (creationHandToHandRequiresSelection(occ) && effective === 'none') {
-
-    return ['Select a Hand-to-Hand fighting style.']
-
-  }
-
-  if (
-
-    effective !== 'none' &&
-
-    !options.some((o) => o.tier === effective)
-
-  ) {
-
-    return ['Hand-to-Hand choice is not valid for this O.C.C.']
-
-  }
-
-  if (
-
-    effective !== 'none' &&
-
-    relatedCap > 0 &&
-
-    !canAffordHandToHandTier(occ, effective, relatedCap, relatedSelectedCount)
-
-  ) {
-
-    const cost = creationHandToHandElectiveSlotCost(occ, effective)
-
-    return [
-
-      `Hand-to-Hand upgrade reserves ${cost} O.C.C. related slot${cost === 1 ? '' : 's'}, but only ${Math.max(0, relatedCap - relatedSelectedCount)} remain.`,
-
-    ]
-
-  }
-
-  return []
 
 }
 
