@@ -65,8 +65,8 @@ export function LiveLedger({ variant = 'card' }: { variant?: 'card' | 'sidebar' 
 
   const panel =
     variant === 'sidebar'
-      ? 'h-full p-3 text-slate-900 dark:text-violet-50'
-      : 'rounded-lg border border-blue-200 bg-white p-4 text-slate-900 dark:border-violet-700 dark:bg-slate-950/80 dark:text-violet-50'
+      ? 'h-full bg-white p-3 text-slate-900 dark:bg-slate-950 dark:text-slate-100'
+      : 'rounded-lg border border-blue-200 bg-white p-4 text-slate-900 dark:border-blue-600 dark:bg-slate-950 dark:text-slate-100'
 
   return (
     <aside className={panel} aria-label="Live creation ledger">

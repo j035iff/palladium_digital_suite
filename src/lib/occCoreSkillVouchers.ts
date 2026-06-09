@@ -3,10 +3,12 @@ import type {
   CreationSkillPick,
   OccCoreSkillChoiceVoucher,
   PalladiumOcc,
+  WeaponProficiencyEra,
 } from '../types'
 import {
   getSkillBookCategories,
   voucherAllowedCategoryMatches,
+  weaponProficiencyEraForSkillId,
 } from './creationSkillCatalog'
 import {
   creationSkillPickIdentityKey,
@@ -46,9 +48,24 @@ export function voucherUsesDedicatedPickerUi(
   )
 }
 
+/** O.C.C.-mandated W.P. era when set; undefined means the player may choose ancient or modern. */
+export function resolveVoucherWeaponProficiencyEra(
+  entry: OccCoreSkillChoiceVoucher,
+): WeaponProficiencyEra | undefined {
+  return entry.weaponProficiencyEra
+}
+
 export function formatOccCoreVoucherCategoryScope(
   entry: OccCoreSkillChoiceVoucher,
 ): string {
+  if (
+    entry.weaponProficiencyEra &&
+    entry.allowedCategories?.includes(WEAPON_PROFICIENCIES_VOUCHER_CATEGORY)
+  ) {
+    const eraLabel =
+      entry.weaponProficiencyEra === 'ancient' ? 'Ancient' : 'Modern'
+    return `${eraLabel} Weapon Proficiencies`
+  }
   if (entry.allowedCategories?.length) {
     return entry.allowedCategories.join(', ')
   }
@@ -238,14 +255,18 @@ function skillMatchesVoucher(
   if (!libraryIds.has(skillId)) return false
 
   if (entry.allowedSkillIds?.length) {
-    return entry.allowedSkillIds.includes(skillId)
-  }
-
-  if (entry.allowedCategories?.length) {
+    if (!entry.allowedSkillIds.includes(skillId)) return false
+  } else if (entry.allowedCategories?.length) {
     const cats = getSkillBookCategories(skillId)
-    return entry.allowedCategories.some((c) =>
+    const categoryMatch = entry.allowedCategories.some((c) =>
       voucherAllowedCategoryMatches(c, skillId, cats),
     )
+    if (!categoryMatch) return false
+  }
+
+  const lockedEra = resolveVoucherWeaponProficiencyEra(entry)
+  if (lockedEra) {
+    return weaponProficiencyEraForSkillId(skillId) === lockedEra
   }
 
   return true

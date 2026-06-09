@@ -6,6 +6,7 @@ import type {
   OccFinances,
   OccHandToHandRules,
   OccRelatedSkills,
+  OccClassAbility,
   OccSpecialization,
   OccWpRules,
   OccStartingEquipment,
@@ -139,6 +140,15 @@ function mergeCategoryRules(
   return [...byName.values()]
 }
 
+function mergeClassAbilities(
+  base: readonly OccClassAbility[] | undefined,
+  patch: readonly OccClassAbility[] | undefined,
+): readonly OccClassAbility[] | undefined {
+  if (!patch?.length) return base
+  if (!base?.length) return patch
+  return [...base, ...patch]
+}
+
 function mergeRelatedSkills(
   base: OccRelatedSkills,
   patch: OccSpecialization['occRelatedSkills'],
@@ -185,6 +195,7 @@ export function resolveEffectivePalladiumOcc(
     occRelatedSkills: mergeRelatedSkills(occ.occRelatedSkills, spec.occRelatedSkills),
     wpRules: mergeWpRules(occ.wpRules, spec.wpRules),
     handToHandRules: mergeHandToHandRules(occ.handToHandRules, spec.handToHandRules),
+    classAbilities: mergeClassAbilities(occ.classAbilities, spec.classAbilities),
   }
 }
 

@@ -13,6 +13,7 @@ import {
 } from '../../lib/configuratorMatrix'
 import { validateOccVariableResolution } from '../../lib/occVariableBonus'
 import { listOccVariableBonusTasks } from '../../lib/occVariableBonus'
+import { DevAutoRollPendingDiceButton } from './dev/DevAutoRollPendingDiceButton'
 import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 import {
   formatCreationSkillPickLabel,
@@ -144,6 +145,8 @@ export function CreationReviewFinalize({
         Enter your physical die results, commit vitality pools, choose alignment, then
         spawn to lock the record (forge-character_creation.md Tab 7).
       </p>
+
+      <DevAutoRollPendingDiceButton />
 
       <div className="mb-4">
         <PendingDiceResolutionPanel

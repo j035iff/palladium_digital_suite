@@ -32,6 +32,15 @@
         "Technical"
       ],
       "label": "Two Medical, Science, or Technical skills of choice"
+    },
+    {
+      "choiceCount": 1,
+      "bonusPercent": 0,
+      "allowedCategories": [
+        "Weapon Proficiencies"
+      ],
+      "weaponProficiencyEra": "modern",
+      "label": "W.P. any modern weapon of choice"
     }
   ],
   "occRelatedSkills": {

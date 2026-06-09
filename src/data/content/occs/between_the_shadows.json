@@ -361,11 +361,27 @@
         }
       ]
     },
+    "classAbilities": [
+      {
+        "name": "Special Anti-Supernatural Bonuses",
+        "description": "Trained to target weak points on known supernatural species (Lore: Demon and Monster may be required for unfamiliar creatures). Aimed attacks bypass supernatural A.R. on a normal strike roll (target may still parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies."
+      }
+    ],
     "specializations": [
       {
         "id": "occ_epsilon_public_forces",
         "name": "Public Special Forces",
         "description": "Agents drawn from SWAT or military counter-terrorism units, not explicitly briefed on the supernatural.",
+        "classAbilities": [
+          {
+            "name": "Physical Bonuses",
+            "description": "Base S.D.C. 4D6+20 plus physical skill bonuses; +1D4 P.S., +2 P.E., +1 P.P., +1D6 Spd."
+          },
+          {
+            "name": "Combat Bonuses",
+            "description": "+1 attack/melee, +1 initiative/strike/parry/dodge, +2 roll with impact/pull punch, +2 save vs horror, +1 possession, +1 psionics and mind-control magic."
+          }
+        ],
         "staticBonuses": {
           "vitals": {
             "sdc": "4D6+20"
@@ -379,6 +395,16 @@
         "id": "occ_epsilon_inner_circle",
         "name": "Team Epsilon (Inner Circle)",
         "description": "The true Spook Squad hunters, fully aware of the supernatural and mentally hardened against it.",
+        "classAbilities": [
+          {
+            "name": "Physical Bonuses",
+            "description": "Base S.D.C. 4D6+25; +1D6 P.S., +2 P.E., +1 P.P., +1D6 Spd. (plus physical skill bonuses)."
+          },
+          {
+            "name": "Combat Bonuses",
+            "description": "+1 attack/melee, +1 initiative/strike/parry/dodge, +2 roll with impact/pull punch, +4 save vs horror, +3 possession, +2 psionics and mind-control magic."
+          }
+        ],
         "staticBonuses": {
           "vitals": {
             "sdc": "4D6+25"
@@ -875,9 +901,245 @@
         }
       ]
     },
+    "classAbilities": [
+      {
+        "name": "Recognize the Supernatural",
+        "description": "30% base, +5% per level. Recognize mind control/possession, Nightbane Morphus, vampires, magic circles/symbols/portals; Doppelgangers and Ashmedai at half skill. One roll per subject; failed roll means uncertain."
+      }
+    ],
+    "staticBonuses": {
+      "combat": {
+        "perception": 2,
+        "initiative": 1
+      },
+      "saves": {
+        "save_magic": 1,
+        "save_psionics": 1,
+        "save_horror": 2
+      }
+    },
     "progression": {
       "xpTableId": "between_shadows_spook_squad"
     }
+  },
+  {
+    "id": "occ_pab_field_agent",
+    "name": "P.A.B. Field Agent",
+    "description": "Paranormal Activities Bureau operatives trained to investigate and combat supernatural threats.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 34
+      }
+    ],
+    "occType": "law_enforcement",
+    "tags": [
+      "spook_squad",
+      "government",
+      "tactical"
+    ],
+    "attributeRequirements": {
+      "ps": 10,
+      "pe": 10,
+      "me": 10
+    },
+    "staticBonuses": {
+      "combat": {
+        "perception": 2,
+        "initiative": 1
+      },
+      "saves": {
+        "save_psionics": 3,
+        "save_mind_control": 3,
+        "save_possession": 3,
+        "save_magic": 2,
+        "save_horror": 4
+      }
+    },
+    "classAbilities": [
+      {
+        "name": "Special Anti-Supernatural Bonuses",
+        "description": "Trained to target weak points on known supernatural species (Lore: Demon and Monster may be required for unfamiliar creatures). Aimed attacks bypass supernatural A.R. on a normal strike roll (target may still parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies."
+      }
+    ],
+    "occSkillsCore": [
+      {
+        "skillId": "skill_radio_basic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_intelligence",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_interrogation_techniques",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_psychic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_nightbane",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_pilot_automobile",
+        "bonusPercent": 15
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedCategories": [
+          "Weapon Proficiencies"
+        ],
+        "weaponProficiencyEra": "modern",
+        "label": "W.P. any modern weapon of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Computer",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": [
+            "first_aid"
+          ],
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [
+        "wp_submachinegun"
+      ],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hand_to_hand_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 2
+        }
+      ]
+    },
+    "progression": {
+      "xpTableId": "between_shadows_spook_squad"
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ]
   },
   {
     "id": "occ_pab_psychic_agent",

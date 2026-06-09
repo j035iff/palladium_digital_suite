@@ -4,14 +4,8 @@ import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoade
 import {
   listRacesForCharacterCreation,
   RACE_REGISTRY,
-  getOccXpTableDisplayName,
 } from '../../data/library/registry'
-import { formatPalladiumSources } from '../../lib/formatPalladiumSources'
-import {
-  occBaseStatsDice,
-  occCharacterCategory,
-  occSkillSlotPolicy,
-} from '../../lib/occCatalogEngine'
+import { occCharacterCategory } from '../../lib/occCatalogEngine'
 import type { PalladiumOcc, Race } from '../../types'
 import {
   assessAlignmentConfiguratorTier,
@@ -23,13 +17,15 @@ import {
   CONFIGURATOR_SELECT_RACE_LABEL,
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
-  formatOccAttributeRequirements,
   isConfiguratorOccSelected,
   isConfiguratorRaceSelected,
   sortConfiguratorEntries,
   type ConfiguratorMatrixContext,
+  type OccConfiguratorTagFilter,
+  type OccConfiguratorTagFilterMode,
 } from '../../lib/configuratorMatrix'
 import { ConfiguratorListItem } from './ConfiguratorListItem'
+import { ConfiguratorPackagePanel } from './ConfiguratorPackagePanel'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
 
 /**
@@ -51,11 +47,16 @@ export function ConfiguratorPanel() {
     setAlignment,
   } = useCharacter()
 
-  const [activeTags, setActiveTags] = useState<string[]>([])
+  const [tagFilterState, setTagFilterState] = useState<
+    Record<string, OccConfiguratorTagFilterMode>
+  >({})
   const morphus = supportsDualForm && activeForm === 'morphus'
   const panel = morphus
     ? 'border-violet-600 bg-slate-950/90 text-violet-50'
     : 'border-blue-300 bg-white text-slate-900'
+  const panelStyle = morphus
+    ? 'border-violet-700 bg-slate-950/80 text-violet-50'
+    : 'border-blue-200 bg-white text-slate-900'
 
   const occPool = useMemo(
     () => listPalladiumOccsForCreation(creationGenreId, hostGenreId),
@@ -76,9 +77,15 @@ export function ConfiguratorPanel() {
     [occPool],
   )
 
+  const occTagFilters = useMemo(
+    (): OccConfiguratorTagFilter[] =>
+      Object.entries(tagFilterState).map(([tag, mode]) => ({ tag, mode })),
+    [tagFilterState],
+  )
+
   const matrixCtx: ConfiguratorMatrixContext = useMemo(
     () => ({
-      activeOccTags: activeTags,
+      occTagFilters,
       selectedRaceId: character.raceId ?? null,
       selectedOccId: character.occ?.id || null,
       selectedAlignment: effectiveConfiguratorAlignment(
@@ -86,7 +93,7 @@ export function ConfiguratorPanel() {
       ),
     }),
     [
-      activeTags,
+      occTagFilters,
       character.raceId,
       character.occ?.id,
       character.facade.alignment,
@@ -148,25 +155,40 @@ export function ConfiguratorPanel() {
       for (const tag of occ.tags ?? []) {
         if (tag.trim()) tokens.add(tag.trim().toLowerCase())
       }
+      if (occCharacterCategory(occ) === 'psychic') {
+        tokens.add('psychic')
+      }
     }
     return [...tokens].sort((a, b) => a.localeCompare(b))
   }, [occPool])
 
-  const toggleTag = (tag: string) => {
-    setActiveTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
-    )
+  const setTagFilterMode = (
+    tag: string,
+    mode: OccConfiguratorTagFilterMode | '',
+  ) => {
+    setTagFilterState((prev) => {
+      if (!mode) {
+        const next = { ...prev }
+        delete next[tag]
+        return next
+      }
+      return { ...prev, [tag]: mode }
+    })
   }
+
+  const formatTagLabel = (tag: string) => tag.replace(/_/g, ' ')
 
   const specializationBranches = activeOcc?.specializations ?? []
   const headingColor = morphus ? '#c4b5fd' : '#1e40af'
   const subColor = morphus ? '#a5b4fc' : '#475569'
 
   return (
-    <section
-      className="mt-0 w-full border-b-2 border-dashed pb-8"
-      aria-labelledby="forge-tab-page-heading"
-    >
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+      <section
+        className="flex min-h-0 min-w-0 flex-1 flex-col"
+        aria-labelledby="forge-tab-page-heading"
+      >
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
       <p
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}
@@ -184,7 +206,7 @@ export function ConfiguratorPanel() {
           Tier 2 — conflict
         </span>
         <span className="rounded border border-slate-400/50 bg-slate-100 px-2 py-0.5 text-slate-600 dark:bg-slate-900 dark:text-slate-400">
-          Tier 3 — tag mismatch
+          Tier 3 — Only / Not tag mismatch
         </span>
         <span className="rounded border border-amber-500/60 bg-amber-50 px-2 py-0.5 text-amber-950 dark:bg-amber-950 dark:text-amber-200">
           Amber — selection vs filters
@@ -198,41 +220,62 @@ export function ConfiguratorPanel() {
           aria-label="O.C.C. tag filters"
         >
           <span className="w-full text-[10px] font-bold uppercase tracking-wide opacity-70">
-            O.C.C. category tags (AND filter → Tier 3)
+            O.C.C. tag filters — set each tag to Any, Only (must match), or Not (exclude)
           </span>
-          {tagPills.map((tag) => {
-            const on = activeTags.includes(tag)
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => toggleTag(tag)}
-                className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wide transition-colors ${
-                  on
-                    ? morphus
-                      ? 'border-amber-400 bg-amber-500/20 text-amber-100'
-                      : 'border-blue-600 bg-blue-100 text-blue-900'
-                    : morphus
-                      ? 'border-violet-700 bg-slate-900/80 text-violet-200 hover:border-violet-500'
-                      : 'border-slate-300 bg-slate-100 text-slate-700 hover:border-blue-400'
-                }`}
-                aria-pressed={on}
-              >
-                {tag}
-              </button>
-            )
-          })}
-          {activeTags.length > 0 ? (
+          <div className="flex w-full flex-wrap gap-3">
+            {tagPills.map((tag) => {
+              const mode = tagFilterState[tag] ?? ''
+              const tagLabel = formatTagLabel(tag)
+              return (
+                <label
+                  key={tag}
+                  className="flex min-w-[7.5rem] flex-col gap-1"
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-wide opacity-80">
+                    {tagLabel}
+                  </span>
+                  <select
+                    value={mode}
+                    onChange={(e) =>
+                      setTagFilterMode(
+                        tag,
+                        e.target.value as OccConfiguratorTagFilterMode | '',
+                      )
+                    }
+                    aria-label={`${tagLabel} O.C.C. filter`}
+                    className={`rounded-lg border-2 px-2 py-1.5 text-xs font-semibold uppercase tracking-wide ${
+                      mode === 'include'
+                        ? morphus
+                          ? 'border-blue-400 bg-blue-500/20 text-blue-100'
+                          : 'border-blue-600 bg-blue-50 text-blue-900'
+                        : mode === 'exclude'
+                          ? morphus
+                            ? 'border-rose-400 bg-rose-500/15 text-rose-100'
+                            : 'border-rose-600 bg-rose-50 text-rose-900'
+                          : morphus
+                            ? 'border-violet-700 bg-slate-900/80 text-violet-100'
+                            : 'border-slate-300 bg-white text-slate-800'
+                    }`}
+                  >
+                    <option value="">Any</option>
+                    <option value="include">Only</option>
+                    <option value="exclude">Not</option>
+                  </select>
+                </label>
+              )
+            })}
+          </div>
+          {occTagFilters.length > 0 ? (
             <button
               type="button"
-              onClick={() => setActiveTags([])}
-              className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+              onClick={() => setTagFilterState({})}
+              className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${
                 morphus
                   ? 'border-slate-600 text-slate-400 hover:text-violet-100'
                   : 'border-slate-300 text-slate-500 hover:text-slate-800'
               }`}
             >
-              Clear filters
+              Clear all filters
             </button>
           ) : null}
         </div>
@@ -385,7 +428,18 @@ export function ConfiguratorPanel() {
           })}
         </div>
       ) : null}
-    </section>
+        </div>
+      </section>
+
+      <ConfiguratorPackagePanel
+        race={activeRace}
+        occ={activeOcc ?? undefined}
+        specializationId={character.occSpecializationId}
+        raceCanPickOcc={raceCanPickOcc}
+        morphus={morphus}
+        panelStyle={panelStyle}
+      />
+    </div>
   )
 }
 
@@ -425,7 +479,6 @@ function RaceRow({
   filterMismatch?: boolean
   onSelect: () => void
 }) {
-  const citation = formatPalladiumSources(race.sources)
   return (
     <ConfiguratorListItem
       morphus={morphus}
@@ -433,6 +486,7 @@ function RaceRow({
       tierResult={tierResult}
       filterMismatch={filterMismatch}
       onSelect={onSelect}
+      className="p-3"
     >
       <span className="flex flex-wrap items-center gap-1.5 text-sm font-semibold">
         {race.name}
@@ -446,14 +500,8 @@ function RaceRow({
           </span>
         ) : null}
       </span>
-      {citation ? (
-        <span
-          className={`mt-1 block font-mono text-[10px] font-normal leading-snug ${
-            morphus ? 'text-violet-300/85' : 'text-slate-500'
-          }`}
-        >
-          {citation}
-        </span>
+      {race.description?.trim() ? (
+        <p className="mt-1 text-[11px] leading-snug opacity-85">{race.description}</p>
       ) : null}
     </ConfiguratorListItem>
   )
@@ -474,15 +522,7 @@ function OccRow({
   filterMismatch?: boolean
   onSelect: () => void
 }) {
-  const xpLabel = getOccXpTableDisplayName(def)
-  const slotPolicy = occSkillSlotPolicy(def)
-  const slotNote =
-    slotPolicy.kind === 'psychic_tier'
-      ? `Related × ${slotPolicy.majorMultiplier} on Major psychic`
-      : null
-  const base = occBaseStatsDice(def)
   const occCat = occCharacterCategory(def)
-  const attrReqs = formatOccAttributeRequirements(def)
 
   return (
     <ConfiguratorListItem
@@ -500,24 +540,8 @@ function OccRow({
         {occCat === 'psychic' ? 'Psychic O.C.C.' : 'O.C.C.'}
       </p>
       <p className="mt-1 text-base font-bold">{def.name}</p>
-      {def.tags?.length ? (
-        <p className="mt-1 font-mono text-[10px] opacity-70">
-          {def.tags.join(' · ')}
-        </p>
-      ) : null}
-      <p className="mt-2 font-mono text-[11px] leading-snug opacity-85">
-        HP {base.hpDice} · SDC {base.sdcDice}
-        {base.ppeDice ? ` · PPE ${base.ppeDice}` : ''}
-        {base.ispDice ? ` · ISP ${base.ispDice}` : ''}
-      </p>
-      <p className="mt-1 text-[11px] leading-snug opacity-80">
-        XP: {xpLabel}
-        {slotNote ? ` · ${slotNote}` : ''}
-      </p>
-      {attrReqs ? (
-        <p className="mt-1 text-[11px] font-semibold leading-snug text-rose-700 dark:text-rose-300">
-          {attrReqs}
-        </p>
+      {def.description?.trim() ? (
+        <p className="mt-1 text-[11px] leading-snug opacity-85">{def.description}</p>
       ) : null}
     </ConfiguratorListItem>
   )

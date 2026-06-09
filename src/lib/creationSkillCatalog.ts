@@ -7,7 +7,10 @@ import {
 } from '../data/library/skillsCatalogLoader'
 import { WEAPON_PROFICIENCY_CATALOG } from '../data/library/weaponProficienciesCatalogLoader'
 import type { EngineSkillDef, SkillCategory, SkillPrerequisite } from '../data/skillLibrary'
+import type { WeaponProficiencyEra } from '../types'
 import { isWhitelistedForHostGenre } from './genreGating'
+
+export type { WeaponProficiencyEra }
 
 /** Filter dropdown order (W.P. composite categories last, after Wilderness). */
 export const CREATION_SKILL_FILTER_CATEGORY_ORDER: readonly string[] = [
@@ -28,6 +31,11 @@ export const CREATION_SKILL_FILTER_CATEGORY_ORDER: readonly string[] = [
   'WP: Ancient',
   'WP: Modern',
 ]
+
+export const WP_ERA_BOOK_CATEGORY: Record<WeaponProficiencyEra, string> = {
+  ancient: 'WP: Ancient',
+  modern: 'WP: Modern',
+}
 
 /** Pinned to the top of the Technical filter in the creation skill library. */
 export const TECHNICAL_PINNED_SKILL_IDS: readonly string[] = [
@@ -290,6 +298,25 @@ export function getSkillBookCategories(skillId: string): readonly string[] {
   const catalog = getPalladiumSkillCatalogEntryById(skillId)
   if (catalog?.categories?.length) return catalog.categories
   return []
+}
+
+export function weaponProficiencyEraForSkillId(
+  skillId: string,
+): WeaponProficiencyEra | undefined {
+  if (!skillId.startsWith('wp_')) return undefined
+  const cats = getSkillBookCategories(skillId)
+  if (cats.includes(WP_ERA_BOOK_CATEGORY.ancient)) return 'ancient'
+  if (cats.includes(WP_ERA_BOOK_CATEGORY.modern)) return 'modern'
+  return undefined
+}
+
+/** Restrict O.C.C. core W.P. voucher dropdowns to ancient or modern proficiencies. */
+export function filterSkillIdsByWeaponProficiencyEra(
+  skillIds: readonly string[],
+  era: WeaponProficiencyEra,
+): string[] {
+  const bookCategory = WP_ERA_BOOK_CATEGORY[era]
+  return skillIds.filter((id) => getSkillBookCategories(id).includes(bookCategory))
 }
 
 /** Genre-gated skill rows for the creation Skill Engine (Pillar 8 — full catalog visibility). */

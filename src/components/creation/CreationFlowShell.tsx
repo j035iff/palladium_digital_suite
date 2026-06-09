@@ -194,7 +194,7 @@ export function CreationFlowShell({
 
       <aside
 
-        className="flex min-h-0 shrink-0 flex-col border-b border-slate-200 bg-slate-50/90 dark:border-slate-700 dark:bg-slate-900/50 md:w-72 md:border-b-0 md:border-r lg:w-80 xl:w-96"
+        className="flex min-h-0 shrink-0 flex-col border-b border-blue-200 bg-white shadow-sm dark:border-blue-600 dark:bg-slate-950 md:w-72 md:border-b-0 md:border-r lg:w-80 xl:w-96"
 
         aria-label="Live ledger panel"
 
@@ -282,7 +282,7 @@ export function CreationFlowShell({
 
         <div
           className={
-            activeTabId === 'tab4_skills'
+            activeTabId === 'tab4_skills' || activeTabId === 'tab1_configurator'
               ? 'flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4 md:pl-4'
               : 'min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4 md:pl-4'
           }
@@ -352,9 +352,9 @@ export function CreationFlowShell({
 
             </>
 
-          ) : activeTabId === 'tab4_skills' ? (
+          ) : activeTabId === 'tab4_skills' || activeTabId === 'tab1_configurator' ? (
 
-            <div className="min-h-0 flex-1">
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
               <ForgeTabBody tabId={activeTabId} />
 

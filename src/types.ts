@@ -287,6 +287,8 @@ export type Race = {
   occLimitations: RaceOccLimitations
   innateSkills: readonly RaceInnateSkillGrant[]
   innateBonuses: RaceInnateBonuses
+  /** Racial or R.C.C. abilities not modeled as catalog skills. */
+  classAbilities?: readonly OccClassAbility[]
   demographics: RaceDemographics
 }
 
@@ -311,6 +313,9 @@ export type OccCoreSkillGrant = {
   basePercent?: number
 }
 
+/** Ancient vs modern weapon proficiency era (W.P. catalog split). */
+export type WeaponProficiencyEra = 'ancient' | 'modern'
+
 /** Open-choice grant in the automatic core package (e.g. W.P. of choice, pick N from categories). */
 export type OccCoreSkillChoiceVoucher = {
   choiceCount: number
@@ -318,6 +323,11 @@ export type OccCoreSkillChoiceVoucher = {
   allowedCategories?: readonly string[]
   allowedSkillIds?: readonly string[]
   label?: string
+  /**
+   * When set on a Weapon Proficiencies voucher, restricts picks to that era
+   * (e.g. "Select any Modern Weapon Proficiency"). Omit to let the player choose.
+   */
+  weaponProficiencyEra?: WeaponProficiencyEra
 }
 
 export type OccCoreSkillEntry = OccCoreSkillGrant | OccCoreSkillChoiceVoucher
@@ -344,11 +354,19 @@ export type OccStaticBonusValue = number | string
 
 export type OccNumericBonusMap = Readonly<Record<string, OccStaticBonusValue>>
 
+/** O.C.C.- or R.C.C.-unique ability not represented as a catalog skill (e.g. Recognize the Supernatural). */
+export type OccClassAbility = {
+  name: string
+  description: string
+}
+
 export type OccSpecialization = {
   id: string
   name: string
   description: string
   staticBonuses?: OccStaticBonuses
+  /** Branch-specific class abilities merged after baseline {@link PalladiumOcc.classAbilities}. */
+  classAbilities?: readonly OccClassAbility[]
   /** When set, replaces baseline {@link PalladiumOcc.startingEquipment} for this branch. */
   startingEquipment?: OccStartingEquipment
   /** Field-wise override of baseline {@link PalladiumOcc.finances}. */
@@ -1561,6 +1579,8 @@ export type PalladiumOcc = {
   handToHandRules: OccHandToHandRules
   /** Sub-class branches; selection stored on {@link Character.occSpecializationId}. */
   specializations?: readonly OccSpecialization[]
+  /** Unique O.C.C. abilities and special skills (book text summaries for creation preview). */
+  classAbilities?: readonly OccClassAbility[]
   staticBonuses?: OccStaticBonuses
   ppeEngine?: OccPpeEngine
   ispEngine?: OccIspEngine
@@ -1675,8 +1695,21 @@ export type DerivedActiveState = CharacterRootState & {
 
 export type DerivedInventoryItem = InventoryItem & HostGenreRuntimeFlags
 
+/** Player-entered identity details (sheet header); height/weight feed movement engines. */
+export type CharacterIdentityProfile = {
+  sex: string
+  age: string
+  heightFeet: string
+  heightInches: string
+  weightLbs: string
+  eyes: string
+  hair: string
+}
+
 export type Character = {
   name: string
+  /** Physical description and anthropometrics for leap/encumbrance and Morphus modifiers. */
+  identityProfile?: CharacterIdentityProfile
   /**
    * Character tier (1..15). Sheet level; ritual modal advances this when XP thresholds are met
    * (master_flow.md progression).

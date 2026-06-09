@@ -4,7 +4,11 @@ import { useCharacter } from '../../context/CharacterContext'
 
 import { getSkillById } from '../../data/library/skills'
 
-import { listCreationSkillLibrary } from '../../lib/creationSkillCatalog'
+import {
+  filterSkillIdsByWeaponProficiencyEra,
+  listCreationSkillLibrary,
+  type WeaponProficiencyEra,
+} from '../../lib/creationSkillCatalog'
 
 import {
   formatOccCoreSkillEntry,
@@ -15,6 +19,7 @@ import {
   collectAllCreationSkillPicks,
   listOccCoreVoucherTasks,
   listEligibleVoucherSkillIds,
+  resolveVoucherWeaponProficiencyEra,
   voucherUsesDedicatedPickerUi,
 } from '../../lib/occCoreSkillVouchers'
 
@@ -106,6 +111,9 @@ export function SelectedOccCoreSkills({
   const [pendingVoucherSlot, setPendingVoucherSlot] =
     useState<PendingVoucherSlot | null>(null)
   const [slotDrafts, setSlotDrafts] = useState<Record<string, string>>({})
+  const [wpEraDrafts, setWpEraDrafts] = useState<
+    Record<string, WeaponProficiencyEra>
+  >({})
   const [voucherError, setVoucherError] = useState<string | null>(null)
 
   const pickDialog: SkillPickAddDialogState | null = pendingVoucherSlot
@@ -249,7 +257,13 @@ export function SelectedOccCoreSkills({
 
           return slots.map((slot) => {
             const pick = slotPicks[slot]
-            const draft = slotDrafts[slotKey(task.id, slot)] ?? ''
+            const key = slotKey(task.id, slot)
+            const draft = slotDrafts[key] ?? ''
+            const lockedEra = resolveVoucherWeaponProficiencyEra(entry)
+            const wpEra = lockedEra ?? wpEraDrafts[key] ?? 'ancient'
+            const eraEligible = lockedEra
+              ? eligible
+              : filterSkillIdsByWeaponProficiencyEra(eligible, wpEra)
             const slotLabel =
               entry.choiceCount > 1 ? `${label} · Pick ${slot + 1}` : label
 
@@ -270,19 +284,54 @@ export function SelectedOccCoreSkills({
               >
                 <div className="flex flex-col gap-1">
                   <p className="text-xs font-medium opacity-80">{slotLabel}</p>
+                  {lockedEra ? (
+                    <p className="text-xs font-medium opacity-80">
+                      Era: {lockedEra === 'ancient' ? 'Ancient' : 'Modern'}{' '}
+                      <span className="font-normal opacity-70">
+                        (required by O.C.C.)
+                      </span>
+                    </p>
+                  ) : (
+                    <label className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="font-medium opacity-80">Era</span>
+                      <select
+                        value={wpEra}
+                        onChange={(e) => {
+                          const nextEra = e.target.value as WeaponProficiencyEra
+                          setVoucherError(null)
+                          setWpEraDrafts((prev) => ({
+                            ...prev,
+                            [key]: nextEra,
+                          }))
+                          const nextEligible = filterSkillIdsByWeaponProficiencyEra(
+                            eligible,
+                            nextEra,
+                          )
+                          if (draft && !nextEligible.includes(draft)) {
+                            setSlotDrafts((prev) => ({ ...prev, [key]: '' }))
+                          }
+                        }}
+                        className={`rounded border px-2 py-1 text-sm ${inputClass}`}
+                        aria-label={`${slotLabel} weapon proficiency era`}
+                      >
+                        <option value="ancient">Ancient</option>
+                        <option value="modern">Modern</option>
+                      </select>
+                    </label>
+                  )}
                   <select
                     value={draft}
                     onChange={(e) => {
                       setVoucherError(null)
                       setSlotDrafts((prev) => ({
                         ...prev,
-                        [slotKey(task.id, slot)]: e.target.value,
+                        [key]: e.target.value,
                       }))
                     }}
                     className={`w-full max-w-md rounded border px-2 py-1.5 text-sm ${inputClass}`}
                   >
                     <option value="">— select —</option>
-                    {eligible.map((id) => (
+                    {eraEligible.map((id) => (
                       <option key={id} value={id}>
                         {getSkillById(id)?.name ?? id}
                       </option>
@@ -306,6 +355,10 @@ export function SelectedOccCoreSkills({
                   {eligible.length === 0 ? (
                     <p className="text-xs text-amber-600">
                       No eligible skills in catalog for this voucher.
+                    </p>
+                  ) : eraEligible.length === 0 ? (
+                    <p className="text-xs text-amber-600">
+                      No {wpEra} weapon proficiencies available for this O.C.C.
                     </p>
                   ) : null}
                 </div>

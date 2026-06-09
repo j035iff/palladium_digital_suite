@@ -112,6 +112,13 @@
       "$ref": "#/$defs/raceInnateBonuses",
       "description": "Composable passive bonuses using modifiers / activation / metadata (mirrors Feature composition)."
     },
+    "classAbilities": {
+      "type": "array",
+      "description": "Racial or R.C.C. abilities not modeled as palladiumSkills rows.",
+      "items": {
+        "$ref": "#/$defs/classAbility"
+      }
+    },
     "demographics": {
       "$ref": "#/$defs/raceDemographics",
       "description": "Average height, weight, lifespan, and alignment tendencies or exclusions."
@@ -488,6 +495,21 @@
           "items": { "type": "string", "minLength": 1 },
           "uniqueItems": true,
           "description": "Alignments structurally barred for this race."
+        }
+      }
+    },
+    "classAbility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

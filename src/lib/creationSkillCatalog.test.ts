@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc } from '../types'
 import {
+  filterSkillIdsByWeaponProficiencyEra,
   getEngineSkillDefFromCatalog,
   listCreationSkillLibrary,
   matchesSkillBookCategoryFilter,
   sortCreationSkillLibraryResults,
   partitionCreationSkillLibrary,
   sortCreationSkillLibraryWithSelectableFirst,
+  weaponProficiencyEraForSkillId,
 } from './creationSkillCatalog'
 import {
   type CreationLibrarySkillContext,
@@ -158,5 +160,26 @@ describe('creationSkillCatalog technical pinning', () => {
     const sorted = sortCreationSkillLibraryResults(technical, 'Technical')
     expect(sorted[0]?.id).toBe('skill_language')
     expect(sorted[1]?.id).toBe('skill_literacy')
+  })
+})
+
+describe('creationSkillCatalog weapon proficiency era', () => {
+  it('classifies ancient and modern W.P. ids', () => {
+    expect(weaponProficiencyEraForSkillId('wp_archery_and_targeting')).toBe(
+      'ancient',
+    )
+    expect(weaponProficiencyEraForSkillId('wp_automatic_pistol')).toBe('modern')
+  })
+
+  it('filters voucher-eligible W.P. ids by era', () => {
+    const catalogIds = listCreationSkillLibrary('nightbane').map((s) => s.id)
+    const wpIds = catalogIds.filter((id) => id.startsWith('wp_'))
+    const ancient = filterSkillIdsByWeaponProficiencyEra(wpIds, 'ancient')
+    const modern = filterSkillIdsByWeaponProficiencyEra(wpIds, 'modern')
+    expect(ancient.length).toBeGreaterThan(0)
+    expect(modern.length).toBeGreaterThan(0)
+    expect(ancient).toContain('wp_archery_and_targeting')
+    expect(modern).toContain('wp_automatic_pistol')
+    expect(ancient.every((id) => !modern.includes(id))).toBe(true)
   })
 })

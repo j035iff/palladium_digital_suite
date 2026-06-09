@@ -1,4 +1,5 @@
 import type { GenreId } from '../data/genres'
+import { EMPTY_CHARACTER_IDENTITY_PROFILE } from './characterIdentity'
 import { resolvePsychicGateBypassed } from './creationPhases'
 import type { Character, CharacterOcc, CharacterRootState } from '../types'
 
@@ -58,7 +59,8 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
   const facade = blankFormState()
   return toCharacterRoot(
     {
-      name: 'New Character',
+      name: '',
+      identityProfile: { ...EMPTY_CHARACTER_IDENTITY_PROFILE },
       level: 1,
       xp: 0,
       ppe: { current: 0, maximum: 0 },

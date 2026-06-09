@@ -1,17 +1,83 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
+import { isGenreId, LAUNCHER_CREATE_OPTIONS } from '../../data/genres'
 import {
-  formatGenreSlug,
-  isGenreId,
-  LAUNCHER_CREATE_OPTIONS,
-} from '../../data/genres'
-import {
+  formatCharacterIndexLabel,
   listRecentlyEditedCharacters,
+  resolveCharacterIndexRowDisplay,
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
 
-function formatRowLabel(entry: CharacterIndexEntry): string {
-  return `${entry.name} -- ${formatGenreSlug(entry.creationGenreId)}`
+function CharacterIndexSelectRow({
+  row,
+  selected,
+  onSelect,
+}: {
+  row: CharacterIndexEntry
+  selected: boolean
+  onSelect: () => void
+}) {
+  const { genreLabel, mainLabel } = resolveCharacterIndexRowDisplay(row)
+  return (
+    <button
+      type="button"
+      role="option"
+      aria-selected={selected}
+      onClick={onSelect}
+      className={`relative w-full px-4 py-2.5 pr-20 text-left text-sm transition ${
+        selected
+          ? 'bg-cyan-500/15 font-semibold text-cyan-100 ring-1 ring-inset ring-cyan-400/50'
+          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+      }`}
+    >
+      <sup
+        className={`absolute right-3 top-2 text-[9px] font-bold uppercase tracking-wide ${
+          selected ? 'text-cyan-300/90' : 'text-slate-500'
+        }`}
+      >
+        {genreLabel}
+      </sup>
+      <span className="block leading-snug">{mainLabel}</span>
+    </button>
+  )
+}
+
+function InProgressCharacterRow({
+  row,
+  onOpen,
+  onDelete,
+}: {
+  row: CharacterIndexEntry
+  onOpen: () => void
+  onDelete: () => void
+}) {
+  const { genreLabel, mainLabel } = resolveCharacterIndexRowDisplay(row)
+  return (
+    <div className="flex items-stretch border-b border-amber-800/30 last:border-b-0">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="relative min-w-0 flex-1 px-4 py-2.5 pr-20 text-left text-sm text-slate-300 transition hover:bg-slate-800/80 hover:text-white"
+      >
+        <sup className="absolute right-3 top-2 text-[9px] font-bold uppercase tracking-wide text-amber-400/80">
+          {genreLabel}
+        </sup>
+        <span className="block leading-snug">{mainLabel}</span>
+      </button>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation()
+          onDelete()
+        }}
+        className="shrink-0 border-l border-amber-800/30 px-3 text-[10px] font-bold uppercase tracking-wide text-red-400/90 transition hover:bg-red-950/40 hover:text-red-300"
+        title="Delete this in-progress character"
+        aria-label={`Delete ${mainLabel}`}
+      >
+        Delete
+      </button>
+    </div>
+  )
 }
 
 const GENRE_ACCENT: Record<string, string> = {
@@ -34,7 +100,7 @@ function CharacterPortraitCard({
       type="button"
       onClick={onOpen}
       className="group flex w-[88px] shrink-0 flex-col items-center gap-2 text-center"
-      title={formatRowLabel(entry)}
+      title={formatCharacterIndexLabel(entry)}
     >
       <span
         className={`flex h-[88px] w-[88px] items-center justify-center rounded-xl border-2 border-slate-600/80 bg-gradient-to-br ${accent} text-2xl font-black text-white shadow-lg transition group-hover:border-cyan-400/70 group-hover:shadow-cyan-500/20`}
@@ -56,6 +122,8 @@ export function AppLauncher() {
     startCreation,
     loadSavedCharacter,
     savedCharacterRows,
+    inProgressCharacterRows,
+    deleteInProgressCharacter,
     refreshSavedCharacterIndex,
   } = useCharacter()
 
@@ -108,6 +176,9 @@ export function AppLauncher() {
   }
 
   const selectedRow = savedCharacterRows.find((r) => r.id === openId)
+  const selectedRowDisplay = selectedRow
+    ? resolveCharacterIndexRowDisplay(selectedRow)
+    : null
 
   return (
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -164,30 +235,21 @@ export function AppLauncher() {
               >
                 {savedCharacterRows.length === 0 ? (
                   <li className="px-4 py-3 text-sm text-slate-500">
-                    No saved characters — create one to get started.
+                    No spawned characters yet — finish creation and spawn to add one here.
                   </li>
                 ) : (
                   savedCharacterRows.map((row) => {
                     const selected = row.id === openId
                     return (
                       <li key={row.id}>
-                        <button
-                          type="button"
-                          role="option"
-                          aria-selected={selected}
-                          onClick={() => {
+                        <CharacterIndexSelectRow
+                          row={row}
+                          selected={selected}
+                          onSelect={() => {
                             setOpenId(row.id)
                             onOpen(row.id)
                           }}
-                          onDoubleClick={() => onOpen(row.id)}
-                          className={`w-full px-4 py-2.5 text-left text-sm transition ${
-                            selected
-                              ? 'bg-cyan-500/15 font-semibold text-cyan-100 ring-1 ring-inset ring-cyan-400/50'
-                              : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                          }`}
-                        >
-                          {formatRowLabel(row)}
-                        </button>
+                        />
                       </li>
                     )
                   })
@@ -195,9 +257,13 @@ export function AppLauncher() {
               </ul>
             ) : null}
 
-            {selectedRow && !openMenu ? (
+            {selectedRowDisplay && !openMenu ? (
               <p className="mt-3 text-center text-xs text-slate-500">
-                Selected: {formatRowLabel(selectedRow)} — open menu to switch
+                Selected: {selectedRowDisplay.mainLabel}
+                <sup className="ml-1 text-[9px] font-bold uppercase tracking-wide text-slate-600">
+                  {selectedRowDisplay.genreLabel}
+                </sup>{' '}
+                — open menu to switch
               </p>
             ) : null}
           </div>
@@ -266,6 +332,32 @@ export function AppLauncher() {
             ) : null}
           </div>
         </div>
+
+        {inProgressCharacterRows.length > 0 ? (
+          <section className="rounded-xl border border-amber-600/40 bg-amber-950/20 px-4 py-5">
+            <h2 className="text-center text-xs font-bold uppercase tracking-[0.25em] text-amber-300/90">
+              In Progress
+            </h2>
+            <p className="mx-auto mt-2 max-w-lg text-center text-xs text-amber-200/70">
+              Draft characters saved with Save for Later — pick up where you left off.
+            </p>
+            <ul
+              className="mx-auto mt-4 max-w-xl overflow-hidden rounded-lg border border-amber-700/50 bg-slate-950/60"
+              role="listbox"
+              aria-label="In progress characters"
+            >
+              {inProgressCharacterRows.map((row) => (
+                <li key={row.id}>
+                  <InProgressCharacterRow
+                    row={row}
+                    onOpen={() => onOpen(row.id)}
+                    onDelete={() => deleteInProgressCharacter(row.id)}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         <section className="mt-auto border-t border-slate-800/80 pt-8">
           <h2 className="text-center text-xs font-bold uppercase tracking-[0.25em] text-slate-500">

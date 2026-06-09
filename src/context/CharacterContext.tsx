@@ -81,8 +81,12 @@ import {
 } from '../data/xpTables'
 import type { GenreId } from '../data/genres'
 import {
-  listSavedCharacters,
+  deleteCharacterSave,
+  isCharacterIndexInProgress,
+  listFinalizedCharacters,
+  listInProgressCharacters,
   loadCharacterSave,
+  resolveCharacterIndexRowDisplay,
   saveCharacterToStorage,
   type CharacterIndexEntry,
 } from '../lib/characterIndex'
@@ -102,6 +106,14 @@ import {
   type MorphusDerivedSheetSlice,
 } from '../lib/morphusPassiveBridge'
 import {
+  collectMorphusHeightModifiers,
+  collectMorphusWeightModifiers,
+  EMPTY_CHARACTER_IDENTITY_PROFILE,
+  normalizeIdentityProfile,
+  resolveIdentityHeightInches,
+  resolveIdentityWeightLbs,
+} from '../lib/characterIdentity'
+import {
   deriveMovementStats,
   type DerivedMovementStats,
 } from '../lib/movementDerivation'
@@ -116,6 +128,7 @@ import type {
   Armor,
   AttacksPerMeleeState,
   Character,
+  CharacterIdentityProfile,
   CharacterRootState,
   CreationSkillPick,
   CombatVitalityChange,
@@ -157,6 +170,7 @@ import type { CreationPhase } from '../lib/creationStep'
 import type { CharacterCreationForgeTabId } from '../types'
 import {
   buildCharacterCreationForgeContext,
+  canSaveCreationForLater as raceOccStepAllowsSaveForLater,
   completeForgeTab,
   forgeTabToLegacyPhase,
   legacyPhaseToForgeTab,
@@ -239,7 +253,18 @@ type CharacterContextValue = {
   loadSavedCharacter: (id: string) => void
   startCreation: (genreId: GenreId) => void
   returnToLauncher: () => void
+  /** Clears every creation tab and starts a fresh blank record for the current genre. */
+  resetCreation: () => void
+  /** Persists the in-progress draft and returns to the portal. */
+  saveCreationForLater: () => void
+  /** True after Race & O.C.C. Continue — required before Save for Later. */
+  canSaveCreationForLater: boolean
+  /** Returns to the portal without writing the current session. */
+  leaveCreationWithoutSaving: () => void
   savedCharacterRows: CharacterIndexEntry[]
+  inProgressCharacterRows: CharacterIndexEntry[]
+  /** Permanently removes an in-progress draft (portal list). */
+  deleteInProgressCharacter: (id: string) => void
   refreshSavedCharacterIndex: () => void
   /** Active terrain for Morphus mobility / surface-isolated skills (default hard_flat). */
   morphusSurfaceType: MorphusSurfaceType
@@ -278,6 +303,12 @@ type CharacterContextValue = {
   saveProfileDerived: SaveProfileDerived
   /** Derived movement payload (ground/swim/fly/leap) from movement engine spec. */
   movementDerived: DerivedMovementStats
+  /** Identity height in inches (player entry + Morphus modifiers when Morphus is active). */
+  identityResolvedHeightInches: number
+  /** Identity weight in lbs when entered (plus Morphus modifiers when Morphus is active). */
+  identityResolvedWeightLbs: number | undefined
+  setCharacterName: (name: string) => void
+  patchIdentityProfile: (patch: Partial<CharacterIdentityProfile>) => void
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
   /** Psychic Gate tier (psychic_gate.md); drives save target & skill tax. */
@@ -359,6 +390,8 @@ type CharacterContextValue = {
   devMakeAttributeExceptional?: (attr: ForgeAttrKey) => void
   /** Dev-only — fills vouchers, related, secondary, and Hand-to-Hand picks. */
   devAutoFillAllSkillSelections?: () => void
+  /** Dev-only — rolls every pending spawn dice field on Review & Spawn. */
+  devAutoRollAllPendingDice?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (
     voucherId: string,
@@ -483,6 +516,7 @@ function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootSta
   const meta = loadCharacterMeta(rooted.name)
   let next = ensureCharacterOcc({
     ...rooted,
+    identityProfile: normalizeIdentityProfile(rooted.identityProfile),
     selectedAbilities: persisted ?? fromFixture,
     isFinalized: meta?.isFinalized ?? rooted.isFinalized ?? false,
     creationVitalityCommitted:
@@ -581,8 +615,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     () => INITIAL_CHARACTER_SNAPSHOT,
   )
   const [savedCharacterRows, setSavedCharacterRows] = useState<CharacterIndexEntry[]>(
-    () => listSavedCharacters(),
+    () => listFinalizedCharacters(),
   )
+  const [inProgressCharacterRows, setInProgressCharacterRows] = useState<
+    CharacterIndexEntry[]
+  >(() => listInProgressCharacters())
   const [levelUpQueue, setLevelUpQueue] = useState<number[]>(() =>
     outstandingLevelUpTargets(INITIAL_CHARACTER_SNAPSHOT),
   )
@@ -696,14 +733,27 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const refreshSavedCharacterIndex = useCallback(() => {
-    setSavedCharacterRows(listSavedCharacters())
+    setSavedCharacterRows(listFinalizedCharacters())
+    setInProgressCharacterRows(listInProgressCharacters())
   }, [])
 
-  const saveCharacter = useCallback(() => {
-    const pristine = serializeCharacterRootForSave(rawCharacter)
-    saveCharacterToStorage(pristine)
+  const applyFreshCreationSession = useCallback((blank: CharacterRootState) => {
+    setRawCharacter(syncRaceOccFacadeSdc(blank))
+    setActiveForm('facade')
+    setPsychicTierState('none')
+    setXpHistory([])
+    setLevelUpQueue([])
+    psychicSeedRef.current = false
+  }, [])
+
+  const persistCharacterSave = useCallback((state: CharacterRootState) => {
+    saveCharacterToStorage(serializeCharacterRootForSave(state))
     refreshSavedCharacterIndex()
-  }, [rawCharacter, refreshSavedCharacterIndex])
+  }, [refreshSavedCharacterIndex])
+
+  const saveCharacter = useCallback(() => {
+    persistCharacterSave(rawCharacter)
+  }, [rawCharacter, persistCharacterSave])
 
   const loadSavedCharacter = useCallback((id: string) => {
     const loaded = loadCharacterSave(id)
@@ -725,14 +775,61 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const startCreation = useCallback((genreId: GenreId) => {
-    const blank = createBlankCharacterForGenre(genreId)
-    setRawCharacter(syncRaceOccFacadeSdc(blank))
+    applyFreshCreationSession(createBlankCharacterForGenre(genreId))
     setViewport('sheet')
-    setActiveForm('facade')
-    setPsychicTierState('none')
-    setXpHistory([])
-    setLevelUpQueue([])
-  }, [])
+  }, [applyFreshCreationSession])
+
+  const resetCreation = useCallback(() => {
+    if (
+      !window.confirm(
+        'Reset all creation progress? Every tab will be cleared and this cannot be undone.',
+      )
+    ) {
+      return
+    }
+    const genreId = rawCharacter.creationGenreId
+    if (!genreId) return
+    applyFreshCreationSession(createBlankCharacterForGenre(genreId as GenreId))
+  }, [applyFreshCreationSession, rawCharacter.creationGenreId])
+
+  const canSaveCreationForLater = raceOccStepAllowsSaveForLater(rawCharacter)
+
+  const saveCreationForLater = useCallback(() => {
+    if (!raceOccStepAllowsSaveForLater(rawCharacter)) return
+    persistCharacterSave(rawCharacter)
+    setViewport('launcher')
+    refreshSavedCharacterIndex()
+  }, [rawCharacter, persistCharacterSave, refreshSavedCharacterIndex])
+
+  const leaveCreationWithoutSaving = useCallback(() => {
+    if (
+      !window.confirm(
+        'Leave without saving? Your progress will not be saved and cannot be undone.',
+      )
+    ) {
+      return
+    }
+    setViewport('launcher')
+    refreshSavedCharacterIndex()
+  }, [refreshSavedCharacterIndex])
+
+  const deleteInProgressCharacter = useCallback(
+    (id: string) => {
+      const entry = inProgressCharacterRows.find((row) => row.id === id)
+      if (!entry || !isCharacterIndexInProgress(entry)) return
+      const label = resolveCharacterIndexRowDisplay(entry).mainLabel
+      if (
+        !window.confirm(
+          `Delete "${label}"? This in-progress character will be permanently removed and cannot be undone.`,
+        )
+      ) {
+        return
+      }
+      deleteCharacterSave(id)
+      refreshSavedCharacterIndex()
+    },
+    [inProgressCharacterRows, refreshSavedCharacterIndex],
+  )
 
   const returnToLauncher = useCallback(() => {
     setViewport('launcher')
@@ -1020,11 +1117,46 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [character, sheetActiveForm, saveVsPsionicsTarget, supportsDualForm],
   )
 
+  const morphusHeightModifiers = useMemo(
+    () =>
+      sheetActiveForm === 'morphus'
+        ? collectMorphusHeightModifiers(morphusTraitRows)
+        : [],
+    [sheetActiveForm, morphusTraitRows],
+  )
+
+  const morphusWeightModifiers = useMemo(
+    () =>
+      sheetActiveForm === 'morphus'
+        ? collectMorphusWeightModifiers(morphusTraitRows)
+        : [],
+    [sheetActiveForm, morphusTraitRows],
+  )
+
+  const identityResolvedHeightInches = useMemo(
+    () =>
+      resolveIdentityHeightInches(
+        rawCharacter.identityProfile,
+        morphusHeightModifiers,
+      ),
+    [rawCharacter.identityProfile, morphusHeightModifiers],
+  )
+
+  const identityResolvedWeightLbs = useMemo(
+    () =>
+      resolveIdentityWeightLbs(
+        rawCharacter.identityProfile,
+        morphusWeightModifiers,
+      ),
+    [rawCharacter.identityProfile, morphusWeightModifiers],
+  )
+
   const movementDerived = useMemo(
     () =>
       deriveMovementStats({
         landSpdAttribute: sheetDisplayScalars.spd,
         ps: activeFormState.attributes.ps.score,
+        totalHeightInches: identityResolvedHeightInches,
         skills: activeFormState.skills,
         isMorphusActive: sheetActiveForm === 'morphus',
         canSwimPhysically:
@@ -1039,6 +1171,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [
       sheetDisplayScalars.spd,
       activeFormState.attributes.ps.score,
+      identityResolvedHeightInches,
       activeFormState.skills,
       sheetActiveForm,
       morphusTraitRows,
@@ -1897,6 +2030,34 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [psychicTier])
 
+  const devAutoRollAllPendingDice = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devAutoRollPendingDice').then(
+      ({ buildAutoRolledPendingDiceResolutions }) => {
+        setRawCharacter((prev) => {
+          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const occ = getLibraryOccById(prev.occ.id)
+          const resolutions = buildAutoRolledPendingDiceResolutions(
+            prev,
+            race,
+            occ,
+            {
+              supportsDualForm: characterHasDualForms(prev),
+              psychicTier: resolveCreationPsychicTier(prev, psychicTier),
+            },
+          )
+          return {
+            ...prev,
+            creationPendingDiceResolutions: {
+              ...(prev.creationPendingDiceResolutions ?? {}),
+              ...resolutions,
+            },
+          }
+        })
+      },
+    )
+  }, [psychicTier])
+
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
       setRawCharacter((prev) => {
@@ -1978,6 +2139,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  const setCharacterName = useCallback((name: string) => {
+    setRawCharacter((prev) => ({ ...prev, name }))
+  }, [])
+
+  const patchIdentityProfile = useCallback((patch: Partial<CharacterIdentityProfile>) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      identityProfile: {
+        ...EMPTY_CHARACTER_IDENTITY_PROFILE,
+        ...prev.identityProfile,
+        ...patch,
+      },
+    }))
+  }, [])
+
   const commitVitalityFromPendingDice = useCallback(() => {
     setRawCharacter((prev) => {
       const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
@@ -2021,10 +2197,14 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [psychicTier])
 
   const finalizeCharacter = useCallback(() => {
-    setRawCharacter((prev) =>
-      applySpawnSheetHandoff(prev, { psychicTier: resolveCreationPsychicTier(prev, psychicTier) }),
-    )
-  }, [psychicTier])
+    setRawCharacter((prev) => {
+      const next = applySpawnSheetHandoff(prev, {
+        psychicTier: resolveCreationPsychicTier(prev, psychicTier),
+      })
+      persistCharacterSave(next)
+      return next
+    })
+  }, [psychicTier, persistCharacterSave])
 
   const addSelectedAbility = useCallback(
     (id: string) => {
@@ -2155,7 +2335,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       loadSavedCharacter,
       startCreation,
       returnToLauncher,
+      resetCreation,
+      saveCreationForLater,
+      canSaveCreationForLater,
+      leaveCreationWithoutSaving,
       savedCharacterRows,
+      inProgressCharacterRows,
+      deleteInProgressCharacter,
       refreshSavedCharacterIndex,
       morphusSurfaceType,
       setMorphusSurfaceType,
@@ -2188,6 +2374,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetPassiveModifiers,
       saveProfileDerived,
       movementDerived,
+      identityResolvedHeightInches,
+      identityResolvedWeightLbs,
+      setCharacterName,
+      patchIdentityProfile,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -2222,6 +2412,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined,
       devAutoFillAllSkillSelections: import.meta.env.DEV
         ? devAutoFillAllSkillSelections
+        : undefined,
+      devAutoRollAllPendingDice: import.meta.env.DEV
+        ? devAutoRollAllPendingDice
         : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
@@ -2282,7 +2475,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       loadSavedCharacter,
       startCreation,
       returnToLauncher,
+      resetCreation,
+      saveCreationForLater,
+      canSaveCreationForLater,
+      leaveCreationWithoutSaving,
       savedCharacterRows,
+      inProgressCharacterRows,
+      deleteInProgressCharacter,
       refreshSavedCharacterIndex,
       morphusSurfaceType,
       morphusPassiveBundle,
@@ -2310,6 +2509,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       sheetPassiveModifiers,
       saveProfileDerived,
       movementDerived,
+      identityResolvedHeightInches,
+      identityResolvedWeightLbs,
+      setCharacterName,
+      patchIdentityProfile,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -2339,6 +2542,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoRollAndAssignAllAttributes,
       devMakeAttributeExceptional,
       devAutoFillAllSkillSelections,
+      devAutoRollAllPendingDice,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccGrantPickDetail,

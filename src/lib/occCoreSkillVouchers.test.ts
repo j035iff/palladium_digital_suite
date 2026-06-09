@@ -10,6 +10,7 @@ import {
   occCoreVoucherPicksComplete,
   resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
+  resolveVoucherWeaponProficiencyEra,
   voucherUsesDedicatedPickerUi,
 } from './occCoreSkillVouchers'
 import { listCreationSkillLibrary } from './creationSkillCatalog'
@@ -73,6 +74,32 @@ describe('occCoreSkillVouchers', () => {
       catalogIds,
     )
     expect(eligible).toEqual(wpIds)
+  })
+
+  it('restricts W.P. vouchers to a locked weapon proficiency era', () => {
+    const catalogIds = listCreationSkillLibrary('nightbane').map((s) => s.id)
+    const modernOnly = listEligibleVoucherSkillIds(
+      {
+        choiceCount: 1,
+        bonusPercent: 0,
+        allowedCategories: ['Weapon Proficiencies'],
+        weaponProficiencyEra: 'modern',
+        label: 'W.P. any modern weapon of choice',
+      },
+      'nightbane',
+      catalogIds,
+    )
+    expect(modernOnly.length).toBeGreaterThan(0)
+    expect(modernOnly).toContain('wp_automatic_pistol')
+    expect(modernOnly).not.toContain('wp_archery_and_targeting')
+    expect(
+      resolveVoucherWeaponProficiencyEra({
+        choiceCount: 1,
+        bonusPercent: 0,
+        allowedCategories: ['Weapon Proficiencies'],
+        weaponProficiencyEra: 'ancient',
+      }),
+    ).toBe('ancient')
   })
 
   it('routes category vouchers to the library picker, not the dropdown', () => {

@@ -1,8 +1,15 @@
 import type { PalladiumOcc, Race } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
-import { occMatchesAllTags } from './genreGating'
+import { occCharacterCategory } from './occCatalogEngine'
 import { isOccAllowedForRace } from './raceEngine'
+
+export type OccConfiguratorTagFilterMode = 'include' | 'exclude'
+
+export type OccConfiguratorTagFilter = {
+  tag: string
+  mode: OccConfiguratorTagFilterMode
+}
 
 const ATTR_LABELS: Record<ForgeAttrKey, string> = {
   iq: 'I.Q.',
@@ -127,12 +134,28 @@ export type ConfiguratorTierResult = {
 }
 
 export type ConfiguratorMatrixContext = {
-  /** Active O.C.C. tag pill filters (AND). */
-  activeOccTags: readonly string[]
+  /** O.C.C. tag filters — include = must match all (Only), exclude = must match none (Not). */
+  occTagFilters: readonly OccConfiguratorTagFilter[]
   /** When empty / undefined, alignment cross-filters are skipped (optional step). */
   selectedAlignment?: string | null
   selectedRaceId?: string | null
   selectedOccId?: string | null
+}
+
+/** Whether an O.C.C. matches a configurator tag (catalog tags, occType, or psychic category). */
+export function occMatchesConfiguratorTag(occ: PalladiumOcc, tag: string): boolean {
+  const normalized = tag.trim().toLowerCase()
+  if (!normalized) return false
+  if (
+    (occ.tags ?? []).some((occTag) => occTag.trim().toLowerCase() === normalized)
+  ) {
+    return true
+  }
+  if (normalized === 'psychic' && occCharacterCategory(occ) === 'psychic') {
+    return true
+  }
+  if (occ.occType?.trim().toLowerCase() === normalized) return true
+  return false
 }
 
 function inList(list: readonly string[] | undefined, value: string): boolean {
@@ -200,11 +223,26 @@ export function describeOccAlignmentConflict(
 
 function tagMismatchReason(
   occ: PalladiumOcc,
-  activeTags: readonly string[],
+  filters: readonly OccConfiguratorTagFilter[],
 ): string | null {
-  if (!activeTags.length) return null
-  if (occMatchesAllTags(occ.tags, activeTags)) return null
-  return `Not a ${activeTags.join(' AND ')} O.C.C.`
+  if (!filters.length) return null
+
+  for (const { tag } of filters.filter((f) => f.mode === 'exclude')) {
+    if (occMatchesConfiguratorTag(occ, tag)) {
+      return `Excluded — matches “${tag}” (NOT filter)`
+    }
+  }
+
+  const include = filters.filter((f) => f.mode === 'include')
+  if (include.length > 0) {
+    const missing = include.filter(({ tag }) => !occMatchesConfiguratorTag(occ, tag))
+    if (missing.length > 0) {
+      const labels = include.map(({ tag }) => tag)
+      return `Not a ${labels.join(' AND ')} O.C.C.`
+    }
+  }
+
+  return null
 }
 
 export function assessRaceConfiguratorTier(
@@ -254,7 +292,7 @@ export function assessOccConfiguratorTier(
       if (rc) return { tier: 2, conflictReason: rc }
     }
   }
-  const tagReason = tagMismatchReason(occ, ctx.activeOccTags)
+  const tagReason = tagMismatchReason(occ, ctx.occTagFilters ?? [])
   if (tagReason) return { tier: 3, tagMismatchReason: tagReason }
   return { tier: 1 }
 }

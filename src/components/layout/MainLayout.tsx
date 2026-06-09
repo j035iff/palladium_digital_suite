@@ -21,6 +21,7 @@ import { formatPolymorphicModifier } from '../../lib/morphusPolymorphicResolver'
 import { PsStrengthPanel } from '../live/PsStrengthPanel'
 import { SkillList } from '../SkillList'
 import { SavingThrowsPanel } from '../live/SavingThrowsPanel'
+import { IdentityHeader } from './IdentityHeader'
 
 const DEFAULT_COMBAT_SIDEBAR_PX = 350
 const MIN_COMBAT_SIDEBAR_PX = 300
@@ -35,6 +36,10 @@ export function MainLayout() {
     hostGenreId,
     saveCharacter,
     returnToLauncher,
+    resetCreation,
+    saveCreationForLater,
+    canSaveCreationForLater,
+    leaveCreationWithoutSaving,
     morphusSurfaceType,
     setMorphusSurfaceType,
     morphusStanceType,
@@ -147,28 +152,15 @@ export function MainLayout() {
             : 'rgba(255, 255, 255, 0.92)',
         }}
       >
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3">
-          <div className="text-left">
-            <p
-              className="text-xs font-semibold uppercase tracking-wider"
-              style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-            >
-              Identity
-            </p>
-            <h1
-              className="text-xl font-bold tracking-tight"
-              style={{ color: morphusActive ? '#f5f3ff' : '#0f172a' }}
-            >
-              {character.name}
-            </h1>
-            <p
-              className="text-xs font-semibold uppercase tracking-wide"
-              style={{ color: morphusActive ? '#a78bfa' : '#475569' }}
-            >
-              O.C.C. {character.occ.name}
-            </p>
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0 flex-1 text-left">
+            <IdentityHeader
+              morphusActive={morphusActive}
+              creationGenreId={creationGenreId}
+              hostGenreId={hostGenreId}
+            />
             {!showCreation ? (
-              <>
+              <div className="mt-2">
                 <p
                   className="text-sm font-medium"
                   style={{ color: morphusActive ? '#a78bfa' : '#334155' }}
@@ -177,20 +169,8 @@ export function MainLayout() {
                   Level {character.level}
                 </p>
                 <IdentityXpBar />
-              </>
+              </div>
             ) : null}
-            <p
-              className="mt-1 font-mono text-[10px] uppercase tracking-wide opacity-70"
-              style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
-            >
-              {creationGenreId} → host {hostGenreId}
-              {morphusActive && morphusRelativeArShift !== 0
-                ? ` · Morphus A.R. ${morphusRelativeArShift >= 0 ? '+' : ''}${morphusRelativeArShift}`
-                : ''}
-              {morphusActive && morphusNaturalAr != null
-                ? ` · natural A.R. ${morphusNaturalAr}`
-                : ''}
-            </p>
             {morphusActive ? (
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 <label className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
@@ -231,31 +211,94 @@ export function MainLayout() {
                 ) : null}
               </div>
             ) : null}
+            {morphusActive &&
+            (morphusRelativeArShift !== 0 || morphusNaturalAr != null) ? (
+              <p
+                className="mt-1 font-mono text-[10px] uppercase tracking-wide opacity-70"
+                style={{ color: '#94a3b8' }}
+              >
+                {morphusRelativeArShift !== 0
+                  ? `Morphus A.R. ${morphusRelativeArShift >= 0 ? '+' : ''}${morphusRelativeArShift}`
+                  : ''}
+                {morphusRelativeArShift !== 0 && morphusNaturalAr != null
+                  ? ' · '
+                  : ''}
+                {morphusNaturalAr != null ? `natural A.R. ${morphusNaturalAr}` : ''}
+              </p>
+            ) : null}
           </div>
 
           <div className="flex shrink-0 flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={saveCharacter}
-              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                morphusActive
-                  ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
-                  : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
-              }`}
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={returnToLauncher}
-              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                morphusActive
-                  ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
-                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
-              }`}
-            >
-              Portal
-            </button>
+            {showCreation ? (
+              <>
+                <button
+                  type="button"
+                  onClick={resetCreation}
+                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                    morphusActive
+                      ? 'border-amber-500/70 bg-amber-950/40 text-amber-200 hover:bg-amber-900/50'
+                      : 'border-amber-500 bg-amber-50 text-amber-950 hover:bg-amber-100'
+                  }`}
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  onClick={saveCreationForLater}
+                  disabled={!canSaveCreationForLater}
+                  title={
+                    canSaveCreationForLater
+                      ? 'Save this draft and return to the portal'
+                      : 'Continue past Race & O.C.C. before saving for later'
+                  }
+                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                    !canSaveCreationForLater
+                      ? 'cursor-not-allowed border-slate-400/50 bg-slate-100/80 text-slate-400 opacity-60 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-500'
+                      : morphusActive
+                        ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
+                        : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
+                  }`}
+                >
+                  Save for Later
+                </button>
+                <button
+                  type="button"
+                  onClick={leaveCreationWithoutSaving}
+                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                    morphusActive
+                      ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+                  }`}
+                >
+                  Leave without Saving
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={saveCharacter}
+                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                    morphusActive
+                      ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
+                      : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
+                  }`}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={returnToLauncher}
+                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                    morphusActive
+                      ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+                  }`}
+                >
+                  Portal
+                </button>
+              </>
+            )}
           {supportsDualForm ? (
             <button
               type="button"

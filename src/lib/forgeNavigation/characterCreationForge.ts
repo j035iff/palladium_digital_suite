@@ -12,6 +12,7 @@ import {
   assessConfiguratorBlockers,
   assessOccVariableBlockers,
 } from '../creationStep'
+import { assessIdentitySpawnBlockers } from '../characterIdentity'
 import { assessCreationSpawnBlockers } from '../creationReadiness'
 import {
   creationNeedsAbilitySelection,
@@ -167,6 +168,13 @@ export function readForgeCompletion(
     completed: character.creationForgeCompleted ?? {},
     snapshots: character.creationForgeSnapshots ?? {},
   }
+}
+
+/** Gate for “Save for Later” — Race & O.C.C. Continue must be clicked first. */
+export function canSaveCreationForLater(
+  character: Pick<CharacterRootState, 'creationForgeCompleted'>,
+): boolean {
+  return character.creationForgeCompleted?.tab1_configurator === true
 }
 
 export function resolveActiveForgeTab(
@@ -509,6 +517,12 @@ export function assessTab7SpawnBlockers(
   if (!alignment) {
     blockers.push('Select an alignment on the Review tab before spawning.')
   }
+  blockers.push(
+    ...assessIdentitySpawnBlockers(
+      ctx.character.name,
+      ctx.character.identityProfile,
+    ),
+  )
   return blockers
 }
 

@@ -12,11 +12,16 @@ export function rollNdS(n: number, sides: number): number {
   return t
 }
 
+/** Display form uses `x` (e.g. 1D4x10); roll parser expects `*`. */
+export function notationForRoll(raw: string): string {
+  return raw.trim().replace(/\s+/g, '').replace(/x(\d+)/gi, '*$1')
+}
+
 /**
- * Parse and roll a single dice expression like "3D6", "1D4*10", "2D6+12", "4d6-1".
+ * Parse and roll a single dice expression like "3D6", "1D4*10", "1D4x10", "2D6+12", "4d6-1".
  */
 export function rollDiceNotation(raw: string): number {
-  const s = raw.trim().replace(/\s+/g, '')
+  const s = notationForRoll(raw)
   const m = /^(\d+)d(\d+)(?:\*(\d+))?([+-]\d+)?$/i.exec(s)
   if (!m) {
     throw new Error(`Invalid dice notation: "${raw}"`)
