@@ -55,7 +55,6 @@ function migrateObject(obj) {
 }
 
 const targets = [
-  'src/data/content/palladiumSkills.json',
   'src/data/content/occs/between_the_shadows.json',
   'src/data/content/occs/nightbane_core.json',
 ]
@@ -63,6 +62,17 @@ const targets = [
 import { readdirSync } from 'node:fs'
 for (const name of readdirSync(join(root, 'src/data/schemas/examples'))) {
   if (name.endsWith('.json')) targets.push(`src/data/schemas/examples/${name}`)
+}
+
+const skillsDir = join(root, 'src/data/content/skills')
+for (const file of readdirSync(skillsDir).filter((f) => f.endsWith('.json'))) {
+  const abs = join(skillsDir, file)
+  const doc = JSON.parse(readFileSync(abs, 'utf8'))
+  const migrated = Array.isArray(doc)
+    ? doc.map((row) => migrateObject(row))
+    : migrateObject(doc)
+  writeFileSync(abs, `${JSON.stringify(migrated, null, 2)}\n`, 'utf8')
+  console.log(`Patched refs in src/data/content/skills/${file}`)
 }
 
 for (const rel of targets) {

@@ -6,7 +6,7 @@
 export type { PalladiumSourceRef } from '../../types'
 import type { PalladiumSourceRef } from '../../types'
 
-/** Row from `content/palladiumSkills.json` — see `schemas/palladium-skill.schema.json`. */
+/** Row from `content/skills/*.json` — see `schemas/palladium-skill.schema.json`. */
 export type PalladiumSkillCatalogEntry = {
   id: string
   name: string

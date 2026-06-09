@@ -1,0 +1,212 @@
+[
+  {
+    "id": "skill_camouflage",
+    "name": "Camouflage",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The skill of concealing a fixed base position, vehicle, equipment or individual, using natural and/or artificial materials. A fair amount of time is involved in the preparation of a larger position. Large cargo nets, cut branches or underbrush are used most often in camouflage. This skill is also used to conceal traps."
+  },
+  {
+    "id": "skill_demolitions",
+    "name": "Demolitions",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 60,
+    "percentPerLevel": 3,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "Increase the character's awareness of suspicious rope, string, and wire."
+      }
+    ],
+    "description": "Demolitions provides the person with an advanced knowledge in the use and workings of explosives and detonation devices for the purpose of blowing up bridges, buildings, and sabotage. This includes all types of explosives, such as mines, dynamite, plastics, nitro, blasting caps, etc. It also includes a basic understanding of the strategic placement of mines and booby traps.",
+    "failureResults": "A failed roll means a dud; no explosion.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch",
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_demolitions_disposal",
+    "name": "Demolitions Disposal",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 60,
+    "percentPerLevel": 3,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "This skill enables the character to safely defuse unexploded mines, bombs, explosive booby traps, dud artillery rounds, dud explosive charges, or any other explosive device.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch",
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_demolitions_underwater",
+    "name": "Demolitions: Underwater",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 56,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound wave damage, different types of explosives, as well as arming, disarming and repairing torpedoes and depth charges.",
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch",
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_field_armorer_and_munitions_expert",
+    "name": "Field Armorer & Munitions Expert",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a fundamental knowledge of infantry weapons, ammo and body armor. The character can maintain, unjam, fix, modify, mount, reload ammunition, and figure out most small arms. As an armorer, the character can repair such weapons, fix minor damage to body armor, adjust targeting sights, use and repair optical enhancements, reload missiles and ammo drums, install/mount machine-guns and rocket launchers on a vehicle, as well as sharpen blades, make arrows and arrowheads, make horseshoes and basic metal items.",
+    "grantsSkills": [
+      {
+        "skillId": "skill_basic_mechanics",
+        "startingPercent": 30,
+        "summary": "Automatically gets the Basic Mechanics skill at 30% +5% per level as part of this package.",
+        "ruleId": "field_armorer_grants_basic_mechanics"
+      }
+    ]
+  },
+  {
+    "id": "skill_military_etiquette",
+    "name": "Military Etiquette",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "This skill grants a basic understanding of the way the military works. It includes basic rules of behavior (when to salute, how to address superiors/subalterns, etc.) as well as how to deal with military bureaucracy, who to contact to get things done, and other useful information. A character with this skill will have a good idea of how matters are handled in military bases and facilities, from the setting of watches to where to get live ammo (actually getting the ammo is a different matter altogether, of course).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "skill_recognize_weapon_quality",
+    "name": "Recognize Weapon Quality",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to accurately determine a weapon's durability, reliability, and quality by physically examining it. This includes knowing which manufacturers are reputed to make the best weapons, the ability to recognize damage or signs of wear or misuse, modifications/customization, whether the weapon can be made as good as new with a little repair work and/or cleaning, whether it is a cheap knock-off, and so on."
+  },
+  {
+    "id": "skill_strategy_tactics",
+    "name": "Strategy/Tactics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Military"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "A successful strategy/tactics roll will reveal some hints as to the best way to approach a potential combat or military situation, like recognizing potential attack/retreat areas, getting good fields of fire, recognizing a good location for a crossfire or booby trap, etc."
+      }
+    ],
+    "description": "This is part of the training given to combat soldiers and officers, and includes a basic understanding of the \"military doctrine\" of the army in question, including preferred methods of fighting (on both a small scale engagement or a full battle), \"do's and don'ts,\" guerilla warfare, and other basic military methods.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  }
+]

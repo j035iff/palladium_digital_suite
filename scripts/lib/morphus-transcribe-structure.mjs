@@ -3,7 +3,7 @@
  * Used during ingest (structure-entries) to minimize customOneOffs / description-only rows.
  */
 
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { isPlayableMorphusTrait } from './morphus-trait-filter.mjs'
 import { repoRoot } from './morphus-ingest-shared.mjs'
@@ -53,8 +53,10 @@ let skillsByName = null
 
 export function loadSkillNameIndex() {
   if (skillsByName) return skillsByName
-  const raw = JSON.parse(
-    readFileSync(join(repoRoot, 'src/data/content/palladiumSkills.json'), 'utf8'),
+  const skillsDir = join(repoRoot, 'src/data/content/skills')
+  const files = readdirSync(skillsDir).filter((f) => f.endsWith('.json'))
+  const raw = files.flatMap((f) =>
+    JSON.parse(readFileSync(join(skillsDir, f), 'utf8')),
   )
   skillsByName = new Map()
   for (const s of raw) {

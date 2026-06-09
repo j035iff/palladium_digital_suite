@@ -1,0 +1,304 @@
+[
+  {
+    "id": "skill_cook",
+    "name": "Cook",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Skill in selecting, planning, and preparing meals.",
+    "failureResults": "The cooked food is not properly prepared. It is edible but tastes bad (greasy, too spicy, sour, burnt, leaves a bad after-taste in mouth, etc.).",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_dance",
+    "name": "Dance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A practiced skill in the art of dancing. The character is especially smooth and graceful, a joy to dance with.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "Can learn new dance steps/moves much more quickly than somebody who can not dance."
+      }
+    ],
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_focus",
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_fishing",
+    "name": "Fishing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The fundamental methods and enjoyment of the relaxing sport of fishing. Areas of knowledge include the use of lures, bait, poles, hooks, lines, and the cleaning and preparation of fish for eating. Also includes a basic knowledge of freshwater fish, their habits and taste.",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_gardening",
+    "name": "Gardening",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill offers a basic understanding of plant care and aesthetic garden design as well as the ability to grow garden crops, and the skill to create beautiful, decorative gardens with flowers, plants, shrubs, trees, and decorative rocks that create a feeling of tranquility and harmony with nature. This skill can be practiced by anyone, but selecting it twice provides a +12% bonus and the skill is that of a professional groundskeeper."
+  },
+  {
+    "id": "skill_housekeeping",
+    "name": "Housekeeping",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively."
+  },
+  {
+    "id": "skill_play_musical_instrument",
+    "name": "Play Musical Instrument",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The individual has learned to play a particular musical instrument with a fair amount of skill. The sound is generally pleasant (except when a bad roll is made). Note that each specific instrument requires the selection of this skill.",
+    "specialization": {
+      "kind": "instrument",
+      "prompt": "Which instrument?",
+      "examples": [
+        "Guitar",
+        "Violin",
+        "Harmonica"
+      ],
+      "allowsMultipleInstances": true
+    },
+    "repeatSelection": {
+      "summary": "Grants the Domestic category professional quality bonus to the specific instrument chosen when selected twice.",
+      "trackScope": "specialization_instance",
+      "categoryTrackInteraction": {
+        "mode": "append",
+        "summary": "Applies the inherited +10% category professional quality bonus to the specific parameterized instrument instance."
+      }
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "skill_sewing",
+    "name": "Sewing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practiced skill with the needle and thread to mend clothing, do minor alterations, and layout, cut and sew simple patterns. This is not a tailoring ability, but can become tailoring if the player selects this skill twice.",
+    "repeatSelection": {
+      "summary": "Selecting this skill twice makes it tailoring.",
+      "categoryTrackInteraction": {
+        "mode": "append",
+        "summary": "Inherits the +10% professional quality from the Domestic category and also upgrades the classification to tailoring."
+      },
+      "ranks": [
+        {
+          "selectionNumber": 2,
+          "label": "Tailoring",
+          "effect": "Becomes tailoring quality."
+        }
+      ]
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_sing",
+    "name": "Sing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The simple ability to read music and carry a pleasant tune.",
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_wardrobe_and_grooming",
+    "name": "Wardrobe & Grooming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Domestic"
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_disguise",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      },
+      {
+        "skillId": "skill_undercover_ops",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      },
+      {
+        "skillId": "skill_seduction",
+        "description": "+2% bonus when using Wardrobe & Grooming."
+      }
+    ],
+    "prerequisites": [],
+    "description": "This skill represents a knowledge of clothing, make-up, hair style, perfume, walking, talking and how one carries his or herself to create a particular 'look' or style. In short, this is how to dress to kill or make the right impression. Keeps an eye on fashion and trends.",
+    "physicalSkillBonuses": {
+      "pb": {
+        "value": 1,
+        "condition": "when dressed to impress"
+      }
+    }
+  }
+]

@@ -64,8 +64,12 @@ export const PALLADIUM_MORPHUS_TABLE_SCHEMA_ID =
 export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-morphus.schema.json' as const
 
+/** One JSON array per Palladium skill category (`categories[0]`). */
+export const PALLADIUM_SKILLS_DIR = `${PALLADIUM_CONTENT_DIR}/skills` as const
+
+/** @deprecated Use {@link PALLADIUM_SKILLS_DIR} — legacy single-file path. */
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/palladiumSkills.json` as const
+  `${PALLADIUM_SKILLS_DIR}/communications.json` as const
 
 /** Merged player + npc + gm_approval race pools. */
 export const PALLADIUM_RACES_DIR = `${PALLADIUM_CONTENT_DIR}/races` as const

@@ -1,0 +1,567 @@
+[
+  {
+    "id": "skill_computer_hacking",
+    "name": "Computer Hacking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_cryptography",
+        "description": "Grants a one time bonus of +5% to the cryptography skill if the character is a hacker.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_surveillance_systems",
+        "description": "Grants a one time bonus of +5% to the surveillance systems skill if the character is a hacker.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_locksmith",
+        "description": "Grants a one time bonus of +5% to the locksmith skill if the character is a hacker.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_computer_operation"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_computer_programming"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_mathematics_basic"
+      }
+    ],
+    "basePercent": 15,
+    "percentPerLevel": 5,
+    "description": "This is a computer skill similar to computer programming, however, the emphasis of the skill is breaking computer access codes to gain illegal access to other computer systems and steal or sabotage its data. The character is an expert in tracing computer data, bypassing defense systems, and breaking ('hacking') codes.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_concealment",
+    "name": "Concealment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "description": "The practiced ability to hide small items on one's body or in hand, usually by continually moving it around from hand to hand or place to place unnoticed. Larger items such as a book, scroll, club, statue, or similarly large or heavy object are more difficult to conceal on one's person for obvious reasons.",
+    "physicalConstraints": {
+      "summary": "Objects must be no larger than 14 inches in height and length, and six inches in width. The weight must also be 10 pounds or less (4.5 kg).",
+      "maxWeightLbs": 10,
+      "maxHeightInches": 14,
+      "maxWidthInches": 6,
+      "maxLengthInches": 14,
+      "maxWeightKg": 4.5
+    },
+    "situationalModifiers": [
+      {
+        "task": "Concealing a smaller and lighter object, such as a knife, gem, key, credit card, etc.",
+        "percentModifier": 5,
+        "appliesTo": "self"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "skill_find_contraband",
+    "name": "Find Contraband",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_id_undercover_agent",
+        "bonusPercent": 10,
+        "description": "+10% bonus to I.D. Undercover Agents."
+      }
+    ],
+    "prerequisites": [],
+    "description": "The character with this skill knows where to find illegal arms dealers, the Black Market, smugglers, thieves, forgers (mainly fake I.D.s), fences, pawn shops, blind pigs (illegal gambling establishments), exotic animal dealers (illegal wild animals, endangered species, and the bizarre), automobile chop-shops, slavers, prostitutes, drug dealers, illegal medical treatment, stolen antiquities, and other people and places that traffic in illegal goods and services.",
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_id_undercover_agent",
+    "name": "I.D. Undercover Agent",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill_any_of",
+        "alternatives": [
+          {
+            "skillId": "skill_undercover_ops"
+          },
+          {
+            "skillId": "skill_intelligence"
+          },
+          {
+            "skillId": "skill_streetwise"
+          }
+        ]
+      }
+    ],
+    "description": "A combination skill, good eye, and knack for identifying undercover agents; typically members of law enforcement, but may also include NSB agents, private detectives, spies, bounty hunters, and anybody snooping around."
+  },
+  {
+    "id": "skill_locate_librarian",
+    "name": "Locate Librarian",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue",
+      "Espionage"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_lore_faction",
+        "name": "Lore: Faction (Nocturnes)",
+        "prerequisiteBypassConditions": [
+          "Has Collector skill package"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_streetwise",
+        "prerequisiteBypassConditions": [
+          "Has Collector skill package"
+        ]
+      }
+    ],
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Home city",
+        "percentModifier": 20,
+        "ruleId": "locate_librarian_home"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Cities visited regularly",
+        "percentModifier": 0,
+        "ruleId": "locate_librarian_regular"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Cities visited at least once",
+        "percentModifier": -15,
+        "ruleId": "locate_librarian_once"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Never visited",
+        "percentModifier": -40,
+        "ruleId": "locate_librarian_never"
+      }
+    ],
+    "sequentialChecks": [
+      {
+        "skillId": "skill_streetwise",
+        "summary": "In a city never visited, the character must succeed on Streetwise before attempting Locate Librarian at the \"never visited\" penalty row.",
+        "gatesSituationalModifierRuleIds": [
+          "locate_librarian_never"
+        ]
+      }
+    ],
+    "initializationBonuses": [
+      {
+        "requirement": "Possesses the Collector skill package.",
+        "bonusPercent": 5,
+        "origin": "skill_package",
+        "ruleId": "locate_librarian_collector_bonus"
+      }
+    ],
+    "description": "Represents the ability to locate the Nocturne Librarian of a given city. Characters can use this skill as a means of guiding Nocturne characters to the proper contacts, who then can drop names and locations, or a string of clues. Finding a librarian in cities never before visited requires a great deal of leg work, a successful Streetwise roll, and then a Locate Librarian roll at a significant penalty."
+  },
+  {
+    "id": "skill_netwise",
+    "name": "Netwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_research",
+        "bonusPercent": 10,
+        "description": "+10% bonus to Research."
+      },
+      {
+        "skillId": "skill_computer_hacking",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Computer Hacking."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_computer_operation"
+      }
+    ],
+    "description": "Similar to the Streetwise skill, the character is familiar with the ins and outs of the World Wide Web. This includes navigating the Internet, using search engines and social networks, and all the usual with a focus on finding obscure sites and information, locating and accessing hidden boards and chat rooms such as the Shadowboard, finding and using backdoors into various databases, a knowledge of what sites are frequented by hackers, Nightbane, factions, NSB agents, and other special interest groups."
+  },
+  {
+    "id": "skill_palming",
+    "name": "Palming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_pick_pockets",
+        "description": "Adds a bonus of +5% to the pick pocket skill.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "Simply the ability to pick up and seemingly make a small object, such as a coin, key or credit card, disappear by concealing it in one's hand.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_roadwise",
+    "name": "Roadwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A regional skill in which the character knows the streets, alleys, back roads, shortcuts, fastest routes, construction zones, speed traps, highways, police stations and posts in his city and state (or province) like the back of his hand. Also knows all the local junkyards, the best mechanic garages (including a few who don't ask questions), and the best places to hide a vehicle or lay low for a few hours or a few days."
+  },
+  {
+    "id": "skill_safe_cracking",
+    "name": "Safe-Cracking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_pick_locks",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Pick Locks."
+      },
+      {
+        "skillId": "skill_demolitions",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Demolitions."
+      },
+      {
+        "skillId": "skill_locksmith",
+        "bonusPercent": 4,
+        "description": "+4% bonus if the character has Locksmith."
+      }
+    ],
+    "prerequisites": [],
+    "skillPercentAttributeModifiers": {
+      "summary": "Characters with M.E. of 14 or lower suffer −10% to this skill.",
+      "rules": [
+        {
+          "kind": "penaltyWhenBelow",
+          "attribute": "me",
+          "below": 15,
+          "skillPercentPenalty": -10
+        }
+      ]
+    },
+    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms.",
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_focus",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_seduction",
+    "name": "Seduction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 3,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_pick_pockets",
+        "bonusPercent": 5,
+        "description": "+5% to Pick Pockets against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_palming",
+        "bonusPercent": 5,
+        "description": "+5% to Palming against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_con_artistry",
+        "bonusPercent": 10,
+        "description": "+10% to Con Artistry against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_fast_talk",
+        "bonusPercent": 10,
+        "description": "+10% to Fast Talk against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      }
+    ],
+    "prerequisites": [],
+    "skillPercentAttributeModifiers": {
+      "summary": "+1% to Seduction per point of M.A. above 20, and +1% per 2 full points of P.B. above 17 (stacks per book).",
+      "rules": [
+        {
+          "kind": "bonusPerPointAbove",
+          "attribute": "ma",
+          "threshold": 20,
+          "percentPerPoint": 1
+        },
+        {
+          "kind": "bonusPerPointAbove",
+          "attribute": "pb",
+          "threshold": 17,
+          "perNPoints": 2,
+          "percentPerPoint": 1
+        }
+      ]
+    },
+    "description": "This is the ability to make the opposite sex melt with desire. This skill is somewhat similar to the Interrogation skill in that the seducer knows how to ask the right questions to get information without being obvious."
+  },
+  {
+    "id": "skill_streetwise",
+    "name": "Streetwise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "description": "This skill instills an understanding of the darker side of city life and the scoundrels who roam those streets. The streetwise character will be able to recognize gang members by their actions and philosophies, gang colors, gang symbols and mannerisms, and dangerous locations and gangland haunts. The individual will also recognize a potential brawl situation, assess a gang member's rank/power in the organization, and know some of the hangouts, modes of operation, rituals, ethics, and perhaps even notorious gang leaders of the more infamous street gangs. This skill also includes the ability to recognize and locate black market dealers/organizations, illegal clinics, drugs and arms dealers, and similar criminal outfits.",
+    "subSkills": [
+      {
+        "id": "drugs",
+        "name": "Drugs",
+        "basePercent": 20,
+        "percentPerLevel": 4,
+        "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability). Uses the base Streetwise proficiency when included as part of the regular streetwise skill."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  },
+  {
+    "id": "skill_streetwise_drugs",
+    "name": "Streetwise - Drugs (special)",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability).",
+    "optionalStandaloneStatus": {
+      "summary": "G.M.'s choice whether this is included as part of the regular streetwise skill or used as an additional rogue skill. If used as a separate skill, the Base Skill proficiency is 25%+5% per level.",
+      "nestedPlacement": {
+        "parentSkillId": "streetwise",
+        "subSkillId": "drugs"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_tailing",
+    "name": "Tailing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 57
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practiced ability to follow someone without their knowledge. Includes basic stake-out procedures. A failed Tailing roll indicates that the character being tailed has noticed that he is being followed and may take evasive action.",
+    "skillTraits": [
+      "requires_focus"
+    ]
+  }
+]

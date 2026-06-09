@@ -1,0 +1,1139 @@
+[
+  {
+    "id": "skill_art",
+    "name": "Art",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "The ability to draw or paint or sculpt or do craft-work.",
+    "acquisitionEffects": [
+      {
+        "origin": "primary_scholastic",
+        "summary": "Scholastic art training indicates a professional quality.",
+        "outputQuality": "professional"
+      },
+      {
+        "origin": "secondary_skill",
+        "summary": "A secondary skill indicates a talented amateur.",
+        "outputQuality": "amateur"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_barter",
+    "name": "Barter",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_mathematics_basic",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Barter when the character has Math: Basic."
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Barter when the character has Literacy."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A skill at bargaining with merchants, businessmen, thieves, traders, smugglers, street persons, and other characters to get a fair price or fair exchange of trade goods or services. Depending on the character's point of view and effort at bartering, he can raise the amount he gets or lower the price he pays by 3D6+2%."
+  },
+  {
+    "id": "skill_begging",
+    "name": "Begging",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 3,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_disguise",
+        "bonusPercent": 5,
+        "description": "+5% to Begging when using Disguise to pose as a beggar or refugee.",
+        "applicability": {
+          "summary": "When posing as a beggar or refugee",
+          "appliesWhen": "Character is using disguise to appear destitute.",
+          "contextTags": [
+            "disguise_destitute"
+          ]
+        }
+      }
+    ],
+    "prerequisites": [],
+    "description": "Though usually learned out of necessity in the school of hard knocks and poverty, this skill can be particularly useful to collect food, money and clothing when down on one's luck, especially in large cities."
+  },
+  {
+    "id": "skill_business_and_finance",
+    "name": "Business & Finance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_mathematics_basic"
+      }
+    ],
+    "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor."
+  },
+  {
+    "id": "skill_computer_operation",
+    "name": "Computer Operation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "A knowledge of how computers work, along with the skills to operate peripherals like keyboards, printers, and modems. Characters can follow computer directions, enter and retrieve information, and similar basic computer operations. However, this does NOT include programming or hacking.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_computer_programming",
+    "name": "Computer Programming",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_computer_operation"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Advance computer knowledge that includes designing, programming, debugging, and testing computer programs and software. Hacking is possible, but at a severe penalty unless the character is a trained hacker.",
+    "situationalModifiers": [
+      {
+        "task": "Hacking",
+        "percentModifier": -40,
+        "appliesTo": "self",
+        "condition": "Applies when attempting to hack, unless the character also has the Computer Hacking (Rogue) skill."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_construction",
+    "name": "Construction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing.",
+    "skillTraits": [
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_divination",
+    "name": "Divination",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "specialization": {
+      "kind": "other",
+      "prompt": "Which divination method?",
+      "examples": [
+        "Tarot cards",
+        "Crystal ball"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Player must choose a specific method (e.g., Tarot cards)."
+    },
+    "repeatSelection": {
+      "summary": "Taking the skill a second time for the same method grants a +15% bonus to represent professional mastery.",
+      "maxSelections": 2,
+      "trackScope": "specialization_instance",
+      "ranks": [
+        {
+          "selectionNumber": 1,
+          "label": "Standard",
+          "effect": "Competent use of the chosen divination method."
+        },
+        {
+          "selectionNumber": 2,
+          "label": "Professional quality",
+          "effect": "Professional mastery of the chosen divination method.",
+          "skillPercentBonus": 15
+        }
+      ]
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practice of foretelling the future or gaining hidden knowledge through specific conduits.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 10
+      }
+    ]
+  },
+  {
+    "id": "skill_excavation",
+    "name": "Excavation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves."
+  },
+  {
+    "id": "skill_firefighting",
+    "name": "Firefighting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear."
+  },
+  {
+    "id": "skill_general_repair_and_maintenance",
+    "name": "General Repair & Maintenance",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Not everyone can be a mechanic, blacksmith or carpenter, but many are good with their hands and capable of doing satisfactory repairs on simple mechanisms, gears, pulleys, wheels, and so on. The General Repair/Maintenance skill includes: sharpening blades, minor repairs on weapons, packing their own common bullets, sewing tears in clothes, changing a tire, shoeing a horse, repairing furniture, painting, varnishing, nailing and assisting in basic woodworking."
+  },
+  {
+    "id": "skill_history",
+    "name": "History",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": {
+      "splitBaseTracks": [
+        {
+          "trackId": "general",
+          "label": "General historical knowledge",
+          "basePercent": 60
+        },
+        {
+          "trackId": "specific",
+          "label": "Specific / specialist topic",
+          "basePercent": 40
+        }
+      ]
+    },
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects."
+  },
+  {
+    "id": "skill_jury_rig",
+    "name": "Jury-Rig",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 58
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_basic_mechanics"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_basic_electronics"
+      }
+    ],
+    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long (4D6 hours or 2D4 days, whichever is most appropriate), or will even work in the way intended.",
+    "skillTraits": [
+      "related_to_mechanics",
+      "related_to_repair",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_language",
+    "name": "Language",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "specialization": {
+      "kind": "language",
+      "prompt": "Which language?",
+      "examples": [
+        "Spanish",
+        "French",
+        "Japanese"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Each selection gives the character knowledge of a different language and costs one skill selection each time."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "Characters with a language skill can understand and speak in a language other than his own native tongue.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_law",
+    "name": "Law",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement."
+  },
+  {
+    "id": "skill_literacy",
+    "name": "Literacy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "specialization": {
+      "kind": "literacy",
+      "prompt": "Which written language?",
+      "examples": [
+        "English",
+        "Spanish",
+        "French"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "The character may be able to read and write several different languages, but each language counts as a separate skill selection."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Characters must pick up literacy as a skill to determine that they can read beyond the most basic levels. Like the language skill, it must be selected specifically for each language.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_astral",
+    "name": "Lore: Astral",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 26,
+    "percentPerLevel": 4,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "description": "An in depth knowledge about the Astral Plane, Outer Plane, Inner Plane, Void, and major kingdoms, as well as a general knowledge about astral travel, methods of travel and navigation, astral beings, domains and dangers.",
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Can only be learned from the few individuals and organizations who regularly venture into the Astral Plane."
+      }
+    ],
+    "externalMechanicsBonuses": [
+      {
+        "targetKind": "psionic_power",
+        "targetName": "Astral Navigation",
+        "targetId": "astral_navigation",
+        "bonusPercentPerLevel": 2,
+        "summary": "Having this skill adds an additional +2% per level to the Astral Navigation power."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_demons_and_monsters",
+    "name": "Lore: Demons and Monsters",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "This is a study of demonic entities and monster lore throughout the ages and around the world. It includes ancient and primitive cultures' belief in demons, possession, reputed demon places of habitation, appearances, habits, weaknesses, strengths and similar data. This knowledge also includes unusual creatures or monsters, past and present. As a skill, it can help the character to recognize what may be a particular type of demon or monster by description, drawings, photos, footprints, legends, ritual, or action.",
+    "situationalModifiers": [
+      {
+        "task": "Dealing with Nightbane",
+        "modifierType": "multiply",
+        "operand": 0.5,
+        "appliesTo": "self",
+        "condition": "When dealing with Nightbane, halve the effective skill level.",
+        "roundingNote": "Round fractions down."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_dreamstream",
+    "name": "Lore: Dreamstream",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill is helpful in understanding and identifying the \"landscape,\" dangers and inhabitants of the Dreamstream. Skill rolls are necessary to identify creatures and events/transformations of the Dreamstream.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Even a beginner will automatically know of such things as Dream Pools and other major concepts regarding the dream lands."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_faction",
+    "name": "Lore: Faction",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "initializationBonuses": [
+      {
+        "requirement": "Skill is added as an R.C.C. or O.C.C. skill for a character starting the game as a member of a faction, only for the faction to which the character belongs.",
+        "bonusPercent": 15,
+        "origin": "occ_rcc_skill_slot",
+        "ruleId": "lore_faction_occ_rcc_bonus"
+      }
+    ],
+    "description": "Provides intimate knowledge of the inner workings, mythology, and legends surrounding a specific faction. Such information as the history of the faction, known leaders, mythical figureheads, methods of operation, bases of operation and safe houses, etc., are all available through the use of this skill. This skill must be taken separately for each individual faction the character has knowledge about."
+  },
+  {
+    "id": "skill_lore_factions",
+    "name": "Lore: Factions",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions."
+  },
+  {
+    "id": "skill_lore_geomancy",
+    "name": "Lore: Geomancy or Lines of Power",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "A study of ley lines, burial mounds, places of power, megaliths, and geomancy beliefs, past and present. The study includes 'known' locations of such places, such as Stonehenge and the Bermuda Triangle, as well as the many theories behind them and the legacy of legends, mysteries, disappearances and dangers linked to each. The skill will provide the character with insight about the areas and enable him/her to recognize specific, known places of power, as well as recognize unknown megalithic markers of these revered or feared places.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_magic",
+    "name": "Lore: Magic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "subSkills": [
+      {
+        "id": "recognize_magic_symbols",
+        "name": "Recognize Magic Symbols, Runes and Circles",
+        "basePercent": 15,
+        "percentPerLevel": 5,
+        "description": "Although the character may recognize whether the symbol, ward, or rune is real, and if it is meant to be a warning, used for protection, or is a component of magic, he cannot read or use magic."
+      },
+      {
+        "id": "recognize_enchantment",
+        "name": "Recognize Enchantment",
+        "basePercent": 5,
+        "percentPerLevel": 5,
+        "description": "May be able to tell if a person is under the influence of magic charms, possession, curses, mind control, and similar."
+      },
+      {
+        "id": "identify_magic_artifact",
+        "name": "Identify Magic Artifact",
+        "basePercent": 10,
+        "percentPerLevel": 5,
+        "description": "Identify Magic Artifact (+10% if the item is famous or he's seen pictures or drawings, but -15% to identify an unknown or alien magic item.)"
+      }
+    ],
+    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners."
+  },
+  {
+    "id": "skill_lore_nightbane",
+    "name": "Lore: Nightbane",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "This is a comprehensive study of the Nightbane species, their powers, limitations, and the myths and beliefs associated with them. Very few non-Nightbane have the crucial pieces of evidence that would allow them to have this skill, and those fortunate few usually gained the knowledge from a Nightbane who was willing (or forced) to pass the knowledge on.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_nightlands",
+    "name": "Lore: Nightlands",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The study of the shadowy parallel dimension ruled by the Ba'al. This skill includes knowledge about the inhabitants of the Nightlands, including the Nightlords, Dopplegangers, Hunters and Hounds, and others. This skill is most often found in the hands of mystics and psychics who have seen the Nightlands with their own eyes.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_psychic",
+    "name": "Lore: Psychic",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "description": "Characters with this skill have knowledge in the way psychic abilities are believed to work, and what types of psionic abilities exist. This knowledge includes a good idea of the limitations of most psychics and psychic abilities, major known types of P.C.C.s, famous psychics, and similar data. The character does not have to be a psychic himself.",
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Must believe that such powers exist. Most commonly known by people who are psychic themselves, or involved in the PAB, Pandora Project, or similar organizations that study paranormal phenomena."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_religion",
+    "name": "Lore: Religion",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "A comprehensive study of the world's religions, past and present, their beliefs, rituals, holy places, pantheons of deities and supernatural creatures (demons, spirits, angels), stories of creation, myths and legends. The skill will help the character recognize specific rituals, their purpose, the deity(s), icons, and similar information.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_lore_secret_societies",
+    "name": "Lore: Secret Societies",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Dark Designs",
+        "pageNumber": 11
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Provides knowledge of the myths, rumors, and background of the most notorious secret societies, their historical roots and precedents, if any, and some idea how these societies operate. This skill applies to cults, secret religions, brotherhoods, and full-blown societies. Knowledge gleaned from this skill applies to myth and legends (and rumors) surrounding a given society, not necessarily facts or details about current day operations or members."
+  },
+  {
+    "id": "skill_lore_vampires",
+    "name": "Lore: Vampires",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "The study of the undead, their habits, origins, powers and weaknesses. The skill will help a character determine if a person is under the sway or control of a vampire, or whether or not a victim has been killed by the undead. It will also aid in differentiating fact from superstition regarding the vampire's vulnerabilities and strength, the few ways to truly destroy them, and basic vampire-hunting tactics.",
+    "narrativeAdvantages": [
+      {
+        "summary": "At the higher levels of knowledge (65%+), the character may have some idea about vampire intelligences, the Wampyr sub-race, and other detailed information.",
+        "appliesWhen": "When effective skill is 65% or higher."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_mythology",
+    "name": "Mythology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_lore_magic",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Lore: Magic."
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Lore: Demons & Monsters."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic."
+  },
+  {
+    "id": "skill_philosophy",
+    "name": "Philosophy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "requiresSpecialization": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_public_speaking",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Public Speaking."
+      },
+      {
+        "skillId": "skill_creative_writing",
+        "bonusPercent": 5,
+        "description": "+5% bonus to Creative Writing."
+      }
+    ],
+    "prerequisites": [],
+    "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness."
+  },
+  {
+    "id": "skill_photography",
+    "name": "Photography",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "Training in the art of still photography, the use of lighting, cameras, lenses, filters, and other camera equipment, as well as storage, development, enlargement, and duplication of film/photos.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_principles_of_magic",
+    "name": "Principles of Magic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "occProgressionOverrides": [
+      {
+        "when": {
+          "summary": "Practitioners of Magic",
+          "practicesMagic": true
+        },
+        "basePercent": 60,
+        "percentPerLevel": 5
+      }
+    ],
+    "synergies": [
+      {
+        "targetAbility": "Spell Strength",
+        "modifier": {
+          "summary": "Gated spell-strength tiers based on skill proficiency."
+        },
+        "thresholdRewards": [
+          {
+            "requiresSkillPercent": {
+              "skillId": "skill_principles_of_magic",
+              "minimumPercent": 60
+            },
+            "summary": "+1 spell strength at character levels 3, 6, 9, 12, and 15 only when Principles of Magic is 60% or higher.",
+            "spellStrengthBonus": 1,
+            "atCharacterLevels": [
+              3,
+              6,
+              9,
+              12,
+              15
+            ]
+          }
+        ]
+      }
+    ],
+    "prerequisites": [],
+    "description": "The foundational theory of magical energy, including identifying types of magic and understanding P.P.E. flow.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 9
+      }
+    ]
+  },
+  {
+    "id": "skill_research",
+    "name": "Research",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "Training in the use of methods, techniques, and locations, for finding information, including public records, libraries, federal information services, data bureaus, interviews, surveys, demographics, trade journals, clipping services, computer services, and legal searches.",
+    "narrativeAdvantages": [
+      {
+        "summary": "The research skill reduces the amount of time required by half compared to an untrained person.",
+        "appliesWhen": "Always when researching."
+      },
+      {
+        "summary": "The character is trained to notice relevant data that an untrained character is liable to overlook.",
+        "appliesWhen": "Always when researching."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ]
+  },
+  {
+    "id": "skill_rope_works",
+    "name": "Rope Works",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope. A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained. Characters bound/tied by this character are -10% to escape/slip knots.",
+    "skillTraits": [
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_salvage",
+    "name": "Salvage",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 59
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts."
+  },
+  {
+    "id": "skill_writing",
+    "name": "Writing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The ability to write prose (stories), poems, or journalistically (article, reports, news). Note that the written word can be a powerful tool in helping others understand the threats they are facing.",
+    "failureResults": "An awkward and poorly written work that is boring and difficult to understand. Try again.",
+    "acquisitionEffects": [
+      {
+        "origin": "primary_scholastic",
+        "summary": "Scholastic training indicates a professional quality.",
+        "outputQuality": "professional"
+      },
+      {
+        "origin": "secondary_skill",
+        "summary": "A secondary skill indicates a talented amateur.",
+        "outputQuality": "amateur"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  }
+]

@@ -7,13 +7,14 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dedupeEntrySkillProse, repairEntryProseArtifacts } from './lib/morphus-skill-prose-dedupe.mjs'
 import { dedupeTableHeaderSkillProse } from './lib/morphus-table-header-skill-dedupe.mjs'
+import { loadSkillsFromDir } from './lib/skills-catalog-fs.mjs'
 
 const root = join(fileURLToPath(import.meta.url), '..')
 const tablesDir = join(root, '../src/data/content/morphus/tables')
-const skillsPath = join(root, '../src/data/content/palladiumSkills.json')
+const skillsDir = join(root, '../src/data/content/skills')
 const dryRun = process.argv.includes('--dry-run')
 
-const skills = JSON.parse(readFileSync(skillsPath, 'utf8'))
+const skills = loadSkillsFromDir(skillsDir)
 const skillsById = new Map(skills.map((s) => [s.id, s]))
 
 function hasTraitData(table) {

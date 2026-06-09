@@ -1,0 +1,490 @@
+[
+  {
+    "id": "skill_airplane",
+    "name": "Pilot: Airplane",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_read_sensory_equipment"
+      }
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 4,
+    "description": "Includes old propeller, single and twin engine types.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_automobile",
+    "name": "Pilot: Automobile",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 2,
+    "description": "Manual and automatic transmissions; includes dune buggies, jeeps, and small trucks.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_bicycling",
+    "name": "Pilot: Bicycling",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 44,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows how to ride bicycles and can ride over rough terrain, reach two times normal running speed, travel cross-country at normal running speed, and perform tricks and jumps on a bike."
+  },
+  {
+    "id": "skill_boat_motor_and_hydrofoils",
+    "name": "Pilot: Boat: Motor and Hydrofoils",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 55,
+    "percentPerLevel": 5,
+    "description": "These include all types of small motor driven boats and yachts.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_boat_sail_type",
+    "name": "Pilot: Boat: Sail Type",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 5,
+    "description": "Small sailing and medium sized sailing yachts, and fishing boats.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_boat_ships",
+    "name": "Pilot: Boat: Ships",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": {
+      "splitBase": {
+        "sailing": 45,
+        "motor": 44
+      }
+    },
+    "percentPerLevel": null,
+    "splitPercentPerLevel": {
+      "sailing": 5,
+      "motor": 4
+    },
+    "description": "This includes all large sailing and motor driven seafaring vessels.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_boats_paddle_types",
+    "name": "Pilot: Boats: Paddle Types/Canoe/Kayak",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes paddled boats and canoes, rowboats and knee boards, as well as the Kayak. Speed in still water is usually equal to the character's P.S. attribute and can be maintained for P.E. x5 in minutes without pause. The skill also includes basic principles behind using currents, maintenance, and 'tricks'."
+  },
+  {
+    "id": "skill_combat_driving",
+    "name": "Combat Driving",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill supplements other driving skills by helping to make the character a master of the roads when driving automobiles, jeeps, trucks, motorcycles and other ground vehicles. It helps to turn the character into an aggressive road hog and cool-headed 'chicken' player. Tricks, dangerous maneuvers, and high-speed car chases are no sweat for this character.",
+    "physicalSkillBonuses": {
+      "dodge": 2,
+      "rollWithImpact": 2
+    },
+    "mechanicProgressions": [
+      {
+        "summary": "Baseline (Survival Guide): penalties for tricks, vehicular attacks (ram, sideswipe, etc.), and evasive maneuvers are halved when this character is driving. Progression: penalties are reduced by one additional point per three levels of the driver's experience (e.g. at levels 3, 6, 9…). Also at the wheel: fire from a moving vehicle at −2; aimed/called shots at −2 while moving; may act while driving without the usual penalty.",
+        "everyNCharacterLevels": 3,
+        "integerDeltaPerStep": -1,
+        "targetKind": "penalty_modifier",
+        "targetLabel": "Tricks, vehicular attacks, and evasive maneuver penalties (after halving)",
+        "ruleId": "combat_driving_penalty_reduction"
+      }
+    ]
+  },
+  {
+    "id": "skill_helicopter",
+    "name": "Pilot: Helicopter",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_read_sensory_equipment"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_weapon_systems",
+        "condition": "Required to operate weapons on a combat helicopter."
+      }
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "description": "The specialized skill required in flying all types of helicopters, including combat 'copters.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_horsemanship",
+    "name": "Horsemanship",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "specialization": {
+      "kind": "mount",
+      "prompt": "Mount type",
+      "examples": [
+        "Horse",
+        "Supernatural animal/monster"
+      ],
+      "allowsMultipleInstances": false,
+      "notes": "Riding supernatural animals/monsters (not applicable to intelligent creatures) has a base skill of 24% + 4% per level."
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "The skill includes the basic principles of riding, the care and feeding of the animal, recognizing breed and quality, charging, and jumps. The percentile number is used whenever the character tries to determine breed and quality, and for special jumps or maneuvers.",
+    "physicalSkillBonuses": {
+      "parry": {
+        "value": 1,
+        "condition": "When charging on horseback"
+      },
+      "dodge": {
+        "value": 1,
+        "condition": "When charging on horseback"
+      },
+      "chargingDamage": {
+        "value": 4,
+        "condition": "When charging on horseback"
+      }
+    },
+    "situationalRuleOverrides": [
+      {
+        "summary": "Aimed shots are impossible on a moving animal.",
+        "domain": "mount_combat",
+        "whenContext": "Firing a projectile weapon from a moving animal.",
+        "constraint": "prohibited",
+        "targets": [
+          "aimed_shot"
+        ]
+      },
+      {
+        "summary": "At full gallop, the shooter can fire only as wild.",
+        "domain": "ranged_combat",
+        "whenContext": "Firing from a horse at a full gallop.",
+        "constraint": "forced_outcome",
+        "targets": [
+          "burst_fire",
+          "automatic_fire"
+        ],
+        "outcomeHint": "wild_burst"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_hover_craft_ground",
+    "name": "Pilot: Hover Craft (ground)",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 50,
+    "percentPerLevel": 5,
+    "description": "The knowledge needed in piloting hover cycles and other hover vehicles used for ground transport. These vehicles utilize several air jets and directional thrusters that pushes the craft along, above the ground, on a cushion of air.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_jet_aircraft",
+    "name": "Pilot: Jet Aircraft",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_read_sensory_equipment"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "Includes large and small commercial transport jets.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_jet_fighters",
+    "name": "Pilot: Jet Fighters",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_read_sensory_equipment"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "Training includes flying, maneuvering, aerial combat strategies, and typical fighter jet weapon systems.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_jet_packs",
+    "name": "Pilot: Jet Packs",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 42,
+    "percentPerLevel": 4,
+    "description": "The piloting skill of backpack like units that strap to the back of an individual to carry him airborne. The typical jet pack is a one person unit capable of hovering above the ground and flying at an average altitude of 300 feet (91.5 m).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_motorcycle",
+    "name": "Pilot: Motorcycle",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 60,
+    "percentPerLevel": 4,
+    "description": "This skill includes the piloting of all two and three wheeled vehicles such as motorcycles of all types, dirt bikes, and mopeds.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_tanks_and_apcs",
+    "name": "Pilot: Tanks and APCs",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "description": "Piloting for many ton, armored, combat vehicles such as tanks and armored personnel carriers (APC) which have unconventional controls and handle differently than conventional vehicles.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  },
+  {
+    "id": "skill_tracked_and_construction_vehicles",
+    "name": "Pilot: Tracked & Construction Vehicles",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes landcrawlers, half-tracks, light tanks, and big-wheeled heavy construction vehicles and Earthmovers like bulldozers, steam shovels/excavators, scrapers, graders, tractors, loaders, backhoes, dump trucks, haulers, etc."
+  },
+  {
+    "id": "skill_truck",
+    "name": "Pilot: Truck",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "description": "This piloting skill specifically applies to large cargo and transport vehicles like eight to sixteen wheeled commercial trucks and multi-ton transports.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
+      }
+    ]
+  }
+]

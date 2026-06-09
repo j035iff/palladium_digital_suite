@@ -17,7 +17,7 @@ export type SkillPrerequisite =
 /**
  * Sheet-facing skill row (skill equation + creation metadata). Narrow engine subset of the
  * Palladium skill JSON Schema in `src/data/schemas/palladium-skill.schema.json` (see
- * `src/lib/palladiumSchemaPaths.ts`). Full catalog: `src/data/content/palladiumSkills.json`
+ * `src/lib/palladiumSchemaPaths.ts`). Full catalog: `src/data/content/skills/*.json`
  * (`PALLADIUM_SKILL_CATALOG` / `getPalladiumSkillCatalogEntryById` in `src/data/library/registry.ts`).
  */
 export type EngineSkillDef = SkillEquationSkill & {

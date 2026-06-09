@@ -1,0 +1,195 @@
+[
+  {
+    "id": "skill_cryptography",
+    "name": "Cryptography",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Skill in recognizing, designing, and cracking secret codes and messages.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_laser",
+    "name": "Laser",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Familiarity with laser communication systems and their operation.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "skill_optic_systems",
+    "name": "Optic Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [
+      {
+        "skillId": "skill_tv_video",
+        "description": "Special one time bonus of +5% to T.V./video skill if both are selected.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "description": "Training in the use of special optical equipment, ranging from night vision goggles to advanced targeting sensors.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ]
+  },
+  {
+    "id": "skill_radio_basic",
+    "name": "Radio: Basic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Basic familiarity with the operation and maintenance of field radios and communication networks.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_radio_scramblers",
+    "name": "Radio: Scramblers",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Knowledge of electronic scrambling and descrambling equipment used in secure communications.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_surveillance_systems",
+    "name": "Surveillance Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill_any_of",
+        "label": "Electronics: basic OR electrical engineering",
+        "skillIds": [
+          "skill_basic_electronics",
+          "skill_electrical_engineer"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_computer_operation",
+        "condition": "only for complex, high-tech systems"
+      }
+    ],
+    "description": "The study and operation of surveillance systems, listening devices, and security cameras.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_tv_video",
+    "name": "T.V./Video",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Familiarity with operating television broadcasting and video recording equipment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_focus"
+    ]
+  }
+]

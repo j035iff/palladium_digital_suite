@@ -1,0 +1,491 @@
+[
+  {
+    "id": "skill_detect_ambush",
+    "name": "Detect Ambush",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training which develops an eye for spotting location and terrain suitable for ambushes and being ambushed. It also provides a rudimentary knowledge of guerrilla tactics used by the enemy.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_detect_concealment",
+    "name": "Detect Concealment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is a skill which enables the individual to spot and recognize camouflage, concealed structures/building and vehicles, as well as the ability to construct unobtrusive shelters, use camouflage and blend into the environment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_disguise",
+    "name": "Disguise",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows how to apply make-up, wigs, skin putty, dies, and other special effects in order to alter his appearance or that of somebody else.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "skill_escape_artist",
+    "name": "Escape Artist",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The methods, principles, and tricks of escape artists. Includes muscle control (tensing and relaxing muscles), flexing and popping joints, knowledge of knots, and the ability to conceal small objects on the person. The character can try slipping out of handcuffs, ropes, straitjacket, etc. Note: Picking locks is a separate and distinct skill.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "skill_fieldcraft",
+    "name": "Fieldcraft",
+    "gameSystems": [
+      "between_the_shadows"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 4,
+    "allowedAsSecondarySkill": true,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill covers the common \"tricks\" spies use to exchange information covertly. Some fieldcraft methods include \"dead drops\" (the information is placed in a hiding place such as taped under a park bench, behind a brick, and so on; the other agent then comes by and picks it up, avoiding ever seeing his \"contact\"), ways to notice and avoid being shadowed (use this skill in conjunction with the Perception rules), selecting code words and passwords to recognize other agents, and similar techniques.",
+    "sources": [
+      {
+        "gameSystem": "between_the_shadows",
+        "reference": "Between the Shadows",
+        "pageNumber": 128
+      }
+    ]
+  },
+  {
+    "id": "skill_forgery",
+    "name": "Forgery",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "situationalModifiers": [
+      {
+        "task": "Recognize other counterfeits",
+        "percentModifier": -10,
+        "appliesTo": "self"
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The techniques of making false copies of official documents, signatures, passports, I.D.s, and other printed material. The forger must have an original or photocopy to work from in order to make an accurate copy.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_focus",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_impersonation",
+    "name": "Imitate Voices & Impersonation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": {
+      "splitBaseTracks": [
+        {
+          "trackId": "regional_accent",
+          "label": "Regional accent, inflection, and expression",
+          "basePercent": 36
+        },
+        {
+          "trackId": "specific_person_voice",
+          "label": "Specific person's voice, inflection, and attitude",
+          "basePercent": 16
+        }
+      ]
+    },
+    "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to imitate the voice, accent and expressions of another person or regional dialect. This skill is common among thieves and assassins, as well as demons and other villains. The first number indicates the character's ability to change his voice and imitate accents, inflections and expressions from other regions. A successful roll means s/he has disguised his normal/true speaking voice and accent, and convincingly sounds like s/he is from another region or part of the world. The second number indicates the character's ability to accurately imitate the voice, inflections and attitude of a specific person! This is much more difficult, and the character will either need to know the person being imitated very well, or have spent hours studying him/her. Base Skill: 36%/16% +4% per level of experience. Impersonation Note: When combined with the disguise and intelligence skills, the character is able to completely impersonate a specific person or person of a particular occupation (soldier, knight, wizard, priest, etc.). This is likely to include knowledge of the subject being impersonated, military procedure, dress, heraldry/rank, and will usually require speaking the language fluently. This means the character can convincingly impersonate a general type of person/soldier/advisor with an accurate disguise, proper action, and language. Base Skill: 16% +4% per level of experience for a regional disguise of an average local person (farmer, laborer, vagabond, etc.), +12% +4% to impersonate a person in a specific occupation (sheriff, guard, inspector, messenger, merchant, priest, etc.), and 10% +4% per level of experience to impersonate a specific, known person.",
+    "subTasks": [
+      {
+        "name": "Regional disguise of an average local person (farmer, laborer, vagabond, etc.)",
+        "basePercent": 16,
+        "percentPerLevel": 4
+      },
+      {
+        "name": "Impersonate a person in a specific occupation (sheriff, guard, inspector, messenger, merchant, priest, etc.)",
+        "basePercent": 12,
+        "percentPerLevel": 4
+      },
+      {
+        "name": "Impersonate a specific, known person",
+        "basePercent": 10,
+        "percentPerLevel": 4
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "The impersonation sub-tasks (average local, occupation, or known person) require Disguise and Intelligence in addition to this skill; voice mimicry alone uses the split base tracks above.",
+        "relatedSkillIds": [
+          "skill_disguise",
+          "skill_intelligence"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "failureResults": "A failed impersonation roll (with Disguise and Intelligence) means some element of the impersonation is flawed—most likely incorrect behavior or a character trait, or lack of information about the person being impersonated (\"Tell me again what you said that night,\" etc.). Such holes will give the character away sooner or later; the longer the character remains under scrutiny, the more likely something reveals the impostor.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 9
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_intelligence",
+    "name": "Intelligence",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 32,
+    "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This is the specific training in the practices and principles of recognizing and analyzing sources of information about the enemy, observation techniques, counterintelligence measures and proper procedure. This includes the practical assessment of sights and sounds, estimation of ranges, what to report, handling prisoners of war, and handling captured documents and equipment. Further intelligence training includes a working knowledge of indigenous guerrilla warfare, enemy practices, appearance, and current activities. Another area of training made available to intelligence is the identification of enemy troops, officers, and foreign advisors.",
+    "failureResults": "A failed roll in any of the areas of intelligence means that evidence is inconclusive, or that the character has incorrectly assessed the information/situation and is uncertain. A failed roll involving individual clues may mean the person has dismissed it entirely as being meaningless.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_interrogation_techniques",
+    "name": "Interrogation Techniques",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill is learned by policemen, intelligence officers, etc. The character knows the techniques to get information from (typically unwilling) subjects. This includes such old methods as \"good cop/bad cop\" (one interrogator is threatening and intimidating, the other is sympathetic and friendly), deceiving and misleading the subject into giving away information, and similar methods. The character can also judge if the subject is lying. This skill also includes some basic knowledge on methods of torture, from basic tactics like depriving the subject of sleep, to the old \"medieval\" instruments and new, sophisticated techniques like sensory deprivation, partial electrocution, and drugs.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ]
+  },
+  {
+    "id": "skill_pick_locks",
+    "name": "Pick Locks",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Rogue"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows the methods and tools for picking/opening key and basic tumbler type locks. This does not include sophisticated computer or electronic locks. It takes 1D6 melee rounds for each attempt to pick a lock.",
+    "failureResults": "The lock holds; try again.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage)",
+        "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Rogue)",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_focus",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_pick_pockets",
+    "name": "Pick Pockets",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Rogue"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "An ability to remove items from a person without their being aware of it.",
+    "failureResults": {
+      "summary": "If a pick pocket attempt fails, the item has NOT been removed.",
+      "secondaryCheck": {
+        "percentChance": 67,
+        "appliesWhen": "After a failed pick pocket attempt.",
+        "subject": "intended_victim",
+        "resolutionNote": "67% likelihood of the intended victim recognizing the intent of the action.",
+        "ifTriggers": "The victim recognizes the intent of the action.",
+        "ifNotTriggers": "The victim does not recognize the intent."
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage)",
+        "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Rogue)",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_prowl",
+    "name": "Prowl",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage",
+      "Physical",
+      "Rogue"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Helps the character to move with stealth; quietly, slowly, and carefully. Techniques include balance and footing, short steps and pacing, rifle positioning, prone positions for low visibility, and crawling. A successful roll allows a sneak attack.",
+    "failureResults": "The character has been seen or heard.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Physical)",
+        "pageNumber": 54
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG, (Espionage & Rogue)",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_sniper",
+    "name": "Sniper",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": null,
+    "percentPerLevel": null,
+    "physicalSkillBonuses": {
+      "strike": {
+        "value": 2,
+        "condition": "On an aimed shot. Only rifles that can be made to fire a single round or blast can be used for sniping (no automatic/multi-firing rifles)."
+      }
+    },
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill represents special training in long-range rifle firing and marksmanship.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_tracking",
+    "name": "Tracking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "situationalModifiers": [
+      {
+        "task": "Follow the trail of this character when they are deliberately using Counter-Tracking",
+        "percentModifier": -25,
+        "appliesTo": "opposing_roll",
+        "target": "enemy tracker",
+        "condition": "When the character is deliberately trying to conceal their trail using Counter-Tracking techniques. The character's rate of travel is reduced by half while doing so."
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Visual tracking is the identification of tracks, and following the path of men or animals by the signs they leave on the ground and vegetation. Tracking is a precise art, requiring much practice. The skill includes the evaluation of tracks, indicating whether the person being tracked is loaded down with equipment, running, moving slowly (by measuring the space between steps), and so on. By this means, the tracker can estimate the person's rate of movement, apparent direction, the number of persons in the party, and whether the person knows he is being followed. Other methods of tracking require recognizing other telltale signs, such as blood and other stains, broken and displaced vegetation, overturned rocks, litter, and even odors carried by the wind. Tracking also includes the recognizing of dangerous animals by their tracks, habits and feces. Likewise, tire tracks of vehicles can reveal much, such as size and type of the vehicle, the weight of its load, etc. Counter-Tracking techniques are also known, such as covering one's trail, misdirection, parallel trails, avoiding obvious pitfalls like littering and others. Roll once every 40 yards/meters when following a trail.",
+    "failureResults": "A failed roll means that the signs are inconclusive, vague or misleading. Additional signs must be found to verify or clarify (roll again). Three consecutive failed rolls means the tracker has completely lost the trail.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 50
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_undercover_ops",
+    "name": "Undercover Ops",
+    "replaces": "skill_fieldcraft",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training in undercover operations in which the character learns the methods and techniques of blending smoothly into the background and appearing as if he belongs there (just another unmemorable face in the crowd or one of the guys), as well as assuming a false identity and playing a 'role' to track, spy upon, or gather information or evidence. Also includes methods for the covert exchange of information, necessary for keeping in touch with the individual's 'handler'.",
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_wilderness_survival",
+    "name": "Wilderness Survival",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Espionage"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Techniques for getting water, food, shelter, and help when stranded in wild forests, deserts, or mountains. Characters without this skill will not be able to stay healthy for more than a few days in the wilderness once their supplies run out.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  }
+]

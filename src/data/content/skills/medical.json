@@ -1,0 +1,254 @@
+[
+  {
+    "id": "skill_criminal_sciences_and_forensics",
+    "name": "Criminal Sciences & Forensics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry_analytical"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_mathematics_advanced"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "Basic knowledge of police skills, including basic criminal law, fingerprinting, ballistics (matching bullets to weapons and angles of impact), and general investigative techniques. Forensic medicine is the method and techniques which enables the character to find evidence regarding the cause of death, time of death, and other details when examining a corpse.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "skill_first_aid",
+    "name": "First Aid",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "description": "Rudimentary medical treatment which includes how to bandage wounds, stop bleeding, administer CPR/artificial respiration, and use antiseptics and common anti-inflammatory drugs and painkillers.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_holistic_medicine",
+    "name": "Holistic Medicine",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "narrativeAdvantages": [
+      {
+        "summary": "Heal wounds faster (twice as quick as normal)."
+      }
+    ],
+    "description": "Training in the recognition, preparation, and application of natural medicines usually made from plants and their parts (roots, leaves, fruit). The holistic doctor is basically a natural pharmacist and naturalist who creates drugs from vegetation and studies common ailments. He can find and use plants to create salves, balms, ointments, and lotions to soothe burns, boils, rashes, and insect bites, reduce swelling, as well as create local anesthetics, and to heal wounds faster (twice as quick as normal). Potions and tonics are created to settle upset stomachs, induce drowsiness, or hallucinations. The individual can also make alcohol and poison (hemlock and mandrake, for example). The student of herbology also has a good knowledge of plant lore and when and where to find healing plants, edible fruit, berries, roots, and bark, as well as how to use and/or avoid dangerous flora. The character can also preserve foods and knows how to set and mend bones, bandage cuts, and suture cuts.",
+    "failureResults": "The treatment or concoction did not work.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ]
+  },
+  {
+    "id": "skill_medical_doctor",
+    "name": "Medical Doctor",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": {
+      "splitBase": {
+        "diagnosis": 60,
+        "treatment": 50
+      }
+    },
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_pathology"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry"
+      },
+      {
+        "type": "skill_any_of",
+        "label": "Basic or Advanced Math",
+        "skillIds": [
+          "skill_mathematics_basic",
+          "skill_mathematics_advanced"
+        ]
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "The medical doctor is a trained surgeon and has a doctorate in the medical sciences. Areas of training include: clinical skills, medical discipline, code of ethics, physiology (muscle, respiratory, blood, body fluids), pathology (diseases, their structure and function), rudimentary pharmacology (use, reaction, and interaction of drugs), laboratory skills, and techniques and methods of data collection.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "skill_paramedic",
+    "name": "Paramedic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [],
+    "synergies": [],
+    "resolutionLogic": [
+      {
+        "type": "best_of_x",
+        "count": 3,
+        "requiredSuccesses": 2,
+        "condition": "Applied to serious injury or coma"
+      }
+    ],
+    "description": "An advanced form of emergency medical treatment which includes all first aid techniques, the setting of broken bones, suturing of wounds, use of oxygen and emergency medical equipment, administering of drugs, knowledge of how to move a critically injured person, and other life saving techniques.",
+    "failureResults": "The patient has not responded to treatment or that the treatment has been improperly administered. For serious injury or coma, failure means the patient's condition is unchanged. Another character can immediately attempt to apply medical aid or the same player can try again, but only after the character has spent six minutes for reexamining and/or concentration on the problem.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_pathology",
+    "name": "Pathology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "This branch of medicine deals with the nature of diseases, their cause, and symptoms, and the functional and structural changes caused by disease. Training includes anatomy, physiology, cell biology, manifestation of disease, tissue injury and repair, abnormal cell structure, metabolism, diagnosis of human disease, tissue culture methods and applications, analysis of drugs in biological samples and laboratory research, investigative methods, and use of instruments, tools and equipment.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  },
+  {
+    "id": "skill_toxicology",
+    "name": "Toxicology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Medical"
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_biology"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "synergies": [],
+    "description": "This is a specialty in medicine that deals with poisons, venoms and toxins, their manufacture, composition and antidotes. This skill is useful for both healers and assassins. A successful skill roll will help determine if poisons have been used on somebody and even the general type of poison/toxin used (a definite answer may require an autopsy and the forensics skill).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 52
+      }
+    ]
+  }
+]

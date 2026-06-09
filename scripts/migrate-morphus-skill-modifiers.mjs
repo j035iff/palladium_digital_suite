@@ -19,13 +19,14 @@ import {
   loadSkillNameIndex,
   structureFromTraitBody,
 } from './lib/morphus-transcribe-structure.mjs'
+import { loadSkillsFromDir } from './lib/skills-catalog-fs.mjs'
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..')
 const tablesDir = join(root, 'src/data/content/morphus/tables')
-const skillsPath = join(root, 'src/data/content/palladiumSkills.json')
+const skillsDir = join(root, 'src/data/content/skills')
 const dryRun = process.argv.includes('--dry-run')
 
-const skills = JSON.parse(readFileSync(skillsPath, 'utf8'))
+const skills = loadSkillsFromDir(skillsDir)
 const skillTraitsById = new Map(skills.map((s) => [s.id, new Set(s.skillTraits ?? [])]))
 
 const traitMemberIds = new Map(

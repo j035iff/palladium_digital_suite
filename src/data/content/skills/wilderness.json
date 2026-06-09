@@ -1,0 +1,252 @@
+[
+  {
+    "id": "skill_boat_building",
+    "name": "Boat Building",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "This skill enables the character to build a variety of rafts, small rowboats, large flatbed boats, and canoes. Construction times: A small raft (two man) can be made within 1D6+1 hours if materials are available; large raft 4D6 hours; canoe 2D6 days; rowboat 4D4 days; large flatbed 1D4x10 days. Time is doubled or tripled if trees must be cut down and wood prepared. Time can be reduced with extra help.",
+    "failureResults": "A failed skill roll means the boat has leaks. Trying to patch it will require 4D4 hours.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "skillTraits": [
+      "related_to_repair",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_carpentry",
+    "name": "Carpentry",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_boat_building",
+        "description": "Adds +5% bonus to the boat building skill if taken.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "A fundamental knowledge of working with wood. The character knows how to prepare, treat, and preserve wood, recognize quality craftsmanship, can repair damaged wood and wood items, and build (chests, chairs, tables, cabinets, houses, etc.).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "skillTraits": [
+      "related_to_repair",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_hunting",
+    "name": "Hunting",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_prowl",
+        "description": "Provides a +2% bonus to prowl.",
+        "bonusPercent": 2
+      },
+      {
+        "skillId": "skill_track_animals",
+        "description": "Provides a +5% bonus to track animals.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_skin_and_prepare_animal_hides",
+        "description": "Provides a +5% bonus to skin animals.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_wilderness_survival",
+        "description": "Provides a +5% bonus to wilderness survival.",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_cook",
+        "description": "Provides a +5% to cook the catch only.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "description": "The skill of killing and preparing an animal for food. This skill has no base percent, but provides distinct bonuses to related hunting and survival skills.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "skill_identify_plants_and_fruits",
+    "name": "Identify Plants & Fruits",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Training in the recognition of the many different types of plants and vegetation and where they grow. The emphasis is placed on edible, herbal, and poisonous plants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "skill_land_navigation",
+    "name": "Land Navigation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 36,
+    "percentPerLevel": 4,
+    "description": "This skill enables the person to stay on course while traveling over land by means of observation. It includes mentally marking/recognizing geographic landmarks, estimating distance and movement, recognizing sounds, night travel, and other navigational tricks.",
+    "failureResults": "The character is drifting off course. Consecutive failed rolls means the individual does not realize that he's off course and continues in the wrong direction.",
+    "failureFormulas": [
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D10x100",
+        "unit": "yards/meters",
+        "metricKey": "land_nav_drift",
+        "linkSummary": "Distance drifted off course per failed navigation check."
+      }
+    ],
+    "resolutionLogic": {
+      "type": "standard",
+      "recurrence": {
+        "summary": "Roll once for approximately every three miles (4.8 km) traveled.",
+        "intervalValue": 3,
+        "intervalUnit": "custom"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_preserve_food",
+    "name": "Preserve Food",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Knowledge in the preparation of foods for storage and later consumption. Includes canning fresh fruit and vegetables, making jams and honey, drying fruit, vegetables, and herbs, drying meat and fish, plus various smoking, salting, and pickling methods.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "skill_skin_and_prepare_animal_hides",
+    "name": "Skin and Prepare Animal Hides",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_sewing",
+        "description": "Adds a +5% bonus to the sewing skill.",
+        "bonusPercent": 5
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Training in the methods and techniques in skinning, tanning, stretching, and preserving animal hides as fur or leather.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  },
+  {
+    "id": "skill_track_animals",
+    "name": "Track Animals",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Wilderness"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This skill enables the character to identify an animal by its tracks, scent, droppings, and habits. The individual can also follow the animal's tracks and other signs. This means he can also estimate how fresh the tracks are, what direction they are heading, whether the animal is hurt or sick, and guess its age. The habits and habitats of animals and animal behavior are also learned.",
+    "situationalModifiers": [
+      {
+        "task": "Tracking humans",
+        "percentModifier": -20,
+        "appliesTo": "self",
+        "target": "Human tracks"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
+      }
+    ]
+  }
+]

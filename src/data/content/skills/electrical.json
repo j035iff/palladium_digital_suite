@@ -1,0 +1,95 @@
+[
+  {
+    "id": "skill_basic_electronics",
+    "name": "Basic Electronics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Electrical"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A rudimentary understanding of electricity, simple circuits, and wiring. The character can do basic wiring, repair appliances, and read schematics.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_computer_repair",
+    "name": "Computer Repair",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Electrical"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_basic_electronics"
+      }
+    ],
+    "description": "The ability to repair, diagnose, and maintain computers and related peripherals.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "related_to_repair",
+      "requires_dexterity",
+      "requires_light_touch"
+    ]
+  },
+  {
+    "id": "skill_electrical_engineer",
+    "name": "Electrical Engineer",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Electrical"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 35,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_basic_electronics"
+      }
+    ],
+    "description": "Advanced training in electrical systems, schematics, and engineering work beyond basic electronics.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "requires_dexterity"
+    ]
+  }
+]

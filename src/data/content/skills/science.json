@@ -1,0 +1,246 @@
+[
+  {
+    "id": "skill_anthropology",
+    "name": "Anthropology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This is the behavioral study of man and other intelligent life forms and their environments. Studies include societies, customs and beliefs, religions, political structure, as well as rudimentary history and archaeological background. The skill can be used in the examination of items/artifacts and ruins to identify the probable people/race, purpose, and technological level, as well as identifying the period in which the item was used.",
+    "situationalRuleOverrides": [
+      {
+        "summary": "The character is not skilled enough to tell whether an item is an authentic artifact or a forgery.",
+        "domain": "skill_roll",
+        "whenContext": "Examining items, artifacts, or ruins.",
+        "constraint": "prohibited"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_archaeology",
+    "name": "Archaeology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 20,
+    "percentPerLevel": 5,
+    "description": "This is the scientific study of relics of ancient civilizations by excavation and analysis of artifacts. Studies include proper excavation (digs) techniques, preservation, restoration, and dating methods (including carbon dating).",
+    "narrativeAdvantages": [
+      {
+        "summary": "Provides a rudimentary history and anthropology background."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_astronomy",
+    "name": "Astronomy",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_navigation",
+        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+      },
+      {
+        "skillId": "skill_land_navigation",
+        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+      }
+    ],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "The study of the stars and other celestial bodies, their movements, positions, cycles, alignments, and interrelations with the earth and each other. This knowledge can also be used to determine direction, approximate distances, identify seasons, and tell the time of day.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_biology",
+    "name": "Biology",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Basic understanding of cells, anatomy, physiology, evolution, and genetics. The character will know how to use a microscope, cultivate bacteria, and how to classify new organisms.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_botany",
+    "name": "Botany",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Plants, their categories and functions, are studied extensively. Characters will know the basics of cross-fertilization and germinating, as well as growing experimental plants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_chemistry",
+    "name": "Chemistry",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "The basic understanding of chemical principles and formulae. Characters know enough chemical laboratory procedures for analyzing and synthesizing chemical compounds in order to be competent assistants.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_chemistry_analytical",
+    "name": "Chemistry Analytical",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_computer_operation",
+        "description": "Computer operation is highly suggested but not required."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_chemistry"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_mathematics_advanced"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "description": "Training in chemical engineering theories useful in the analysis of compounds and their practical applications. Characters will be highly skilled in the use of laboratory equipment and can analyze and synthesize chemicals.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ]
+  },
+  {
+    "id": "skill_mathematics_advanced",
+    "name": "Math: Advanced",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "description": "Knowledge of all basic and advanced mathematics, including algebra, geometry, trigonometry, calculus, and techniques for advanced mathematical formulae.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ],
+    "skillTraits": [
+      "requires_timing"
+    ]
+  },
+  {
+    "id": "skill_mathematics_basic",
+    "name": "Math: Basic",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Science"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 45,
+    "percentPerLevel": 5,
+    "description": "Knowledge of basic math, including the ability to count, addition, subtraction, multiplication, division, and fractions.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
+      }
+    ],
+    "skillTraits": [
+      "requires_timing"
+    ]
+  }
+]

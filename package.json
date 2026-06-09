@@ -12,6 +12,7 @@
     "validate:morphus": "node scripts/validate-morphus.mjs",
     "morphus:ingest": "node scripts/morphus-ingest.mjs",
     "apply:skill-traits": "node scripts/apply-skill-traits.mjs",
+    "split:skills": "node scripts/split-skills-by-category.mjs",
     "migrate:morphus-skills": "node scripts/migrate-morphus-skill-modifiers.mjs",
     "dedupe:morphus-skill-prose": "node scripts/dedupe-morphus-skill-prose.mjs",
     "preview": "vite preview"

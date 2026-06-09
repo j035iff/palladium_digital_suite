@@ -1,0 +1,89 @@
+[
+  {
+    "id": "skill_locksmith",
+    "name": "Locksmith",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Mechanical"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [
+      {
+        "skillId": "skill_electrical_engineer",
+        "bonusPercent": 5,
+        "description": "+5% when Electrical Engineering is also known (Nightbane Core)."
+      }
+    ],
+    "prerequisites": [
+      {
+        "type": "skill_any_of",
+        "label": "At least Basic Electronics (Electrical Engineering satisfies and grants +5%)",
+        "skillIds": [
+          "skill_basic_electronics",
+          "skill_electrical_engineer"
+        ]
+      }
+    ],
+    "description": "The study of lock designs and the ability to repair, build, modify and open locks. The methods, techniques, and tools of lock picking include the old-style key and tumbler, combination, and modern electrical locking systems. Time requirements: 1D4 melees to open an antiquated key type lock or simple tumbler/combination type; 1D4 minutes to open an elaborate tumbler type; 2D4 minutes to open a simple electronic lock (usually by patching in a bypass system); and 1D4 hours to break a complex, state-of-the-art electronic lock system such as those used in high security and restricted areas. Super high-tech systems, such as those used by the military and government, require 3D4 hours and impose a -20% skill penalty. If an unsuccessful skill roll is made, the lock is not opened and the process must be repeated. If an attempt to open an electronic lock fails, roll again; a second failed roll means the lock is irreparably damaged and cannot be opened.",
+    "failureResults": "The lock is not opened; repeat the attempt. A second failed roll on an electronic lock irreparably damages the lock and it cannot be opened.",
+    "situationalModifiers": [
+      {
+        "task": "Complex or high-tech locks without Electrical Engineering",
+        "percentModifier": -5,
+        "appliesTo": "self",
+        "condition": "Character has Basic Electronics but not Electrical Engineering"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ],
+    "skillTraits": [
+      "related_to_mechanics",
+      "requires_dexterity"
+    ]
+  },
+  {
+    "id": "skill_vehicle_armorer",
+    "name": "Vehicle Armorer",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Mechanical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [
+      {
+        "skillId": "skill_automotive_mechanics",
+        "description": "Taking this skill in conjunction with Automotive Mechanics provides a +10% bonus to the automotive skill."
+      }
+    ],
+    "prerequisites": [],
+    "description": "A specialized skill in which the character can do more than just tinker with the mechanics of a vehicle. Extra Armor: Add more S.D.C. to armor at 25 S.D.C. per level of experience to military/combat vehicles, full-sized vans and large trucks; 10 S.D.C. per level on commercial (non-combat) vehicles. Increase the A.R. of pre-existing or added vehicle armor by 1 point per 3 levels of experience. Includes custom body modifications, ram prows, replacing components, and adding weapon mounts.",
+    "grantsSkills": [
+      {
+        "skillId": "skill_basic_mechanics",
+        "summary": "Automatically gets the Basic Mechanics skill at +20% as part of this skill.",
+        "ruleId": "vehicle_armorer_grants_basic_mechanics"
+      }
+    ],
+    "skillTraits": [
+      "related_to_mechanics"
+    ]
+  }
+]

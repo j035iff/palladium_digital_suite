@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
 import addFormats from 'ajv-formats'
+import { loadSkillsFromDir } from './lib/skills-catalog-fs.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const schemasDir = join(root, 'src/data/schemas')
@@ -91,28 +92,33 @@ const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
 const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
 
-const palladiumSkills = loadJson(join(contentDir, 'palladiumSkills.json'))
-if (!Array.isArray(palladiumSkills)) {
+const skillsDir = join(contentDir, 'skills')
+let palladiumSkills
+try {
+  palladiumSkills = loadSkillsFromDir(skillsDir)
+} catch (err) {
   failed = true
-  console.error('ERR palladiumSkills.json — expected top-level array')
-} else {
+  console.error('ERR content/skills —', err.message)
+  palladiumSkills = []
+}
+if (palladiumSkills.length > 0) {
   let bad = 0
   for (const row of palladiumSkills) {
     if (!validateSkillRow(row)) {
       bad++
       if (bad <= 5) {
         console.error(
-          `ERR palladiumSkills.json id=${row?.id ?? '?'}:`,
+          `ERR content/skills id=${row?.id ?? '?'}:`,
           validateSkillRow.errors,
         )
       }
     }
   }
   if (bad === 0) {
-    console.log(`OK  palladiumSkills.json — ${palladiumSkills.length} rows validate`)
+    console.log(`OK  content/skills — ${palladiumSkills.length} rows validate`)
   } else {
     failed = true
-    console.error(`ERR palladiumSkills.json — ${bad} row(s) failed schema validation`)
+    console.error(`ERR content/skills — ${bad} row(s) failed schema validation`)
   }
 
   const traitRegistry = loadJson(join(contentDir, 'skill_trait_registry.json'))
@@ -124,7 +130,7 @@ if (!Array.isArray(palladiumSkills)) {
         traitBad++
         if (traitBad <= 5) {
           console.error(
-            `ERR palladiumSkills.json id=${row.id}: unknown skillTraits "${tid}"`,
+            `ERR content/skills id=${row.id}: unknown skillTraits "${tid}"`,
           )
         }
       }

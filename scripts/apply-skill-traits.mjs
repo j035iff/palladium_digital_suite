@@ -2,13 +2,17 @@
  * Applies skill trait tags from source lists onto palladiumSkills.json.
  * Run after editing skill_trait_lists/*.txt: npm run apply:skill-traits
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SKILL_TRAIT_LIST_FILES } from './lib/skill-trait-constants.mjs'
+import {
+  loadSkillsFromDir,
+  writeSkillsToDir,
+} from './lib/skills-catalog-fs.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const skillsPath = join(root, 'src/data/content/palladiumSkills.json')
+const skillsDir = join(root, 'src/data/content/skills')
 const listsDir = join(root, 'src/data/source/skill_trait_lists')
 
 const NAME_ALIASES = {
@@ -81,7 +85,7 @@ function resolveSkillId(line, skills, byNorm) {
   return null
 }
 
-const skills = JSON.parse(readFileSync(skillsPath, 'utf8'))
+const skills = loadSkillsFromDir(skillsDir)
 const byNorm = new Map()
 for (const sk of skills) {
   byNorm.set(norm(sk.name), sk.id)
@@ -113,10 +117,10 @@ for (const sk of skills) {
   }
 }
 
-writeFileSync(skillsPath, `${JSON.stringify(skills, null, 2)}\n`, 'utf8')
+writeSkillsToDir(skillsDir, skills)
 
 const tagged = skills.filter((s) => s.skillTraits?.length).length
-console.log(`Tagged ${tagged} skills in palladiumSkills.json`)
+console.log(`Tagged ${tagged} skills in content/skills`)
 if (missing.length) {
   console.warn('Unresolved lines (no catalog id):')
   for (const m of missing) console.warn(`  [${m.trait}] ${m.line}`)

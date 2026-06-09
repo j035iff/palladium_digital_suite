@@ -1,0 +1,153 @@
+[
+  {
+    "id": "skill_navigation",
+    "name": "Navigation",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_mathematics_basic"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_read_sensory_equipment"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "Training in map reading, star charts, course computation, following landmarks, and use of navigational equipment. Includes land, air, and water navigation, as well as piloting by instruments alone.",
+    "failureResults": "A failed roll means the pilot is off course. Roll to determine how many miles/kilometers they are off course. Roll for every hour that one is off course.",
+    "failureFormulas": [
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D6x100",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_aircraft",
+        "linkSummary": "Distance off course for most aircraft.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "aircraft"
+        }
+      },
+      {
+        "consequence": "distance_off_course",
+        "formula": "4D6x100",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_jet",
+        "linkSummary": "Distance off course for jets.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "jet_aircraft"
+        }
+      },
+      {
+        "consequence": "distance_off_course",
+        "formula": "2D6x10",
+        "unit": "miles/kilometers",
+        "metricKey": "nav_off_course_ground",
+        "linkSummary": "Distance off course for ground vehicles.",
+        "contextVariables": [
+          "vehicle_type"
+        ],
+        "contextMatch": {
+          "vehicle_type": "ground_vehicle"
+        }
+      }
+    ],
+    "resolutionLogic": {
+      "type": "standard",
+      "recurrence": {
+        "summary": "Roll for every hour that one is off course.",
+        "intervalValue": 1,
+        "intervalUnit": "hour"
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_read_sensory_equipment",
+    "name": "Read Sensory Equipment",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "description": "Individuals with this training can operate, maintain, understand, and \"read\" or interpret sensory data from all types of conventional sensor devices. These devices include radar, sonar, motion detectors, surveillance equipment, optical enhancements, instrument panels, and so on.",
+    "categoryAccessLockouts": [
+      {
+        "targetCategories": [
+          "Pilot"
+        ],
+        "constraint": "prohibited",
+        "summary": "Characters without this skill cannot understand nor operate aircraft, radar, or detection/surveillance equipment.",
+        "scope": "Aircraft, radar, or detection/surveillance equipment"
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_weapon_systems",
+    "name": "Weapon Systems",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Pilot Related"
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "basePercent": 40,
+    "percentPerLevel": 5,
+    "description": "This is the complete understanding of weapon units and systems incorporated in military vehicles. It includes machineguns, missile and grenade launchers, cannons, and other heavy weapons systems.",
+    "physicalSkillBonuses": {
+      "strike": {
+        "value": 1,
+        "condition": "When using weapon units and systems incorporated in military vehicles; this does not include hand-held weapons."
+      }
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ]
+  }
+]

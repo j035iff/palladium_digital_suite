@@ -1,10 +1,27 @@
 import type { PalladiumSkillCatalogEntry } from './catalogTypes'
-import skillsData from '../content/palladiumSkills.json'
 
-const rows = skillsData as unknown
+const skillModules = import.meta.glob('../content/skills/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, PalladiumSkillCatalogEntry[]>
 
 function loadSkills(): readonly PalladiumSkillCatalogEntry[] {
-  return Array.isArray(rows) ? (rows as PalladiumSkillCatalogEntry[]) : []
+  const byId = new Map<string, PalladiumSkillCatalogEntry>()
+  for (const [path, rows] of Object.entries(skillModules)) {
+    if (!Array.isArray(rows)) {
+      throw new Error(`Skill pool ${path} must be a top-level JSON array`)
+    }
+    for (const row of rows) {
+      if (!row?.id) continue
+      if (byId.has(row.id)) {
+        throw new Error(
+          `Duplicate skill id "${row.id}" in skill catalog (e.g. ${path})`,
+        )
+      }
+      byId.set(row.id, row)
+    }
+  }
+  return [...byId.values()].sort((a, b) => a.id.localeCompare(b.id))
 }
 
 export const PALLADIUM_SKILL_CATALOG: readonly PalladiumSkillCatalogEntry[] = loadSkills()
