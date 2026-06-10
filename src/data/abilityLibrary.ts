@@ -38,6 +38,7 @@ export type AbilityDef = {
   morphusOnly?: boolean
   ppeCost?: number
   activationCost?: string
+  innateStarter?: boolean
 }
 
 function featureToAbilityDef(f: Feature): AbilityDef | null {
@@ -69,6 +70,7 @@ function featureToAbilityDef(f: Feature): AbilityDef | null {
       typeof f.metadata?.activationCost === 'string'
         ? f.metadata.activationCost
         : undefined,
+    innateStarter: f.metadata?.innateStarter === true,
   }
 }
 

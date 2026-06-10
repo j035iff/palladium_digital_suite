@@ -16,18 +16,19 @@ None
 Standard skill progression.
 Minor
 12
-Selection of 1-2 powers. No skill penalty.
+Selection of 2 powers from any one of Sensitive, Physical, or Healing. No skill penalty.
 Major
 12
-Selection of 8 powers. O.C.C. Related skills reduced by 50% (floor).
+Selection of 8 powers from any one of Sensitive, Physical, or Healing, OR 6 powers from any combination of those three categories. O.C.C. Related skills reduced by 50% (floor).
 Master
 10
 Typically O.C.C.-driven. Full skill access.
 
 3. I.S.P. Initialization & Growth
 Upon confirmation of a psychic tier, the Vitality Engine initializes the I.S.P. pool.
-Base Pool: Calculated using the Tier Formula (e.g., M.E. + Dice Roll).
-Growth Variable: A hidden variable is set for the Level-Up Engine to track I.S.P. gain per level (e.g., +1d6).
+Minor Base Pool: M.E. + 2D6 (+1D6/level).
+Major Base Pool: M.E. + 4D6 (+1D6+1/level).
+Power picks are chosen on the Abilities tab (Major: player selects 8-from-one-category or 6-mixed allocation there).
 4. Selection Interaction
 The "Power Picker" UI provides a count-down of available selections based on the Tier.
 Constraint: Super Psionic powers remain locked/hidden for Minor Psionic characters unless a specific O.C.C. ability overrides the restriction.

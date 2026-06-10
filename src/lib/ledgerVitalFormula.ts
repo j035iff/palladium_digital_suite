@@ -177,10 +177,16 @@ export function resolveIspCreationFormula(
       perLevel: occ?.ispEngine?.perLevelFormula?.trim(),
     }
   }
-  if (psychicTier !== 'none') {
+  if (psychicTier === 'minor') {
+    return { base: 'ME + 2D6', perLevel: '1D6' }
+  }
+  if (psychicTier === 'major') {
+    return { base: 'ME + 4D6', perLevel: '1D6+1' }
+  }
+  if (psychicTier === 'master') {
     return { base: 'ME + 1D6' }
   }
-  return { base: 'ME + 1D6' }
+  return null
 }
 
 export function vitalLedgerValueFromFlat(flatTotal: number): string {

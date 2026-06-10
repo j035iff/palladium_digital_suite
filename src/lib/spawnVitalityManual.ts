@@ -1,10 +1,13 @@
-import type { Character, PalladiumOcc, Race } from '../types'
+import type { Character, CharacterRootState, PalladiumOcc, Race } from '../types'
 import type { SpawnVitalityRolls } from './spawnFinalVitality'
 import {
   creationHpLabel,
   creationIspLabel,
   creationSdcLabel,
 } from './creationFormLabels'
+import { applyPendingAttributeDiceToForms } from './creationAttributeSync'
+import { retainCharacterRoot } from './characterRoot'
+import { tryApplyNumericSheetPath } from './vitalityPathUpdate'
 import {
   buildPendingDiceBlocks,
   pendingDiceBlockRunningTotal,
@@ -86,6 +89,58 @@ export function computeSpawnVitalityFromResolutions(
     ppeMax,
     morphusIspMax: facadeIsp,
   }
+}
+
+/** Write H.P./S.D.C./P.P.E./I.S.P. and Review attribute dice from entered resolutions. */
+export function applyPendingDiceResolutionsToCharacter(
+  prev: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  opts: {
+    supportsDualForm: boolean
+    psychicTier: string
+    markVitalityCommitted?: boolean
+  },
+): CharacterRootState {
+  const resolutions = prev.creationPendingDiceResolutions ?? {}
+  const pendingBlocks = buildPendingDiceBlocks(prev, race, occ, {
+    supportsDualForm: opts.supportsDualForm,
+    psychicTier: opts.psychicTier,
+  })
+  const rolls = computeSpawnVitalityFromResolutions(
+    prev,
+    race,
+    occ,
+    resolutions,
+    {
+      supportsDualForm: opts.supportsDualForm,
+      psychicTier: opts.psychicTier,
+    },
+  )
+  const pairs: [string, number][] = [
+    ['facade.hitPoints.maximum', rolls.facadeHp],
+    ['facade.hitPoints.current', rolls.facadeHp],
+    ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
+    ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+    ['morphus.hitPoints.maximum', rolls.morphusHp],
+    ['morphus.hitPoints.current', rolls.morphusHp],
+    ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
+    ['morphus.structuralDamageCapacity.current', rolls.morphusSdc],
+    ['ppe.maximum', rolls.ppeMax],
+    ['ppe.current', rolls.ppeMax],
+    ['morphus.isp.maximum', rolls.morphusIspMax],
+    ['morphus.isp.current', rolls.morphusIspMax],
+  ]
+  let next: CharacterRootState = prev
+  for (const [path, v] of pairs) {
+    const applied = tryApplyNumericSheetPath(next, path, v)
+    next = applied ? retainCharacterRoot(prev, applied) : next
+  }
+  next = applyPendingAttributeDiceToForms(next, pendingBlocks, resolutions)
+  if (opts.markVitalityCommitted) {
+    return { ...next, creationVitalityCommitted: true }
+  }
+  return next
 }
 
 export function vitalityPreviewLines(

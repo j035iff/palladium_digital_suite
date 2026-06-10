@@ -68,6 +68,12 @@ import {
   FORGE_ATTRIBUTE_KEYS,
   type ForgeAttrKey,
 } from './attributeKeys'
+import {
+  buildPendingDiceBlocks,
+  pendingDiceBlockRunningTotal,
+  sumPendingAttributeDiceBonuses,
+  type PendingDiceBlock,
+} from './spawnDiceBlocks'
 
 export const LEDGER_NA = 'N/A'
 /** Unassigned creation attribute pool slot (not yet dragged onto the strip). */
@@ -416,6 +422,7 @@ export function resolveLedgerEffectiveAttributes(
   specializationId?: string | null,
   grantedSkillIds: readonly string[] = [],
   occVariableResolutions: Readonly<Record<string, number>> = {},
+  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>> = {},
 ): CharacterAttributes {
   let attrs = { ...template, ps: { ...template.ps } }
   for (const attr of FORGE_ATTRIBUTE_KEYS) {
@@ -435,11 +442,12 @@ export function resolveLedgerEffectiveAttributes(
       specializationId,
       occVariableResolutions,
     )
+    const pendingBonus = pendingAttrBonuses[attr] ?? 0
     const total =
       poolRoll != null
-        ? poolRoll + bundle.flatTotal + variableBonus
-        : bundle.flatTotal > 0
-          ? bundle.flatTotal
+        ? poolRoll + bundle.flatTotal + variableBonus + pendingBonus
+        : bundle.flatTotal > 0 || pendingBonus > 0
+          ? bundle.flatTotal + variableBonus + pendingBonus
           : null
     if (total == null) continue
     if (attr === 'ps') {
@@ -452,6 +460,47 @@ export function resolveLedgerEffectiveAttributes(
 }
 
 /** All eight attributes — dash until a pool roll is assigned on the attribute strip. */
+function pendingDiceBlockById(
+  blocks: readonly PendingDiceBlock[],
+): Record<string, PendingDiceBlock> {
+  return Object.fromEntries(blocks.map((block) => [block.id, block]))
+}
+
+function vitalityLedgerLineFromBlock(
+  label: string,
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+  fallback: CreationLedgerLine,
+): CreationLedgerLine {
+  if (!block) return { ...fallback, label }
+  const rolls = block.groups.flatMap((group) => group.rolls)
+  const anyEntered = rolls.some((roll) => resolutions[roll.id] != null)
+  if (!anyEntered && block.flatBaseline <= 0) {
+    return { ...fallback, label }
+  }
+  const total = pendingDiceBlockRunningTotal(block, resolutions)
+  const allEntered =
+    rolls.length === 0 ||
+    rolls.every((roll) => {
+      const value = resolutions[roll.id]
+      return (
+        value != null &&
+        Number.isFinite(value) &&
+        value >= roll.min &&
+        value <= roll.max
+      )
+    })
+  return {
+    label,
+    value: String(total),
+    hint: allEntered ? fallback.hint : block.hint ?? fallback.hint,
+    valueModified:
+      block.flatBaseline > 0 || anyEntered || fallback.valueModified === true,
+    valueTooltip: block.flatTooltip ?? fallback.valueTooltip,
+    diceGroups: fallback.diceGroups,
+  }
+}
+
 export function buildCreationAttributeBlock(
   _attrs: CharacterAttributes,
   assignments: Partial<Record<ForgeAttrKey, number>> = {},
@@ -460,6 +509,7 @@ export function buildCreationAttributeBlock(
   specializationId?: string | null,
   grantedSkillIds: readonly string[] = [],
   occVariableResolutions: Readonly<Record<string, number>> = {},
+  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>> = {},
 ): CreationLedgerLine[] {
   return FORGE_ATTRIBUTE_KEYS.map((attr) => {
     const assigned = assignments[attr]
@@ -478,14 +528,16 @@ export function buildCreationAttributeBlock(
       specializationId,
       occVariableResolutions,
     )
+    const pendingBonus = pendingAttrBonuses[attr] ?? 0
     const total =
       poolRoll != null
-        ? poolRoll + bundle.flatTotal + variableBonus
-        : bundle.flatTotal > 0
-          ? bundle.flatTotal
+        ? poolRoll + bundle.flatTotal + variableBonus + pendingBonus
+        : bundle.flatTotal > 0 || pendingBonus > 0
+          ? bundle.flatTotal + variableBonus + pendingBonus
           : null
 
-    const hasBonuses = bundle.flatTotal > 0 || variableBonus > 0
+    const hasBonuses =
+      bundle.flatTotal > 0 || variableBonus > 0 || pendingBonus > 0
     return {
       label: ATTR_LEDGER_LABELS[attr],
       inlineRaceRoll: bundle.inlineRaceRoll,
@@ -669,12 +721,23 @@ export function buildCreationVitalsBlock(opts: {
   skillIds: readonly string[]
 }): CreationLedgerLine[] {
   const assignments = opts.character.creationAttributeAssignments ?? {}
+  const resolutions = opts.character.creationPendingDiceResolutions ?? {}
   const preview = creationVitalityPreview(opts.character, opts.race, opts.occ, {
     psychicTier: opts.psychicTier,
     assignments,
   })
   const showIsp =
     opts.psychicTier !== 'none' || opts.character.psychicGateBypassed === true
+  const pendingBlocks = buildPendingDiceBlocks(
+    opts.character,
+    opts.race,
+    opts.occ,
+    {
+      supportsDualForm: opts.supportsDualForm,
+      psychicTier: opts.psychicTier,
+    },
+  )
+  const pendingById = pendingDiceBlockById(pendingBlocks)
 
   const hpFormula = opts.race ? (opts.race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
@@ -711,8 +774,11 @@ export function buildCreationVitalsBlock(opts: {
   )
 
   const lines: CreationLedgerLine[] = [
-    { label: 'H.P.', ...hpFields },
-    {
+    vitalityLedgerLineFromBlock('H.P.', pendingById.hp, resolutions, {
+      label: 'H.P.',
+      ...hpFields,
+    }),
+    vitalityLedgerLineFromBlock('S.D.C.', pendingById.sdc, resolutions, {
       label: 'S.D.C.',
       value:
         sdcBonuses.flatTotal > 0
@@ -722,10 +788,16 @@ export function buildCreationVitalsBlock(opts: {
       valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
       diceGroups:
         sdcBonuses.diceGroups.length > 0 ? sdcBonuses.diceGroups : undefined,
-    },
-    { label: 'P.P.E.', ...ppeFields },
+    }),
+    vitalityLedgerLineFromBlock('P.P.E.', pendingById.ppe, resolutions, {
+      label: 'P.P.E.',
+      ...ppeFields,
+    }),
     showIsp && ispFields
-      ? { label: 'I.S.P.', ...ispFields }
+      ? vitalityLedgerLineFromBlock('I.S.P.', pendingById.isp, resolutions, {
+          label: 'I.S.P.',
+          ...ispFields,
+        })
       : { label: 'I.S.P.', value: LEDGER_NA },
     {
       label: 'H.F.',
@@ -739,18 +811,28 @@ export function buildCreationVitalsBlock(opts: {
 
   if (opts.supportsDualForm) {
     lines.push(
-      {
-        label: creationHpLabel(true, 'morphus'),
-        ...buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
-          hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
-        }),
-      },
-      {
-        label: creationSdcLabel(true, 'morphus'),
-        ...buildAttrFormulaLedgerFields('PEx4 + PSx2 + 2D6*8', assignments, {
-          hintOverride: 'P.E.×4 + P.S.×2 + 2D6×8 (resolve at Spawn)',
-        }),
-      },
+      vitalityLedgerLineFromBlock(
+        creationHpLabel(true, 'morphus'),
+        pendingById.morphus_hp,
+        resolutions,
+        {
+          label: creationHpLabel(true, 'morphus'),
+          ...buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
+            hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
+          }),
+        },
+      ),
+      vitalityLedgerLineFromBlock(
+        creationSdcLabel(true, 'morphus'),
+        pendingById.morphus_sdc,
+        resolutions,
+        {
+          label: creationSdcLabel(true, 'morphus'),
+          ...buildAttrFormulaLedgerFields('PEx4 + PSx2 + 2D6*8', assignments, {
+            hintOverride: 'P.E.×4 + P.S.×2 + 2D6×8 (resolve at Spawn)',
+          }),
+        },
+      ),
     )
   }
 
@@ -1356,6 +1438,19 @@ export function buildCreationLiveLedgerSnapshot(opts: {
   horrorFactorTotal?: number | null
 }): CreationLiveLedgerSnapshot {
   const skillIds = resolveCreationSkillIds(opts.character, opts.occ)
+  const pendingBlocks = buildPendingDiceBlocks(
+    opts.character,
+    opts.race,
+    opts.occ,
+    {
+      supportsDualForm: opts.supportsDualForm,
+      psychicTier: opts.psychicTier,
+    },
+  )
+  const pendingAttrBonuses = sumPendingAttributeDiceBonuses(
+    pendingBlocks,
+    opts.character.creationPendingDiceResolutions ?? {},
+  )
   const passive = aggregateAllPassiveModifiers(
     opts.character,
     opts.activeForm,
@@ -1380,6 +1475,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     opts.character.occSpecializationId,
     skillIds,
     opts.character.creationOccVariableResolutions ?? {},
+    pendingAttrBonuses,
   )
 
   const damageCtx: CreationCombatDamageContext = {
@@ -1409,6 +1505,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       opts.character.occSpecializationId,
       skillIds,
       opts.character.creationOccVariableResolutions ?? {},
+      pendingAttrBonuses,
     ),
     exceptional: buildCreationExceptionalStandardBlock(effectiveAttrs),
     exceptionalSuper,

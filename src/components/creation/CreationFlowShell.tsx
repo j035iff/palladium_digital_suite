@@ -8,7 +8,11 @@ import { PsychicGate } from './PsychicGate'
 
 import { SkillEngine } from './SkillEngine'
 
-import { AbilitySelection } from './AbilitySelection'
+import {
+  SupernaturalAbilitiesForge,
+  SupernaturalAbilitiesForgeLaneTabs,
+} from './abilities/SupernaturalAbilitiesForge'
+import { SupernaturalAbilitiesForgeProvider } from './abilities/SupernaturalAbilitiesForgeContext'
 
 import { CreationReviewFinalize } from './CreationReviewFinalize'
 
@@ -84,7 +88,7 @@ function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
 
     case 'tab6_abilities':
 
-      return <AbilitySelection />
+      return <SupernaturalAbilitiesForge />
 
     case 'tab7_review':
 
@@ -210,79 +214,89 @@ export function CreationFlowShell({
 
 
 
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+      <SupernaturalAbilitiesForgeProvider>
 
-        <div
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
 
-          className="shrink-0 border-b border-slate-200 bg-white pb-3 shadow-sm dark:border-slate-700 dark:bg-slate-950"
+          <div
 
-          aria-label="Creation forge frame"
+            className="shrink-0 border-b border-slate-200 bg-white pb-3 shadow-sm dark:border-slate-700 dark:bg-slate-950"
 
-        >
+            aria-label="Creation forge frame"
 
-          <div className="pt-1">
+          >
 
-            <ForgeNavigationBar
+            <div className="pt-1">
 
-              tabs={nav.tabs}
+              <ForgeNavigationBar
 
-              activeTabId={activeTabId}
+                tabs={nav.tabs}
 
-              onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+                activeTabId={activeTabId}
 
-            />
+                onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+
+              />
+
+            </div>
+
+            <div className="mt-3">
+
+              <ForgeTabPageHeader
+
+                title={CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]}
+
+                visual={activeView?.visual ?? 'active'}
+
+                requirements={activeRequirements}
+
+                actions={
+
+                  nav.showContinue ? (
+
+                    <ForgeContinueGate
+
+                      inline
+
+                      showBlockers={false}
+
+                      enabled={nav.continueEnabled}
+
+                      validated={activeView?.visual === 'complete'}
+
+                      headerVisual={activeView?.visual}
+
+                      tooltip={nav.continueTooltip}
+
+                      blockers={activeBlockers}
+
+                      onContinue={handleContinue}
+
+                    />
+
+                  ) : null
+
+                }
+
+              />
+
+            </div>
+
+            {activeTabId === 'tab6_abilities' ? (
+              <div className="mt-3 px-4">
+                <SupernaturalAbilitiesForgeLaneTabs />
+              </div>
+            ) : null}
 
           </div>
-
-          <div className="mt-3">
-
-            <ForgeTabPageHeader
-
-              title={CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]}
-
-              visual={activeView?.visual ?? 'active'}
-
-              requirements={activeRequirements}
-
-              actions={
-
-                nav.showContinue ? (
-
-                  <ForgeContinueGate
-
-                    inline
-
-                    showBlockers={false}
-
-                    enabled={nav.continueEnabled}
-
-                    validated={activeView?.visual === 'complete'}
-
-                    headerVisual={activeView?.visual}
-
-                    tooltip={nav.continueTooltip}
-
-                    blockers={activeBlockers}
-
-                    onContinue={handleContinue}
-
-                  />
-
-                ) : null
-
-              }
-
-            />
-
-          </div>
-
-        </div>
 
 
 
         <div
           className={
-            activeTabId === 'tab4_skills' || activeTabId === 'tab1_configurator'
+            activeTabId === 'tab4_skills' ||
+            activeTabId === 'tab1_configurator' ||
+            activeTabId === 'tab6_abilities'
               ? 'flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4 md:pl-4'
               : 'min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4 md:pl-4'
           }
@@ -368,7 +382,9 @@ export function CreationFlowShell({
 
         </div>
 
-      </div>
+        </div>
+
+      </SupernaturalAbilitiesForgeProvider>
 
     </div>
 

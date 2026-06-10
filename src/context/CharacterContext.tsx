@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { getAbilityById } from '../data/abilityLibrary'
 import { characterFixture } from '../data/characterFixture'
 import { initialInventoryItems } from '../data/inventoryFixture'
 import {
@@ -41,8 +42,6 @@ import {
   applyPsychicTierToFormState,
   saveVsPsionicsForTier,
   skillSlotMultiplierForTier,
-  tierFromTestPotential,
-  rollD100,
 } from '../lib/psychicGate'
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
 import { rollFacadeSdcMaximum } from '../lib/spawnFinalVitality'
@@ -139,6 +138,7 @@ import type {
   CombatHudDamagePulse,
   CombatNarrativeEntry,
   FeatureModifiers,
+  PsychicGateMajorAllocation,
   PsychicTier,
   MorphusStanceType,
   MorphusSurfaceType,
@@ -160,6 +160,13 @@ import {
 } from '../lib/raceEngine'
 import { occSkillSlotPolicy } from '../lib/occCatalogEngine'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
+import { resolveEffectiveCreationAbilityBudget } from '../lib/creationAbilityBudget'
+import {
+  listGatePsionicSelections,
+  psychicGatePsionicPickAllowed,
+  psychicGatePsionicRulesApply,
+  psychicGateRequiredPickCount,
+} from '../lib/psychicGatePsionicBudget'
 import {
   creationNeedsAbilitySelection,
   resolvePsychicGateBypassed,
@@ -176,9 +183,7 @@ import {
   legacyPhaseToForgeTab,
 } from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
-import { computeSpawnVitalityFromResolutions } from '../lib/spawnVitalityManual'
-import { applyPendingAttributeDiceToForms } from '../lib/creationAttributeSync'
-import { buildPendingDiceBlocks } from '../lib/spawnDiceBlocks'
+import { applyPendingDiceResolutionsToCharacter } from '../lib/spawnVitalityManual'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -318,8 +323,7 @@ type CharacterContextValue = {
   /** Save vs. Psionics roll target for the current tier. */
   saveVsPsionicsTarget: 15 | 12 | 10
   setPsychicTier: (tier: PsychicTier) => void
-  /** Standard entry: roll d100 and apply {@link tierFromTestPotential} bands. */
-  testPsychicPotential: () => number
+  setPsychicGateMajorAllocation: (allocation: PsychicGateMajorAllocation) => void
   toggleForm: () => void
   /**
    * Dot-path setter for attributes and numeric sheet pools.
@@ -403,8 +407,6 @@ type CharacterContextValue = {
   ) => void
   setCreationPendingDiceResolution: (entryId: string, value: number) => void
   setAlignment: (alignment: string) => void
-  /** Phase IV — apply manual dice resolutions to vitality pools (no auto-roll). */
-  commitVitalityFromPendingDice: () => void
   /** Live combat — A.P.M. tracker (combat_logic.md §3). */
   attacksPerMelee: AttacksPerMeleeState
   spendCombatAction: (amount?: number) => void
@@ -548,11 +550,20 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
   if (!def) return null
   const selected = prev.selectedAbilities ?? []
   if (selected.includes(id)) return null
-  if (!creationNeedsAbilitySelection(prev.creationAbilityBudget, prev.creationGenreId)) {
-    return null
-  }
 
   const occRow = getLibraryOccById(prev.occ.id)
+  const tier = resolveCreationPsychicTier(prev, prev.creationPsychicTier ?? 'none')
+  const abilityBudget = resolveEffectiveCreationAbilityBudget({
+    occ: occRow,
+    psychicTier: tier,
+    psychicGateBypassed: prev.psychicGateBypassed === true,
+    majorAllocation: prev.creationPsychicGateMajorAllocation,
+    storedBudget: prev.creationAbilityBudget,
+    creationGenreId: prev.creationGenreId ?? prev.hostGenreId,
+  })
+  if (!creationNeedsAbilitySelection(abilityBudget, prev.creationGenreId)) {
+    return null
+  }
   const spellCap = occRow
     ? occStartingSpellLevelCap(occRow)
     : (prev.startingSpellLevelCap ?? 4)
@@ -560,29 +571,59 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
   const spellLevel =
     typeof def.metadata?.level === 'number' ? def.metadata.level : undefined
 
+  const genreId = prev.creationGenreId ?? prev.hostGenreId
   if (occRow) {
-    const gate = abilityPassesOccSupernaturalRules(occRow, def, spellCap)
+    const gate = abilityPassesOccSupernaturalRules(
+      occRow,
+      def,
+      spellCap,
+      genreId,
+    )
     if (!gate.allowed) return null
   } else if (cat === 'Spell' && spellLevel != null && spellLevel > spellCap) {
     return null
   }
 
-  const b = occRow
-    ? occCreationAbilityBudget(occRow)
-    : (prev.creationAbilityBudget ?? {
-        spellSlots: 0,
-        psionicSlots: 0,
-        talentSlots: 0,
-      })
   const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
     selected.filter((x) => {
       const f = getFeatureById(x)
       return f != null && featureBudgetCategory(f) === c
     }).length
 
-  if (cat === 'Spell' && countCat('Spell') >= b.spellSlots) return null
-  if (cat === 'Psionic' && countCat('Psionic') >= b.psionicSlots) return null
-  if (cat === 'Talent' && countCat('Talent') >= b.talentSlots) return null
+  if (cat === 'Psionic') {
+    const psychicGate = psychicGatePsionicPickAllowed({
+      tier,
+      majorAllocation: prev.creationPsychicGateMajorAllocation,
+      psychicGateBypassed: prev.psychicGateBypassed === true,
+      occ: occRow,
+      selectedIds: selected,
+      candidateId: id,
+      genreId: genreId ?? 'nightbane',
+    })
+    if (psychicGate && !psychicGate.allowed) return null
+  }
+
+  if (cat === 'Spell' && countCat('Spell') >= abilityBudget.spellSlots) return null
+  if (cat === 'Psionic') {
+    const gateApplies = psychicGatePsionicRulesApply(
+      occRow,
+      tier,
+      prev.psychicGateBypassed === true,
+    )
+    if (gateApplies) {
+      const required =
+        psychicGateRequiredPickCount(tier, prev.creationPsychicGateMajorAllocation) ??
+        abilityBudget.psionicSlots
+      const gateTotal = listGatePsionicSelections(
+        selected,
+        genreId ?? 'nightbane',
+      ).length
+      if (gateTotal >= required) return null
+    } else if (countCat('Psionic') >= abilityBudget.psionicSlots) {
+      return null
+    }
+  }
+  if (cat === 'Talent' && countCat('Talent') >= abilityBudget.talentSlots) return null
   if (!cat) return null
 
   return { ...prev, selectedAbilities: [...selected, id] }
@@ -1584,6 +1625,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setActiveForm((f) => (f === 'facade' ? 'morphus' : 'facade'))
   }, [character])
 
+  const stripPsionicSelections = useCallback((ids: readonly string[]) => {
+    return ids.filter((abilityId) => getAbilityById(abilityId)?.category !== 'Psionic')
+  }, [])
+
   const setPsychicTier = useCallback(
     (tier: PsychicTier) => {
       if (gateBypassed) return
@@ -1594,35 +1639,40 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setRawCharacter((prev) => {
         const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
         const branch = getFormState(prev, form)
+        const tierChanged = prev.creationPsychicTier !== tier
         return {
           ...prev,
           creationPsychicTier: tier,
           creationPsychicTierChosen: true,
+          creationPsychicGateMajorAllocation:
+            tier === 'major'
+              ? tierChanged
+                ? undefined
+                : prev.creationPsychicGateMajorAllocation
+              : undefined,
+          selectedAbilities: tierChanged
+            ? stripPsionicSelections(prev.selectedAbilities ?? [])
+            : prev.selectedAbilities,
           [form]: applyPsychicTierToFormState(branch, tier),
         }
       })
     },
-    [activeForm, gateBypassed, occPsychicLocked],
+    [activeForm, gateBypassed, occPsychicLocked, stripPsionicSelections],
   )
 
-  const testPsychicPotential = useCallback((): number => {
-    if (gateBypassed) return 0
-    if (occPsychicLocked) return 0
-    const roll = rollD100()
-    const tier = tierFromTestPotential(roll)
-    setPsychicTierState(tier)
-    setRawCharacter((prev) => {
-      const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
-      const branch = getFormState(prev, form)
-      return {
-        ...prev,
-        creationPsychicTier: tier,
-        creationPsychicTierChosen: true,
-        [form]: applyPsychicTierToFormState(branch, tier),
-      }
-    })
-    return roll
-  }, [activeForm, gateBypassed, occPsychicLocked])
+  const setPsychicGateMajorAllocation = useCallback(
+    (allocation: PsychicGateMajorAllocation) => {
+      setRawCharacter((prev) => {
+        if (prev.creationPsychicGateMajorAllocation === allocation) return prev
+        return {
+          ...prev,
+          creationPsychicGateMajorAllocation: allocation,
+          selectedAbilities: stripPsionicSelections(prev.selectedAbilities ?? []),
+        }
+      })
+    },
+    [stripPsionicSelections],
+  )
 
   const updateAttribute = useCallback(
     (path: string, value: number | string) => {
@@ -2154,52 +2204,19 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
-  const commitVitalityFromPendingDice = useCallback(() => {
+  const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => {
       const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
       const occ = getLibraryOccById(prev.occ.id)
       const dual = characterHasDualForms(prev)
       const tier = prev.psychicGateBypassed ? 'none' : psychicTier
-      const resolutions = prev.creationPendingDiceResolutions ?? {}
-      const pendingBlocks = buildPendingDiceBlocks(prev, race, occ, {
+      let next = applyPendingDiceResolutionsToCharacter(prev, race, occ, {
         supportsDualForm: dual,
         psychicTier: tier,
+        markVitalityCommitted: true,
       })
-      const rolls = computeSpawnVitalityFromResolutions(
-        prev,
-        race,
-        occ,
-        resolutions,
-        { supportsDualForm: dual, psychicTier: tier },
-      )
-      const pairs: [string, number][] = [
-        ['facade.hitPoints.maximum', rolls.facadeHp],
-        ['facade.hitPoints.current', rolls.facadeHp],
-        ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
-        ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
-        ['morphus.hitPoints.maximum', rolls.morphusHp],
-        ['morphus.hitPoints.current', rolls.morphusHp],
-        ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
-        ['morphus.structuralDamageCapacity.current', rolls.morphusSdc],
-        ['ppe.maximum', rolls.ppeMax],
-        ['ppe.current', rolls.ppeMax],
-        ['morphus.isp.maximum', rolls.morphusIspMax],
-        ['morphus.isp.current', rolls.morphusIspMax],
-      ]
-      let next: CharacterRootState = prev
-      for (const [path, v] of pairs) {
-        const applied = tryApplyNumericSheetPath(next, path, v)
-        next = applied ? retainCharacterRoot(prev, applied) : next
-      }
-      next = applyPendingAttributeDiceToForms(next, pendingBlocks, resolutions)
-      return { ...next, creationVitalityCommitted: true }
-    })
-  }, [psychicTier])
-
-  const finalizeCharacter = useCallback(() => {
-    setRawCharacter((prev) => {
-      const next = applySpawnSheetHandoff(prev, {
-        psychicTier: resolveCreationPsychicTier(prev, psychicTier),
+      next = applySpawnSheetHandoff(next, {
+        psychicTier: resolveCreationPsychicTier(next, psychicTier),
       })
       persistCharacterSave(next)
       return next
@@ -2383,7 +2400,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       skillSlotMultiplier,
       saveVsPsionicsTarget,
       setPsychicTier,
-      testPsychicPotential,
+      setPsychicGateMajorAllocation,
       toggleForm,
       updateAttribute,
       getVitalityType,
@@ -2421,7 +2438,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,
-      commitVitalityFromPendingDice,
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,
@@ -2518,7 +2534,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       skillSlotMultiplier,
       saveVsPsionicsTarget,
       setPsychicTier,
-      testPsychicPotential,
+      setPsychicGateMajorAllocation,
       toggleForm,
       updateAttribute,
       getVitalityType,
@@ -2548,7 +2564,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,
-      commitVitalityFromPendingDice,
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,

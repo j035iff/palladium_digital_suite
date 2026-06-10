@@ -11,8 +11,6 @@ import {
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
 } from '../../lib/configuratorMatrix'
-import { validateOccVariableResolution } from '../../lib/occVariableBonus'
-import { listOccVariableBonusTasks } from '../../lib/occVariableBonus'
 import { DevAutoRollPendingDiceButton } from './dev/DevAutoRollPendingDiceButton'
 import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 import {
@@ -118,17 +116,6 @@ export function CreationReviewFinalize({
   const secPicks = getCreationSecondaryPicks(character)
   const abilityIds = character.selectedAbilities ?? []
 
-  const validateBeforeVitalityCommit = () => {
-    for (const task of listOccVariableBonusTasks(
-      effectiveOcc ?? undefined,
-      character.occSpecializationId,
-    )) {
-      const v = character.creationOccVariableResolutions?.[task.id]
-      if (v != null && !validateOccVariableResolution(task, v)) return false
-    }
-    return true
-  }
-
   const handleSpawnClick = () => {
     if (blockers.length > 0) return
     setConfirmOpen(true)
@@ -142,17 +129,14 @@ export function CreationReviewFinalize({
   return (
     <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
-        Enter your physical die results, commit vitality pools, choose alignment, then
-        spawn to lock the record (forge-character_creation.md Tab 7).
+        Enter your physical die results, choose alignment, then spawn to lock the record
+        (forge-character_creation.md Tab 7). The Live Ledger updates as you enter rolls.
       </p>
 
       <DevAutoRollPendingDiceButton />
 
       <div className="mb-4">
-        <PendingDiceResolutionPanel
-          showCommit
-          onBeforeCommit={validateBeforeVitalityCommit}
-        />
+        <PendingDiceResolutionPanel />
       </div>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">

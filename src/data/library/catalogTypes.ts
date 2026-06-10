@@ -61,6 +61,7 @@ export type PalladiumPsionicCatalogEntry = {
   id: string
   name: string
   description: string
+  descriptionMorphus?: string
   gameSystems: readonly string[]
   sources: readonly PalladiumSourceRef[]
   genrePlacements: readonly {

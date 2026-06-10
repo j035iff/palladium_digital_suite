@@ -7,6 +7,17 @@ import {
 } from '../creationAttributeSync'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from '../attributeKeys'
 import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
+import {
+  countSelectedAbilitiesByBudgetCategory,
+  formatAbilityBudgetRequirementLabel,
+  resolveEffectiveCreationAbilityBudget,
+} from '../creationAbilityBudget'
+import {
+  formatPsychicGateRequirementLabel,
+  listGatePsionicSelections,
+  psychicGatePsionicRulesApply,
+  psychicGateRequiredPickCount,
+} from '../psychicGatePsionicBudget'
 import { creationNeedsAbilitySelection } from '../creationPhases'
 import {
   creationPsychicGateRequiresTierChoice,
@@ -21,7 +32,6 @@ import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
   occRelatedSkillSlotBudget,
   occSecondarySkillSlots,
-  occCreationAbilityBudget,
 } from '../occCreationDerivation'
 import {
   collectAllCreationSkillPicks,
@@ -179,7 +189,7 @@ function tab3Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
   ) {
     return []
   }
-  return [
+  const requirements: ForgeTabRequirement[] = [
     {
       id: 'psychic-tier',
       label: 'Select None, Minor, or Major psionic potential',
@@ -190,6 +200,8 @@ function tab3Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
       ),
     },
   ]
+
+  return requirements
 }
 
 function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
@@ -308,20 +320,99 @@ function tab5Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
 }
 
 function tab6Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
-  const budget = ctx.occ
-    ? occCreationAbilityBudget(ctx.occ)
-    : ctx.character.creationAbilityBudget
-  if (!creationNeedsAbilitySelection(budget, ctx.character.creationGenreId)) {
+  const genreId = ctx.character.creationGenreId ?? 'nightbane'
+  const budget = resolveEffectiveCreationAbilityBudget({
+    occ: ctx.occ,
+    psychicTier: ctx.psychicTier,
+    psychicGateBypassed: ctx.character.psychicGateBypassed === true,
+    majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
+    storedBudget: ctx.character.creationAbilityBudget,
+    creationGenreId: genreId,
+  })
+  if (!creationNeedsAbilitySelection(budget, genreId)) {
     return []
   }
-  const abs = ctx.character.selectedAbilities ?? []
-  return [
-    {
-      id: 'ability-min',
-      label: 'Pick at least one supernatural ability',
-      satisfied: abs.length >= 1,
-    },
-  ]
+  const counts = countSelectedAbilitiesByBudgetCategory(
+    ctx.character.selectedAbilities,
+  )
+  const requirements: ForgeTabRequirement[] = []
+  if (budget.spellSlots > 0) {
+    requirements.push({
+      id: 'ability-spells',
+      label: formatAbilityBudgetRequirementLabel(
+        'spell',
+        counts.spell,
+        budget.spellSlots,
+      ),
+      satisfied: counts.spell >= budget.spellSlots,
+    })
+  }
+  if (budget.psionicSlots > 0) {
+    const gatePsionics = psychicGatePsionicRulesApply(
+      ctx.occ,
+      ctx.psychicTier,
+      ctx.character.psychicGateBypassed === true,
+    )
+    if (gatePsionics) {
+      if (
+        ctx.psychicTier === 'major' &&
+        !ctx.character.creationPsychicGateMajorAllocation
+      ) {
+        requirements.push({
+          id: 'psychic-major-allocation',
+          label:
+            'Choose Major psionic allocation (8 from one category, or 6 mixed)',
+          satisfied: false,
+        })
+      } else {
+      const label = formatPsychicGateRequirementLabel(
+        ctx.psychicTier,
+        ctx.character.creationPsychicGateMajorAllocation,
+        ctx.character.selectedAbilities,
+        genreId,
+      )
+      const required =
+        psychicGateRequiredPickCount(
+          ctx.psychicTier,
+          ctx.character.creationPsychicGateMajorAllocation,
+        ) ?? budget.psionicSlots
+      const gateTotal = listGatePsionicSelections(
+        ctx.character.selectedAbilities,
+        genreId,
+      ).length
+      const allocationChosen =
+        ctx.psychicTier !== 'major' ||
+        Boolean(ctx.character.creationPsychicGateMajorAllocation)
+      requirements.push({
+        id: 'ability-psionics',
+        label,
+        satisfied: allocationChosen && gateTotal >= required,
+      })
+      }
+    } else {
+      requirements.push({
+        id: 'ability-psionics',
+        label: formatAbilityBudgetRequirementLabel(
+          'psionic',
+          counts.psionic,
+          budget.psionicSlots,
+        ),
+        satisfied: counts.psionic >= budget.psionicSlots,
+      })
+    }
+  }
+  if (budget.talentSlots > 0) {
+    requirements.push({
+      id: 'ability-talents',
+      label: formatAbilityBudgetRequirementLabel(
+        'talent',
+        counts.talent,
+        budget.talentSlots,
+      ),
+      satisfied: counts.talent >= budget.talentSlots,
+    })
+  }
+  return requirements
 }
 
 export function listCharacterCreationTabRequirements(

@@ -72,6 +72,32 @@ describe('spawnDiceBlocks', () => {
     expect(spd?.groups.find((g) => g.kind === 'occ')?.rolls[0]?.notation).toBe('1D6')
   })
 
+  it('orders Review dice blocks as Attributes, HP, SDC, PPE, ISP', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const character = {
+      ...characterFixture,
+      creationAttributeAssignments: { spd: 14 },
+      creationSecondarySkillPicks: [
+        { instanceId: 'ath', skillId: 'skill_athletics_general' },
+      ],
+    }
+    const blocks = buildPendingDiceBlocks(character, human, occ, {
+      psychicTier: 'major',
+    })
+    const ids = blocks.map((block) => block.id)
+    const attrIndex = ids.findIndex((id) => id.startsWith('attr_'))
+    const hpIndex = ids.indexOf('hp')
+    const sdcIndex = ids.indexOf('sdc')
+    const ppeIndex = ids.indexOf('ppe')
+    const ispIndex = ids.indexOf('isp')
+    expect(attrIndex).toBeGreaterThanOrEqual(0)
+    expect(hpIndex).toBeGreaterThan(attrIndex)
+    expect(sdcIndex).toBeGreaterThan(hpIndex)
+    expect(ppeIndex).toBeGreaterThan(sdcIndex)
+    expect(ispIndex).toBeGreaterThan(ppeIndex)
+  })
+
   it('updates running total from flat baseline plus entered rolls', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')

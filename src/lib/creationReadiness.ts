@@ -1,11 +1,11 @@
 import type { Character } from '../types'
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
-import { creationNeedsAbilitySelection } from './creationPhases'
-import type { CharacterRootState } from '../types'
 import {
-  occCreationAbilityBudget,
-  occRelatedSkillSlotBudget,
-} from './occCreationDerivation'
+  assessAbilitiesBudgetBlockers,
+  resolveEffectiveCreationAbilityBudget,
+} from './creationAbilityBudget'
+import type { CharacterRootState } from '../types'
+import { occRelatedSkillSlotBudget } from './occCreationDerivation'
 import { raceCanPickOcc } from './raceEngine'
 import {
   assessAttributesBlockers,
@@ -135,15 +135,25 @@ export function assessCreationReviewBlockers(
     )
   }
 
-  const abilityBudget = occLib
-    ? occCreationAbilityBudget(occLib)
-    : character.creationAbilityBudget
-  if (creationNeedsAbilitySelection(abilityBudget, character.creationGenreId)) {
-    const abs = character.selectedAbilities ?? []
-    if (abs.length < 1) {
-      blockers.push('Pick at least one supernatural ability.')
-    }
-  }
+  const psychicTier = resolveCreationPsychicTier(character)
+  blockers.push(
+    ...assessAbilitiesBudgetBlockers({
+      budget: resolveEffectiveCreationAbilityBudget({
+        occ: occLib,
+        psychicTier,
+        psychicGateBypassed: character.psychicGateBypassed === true,
+        majorAllocation: character.creationPsychicGateMajorAllocation,
+        storedBudget: character.creationAbilityBudget,
+        creationGenreId: character.creationGenreId,
+      }),
+      creationGenreId: character.creationGenreId,
+      selectedIds: character.selectedAbilities,
+      occ: occLib,
+      psychicTier,
+      psychicGateBypassed: character.psychicGateBypassed === true,
+      majorAllocation: character.creationPsychicGateMajorAllocation,
+    }),
+  )
 
   return blockers
 }
@@ -172,10 +182,6 @@ export function assessCreationSpawnBlockers(
     )
   ) {
     blockers.push('Enter all pending dice results on the Review screen.')
-  }
-
-  if (!character.creationVitalityCommitted) {
-    blockers.push('Commit vitality pools on the Review screen.')
   }
 
   return blockers

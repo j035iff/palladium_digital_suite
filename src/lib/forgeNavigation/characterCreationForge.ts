@@ -38,12 +38,14 @@ import {
 } from '../creationSkillPicks'
 import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
-  occCreationAbilityBudget,
   occRelatedSkillSlotBudget,
   occSecondarySkillSlots,
 } from '../occCreationDerivation'
 import { raceCanPickOcc, raceLineageFromDefinition } from '../raceEngine'
-import { getAbilityById } from '../../data/abilityLibrary'
+import {
+  assessAbilitiesBudgetBlockers,
+  resolveEffectiveCreationAbilityBudget,
+} from '../creationAbilityBudget'
 import {
   deriveForgeNavigation,
   invalidateForgeCompletionFrom,
@@ -244,39 +246,27 @@ function assessPsychicTabBlockers(ctx: CharacterCreationForgeContext): string[] 
   return []
 }
 
-function assessAbilitiesMinimumBlockers(
-  ctx: CharacterCreationForgeContext,
-): string[] {
-  const occLib = ctx.occ
-  const budget = occLib
-    ? occCreationAbilityBudget(occLib)
-    : ctx.character.creationAbilityBudget
-  if (!creationNeedsAbilitySelection(budget, ctx.character.creationGenreId)) {
-    return []
-  }
-  const abs = ctx.character.selectedAbilities ?? []
-  if (abs.length < 1) {
-    return ['Pick at least one supernatural ability.']
-  }
-  return []
+function resolveCreationAbilityBudget(ctx: CharacterCreationForgeContext) {
+  return resolveEffectiveCreationAbilityBudget({
+    occ: ctx.occ,
+    psychicTier: ctx.psychicTier,
+    psychicGateBypassed: ctx.character.psychicGateBypassed === true,
+    majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
+    storedBudget: ctx.character.creationAbilityBudget,
+    creationGenreId: ctx.character.creationGenreId,
+  })
 }
 
-export function abilitiesHaveOptionalPicksRemaining(
-  ctx: CharacterCreationForgeContext,
-): boolean {
-  const budget = ctx.occ
-    ? occCreationAbilityBudget(ctx.occ)
-    : ctx.character.creationAbilityBudget
-  if (!budget) return false
-  const ids = ctx.character.selectedAbilities ?? []
-  const spell = ids.filter((id) => getAbilityById(id)?.category === 'Spell').length
-  const psionic = ids.filter((id) => getAbilityById(id)?.category === 'Psionic').length
-  const talent = ids.filter((id) => getAbilityById(id)?.category === 'Talent').length
-  return (
-    spell < budget.spellSlots ||
-    psionic < budget.psionicSlots ||
-    talent < budget.talentSlots
-  )
+function assessAbilitiesTabBlockers(ctx: CharacterCreationForgeContext): string[] {
+  return assessAbilitiesBudgetBlockers({
+    budget: resolveCreationAbilityBudget(ctx),
+    creationGenreId: ctx.character.creationGenreId,
+    selectedIds: ctx.character.selectedAbilities,
+    occ: ctx.occ,
+    psychicTier: ctx.psychicTier,
+    psychicGateBypassed: ctx.character.psychicGateBypassed === true,
+    majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
+  })
 }
 
 function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
@@ -424,16 +414,21 @@ function buildTabDefinitions(
           id,
           label,
           isNa: () => {
-            const budget = occ
-              ? occCreationAbilityBudget(occ)
-              : character.creationAbilityBudget
+            const budget = resolveEffectiveCreationAbilityBudget({
+              occ,
+              psychicTier: ctx.psychicTier,
+              psychicGateBypassed: character.psychicGateBypassed === true,
+              majorAllocation: character.creationPsychicGateMajorAllocation,
+              storedBudget: character.creationAbilityBudget,
+              creationGenreId: character.creationGenreId,
+            })
             return !creationNeedsAbilitySelection(
               budget,
               character.creationGenreId,
             )
           },
           validate: () => {
-            const blockers = assessAbilitiesMinimumBlockers(ctx)
+            const blockers = assessAbilitiesTabBlockers(ctx)
             return { ok: blockers.length === 0, blockers }
           },
           snapshot: () => tab6Snapshot(character),
@@ -467,10 +462,6 @@ export function deriveCharacterCreationForgeNavigation(
 
   return deriveForgeNavigation(tabDefs, activeTabId, completion, {
     terminalTabId: 'tab7_review',
-    continueHint: (tabId, validation) => {
-      if (tabId !== 'tab6_abilities' || !validation.ok) return false
-      return abilitiesHaveOptionalPicksRemaining(ctx)
-    },
   })
 }
 

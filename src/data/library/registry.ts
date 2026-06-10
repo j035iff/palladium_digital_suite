@@ -1,6 +1,7 @@
 import type { Feature } from '../../types'
 import type { PalladiumOcc, Race } from '../../types'
 import { POWER_FEATURES } from './features'
+import { PSIONIC_FEATURES } from './psionicCatalogLoader'
 import { TALENT_FEATURES } from './talentCatalogLoader'
 import { loadRacesFromJson } from './racesLoader'
 import type { XPTable } from '../../types'
@@ -14,7 +15,11 @@ import {
   getPalladiumOccById,
 } from './occCatalogLoader'
 
-export const FEATURE_REGISTRY: Feature[] = [...POWER_FEATURES, ...TALENT_FEATURES]
+export const FEATURE_REGISTRY: Feature[] = [
+  ...POWER_FEATURES,
+  ...PSIONIC_FEATURES,
+  ...TALENT_FEATURES,
+]
 export const RACE_REGISTRY: Race[] = loadRacesFromJson()
 export const OCC_REGISTRY: readonly PalladiumOcc[] = PALLADIUM_OCC_CATALOG
 
@@ -107,6 +112,19 @@ export {
   listPalladiumTalentsForGameSystem,
   palladiumTalentToFeature,
 } from './talentCatalogLoader'
+
+export {
+  PALLADIUM_PSIONIC_CATALOG,
+  PSIONIC_FEATURES,
+  formatPsionicIspCost,
+  getPalladiumPsionicById,
+  getPsionicFeatureById,
+  getPsionicPlacementForGenre,
+  listPalladiumPsionicsForGenre,
+  listPalladiumPsionicsForGenreCategory,
+  listPsionicCategoryIdsForGenre,
+  palladiumPsionicToFeature,
+} from './psionicCatalogLoader'
 
 export {
   PALLADIUM_RACE_CATALOG,

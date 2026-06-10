@@ -13,6 +13,9 @@ export type ActiveForm = 'facade' | 'morphus'
 /** Psychic Gate tier (psychic_gate.md). */
 export type PsychicTier = 'none' | 'minor' | 'major' | 'master'
 
+/** Major Psychic Gate: 8 from one pool vs 6 mixed across Sensitive/Physical/Healing. */
+export type PsychicGateMajorAllocation = 'single_pool' | 'mixed_pools'
+
 /** Character Creation Forge tabs (forge-character_creation.md). */
 export type CharacterCreationForgeTabId =
   | 'tab1_configurator'
@@ -1759,6 +1762,8 @@ export type Character = {
   creationPsychicTier?: PsychicTier
   /** True after player explicitly picks a tier on Tab 3 (Forge gate). */
   creationPsychicTierChosen?: boolean
+  /** Major tier only — 8 single-category vs 6 mixed pool picks. */
+  creationPsychicGateMajorAllocation?: PsychicGateMajorAllocation
   /** Universal Forge — tab completion (Continue clicked). */
   creationForgeCompleted?: Readonly<
     Partial<Record<CharacterCreationForgeTabId, true>>

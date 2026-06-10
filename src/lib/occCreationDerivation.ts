@@ -137,6 +137,44 @@ export function occCreationPsionicRestrictions(
   return flattenRestrictions(occ.ispEngine?.progressionRoadmap, maxLevel)
 }
 
+/** Normalized psionic pool id (sensitive, physical, healer, super, …). */
+export function normalizePsionicCategoryId(raw: string): string {
+  const lower = raw.toLowerCase().trim()
+  if (lower === 'healing') return 'healer'
+  return lower
+    .replace(/\s+(abilities|psionics)$/i, '')
+    .replace(/\s*\/\s*.*$/, '')
+}
+
+/** Genre pool categories for a psionic feature (from genrePlacements). */
+export function psionicCategoriesForFeature(
+  feature: Feature,
+  genreId: string,
+): readonly string[] {
+  const placements = feature.metadata?.genrePlacements
+  if (!Array.isArray(placements)) return []
+  const g = genreId.toLowerCase()
+  const out = new Set<string>()
+  for (const placement of placements) {
+    if (
+      placement &&
+      typeof placement === 'object' &&
+      String(placement.genreId).toLowerCase() === g &&
+      typeof placement.category === 'string'
+    ) {
+      out.add(normalizePsionicCategoryId(placement.category))
+    }
+  }
+  return [...out]
+}
+
+function occCreationPsionicAllowedCategories(
+  occ: PalladiumOcc,
+  maxLevel = 1,
+): readonly string[] {
+  return occCreationPsionicRestrictions(occ, maxLevel).map(normalizePsionicCategoryId)
+}
+
 function categoryAccessAllowed(
   accessType: 'any' | 'none' | 'only' | 'except',
   inExceptions: boolean,
@@ -328,6 +366,7 @@ export function abilityPassesOccSupernaturalRules(
   occ: PalladiumOcc,
   feature: Feature,
   spellCap: number,
+  genreId?: string | null,
 ): { allowed: boolean; reason?: string } {
   const cat = featureBudgetCategory(feature)
   const level =
@@ -354,6 +393,24 @@ export function abilityPassesOccSupernaturalRules(
   }
 
   if (cat === 'Psionic') {
+    const allowedCategories = occCreationPsionicAllowedCategories(occ, 1)
+    if (allowedCategories.length > 0 && genreId) {
+      const powerCategories = psionicCategoriesForFeature(feature, genreId)
+      if (powerCategories.length === 0) {
+        return {
+          allowed: false,
+          reason: 'Not listed in this genre psionic catalog.',
+        }
+      }
+      const permitted = powerCategories.some((c) => allowedCategories.includes(c))
+      if (!permitted) {
+        return {
+          allowed: false,
+          reason: `O.C.C. permits ${allowedCategories.join(', ')} psionics only at 1st level.`,
+        }
+      }
+    }
+
     for (const r of occCreationPsionicRestrictions(occ, 1)) {
       if (!restrictionMatches(r, { psionicTier })) {
         return { allowed: false, reason: r }

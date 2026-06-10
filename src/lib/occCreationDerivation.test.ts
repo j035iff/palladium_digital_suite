@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
+import { getFeatureById, getLibraryOccById } from '../data/library/registry'
 import type { PalladiumOcc } from '../types'
 import {
+  abilityPassesOccSupernaturalRules,
   isOccRelatedSkillAllowed,
   occRelatedSkillAllowedInCategory,
 } from './occCreationDerivation'
@@ -95,5 +97,35 @@ describe('isOccRelatedSkillAllowed activeFilterCategory', () => {
         'skill_pick_locks',
       ),
     ).toBe(true)
+  })
+})
+
+describe('abilityPassesOccSupernaturalRules psionic categories', () => {
+  const pabPsychicAgent = getLibraryOccById('occ_pab_psychic_agent')
+
+  it('blocks super psionics for P.A.B. Psychic Agent at 1st level', () => {
+    expect(pabPsychicAgent).toBeDefined()
+    const superPower = getFeatureById('psionic_astral_transference')
+    expect(superPower).toBeDefined()
+    const gate = abilityPassesOccSupernaturalRules(
+      pabPsychicAgent!,
+      superPower!,
+      4,
+      'nightbane',
+    )
+    expect(gate.allowed).toBe(false)
+    expect(gate.reason).toMatch(/permits/i)
+  })
+
+  it('allows sensitive psionics for P.A.B. Psychic Agent', () => {
+    const sensitive = getFeatureById('psionic_astral_projection')
+    expect(sensitive).toBeDefined()
+    const gate = abilityPassesOccSupernaturalRules(
+      pabPsychicAgent!,
+      sensitive!,
+      4,
+      'nightbane',
+    )
+    expect(gate.allowed).toBe(true)
   })
 })

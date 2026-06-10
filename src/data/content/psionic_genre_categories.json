@@ -6,18 +6,23 @@
       "categories": [
         {
           "id": "sensitive",
-          "label": "Psychic Sensitive Abilities",
+          "label": "Sensitive Abilities",
           "sourcePage": 71
         },
         {
           "id": "physical",
-          "label": "Psychic Physical Abilities",
+          "label": "Physical Abilities",
           "sourcePage": 79
         },
         {
           "id": "healer",
-          "label": "Psychic Healer Abilities",
+          "label": "Healer Abilities",
           "sourcePage": 84
+        },
+        {
+          "id": "super",
+          "label": "Super/Master Abilities",
+          "notes": "Advanced psionics (e.g. Between the Shadows super-psionic list)."
         }
       ],
       "selectionRules": "Psychic P.C.C.: 2 picks from each category at 1st level; +1 pick from any category per additional level (p. 70). Innate starters: See Aura, Sense Evil, Meditation, Presence Sense."

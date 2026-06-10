@@ -215,7 +215,8 @@ export function buildPendingDiceBlocks(
   const showIsp =
     psychicTier !== 'none' || character.psychicGateBypassed === true
   const skillIds = resolveCreationSkillIds(character, occ)
-  const blocks: PendingDiceBlock[] = []
+  const attributeBlocks = buildAttributePendingDiceBlocks(character, occ, skillIds)
+  const vitalityBlocks: PendingDiceBlock[] = []
 
   const hpFormula = race ? (race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
@@ -223,7 +224,7 @@ export function buildPendingDiceBlocks(
   })
   const hpDice = hpFormula ? formulaDiceRolls('hp', hpFormula, 'die') : []
   if (hpFields.hint || hpDice.length > 0) {
-    blocks.push({
+    vitalityBlocks.push({
       id: 'hp',
       label: 'H.P.',
       flatBaseline: Number(hpFields.value) || 0,
@@ -288,7 +289,7 @@ export function buildPendingDiceBlocks(
     }
   }
   if (sdcGroups.length > 0 || sdcDetails.flatTotal > 0) {
-    blocks.push({
+    vitalityBlocks.push({
       id: 'sdc',
       label: 'S.D.C.',
       flatBaseline: sdcDetails.flatTotal,
@@ -304,7 +305,7 @@ export function buildPendingDiceBlocks(
   })
   const ppeDice = ppeFormula ? formulaDiceRolls('ppe', ppeFormula, 'die') : []
   if (ppeFields.hint || ppeDice.length > 0) {
-    blocks.push({
+    vitalityBlocks.push({
       id: 'ppe',
       label: 'P.P.E.',
       flatBaseline: Number(ppeFields.value) || 0,
@@ -333,7 +334,7 @@ export function buildPendingDiceBlocks(
     : null
   const ispDice = ispFormula ? formulaDiceRolls('isp', ispFormula.base, 'die') : []
   if (showIsp && ispFields && (ispFields.hint || ispDice.length > 0)) {
-    blocks.push({
+    vitalityBlocks.push({
       id: 'isp',
       label: 'I.S.P.',
       flatBaseline: Number(ispFields.value) || 0,
@@ -360,7 +361,7 @@ export function buildPendingDiceBlocks(
     const morphSdc = buildAttrFormulaLedgerFields('PEx4 + PSx2 + 2D6*8', assignments, {
       hintOverride: 'P.E.×4 + P.S.×2 + 2D6×8 (resolve at Spawn)',
     })
-    blocks.push({
+    vitalityBlocks.push({
       id: 'morphus_hp',
       label: 'Morphus H.P.',
       flatBaseline: Number(morphHp.value) || 0,
@@ -375,7 +376,7 @@ export function buildPendingDiceBlocks(
         },
       ],
     })
-    blocks.push({
+    vitalityBlocks.push({
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
       flatBaseline: Number(morphSdc.value) || 0,
@@ -392,9 +393,7 @@ export function buildPendingDiceBlocks(
     })
   }
 
-  blocks.push(...buildAttributePendingDiceBlocks(character, occ, skillIds))
-
-  return blocks
+  return [...attributeBlocks, ...vitalityBlocks]
 }
 
 /** Sum entered spawn attribute dice (skill + post-strip O.C.C.) per forge attribute key. */
