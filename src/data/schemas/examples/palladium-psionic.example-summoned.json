@@ -1,0 +1,36 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_ectoplasm",
+  "name": "Ectoplasm",
+  "description": "Generate a semi-solid ectoplasmic construct that can interact with the physical world.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 81
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "physical" }],
+  "isp": { "baseActivation": 10 },
+  "range": { "summary": "60 feet (18.3 m)" },
+  "duration": {
+    "summary": "2 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "2 minutes"
+  },
+  "summonedEntity": {
+    "name": "Ectoplasm Construct",
+    "derivedHealth": "20 S.D.C. + 2 per level of experience",
+    "statModifiers": {
+      "ps": 16,
+      "pp": 14,
+      "spd": 22
+    },
+    "movement": {
+      "flightSpeed": "90 mph (145 km/h)"
+    },
+    "combatModifiers": { "strike": 2, "parry": 2 }
+  },
+  "durationType": "narrative"
+}

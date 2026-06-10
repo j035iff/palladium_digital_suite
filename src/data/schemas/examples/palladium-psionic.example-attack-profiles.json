@@ -1,0 +1,33 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_telekinetic_punch",
+  "name": "Telekinetic Punch",
+  "description": "Hurl a telekinetic blow at a visible target within range.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 83
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "physical" }],
+  "isp": { "baseActivation": 8 },
+  "range": { "summary": "60 feet (18.3 m)" },
+  "duration": { "summary": "Instant", "kind": "instant" },
+  "damage": {
+    "attackProfiles": [
+      {
+        "name": "Telekinetic Punch",
+        "formula": "4D6 + P.S. bonus",
+        "notes": "Counts as one melee attack."
+      },
+      {
+        "name": "Telekinetic Kick",
+        "formula": "5D6 + P.S. bonus",
+        "notes": "Counts as one melee attack; +1 to strike."
+      }
+    ]
+  },
+  "durationType": "instant"
+}

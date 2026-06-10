@@ -1,0 +1,38 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_mind_block",
+  "name": "Mind Block",
+  "description": "Completely close oneself from psychic and mental emanations. While blocked, the psychic cannot sense, use psionics, or be influenced by others; blocks telepathy, empathy, hypnotic suggestion, and empathic transfer. Adds +1 to save vs psychic and mental attacks.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 76
+    }
+  ],
+  "genrePlacements": [
+    { "genreId": "nightbane", "category": "sensitive" },
+    { "genreId": "rifts", "category": "sensitive" }
+  ],
+  "isp": {
+    "baseActivation": 4,
+    "perMinute": "4 per each 10-minute duration period"
+  },
+  "range": { "summary": "Self" },
+  "duration": {
+    "summary": "10 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "10 minutes"
+  },
+  "save": { "summary": "None", "saveKind": "none" },
+  "limitations": {
+    "selfOnly": true,
+    "cannotUseWhile": ["using other psionic powers", "sensing supernatural forces"]
+  },
+  "durationType": "narrative",
+  "activation": {
+    "cost": { "type": "isp", "value": 4 },
+    "duration": "10 minutes / level"
+  }
+}

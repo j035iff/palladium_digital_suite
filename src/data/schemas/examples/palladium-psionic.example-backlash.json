@@ -1,0 +1,31 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_telekinetic_leap",
+  "name": "Telekinetic Leap",
+  "description": "Propel the psychic through the air via telekinetic thrust.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 83
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "physical" }],
+  "isp": { "baseActivation": 6 },
+  "range": { "summary": "Self" },
+  "duration": { "summary": "Instant", "kind": "instant" },
+  "grantedModifiers": {
+    "target": "self",
+    "movement": {
+      "leapDistance": "30 feet (9.1 m) per level of experience"
+    }
+  },
+  "backlash": {
+    "damageFormula": "1D6",
+    "saveToAvoid": 14,
+    "notes": "Damage is from wrenched muscles; save vs physical trauma."
+  },
+  "limitations": { "selfOnly": true },
+  "durationType": "instant"
+}

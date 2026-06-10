@@ -1,0 +1,40 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_psychic_surgery",
+  "name": "Psychic Surgery",
+  "description": "Repair broken bones, internal injuries, and remove foreign objects; treat coma victims (zero or fewer hit points). Recovery from coma: 1–66% as hospital treatment. No scarring; minimal pain.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 85
+    }
+  ],
+  "genrePlacements": [
+    { "genreId": "nightbane", "category": "healer" },
+    { "genreId": "rifts", "category": "healing" }
+  ],
+  "isp": { "baseActivation": 14 },
+  "range": { "summary": "Touch" },
+  "duration": {
+    "summary": "Varies with injury; surgery time is half conventional medicine.",
+    "kind": "special"
+  },
+  "lengthOfTrance": {
+    "summary": "2D6 minutes preparatory meditation plus surgery duration.",
+    "preparationMinutes": "2D6"
+  },
+  "prerequisites": [
+    {
+      "type": "diagnosis_before_surgery",
+      "psionicId": "psionic_psychic_diagnosis",
+      "label": "Psychic Diagnosis must be performed before surgery is possible."
+    }
+  ],
+  "limitations": {
+    "cannotAffectSelf": true,
+    "otherLimitations": "No tools needed — only the psychic's hands."
+  },
+  "durationType": "narrative"
+}

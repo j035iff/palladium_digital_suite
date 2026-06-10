@@ -27,6 +27,9 @@ export const PALLADIUM_HAND_TO_HAND_SCHEMA_PATH =
 export const PALLADIUM_TALENT_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-talent.schema.json` as const
 
+export const PALLADIUM_PSIONIC_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-psionic.schema.json` as const
+
 export const PALLADIUM_MORPHUS_TABLE_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-morphus-table.schema.json` as const
 
@@ -57,6 +60,9 @@ export const PALLADIUM_HAND_TO_HAND_SCHEMA_ID =
 
 export const PALLADIUM_TALENT_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-talent.schema.json' as const
+
+export const PALLADIUM_PSIONIC_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-psionic.schema.json' as const
 
 export const PALLADIUM_MORPHUS_TABLE_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-morphus-table.schema.json' as const
@@ -95,6 +101,10 @@ export const PALLADIUM_HAND_TO_HAND_CATALOG_JSON_PATH =
 
 export const PALLADIUM_TALENT_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumTalents.json` as const
+
+/** Psionic power catalog (`schemas/palladium-psionic.schema.json`). */
+export const PALLADIUM_PSIONIC_CATALOG_JSON_PATH =
+  `${PALLADIUM_CONTENT_DIR}/palladiumPsionics.json` as const
 
 export const WEAPON_PROFICIENCIES_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/weapon_proficiencies.json` as const

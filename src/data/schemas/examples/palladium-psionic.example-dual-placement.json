@@ -1,0 +1,46 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_death_trance",
+  "name": "Death Trance",
+  "description": "Mind over matter that slows metabolism to suspended animation, simulating death. Drugs and toxins take effect only when the trance ends. The psychic cannot be roused or respond during the trance.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 73
+    }
+  ],
+  "genrePlacements": [
+    {
+      "genreId": "nightbane",
+      "category": "sensitive",
+      "isp": { "baseActivation": 2 }
+    },
+    {
+      "genreId": "nightbane",
+      "category": "physical",
+      "isp": {
+        "baseActivation": 1,
+        "notes": "Easier for the physical psychic to control the body (p. 79)."
+      }
+    },
+    {
+      "genreId": "rifts",
+      "category": "physical",
+      "isp": { "baseActivation": 2 }
+    }
+  ],
+  "isp": { "baseActivation": 2 },
+  "range": { "summary": "Self" },
+  "duration": {
+    "summary": "As long as needed, up to four days maximum.",
+    "kind": "day",
+    "durationValue": 4
+  },
+  "limitations": {
+    "selfOnly": true,
+    "otherLimitations": "89% likelihood a medical doctor believes the character is dead without hospital facilities."
+  },
+  "durationType": "narrative"
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_bio_manipulation_stun",
+  "name": "Bio-Manipulation: Stun",
+  "description": "Psychically disrupt the target's nervous system, causing temporary paralysis.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 80
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "physical" }],
+  "isp": { "baseActivation": 8 },
+  "range": { "summary": "100 feet (30.5 m)" },
+  "duration": { "summary": "2D4 melees", "kind": "melee_round", "durationValue": "2D4" },
+  "save": { "summary": "Standard", "saveKind": "standard" },
+  "inflictedModifiers": {
+    "statusEffects": ["stun", "paralyzed"],
+    "combatModifiers": {
+      "attacksPerMelee": -1,
+      "strike": -3,
+      "parry": -3,
+      "dodge": -3
+    }
+  },
+  "durationType": "narrative"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_summon_inner_strength",
+  "name": "Summon Inner Strength",
+  "description": "Draw on inner reserves to ward off pain and fatigue for the duration.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 78
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "sensitive" }],
+  "isp": { "baseActivation": 4 },
+  "range": { "summary": "Self" },
+  "duration": {
+    "summary": "10 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "10 minutes"
+  },
+  "grantedModifiers": {
+    "statModifiers": {
+      "sdc": 10
+    },
+    "combatModifiers": {
+      "savePoison": 2
+    }
+  },
+  "limitations": { "selfOnly": true },
+  "durationType": "narrative"
+}

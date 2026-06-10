@@ -1,0 +1,28 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_healing_touch",
+  "name": "Healing Touch",
+  "description": "Channel psychic energy through touch to mend wounds and restore vitality.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 84
+    }
+  ],
+  "genrePlacements": [
+    { "genreId": "nightbane", "category": "healer" },
+    { "genreId": "rifts", "category": "healing" }
+  ],
+  "isp": { "baseActivation": 6 },
+  "range": { "summary": "Touch" },
+  "duration": { "summary": "Instant", "kind": "instant" },
+  "healing": {
+    "hpFormula": "1D8",
+    "sdcFormula": "2D6",
+    "notes": "Cannot restore more hit points than the victim originally had at full health."
+  },
+  "limitations": { "otherLimitations": "One healing touch per target per 24 hours." },
+  "durationType": "instant"
+}

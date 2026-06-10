@@ -1,0 +1,30 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_deaden_pain",
+  "name": "Deaden Pain",
+  "description": "Psychically suppress pain and fatigue in a willing recipient.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 84
+    }
+  ],
+  "genrePlacements": [
+    { "genreId": "nightbane", "category": "healer" },
+    { "genreId": "rifts", "category": "healing" }
+  ],
+  "isp": { "baseActivation": 4 },
+  "range": { "summary": "Touch" },
+  "duration": {
+    "summary": "10 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "10 minutes"
+  },
+  "grantedModifiers": {
+    "target": "touch",
+    "immunities": ["pain", "fatigue_penalties"]
+  },
+  "durationType": "narrative"
+}

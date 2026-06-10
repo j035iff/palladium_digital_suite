@@ -1,0 +1,53 @@
+{
+  "description": "Authoring reference — valid psionic selection categories per genre. Rows in the psionic catalog use genrePlacements[] in palladium-psionic.schema.json.",
+  "genres": {
+    "nightbane": {
+      "label": "Nightbane",
+      "categories": [
+        {
+          "id": "sensitive",
+          "label": "Psychic Sensitive Abilities",
+          "sourcePage": 71
+        },
+        {
+          "id": "physical",
+          "label": "Psychic Physical Abilities",
+          "sourcePage": 79
+        },
+        {
+          "id": "healer",
+          "label": "Psychic Healer Abilities",
+          "sourcePage": 84
+        }
+      ],
+      "selectionRules": "Psychic P.C.C.: 2 picks from each category at 1st level; +1 pick from any category per additional level (p. 70). Innate starters: See Aura, Sense Evil, Meditation, Presence Sense."
+    },
+    "rifts": {
+      "label": "Rifts",
+      "categories": [
+        { "id": "sensitive", "label": "Sensitive Psionics" },
+        { "id": "physical", "label": "Physical Psionics" },
+        { "id": "healing", "label": "Healing Psionics" },
+        { "id": "super", "label": "Super Psionics" }
+      ],
+      "notes": "Some powers classified as Physical in Nightbane appear under Sensitive or Healing in Rifts — record per-power overrides in genrePlacements."
+    },
+    "heroes_unlimited": {
+      "label": "Heroes Unlimited",
+      "categories": [
+        { "id": "sensitive", "label": "Sensitive Psionics" },
+        { "id": "physical", "label": "Physical Psionics" },
+        { "id": "healing", "label": "Healing Psionics" },
+        { "id": "super", "label": "Super Psionics" }
+      ]
+    },
+    "palladium_fantasy": {
+      "label": "Palladium Fantasy",
+      "categories": [
+        { "id": "sensitive", "label": "Sensitive Psionics" },
+        { "id": "physical", "label": "Physical Psionics" },
+        { "id": "healing", "label": "Healing Psionics" }
+      ]
+    }
+  }
+}

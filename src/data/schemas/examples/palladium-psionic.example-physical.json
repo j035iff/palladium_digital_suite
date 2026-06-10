@@ -1,0 +1,31 @@
+{
+  "$schema": "../palladium-psionic.schema.json",
+  "id": "psionic_telekinesis",
+  "name": "Telekinesis",
+  "description": "Lift, move, and hurl objects with the mind.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 83
+    }
+  ],
+  "genrePlacements": [{ "genreId": "nightbane", "category": "physical" }],
+  "isp": {
+    "baseActivation": 6,
+    "dynamicCosts": [
+      {
+        "trigger": "Weight: > 20 lbs",
+        "costFormula": "+1 I.S.P. per 10 lbs"
+      }
+    ]
+  },
+  "range": { "summary": "60 feet (18.3 m) + 10 feet (3 m) per level." },
+  "duration": {
+    "summary": "2 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "2 minutes"
+  },
+  "durationType": "narrative"
+}

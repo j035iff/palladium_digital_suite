@@ -37,6 +37,7 @@ const standardModernWeaponProgressionSchema = loadJson(
 )
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
+const psionicSchema = loadJson(join(schemasDir, 'palladium-psionic.schema.json'))
 const morphusCharacteristicSchema = loadJson(
   join(schemasDir, 'palladium-morphus.schema.json'),
 )
@@ -66,6 +67,7 @@ for (const [label, schema] of [
   ['palladium-occ.schema.json', occSchema],
   ['palladium-hth.schema.json', handToHandSchema],
   ['palladium-talent.schema.json', talentSchema],
+  ['palladium-psionic.schema.json', psionicSchema],
   ['palladium-morphus.schema.json', morphusCharacteristicSchema],
   ['palladium-morphus-table.schema.json', morphusTableSchema],
   ['palladium-xp-table.schema.json', xpTableSchema],
@@ -87,6 +89,7 @@ const validateRaceRow = ajv.compile(raceSchema)
 const validateOccRow = ajv.compile(occSchema)
 const validateHandToHandRow = ajv.compile(handToHandSchema)
 const validateTalentRow = ajv.compile(talentSchema)
+const validatePsionicRow = ajv.compile(psionicSchema)
 const validateMorphusCharacteristic = ajv.compile(morphusCharacteristicSchema)
 const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
@@ -508,6 +511,67 @@ if (!Array.isArray(palladiumTalents)) {
   }
 }
 
+const palladiumPsionicsPath = join(contentDir, 'palladiumPsionics.json')
+let palladiumPsionics = []
+let palladiumPsionicsLoaded = false
+try {
+  palladiumPsionics = loadJson(palladiumPsionicsPath)
+  palladiumPsionicsLoaded = true
+} catch (err) {
+  if (err.code !== 'ENOENT') {
+    failed = true
+    console.error('ERR palladiumPsionics.json —', err.message)
+  }
+}
+if (palladiumPsionicsLoaded) {
+  if (!Array.isArray(palladiumPsionics)) {
+    failed = true
+    console.error('ERR palladiumPsionics.json — expected top-level array')
+  } else if (palladiumPsionics.length > 0) {
+  const seenPsionicIds = new Set()
+  let psionicBad = 0
+  let psionicDup = 0
+  for (const row of palladiumPsionics) {
+    if (row?.id) {
+      if (seenPsionicIds.has(row.id)) {
+        psionicDup++
+        if (psionicDup <= 5) {
+          console.error(`ERR palladiumPsionics.json duplicate id=${row.id}`)
+        }
+      } else {
+        seenPsionicIds.add(row.id)
+      }
+    }
+    if (!validatePsionicRow(row)) {
+      psionicBad++
+      if (psionicBad <= 5) {
+        console.error(
+          `ERR palladiumPsionics.json id=${row?.id ?? '?'}:`,
+          validatePsionicRow.errors,
+        )
+      }
+    }
+  }
+  if (psionicBad === 0 && psionicDup === 0) {
+    console.log(
+      `OK  palladiumPsionics.json — ${palladiumPsionics.length} rows validate`,
+    )
+  } else {
+    failed = true
+    if (psionicBad > 0) {
+      console.error(
+        `ERR palladiumPsionics.json — ${psionicBad} row(s) failed schema validation`,
+      )
+    }
+    if (psionicDup > 0) {
+      console.error(`ERR palladiumPsionics.json — ${psionicDup} duplicate id(s)`)
+    }
+  }
+  } else {
+    console.log('OK  palladiumPsionics.json — empty catalog')
+  }
+}
+
 const morphusTablesDir = join(contentDir, 'morphus/tables')
 let morphusTableFiles = []
 try {
@@ -568,6 +632,7 @@ const exampleValidators = [
   { prefix: 'palladium-occ', compile: validateOccRow },
   { prefix: 'palladium-hth', compile: validateHandToHandRow },
   { prefix: 'palladium-talent', compile: validateTalentRow },
+  { prefix: 'palladium-psionic', compile: validatePsionicRow },
   { prefix: 'palladium-morphus-table', compile: validateMorphusTableDoc },
   {
     prefix: 'palladium-morphus-characteristic',

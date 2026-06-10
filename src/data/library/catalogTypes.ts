@@ -56,6 +56,23 @@ export type PalladiumHandToHandCatalogEntry = import('../../types').HandToHandSk
 /** Row from `content/palladiumTalents.json` — see `schemas/palladium-talent.schema.json`. */
 export type PalladiumTalentCatalogEntry = import('../../types').PalladiumTalent
 
+/** Row from `content/palladiumPsionics.json` — see `schemas/palladium-psionic.schema.json`. */
+export type PalladiumPsionicCatalogEntry = {
+  id: string
+  name: string
+  description: string
+  gameSystems: readonly string[]
+  sources: readonly PalladiumSourceRef[]
+  genrePlacements: readonly {
+    genreId: string
+    category: string
+    isp?: unknown
+    notes?: string
+  }[]
+  innateStarter?: boolean
+  [key: string]: unknown
+}
+
 /** Row from `weapon_proficiencies.json` (ancient or modern W.P.). */
 export type WeaponProficiencyCatalogEntry = {
   kind: 'weapon_proficiency'
