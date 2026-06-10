@@ -24,6 +24,7 @@ export type CreationPhase =
   | 'occVariableBonus'
   | 'psychicGate'
   | 'skills'
+  | 'finalize'
   | 'morphus'
   | 'abilities'
   | 'review'
@@ -74,6 +75,7 @@ export function orderedCreationPhases(ctx: CreationFlowContext): CreationPhase[]
   if (ctx.hasOccVariableBonus) phases.push('occVariableBonus')
   if (ctx.showPsychicGate) phases.push('psychicGate')
   phases.push('skills')
+  phases.push('finalize')
   if (ctx.showMorphusPhase) phases.push('morphus')
   if (ctx.showAbilitySelection) phases.push('abilities')
   phases.push('review')
@@ -125,6 +127,8 @@ export function creationPhaseLabel(phase: CreationPhase): string {
       return 'Psychic Gate'
     case 'skills':
       return 'Skills'
+    case 'finalize':
+      return 'Roll Pending'
     case 'morphus':
       return 'Morphus'
     case 'abilities':
@@ -274,6 +278,7 @@ export function canAdvanceFromPhase(
       }
     case 'psychicGate':
     case 'skills':
+    case 'finalize':
     case 'morphus':
     case 'abilities':
       return { ok: true, blockers: [] }

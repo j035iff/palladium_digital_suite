@@ -10,6 +10,7 @@ import { retainCharacterRoot } from './characterRoot'
 import { tryApplyNumericSheetPath } from './vitalityPathUpdate'
 import {
   buildPendingDiceBlocks,
+  filterPendingDiceBlocksByScope,
   pendingDiceBlockRunningTotal,
   type PendingDiceBlock,
 } from './spawnDiceBlocks'
@@ -91,7 +92,123 @@ export function computeSpawnVitalityFromResolutions(
   }
 }
 
-/** Write H.P./S.D.C./P.P.E./I.S.P. and Review attribute dice from entered resolutions. */
+/** Facade / single-form dice — attributes + H.P./S.D.C./P.P.E./I.S.P. (excludes morphus vitality). */
+export function applyFacadePendingDiceResolutions(
+  prev: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  opts: {
+    supportsDualForm: boolean
+    psychicTier: string
+  },
+): CharacterRootState {
+  const resolutions = prev.creationPendingDiceResolutions ?? {}
+  const allBlocks = buildPendingDiceBlocks(prev, race, occ, opts)
+  const facadeBlocks = filterPendingDiceBlocksByScope(
+    allBlocks,
+    opts.supportsDualForm ? 'facade' : 'all',
+  )
+  const byId = blockById(allBlocks)
+  const rolls = computeSpawnVitalityFromResolutions(
+    prev,
+    race,
+    occ,
+    resolutions,
+    opts,
+  )
+
+  const pairs: [string, number][] = [
+    ['facade.hitPoints.maximum', rolls.facadeHp],
+    ['facade.hitPoints.current', rolls.facadeHp],
+    ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
+    ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+    ['ppe.maximum', rolls.ppeMax],
+    ['ppe.current', rolls.ppeMax],
+  ]
+
+  if (!opts.supportsDualForm) {
+    pairs.push(
+      ['morphus.hitPoints.maximum', rolls.morphusHp],
+      ['morphus.hitPoints.current', rolls.morphusHp],
+      ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
+      ['morphus.structuralDamageCapacity.current', rolls.morphusSdc],
+    )
+  }
+
+  if (rolls.morphusIspMax > 0) {
+    pairs.push(
+      ['morphus.isp.maximum', rolls.morphusIspMax],
+      ['morphus.isp.current', rolls.morphusIspMax],
+    )
+  }
+
+  let next: CharacterRootState = prev
+  for (const [path, v] of pairs) {
+    const applied = tryApplyNumericSheetPath(next, path, v)
+    next = applied ? retainCharacterRoot(prev, applied) : next
+  }
+
+  const attrForms: ('facade' | 'morphus')[] = opts.supportsDualForm
+    ? ['facade']
+    : ['facade', 'morphus']
+  next = applyPendingAttributeDiceToForms(
+    next,
+    facadeBlocks,
+    resolutions,
+    attrForms,
+  )
+
+  return {
+    ...next,
+    creationFacadeDiceFinalized: true,
+    creationMorphusDiceFinalized: opts.supportsDualForm
+      ? next.creationMorphusDiceFinalized
+      : true,
+  }
+}
+
+/** Nightbane morphus vitality dice — H.P. and S.D.C. on the morphus branch. */
+export function applyMorphusPendingDiceResolutions(
+  prev: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  opts: {
+    supportsDualForm: boolean
+    psychicTier: string
+  },
+): CharacterRootState {
+  const resolutions = prev.creationPendingDiceResolutions ?? {}
+  const allBlocks = buildPendingDiceBlocks(prev, race, occ, opts)
+  const byId = blockById(allBlocks)
+  const rolls = computeSpawnVitalityFromResolutions(
+    prev,
+    race,
+    occ,
+    resolutions,
+    opts,
+  )
+
+  const pairs: [string, number][] = [
+    ['morphus.hitPoints.maximum', rolls.morphusHp],
+    ['morphus.hitPoints.current', rolls.morphusHp],
+    ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
+    ['morphus.structuralDamageCapacity.current', rolls.morphusSdc],
+  ]
+
+  let next: CharacterRootState = prev
+  for (const [path, v] of pairs) {
+    const applied = tryApplyNumericSheetPath(next, path, v)
+    next = applied ? retainCharacterRoot(prev, applied) : next
+  }
+
+  if (byId.morphus_hp == null && byId.morphus_sdc == null) {
+    return { ...next, creationMorphusDiceFinalized: true }
+  }
+
+  return { ...next, creationMorphusDiceFinalized: true }
+}
+
+/** Write H.P./S.D.C./P.P.E./I.S.P. and attribute dice from entered resolutions. */
 export function applyPendingDiceResolutionsToCharacter(
   prev: CharacterRootState,
   race: Race | undefined,

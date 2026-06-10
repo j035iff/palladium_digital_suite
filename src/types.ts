@@ -22,9 +22,10 @@ export type CharacterCreationForgeTabId =
   | 'tab2_attributes'
   | 'tab3_psionic'
   | 'tab4_skills'
-  | 'tab5_traits'
-  | 'tab6_abilities'
-  | 'tab7_review'
+  | 'tab5_finalize'
+  | 'tab6_traits'
+  | 'tab7_abilities'
+  | 'tab8_review'
 
 /**
  * Damage / durability scaling tier (docs/combat_logic.md §1).
@@ -1777,6 +1778,10 @@ export type Character = {
   creationTraitForgeStubComplete?: boolean
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
+  /** Finalize tab — facade / single-form physical dice applied. */
+  creationFacadeDiceFinalized?: boolean
+  /** Traits tab — morphus vitality dice applied (Nightbane). */
+  creationMorphusDiceFinalized?: boolean
   /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */
   creationOccSkillIds?: string[]
   /**

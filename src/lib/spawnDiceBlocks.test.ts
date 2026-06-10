@@ -3,6 +3,7 @@ import { characterFixture } from '../data/characterFixture'
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import {
   buildPendingDiceBlocks,
+  filterPendingDiceBlocksByScope,
   flattenPendingDiceRolls,
   pendingDiceBlockRunningTotal,
 } from './spawnDiceBlocks'
@@ -125,5 +126,19 @@ describe('spawnDiceBlocks', () => {
         [rollId!]: 7,
       }),
     ).toBe(127)
+  })
+
+  it('splits facade and morphus pending dice blocks for dual-form builds', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const blocks = buildPendingDiceBlocks(characterFixture, human, occ, {
+      supportsDualForm: true,
+      psychicTier: 'major',
+    })
+    const facade = filterPendingDiceBlocksByScope(blocks, 'facade')
+    const morphus = filterPendingDiceBlocksByScope(blocks, 'morphus')
+    expect(facade.some((block) => block.id === 'hp')).toBe(true)
+    expect(facade.some((block) => block.id.startsWith('morphus_'))).toBe(false)
+    expect(morphus.map((block) => block.id)).toEqual(['morphus_hp', 'morphus_sdc'])
   })
 })

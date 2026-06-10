@@ -183,7 +183,12 @@ import {
   legacyPhaseToForgeTab,
 } from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
-import { applyPendingDiceResolutionsToCharacter } from '../lib/spawnVitalityManual'
+import {
+  applyFacadePendingDiceResolutions,
+  applyMorphusPendingDiceResolutions,
+  applyPendingDiceResolutionsToCharacter,
+} from '../lib/spawnVitalityManual'
+import { patchPendingDiceResolution } from '../lib/pendingDiceLedger'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -1930,15 +1935,28 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
         const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
         const tier = resolveCreationPsychicTier(prev, psychicTier)
-        const ctx = buildCharacterCreationForgeContext(
-          { ...prev, creationGenreId: prev.creationGenreId },
+        const dual = characterHasDualForms(prev)
+        let next: CharacterRootState = prev
+        if (tabId === 'tab5_finalize') {
+          next = applyFacadePendingDiceResolutions(next, race, occLib, {
+            supportsDualForm: dual,
+            psychicTier: tier,
+          })
+        } else if (tabId === 'tab6_traits' && dual) {
+          next = applyMorphusPendingDiceResolutions(next, race, occLib, {
+            supportsDualForm: true,
+            psychicTier: tier,
+          })
+        }
+        const ctxAfter = buildCharacterCreationForgeContext(
+          { ...next, creationGenreId: next.creationGenreId },
           race,
           occLib,
           tier,
         )
         return {
-          ...prev,
-          ...completeForgeTab(prev, tabId, ctx),
+          ...next,
+          ...completeForgeTab(next, tabId, ctxAfter),
         }
       })
     },
@@ -2170,15 +2188,19 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setCreationPendingDiceResolution = useCallback(
     (entryId: string, value: number) => {
-      setRawCharacter((prev) => ({
-        ...prev,
-        creationPendingDiceResolutions: {
-          ...(prev.creationPendingDiceResolutions ?? {}),
-          [entryId]: value,
-        },
-      }))
+      setRawCharacter((prev) => {
+        const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+        const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+        const tier = resolveCreationPsychicTier(prev, psychicTier)
+        return patchPendingDiceResolution(prev, entryId, value, {
+          race,
+          occ: occLib,
+          psychicTier: tier,
+          supportsDualForm: characterHasDualForms(prev),
+        })
+      })
     },
-    [],
+    [psychicTier],
   )
 
   const setAlignment = useCallback((alignment: string) => {

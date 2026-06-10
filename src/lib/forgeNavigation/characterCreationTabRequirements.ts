@@ -58,6 +58,10 @@ import {
 import type { ForgeTabRequirement } from './types'
 import type { CharacterCreationForgeContext } from './characterCreationForge'
 import { traitForgeTabApplicable } from './characterCreationForge'
+import {
+  listPendingDiceBlocks,
+  pendingDiceBlocksResolutionComplete,
+} from '../pendingDiceLedger'
 
 function occMinForAttr(
   occ: CharacterCreationForgeContext['occ'],
@@ -309,17 +313,70 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
 }
 
 function tab5Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
-  if (!traitForgeTabApplicable(ctx.race, ctx.occ)) return []
+  const scope = ctx.supportsDualForm ? 'facade' : 'all'
+  const blocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
+    supportsDualForm: ctx.supportsDualForm,
+    psychicTier: ctx.psychicTier,
+    scope,
+  })
+  if (blocks.length === 0) {
+    return [
+      {
+        id: 'finalize-none',
+        label: 'No pending dice for this build',
+        satisfied: true,
+      },
+    ]
+  }
+  const complete = pendingDiceBlocksResolutionComplete(
+    blocks,
+    ctx.character.creationPendingDiceResolutions ?? {},
+  )
   return [
     {
-      id: 'trait-stub',
-      label: 'Complete the trait forge placeholder step',
-      satisfied: ctx.character.creationTraitForgeStubComplete === true,
+      id: 'finalize-dice',
+      label: ctx.supportsDualForm
+        ? 'Enter all Facade physical die results'
+        : 'Enter all physical die results',
+      satisfied: complete,
     },
   ]
 }
 
 function tab6Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
+  if (!traitForgeTabApplicable(ctx.race, ctx.occ)) return []
+  const requirements: ForgeTabRequirement[] = []
+  if (ctx.supportsDualForm) {
+    requirements.push({
+      id: 'facade-finalized',
+      label: 'Complete Facade dice on the Roll Pending tab',
+      satisfied: ctx.character.creationFacadeDiceFinalized === true,
+    })
+    const morphusBlocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
+      supportsDualForm: true,
+      psychicTier: ctx.psychicTier,
+      scope: 'morphus',
+    })
+    if (morphusBlocks.length > 0) {
+      requirements.push({
+        id: 'morphus-dice',
+        label: 'Enter all Morphus physical die results',
+        satisfied: pendingDiceBlocksResolutionComplete(
+          morphusBlocks,
+          ctx.character.creationPendingDiceResolutions ?? {},
+        ),
+      })
+    }
+  }
+  requirements.push({
+    id: 'trait-stub',
+    label: 'Complete the trait forge placeholder step',
+    satisfied: ctx.character.creationTraitForgeStubComplete === true,
+  })
+  return requirements
+}
+
+function tab7Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
   const genreId = ctx.character.creationGenreId ?? 'nightbane'
   const budget = resolveEffectiveCreationAbilityBudget({
     occ: ctx.occ,
@@ -428,10 +485,12 @@ export function listCharacterCreationTabRequirements(
       return tab3Requirements(ctx)
     case 'tab4_skills':
       return tab4Requirements(ctx)
-    case 'tab5_traits':
+    case 'tab5_finalize':
       return tab5Requirements(ctx)
-    case 'tab6_abilities':
+    case 'tab6_traits':
       return tab6Requirements(ctx)
+    case 'tab7_abilities':
+      return tab7Requirements(ctx)
     default:
       return []
   }

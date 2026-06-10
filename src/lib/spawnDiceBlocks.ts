@@ -396,6 +396,19 @@ export function buildPendingDiceBlocks(
   return [...attributeBlocks, ...vitalityBlocks]
 }
 
+export type PendingDiceBlockScope = 'facade' | 'morphus' | 'all'
+
+export function filterPendingDiceBlocksByScope(
+  blocks: readonly PendingDiceBlock[],
+  scope: PendingDiceBlockScope,
+): PendingDiceBlock[] {
+  if (scope === 'all') return [...blocks]
+  if (scope === 'facade') {
+    return blocks.filter((block) => !block.id.startsWith('morphus_'))
+  }
+  return blocks.filter((block) => block.id.startsWith('morphus_'))
+}
+
 /** Sum entered spawn attribute dice (skill + post-strip O.C.C.) per forge attribute key. */
 export function sumPendingAttributeDiceBonuses(
   blocks: readonly PendingDiceBlock[],

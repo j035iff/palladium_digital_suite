@@ -1,18 +1,34 @@
 import { useCharacter } from '../../context/CharacterContext'
 import { MORPHUS_FORGE_IMPLEMENTED } from '../../lib/morphusForgeStub'
+import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 
-/** Single-step trait Sub-Forge placeholder (forge-character_creation.md Tab 5). */
+/** Single-step trait Sub-Forge placeholder (forge-character_creation.md Traits tab). */
 export function MorphusForgeStub() {
   const { character, setTraitForgeStubComplete } = useCharacter()
   const done = character.creationTraitForgeStubComplete === true
+  const facadeReady = character.creationFacadeDiceFinalized === true
 
   return (
     <section aria-labelledby="forge-tab-page-heading">
+      {!facadeReady ? (
+        <p
+          className="mb-4 rounded-lg border border-amber-500/60 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100"
+          role="alert"
+        >
+          Complete all Facade dice on the <strong>Roll Pending</strong> tab before building
+          Morphus.
+        </p>
+      ) : null}
       <p className="max-w-2xl text-sm text-violet-200/90">
         Full Morphus / trait generation will plug in here as a nested Sub-Forge.
-        For now, acknowledge this placeholder so Tab 5 can validate — then use{' '}
+        Enter Morphus vitality dice below, then acknowledge this placeholder — use{' '}
         <strong>Continue</strong> at the top right.
       </p>
+      {facadeReady ? (
+        <div className="mt-4">
+          <PendingDiceResolutionPanel scope="morphus" />
+        </div>
+      ) : null}
       {!MORPHUS_FORGE_IMPLEMENTED ? (
         <p className="mt-3 text-xs uppercase tracking-wide text-violet-400/80">
           Engine stub — no trait selections are captured in this build.

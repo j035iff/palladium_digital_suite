@@ -70,6 +70,8 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       psychicGateBypassed: resolvePsychicGateBypassed(undefined, undefined, genreId),
       isFinalized: false,
       creationVitalityCommitted: false,
+      creationFacadeDiceFinalized: false,
+      creationMorphusDiceFinalized: false,
       selectedAbilities: [],
       creationAbilityBudget: {
         spellSlots: 0,

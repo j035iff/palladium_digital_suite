@@ -13,10 +13,6 @@ import {
   assessOccVariableBlockers,
 } from './creationStep'
 import {
-  listPendingDiceEntries,
-  pendingDiceResolutionsComplete,
-} from './pendingDiceLedger'
-import {
   assessRelatedSkillSlotBlockers,
   creationRelatedSkillCap,
   resolveCreationPsychicTier,
@@ -59,8 +55,8 @@ function attrsPlausible(attrs: {
 }
 
 /**
- * Pillar 8 — enable Review & Finalize once mandatory gates through abilities are done.
- * Pending vitality dice are resolved on the Review screen itself.
+ * Pillar 8 — enable Review once mandatory gates through abilities are done.
+ * Pending dice are resolved on the Roll Pending and Traits tabs before Review.
  */
 export function assessCreationReviewBlockers(
   character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
@@ -167,21 +163,21 @@ export function assessCreationSpawnBlockers(
 ): string[] {
   const blockers = assessCreationReviewBlockers(character)
 
-  const race = character.raceId?.trim()
-    ? getRaceById(character.raceId)
-    : undefined
-  const occLib = getLibraryOccById(character.occ.id)
-  const pending = listPendingDiceEntries(character, race, occLib, {
-    supportsDualForm: opts?.supportsDualForm ?? false,
-    psychicTier: opts?.psychicTier ?? 'none',
-  })
-  if (
-    !pendingDiceResolutionsComplete(
-      pending,
-      character.creationPendingDiceResolutions ?? {},
+  const supportsDualForm =
+    opts?.supportsDualForm ??
+    raceLineageFromDefinition(
+      character.raceId?.trim() ? getRaceById(character.raceId) : undefined,
+    ) === 'nightbane'
+
+  if (character.creationFacadeDiceFinalized !== true) {
+    blockers.push(
+      'Complete all pending dice on the Roll Pending tab before Review & Spawn.',
     )
-  ) {
-    blockers.push('Enter all pending dice results on the Review screen.')
+  }
+  if (supportsDualForm && character.creationMorphusDiceFinalized !== true) {
+    blockers.push(
+      'Complete Morphus dice on the Traits tab before Review & Spawn.',
+    )
   }
 
   return blockers

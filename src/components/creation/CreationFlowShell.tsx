@@ -26,6 +26,8 @@ import { useCharacter } from '../../context/CharacterContext'
 
 import { MorphusForgeStub } from './MorphusForgeStub'
 
+import { CreationFinalizeDice } from './CreationFinalizeDice'
+
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 
 import { ForgeContinueGate } from '../forge/ForgeContinueGate'
@@ -82,15 +84,19 @@ function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
 
       return <SkillEngine />
 
-    case 'tab5_traits':
+    case 'tab5_finalize':
+
+      return <CreationFinalizeDice />
+
+    case 'tab6_traits':
 
       return <MorphusForgeStub />
 
-    case 'tab6_abilities':
+    case 'tab7_abilities':
 
       return <SupernaturalAbilitiesForge />
 
-    case 'tab7_review':
+    case 'tab8_review':
 
       return null
 
@@ -282,7 +288,7 @@ export function CreationFlowShell({
 
             </div>
 
-            {activeTabId === 'tab6_abilities' ? (
+            {activeTabId === 'tab7_abilities' ? (
               <div className="mt-3 px-4">
                 <SupernaturalAbilitiesForgeLaneTabs />
               </div>
@@ -296,7 +302,7 @@ export function CreationFlowShell({
           className={
             activeTabId === 'tab4_skills' ||
             activeTabId === 'tab1_configurator' ||
-            activeTabId === 'tab6_abilities'
+            activeTabId === 'tab7_abilities'
               ? 'flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4 md:pl-4'
               : 'min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4 md:pl-4'
           }
@@ -342,7 +348,7 @@ export function CreationFlowShell({
 
 
 
-          {activeTabId === 'tab7_review' ? (
+          {activeTabId === 'tab8_review' ? (
 
             <>
 
@@ -360,7 +366,8 @@ export function CreationFlowShell({
 
               <p className="text-xs text-slate-500">
 
-                Review is the terminal gate — resolve pending dice and spawn when ready.
+                Review is a summary only — all dice must be finalized on earlier tabs
+                before you can spawn.
 
               </p>
 

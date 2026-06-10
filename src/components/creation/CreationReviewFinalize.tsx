@@ -3,7 +3,7 @@ import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
 import { getSkillById } from '../../data/skillLibrary'
 import {
-  assessTab7SpawnBlockers,
+  assessTab8SpawnBlockers,
   buildCharacterCreationForgeContext,
 } from '../../lib/forgeNavigation/characterCreationForge'
 import { PALLADIUM_ALIGNMENT_VALUES } from '../../lib/configuratorMatrix'
@@ -11,8 +11,6 @@ import {
   configuratorAlignmentLabel,
   effectiveConfiguratorAlignment,
 } from '../../lib/configuratorMatrix'
-import { DevAutoRollPendingDiceButton } from './dev/DevAutoRollPendingDiceButton'
-import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 import {
   formatCreationSkillPickLabel,
   getCreationRelatedPicks,
@@ -105,7 +103,7 @@ export function CreationReviewFinalize({
   )
 
   const blockers = useMemo(
-    () => assessTab7SpawnBlockers(forgeCtx),
+    () => assessTab8SpawnBlockers(forgeCtx),
     [forgeCtx],
   )
 
@@ -129,15 +127,9 @@ export function CreationReviewFinalize({
   return (
     <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
-        Enter your physical die results, choose alignment, then spawn to lock the record
-        (forge-character_creation.md Tab 7). The Live Ledger updates as you enter rolls.
+        Confirm your build summary, choose alignment, then spawn to lock the record.
+        All physical dice must already be entered on the Roll Pending and Traits tabs.
       </p>
-
-      <DevAutoRollPendingDiceButton />
-
-      <div className="mb-4">
-        <PendingDiceResolutionPanel />
-      </div>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
         <h3 className="mb-2 text-xs font-bold uppercase opacity-80">
