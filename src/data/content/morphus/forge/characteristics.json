@@ -1,0 +1,347 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json",
+  "id": "characteristics",
+  "kind": "forge_routing_table",
+  "displayName": "Characteristics",
+  "forgeRole": "characteristics_router",
+  "description": "Nightbane Morphus Characteristics routing table (percentile 01–00%). Used for Path 2 direct picks and nested characteristic resolution.",
+  "path2Entry": {
+    "countRoll": { "notation": "1D4+2", "min": 3, "max": 6 },
+    "description": "Personality Crafter — roll 1D4+2, then select that many characteristics from this table."
+  },
+  "entries": [
+    {
+      "id": "aerial",
+      "name": "Aerial",
+      "percentile": { "min": 1, "max": 1 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "label": "Aerial",
+          "options": [
+            { "tableId": "animal_bat", "label": "Bat" },
+            { "tableId": "animal_avian", "label": "Avian" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alien_creature",
+      "name": "Alien Creature",
+      "percentile": { "min": 2, "max": 7 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "alien_shape", "label": "Alien Shape" },
+            { "tableId": "extraterrestrial", "label": "Extraterrestrial" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anthropod",
+      "name": "Anthropod",
+      "percentile": { "min": 8, "max": 8 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_arachnid", "label": "Arachnid" },
+            { "tableId": "animal_crustacean", "label": "Crustacean" },
+            { "tableId": "animal_insectoid", "label": "Insectoid" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "biomechanical",
+      "name": "Biomechanical",
+      "percentile": { "min": 9, "max": 14 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "biomechanical", "label": "Biomechanical" },
+            { "tableId": "gear_head", "label": "Gear-Head" },
+            { "tableId": "biomechanical_aquatic", "label": "Aquatic Biomech" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civilian",
+      "name": "Civilian",
+      "percentile": { "min": 15, "max": 20 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "hobbyist", "label": "Hobbyist" },
+            { "tableId": "occupation", "label": "Occupation" },
+            { "tableId": "athlete", "label": "Athlete" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clever_girl",
+      "name": "Clever Girl",
+      "percentile": { "min": 21, "max": 21 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_dolphin_whale", "label": "Dolphin/Whale" },
+            { "tableId": "animal_primate", "label": "Primate" },
+            { "tableId": "dinosaur", "label": "Dinosaur" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cold_blooded",
+      "name": "Cold-Blooded",
+      "percentile": { "min": 22, "max": 22 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_amphibian", "label": "Amphibian" },
+            { "tableId": "animal_reptilian", "label": "Reptilian" },
+            { "tableId": "animal_snake", "label": "Snake" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comic_book",
+      "name": "Comic Book",
+      "percentile": { "min": 23, "max": 29 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "sci-fi", "label": "Sci-Fi" },
+            { "tableId": "super_being", "label": "Superbeing" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "depraved",
+      "name": "Depraved",
+      "percentile": { "min": 30, "max": 35 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "infernal", "label": "Infernal" },
+            { "tableId": "undead", "label": "Undead" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "divine",
+      "name": "Divine",
+      "percentile": { "min": 36, "max": 42 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "angelic", "label": "Angelic" },
+            { "tableId": "unearthly_beauty", "label": "Unearthly Beauty" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fantasy",
+      "name": "Fantasy",
+      "percentile": { "min": 43, "max": 48 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "fantasy", "label": "Fantasy" },
+            { "tableId": "mythical_creature", "label": "Mythical Creature" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "horror_show",
+      "name": "Horror Show",
+      "percentile": { "min": 49, "max": 55 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "nightmare", "label": "Nightmare" },
+            { "tableId": "stigmata", "label": "Stigmata" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inanimate",
+      "name": "Inanimate",
+      "percentile": { "min": 56, "max": 62 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "plant_life", "label": "Plant Life" },
+            { "tableId": "mineral", "label": "Mineral" },
+            { "tableId": "artificial_appearance", "label": "Artificial Appearance" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "militia",
+      "name": "Militia",
+      "percentile": { "min": 63, "max": 68 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "ancient_warrior", "label": "Ancient Warrior" },
+            { "tableId": "modern_soldier", "label": "Modern Soldier" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "misshapen",
+      "name": "Misshapen",
+      "percentile": { "min": 69, "max": 75 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "disproportion", "label": "Disproportion" },
+            { "tableId": "unnatural_limbs", "label": "Unnatural Limbs" },
+            { "tableId": "unusual_facial_features", "label": "Unusual Facial Features" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pelagic",
+      "name": "Pelagic",
+      "percentile": { "min": 76, "max": 76 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_fish", "label": "Fish" },
+            { "tableId": "animal_octopus_squid", "label": "Octopus/Squid" },
+            { "tableId": "animal_shark", "label": "Shark" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "performer",
+      "name": "Performer",
+      "percentile": { "min": 77, "max": 82 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "artisan", "label": "Artisan" },
+            { "tableId": "clown_jester", "label": "Clown/Jester" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "predator",
+      "name": "Predator",
+      "percentile": { "min": 83, "max": 83 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_bear", "label": "Bear" },
+            { "tableId": "animal_canine", "label": "Canine" },
+            { "tableId": "animal_feline", "label": "Feline" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prey",
+      "name": "Prey",
+      "percentile": { "min": 84, "max": 84 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_equine_bovine_deer", "label": "Equine/Bovine/Deer" },
+            { "tableId": "animal_rodent", "label": "Rodent" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wretch",
+      "name": "Wretch",
+      "percentile": { "min": 85, "max": 90 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "pestilence_disease", "label": "Pestilence" },
+            { "tableId": "substance_abuse", "label": "Substance Abuse" },
+            { "tableId": "victim", "label": "Victim" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "two_characteristics",
+      "name": "2 Characteristics",
+      "percentile": { "min": 91, "max": 95 },
+      "slotPlan": [
+        {
+          "kind": "characteristics_multiplier",
+          "count": 2,
+          "mode": "roll_or_select",
+          "rerollAbovePercentile": 90,
+          "label": "Roll or Select 2 Characteristics (reroll results above 90%)"
+        }
+      ]
+    },
+    {
+      "id": "three_characteristics",
+      "name": "3 Characteristics",
+      "percentile": { "min": 96, "max": 98 },
+      "slotPlan": [
+        {
+          "kind": "characteristics_multiplier",
+          "count": 3,
+          "mode": "roll_or_select",
+          "rerollAbovePercentile": 90,
+          "label": "Roll or Select 3 Characteristics (reroll results above 90%)"
+        }
+      ]
+    },
+    {
+      "id": "four_characteristics",
+      "name": "4 Characteristics",
+      "percentile": { "min": 99, "max": 100 },
+      "slotPlan": [
+        {
+          "kind": "characteristics_multiplier",
+          "count": 4,
+          "mode": "roll_or_select",
+          "rerollAbovePercentile": 90,
+          "label": "Roll or Select 4 Characteristics (reroll results above 90%)"
+        }
+      ]
+    }
+  ]
+}

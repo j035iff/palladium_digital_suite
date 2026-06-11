@@ -1,0 +1,41 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json",
+  "id": "characteristics",
+  "kind": "forge_routing_table",
+  "displayName": "Characteristics",
+  "forgeRole": "characteristics_router",
+  "path2Entry": {
+    "countRoll": { "notation": "1D4+2", "min": 3, "max": 6 },
+    "description": "Personality Crafter — roll 1D4+2, then select that many characteristics."
+  },
+  "entries": [
+    {
+      "id": "aerial",
+      "name": "Aerial",
+      "percentile": { "min": 1, "max": 1 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "animal_bat", "label": "Bat" },
+            { "tableId": "animal_avian", "label": "Avian" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "two_characteristics",
+      "name": "2 Characteristics",
+      "percentile": { "min": 91, "max": 95 },
+      "slotPlan": [
+        {
+          "kind": "characteristics_multiplier",
+          "count": 2,
+          "mode": "roll_or_select",
+          "rerollAbovePercentile": 90,
+          "label": "Roll or Select 2 Characteristics (reroll results above 90%)"
+        }
+      ]
+    }
+  ]
+}

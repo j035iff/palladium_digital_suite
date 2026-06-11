@@ -1,0 +1,17 @@
+{
+  "id": "morphus_forge_manifest",
+  "kind": "forge_manifest",
+  "displayName": "Morphus Sub-Forge",
+  "description": "Entry points for Tab 1 Crossroads — Path 1 (Appearance) vs Path 2 (Personality Crafter).",
+  "path1": {
+    "routingTableId": "appearance",
+    "routingTableFile": "appearance.json"
+  },
+  "path2": {
+    "routingTableId": "characteristics",
+    "routingTableFile": "characteristics.json",
+    "countRoll": { "notation": "1D4+2", "min": 3, "max": 6 },
+    "description": "Hand-craft a Morphus symbolic of personality — roll 1D4+2, then make that many direct Characteristics selections."
+  },
+  "traitTableDir": "../tables"
+}

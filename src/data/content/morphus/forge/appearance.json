@@ -1,0 +1,560 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json",
+  "id": "appearance",
+  "kind": "forge_routing_table",
+  "displayName": "Appearance",
+  "forgeRole": "appearance_archetype",
+  "description": "Nightbane Morphus Appearance table (percentile 01–00%). Path 1 macro archetype selection for Sub-Forge Tab 1.",
+  "entries": [
+    {
+      "id": "almost_human",
+      "name": "Almost Human",
+      "percentile": { "min": 1, "max": 2 },
+      "slotPlan": [
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "amalgam",
+      "name": "Amalgam",
+      "percentile": { "min": 3, "max": 6 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        { "kind": "required", "tableId": "plant_life", "label": "Plant Life" },
+        { "kind": "required", "tableId": "mineral", "label": "Mineral" }
+      ]
+    },
+    {
+      "id": "anthromorph",
+      "name": "Anthromorph",
+      "percentile": { "min": 7, "max": 10 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "label": "Beauty or Angelic",
+          "options": [
+            { "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+            { "tableId": "angelic", "label": "Angelic" }
+          ]
+        },
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "apocalyptic",
+      "name": "Apocalyptic",
+      "percentile": { "min": 11, "max": 14 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "infernal", "label": "Infernal" },
+            { "tableId": "angelic", "label": "Angelic" }
+          ]
+        },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "nightmare", "label": "Nightmare" },
+            { "tableId": "stigmata", "label": "Stigmata" }
+          ]
+        },
+        { "kind": "required", "tableId": "pestilence_disease", "label": "Pestilence" },
+        { "kind": "required", "tableId": "undead", "label": "Undead" }
+      ]
+    },
+    {
+      "id": "bizarre",
+      "name": "Bizarre",
+      "percentile": { "min": 15, "max": 18 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        { "kind": "required", "tableId": "stigmata", "label": "Stigmata" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "carnifern",
+      "name": "Carnifern",
+      "percentile": { "min": 19, "max": 22 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "plant_life", "label": "Plant Life" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "chosen_one",
+      "name": "Chosen One",
+      "percentile": { "min": 23, "max": 26 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+        { "kind": "required", "tableId": "angelic", "label": "Angelic" },
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "animal", "label": "Animal Form" },
+            { "tableId": "mythical_creature", "label": "Mythical Creature" },
+            { "tableId": "mineral", "label": "Mineral" },
+            { "tableId": "super_being", "label": "Superbeing" },
+            {
+              "tableId": "characteristics",
+              "label": "Characteristics",
+              "rerollMultiRollResults": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condemned",
+      "name": "Condemned",
+      "percentile": { "min": 27, "max": 29 },
+      "slotPlan": [
+        { "kind": "repeat", "count": 2, "tableId": "infernal", "label": "Infernal" },
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "animal", "label": "Animal Form" },
+            { "tableId": "alien_shape", "label": "Alien Shape" },
+            { "tableId": "biomechanical", "label": "Biomechanical" },
+            { "tableId": "nightmare", "label": "Nightmare" },
+            { "tableId": "pestilence_disease", "label": "Pestilence" },
+            { "tableId": "stigmata", "label": "Stigmata" },
+            { "tableId": "undead", "label": "Undead" },
+            { "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+            {
+              "tableId": "unnatural_limbs",
+              "label": "Unnatural Limbs",
+              "rerollMultiRollResults": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dimensional_traveler",
+      "name": "Dimensional Traveler",
+      "percentile": { "min": 30, "max": 33 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "biomechanical", "label": "Biomechanical" },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "fantasy", "label": "Fantasy" },
+            { "tableId": "sci-fi", "label": "Sci-Fi" }
+          ]
+        },
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "animal", "label": "Animal Form" },
+            { "tableId": "extraterrestrial", "label": "Extraterrestrial" },
+            {
+              "tableId": "characteristics",
+              "label": "Characteristics",
+              "rerollMultiRollResults": true
+            },
+            { "tableId": "stigmata", "label": "Stigmata" },
+            { "tableId": "undead", "label": "Undead" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dino_freak",
+      "name": "Dino Freak",
+      "percentile": { "min": 34, "max": 35 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "dinosaur", "label": "Dinosaur Form" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "fabled",
+      "name": "Fabled",
+      "percentile": { "min": 36, "max": 38 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "mythical_creature", "label": "Mythical Creature" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "gladiator",
+      "name": "Gladiator",
+      "percentile": { "min": 39, "max": 42 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "athlete", "label": "Athlete" },
+            { "tableId": "ancient_warrior", "label": "Ancient Warrior" }
+          ]
+        },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "sci-fi", "label": "Sci-Fi" },
+            { "tableId": "fantasy", "label": "Fantasy" }
+          ]
+        },
+        {
+          "kind": "choice",
+          "label": "Animal Form or Characteristics",
+          "options": [
+            { "tableId": "animal", "label": "Animal Form" },
+            {
+              "tableId": "characteristics",
+              "label": "Characteristics",
+              "rerollMultiRollResults": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "historical",
+      "name": "Historical",
+      "percentile": { "min": 43, "max": 46 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "ancient_warrior", "label": "Ancient Warrior" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "inhuman_but_beautiful",
+      "name": "Inhuman but Beautiful",
+      "percentile": { "min": 47, "max": 50 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "inhuman_shape",
+      "name": "Inhuman Shape",
+      "percentile": { "min": 51, "max": 54 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "stigmata", "label": "Stigmata" },
+            { "tableId": "nightmare", "label": "Nightmare" }
+          ]
+        },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "inorganic",
+      "name": "Inorganic",
+      "percentile": { "min": 55, "max": 58 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "mineral", "label": "Mineral" },
+            { "tableId": "artificial_appearance", "label": "Artificial Appearance" }
+          ]
+        },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "biomechanical", "label": "Biomechanical" },
+            { "tableId": "gear_head", "label": "Gear-Head" }
+          ]
+        },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "living_myth",
+      "name": "Living Myth",
+      "percentile": { "min": 59, "max": 62 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "fantasy", "label": "Fantasy" },
+            { "tableId": "mythical_creature", "label": "Mythical Creature" }
+          ]
+        },
+        { "kind": "required", "tableId": "extraterrestrial", "label": "Extraterrestrial" },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "angelic", "label": "Angelic" },
+            { "tableId": "infernal", "label": "Infernal" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lycanthrope",
+      "name": "Lycanthrope",
+      "percentile": { "min": 63, "max": 64 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" }
+      ]
+    },
+    {
+      "id": "marred_beauty",
+      "name": "Marred Beauty",
+      "percentile": { "min": 65, "max": 68 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+        { "kind": "required", "tableId": "stigmata", "label": "Stigmata" },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "monstrous_lycanthrope",
+      "name": "Monsterous Lycanthrope",
+      "percentile": { "min": 69, "max": 71 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "nightmare", "label": "Nightmare" },
+            { "tableId": "stigmata", "label": "Stigmata" }
+          ]
+        },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "morbid",
+      "name": "Morbid",
+      "percentile": { "min": 72, "max": 74 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "infernal", "label": "Infernal" },
+        { "kind": "required", "tableId": "stigmata", "label": "Stigmata" },
+        { "kind": "required", "tableId": "undead", "label": "Undead" }
+      ]
+    },
+    {
+      "id": "mundane",
+      "name": "Mundane",
+      "percentile": { "min": 75, "max": 76 },
+      "slotPlan": [
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "occupation", "label": "Occupation" },
+            { "tableId": "hobbyist", "label": "Hobbyist" },
+            { "tableId": "athlete", "label": "Athlete" },
+            { "tableId": "gear_head", "label": "Gear-Head" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patchwork_horror",
+      "name": "Patchwork Horror",
+      "percentile": { "min": 77, "max": 80 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "unusual_facial_features", "label": "Unusual Facial Features" },
+        { "kind": "required", "tableId": "disproportion", "label": "Disproportion" },
+        { "kind": "required", "tableId": "unnatural_limbs", "label": "Unnatural Limbs" },
+        { "kind": "required", "tableId": "stigmata", "label": "Stigmata" }
+      ]
+    },
+    {
+      "id": "starving_artist",
+      "name": "Starving Artist",
+      "percentile": { "min": 81, "max": 83 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "artisan", "label": "Artisan" },
+            { "tableId": "clown_jester", "label": "Clown/Jester" }
+          ]
+        },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "super_soldier",
+      "name": "Super-Soldier",
+      "percentile": { "min": 84, "max": 87 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "super_being", "label": "Superbeing" },
+        { "kind": "required", "tableId": "modern_soldier", "label": "Soldier" },
+        { "kind": "required", "tableId": "sci-fi", "label": "Sci-Fi" }
+      ]
+    },
+    {
+      "id": "the_drowned",
+      "name": "The Drowned",
+      "percentile": { "min": 88, "max": 89 },
+      "slotPlan": [
+        {
+          "kind": "required",
+          "tableId": "animal",
+          "label": "Aquatic Animal Form",
+          "subtableIds": [
+            "animal_amphibian",
+            "animal_fish",
+            "animal_shark",
+            "animal_octopus_squid",
+            "animal_dolphin_whale",
+            "animal_crustacean"
+          ]
+        },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "biomechanical", "label": "Biomechanical" },
+            { "tableId": "biomechanical_aquatic", "label": "Aquatic Biomech" }
+          ]
+        },
+        { "kind": "required", "tableId": "undead", "label": "Undead" }
+      ]
+    },
+    {
+      "id": "the_sickness",
+      "name": "The Sickness",
+      "percentile": { "min": 90, "max": 93 },
+      "slotPlan": [
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "pestilence_disease", "label": "Pestilence" },
+            { "tableId": "substance_abuse", "label": "Substance Abuse" }
+          ]
+        },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "stigmata", "label": "Stigmata" },
+            { "tableId": "nightmare", "label": "Nightmare" }
+          ]
+        },
+        {
+          "kind": "required",
+          "tableId": "characteristics",
+          "label": "Characteristics",
+          "rerollMultiRollResults": true
+        }
+      ]
+    },
+    {
+      "id": "victim_archetype",
+      "name": "Victim",
+      "percentile": { "min": 94, "max": 96 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "victim", "label": "Victim" },
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "substance_abuse", "label": "Substance Abuse" },
+            { "tableId": "nightmare", "label": "Nightmare" },
+            { "tableId": "unearthly_beauty", "label": "Unearthly Beauty" },
+            {
+              "tableId": "characteristics",
+              "label": "Characteristics",
+              "rerollMultiRollResults": true
+            },
+            { "tableId": "stigmata", "label": "Stigmata" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xenomorph",
+      "name": "Xenomorph",
+      "percentile": { "min": 97, "max": 100 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "alien_shape", "label": "Alien Shape" },
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        { "kind": "required", "tableId": "plant_life", "label": "Plant Life" },
+        {
+          "kind": "choice",
+          "options": [
+            { "tableId": "biomechanical", "label": "Biomechanical" },
+            { "tableId": "gear_head", "label": "Gear-Head" }
+          ]
+        }
+      ]
+    }
+  ]
+}

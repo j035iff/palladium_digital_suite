@@ -2,9 +2,11 @@
 
 ## Overview
 
-The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](./universal_forge_navigation_engine.md). It begins **after** [Create Character](./app_viewport_launcher.md) — not at app launch. All seven primary tabs are permanently rendered in the header viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
+The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](./universal_forge_navigation_engine.md). It begins **after** [Create Character](./app_viewport_launcher.md) — not at app launch. All eight primary tabs are permanently rendered in the header viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
 
-**Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 7 spawn confirmation modal runs [spawn handoff](./character_spawn_handoff.md).
+**Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](./character_spawn_handoff.md).
+
+**Nightbane Morphus:** Tab 6 hosts the nested [Morphus Sub-Forge](./forge-morphus_creation.md). Facade dice are finalized on Tab 5; all Morphus trait generation and Morphus vitality dice live on Tab 6 only.
 
 ---
 
@@ -14,23 +16,31 @@ The Character Creation flow is an implementation of the [Universal Forge Navigat
 
 - **Yellow:** A tab was Green, upstream data changed, and this tab’s stored snapshot no longer matches the live payload (even if current fields still pass validation). Player data is **not** auto-cleared; the tab shows what must be re-confirmed.
 - **Red:** A tab was Green (or was being edited) and required fields are now missing or invalid.
-- **Race / O.C.C. change:** Typically cascades conflict flags across Tabs 2–6 (and Tab 5 stub acknowledgment when applicable). Tab 1 completion may remain Green until the user re-validates it.
+- **Race / O.C.C. change:** Typically cascades conflict flags across Tabs 2–7 (and Tab 6 Morphus state when applicable). Tab 1 completion may remain Green until the user re-validates it.
 - **No destructive invalidation:** Changing Race or O.C.C. does **not** wipe skills, attributes, psychic tier, abilities, dice resolutions, or voucher picks. Only downstream **completion markers and snapshots** are cleared so tabs turn Yellow until the user clicks **Continue** again on each affected step.
 
 ### Multiple Yellow / Red Tabs — Top-Down Repair
 
-When more than one tab is Yellow or Red, the engine designates the **first** such tab in sequence (1 → 7). The user must resolve that tab first; downstream flagged tabs stay locked or blocked until the chain is repaired in order. Continue and Tab 7 access honor this ordering.
+When more than one tab is Yellow or Red, the engine designates the **first** such tab in sequence (1 → 8). The user must resolve that tab first; downstream flagged tabs stay locked or blocked until the chain is repaired in order. Continue and Tab 8 access honor this ordering.
 
-### Alignment (Tab 1 vs Tab 7)
+### Alignment (Tab 1 vs Tab 8)
 
 | Location | Rule |
 |----------|------|
 | **Tab 1** | Alignment is **optional** for **Continue**. A valid Race + O.C.C. pair is sufficient to turn Tab 1 Green. |
-| **Tab 7** | Alignment is **required** before **Spawn Character**. The Review tab hosts the alignment picker; spawn blockers list a missing alignment explicitly. Tab 1 may still show “Alignment (optional).” |
+| **Tab 8** | Alignment is **required** before **Spawn Character**. The Review tab hosts the alignment picker; spawn blockers list a missing alignment explicitly. Tab 1 may still show “Alignment (optional).” |
+
+### Pending Dice (Tabs 5, 6, and 8)
+
+| Location | Rule |
+|----------|------|
+| **Tab 5 — Roll Pending** | All Facade / single-form physical dice (attributes, H.P., S.D.C., P.P.E., I.S.P.). Nightbane: **Facade only** — no Morphus blocks. |
+| **Tab 6 — Traits** | Nightbane only: Morphus vitality dice and the full [Morphus Sub-Forge](./forge-morphus_creation.md). Requires Tab 5 complete. |
+| **Tab 8 — Review & Spawn** | **Summary only** — no dice entry. Spawn blocked until Tabs 5 and 6 (when applicable) have finalized all pending rolls. |
 
 ---
 
-## The 7-Step Sequence
+## The 8-Step Sequence
 
 ### Tab 1: Race, O.C.C., & Alignment Selection
 
@@ -50,9 +60,9 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 3: Psionic Determination
 
-- **Engine Action:** Psychic Gate — explicit tier choice and/or physical percentile test. Major tier stages the 50% related-skill penalty applied in Tab 4.
+- **Engine Action:** Psychic Gate — explicit tier choice. Major tier stages the 50% related-skill penalty applied in Tab 4.
 - **Black (N/A) Condition:** Tab is **Black** when the Psychic Gate is bypassed (genre disallows supernatural abilities, or Race/O.C.C. rules bypass the gate). Black tabs are treated as complete for linear unlock.
-- **Completion Criteria (Turns Green):** The player **explicitly** confirms a tier: **None**, **Minor**, or **Major** (or **Master** when the O.C.C. locks psychic class — still requires an explicit tier click, not only a default seed). Rolling **Test Potential** counts as explicit confirmation. Changing Race or O.C.C. resets the “tier chosen” flag; Tab 3 must be re-confirmed via **Continue**.
+- **Completion Criteria (Turns Green):** The player **explicitly** confirms a tier: **None**, **Minor**, or **Major** (or **Master** when the O.C.C. locks psychic class — still requires an explicit tier click, not only a default seed). Changing Race or O.C.C. resets the “tier chosen” flag; Tab 3 must be re-confirmed via **Continue**.
 
 ### Tab 4: Skill Selection
 
@@ -60,30 +70,39 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Black (N/A) Condition:** Never.
 - **Completion Criteria (Turns Green):** Mandatory core skills and vouchers satisfied, related slots filled per budget (including psychic slot multipliers), no prerequisite blockers. User clicks **Continue**.
 
-### Tab 5: Character Trait Forges (Sub-Forge Container)
+### Tab 5: Roll Pending
 
-- **Engine Action:** Host for nested Sub-Forges (e.g., Morphus Forge for Nightbane).
+- **Engine Action:** Manual entry of all pending physical dice for the build. Live Ledger updates as values are typed (Pillar 5 — physical dice first). **Continue** writes resolved Facade / single-form vitals and attribute bonuses to the sheet.
+- **Black (N/A) Condition:** Never (may show “no pending dice” when a build has none).
+- **Nightbane gate:** Only **Facade** dice blocks appear here. Morphus H.P./S.D.C. and trait tables are **not** on this tab.
+- **Completion Criteria (Turns Green):** Every pending dice field in scope is filled with a valid result; user clicks **Continue**.
+
+### Tab 6: Character Trait Forges (Sub-Forge Container)
+
+- **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](./forge-morphus_creation.md) — a 3-step Sub-Forge with Guided Wizard / Expert Mode, progressive slot resolution, and Morphus Live Ledger compilation.
 - **Black (N/A) Condition:** **Black** when the selected Race line does not use a trait sub-system (e.g., non–Nightbane builds).
-- **Implementation (current):** Single-step **stub** — acknowledge placeholder, then **Continue**. Full Sub-Forge tab sets will replace this when spec’d.
-- **Completion Criteria (Turns Green):** When applicable, stub step acknowledged and **Continue** clicked. When Black, auto-bypassed for progression.
+- **Nightbane completion:**
+  - Tab 5 (Roll Pending) must be Green first.
+  - Morphus vitality dice entered on this tab.
+  - Sub-Forge **Finalize Morphus** passes Complete state up to turn Tab 6 Green on the master forge.
+- **Implementation (current):** Stub UI with Morphus dice panel; full Sub-Forge per [forge-morphus_creation.md](./forge-morphus_creation.md).
 
-### Tab 6: Resource-Based Abilities Selection
+### Tab 7: Resource-Based Abilities Selection
 
 - **Engine Action:** Spells, psionics, talents, etc., from O.C.C. / genre ability budgets.
 - **Black (N/A) Condition:** **Black** when no ability pick budget applies.
-- **Completion Criteria (Turns Green):** **Minimum** mandatory picks met (e.g., at least one ability when the budget requires picks). The user may leave **optional** budget slots unfilled and still click **Continue**.
-- **Optional picks UX:** Tab turns Green at minimum; the **Continue** tooltip appends guidance when additional slots remain (e.g., optional talent spend). The selection UI should still show remaining budget clearly.
+- **Completion Criteria (Turns Green):** **Full** mandatory budget satisfied (all required spell, psionic, and talent slots filled per effective budget, including Psychic Gate pool rules). User clicks **Continue**.
+- **Optional picks UX:** When minimum mandatory picks are met but optional budget remains, the **Continue** tooltip may note optional spend; the selection UI shows remaining budget clearly.
 
-### Tab 7: Review and Spawn (The Terminal Gate)
+### Tab 8: Review and Spawn (The Terminal Gate)
 
-- **Engine Action:** Summary, **alignment selection (required)**, manual dice resolution for Live Ledger entries, vitality commit, then spawn.
+- **Engine Action:** Build **summary only**, **alignment selection (required)**, then spawn. No dice entry on this tab.
 - **Black (N/A) Condition:** Never.
-- **Availability Gate:** **Grey (Locked)** until Tabs 1–6 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access.
+- **Availability Gate:** **Grey (Locked)** until Tabs 1–7 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access. Pending dice must already be finalized on Tabs 5 and 6.
 - **No Continue button** on this tab.
 - **Terminal completion:**
-  - Resolve all pending dice on the Live Ledger and commit vitality when required.
   - **Select alignment** (required here even if skipped on Tab 1).
-  - **Spawn Character** enables only when `assessTab7SpawnBlockers` is empty (alignment, dice, vitality, and other spawn checks).
+  - **Spawn Character** enables only when `assessTab8SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
   - Confirmation modal → [spawn handoff](./character_spawn_handoff.md) → live sheet; creation UI hidden.
 
 ---
@@ -95,5 +114,9 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Tab order, validators, snapshots | `src/lib/forgeNavigation/characterCreationForge.ts` |
 | Color states, Continue, top-down repair | `src/lib/forgeNavigation/engine.ts` |
 | Race/O.C.C. invalidation (retain data) | `src/lib/creationInvalidate.ts` |
+| Pending dice scope (facade / morphus) | `src/lib/spawnDiceBlocks.ts`, `src/lib/pendingDiceLedger.ts` |
 | Shell UI | `src/components/creation/CreationFlowShell.tsx` |
-| Tab 7 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
+| Tab 5 Roll Pending | `src/components/creation/CreationFinalizeDice.tsx` |
+| Tab 6 Traits / Morphus stub | `src/components/creation/MorphusForgeStub.tsx` |
+| Tab 8 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
+| Morphus Sub-Forge spec | [forge-morphus_creation.md](./forge-morphus_creation.md) |

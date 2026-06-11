@@ -1,0 +1,37 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json",
+  "id": "appearance",
+  "kind": "forge_routing_table",
+  "displayName": "Appearance",
+  "forgeRole": "appearance_archetype",
+  "description": "Example excerpt — see content/morphus/forge/appearance.json for the full table.",
+  "entries": [
+    {
+      "id": "amalgam",
+      "name": "Amalgam",
+      "percentile": { "min": 3, "max": 6 },
+      "slotPlan": [
+        { "kind": "required", "tableId": "animal", "label": "Animal Form" },
+        { "kind": "required", "tableId": "plant_life", "label": "Plant Life" },
+        { "kind": "required", "tableId": "mineral", "label": "Mineral" }
+      ]
+    },
+    {
+      "id": "condemned",
+      "name": "Condemned",
+      "percentile": { "min": 27, "max": 29 },
+      "slotPlan": [
+        { "kind": "repeat", "count": 2, "tableId": "infernal", "label": "Infernal" },
+        {
+          "kind": "combination_pool",
+          "label": "1D4 on any combination",
+          "countRoll": { "notation": "1D4", "min": 1, "max": 4 },
+          "pool": [
+            { "tableId": "animal", "label": "Animal Form" },
+            { "tableId": "nightmare", "label": "Nightmare" }
+          ]
+        }
+      ]
+    }
+  ]
+}

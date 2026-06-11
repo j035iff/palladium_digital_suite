@@ -3,11 +3,11 @@
   "kind": "morphus_trait_table",
   "displayName": "Alien Shape",
   "parentTable": null,
-  "description": "Alien Shape Morphus tables (Nightbane Core Rulebook, p. 103; Nightbane Survival Guide (WB5), p. 72; Dark Designs (WB6), pp. 135-136). Encompasses bizarre, non-humanoid forms, structural aberrations, and physical anomalies.",
+  "description": "Alien Shape Morphus table (Nightbane Core Rulebook, p. 103; Nightbane Survival Guide (WB5), p. 72; Dark Designs (WB6), pp. 135-136). Percentile bands: 01-05% Abnormally Large Sensory Organs, 06-10% Alien Plantlife, 11-15% Armored Scales, 16-19% Baggy Flaps of Skin, 20-23% Bony Exoskeleton, 24-28% Brute, 29-30% Cone Head, 31-34% Crystalline, 35-39% Hulking Monster, 40-43% Living Tattoos, 44-48% Mouth-Covered Body, 49-53% Multiple Heads, 54-58% No Bones, 59-63% On Fire, 64-68% Plasmoid, 69-73% Shadow Man, 74-77% Shaggy Hairy, 78-82% Slimy Slug-Like Skin, 83-86% Thorns, 87-91% Unusual Skin Color, 92-95% Wrinkled Skin, 96-00% Combination of 2.",
   "entries": [
     {
-      "id": "alien_shape_plasmoid",
-      "name": "Plasmoid",
+      "id": "alien_shape_abnormally_large_sensory_organs",
+      "name": "Abnormally Large Sensory Organs",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -15,38 +15,55 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Core Rulebook",
-          "pageNumber": 103
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 135
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
         }
       ],
-      "description": "The Nightbane's body has a semi-liquid consistency; he is made up of jelly-like blood! The basic shape of the character remains that of a bipedal humanoid, but it can be changed at will.",
+      "description": "The eyes, ears, nose, tongue and fingertips of this Nightbane are extremely large, but the senses are proportionately better too.",
       "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
+        "perception": {
+          "flat": 3
         },
-        "hf": {
-          "dice": "1D6"
+        "pb": {
+          "flat": -3
         }
       },
-      "damageAffinities": {
-        "physical": 0.5
+      "sensory": {
+        "hawkLikeDayVision": true,
+        "nightvisionRangeFlatBonus": 2000,
+        "whisperHearingRangeFeet": 150,
+        "scentTracking": {
+          "enabled": true,
+          "baseSuccessPercent": 20,
+          "perLevelIncrement": 5,
+          "recognizeScentBasePercent": 25,
+          "recognizeScentPerLevel": 5,
+          "recognizeSpecificScentBasePercent": 20,
+          "recognizeSpecificScentPerLevel": 3,
+          "recognizeCommonScentBonusPercent": 30
+        },
+        "tasteIdentification": {
+          "baseSuccessPercent": 30,
+          "perLevelIncrement": 5
+        }
       },
-      "appearanceConstraints": {
-        "narrowOpeningAccess": "enhanced"
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_trait",
+            "targetValue": "requires_light_touch",
+            "modifierPercent": 5
+          }
+        ]
       },
-      "customOneOffs": [
-        "The character can squeeze through narrow openings (even a couple of inches will do!).",
-        "Can slip out of restraints and conceal himself as a glob or goo."
-      ]
+      "percentile": {
+        "min": 1,
+        "max": 5
+      }
     },
     {
       "id": "alien_shape_bark_like_skin",
-      "name": "Bark-like Skin",
+      "name": "Alien Plantlife",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -71,6 +88,102 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 6,
+        "max": 10
+      }
+    },
+    {
+      "id": "alien_shape_armored_scales",
+      "name": "Armored Scales",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "Thick, heavy scales like an alligator's cover the Nightbane like armor, protecting him and adding to his frightening, alien appearance.",
+      "naturalAr": 9,
+      "statModifiers": {
+        "sdc": {
+          "dice": "6D6+6"
+        },
+        "pp": {
+          "flat": -1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "percentile": {
+        "min": 11,
+        "max": 15
+      }
+    },
+    {
+      "id": "alien_shape_baggy_flaps_of_skin",
+      "name": "Baggy Flaps of Skin",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "The character's skin seems too large for his body, causing it to sag, flap, and fold in triple and quadruple layers all over.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6"
+        },
+        "pb": {
+          "percent": -30
+        },
+        "spd": {
+          "percent": -10
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "concealment",
+            "modifierPercent": 25
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          },
+          {
+            "targetType": "category",
+            "targetValue": "physical",
+            "modifierPercent": -10
+          }
+        ]
+      },
+      "customOneOffs": [
+        "Can easily hide small objects beneath the folds of skin."
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 19
       }
     },
     {
@@ -103,11 +216,15 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 20,
+        "max": 23
       }
     },
     {
-      "id": "alien_shape_thorns",
-      "name": "Thorns",
+      "id": "alien_shape_brute",
+      "name": "Brute",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -115,23 +232,118 @@
       "sources": [
         {
           "gameSystem": "nightbane",
-          "reference": "Nightbane Core Rulebook",
-          "pageNumber": 103
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 136
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
         }
       ],
-      "description": "Thorns protrude from the character's body! They may appear to be natural growths, or they might be stigmata-like, appearing to painfully pierce the character's skin!",
+      "description": "Increase body size and weight by 50%, limbs are muscular and thick, teeth have fangs and the Brute has claws in place of fingernails.",
       "statModifiers": {
+        "ps": {
+          "dice": "1D4"
+        },
+        "pe": {
+          "flat": 1
+        },
+        "iq": {
+          "flat": -1
+        },
+        "pb": {
+          "dice": "-1D4"
+        },
         "sdc": {
-          "dice": "4D6"
+          "dice": "1D4x10"
         },
         "hf": {
-          "dice": "1D4"
+          "flat": 2
         }
+      },
+      "weightModifier": {
+        "percent": 50
+      },
+      "appearanceConstraints": {
+        "clothingFit": "custom_required"
+      },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Fanged Bite",
+          "damageFormula": "1D6",
+          "isAdditiveToHth": true
+        },
+        {
+          "limbType": "claws",
+          "label": "Brute Claws",
+          "damageFormula": "2D6",
+          "isAdditiveToHth": true
+        }
+      ],
+      "percentile": {
+        "min": 24,
+        "max": 28
+      }
+    },
+    {
+      "id": "alien_shape_cone_head",
+      "name": "Cone Head",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "The character's head is elongated and conical, or straight up as if the forehead was 4x higher than usual.",
+      "statModifiers": {
+        "iq": {
+          "flat": 1
+        },
+        "me": {
+          "dice": "1D4"
+        },
+        "perception": {
+          "flat": 1
+        },
+        "pb": {
+          "flat": -1
+        },
+        "sdc": {
+          "dice": "2D6"
+        }
+      },
+      "mobility": {
+        "balanceModifierPercent": -10
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "acrobatics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "climbing",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "gymnastics",
+            "modifierPercent": -10
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "disguise",
+            "modifierPercent": -30
+          }
+        ]
+      },
+      "percentile": {
+        "min": 29,
+        "max": 30
       }
     },
     {
@@ -196,65 +408,11 @@
       ],
       "customOneOffs": [
         "The Nightbane can parry bladed weapons and fiery torches with his bare hands."
-      ]
-    },
-    {
-      "id": "alien_shape_living_tattoos",
-      "name": "Living Tattoos",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
       ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Core Rulebook",
-          "pageNumber": 103
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 136
-        }
-      ],
-      "description": "The Nightbane's skin is covered with tattoos. Unlike normal body decorations, however, these tattoos change and move!",
-      "statModifiers": {
-        "hf": {
-          "dice": "1D6"
-        }
-      },
-      "customOneOffs": [
-        "Tattoos change and move; they may reflect the character's current state of mind (reacting to emotions) or be controlled directly by the character (50/50 chance or select one)."
-      ]
-    },
-    {
-      "id": "alien_shape_unusual_skin_color",
-      "name": "Unusual Skin Color",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Core Rulebook",
-          "pageNumber": 103
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 136
-        }
-      ],
-      "description": "The Nightbane's skin has an inhuman hue. The color is too intense and sharp to be normal body paint or dyes.",
-      "statModifiers": {
-        "hf": {
-          "flat": 1
-        }
-      },
-      "customOneOffs": [
-        "Colors can include shades of yellow, red, green, blue, purple/violet, copper, gold, metallic grey, silver, pitch black, and stark white."
-      ]
+      "percentile": {
+        "min": 31,
+        "max": 34
+      }
     },
     {
       "id": "alien_shape_hulking_monster",
@@ -296,11 +454,48 @@
       "customOneOffs": [
         "The misshapen hulk stands 1D6+6 feet (2.1 to 3.7 m) tall, even with a hunched back.",
         "Weighs 800 pounds (360 kg) per every foot (0.3 m) of height."
-      ]
+      ],
+      "percentile": {
+        "min": 35,
+        "max": 39
+      }
+    },
+    {
+      "id": "alien_shape_living_tattoos",
+      "name": "Living Tattoos",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 136
+        }
+      ],
+      "description": "The Nightbane's skin is covered with tattoos. Unlike normal body decorations, however, these tattoos change and move!",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D6"
+        }
+      },
+      "customOneOffs": [
+        "Tattoos change and move; they may reflect the character's current state of mind (reacting to emotions) or be controlled directly by the character (50/50 chance or select one)."
+      ],
+      "percentile": {
+        "min": 40,
+        "max": 43
+      }
     },
     {
       "id": "alien_shape_mouth_covered_body",
-      "name": "Mouth-Covered Body!",
+      "name": "Mouth-Covered Body",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -342,94 +537,10 @@
       "customOneOffs": [
         "Adds +3 to Horror Factor when all the mouths are screaming or screeching at once.",
         "The mouths cannot speak language, but they can scream, whistle, hoot, and growl."
-      ]
-    },
-    {
-      "id": "alien_shape_no_bones",
-      "name": "No Bones",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
       ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "This Nightbane may appear normal, but his freakish movement suggests he has no bones. The arms, legs, neck, etc., move and bend any which way, yet somehow the appendages and body parts keep their shape.",
-      "statModifiers": {
-        "sdc": {
-          "dice": "3D6"
-        },
-        "dodge": {
-          "flat": 1
-        },
-        "rollWithPunch": {
-          "flat": 6
-        },
-        "ps": {
-          "percent": -20
-        },
-        "spd": {
-          "percent": -20
-        },
-        "hf": {
-          "flat": 2
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "escape_artist",
-            "modifierPercent": 20,
-            "grantUnlearnedValue": 40
-          }
-        ]
-      },
-      "combatContextModifiers": [
-        {
-          "condition": "grapple_defense",
-          "target": "self",
-          "naturalArFlat": 10,
-          "note": "Can wriggle out of holds like nobody's business."
-        }
-      ],
-      "customOneOffs": [
-        "Does not allow the Nightbane any type of stretching power or shape shifting abilities."
-      ]
-    },
-    {
-      "id": "alien_shape_armored_scales",
-      "name": "Armored Scales",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "Thick, heavy scales like an alligator's cover the Nightbane like armor, protecting him and adding to his frightening, alien appearance.",
-      "naturalAr": 9,
-      "statModifiers": {
-        "sdc": {
-          "dice": "6D6+6"
-        },
-        "pp": {
-          "flat": -1
-        },
-        "pb": {
-          "flat": -1
-        },
-        "hf": {
-          "flat": 1
-        }
+      "percentile": {
+        "min": 44,
+        "max": 48
       }
     },
     {
@@ -514,158 +625,15 @@
       ],
       "customOneOffs": [
         "Each head is capable of speech and can look in a different direction from the others."
-      ]
-    },
-    {
-      "id": "alien_shape_shadow_man",
-      "name": "Shadow Man",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
       ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "This character appears pitch black, like a three-dimensional shadow or silhouette with no visible features.",
-      "statModifiers": {
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "sensory": {
-        "darknessInvisibilityPercent": 80,
-        "lightSensitivity": {
-          "daylightVisionMultiplier": 0.5
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "prowl",
-            "grantUnlearnedValue": 45
-          }
-        ]
-      },
-      "skillContextModifiers": [
-        {
-          "skillId": "prowl",
-          "modifierPercent": 20,
-          "context": "darkness"
-        },
-        {
-          "skillId": "prowl",
-          "modifierPercent": -20,
-          "context": "bright_light"
-        }
-      ],
-      "customOneOffs": [
-        "Makes no sound when he moves.",
-        "Sticks out like a sore thumb in daytime or in well-lit areas."
-      ]
-    },
-    {
-      "id": "alien_shape_slimy_slug_like_skin",
-      "name": "Slimy, Slug-Like Skin",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "Disgusting slime-covered skin that moves and ripples in strange ways covers the Nightbane's body.",
-      "statModifiers": {
-        "sdc": {
-          "dice": "-2D6"
-        },
-        "pb": {
-          "dice": "-1D4"
-        },
-        "hf": {
-          "flat": 3
-        }
-      },
-      "sensory": {
-        "opponentTrackingBonusPercent": 20
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "prowl",
-            "modifierPercent": -10
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Leaves slime on everything he touches.",
-        "Everyone who touches him needs to save vs Horror Factor or they will be so disgusted they can't bear to touch him again."
-      ]
-    },
-    {
-      "id": "alien_shape_abnormally_large_sensory_organs",
-      "name": "Abnormally Large Sensory Organs",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "The eyes, ears, nose, tongue and fingertips of this Nightbane are extremely large, but the senses are proportionately better too.",
-      "statModifiers": {
-        "perception": {
-          "flat": 3
-        },
-        "pb": {
-          "flat": -3
-        }
-      },
-      "sensory": {
-        "hawkLikeDayVision": true,
-        "nightvisionRangeFlatBonus": 2000,
-        "whisperHearingRangeFeet": 150,
-        "scentTracking": {
-          "enabled": true,
-          "baseSuccessPercent": 20,
-          "perLevelIncrement": 5,
-          "recognizeScentBasePercent": 25,
-          "recognizeScentPerLevel": 5,
-          "recognizeSpecificScentBasePercent": 20,
-          "recognizeSpecificScentPerLevel": 3,
-          "recognizeCommonScentBonusPercent": 30
-        },
-        "tasteIdentification": {
-          "baseSuccessPercent": 30,
-          "perLevelIncrement": 5
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_trait",
-            "targetValue": "requires_light_touch",
-            "modifierPercent": 5
-          }
-        ]
+      "percentile": {
+        "min": 49,
+        "max": 53
       }
     },
     {
-      "id": "alien_shape_shaggy_hairy",
-      "name": "Shaggy Hairy",
+      "id": "alien_shape_no_bones",
+      "name": "No Bones",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -677,111 +645,52 @@
           "pageNumber": 72
         }
       ],
-      "description": "The Nightbane's body is covered by thick, shaggy hair in any color (even unnatural like blue). Covers everything except palms and soles.",
+      "description": "This Nightbane may appear normal, but his freakish movement suggests he has no bones. The arms, legs, neck, etc., move and bend any which way, yet somehow the appendages and body parts keep their shape.",
       "statModifiers": {
         "sdc": {
-          "dice": "4D6"
+          "dice": "3D6"
         },
-        "hf": {
-          "flat": 2
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "concealment",
-            "modifierPercent": 10
-          }
-        ]
-      },
-      "customOneOffs": [
-        "Hair may leave clearly discernable trace evidence and may get in the way from time to time."
-      ]
-    },
-    {
-      "id": "alien_shape_wrinkled_skin",
-      "name": "Wrinkled Skin",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "The body is covered by a tough, wrinkled hide similar to that of a rhinoceros.",
-      "naturalAr": 8,
-      "statModifiers": {
-        "sdc": {
-          "dice": "5D6+5"
-        },
-        "pb": {
-          "flat": -2
-        },
-        "hf": {
+        "dodge": {
           "flat": 1
-        }
-      }
-    },
-    {
-      "id": "alien_shape_brute",
-      "name": "Brute",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Survival Guide (WB5)",
-          "pageNumber": 72
-        }
-      ],
-      "description": "Increase body size and weight by 50%, limbs are muscular and thick, teeth have fangs and the Brute has claws in place of fingernails.",
-      "statModifiers": {
+        },
+        "rollWithPunch": {
+          "flat": 6
+        },
         "ps": {
-          "dice": "1D4"
+          "percent": -20
         },
-        "pe": {
-          "flat": 1
-        },
-        "iq": {
-          "flat": -1
-        },
-        "pb": {
-          "dice": "-1D4"
-        },
-        "sdc": {
-          "dice": "1D4x10"
+        "spd": {
+          "percent": -20
         },
         "hf": {
           "flat": 2
         }
       },
-      "weightModifier": {
-        "percent": 50
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "escape_artist",
+            "modifierPercent": 20,
+            "grantUnlearnedValue": 40
+          }
+        ]
       },
-      "appearanceConstraints": {
-        "clothingFit": "custom_required"
-      },
-      "naturalWeapons": [
+      "combatContextModifiers": [
         {
-          "limbType": "bite",
-          "label": "Fanged Bite",
-          "damageFormula": "1D6",
-          "isAdditiveToHth": true
-        },
-        {
-          "limbType": "claws",
-          "label": "Brute Claws",
-          "damageFormula": "2D6",
-          "isAdditiveToHth": true
+          "condition": "grapple_defense",
+          "target": "self",
+          "naturalArFlat": 10,
+          "note": "Can wriggle out of holds like nobody's business."
         }
-      ]
+      ],
+      "customOneOffs": [
+        "Does not allow the Nightbane any type of stretching power or shape shifting abilities."
+      ],
+      "percentile": {
+        "min": 54,
+        "max": 58
+      }
     },
     {
       "id": "alien_shape_on_fire",
@@ -842,11 +751,58 @@
         "Fire does not rely on oxygen (though the Nightbane still needs air to breathe).",
         "Flames catch flammable items on fire only when the Nightbane wishes it.",
         "Prowl and hiding are impossible due to the light and noise of the flames."
-      ]
+      ],
+      "percentile": {
+        "min": 59,
+        "max": 63
+      }
     },
     {
-      "id": "alien_shape_baggy_flaps_of_skin",
-      "name": "Baggy Flaps of Skin",
+      "id": "alien_shape_plasmoid",
+      "name": "Plasmoid",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 135
+        }
+      ],
+      "description": "The Nightbane's body has a semi-liquid consistency; he is made up of jelly-like blood! The basic shape of the character remains that of a bipedal humanoid, but it can be changed at will.",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D6"
+        }
+      },
+      "damageAffinities": {
+        "physical": 0.5
+      },
+      "appearanceConstraints": {
+        "narrowOpeningAccess": "enhanced"
+      },
+      "customOneOffs": [
+        "The character can squeeze through narrow openings (even a couple of inches will do!).",
+        "Can slip out of restraints and conceal himself as a glob or goo."
+      ],
+      "percentile": {
+        "min": 64,
+        "max": 68
+      }
+    },
+    {
+      "id": "alien_shape_shadow_man",
+      "name": "Shadow Man",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -858,20 +814,69 @@
           "pageNumber": 72
         }
       ],
-      "description": "The character's skin seems too large for his body, causing it to sag, flap, and fold in triple and quadruple layers all over.",
-      "naturalAr": 8,
+      "description": "This character appears pitch black, like a three-dimensional shadow or silhouette with no visible features.",
+      "statModifiers": {
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "sensory": {
+        "darknessInvisibilityPercent": 80,
+        "lightSensitivity": {
+          "daylightVisionMultiplier": 0.5
+        }
+      },
+      "skillModifiers": {
+        "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "prowl",
+            "grantUnlearnedValue": 45
+          }
+        ]
+      },
+      "skillContextModifiers": [
+        {
+          "skillId": "prowl",
+          "modifierPercent": 20,
+          "context": "darkness"
+        },
+        {
+          "skillId": "prowl",
+          "modifierPercent": -20,
+          "context": "bright_light"
+        }
+      ],
+      "customOneOffs": [
+        "Makes no sound when he moves.",
+        "Sticks out like a sore thumb in daytime or in well-lit areas."
+      ],
+      "percentile": {
+        "min": 69,
+        "max": 73
+      }
+    },
+    {
+      "id": "alien_shape_shaggy_hairy",
+      "name": "Shaggy Hairy",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "The Nightbane's body is covered by thick, shaggy hair in any color (even unnatural like blue). Covers everything except palms and soles.",
       "statModifiers": {
         "sdc": {
-          "dice": "5D6"
-        },
-        "pb": {
-          "percent": -30
-        },
-        "spd": {
-          "percent": -10
+          "dice": "4D6"
         },
         "hf": {
-          "flat": 1
+          "flat": 2
         }
       },
       "skillModifiers": {
@@ -879,27 +884,21 @@
           {
             "targetType": "skill_id",
             "targetValue": "concealment",
-            "modifierPercent": 25
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "disguise",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "category",
-            "targetValue": "physical",
-            "modifierPercent": -10
+            "modifierPercent": 10
           }
         ]
       },
       "customOneOffs": [
-        "Can easily hide small objects beneath the folds of skin."
-      ]
+        "Hair may leave clearly discernable trace evidence and may get in the way from time to time."
+      ],
+      "percentile": {
+        "min": 74,
+        "max": 77
+      }
     },
     {
-      "id": "alien_shape_cone_head",
-      "name": "Cone Head",
+      "id": "alien_shape_slimy_slug_like_skin",
+      "name": "Slimy, Slug-Like Skin",
       "tableCategory": "Alien Shape",
       "gameSystems": [
         "nightbane"
@@ -911,51 +910,191 @@
           "pageNumber": 72
         }
       ],
-      "description": "The character's head is elongated and conical, or straight up as if the forehead was 4x higher than usual.",
+      "description": "Disgusting slime-covered skin that moves and ripples in strange ways covers the Nightbane's body.",
       "statModifiers": {
-        "iq": {
-          "flat": 1
-        },
-        "me": {
-          "dice": "1D4"
-        },
-        "perception": {
-          "flat": 1
+        "sdc": {
+          "dice": "-2D6"
         },
         "pb": {
-          "flat": -1
+          "dice": "-1D4"
         },
-        "sdc": {
-          "dice": "2D6"
+        "hf": {
+          "flat": 3
         }
       },
-      "mobility": {
-        "balanceModifierPercent": -10
+      "sensory": {
+        "opponentTrackingBonusPercent": 20
       },
       "skillModifiers": {
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "prowl",
             "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "climbing",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "gymnastics",
-            "modifierPercent": -10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "disguise",
-            "modifierPercent": -30
           }
         ]
+      },
+      "customOneOffs": [
+        "Leaves slime on everything he touches.",
+        "Everyone who touches him needs to save vs Horror Factor or they will be so disgusted they can't bear to touch him again."
+      ],
+      "percentile": {
+        "min": 78,
+        "max": 82
       }
+    },
+    {
+      "id": "alien_shape_thorns",
+      "name": "Thorns",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 136
+        }
+      ],
+      "description": "Thorns protrude from the character's body! They may appear to be natural growths, or they might be stigmata-like, appearing to painfully pierce the character's skin!",
+      "statModifiers": {
+        "sdc": {
+          "dice": "4D6"
+        },
+        "hf": {
+          "dice": "1D4"
+        }
+      },
+      "percentile": {
+        "min": 83,
+        "max": 86
+      }
+    },
+    {
+      "id": "alien_shape_unusual_skin_color",
+      "name": "Unusual Skin Color",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 136
+        }
+      ],
+      "description": "The Nightbane's skin has an inhuman hue. The color is too intense and sharp to be normal body paint or dyes.",
+      "statModifiers": {
+        "hf": {
+          "flat": 1
+        }
+      },
+      "customOneOffs": [
+        "Colors can include shades of yellow, red, green, blue, purple/violet, copper, gold, metallic grey, silver, pitch black, and stark white."
+      ],
+      "percentile": {
+        "min": 87,
+        "max": 91
+      }
+    },
+    {
+      "id": "alien_shape_wrinkled_skin",
+      "name": "Wrinkled Skin",
+      "tableCategory": "Alien Shape",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "The body is covered by a tough, wrinkled hide similar to that of a rhinoceros.",
+      "naturalAr": 8,
+      "statModifiers": {
+        "sdc": {
+          "dice": "5D6+5"
+        },
+        "pb": {
+          "flat": -2
+        },
+        "hf": {
+          "flat": 1
+        }
+      },
+      "percentile": {
+        "min": 92,
+        "max": 95
+      }
+    },
+    {
+      "id": "alien_shape_combination_of_two",
+      "name": "Combination of 2",
+      "tableCategory": "Alien Shape",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 96,
+        "max": 100
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Survival Guide (WB5)",
+          "pageNumber": 72
+        }
+      ],
+      "description": "Roll or select two additional Alien Shape features. Bonuses and penalties from both traits apply; Horror Factor is cumulative.",
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 2,
+        "allowedChoicesPool": [
+          "alien_shape_abnormally_large_sensory_organs",
+          "alien_shape_bark_like_skin",
+          "alien_shape_armored_scales",
+          "alien_shape_baggy_flaps_of_skin",
+          "alien_shape_bony_exoskeleton",
+          "alien_shape_brute",
+          "alien_shape_cone_head",
+          "alien_shape_crystalline",
+          "alien_shape_hulking_monster",
+          "alien_shape_living_tattoos",
+          "alien_shape_mouth_covered_body",
+          "alien_shape_multiple_heads",
+          "alien_shape_no_bones",
+          "alien_shape_on_fire",
+          "alien_shape_plasmoid",
+          "alien_shape_shadow_man",
+          "alien_shape_shaggy_hairy",
+          "alien_shape_slimy_slug_like_skin",
+          "alien_shape_thorns",
+          "alien_shape_unusual_skin_color",
+          "alien_shape_wrinkled_skin"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "alien_shape",
+        "targetTableName": "Alien Shape",
+        "note": "Pick two traits from this table (excluding Combination of 2)."
+      },
+      "customOneOffs": [
+        "Roll twice on this table or choose any two traits except Combination of 2."
+      ]
     }
   ]
 }

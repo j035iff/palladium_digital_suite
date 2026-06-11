@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json",
+  "title": "Palladium Morphus forge routing table",
+  "description": "Percentile routing tables for the Nightbane Morphus Sub-Forge (Appearance and Characteristics). Entries describe slot plans the engine expands into Trait Cart requirements.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "displayName", "forgeRole", "entries"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "minLength": 1
+    },
+    "kind": { "const": "forge_routing_table" },
+    "displayName": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "forgeRole": {
+      "type": "string",
+      "enum": ["appearance_archetype", "characteristics_router"],
+      "description": "appearance_archetype = Path 1 macro table; characteristics_router = Path 2 and nested characteristic rolls."
+    },
+    "path2Entry": {
+      "$ref": "#/$defs/path2Entry",
+      "description": "Path 2 (Personality Crafter) dice gate — only on characteristics_router."
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/routingEntry" }
+    }
+  },
+  "$defs": {
+    "percentileRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "max": { "type": "integer", "minimum": 1, "maximum": 100 }
+      }
+    },
+    "diceRollSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notation", "min", "max"],
+      "properties": {
+        "notation": { "type": "string", "minLength": 1 },
+        "min": { "type": "integer" },
+        "max": { "type": "integer" }
+      }
+    },
+    "tableTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tableId", "label"],
+      "properties": {
+        "tableId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "description": "Morphus table id from content/morphus/tables/*.json"
+        },
+        "label": { "type": "string", "minLength": 1 },
+        "rerollMultiRollResults": {
+          "type": "boolean",
+          "description": "When true (Characteristics), reroll 91–00% multiplier results until a terminal characteristic is reached."
+        },
+        "subtableIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+          "description": "Restrict hub routing to these child table ids (e.g. aquatic Animal Form)."
+        }
+      }
+    },
+    "slotRequired": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "tableId", "label"],
+      "properties": {
+        "kind": { "const": "required" },
+        "tableId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "label": { "type": "string", "minLength": 1 },
+        "rerollMultiRollResults": { "type": "boolean" },
+        "subtableIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" }
+        }
+      }
+    },
+    "slotChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "options"],
+      "properties": {
+        "kind": { "const": "choice" },
+        "label": { "type": "string" },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/tableTarget" }
+        }
+      }
+    },
+    "slotRepeat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "count", "tableId", "label"],
+      "properties": {
+        "kind": { "const": "repeat" },
+        "count": { "type": "integer", "minimum": 2 },
+        "tableId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "label": { "type": "string", "minLength": 1 },
+        "rerollMultiRollResults": { "type": "boolean" },
+        "subtableIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" }
+        }
+      }
+    },
+    "slotCombinationPool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "countRoll", "pool"],
+      "properties": {
+        "kind": { "const": "combination_pool" },
+        "label": { "type": "string" },
+        "countRoll": { "$ref": "#/$defs/diceRollSpec" },
+        "pool": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/tableTarget" }
+        }
+      }
+    },
+    "slotCharacteristicsMultiplier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "count", "mode", "rerollAbovePercentile"],
+      "properties": {
+        "kind": { "const": "characteristics_multiplier" },
+        "count": { "type": "integer", "minimum": 2, "maximum": 4 },
+        "mode": { "const": "roll_or_select" },
+        "rerollAbovePercentile": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "label": { "type": "string" }
+      }
+    },
+    "slotRequirement": {
+      "oneOf": [
+        { "$ref": "#/$defs/slotRequired" },
+        { "$ref": "#/$defs/slotChoice" },
+        { "$ref": "#/$defs/slotRepeat" },
+        { "$ref": "#/$defs/slotCombinationPool" },
+        { "$ref": "#/$defs/slotCharacteristicsMultiplier" }
+      ]
+    },
+    "routingEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "percentile", "slotPlan"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "percentile": { "$ref": "#/$defs/percentileRange" },
+        "slotPlan": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/slotRequirement" }
+        }
+      }
+    },
+    "path2Entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["countRoll", "description"],
+      "properties": {
+        "countRoll": { "$ref": "#/$defs/diceRollSpec" },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

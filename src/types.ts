@@ -1176,6 +1176,8 @@ export type MorphusCharacteristic = {
   specialCombatInterceptions?: readonly MorphusSpecialCombatInterception[]
   combatEffects?: MorphusCombatEffects
   customOneOffs?: readonly string[]
+  /** Main-table d100 band (01–00%) for Morphus Sub-Forge roll display. */
+  percentile?: { min: number; max: number }
   /** Step-One router or section header — not a final Morphus look by itself. */
   entryRole?: 'trait' | 'table_router' | 'subtable_header'
   /** Inner percentile bands inside one trait row (Junk Golem body type, Mirror Man style, etc.). */
@@ -1402,6 +1404,108 @@ export type PalladiumMorphusTable = {
   /** Hub-level Step One rules (e.g. Disproportion roll twice on 91–00%). */
   tableWorkflow?: MorphusTableWorkflow
   entries: readonly MorphusCharacteristic[]
+}
+
+/** Morphus Sub-Forge dice roll spec (1D4, 1D4+2, etc.). */
+export type MorphusForgeDiceRollSpec = {
+  notation: string
+  min: number
+  max: number
+}
+
+export type MorphusForgeTableTarget = {
+  tableId: string
+  label: string
+  rerollMultiRollResults?: boolean
+  subtableIds?: readonly string[]
+}
+
+export type MorphusForgeSlotRequired = {
+  kind: 'required'
+  tableId: string
+  label: string
+  rerollMultiRollResults?: boolean
+  subtableIds?: readonly string[]
+}
+
+export type MorphusForgeSlotChoice = {
+  kind: 'choice'
+  label?: string
+  options: readonly MorphusForgeTableTarget[]
+}
+
+export type MorphusForgeSlotRepeat = {
+  kind: 'repeat'
+  count: number
+  tableId: string
+  label: string
+  rerollMultiRollResults?: boolean
+  subtableIds?: readonly string[]
+}
+
+export type MorphusForgeSlotCombinationPool = {
+  kind: 'combination_pool'
+  label?: string
+  countRoll: MorphusForgeDiceRollSpec
+  pool: readonly MorphusForgeTableTarget[]
+}
+
+export type MorphusForgeSlotCharacteristicsMultiplier = {
+  kind: 'characteristics_multiplier'
+  count: number
+  mode: 'roll_or_select'
+  rerollAbovePercentile: number
+  label?: string
+}
+
+export type MorphusForgeSlotRequirement =
+  | MorphusForgeSlotRequired
+  | MorphusForgeSlotChoice
+  | MorphusForgeSlotRepeat
+  | MorphusForgeSlotCombinationPool
+  | MorphusForgeSlotCharacteristicsMultiplier
+
+export type MorphusForgeRoutingEntry = {
+  id: string
+  name: string
+  percentile: { min: number; max: number }
+  slotPlan: readonly MorphusForgeSlotRequirement[]
+}
+
+export type MorphusForgeRoutingRole =
+  | 'appearance_archetype'
+  | 'characteristics_router'
+
+/**
+ * Percentile routing table for Morphus Sub-Forge Tab 1 / nested characteristic rolls.
+ * `content/morphus/forge/*.json`, palladium-morphus-forge-routing.schema.json.
+ */
+export type PalladiumMorphusForgeRoutingTable = {
+  id: string
+  kind: 'forge_routing_table'
+  displayName: string
+  description?: string
+  forgeRole: MorphusForgeRoutingRole
+  path2Entry?: {
+    countRoll: MorphusForgeDiceRollSpec
+    description: string
+  }
+  entries: readonly MorphusForgeRoutingEntry[]
+}
+
+export type MorphusForgeManifest = {
+  id: string
+  kind: 'forge_manifest'
+  displayName: string
+  description?: string
+  path1: { routingTableId: string; routingTableFile: string }
+  path2: {
+    routingTableId: string
+    routingTableFile: string
+    countRoll: MorphusForgeDiceRollSpec
+    description: string
+  }
+  traitTableDir: string
 }
 
 /**

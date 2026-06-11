@@ -3,6 +3,10 @@
   "id": "morphus_example_winged_predator",
   "name": "Winged Predator (example)",
   "tableCategory": "Animal",
+  "percentile": {
+    "min": 1,
+    "max": 10
+  },
   "gameSystems": [
     "nightbane"
   ],

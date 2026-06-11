@@ -36,6 +36,9 @@ export const PALLADIUM_MORPHUS_TABLE_SCHEMA_PATH =
 export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-morphus.schema.json` as const
 
+export const PALLADIUM_MORPHUS_FORGE_ROUTING_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-morphus-forge-routing.schema.json` as const
+
 /** `$id` inside `palladium-skill.schema.json` — use for `$schema` pointers in skill JSON. */
 export const PALLADIUM_SKILL_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-skill.schema.json' as const
@@ -69,6 +72,9 @@ export const PALLADIUM_MORPHUS_TABLE_SCHEMA_ID =
 
 export const PALLADIUM_MORPHUS_CHARACTERISTIC_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-morphus.schema.json' as const
+
+export const PALLADIUM_MORPHUS_FORGE_ROUTING_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-morphus-forge-routing.schema.json' as const
 
 /** One JSON array per Palladium skill category (`categories[0]`). */
 export const PALLADIUM_SKILLS_DIR = `${PALLADIUM_CONTENT_DIR}/skills` as const
@@ -115,6 +121,10 @@ export const STANDARD_MODERN_WEAPON_PROGRESSION_JSON_PATH =
 /** One JSON file per Morphus table (hubs and trait tables). */
 export const PALLADIUM_MORPHUS_TABLES_DIR =
   `${PALLADIUM_CONTENT_DIR}/morphus/tables` as const
+
+/** Morphus Sub-Forge routing tables (Appearance, Characteristics). */
+export const PALLADIUM_MORPHUS_FORGE_DIR =
+  `${PALLADIUM_CONTENT_DIR}/morphus/forge` as const
 
 export const SKILL_TRAIT_REGISTRY_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/skill_trait_registry.json` as const

@@ -100,3 +100,28 @@ export function resolveMorphusCharacteristicsByIds(
   }
   return out
 }
+
+/** Resolve a trait-table row by main-table d100 roll (01 = 1, 00 = 100). */
+export function resolveMorphusTraitEntryByPercentile(
+  tableId: string,
+  percentileRoll: number,
+): MorphusCharacteristic | undefined {
+  const table = getMorphusTableById(tableId)
+  if (!table || table.kind !== 'morphus_trait_table') return undefined
+  const roll = Math.min(100, Math.max(1, Math.round(percentileRoll)))
+  return table.entries.find((entry) => {
+    const band = entry.percentile
+    return band != null && roll >= band.min && roll <= band.max
+  })
+}
+
+/** Entries with percentile bands, sorted for Sub-Forge display. */
+export function listMorphusTraitEntriesWithPercentiles(
+  tableId: string,
+): MorphusCharacteristic[] {
+  const table = getMorphusTableById(tableId)
+  if (!table) return []
+  return [...table.entries]
+    .filter((entry) => entry.percentile != null)
+    .sort((a, b) => (a.percentile!.min ?? 0) - (b.percentile!.min ?? 0))
+}
