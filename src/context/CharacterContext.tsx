@@ -190,6 +190,13 @@ import {
 } from '../lib/spawnVitalityManual'
 import { patchPendingDiceResolution } from '../lib/pendingDiceLedger'
 import {
+  defaultMorphusForgeState,
+  type MorphusForgeSubTabId,
+} from '../lib/morphusForgeNavigation'
+import { applyNightbaneMorphusBaseAttributes } from '../lib/morphusNightbaneBase'
+import { markForgeTabComplete } from '../lib/forgeNavigation/engine'
+import type { MorphusForgeState } from '../types'
+import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
   occCreationAbilityBudget,
@@ -390,6 +397,13 @@ type CharacterContextValue = {
   /** Mark tab Green after explicit Continue (no viewport change). */
   markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void
   setTraitForgeStubComplete: (complete: boolean) => void
+  patchMorphusForgeState: (
+    patch:
+      | Partial<MorphusForgeState>
+      | ((prev: MorphusForgeState) => MorphusForgeState),
+  ) => void
+  setMorphusForgeSubTab: (tabId: MorphusForgeSubTabId) => void
+  markMorphusForgeSubTabComplete: (tabId: MorphusForgeSubTabId) => void
   addMorphusCustomTraitSlot: (catalogEntryId: string) => void
   setMorphusCustomTraitInstance: (
     slotId: string,
@@ -1976,6 +1990,85 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  const patchMorphusForgeState = useCallback(
+    (
+      patch:
+        | Partial<MorphusForgeState>
+        | ((prev: MorphusForgeState) => MorphusForgeState),
+    ) => {
+      setRawCharacter((prev) => {
+        const merged = {
+          ...defaultMorphusForgeState(),
+          ...prev.morphusForgeState,
+        }
+        const nextState =
+          typeof patch === 'function' ? patch(merged) : { ...merged, ...patch }
+        const pathChanged =
+          typeof patch === 'function' ||
+          (patch.path != null && patch.path !== merged.path) ||
+          (patch.appearanceEntryId != null &&
+            patch.appearanceEntryId !== merged.appearanceEntryId)
+
+        let next: CharacterRootState = {
+          ...prev,
+          morphusForgeState: nextState,
+          ...(pathChanged ? { creationTraitForgeStubComplete: false } : {}),
+        }
+        if (!nextState.baseStatsApplied) {
+          next = applyNightbaneMorphusBaseAttributes(next, effectiveOcc ?? undefined)
+          next = {
+            ...next,
+            morphusForgeState: {
+              ...(next.morphusForgeState ?? nextState),
+              baseStatsApplied: true,
+            },
+          }
+        }
+        return next
+      })
+    },
+    [effectiveOcc],
+  )
+
+  const setMorphusForgeSubTab = useCallback((tabId: MorphusForgeSubTabId) => {
+    patchMorphusForgeState({ activeSubTab: tabId })
+  }, [patchMorphusForgeState])
+
+  const markMorphusForgeSubTabComplete = useCallback(
+    (tabId: MorphusForgeSubTabId) => {
+      setRawCharacter((prev) => {
+        const state = { ...defaultMorphusForgeState(), ...prev.morphusForgeState }
+        const snapshot =
+          tabId === 'crossroads'
+            ? JSON.stringify({
+                path: state.path,
+                appearanceEntryId: state.appearanceEntryId,
+              })
+            : tabId === 'trait_forge'
+              ? JSON.stringify({
+                  path: state.path,
+                  characteristicsPickCount: state.characteristicsPickCount,
+                })
+              : JSON.stringify({
+                  finalized: prev.creationTraitForgeStubComplete === true,
+                })
+        const marked = markForgeTabComplete(tabId, snapshot, {
+          completed: state.subTabCompleted ?? {},
+          snapshots: state.subTabSnapshots ?? {},
+        })
+        return {
+          ...prev,
+          morphusForgeState: {
+            ...state,
+            subTabCompleted: marked.completed,
+            subTabSnapshots: marked.snapshots,
+          },
+        }
+      })
+    },
+    [psychicTier, activeRace, effectiveOcc],
+  )
+
   const addMorphusCustomTraitSlot = useCallback((catalogEntryId: string) => {
     const slotId =
       typeof crypto !== 'undefined' && 'randomUUID' in crypto
@@ -2493,6 +2586,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationForgeTab,
       markCreationForgeTabComplete,
       setTraitForgeStubComplete,
+      patchMorphusForgeState,
+      setMorphusForgeSubTab,
+      markMorphusForgeSubTabComplete,
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,
@@ -2630,6 +2726,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationForgeTab,
       markCreationForgeTabComplete,
       setTraitForgeStubComplete,
+      patchMorphusForgeState,
+      setMorphusForgeSubTab,
+      markMorphusForgeSubTabComplete,
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,

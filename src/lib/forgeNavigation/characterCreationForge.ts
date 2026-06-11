@@ -41,6 +41,8 @@ import {
   occRelatedSkillSlotBudget,
   occSecondarySkillSlots,
 } from '../occCreationDerivation'
+import { traitForgeTabApplicable, traitForgeTabLabel } from '../creationSubForge'
+import { isMorphusForgeComplete } from '../morphusForgeNavigation'
 import { raceCanPickOcc, raceLineageFromDefinition } from '../raceEngine'
 import {
   assessAbilitiesBudgetBlockers,
@@ -97,7 +99,7 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
   tab3_psionic: 'Step 2.5: Psychic Gate',
   tab4_skills: 'Step 3: Skill Engine',
   tab5_finalize: 'Phase II: Roll Pending Dice',
-  tab6_traits: 'Character Trait Forge (stub)',
+  tab6_traits: 'Character Trait Sub-Forge',
   tab7_abilities: 'Step 4: Supernatural Abilities',
   tab8_review: 'Phase IV: Review & Spawn',
 }
@@ -216,7 +218,8 @@ function tab5Snapshot(c: Character): string {
 /** Morphus trait forge — upstream only; morphus dice live entirely on this tab. */
 function tab6Snapshot(c: Character): string {
   return stableJson({
-    traitStub: c.creationTraitForgeStubComplete === true,
+    traitForge: c.creationTraitForgeStubComplete === true,
+    morphusForge: c.morphusForgeState,
     raceId: c.raceId,
     occId: c.occ.id,
     assignments: c.creationAttributeAssignments,
@@ -227,12 +230,7 @@ function tab7Snapshot(c: Character): string {
   return stableJson({ abilities: c.selectedAbilities })
 }
 
-export function traitForgeTabApplicable(
-  race: Race | undefined,
-  _occ: PalladiumOcc | undefined,
-): boolean {
-  return raceLineageFromDefinition(race) === 'nightbane'
-}
+export { traitForgeTabApplicable } from '../creationSubForge'
 
 export function readForgeCompletion(
   character: Pick<
@@ -439,22 +437,19 @@ function assessTraitsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
   if (ctx.supportsDualForm && ctx.character.creationFacadeDiceFinalized !== true) {
     blockers.push('Complete Facade dice on the Roll Pending tab first.')
   }
-  const morphusBlocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
-    supportsDualForm: ctx.supportsDualForm,
-    psychicTier: ctx.psychicTier,
-    scope: 'morphus',
-  })
   if (
-    morphusBlocks.length > 0 &&
-    !pendingDiceBlocksResolutionComplete(
-      morphusBlocks,
-      ctx.character.creationPendingDiceResolutions ?? {},
-    )
+    !isMorphusForgeComplete(ctx.character, {
+      supportsDualForm: ctx.supportsDualForm,
+      psychicTier: ctx.psychicTier,
+      race: ctx.race,
+      occ: ctx.occ,
+    })
   ) {
-    blockers.push('Enter all Morphus physical die results.')
-  }
-  if (ctx.character.creationTraitForgeStubComplete !== true) {
-    blockers.push('Complete the trait forge placeholder step.')
+    if (ctx.character.creationTraitForgeStubComplete !== true) {
+      blockers.push('Complete the Morphus Sub-Forge and click Finalize Morphus.')
+    } else {
+      blockers.push('Complete all Morphus Sub-Forge steps (including vitality dice).')
+    }
   }
   return blockers
 }
@@ -626,9 +621,19 @@ export function invalidateForgeFromConfiguratorChange(
     creationForgeCompleted: next.completed,
     creationForgeSnapshots: next.snapshots,
     creationTraitForgeStubComplete: false,
+    morphusForgeState: undefined,
     creationFacadeDiceFinalized: false,
     creationMorphusDiceFinalized: false,
   }
+}
+
+/** Dynamic Tab 6 page title from race/O.C.C. sub-forge binding. */
+export function characterCreationTraitsTabPageTitle(
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+): string {
+  const label = traitForgeTabLabel(race, occ)
+  return label === 'Traits' ? 'Character Trait Sub-Forge' : label
 }
 
 export function assessTab8SpawnBlockers(

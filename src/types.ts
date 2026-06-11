@@ -283,6 +283,8 @@ export type Race = {
   sources: readonly PalladiumSourceRef[]
   canPickOcc: boolean
   lineage?: 'nightbane' | 'megaversal'
+  /** When set, master forge Tab 6 hosts this sub-forge manifest (e.g. `morphus_forge_manifest`). */
+  creationSubForgeId?: string
   defaultTraitIds?: readonly string[]
   attributes: RaceAttributeFormulas
   strengthCategory: RaceStrengthCategory
@@ -1557,6 +1559,24 @@ export type MorphusForgeManifest = {
   traitTableDir: string
 }
 
+export type MorphusForgePath = 'appearance' | 'characteristics'
+
+export type MorphusForgeSubTabId = 'crossroads' | 'trait_forge' | 'review'
+
+/** Creation-time Morphus Sub-Forge progress (Tab 6 nested forge). */
+export type MorphusForgeState = {
+  activeSubTab?: MorphusForgeSubTabId
+  subTabCompleted?: Partial<Record<MorphusForgeSubTabId, true>>
+  subTabSnapshots?: Partial<Record<MorphusForgeSubTabId, string>>
+  path?: MorphusForgePath
+  /** Path 1 — appearance routing entry id from `appearance.json`. */
+  appearanceEntryId?: string
+  /** Path 2 — physical 1D4+2 result (3–6). */
+  characteristicsPickCount?: number
+  /** Nightbane base Morphus attribute bonuses applied to the morphus branch. */
+  baseStatsApplied?: boolean
+}
+
 /**
  * Nightbane talent catalog row (`content/palladiumTalents.json`, palladium-talent.schema.json).
  */
@@ -1746,6 +1766,8 @@ export type PalladiumOcc = {
   finances?: OccFinances
   progression?: OccProgressionHooks
   baseStats?: OccBaseStatsDice
+  /** When set, master forge Tab 6 hosts this sub-forge manifest (overrides race default). */
+  creationSubForgeId?: string
 }
 
 /** Alias for {@link PalladiumOcc} — full O.C.C. composition document. */
@@ -1927,8 +1949,10 @@ export type Character = {
     Partial<Record<CharacterCreationForgeTabId, string>>
   >
   creationForgeTab?: CharacterCreationForgeTabId
-  /** Tab 5 trait sub-forge stub acknowledged. */
+  /** Tab 6 trait sub-forge finalized (Morphus Review — Finalize Morphus clicked). */
   creationTraitForgeStubComplete?: boolean
+  /** Nested Morphus / trait sub-forge state (creation only). */
+  morphusForgeState?: MorphusForgeState
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
   /** Finalize tab — facade / single-form physical dice applied. */

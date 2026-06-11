@@ -1,0 +1,34 @@
+{
+  "id": "nightbane_base_morphus",
+  "kind": "morphus_base_profile",
+  "displayName": "Nightbane Morphus Base (R.C.C.)",
+  "source": {
+    "reference": "Nightbane RPG",
+    "pageNumber": 88
+  },
+  "attributeBonuses": {
+    "ps": 10,
+    "pe": 10,
+    "pp": 6,
+    "spd": 10
+  },
+  "morphusStrengthCategory": "supernatural",
+  "horrorFactor": 6,
+  "handToHandMorphus": "martial_arts",
+  "extraAttacksPerMelee": 1,
+  "combatBonuses": {
+    "initiative": 1,
+    "strike": 2,
+    "parry": 2,
+    "dodge": 2,
+    "rollPullPunch": 3,
+    "saveMagic": 4,
+    "savePsionics": 3,
+    "saveDisease": 3,
+    "saveHorrorFactor": 3
+  },
+  "vitalsNotes": {
+    "sdc": "Add 2D6×10 S.D.C. to the Facade total (rolled on Review tab).",
+    "hitPoints": "P.E. ×2 plus 2D6 per level of experience (Morphus H.P. rolled on Review tab)."
+  }
+}

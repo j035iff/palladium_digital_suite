@@ -141,6 +141,11 @@
     "baseStats": {
       "$ref": "#/$defs/baseStatsDice",
       "description": "Optional chargen dice summary for UI (legacy display); prefer staticBonuses and supernatural engines when modeled."
+    },
+    "creationSubForgeId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "When set, master character creation Tab 6 hosts this sub-forge manifest (overrides race default)."
     }
   },
   "$defs": {

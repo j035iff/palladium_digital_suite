@@ -5,4 +5,5 @@
  * Full table resolution and forge UI live under the morphus spec / content tables.
  * Set to true when the Morphus subsystem is ready to replace {@link MorphusForgeStub}.
  */
-export const MORPHUS_FORGE_IMPLEMENTED = false
+/** Crossroads + sub-forge shell shipped; full trait slot engine still in progress. */
+export const MORPHUS_FORGE_IMPLEMENTED = true

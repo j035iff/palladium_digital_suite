@@ -24,7 +24,7 @@ import { LiveLedger } from './LiveLedger'
 
 import { useCharacter } from '../../context/CharacterContext'
 
-import { MorphusForgeStub } from './MorphusForgeStub'
+import { MorphusForge } from './MorphusForge'
 
 import { CreationFinalizeDice } from './CreationFinalizeDice'
 
@@ -39,6 +39,7 @@ import {
   buildCharacterCreationForgeContext,
 
   CHARACTER_CREATION_TAB_PAGE_TITLES,
+  characterCreationTraitsTabPageTitle,
 
   deriveCharacterCreationForgeNavigation,
 
@@ -90,7 +91,7 @@ function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
 
     case 'tab6_traits':
 
-      return <MorphusForgeStub />
+      return <MorphusForge />
 
     case 'tab7_abilities':
 
@@ -176,6 +177,11 @@ export function CreationFlowShell({
 
   const activeView = nav.tabs.find((t) => t.id === activeTabId)
 
+  const pageTitle =
+    activeTabId === 'tab6_traits'
+      ? characterCreationTraitsTabPageTitle(activeRace, effectiveOcc ?? undefined)
+      : CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]
+
   const activeBlockers = activeView?.blockers ?? []
 
   const activeRequirements = useMemo(
@@ -250,7 +256,7 @@ export function CreationFlowShell({
 
               <ForgeTabPageHeader
 
-                title={CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]}
+                title={pageTitle}
 
                 visual={activeView?.visual ?? 'active'}
 

@@ -369,8 +369,8 @@ function tab6Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     }
   }
   requirements.push({
-    id: 'trait-stub',
-    label: 'Complete the trait forge placeholder step',
+    id: 'morphus-sub-forge',
+    label: 'Complete the Morphus Sub-Forge and Finalize Morphus',
     satisfied: ctx.character.creationTraitForgeStubComplete === true,
   })
   return requirements

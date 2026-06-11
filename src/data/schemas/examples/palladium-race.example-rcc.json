@@ -16,6 +16,7 @@
   ],
   "canPickOcc": false,
   "lineage": "nightbane",
+  "creationSubForgeId": "morphus_forge_manifest",
   "attributes": {
     "iq": "3D6",
     "me": "3D6",

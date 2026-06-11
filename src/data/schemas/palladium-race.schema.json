@@ -71,6 +71,11 @@
       "enum": ["nightbane", "megaversal"],
       "description": "Optional engine hint for dual-form Nightbane UX and setting integrity. Prefer deriving from id when omitted."
     },
+    "creationSubForgeId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "When set, master character creation Tab 6 hosts this sub-forge manifest (e.g. morphus_forge_manifest)."
+    },
     "defaultTraitIds": {
       "type": "array",
       "description": "Optional morphus / racial trait feature ids granted at creation.",
