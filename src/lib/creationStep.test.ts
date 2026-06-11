@@ -35,11 +35,30 @@ describe('creationStep', () => {
     expect(blockers.some((b) => /Select a race/i.test(b))).toBe(true)
   })
 
-  it('blocks attributes until pool is filled and assigned', () => {
+  it('blocks attributes until all eight values are assigned', () => {
     const character = createBlankCharacterForGenre('nightbane')
     const occ = getPalladiumOccById('occ_ex_government_agent')
     const blockers = assessAttributesBlockers(character, occ)
     expect(blockers.length).toBeGreaterThan(0)
+  })
+
+  it('allows attributes when all eight are typed directly without using the pool', () => {
+    const character = createBlankCharacterForGenre('nightbane')
+    const occ = getPalladiumOccById('occ_ex_government_agent')
+    const withAssignments = {
+      ...character,
+      creationAttributeAssignments: {
+        iq: 12,
+        me: 11,
+        ma: 10,
+        ps: 14,
+        pp: 12,
+        pe: 13,
+        pb: 11,
+        spd: 10,
+      },
+    }
+    expect(assessAttributesBlockers(withAssignments, occ)).toHaveLength(0)
   })
 
   it('omits psychic gate phase for natural psychic O.C.C.s', () => {

@@ -8,7 +8,6 @@ import {
   occVariableBonusTasksComplete,
 } from './occVariableBonus'
 import {
-  getEffectivePoolSlots,
   raceAttrNotation,
   valueFitsRaceNotation,
 } from './creationAttributeSync'
@@ -124,7 +123,7 @@ export function creationPhaseLabel(phase: CreationPhase): string {
     case 'occVariableBonus':
       return 'O.C.C. Bonuses'
     case 'psychicGate':
-      return 'Psychic Gate'
+      return 'Random Psionics'
     case 'skills':
       return 'Skills'
     case 'finalize':
@@ -155,11 +154,7 @@ export function assessConfiguratorBlockers(
     if (!character.occ?.id || !character.occ?.xpTable?.floors?.length) {
       blockers.push('Select an O.C.C.')
     } else if (occ) {
-      const pair = assessConfiguratorPairConflict(
-        race,
-        occ,
-        character.facade.alignment,
-      )
+      const pair = assessConfiguratorPairConflict(race, occ, null)
       if (pair) blockers.push(pair)
     }
     if (occ?.specializations?.length && !character.occSpecializationId) {
@@ -186,18 +181,13 @@ export function assessAttributesBlockers(
 ): string[] {
   const blockers: string[] = []
   const assignments = character.creationAttributeAssignments ?? {}
-  const pool = character.creationAttributePool ?? []
-  const poolSlots = getEffectivePoolSlots(
-    pool,
-    assignments,
-    character.creationAttributePoolSlots,
-  )
+  const poolSlots = character.creationAttributePoolSlots ?? {}
   const formulas = race?.attributes
 
   for (const attr of FORGE_ATTRIBUTE_KEYS) {
     const v = assignments[attr]
     if (v == null || !Number.isFinite(v) || v < 1) {
-      blockers.push(`Assign a rolled value to ${attr.toUpperCase()}.`)
+      blockers.push(`Assign a value to ${attr.toUpperCase()}.`)
       continue
     }
     const min = occMinForAttr(occ, attr)
@@ -214,20 +204,11 @@ export function assessAttributesBlockers(
     }
   }
 
-  const filledPool = pool.filter((n) => n != null && Number.isFinite(n)).length
-  if (filledPool < 8) {
-    blockers.push('Enter all eight rolled values in the attribute pool.')
-  }
-
-  const usedSlotIndices = FORGE_ATTRIBUTE_KEYS.map((a) => poolSlots[a]).filter(
+  const poolLinked = FORGE_ATTRIBUTE_KEYS.map((a) => poolSlots[a]).filter(
     (i): i is number => typeof i === 'number',
   )
-  if (usedSlotIndices.length === 8) {
-    if (new Set(usedSlotIndices).size !== 8) {
-      blockers.push(
-        'Each pool roll may only be assigned to one attribute.',
-      )
-    }
+  if (poolLinked.length > 0 && new Set(poolLinked).size !== poolLinked.length) {
+    blockers.push('Each pool roll may only be assigned to one attribute.')
   }
 
   return blockers

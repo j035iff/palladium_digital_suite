@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -8,18 +8,16 @@ import {
 import { occCharacterCategory } from '../../lib/occCatalogEngine'
 import type { PalladiumOcc, Race } from '../../types'
 import {
-  assessAlignmentConfiguratorTier,
   assessOccConfiguratorTier,
   assessRaceConfiguratorTier,
   buildConfiguratorScrollLayout,
-  CONFIGURATOR_ALIGNMENT_OPTIONS,
   CONFIGURATOR_SELECT_OCC_LABEL,
   CONFIGURATOR_SELECT_RACE_LABEL,
-  configuratorAlignmentLabel,
-  effectiveConfiguratorAlignment,
   filterConfiguratorOccPoolForRace,
   filterConfiguratorListForActiveFilter,
   filterConfiguratorRacePoolForOcc,
+  formatOccAlignmentRestrictionNote,
+  formatRaceAlignmentRestrictionNote,
   isConfiguratorOccSelected,
   isConfiguratorRaceSelected,
   sortConfiguratorEntries,
@@ -39,7 +37,7 @@ import { ConfiguratorPackagePanel } from './ConfiguratorPackagePanel'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
 
 /**
- * Step 2 — tri-directional Race / O.C.C. / Alignment matrix with three-tier rendering.
+ * Step 2 — Race / O.C.C. matrix with three-tier rendering; alignment lives in the tab header.
  */
 export function ConfiguratorPanel() {
   const {
@@ -54,7 +52,6 @@ export function ConfiguratorPanel() {
     supportsDualForm,
     creationGenreId,
     hostGenreId,
-    setAlignment,
   } = useCharacter()
 
   const [configuratorFilterRoot, setConfiguratorFilterRoot] =
@@ -137,16 +134,12 @@ export function ConfiguratorPanel() {
       filterFormatOptions,
       selectedRaceId: character.raceId ?? null,
       selectedOccId: character.occ?.id || null,
-      selectedAlignment: effectiveConfiguratorAlignment(
-        character.facade.alignment,
-      ),
     }),
     [
       configuratorFilterRoot,
       filterFormatOptions,
       character.raceId,
       character.occ?.id,
-      character.facade.alignment,
     ],
   )
 
@@ -192,10 +185,6 @@ export function ConfiguratorPanel() {
         (occ) => occ.name,
       ),
     [visibleOccPool, matrixCtx, raceById],
-  )
-
-  const currentAlignment = effectiveConfiguratorAlignment(
-    character.facade.alignment,
   )
 
   const filterActive = isConfiguratorFilterActive(configuratorFilterRoot)
@@ -330,9 +319,9 @@ export function ConfiguratorPanel() {
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}
       >
-        Tri-directional matrix — selections in any column filter the others. Tier 1
-        (active) · Tier 2 (red, conflict) · Tier 3 (grey, tag mismatch). Alignment is
-        optional; use <strong>Determine attributes</strong> when race and O.C.C. match.
+        Race and O.C.C. matrix — selections cross-filter each other. Tier 1 (active) · Tier
+        2 (red, conflict) · Tier 3 (grey, filter mismatch). Choose alignment in the
+        Identity header; restricted options are greyed out with a hover note.
       </p>
 
       <div className="mb-3 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-wide">
@@ -529,7 +518,7 @@ export function ConfiguratorPanel() {
         </div>
       ) : null}
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-2">
         <ConfiguratorPinScrollColumn
           panel={panel}
           morphus={morphus}
@@ -642,26 +631,6 @@ export function ConfiguratorPanel() {
           </div>
         )}
 
-        <ConfiguratorListColumn panel={panel} ariaLabel="Alignment">
-          {CONFIGURATOR_ALIGNMENT_OPTIONS.map((alignment) => (
-            <ConfiguratorListItem
-              key={alignment || '__undecided__'}
-              morphus={morphus}
-              selected={currentAlignment === alignment}
-              tierResult={assessAlignmentConfiguratorTier(
-                alignment,
-                matrixCtx,
-                raceById,
-                occById,
-              )}
-              onSelect={() => setAlignment(alignment)}
-            >
-              <span className="text-sm font-semibold">
-                {configuratorAlignmentLabel(alignment)}
-              </span>
-            </ConfiguratorListItem>
-          ))}
-        </ConfiguratorListColumn>
       </div>
 
       {raceCanPickOcc && specializationBranches.length > 0 ? (
@@ -716,27 +685,6 @@ export function ConfiguratorPanel() {
   )
 }
 
-function ConfiguratorListColumn({
-  panel,
-  children,
-  ariaLabel,
-}: {
-  panel: string
-  children: ReactNode
-  ariaLabel?: string
-}) {
-  return (
-    <div
-      className={`flex flex-col rounded-lg border-2 p-3 ${panel}`}
-      aria-label={ariaLabel}
-    >
-      <div className="flex max-h-[28rem] flex-col gap-2 overflow-y-auto pr-1">
-        {children}
-      </div>
-    </div>
-  )
-}
-
 function RaceRow({
   race,
   morphus,
@@ -752,6 +700,7 @@ function RaceRow({
   filterMismatch?: boolean
   onSelect: () => void
 }) {
+  const alignmentNote = selected ? formatRaceAlignmentRestrictionNote(race) : null
   return (
     <ConfiguratorListItem
       morphus={morphus}
@@ -776,6 +725,15 @@ function RaceRow({
       {race.description?.trim() ? (
         <p className="mt-1 text-[11px] leading-snug opacity-85">{race.description}</p>
       ) : null}
+      {selected && alignmentNote ? (
+        <p
+          className={`mt-1.5 text-[10px] font-semibold leading-snug ${
+            morphus ? 'text-amber-200' : 'text-amber-900'
+          }`}
+        >
+          {alignmentNote}
+        </p>
+      ) : null}
     </ConfiguratorListItem>
   )
 }
@@ -796,6 +754,7 @@ function OccRow({
   onSelect: () => void
 }) {
   const occCat = occCharacterCategory(def)
+  const alignmentNote = selected ? formatOccAlignmentRestrictionNote(def) : null
 
   return (
     <ConfiguratorListItem
@@ -815,6 +774,15 @@ function OccRow({
       <p className="mt-1 text-base font-bold">{def.name}</p>
       {def.description?.trim() ? (
         <p className="mt-1 text-[11px] leading-snug opacity-85">{def.description}</p>
+      ) : null}
+      {selected && alignmentNote ? (
+        <p
+          className={`mt-1.5 text-[10px] font-semibold leading-snug ${
+            morphus ? 'text-amber-200' : 'text-amber-900'
+          }`}
+        >
+          {alignmentNote}
+        </p>
       ) : null}
     </ConfiguratorListItem>
   )

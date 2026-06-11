@@ -1,5 +1,5 @@
 import { useCharacter } from '../../context/CharacterContext'
-import { configuratorAlignmentLabel } from '../../lib/configuratorMatrix'
+import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
 import {
   CHARACTER_NAME_PLACEHOLDER,
@@ -159,7 +159,6 @@ export function IdentityHeader({
     character.occSpecializationId,
     effectiveOcc,
   )
-  const alignmentLabel = configuratorAlignmentLabel(character.facade.alignment)
   const heightFeetError = identityHeightFeetError(profile.heightFeet)
   const heightInchesError = identityHeightInchesError(profile.heightInches)
   const weightLbsError = identityWeightLbsError(profile.weightLbs)
@@ -210,10 +209,10 @@ export function IdentityHeader({
               <p className={identityLabelClass(morphusActive)}>O.C.C.</p>
               <p className={identityValueClass(morphusActive)}>{occLabel}</p>
             </div>
-            <div>
-              <p className={identityLabelClass(morphusActive)}>Alignment</p>
-              <p className={identityValueClass(morphusActive)}>{alignmentLabel}</p>
-            </div>
+            <ConfiguratorAlignmentSelect
+              morphus={morphusActive}
+              variant="identity"
+            />
           </div>
 
           <div className="flex min-w-[12rem] flex-1 flex-col gap-2 sm:max-w-xs">

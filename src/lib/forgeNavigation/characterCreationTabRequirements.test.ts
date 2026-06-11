@@ -31,7 +31,13 @@ function ctx(
       facade: { alignment: 'Principled' },
       ...overrides,
     } as CharacterCreationForgeContext['character'],
-    race: { id: 'race_human', gameSystems: ['nightbane'] } as CharacterCreationForgeContext['race'],
+    race: {
+      id: 'race_human',
+      name: 'Human',
+      gameSystems: ['nightbane'],
+      canPickOcc: true,
+      occLimitations: { forbiddenOccIds: [], forbiddenCategories: [] },
+    } as CharacterCreationForgeContext['race'],
     occ: pandoraOcc,
     psychicTier: 'none',
     supportsDualForm: false,
@@ -70,5 +76,26 @@ describe('listCharacterCreationTabRequirements', () => {
       true,
     )
     expect(requirements.some((r) => r.id === 'hand-to-hand')).toBe(false)
+  })
+
+  it('tab1 uses a single race/O.C.C. pair requirement without alignment', () => {
+    const requirements = listCharacterCreationTabRequirements('tab1_configurator', ctx())
+    expect(requirements).toHaveLength(1)
+    expect(requirements[0]?.id).toBe('race-occ-pair')
+    expect(requirements[0]?.label).toBe('Select a valid race and O.C.C. combination')
+    expect(requirements[0]?.satisfied).toBe(true)
+  })
+
+  it('tab1 adds specialization requirement when O.C.C. has branches', () => {
+    const branchedOcc = {
+      ...pandoraOcc,
+      specializations: [{ id: 'spec_a', name: 'Branch A' }],
+    } as PalladiumOcc
+    const requirements = listCharacterCreationTabRequirements('tab1_configurator', {
+      ...ctx(),
+      occ: branchedOcc,
+    })
+    expect(requirements.map((r) => r.id)).toEqual(['race-occ-pair', 'occ-spec'])
+    expect(requirements[1]?.satisfied).toBe(false)
   })
 })

@@ -412,6 +412,8 @@ type CharacterContextValue = {
   removeMorphusCustomTraitSlot: (slotId: string) => void
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
+  /** Set an attribute total directly (not tied to a pool slot). */
+  setCreationAttributeValue: (attr: ForgeAttrKey, value: number | null) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
   /** Dev-only — rolls and assigns all eight attributes in one update. */
   devAutoRollAndAssignAllAttributes?: () => void
@@ -2164,6 +2166,34 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [],
   )
 
+  const setCreationAttributeValue = useCallback(
+    (attr: ForgeAttrKey, value: number | null) => {
+      setRawCharacter((prev) => {
+        const assignments = { ...(prev.creationAttributeAssignments ?? {}) }
+        const poolSlots = { ...(prev.creationAttributePoolSlots ?? {}) }
+
+        if (value == null || !Number.isFinite(value)) {
+          delete assignments[attr]
+          delete poolSlots[attr]
+        } else {
+          assignments[attr] = Math.round(value)
+          delete poolSlots[attr]
+        }
+
+        const occ = getLibraryOccById(prev.occ.id) ?? undefined
+        const withAssignments = {
+          ...prev,
+          creationAttributeAssignments: assignments,
+          creationAttributePoolSlots: poolSlots,
+        }
+        return syncRaceOccFacadeSdc(
+          syncCreationAttributeBranches(withAssignments, occ),
+        )
+      })
+    },
+    [],
+  )
+
   const clearCreationAttributeAssignment = useCallback(
     (attr: ForgeAttrKey) => {
       setRawCharacter((prev) => {
@@ -2594,6 +2624,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeMorphusCustomTraitSlot,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
+      setCreationAttributeValue,
       clearCreationAttributeAssignment,
       devAutoRollAndAssignAllAttributes: import.meta.env.DEV
         ? devAutoRollAndAssignAllAttributes
@@ -2734,6 +2765,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeMorphusCustomTraitSlot,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
+      setCreationAttributeValue,
       clearCreationAttributeAssignment,
       devAutoRollAndAssignAllAttributes,
       devMakeAttributeExceptional,

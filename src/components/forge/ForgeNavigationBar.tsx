@@ -37,7 +37,7 @@ export function ForgeNavigationBar({
         const theme = forgeTabVisualTheme(tab.visual)
         const title = [
           tab.label,
-          tab.visual === 'na' ? 'Not applicable to this build' : '',
+          tab.visual === 'na' ? tab.naReason ?? 'Not applicable to this build' : '',
           tab.visual === 'locked' ? 'Not unlocked yet' : '',
           tab.conflictReason,
           tab.blockers.length ? tab.blockers.join('; ') : '',
@@ -54,10 +54,11 @@ export function ForgeNavigationBar({
             onClick={() => {
               if (tab.clickable) onSelectTab(tab.id)
             }}
-            className={`relative overflow-hidden rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition disabled:cursor-not-allowed disabled:opacity-95 ${theme.pill} ${
-              isViewing ? VIEWING_RING : ''
-            }`}
+            className={`relative overflow-hidden rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition ${theme.pill} ${
+              tab.visual === 'na' ? 'cursor-pointer' : ''
+            } disabled:cursor-not-allowed disabled:opacity-95 ${isViewing ? VIEWING_RING : ''}`}
             aria-current={isViewing ? 'step' : undefined}
+            aria-disabled={!tab.clickable ? true : undefined}
           >
             {tab.visual === 'na' ? <NaTabWatermark /> : null}
             <span className="relative z-[1]">{tab.label}</span>

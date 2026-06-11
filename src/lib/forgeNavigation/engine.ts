@@ -9,6 +9,8 @@ export type ForgeTabDefinition<TId extends string> = {
   id: TId
   label: string
   isNa: () => boolean
+  /** Human-readable explanation when {@link isNa} is true. */
+  naReason?: () => string
   validate: () => ForgeTabValidation
   snapshot: () => string
 }
@@ -131,8 +133,10 @@ export function deriveForgeNavigation<TId extends string>(
         id: tab.id,
         label: tab.label,
         visual: 'na' as ForgeTabVisualState,
-        clickable: false,
+        clickable: true,
         blockers: validation.blockers,
+        naReason:
+          tab.naReason?.() ?? 'This step does not apply to the character you are building.',
       }
     }
 

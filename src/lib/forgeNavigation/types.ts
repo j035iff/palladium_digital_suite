@@ -28,6 +28,8 @@ export type ForgeTabView = {
   clickable: boolean
   blockers: string[]
   conflictReason?: string
+  /** Shown when `visual === 'na'` — why this step does not apply. */
+  naReason?: string
   /** Tab whose content is in the viewport (dark outline in nav). */
   isViewing?: boolean
 }

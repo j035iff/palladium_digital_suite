@@ -6,6 +6,7 @@ import type {
   PsychicTier,
   Race,
 } from '../../types'
+import { isGenreSupernaturalAbilitiesDisallowed } from '../../data/genres'
 import type { CreationPhase } from '../creationStep'
 import {
   assessAttributesBlockers,
@@ -18,6 +19,8 @@ import {
   creationNeedsAbilitySelection,
   creationPsychicGateRequiresTierChoice,
   isCreationPsychicTierComplete,
+  occIsNaturalPsychicClass,
+  resolvePsychicGateBypassed,
 } from '../creationPhases'
 import {
   assessRelatedSkillSlotBlockers,
@@ -81,7 +84,7 @@ export const CHARACTER_CREATION_TAB_LABELS: Record<
 > = {
   tab1_configurator: 'Race & O.C.C.',
   tab2_attributes: 'Attributes',
-  tab3_psionic: 'Psionic',
+  tab3_psionic: 'Random Psionics',
   tab4_skills: 'Skills',
   tab5_finalize: 'Roll Pending',
   tab6_traits: 'Traits',
@@ -94,9 +97,9 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
   CharacterCreationForgeTabId,
   string
 > = {
-  tab1_configurator: 'Step 2: Race, O.C.C. & Alignment',
+  tab1_configurator: 'Step 2: Race & O.C.C.',
   tab2_attributes: 'Phase I: Attribute Pool & Allocation',
-  tab3_psionic: 'Step 2.5: Psychic Gate',
+  tab3_psionic: 'Step 2.5: Random Psionics',
   tab4_skills: 'Step 3: Skill Engine',
   tab5_finalize: 'Phase II: Roll Pending Dice',
   tab6_traits: 'Character Trait Sub-Forge',
@@ -231,6 +234,38 @@ function tab7Snapshot(c: Character): string {
 }
 
 export { traitForgeTabApplicable } from '../creationSubForge'
+
+function randomPsionicsTabNaReason(ctx: CharacterCreationForgeContext): string {
+  const { character, occ } = ctx
+  const genreId = character.creationGenreId ?? 'nightbane'
+  if (genreId && isGenreSupernaturalAbilitiesDisallowed(genreId)) {
+    return 'This creation genre does not use Random Psionics.'
+  }
+  if (occIsNaturalPsychicClass(occ)) {
+    return 'O.C.C. already has psychic abilities — Random Psionics does not apply to this build.'
+  }
+  if (resolvePsychicGateBypassed(character.raceId, occ, genreId)) {
+    return 'This race or O.C.C. does not use Random Psionics (psionics are none, innate, or explicitly bypassed).'
+  }
+  return 'Random Psionics does not apply to this build.'
+}
+
+function traitsTabNaReason(ctx: CharacterCreationForgeContext): string {
+  const { race, occ } = ctx
+  if (!race) {
+    return 'Select a race to determine whether a trait sub-forge applies.'
+  }
+  const label = traitForgeTabLabel(race, occ)
+  return `This race and O.C.C. combination does not use ${label} — no trait sub-forge is required.`
+}
+
+function abilitiesTabNaReason(ctx: CharacterCreationForgeContext): string {
+  const genreId = ctx.character.creationGenreId ?? 'nightbane'
+  if (isGenreSupernaturalAbilitiesDisallowed(genreId)) {
+    return 'This creation genre does not include supernatural ability picks.'
+  }
+  return 'This build has no spell, psionic, or talent picks during creation.'
+}
 
 export function readForgeCompletion(
   character: Pick<
@@ -497,6 +532,7 @@ function buildTabDefinitions(
               occ,
               character.creationGenreId,
             ),
+          naReason: () => randomPsionicsTabNaReason(ctx),
           validate: () => {
             const blockers = assessPsychicTabBlockers(ctx)
             return { ok: blockers.length === 0, blockers }
@@ -530,6 +566,7 @@ function buildTabDefinitions(
           id,
           label,
           isNa: () => !traitForgeTabApplicable(race, occ),
+          naReason: () => traitsTabNaReason(ctx),
           validate: () => {
             const blockers = assessTraitsTabBlockers(ctx)
             return { ok: blockers.length === 0, blockers }
@@ -554,6 +591,7 @@ function buildTabDefinitions(
               character.creationGenreId,
             )
           },
+          naReason: () => abilitiesTabNaReason(ctx),
           validate: () => {
             const blockers = assessAbilitiesTabBlockers(ctx)
             return { ok: blockers.length === 0, blockers }

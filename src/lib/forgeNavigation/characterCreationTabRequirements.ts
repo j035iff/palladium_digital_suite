@@ -1,7 +1,6 @@
 import type { CharacterCreationForgeTabId } from '../../types'
 import { assessConfiguratorPairConflict } from '../configuratorMatrix'
 import {
-  getEffectivePoolSlots,
   raceAttrNotation,
   valueFitsRaceNotation,
 } from '../creationAttributeSync'
@@ -75,21 +74,28 @@ function occMinForAttr(
 
 function tab1Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
   const { character, race, occ } = ctx
+  const raceSelected = Boolean(character.raceId && race)
+  const occSelected = Boolean(
+    character.occ?.id && character.occ?.xpTable?.floors?.length,
+  )
+  const picksOcc = race ? raceCanPickOcc(race) : false
+
+  const pairConflict =
+    raceSelected && occSelected && race && occ && picksOcc
+      ? assessConfiguratorPairConflict(race, occ, null)
+      : null
+
+  const pairSatisfied = picksOcc
+    ? raceSelected && occSelected && pairConflict == null
+    : raceSelected
+
   const requirements: ForgeTabRequirement[] = [
     {
-      id: 'race',
-      label: 'Select a race',
-      satisfied: Boolean(character.raceId && race),
+      id: 'race-occ-pair',
+      label: pairConflict ?? 'Select a valid race and O.C.C. combination',
+      satisfied: pairSatisfied,
     },
   ]
-
-  if (!race || !raceCanPickOcc(race)) return requirements
-
-  requirements.push({
-    id: 'occ',
-    label: 'Select an O.C.C.',
-    satisfied: Boolean(character.occ?.id && character.occ?.xpTable?.floors?.length),
-  })
 
   if (occ?.specializations?.length) {
     requirements.push({
@@ -99,32 +105,12 @@ function tab1Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     })
   }
 
-  if (character.occ?.id && occ && race) {
-    const conflict = assessConfiguratorPairConflict(
-      race,
-      occ,
-      character.facade.alignment,
-    )
-    requirements.push({
-      id: 'pair',
-      label: conflict ?? 'Valid race, O.C.C., and alignment combination',
-      satisfied: conflict == null,
-    })
-  }
-
   return requirements
 }
 
 function tab2Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
   const { character, occ, race } = ctx
   const assignments = character.creationAttributeAssignments ?? {}
-  const pool = character.creationAttributePool ?? []
-  const poolSlots = getEffectivePoolSlots(
-    pool,
-    assignments,
-    character.creationAttributePoolSlots,
-  )
-  const filledPool = pool.filter((n) => n != null && Number.isFinite(n)).length
   const formulas = race?.attributes
 
   const allAssigned = FORGE_ATTRIBUTE_KEYS.every((attr) => {
@@ -141,22 +127,11 @@ function tab2Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     return valueFitsRaceNotation(v, notation)
   })
 
-  const usedSlotIndices = FORGE_ATTRIBUTE_KEYS.map((a) => poolSlots[a]).filter(
-    (i): i is number => typeof i === 'number',
-  )
-  const poolSlotsUnique =
-    usedSlotIndices.length < 8 || new Set(usedSlotIndices).size === 8
-
   const requirements: ForgeTabRequirement[] = [
     {
-      id: 'pool',
-      label: 'Enter all eight rolled values in the attribute pool',
-      satisfied: filledPool >= 8,
-    },
-    {
       id: 'assign',
-      label: 'Assign all eight attributes from the pool',
-      satisfied: allAssigned && poolSlotsUnique,
+      label: 'Assign all eight attributes',
+      satisfied: allAssigned,
     },
     {
       id: 'limits',

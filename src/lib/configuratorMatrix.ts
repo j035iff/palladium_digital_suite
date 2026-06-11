@@ -236,14 +236,6 @@ export function assessRaceConfiguratorTier(
     const conflict = describeRaceOccConflict(race, selectedOcc)
     if (conflict) return { tier: 2, conflictReason: conflict }
   }
-  if (ctx.selectedAlignment?.trim()) {
-    const ac = describeRaceAlignmentConflict(race, ctx.selectedAlignment)
-    if (ac) return { tier: 2, conflictReason: ac }
-    if (selectedOcc) {
-      const oc = describeOccAlignmentConflict(selectedOcc, ctx.selectedAlignment)
-      if (oc) return { tier: 2, conflictReason: oc }
-    }
-  }
   const filterReason = describeConfiguratorFilterMismatch(
     { race, occ: selectedOcc, focus: 'race' },
     resolveConfiguratorFilter(ctx),
@@ -265,17 +257,6 @@ export function assessOccConfiguratorTier(
   if (selectedRace) {
     const conflict = describeRaceOccConflict(selectedRace, occ)
     if (conflict) return { tier: 2, conflictReason: conflict }
-  }
-  if (ctx.selectedAlignment?.trim()) {
-    const oc = describeOccAlignmentConflict(occ, ctx.selectedAlignment)
-    if (oc) return { tier: 2, conflictReason: oc }
-    if (selectedRace) {
-      const rc = describeRaceAlignmentConflict(
-        selectedRace,
-        ctx.selectedAlignment,
-      )
-      if (rc) return { tier: 2, conflictReason: rc }
-    }
   }
   const filterReason = describeConfiguratorFilterMismatch(
     { race: selectedRace, occ, focus: 'occ' },
@@ -449,4 +430,96 @@ export function effectiveConfiguratorAlignment(
   facadeAlignment: string | undefined,
 ): string {
   return facadeAlignment?.trim() ?? ''
+}
+
+const ALIGNMENT_CATEGORY_LABELS = {
+  good: 'Good alignments',
+  selfish: 'Selfish alignments',
+  evil: 'Evil alignments',
+} as const
+
+const ALIGNMENT_CATEGORIES = {
+  good: ['Principled', 'Scrupulous'] as const,
+  selfish: ['Unprincipled', 'Anarchist'] as const,
+  evil: ['Miscreant', 'Aberrant', 'Diabolic'] as const,
+}
+
+/** Human-readable list such as "Anarchist or Evil alignments". */
+export function summarizeAlignmentNames(names: readonly string[]): string {
+  const allowed = new Set(names.map((name) => name.trim()).filter(Boolean))
+  const parts: string[] = []
+
+  for (const category of ['good', 'selfish', 'evil'] as const) {
+    const bucket = ALIGNMENT_CATEGORIES[category]
+    const bucketFull =
+      bucket.length > 0 && bucket.every((alignment) => allowed.has(alignment))
+
+    if (bucketFull) {
+      parts.push(ALIGNMENT_CATEGORY_LABELS[category])
+      for (const alignment of bucket) allowed.delete(alignment)
+      continue
+    }
+
+    for (const alignment of bucket) {
+      if (allowed.has(alignment)) {
+        parts.push(alignment)
+        allowed.delete(alignment)
+      }
+    }
+  }
+
+  for (const alignment of allowed) parts.push(alignment)
+
+  if (parts.length === 0) return 'restricted alignments'
+  if (parts.length === 1) return parts[0]!
+  if (parts.length === 2) return `${parts[0]} or ${parts[1]}`
+  return `${parts.slice(0, -1).join(', ')}, or ${parts.at(-1)}`
+}
+
+function effectiveAllowedAlignmentsForOcc(
+  restrictions: PalladiumOcc['alignmentRestrictions'],
+): readonly string[] | null {
+  if (!restrictions?.allowed?.length && !restrictions?.forbidden?.length) {
+    return null
+  }
+  if (restrictions.allowed?.length) return restrictions.allowed
+  return PALLADIUM_ALIGNMENT_VALUES.filter(
+    (alignment) => !inList(restrictions.forbidden, alignment),
+  )
+}
+
+/** Selection note for O.C.C. rows with alignment restrictions. */
+export function formatOccAlignmentRestrictionNote(occ: PalladiumOcc): string | null {
+  const allowed = effectiveAllowedAlignmentsForOcc(occ.alignmentRestrictions)
+  if (!allowed || allowed.length >= PALLADIUM_ALIGNMENT_VALUES.length) return null
+  return `Only available to ${summarizeAlignmentNames(allowed)}`
+}
+
+/** Selection note for race rows with excluded alignments. */
+export function formatRaceAlignmentRestrictionNote(race: Race): string | null {
+  const excluded = race.demographics.excludedAlignments
+  if (!excluded?.length) return null
+  return `Not available to ${summarizeAlignmentNames(excluded)}`
+}
+
+/** Tooltip / disabled-reason for an alignment option given current race + O.C.C. */
+export function describeAlignmentSelectionConflict(
+  alignment: string,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+): string | null {
+  if (!alignment.trim()) return null
+  const raceConflict = race
+    ? describeRaceAlignmentConflict(race, alignment)
+    : null
+  if (raceConflict) return raceConflict
+  return occ ? describeOccAlignmentConflict(occ, alignment) : null
+}
+
+export function isAlignmentCompatibleWithSelection(
+  alignment: string,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+): boolean {
+  return describeAlignmentSelectionConflict(alignment, race, occ) == null
 }

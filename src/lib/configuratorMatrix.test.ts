@@ -6,8 +6,11 @@ import {
   assessAlignmentConfiguratorTier,
   assessConfiguratorPairConflict,
   describeRaceOccConflict,
+  describeRaceAlignmentConflict,
   describeOccAlignmentConflict,
-  CONFIGURATOR_ALIGNMENT_UNDECIDED,
+  describeAlignmentSelectionConflict,
+  formatOccAlignmentRestrictionNote,
+  formatRaceAlignmentRestrictionNote,
   buildConfiguratorColumnRows,
   buildConfiguratorScrollLayout,
   configuratorAlignmentLabel,
@@ -17,6 +20,7 @@ import {
   formatOccAttributeRequirements,
   isOccCompatibleWithRace,
   occMatchesConfiguratorTag,
+  summarizeAlignmentNames,
 } from './configuratorMatrix'
 import {
   newFilterGroupNode,
@@ -211,12 +215,64 @@ describe('configuratorMatrix', () => {
       human,
       {
         configuratorFilter: null,
-        selectedAlignment: CONFIGURATOR_ALIGNMENT_UNDECIDED,
         selectedOccId: 'occ_diabolic_only',
       },
       occMap,
     )
     expect(tier.tier).toBe(1)
+  })
+
+  it('does not tier-lock race rows for incompatible chosen alignment', () => {
+    const tier = assessRaceConfiguratorTier(
+      human,
+      {
+        configuratorFilter: null,
+        selectedAlignment: 'Diabolic',
+        selectedOccId: 'occ_agent',
+      },
+      occMap,
+    )
+    expect(tier.tier).toBe(1)
+  })
+
+  it('formats O.C.C. alignment notes with grouped evil + anarchist', () => {
+    const assassinOcc = {
+      ...agentOcc,
+      id: 'occ_assassin',
+      name: 'Assassin',
+      alignmentRestrictions: {
+        allowed: ['Anarchist', 'Miscreant', 'Aberrant', 'Diabolic'],
+      },
+    } as PalladiumOcc
+    expect(formatOccAlignmentRestrictionNote(assassinOcc)).toBe(
+      'Only available to Anarchist or Evil alignments',
+    )
+  })
+
+  it('greys out incompatible alignment options for selected O.C.C.', () => {
+    expect(
+      describeAlignmentSelectionConflict('Principled', human, diabolicOcc),
+    ).toMatch(/requires/i)
+    const openRace = {
+      ...human,
+      id: 'race_open',
+      demographics: {},
+    } as Race
+    expect(
+      describeAlignmentSelectionConflict('Diabolic', openRace, diabolicOcc),
+    ).toBeNull()
+    expect(
+      describeAlignmentSelectionConflict('Diabolic', human, diabolicOcc),
+    ).toMatch(/prohibits/i)
+  })
+
+  it('formats race excluded alignment notes', () => {
+    expect(formatRaceAlignmentRestrictionNote(human)).toBe(
+      'Not available to Diabolic',
+    )
+    expect(
+      summarizeAlignmentNames(['Principled', 'Scrupulous']),
+    ).toBe('Good alignments')
   })
 
   it('reports pair conflict for invalid human + nightbane-only O.C.C.', () => {
@@ -343,12 +399,7 @@ describe('configuratorMatrix', () => {
     expect(formatOccAttributeRequirements(withReqs)).toMatch(/P\.E\. 14\+/)
   })
 
-  it('race tier 2 when alignment excluded by race demographics', () => {
-    const tier = assessRaceConfiguratorTier(
-      human,
-      { configuratorFilter: null, selectedAlignment: 'Diabolic' },
-      occMap,
-    )
-    expect(tier.tier).toBe(2)
+  it('race alignment conflict description when demographics exclude alignment', () => {
+    expect(describeRaceAlignmentConflict(human, 'Diabolic')).toMatch(/prohibits/i)
   })
 })

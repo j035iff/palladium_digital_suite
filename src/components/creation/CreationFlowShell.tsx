@@ -32,6 +32,10 @@ import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 
 import { ForgeContinueGate } from '../forge/ForgeContinueGate'
 
+import { ForgeTabNaBanner } from '../forge/ForgeTabNaBanner'
+
+import { ForgeTabInactiveShell } from '../forge/ForgeTabInactiveShell'
+
 import { ForgeTabPageHeader } from '../forge/ForgeTabPageHeader'
 
 import {
@@ -183,6 +187,7 @@ export function CreationFlowShell({
       : CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]
 
   const activeBlockers = activeView?.blockers ?? []
+  const tabInactive = activeView?.visual === 'na'
 
   const activeRequirements = useMemo(
     () =>
@@ -295,9 +300,9 @@ export function CreationFlowShell({
             </div>
 
             {activeTabId === 'tab7_abilities' ? (
-              <div className="mt-3 px-4">
+              <ForgeTabInactiveShell inactive={tabInactive} className="mt-3 px-4">
                 <SupernaturalAbilitiesForgeLaneTabs />
-              </div>
+              </ForgeTabInactiveShell>
             ) : null}
 
           </div>
@@ -335,6 +340,10 @@ export function CreationFlowShell({
           ) : null}
 
 
+
+          {activeView?.visual === 'na' && activeView.naReason ? (
+            <ForgeTabNaBanner message={activeView.naReason} />
+          ) : null}
 
           {activeView?.conflictReason ? (
 
@@ -383,13 +392,17 @@ export function CreationFlowShell({
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
-              <ForgeTabBody tabId={activeTabId} />
+              <ForgeTabInactiveShell inactive={tabInactive} className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                <ForgeTabBody tabId={activeTabId} />
+              </ForgeTabInactiveShell>
 
             </div>
 
           ) : (
 
-            <ForgeTabBody tabId={activeTabId} />
+            <ForgeTabInactiveShell inactive={tabInactive}>
+              <ForgeTabBody tabId={activeTabId} />
+            </ForgeTabInactiveShell>
 
           )}
 

@@ -14,38 +14,15 @@ import type { PsychicTier } from '../../types'
 
 
 
-const TIERS: PsychicTier[] = ['none', 'minor', 'major', 'master']
+const TIERS: PsychicTier[] = ['none', 'minor', 'major']
 
-
-
-const TIER_LABEL: Record<PsychicTier, string> = {
-
+const TIER_LABEL: Record<(typeof TIERS)[number], string> = {
   none: 'None',
-
   minor: 'Minor',
-
   major: 'Major',
-
-  master: 'Master',
-
 }
 
-
-
-const OCC_LOCK_TOOLTIP =
-
-  'Psychic-class O.C.C. (e.g. Mind Melter): tier is locked to Master (psychic_gate.md §1).'
-
-
-
-const MASTER_OCC_ONLY_TOOLTIP =
-
-  'Master psionic — only available with a psychic-class O.C.C.'
-
-
-
 export function PsychicGate() {
-
   const {
 
     activeForm,
@@ -72,11 +49,7 @@ export function PsychicGate() {
 
   const bypassed = character.psychicGateBypassed === true
 
-  const occLocked = character.occ.category === 'psychic'
-
-  const tierChosen =
-
-    character.creationPsychicTierChosen === true || occLocked
+  const tierChosen = character.creationPsychicTierChosen === true
 
 
 
@@ -156,24 +129,6 @@ export function PsychicGate() {
 
           <div className="space-y-4">
 
-            {occLocked ? (
-
-              <p
-
-                className="rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-200"
-
-                role="status"
-
-              >
-
-                O.C.C. check: Psychic-class character — tier locked to <strong>Master</strong>.
-
-              </p>
-
-            ) : null}
-
-
-
             <div>
 
               <h3 className="mb-2 text-xs font-bold uppercase tracking-wide opacity-80">
@@ -186,22 +141,6 @@ export function PsychicGate() {
 
                 {TIERS.map((tier) => {
 
-                  const locked =
-
-                    tier === 'master' ? !occLocked : occLocked
-
-                  const lockReason =
-
-                    tier === 'master' && !occLocked
-
-                      ? MASTER_OCC_ONLY_TOOLTIP
-
-                      : occLocked && tier !== 'master'
-
-                        ? OCC_LOCK_TOOLTIP
-
-                        : undefined
-
                   const active = tierChosen && psychicTier === tier
 
                   return (
@@ -212,35 +151,23 @@ export function PsychicGate() {
 
                       type="button"
 
-                      disabled={locked}
-
-                      title={lockReason}
-
                       onClick={() => setPsychicTier(tier)}
 
                       className={`rounded-md border-2 px-3 py-2 text-sm font-semibold transition ${
 
-                        locked
+                        active
 
                           ? morphus
 
-                            ? 'cursor-not-allowed border-slate-600 text-slate-500 line-through opacity-50'
+                            ? 'border-amber-400 bg-violet-900 text-amber-100'
 
-                            : 'cursor-not-allowed border-slate-300 text-slate-400 line-through opacity-60'
+                            : 'border-blue-600 bg-blue-50 text-blue-900'
 
-                          : active
+                          : morphus
 
-                            ? morphus
+                            ? 'border-violet-700 bg-slate-900 hover:border-violet-500'
 
-                              ? 'border-amber-400 bg-violet-900 text-amber-100'
-
-                              : 'border-blue-600 bg-blue-50 text-blue-900'
-
-                            : morphus
-
-                              ? 'border-violet-700 bg-slate-900 hover:border-violet-500'
-
-                              : 'border-slate-300 bg-white hover:border-blue-400'
+                            : 'border-slate-300 bg-white hover:border-blue-400'
 
                       }`}
 
@@ -322,9 +249,7 @@ export function PsychicGate() {
 
               <p className="mt-1 text-xs opacity-80">
 
-                Roll M.E. or higher on d20 to save (None 15+, Minor/Major 12+, Master 10+;
-
-                psychic_gate.md §2).
+                Roll M.E. or higher on d20 to save (None 15+, Minor/Major 12+; psychic_gate.md §2).
 
               </p>
 

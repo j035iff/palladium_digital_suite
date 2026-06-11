@@ -95,6 +95,40 @@ describe('deriveForgeNavigation', () => {
     expect(nav.continueTooltip).toContain('Optional picks remain')
   })
 
+  it('allows viewing N/A tabs with a reason while hiding Continue', () => {
+    type TabId = 'a' | 'b' | 'c'
+    const defs: ForgeTabDefinition<TabId>[] = [
+      {
+        id: 'a',
+        label: 'a',
+        isNa: () => false,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-a',
+      },
+      {
+        id: 'b',
+        label: 'b',
+        isNa: () => true,
+        naReason: () => 'Step b does not apply.',
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-b',
+      },
+      {
+        id: 'c',
+        label: 'c',
+        isNa: () => false,
+        validate: () => ({ ok: true, blockers: [] }),
+        snapshot: () => 'snap-c',
+      },
+    ]
+    const nav = deriveForgeNavigation(defs, 'b', { completed: {}, snapshots: {} })
+    const bView = nav.tabs.find((t) => t.id === 'b')
+    expect(bView?.visual).toBe('na')
+    expect(bView?.clickable).toBe(true)
+    expect(bView?.naReason).toBe('Step b does not apply.')
+    expect(nav.showContinue).toBe(false)
+  })
+
   it('unlocks terminal tab when preceding tabs are complete (terminal not marked yet)', () => {
     type TabId = 'a' | 'b' | 'c' | 'terminal'
     const defs: ForgeTabDefinition<TabId>[] = [

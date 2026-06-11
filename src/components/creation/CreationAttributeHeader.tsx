@@ -36,6 +36,8 @@ export function CreationAttributeHeader() {
     supportsDualForm,
     activeForm,
     setCreationAttributeAssignment,
+    setCreationAttributeValue,
+    clearCreationAttributeAssignment,
     devMakeAttributeExceptional,
   } = useCharacter()
 
@@ -68,6 +70,23 @@ export function CreationAttributeHeader() {
       return typeof v === 'number' && v > 0 ? v : undefined
     },
     [reqs],
+  )
+
+  const handleAttrInput = useCallback(
+    (attr: ForgeAttrKey, raw: string) => {
+      const trimmed = raw.trim()
+      if (trimmed === '') {
+        clearCreationAttributeAssignment(attr)
+        setDropError(null)
+        return
+      }
+      if (!/^\d+$/.test(trimmed)) return
+      const n = Number(trimmed)
+      if (!Number.isFinite(n) || n < 1) return
+      setCreationAttributeValue(attr, n)
+      setDropError(null)
+    },
+    [clearCreationAttributeAssignment, setCreationAttributeValue],
   )
 
   const tryAssign = useCallback(
@@ -113,8 +132,7 @@ export function CreationAttributeHeader() {
       className="rounded-lg border-2 border-blue-300 bg-sky-50/90 px-4 py-3 dark:border-violet-700 dark:bg-violet-950/40"
     >
       <p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-blue-800 dark:text-violet-300">
-        Assign attributes — drag pool rolls here (Live Ledger mirrors totals after you
-        continue)
+        Assign attributes — type a value directly or drag optional pool rolls here
       </p>
       {dropError ? (
         <p className="mb-2 text-xs font-semibold text-rose-600 dark:text-rose-400" role="alert">
@@ -137,14 +155,6 @@ export function CreationAttributeHeader() {
           const isDropTarget = dragOverAttr === attr
           const labelTone = morphus ? 'text-violet-300' : 'text-blue-800'
           const diceTone = morphus ? 'text-violet-300/90' : 'text-blue-700/80'
-          const valueTone =
-            assigned != null
-              ? morphus
-                ? 'text-violet-50'
-                : 'text-slate-900'
-              : morphus
-                ? 'text-violet-400/75'
-                : 'text-slate-400'
           return (
             <div
               key={attr}
@@ -170,7 +180,10 @@ export function CreationAttributeHeader() {
                         ? 'border-violet-800/80 bg-slate-950/70'
                         : 'border-blue-200 bg-white'
               }`}
-              title={assignIssue ?? `Drop a pool roll on ${ATTR_LABELS[attr]}`}
+              title={
+                assignIssue ??
+                `Enter a value or drop a pool roll on ${ATTR_LABELS[attr]}`
+              }
             >
               {min != null && min > 0 ? (
                 <span
@@ -194,11 +207,29 @@ export function CreationAttributeHeader() {
                 </span>
               </div>
 
-              <p
-                className={`my-1 text-center font-mono text-sm font-bold leading-none tabular-nums ${valueTone}`}
-              >
-                {assigned ?? '—'}
-              </p>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                aria-label={`${ATTR_LABELS[attr]} score`}
+                aria-invalid={assignIssue ? true : undefined}
+                value={assigned ?? ''}
+                onChange={(e) => handleAttrInput(attr, e.target.value)}
+                placeholder="—"
+                className={`my-1 w-full border-0 border-b-2 bg-transparent text-center font-mono text-sm font-bold leading-none tabular-nums outline-none transition-colors ${
+                  assignIssue
+                    ? morphus
+                      ? 'border-rose-500 text-rose-200'
+                      : 'border-rose-500 text-rose-700'
+                    : assigned != null
+                      ? morphus
+                        ? 'border-violet-600 text-violet-50 focus:border-violet-400'
+                        : 'border-slate-300 text-slate-900 focus:border-blue-600'
+                      : morphus
+                        ? 'border-violet-800/80 text-violet-400/75 focus:border-violet-400'
+                        : 'border-slate-200 text-slate-400 focus:border-blue-500'
+                }`}
+              />
 
               {bonus ? (
                 <p className="text-center font-mono text-xs font-bold text-emerald-500 dark:text-emerald-400">
