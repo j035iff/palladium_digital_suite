@@ -19,8 +19,15 @@ export function notationForRoll(raw: string): string {
 
 /**
  * Parse and roll a single dice expression like "3D6", "1D4*10", "1D4x10", "2D6+12", "4d6-1".
+ * Plain integers (e.g. Nightbane base S.D.C. 30) pass through unchanged.
  */
 export function rollDiceNotation(raw: string): number {
+  const t = raw.trim()
+  if (/^\d+$/.test(t)) {
+    const n = Number(t)
+    if (!Number.isFinite(n)) throw new Error(`Invalid dice notation: "${raw}"`)
+    return n
+  }
   const s = notationForRoll(raw)
   const m = /^(\d+)d(\d+)(?:\*(\d+))?([+-]\d+)?$/i.exec(s)
   if (!m) {

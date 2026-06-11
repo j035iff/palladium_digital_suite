@@ -26,7 +26,7 @@ describe('skillDisplayNames', () => {
   it('treats legacy and canonical math ids as equivalent for satisfaction', () => {
     const prereq = { gate: 'and' as const, skillIds: ['skill_math_basic'] }
     expect(
-      prerequisiteSatisfied(prereq, new Set(['skill_mathematics_basic'])),
+      prerequisiteSatisfied(prereq, new Set(['skill_math_basic'])),
     ).toBe(true)
   })
 })

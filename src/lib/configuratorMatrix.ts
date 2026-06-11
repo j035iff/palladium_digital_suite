@@ -1,11 +1,21 @@
 import type { PalladiumOcc, Race } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
-import { occCharacterCategory } from './occCatalogEngine'
+import {
+  describeConfiguratorFilterMismatch,
+  type ConfiguratorFilterExpression,
+  type ConfiguratorFilterFormatOptions,
+  occMatchesConfiguratorTag,
+} from './configuratorFilterExpression'
 import { isOccAllowedForRace } from './raceEngine'
 
+export type { ConfiguratorFilterExpression, OccTagFilterExpression } from './configuratorFilterExpression'
+export { occMatchesConfiguratorTag } from './configuratorFilterExpression'
+
+/** @deprecated Use {@link OccTagFilterExpression} instead. */
 export type OccConfiguratorTagFilterMode = 'include' | 'exclude'
 
+/** @deprecated Use {@link OccTagFilterExpression} instead. */
 export type OccConfiguratorTagFilter = {
   tag: string
   mode: OccConfiguratorTagFilterMode
@@ -134,28 +144,21 @@ export type ConfiguratorTierResult = {
 }
 
 export type ConfiguratorMatrixContext = {
-  /** O.C.C. tag filters — include = must match all (Only), exclude = must match none (Not). */
-  occTagFilters: readonly OccConfiguratorTagFilter[]
+  /** Boolean filter tree — race / O.C.C. predicates with AND, OR, NOT, and groups. */
+  configuratorFilter?: ConfiguratorFilterExpression | null
+  /** @deprecated Use {@link configuratorFilter}. */
+  occTagFilter?: ConfiguratorFilterExpression | null
+  filterFormatOptions?: ConfiguratorFilterFormatOptions
   /** When empty / undefined, alignment cross-filters are skipped (optional step). */
   selectedAlignment?: string | null
   selectedRaceId?: string | null
   selectedOccId?: string | null
 }
 
-/** Whether an O.C.C. matches a configurator tag (catalog tags, occType, or psychic category). */
-export function occMatchesConfiguratorTag(occ: PalladiumOcc, tag: string): boolean {
-  const normalized = tag.trim().toLowerCase()
-  if (!normalized) return false
-  if (
-    (occ.tags ?? []).some((occTag) => occTag.trim().toLowerCase() === normalized)
-  ) {
-    return true
-  }
-  if (normalized === 'psychic' && occCharacterCategory(occ) === 'psychic') {
-    return true
-  }
-  if (occ.occType?.trim().toLowerCase() === normalized) return true
-  return false
+function resolveConfiguratorFilter(
+  ctx: ConfiguratorMatrixContext,
+): ConfiguratorFilterExpression | null | undefined {
+  return ctx.configuratorFilter ?? ctx.occTagFilter
 }
 
 function inList(list: readonly string[] | undefined, value: string): boolean {
@@ -221,30 +224,6 @@ export function describeOccAlignmentConflict(
   return null
 }
 
-function tagMismatchReason(
-  occ: PalladiumOcc,
-  filters: readonly OccConfiguratorTagFilter[],
-): string | null {
-  if (!filters.length) return null
-
-  for (const { tag } of filters.filter((f) => f.mode === 'exclude')) {
-    if (occMatchesConfiguratorTag(occ, tag)) {
-      return `Excluded — matches “${tag}” (NOT filter)`
-    }
-  }
-
-  const include = filters.filter((f) => f.mode === 'include')
-  if (include.length > 0) {
-    const missing = include.filter(({ tag }) => !occMatchesConfiguratorTag(occ, tag))
-    if (missing.length > 0) {
-      const labels = include.map(({ tag }) => tag)
-      return `Not a ${labels.join(' AND ')} O.C.C.`
-    }
-  }
-
-  return null
-}
-
 export function assessRaceConfiguratorTier(
   race: Race,
   ctx: ConfiguratorMatrixContext,
@@ -265,6 +244,12 @@ export function assessRaceConfiguratorTier(
       if (oc) return { tier: 2, conflictReason: oc }
     }
   }
+  const filterReason = describeConfiguratorFilterMismatch(
+    { race, occ: selectedOcc, focus: 'race' },
+    resolveConfiguratorFilter(ctx),
+    ctx.filterFormatOptions,
+  )
+  if (filterReason) return { tier: 3, tagMismatchReason: filterReason }
   return { tier: 1 }
 }
 
@@ -292,8 +277,12 @@ export function assessOccConfiguratorTier(
       if (rc) return { tier: 2, conflictReason: rc }
     }
   }
-  const tagReason = tagMismatchReason(occ, ctx.occTagFilters ?? [])
-  if (tagReason) return { tier: 3, tagMismatchReason: tagReason }
+  const filterReason = describeConfiguratorFilterMismatch(
+    { race: selectedRace, occ, focus: 'occ' },
+    resolveConfiguratorFilter(ctx),
+    ctx.filterFormatOptions,
+  )
+  if (filterReason) return { tier: 3, tagMismatchReason: filterReason }
   return { tier: 1 }
 }
 
@@ -334,6 +323,48 @@ export function sortConfiguratorEntries<T>(
     if (ta !== tb) return ta - tb
     return nameOf(a).localeCompare(nameOf(b))
   })
+}
+
+/** Whether race and O.C.C. pass both-direction restrictions (no Tier 2 conflict). */
+export function isOccCompatibleWithRace(
+  race: Race | undefined,
+  occ: PalladiumOcc,
+): boolean {
+  if (!race) return true
+  return describeRaceOccConflict(race, occ) == null
+}
+
+/**
+ * When hiding filter mismatches, drop Tier 3 rows from scroll lists.
+ * The current selection stays pinned above the scroll region separately.
+ */
+export function filterConfiguratorListForActiveFilter<T>(
+  items: readonly T[],
+  tierOf: (item: T) => ConfiguratorTierResult,
+  hideFilterMismatches: boolean,
+): T[] {
+  if (!hideFilterMismatches) return [...items]
+  return items.filter((item) => tierOf(item).tier !== 3)
+}
+
+/** Drop O.C.C.s the selected race cannot take when `hideRaceIncompatible` is true. */
+export function filterConfiguratorOccPoolForRace(
+  occs: readonly PalladiumOcc[],
+  race: Race | undefined,
+  hideRaceIncompatible: boolean,
+): PalladiumOcc[] {
+  if (!hideRaceIncompatible || !race) return [...occs]
+  return occs.filter((occ) => isOccCompatibleWithRace(race, occ))
+}
+
+/** Drop races that cannot take the selected O.C.C. when `hideOccIncompatible` is true. */
+export function filterConfiguratorRacePoolForOcc(
+  races: readonly Race[],
+  occ: PalladiumOcc | undefined,
+  hideOccIncompatible: boolean,
+): Race[] {
+  if (!hideOccIncompatible || !occ) return [...races]
+  return races.filter((race) => isOccCompatibleWithRace(race, occ))
 }
 
 /** Selected race + O.C.C. must both be Tier 1 relative to each other (alignment optional). */

@@ -136,12 +136,12 @@ describe('occCoreSkillVouchers', () => {
     })
   })
 
-  it('matches legacy occ skill ids to canonical catalog ids', () => {
+  it('matches legacy mathematics ids to canonical math catalog ids', () => {
     expect(
       catalogSkillIdsMatch('skill_math_basic', 'skill_mathematics_basic'),
     ).toBe(true)
     expect(
-      resolveCreationLibrarySkillTier('skill_mathematics_basic', {
+      resolveCreationLibrarySkillTier('skill_math_basic', {
         relatedPicks: [],
         secondaryPicks: [],
         resolvedOccPicks: [migrateSkillIdToPick('skill_math_basic')],

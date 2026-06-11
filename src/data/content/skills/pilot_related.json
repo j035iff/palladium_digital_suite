@@ -12,7 +12,7 @@
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "skill_mathematics_basic"
+        "skillId": "skill_math_basic"
       },
       {
         "type": "skill",

@@ -175,7 +175,7 @@
       },
       {
         "type": "skill",
-        "skillId": "skill_mathematics_advanced"
+        "skillId": "skill_math_advanced"
       },
       {
         "type": "skill",
@@ -194,7 +194,7 @@
     ]
   },
   {
-    "id": "skill_mathematics_advanced",
+    "id": "skill_math_advanced",
     "name": "Math: Advanced",
     "gameSystems": [
       "nightbane"
@@ -219,7 +219,7 @@
     ]
   },
   {
-    "id": "skill_mathematics_basic",
+    "id": "skill_math_basic",
     "name": "Math: Basic",
     "gameSystems": [
       "nightbane"

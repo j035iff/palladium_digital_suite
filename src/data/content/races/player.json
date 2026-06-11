@@ -71,5 +71,105 @@
         "Any"
       ]
     }
+  },
+  {
+    "id": "nightbane",
+    "name": "Nightbane",
+    "description": "Dual-form R.C.C. — Facade humans who manifest a unique Morphus after the Becoming. Select a Nightbane skill package (Basic, Resistance/Spook Squad, Nocturne, or Warlord).",
+    "raceAudience": "player",
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 86
+      }
+    ],
+    "canPickOcc": true,
+    "lineage": "nightbane",
+    "creationSubForgeId": "morphus_forge_manifest",
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "3D6",
+      "pp": "3D6",
+      "pe": "3D6",
+      "pb": "3D6",
+      "spd": "3D6"
+    },
+    "strengthCategory": "standard",
+    "vitals": {
+      "hpFormula": "PE + 1D6",
+      "averageStandardPpe": "PE + 3D6*10+20",
+      "sdc": "30"
+    },
+    "psionics": {
+      "capabilityType": "none",
+      "naturalIspFormula": "0"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": [],
+      "allowedOccIds": [
+        "occ_nightbane_basic",
+        "occ_nightbane_resistance_spook_squad",
+        "occ_nightbane_nocturne_seeker_lightbringer",
+        "occ_nightbane_warlord"
+      ]
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_magic": 2,
+        "save_disease": 1,
+        "save_horror_factor": 1
+      }
+    },
+    "classAbilities": [
+      {
+        "name": "The Becoming",
+        "description": "Shift between Facade and Morphus at will (one full melee round; M.E. save 12+ reduces to ~3 seconds). +1 to save at 1st level, +1 per two levels thereafter."
+      },
+      {
+        "name": "Supernatural Senses",
+        "description": "Nightvision 200 ft (Facade) or 500 ft (Morphus). Sense other Nightbane within 300 ft + 30 ft per level; automatic recognition when visible, Perception roll for direction/distance when not."
+      },
+      {
+        "name": "Supernatural Attributes & Regeneration",
+        "description": "Morphus: +10 P.S., P.E., Spd; +6 P.P.; Supernatural Strength damage. Regenerate 10 S.D.C./H.P. per melee round (overwhelmed by sustained automatic fire)."
+      },
+      {
+        "name": "Mirror Walk",
+        "description": "Morphus only — cross to/from the Nightlands through a mirrored counterpart (2 P.P.E., one melee round; carry up to 100 lb, or 1 P.P.E. per 2 lb for passengers/cargo)."
+      },
+      {
+        "name": "Immunities",
+        "description": "Immune to all mind control (including vampiric control), spells, and psionics that impose mind control; immune to vampire slow-kill bite."
+      },
+      {
+        "name": "Morphus Combat",
+        "description": "Innate Hand to Hand: Martial Arts in Morphus (+1 attack per melee, +1 initiative, +2 strike/parry/dodge, +3 roll/pull punch, +4 save vs magic, +3 save vs psionics/disease/horror factor). Facade uses normal hand to hand only."
+      },
+      {
+        "name": "Talents",
+        "description": "One free Talent at 1st level; additional free Talents at levels 4, 7, 10, and 12. More may be purchased by permanently spending P.P.E."
+      },
+      {
+        "name": "Immune to Transformations",
+        "description": "Cannot be physically transformed by metamorphosis, petrification, vampire transformation, curses, wishes, or similar magic."
+      }
+    ],
+    "demographics": {
+      "averageLifespan": "Unknown — centuries to millennia rumored",
+      "alignmentTendencies": [
+        "Any"
+      ]
+    }
   }
 ]

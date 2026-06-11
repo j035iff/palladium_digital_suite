@@ -57,7 +57,7 @@
     ],
     "synergies": [
       {
-        "skillId": "skill_mathematics_basic",
+        "skillId": "skill_math_basic",
         "bonusPercent": 2,
         "description": "+2% bonus to Barter when the character has Math: Basic."
       },
@@ -131,7 +131,7 @@
       },
       {
         "type": "skill",
-        "skillId": "skill_mathematics_basic"
+        "skillId": "skill_math_basic"
       }
     ],
     "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor."

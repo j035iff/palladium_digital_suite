@@ -19,8 +19,13 @@
         0, 2401, 4601, 9201, 18401, 28301, 48301, 78001, 110001, 150001, 200001, 250001, 310001,
         380001, 470001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Nightbane R.C.C. & Guardian R.C.C. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_nightbane_basic",
+        "occ_nightbane_resistance_spook_squad",
+        "occ_nightbane_nocturne_seeker_lightbringer",
+        "occ_nightbane_warlord"
+      ],
+      "notes": "Nightbane RPG p.233 — Nightbane R.C.C. & Guardian R.C.C. O.C.C.s."
     },
     {
       "id": "nightbane_core_snakebird_mystic",

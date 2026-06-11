@@ -25,7 +25,7 @@
       },
       {
         "type": "skill",
-        "skillId": "skill_mathematics_advanced"
+        "skillId": "skill_math_advanced"
       },
       {
         "type": "skill",
@@ -128,8 +128,8 @@
         "type": "skill_any_of",
         "label": "Basic or Advanced Math",
         "skillIds": [
-          "skill_mathematics_basic",
-          "skill_mathematics_advanced"
+          "skill_math_basic",
+          "skill_math_advanced"
         ]
       },
       {

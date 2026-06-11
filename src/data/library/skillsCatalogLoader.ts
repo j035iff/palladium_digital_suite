@@ -28,8 +28,8 @@ export const PALLADIUM_SKILL_CATALOG: readonly PalladiumSkillCatalogEntry[] = lo
 
 /** Legacy / authoring ids mapped to canonical catalog ids. */
 export const LEGACY_SKILL_ID_ALIASES: Readonly<Record<string, string>> = {
-  skill_math_basic: 'skill_mathematics_basic',
-  skill_math_advanced: 'skill_mathematics_advanced',
+  skill_mathematics_basic: 'skill_math_basic',
+  skill_mathematics_advanced: 'skill_math_advanced',
 }
 
 let catalogReplacedByIndex: Map<string, string> | null = null

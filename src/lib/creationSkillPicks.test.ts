@@ -148,6 +148,18 @@ describe('creationSkillPicks', () => {
     ).toBe(false)
   })
 
+  it('treats legacy mathematics skill ids as canonical math ids', () => {
+    const occPicks: CreationSkillPick[] = [
+      { instanceId: 'skill_math_basic', skillId: 'skill_math_basic' },
+    ]
+    expect(
+      isCreationSkillIdentityTaken(occPicks, 'skill_mathematics_basic'),
+    ).toBe(true)
+    expect(
+      isCreationSkillFullySelected('skill_mathematics_basic', occPicks, [], []),
+    ).toBe(true)
+  })
+
   it('only opens pick dialog when specialization or professional choice is needed', () => {
     expect(skillNeedsPickDialog('skill_vehicle_armorer', [])).toBe(false)
     expect(skillNeedsPickDialog('skill_language', [])).toBe(true)

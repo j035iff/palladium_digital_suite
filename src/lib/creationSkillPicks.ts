@@ -1,5 +1,8 @@
 import type { EngineSkillDef } from '../data/library/skills'
-import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import {
+  getPalladiumSkillCatalogEntryById,
+  resolveCatalogSkillId,
+} from '../data/library/skillsCatalogLoader'
 import type { PalladiumOcc } from '../types'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
@@ -253,6 +256,10 @@ export function formatCreationSkillPickLabel(
   return label
 }
 
+function catalogSkillIdsMatch(a: string, b: string): boolean {
+  return resolveCatalogSkillId(a) === resolveCatalogSkillId(b)
+}
+
 export function findMatchingCreationSkillPick(
   picks: readonly CreationSkillPick[],
   skillId: string,
@@ -264,7 +271,7 @@ export function findMatchingCreationSkillPick(
   const exclude = new Set(excludeInstanceIds ?? [])
   return picks.find((p) => {
     if (exclude.has(p.instanceId)) return false
-    if (p.skillId !== skillId) return false
+    if (!catalogSkillIdsMatch(p.skillId, skillId)) return false
     if (requiresSpec) {
       return normalizeSpecialization(p.specialization) === specNorm
     }
@@ -334,7 +341,7 @@ export function resolveSelectionTierForPick(
   relatedPicks: readonly CreationSkillPick[],
   secondaryPicks: readonly CreationSkillPick[],
 ): 'occ' | 'related' | 'secondary' | undefined {
-  if (occSkillIds.includes(pick.skillId)) return 'occ'
+  if (occSkillIds.some((id) => catalogSkillIdsMatch(id, pick.skillId))) return 'occ'
   if (relatedPicks.some((p) => p.instanceId === pick.instanceId)) return 'related'
   if (secondaryPicks.some((p) => p.instanceId === pick.instanceId)) return 'secondary'
   return undefined
@@ -416,7 +423,7 @@ export function sumRelatedPoolSlotUsage(
 /** Stable identity for duplicate detection (skill + specialization, case-insensitive). */
 export function creationSkillPickIdentityKey(pick: CreationSkillPick): string {
   const spec = pick.specialization?.trim().toLowerCase() ?? ''
-  return `${pick.skillId}::${spec}`
+  return `${resolveCatalogSkillId(pick.skillId)}::${spec}`
 }
 
 export function normalizeVoucherSlotArray(

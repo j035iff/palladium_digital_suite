@@ -11,9 +11,18 @@ import {
   buildConfiguratorColumnRows,
   buildConfiguratorScrollLayout,
   configuratorAlignmentLabel,
+  filterConfiguratorOccPoolForRace,
+  filterConfiguratorListForActiveFilter,
+  filterConfiguratorRacePoolForOcc,
   formatOccAttributeRequirements,
+  isOccCompatibleWithRace,
   occMatchesConfiguratorTag,
 } from './configuratorMatrix'
+import {
+  newFilterGroupNode,
+  newFilterNotNode,
+  newFilterPredicateNode,
+} from './configuratorFilterExpression'
 
 const human: Race = {
   id: 'race_human',
@@ -93,7 +102,7 @@ describe('configuratorMatrix', () => {
     expect(reason).toMatch(/Requires/i)
     const tier = assessOccConfiguratorTier(
       nightbaneOnlyOcc,
-      { occTagFilters: [], selectedRaceId: 'race_human' },
+      { configuratorFilter: null, selectedRaceId: 'race_human' },
       raceMap,
     )
     expect(tier.tier).toBe(2)
@@ -104,20 +113,24 @@ describe('configuratorMatrix', () => {
     const tier = assessOccConfiguratorTier(
       agentOcc,
       {
-        occTagFilters: [{ tag: 'magic', mode: 'include' }],
+        configuratorFilter: newFilterGroupNode('and', [
+          newFilterPredicateNode('occ', 'magic'),
+        ]),
         selectedRaceId: 'race_human',
       },
       raceMap,
     )
     expect(tier.tier).toBe(3)
-    expect(tier.tagMismatchReason).toMatch(/Not a magic/)
+    expect(tier.tagMismatchReason).toMatch(/Does not match filter.*magic/i)
   })
 
   it('Only psychic keeps psychic O.C.C.s at Tier 1 and greys others', () => {
     const psychicTier = assessOccConfiguratorTier(
       psychicOcc,
       {
-        occTagFilters: [{ tag: 'psychic', mode: 'include' }],
+        configuratorFilter: newFilterGroupNode('and', [
+          newFilterPredicateNode('occ', 'psychic'),
+        ]),
         selectedRaceId: 'race_human',
       },
       raceMap,
@@ -128,31 +141,37 @@ describe('configuratorMatrix', () => {
     const agentTier = assessOccConfiguratorTier(
       agentOcc,
       {
-        occTagFilters: [{ tag: 'psychic', mode: 'include' }],
+        configuratorFilter: newFilterGroupNode('and', [
+          newFilterPredicateNode('occ', 'psychic'),
+        ]),
         selectedRaceId: 'race_human',
       },
       raceMap,
     )
     expect(agentTier.tier).toBe(3)
-    expect(agentTier.tagMismatchReason).toMatch(/Not a psychic/)
+    expect(agentTier.tagMismatchReason).toMatch(/Does not match filter.*psychic/i)
   })
 
   it('Not psychic greys psychic O.C.C.s and keeps non-psychic at Tier 1', () => {
     const psychicTier = assessOccConfiguratorTier(
       psychicOcc,
       {
-        occTagFilters: [{ tag: 'psychic', mode: 'exclude' }],
+        configuratorFilter: newFilterNotNode(
+          newFilterPredicateNode('occ', 'psychic'),
+        ),
         selectedRaceId: 'race_human',
       },
       raceMap,
     )
     expect(psychicTier.tier).toBe(3)
-    expect(psychicTier.tagMismatchReason).toMatch(/Excluded/)
+    expect(psychicTier.tagMismatchReason).toMatch(/Does not match filter/i)
 
     const agentTier = assessOccConfiguratorTier(
       agentOcc,
       {
-        occTagFilters: [{ tag: 'psychic', mode: 'exclude' }],
+        configuratorFilter: newFilterNotNode(
+          newFilterPredicateNode('occ', 'psychic'),
+        ),
         selectedRaceId: 'race_human',
       },
       raceMap,
@@ -164,7 +183,9 @@ describe('configuratorMatrix', () => {
     const tier = assessOccConfiguratorTier(
       nightbaneOnlyOcc,
       {
-        occTagFilters: [{ tag: 'magic', mode: 'include' }],
+        configuratorFilter: newFilterGroupNode('and', [
+          newFilterPredicateNode('occ', 'magic'),
+        ]),
         selectedRaceId: 'race_human',
       },
       raceMap,
@@ -175,7 +196,7 @@ describe('configuratorMatrix', () => {
   it('filters alignment when O.C.C. restricts codes', () => {
     const tier = assessAlignmentConfiguratorTier(
       'Principled',
-      { occTagFilters: [], selectedOccId: 'occ_diabolic_only' },
+      { configuratorFilter: null, selectedOccId: 'occ_diabolic_only' },
       raceMap,
       occMap,
     )
@@ -189,7 +210,7 @@ describe('configuratorMatrix', () => {
     const tier = assessRaceConfiguratorTier(
       human,
       {
-        occTagFilters: [],
+        configuratorFilter: null,
         selectedAlignment: CONFIGURATOR_ALIGNMENT_UNDECIDED,
         selectedOccId: 'occ_diabolic_only',
       },
@@ -217,7 +238,7 @@ describe('configuratorMatrix', () => {
       (occ) =>
         assessOccConfiguratorTier(
           occ,
-          { occTagFilters: [], selectedRaceId: 'race_human' },
+          { configuratorFilter: null, selectedRaceId: 'race_human' },
           raceMap,
         ),
       'occ_agent',
@@ -233,7 +254,7 @@ describe('configuratorMatrix', () => {
       (occ) =>
         assessOccConfiguratorTier(
           occ,
-          { occTagFilters: [], selectedRaceId: 'race_human' },
+          { configuratorFilter: null, selectedRaceId: 'race_human' },
           raceMap,
         ),
       'occ_agent',
@@ -254,7 +275,9 @@ describe('configuratorMatrix', () => {
         assessOccConfiguratorTier(
           occ,
           {
-        occTagFilters: [{ tag: 'magic', mode: 'include' }],
+        configuratorFilter: newFilterGroupNode('and', [
+          newFilterPredicateNode('occ', 'magic'),
+        ]),
         selectedRaceId: 'race_human',
       },
           raceMap,
@@ -270,6 +293,47 @@ describe('configuratorMatrix', () => {
     }
   })
 
+  it('filters race pool to occ-compatible entries when hiding incompatible', () => {
+    const nightbaneRace = { ...human, id: 'race_nightbane', name: 'Nightbane' } as Race
+    const races = [human, nightbaneRace]
+    expect(
+      filterConfiguratorRacePoolForOcc(races, nightbaneOnlyOcc, true).map((r) => r.id),
+    ).toEqual(['race_nightbane'])
+    expect(
+      filterConfiguratorRacePoolForOcc(races, nightbaneOnlyOcc, false).map((r) => r.id),
+    ).toEqual(['race_human', 'race_nightbane'])
+  })
+
+  it('filters occ pool to race-compatible entries when hiding incompatible', () => {
+    const pool = [agentOcc, nightbaneOnlyOcc, psychicOcc]
+    expect(
+      filterConfiguratorOccPoolForRace(pool, human, true).map((o) => o.id),
+    ).toEqual(['occ_agent', 'occ_psychic'])
+    expect(
+      filterConfiguratorOccPoolForRace(pool, human, false).map((o) => o.id),
+    ).toEqual(['occ_agent', 'occ_nightbane_only', 'occ_psychic'])
+    expect(isOccCompatibleWithRace(human, nightbaneOnlyOcc)).toBe(false)
+    expect(isOccCompatibleWithRace(human, agentOcc)).toBe(true)
+  })
+
+  it('drops tier 3 rows from scroll lists when hiding filter mismatches', () => {
+    const tierOf = (id: string) =>
+      id === 'occ_match'
+        ? { tier: 1 as const }
+        : { tier: 3 as const, tagMismatchReason: 'filter' }
+    const items = [{ id: 'occ_match' }, { id: 'occ_miss' }]
+    expect(
+      filterConfiguratorListForActiveFilter(items, (i) => tierOf(i.id), false).map(
+        (i) => i.id,
+      ),
+    ).toEqual(['occ_match', 'occ_miss'])
+    expect(
+      filterConfiguratorListForActiveFilter(items, (i) => tierOf(i.id), true).map(
+        (i) => i.id,
+      ),
+    ).toEqual(['occ_match'])
+  })
+
   it('formats attribute requirements on occ rows', () => {
     const withReqs = {
       ...agentOcc,
@@ -282,7 +346,7 @@ describe('configuratorMatrix', () => {
   it('race tier 2 when alignment excluded by race demographics', () => {
     const tier = assessRaceConfiguratorTier(
       human,
-      { occTagFilters: [], selectedAlignment: 'Diabolic' },
+      { configuratorFilter: null, selectedAlignment: 'Diabolic' },
       occMap,
     )
     expect(tier.tier).toBe(2)

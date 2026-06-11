@@ -1,1 +1,545 @@
-[]
+[
+  {
+    "id": "occ_nightbane_basic",
+    "name": "Nightbane — Basic Skill Package",
+    "description": "Default R.C.C. skill package for Nightbane who were normal young adults or students at the Becoming — typical Dark Day campaign characters with high-school or early college backgrounds.",
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 90
+      }
+    ],
+    "occType": "nightbane_rcc",
+    "tags": [
+      "nightbane",
+      "basic",
+      "civilian"
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "nightbane"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 10
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedCategories": [
+          "Domestic"
+        ],
+        "label": "One Domestic skill of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": [
+          "Electrical",
+          "Mechanical",
+          "Science",
+          "Technical"
+        ],
+        "label": "One Electrical, Mechanical, Science, or Technical skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "only",
+          "exceptions": [
+            "skill_radio_basic"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": [
+            "skill_first_aid",
+            "skill_paramedic"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "only",
+          "exceptions": [
+            "skill_navigation",
+            "skill_read_sensory_equipment"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": [
+        "wp_heavy_weapons"
+      ]
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hand_to_hand_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hand_to_hand_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 3
+        },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand must be purchased as a related skill (Basic = 1 slot, Expert = 2, Martial Arts or Assassin = 3). Applies to the Facade only — Morphus has innate Martial Arts."
+      },
+      {
+        "name": "Civilian Weapon Proficiencies",
+        "description": "Related W.P. selections are limited to civilian weapons (no military arms such as assault rifles or heavy weapons)."
+      }
+    ],
+    "ppeEngine": {
+      "baseFormula": "PE + 3D6*10+20",
+      "perLevelFormula": "3D6"
+    },
+    "finances": {
+      "startingCashFormula": "3D6*100"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_nightbane_guardian"
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 2,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 4,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ]
+  },
+  {
+    "id": "occ_nightbane_resistance_spook_squad",
+    "name": "Nightbane — Resistance / Spook Squad",
+    "description": "Militant or guerrilla faction training — or a character who was serving in the military at the Becoming. Includes basic military skills and Facade Hand to Hand: Basic.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 90
+      }
+    ],
+    "occType": "nightbane_rcc",
+    "tags": ["nightbane", "resistance", "spook_squad", "military", "guerrilla", "tactical"],
+    "raceRestrictions": { "allowed": ["nightbane"] },
+    "occSkillsCore": [
+      { "skillId": "skill_math_basic", "bonusPercent": 10 },
+      { "skillId": "skill_radio_basic", "bonusPercent": 15 },
+      { "skillId": "skill_language", "bonusPercent": 25 },
+      { "skillId": "skill_literacy", "bonusPercent": 25 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedCategories": ["Pilot"],
+        "label": "Pilot (vehicle of choice)"
+      },
+      { "skillId": "skill_first_aid", "bonusPercent": 10 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedCategories": ["Weapon Proficiencies"],
+        "label": "One W.P. of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 2 }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand: Basic is included. Upgrade to Expert for one related skill, or Martial Arts/Assassin for two related skills. Facade only — Morphus has innate Martial Arts."
+      }
+    ],
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "finances": { "startingCashFormula": "3D6*100" },
+    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_nightbane_nocturne_seeker_lightbringer",
+    "name": "Nightbane — Nocturne / Seeker / Lightbringer",
+    "description": "Scholastic and magically oriented faction training — broad technical and scientific knowledge, Nightbane Lore, and two foreign languages.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 91
+      }
+    ],
+    "occType": "nightbane_rcc",
+    "tags": ["nightbane", "nocturne", "seeker", "lightbringer", "scholastic", "scientific"],
+    "raceRestrictions": { "allowed": ["nightbane"] },
+    "occSkillsCore": [
+      { "skillId": "skill_math_basic", "bonusPercent": 20 },
+      { "skillId": "skill_math_advanced", "bonusPercent": 10 },
+      { "skillId": "skill_language", "bonusPercent": 30 },
+      { "skillId": "skill_literacy", "bonusPercent": 30 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "label": "Two languages of choice (spoken and literacy)"
+      },
+      { "skillId": "skill_computer_operation", "bonusPercent": 20 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedCategories": ["Science", "Technical"],
+        "label": "Two Science or Technical skills of choice"
+      },
+      { "skillId": "skill_lore_nightbane", "bonusPercent": 15 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "only",
+          "exceptions": ["skill_radio_basic", "skill_cryptography", "skill_tv_video"],
+          "bonusPercent": 5
+        },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "only",
+          "exceptions": ["skill_navigation", "skill_read_sensory_equipment"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": ["wp_heavy_weapons"] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 3 }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand must be purchased as a related skill (Basic = 1, Expert = 2, Martial Arts/Assassin = 3). Facade only."
+      },
+      {
+        "name": "Civilian Weapon Proficiencies",
+        "description": "Related W.P. selections are limited to civilian weapons."
+      }
+    ],
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "finances": { "startingCashFormula": "3D6*100" },
+    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_nightbane_warlord",
+    "name": "Nightbane — Warlord",
+    "description": "Street-survival training for Nightbane Warlords or gang members at the Becoming — locks, prowling, streetwise, and brawling over advanced education.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 91
+      }
+    ],
+    "occType": "nightbane_rcc",
+    "tags": ["nightbane", "warlord", "gang", "street", "rogue"],
+    "raceRestrictions": { "allowed": ["nightbane"] },
+    "occSkillsCore": [
+      { "skillId": "skill_math_basic", "bonusPercent": 5 },
+      { "skillId": "skill_language", "bonusPercent": 10 },
+      { "skillId": "skill_streetwise", "bonusPercent": 15 },
+      { "skillId": "skill_prowl", "bonusPercent": 10 },
+      { "skillId": "skill_pick_locks", "bonusPercent": 15 },
+      { "skillId": "skill_running", "bonusPercent": 0 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 0,
+        "allowedCategories": ["Weapon Proficiencies"],
+        "label": "Two W.P.s of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 6,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "only",
+          "exceptions": ["skill_radio_basic"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "except",
+          "exceptions": [
+            "skill_disguise",
+            "skill_tracking",
+            "skill_sniper",
+            "skill_wilderness_survival"
+          ],
+          "bonusPercent": 5
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Pilot",
+          "accessType": "only",
+          "exceptions": [
+            "skill_automobile",
+            "skill_motorcycle",
+            "skill_truck",
+            "skill_boat_motor_and_hydrofoils"
+          ],
+          "bonusPercent": 5
+        },
+        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "none", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hand_to_hand_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 2 }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Literacy",
+        "description": "Native literacy is not in the core package — select Literacy as a related skill if desired (+10% when taken from the book list)."
+      },
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand: Basic included. Upgrade to Expert for one related skill, or Martial Arts/Assassin for two. Facade only."
+      }
+    ],
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "finances": { "startingCashFormula": "3D6*100" },
+    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 2, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 5, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  }
+]
