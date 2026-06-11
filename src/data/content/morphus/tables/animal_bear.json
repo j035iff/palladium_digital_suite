@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Bear",
   "parentTable": "animal",
-  "description": "Bear Morphus tables (Between the Shadows (WB1), pp. 130-131; Dark Designs (WB6), p. 138). Bears are respected for strength and raw power. Common shapes include grizzly, polar, black, and brown bears.",
+  "description": "Bear Morphus table. Percentile bands: 01-10% Bear Centauroid, 11-30% Bear Head, 31-55% Bear Humanoid, 56-75% Full Ursinoid, 76-00% Were-Bear.",
   "entries": [
     {
       "id": "animal_bear_full_ursinoid",
@@ -93,7 +93,11 @@
       },
       "customOneOffs": [
         "The bear form cannot use weapons."
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 75
+      }
     },
     {
       "id": "animal_bear_were",
@@ -194,7 +198,11 @@
         "Any task requiring careful manual dexterity (picking locks, typing on a computer, using most guns) is at -15%.",
         "Using weapons is at -2 to strike and parry.",
         "Speed is normal."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 100
+      }
     },
     {
       "id": "animal_bear_humanoid",
@@ -268,6 +276,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 31,
+        "max": 55
       }
     },
     {
@@ -361,7 +373,11 @@
         "Any task requiring careful manual dexterity (picking locks, typing on a computer, and so on) is at -15%.",
         "Using most weapons and guns is at -2 to strike and parry.",
         "Speed is normal."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "animal_bear_head",
@@ -420,6 +436,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 11,
+        "max": 30
       }
     }
   ]

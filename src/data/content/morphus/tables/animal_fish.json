@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Fish",
   "parentTable": "animal",
-  "description": "Fish Morphus table (Nightbane Survival Guide (WB5), pp. 78-79). Aquatic: Nightbane with a Fish Morphus have an affinity for fish or fishing. All rows grant Swimming at 98%, indefinite underwater breathing, labored breathing of air on land, and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "description": "Fish Morphus table. Percentile bands: 01-10% Bioluminescence, 11-35% Fish Man, 36-60% Full Fish, 61-70% Gills, 71-80% Piranha Jaws, 81-90% Puffer Fish Skin, 91-00% Scaly Skin.",
   "entries": [
     {
       "id": "animal_fish_full_form",
@@ -79,7 +79,11 @@
       "customOneOffs": [
         "Cannot manipulate objects even with the mouth.",
         "Transportation on land may be a problem for this cold, slippery, large, heavy character."
-      ]
+      ],
+      "percentile": {
+        "min": 36,
+        "max": 60
+      }
     },
     {
       "id": "animal_fish_fish_man",
@@ -145,7 +149,11 @@
       },
       "customOneOffs": [
         "Weight and size may be a problem on land and for transportation."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 35
+      }
     },
     {
       "id": "animal_fish_bioluminescence",
@@ -222,7 +230,11 @@
             "Prowling is impossible while glowing unless concealed."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "animal_fish_scaly_skin",
@@ -297,7 +309,11 @@
       ],
       "customOneOffs": [
         "+1 to escape from wrestling holds and entanglement attacks."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "animal_fish_puffer_fish_skin",
@@ -356,7 +372,11 @@
         "Puffer defense does 3D6 damage per action in which someone attacks, touches, or tries to move the character.",
         "+2 to Horror Factor only when the skin is inflated.",
         "Must remove clothing from the upper torso when inflating."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "animal_fish_gills",
@@ -412,7 +432,11 @@
       },
       "customOneOffs": [
         "Gills are easy to conceal with a scarf or high collar."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "animal_fish_piranha_jaws",
@@ -491,7 +515,11 @@
       },
       "customOneOffs": [
         "Tends to be a bit jumpy."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     }
   ]
 }

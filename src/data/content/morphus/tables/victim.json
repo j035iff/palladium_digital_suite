@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Victim",
   "parentTable": null,
-  "description": "Victim Morphus table (Nightbane Survival Guide (WB5), pp. 99-101). Nightbane who felt abused, tortured, neglected, helpless, or unwanted - Morphus forms appear frail and wounded whether or not the character truly is. Roll 01-00% on this table only (no cross-table routers).",
+  "description": "Victim Morphus table. Percentile bands: 01-09% Beaten, 10-18% Broken Body, 19-27% Child, 28-36% Dead Man Walking, 37-45% Escaped Captivity, 46-54% Face of Comedy and Tragedy, 55-63% Faceless Victim, 64-72% Filthy, 73-81% Frail, 82-90% Hollow Eyes, 91-00% Horribly Burned.",
   "entries": [
     {
       "id": "victim_beaten",
@@ -46,6 +46,10 @@
             "modifierPercent": -5
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 9
       }
     },
     {
@@ -100,6 +104,10 @@
             "modifierPercent": 5
           }
         ]
+      },
+      "percentile": {
+        "min": 10,
+        "max": 18
       }
     },
     {
@@ -130,6 +138,10 @@
         "ppe": {
           "dice": "3D6"
         }
+      },
+      "percentile": {
+        "min": 19,
+        "max": 27
       }
     },
     {
@@ -181,6 +193,10 @@
             "modifierPercent": 10
           }
         ]
+      },
+      "percentile": {
+        "min": 28,
+        "max": 36
       }
     },
     {
@@ -253,6 +269,10 @@
             "modifierPercent": -15
           }
         ]
+      },
+      "percentile": {
+        "min": 37,
+        "max": 45
       }
     },
     {
@@ -292,6 +312,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 46,
+        "max": 54
       }
     },
     {
@@ -313,6 +337,10 @@
         "ps": {
           "dice": "1D6"
         }
+      },
+      "percentile": {
+        "min": 55,
+        "max": 63
       }
     },
     {
@@ -367,6 +395,10 @@
             "modifierPercent": -25
           }
         ]
+      },
+      "percentile": {
+        "min": 64,
+        "max": 72
       }
     },
     {
@@ -408,6 +440,10 @@
       },
       "weightModifier": {
         "percent": -50
+      },
+      "percentile": {
+        "min": 73,
+        "max": 81
       }
     },
     {
@@ -429,6 +465,10 @@
         "hf": {
           "flat": 1
         }
+      },
+      "percentile": {
+        "min": 82,
+        "max": 90
       }
     },
     {
@@ -456,6 +496,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
       }
     }
   ]

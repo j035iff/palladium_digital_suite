@@ -1195,6 +1195,8 @@ export type MorphusCharacteristic = {
   atWillAbilities?: readonly MorphusAtWillAbility[]
   playerChoices?: readonly MorphusPlayerChoice[]
   tableWorkflow?: MorphusTableWorkflow
+  /** Opens Custom Trait Workshop when this router row is resolved. */
+  customTraitResolution?: MorphusCustomTraitResolution
   livingWeaponRules?: MorphusLivingWeaponRules
   skillContextModifiers?: readonly MorphusSkillContextModifier[]
   disguiseLimits?: MorphusDisguiseLimits
@@ -1325,6 +1327,53 @@ export type MorphusPlayerChoice = {
   label: string
   options: readonly string[]
   timing?: 'character_creation' | 'any'
+}
+
+/** Fields the Custom Trait Workshop may edit (expert panel respects this allow-list). */
+export type MorphusCustomTraitAllowedField =
+  | 'statModifiers'
+  | 'saveModifiers'
+  | 'skillModifiers'
+  | 'atWillAbilities'
+  | 'naturalWeapons'
+  | 'sensory'
+  | 'mobility'
+  | 'customOneOffs'
+  | 'naturalAr'
+  | 'progressionModifiers'
+
+/** Catalog flag on router rows that open the player/G.M. Custom Trait Workshop. */
+export type MorphusCustomTraitResolution = {
+  kind: 'player_gm_authored'
+  requiresGmApproval?: boolean
+  prompt?: string
+  allowedFields?: readonly MorphusCustomTraitAllowedField[]
+}
+
+/** Runtime instance stored on the character — not authored in table JSON. */
+export type MorphusCustomTraitInstance = {
+  displayName: string
+  description: string
+  gmApproved: boolean
+  statModifiers?: MorphusStatModifiers
+  saveModifiers?: MorphusSaveModifiers
+  skillModifiers?: MorphusSkillModifiers
+  atWillAbilities?: readonly MorphusAtWillAbility[]
+  naturalWeapons?: readonly MorphusNaturalWeapon[]
+  sensory?: MorphusSensory
+  mobility?: MorphusMobility
+  customOneOffs?: readonly string[]
+  naturalAr?: number
+  progressionModifiers?: MorphusProgressionModifiers
+}
+
+/** Resolved Morphus trait slot during Sub-Forge (catalog id + optional custom overlay). */
+export type MorphusTraitSlotResolution = {
+  slotId: string
+  catalogEntryId: string
+  percentileRoll?: number
+  branchChoice?: string
+  customInstance?: MorphusCustomTraitInstance
 }
 
 export type MorphusTableWorkflow = {
@@ -1930,6 +1979,8 @@ export type Character = {
    * via `skillPercentResolution.ts`.
    */
   activeMorphusCharacteristicIds?: readonly string[]
+  /** Sub-Forge trait slots (catalog + optional custom instance). Preferred over bare ids. */
+  morphusTraitSlotResolutions?: readonly MorphusTraitSlotResolution[]
   facade: FormState
   morphus: FormState
 }

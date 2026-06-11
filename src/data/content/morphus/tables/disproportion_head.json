@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Head",
   "parentTable": "disproportion",
-  "description": "Head Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Roll percentile on this sub-table after Step One selects the head.",
+  "description": "Disproportion Head sub-table (Nightbane Survival Guide (WB5), pp. 87-88). Percentile bands: 01-07% Huge Ears, 08-14% Huge Eyes, 15-19% Huge Jaw Strong Neck, 20-25% Huge Nose, 26-30% Huge Teeth, 31-40% Large Head, 41-45% Large Mouth, 46-50% Large Thick Neck, 51-55% No Chin, 56-60% Pencil Neck, 61-68% Tiny Ears, 69-75% Tiny Eyes, 76-80% Tiny Mouth, 81-85% Tiny Nose, 86-90% Tiny Teeth, 91-00% Very Small Head.",
   "entries": [
     {
       "id": "disproportion_huge_ears",
@@ -41,6 +41,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 7
       }
     },
     {
@@ -69,6 +73,10 @@
           "daylightVisionMultiplier": 0.5,
           "perceptionVisionPenalty": -2
         }
+      },
+      "percentile": {
+        "min": 8,
+        "max": 14
       }
     },
     {
@@ -121,6 +129,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 15,
+        "max": 19
       }
     },
     {
@@ -151,6 +163,10 @@
           "baseSuccessPercent": 20,
           "perLevelIncrement": 4
         }
+      },
+      "percentile": {
+        "min": 20,
+        "max": 25
       }
     },
     {
@@ -183,7 +199,11 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 26,
+        "max": 30
+      }
     },
     {
       "id": "disproportion_large_head",
@@ -216,6 +236,10 @@
         "iq": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 31,
+        "max": 40
       }
     },
     {
@@ -251,7 +275,11 @@
             "flat": 2
           }
         }
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 45
+      }
     },
     {
       "id": "disproportion_large_thick_neck",
@@ -275,6 +303,10 @@
         "hf": {
           "flat": 1
         }
+      },
+      "percentile": {
+        "min": 46,
+        "max": 50
       }
     },
     {
@@ -299,6 +331,10 @@
         "hf": {
           "flat": -1
         }
+      },
+      "percentile": {
+        "min": 51,
+        "max": 55
       }
     },
     {
@@ -335,7 +371,11 @@
           },
           "calledShotPenalty": -1
         }
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 60
+      }
     },
     {
       "id": "disproportion_tiny_ears",
@@ -356,6 +396,10 @@
         "perception": {
           "flat": 1
         }
+      },
+      "percentile": {
+        "min": 61,
+        "max": 68
       }
     },
     {
@@ -400,7 +444,11 @@
           "target": "opponent",
           "strike": 2
         }
-      ]
+      ],
+      "percentile": {
+        "min": 69,
+        "max": 75
+      }
     },
     {
       "id": "disproportion_tiny_mouth",
@@ -424,6 +472,10 @@
         "ma": {
           "flat": -1
         }
+      },
+      "percentile": {
+        "min": 76,
+        "max": 80
       }
     },
     {
@@ -458,6 +510,10 @@
           "enabled": false,
           "identifyOdorsModifierPercent": -10
         }
+      },
+      "percentile": {
+        "min": 81,
+        "max": 85
       }
     },
     {
@@ -490,7 +546,11 @@
             "percent": -50
           }
         }
-      ]
+      ],
+      "percentile": {
+        "min": 86,
+        "max": 90
+      }
     },
     {
       "id": "disproportion_very_small_head",
@@ -530,7 +590,11 @@
           "requiresCalledShot": true,
           "calledShotPenalty": -3
         }
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

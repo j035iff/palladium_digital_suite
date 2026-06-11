@@ -390,6 +390,12 @@ type CharacterContextValue = {
   /** Mark tab Green after explicit Continue (no viewport change). */
   markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void
   setTraitForgeStubComplete: (complete: boolean) => void
+  addMorphusCustomTraitSlot: (catalogEntryId: string) => void
+  setMorphusCustomTraitInstance: (
+    slotId: string,
+    instance: import('../types').MorphusCustomTraitInstance,
+  ) => void
+  removeMorphusCustomTraitSlot: (slotId: string) => void
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
   clearCreationAttributeAssignment: (attr: ForgeAttrKey) => void
@@ -1001,7 +1007,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const morphusTraitRows = useMemo(
     () => resolveActiveMorphusTraits(rawCharacter),
-    [rawCharacter.activeMorphusCharacteristicIds],
+    [rawCharacter.activeMorphusCharacteristicIds, rawCharacter.morphusTraitSlotResolutions],
   )
 
   const morphusNaturalAr = useMemo(
@@ -1970,6 +1976,53 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  const addMorphusCustomTraitSlot = useCallback((catalogEntryId: string) => {
+    const slotId =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `morphus-slot-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+    setRawCharacter((prev) => ({
+      ...prev,
+      morphusTraitSlotResolutions: [
+        ...(prev.morphusTraitSlotResolutions ?? []),
+        {
+          slotId,
+          catalogEntryId,
+          customInstance: {
+            displayName: '',
+            description: '',
+            gmApproved: false,
+          },
+        },
+      ],
+    }))
+  }, [])
+
+  const setMorphusCustomTraitInstance = useCallback(
+    (slotId: string, instance: import('../types').MorphusCustomTraitInstance) => {
+      setRawCharacter((prev) => {
+        const slots = prev.morphusTraitSlotResolutions
+        if (!slots?.length) return prev
+        return {
+          ...prev,
+          morphusTraitSlotResolutions: slots.map((slot) =>
+            slot.slotId === slotId ? { ...slot, customInstance: instance } : slot,
+          ),
+        }
+      })
+    },
+    [],
+  )
+
+  const removeMorphusCustomTraitSlot = useCallback((slotId: string) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      morphusTraitSlotResolutions: (prev.morphusTraitSlotResolutions ?? []).filter(
+        (slot) => slot.slotId !== slotId,
+      ),
+    }))
+  }, [])
+
   const setCreationAttributePoolSlot = useCallback(
     (index: number, value: number | null) => {
       if (index < 0 || index > 7) return
@@ -2440,6 +2493,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationForgeTab,
       markCreationForgeTabComplete,
       setTraitForgeStubComplete,
+      addMorphusCustomTraitSlot,
+      setMorphusCustomTraitInstance,
+      removeMorphusCustomTraitSlot,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,
@@ -2574,6 +2630,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCreationForgeTab,
       markCreationForgeTabComplete,
       setTraitForgeStubComplete,
+      addMorphusCustomTraitSlot,
+      setMorphusCustomTraitInstance,
+      removeMorphusCustomTraitSlot,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       clearCreationAttributeAssignment,

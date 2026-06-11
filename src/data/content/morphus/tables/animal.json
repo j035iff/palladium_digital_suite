@@ -2,35 +2,472 @@
   "id": "animal",
   "kind": "category_hub",
   "displayName": "Animal",
-  "description": "Master Animal Morphus: pick or roll one sub-table, then roll or pick traits on that table for stat modifiers. Dinosaur and Mythical Creature use top-level tables `dinosaur.json` and `mythical_creature.json`.",
+  "description": "Master Animal Morphus (Nightbane Survival Guide). Percentile bands route to sub-tables: 01-06% Amphibian, 07-12% Arachnid, 13-18% Avian, 19-24% Bat, 25-30% Bear, 31-36% Canine, 37-42% Crustacean, 43-45% Dolphin/Whale, 46-51% Equine/Bovine/Deer, 52-57% Feline, 58-60% Fish, 61-66% Insect, 67-72% Octopus/Squid, 73-75% Primate, 76-81% Reptilian, 82-87% Rodent, 88-90% Shark, 91-96% Snake, 97-99% Combo of Two, 100% Combo of Three. Dinosaur and Mythical Creature use top-level tables `dinosaur.json` and `mythical_creature.json`.",
   "parentTable": null,
   "subtables": [
-    { "id": "animal_amphibian", "name": "Amphibian", "tableFile": "animal_amphibian.json" },
-    { "id": "animal_arachnid", "name": "Arachnid", "tableFile": "animal_arachnid.json" },
-    { "id": "animal_avian", "name": "Avian", "tableFile": "animal_avian.json" },
-    { "id": "animal_bat", "name": "Bat", "tableFile": "animal_bat.json" },
-    { "id": "animal_bear", "name": "Bear", "tableFile": "animal_bear.json" },
-    { "id": "animal_canine", "name": "Canine", "tableFile": "animal_canine.json" },
-    { "id": "animal_crustacean", "name": "Crustacean", "tableFile": "animal_crustacean.json" },
-    { "id": "animal_dolphin_whale", "name": "Dolphin/Whale", "tableFile": "animal_dolphin_whale.json" },
+    {
+      "id": "animal_amphibian",
+      "name": "Amphibian",
+      "tableFile": "animal_amphibian.json"
+    },
+    {
+      "id": "animal_arachnid",
+      "name": "Arachnid",
+      "tableFile": "animal_arachnid.json"
+    },
+    {
+      "id": "animal_avian",
+      "name": "Avian",
+      "tableFile": "animal_avian.json"
+    },
+    {
+      "id": "animal_bat",
+      "name": "Bat",
+      "tableFile": "animal_bat.json"
+    },
+    {
+      "id": "animal_bear",
+      "name": "Bear",
+      "tableFile": "animal_bear.json"
+    },
+    {
+      "id": "animal_canine",
+      "name": "Canine",
+      "tableFile": "animal_canine.json"
+    },
+    {
+      "id": "animal_crustacean",
+      "name": "Crustacean",
+      "tableFile": "animal_crustacean.json"
+    },
+    {
+      "id": "animal_dolphin_whale",
+      "name": "Dolphin/Whale",
+      "tableFile": "animal_dolphin_whale.json"
+    },
     {
       "id": "animal_equine_bovine_deer",
       "name": "Equine/Bovine/Deer",
       "tableFile": "animal_equine_bovine_deer.json"
     },
-    { "id": "animal_feline", "name": "Feline", "tableFile": "animal_feline.json" },
-    { "id": "animal_fish", "name": "Fish", "tableFile": "animal_fish.json" },
-    { "id": "animal_insectoid", "name": "Insectoid", "tableFile": "animal_insectoid.json" },
+    {
+      "id": "animal_feline",
+      "name": "Feline",
+      "tableFile": "animal_feline.json"
+    },
+    {
+      "id": "animal_fish",
+      "name": "Fish",
+      "tableFile": "animal_fish.json"
+    },
+    {
+      "id": "animal_insectoid",
+      "name": "Insectoid",
+      "tableFile": "animal_insectoid.json"
+    },
     {
       "id": "animal_octopus_squid",
       "name": "Octopus/Squid",
       "tableFile": "animal_octopus_squid.json"
     },
-    { "id": "animal_primate", "name": "Primate", "tableFile": "animal_primate.json" },
-    { "id": "animal_reptilian", "name": "Reptilian", "tableFile": "animal_reptilian.json" },
-    { "id": "animal_rodent", "name": "Rodent", "tableFile": "animal_rodent.json" },
-    { "id": "animal_shark", "name": "Shark", "tableFile": "animal_shark.json" },
-    { "id": "animal_snake", "name": "Snake", "tableFile": "animal_snake.json" }
+    {
+      "id": "animal_primate",
+      "name": "Primate",
+      "tableFile": "animal_primate.json"
+    },
+    {
+      "id": "animal_reptilian",
+      "name": "Reptilian",
+      "tableFile": "animal_reptilian.json"
+    },
+    {
+      "id": "animal_rodent",
+      "name": "Rodent",
+      "tableFile": "animal_rodent.json"
+    },
+    {
+      "id": "animal_shark",
+      "name": "Shark",
+      "tableFile": "animal_shark.json"
+    },
+    {
+      "id": "animal_snake",
+      "name": "Snake",
+      "tableFile": "animal_snake.json"
+    }
   ],
-  "entries": []
+  "entries": [
+    {
+      "id": "animal_amphibian_router",
+      "name": "Amphibian",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 1,
+        "max": 6
+      },
+      "description": "Roll on the Amphibian animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_amphibian",
+        "targetTableName": "Amphibian",
+        "note": "Resolve on Amphibian sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_arachnid_router",
+      "name": "Arachnid",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 7,
+        "max": 12
+      },
+      "description": "Roll on the Arachnid animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_arachnid",
+        "targetTableName": "Arachnid",
+        "note": "Resolve on Arachnid sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_avian_router",
+      "name": "Avian",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 13,
+        "max": 18
+      },
+      "description": "Roll on the Avian animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_avian",
+        "targetTableName": "Avian",
+        "note": "Resolve on Avian sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_bat_router",
+      "name": "Bat",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 19,
+        "max": 24
+      },
+      "description": "Roll on the Bat animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_bat",
+        "targetTableName": "Bat",
+        "note": "Resolve on Bat sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_bear_router",
+      "name": "Bear",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 25,
+        "max": 30
+      },
+      "description": "Roll on the Bear animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_bear",
+        "targetTableName": "Bear",
+        "note": "Resolve on Bear sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_canine_router",
+      "name": "Canine",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 31,
+        "max": 36
+      },
+      "description": "Roll on the Canine animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_canine",
+        "targetTableName": "Canine",
+        "note": "Resolve on Canine sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_crustacean_router",
+      "name": "Crustacean",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 37,
+        "max": 42
+      },
+      "description": "Roll on the Crustacean animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_crustacean",
+        "targetTableName": "Crustacean",
+        "note": "Resolve on Crustacean sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_dolphin_whale_router",
+      "name": "Dolphin/Whale",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 43,
+        "max": 45
+      },
+      "description": "Roll on the Dolphin/Whale animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_dolphin_whale",
+        "targetTableName": "Dolphin/Whale",
+        "note": "Resolve on Dolphin/Whale sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_equine_bovine_deer_router",
+      "name": "Equine/Bovine/Deer",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 46,
+        "max": 51
+      },
+      "description": "Roll on the Equine/Bovine/Deer animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_equine_bovine_deer",
+        "targetTableName": "Equine/Bovine/Deer",
+        "note": "Resolve on Equine/Bovine/Deer sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_feline_router",
+      "name": "Feline",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 52,
+        "max": 57
+      },
+      "description": "Roll on the Feline animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_feline",
+        "targetTableName": "Feline",
+        "note": "Resolve on Feline sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_fish_router",
+      "name": "Fish",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 58,
+        "max": 60
+      },
+      "description": "Roll on the Fish animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_fish",
+        "targetTableName": "Fish",
+        "note": "Resolve on Fish sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_insectoid_router",
+      "name": "Insect",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 61,
+        "max": 66
+      },
+      "description": "Roll on the Insect animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_insectoid",
+        "targetTableName": "Insect",
+        "note": "Resolve on Insect sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_octopus_squid_router",
+      "name": "Octopus/Squid",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 67,
+        "max": 72
+      },
+      "description": "Roll on the Octopus/Squid animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_octopus_squid",
+        "targetTableName": "Octopus/Squid",
+        "note": "Resolve on Octopus/Squid sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_primate_router",
+      "name": "Primate",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 73,
+        "max": 75
+      },
+      "description": "Roll on the Primate animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_primate",
+        "targetTableName": "Primate",
+        "note": "Resolve on Primate sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_reptilian_router",
+      "name": "Reptilian",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 76,
+        "max": 81
+      },
+      "description": "Roll on the Reptilian animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_reptilian",
+        "targetTableName": "Reptilian",
+        "note": "Resolve on Reptilian sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_rodent_router",
+      "name": "Rodent",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 82,
+        "max": 87
+      },
+      "description": "Roll on the Rodent animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_rodent",
+        "targetTableName": "Rodent",
+        "note": "Resolve on Rodent sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_shark_router",
+      "name": "Shark",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 88,
+        "max": 90
+      },
+      "description": "Roll on the Shark animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_shark",
+        "targetTableName": "Shark",
+        "note": "Resolve on Shark sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_snake_router",
+      "name": "Snake",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 91,
+        "max": 96
+      },
+      "description": "Roll on the Snake animal sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "animal_snake",
+        "targetTableName": "Snake",
+        "note": "Resolve on Snake sub-table."
+      },
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_combo_of_two",
+      "name": "Combo of Two",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 97,
+        "max": 99
+      },
+      "description": "Roll or select two animal forms, then resolve each on its sub-table.",
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 2,
+        "allowedChoicesPool": [
+          "animal_amphibian",
+          "animal_arachnid",
+          "animal_avian",
+          "animal_bat",
+          "animal_bear",
+          "animal_canine",
+          "animal_crustacean",
+          "animal_dolphin_whale",
+          "animal_equine_bovine_deer",
+          "animal_feline",
+          "animal_fish",
+          "animal_insectoid",
+          "animal_octopus_squid",
+          "animal_primate",
+          "animal_reptilian",
+          "animal_rodent",
+          "animal_shark",
+          "animal_snake"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "animal",
+        "targetTableName": "Animal",
+        "note": "Pick two animal sub-tables (excluding Combo rows), then roll each."
+      },
+      "customOneOffs": [
+        "Choose two different animal types from the Animal table, then roll on each sub-table."
+      ],
+      "tableCategory": "Animal"
+    },
+    {
+      "id": "animal_combo_of_three",
+      "name": "Combo of Three",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 100,
+        "max": 100
+      },
+      "description": "Roll or select three animal forms, then resolve each on its sub-table.",
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 3,
+        "allowedChoicesPool": [
+          "animal_amphibian",
+          "animal_arachnid",
+          "animal_avian",
+          "animal_bat",
+          "animal_bear",
+          "animal_canine",
+          "animal_crustacean",
+          "animal_dolphin_whale",
+          "animal_equine_bovine_deer",
+          "animal_feline",
+          "animal_fish",
+          "animal_insectoid",
+          "animal_octopus_squid",
+          "animal_primate",
+          "animal_reptilian",
+          "animal_rodent",
+          "animal_shark",
+          "animal_snake"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "animal",
+        "targetTableName": "Animal",
+        "note": "Pick three animal sub-tables (excluding Combo rows), then roll each."
+      },
+      "customOneOffs": [
+        "Choose three different animal types from the Animal table, then roll on each sub-table."
+      ],
+      "tableCategory": "Animal"
+    }
+  ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Arachnid",
   "parentTable": "animal",
-  "description": "Arachnid Morphus tables (Nightbane Core Rulebook, p. 94; Dark Designs (WB6), pp. 128-129). Spiders and scorpions symbolize alienness and danger. Player selects spider or scorpion where a row offers both.",
+  "description": "Arachnid Morphus table. Percentile bands: 01-10% Arachnid Centauroid, 11-30% Full Arachnid, 31-55% Humanoid-Arachnid, 56-75% Scorpion Pincers/Spider Limbs, 76-00% Were-Arachnid.",
   "entries": [
     {
       "id": "animal_arachnid_full",
@@ -136,7 +136,11 @@
             "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 30
+      }
     },
     {
       "id": "animal_arachnid_were",
@@ -266,7 +270,11 @@
             "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 100
+      }
     },
     {
       "id": "animal_arachnid_humanoid",
@@ -388,7 +396,11 @@
             "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds)."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 55
+      }
     },
     {
       "id": "animal_arachnid_pincers_or_limbs",
@@ -494,7 +506,11 @@
       ],
       "customOneOffs": [
         "Hands cannot grasp tools and weapons properly (-5 to use them)."
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 75
+      }
     },
     {
       "id": "animal_arachnid_centauroid",
@@ -615,7 +631,11 @@
             "Stinger injects poison inflicting 4D6 (2D6 if a save versus lethal poison succeeds), same as giant spider."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     }
   ]
 }

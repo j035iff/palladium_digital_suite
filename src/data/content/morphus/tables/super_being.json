@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Super Being",
   "parentTable": null,
-  "description": "Super Being Morphus table (Dark Designs (WB6), pp. 59-60, 62). Comic-book super-hero (or super-villain) features: idealistic crusaders who protect civilians, or theatrical, vindictive villains shunned by other Nightbane.",
+  "description": "Super Being Morphus table. Percentile bands: 01-10% Chiseled Jaw and Physique/Bold and the Beautiful, 11-20% Energized, 21-30% Gadgeteer, 31-35% Mutant or Alien, 36-45% Oversized Flowing Cape or Cloak, 46-55% Super-Brain, 56-65% Super-Costume, 66-76% Super-Fast, 77-85% Super-Strong, 86-95% Technonaut or Cyborg, 96-00% Theme Music.",
   "entries": [
     {
       "id": "super_being_super_brain",
@@ -59,7 +59,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 59
         }
-      ]
+      ],
+      "percentile": {
+        "min": 46,
+        "max": 55
+      }
     },
     {
       "id": "super_being_super_fast",
@@ -102,6 +106,10 @@
       ],
       "skillModifiers": {
         "globalSkillModifier": -15
+      },
+      "percentile": {
+        "min": 66,
+        "max": 76
       }
     },
     {
@@ -159,7 +167,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 59
         }
-      ]
+      ],
+      "percentile": {
+        "min": 77,
+        "max": 85
+      }
     },
     {
       "id": "super_being_chiseled_jaw_bold_beautiful",
@@ -206,7 +218,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 60
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "super_being_super_costume",
@@ -275,7 +291,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 60
         }
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 65
+      }
     },
     {
       "id": "super_being_oversized_flowing_cape_cloak",
@@ -346,7 +366,11 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
       },
-      "naturalAr": 14
+      "naturalAr": 14,
+      "percentile": {
+        "min": 36,
+        "max": 45
+      }
     },
     {
       "id": "super_being_energized",
@@ -403,7 +427,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 60
         }
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "super_being_technonaut_cyborg",
@@ -471,7 +499,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 60
         }
-      ]
+      ],
+      "percentile": {
+        "min": 86,
+        "max": 95
+      }
     },
     {
       "id": "super_being_gadgeteer",
@@ -679,6 +711,10 @@
       ],
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "percentile": {
+        "min": 21,
+        "max": 30
       }
     },
     {
@@ -729,7 +765,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 62
         }
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 35
+      }
     },
     {
       "id": "super_being_theme_music",
@@ -773,6 +813,10 @@
       ],
       "skillModifiers": {
         "globalSkillModifier": -15
+      },
+      "percentile": {
+        "min": 96,
+        "max": 100
       }
     }
   ]

@@ -3,8 +3,31 @@
   "kind": "morphus_trait_table",
   "displayName": "Science Fiction",
   "parentTable": null,
-  "description": "Science Fiction Morphus table (Dark Designs (WB6), pp. 50-52).",
+  "description": "Science Fiction Morphus table (Dark Designs (WB6), pp. 50-52). Percentile bands: 01-06% Bug-Eyed Monster, 07-15% Energy Blaster, 16-24% Flight Pack/Thrusters, 25-33% Force Field Array, 34-42% Heavy Sci-Fi Armor, 43-51% Hologram Projector, 52-61% Light Sci-Fi Armor, 62-71% Personal Scanner/Sensors, 72-80% Sci-Fi Melee Weapon(s), 81-90% Sci-Fi Optics, 91-00% Universal Translator.",
   "entries": [
+    {
+      "id": "morphus_sci_fi_bug_eyed_monster",
+      "name": "Bug-Eyed Monster",
+      "tableCategory": "Science Fiction",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 52
+        }
+      ],
+      "description": "The Nightbane resembles an alien from another world — classic Grey, Grade-B sci-fi creature, or other monstrous (non-attractive) extraterrestrial look with oversized eyes and/or insect or crustacean features.",
+      "customOneOffs": [
+        "STUB: Hands, body type, and optional-feature sub-rolls are not yet modeled. Likely cross-table alternatives include Alien Shape, Biomechanical, and Extraterrestrial tables."
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 6
+      }
+    },
     {
       "id": "morphus_sci_fi_light_armor",
       "name": "Light Sci-Fi Armor",
@@ -91,7 +114,11 @@
       "customOneOffs": [
         "The armor is environmentally sealed so the 'Bane does not need air to breathe and is immune to airborne irritants, toxins, and poisonous gases.",
         "(like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
-      ]
+      ],
+      "percentile": {
+        "min": 52,
+        "max": 61
+      }
     },
     {
       "id": "morphus_sci_fi_heavy_armor",
@@ -189,7 +216,11 @@
       "customOneOffs": [
         "The armor is environmentally sealed so the 'Bane does not need air to breathe and is immune to airborne irritants, toxins, and poisonous gases.",
         "(like most repairs, Art, Pick Locks, Pick Pockets, etc.)."
-      ]
+      ],
+      "percentile": {
+        "min": 34,
+        "max": 42
+      }
     },
     {
       "id": "morphus_sci_fi_flight_pack",
@@ -252,7 +283,11 @@
         "+2 to damage for physical attacks per 20 mph (32 km) of speed above 40 mph (64 kph).",
         "Flight pack regenerates at the same rate as the Nightbane, taking a full day to regenerate if completely destroyed. It is inoperable while regenerating.",
         "Cannot hover (built for speed)."
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 24
+      }
     },
     {
       "id": "morphus_sci_fi_energy_blaster",
@@ -291,7 +326,11 @@
         "Fueled by the Nightbane's P.P.E. Deals 1D6 damage per point of P.P.E. expended, with a maximum of 10 points able to be spent per attack.",
         "Damage inflicted by the energy blaster is NOT considered magical or supernatural in nature.",
         "Reduces the number of starting Talents by one."
-      ]
+      ],
+      "percentile": {
+        "min": 7,
+        "max": 15
+      }
     },
     {
       "id": "morphus_sci_fi_melee_weapons",
@@ -323,7 +362,11 @@
         "+1 to Awe/Horror Factor when the weapon is energized.",
         "Grants the appropriate Weapon Proficiency skill for the weapon while in Morphus form.",
         "Cannot be forcibly taken or disarmed. Anyone else trying to use the weapon finds it deceptively heavy and poorly balanced (-6 to strike, parry, and disarm)."
-      ]
+      ],
+      "percentile": {
+        "min": 72,
+        "max": 80
+      }
     },
     {
       "id": "morphus_sci_fi_universal_translator",
@@ -380,7 +423,11 @@
       },
       "customOneOffs": [
         "Ability to understand and speak all languages with 98% fluency. Even alien languages never heard on Earth will be comprehended."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "morphus_sci_fi_optics",
@@ -423,7 +470,11 @@
         "Can see heat signatures through smoke, thin walls, and follow footsteps less than 10 minutes old.",
         "A virtual targeting reticule is superimposed over vision in combat.",
         "For an expense of 3 P.P.E., the Nightbane can see the magically invisible (1,000 ft/305 m range) for one minute per level of experience."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "morphus_sci_fi_personal_scanner",
@@ -552,7 +603,11 @@
       ],
       "customOneOffs": [
         "EACH selected scan feature imposes a cumulative penalty of -1 M.A. and -1D4 from the permanent P.P.E. base."
-      ]
+      ],
+      "percentile": {
+        "min": 62,
+        "max": 71
+      }
     },
     {
       "id": "morphus_sci_fi_hologram_projector",
@@ -614,7 +669,11 @@
         "Holograms may cover an area up to 10x10x10 feet and project as far as 50 feet away.",
         "The projector can only operate for 5 minutes out of any one hour period before needing to recharge from the character's bio-kinetic energy.",
         "Disguise and Camouflage skills operate at 80% or receive a +20% bonus (whichever is higher) when using the projector for disguise or concealment."
-      ]
+      ],
+      "percentile": {
+        "min": 43,
+        "max": 51
+      }
     },
     {
       "id": "morphus_sci_fi_force_field_array",
@@ -645,7 +704,11 @@
         "Immune to gases, poison, and diseases while the force field is up.",
         "To activate Talents or cast spells, the force field must be dropped while P.P.E. is expended, leaving the Nightbane open to attack for 2D4 seconds.",
         "A Nightbane with this feature can never develop Talents that create a magical protective field (e.g., Shadow Shield or Pipe Bomb)."
-      ]
+      ],
+      "percentile": {
+        "min": 25,
+        "max": 33
+      }
     }
   ]
 }

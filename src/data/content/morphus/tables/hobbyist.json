@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Hobbyist",
   "parentTable": null,
-  "description": "Hobbyist Morphus table (Dark Designs (WB6), pp. 35-37).",
+  "description": "Hobbyist Morphus table (Dark Designs (WB6), p. 37). Percentile bands: 01-11% Backpack, 12-22% Card Deck, 23-31% Dice Bag, 32-42% Display Case, 43-53% Leather-Bound, 54-64% Saddle, 65-75% Telescopic or Binocular Eyes, 76-88% Video Games, 89-00% Other (cross-table reroll).",
   "entries": [
     {
       "id": "hobbyist_backpack",
@@ -91,7 +91,11 @@
       },
       "customOneOffs": [
         "Capable of storing up to 120 pounds (54 kg) +10 pounds (4.5 kg) per level of experience."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 11
+      }
     },
     {
       "id": "hobbyist_card_deck",
@@ -143,7 +147,11 @@
       ],
       "customOneOffs": [
         "Does +2D6 damage on a roll of a Natural 19 or 20 when using poker cards or any weapon designed for throwing[cite: 7]."
-      ]
+      ],
+      "percentile": {
+        "min": 12,
+        "max": 22
+      }
     },
     {
       "id": "hobbyist_video_games",
@@ -308,7 +316,11 @@
       "customOneOffs": [
         "The Nightbane shares a single pool of charges for all video game powers: 3 activations per hour, +1 per level of experience[cite: 7].",
         "The character tends to equate the real world with video game equivalents and analogies[cite: 7]."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 88
+      }
     },
     {
       "id": "hobbyist_dice_bag",
@@ -348,7 +360,11 @@
       ],
       "customOneOffs": [
         "The dice can also be removed from the bag and scattered on hard ground or floors to discourage pursuit[cite: 7]."
-      ]
+      ],
+      "percentile": {
+        "min": 23,
+        "max": 31
+      }
     },
     {
       "id": "hobbyist_display_case",
@@ -421,7 +437,11 @@
       },
       "customOneOffs": [
         "The Barter bonus applies only when buying or trading for the collection."
-      ]
+      ],
+      "percentile": {
+        "min": 32,
+        "max": 42
+      }
     },
     {
       "id": "hobbyist_leather_bound",
@@ -506,7 +526,11 @@
       },
       "customOneOffs": [
         "-2 to Perception Rolls involving the sense of touch."
-      ]
+      ],
+      "percentile": {
+        "min": 43,
+        "max": 53
+      }
     },
     {
       "id": "hobbyist_saddle",
@@ -551,7 +575,11 @@
       },
       "customOneOffs": [
         "Anyone riding in the saddle receives +1 to initiative, +2 to damage with melee weapon, and +1 to dodge regardless of training or experience in mounted combat."
-      ]
+      ],
+      "percentile": {
+        "min": 54,
+        "max": 64
+      }
     },
     {
       "id": "hobbyist_telescopic_binocular_eyes",
@@ -626,7 +654,11 @@
         "These optics allow the Nightbane to see objects up to 2 miles (3.2 km) away as if standing within a few feet.",
         "Characters with nightvision can see as if they have a passive nightvision scope.",
         "like reading, surgery, Computer Operation, Pick Locks, etc."
-      ]
+      ],
+      "percentile": {
+        "min": 65,
+        "max": 75
+      }
     },
     {
       "id": "hobbyist_other",
@@ -646,7 +678,16 @@
       "description": "Roll on another random table and relate the result to the character's hobbies[cite: 7].",
       "customOneOffs": [
         "The most obvious choices include Artisan, Athlete, Biomechanical, Insectoid, or Plant Life tables. Otherwise, re-roll on the Hobbyist table and ignore this result[cite: 7]."
-      ]
+      ],
+      "crossTableRoll": {
+        "targetTableId": "hobbyist",
+        "targetTableName": "Hobbyist",
+        "note": "Roll another Morphus table and relate the result to the character's hobbies; re-roll if this result comes up again."
+      },
+      "percentile": {
+        "min": 89,
+        "max": 100
+      }
     }
   ]
 }

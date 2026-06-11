@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Biomechanical Aquatic",
   "parentTable": null,
-  "description": "Biomechanical Aquatic Morphus table (Nightbane Survival Guide (WB5), pp. 83-84). Nightbane with this feature often feel a need to explore the world, especially beneath the waves. All rows grant Swimming at 80%, underwater breathing for 2D6+20 minutes per immersion (with or without air tanks present), and depth tolerance of 1,000 feet (305 m) unless a row states otherwise.",
+  "description": "Biomechanical Aquatic Morphus table. Percentile bands: 01-10% Catch of the Day, 11-20% Deep Sea Diving Suit Skin, 21-30% Fins, 31-40% Flippers, 41-50% Hydrofoil Engine, 51-60% Propellers, 61-70% Scuba Gear, 71-80% Sonar Screen, 81-90% Spear Gun Limb, 91-00% Torpedo Tubes.",
   "entries": [
     {
       "id": "biomechanical_aquatic_deep_sea_diving_suit",
@@ -84,7 +84,11 @@
       },
       "customOneOffs": [
         "Air supply lasts 4D6+60 minutes per immersion."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "biomechanical_aquatic_flippers",
@@ -158,7 +162,11 @@
           }
         ]
       },
-      "customOneOffs": []
+      "customOneOffs": [],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "biomechanical_aquatic_spear_gun_limb",
@@ -238,7 +246,11 @@
       },
       "customOneOffs": [
         "Special rounds may include explosive-tipped (double damage), tranquilizer dart (1D4 damage plus knockout for 2D4+2 minutes), etc."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "biomechanical_aquatic_propellers",
@@ -297,7 +309,11 @@
       },
       "customOneOffs": [
         "Propeller travel does not cause fatigue."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "biomechanical_aquatic_sonar_screen",
@@ -362,7 +378,11 @@
       },
       "customOneOffs": [
         "The sonar unit continues to ping, making hiding difficult."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "biomechanical_aquatic_hydrofoil_engine",
@@ -422,7 +442,11 @@
       "customOneOffs": [
         "When leaning forward in a prone push-up posture on water, hydrofoils across the surface at up to 60 mph (96 km/h) +5 mph (8 km/h) per level of experience; half that speed underwater.",
         "The engine cannot be used to fly, but can make short leaps of up to 15 feet (4.6 m) high and 30 feet (9.1 m) across."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "biomechanical_aquatic_fins",
@@ -489,7 +513,11 @@
       },
       "customOneOffs": [
         "Can use arms to block melee weapons without injury."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "biomechanical_aquatic_catch_of_the_day",
@@ -548,7 +576,11 @@
       "customOneOffs": [
         "If Escape Artist is already known, apply a +10% bonus instead of the automatic 60% grant.",
         "Enables the character to take Talents that require a Stigmata trait."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "biomechanical_aquatic_torpedo_tubes",
@@ -631,7 +663,11 @@
         "The Nightbane must permanently sacrifice 6 P.P.E. per torpedo tube.",
         "Torpedo blast affects a five foot (1.5 m) radius; range is 1,000 feet (305 m) +100 feet (30.5 m) per level of experience.",
         "Torpedoes are only useful underwater."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "biomechanical_aquatic_scuba_gear",
@@ -708,7 +744,11 @@
           }
         ]
       },
-      "customOneOffs": []
+      "customOneOffs": [],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     }
   ]
 }

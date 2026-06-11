@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Stigmata",
   "parentTable": null,
-  "description": "Stigmata Morphus tables (Nightbane Core Rulebook, pp. 101-102; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), p. 95; Dark Designs (WB6), pp. 134, 140). Stigmata I, II, and III Morphus tables. Stigmata I (core RPG / Dark Designs (WB6)): the Nightbane appears injured-open wounds, embedded objects, oozing blood or pus that never heal. Stigmata III (Survival Guide): additional grievous-injury stigmata. Rows 91-96% Biomechanical and 97-00% Combination of Two on Table I are cross-table routers, not standalone traits.",
+  "description": "Stigmata Morphus tables (Nightbane Core Rulebook, pp. 101-102; Between the Shadows (WB1), p. 132; Nightbane Survival Guide (WB5), p. 95; Dark Designs (WB6), pp. 134, 140). Stigmata I (core RPG / Dark Designs (WB6)): the Nightbane appears injured-open wounds, embedded objects, oozing blood or pus that never heal. Percentile bands: 01-03% Barbed Wire/Razor Wire, 04-06% Biomechanical (cross-table), 07-09% Bloody Ooze, 10-12% Body Faces, 13-15% Boils or Sores, 16-19% Bones, 20-22% Broken Glass, 23-25% Corpse-Like, 26-29% Crushed, 30-32% Dangling Intestines, 33-35% Eternal Wounds, 36-38% Gut Tentacles, 39-41% Horrific Acne, 42-44% Inside-Out Creature, 45-47% Leatherboy/girl, 48-50% Missing Eyeball, 51-54% Missing Skin, 55-58% Nails, 59-61% Nightmare Pet, 62-64% Outer Veins, 65-67% Raw Meat, 68-70% Razor Blades, 71-73% See No Evil Speak No Evil, 74-76% Shifting Body, 77-79% Splitting Headache, 80-82% Stitches, 83-85% Third Eye, 86-88% Translucent Skin, 89-91% Withered Flesh, 92-95% Zippers, 96-00% Combination of 2.",
   "entries": [
     {
       "id": "stigmata_barbed_wire_razor_wire",
@@ -27,6 +27,41 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "id": "stigmata_biomechanical",
+      "name": "Biomechanical",
+      "tableCategory": "Stigmata I",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Roll on the Biomechanical Morphus table. The Nightbane appears partially or wholly mechanical.",
+      "crossTableRoll": {
+        "targetTableId": "biomechanical",
+        "targetTableName": "Biomechanical",
+        "note": "Resolve on the Biomechanical table."
+      },
+      "percentile": {
+        "min": 4,
+        "max": 6
       }
     },
     {
@@ -59,6 +94,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 7,
+        "max": 9
       }
     },
     {
@@ -107,6 +146,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 10,
+        "max": 12
       }
     },
     {
@@ -136,6 +179,10 @@
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "percentile": {
+        "min": 13,
+        "max": 15
       }
     },
     {
@@ -166,6 +213,10 @@
         "sdc": {
           "dice": "5D6x10"
         }
+      },
+      "percentile": {
+        "min": 16,
+        "max": 19
       }
     },
     {
@@ -195,6 +246,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 20,
+        "max": 22
       }
     },
     {
@@ -227,6 +282,10 @@
         "pb": {
           "percent": -25
         }
+      },
+      "percentile": {
+        "min": 23,
+        "max": 25
       }
     },
     {
@@ -271,6 +330,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 26,
+        "max": 29
       }
     },
     {
@@ -320,6 +383,10 @@
             "modifierPercent": -30
           }
         ]
+      },
+      "percentile": {
+        "min": 30,
+        "max": 32
       }
     },
     {
@@ -349,6 +416,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 33,
+        "max": 35
       }
     },
     {
@@ -397,6 +468,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 36,
+        "max": 38
       }
     },
     {
@@ -432,6 +507,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 39,
+        "max": 41
       }
     },
     {
@@ -481,6 +560,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 42,
+        "max": 44
       }
     },
     {
@@ -510,6 +593,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 45,
+        "max": 47
       }
     },
     {
@@ -537,6 +624,10 @@
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "percentile": {
+        "min": 48,
+        "max": 50
       }
     },
     {
@@ -567,6 +658,10 @@
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "percentile": {
+        "min": 51,
+        "max": 54
       }
     },
     {
@@ -593,6 +688,10 @@
         "sdc": {
           "dice": "4D6"
         }
+      },
+      "percentile": {
+        "min": 55,
+        "max": 58
       }
     },
     {
@@ -648,6 +747,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 59,
+        "max": 61
       }
     },
     {
@@ -686,6 +789,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 62,
+        "max": 64
       }
     },
     {
@@ -740,6 +847,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 65,
+        "max": 67
       }
     },
     {
@@ -777,7 +888,11 @@
           "damageFormula": "2D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 68,
+        "max": 70
+      }
     },
     {
       "id": "stigmata_see_no_evil_speak_no_evil",
@@ -804,6 +919,10 @@
       },
       "saveModifiers": {
         "illusions": 1
+      },
+      "percentile": {
+        "min": 71,
+        "max": 73
       }
     },
     {
@@ -849,6 +968,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 74,
+        "max": 76
       }
     },
     {
@@ -885,6 +1008,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 77,
+        "max": 79
       }
     },
     {
@@ -914,6 +1041,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 80,
+        "max": 82
       }
     },
     {
@@ -954,6 +1085,10 @@
             "modifierPercent": -30
           }
         ]
+      },
+      "percentile": {
+        "min": 83,
+        "max": 85
       }
     },
     {
@@ -1002,6 +1137,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 86,
+        "max": 88
       }
     },
     {
@@ -1050,6 +1189,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 89,
+        "max": 91
       }
     },
     {
@@ -1076,7 +1219,79 @@
         "sdc": {
           "dice": "3D6"
         }
+      },
+      "percentile": {
+        "min": 92,
+        "max": 95
       }
+    },
+    {
+      "id": "stigmata_combination_of_two",
+      "name": "Combination of 2",
+      "tableCategory": "Stigmata I",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 134
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 101
+        }
+      ],
+      "description": "Roll or select two additional Stigmata features. Bonuses and penalties from both traits apply; Horror Factor is cumulative.",
+      "percentile": {
+        "min": 96,
+        "max": 100
+      },
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 2,
+        "allowedChoicesPool": [
+          "stigmata_barbed_wire_razor_wire",
+          "stigmata_bloody_ooze",
+          "stigmata_body_faces",
+          "stigmata_boils_or_sores",
+          "stigmata_bones",
+          "stigmata_broken_glass",
+          "stigmata_corpse_like",
+          "stigmata_crushed",
+          "stigmata_dangling_intestines",
+          "stigmata_eternal_wounds",
+          "stigmata_gut_tentacles",
+          "stigmata_horrific_acne",
+          "stigmata_inside_out_creature",
+          "stigmata_leatherboy_girl",
+          "stigmata_missing_eyeball",
+          "stigmata_missing_skin",
+          "stigmata_nails",
+          "stigmata_nightmare_pet",
+          "stigmata_outer_veins",
+          "stigmata_raw_meat",
+          "stigmata_razor_blades",
+          "stigmata_see_no_evil_speak_no_evil",
+          "stigmata_shifting_body",
+          "stigmata_splitting_headache",
+          "stigmata_stitches",
+          "stigmata_third_eye",
+          "stigmata_translucent_skin",
+          "stigmata_withered_flesh",
+          "stigmata_zippers"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "stigmata",
+        "targetTableName": "Stigmata",
+        "note": "Pick two traits from this table (excluding Combination of 2 and Biomechanical)."
+      },
+      "customOneOffs": [
+        "Roll twice on this table or choose any two traits except Combination of 2 and Biomechanical."
+      ]
     }
   ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unusual Facial Features",
   "parentTable": null,
-  "description": "Unusual Facial Features Morphus tables (Nightbane Core Rulebook, pp. 102-103; Nightbane Survival Guide (WB5), pp. 98-99; Dark Designs (WB6), pp. 134-135). Unusual facial Morphus tables. Table I (Facial Features / Unusual Facial Features) from Nightbane Core Rulebook and Dark Designs (WB6) - distorted faces, horns, tentacles, and alien features (01-95%; 86-90% Biomechanical and 96-00% Two/Three are cross-table routers). Table II (Unusual Facial Features Table II) from Survival Guide only - heat pits, chest face, metal head, worm face, and similar (01-00%).",
+  "description": "Unusual Facial Features Morphus tables (Nightbane Core Rulebook, pp. 102-103; Nightbane Survival Guide (WB5), pp. 98-99; Dark Designs (WB6), pp. 134-135). Percentile bands: 01-04% Alien Features, 05-08% Angel Face, 09-13% Biomechanical (cross-table), 14-17% Chest Face, 18-21% Cyclops, 22-26% Extra Eyes, 27-31% Facial Tentacles, 32-36% Glowing Eyes, 37-40% Heat Pits, 41-44% Large Horns, 45-48% Masked Face, 49-52% Metal Head, 53-56% Misshapen Facial Features, 57-61% Multiple Faces, 62-66% No Face, 67-71% Oversized Carnivorous Mouth, 72-75% Sharp Teeth, 76-79% Skull Face, 80-83% Small Horns, 84-87% Snake/Worm/Millipede Tongue, 88-91% Strange Ears, 92-95% Worm Face, 96-98% Combination of 2, 99-00% Combination of 3.",
   "entries": [
     {
       "id": "unusual_facial_features_alien_features",
@@ -48,6 +48,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 4
       }
     },
     {
@@ -105,6 +109,41 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 5,
+        "max": 8
+      }
+    },
+    {
+      "id": "unusual_facial_features_biomechanical",
+      "name": "Biomechanical",
+      "tableCategory": "Unusual Facial Features",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        }
+      ],
+      "description": "Roll on the Biomechanical Morphus table for mechanical facial features.",
+      "crossTableRoll": {
+        "targetTableId": "biomechanical",
+        "targetTableName": "Biomechanical",
+        "note": "Resolve on the Biomechanical table."
+      },
+      "percentile": {
+        "min": 9,
+        "max": 13
       }
     },
     {
@@ -138,6 +177,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 14,
+        "max": 17
       }
     },
     {
@@ -186,6 +229,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 18,
+        "max": 21
       }
     },
     {
@@ -234,6 +281,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 22,
+        "max": 26
       }
     },
     {
@@ -282,6 +333,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 27,
+        "max": 31
       }
     },
     {
@@ -327,6 +382,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 32,
+        "max": 36
       }
     },
     {
@@ -348,6 +407,10 @@
         "hf": {
           "flat": 2
         }
+      },
+      "percentile": {
+        "min": 37,
+        "max": 40
       }
     },
     {
@@ -393,6 +456,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 41,
+        "max": 44
       }
     },
     {
@@ -428,6 +495,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 45,
+        "max": 48
       }
     },
     {
@@ -472,6 +543,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 49,
+        "max": 52
       }
     },
     {
@@ -517,6 +592,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 53,
+        "max": 56
       }
     },
     {
@@ -547,6 +626,10 @@
         "sdc": {
           "dice": "2D6"
         }
+      },
+      "percentile": {
+        "min": 57,
+        "max": 61
       }
     },
     {
@@ -592,6 +675,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 62,
+        "max": 66
       }
     },
     {
@@ -640,6 +727,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 67,
+        "max": 71
       }
     },
     {
@@ -685,6 +776,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 72,
+        "max": 75
       }
     },
     {
@@ -733,6 +828,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 76,
+        "max": 79
       }
     },
     {
@@ -781,6 +880,10 @@
             "modifierPercent": -40
           }
         ]
+      },
+      "percentile": {
+        "min": 80,
+        "max": 83
       }
     },
     {
@@ -816,6 +919,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 84,
+        "max": 87
       }
     },
     {
@@ -846,6 +953,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 88,
+        "max": 91
       }
     },
     {
@@ -888,6 +999,124 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 92,
+        "max": 95
+      }
+    },
+    {
+      "id": "unusual_facial_features_combination_of_two",
+      "name": "Combination of 2",
+      "tableCategory": "Unusual Facial Features",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        }
+      ],
+      "description": "Roll or select two additional Unusual Facial Features. Bonuses and penalties from both traits apply.",
+      "percentile": {
+        "min": 96,
+        "max": 98
+      },
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 2,
+        "allowedChoicesPool": [
+          "unusual_facial_features_alien_features",
+          "unusual_facial_features_angel_face",
+          "unusual_facial_features_chest_face",
+          "unusual_facial_features_cyclops",
+          "unusual_facial_features_extra_eyes",
+          "unusual_facial_features_facial_tentacles",
+          "unusual_facial_features_glowing_eyes",
+          "unusual_facial_features_heat_pits",
+          "unusual_facial_features_large_horns",
+          "unusual_facial_features_masked_face",
+          "unusual_facial_features_metal_head",
+          "unusual_facial_features_misshapen_facial_features",
+          "unusual_facial_features_multiple_faces",
+          "unusual_facial_features_no_face",
+          "unusual_facial_features_oversized_carnivorous_mouth",
+          "unusual_facial_features_sharp_teeth",
+          "unusual_facial_features_skull_face",
+          "unusual_facial_features_small_horns",
+          "unusual_facial_features_snake_worm_or_millipede_for_a_tongue",
+          "unusual_facial_features_strange_ears",
+          "unusual_facial_features_worm_face"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "unusual_facial_features",
+        "targetTableName": "Unusual Facial Features",
+        "note": "Pick two traits from this table (excluding router rows)."
+      }
+    },
+    {
+      "id": "unusual_facial_features_combination_of_three",
+      "name": "Combination of 3",
+      "tableCategory": "Unusual Facial Features",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 135
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 103
+        }
+      ],
+      "description": "Roll or select three additional Unusual Facial Features. Bonuses and penalties from all three traits apply.",
+      "percentile": {
+        "min": 99,
+        "max": 100
+      },
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 3,
+        "allowedChoicesPool": [
+          "unusual_facial_features_alien_features",
+          "unusual_facial_features_angel_face",
+          "unusual_facial_features_chest_face",
+          "unusual_facial_features_cyclops",
+          "unusual_facial_features_extra_eyes",
+          "unusual_facial_features_facial_tentacles",
+          "unusual_facial_features_glowing_eyes",
+          "unusual_facial_features_heat_pits",
+          "unusual_facial_features_large_horns",
+          "unusual_facial_features_masked_face",
+          "unusual_facial_features_metal_head",
+          "unusual_facial_features_misshapen_facial_features",
+          "unusual_facial_features_multiple_faces",
+          "unusual_facial_features_no_face",
+          "unusual_facial_features_oversized_carnivorous_mouth",
+          "unusual_facial_features_sharp_teeth",
+          "unusual_facial_features_skull_face",
+          "unusual_facial_features_small_horns",
+          "unusual_facial_features_snake_worm_or_millipede_for_a_tongue",
+          "unusual_facial_features_strange_ears",
+          "unusual_facial_features_worm_face"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "unusual_facial_features",
+        "targetTableName": "Unusual Facial Features",
+        "note": "Pick three traits from this table (excluding router rows)."
       }
     }
   ]

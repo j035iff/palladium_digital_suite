@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Mythical Creature",
   "parentTable": null,
-  "description": "Mythical Creature Morphus table (Dark Designs (WB6), pp. 37-40). Forms inspired by legends and modern reimaginings of mythical beings; distinct from the Fantasy table.",
+  "description": "Mythical Creature Morphus table (Dark Designs (WB6), pp. 37-40). Forms inspired by legends and modern reimaginings of mythical beings; distinct from the Fantasy table. Percentile bands: 01-10% Bigfoot/Wendigo/Yeti, 11-20% Cyclops/Giant, 21-30% Djinn, 31-40% Dragon/Wyvern/Serpent, 41-50% Fairy, 51-60% Gorgon, 61-70% Griffin, 71-80% Sphinx, 81-90% Unicorn, 91-00% Other.",
   "entries": [
     {
       "id": "mythical_creature_bigfoot",
@@ -105,7 +105,11 @@
         ", Camouflage and Climbing skills in wooded environments, and +10% to all Wilderness skills.",
         "Automatically starts with the Leave No Trace Talent.",
         "They also tend to eschew high-tech 'gadgets' like cell phones and computers."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "mythical_creature_djinn",
@@ -178,7 +182,11 @@
       "customOneOffs": [
         "The eyes glow like hot coals and brighten or dim with the character's mood.",
         "Note on Prowl: The text provides in the bonuses section, but also lists a -10% to Prowl in the penalties section."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "mythical_creature_dragon",
@@ -300,7 +308,11 @@
         "The -2 penalty to dodge applies only when not airborne.",
         "Too large to fit in ordinary vehicles and may have trouble negotiating hallways and staircases inside buildings.",
         "All magic and enchanted weapons, including Dark Blades, ignore the character's Natural A.R. and inflict full damage. Dragon slaying weapons do double damage."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "mythical_creature_gorgon",
@@ -408,7 +420,11 @@
         "Attacks from behind are detected by the snakes and conveyed to the Nightbane, so surprise attacks are nearly impossible when the crown of serpents is not covered by a hood.",
         "Snake Attack: 1D4+1 snakes strike at the same target at a time, each doing 1D4 damage per bite. This provides an extra five attacks per melee round, but only against those who come within striking distance (3 feet/0.9 m).",
         "Averages 17 snakes (2D6+10). Each has its own S.D.C. pool and will grow back in a single day if destroyed."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "mythical_creature_griffin",
@@ -560,7 +576,11 @@
         "Can turn his head 180 degrees.",
         "Diving/swooping attacks inflict double damage but count as two attacks.",
         "In Morphus form the taloned hands/forelegs make it very difficult to use tools or weapons."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "mythical_creature_sphinx",
@@ -687,7 +707,11 @@
         "Adds +1 to Spell Strength if a magic user.",
         "In Morphus form, the Nightbane is completely unable to use tools or weapons.",
         "Diving/swooping attacks inflict double damage but count as two melee attacks."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "mythical_creature_unicorn",
@@ -830,7 +854,11 @@
         "Gains the Auto-Dodge ability (use only the bonuses from the R.C.C. and high P.P. attribute).",
         "In Morphus form the Nightbane is completely unable to use tools or weapons (unless a Unicorn Centaur).",
         "Hates confined spaces and does not like to let people ride on its back, with the exception of children and the innocent."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "mythical_creature_fairy",
@@ -966,7 +994,11 @@
       },
       "customOneOffs": [
         "Hovering 1D4 feet (0.3 to 1.2 m) above the ground is normal for this Nightbane."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "mythical_creature_cyclops",
@@ -1071,13 +1103,22 @@
         "In the alternative, the eye can be in the back of the Nightbane's head. It has the same sight capabilities, but also prevents the character from being surprised from attacks from behind.",
         ".",
         "Using conventional modern weapons/guns and devices like cell phones and keyboards are difficult to impossible to use."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "mythical_creature_other",
       "name": "Other",
       "tableCategory": "Mythical Creature",
       "entryRole": "table_router",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Work with your G.M. to define a mythical creature not covered elsewhere on this table or the Animal Morphus tables."
+      },
       "gameSystems": [
         "nightbane"
       ],
@@ -1092,7 +1133,11 @@
       "customOneOffs": [
         "With a bit of work, many animal Morphus features can be turned into mythical creatures. For example, add a stinging scorpion tail from the Arachnid Table to a Full Feline Form, change the color of the fur to red, and make the face more human to create a Manticore[cite: 5].",
         "G.M.s and players should work together to create any new features[cite: 5]."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

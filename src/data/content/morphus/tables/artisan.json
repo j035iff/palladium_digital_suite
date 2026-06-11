@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Artisan",
   "parentTable": null,
-  "description": "Artisan Morphus table (Dark Designs (WB6), pp. 26-27). Artistic Nightbane and those who share a great appreciation for art may find their Morphus forms reflect creative identity through painterly, sculptural, literary, costume, metalwork, musical, or body-art features (WB6 pp. 26-27).",
+  "description": "Artisan Morphus table (Dark Designs (WB6), pp. 26-27). Percentile bands: 01-05% Bellows Lungs, 06-15% Body Artist (Tattoos & Piercings), 16-25% Chisel Fingers, 26-35% Costumes/Outfits/Cosplay, 36-45% Drawing Table, 46-55% Instrument/Mic Stand, 56-65% Iron Works, 66-80% Paint Palette, 81-90% Typewriter/Keyboard, 91-00% Other.",
   "entries": [
     {
       "id": "artisan_paint_palette",
@@ -69,7 +69,11 @@
       ],
       "customOneOffs": [
         "Can paint images that are startlingly realistic and work like optical illusions for a time. A save vs illusions or a Perception Roll of 14 or better lets observers realize it is a painting."
-      ]
+      ],
+      "percentile": {
+        "min": 66,
+        "max": 80
+      }
     },
     {
       "id": "artisan_bellows_lungs",
@@ -126,7 +130,11 @@
       "customOneOffs": [
         "Can hold their breath for a number of minutes equal to their P.E. attribute.",
         "The bellows increase buoyancy, making swimming difficult, and they make a lot more noise than normal breathing."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 5
+      }
     },
     {
       "id": "artisan_drawing_table",
@@ -179,7 +187,11 @@
         "Gains the equivalent of the psionic power of Total Recall at no cost, but only for images, not words (includes faces, tattoos, design elements).",
         "Recalled images can be duplicated as a detailed sketch with a successful Art skill roll in 2D4 minutes (twice that for color).",
         "Those skilled in drafting can duplicate building plans just by having seen them or been through the building once."
-      ]
+      ],
+      "percentile": {
+        "min": 36,
+        "max": 45
+      }
     },
     {
       "id": "artisan_chisel_fingers",
@@ -237,7 +249,11 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 25
+      }
     },
     {
       "id": "artisan_typewriter_keyboard",
@@ -296,7 +312,11 @@
         "Finished documents either appear on the character's hand, print out, or can be removed from the top of the typewriter.",
         "By taking 1D4 hours to journal, the Nightbane may gain a spontaneous burst of insight about a nagging question (Spontaneous Insight roll).",
         "Nightbane with this feature often seem to be distracted by their own thoughts."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "artisan_costumes_outfits_cosplay",
@@ -377,7 +397,11 @@
         "Gains an additional +5% to any other skill that might benefit from a specific outfit (e.g. dark-colored clothing aiding Prowl).",
         "The Nightbane gains S.D.C. protection from the costume as if wearing the physical outfit (maximum 30 S.D.C.).",
         "Can only manifest costumes or appearances that they have actually worn or created and worn in public for at least 2 hours."
-      ]
+      ],
+      "percentile": {
+        "min": 26,
+        "max": 35
+      }
     },
     {
       "id": "artisan_iron_works",
@@ -458,7 +482,11 @@
           "damageFormula": "Varies by selection",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 65
+      }
     },
     {
       "id": "artisan_instrument_mic_stand",
@@ -550,7 +578,11 @@
       "customOneOffs": [
         "Without any kind of amplification, the music produced with this instrument can be heard up to a half mile to one full mile (0.8 to 1.6 km) away.",
         "The instrument is exceptionally sturdy and can be used as a blunt weapon in combat."
-      ]
+      ],
+      "percentile": {
+        "min": 46,
+        "max": 55
+      }
     },
     {
       "id": "artisan_body_artist",
@@ -613,7 +645,37 @@
       ],
       "customOneOffs": [
         "Impossible to look inconspicuous unless completely covered, and even then, facial piercings and modifications may make that difficult."
-      ]
+      ],
+      "percentile": {
+        "min": 6,
+        "max": 15
+      }
+    },
+    {
+      "id": "artisan_other",
+      "name": "Other",
+      "tableCategory": "Artisan",
+      "entryRole": "table_router",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Work with your G.M. to define an artistic Morphus feature not listed on this table."
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 27
+        }
+      ],
+      "description": "Work with your G.M. to define an artistic Morphus feature not listed on this table.",
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

@@ -101,13 +101,18 @@ export function resolveMorphusCharacteristicsByIds(
   return out
 }
 
-/** Resolve a trait-table row by main-table d100 roll (01 = 1, 00 = 100). */
+/** Resolve a table row by main-table d100 roll (01 = 1, 00 = 100). */
 export function resolveMorphusTraitEntryByPercentile(
   tableId: string,
   percentileRoll: number,
 ): MorphusCharacteristic | undefined {
   const table = getMorphusTableById(tableId)
-  if (!table || table.kind !== 'morphus_trait_table') return undefined
+  if (
+    !table ||
+    (table.kind !== 'morphus_trait_table' && table.kind !== 'category_hub')
+  ) {
+    return undefined
+  }
   const roll = Math.min(100, Math.max(1, Math.round(percentileRoll)))
   return table.entries.find((entry) => {
     const band = entry.percentile

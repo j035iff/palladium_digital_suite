@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Torso",
   "parentTable": "disproportion",
-  "description": "Torso Morphus table (Nightbane Survival Guide (WB5), p. 88). Roll percentile on this sub-table after Step One selects the torso.",
+  "description": "Disproportion Torso sub-table (Nightbane Survival Guide (WB5), pp. 87-88). Percentile bands: 01-20% Barrel-Chested and Stoutly Built, 21-40% Morbidly Obese, 41-60% Muscular, 61-80% Puny Build, 81-00% Thin and Tall/Long.",
   "entries": [
     {
       "id": "disproportion_barrel_chested_and_stoutly_built",
@@ -53,6 +53,10 @@
             "modifierPercent": -15
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 20
       }
     },
     {
@@ -97,6 +101,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 21,
+        "max": 40
       }
     },
     {
@@ -127,6 +135,10 @@
         "spd": {
           "dice": "-1D4"
         }
+      },
+      "percentile": {
+        "min": 41,
+        "max": 60
       }
     },
     {
@@ -174,6 +186,10 @@
             "modifierPercent": 10
           }
         ]
+      },
+      "percentile": {
+        "min": 61,
+        "max": 80
       }
     },
     {
@@ -221,6 +237,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 81,
+        "max": 100
       }
     }
   ]

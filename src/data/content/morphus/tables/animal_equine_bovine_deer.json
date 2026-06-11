@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Equine/Bovine/Deer",
   "parentTable": "animal",
-  "description": "Equine/Bovine/Deer Morphus tables (Nightbane Core Rulebook, p. 98; Dark Designs (WB6), p. 131). Covers four-legged herbivores from cattle and horses to deer, bison, and antelope. Centaur and minotaur shapes are common. Unless otherwise noted, kicks and head butts inflict double damage (typically 2D6 + P.S. bonus) and jump/leap kicks do triple damage; horned or antlered creatures can head-butt for 4D6 damage.",
+  "description": "Equine/Bovine/Deer Morphus table. Percentile bands: 01-24% Centaur, 25-34% Equine/Bovine/Deer Head, 35-54% Full Horse/Bovine/Deer, 55-75% Humanoid Shape, 76-00% Were-Animal/Minotaur.",
   "entries": [
     {
       "id": "animal_equine_full_form",
@@ -105,7 +105,11 @@
         "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
         "Horned or antlered species can head-butt for 4D6 damage.",
         "Cannot use any weapons or tools; likely too large to fit into most vehicles."
-      ]
+      ],
+      "percentile": {
+        "min": 35,
+        "max": 54
+      }
     },
     {
       "id": "animal_equine_minotaur",
@@ -206,7 +210,11 @@
       "customOneOffs": [
         "Kicks and horn attacks inflict an additional 2D6 damage.",
         "Kicks and head butts otherwise inflict double damage; jump and leap kicks do triple damage."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 100
+      }
     },
     {
       "id": "animal_equine_humanoid",
@@ -296,7 +304,11 @@
       "customOneOffs": [
         "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
         "Horned or antlered species can head-butt for 4D6 damage."
-      ]
+      ],
+      "percentile": {
+        "min": 55,
+        "max": 75
+      }
     },
     {
       "id": "animal_equine_centaur",
@@ -386,7 +398,11 @@
       "customOneOffs": [
         "Kicks and head butts inflict double damage; jump and leap kicks do triple damage.",
         "Horned or antlered species can head-butt for 4D6 damage."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 24
+      }
     },
     {
       "id": "animal_equine_head",
@@ -466,6 +482,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 25,
+        "max": 34
       }
     }
   ]

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Ancient Warrior",
   "parentTable": null,
-  "description": "Ancient Warrior Morphus table (Dark Designs (WB6), pp. 19-20). Morphus features reflecting aspects of ancient warfare, foreign cultures, and historical warrior castes.",
+  "description": "Ancient Warrior Morphus table (Dark Designs (WB6), pp. 19-20). Percentile bands: 01-15% Archer, 16-30% Assassin, 31-40% Cavalry, 41-50% Color Standard, 51-65% Heavy Armor, 66-80% Infantry/Foot Soldier, 81-95% Light Armor, 96-00% War-Chief/Warlord.",
   "entries": [
     {
       "id": "ancient_warrior_infantry",
@@ -62,7 +62,11 @@
       ],
       "customOneOffs": [
         "The blade never dulls and cannot be separated from the Nightbane."
-      ]
+      ],
+      "percentile": {
+        "min": 66,
+        "max": 80
+      }
     },
     {
       "id": "ancient_warrior_archer",
@@ -129,7 +133,11 @@
         "The quiver NEVER runs out of ammunition.",
         "The number of attacks per melee with this weapon is equal to the number of hand-to-hand attacks using a bow, and half that for a crossbow.",
         "Tends to be uncomfortable in confined spaces."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 15
+      }
     },
     {
       "id": "ancient_warrior_assassin",
@@ -207,7 +215,11 @@
       ],
       "customOneOffs": [
         "Weapons disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds)."
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 30
+      }
     },
     {
       "id": "ancient_warrior_cavalry",
@@ -322,7 +334,11 @@
         "If dismounted, the rider and mount must remain in physical contact (even if just leading by the reins).",
         "If the mount or rider is destroyed, transforming to Facade and back to Morphus is required to restore the destroyed half, which re-splits the remaining Hit Points/S.D.C.",
         "Each portion heals 5 Hit Points/S.D.C. per melee round."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "ancient_warrior_war_chief",
@@ -395,7 +411,11 @@
       "customOneOffs": [
         "If armor is a part of the Morphus via another feature, it will be richly decorated or gilded and adds 50% more S.D.C. to that armor.",
         "Looking like a leader tends to make one a target in battle."
-      ]
+      ],
+      "percentile": {
+        "min": 96,
+        "max": 100
+      }
     },
     {
       "id": "ancient_warrior_light_armor",
@@ -435,7 +455,11 @@
       },
       "customOneOffs": [
         "This armor cannot be removed. It is a part of the character."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 95
+      }
     },
     {
       "id": "ancient_warrior_heavy_armor",
@@ -478,7 +502,11 @@
       },
       "customOneOffs": [
         "This armor cannot be removed like normal armor."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 65
+      }
     },
     {
       "id": "ancient_warrior_color_standard",
@@ -533,7 +561,11 @@
           "parryBonus": 1,
           "disarmBonus": 1
         }
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     }
   ]
 }

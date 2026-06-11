@@ -3,7 +3,7 @@
   "kind": "category_hub",
   "displayName": "Disproportion",
   "parentTable": null,
-  "description": "Disproportion Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Body image has always been one of the most common fears throughout time. People thinking they are too fat, too skinny, have huge feet or ears, etc., leading to fear that one's body is ugly and malformed. Perhaps this character obsessed about such things, and now has a Morphus body that is grossly out of proportion (2-3 times larger or smaller than normal). Step One (percentile): 01-20% Head, 21-50% Arms & Hands, 51-70% Torso, 71-90% Legs & Feet, 91-00% roll Step One twice for two disproportions. Step Two: roll on the matching sub-table below.",
+  "description": "Disproportion Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Step One (percentile): 01-20% Head, 21-50% Arms & Hands, 51-70% Torso, 71-90% Legs & Feet, 91-00% Combo of 2 (roll Step One twice). Step Two: roll on the matching sub-table below.",
   "subtables": [
     {
       "id": "disproportion_head",
@@ -26,5 +26,93 @@
       "tableFile": "disproportion_legs_feet.json"
     }
   ],
-  "entries": []
+  "entries": [
+    {
+      "id": "disproportion_step_head",
+      "name": "Head",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 1,
+        "max": 20
+      },
+      "description": "Step One: Head disproportion. Roll on the Head sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "disproportion_head",
+        "targetTableName": "Head",
+        "note": "Step Two: roll on disproportion_head."
+      },
+      "tableCategory": "Disproportion"
+    },
+    {
+      "id": "disproportion_step_arms_hands",
+      "name": "Arms and Hands",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 21,
+        "max": 50
+      },
+      "description": "Step One: Arms & Hands disproportion. Roll on the Arms & Hands sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "disproportion_arms_hands",
+        "targetTableName": "Arms & Hands",
+        "note": "Step Two: roll on disproportion_arms_hands."
+      },
+      "tableCategory": "Disproportion"
+    },
+    {
+      "id": "disproportion_step_torso",
+      "name": "Torso",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 51,
+        "max": 70
+      },
+      "description": "Step One: Torso disproportion. Roll on the Torso sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "disproportion_torso",
+        "targetTableName": "Torso",
+        "note": "Step Two: roll on disproportion_torso."
+      },
+      "tableCategory": "Disproportion"
+    },
+    {
+      "id": "disproportion_step_legs_feet",
+      "name": "Legs and Feet",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 71,
+        "max": 90
+      },
+      "description": "Step One: Legs & Feet disproportion. Roll on the Legs & Feet sub-table.",
+      "crossTableRoll": {
+        "targetTableId": "disproportion_legs_feet",
+        "targetTableName": "Legs & Feet",
+        "note": "Step Two: roll on disproportion_legs_feet."
+      },
+      "tableCategory": "Disproportion"
+    },
+    {
+      "id": "disproportion_roll_twice_for_two_disproportions",
+      "name": "Combo of 2",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 91,
+        "max": 100
+      },
+      "description": "Roll Step One twice for two disproportions, then roll Step Two on each matching sub-table.",
+      "tableWorkflow": {
+        "stepOneRollCount": 2,
+        "excludeSelfFromReroll": true
+      },
+      "crossTableRoll": {
+        "targetTableId": "disproportion",
+        "targetTableName": "Disproportion",
+        "note": "Roll Step One twice (excluding this row), then Step Two for each result."
+      },
+      "customOneOffs": [
+        "Roll Step One twice for two body areas, then roll on each sub-table."
+      ],
+      "tableCategory": "Disproportion"
+    }
+  ]
 }

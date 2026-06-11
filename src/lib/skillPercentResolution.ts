@@ -1,5 +1,5 @@
 import type { ActiveForm, Character, MorphusCharacteristic } from '../types'
-import { resolveMorphusCharacteristicsByIds } from '../data/library/morphusTableCatalogLoader'
+import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
@@ -40,9 +40,7 @@ export function buildSkillPercentContext(
     activeForm,
     facadePp: character.facade.attributes.pp,
     morphusSurfaceType,
-    activeMorphusCharacteristics: resolveMorphusCharacteristicsByIds(
-      character.activeMorphusCharacteristicIds ?? [],
-    ),
+    activeMorphusCharacteristics: resolveActiveMorphusTraits(character),
   }
 }
 

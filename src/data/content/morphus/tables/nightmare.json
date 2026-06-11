@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Nightmare",
   "parentTable": null,
-  "description": "Nightmare Morphus table (Dark Designs (WB6), pp. 40-43). Morphus forms conjured from the darkest depths of the Dreamstream, resulting from vivid nightmares or psychological trauma.[cite: 9]",
+  "description": "Nightmare Morphus table (Dark Designs (WB6), pp. 43-44). Percentile bands: 01-10% Contorted Body, 11-20% Floating, 21-30% Gnarled Limbs, 31-40% Gruesome Weapon, 41-50% Massive Maw, 51-60% Pulsating Skin, 61-70% Spines, 71-80% Straight-Jacket, 81-90% Torture Mask, 91-00% Other.",
   "entries": [
     {
       "id": "morphus_nightmare_floating",
@@ -65,7 +65,11 @@
         "Hovering and floating a few feet above the ground is the natural state of being. Does not take damage from falls, leaves no footprints or tracks, and does not set off pressure plates.",
         "Maximum Spd is equal to the Spd attribute, but halved due to floating speed.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "morphus_nightmare_contorted_body",
@@ -143,7 +147,11 @@
       },
       "customOneOffs": [
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "morphus_nightmare_gnarled_limbs",
@@ -243,7 +251,11 @@
       "customOneOffs": [
         "The Nightbane is double-jointed in all limbs.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "morphus_nightmare_spines",
@@ -332,7 +344,11 @@
         "The character can attack with one or two spines in a single melee attack (roll a single strike even if using two spines).",
         "Destroyed spines will completely regrow in an hour.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "morphus_nightmare_pulsating_skin",
@@ -408,7 +424,11 @@
       },
       "customOneOffs": [
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "morphus_nightmare_straight_jacket",
@@ -488,7 +508,11 @@
         "A body block/ramming attack is the same as a power punch (counts as two attacks to perform).",
         "The arms are immobilized; the Nightbane is unable to use tools and weapons, cannot parry attacks, nor perform skills that require the use of hands and arms (like Climbing and Swimming). However, he is able to tread water with the legs to stay afloat.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "morphus_nightmare_torture_mask",
@@ -534,7 +558,11 @@
         "The Nightbane is somehow able to see, breathe and speak through the mask as if it was not there.[cite: 9]",
         "Interrogators find their Interrogation skill to be -30% when questioning this character.[cite: 9]",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature.[cite: 9]"
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "morphus_nightmare_massive_maw",
@@ -589,7 +617,11 @@
         "Can latch onto an opponent; target needs a Supernatural P.S. twice that of the Nightbane to pry free.",
         "Can gnaw through a wood fence, crate, door or other barrier in 1D4+2 melee rounds.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "morphus_nightmare_gruesome_weapon",
@@ -654,7 +686,37 @@
         "The weapon has 45 S.D.C. +5 S.D.C. per level. It only takes damage if targeted via Called Shot.",
         "If the weapon S.D.C. is reduced to zero, it crumbles to dust and does not reappear until all of the character's personal S.D.C. are restored to full capacity. Without this weapon, the Nightbane's other combat bonuses are all reduced by half, and he is -1 attack per melee round.",
         "All Nightbane with one or more features from this table can select either of the elite Talents, Bloodbath or Mark of the Nightbane as though they had a Stigmata feature."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
+    },
+    {
+      "id": "morphus_nightmare_other",
+      "name": "Other",
+      "tableCategory": "Nightmare",
+      "entryRole": "table_router",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Work with your G.M. to define a nightmare Morphus feature not listed on this table."
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 44
+        }
+      ],
+      "description": "Work with your G.M. to define a nightmare Morphus feature not listed on this table.",
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Snake",
   "parentTable": "animal",
-  "description": "Snake Morphus tables (Nightbane Core Rulebook, pp. 101-102; Dark Designs (WB6), p. 134). Symbols of temptation, hunting, and subtlety; cobra shapes often appear among ambitious Nightbane. Player selects poisonous or constrictor serpent where applicable.",
+  "description": "Snake Morphus table. Percentile bands: 01-15% Full Snake, 16-30% Half-Man Half-Snake, 31-55% Humanoid Snake, 56-70% Limbed Snake, 71-85% Scaly Skin, 86-00% Snake's Head.",
   "entries": [
     {
       "id": "animal_snake_full",
@@ -118,7 +118,11 @@
             "Crushing/constricting attacks do double normal punch damage plus P.S. bonuses; each constriction counts as one melee attack."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 15
+      }
     },
     {
       "id": "animal_snake_limbed",
@@ -228,7 +232,11 @@
             "Crushing/constricting attacks do double normal punch damage plus P.S. bonuses; each constriction counts as one melee attack."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 70
+      }
     },
     {
       "id": "animal_snake_humanoid",
@@ -344,7 +352,11 @@
             }
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 55
+      }
     },
     {
       "id": "animal_snake_scaly_skin",
@@ -397,6 +409,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 71,
+        "max": 85
       }
     },
     {
@@ -509,7 +525,11 @@
             "Crushing/constricting attacks do double normal punch damage plus P.S. bonuses; each constriction counts as one melee attack."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 30
+      }
     },
     {
       "id": "animal_snake_head",
@@ -593,7 +613,11 @@
           "roll": "constrictor",
           "label": "Constrictor"
         }
-      ]
+      ],
+      "percentile": {
+        "min": 86,
+        "max": 100
+      }
     }
   ]
 }

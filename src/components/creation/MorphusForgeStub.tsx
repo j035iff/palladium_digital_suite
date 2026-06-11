@@ -1,6 +1,7 @@
 import { useCharacter } from '../../context/CharacterContext'
 import { MORPHUS_FORGE_IMPLEMENTED } from '../../lib/morphusForgeStub'
 import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
+import { MorphusCustomTraitSlotsPanel } from './morphus/MorphusCustomTraitSlotsPanel'
 
 /** Single-step trait Sub-Forge placeholder (forge-character_creation.md Traits tab). */
 export function MorphusForgeStub() {
@@ -25,8 +26,9 @@ export function MorphusForgeStub() {
         <strong>Continue</strong> at the top right.
       </p>
       {facadeReady ? (
-        <div className="mt-4">
+        <div className="mt-4 space-y-6">
           <PendingDiceResolutionPanel scope="morphus" />
+          <MorphusCustomTraitSlotsPanel />
         </div>
       ) : null}
       {!MORPHUS_FORGE_IMPLEMENTED ? (

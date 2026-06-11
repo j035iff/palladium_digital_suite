@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Shark",
   "parentTable": "animal",
-  "description": "Shark Morphus table (Nightbane Survival Guide (WB5), pp. 80-81). Aquatic: Shark Morphus Nightbane tend to be aggressive and quick to fight. All rows grant Swimming at 96%, indefinite underwater breathing and normal air breathing, and depth tolerance of 3,000 feet (914 m) unless stated otherwise.",
+  "description": "Shark Morphus table. Percentile bands: 01-20% Full Shark, 21-40% Humanoid Shark, 41-60% Shark Eyes & Senses, 61-80% Shark Head, 81-00% Were-Shark.",
   "entries": [
     {
       "id": "animal_shark_full_form",
@@ -109,7 +109,11 @@
         "Helpless on land (attacks per melee round, P.P., and Spd reduced to two) unless another means of locomotion exists.",
         "Cannot manipulate objects even with the mouth.",
         "Transportation on land may be a problem for this cold, slippery, large, heavy character."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "animal_shark_were",
@@ -229,7 +233,11 @@
         "Impervious to cold (no damage).",
         "Can detect blood up to one mile (1.6 km) away underwater; half that on dry land.",
         "Weight and size may be a problem on land and for transportation."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 100
+      }
     },
     {
       "id": "animal_shark_humanoid",
@@ -330,7 +338,11 @@
       "customOneOffs": [
         "Can detect blood up to 3,500 feet (1,067 m) away underwater; half that on dry land.",
         "Cannot be disguised or easily concealed."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 40
+      }
     },
     {
       "id": "animal_shark_eyes_and_senses",
@@ -387,7 +399,11 @@
       },
       "customOneOffs": [
         "Can detect/smell blood up to 6,000 feet (1,828 m) away underwater; half that on dry land."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 60
+      }
     },
     {
       "id": "animal_shark_head",
@@ -468,7 +484,11 @@
       "customOneOffs": [
         "Can detect/smell blood up to two miles (3.2 km) away underwater; half that on dry land.",
         "Cannot be disguised or easily concealed."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 80
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Mineral",
   "parentTable": null,
-  "description": "Mineral Morphus tables (Nightlands (WB2), pp. 144-145; Nightbane Survival Guide (WB5), pp. 93-95). Mineral and Mineral II Morphus tables. Mineral Table I (Dark Designs (WB6) / Nightlands (WB2)): inorganic stone, metal, or crystal bodies.",
+  "description": "Mineral Morphus table. Percentile bands: 01-05% Amethyst Crystal, 06-10% Arsenic, 11-15% Clear Crystal/Quartz, 16-21% Crystalline Body, 22-26% Emerald/Tourmaline, 27-31% Gold, 32-34% Horns Spines or Spikes, 35-39% Iron Hematite, 40-44% Iron Magnetite, 45-51% Living Statue, 52-58% Metal Statue, 59-63% Orpiment, 64-69% Part Inorganic, 70-75% Part Inorganic with Weapons, 76-83% Rough Metal Body, 84-90% Rough Stone Body, 91-95% Silver, 96-00% Uraninite.",
   "entries": [
     {
       "id": "mineral_1_rough_metal_body",
@@ -49,7 +49,11 @@
       "customOneOffs": [
         "The body is roughly human shaped, but large and heavy-set[cite: 41].",
         "Impervious to cold (no damage) but takes double damage from fire[cite: 43]."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 83
+      }
     },
     {
       "id": "mineral_1_metal_statue",
@@ -98,7 +102,11 @@
       "customOneOffs": [
         "Since the Nightbane has a basically humanoid size and shape, he can hide his appearance under clothing and a hood or hat[cite: 45].",
         "Impervious to cold (no damage) but takes double damage from fire[cite: 47]."
-      ]
+      ],
+      "percentile": {
+        "min": 52,
+        "max": 58
+      }
     },
     {
       "id": "mineral_1_rough_stone_body",
@@ -146,7 +154,11 @@
       },
       "customOneOffs": [
         "Resistant to fire and cold (takes half damage)[cite: 50]."
-      ]
+      ],
+      "percentile": {
+        "min": 84,
+        "max": 90
+      }
     },
     {
       "id": "mineral_1_living_statue",
@@ -195,7 +207,11 @@
       "customOneOffs": [
         "Since the Nightbane has a basically humanoid size and shape, he can hide his appearance under clothing with a hood or a hat[cite: 52].",
         "Resistant to fire and cold (takes half damage)[cite: 54]."
-      ]
+      ],
+      "percentile": {
+        "min": 45,
+        "max": 51
+      }
     },
     {
       "id": "mineral_1_part_inorganic",
@@ -225,7 +241,11 @@
       },
       "customOneOffs": [
         "If a leg is inorganic, reduce Spd by 10% (this is a GM/player call based on where the parts manifest)[cite: 55]."
-      ]
+      ],
+      "percentile": {
+        "min": 64,
+        "max": 69
+      }
     },
     {
       "id": "mineral_1_part_inorganic_with_weapons",
@@ -258,7 +278,11 @@
       "customOneOffs": [
         "The hands are resistant to cold, heat and fire (take half damage)[cite: 59].",
         "Adds 2D6 to damage[cite: 59]."
-      ]
+      ],
+      "percentile": {
+        "min": 70,
+        "max": 75
+      }
     },
     {
       "id": "mineral_1_horns_spines_spikes",
@@ -293,7 +317,11 @@
       ],
       "customOneOffs": [
         "Adds an additional 1D6 damage when used as a weapon/in combat[cite: 61]."
-      ]
+      ],
+      "percentile": {
+        "min": 32,
+        "max": 34
+      }
     },
     {
       "id": "mineral_1_crystalline_body",
@@ -343,7 +371,11 @@
         "Laser resistant (half damage).",
         "The hands are not as articulated and have trouble holding on to things, resulting in a -10% on all skills that require the use of hands[cite: 66, 67].",
         "The crystalline hands and fingers act like claws, inflicting an additional 1D6 points of damage on punches."
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 21
+      }
     },
     {
       "id": "mineral_2_amethyst_crystal",
@@ -418,7 +450,11 @@
         "Among mages and healers, amethyst is said to have a property to improve powers of intuition.",
         "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
         "Cannot swim; sinks like a rock."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 5
+      }
     },
     {
       "id": "mineral_2_arsenic",
@@ -514,7 +550,11 @@
         "When heated, the character exudes the smell of garlic which is repugnant to vampires, Wampyrs, were-beasts and select other supernatural beings, and holds them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane.",
         "Clawing, biting and any attack by the Nightbane that cuts or stabs an opponent with the character's mineral body does the usual damage plus 2D6 damage from poison.",
         "The 'Bane can scrape grains of arsenic off his body to use as ingested poison, typically mixed into food or drink."
-      ]
+      ],
+      "percentile": {
+        "min": 6,
+        "max": 10
+      }
     },
     {
       "id": "mineral_2_emerald_tourmaline",
@@ -591,7 +631,11 @@
         "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
         "Cannot swim; sinks like a rock.",
         "Can heal others, restoring 4D6+6 S.D.C. or Hit Points twice per 24 hours, or completely negate poison (restoring all lost H.P./S.D.C. from poison)[cite: 1081, 1082]."
-      ]
+      ],
+      "percentile": {
+        "min": 22,
+        "max": 26
+      }
     },
     {
       "id": "mineral_2_gold",
@@ -672,7 +716,11 @@
         "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
         "Cannot swim; sinks like a lead weight.",
         "+6 to punch and kick damage (in addition to P.S. bonus)."
-      ]
+      ],
+      "percentile": {
+        "min": 27,
+        "max": 31
+      }
     },
     {
       "id": "mineral_2_orpiment",
@@ -750,7 +798,11 @@
         "Cannot swim; sinks like a rock.",
         "Impervious to stench.",
         "When heated, smells of garlic, which is repugnant to vampires, wampyres, werebeasts and select other supernatural beings, holding them at bay for a 20 foot (6.1 m) radius around the Mineral Nightbane."
-      ]
+      ],
+      "percentile": {
+        "min": 59,
+        "max": 63
+      }
     },
     {
       "id": "mineral_2_iron_hematite",
@@ -841,7 +893,11 @@
         "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
         "Cannot swim; sinks like a rock.",
         "+4 to punch and kick damage (in addition to P.S. bonus)."
-      ]
+      ],
+      "percentile": {
+        "min": 35,
+        "max": 39
+      }
     },
     {
       "id": "mineral_2_iron_magnetite",
@@ -940,7 +996,11 @@
         "All mineral Morphus forms make the character impervious to the vampire's bite and mind control.",
         "Cannot swim; sinks like a rock.",
         "+3 to punch and kick damage (in addition to P.S. bonus)."
-      ]
+      ],
+      "percentile": {
+        "min": 40,
+        "max": 44
+      }
     },
     {
       "id": "mineral_2_silver",
@@ -1022,7 +1082,11 @@
         "Cannot swim; sinks like a rock.",
         "+3 to punch and kick damage (in addition to P.S. bonus).",
         "Punches, kicks and other attacks from a Nightbane made of silver inflict double damage to vampires, werebeasts and other beings vulnerable to silver."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 95
+      }
     },
     {
       "id": "mineral_2_clear_crystal_quartz",
@@ -1122,7 +1186,11 @@
         "The Clear Crystal Morphus can see and attack Astral Beings, the clear crystals of his body able to inflict damage to Astral Being with punches, kicks, and any crystalline weapon.",
         "Can form one crystalline weapon from his hand, typically a rod or sword-like weapon that does 2D6 damage[cite: 1125, 1126].",
         "Does +1D6 to Astral Beings."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 15
+      }
     },
     {
       "id": "mineral_2_uraninite",
@@ -1216,7 +1284,11 @@
         "+4 to punch and kick damage (in addition to P.S. bonus).",
         "No flame but radiates heat from the hands to inflict 2D6 damage per attack.",
         "Can fire heat blast up to 20 feet (6.1 m) inflicting 2D6 damage."
-      ]
+      ],
+      "percentile": {
+        "min": 96,
+        "max": 100
+      }
     }
   ]
 }

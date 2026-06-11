@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Substance Abuse",
   "parentTable": null,
-  "description": "Substance Abuse Morphus table (Dark Designs (WB6), pp. 56-58). Features reflect drugs of choice; typically 01-60% active addiction, 61-80% history of abuse, or 81-00% family history/fear of addiction without personal dependency.",
+  "description": "Substance Abuse Morphus table. Percentile bands: 01-10% Alcohol-Soaked, 11-20% Branded Loyalty, 21-30% Hypodermic Quills, 31-50% Pills, 51-60% Pipe Throat, 61-70% Roid-Rage, 71-80% Rolling Paper or Leafy Skin, 81-90% Rotted Teeth, 91-00% Speed Freak.",
   "entries": [
     {
       "id": "substance_abuse_hypodermic_quills",
@@ -79,7 +79,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 56
         }
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "substance_abuse_pills",
@@ -137,6 +141,10 @@
       ],
       "skillModifiers": {
         "globalSkillModifier": -10
+      },
+      "percentile": {
+        "min": 31,
+        "max": 50
       }
     },
     {
@@ -194,7 +202,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 57
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "substance_abuse_branded_loyalty",
@@ -263,6 +275,10 @@
           "disease",
           "horrorFactor"
         ]
+      },
+      "percentile": {
+        "min": 11,
+        "max": 20
       }
     },
     {
@@ -319,7 +335,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 58
         }
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "substance_abuse_pipe_throat",
@@ -368,7 +388,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 58
         }
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "substance_abuse_rotted_teeth",
@@ -439,7 +463,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 58
         }
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "substance_abuse_roid_rage",
@@ -475,7 +503,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 58
         }
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "substance_abuse_speed_freak",
@@ -526,7 +558,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 58
         }
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

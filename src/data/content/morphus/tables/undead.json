@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Undead",
   "parentTable": null,
-  "description": "Undead Morphus table (Nightbane Survival Guide (WB5), pp. 1-3). Manifests from trauma, fascination with death/immortality, or a life that felt like a dead end. Most Undead Nightbane have little fear of death; all have no life signs (no pulse, respiration, or body heat), need not breathe, are immune to extreme cold and heat, impervious to vampire bite and mind control, and are not attacked by zombies unless they strike first.",
+  "description": "Undead Morphus table. Percentile bands: 01-20% Nosferatu Vampire, 21-40% Partial Skeleton Form, 41-60% Vampiric Nature, 61-80% Walking Corpse, 81-00% Walking Mummy.",
   "entries": [
     {
       "id": "undead_nosferatu_vampire",
@@ -66,7 +66,11 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
       },
-      "naturalAr": 12
+      "naturalAr": 12,
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "undead_partial_skeleton_form",
@@ -109,6 +113,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 21,
+        "max": 40
       }
     },
     {
@@ -182,7 +190,11 @@
           }
         }
       },
-      "naturalAr": 10
+      "naturalAr": 10,
+      "percentile": {
+        "min": 41,
+        "max": 60
+      }
     },
     {
       "id": "undead_walking_corpse",
@@ -218,6 +230,10 @@
             "modifierPercent": -15
           }
         ]
+      },
+      "percentile": {
+        "min": 61,
+        "max": 80
       }
     },
     {
@@ -258,6 +274,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 81,
+        "max": 100
       }
     }
   ]

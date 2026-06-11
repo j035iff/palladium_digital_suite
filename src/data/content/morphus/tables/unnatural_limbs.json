@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unnatural Limbs",
   "parentTable": null,
-  "description": "Unnatural Limbs Morphus tables (Nightbane Core Rulebook, pp. 104-105; Nightbane Survival Guide (WB5), pp. 97-98; Dark Designs (WB6), p. 136). Unnatural limb Morphus tables. Table I (Unnatural Limbs) from Nightbane Core Rulebook / Dark Designs (WB6) - extra tails, tentacles, arms, pseudopods, and similar limb mutations (01-00%, no cross-table routers). Table II (Unnatural Appendages & Limbs) from Survival Guide only - chains, eye stalks, snake body, spider legs, and other appendage forms (01-00%).",
+  "description": "Unnatural Limbs Morphus table. Percentile bands: 01-06% 2D4 Pairs of Tiny Arms and Hands, 07-11% Additional Arms in Unusual Places, 12-16% Antennae, 17-21% Articulated Spikes, 22-28% Chains, 29-34% Dual Forearms and Hands on Each Arm, 35-36% Elephant Trunk, 37-42% Eye Stalks, 43-47% Flexible Limbs, 48-54% Four Arms, 55-59% Long Sensitive Fingers, 60-64% Mandibles, 65-70% Prehensile Hair, 71-76% Prehensile Tail, 77-83% Pseudopods, 84-85% Snake Body, 86-87% Spider Legs, 88-93% Spiked Prehensile Tail, 94-00% Tentacles.",
   "entries": [
     {
       "id": "unnatural_limbs_2d4_pairs_of_tiny_arms_and_hands",
@@ -29,6 +29,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 1,
+        "max": 6
       }
     },
     {
@@ -71,6 +75,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 7,
+        "max": 11
       }
     },
     {
@@ -100,6 +108,10 @@
         "hf": {
           "flat": 1
         }
+      },
+      "percentile": {
+        "min": 12,
+        "max": 16
       }
     },
     {
@@ -129,6 +141,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 17,
+        "max": 21
       }
     },
     {
@@ -145,7 +161,11 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus has 1D4+1 chains made of metal, vertebrae bones, sinew, intestines, or plant vines. 01-50% the chains are attached to the character’s flesh by hooks and pins, or"
+      "description": "The Morphus has 1D4+1 chains made of metal, vertebrae bones, sinew, intestines, or plant vines. 01-50% the chains are attached to the character’s flesh by hooks and pins, or",
+      "percentile": {
+        "min": 22,
+        "max": 28
+      }
     },
     {
       "id": "unnatural_limbs_dual_forearms_and_hands_on_each_arm",
@@ -194,6 +214,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 29,
+        "max": 34
       }
     },
     {
@@ -210,7 +234,11 @@
           "pageNumber": 97
         }
       ],
-      "description": "The Morphus is a human with leathery gray skin and an elephant’s trunk somewhere on the body: 01-25% on the face in place of the nose, 26-50% on the side or back of the head,"
+      "description": "The Morphus is a human with leathery gray skin and an elephant’s trunk somewhere on the body: 01-25% on the face in place of the nose, 26-50% on the side or back of the head,",
+      "percentile": {
+        "min": 35,
+        "max": 36
+      }
     },
     {
       "id": "unnatural_limbs_eye_stalks",
@@ -260,6 +288,10 @@
       },
       "sensory": {
         "sharpVision": true
+      },
+      "percentile": {
+        "min": 37,
+        "max": 42
       }
     },
     {
@@ -305,6 +337,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 43,
+        "max": 47
       }
     },
     {
@@ -331,6 +367,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 48,
+        "max": 54
       }
     },
     {
@@ -386,6 +426,10 @@
             "modifierPercent": 5
           }
         ]
+      },
+      "percentile": {
+        "min": 55,
+        "max": 59
       }
     },
     {
@@ -427,7 +471,11 @@
           "damageFormula": "3D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 60,
+        "max": 64
+      }
     },
     {
       "id": "unnatural_limbs_prehensile_hair",
@@ -467,6 +515,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 65,
+        "max": 70
       }
     },
     {
@@ -507,6 +559,10 @@
             "modifierPercent": 20
           }
         ]
+      },
+      "percentile": {
+        "min": 71,
+        "max": 76
       }
     },
     {
@@ -534,6 +590,10 @@
           "flat": 2,
           "dice": "1D4+2"
         }
+      },
+      "percentile": {
+        "min": 77,
+        "max": 83
       }
     },
     {
@@ -576,6 +636,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 84,
+        "max": 85
       }
     },
     {
@@ -612,6 +676,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 86,
+        "max": 87
       }
     },
     {
@@ -633,7 +701,11 @@
           "pageNumber": 104
         }
       ],
-      "description": "Same as above, except that the tail ends in a spike, blade, stinger or club with 2D4 small spikes at the end. Strikes with the tail inflict 2D6 damage."
+      "description": "Same as above, except that the tail ends in a spike, blade, stinger or club with 2D4 small spikes at the end. Strikes with the tail inflict 2D6 damage.",
+      "percentile": {
+        "min": 88,
+        "max": 93
+      }
     },
     {
       "id": "unnatural_limbs_tentacles",
@@ -659,6 +731,10 @@
         "hf": {
           "dice": "1D4"
         }
+      },
+      "percentile": {
+        "min": 94,
+        "max": 100
       }
     }
   ]

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Pestilence & Disease",
   "parentTable": null,
-  "description": "Pestilence & Disease Morphus table (Dark Designs (WB6), pp. 46-47). Sickly, infectious, or disease-haunted forms.",
+  "description": "Pestilence/Disease Morphus table. Percentile bands: 01-05% Anthrax, 06-15% Buzzing Pests, 16-25% Creeping Crud, 26-35% Ebola/Bleeding, 36-40% Infected Lesions, 41-50% Life Support/Coma Victim, 51-60% Madness/Mad Cow/Brain Worm, 61-65% Malignant Growths, 66-75% Oozing Rash, 76-85% Pestilence/Bugs/Parasite Infestation, 86-90% Swelling/Bloating, 91-00% Typhoid Mary/Patient Zero.",
   "entries": [
     {
       "id": "morphus_pestilence_typhoid_mary",
@@ -71,6 +71,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
       }
     },
     {
@@ -150,7 +154,11 @@
         "Vampires and other creatures that can sense and track blood by smell are +25% to track this Morphus.",
         "Constantly oozing blood leaves a blood trail (+15% to opponents' Tracking skill).",
         "Some develop a taste for blood and may drink the blood of their enemies."
-      ]
+      ],
+      "percentile": {
+        "min": 26,
+        "max": 35
+      }
     },
     {
       "id": "morphus_pestilence_anthrax",
@@ -228,7 +236,11 @@
       },
       "customOneOffs": [
         "+3 to Perception Rolls to recognize disease."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 5
+      }
     },
     {
       "id": "morphus_pestilence_creeping_crud",
@@ -304,7 +316,11 @@
       },
       "customOneOffs": [
         "Morphus may be a different gender than the Facade."
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 25
+      }
     },
     {
       "id": "morphus_pestilence_bugs",
@@ -377,7 +393,11 @@
       },
       "customOneOffs": [
         "Impervious to the venom of insects."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 85
+      }
     },
     {
       "id": "morphus_pestilence_life_support",
@@ -482,7 +502,11 @@
       },
       "customOneOffs": [
         "Reduce base P.P.E. by 2D6 points."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "morphus_pestilence_madness",
@@ -530,7 +554,11 @@
       },
       "customOneOffs": [
         "The character may be a bit absentminded and forgetful."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "morphus_pestilence_swelling",
@@ -615,7 +643,11 @@
       },
       "customOneOffs": [
         "Reduce Spd attribute by 1D4."
-      ]
+      ],
+      "percentile": {
+        "min": 86,
+        "max": 90
+      }
     },
     {
       "id": "morphus_pestilence_growths",
@@ -672,6 +704,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 61,
+        "max": 65
       }
     },
     {
@@ -746,7 +782,11 @@
       ],
       "customOneOffs": [
         "Impervious to infection."
-      ]
+      ],
+      "percentile": {
+        "min": 66,
+        "max": 75
+      }
     },
     {
       "id": "morphus_pestilence_infected_lesions",
@@ -821,6 +861,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 36,
+        "max": 40
       }
     },
     {
@@ -892,7 +936,11 @@
       },
       "customOneOffs": [
         "Resistant to insect venom (half damage, penalties, and duration)."
-      ]
+      ],
+      "percentile": {
+        "min": 6,
+        "max": 15
+      }
     }
   ]
 }

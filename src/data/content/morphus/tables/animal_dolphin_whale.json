@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Dolphin/Whale",
   "parentTable": "animal",
-  "description": "Dolphin/Whale Morphus table (Nightbane Survival Guide (WB5), pp. 77-78). Aquatic: Dolphin/Whale (Cetacean) Cetaceans are mammals and must breathe air. All rows grant Swimming at 90%, hold breath for 1D6+6 minutes, echolocation (operate perfectly in darkness or when blinded), and swimming speed equal to land Spd plus 50% unless a row states otherwise.",
+  "description": "Dolphin/Whale Morphus table (Nightbane Survival Guide (WB5), pp. 77-78). Percentile bands: 01-10% Aquatic Humanoid, 11-30% Finned Humanoid, 31-50% Full Cetacean, 51-70% Humanoid Cetacean, 71-80% Mermaid/Merman, 81-00% Were-Cetacean.",
   "entries": [
     {
       "id": "animal_dolphin_whale_full_cetacean",
@@ -170,7 +170,11 @@
       "customOneOffs": [
         "Can manipulate objects with the mouth in a pinch (, -5 to strike or parry with melee weapons, cannot use modern weapons).",
         "Transportation on land may be a problem for these large, heavy characters."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 50
+      }
     },
     {
       "id": "animal_dolphin_whale_were_cetacean",
@@ -351,7 +355,11 @@
       ],
       "customOneOffs": [
         "Weight and size may be a problem on land and for transportation."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 100
+      }
     },
     {
       "id": "animal_dolphin_whale_humanoid",
@@ -507,7 +515,11 @@
       ],
       "customOneOffs": [
         "Weight and size may be a problem on land and for transportation."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 70
+      }
     },
     {
       "id": "animal_dolphin_whale_finned_humanoid",
@@ -588,6 +600,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 11,
+        "max": 30
       }
     },
     {
@@ -650,6 +666,10 @@
             "modifierPercent": -5
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 10
       }
     },
     {
@@ -725,7 +745,11 @@
       },
       "customOneOffs": [
         "The lower aquatic torso can be concealed with a blanket; mobility on land may require a wheelchair, the Air Swim Talent, or other means."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     }
   ]
 }

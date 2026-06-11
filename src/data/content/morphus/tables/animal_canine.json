@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Canine",
   "parentTable": "animal",
-  "description": "Canine Morphus tables (Nightbane Core Rulebook, p. 97; Dark Designs (WB6), p. 130). Wolves are most common, but dogs of all types, foxes, and other canines are possible. Player selects specific canine species.",
+  "description": "Canine Morphus table. Percentile bands: 01-10% Canine Centauroid, 11-30% Canine Head, 31-55% Canine Humanoid, 56-75% Full Canine, 76-00% Were-Canine.",
   "entries": [
     {
       "id": "animal_canine_full",
@@ -100,7 +100,11 @@
         "Superior sense of smell and hearing.",
         "Can body-slam enemies (inflicts the equivalent of punch damage).",
         "Cannot punch, kick, or use weapons or tools."
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 75
+      }
     },
     {
       "id": "animal_canine_were",
@@ -198,6 +202,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 76,
+        "max": 100
       }
     },
     {
@@ -299,6 +307,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 31,
+        "max": 55
       }
     },
     {
@@ -393,6 +405,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 10
       }
     },
     {
@@ -469,6 +485,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 11,
+        "max": 30
       }
     }
   ]

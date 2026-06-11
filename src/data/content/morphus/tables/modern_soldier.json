@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Modern Soldier",
   "parentTable": null,
-  "description": "Modern Soldier Morphus table (Dark Designs (WB6), pp. 53-55). Military gear and tactics; weapons, helmets, and armor may be biomechanical. With any Modern Soldier feature: +1 to save vs Horror Factor and +1 to Perception Rolls to recognize ambushes, booby-traps, military weapons, and explosive devices.",
+  "description": "Modern Soldier Morphus table (Dark Designs (WB6), pp. 54-55). Percentile bands: 01-10% Body Armor, 11-20% Camouflage, 21-30% Dress Uniform, 31-40% Field Radio, 41-50% Gas Mask, 51-60% Heavy Firepower, 61-70% Medic and First Aid, 71-80% Night Hunter/Nightvision Goggles, 81-90% Personal Weaponry, 91-00% Other (Biomechanical).",
   "entries": [
     {
       "id": "modern_soldier_body_armor",
@@ -86,7 +86,11 @@
       "customOneOffs": [
         "+1 to Perception Rolls to recognize potential ambushes and booby-traps, as well as military weapons and explosive devices.",
         "The armor provides no protection against damage from disease, gas attacks, possession, spells, Talents, magic weapons, or other supernatural powers (which ignore the armor's S.D.C. entirely)."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "modern_soldier_camouflage",
@@ -174,7 +178,11 @@
         "Given 1D4 minutes and suitable materials, the Nightbane can prepare a personal hiding spot that is extremely difficult to detect (Perception Roll of 1D4+13 needed to spot the character).",
         "-20% to opponents' ability to Detect Concealment, Detect Ambush, Tailing, or Tracking rolls when trying to locate this Nightbane (bonus does not apply if other people are with the 'Bane).",
         "Gets automatic first initiative when ambushing an opponent from a hiding place (normal initiative penalty applies when not ambushing)."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "modern_soldier_dress_uniform",
@@ -245,7 +253,11 @@
         "The Nightbane gains one Modern Weapon Proficiency of choice, but it can only be used while in Morphus form.",
         "+5% to Invoke Trust/Intimidate.",
         "Disguise, Impersonation, and Undercover Ops are impossible unless impersonating a military officer in full regalia."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "modern_soldier_gas_mask",
@@ -315,7 +327,11 @@
         "Even when the gas or disease is magical, the character is +4 to save against its effects.",
         "Nuclear radiation is ineffective against this Nightbane and will not even irradiate personal equipment kept on the character's person.",
         "Voice is a bit muffled, causing the penalty to Communications skills."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "modern_soldier_medic_and_first_aid",
@@ -382,7 +398,11 @@
         "By spending one P.P.E., the Nightbane can conjure basic medical supplies from the kit (e.g., bandages, antiseptic, tongue depressors) by visualizing what is needed.",
         "By spending 6 P.P.E., the Nightbane has a healing touch that stops bleeding, causes open wounds to begin to heal, starts any stopped heart, and instantly restores 4D6 Hit Points or S.D.C.",
         "If the Nightbane Medic has any stigmata, it is likely to be bullet holes that never heal and regularly ooze blood, or bandages covering the head or face."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "modern_soldier_night_hunter_goggles",
@@ -427,7 +447,11 @@
         "+1 to Perception Rolls to recognize potential ambushes and booby-traps, as well as military weapons and explosive devices (stacks with the +2 Perception bonus from this trait).",
         "Never afraid of the dark and impervious to even magical blindness.",
         "Punches, kicks, and melee attacks with a handheld weapon do double damage to Shadow creatures, Nightlords, and all creatures from the Nightlands!"
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "modern_soldier_field_radio",
@@ -486,7 +510,11 @@
         "+1 to Perception Rolls to recognize potential ambushes and booby-traps, as well as military weapons and explosive devices.",
         "The radio communications can only be jammed by magical means like the Anti-Magic Cloud or Sanctum spell.",
         "Double the range and halve the cost of using the Operator Talent if possessed by this Nightbane. Also double the range in the Nightlands."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "modern_soldier_personal_weaponry",
@@ -555,6 +583,10 @@
       ],
       "skillModifiers": {
         "globalSkillModifier": -5
+      },
+      "percentile": {
+        "min": 81,
+        "max": 90
       }
     },
     {
@@ -668,11 +700,15 @@
         "+1 to Perception Rolls to recognize potential ambushes and booby-traps, as well as military weapons and explosive devices.",
         "Each attack with this beast counts as one attack. Ammunition necessary is provided at a rate of three shots per melee round.",
         "Double the range and damage of the Darkblast Talent if channeled through this weapon."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "modern_soldier_biomechanical",
-      "name": "Biomechanical",
+      "name": "Other (Biomechanical)",
       "tableCategory": "Modern Soldier",
       "entryRole": "table_router",
       "gameSystems": [
@@ -697,7 +733,16 @@
       "customOneOffs": [
         "+1 to Perception Rolls to recognize potential ambushes and booby-traps, as well as military weapons and explosive devices.",
         "Roll for or select a feature from one of the Biomechanical tables (including Aquatic and Gear-Head), then relate it back to modern military."
-      ]
+      ],
+      "crossTableRoll": {
+        "targetTableId": "biomechanical",
+        "targetTableName": "Biomechanical",
+        "note": "Roll on a Biomechanical table (including Aquatic or Gear Head) and relate it to modern military."
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

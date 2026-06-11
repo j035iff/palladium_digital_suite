@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Primate",
   "parentTable": "animal",
-  "description": "Primate Morphus table (Dark Designs (WB6), pp. 24-25). Humanity's closest cousins. All Nightbane with at least one primate feature automatically gain Climbing at a base ability of 50%. Main table: 01-14% Monkey, 15-26% Baboon, 27-38% Chimpanzee, 39-50% Orangutan, 51-64% Gorilla, 65-76% Missing Link, 77-88% Prehensile Feet, 89-00% then roll or pick Sharp Teeth (01-25%), Prehensile Tail (26-50%), Shaggy Hair (51-75%), or Elongated Arms (76-00%).",
+  "description": "Primate Morphus table. Percentile bands: 01-12% Baboon, 13-24% Chimpanzee, 25-27% Elongated Arms, 28-41% Gorilla, 42-53% Missing Link, 54-67% Monkey, 68-79% Orangutan, 80-91% Prehensile Feet, 92-94% Prehensile Tail, 95-97% Shaggy Hair, 98-00% Sharp Teeth.",
   "entries": [
     {
       "id": "animal_primate_monkey",
@@ -74,7 +74,11 @@
         "Can climb, jump, and swing through trees or dense urban settings with poles, pipes, and ledges at twice normal running speed.",
         "Auto-Dodge (use only bonuses from the R.C.C. and high P.P. attribute).",
         "Reduce total S.D.C. (not Hit Points) by half in Morphus form."
-      ]
+      ],
+      "percentile": {
+        "min": 54,
+        "max": 67
+      }
     },
     {
       "id": "animal_primate_baboon",
@@ -145,7 +149,11 @@
       },
       "customOneOffs": [
         "Spd reflects running on all fours or jumping from perch to perch; reduce running speed by half when moving upright."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 12
+      }
     },
     {
       "id": "animal_primate_chimpanzee",
@@ -215,7 +223,11 @@
       "customOneOffs": [
         "May parry with legs/feet.",
         "Spd reflects running on all fours; reduce running speed by half when moving upright."
-      ]
+      ],
+      "percentile": {
+        "min": 13,
+        "max": 24
+      }
     },
     {
       "id": "animal_primate_orangutan",
@@ -294,7 +306,11 @@
       "customOneOffs": [
         "Arms elongated; add one foot (0.3 m) to reach. +1 to parry using legs/feet (included in parry bonus above).",
         "Spd reflects climbing and swinging tree-to-tree or building-to-building; running speed is half on flat ground due to short, bowed legs."
-      ]
+      ],
+      "percentile": {
+        "min": 68,
+        "max": 79
+      }
     },
     {
       "id": "animal_primate_gorilla",
@@ -363,7 +379,11 @@
       "customOneOffs": [
         "Weight increased to 3D6×10+300 lbs (136 to 480 kg).",
         "Spd reflects running on all fours; reduce running speed by half when moving upright."
-      ]
+      ],
+      "percentile": {
+        "min": 28,
+        "max": 41
+      }
     },
     {
       "id": "animal_primate_missing_link",
@@ -431,7 +451,11 @@
       },
       "customOneOffs": [
         "-10% to all Communications skills."
-      ]
+      ],
+      "percentile": {
+        "min": 42,
+        "max": 53
+      }
     },
     {
       "id": "animal_primate_prehensile_feet",
@@ -472,7 +496,11 @@
       "customOneOffs": [
         "+1 to parry using the legs/feet (included in parry bonus above).",
         "Feet built for dexterity instead of running; Spd attribute reduced by half."
-      ]
+      ],
+      "percentile": {
+        "min": 80,
+        "max": 91
+      }
     },
     {
       "id": "animal_primate_sharp_teeth",
@@ -530,7 +558,11 @@
       "customOneOffs": [
         "+1 to Horror Factor whenever teeth are displayed (e.g. in a smile).",
         "Disguise and Undercover Ops penalties apply unless prosthetic teeth cover the pointed teeth."
-      ]
+      ],
+      "percentile": {
+        "min": 98,
+        "max": 100
+      }
     },
     {
       "id": "animal_primate_prehensile_tail",
@@ -572,7 +604,11 @@
         "Tail supports full body weight when suspended; can carry about one third body weight (~60 lbs / 27 kg).",
         "and balance when the tail is used; adds one melee attack/action.",
         "Easy to conceal tucked in clothing."
-      ]
+      ],
+      "percentile": {
+        "min": 92,
+        "max": 94
+      }
     },
     {
       "id": "animal_primate_shaggy_hair",
@@ -623,7 +659,11 @@
       },
       "customOneOffs": [
         "Hair may leave clearly discernible trace evidence and may get in the way from time to time."
-      ]
+      ],
+      "percentile": {
+        "min": 95,
+        "max": 97
+      }
     },
     {
       "id": "animal_primate_elongated_arms",
@@ -678,6 +718,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 25,
+        "max": 27
       }
     }
   ]

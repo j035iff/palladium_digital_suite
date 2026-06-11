@@ -1,0 +1,20 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-morphus.schema.json",
+  "id": "morphus_example_other_router",
+  "name": "Other",
+  "tableCategory": "Example Table",
+  "entryRole": "table_router",
+  "customTraitResolution": {
+    "kind": "player_gm_authored",
+    "requiresGmApproval": true,
+    "prompt": "Work with your G.M. to define a custom Morphus feature.",
+    "allowedFields": [
+      "statModifiers",
+      "saveModifiers",
+      "atWillAbilities",
+      "naturalWeapons",
+      "customOneOffs"
+    ]
+  },
+  "description": "Schema example — opens Custom Trait Workshop at runtime."
+}

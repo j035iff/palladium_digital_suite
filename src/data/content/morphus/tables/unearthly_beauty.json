@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Unearthly Beauty",
   "parentTable": null,
-  "description": "Unearthly Beauty Morphus tables (Nightbane Core Rulebook, p. 93; Dark Designs (WB6), p. 126). Not all Morphus forms are horrible-some inspire fascination and awe. These Nightbane are often nicknamed \"Barbie\" or \"Ken\" by others. Table I rolls 01-90%; 91-95% Combination of Two and 96-00% Other are cross-table routers (not listed as traits).",
+  "description": "Unearthly Beauty Morphus tables (Nightbane Core Rulebook, p. 93; Dark Designs (WB6), p. 126). Not all Morphus forms are horrible-some inspire fascination and awe. Percentile bands: 01-20% Animal Magnetism, 21-30% Doll-Like Appearance, 31-50% Elfin Features, 51-70% Fallen Angel, 71-90% Physical Perfection, 91-95% Combination of Two, 96-00% Combination of Three or Other.",
   "entries": [
     {
       "id": "unearthly_beauty_animal_magnetism",
@@ -36,7 +36,11 @@
       "customOneOffs": [
         "Minimum P.B. and M.A. is 20 after bonuses.",
         "Charisma attraction cannot be turned off; strangers may become a distraction or hazard."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "unearthly_beauty_doll_like_appearance",
@@ -65,6 +69,10 @@
         "hf": {
           "flat": 10
         }
+      },
+      "percentile": {
+        "min": 21,
+        "max": 30
       }
     },
     {
@@ -100,7 +108,11 @@
       },
       "customOneOffs": [
         "Minimum P.B. 17 after bonus."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 50
+      }
     },
     {
       "id": "unearthly_beauty_fallen_angel",
@@ -139,7 +151,11 @@
       },
       "customOneOffs": [
         "Feathered wings on back; slow flight."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 70
+      }
     },
     {
       "id": "unearthly_beauty_physical_perfection",
@@ -177,7 +193,97 @@
         "hf": {
           "flat": 6
         }
+      },
+      "percentile": {
+        "min": 71,
+        "max": 90
       }
+    },
+    {
+      "id": "unearthly_beauty_combination_of_two",
+      "name": "Combination of Two",
+      "tableCategory": "Unearthly Beauty",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 93
+        }
+      ],
+      "description": "Roll or select two additional Unearthly Beauty features. Bonuses from both traits apply.",
+      "percentile": {
+        "min": 91,
+        "max": 95
+      },
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 2,
+        "allowedChoicesPool": [
+          "unearthly_beauty_animal_magnetism",
+          "unearthly_beauty_doll_like_appearance",
+          "unearthly_beauty_elfin_features",
+          "unearthly_beauty_fallen_angel",
+          "unearthly_beauty_physical_perfection"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "unearthly_beauty",
+        "targetTableName": "Unearthly Beauty",
+        "note": "Pick two traits from this table (excluding router rows)."
+      }
+    },
+    {
+      "id": "unearthly_beauty_combination_of_three_or_other",
+      "name": "Combination of Three or Other",
+      "tableCategory": "Unearthly Beauty",
+      "entryRole": "table_router",
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 126
+        },
+        {
+          "gameSystem": "nightbane",
+          "reference": "Nightbane Core Rulebook",
+          "pageNumber": 93
+        }
+      ],
+      "description": "Either roll three additional Unearthly Beauty features, or roll on another random Morphus table and relate the result to unearthly beauty.",
+      "percentile": {
+        "min": 96,
+        "max": 100
+      },
+      "subTraitChoicesBudget": {
+        "slotsAvailable": 3,
+        "allowedChoicesPool": [
+          "unearthly_beauty_animal_magnetism",
+          "unearthly_beauty_doll_like_appearance",
+          "unearthly_beauty_elfin_features",
+          "unearthly_beauty_fallen_angel",
+          "unearthly_beauty_physical_perfection"
+        ]
+      },
+      "crossTableRoll": {
+        "targetTableId": "unearthly_beauty",
+        "targetTableName": "Unearthly Beauty",
+        "note": "Pick three traits from this table, or roll another Morphus table (player/GM choice)."
+      },
+      "customOneOffs": [
+        "Combination of three: pick any three traits from this table (excluding router rows).",
+        "Other: roll on another random Morphus table; re-roll if this result comes up again."
+      ]
     }
   ]
 }

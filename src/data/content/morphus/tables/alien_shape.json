@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Alien Shape",
   "parentTable": null,
-  "description": "Alien Shape Morphus table (Nightbane Core Rulebook, p. 103; Nightbane Survival Guide (WB5), p. 72; Dark Designs (WB6), pp. 135-136). Percentile bands: 01-05% Abnormally Large Sensory Organs, 06-10% Alien Plantlife, 11-15% Armored Scales, 16-19% Baggy Flaps of Skin, 20-23% Bony Exoskeleton, 24-28% Brute, 29-30% Cone Head, 31-34% Crystalline, 35-39% Hulking Monster, 40-43% Living Tattoos, 44-48% Mouth-Covered Body, 49-53% Multiple Heads, 54-58% No Bones, 59-63% On Fire, 64-68% Plasmoid, 69-73% Shadow Man, 74-77% Shaggy Hairy, 78-82% Slimy Slug-Like Skin, 83-86% Thorns, 87-91% Unusual Skin Color, 92-95% Wrinkled Skin, 96-00% Combination of 2.",
+  "description": "Alien Shape Morphus table (Nightbane Core Rulebook, p. 103; Nightbane Survival Guide (WB5), p. 72; Dark Designs (WB6), pp. 135-136). Percentile bands: 01-05% Abnormally Large Sensory Organs, 06-12% Alien Plantlife, 13-17% Armored Scales, 18-21% Baggy Flaps of Skin, 22-26% Bony Exoskeleton, 27-31% Brute, 32-33% Cone Head, 34-38% Crystalline, 39-43% Hulking Monster, 44-47% Living Tattoos, 48-52% Mouth-Covered Body, 53-57% Multiple Heads, 58-62% No Bones, 63-67% On Fire, 68-72% Plasmoid, 73-77% Shadow Man, 78-81% Shaggy Hairy, 82-86% Slimy Slug-Like Skin, 87-91% Unusual Skin Color, 92-95% Wrinkled Skin, 96-00% Combination of 2.",
   "entries": [
     {
       "id": "alien_shape_abnormally_large_sensory_organs",
@@ -62,9 +62,14 @@
       }
     },
     {
-      "id": "alien_shape_bark_like_skin",
+      "id": "alien_shape_plant_life",
       "name": "Alien Plantlife",
       "tableCategory": "Alien Shape",
+      "entryRole": "table_router",
+      "percentile": {
+        "min": 6,
+        "max": 12
+      },
       "gameSystems": [
         "nightbane"
       ],
@@ -80,19 +85,21 @@
           "pageNumber": 136
         }
       ],
-      "description": "The character looks like a bizarre combination of a tree and human, with bark instead of skin, and often with leaves or vines instead of hair!",
-      "statModifiers": {
-        "sdc": {
-          "dice": "1D4x10"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
+      "description": "Either roll or select from the Plant Life table and modify the result to be alien, or work with your G.M. to create a new alien plant feature.",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Either roll or select from the Plant Life table and modify the result to be alien, or work with your G.M. to create something new."
       },
-      "percentile": {
-        "min": 6,
-        "max": 10
-      }
+      "crossTableRoll": {
+        "targetTableId": "plant_life",
+        "targetTableName": "Plant Life",
+        "note": "Resolve on the Plant Life table, then make the result distinctly alien."
+      },
+      "customOneOffs": [
+        "Plant Life path: pick or roll a Plant Life trait and alter it to read as alien flora.",
+        "Custom path: use the Custom Trait Workshop if nothing on Plant Life fits."
+      ]
     },
     {
       "id": "alien_shape_armored_scales",
@@ -125,8 +132,8 @@
         }
       },
       "percentile": {
-        "min": 11,
-        "max": 15
+        "min": 13,
+        "max": 17
       }
     },
     {
@@ -182,8 +189,8 @@
         "Can easily hide small objects beneath the folds of skin."
       ],
       "percentile": {
-        "min": 16,
-        "max": 19
+        "min": 18,
+        "max": 21
       }
     },
     {
@@ -218,8 +225,8 @@
         }
       },
       "percentile": {
-        "min": 20,
-        "max": 23
+        "min": 22,
+        "max": 26
       }
     },
     {
@@ -278,8 +285,8 @@
         }
       ],
       "percentile": {
-        "min": 24,
-        "max": 28
+        "min": 27,
+        "max": 31
       }
     },
     {
@@ -342,8 +349,8 @@
         ]
       },
       "percentile": {
-        "min": 29,
-        "max": 30
+        "min": 32,
+        "max": 33
       }
     },
     {
@@ -410,8 +417,8 @@
         "The Nightbane can parry bladed weapons and fiery torches with his bare hands."
       ],
       "percentile": {
-        "min": 31,
-        "max": 34
+        "min": 34,
+        "max": 38
       }
     },
     {
@@ -456,8 +463,8 @@
         "Weighs 800 pounds (360 kg) per every foot (0.3 m) of height."
       ],
       "percentile": {
-        "min": 35,
-        "max": 39
+        "min": 39,
+        "max": 43
       }
     },
     {
@@ -489,8 +496,8 @@
         "Tattoos change and move; they may reflect the character's current state of mind (reacting to emotions) or be controlled directly by the character (50/50 chance or select one)."
       ],
       "percentile": {
-        "min": 40,
-        "max": 43
+        "min": 44,
+        "max": 47
       }
     },
     {
@@ -539,8 +546,8 @@
         "The mouths cannot speak language, but they can scream, whistle, hoot, and growl."
       ],
       "percentile": {
-        "min": 44,
-        "max": 48
+        "min": 48,
+        "max": 52
       }
     },
     {
@@ -627,8 +634,8 @@
         "Each head is capable of speech and can look in a different direction from the others."
       ],
       "percentile": {
-        "min": 49,
-        "max": 53
+        "min": 53,
+        "max": 57
       }
     },
     {
@@ -688,8 +695,8 @@
         "Does not allow the Nightbane any type of stretching power or shape shifting abilities."
       ],
       "percentile": {
-        "min": 54,
-        "max": 58
+        "min": 58,
+        "max": 62
       }
     },
     {
@@ -753,8 +760,8 @@
         "Prowl and hiding are impossible due to the light and noise of the flames."
       ],
       "percentile": {
-        "min": 59,
-        "max": 63
+        "min": 63,
+        "max": 67
       }
     },
     {
@@ -796,8 +803,8 @@
         "Can slip out of restraints and conceal himself as a glob or goo."
       ],
       "percentile": {
-        "min": 64,
-        "max": 68
+        "min": 68,
+        "max": 72
       }
     },
     {
@@ -852,8 +859,8 @@
         "Sticks out like a sore thumb in daytime or in well-lit areas."
       ],
       "percentile": {
-        "min": 69,
-        "max": 73
+        "min": 73,
+        "max": 77
       }
     },
     {
@@ -892,8 +899,8 @@
         "Hair may leave clearly discernable trace evidence and may get in the way from time to time."
       ],
       "percentile": {
-        "min": 74,
-        "max": 77
+        "min": 78,
+        "max": 81
       }
     },
     {
@@ -939,40 +946,7 @@
         "Everyone who touches him needs to save vs Horror Factor or they will be so disgusted they can't bear to touch him again."
       ],
       "percentile": {
-        "min": 78,
-        "max": 82
-      }
-    },
-    {
-      "id": "alien_shape_thorns",
-      "name": "Thorns",
-      "tableCategory": "Alien Shape",
-      "gameSystems": [
-        "nightbane"
-      ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightbane Core Rulebook",
-          "pageNumber": 103
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 136
-        }
-      ],
-      "description": "Thorns protrude from the character's body! They may appear to be natural growths, or they might be stigmata-like, appearing to painfully pierce the character's skin!",
-      "statModifiers": {
-        "sdc": {
-          "dice": "4D6"
-        },
-        "hf": {
-          "dice": "1D4"
-        }
-      },
-      "percentile": {
-        "min": 83,
+        "min": 82,
         "max": 86
       }
     },
@@ -1065,7 +1039,6 @@
         "slotsAvailable": 2,
         "allowedChoicesPool": [
           "alien_shape_abnormally_large_sensory_organs",
-          "alien_shape_bark_like_skin",
           "alien_shape_armored_scales",
           "alien_shape_baggy_flaps_of_skin",
           "alien_shape_bony_exoskeleton",
@@ -1082,7 +1055,6 @@
           "alien_shape_shadow_man",
           "alien_shape_shaggy_hairy",
           "alien_shape_slimy_slug_like_skin",
-          "alien_shape_thorns",
           "alien_shape_unusual_skin_color",
           "alien_shape_wrinkled_skin"
         ]
@@ -1093,7 +1065,7 @@
         "note": "Pick two traits from this table (excluding Combination of 2)."
       },
       "customOneOffs": [
-        "Roll twice on this table or choose any two traits except Combination of 2."
+        "Roll twice on this table or choose any two traits except Combination of 2 and Alien Plantlife."
       ]
     }
   ]

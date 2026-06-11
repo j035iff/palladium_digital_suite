@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Arms & Hands",
   "parentTable": "disproportion",
-  "description": "Arms & Hands Morphus table (Nightbane Survival Guide (WB5), pp. 87-88). Roll percentile on this sub-table after Step One selects arms and hands.",
+  "description": "Disproportion Arms & Hands sub-table (Nightbane Survival Guide (WB5), pp. 87-88). Percentile bands: 01-10% Huge Forearms, 11-30% Huge Hands, 31-40% Huge Broad Shoulders, 41-50% Large Muscular Upper Arms, 51-70% Small Hands, 71-80% Small Narrow Shoulders, 81-90% Thin Forearms, 91-00% Unusually Long Arms.",
   "entries": [
     {
       "id": "disproportion_huge_forearms",
@@ -34,6 +34,10 @@
       "appearanceConstraints": {
         "clothingFit": "oversized_required",
         "narrowOpeningAccess": "restricted"
+      },
+      "percentile": {
+        "min": 1,
+        "max": 10
       }
     },
     {
@@ -89,6 +93,10 @@
             "modifierPercent": -5
           }
         ]
+      },
+      "percentile": {
+        "min": 11,
+        "max": 30
       }
     },
     {
@@ -119,6 +127,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "percentile": {
+        "min": 31,
+        "max": 40
       }
     },
     {
@@ -149,6 +161,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "oversized_required"
+      },
+      "percentile": {
+        "min": 41,
+        "max": 50
       }
     },
     {
@@ -203,6 +219,10 @@
             "modifierPercent": -5
           }
         ]
+      },
+      "percentile": {
+        "min": 51,
+        "max": 70
       }
     },
     {
@@ -236,6 +256,10 @@
             "modifierPercent": -5
           }
         ]
+      },
+      "percentile": {
+        "min": 71,
+        "max": 80
       }
     },
     {
@@ -269,6 +293,10 @@
             "modifierPercent": 2
           }
         ]
+      },
+      "percentile": {
+        "min": 81,
+        "max": 90
       }
     },
     {
@@ -316,6 +344,10 @@
             "modifierPercent": -20
           }
         ]
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
       }
     }
   ]

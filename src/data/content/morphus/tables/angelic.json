@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Angelic",
   "parentTable": null,
-  "description": "Nightbane who believe they were chosen for a holy purpose-appearance varies by faith; many other Nightbane find them arrogant.",
+  "description": "Nightbane who believe they were chosen for a holy purpose — appearance varies by faith; many other Nightbane find them arrogant. Percentile bands: 01-10% Angelic Wings, 11-20% Halo of Power, 21-29% Heroic Proportions, 30-39% Icon of Faith, 40-49% Inner Light, 50-56% Living Armor, 57-63% Living Holy Shield, 64-70% Living Holy Weapon, 71-80% Melodious Voice, 81-90% Mystical Protection, 91-00% Noble Bearing.",
   "entries": [
     {
       "id": "angelic_inner_light",
@@ -39,7 +39,11 @@
       },
       "customOneOffs": [
         "Cannot hide at night or in shadow; glows like a beacon."
-      ]
+      ],
+      "percentile": {
+        "min": 40,
+        "max": 49
+      }
     },
     {
       "id": "angelic_angelic_wings",
@@ -119,7 +123,11 @@
         "Can hover and glide silently.",
         "Flight speed 1D4x10+26 (25-45 mph/40-72 km).",
         "Undercover work only possible if disguised as another angel."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "angelic_melodious_voice",
@@ -166,7 +174,11 @@
       "customOneOffs": [
         "Voice has a calming effect on angry or beleaguered souls.",
         "Sonic attacks inflict double penalties."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "angelic_living_armor",
@@ -223,7 +235,11 @@
       },
       "customOneOffs": [
         "A helmet is optional and can be removed, but the rest of the armor cannot; it is a part of the Nightbane."
-      ]
+      ],
+      "percentile": {
+        "min": 50,
+        "max": 56
+      }
     },
     {
       "id": "angelic_living_holy_weapon",
@@ -299,7 +315,11 @@
         "Weapon may be lent to others, dropped, or stolen, but disappears when assuming Facade and reappears in Morphus form.",
         "Damage is inflicted to the weapon only when specifically targeted. Any damage that exceeds its S.D.C. is applied to the Nightbane.",
         "When the weapon's S.D.C. is reduced to one point or less, the Nightbane feels the effect/damage."
-      ]
+      ],
+      "percentile": {
+        "min": 64,
+        "max": 70
+      }
     },
     {
       "id": "angelic_living_holy_shield",
@@ -347,7 +367,11 @@
       "customOneOffs": [
         "Shield regenerates at the same rate as the Nightbane.",
         "If destroyed, vanishes and does not return for 24 hours."
-      ]
+      ],
+      "percentile": {
+        "min": 57,
+        "max": 63
+      }
     },
     {
       "id": "angelic_heroic_proportions",
@@ -376,6 +400,10 @@
       },
       "weightModifier": {
         "percent": 50
+      },
+      "percentile": {
+        "min": 21,
+        "max": 29
       }
     },
     {
@@ -423,7 +451,11 @@
       },
       "customOneOffs": [
         "Likely to be among the first to be targeted by evil."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "angelic_mystical_protection",
@@ -453,7 +485,11 @@
       "customOneOffs": [
         "The mystical field provides 1D6x10+30 S.D.C. in addition to the character's own.",
         "Damage from silver weapons goes right to the character's own S.D.C., then Hit Points."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "angelic_noble_bearing",
@@ -506,6 +542,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
       }
     },
     {
@@ -540,7 +580,11 @@
       "customOneOffs": [
         "Icon may be lent to others, dropped, or stolen, but disappears when switching to Facade and reappears in Morphus form.",
         "The icon is a living part of the character."
-      ]
+      ],
+      "percentile": {
+        "min": 30,
+        "max": 39
+      }
     }
   ]
 }

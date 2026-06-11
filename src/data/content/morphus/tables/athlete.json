@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Athlete",
   "parentTable": null,
-  "description": "Athlete Morphus table (Dark Designs (WB6), pp. 28-29). Nightbane with substantial interest or investment in athletics-from recreational play to Olympic-level training.",
+  "description": "Athlete Morphus table. Percentile bands: 01-11% Cleats, 12-22% Club/Stick, 23-33% Game Ball/Projectile, 34-44% Gymnast's Build, 45-56% Musclebound, 57-67% Protective Gear, 68-78% Skates, 79-89% Streamlined, 90-00% Team Jersey.",
   "entries": [
     {
       "id": "athlete_streamlined",
@@ -57,7 +57,11 @@
       ],
       "customOneOffs": [
         "Even running at maximum speed for hours at a time does NOT fatigue the Nightbane in any way."
-      ]
+      ],
+      "percentile": {
+        "min": 79,
+        "max": 89
+      }
     },
     {
       "id": "athlete_gymnasts_build",
@@ -117,6 +121,10 @@
             "modifierPercent": 10
           }
         ]
+      },
+      "percentile": {
+        "min": 34,
+        "max": 44
       }
     },
     {
@@ -188,7 +196,11 @@
       },
       "customOneOffs": [
         "The character can lift and carry twice the standard amount for their strength attribute."
-      ]
+      ],
+      "percentile": {
+        "min": 45,
+        "max": 56
+      }
     },
     {
       "id": "athlete_team_jersey",
@@ -226,7 +238,11 @@
       },
       "customOneOffs": [
         "+2 on Perception Rolls specifically involving the team represented on the jersey."
-      ]
+      ],
+      "percentile": {
+        "min": 90,
+        "max": 100
+      }
     },
     {
       "id": "athlete_skates",
@@ -276,7 +292,11 @@
           "damageFormula": "1D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 68,
+        "max": 78
+      }
     },
     {
       "id": "athlete_club_stick",
@@ -314,7 +334,11 @@
       ],
       "customOneOffs": [
         "The stick is large and unwieldy to carry, so other two-handed weapons cannot be used unless it can be slung over the back or the Nightbane has other appendages."
-      ]
+      ],
+      "percentile": {
+        "min": 12,
+        "max": 22
+      }
     },
     {
       "id": "athlete_protective_gear",
@@ -383,6 +407,10 @@
             "modifierPercent": -15
           }
         ]
+      },
+      "percentile": {
+        "min": 57,
+        "max": 67
       }
     },
     {
@@ -438,7 +466,11 @@
       "customOneOffs": [
         "Surfaces such as ice, mud, and even oil-slicked floors do not cause the Nightbane to lose his footing, slip or fall.",
         "The Nightbane is easily tracked across soft and hard surfaces due to the tell-tale gouges left by the cleats."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 11
+      }
     },
     {
       "id": "athlete_game_ball_projectile",
@@ -507,7 +539,11 @@
         "Victims struck by the speeding projectile have a 25% chance of being knocked flat (losing initiative and one melee attack). 10% chance against those with Supernatural Strength or larger than 8 feet. Add +20% to these odds if the target is already off balance.",
         "The projectile may be passed to another person up to 300 feet away, but once dropped or thrown, it returns to the Nightbane.",
         "+1 to dodge thrown projectiles."
-      ]
+      ],
+      "percentile": {
+        "min": 23,
+        "max": 33
+      }
     }
   ]
 }

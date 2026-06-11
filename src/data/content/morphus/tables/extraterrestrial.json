@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Extraterrestrial",
   "parentTable": null,
-  "description": "Extraterrestrial Morphus table (Nightbane Survival Guide (WB5), pp. 89-90). Sci-fi fan or dreamer whose Morphus appears as a being from beyond Earth[cite: 1].",
+  "description": "Extraterrestrial Morphus table. Percentile bands: 01-15% Alien Robotic Body, 16-45% B-Movie Alien, 46-55% Energy Being, 56-70% Parasitic Alien, 71-90% Roswell Gray, 91-00% Spheroid.",
   "entries": [
     {
       "id": "extraterrestrial_roswell_gray",
@@ -67,6 +67,10 @@
             "modifierPercent": 20
           }
         ]
+      },
+      "percentile": {
+        "min": 71,
+        "max": 90
       }
     },
     {
@@ -240,7 +244,11 @@
       ],
       "customOneOffs": [
         "Fifty percent of alien bodies have a rubbery quality and resemble a man in a rubber suit."
-      ]
+      ],
+      "percentile": {
+        "min": 16,
+        "max": 45
+      }
     },
     {
       "id": "extraterrestrial_parasitic_alien",
@@ -287,7 +295,11 @@
       "customOneOffs": [
         "The alien parasite is a hideous thing (large leech, worm, insect, crustacean, tentacle thingy, or something else repugnant) attached to the body or under the skin[cite: 8].",
         "Killing or removing the parasite means killing the Nightbane![cite: 8]"
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 70
+      }
     },
     {
       "id": "extraterrestrial_energy_being",
@@ -363,7 +375,11 @@
       "customOneOffs": [
         "Moves silently and hovers above bodies of water.",
         "Impossible to disguise, Prowl or hide in dim lighting or darkness unless completely covered by a thick, heavy fabric (but then the character can't see)."
-      ]
+      ],
+      "percentile": {
+        "min": 46,
+        "max": 55
+      }
     },
     {
       "id": "extraterrestrial_alien_robotic_body",
@@ -493,7 +509,11 @@
       ],
       "customOneOffs": [
         "Do not need to breathe and can function in a vacuum."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 15
+      }
     },
     {
       "id": "extraterrestrial_spheroid",
@@ -583,7 +603,11 @@
       "customOneOffs": [
         "The method of flight is undeterminable (Anti-gravity? Magic?); speed is ponderous.",
         "Hovers above water and can also float on water (cannot sink)."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     }
   ]
 }

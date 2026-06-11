@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Fantasy",
   "parentTable": null,
-  "description": "Fantasy Morphus table (Nightbane Survival Guide (WB5), pp. 90-91). Fantasy Morphus table. Add characteristic rows from the book.",
+  "description": "Fantasy Morphus table. Percentile bands: 01-10% Aura of Magical Power, 11-20% Branded with Magic Symbols, 21-30% Dragon Lord, 31-40% Enchanted Knight Armor, 41-50% Faerie Wings, 51-60% Ogre Warrior with a Magic Weapon, 61-70% Prince/Princess, 71-80% Stone-Like Flesh, 81-90% Wee Folk, 91-00% Wizard Robes.",
   "entries": [
     {
       "id": "fantasy_wizard_robes",
@@ -64,7 +64,11 @@
       },
       "customOneOffs": [
         "Adds +1 to Spell Strength if the character is a Mystic or Sorcerer."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "fantasy_enchanted_knight_armor",
@@ -137,7 +141,11 @@
       "customOneOffs": [
         "Resistant to magic energy blasts including magic fire (half damage).",
         "The armor cannot be forcibly removed, there is no movement penalty for the enchanted armor."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "fantasy_aura_of_magical_power",
@@ -210,7 +218,11 @@
         "His own aura cannot be read.",
         "The glow cannot be disguised (the character glows right through clothing).",
         "Beings who can sense magic can sense this character's presence at double their usual range."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "fantasy_branded_with_magic_symbols",
@@ -268,7 +280,11 @@
       "customOneOffs": [
         "The symbols faintly glow whenever a Night Prince, Nightlord, or spell caster is within 100 feet (30.5 m) of the character, and they also glow when he is locked in combat.",
         "Impervious to the bite and controlling powers of the vampire."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "fantasy_prince_princess",
@@ -316,7 +332,11 @@
       "customOneOffs": [
         "The character seems out of place in our modern world and cannot remove his crown.",
         "Looked down upon by other Nightbane as a 'Ken' or 'Barbie'."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "fantasy_stone_like_flesh",
@@ -391,6 +411,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 71,
+        "max": 80
       }
     },
     {
@@ -457,7 +481,11 @@
       "customOneOffs": [
         "Can hover in mid-air.",
         "Flying speed is double the Spd attribute number."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "fantasy_wee_folk",
@@ -557,7 +585,11 @@
         "Weight is 15 pounds (6.75 kg) per foot (0.3 m) of height in Morphus.",
         "P.S. punch and kick damage (Supernatural or not) does half.",
         "Can leap three times his height."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "fantasy_ogre_warrior_with_a_magic_weapon",
@@ -635,7 +667,11 @@
       "customOneOffs": [
         "This weapon may be lent to others, dropped, or stolen, but it will disappear when the 'Bane switches back to Facade form and reappear with him when he assumes his Morphus the next time.",
         "The face and voice is that of a brutish Ogre."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "fantasy_dragon_lord",
@@ -761,7 +797,11 @@
         "Flying speed is triple the Spd attribute number.",
         "Cannot swim (flounders for 1D6 minutes then sinks like a brick).",
         "Each blast of fire breath counts as one melee attack."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     }
   ]
 }

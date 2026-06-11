@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Plant Life",
   "parentTable": null,
-  "description": "Plant Life Morphus tables (Nightlands (WB2), p. 143; Dark Designs (WB6), pp. 47-50, 142). Plant Life and Plant Life II Morphus tables. Plant traits are universally vulnerable to fire/heat (double damage) and resistant to cold/ice (half damage). Plant Life II entries also inherit the table rule that defoliants/herbicides act as lethal poison.",
+  "description": "Plant Life Morphus tables (Nightlands (WB2), p. 143; Dark Designs (WB6), pp. 47-50, 142). Percentile bands: 01-06% Bark Skin, 07-12% Cactus Skin, 13-18% Fern Fronds, 19-23% Flower Child, 24-29% Fruit-Bearing Vines, 30-35% Fungus/Mushrooms, 36-41% Humanoid Tree, 42-47% Itch-Weed, 48-53% Moss Monster, 54-59% Nutshell, 60-65% Sap, 66-71% Seed/Spore Pods, 72-77% Stink Weed, 78-83% Thorn Skin, 84-89% Tree Features, 90-94% Venus Flytrap, 95-00% Vines.",
   "entries": [
     {
       "id": "plant_life_humanoid_tree",
@@ -65,7 +65,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 36,
+        "max": 41
+      }
     },
     {
       "id": "plant_life_cactus_skin",
@@ -122,7 +126,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 7,
+        "max": 12
+      }
     },
     {
       "id": "plant_life_thorn_skin",
@@ -179,61 +187,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
-    },
-    {
-      "id": "plant_life_living_mannequin",
-      "name": "Living Mannequin",
-      "tableCategory": "Plant Life",
-      "description": "The Nightbane looks as if he is a giant, unfinished puppet or mannequin with a body made of polished wood but with the wood grain still showing. Bonuses: 2D4x10 to S.D.C., 1D4 to damage and +1 to Horror Factor.",
-      "statModifiers": {
-        "hf": {
-          "flat": 1
-        },
-        "sdc": {
-          "dice": "2D4x10"
-        }
-      },
-      "skillModifiers": {
-        "specificSkillOverrides": [
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_disguise",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_seduction",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_undercover_ops",
-            "impossibleInMorphus": true
-          }
-        ]
-      },
-      "damageAffinities": {
-        "fire": 2,
-        "heat": 2,
-        "cold": 0.5,
-        "ice": 0.5
-      },
-      "gameSystems": [
-        "nightbane"
       ],
-      "sources": [
-        {
-          "gameSystem": "nightbane",
-          "reference": "Dark Designs (WB6)",
-          "pageNumber": 142
-        },
-        {
-          "gameSystem": "nightbane",
-          "reference": "Nightlands (WB2)",
-          "pageNumber": 143
-        }
-      ]
+      "percentile": {
+        "min": 78,
+        "max": 83
+      }
     },
     {
       "id": "plant_life_tree_features",
@@ -287,7 +245,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 84,
+        "max": 89
+      }
     },
     {
       "id": "plant_life_flower_child",
@@ -328,7 +290,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 19,
+        "max": 23
+      }
     },
     {
       "id": "plant_life_bark_skin",
@@ -366,7 +332,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 6
+      }
     },
     {
       "id": "plant_life_stink_weed",
@@ -428,7 +398,11 @@
           "reference": "Nightlands (WB2)",
           "pageNumber": 143
         }
-      ]
+      ],
+      "percentile": {
+        "min": 72,
+        "max": 77
+      }
     },
     {
       "id": "plant_life_ii_fern_fronds",
@@ -494,7 +468,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 47
         }
-      ]
+      ],
+      "percentile": {
+        "min": 13,
+        "max": 18
+      }
     },
     {
       "id": "plant_life_ii_vines",
@@ -555,7 +533,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
-      ]
+      ],
+      "percentile": {
+        "min": 95,
+        "max": 100
+      }
     },
     {
       "id": "plant_life_ii_nutshell",
@@ -624,7 +606,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
-      ]
+      ],
+      "percentile": {
+        "min": 54,
+        "max": 59
+      }
     },
     {
       "id": "plant_life_ii_itch_weed",
@@ -692,7 +678,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
-      ]
+      ],
+      "percentile": {
+        "min": 42,
+        "max": 47
+      }
     },
     {
       "id": "plant_life_ii_moss_monster",
@@ -763,7 +753,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
-      ]
+      ],
+      "percentile": {
+        "min": 48,
+        "max": 53
+      }
     },
     {
       "id": "plant_life_ii_venus_flytrap",
@@ -904,7 +898,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 48
         }
-      ]
+      ],
+      "percentile": {
+        "min": 90,
+        "max": 94
+      }
     },
     {
       "id": "plant_life_ii_seed_spore_pods",
@@ -971,7 +969,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
-      ]
+      ],
+      "percentile": {
+        "min": 66,
+        "max": 71
+      }
     },
     {
       "id": "plant_life_ii_fungus_mushrooms",
@@ -1042,7 +1044,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
-      ]
+      ],
+      "percentile": {
+        "min": 30,
+        "max": 35
+      }
     },
     {
       "id": "plant_life_ii_fruit_bearing_vines",
@@ -1119,7 +1125,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 49
         }
-      ]
+      ],
+      "percentile": {
+        "min": 24,
+        "max": 29
+      }
     },
     {
       "id": "plant_life_ii_sap",
@@ -1193,7 +1203,11 @@
           "reference": "Dark Designs (WB6)",
           "pageNumber": 50
         }
-      ]
+      ],
+      "percentile": {
+        "min": 60,
+        "max": 65
+      }
     }
   ]
 }

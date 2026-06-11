@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Clown/Jester",
   "parentTable": null,
-  "description": "Clown/Jester Morphus table (Dark Designs (WB6), pp. 30-32). Nightbane with a substantial interest in clowns, jesters, or circus performance may manifest garish, unsettling, or darkly humorous Morphus features. Anyone afraid of clowns treats these Morphus forms as Horror Factor 18 (WB6 pp. 30-32).",
+  "description": "Clown/Jester Morphus table. Percentile bands: 01-10% Balloons, 11-20% Clown Clothes, 21-30% Clown Gags, 31-40% Clown Nose, 41-50% Clown Shoes, 51-60% Face Paint, 61-70% Jack-in-the-Box, 71-80% Jester's Cap and Costume, 81-90% Outrageous Hair and Head, 91-00% Scepter/Baton or Bowling Pin.",
   "entries": [
     {
       "id": "clown_nose",
@@ -64,7 +64,11 @@
       "customOneOffs": [
         "By honking the nose while smiling or striking a silly pose, observers are temporarily unaffected by the Nightbane's Horror Factor and the Nightbane appears harmless and friendly.",
         "When dealing with children under 13, the base Charm/Impress percentage is doubled (or receives a +20% bonus)."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "clown_face_paint",
@@ -123,7 +127,11 @@
       "customOneOffs": [
         "Mold Face (Special): Can morph his face to look like another humanoid/monster or specific person (takes 1D4 melee rounds).",
         "If the subject being copied is right in front of him, he can imitate the person's voice perfectly."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "clown_clothes",
@@ -221,7 +229,11 @@
       },
       "customOneOffs": [
         "Nobody can remember the clown's face. They can describe the clothing, but the face is a blank and is blurred out in photographs, video, and film."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "clown_shoes",
@@ -304,7 +316,11 @@
         "Impervious to damage from falls, impact from large objects (like a falling safe, car, or boulder), and explosions.",
         "Punches, normal kicks, bullets, and melee weapons still inflict full damage to the clown.",
         "Cannot leap or jump."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "clown_outrageous_hair_head",
@@ -368,7 +384,11 @@
         "+2 to Horror Factor when the head is visibly detached.",
         "The head can be placed inconspicuously to spy, placed on a stick, or float like a balloon 1-2 feet above the neck.",
         "The head controls the body even when detached (max 20 feet away). If taken more than 120 feet away, forces the Nightbane to switch to Facade to reunite."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "clown_balloons",
@@ -447,7 +467,11 @@
         "As long as one balloon is attached, the Nightbane floats down safely when jumping (1D6 damage upon hard landing; double if falling >200 feet).",
         "Cut or separated balloons register to supernatural senses as that Nightbane for 1 hour (can be used as a decoy).",
         "Destroyed or cut balloons regenerate at the rate of one every hour."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "clown_gags",
@@ -654,7 +678,11 @@
             "Spend 1 HP: squirts 10 oz of blood, ink, inorganic acid (2D6 damage to metal/concrete), kerosene, or mace (victim blinded -10 strike/parry/dodge for 1D4 rounds)."
           ]
         }
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "clown_jester_cap",
@@ -694,7 +722,11 @@
           ],
           "timing": "character_creation"
         }
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "clown_scepter_baton",
@@ -730,7 +762,11 @@
         "Can be used as a blunt weapon that deals 1D6 + Supernatural P.S. damage.",
         "+1 attack/action per melee when using ONLY this item in combat for the entire round.",
         "+2 to pull punch with the item."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "clown_jack_in_the_box",
@@ -850,7 +886,11 @@
         "Speed is halved again when crawling (inchworm fashion dragging the box).",
         "If severed below the waist, the torso must crawl back into the box to reattach (takes 1 full melee round).",
         "Special kick attacks are impossible."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     }
   ]
 }

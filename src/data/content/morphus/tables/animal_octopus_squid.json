@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Octopus/Squid",
   "parentTable": "animal",
-  "description": "Octopus/Squid Morphus table (Nightbane Survival Guide (WB5), pp. 79-80). Aquatic: All rows grant Swimming at 85%, indefinite underwater breathing and normal air breathing, cold resistance (half damage), and depth tolerance of 1,000 feet (305 m) unless stated otherwise.",
+  "description": "Octopus/Squid Morphus table. Percentile bands: 01-20% Giant Octopus/Squid, 21-40% Humanoid Octopus/Squid, 41-60% Octopus/Squid Centauroid, 61-80% Octopus/Squid Head, 81-00% Were-Octopus/Squid.",
   "entries": [
     {
       "id": "animal_octopus_squid_giant",
@@ -106,7 +106,11 @@
         "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half.",
         "On land, reduce P.P. and Spd by half; number of attacks per melee is unchanged.",
         "Transportation on land may be a problem."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "animal_octopus_squid_were",
@@ -268,7 +272,11 @@
           "modifierPercent": 20,
           "context": "color_change"
         }
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 100
+      }
     },
     {
       "id": "animal_octopus_squid_humanoid",
@@ -363,7 +371,11 @@
         "Each crush/squeeze attack inflicts Supernatural P.S. punch damage.",
         "Tentacles have twice the P.S. attribute of the Nightbane.",
         "Can manipulate objects and use melee weapons with tentacles, but the strike bonus is half."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 40
+      }
     },
     {
       "id": "animal_octopus_squid_head",
@@ -447,7 +459,11 @@
       "customOneOffs": [
         "Each crush/squeeze attack inflicts half Supernatural P.S. punch damage.",
         "Can use tentacles to manipulate objects and wield melee weapons, but the strike bonus is half."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 80
+      }
     },
     {
       "id": "animal_octopus_squid_centauroid",
@@ -526,7 +542,11 @@
         "Tentacles have +8 P.S. (tentacles only).",
         "Can scale smooth surfaces and climb vertical walls.",
         "Tentacles can operate computers and other machinery at halved strike bonuses."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 60
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Avian",
   "parentTable": "animal",
-  "description": "Avian Morphus tables (Nightbane Core Rulebook, pp. 95-96; Dark Designs (WB6), p. 129). Avian/Bird Predatory or scavenger birds are common, but any species is possible. Avian Nightbane are often wanderers or those who covet the freedom to fly away from problems. Player selects bird species.",
+  "description": "Avian/Bird Morphus table. Percentile bands: 01-11% Bird Face, 12-21% Bird Head, 22-31% Feather Hair, 32-46% Full Bird, 47-61% Man-Bird, 62-75% Talons, 76-90% Were-Bird, 91-00% Winged Human.",
   "entries": [
     {
       "id": "animal_avian_full_bird",
@@ -95,7 +95,11 @@
       "customOneOffs": [
         "Exceptional vision: can see a rabbit or read a sign two miles (3.2 km) away.",
         "Cannot manipulate guns and normal weapons (arms replaced by wings)."
-      ]
+      ],
+      "percentile": {
+        "min": 32,
+        "max": 46
+      }
     },
     {
       "id": "animal_avian_were_bird",
@@ -190,7 +194,11 @@
       "customOneOffs": [
         "Exceptional vision.",
         "Guns and hand weapons are at -4 to strike."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 90
+      }
     },
     {
       "id": "animal_avian_man_bird",
@@ -266,7 +274,11 @@
       ],
       "customOneOffs": [
         "Exceptional vision."
-      ]
+      ],
+      "percentile": {
+        "min": 47,
+        "max": 61
+      }
     },
     {
       "id": "animal_avian_bird_head",
@@ -326,7 +338,11 @@
       ],
       "customOneOffs": [
         "Exceptional vision."
-      ]
+      ],
+      "percentile": {
+        "min": 12,
+        "max": 21
+      }
     },
     {
       "id": "animal_avian_bird_face",
@@ -377,7 +393,11 @@
           "damageFormula": "3D6",
           "isAdditiveToHth": true
         }
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 11
+      }
     },
     {
       "id": "animal_avian_talons",
@@ -440,7 +460,11 @@
       },
       "customOneOffs": [
         "Normal shoes and gloves are uncomfortable and painful to wear; reduce Spd by 30% when wearing them."
-      ]
+      ],
+      "percentile": {
+        "min": 62,
+        "max": 75
+      }
     },
     {
       "id": "animal_avian_feather_hair",
@@ -483,6 +507,10 @@
         "hf": {
           "flat": 1
         }
+      },
+      "percentile": {
+        "min": 22,
+        "max": 31
       }
     },
     {
@@ -533,6 +561,10 @@
             "dice": "1D4x10"
           }
         }
+      },
+      "percentile": {
+        "min": 91,
+        "max": 100
       }
     }
   ]

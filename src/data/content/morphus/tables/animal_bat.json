@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Bat",
   "parentTable": "animal",
-  "description": "Bat Morphus tables (Nightbane Core Rulebook, pp. 95-96; Dark Designs (WB6), pp. 129-130). Bat-like Nightbane are often confused with vampires and demons. Vampire bats dominate, but all bat species are possible.",
+  "description": "Bat Morphus table. Percentile bands: 01-20% Bat Head, 21-40% Bat Wings, 41-60% Full Bat, 61-80% Humanoid Bat, 81-00% Were-Bat.",
   "entries": [
     {
       "id": "animal_bat_full",
@@ -121,7 +121,11 @@
         "Screeching radar/sonar senses invisible figures and obstacles in total darkness, fog, or smoke (range 500 feet / 152 m).",
         "Can carry small objects in hands or large items or people in prehensile clawed feet.",
         "Tool and weapon use is impossible while flying."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 60
+      }
     },
     {
       "id": "animal_bat_were",
@@ -238,7 +242,11 @@
         "Unlike true bats, vision is not impaired.",
         "Screeching radar/sonar senses invisible figures and sees through obscured vision (range 200 feet / 61 m).",
         "Tool and weapon use is impossible while flying."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 100
+      }
     },
     {
       "id": "animal_bat_humanoid",
@@ -341,7 +349,11 @@
       "customOneOffs": [
         "Wings can be folded but this restricts movement; normal clothing is very uncomfortable.",
         "Does not have the bat's sonar sense."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 80
+      }
     },
     {
       "id": "animal_bat_wings",
@@ -417,6 +429,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 21,
+        "max": 40
       }
     },
     {
@@ -503,7 +519,11 @@
       "customOneOffs": [
         "Unlike true bats, vision is not impaired.",
         "Screeching radar senses invisible figures and sees in total darkness, fog, or smoke (range 500 feet / 152 m)."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     }
   ]
 }

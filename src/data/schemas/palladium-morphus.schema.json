@@ -248,6 +248,10 @@
       "$ref": "#/$defs/tableWorkflow",
       "description": "Multi-step table instructions (roll twice on Step One, etc.)."
     },
+    "customTraitResolution": {
+      "$ref": "#/$defs/customTraitResolution",
+      "description": "Router row opens the Custom Trait Workshop for player/G.M. authored stats and abilities."
+    },
     "livingWeaponRules": {
       "$ref": "#/$defs/livingWeaponRules",
       "description": "Living Morphus weapon durability and attachment rules."
@@ -2473,6 +2477,45 @@
         "excludeSelfFromReroll": {
           "type": "boolean",
           "description": "Exclude the 'roll twice' router row from Step One rerolls."
+        }
+      }
+    },
+    "customTraitResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "player_gm_authored"
+        },
+        "requiresGmApproval": {
+          "type": "boolean",
+          "default": true
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "statModifiers",
+              "saveModifiers",
+              "skillModifiers",
+              "atWillAbilities",
+              "naturalWeapons",
+              "sensory",
+              "mobility",
+              "customOneOffs",
+              "naturalAr",
+              "progressionModifiers"
+            ]
+          }
         }
       }
     },

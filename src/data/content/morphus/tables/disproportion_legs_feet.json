@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Legs & Feet",
   "parentTable": "disproportion",
-  "description": "Legs & Feet Morphus table (Nightbane Survival Guide (WB5), p. 88). Roll percentile on this sub-table after Step One selects legs and feet.",
+  "description": "Disproportion Legs & Feet sub-table (Nightbane Survival Guide (WB5), pp. 87-88). Percentile bands: 01-20% Huge Feet, 21-40% Huge Legs, 41-60% Long Thin Legs, 61-80% Short Legs, 81-00% Small Feet.",
   "entries": [
     {
       "id": "disproportion_huge_legs",
@@ -51,6 +51,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 21,
+        "max": 40
       }
     },
     {
@@ -84,7 +88,11 @@
       },
       "customOneOffs": [
         "+1 to kick damage."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 60
+      }
     },
     {
       "id": "disproportion_short_legs",
@@ -125,7 +133,11 @@
             "percent": -50
           }
         }
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 80
+      }
     },
     {
       "id": "disproportion_huge_feet",
@@ -175,7 +187,11 @@
       },
       "customOneOffs": [
         "+2 to kick and stomp damage."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "disproportion_small_feet",
@@ -211,6 +227,10 @@
             "modifierPercent": -10
           }
         ]
+      },
+      "percentile": {
+        "min": 81,
+        "max": 100
       }
     }
   ]

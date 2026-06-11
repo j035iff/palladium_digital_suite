@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Reptilian",
   "parentTable": "animal",
-  "description": "Reptilian Morphus tables (Nightbane Core Rulebook, p. 100; Dark Designs (WB6), p. 133). Lizards of all kinds; dragon legends may originate from reptilian Nightbane.",
+  "description": "Reptilian Morphus table. Percentile bands: 01-20% Giant Reptile, 21-40% Humanoid-Reptile, 41-60% Reptile's Head, 61-80% Reptilian Centauroid, 81-00% Were-Reptile.",
   "entries": [
     {
       "id": "animal_reptilian_giant",
@@ -99,7 +99,11 @@
       "customOneOffs": [
         "Can move in great bursts of speed, but maximum speed cannot be maintained for more than 3D4 minutes.",
         "Cannot use weapons or tools; may be too large to fit into most vehicles."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "animal_reptilian_were",
@@ -192,6 +196,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 81,
+        "max": 100
       }
     },
     {
@@ -285,6 +293,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 21,
+        "max": 40
       }
     },
     {
@@ -359,6 +371,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 41,
+        "max": 60
       }
     },
     {
@@ -451,6 +467,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 61,
+        "max": 80
       }
     }
   ]

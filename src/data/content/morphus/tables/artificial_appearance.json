@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Artificial Appearance",
   "parentTable": null,
-  "description": "Artificial Appearance Morphus table (Nightbane Survival Guide (WB5), pp. 80-81). Nightbane who appear artificial or man-made-mannequins, dummies, scarecrows, porcelain, junk, glass, clay, wood, mirrors, or stuffed animals.",
+  "description": "Artificial Appearance Morphus table. Percentile bands: 01-10% Crash Test Dummy, 11-20% Glass, 21-30% Junk Golem, 31-40% Mirror Man, 41-50% Porcelain/Ceramic, 51-60% Scarecrow, 61-70% Soft Clay, 71-80% Store Mannequin, 81-90% Stuffed Animal, 91-00% Wood Statue.",
   "entries": [
     {
       "id": "artificial_appearance_store_mannequin",
@@ -84,7 +84,11 @@
       },
       "customOneOffs": [
         "Text states both 'impervious to cold' and 'resistant to cold (half damage)'. Assuming immunity to environmental cold, but double damage from fire."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "artificial_appearance_crash_test_dummy",
@@ -135,6 +139,10 @@
         "heat": 0,
         "poison": 0,
         "airborneToxins": 0
+      },
+      "percentile": {
+        "min": 1,
+        "max": 10
       }
     },
     {
@@ -218,7 +226,11 @@
           "lockoutHoursDice": "1D6+1",
           "note": "If torn apart, knocked apart or blown to pieces, the character reforms in 2D6 minutes at half S.D.C. and Hit Points or the 'Bane can turn back into his Facade (preventing Morphus use for 1D6+1 hours)."
         }
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "artificial_appearance_porcelain_ceramic",
@@ -277,7 +289,11 @@
       },
       "customOneOffs": [
         "Skin is tougher than normal ceramic, but bullets and heavy impacts may cause chipping and hairline fractures (heals as the 'Bane heals)."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 50
+      }
     },
     {
       "id": "artificial_appearance_junk_golem",
@@ -373,7 +389,11 @@
       ],
       "customOneOffs": [
         "Cannot swim (unless mostly wood)."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "artificial_appearance_glass",
@@ -431,7 +451,11 @@
       },
       "customOneOffs": [
         "Penalty to Prowl is due to light reflections."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "artificial_appearance_soft_clay",
@@ -518,7 +542,11 @@
       },
       "customOneOffs": [
         "Can shape his own features and even mold and shape his body."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     },
     {
       "id": "artificial_appearance_wood_statue",
@@ -594,7 +622,11 @@
       },
       "customOneOffs": [
         "Penalty to Prowl is because the character clunks when he walks."
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "artificial_appearance_mirror_man",
@@ -687,7 +719,11 @@
           "label": "Broken Mirrors",
           "description": "The body is covered in the cracked and shattered pieces of broken mirrors."
         }
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "artificial_appearance_stuffed_animal",
@@ -756,7 +792,11 @@
       "customOneOffs": [
         "The animal may be a humanoid caricature or a more realistic stuffed rendition of the creature.",
         "Floats on water until it becomes waterlogged and sinks (takes 4D6+20 minutes)."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     }
   ]
 }

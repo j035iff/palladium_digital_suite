@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Gear-Head",
   "parentTable": null,
-  "description": "Gear-Head Morphus table (Dark Designs (WB6), pp. 33-35). Nightbane whose identity ties to automobiles, engines, and vehicular culture may manifest automotive machinery in Morphus form (WB6 pp. 33-35).",
+  "description": "Gear Head Morphus table (Dark Designs (WB6), pp. 32-33). Percentile bands: 01-09% Air Horn, 10-18% Chrome Job, 19-27% Coolant Tubes/Radiator, 28-37% Engine Block, 38-46% Exhaust Pipes, 47-55% Hydraulics, 56-64% Nitrous Bottles, 65-73% Searchlight(s), 74-82% Shocks & Struts, 83-91% Winch and Cable, 92-00% Other.",
   "entries": [
     {
       "id": "gear_head_engine_block",
@@ -97,7 +97,11 @@
       "customOneOffs": [
         "Adds +1 to an existing A.R. that is greater than 10.",
         "The character will drown within 1D4+2 melee rounds if dropped into deep water in Morphus form (can't hold breath or swim, too heavy)."
-      ]
+      ],
+      "percentile": {
+        "min": 28,
+        "max": 37
+      }
     },
     {
       "id": "gear_head_coolant_tubes_radiator",
@@ -178,7 +182,11 @@
       "customOneOffs": [
         "His blood is toxic to vampires (4D6 damage per sip).",
         "The immunity to poisons, toxins, and diseases strictly applies to those that affect the blood."
-      ]
+      ],
+      "percentile": {
+        "min": 19,
+        "max": 27
+      }
     },
     {
       "id": "gear_head_exhaust_pipes",
@@ -241,7 +249,11 @@
       ],
       "customOneOffs": [
         "The Nightbane is much easier to locate due to the smell of the exhaust, heat of the pipes, and larger visual profile."
-      ]
+      ],
+      "percentile": {
+        "min": 38,
+        "max": 46
+      }
     },
     {
       "id": "gear_head_nitrous_bottles",
@@ -300,7 +312,11 @@
       ],
       "customOneOffs": [
         "The character is a speed-freak and/or thrill seeker who tends to be a daredevil who likes to take risks."
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 64
+      }
     },
     {
       "id": "gear_head_hydraulics",
@@ -373,7 +389,11 @@
       "customOneOffs": [
         "Arms and legs can stretch an additional three feet (0.9 m).",
         "Can perform power punches without using up two attacks, counts as one attack."
-      ]
+      ],
+      "percentile": {
+        "min": 47,
+        "max": 55
+      }
     },
     {
       "id": "gear_head_shocks_and_struts",
@@ -448,7 +468,11 @@
       },
       "customOneOffs": [
         "Can drop from heights as great as 200 feet (61 m) and land on his feet without injury (only loses two melee attacks; no penalty if the drop or fall was from 60 feet/18.3 m or shorter)."
-      ]
+      ],
+      "percentile": {
+        "min": 74,
+        "max": 82
+      }
     },
     {
       "id": "gear_head_air_horn",
@@ -505,7 +529,11 @@
       "customOneOffs": [
         "The horn can be heard for one mile (1.6 km) and can be used as a warning or signal.",
         "May mishear/misunderstand something that could be important or lead to a misunderstanding."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 9
+      }
     },
     {
       "id": "gear_head_searchlights",
@@ -559,7 +587,11 @@
         "The searchlights can be engaged to see in the dark and through any magically created darkness (at half their usual range and intensity).",
         "If a parry against a Shadow/Darkness attack is successful, the light completely negates it.",
         "The penalty to Disguise and Undercover Ops applies when the lights are off."
-      ]
+      ],
+      "percentile": {
+        "min": 65,
+        "max": 73
+      }
     },
     {
       "id": "gear_head_winch_and_cable",
@@ -620,7 +652,11 @@
         "Maximum range/length of cable is 50 feet (15.2 m) +1 foot (0.3 m) per level of experience.",
         "The winch is capable of pulling twice the Nightbane's maximum carry weight.",
         "Can pin one or both arms of an opponent (+2 to pin)."
-      ]
+      ],
+      "percentile": {
+        "min": 83,
+        "max": 91
+      }
     },
     {
       "id": "gear_head_chrome_job",
@@ -693,7 +729,37 @@
       "customOneOffs": [
         "The Nightbane might even have a chrome head (+20 S.D.C. to the head) or chrome hands (+1D4 damage).",
         "The Nightbane heals a bit slower than usual (6 S.D.C./Hit Point per melee round)."
-      ]
+      ],
+      "percentile": {
+        "min": 10,
+        "max": 18
+      }
+    },
+    {
+      "id": "gear_head_other",
+      "name": "Other",
+      "tableCategory": "Gear Head",
+      "entryRole": "table_router",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Work with your G.M. to define a mechanical/automotive Morphus feature not listed on this table."
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 33
+        }
+      ],
+      "description": "Work with your G.M. to define a mechanical/automotive Morphus feature not listed on this table.",
+      "percentile": {
+        "min": 92,
+        "max": 100
+      }
     }
   ]
 }

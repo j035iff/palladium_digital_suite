@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Rodent",
   "parentTable": "animal",
-  "description": "Rodent Morphus tables (Nightbane Core Rulebook, p. 101; Dark Designs (WB6), pp. 133-134). Rats, mice, squirrels, rabbits, and similar animals. Rat-like Nightbane are common in cities.",
+  "description": "Rodent Morphus table. Percentile bands: 01-20% Full Rodent, 21-45% Humanoid Rodent, 46-55% Rodent Centauroid, 56-75% Rodent Head, 76-00% Were-Rat.",
   "entries": [
     {
       "id": "animal_rodent_full",
@@ -124,7 +124,11 @@
         "Cannot punch or kick effectively, but can parry and slash with claws.",
         "Body slam or jump kick inflicts 2D6 damage.",
         "Can use tools or weapons very poorly (-6 to strike or -30% on skill performance)."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 20
+      }
     },
     {
       "id": "animal_rodent_were_rat",
@@ -216,6 +220,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 76,
+        "max": 100
       }
     },
     {
@@ -305,6 +313,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 21,
+        "max": 45
       }
     },
     {
@@ -376,6 +388,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 56,
+        "max": 75
       }
     },
     {
@@ -468,6 +484,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 46,
+        "max": 55
       }
     }
   ]

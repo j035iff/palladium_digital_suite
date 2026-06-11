@@ -12,7 +12,7 @@ import type {
   MorphusWeaponTrait,
 } from '../types'
 import { getFormState } from '../types'
-import { resolveMorphusCharacteristicsByIds } from '../data/library/morphusTableCatalogLoader'
+import { resolveActiveMorphusTraitsFromCharacter } from './morphusCustomTrait'
 import {
   aggregateHandCapacityFromTraits,
   aggregateMorphusSaveBonuses,
@@ -184,11 +184,12 @@ export type MorphusPassiveBuildOptions = {
 }
 
 export function resolveActiveMorphusTraits(
-  character: Pick<Character, 'activeMorphusCharacteristicIds'>,
+  character: Pick<
+    Character,
+    'activeMorphusCharacteristicIds' | 'morphusTraitSlotResolutions'
+  >,
 ): MorphusCharacteristic[] {
-  return resolveMorphusCharacteristicsByIds(
-    character.activeMorphusCharacteristicIds ?? [],
-  )
+  return resolveActiveMorphusTraitsFromCharacter(character)
 }
 
 /**

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Occupation",
   "parentTable": null,
-  "description": "Occupation Morphus table (Dark Designs (WB6), pp. 43-45). Dream career or profession manifests as permanent Morphus features.[cite: 10]",
+  "description": "Occupation Morphus table (Dark Designs (WB6), pp. 47-48). Percentile bands: 01-10% Communications, 11-18% Electrician/Electronic Devices, 19-28% Hazardous Duty, 29-35% Mechanic/Mechanical, 36-45% Suit/Consummate Professional, 46-55% Time Clock or Timepiece, 56-65% Tools of the Trade, 66-75% Uniform/Official, 76-85% Water Cooler, 86-92% Workaholic, 93-00% Other.",
   "entries": [
     {
       "id": "morphus_occupation_suit_consummate_professional",
@@ -64,7 +64,11 @@
       },
       "customOneOffs": [
         "No Secondary Skills as the character is focused only on his career."
-      ]
+      ],
+      "percentile": {
+        "min": 36,
+        "max": 45
+      }
     },
     {
       "id": "morphus_occupation_uniform_official",
@@ -124,7 +128,11 @@
       },
       "customOneOffs": [
         "The Nightbane is unlikely to be fully trusted by criminals like the majority of the Warlords faction."
-      ]
+      ],
+      "percentile": {
+        "min": 66,
+        "max": 75
+      }
     },
     {
       "id": "morphus_occupation_hazardous_duty",
@@ -163,6 +171,10 @@
         "disease": 2,
         "gas": 2,
         "poison": 2
+      },
+      "percentile": {
+        "min": 19,
+        "max": 28
       }
     },
     {
@@ -200,7 +212,11 @@
       "customOneOffs": [
         "The Nightbane's own communications and devices are untraceable by modern methods. And did we mention there are no roaming charges?",
         "This character can be detected by Hounds and other beings sensitive to the supernatural at a 50% greater range."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "morphus_occupation_tools_of_the_trade",
@@ -259,6 +275,10 @@
             "modifierPercent": 5
           }
         ]
+      },
+      "percentile": {
+        "min": 56,
+        "max": 65
       }
     },
     {
@@ -306,7 +326,11 @@
         "Spd modifiers sum to zero (+2 from mechanics, -2 from penalties).",
         "The character is able to accurately sense the exact time and the passage of time while in Morphus form.",
         "The character is always on time, though a bit anxiety prone and overly concerned with punctuality."
-      ]
+      ],
+      "percentile": {
+        "min": 46,
+        "max": 55
+      }
     },
     {
       "id": "morphus_occupation_water_cooler",
@@ -376,7 +400,11 @@
         "The character does not require any hydration while in Morphus form and is never thirsty.",
         "Can unleash a blast of water (does 2D6 damage to vampires) from his hands; each blast counts as one attack, endless payload. The release of water is always in a sudden burst and cannot be neatly placed in a glass or container.",
         "The tank has 40 S.D.C. and is always two-thirds full and weighs 25 pounds (11 kg), which causes sloshing that penalizes physical skills."
-      ]
+      ],
+      "percentile": {
+        "min": 76,
+        "max": 85
+      }
     },
     {
       "id": "morphus_occupation_mechanic",
@@ -424,7 +452,11 @@
         "+2 to Perception Rolls pertaining to mechanics, finding a mechanical problem and fixing it.",
         "-2 on all Perception Rolls when caught up in examining or working on machines.",
         "The character tends to enjoy working on machines than hanging out with people."
-      ]
+      ],
+      "percentile": {
+        "min": 29,
+        "max": 35
+      }
     },
     {
       "id": "morphus_occupation_electrician",
@@ -472,7 +504,11 @@
         "+2 to Perception Rolls pertaining to electronics and circuitry, finding electrical problems and fixing them.",
         "-3 on all Perception Rolls when caught up in examining or working on electronics or electrical devices.",
         "The character tends to lose himself in electronic devices, losing track of time and the things going on around him."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 18
+      }
     },
     {
       "id": "morphus_occupation_workaholic",
@@ -554,7 +590,37 @@
         "The Nightbane needs only half the amount of sleep as a normal person.",
         "-5% penalty to skills that require focus and brain power. Physical skills that get the Nightbane moving as well as quick, easy tasks that take only a few minutes, are done without penalty.",
         "01-50% chance of falling asleep on guard duty or as a lookout."
-      ]
+      ],
+      "percentile": {
+        "min": 86,
+        "max": 92
+      }
+    },
+    {
+      "id": "morphus_occupation_other",
+      "name": "Other",
+      "tableCategory": "Occupation",
+      "entryRole": "table_router",
+      "customTraitResolution": {
+        "kind": "player_gm_authored",
+        "requiresGmApproval": true,
+        "prompt": "Work with your G.M. to define a workplace Morphus feature not listed on this table."
+      },
+      "gameSystems": [
+        "nightbane"
+      ],
+      "sources": [
+        {
+          "gameSystem": "nightbane",
+          "reference": "Dark Designs (WB6)",
+          "pageNumber": 48
+        }
+      ],
+      "description": "Work with your G.M. to define a workplace Morphus feature not listed on this table.",
+      "percentile": {
+        "min": 93,
+        "max": 100
+      }
     }
   ]
 }

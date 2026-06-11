@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Insectoid",
   "parentTable": "animal",
-  "description": "Insectoid Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 22-23, 131-132). Insectoid Morphus tables. Table I (Nightbane Core Rulebook pp. 98-99; Dark Designs (WB6) pp. 131-132): insect-looking Nightbane became more common after Dark Day. Table II (Dark Designs (WB6) pp. 22-23): supplemental insect features-roll Table I, Table II, or mix per GM.",
+  "description": "Insectoid Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 22-23, 131-132). Percentile bands: 01-06% Bioluminescence, 07-12% Bombardier Chamber, 13-18% Camouflage Markings, 19-24% Climbing Filaments, 25-28% Danger Markings, 29-34% Giant Insect, 35-40% Goo Glands, 41-46% Humanoid-Insectoid, 47-52% Insect Eyes, 53-58% Insect Head, 59-64% Insect Wings, 65-70% Insectoid Centauroid, 71-76% Mantis Arms, 77-82% Proboscis, 83-88% Spiracles, 89-94% Stinger, 95-00% Were-Insect.",
   "entries": [
     {
       "id": "animal_insectoid_giant_insect",
@@ -196,7 +196,11 @@
       "customOneOffs": [
         "Stingers (wasp/bee) inflict 2D6 stabbing damage plus 1D6 poison; victims who fail save vs non-lethal poison are -2 on initiative and -1 to strike, parry, and dodge. Stinger does not fall off; can sting repeatedly.",
         "Cannot use tools or weapons or perform complex skills requiring human hands and dexterity (-40% on such skills)."
-      ]
+      ],
+      "percentile": {
+        "min": 29,
+        "max": 34
+      }
     },
     {
       "id": "animal_insectoid_were_insect",
@@ -361,7 +365,11 @@
       ],
       "customOneOffs": [
         "Extra arms add one attack/action per melee round."
-      ]
+      ],
+      "percentile": {
+        "min": 95,
+        "max": 100
+      }
     },
     {
       "id": "animal_insectoid_humanoid_insectoid",
@@ -506,7 +514,11 @@
       ],
       "customOneOffs": [
         "Extra arms add one attack/action per melee round."
-      ]
+      ],
+      "percentile": {
+        "min": 41,
+        "max": 46
+      }
     },
     {
       "id": "animal_insectoid_insect_wings",
@@ -579,6 +591,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 59,
+        "max": 64
       }
     },
     {
@@ -654,6 +670,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 53,
+        "max": 58
       }
     },
     {
@@ -720,7 +740,11 @@
         "Polarized vision (works like sunglasses to reduce glare).",
         "Can see in the ultraviolet and infrared spectrum of light.",
         "Unless the eyes are covered with sunglasses or mirror goggles, +2 to Horror Factor."
-      ]
+      ],
+      "percentile": {
+        "min": 47,
+        "max": 52
+      }
     },
     {
       "id": "animal_insectoid_centauroid",
@@ -813,7 +837,11 @@
       },
       "customOneOffs": [
         "If the insect body has wings, flying speed is 1D6x10."
-      ]
+      ],
+      "percentile": {
+        "min": 65,
+        "max": 70
+      }
     },
     {
       "id": "animal_insectoid_ii_mantis_arms",
@@ -882,7 +910,11 @@
       "customOneOffs": [
         "Grip requires Supernatural P.S. greater than the Mantis Nightbane's own to break free; entangled targets need Supernatural P.S. twice that of the Nightbane to break free.",
         "Use of tools and simple melee weapons is impossible; keyboards, steering wheels, door knobs, large buttons, light switches, and levers can be used with effort."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 76
+      }
     },
     {
       "id": "animal_insectoid_ii_spiracles",
@@ -924,6 +956,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 83,
+        "max": 88
       }
     },
     {
@@ -974,6 +1010,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 77,
+        "max": 82
       }
     },
     {
@@ -1041,6 +1081,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 89,
+        "max": 94
       }
     },
     {
@@ -1082,6 +1126,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 7,
+        "max": 12
       }
     },
     {
@@ -1126,6 +1174,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 35,
+        "max": 40
       }
     },
     {
@@ -1164,7 +1216,11 @@
       },
       "customOneOffs": [
         "Assailants are -2 to disarm the Nightbane while he holds grippable objects (wood, leather, soft rubber, rope, etc.)."
-      ]
+      ],
+      "percentile": {
+        "min": 19,
+        "max": 24
+      }
     },
     {
       "id": "animal_insectoid_ii_bioluminescence",
@@ -1215,7 +1271,11 @@
         "Can illuminate darkness, signal, distract, or flash Morse code.",
         "By sacrificing one Hit Point per melee round, radiate magical sunlight equivalent to Globe of Daylight (5 feet/1.5 m radius per level), driving sunlight-vulnerable undead from the area.",
         "Unless covered, in dark environments."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 6
+      }
     },
     {
       "id": "animal_insectoid_ii_danger_markings",
@@ -1260,6 +1320,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 25,
+        "max": 28
       }
     },
     {
@@ -1306,7 +1370,11 @@
       },
       "customOneOffs": [
         "and ability to hide unseen outdoors among natural environments."
-      ]
+      ],
+      "percentile": {
+        "min": 13,
+        "max": 18
+      }
     }
   ]
 }

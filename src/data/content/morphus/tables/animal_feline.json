@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Feline",
   "parentTable": "animal",
-  "description": "Feline Morphus tables (Nightbane Core Rulebook, pp. 98-99; Dark Designs (WB6), pp. 131-132). Any feline from sabertooth tigers to household tabbies is possible. Player selects cat species and features.",
+  "description": "Feline Morphus table. Percentile bands: 01-11% Cat Claws, 12-27% Cat-like, 28-37% Cat's Head, 38-48% Feline Centauroid, 49-58% Feline Features, 59-68% Full Feline, 69-84% Fur-Covered Humanoid, 85-00% Were-Cat.",
   "entries": [
     {
       "id": "animal_feline_full",
@@ -126,7 +126,11 @@
       },
       "customOneOffs": [
         "Cannot use any weapons, tools, or vehicles."
-      ]
+      ],
+      "percentile": {
+        "min": 59,
+        "max": 68
+      }
     },
     {
       "id": "animal_feline_were_cat",
@@ -257,7 +261,11 @@
       },
       "customOneOffs": [
         "Paws make weapons and tools difficult: -4 to strike with guns and -20% (or -4) to weapons, tools, or skills requiring manual dexterity."
-      ]
+      ],
+      "percentile": {
+        "min": 85,
+        "max": 100
+      }
     },
     {
       "id": "animal_feline_fur_humanoid",
@@ -364,6 +372,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 69,
+        "max": 84
       }
     },
     {
@@ -462,6 +474,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 12,
+        "max": 27
       }
     },
     {
@@ -573,6 +589,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 38,
+        "max": 48
       }
     },
     {
@@ -651,6 +671,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 1,
+        "max": 11
       }
     },
     {
@@ -737,6 +761,10 @@
             "impossibleInMorphus": true
           }
         ]
+      },
+      "percentile": {
+        "min": 28,
+        "max": 37
       }
     },
     {
@@ -823,7 +851,11 @@
       },
       "customOneOffs": [
         "Keen hearing."
-      ]
+      ],
+      "percentile": {
+        "min": 49,
+        "max": 58
+      }
     }
   ]
 }

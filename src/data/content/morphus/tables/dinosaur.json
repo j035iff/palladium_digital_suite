@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Dinosaur",
   "parentTable": null,
-  "description": "Dinosaur Morphus table (Nightbane Survival Guide (WB5), pp. 85-86). Add characteristic rows from the book.",
+  "description": "Dinosaur Morphus table (Nightbane Survival Guide (WB5), pp. 85-86). Percentile bands: 01-11% Ankylosaur Humanoid, 12-22% Duckoid Humanoid, 23-33% Lesothosaurus Humanoid, 34-44% Pterodactyl Humanoid, 45-55% Raptor Legs, 56-66% Sauropod Humanoid, 67-77% Stegosaur Plates, 78-88% Triceratops Head, 89-00% Tyrannosaur Humanoid.",
   "entries": [
     {
       "id": "dinosaur_sauropod_humanoid",
@@ -67,7 +67,11 @@
       ],
       "customOneOffs": [
         "The nostrils are on top of the head, allowing the creature to be underwater indefinitely and still breathe as long as the very top of the head is above the surface."
-      ]
+      ],
+      "percentile": {
+        "min": 56,
+        "max": 66
+      }
     },
     {
       "id": "dinosaur_raptor_legs",
@@ -140,7 +144,11 @@
       ],
       "customOneOffs": [
         "The Nightbane possesses a large scythe claw on the big toe of each foot that deals 3D6 damage with a kick."
-      ]
+      ],
+      "percentile": {
+        "min": 45,
+        "max": 55
+      }
     },
     {
       "id": "dinosaur_triceratops_head",
@@ -227,7 +235,11 @@
         "The head and bony frill protecting the neck provide a Natural A.R. of 17.",
         "The +3 Parry bonus specifically applies when parrying with the horns/head.",
         "The running ram attack counts as two melee attacks."
-      ]
+      ],
+      "percentile": {
+        "min": 78,
+        "max": 88
+      }
     },
     {
       "id": "dinosaur_ankylosaur_humanoid",
@@ -307,7 +319,11 @@
         "The back shell (which makes the character look hunchbacked) has 3D6x10+55 S.D.C. and a Natural A.R. of 16.",
         "The 6 foot (1.8 m) long tail is lightly armored, ends in a hard bone club (+1 to strike), is covered in small horns, and has 1D6x10+12 S.D.C.",
         "Speed penalty does not apply in water (normal Spd)."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 11
+      }
     },
     {
       "id": "dinosaur_duckoid_humanoid",
@@ -393,7 +409,11 @@
         "Anyone within 5 feet (1.5 m) of the Nightbane when he calls at full volume must save vs 16 or suffer temporary deafness for 1D4 rounds (lose initiative, -2 to parry, disarm, and dodge).",
         "Can disguise his voice with 2D6+4 different voices at an 85% proficiency.",
         "Speed penalty does not apply in water (normal Spd)."
-      ]
+      ],
+      "percentile": {
+        "min": 12,
+        "max": 22
+      }
     },
     {
       "id": "dinosaur_tyrannosaur_humanoid",
@@ -522,7 +542,11 @@
         "The arms are 20% shorter and spindly, possessing only half the character's normal P.S.",
         "The legs are 20% longer than normal and receive a +1D6 bonus to P.S.",
         "Can smell blood and decaying bodies/meat up to one mile (1.6 km) away."
-      ]
+      ],
+      "percentile": {
+        "min": 89,
+        "max": 100
+      }
     },
     {
       "id": "dinosaur_pterodactyl_humanoid",
@@ -607,7 +631,11 @@
         "The taloned feet are prehensile like a hawk, allowing the character to grasp and hold items (but cannot use any type of weapon) or claw opponents from the air/hovering.",
         "Cannot swim; flounders and sinks.",
         "Gliding flight is completely silent but reduces flying speed by half (negates the Prowl penalty)."
-      ]
+      ],
+      "percentile": {
+        "min": 34,
+        "max": 44
+      }
     },
     {
       "id": "dinosaur_lesothosaurus_humanoid",
@@ -678,7 +706,11 @@
       ],
       "customOneOffs": [
         "The tail is as long as the character's body is tall."
-      ]
+      ],
+      "percentile": {
+        "min": 23,
+        "max": 33
+      }
     },
     {
       "id": "dinosaur_stegosaur_plates",
@@ -762,7 +794,11 @@
         "The dorsal plates provide armor protection from attacks from behind.",
         "Three pair of small triangular plates line the forearms, enabling the character to block melee weapons with his arms without taking damage.",
         "1D4 spikes grow just behind the knuckles on the backs of the hands, adding 2D6 damage to punch attacks."
-      ]
+      ],
+      "percentile": {
+        "min": 67,
+        "max": 77
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Crustacean",
   "parentTable": "animal",
-  "description": "Crustacean Morphus table (Nightbane Survival Guide (WB5), pp. 76-77). Aquatic: The character has an affinity for crustaceans reflected in the Morphus.",
+  "description": "Crustacean Morphus table. Percentile bands: 01-10% Crustacean Shell, 11-30% Giant Crustacean, 31-50% Humanoid Crustacean, 51-70% Lobster Centauroid, 71-80% Lobster Claws, 81-00% Were-Crustacean.",
   "entries": [
     {
       "id": "animal_crustacean_giant",
@@ -86,7 +86,11 @@
       },
       "customOneOffs": [
         "Difficult to hide; transportation may be a problem (e.g. cannot fit inside a vehicle, but can cling to the roof)."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 30
+      }
     },
     {
       "id": "animal_crustacean_were",
@@ -175,7 +179,11 @@
       },
       "customOneOffs": [
         "Difficult to hide; transportation may be a problem (e.g. can fit inside a vehicle, but takes up two spaces)."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 100
+      }
     },
     {
       "id": "animal_crustacean_humanoid",
@@ -238,7 +246,11 @@
       },
       "customOneOffs": [
         "Difficult to hide."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 50
+      }
     },
     {
       "id": "animal_crustacean_lobster_claws",
@@ -320,7 +332,11 @@
       },
       "customOneOffs": [
         "Arms can parry melee weapons without injury."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "animal_crustacean_shell",
@@ -383,6 +399,10 @@
       },
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 1,
+        "max": 10
       }
     },
     {
@@ -461,7 +481,11 @@
         "Clattering movement on land ( ).",
         "Difficult to hide; transportation may be a problem (e.g. cramped in a vehicle back seat).",
         "Triple weight."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 70
+      }
     }
   ]
 }

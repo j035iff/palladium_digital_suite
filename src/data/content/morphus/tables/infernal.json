@@ -3,7 +3,7 @@
   "kind": "morphus_trait_table",
   "displayName": "Infernal",
   "parentTable": null,
-  "description": "Infernal Morphus table (Nightbane Survival Guide (WB5), pp. 92-93). Nightbane drawn to demonic myth, cursed self-image, or a dark path-may struggle with evil, fight it, or embrace it. When this table is selected, the player may elect Anarchist, Aberrant, or Miscreant alignment. Holy Weapons inflict 50% more damage to all Infernal-table characters; they tend to avoid churches and sacred places.",
+  "description": "Infernal Morphus table. Percentile bands: 01-10% Burning Soul of Hell, 11-20% Cloven Hooved Beast, 21-30% Demon Claw, 31-40% Demon Eyes, 41-50% Feral Monster, 51-60% Fire & Brimstone, 61-70% Living Weapon, 71-80% Mark of the Profane, 81-90% The Mask of Darkness, 91-00% Shadow Demon.",
   "entries": [
     {
       "id": "infernal_demon_claw",
@@ -85,7 +85,11 @@
       "customOneOffs": [
         "Can parry blades and other weapons with bare hands without injury.",
         "+2 to Horror Factor, but only when speaking."
-      ]
+      ],
+      "percentile": {
+        "min": 21,
+        "max": 30
+      }
     },
     {
       "id": "infernal_shadow_demon",
@@ -167,7 +171,11 @@
         "Suffers half damage and effect from magic and Talents involving shadows and darkness.",
         "Contextual modifiers: {\"skillOverrides\":[{\"targetType\":\"skill_id\",\"targetValue\":\"prowl\",\"modifierPercent\":20},{\"targetType\":\"skill_id\",\"targetValue\":\"tailing\",\"modifierPercent\":20}]}",
         "Contextual modifiers: {\"skillOverrides\":[{\"targetType\":\"skill_id\",\"targetValue\":\"prowl\",\"modifierPercent\":-20}]}"
-      ]
+      ],
+      "percentile": {
+        "min": 91,
+        "max": 100
+      }
     },
     {
       "id": "infernal_feral_monster",
@@ -253,6 +261,10 @@
       ],
       "appearanceConstraints": {
         "clothingFit": "custom_required"
+      },
+      "percentile": {
+        "min": 41,
+        "max": 50
       }
     },
     {
@@ -330,7 +342,11 @@
       },
       "customOneOffs": [
         "+10% to balance."
-      ]
+      ],
+      "percentile": {
+        "min": 11,
+        "max": 20
+      }
     },
     {
       "id": "infernal_fire_and_brimstone",
@@ -393,7 +409,11 @@
         "Passive Aura: Everyone within 20 feet (6.1 m) must roll a 10 or higher to save vs nausea. A failed roll means the stomach is queasy and any sudden movement has a 50% chance of throwing up.",
         "Combat Aura: When angry or in combat, the stench intensifies. Those around him must roll a 16 or higher every minute of exposure. A failed save means -1 on all combat rolls, -10% on skill performance, and reduce Spd by 50%. Vomiting causes the victim to lose initiative and 1D4 melee attacks.",
         "+4 to save vs all other types of poisons (aside from the immunities listed to foul odors/airborne toxins)."
-      ]
+      ],
+      "percentile": {
+        "min": 51,
+        "max": 60
+      }
     },
     {
       "id": "infernal_demon_eyes",
@@ -466,7 +486,11 @@
         "Cannot be magically or psionically blinded.",
         "Blinded by intense, bright light.",
         "The character always has a sinister or dangerous expression on his face."
-      ]
+      ],
+      "percentile": {
+        "min": 31,
+        "max": 40
+      }
     },
     {
       "id": "infernal_mark_of_the_profane",
@@ -523,7 +547,11 @@
         "Holy symbols have a Horror Factor of 13 (usual effects) for this Nightbane.",
         "Holy Weapons inflict double damage.",
         "Dislikes and distrusts clergy, angelic beings, Guardians, and gods of light."
-      ]
+      ],
+      "percentile": {
+        "min": 71,
+        "max": 80
+      }
     },
     {
       "id": "infernal_the_mask_of_darkness",
@@ -593,7 +621,11 @@
       ],
       "customOneOffs": [
         "Inscribed on the Nightbane's chest or back is a strange symbol which the 'Bane believes marks him as an agent of destruction to the Nightlords."
-      ]
+      ],
+      "percentile": {
+        "min": 81,
+        "max": 90
+      }
     },
     {
       "id": "infernal_burning_soul_of_hell",
@@ -655,7 +687,11 @@
         "Rain does 1D6 damage per melee round.",
         "Being immersed in water does 6D6 damage per melee round when in this Morphus form.",
         "To grab and hold the Burning Soul inflicts 2D6 damage per melee action (i.e. every 3 seconds) to the attacker."
-      ]
+      ],
+      "percentile": {
+        "min": 1,
+        "max": 10
+      }
     },
     {
       "id": "infernal_living_weapon",
@@ -726,7 +762,11 @@
       ],
       "customOneOffs": [
         "Can be used to entangle or climb."
-      ]
+      ],
+      "percentile": {
+        "min": 61,
+        "max": 70
+      }
     }
   ]
 }
