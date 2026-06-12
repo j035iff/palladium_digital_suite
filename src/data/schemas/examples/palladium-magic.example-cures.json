@@ -3,7 +3,9 @@
   "id": "magic_wizard_negate_poisons_toxins",
   "name": "Negate Poisons/Toxins",
   "description": "Instantly neutralizes poisons and toxins in the recipient's body.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,18 +13,29 @@
       "pageNumber": 131
     }
   ],
+  "school": "wizard",
   "spellLevel": 3,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 5 },
-  "range": { "summary": "Touch." },
+  "ppe": {
+    "baseActivation": 5
+  },
+  "range": {
+    "summary": "Touch."
+  },
   "duration": {
     "summary": "Instant",
     "kind": "instant"
   },
-  "save": { "summary": "None", "saveKind": "none" },
+  "save": {
+    "summary": "None",
+    "saveKind": "none"
+  },
   "healing": {
-    "cures": ["poison", "toxin"]
+    "cures": [
+      "poison",
+      "toxin"
+    ]
   },
   "durationType": "instant"
 }

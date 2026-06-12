@@ -62,6 +62,7 @@
   "ppeEngine": {
     "baseFormula": "2D6+12",
     "perLevelFormula": "2D6",
+    "magicSchools": ["wizard"],
     "spellStrengthProgression": {
       "1": 4,
       "2": 5,

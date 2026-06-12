@@ -1,7 +1,9 @@
 import { getAbilityById } from '../data/abilityLibrary'
 import type { PalladiumPsionicCatalogEntry } from '../data/library/catalogTypes'
+import type { PalladiumMagicSpell } from '../types'
 import { getFeatureById } from '../data/library/registry'
 import { abilityPassesOccSupernaturalRules } from './occCreationDerivation'
+import { magicSchoolFilterLabel } from './magicSchoolLabels'
 import { psychicGatePsionicPickAllowed } from './psychicGatePsionicBudget'
 import { psionicCategoryFilterLabel } from './psionicCategoryLabels'
 import type {
@@ -78,4 +80,37 @@ export function abilityDurationBadgeLabel(
   if (d === 'instant') return 'Instant'
   if (d === 'melee') return 'Melee (APM)'
   return 'Narrative'
+}
+
+export function magicSchoolTags(
+  row: Pick<PalladiumMagicSpell, 'school'>,
+  genreId: string,
+): string {
+  return magicSchoolFilterLabel(genreId, row.school)
+}
+
+export type MagicRowSelectContext = {
+  activeOcc?: PalladiumOcc
+  spellCap: number
+  genreId: string
+  selectedIds?: readonly string[]
+}
+
+export function magicRowIsSelectable(
+  catalog: PalladiumMagicSpell,
+  ctx: MagicRowSelectContext,
+): boolean {
+  const ability = getAbilityById(catalog.id)
+  if (!ability) return false
+  const feature = getFeatureById(catalog.id)
+  if (ctx.activeOcc && feature) {
+    const occGate = abilityPassesOccSupernaturalRules(
+      ctx.activeOcc,
+      feature,
+      ctx.spellCap,
+      ctx.genreId,
+    )
+    if (!occGate.allowed) return false
+  }
+  return true
 }

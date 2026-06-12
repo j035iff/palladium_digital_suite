@@ -20,6 +20,11 @@ import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { initialOccCoreVoucherPicks } from './creationInvalidate'
 import { occStartingHandToHandTier } from './creationHandToHandChoice'
+import {
+  magicSchoolForFeature,
+  spellLevelForFeature,
+  spellSchoolAllowedForOcc,
+} from './magicSchool'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -338,18 +343,33 @@ export function deriveOccCreation(
   }
 }
 
+function maxSpellLevelFromRestriction(restriction: string): number | undefined {
+  const match = restriction.match(/level\s+(\d+)/i)
+  if (!match) return undefined
+  const n = Number.parseInt(match[1], 10)
+  return Number.isFinite(n) ? n : undefined
+}
+
 function restrictionMatches(
   restriction: string,
   ctx: {
     level?: number
     school?: string
     psionicTier?: string
+    /** When true, school prose (e.g. Necromancy Only) is handled by `ppeEngine.magicSchools`. */
+    structuredSchoolGate?: boolean
   },
 ): boolean {
   const r = restriction.toLowerCase()
-  if (r.includes('level 1') && (ctx.level == null || ctx.level > 1)) return false
-  if (r.includes('level 2') && (ctx.level == null || ctx.level > 2)) return false
-  if (r.includes('necromancy') && ctx.school?.toLowerCase() !== 'necromancy') {
+  const maxSpellLevel = maxSpellLevelFromRestriction(restriction)
+  if (maxSpellLevel != null && (ctx.level == null || ctx.level > maxSpellLevel)) {
+    return false
+  }
+  if (
+    !ctx.structuredSchoolGate &&
+    r.includes('necromancy') &&
+    ctx.school?.toLowerCase() !== 'necromancy'
+  ) {
     return false
   }
   if (r.includes('sensitive only') && ctx.psionicTier?.toLowerCase() !== 'sensitive') {
@@ -369,10 +389,9 @@ export function abilityPassesOccSupernaturalRules(
   genreId?: string | null,
 ): { allowed: boolean; reason?: string } {
   const cat = featureBudgetCategory(feature)
-  const level =
-    typeof feature.metadata?.level === 'number' ? feature.metadata.level : undefined
-  const school =
-    typeof feature.metadata?.school === 'string' ? feature.metadata.school : undefined
+  const level = spellLevelForFeature(feature)
+  const school = magicSchoolForFeature(feature)
+  const structuredSchoolGate = (occ.ppeEngine?.magicSchools?.length ?? 0) > 0
   const psionicTier =
     typeof feature.metadata?.psionicTier === 'string'
       ? feature.metadata.psionicTier
@@ -385,8 +404,12 @@ export function abilityPassesOccSupernaturalRules(
         reason: `Spell level ${level} exceeds O.C.C. spell strength cap (${spellCap}).`,
       }
     }
+    const schoolGate = spellSchoolAllowedForOcc(occ, school)
+    if (!schoolGate.allowed) {
+      return schoolGate
+    }
     for (const r of occCreationSpellRestrictions(occ, 1)) {
-      if (!restrictionMatches(r, { level, school })) {
+      if (!restrictionMatches(r, { level, school, structuredSchoolGate })) {
         return { allowed: false, reason: r }
       }
     }

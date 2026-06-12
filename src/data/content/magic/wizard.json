@@ -45,7 +45,8 @@
         "dodge": -10,
         "notes": "The chance of falling is 50% every 10 ft (3.0 m) moved."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_cloud_of_smoke",
@@ -90,7 +91,8 @@
       "combatModifiers": {
         "notes": "Sight through the smoke is impossible. Those inside suffer blindness penalties."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_death_trance",
@@ -135,7 +137,8 @@
         "drug_progression",
         "poison_progression"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_globe_of_daylight",
@@ -173,7 +176,8 @@
     "save": {
       "summary": "None",
       "saveKind": "none"
-    }
+    },
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_see_aura",
@@ -219,7 +223,8 @@
       "Presence of supernatural possession",
       "Presence of a human aberration or mutant",
       "General health and presence of severe illness"
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_see_the_invisible",
@@ -262,7 +267,8 @@
       "Invisible objects",
       "Astral travelers",
       "Entities of energy"
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_sense_evil",
@@ -304,7 +310,8 @@
       "Supernatural evil",
       "Magical evil",
       "General direction and proximity of evil"
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_sense_magic",
@@ -347,7 +354,8 @@
       "Enchanted objects",
       "Invisible magical barriers",
       "People currently casting spells"
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "id": "magic_wizard_thunderclap",
@@ -394,7 +402,8 @@
         "parry": 1,
         "dodge": 1
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -447,7 +456,8 @@
         "speedMultiplier": 0.5,
         "notes": "Attacks per melee round are reduced by half."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -496,7 +506,8 @@
           "notes": "90% undetectable if unmoving, 70% if moving 2 ft per melee or slower, 20% if moving normally. Completely ineffective in a void/empty room."
         }
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -544,7 +555,8 @@
           "notes": "60% on smooth or extremely difficult surfaces; rappelling included."
         }
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -584,7 +596,8 @@
       "summary": "Standard (if actively searching for the item)",
       "saveKind": "standard"
     },
-    "targetCountFormula": "One small object."
+    "targetCountFormula": "One small object.",
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -626,7 +639,8 @@
       "Magically concealed objects",
       "Physically hidden objects",
       "Secret doors and compartments"
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -664,7 +678,8 @@
     "save": {
       "summary": "None",
       "saveKind": "none"
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -715,7 +730,8 @@
         "dodge": -3,
         "notes": "Victims lose initiative and will likely flee. If cornered, they fight with extreme penalties."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -756,7 +772,8 @@
       "summary": "Save vs Horror Factor",
       "saveKind": "horror_factor"
     },
-    "horrorFactor": 7
+    "horrorFactor": 7,
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -801,7 +818,8 @@
         "hover": true,
         "notes": "Maximum weight is 200 lbs (90 kg) plus 20 lbs (9 kg) per level of experience."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -838,7 +856,8 @@
     "save": {
       "summary": "None",
       "saveKind": "none"
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -878,7 +897,8 @@
       "summary": "Standard (for the undead)",
       "saveKind": "standard"
     },
-    "targetCountFormula": "1D6 undead per level of experience."
+    "targetCountFormula": "1D6 undead per level of experience.",
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -928,7 +948,8 @@
         "lightning",
         "cold"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -975,7 +996,8 @@
         "suffocation",
         "toxic gases"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1016,7 +1038,8 @@
     "damage": {
       "formula": "4D6",
       "notes": "Magical directed energy attack. The caster gets a +3 bonus to strike."
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1060,7 +1083,8 @@
       "combatModifiers": {
         "notes": "Operates with a P.S. equivalent to 5. Cannot be used to attack or parry."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1105,7 +1129,8 @@
         "hover": true,
         "notes": "Target is suspended in air. Movement is impossible unless pushed/pulled by an outside force."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1146,7 +1171,8 @@
     },
     "damage": {
       "notes": "Doubles the damage inflicted by the targeted fire."
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1184,7 +1210,8 @@
     "save": {
       "summary": "None",
       "saveKind": "none"
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1231,7 +1258,8 @@
         "heat",
         "magical fire"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1279,7 +1307,8 @@
         "venom",
         "drugs"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1324,7 +1353,8 @@
       "combatModifiers": {
         "notes": "Attackers are -5 to strike the invisible character. Engaging in combat immediately dispels the invisibility."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1369,7 +1399,8 @@
         "drug effects",
         "alcohol"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1416,7 +1447,8 @@
       "combatModifiers": {
         "notes": "Victim loses all attacks per melee, cannot move, and cannot cast spells requiring physical gestures or speech."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1462,7 +1494,8 @@
         "magical fire",
         "heat"
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1506,7 +1539,8 @@
       "combatModifiers": {
         "notes": "Can carry or hurl up to 60 lbs (27.2 kg). Hurled objects inflict 1D4 damage per 10 lbs of weight."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1553,7 +1587,8 @@
       "combatModifiers": {
         "notes": "Victims are stuck and immobile. Freeing oneself requires a P.S. check (must roll above the spell strength) or cutting through the adhesive."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1619,7 +1654,8 @@
           ]
         }
       }
-    ]
+    ],
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1664,7 +1700,8 @@
       "forceField": {
         "sdcFormula": "60 S.D.C. per level of experience"
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1705,7 +1742,8 @@
     },
     "damage": {
       "formula": "6D6"
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1753,7 +1791,8 @@
       "kind": "construct",
       "name": "Magic Net",
       "derivedHealth": "20 S.D.C. per level of experience"
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1802,7 +1841,8 @@
           "notes": "Effective only in shadows or dark areas."
         }
       ]
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1849,7 +1889,8 @@
       "combatModifiers": {
         "notes": "P.S. becomes Supernatural Strength."
       }
-    }
+    },
+    "school": "wizard"
   },
   {
     "$schema": "../palladium-magic.schema.json",
@@ -1898,6 +1939,961 @@
         "dodge": 2,
         "notes": "Gives the illusion of superhuman speed."
       }
-    }
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_blind",
+    "name": "Blind",
+    "description": "Temporarily blinds the victim, impairing their combat abilities.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 133
+      }
+    ],
+    "spellLevel": 5,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "90 ft (27.4 m)"
+    },
+    "duration": {
+      "summary": "1 minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "blinded"
+      ],
+      "combatModifiers": {
+        "strike": -5,
+        "parry": -10,
+        "dodge": -10,
+        "notes": "Victim cannot see; speed is reduced by half."
+      }
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_house_of_glass",
+    "name": "House of Glass",
+    "description": "Creates a transparent, glass-like structure that traps victims or serves as a shelter.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 134
+      }
+    ],
+    "spellLevel": 5,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "ward",
+      "construct"
+    ],
+    "ppe": {
+      "baseActivation": 12
+    },
+    "range": {
+      "summary": "60 ft (18.3 m)"
+    },
+    "duration": {
+      "summary": "10 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "10 minutes"
+    },
+    "save": {
+      "summary": "Dodge (to jump out before it forms)",
+      "saveKind": "dodge"
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "House of Glass",
+      "derivedHealth": "200 S.D.C."
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_metamorphosis_animal",
+    "name": "Metamorphosis: Animal",
+    "description": "Transforms the caster into a normal animal. The caster uses the creature's physical stats and natural attacks but retains their own intelligence and alignment.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 134
+      }
+    ],
+    "spellLevel": 5,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "shapeshift"
+    ],
+    "ppe": {
+      "baseActivation": 25
+    },
+    "range": {
+      "summary": "Self."
+    },
+    "duration": {
+      "summary": "10 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "10 minutes"
+    },
+    "effectProfiles": [
+      {
+        "name": "Wolf",
+        "description": "Transform into a wolf.",
+        "formTransformation": {
+          "mode": "sheet_replacement",
+          "targetCatalogRaceId": "npc_wolf",
+          "masksCharacterSheet": true,
+          "preservedAspects": [
+            "mind",
+            "alignment",
+            "ppe_pool"
+          ],
+          "notes": "Uses wolf natural attacks and movement."
+        }
+      },
+      {
+        "name": "Raven",
+        "description": "Transform into a raven.",
+        "formTransformation": {
+          "mode": "sheet_replacement",
+          "targetCatalogRaceId": "npc_raven",
+          "masksCharacterSheet": true,
+          "preservedAspects": [
+            "mind",
+            "alignment",
+            "ppe_pool"
+          ],
+          "notes": "Grants flight."
+        }
+      }
+    ],
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_teleport_lesser",
+    "name": "Teleport: Lesser",
+    "description": "Instantly transports the caster to a known destination. Arrival accuracy is resolved on a percentile table based on familiarity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 134
+      }
+    ],
+    "spellLevel": 6,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "movement",
+      "teleport"
+    ],
+    "ppe": {
+      "baseActivation": 15
+    },
+    "range": {
+      "summary": "Self and 50 lbs (22.6 kg) of gear."
+    },
+    "duration": {
+      "summary": "Instant.",
+      "kind": "instant"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Teleport arrival accuracy",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "percentile": {
+            "min": 1,
+            "max": 80
+          },
+          "label": "On Target",
+          "effect": "Arrive exactly at the intended destination."
+        },
+        {
+          "percentile": {
+            "min": 81,
+            "max": 99
+          },
+          "label": "Off Course",
+          "effect": "Arrive 1D6 miles away from the destination."
+        },
+        {
+          "percentile": {
+            "min": 100,
+            "max": 100
+          },
+          "label": "Catastrophic Failure",
+          "effect": "Arrive high in the air or teleport into an object. Take 3D6 damage."
+        }
+      ]
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_fire_ball",
+    "name": "Fire Ball",
+    "description": "The caster hurls a large flaming sphere that inflicts massive damage upon impact.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 135
+      }
+    ],
+    "spellLevel": 6,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "elemental",
+      "fire"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "90 ft (27.4 m)"
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "Dodge",
+      "saveKind": "dodge"
+    },
+    "damage": {
+      "formula": "1D6 per level of experience",
+      "notes": "Plus 2 to strike when thrown."
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_familiar_link",
+    "name": "Familiar Link",
+    "description": "Creates a permanent mystical bond with an animal familiar. Success permanently reduces the caster's maximum P.P.E. and Hit Points.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 136
+      }
+    ],
+    "spellLevel": 7,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "ritual",
+      "summoning"
+    ],
+    "ppe": {
+      "baseActivation": 55
+    },
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 5
+        },
+        "notes": "Permanent — lowers maximum P.P.E. by 5."
+      },
+      {
+        "resource": "hp_max",
+        "reduction": {
+          "kind": "fraction",
+          "numerator": 1,
+          "denominator": 2
+        },
+        "notes": "Hit points are restored only if the familiar dies."
+      }
+    ],
+    "range": {
+      "summary": "Touch."
+    },
+    "duration": {
+      "summary": "Permanent bond.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_invulnerability",
+    "name": "Invulnerability",
+    "description": "Grants the caster incredible durability, a massive temporary health pool, and immunity to energy attacks.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 136
+      }
+    ],
+    "spellLevel": 7,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "buff",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 25
+    },
+    "range": {
+      "summary": "Self or others by touch."
+    },
+    "duration": {
+      "summary": "1 melee round (15 seconds) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "forceField": {
+        "sdcFormula": "50 S.D.C."
+      },
+      "immunities": [
+        "energy",
+        "fire",
+        "cold",
+        "disease",
+        "poisons"
+      ],
+      "combatModifiers": {
+        "save_magic": 1,
+        "save_psionics": 1,
+        "save_horror_factor": 1
+      }
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_exorcism",
+    "name": "Exorcism",
+    "description": "A powerful ritual designed to expel possessing entities and demons from a host body or location.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 137
+      }
+    ],
+    "spellLevel": 8,
+    "magicKind": "ritual",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "anti_demonic",
+      "ritual"
+    ],
+    "ppe": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Touch or within 10 ft (3.0 m)."
+    },
+    "duration": {
+      "summary": "Instant expulsion.",
+      "kind": "instant"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Exorcism success",
+      "resolutionTrigger": {
+        "when": "on_ritual_completion",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "percentile": {
+            "min": 1,
+            "max": 7
+          },
+          "label": "Success",
+          "effect": "Success (per level of experience). The entity is banished."
+        },
+        {
+          "percentile": {
+            "min": 8,
+            "max": 100
+          },
+          "label": "Failure",
+          "effect": "The entity remains. Can only be attempted once per 24 hours."
+        }
+      ]
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_summon_canines",
+    "name": "Summon & Control Canines",
+    "description": "Calls forth actual canines (dogs, wolves) from the surrounding area and forces them to obey the caster.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 138
+      }
+    ],
+    "spellLevel": 9,
+    "magicKind": "summoning",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "summoning",
+      "mind_control"
+    ],
+    "ppe": {
+      "baseActivation": 50
+    },
+    "range": {
+      "summary": "2 mile (3.2 km) radius."
+    },
+    "duration": {
+      "summary": "1 hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None (animals cannot save)",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "catalogRaceId": "npc_wolf",
+      "countFormula": "1D6 per level of experience",
+      "control": {
+        "saveKind": "none",
+        "summary": "Animals cannot save; caster dictates actions telepathically."
+      },
+      "duration": {
+        "summary": "1 hour per level of experience.",
+        "kind": "hour",
+        "perLevel": "1 hour"
+      }
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_amulet",
+    "name": "Amulet",
+    "description": "Enchants a precious-metal amulet that grants ongoing protection or abilities to the wearer. The amulet becomes a permanent magical item.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 139
+      }
+    ],
+    "spellLevel": 10,
+    "magicKind": "enchantment",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "crafting",
+      "enchantment"
+    ],
+    "ppe": {
+      "baseActivation": 290
+    },
+    "materialComponents": {
+      "label": "Amulet Materials",
+      "entries": [
+        {
+          "catalogItemId": "item_gold_or_silver",
+          "quantity": {
+            "kind": "fixed",
+            "value": 2
+          },
+          "unit": "oz",
+          "consumption": "destroyed",
+          "timing": "on_ritual_completion"
+        },
+        {
+          "label": "Rare herbs and gems",
+          "quantity": {
+            "kind": "fixed",
+            "value": 1
+          },
+          "unit": "pouch",
+          "consumption": "destroyed",
+          "timing": "on_ritual_completion"
+        }
+      ]
+    },
+    "ritualProfile": {
+      "craftingDuration": {
+        "summary": "1D4+1 hours.",
+        "kind": "special"
+      },
+      "workspace": {
+        "summary": "Quiet space for chanting and metalwork."
+      },
+      "assistantsRequired": 0,
+      "failureHandling": "lose_materials_and_ppe"
+    },
+    "forgedOutputs": [
+      {
+        "catalogItemId": "item_amulet",
+        "destination": "caster_inventory",
+        "encodedSpellId": "magic_wizard_amulet"
+      }
+    ],
+    "range": {
+      "summary": "Touch."
+    },
+    "duration": {
+      "summary": "Permanent.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_mystic_portal",
+    "name": "Mystic Portal",
+    "description": "Creates a dimensional rift that acts as a doorway through solid objects or across short distances. It can penetrate vaults, walls, and magical barriers.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 139
+      }
+    ],
+    "spellLevel": 10,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "movement",
+      "temporal"
+    ],
+    "ppe": {
+      "baseActivation": 60
+    },
+    "range": {
+      "summary": "100 ft (30.5 m)."
+    },
+    "duration": {
+      "summary": "1 melee round (15 seconds) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_create_mummy",
+    "name": "Create Mummy",
+    "description": "A dark ritual that animates a specially prepared corpse, turning it into an undead mummy bound to the caster's will.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 140
+      }
+    ],
+    "spellLevel": 12,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "necromancy",
+      "summoning"
+    ],
+    "ppe": {
+      "baseActivation": 160
+    },
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 10
+        },
+        "notes": "Permanent loss of 10 P.P.E. to bind the undead entity."
+      }
+    ],
+    "materialComponents": {
+      "label": "Mummification Supplies",
+      "entries": [
+        {
+          "label": "Fresh or preserved human corpse",
+          "quantity": {
+            "kind": "fixed",
+            "value": 1
+          },
+          "unit": "each",
+          "consumption": "destroyed",
+          "timing": "over_crafting_period"
+        },
+        {
+          "label": "Embalming fluids and treated linen",
+          "quantity": {
+            "kind": "fixed",
+            "value": 1
+          },
+          "unit": "kit",
+          "consumption": "destroyed"
+        }
+      ]
+    },
+    "ritualProfile": {
+      "craftingDuration": {
+        "summary": "1D4 days of preparation.",
+        "kind": "special"
+      },
+      "workspace": {
+        "summary": "Mortuary or secure laboratory."
+      },
+      "failureHandling": "lose_materials_and_ppe"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "catalogRaceId": "npc_mummy",
+      "countFormula": "1",
+      "notes": "The Mummy is permanently loyal to its creator."
+    },
+    "range": {
+      "summary": "Touch."
+    },
+    "duration": {
+      "summary": "Permanent.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_talisman",
+    "name": "Talisman",
+    "description": "Forges a magical battery that can store P.P.E. or specific spells for the caster to tap into later.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 141
+      }
+    ],
+    "spellLevel": 13,
+    "magicKind": "enchantment",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "crafting",
+      "enchantment"
+    ],
+    "ppe": {
+      "baseActivation": 500
+    },
+    "materialComponents": {
+      "label": "Talisman Focus",
+      "entries": [
+        {
+          "label": "Flawless gem, skull, or iron rod",
+          "quantity": {
+            "kind": "fixed",
+            "value": 1
+          },
+          "unit": "item",
+          "consumption": "reusable_tool"
+        }
+      ]
+    },
+    "ritualProfile": {
+      "craftingDuration": {
+        "summary": "12 hours.",
+        "kind": "special"
+      }
+    },
+    "forgedOutputs": [
+      {
+        "catalogItemId": "item_talisman",
+        "destination": "caster_inventory",
+        "notes": "Can hold up to 50 P.P.E. or 3 specific spells of levels 1-8."
+      }
+    ],
+    "range": {
+      "summary": "Touch."
+    },
+    "duration": {
+      "summary": "Permanent.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_restoration",
+    "name": "Restoration",
+    "description": "The pinnacle of healing magic. Instantly mends all internal damage, restores all Hit Points and S.D.C., and miraculously regrows severed limbs.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 142
+      }
+    ],
+    "spellLevel": 14,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "healing",
+      "buff"
+    ],
+    "ppe": {
+      "baseActivation": 750
+    },
+    "range": {
+      "summary": "Touch."
+    },
+    "duration": {
+      "summary": "Instant.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "100%",
+      "sdcFormula": "100%",
+      "cures": [
+        "amputations",
+        "missing_limbs",
+        "internal_injuries",
+        "blindness",
+        "deafness",
+        "disease",
+        "poison"
+      ]
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_annihilate",
+    "name": "Annihilate",
+    "description": "A devastating spell that calls forth anti-matter or pure destructive force, utterly wiping the target out of existence.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 142
+      }
+    ],
+    "spellLevel": 14,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "energy",
+      "destruction"
+    ],
+    "ppe": {
+      "baseActivation": 600
+    },
+    "range": {
+      "summary": "100 ft (30.5 m) per level of experience."
+    },
+    "duration": {
+      "summary": "Instant.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "Dodge",
+      "saveKind": "dodge"
+    },
+    "damage": {
+      "formula": "1D6*1000",
+      "notes": "If target is reduced to 0 or fewer hit points, they are completely vaporized."
+    },
+    "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_dimensional_portal",
+    "name": "Dimensional Portal",
+    "description": "Tears a hole in the fabric of space and time, allowing transit to completely different dimensions, planes of existence, or parallel worlds.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 143
+      }
+    ],
+    "spellLevel": 15,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "movement",
+      "temporal"
+    ],
+    "ppe": {
+      "baseActivation": 1000
+    },
+    "range": {
+      "summary": "A gateway 10x20 ft (3x6 m) opens up to 20 ft (6.1 m) away."
+    },
+    "duration": {
+      "summary": "1 minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Dimensional Portal Accuracy",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "percentile": {
+            "min": 1,
+            "max": 75
+          },
+          "label": "Success",
+          "effect": "Portal opens safely to the intended dimension/world."
+        },
+        {
+          "percentile": {
+            "min": 76,
+            "max": 90
+          },
+          "label": "Off Course",
+          "effect": "Portal opens to the right dimension, but in a completely random physical location."
+        },
+        {
+          "percentile": {
+            "min": 91,
+            "max": 100
+          },
+          "label": "Catastrophic Failure",
+          "effect": "Portal opens to a hostile or entirely unknown dimension, or releases a dangerous entity into the caster's world."
+        }
+      ]
+    },
+    "school": "wizard"
   }
 ]

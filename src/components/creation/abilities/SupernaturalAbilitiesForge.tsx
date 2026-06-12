@@ -159,7 +159,14 @@ export function SupernaturalAbilitiesForge() {
 
           {activeLane === 'magic' && activeLaneAllowed ? (
 
-            <MagicForgePanel morphus={morphus} spellCap={spellCap} />
+            <MagicForgePanel
+              morphus={morphus}
+              genreId={genreId}
+              activeOcc={activeOcc}
+              spellCap={spellCap}
+              spellBudget={budget.spellSlots}
+              spellCount={counts.spell}
+            />
 
           ) : null}
 

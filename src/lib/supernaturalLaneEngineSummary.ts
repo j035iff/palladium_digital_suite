@@ -1,4 +1,6 @@
 import type { SupernaturalAbilityForgeLane } from './forgeNavigation/supernaturalAbilitiesForge'
+import { magicSchoolFilterLabel } from './magicSchoolLabels'
+import { occMagicSchools } from './magicSchool'
 import type {
   OccCreationAbilityBudget,
   OccCreationDerived,
@@ -46,8 +48,14 @@ export function buildSupernaturalLaneEngineLines(
     }
     if (budget.spellSlots > 0) {
       lines.push(`Spell strength cap at 1st level: ${derived.startingSpellLevelCap}`)
+      const schools = occMagicSchools(occ)
+      if (schools.length) {
+        lines.push(
+          `Magic schools: ${schools.map((s) => magicSchoolFilterLabel(undefined, s)).join(', ')}`,
+        )
+      }
       if (derived.spellRestrictions.length) {
-        lines.push(`Spell categories: ${derived.spellRestrictions.join('; ')}`)
+        lines.push(`Spell level rules: ${derived.spellRestrictions.join('; ')}`)
       }
       lines.push(
         `Selection budget: ${selectionCount}/${budget.spellSlots} spell${budget.spellSlots === 1 ? '' : 's'}`,

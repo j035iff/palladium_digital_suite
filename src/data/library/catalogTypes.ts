@@ -56,6 +56,9 @@ export type PalladiumHandToHandCatalogEntry = import('../../types').HandToHandSk
 /** Row from `content/palladiumTalents.json` — see `schemas/palladium-talent.schema.json`. */
 export type PalladiumTalentCatalogEntry = import('../../types').PalladiumTalent
 
+/** Row from `content/magic/<school>.json` — see `schemas/palladium-magic.schema.json`. */
+export type PalladiumMagicCatalogEntry = import('../../types').PalladiumMagicSpell
+
 /** Row from `content/palladiumPsionics.json` — see `schemas/palladium-psionic.schema.json`. */
 export type PalladiumPsionicCatalogEntry = {
   id: string

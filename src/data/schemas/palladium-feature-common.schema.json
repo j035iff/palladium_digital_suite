@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json",
   "title": "Palladium feature common fragments",
-  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `spawnedPresence`, `formTransformation`).",
+  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `materialRequirements`, `forgedItemOutput`, `spawnedPresence`, `formTransformation`).",
   "$defs": {
     "percentileRange": {
       "type": "object",
@@ -111,6 +111,193 @@
           "description": "Canonical race id from `content/races/npc.json` or `gm_approval.json`."
         }
       }
+    },
+    "catalogItemRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalogItemId"],
+      "description": "Reference to an equipment/loot catalog row (future `palladium-item.schema.json`).",
+      "properties": {
+        "catalogItemId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Canonical item id from `content/items/*.json` when the loot catalog exists."
+        }
+      }
+    },
+    "quantitySpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "description": "Structured amount for material components, forged item counts, or charges.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["fixed", "formula", "per_level"]
+        },
+        "value": {
+          "type": "number",
+          "description": "Fixed amount when `kind` is `fixed`."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Palladium dice or prose formula when `kind` is `formula` or `per_level`."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "fixed" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["value"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "formula" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["formula"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "per_level" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["formula"] }
+        }
+      ]
+    },
+    "materialComponentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One physical inventory or prose reagent required to cast or complete a ritual.",
+      "properties": {
+        "catalogItemId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display label when no catalog row exists yet."
+        },
+        "quantity": { "$ref": "#/$defs/quantitySpec" },
+        "unit": {
+          "type": "string",
+          "enum": ["each", "lb", "oz", "kg", "g", "ft", "liter", "dose", "other"]
+        },
+        "consumption": {
+          "type": "string",
+          "enum": ["destroyed", "returned", "reusable_tool"],
+          "description": "`destroyed` deducts from inventory on success; `reusable_tool` must be present but is not consumed."
+        },
+        "condition": {
+          "type": "string",
+          "enum": ["any", "fresh", "virgin", "enchanted", "unprocessed", "other"]
+        },
+        "timing": {
+          "type": "string",
+          "enum": [
+            "before_cast",
+            "at_cast",
+            "on_ritual_completion",
+            "over_crafting_period"
+          ]
+        },
+        "substitutes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/materialComponentEntry" }
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [
+        { "required": ["catalogItemId"] },
+        { "required": ["label"] }
+      ]
+    },
+    "materialRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entries"],
+      "description": "Physical components consumed or required present for casting (distinct from `ppe` and `permanentCosts`).",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Checklist heading shown before cast or ritual start."
+        },
+        "allRequired": {
+          "type": "boolean",
+          "description": "When true (default), every entry must be satisfied; when false, GM adjudicates partial sets."
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/materialComponentEntry" }
+        }
+      }
+    },
+    "forgedItemOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["destination"],
+      "description": "Persistent equippable item created by enchanting or scroll/scribing rituals.",
+      "properties": {
+        "catalogItemId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Loot/equipment catalog row cloned into inventory on success."
+        },
+        "outputTemplateId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Lightweight template when no catalog row exists yet."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name when forging from a template only."
+        },
+        "count": { "type": "integer", "minimum": 1 },
+        "countFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice or scaling formula (e.g. `1D4`)."
+        },
+        "destination": {
+          "type": "string",
+          "enum": ["caster_inventory", "touch_target_inventory", "ground_loot"]
+        },
+        "initialPresence": {
+          "type": "string",
+          "enum": ["carried", "equipped", "stashed"],
+          "description": "Inventory presence state when the item is created."
+        },
+        "bindToCaster": {
+          "type": "boolean",
+          "description": "When true, only the caster (or designated owner) can use the item."
+        },
+        "charges": { "$ref": "#/$defs/quantitySpec" },
+        "encodedSpellId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "For scrolls and similar items — spell invoked when the item is used."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [
+        { "required": ["catalogItemId"] },
+        { "required": ["outputTemplateId"] },
+        { "required": ["label"] }
+      ]
     },
     "permanentPoolReduction": {
       "type": "object",

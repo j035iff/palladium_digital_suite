@@ -3,7 +3,9 @@
   "id": "magic_wizard_summon_wolves",
   "name": "Summon Wolves",
   "description": "Calls 1D6 wolves from the surrounding area to obey the caster for the spell duration.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,17 +13,25 @@
       "pageNumber": 130
     }
   ],
+  "school": "wizard",
   "spellLevel": 6,
   "magicKind": "summoning",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 35 },
-  "range": { "summary": "1 mile (1.6 km) radius." },
+  "ppe": {
+    "baseActivation": 35
+  },
+  "range": {
+    "summary": "1 mile (1.6 km) radius."
+  },
   "duration": {
     "summary": "1 hour per level of experience.",
     "kind": "hour",
     "perLevel": "1 hour"
   },
-  "save": { "summary": "Standard", "saveKind": "standard" },
+  "save": {
+    "summary": "Standard",
+    "saveKind": "standard"
+  },
   "spawnedPresence": {
     "kind": "creature",
     "catalogRaceId": "race_wolf",

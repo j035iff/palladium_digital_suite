@@ -3,7 +3,9 @@
   "id": "magic_wizard_example_invocation_pattern",
   "name": "Example: Magic Invocation (pattern)",
   "description": "Illustrates spell level, P.P.E. economy, range/duration/save blocks, and optional genre placement.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,17 +13,27 @@
       "pageNumber": 128
     }
   ],
+  "school": "wizard",
   "spellLevel": 1,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "tags": ["utility"],
-  "ppe": { "baseActivation": 2 },
-  "range": { "summary": "Self" },
+  "tags": [
+    "utility"
+  ],
+  "ppe": {
+    "baseActivation": 2
+  },
+  "range": {
+    "summary": "Self"
+  },
   "duration": {
     "summary": "2 minutes per level of experience.",
     "kind": "minute",
     "perLevel": "2 minutes"
   },
-  "save": { "summary": "None", "saveKind": "none" },
+  "save": {
+    "summary": "None",
+    "saveKind": "none"
+  },
   "durationType": "narrative"
 }

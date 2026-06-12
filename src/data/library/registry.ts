@@ -1,6 +1,7 @@
 import type { Feature } from '../../types'
 import type { PalladiumOcc, Race } from '../../types'
 import { POWER_FEATURES } from './features'
+import { MAGIC_FEATURES } from './magicCatalogLoader'
 import { PSIONIC_FEATURES } from './psionicCatalogLoader'
 import { TALENT_FEATURES } from './talentCatalogLoader'
 import { loadRacesFromJson } from './racesLoader'
@@ -17,6 +18,7 @@ import {
 
 export const FEATURE_REGISTRY: Feature[] = [
   ...POWER_FEATURES,
+  ...MAGIC_FEATURES,
   ...PSIONIC_FEATURES,
   ...TALENT_FEATURES,
 ]
@@ -112,6 +114,19 @@ export {
   listPalladiumTalentsForGameSystem,
   palladiumTalentToFeature,
 } from './talentCatalogLoader'
+
+export {
+  PALLADIUM_MAGIC_CATALOG,
+  MAGIC_FEATURES,
+  formatMagicPpeCost,
+  getMagicFeatureById,
+  getPalladiumMagicSpellById,
+  listMagicSchoolIdsForGameSystem,
+  listPalladiumMagicByMaxLevel,
+  listPalladiumMagicForGameSystem,
+  listPalladiumMagicForSchool,
+  palladiumMagicToFeature,
+} from './magicCatalogLoader'
 
 export {
   PALLADIUM_PSIONIC_CATALOG,

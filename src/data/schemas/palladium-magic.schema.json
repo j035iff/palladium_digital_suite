@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-magic.schema.json",
   "title": "Palladium magic spell / invocation",
-  "description": "Magic invocation catalog row (Nightbane RPG pp. 126–130 pattern; Rifts/Palladium Fantasy variants via optional genre placement). Documents P.P.E. economy, spell level (1–15), range/duration/save, `targetCountFormula` for variable victim counts, offensive `damage`, sensory `reveals`, Horror Factor, ritual flag, `healing` (H.P./S.D.C. restoration and condition `cures`), `resolutionTable` for percentile outcome bands (Teleport, Exorcism), `permanentCosts` for irreversible maximum-pool sacrifices (Familiar Link), `spawnedPresence` for constructs and catalog creature summons, `formTransformation` for sheet-replacement metamorphosis, legacy `summonedEntity` (construct alias), `effectProfiles` for modal spells, and optional mechanical automation (`grantedModifiers` including `forceField`, `resistances`, temporary `grantedSkills`, `inflictedModifiers`, `horrorFactor`). Shared fragments live in `palladium-feature-common.schema.json`. Runtime importers map rows to the universal Feature composer (`metadata.pickBucket`: `magic`). **Genre placement** records setting-specific spell level or P.P.E. overrides when the same invocation appears across Megaversal books.",
+  "description": "Magic invocation catalog row (Nightbane RPG pp. 126–130 pattern; Rifts/Palladium Fantasy variants via optional genre placement). Documents P.P.E. economy, spell level (1–15), range/duration/save, `targetCountFormula` for variable victim counts, offensive `damage`, sensory `reveals`, Horror Factor, ritual flag, `healing` (H.P./S.D.C. restoration and condition `cures`), `resolutionTable` for percentile outcome bands (Teleport, Exorcism), `materialComponents` for physical ritual reagents (Create Golem, Create Mummy), `permanentCosts` for irreversible maximum-pool sacrifices (Familiar Link), `forgedOutputs` for persistent enchanted items (Amulet, Talisman, Scroll), `ritualProfile` for downtime crafting metadata, `spawnedPresence` for constructs and catalog creature summons, `formTransformation` for sheet-replacement metamorphosis, legacy `summonedEntity` (construct alias), `effectProfiles` for modal spells, and optional mechanical automation (`grantedModifiers` including `forceField`, `resistances`, temporary `grantedSkills`, `inflictedModifiers`, `horrorFactor`). Shared fragments live in `palladium-feature-common.schema.json`. Runtime importers map rows to the universal Feature composer (`metadata.pickBucket`: `magic`). **Genre placement** records setting-specific spell level or P.P.E. overrides when the same invocation appears across Megaversal books.",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -11,6 +11,7 @@
     "description",
     "gameSystems",
     "sources",
+    "school",
     "spellLevel"
   ],
   "properties": {
@@ -38,6 +39,12 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/sourceRef" }
+    },
+    "school": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "minLength": 1,
+      "description": "Magic school slug — must match the content file basename (`wizard.json` → `wizard`) and the `magic_<school>_` id prefix."
     },
     "spellLevel": {
       "type": "integer",
@@ -129,6 +136,10 @@
       "description": "Percentile or dice outcome bands mapped to mechanical effects (e.g. Teleport arrival accuracy, Exorcism sub-outcomes).",
       "$ref": "#/$defs/magicResolutionTable"
     },
+    "materialComponents": {
+      "description": "Physical inventory reagents required to cast or complete the ritual (distinct from `ppe` and `permanentCosts`).",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/materialRequirements"
+    },
     "permanentCosts": {
       "type": "array",
       "description": "Irreversible maximum-pool or attribute sacrifices applied once when the spell succeeds (distinct from `ppe` activation cost).",
@@ -136,6 +147,18 @@
       "items": {
         "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/permanentCostEntry"
       }
+    },
+    "forgedOutputs": {
+      "type": "array",
+      "description": "Persistent equippable items created on success (amulets, talismans, scrolls). Distinct from `spawnedPresence` field entities.",
+      "minItems": 1,
+      "items": {
+        "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/forgedItemOutput"
+      }
+    },
+    "ritualProfile": {
+      "description": "Downtime ritual wrapper for high-level crafting spells (duration, workspace, assistants).",
+      "$ref": "#/$defs/magicRitualProfile"
     },
     "spawnedPresence": {
       "description": "Construct or catalog creature spawned by the spell (`kind`: `construct` | `creature`). Prefer over legacy `summonedEntity`.",
@@ -445,6 +468,46 @@
         "saveHorrorFactor": { "type": "integer" }
       }
     },
+    "magicGrantedStatModifiers": {
+      "type": "object",
+      "description": "Temporary attribute buffs granted while the spell is active (e.g. Superhuman Strength P.S.).",
+      "additionalProperties": true,
+      "properties": {
+        "iq": { "type": "integer" },
+        "me": { "type": "integer" },
+        "ma": { "type": "integer" },
+        "ps": { "type": "integer" },
+        "pp": { "type": "integer" },
+        "pe": { "type": "integer" },
+        "pb": { "type": "integer" },
+        "spd": { "type": "integer" },
+        "hp": { "type": "integer" },
+        "sdc": { "type": "integer" }
+      }
+    },
+    "magicRitualProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "High-level ritual and crafting metadata grouped for downtime workflows.",
+      "properties": {
+        "craftingDuration": { "$ref": "#/$defs/magicDuration" },
+        "workspace": { "$ref": "#/$defs/proseBlock" },
+        "materialComponents": {
+          "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/materialRequirements"
+        },
+        "assistantsRequired": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of assistants required during the ritual period."
+        },
+        "failureHandling": {
+          "type": "string",
+          "enum": ["lose_materials_only", "lose_materials_and_ppe", "lose_all", "narrative"],
+          "description": "What is lost when the ritual fails after materials are committed."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
     "magicGrantedSkill": {
       "type": "object",
       "additionalProperties": false,
@@ -530,6 +593,9 @@
         },
         "combatModifiers": {
           "$ref": "#/$defs/magicGrantedCombatModifiers"
+        },
+        "statModifiers": {
+          "$ref": "#/$defs/magicGrantedStatModifiers"
         },
         "grantedSkills": {
           "type": "array",
@@ -713,6 +779,16 @@
         },
         "formTransformation": {
           "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/formTransformation"
+        },
+        "materialComponents": {
+          "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/materialRequirements"
+        },
+        "forgedOutputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/forgedItemOutput"
+          }
         }
       }
     }

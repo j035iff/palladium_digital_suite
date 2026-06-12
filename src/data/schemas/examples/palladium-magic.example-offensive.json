@@ -3,7 +3,9 @@
   "id": "magic_wizard_blinding_flash",
   "name": "Blinding Flash",
   "description": "Sudden burst of intense white light that can blind victims in a 10 ft radius.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,10 +13,13 @@
       "pageNumber": 128
     }
   ],
+  "school": "wizard",
   "spellLevel": 1,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 1 },
+  "ppe": {
+    "baseActivation": 1
+  },
   "range": {
     "summary": "10 ft (3.0 m) radius; up to 60 ft (18.3 m) away."
   },
@@ -27,7 +32,9 @@
     "saveKind": "standard"
   },
   "inflictedModifiers": {
-    "statusEffects": ["blinded"],
+    "statusEffects": [
+      "blinded"
+    ],
     "combatModifiers": {
       "strike": -5,
       "parry": -10,
@@ -36,7 +43,10 @@
   },
   "durationType": "instant",
   "activation": {
-    "cost": { "type": "ppe", "value": 1 },
+    "cost": {
+      "type": "ppe",
+      "value": 1
+    },
     "range": "10 ft radius / 60 ft cast",
     "duration": "Instant",
     "save": "Standard"

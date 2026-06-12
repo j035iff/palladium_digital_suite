@@ -3,7 +3,9 @@
   "id": "magic_wizard_thunderclap",
   "name": "Thunderclap",
   "description": "Booming thunder that startles foes and grants the caster brief combat bonuses.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,10 +13,13 @@
       "pageNumber": 130
     }
   ],
+  "school": "wizard",
   "spellLevel": 1,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 4 },
+  "ppe": {
+    "baseActivation": 4
+  },
   "range": {
     "summary": "30 ft (9.1 m) radius around the sorcerer."
   },

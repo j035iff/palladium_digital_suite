@@ -3,7 +3,9 @@
   "id": "magic_wizard_charismatic_aura",
   "name": "Charismatic Aura",
   "description": "The caster chooses one distinct aura effect when the spell is invoked.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,11 +13,16 @@
       "pageNumber": 132
     }
   ],
+  "school": "wizard",
   "spellLevel": 4,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 7 },
-  "range": { "summary": "Self; affects those within 10 ft (3.0 m)." },
+  "ppe": {
+    "baseActivation": 7
+  },
+  "range": {
+    "summary": "Self; affects those within 10 ft (3.0 m)."
+  },
   "duration": {
     "summary": "2 minutes per level of experience.",
     "kind": "minute",
@@ -25,12 +32,18 @@
     {
       "name": "Charm",
       "description": "Victims regard the caster as a trusted friend; save vs magic to resist.",
-      "save": { "summary": "Standard", "saveKind": "standard" }
+      "save": {
+        "summary": "Standard",
+        "saveKind": "standard"
+      }
     },
     {
       "name": "Fear",
       "description": "Victims are intimidated by the caster's presence.",
-      "save": { "summary": "Save vs Horror Factor", "saveKind": "horror_factor" },
+      "save": {
+        "summary": "Save vs Horror Factor",
+        "saveKind": "horror_factor"
+      },
       "horrorFactor": 14
     },
     {

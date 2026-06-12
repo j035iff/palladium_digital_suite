@@ -3,7 +3,9 @@
   "id": "magic_wizard_magic_net",
   "name": "Magic Net",
   "description": "Creates a large, magical net to ensnare one or more victims.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,24 +13,34 @@
       "pageNumber": 132
     }
   ],
+  "school": "wizard",
   "spellLevel": 4,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 7 },
-  "range": { "summary": "Up to 60 ft (18.3 m) away." },
+  "ppe": {
+    "baseActivation": 7
+  },
+  "range": {
+    "summary": "Up to 60 ft (18.3 m) away."
+  },
   "duration": {
     "summary": "2 minutes per level of experience.",
     "kind": "minute",
     "perLevel": "2 minutes"
   },
-  "save": { "summary": "Standard", "saveKind": "standard" },
+  "save": {
+    "summary": "Standard",
+    "saveKind": "standard"
+  },
   "spawnedPresence": {
     "kind": "construct",
     "name": "Magic Net",
     "derivedHealth": "20 S.D.C. per level of experience"
   },
   "inflictedModifiers": {
-    "statusEffects": ["entangled"]
+    "statusEffects": [
+      "entangled"
+    ]
   },
   "durationType": "narrative"
 }

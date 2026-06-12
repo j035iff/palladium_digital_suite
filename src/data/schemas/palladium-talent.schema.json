@@ -93,6 +93,18 @@
       "description": "Temporary sheet replacement while the talent is active.",
       "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/formTransformation"
     },
+    "materialComponents": {
+      "description": "Physical reagents required to activate or acquire the talent.",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/materialRequirements"
+    },
+    "forgedOutputs": {
+      "type": "array",
+      "description": "Persistent items created when the talent is used (rare crafting talents).",
+      "minItems": 1,
+      "items": {
+        "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/forgedItemOutput"
+      }
+    },
     "prerequisites": {
       "description": "Morphus-table gates or structured chargen prerequisites.",
       "oneOf": [

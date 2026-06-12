@@ -582,7 +582,11 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
     : (prev.startingSpellLevelCap ?? 4)
   const cat = featureBudgetCategory(def)
   const spellLevel =
-    typeof def.metadata?.level === 'number' ? def.metadata.level : undefined
+    typeof def.metadata?.level === 'number'
+      ? def.metadata.level
+      : typeof def.metadata?.spellLevel === 'number'
+        ? def.metadata.spellLevel
+        : undefined
 
   const genreId = prev.creationGenreId ?? prev.hostGenreId
   if (occRow) {

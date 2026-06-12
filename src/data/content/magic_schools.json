@@ -1,0 +1,23 @@
+{
+  "description": "Authoring reference — valid magic school slugs per game system. Spell rows use the required `school` field in palladium-magic.schema.json; O.C.C. `ppeEngine.magicSchools` lists which schools a practitioner may learn.",
+  "gameSystems": {
+    "nightbane": {
+      "label": "Nightbane",
+      "schools": [
+        {
+          "id": "wizard",
+          "label": "Wizard Magic",
+          "contentFile": "content/magic/wizard.json",
+          "sourcePage": 127
+        },
+        {
+          "id": "necromancy",
+          "label": "Necromancy",
+          "contentFile": "content/magic/necromancy.json",
+          "notes": "Necromancer O.C.C. only; distinct from per-spell magicKind necromancy delivery."
+        }
+      ],
+      "selectionRules": "Spell picks are gated by O.C.C. magicSchools and progressionRoadmap level caps (e.g. Level 1 Spells Only at 1st level)."
+    }
+  }
+}

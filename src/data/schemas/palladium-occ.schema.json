@@ -650,6 +650,17 @@
           "items": {
             "$ref": "#/$defs/supernaturalProgressionStep"
           }
+        },
+        "magicSchools": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "Magic schools this O.C.C. may learn (e.g. wizard, necromancy). When omitted, school is not gated at creation — use progressionRoadmap categoryRestrictions for level caps only."
         }
       }
     },

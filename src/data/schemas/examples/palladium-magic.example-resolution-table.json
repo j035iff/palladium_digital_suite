@@ -3,7 +3,9 @@
   "id": "magic_wizard_teleport",
   "name": "Teleport",
   "description": "Instantly transports the caster to a known destination. Arrival accuracy is resolved on a percentile table.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,12 +13,20 @@
       "pageNumber": 129
     }
   ],
+  "school": "wizard",
   "spellLevel": 5,
   "magicKind": "invocation",
   "spellStrengthBase": 12,
-  "ppe": { "baseActivation": 50 },
-  "range": { "summary": "Self or one touched person." },
-  "duration": { "summary": "Instant.", "kind": "instant" },
+  "ppe": {
+    "baseActivation": 50
+  },
+  "range": {
+    "summary": "Self or one touched person."
+  },
+  "duration": {
+    "summary": "Instant.",
+    "kind": "instant"
+  },
   "resolutionTable": {
     "rollKind": "d100",
     "label": "Teleport arrival accuracy",
@@ -26,21 +36,32 @@
     },
     "entries": [
       {
-        "percentile": { "min": 1, "max": 20 },
+        "percentile": {
+          "min": 1,
+          "max": 20
+        },
         "label": "On target",
         "effect": "Arrive at the intended destination."
       },
       {
-        "percentile": { "min": 21, "max": 80 },
+        "percentile": {
+          "min": 21,
+          "max": 80
+        },
         "label": "Off course",
         "effect": "Arrive 2D6×100 feet (30.5 m) from the intended destination."
       },
       {
-        "percentile": { "min": 81, "max": 100 },
+        "percentile": {
+          "min": 81,
+          "max": 100
+        },
         "label": "Disastrous",
         "effect": "Arrive 4D6 miles from the intended destination in a random direction.",
         "inflictedModifiers": {
-          "statusEffects": ["disoriented"]
+          "statusEffects": [
+            "disoriented"
+          ]
         }
       }
     ]

@@ -1662,6 +1662,8 @@ export type PalladiumMagicSpell = {
   descriptionMorphus?: string
   gameSystems: readonly string[]
   sources: readonly PalladiumSourceRef[]
+  /** School slug — matches `content/magic/<school>.json` basename and `magic_<school>_` id prefix. */
+  school: string
   spellLevel: number
   magicKind?: MagicKind
   isRitual?: boolean
@@ -1684,8 +1686,14 @@ export type PalladiumMagicSpell = {
   inflictedModifiers?: Record<string, unknown>
   /** Percentile outcome bands (e.g. Teleport arrival accuracy). */
   resolutionTable?: Record<string, unknown>
+  /** Physical reagents required to cast (distinct from `ppe` and `permanentCosts`). */
+  materialComponents?: Record<string, unknown>
   /** Irreversible maximum-pool sacrifices (distinct from `ppe` activation). */
   permanentCosts?: readonly Record<string, unknown>[]
+  /** Persistent equippable items created on success (amulets, scrolls). */
+  forgedOutputs?: readonly Record<string, unknown>[]
+  /** Downtime ritual metadata (crafting duration, workspace, assistants). */
+  ritualProfile?: Record<string, unknown>
   /** Construct or catalog creature spawn (`kind`: construct | creature). */
   spawnedPresence?: Record<string, unknown>
   /** Sheet-replacement metamorphosis while the spell is active. */
@@ -1734,6 +1742,8 @@ export type PalladiumTalent = {
   permanentCosts?: readonly Record<string, unknown>[]
   spawnedPresence?: Record<string, unknown>
   formTransformation?: Record<string, unknown>
+  materialComponents?: Record<string, unknown>
+  forgedOutputs?: readonly Record<string, unknown>[]
   activation?: FeatureActivation
   save?: unknown
   [key: string]: unknown
@@ -1800,6 +1810,8 @@ export type OccPpeEngine = {
   perLevelFormula: string
   spellStrengthProgression?: Readonly<Record<string, number>>
   progressionRoadmap: readonly OccSupernaturalProgressionStep[]
+  /** School slugs this O.C.C. may learn (e.g. wizard, necromancy). Empty/omitted = no school gate. */
+  magicSchools?: readonly string[]
 }
 
 export type OccIspSavingThrowClass = 'minor' | 'major' | 'master'
