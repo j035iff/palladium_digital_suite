@@ -64,8 +64,10 @@
             "on_cast",
             "on_save_failed",
             "on_ritual_completion",
-            "on_duration_end"
-          ]
+            "on_duration_end",
+            "per_melee_round"
+          ],
+          "description": "`per_melee_round` — roll each melee round while the effect persists (e.g. cumulative escape hazard)."
         },
         "rollKind": {
           "type": "string",
@@ -188,7 +190,21 @@
         "quantity": { "$ref": "#/$defs/quantitySpec" },
         "unit": {
           "type": "string",
-          "enum": ["each", "lb", "oz", "kg", "g", "ft", "liter", "dose", "other"]
+          "enum": [
+            "each",
+            "item",
+            "kit",
+            "pouch",
+            "lb",
+            "oz",
+            "kg",
+            "g",
+            "ft",
+            "liter",
+            "dose",
+            "other"
+          ],
+          "description": "Inventory unit for the reagent. `item`, `kit`, and `pouch` cover prose ritual components without a catalog row."
         },
         "consumption": {
           "type": "string",
@@ -453,6 +469,11 @@
         },
         "movement": {
           "$ref": "#/$defs/spawnedPresenceConstructMovement"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Behavior or lore not captured in catalog stats (e.g. alien intelligence, loyalty rules)."
         }
       }
     },
@@ -506,7 +527,12 @@
           "description": "Dice or scaling formula for how many creatures appear (e.g. `1D6`)."
         },
         "control": { "$ref": "#/$defs/spawnedPresenceCreatureControl" },
-        "duration": { "$ref": "#/$defs/spawnedPresenceCreatureDuration" }
+        "duration": { "$ref": "#/$defs/spawnedPresenceCreatureDuration" },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Summoned creature behavior not implied by the catalog race (e.g. permanent loyalty, command wording)."
+        }
       }
     },
     "spawnedPresence": {

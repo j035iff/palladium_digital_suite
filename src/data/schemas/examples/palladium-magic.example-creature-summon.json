@@ -44,7 +44,8 @@
       "summary": "1 hour per level of experience.",
       "kind": "hour",
       "perLevel": "1 hour"
-    }
+    },
+    "notes": "Summoned wolves obey simple commands but flee if badly wounded."
   },
   "durationType": "narrative"
 }

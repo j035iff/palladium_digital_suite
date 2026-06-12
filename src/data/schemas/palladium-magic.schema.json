@@ -364,6 +364,7 @@
             "minute",
             "hour",
             "day",
+            "week",
             "permanent",
             "until_condition",
             "special"

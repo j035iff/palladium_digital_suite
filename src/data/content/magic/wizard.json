@@ -2895,5 +2895,768 @@
       ]
     },
     "school": "wizard"
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_reanimate_flesh",
+    "name": "Reanimate Flesh",
+    "description": "Animates and controls up to 15 lbs (6 kg) of dead flesh, such as a hand, arm, foot, or jaw.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 56
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["necromancy", "utility"],
+    "ppe": { "baseActivation": 4 },
+    "range": { "summary": "Touch." },
+    "duration": {
+      "summary": "One hour.",
+      "kind": "hour"
+    },
+    "save": { "summary": "None", "saveKind": "none" },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Reanimated Flesh",
+      "derivedHealth": "2D4+6 S.D.C. for a human arm; 2D6+4 S.D.C. for a head."
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_knowing_candle",
+    "name": "The Knowing Candle",
+    "description": "Enchants a lit candle or flashlight so its flame changes color or brightness depending on its proximity to supernatural creatures, spells, or psychic effects.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 56
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 2,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["utility", "divination", "sensory"],
+    "ppe": { "baseActivation": 5 },
+    "range": { "summary": "100 feet (30.5 meters)." },
+    "duration": {
+      "summary": "4 melees (1 minute) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": { "summary": "None", "saveKind": "none" },
+    "materialComponents": {
+      "label": "Spell Focus",
+      "entries": [
+        {
+          "label": "A lit candle, lantern, or flashlight",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "each",
+          "consumption": "reusable_tool",
+          "timing": "at_cast"
+        }
+      ]
+    },
+    "reveals": ["magic", "supernatural", "psionic"]
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_bloodward",
+    "name": "Bloodward",
+    "description": "Inscribes a protective symbol onto a person or object using the caster's freshly drawn blood, warding off evil supernatural creatures.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 57
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 3,
+    "magicKind": "ward",
+    "spellStrengthBase": 12,
+    "tags": ["ward", "protection"],
+    "ppe": { 
+      "baseActivation": 5, 
+      "notes": "5 P.P.E. per hour of its intended duration." 
+    },
+    "range": { "summary": "Touch." },
+    "duration": { "summary": "Variable; determined at casting.", "kind": "special" },
+    "save": { 
+      "summary": "Save vs Horror Factor 15 to approach.", 
+      "saveKind": "horror_factor",
+      "targetNumber": 15
+    },
+    "materialComponents": {
+      "label": "Ward Components",
+      "entries": [
+        {
+          "label": "Caster's freshly drawn blood",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "dose",
+          "consumption": "destroyed",
+          "timing": "before_cast",
+          "notes": "Drawing the blood causes 1 hit point of damage to the caster."
+        }
+      ]
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "combatModifiers": {
+        "saveMagic": 1,
+        "notes": "Also gives +1 to save vs mind control."
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_scarlet_pepper",
+    "name": "Scarlet Pepper",
+    "description": "Transforms a handful of fire into red crystals. When scattered, the fire created from the crystals inflicts damage and sets fire to flammable substances.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 57
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 4,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["offensive", "fire"],
+    "ppe": { "baseActivation": 10 },
+    "range": { "summary": "Touch." },
+    "duration": { 
+      "summary": "Crystals last 2D10 hours; fire effects are instant.", 
+      "kind": "special" 
+    },
+    "save": { "summary": "None", "saveKind": "none" },
+    "damage": {
+      "formula": "1D6",
+      "notes": "Sets fire to any flammable substance with which it is in contact."
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_traitorous_hand",
+    "name": "Traitorous Hand",
+    "description": "Takes control of a part of another person's body, such as a hand, stomach, or tongue, turning it against them.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 57
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 4,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["offensive", "debuff", "mind_control"],
+    "ppe": { "baseActivation": 10 },
+    "range": { "summary": "30 feet (9.1 meters)." },
+    "duration": {
+      "summary": "One melee round (15 seconds) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": { "summary": "Standard", "saveKind": "standard" },
+    "inflictedModifiers": {
+      "statusEffects": ["disarmed"],
+      "combatModifiers": {
+        "attacksPerMelee": -1,
+        "notes": "Victim loses attacks or actions fighting their own body."
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_soul_in_a_bottle",
+    "name": "Soul in a Bottle",
+    "description": "Extracts half of the soul (psychic energy) of the victim and stores it in a glass receptacle. Gives the target significant protections but halves their energy pools.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 58
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 8,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": ["utility", "ward", "ritual"],
+    "ppe": { "baseActivation": 50 },
+    "range": { "summary": "Touch." },
+    "duration": { "summary": "Permanent, until receptacle is broken.", "kind": "permanent" },
+    "save": { "summary": "Standard (if unwilling)", "saveKind": "standard" },
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": { "kind": "fraction", "numerator": 1, "denominator": 2 },
+        "notes": "Target loses half of their P.P.E. and only gains half P.P.E. when leveling up."
+      },
+      {
+        "resource": "isp_max",
+        "reduction": { "kind": "fraction", "numerator": 1, "denominator": 2 },
+        "notes": "Target loses half of their I.S.P. and only gains half I.S.P. when leveling up."
+      }
+    ],
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "notes": "Skill performance is -10%. Split character cannot Astral Travel."
+      }
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "combatModifiers": {
+        "saveMagic": 5,
+        "notes": "+5 to save vs illusions, mind control, empathic attacks, and possession."
+      }
+    },
+    "materialComponents": {
+      "label": "Soul Receptacle",
+      "entries": [
+        {
+          "label": "A glass bottle, jar, or similar receptacle",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "each",
+          "consumption": "reusable_tool",
+          "timing": "on_ritual_completion"
+        }
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_create_zombie",
+    "name": "Create Zombie",
+    "description": "Animates a relatively fresh corpse into an undead servant bound to the caster's will.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 59
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 9,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": ["summoning", "necromancy"],
+    "ppe": { 
+      "baseActivation": 80, 
+      "notes": "80 P.P.E. per each zombie created." 
+    },
+    "range": { "summary": "Touch." },
+    "duration": { 
+      "summary": "24 hours per level of experience (active 10 hours/day).", 
+      "kind": "day", 
+      "perLevel": "1 day" 
+    },
+    "save": { "summary": "None", "saveKind": "none" },
+    "spawnedPresence": {
+      "kind": "creature",
+      "catalogRaceId": "npc_zombie",
+      "countFormula": "1",
+      "duration": {
+        "summary": "24 hours per level of experience.",
+        "kind": "day",
+        "perLevel": "1 day"
+      }
+    },
+    "materialComponents": {
+      "label": "Zombie Materials",
+      "entries": [
+        {
+          "label": "Mostly intact corpse (dead less than two weeks)",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "each",
+          "consumption": "destroyed",
+          "timing": "at_cast"
+        }
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_friend_in_the_head",
+    "name": "Friend in the Head",
+    "description": "This spell creates a magical intelligence with its own personality inside the head of the target subject. [cite: 210, 211] It can act as a helpful guide or a tormenting distraction. [cite: 216]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 60
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 9,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["mind_control", "offensive", "debuff", "utility"],
+    "ppe": { "baseActivation": 75 },
+    "range": { "summary": "60 feet (18.3 meters). [cite: 206]" },
+    "duration": { 
+      "summary": "Uncertain; typically a number of days equal to the victim's M.E. [cite: 207, 222]", 
+      "kind": "special" 
+    },
+    "save": { "summary": "Standard [cite: 208]", "saveKind": "standard" },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "initiative": -3,
+        "perception": -3,
+        "strike": -1,
+        "parry": -1,
+        "dodge": -1,
+        "notes": "If the voice is harmful, all other rolls are -1 and skill performance is -5% (-10% if kept awake). [cite: 218, 219]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_fatal_growth",
+    "name": "Fatal Growth",
+    "description": "The bones of the target person begin to grow very rapidly, expanding, forming spines and spikes, twisting and generally causing all manors of deformity. [cite: 238]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 60
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 10,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 12,
+    "tags": ["offensive", "ritual", "curse"],
+    "ppe": { "baseActivation": 95 },
+    "range": { "summary": "100 feet (30.5 meters). [cite: 235]" },
+    "duration": { "summary": "Special: until victim is slain or magic is negated. [cite: 236]", "kind": "special" },
+    "save": { "summary": "Standard (must also save vs pain 16 or higher). [cite: 236, 239]", "saveKind": "standard" },
+    "ritualProfile": {
+      "craftingDuration": { "summary": "1D6+6 minutes. [cite: 248]", "kind": "minute" }
+    },
+    "materialComponents": {
+      "label": "Target Link",
+      "entries": [
+        {
+          "label": "An object intimately associated with the target (blood, wedding ring, etc.) if not in direct sight. [cite: 246]",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "item",
+          "consumption": "reusable_tool",
+          "timing": "at_cast"
+        }
+      ]
+    },
+    "damage": {
+      "notes": "Exponential damage direct to Hit Points: 1D6 first melee, 2D6 second, 4D6 third, 8D6 fourth, etc., until the body rips apart. [cite: 240, 241, 242]"
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_destroy_undead_flesh",
+    "name": "Destroy Undead Flesh",
+    "description": "Causes a carcass of up to 600 lbs (270 kg) of undead flesh to smolder, crumble and evaporate. [cite: 256, 257]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 61
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 11,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["offensive", "anti_demonic", "necromancy"],
+    "ppe": { "baseActivation": 100 },
+    "range": { "summary": "30 feet (9 meters). [cite: 254]" },
+    "duration": {
+      "summary": "One melee round per level of experience. [cite: 255]",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": { "summary": "Standard, each melee round. [cite: 255]", "saveKind": "standard" },
+    "damage": {
+      "formula": "1D6*10",
+      "notes": "Damage is inflicted each melee round on undead creatures until a save is made or the spell ends. [cite: 257, 258]"
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_mictlantecutlis_command",
+    "name": "Mictlantecutli's Command",
+    "description": "An extreme method of gaining command over another's magics by flaying the skin from a living victim and wearing it. [cite: 266, 267, 271]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 61
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 12,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": ["ritual", "necromancy", "mind_control"],
+    "ppe": { "baseActivation": 150 },
+    "range": { "summary": "Touch. [cite: 262]" },
+    "duration": { "summary": "Until the skin is destroyed. [cite: 263]", "kind": "permanent" },
+    "save": { "summary": "None. [cite: 263]", "saveKind": "none" },
+    "ritualProfile": {
+      "craftingDuration": { "summary": "One hour beneath the mid-day sun. [cite: 267]", "kind": "hour" }
+    },
+    "materialComponents": {
+      "label": "Ritual Sacrifice",
+      "entries": [
+        {
+          "label": "A captured, living magician. [cite: 267]",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "each",
+          "consumption": "destroyed",
+          "timing": "over_crafting_period",
+          "notes": "Victim's death provides P.P.E. for the enchantment. [cite: 269]"
+        }
+      ]
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "combatModifiers": {
+        "notes": "Grants access to all spell knowledge known by the deceased, and control over their magical servants/zombies. [cite: 273, 274, 275]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_open_pathway",
+    "name": "Open Pathway",
+    "description": "Allows a magician to call up and 'open' a Pathway between his current location to any other known location on any other world or plane. [cite: 279]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 61
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 12,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["utility", "movement", "temporal", "summoning"],
+    "ppe": { "baseActivation": 170 },
+    "range": { "summary": "20 feet (6 meters). [cite: 278]" },
+    "duration": { "summary": "1D6 melee rounds (the journey takes several minutes). [cite: 278, 291, 293]", "kind": "melee_round" },
+    "save": { "summary": "None [cite: 278]", "saveKind": "none" },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Pathway Embodiment",
+      "derivedHealth": "10000 S.D.C.",
+      "notes": "Pathways are living entities, outside of all planes, with alien minds. [cite: 283, 335, 336]"
+    },
+    "materialComponents": {
+      "label": "Pathway Bribe",
+      "entries": [
+        {
+          "label": "Specific offering (e.g., a silver coin, a child's toy) depending on the individual Pathway. [cite: 308, 322]",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "item",
+          "consumption": "destroyed",
+          "timing": "at_cast"
+        }
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_psychic_drain",
+    "name": "Psychic Drain",
+    "description": "This ritual enchants a small object, which draws P.P.E. from the unfortunate target. [cite: 358]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 62
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 13,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": ["ritual", "offensive", "debuff", "curse"],
+    "ppe": { "baseActivation": 200 },
+    "range": { "summary": "One mile (1.6 km). [cite: 357]" },
+    "duration": { "summary": "One week. [cite: 357]", "kind": "week" },
+    "save": { "summary": "Standard (rolled once when created). [cite: 357, 361]", "saveKind": "standard" },
+    "materialComponents": {
+      "label": "Ritual Focus",
+      "entries": [
+        {
+          "label": "Object to enchant (e.g., bone knife, crystal sphere). [cite: 359, 360]",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "item",
+          "consumption": "reusable_tool",
+          "timing": "at_cast"
+        },
+        {
+          "label": "Object intimately associated with the target (blood, hair, etc.). [cite: 360]",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "item",
+          "consumption": "destroyed",
+          "timing": "at_cast"
+        }
+      ]
+    },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "notes": "Target cannot recover spent P.P.E. while within 1 mile of the object; all recovered P.P.E. is siphoned into it. [cite: 362, 363]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_maggots_curse",
+    "name": "Maggots Curse",
+    "description": "Causes a large nest of maggots to start feeding and multiplying inside the flesh of a living person. [cite: 384]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 63
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 14,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["offensive", "debuff", "curse"],
+    "ppe": { "baseActivation": 500 },
+    "range": { "summary": "5 feet (1.5 meters) per level of experience. [cite: 382]" },
+    "duration": { 
+      "summary": "Conditionally, 4 melee rounds per level of experience (requires concentration). [cite: 382, 392]", 
+      "kind": "melee_round",
+      "perLevel": "4 melee rounds"
+    },
+    "save": { "summary": "Standard (once only). [cite: 383]", "saveKind": "standard" },
+    "inflictedModifiers": {
+      "statusEffects": ["writhing in agony"],
+      "combatModifiers": {
+        "notes": "Victim must save vs P.E. starting round 2 or fall down writhing. [cite: 386, 387]"
+      }
+    },
+    "damage": {
+      "notes": "Direct to Hit Points (armor ignores): 1D4 round 1; 1D6 round 2; 2D6 round 3 and beyond. [cite: 385, 386, 388, 389, 390]"
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_someone_makes_them",
+    "name": "Someone Makes Them",
+    "description": "Reconstructs the target's personality by going through their mind and restructuring, replacing and deleting all of their memories of their formative experiences. [cite: 375]",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 63
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 15,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": ["ritual", "mind_control", "curse"],
+    "ppe": { "baseActivation": 920 },
+    "range": { "summary": "Touch [cite: 372]" },
+    "duration": { "summary": "Indefinite [cite: 372]", "kind": "permanent" },
+    "save": { "summary": "Standard [cite: 373]", "saveKind": "standard" },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "notes": "Can cure or create addictions, change alignment, implant obsessions, or restructure the target's sense of self. [cite: 379]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_observe_dream",
+    "name": "Observe Dream",
+    "description": "Allows the caster to safely watch the dreams of a sleeping subject as if watching a movie or theatrical play. The caster cannot interfere or interact.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 110
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 2,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["divination", "dream", "sensory"],
+    "ppe": { "baseActivation": 10 },
+    "range": { "summary": "Touch or within 10 feet (3.0 m)." },
+    "duration": { 
+      "summary": "5 minutes plus 2 minutes per level of experience.", 
+      "kind": "special" 
+    },
+    "save": { "summary": "Standard (if the victim is resisting).", "saveKind": "standard" }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_summon_minor_astral_being",
+    "name": "Summon & Control Minor Astral Being",
+    "description": "Tears a brief opening into the Astral Plane to summon a minor astral or dream entity and compel it into service.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 5,
+    "magicKind": "summoning",
+    "spellStrengthBase": 12,
+    "tags": ["summoning", "astral", "dimensional"],
+    "ppe": { "baseActivation": 40 },
+    "range": { "summary": "Immediate area (within 20 feet / 6.1 m)." },
+    "duration": { 
+      "summary": "One hour per level of experience.", 
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": { "summary": "Standard to resist control.", "saveKind": "standard" },
+    "spawnedPresence": {
+      "kind": "creature",
+      "catalogRaceId": "npc_minor_astral_being",
+      "countFormula": "1",
+      "control": {
+        "saveKind": "magic",
+        "summary": "Standard save to resist control each hour."
+      },
+      "notes": "Entity will obey commands but, depending on its alignment, may attempt to twist the wording if hostile toward the caster."
+    }
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_dream_window",
+    "name": "Dream Window",
+    "description": "Opens a visible, hovering rift into the Dreamstream, allowing the caster and others to look directly into it. However, it risks allowing entities to escape into the real world.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 6,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": ["divination", "dimensional", "dream"],
+    "ppe": { "baseActivation": 25 },
+    "range": { "summary": "10 feet (3.0 m)." },
+    "duration": { 
+      "summary": "1 melee round (15 seconds) per level of experience.", 
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": { "summary": "None", "saveKind": "none" },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Dream Entity Escape Hazard",
+      "resolutionTrigger": {
+        "when": "per_melee_round",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "percentile": { "min": 1, "max": 20 },
+          "label": "Breach",
+          "effect": "A random dream entity slips through the window into the physical world."
+        },
+        {
+          "percentile": { "min": 21, "max": 100 },
+          "label": "Safe",
+          "effect": "The window remains secure."
+        }
+      ]
+    },
+    "notes": "The chance for a creature to escape is 20% and is CUMULATIVE for every melee round the window is kept open (e.g., 20% on round 1, 40% on round 2, 60% on round 3)."
+  },
+  {
+    "$schema": "../palladium-magic.schema.json",
+    "id": "magic_wizard_circle_of_concealment",
+    "name": "Circle of Concealment",
+    "description": "A powerful warding circle that completely hides its contents from normal sight, technological sensors, and mystical/psychic detection.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 112
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 7,
+    "magicKind": "ritual",
+    "isRitual": true,
+    "spellStrengthBase": 12,
+    "tags": ["ward", "protection", "stealth"],
+    "ppe": { 
+      "baseActivation": 15,
+      "notes": "15 P.P.E. for temporary; 100 P.P.E. for permanent."
+    },
+    "range": { "summary": "Radius of 5 feet (1.5 m) per level of experience." },
+    "duration": { "summary": "Variable based on casting mode.", "kind": "special" },
+    "save": { "summary": "None", "saveKind": "none" },
+    "effectProfiles": [
+      {
+        "name": "Temporary Concealment",
+        "description": "The circle lasts for one hour per level of the caster's experience.",
+        "grantedModifiers": {
+          "target": "area",
+          "immunities": ["see_the_invisible", "sense_magic", "presence_sense", "technological_sensors"]
+        }
+      },
+      {
+        "name": "Permanent Concealment",
+        "description": "Requires an infusion of 100 P.P.E. The circle lasts for one year per level of the caster's experience.",
+        "grantedModifiers": {
+          "target": "area",
+          "immunities": ["see_the_invisible", "sense_magic", "presence_sense", "technological_sensors"]
+        }
+      }
+    ]
   }
 ]
