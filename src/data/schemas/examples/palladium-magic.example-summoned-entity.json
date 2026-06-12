@@ -22,7 +22,8 @@
     "perLevel": "2 minutes"
   },
   "save": { "summary": "Standard", "saveKind": "standard" },
-  "summonedEntity": {
+  "spawnedPresence": {
+    "kind": "construct",
     "name": "Magic Net",
     "derivedHealth": "20 S.D.C. per level of experience"
   },

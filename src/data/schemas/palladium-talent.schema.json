@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-talent.schema.json",
   "title": "Palladium Nightbane talent",
-  "description": "Nightbane **Talent** catalog row (Dark Designs / Survival Guide pattern). Documents P.P.E. economy, form limitations, structured range/duration/damage, and book-specific mechanical extension blocks. Runtime importers map rows to the universal **Feature** composer (`metadata.pickBucket`: `talent`).",
+  "description": "Nightbane **Talent** catalog row (Dark Designs / Survival Guide pattern). Documents P.P.E. economy, form limitations, structured range/duration/damage, optional `resolutionTable`, `permanentCosts`, `spawnedPresence`, and `formTransformation` (shared with magic/psionic via `palladium-feature-common.schema.json`), and book-specific mechanical extension blocks. Runtime importers map rows to the universal **Feature** composer (`metadata.pickBucket`: `talent`).",
   "type": "object",
   "additionalProperties": true,
   "required": ["id", "name", "description", "gameSystems", "sources"],
@@ -73,6 +73,26 @@
       ]
     },
     "combat": { "type": "object", "additionalProperties": true },
+    "resolutionTable": {
+      "description": "Percentile or dice outcome bands for modal or conditional talents.",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/resolutionTable"
+    },
+    "permanentCosts": {
+      "type": "array",
+      "description": "Irreversible maximum-pool sacrifices applied once when the talent is acquired or first activated (distinct from `ppe.permanentBurnToAcquire`).",
+      "minItems": 1,
+      "items": {
+        "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/permanentCostEntry"
+      }
+    },
+    "spawnedPresence": {
+      "description": "Construct or catalog creature spawned by the talent.",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/spawnedPresence"
+    },
+    "formTransformation": {
+      "description": "Temporary sheet replacement while the talent is active.",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/formTransformation"
+    },
     "prerequisites": {
       "description": "Morphus-table gates or structured chargen prerequisites.",
       "oneOf": [

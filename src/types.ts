@@ -1682,6 +1682,17 @@ export type PalladiumMagicSpell = {
   combatBonuses?: FeatureModifiers
   grantedModifiers?: Record<string, unknown>
   inflictedModifiers?: Record<string, unknown>
+  /** Percentile outcome bands (e.g. Teleport arrival accuracy). */
+  resolutionTable?: Record<string, unknown>
+  /** Irreversible maximum-pool sacrifices (distinct from `ppe` activation). */
+  permanentCosts?: readonly Record<string, unknown>[]
+  /** Construct or catalog creature spawn (`kind`: construct | creature). */
+  spawnedPresence?: Record<string, unknown>
+  /** Sheet-replacement metamorphosis while the spell is active. */
+  formTransformation?: Record<string, unknown>
+  /** @deprecated Prefer `spawnedPresence` with `kind: construct`. */
+  summonedEntity?: Record<string, unknown>
+  effectProfiles?: readonly Record<string, unknown>[]
   prerequisites?: readonly MagicPrerequisite[]
   incompatibleSpellIds?: readonly string[]
   notes?: string
@@ -1717,6 +1728,12 @@ export type PalladiumTalent = {
   incompatibleTalentIds?: readonly string[]
   notes?: string
   modifiers?: FeatureModifiers
+  /** Percentile outcome bands for modal or conditional talents. */
+  resolutionTable?: Record<string, unknown>
+  /** Irreversible maximum-pool sacrifices (distinct from `ppe.permanentBurnToAcquire`). */
+  permanentCosts?: readonly Record<string, unknown>[]
+  spawnedPresence?: Record<string, unknown>
+  formTransformation?: Record<string, unknown>
   activation?: FeatureActivation
   save?: unknown
   [key: string]: unknown

@@ -3,7 +3,9 @@
   "id": "psionic_astral_projection",
   "name": "Astral Projection",
   "description": "Frees the astral body from the physical form. Material-world astral form can float, fly, see the invisible, and pass through solid objects.",
-  "gameSystems": ["nightbane"],
+  "gameSystems": [
+    "nightbane"
+  ],
   "sources": [
     {
       "gameSystem": "nightbane",
@@ -11,43 +13,77 @@
       "pageNumber": 71
     }
   ],
-  "genrePlacements": [{ "genreId": "nightbane", "category": "sensitive" }],
-  "isp": { "baseActivation": 8 },
-  "range": { "summary": "Self" },
+  "genrePlacements": [
+    {
+      "genreId": "nightbane",
+      "category": "sensitive"
+    }
+  ],
+  "isp": {
+    "baseActivation": 8
+  },
+  "range": {
+    "summary": "Self"
+  },
   "duration": {
     "summary": "5 minutes per level of experience.",
     "kind": "minute",
     "perLevel": "5 minutes"
   },
-  "summonedEntity": {
-    "name": "Silver Cord",
-    "derivedHealth": "Twice the combined physical H.P. and S.D.C. (Astral S.D.C.)",
-    "combatModifiers": { "strike": -6 }
-  },
   "grantedModifiers": {
-    "immunities": ["physical_harm"],
+    "immunities": [
+      "physical_harm"
+    ],
     "movement": {
       "flightSpeed": "Mach 1 (670 mph max)",
       "hover": "true"
     }
   },
-  "resolutionTable": [
-    {
-      "rollRange": "01-30",
-      "effect": "Hopelessly lost — cannot return to the physical body without outside help."
+  "resolutionTable": {
+    "rollKind": "d100",
+    "label": "Return to physical body accuracy",
+    "resolutionTrigger": {
+      "when": "on_duration_end",
+      "rollKind": "d100"
     },
-    {
-      "rollRange": "31-50",
-      "effect": "Uncertain of return path."
-    },
-    {
-      "rollRange": "51-76",
-      "effect": "Fairly certain of return path."
-    },
-    {
-      "rollRange": "77-00",
-      "effect": "Definitely certain — return succeeds."
+    "entries": [
+      {
+        "effect": "Hopelessly lost — cannot return to the physical body without outside help.",
+        "percentile": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      {
+        "effect": "Uncertain of return path.",
+        "percentile": {
+          "min": 31,
+          "max": 50
+        }
+      },
+      {
+        "effect": "Fairly certain of return path.",
+        "percentile": {
+          "min": 51,
+          "max": 76
+        }
+      },
+      {
+        "effect": "Definitely certain — return succeeds.",
+        "percentile": {
+          "min": 77,
+          "max": 100
+        }
+      }
+    ]
+  },
+  "durationType": "narrative",
+  "spawnedPresence": {
+    "kind": "construct",
+    "name": "Silver Cord",
+    "derivedHealth": "Twice the combined physical H.P. and S.D.C. (Astral S.D.C.)",
+    "combatModifiers": {
+      "strike": -6
     }
-  ],
-  "durationType": "narrative"
+  }
 }

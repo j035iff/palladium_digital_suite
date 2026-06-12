@@ -71,6 +71,12 @@ export type PalladiumPsionicCatalogEntry = {
     notes?: string
   }[]
   innateStarter?: boolean
+  resolutionTable?: unknown
+  permanentCosts?: readonly unknown[]
+  spawnedPresence?: Record<string, unknown>
+  formTransformation?: Record<string, unknown>
+  /** @deprecated Prefer `spawnedPresence` with `kind: construct`. */
+  summonedEntity?: Record<string, unknown>
   [key: string]: unknown
 }
 

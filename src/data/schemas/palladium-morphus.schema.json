@@ -270,23 +270,7 @@
   },
   "$defs": {
     "percentileRange": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["min", "max"],
-      "properties": {
-        "min": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 100,
-          "description": "Inclusive low bound on a d100 (01 = 1)."
-        },
-        "max": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 100,
-          "description": "Inclusive high bound on a d100 (00 = 100)."
-        }
-      }
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/percentileRange"
     },
     "sources": {
       "type": "array",

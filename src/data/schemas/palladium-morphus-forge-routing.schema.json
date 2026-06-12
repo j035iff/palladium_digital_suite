@@ -33,13 +33,7 @@
   },
   "$defs": {
     "percentileRange": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["min", "max"],
-      "properties": {
-        "min": { "type": "integer", "minimum": 1, "maximum": 100 },
-        "max": { "type": "integer", "minimum": 1, "maximum": 100 }
-      }
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/percentileRange"
     },
     "diceRollSpec": {
       "type": "object",

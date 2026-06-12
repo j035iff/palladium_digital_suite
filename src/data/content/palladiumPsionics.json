@@ -34,30 +34,43 @@
       "summary": "4D4 minutes of preparatory meditation.",
       "preparationMinutes": "4D4"
     },
-    "resolutionTable": [
-      {
-        "rollRange": "1-30",
-        "effect": "Hopelessly Lost (roll again)."
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Return to physical body accuracy",
+      "resolutionTrigger": {
+        "when": "on_duration_end",
+        "rollKind": "d100"
       },
-      {
-        "rollRange": "31-50",
-        "effect": "Uncertain, confused (roll again)."
-      },
-      {
-        "rollRange": "51-76",
-        "effect": "Fairly certain of location; on the right track (roll again)."
-      },
-      {
-        "rollRange": "77-00",
-        "effect": "Definitely certain of location. (Whew! Made it Back)."
-      }
-    ],
-    "summonedEntity": {
-      "name": "Astral Body and Silver Cord",
-      "derivedHealth": "Twice the combined physical H.P. and S.D.C. of the psychic.",
-      "combatModifiers": {
-        "strike": -6
-      }
+      "entries": [
+        {
+          "effect": "Hopelessly Lost (roll again).",
+          "percentile": {
+            "min": 1,
+            "max": 30
+          }
+        },
+        {
+          "effect": "Uncertain, confused (roll again).",
+          "percentile": {
+            "min": 31,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Fairly certain of location; on the right track (roll again).",
+          "percentile": {
+            "min": 51,
+            "max": 76
+          }
+        },
+        {
+          "effect": "Definitely certain of location. (Whew! Made it Back).",
+          "percentile": {
+            "min": 77,
+            "max": 100
+          }
+        }
+      ]
     },
     "grantedModifiers": {
       "immunities": [
@@ -68,6 +81,14 @@
       ],
       "movement": {
         "flightSpeed": "Mach 1 / 670 mph maximum"
+      }
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Astral Body and Silver Cord",
+      "derivedHealth": "Twice the combined physical H.P. and S.D.C. of the psychic.",
+      "combatModifiers": {
+        "strike": -6
       }
     }
   },
@@ -777,20 +798,37 @@
       "summary": "Permanent",
       "kind": "special"
     },
-    "resolutionTable": [
-      {
-        "rollRange": "1-50",
-        "effect": "Remembered in full detail, word for word."
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Recall clarity when I.S.P. is exhausted",
+      "resolutionTrigger": {
+        "when": "on_duration_end",
+        "rollKind": "d100"
       },
-      {
-        "rollRange": "51-80",
-        "effect": "Details are forgotten, but the full essence of the ideas are clear."
-      },
-      {
-        "rollRange": "81-00",
-        "effect": "Can only recall the most basic concepts; no details nor strong comprehension."
-      }
-    ]
+      "entries": [
+        {
+          "effect": "Remembered in full detail, word for word.",
+          "percentile": {
+            "min": 1,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Details are forgotten, but the full essence of the ideas are clear.",
+          "percentile": {
+            "min": 51,
+            "max": 80
+          }
+        },
+        {
+          "effect": "Can only recall the most basic concepts; no details nor strong comprehension.",
+          "percentile": {
+            "min": 81,
+            "max": 100
+          }
+        }
+      ]
+    }
   },
   {
     "$schema": "../palladium-psionic.schema.json",
@@ -1031,7 +1069,8 @@
       "kind": "minute",
       "perLevel": "4 minutes"
     },
-    "summonedEntity": {
+    "spawnedPresence": {
+      "kind": "construct",
       "name": "Ectoplasm Appendage",
       "derivedHealth": "Astral S.D.C. is 40 plus one hit point. If destroyed, the creator takes 1 hit point and 10 S.D.C. of physical damage.",
       "combatModifiers": {
@@ -1041,7 +1080,7 @@
         "notes": "Gets an automatic dodge against all attacks. Attacks per melee equal to creator."
       },
       "movement": {
-        "flightSpeed": 18
+        "flightSpeed": "18 mph (29 km/h)"
       },
       "statModifiers": {
         "ps": 4
@@ -2263,12 +2302,23 @@
     "psionicPrerequisites": [
       "psionic_psychic_diagnosis"
     ],
-    "resolutionTable": [
-      {
-        "rollRange": "1-66",
-        "effect": "The recovery from a coma (near death) is equal to treatment from a hospital, 1-66%, when psychic surgery is used. [cite: 94]"
-      }
-    ],
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Coma recovery success",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "The recovery from a coma (near death) is equal to treatment from a hospital, 1-66%, when psychic surgery is used. [cite: 94]",
+          "percentile": {
+            "min": 1,
+            "max": 66
+          }
+        }
+      ]
+    },
     "limitations": {
       "otherLimitations": "Note: A psychic diagnosis must be made before surgery is possible. [cite: 96]"
     }
@@ -2816,7 +2866,8 @@
       "summary": "None",
       "saveKind": "none"
     },
-    "summonedEntity": {
+    "spawnedPresence": {
+      "kind": "construct",
       "name": "Psi-Shield",
       "derivedHealth": "120 S.D.C."
     }
@@ -2989,7 +3040,8 @@
       "summary": "None",
       "saveKind": "none"
     },
-    "summonedEntity": {
+    "spawnedPresence": {
+      "kind": "construct",
       "name": "Telekinetic Force Field",
       "derivedHealth": "130 S.D.C., plus 20 S.D.C. per level of experience."
     }
@@ -3378,32 +3430,56 @@
       "summary": "None",
       "saveKind": "none"
     },
-    "summonedEntity": {
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Find Dream Pool success",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "Find Pool (Roll every minute): Intimately knows the person or feels great love/hatred.",
+          "percentile": {
+            "min": 1,
+            "max": 70
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every five minutes): Knows the person.",
+          "percentile": {
+            "min": 1,
+            "max": 60
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every ten minutes): Acquainted with the person.",
+          "percentile": {
+            "min": 1,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every half hour): Has seen the person at least once.",
+          "percentile": {
+            "min": 1,
+            "max": 35
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every hour): Has heard of the person, or seen pictures (includes famous people).",
+          "percentile": {
+            "min": 1,
+            "max": 20
+          }
+        }
+      ]
+    },
+    "spawnedPresence": {
+      "kind": "construct",
       "name": "Dream Projection",
       "derivedHealth": "Equal to the total S.D.C. and hit points of the character."
-    },
-    "resolutionTable": [
-      {
-        "rollRange": "1-70",
-        "effect": "Find Pool (Roll every minute): Intimately knows the person or feels great love/hatred."
-      },
-      {
-        "rollRange": "1-60",
-        "effect": "Find Pool (Roll every five minutes): Knows the person."
-      },
-      {
-        "rollRange": "1-50",
-        "effect": "Find Pool (Roll every ten minutes): Acquainted with the person."
-      },
-      {
-        "rollRange": "1-35",
-        "effect": "Find Pool (Roll every half hour): Has seen the person at least once."
-      },
-      {
-        "rollRange": "1-20",
-        "effect": "Find Pool (Roll every hour): Has heard of the person, or seen pictures (includes famous people)."
-      }
-    ]
+    }
   },
   {
     "$schema": "../palladium-psionic.schema.json",

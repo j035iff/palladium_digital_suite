@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json",
+  "title": "Palladium feature common fragments",
+  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `spawnedPresence`, `formTransformation`).",
+  "$defs": {
+    "percentileRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "description": "Inclusive d100 band (01 = 1, 00 = 100). Matches morphus `percentileRange` convention.",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Inclusive low bound on a d100 (01 = 1)."
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Inclusive high bound on a d100 (00 = 100)."
+        }
+      }
+    },
+    "resolutionTableEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effect"],
+      "description": "One outcome band in a percentile or dice resolution table. Provide structured `percentile` for machine resolution or legacy `rollRange` prose for authoring.",
+      "properties": {
+        "percentile": { "$ref": "#/$defs/percentileRange" },
+        "rollRange": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Authoring shorthand for an outcome band (e.g. `01-20`, `77-00`)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short outcome label shown in UI (e.g. On target, Off course)."
+        },
+        "effect": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Mechanical or narrative outcome when the roll falls within the band."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [
+        { "required": ["percentile"] },
+        { "required": ["rollRange"] }
+      ]
+    },
+    "resolutionTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "When a resolution table is rolled relative to the spell or power lifecycle.",
+      "properties": {
+        "when": {
+          "type": "string",
+          "enum": [
+            "on_cast",
+            "on_save_failed",
+            "on_ritual_completion",
+            "on_duration_end"
+          ]
+        },
+        "rollKind": {
+          "type": "string",
+          "enum": ["d100", "d20", "d6", "d4", "other"],
+          "description": "Dice used when `when` fires; may duplicate table-level `rollKind`."
+        }
+      }
+    },
+    "resolutionTable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entries"],
+      "description": "Percentile or dice outcome bands mapped to mechanical effects (e.g. Teleport arrival accuracy, Exorcism sub-outcomes).",
+      "properties": {
+        "rollKind": {
+          "type": "string",
+          "enum": ["d100", "d20", "d6", "d4", "other"],
+          "description": "Primary dice for table resolution when not implied by `resolutionTrigger`."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Table heading shown at cast or resolution time."
+        },
+        "resolutionTrigger": { "$ref": "#/$defs/resolutionTrigger" },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/resolutionTableEntry" }
+        }
+      }
+    },
+    "catalogEntityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalogRaceId"],
+      "description": "Reference to a race/NPC catalog row (`palladium-race.schema.json`, typically `raceAudience: npc`).",
+      "properties": {
+        "catalogRaceId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Canonical race id from `content/races/npc.json` or `gm_approval.json`."
+        }
+      }
+    },
+    "permanentPoolReduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "description": "Irreversible reduction applied to a maximum pool or attribute.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["fixed", "formula", "fraction"]
+        },
+        "value": {
+          "type": "number",
+          "description": "Fixed amount subtracted from the maximum when `kind` is `fixed`."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Palladium dice or attribute formula when `kind` is `formula` (e.g. `2D6`, `PE`)."
+        },
+        "numerator": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Numerator when `kind` is `fraction`."
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Denominator when `kind` is `fraction`."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "fixed" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["value"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "formula" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["formula"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "fraction" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["numerator", "denominator"] }
+        }
+      ]
+    },
+    "permanentCostEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource", "reduction"],
+      "description": "One permanent sacrifice applied when the feature succeeds (distinct from activation economy).",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": [
+            "ppe_max",
+            "isp_max",
+            "hp_max",
+            "sdc_max",
+            "mdc_max",
+            "iq",
+            "me",
+            "ma",
+            "ps",
+            "pp",
+            "pe",
+            "pb",
+            "spd"
+          ],
+          "description": "Maximum pool or attribute permanently reduced."
+        },
+        "reduction": { "$ref": "#/$defs/permanentPoolReduction" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "spawnedPresenceConstructStatModifiers": {
+      "type": "object",
+      "description": "Physical attributes of a spawned construct (e.g. Ectoplasm entity P.S., P.P., Spd.).",
+      "additionalProperties": true,
+      "properties": {
+        "ps": { "type": "integer" },
+        "pp": { "type": "integer" },
+        "spd": { "type": "integer" },
+        "pe": { "type": "integer" },
+        "sdc": { "type": "integer" },
+        "hp": { "type": "integer" }
+      }
+    },
+    "spawnedPresenceConstructMovement": {
+      "type": "object",
+      "description": "Movement capabilities of a spawned construct.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string", "minLength": 1 },
+          { "type": "integer" },
+          { "type": "number" },
+          { "type": "boolean" }
+        ]
+      },
+      "properties": {
+        "flightSpeed": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer" },
+            { "type": "number" }
+          ]
+        },
+        "hover": { "type": "boolean" }
+      }
+    },
+    "spawnedPresenceConstructCombatModifiers": {
+      "type": "object",
+      "description": "Flat integer strike/parry/dodge penalties or bonuses specific to the construct.",
+      "additionalProperties": true,
+      "properties": {
+        "strike": { "type": "integer" },
+        "parry": { "type": "integer" },
+        "dodge": { "type": "integer" },
+        "initiative": { "type": "integer" }
+      }
+    },
+    "spawnedPresenceConstruct": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "description": "Targetable magical construct with its own ablative health pool, distinct from catalog creatures.",
+      "properties": {
+        "kind": { "const": "construct" },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Construct label (e.g. Magic Net, Energy Field)."
+        },
+        "derivedHealth": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Construct S.D.C. pool formula (e.g. `60 S.D.C.`, `20 S.D.C. per level of experience`)."
+        },
+        "combatModifiers": {
+          "$ref": "#/$defs/spawnedPresenceConstructCombatModifiers"
+        },
+        "statModifiers": {
+          "$ref": "#/$defs/spawnedPresenceConstructStatModifiers"
+        },
+        "movement": {
+          "$ref": "#/$defs/spawnedPresenceConstructMovement"
+        }
+      }
+    },
+    "spawnedPresenceCreatureControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Control or obedience save for a summoned catalog creature.",
+      "properties": {
+        "saveKind": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "magic",
+            "psionics",
+            "horror_factor",
+            "none",
+            "other"
+          ]
+        },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "spawnedPresenceCreatureDuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How long summoned creatures remain under the caster's influence.",
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["melee", "minute", "hour", "day", "narrative", "permanent"]
+        },
+        "perLevel": { "type": "string", "minLength": 1 }
+      }
+    },
+    "spawnedPresenceCreature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "catalogRaceId"],
+      "description": "True creature summoning from the race/NPC catalog (full stat block loaded from `catalogRaceId`).",
+      "properties": {
+        "kind": { "const": "creature" },
+        "catalogRaceId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1
+        },
+        "countFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice or scaling formula for how many creatures appear (e.g. `1D6`)."
+        },
+        "control": { "$ref": "#/$defs/spawnedPresenceCreatureControl" },
+        "duration": { "$ref": "#/$defs/spawnedPresenceCreatureDuration" }
+      }
+    },
+    "spawnedPresence": {
+      "description": "Physical construct or catalog creature spawned by a spell or power.",
+      "oneOf": [
+        { "$ref": "#/$defs/spawnedPresenceConstruct" },
+        { "$ref": "#/$defs/spawnedPresenceCreature" }
+      ]
+    },
+    "formTransformation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "description": "Full or partial character sheet replacement while the feature is active (distinct from `grantedModifiers` overlay buffs).",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["sheet_replacement", "facade_overlay"],
+          "description": "`sheet_replacement` swaps the active stat block; `facade_overlay` applies only when casting from Facade."
+        },
+        "targetCatalogRaceId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Bestiary or race row whose stat block replaces the caster's form."
+        },
+        "targetTemplateId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Lightweight transformation template when no single catalog race applies (e.g. Mist form)."
+        },
+        "masksCharacterSheet": {
+          "type": "boolean",
+          "description": "When true, the original sheet is hidden behind the transformed form until the effect ends."
+        },
+        "preservedAspects": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Caster aspects that persist through transformation (e.g. mind, alignment, ppe_pool)."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [
+        { "required": ["targetCatalogRaceId"] },
+        { "required": ["targetTemplateId"] }
+      ]
+    }
+  }
+}

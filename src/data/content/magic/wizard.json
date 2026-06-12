@@ -3,7 +3,9 @@
     "id": "magic_wizard_blinding_flash",
     "name": "Blinding Flash",
     "description": "This invocation creates a sudden burst of intense white light, temporarily blinding everyone in its ten foot (3.0 m) radius. Victims are blinded for one to four (1D4) melee rounds, with a penalty of -5 to strike, and -10 to parry and dodge. The chance of falling is 50% every 10 ft (3.0 m). The magic can be cast up to 60 ft (18.3 m) away. Saving throw is standard; those who successfully save versus magic are not blinded.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -14,8 +16,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "light"],
-    "ppe": { "baseActivation": 1 },
+    "tags": [
+      "offensive",
+      "light"
+    ],
+    "ppe": {
+      "baseActivation": 1
+    },
     "range": {
       "summary": "10 ft (3.0 m) radius; up to 60 ft (18.3 m) away."
     },
@@ -29,7 +36,9 @@
       "saveKind": "standard"
     },
     "inflictedModifiers": {
-      "statusEffects": ["blinded"],
+      "statusEffects": [
+        "blinded"
+      ],
       "combatModifiers": {
         "strike": -5,
         "parry": -10,
@@ -42,7 +51,9 @@
     "id": "magic_wizard_cloud_of_smoke",
     "name": "Cloud of Smoke",
     "description": "This magic enables the spell caster to create a dense, billowing cloud of smoke up to 90 feet (27.4 m) away. The cloud is 30x30x30 feet (9.1 m) in size. Sight through the smoke is impossible, rendering those inside effectively blind.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -53,8 +64,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "obscurement"],
-    "ppe": { "baseActivation": 2 },
+    "tags": [
+      "utility",
+      "obscurement"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
     "range": {
       "summary": "90 ft (27.4 m)."
     },
@@ -68,7 +84,9 @@
       "saveKind": "none"
     },
     "inflictedModifiers": {
-      "statusEffects": ["blinded"],
+      "statusEffects": [
+        "blinded"
+      ],
       "combatModifiers": {
         "notes": "Sight through the smoke is impossible. Those inside suffer blindness penalties."
       }
@@ -78,7 +96,9 @@
     "id": "magic_wizard_death_trance",
     "name": "Death Trance",
     "description": "A state of mind over matter that slows the metabolism to such a degree that it simulates death. Only a careful medical examination will detect the faint heartbeat and breathing. The effects of drugs and poisons are slowed to a crawl. The mage cannot be roused until the duration expires or they choose to end it.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -89,8 +109,14 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "stealth", "survival"],
-    "ppe": { "baseActivation": 1 },
+    "tags": [
+      "utility",
+      "stealth",
+      "survival"
+    ],
+    "ppe": {
+      "baseActivation": 1
+    },
     "range": {
       "summary": "Self"
     },
@@ -105,14 +131,19 @@
     },
     "grantedModifiers": {
       "target": "self",
-      "immunities": ["drug_progression", "poison_progression"]
+      "immunities": [
+        "drug_progression",
+        "poison_progression"
+      ]
     }
   },
   {
     "id": "magic_wizard_globe_of_daylight",
     "name": "Globe of Daylight",
     "description": "Creates a small globe of true daylight that can be cast up to 30 feet away and will illuminate a 12 foot (3.6 m) radius. It is bright enough to read by and will ward off vampires and other entities harmed by sunlight. The globe will hover and follow the caster if commanded.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -123,8 +154,14 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "light", "ward"],
-    "ppe": { "baseActivation": 2 },
+    "tags": [
+      "utility",
+      "light",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
     "range": {
       "summary": "Near self or up to 30 ft (9.1 m) away."
     },
@@ -142,7 +179,9 @@
     "id": "magic_wizard_see_aura",
     "name": "See Aura",
     "description": "All things, organic and inorganic, have an aura. The aura has a multitude of colors and patterns that indicate the true nature of the thing. This spell allows the caster to clearly see and read a target's aura.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -153,8 +192,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["sensory", "divination"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "60 ft (18.3 m) and must be visible."
     },
@@ -181,7 +225,9 @@
     "id": "magic_wizard_see_the_invisible",
     "name": "See the Invisible",
     "description": "The character can see forces, objects, and creatures which can turn invisible, or are naturally invisible. Even astral bodies can be seen.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -192,8 +238,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["sensory", "divination"],
-    "ppe": { "baseActivation": 4 },
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
     "range": {
       "summary": "200 ft (61 m) line of vision."
     },
@@ -217,7 +268,9 @@
     "id": "magic_wizard_sense_evil",
     "name": "Sense Evil",
     "description": "This spell enables the caster to sense the presence of supernatural evil. It will indicate the general direction and proximity, but not exact location. It cannot sense evil intentions of normal people, only supernatural entities.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -228,8 +281,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["sensory", "divination"],
-    "ppe": { "baseActivation": 2 },
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
     "range": {
       "summary": "90 ft (27.4 m) radius."
     },
@@ -252,7 +310,9 @@
     "id": "magic_wizard_sense_magic",
     "name": "Sense Magic",
     "description": "The caster can feel the presence of magic. It indicates if magic is in use within the area, if an object is enchanted, or if someone is casting a spell. It will not indicate exactly what the magic is, but will sense its presence.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -263,8 +323,13 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["sensory", "divination"],
-    "ppe": { "baseActivation": 4 },
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
     "range": {
       "summary": "120 ft (36.5 m) radius."
     },
@@ -288,7 +353,9 @@
     "id": "magic_wizard_thunderclap",
     "name": "Thunderclap",
     "description": "The invocation produces a booming clap of thunder that sounds as if it came from the mage. A thunderclap is an excellent means of alerting or signaling allies, as well as a means of intimidation. As an intimidation device, it will momentarily startle and distract everyone other than the spell caster.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -299,8 +366,14 @@
     "spellLevel": 1,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "sound", "horror_factor"],
-    "ppe": { "baseActivation": 4 },
+    "tags": [
+      "offensive",
+      "sound",
+      "horror_factor"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
     "range": {
       "summary": "30 ft (9.1 m) radius around the sorcerer; audible up to 1 mile (1.6 km)."
     },
@@ -328,7 +401,9 @@
     "id": "magic_wizard_befuddle",
     "name": "Befuddle",
     "description": "An enchantment that temporarily confuses the victim. The character becomes disoriented, unable to focus, and sluggish in combat.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -339,8 +414,14 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "mind_control", "debuff"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "offensive",
+      "mind_control",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "100 ft (30.5 m)"
     },
@@ -355,7 +436,10 @@
     },
     "targetCountFormula": "One person or animal.",
     "inflictedModifiers": {
-      "statusEffects": ["confused", "sluggish"],
+      "statusEffects": [
+        "confused",
+        "sluggish"
+      ],
       "combatModifiers": {
         "strike": -2,
         "parry": -2,
@@ -370,7 +454,9 @@
     "id": "magic_wizard_chameleon",
     "name": "Chameleon",
     "description": "This spell enables the character to seemingly alter the color and pattern of his clothes and physical body to blend into the surrounding environment. The mage is virtually undetectable as long as they remain completely still.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -381,8 +467,14 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "stealth", "illusion"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "utility",
+      "stealth",
+      "illusion"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -411,7 +503,9 @@
     "id": "magic_wizard_climb",
     "name": "Climb",
     "description": "The spell magically grants exceptional climbing skill for the duration. The magic allows the character to climb almost any surface, including smooth walls, with remarkable proficiency.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -422,8 +516,13 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "movement"],
-    "ppe": { "baseActivation": 3 },
+    "tags": [
+      "utility",
+      "movement"
+    ],
+    "ppe": {
+      "baseActivation": 3
+    },
     "range": {
       "summary": "Self, or others up to 40 ft (12.2 m) away."
     },
@@ -452,7 +551,9 @@
     "id": "magic_wizard_concealment",
     "name": "Concealment",
     "description": "This spell makes a small object (under 14 inches/0.35 m in length or width) completely undetectable to normal vision. It cannot be seen unless someone physically bumps into it or uses magic to reveal it.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -463,8 +564,14 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "illusion", "stealth"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "utility",
+      "illusion",
+      "stealth"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "Small objects up to 10 ft (3.0 m) away."
     },
@@ -484,7 +591,9 @@
     "id": "magic_wizard_detect_concealment",
     "name": "Detect Concealment",
     "description": "A spell that instantly reveals any object that has been magically or physically hidden, concealed, or disguised within the area of effect.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -495,8 +604,13 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["sensory", "divination"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "30 ft (9.1 m) area of effect."
     },
@@ -519,7 +633,9 @@
     "id": "magic_wizard_extinguish_fire",
     "name": "Extinguish Fire",
     "description": "The spell caster can instantly put out a 20 foot (6.1 m) radius of fire up to 80 feet away. A great tool for rescues and covering tracks.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -530,8 +646,13 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "elemental"],
-    "ppe": { "baseActivation": 4 },
+    "tags": [
+      "utility",
+      "elemental"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
     "range": {
       "summary": "20 ft (6.1 m) radius, up to 80 ft (24.4 m) away."
     },
@@ -550,7 +671,9 @@
     "id": "magic_wizard_fear",
     "name": "Fear",
     "description": "This spell creates an overwhelming sensation of terror in its victims. Those affected will either flee in panic or be temporarily paralyzed by fear.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -561,8 +684,14 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "mind_control", "debuff"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "offensive",
+      "mind_control",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "20 ft (6.1 m) area, up to 100 ft (30.5 m) away."
     },
@@ -576,7 +705,10 @@
       "saveKind": "standard"
     },
     "inflictedModifiers": {
-      "statusEffects": ["fear", "panic"],
+      "statusEffects": [
+        "fear",
+        "panic"
+      ],
       "combatModifiers": {
         "strike": -3,
         "parry": -3,
@@ -590,7 +722,9 @@
     "id": "magic_wizard_heavy_breathing",
     "name": "Heavy Breathing",
     "description": "The magic creates a phantom sound of someone breathing heavily. The sound can be cast up to 60 feet away and slowly moves around to unnerve those who hear it.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -601,8 +735,15 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "sound", "illusion", "horror_factor"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "offensive",
+      "sound",
+      "illusion",
+      "horror_factor"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Up to 60 ft (18.3 m) away."
     },
@@ -622,7 +763,9 @@
     "id": "magic_wizard_levitation",
     "name": "Levitation",
     "description": "The spell enables the caster to magically lift themselves, someone else, or an object into the air and hover or move horizontally.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -633,8 +776,13 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "movement"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "movement"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Up to 60 ft (18.3 m) away."
     },
@@ -660,7 +808,9 @@
     "id": "magic_wizard_mystic_alarm",
     "name": "Mystic Alarm",
     "description": "Creates an invisible, magical ward on a door, window, or container. If the warded object is opened or tampered with, a silent alarm rings in the spell caster's head.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -671,8 +821,13 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "ward"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "12 ft (3.6 m) area."
     },
@@ -690,7 +845,9 @@
     "id": "magic_wizard_turn_dead",
     "name": "Turn Dead",
     "description": "Turns away animated dead (skeletons, zombies, corpses). The undead are stopped in their tracks and forced to retreat or stand absolutely still, unable to approach the spell caster.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -701,8 +858,14 @@
     "spellLevel": 2,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "ward", "anti_undead"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "offensive",
+      "ward",
+      "anti_undead"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "60 ft (18.3 m)"
     },
@@ -722,7 +885,9 @@
     "id": "magic_wizard_magic_armor",
     "name": "Magic Armor",
     "description": "Creates an invisible, weightless, noiseless, full suit of mystic armor upon the spell caster or other. It provides formidable protection against physical and energy attacks.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -733,8 +898,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff", "ward"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "utility",
+      "buff",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "Self or other by touch."
     },
@@ -752,7 +923,11 @@
       "forceField": {
         "sdcFormula": "100 + 10 per level of experience"
       },
-      "resistances": ["fire", "lightning", "cold"]
+      "resistances": [
+        "fire",
+        "lightning",
+        "cold"
+      ]
     }
   },
   {
@@ -760,7 +935,9 @@
     "id": "magic_wizard_breathe_without_air",
     "name": "Breathe Without Air",
     "description": "This spell enables the character to function completely without air, whether underwater or in a toxic, oxygen-depleted environment.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -771,8 +948,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "survival", "buff"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "survival",
+      "buff"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -787,7 +970,11 @@
     },
     "grantedModifiers": {
       "target": "touch",
-      "immunities": ["drowning", "suffocation", "toxic gases"]
+      "immunities": [
+        "drowning",
+        "suffocation",
+        "toxic gases"
+      ]
     }
   },
   {
@@ -795,7 +982,9 @@
     "id": "magic_wizard_energy_bolt",
     "name": "Energy Bolt",
     "description": "The incantation creates a bolt of energy which the mage can direct at any specific target. The spell caster must roll to strike, but is +3 to hit.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -806,8 +995,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "energy"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "offensive",
+      "energy"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "150 ft (45.7 m)"
     },
@@ -829,7 +1023,9 @@
     "id": "magic_wizard_fingers_of_the_wind",
     "name": "Fingers of the Wind",
     "description": "The spell enables the caster to manipulate physical objects out of reach. Can be used to open unlocked doors, flick switches, tap shoulders, or knock over small objects.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -840,8 +1036,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "telekinesis"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "telekinesis"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "90 ft (27.4 m)"
     },
@@ -866,7 +1067,9 @@
     "id": "magic_wizard_float_in_air",
     "name": "Float in Air",
     "description": "Creates air currents that hold a person or object completely stationary in the air. Can be used to stop someone from falling or simply to hover.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -877,8 +1080,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "movement"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "movement"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Self or others within 30 ft (9.1 m)."
     },
@@ -904,7 +1112,9 @@
     "id": "magic_wizard_fuel_flame",
     "name": "Fuel Flame",
     "description": "The magic feeds an existing fire, doubling its size and the damage it inflicts.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -915,8 +1125,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "elemental", "fire"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "offensive",
+      "elemental",
+      "fire"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "100 ft (30.5 m)"
     },
@@ -937,7 +1153,9 @@
     "id": "magic_wizard_ignite_fire",
     "name": "Ignite Fire",
     "description": "Causes a combustible object (wood, paper, cloth) to spontaneously catch fire.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -948,8 +1166,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "elemental", "fire"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "offensive",
+      "elemental",
+      "fire"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "40 ft (12.2 m)"
     },
@@ -967,7 +1191,9 @@
     "id": "magic_wizard_impervious_to_fire",
     "name": "Impervious to Fire",
     "description": "Makes the individual completely impervious to normal and magical fires and intense heat.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -978,8 +1204,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff", "survival"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "buff",
+      "survival"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Self or others within 60 ft (18.3 m)."
     },
@@ -994,7 +1226,11 @@
     },
     "grantedModifiers": {
       "target": "touch",
-      "immunities": ["fire", "heat", "magical fire"]
+      "immunities": [
+        "fire",
+        "heat",
+        "magical fire"
+      ]
     }
   },
   {
@@ -1002,7 +1238,9 @@
     "id": "magic_wizard_impervious_to_poison",
     "name": "Impervious to Poison",
     "description": "The incantation makes the person completely impervious to all poisons, toxins, and venom.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1013,8 +1251,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff", "survival"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "utility",
+      "buff",
+      "survival"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -1029,7 +1273,12 @@
     },
     "grantedModifiers": {
       "target": "touch",
-      "immunities": ["poison", "toxin", "venom", "drugs"]
+      "immunities": [
+        "poison",
+        "toxin",
+        "venom",
+        "drugs"
+      ]
     }
   },
   {
@@ -1037,7 +1286,9 @@
     "id": "magic_wizard_invisibility_simple",
     "name": "Invisibility: Simple",
     "description": "Makes the target invisible to normal vision. The magic is broken the moment the invisible person engages in combat or acts aggressively.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1048,8 +1299,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "stealth", "illusion"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "utility",
+      "stealth",
+      "illusion"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -1074,7 +1331,9 @@
     "id": "magic_wizard_negate_poisons_toxins",
     "name": "Negate Poisons/Toxins",
     "description": "Instantly neutralizes any poison or toxin in the recipient's body. Also cures the effects of drugs and alcohol.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1085,8 +1344,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["healing", "survival"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "healing",
+      "survival"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -1099,7 +1363,12 @@
       "saveKind": "none"
     },
     "healing": {
-      "cures": ["poison", "toxin", "drug effects", "alcohol"]
+      "cures": [
+        "poison",
+        "toxin",
+        "drug effects",
+        "alcohol"
+      ]
     }
   },
   {
@@ -1107,7 +1376,9 @@
     "id": "magic_wizard_paralysis_lesser",
     "name": "Paralysis: Lesser",
     "description": "Temporarily paralyzes the victim's motor functions, freezing them in place. They can still see, hear, and think, but cannot physically move or speak.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1118,8 +1389,14 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "debuff", "mind_control"],
-    "ppe": { "baseActivation": 5 },
+    "tags": [
+      "offensive",
+      "debuff",
+      "mind_control"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
     "range": {
       "summary": "60 ft (18.3 m)"
     },
@@ -1133,7 +1410,9 @@
       "saveKind": "standard"
     },
     "inflictedModifiers": {
-      "statusEffects": ["paralyzed"],
+      "statusEffects": [
+        "paralyzed"
+      ],
       "combatModifiers": {
         "notes": "Victim loses all attacks per melee, cannot move, and cannot cast spells requiring physical gestures or speech."
       }
@@ -1144,7 +1423,9 @@
     "id": "magic_wizard_resist_fire",
     "name": "Resist Fire",
     "description": "Provides a partial resistance to fire, magical fires, and intense heat, cutting the damage inflicted in half.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1155,8 +1436,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff"],
-    "ppe": { "baseActivation": 6 },
+    "tags": [
+      "utility",
+      "buff"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
     "range": {
       "summary": "Self or others within 60 ft (18.3 m)."
     },
@@ -1171,7 +1457,11 @@
     },
     "grantedModifiers": {
       "target": "touch",
-      "resistances": ["fire", "magical fire", "heat"]
+      "resistances": [
+        "fire",
+        "magical fire",
+        "heat"
+      ]
     }
   },
   {
@@ -1179,7 +1469,9 @@
     "id": "magic_wizard_telekinesis",
     "name": "Telekinesis",
     "description": "Enables the mage to manipulate objects with his mind. They can move, throw, or lift items up to 60 lbs without physical contact.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1190,8 +1482,13 @@
     "spellLevel": 3,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "telekinesis"],
-    "ppe": { "baseActivation": 8 },
+    "tags": [
+      "utility",
+      "telekinesis"
+    ],
+    "ppe": {
+      "baseActivation": 8
+    },
     "range": {
       "summary": "60 ft (18.3 m)"
     },
@@ -1216,7 +1513,9 @@
     "id": "magic_wizard_carpet_of_adhesion",
     "name": "Carpet of Adhesion",
     "description": "Creates an ultra-sticky, invisible floor area that instantly traps victims. It is nearly impossible to pull free once stuck.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1227,8 +1526,13 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "debuff"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "100 ft (30.5 m) away; 6 ft (1.8 m) radius."
     },
@@ -1243,7 +1547,9 @@
     },
     "targetCountFormula": "Multiple victims within the 6 ft radius.",
     "inflictedModifiers": {
-      "statusEffects": ["immobile"],
+      "statusEffects": [
+        "immobile"
+      ],
       "combatModifiers": {
         "notes": "Victims are stuck and immobile. Freeing oneself requires a P.S. check (must roll above the spell strength) or cutting through the adhesive."
       }
@@ -1254,7 +1560,9 @@
     "id": "magic_wizard_charismatic_aura",
     "name": "Charismatic Aura",
     "description": "The caster chooses one distinct aura effect when the spell is invoked: Charm, Fear, or Authority. Each mode alters how NPCs perceive and react to the mage.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1265,8 +1573,13 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["social", "mind_control"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "social",
+      "mind_control"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "Self; affects those within 10 ft (3.0 m)."
     },
@@ -1279,19 +1592,32 @@
       {
         "name": "Charm",
         "description": "Victims regard the caster as a trusted friend.",
-        "save": { "summary": "Standard", "saveKind": "standard" }
+        "save": {
+          "summary": "Standard",
+          "saveKind": "standard"
+        }
       },
       {
         "name": "Fear",
         "description": "Victims are intimidated by the caster's presence.",
-        "save": { "summary": "Save vs Horror Factor", "saveKind": "horror_factor" },
+        "save": {
+          "summary": "Save vs Horror Factor",
+          "saveKind": "horror_factor"
+        },
         "horrorFactor": 12
       },
       {
         "name": "Authority",
         "description": "Victims are compelled to obey the caster's commands.",
-        "save": { "summary": "Standard", "saveKind": "standard" },
-        "inflictedModifiers": { "statusEffects": ["charmed"] }
+        "save": {
+          "summary": "Standard",
+          "saveKind": "standard"
+        },
+        "inflictedModifiers": {
+          "statusEffects": [
+            "charmed"
+          ]
+        }
       }
     ]
   },
@@ -1300,7 +1626,9 @@
     "id": "magic_wizard_energy_field",
     "name": "Energy Field",
     "description": "Creates a shimmering, spherical force field bubble around the caster or others. It provides significant S.D.C. protection.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1311,8 +1639,14 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff", "ward"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "utility",
+      "buff",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "60 ft (18.3 m)."
     },
@@ -1337,7 +1671,9 @@
     "id": "magic_wizard_fire_gout",
     "name": "Fire Gout",
     "description": "A focused blast of fire that shoots from the caster's fingertips.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1348,8 +1684,14 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "elemental", "fire"],
-    "ppe": { "baseActivation": 7 },
+    "tags": [
+      "offensive",
+      "elemental",
+      "fire"
+    ],
+    "ppe": {
+      "baseActivation": 7
+    },
     "range": {
       "summary": "100 ft (30.5 m)"
     },
@@ -1370,7 +1712,9 @@
     "id": "magic_wizard_magic_net",
     "name": "Magic Net",
     "description": "Creates a magical net that entangles and holds its target. The net has its own structural integrity.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1381,8 +1725,13 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["offensive", "debuff"],
-    "ppe": { "baseActivation": 7 },
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 7
+    },
     "range": {
       "summary": "60 ft (18.3 m)"
     },
@@ -1395,12 +1744,15 @@
       "summary": "Standard",
       "saveKind": "standard"
     },
-    "summonedEntity": {
+    "inflictedModifiers": {
+      "statusEffects": [
+        "entangled"
+      ]
+    },
+    "spawnedPresence": {
+      "kind": "construct",
       "name": "Magic Net",
       "derivedHealth": "20 S.D.C. per level of experience"
-    },
-    "inflictedModifiers": {
-      "statusEffects": ["entangled"]
     }
   },
   {
@@ -1408,7 +1760,9 @@
     "id": "magic_wizard_shadow_meld",
     "name": "Shadow Meld",
     "description": "The caster can merge their body with a shadow, becoming virtually undetectable.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1419,8 +1773,14 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "stealth", "shadow"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "utility",
+      "stealth",
+      "shadow"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "Self"
     },
@@ -1449,7 +1809,9 @@
     "id": "magic_wizard_superhuman_strength",
     "name": "Superhuman Strength",
     "description": "Empowers the recipient with supernatural strength for the spell's duration.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1460,8 +1822,13 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "buff"],
-    "ppe": { "baseActivation": 10 },
+    "tags": [
+      "utility",
+      "buff"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
     "range": {
       "summary": "Self or others by touch."
     },
@@ -1489,7 +1856,9 @@
     "id": "magic_wizard_time_slip",
     "name": "Time Slip",
     "description": "The mage briefly steps out of the normal flow of time, creating the illusion of moving faster than the eye can follow.",
-    "gameSystems": ["nightbane"],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1500,8 +1869,14 @@
     "spellLevel": 4,
     "magicKind": "invocation",
     "spellStrengthBase": 12,
-    "tags": ["utility", "combat", "temporal"],
-    "ppe": { "baseActivation": 20 },
+    "tags": [
+      "utility",
+      "combat",
+      "temporal"
+    ],
+    "ppe": {
+      "baseActivation": 20
+    },
     "range": {
       "summary": "Self"
     },

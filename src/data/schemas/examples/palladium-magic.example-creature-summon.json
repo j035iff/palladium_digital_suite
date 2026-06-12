@@ -1,0 +1,40 @@
+{
+  "$schema": "../palladium-magic.schema.json",
+  "id": "magic_wizard_summon_wolves",
+  "name": "Summon Wolves",
+  "description": "Calls 1D6 wolves from the surrounding area to obey the caster for the spell duration.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 130
+    }
+  ],
+  "spellLevel": 6,
+  "magicKind": "summoning",
+  "spellStrengthBase": 12,
+  "ppe": { "baseActivation": 35 },
+  "range": { "summary": "1 mile (1.6 km) radius." },
+  "duration": {
+    "summary": "1 hour per level of experience.",
+    "kind": "hour",
+    "perLevel": "1 hour"
+  },
+  "save": { "summary": "Standard", "saveKind": "standard" },
+  "spawnedPresence": {
+    "kind": "creature",
+    "catalogRaceId": "race_wolf",
+    "countFormula": "1D6",
+    "control": {
+      "saveKind": "magic",
+      "summary": "Standard save to resist control each melee round."
+    },
+    "duration": {
+      "summary": "1 hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    }
+  },
+  "durationType": "narrative"
+}

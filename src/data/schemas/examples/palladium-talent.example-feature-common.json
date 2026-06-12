@@ -1,0 +1,31 @@
+{
+  "$schema": "../palladium-talent.schema.json",
+  "id": "talent_example_shape_shift",
+  "name": "Shape Shift (example)",
+  "description": "Rare morphus talent that temporarily replaces the Nightbane's active sheet with a catalog creature form.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Dark Designs (example)",
+      "pageNumber": 1
+    }
+  ],
+  "talentTier": "rare",
+  "ppe": { "baseActivation": 15 },
+  "range": { "summary": "Self." },
+  "duration": {
+    "summary": "5 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "5 minutes"
+  },
+  "formRequirement": "morphus",
+  "formTransformation": {
+    "mode": "sheet_replacement",
+    "targetCatalogRaceId": "race_wolf",
+    "masksCharacterSheet": true,
+    "preservedAspects": ["mind", "alignment", "ppe_pool"],
+    "notes": "Nightbane retains identity and P.P.E. pool while using the wolf stat block."
+  },
+  "durationType": "narrative"
+}

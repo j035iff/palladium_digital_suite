@@ -38,12 +38,18 @@ const standardModernWeaponProgressionSchema = loadJson(
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
 const psionicSchema = loadJson(join(schemasDir, 'palladium-psionic.schema.json'))
+const featureCommonSchema = loadJson(
+  join(schemasDir, 'palladium-feature-common.schema.json'),
+)
 const magicSchema = loadJson(join(schemasDir, 'palladium-magic.schema.json'))
 const morphusCharacteristicSchema = loadJson(
   join(schemasDir, 'palladium-morphus.schema.json'),
 )
 const morphusTableSchema = loadJson(
   join(schemasDir, 'palladium-morphus-table.schema.json'),
+)
+const morphusForgeRoutingSchema = loadJson(
+  join(schemasDir, 'palladium-morphus-forge-routing.schema.json'),
 )
 const xpTableSchema = loadJson(join(schemasDir, 'palladium-xp-table.schema.json'))
 const xpTableBookSchema = loadJson(join(schemasDir, 'palladium-xp-table-book.schema.json'))
@@ -56,6 +62,7 @@ const ajv = new Ajv2020({
   validateSchema: false,
 })
 addFormats(ajv)
+ajv.addSchema(featureCommonSchema)
 ajv.addSchema(morphusCharacteristicSchema)
 ajv.addSchema(xpTableSchema)
 
@@ -69,9 +76,11 @@ for (const [label, schema] of [
   ['palladium-hth.schema.json', handToHandSchema],
   ['palladium-talent.schema.json', talentSchema],
   ['palladium-psionic.schema.json', psionicSchema],
+  ['palladium-feature-common.schema.json', featureCommonSchema],
   ['palladium-magic.schema.json', magicSchema],
   ['palladium-morphus.schema.json', morphusCharacteristicSchema],
   ['palladium-morphus-table.schema.json', morphusTableSchema],
+  ['palladium-morphus-forge-routing.schema.json', morphusForgeRoutingSchema],
   ['palladium-xp-table.schema.json', xpTableSchema],
   ['palladium-xp-table-book.schema.json', xpTableBookSchema],
 ]) {
@@ -95,6 +104,7 @@ const validatePsionicRow = ajv.compile(psionicSchema)
 const validateMagicRow = ajv.compile(magicSchema)
 const validateMorphusCharacteristic = ajv.compile(morphusCharacteristicSchema)
 const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
+const validateMorphusForgeRoutingDoc = ajv.compile(morphusForgeRoutingSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
 const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
 
@@ -713,6 +723,14 @@ const exampleValidators = [
   {
     prefix: 'palladium-morphus-characteristic',
     compile: validateMorphusCharacteristic,
+  },
+  {
+    prefix: 'palladium-morphus-custom-trait-router',
+    compile: validateMorphusCharacteristic,
+  },
+  {
+    prefix: 'palladium-morphus-forge',
+    compile: validateMorphusForgeRoutingDoc,
   },
   {
     prefix: 'palladium-weapon-proficiency',
