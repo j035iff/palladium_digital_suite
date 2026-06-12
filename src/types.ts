@@ -527,6 +527,7 @@ export type MagicKind =
   | 'enchantment'
   | 'summoning'
   | 'necromancy'
+  | 'fleshsculpting'
   | 'other'
 
 export type MagicPpeEconomy = {

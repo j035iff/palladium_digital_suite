@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json",
   "title": "Palladium feature common fragments",
-  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `materialRequirements`, `forgedItemOutput`, `spawnedPresence`, `formTransformation`).",
+  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `materialRequirements`, `forgedItemOutput`, `spawnedPresence`, `formTransformation`, `castingTargetPreconditions`, `statAdjustment`, `globalSkillModifier`, `damageReflection`, `damageProgression`, `personalityOverride`, `alarmTrigger`, `effectUpkeep`).",
   "$defs": {
     "percentileRange": {
       "type": "object",
@@ -315,6 +315,576 @@
         { "required": ["label"] }
       ]
     },
+    "statAdjustment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "description": "Structured adjustment to an attribute or combat value while an effect is active — flat delta, dice formula, fraction of current maximum, multiplier, or absolute override (e.g. Superhuman Speed locks Spd. to 44). Mirrors `permanentPoolReduction` math but for temporary inflicted/granted modifiers.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["fixed", "formula", "fraction", "multiplier", "override"],
+          "description": "`fixed` — add/subtract delta; `formula` — dice or attribute expression; `fraction` — numerator/denominator of current value; `multiplier` — scale current value; `override` — replace with absolute locked value regardless of base."
+        },
+        "value": {
+          "type": "number",
+          "description": "Flat delta when `kind` is `fixed`; multiplier when `kind` is `multiplier` (e.g. `0.5` halves the attribute); absolute locked value when `kind` is `override` (e.g. `44` for incredible speed)."
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Palladium dice or attribute formula when `kind` is `formula`."
+        },
+        "numerator": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Numerator when `kind` is `fraction`."
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Denominator when `kind` is `fraction`."
+        },
+        "rounding": {
+          "type": "string",
+          "enum": ["floor", "ceil", "round", "none"],
+          "description": "How to round fractional results when applying multipliers or fractions."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "fixed" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["value"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "formula" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["formula"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "fraction" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["numerator", "denominator"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "multiplier" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["value"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "override" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["value"] }
+        }
+      ]
+    },
+    "attributeStatAdjustment": {
+      "description": "Integer shorthand (`-3`) or structured `statAdjustment` for one attribute key.",
+      "oneOf": [
+        { "type": "integer" },
+        { "$ref": "#/$defs/statAdjustment" }
+      ]
+    },
+    "statAdjustmentMap": {
+      "type": "object",
+      "description": "Per-attribute adjustments applied while an effect is active. Scope keys (`physical_attributes`, `mental_attributes`) apply one adjustment to every attribute in that scope.",
+      "additionalProperties": { "$ref": "#/$defs/attributeStatAdjustment" },
+      "properties": {
+        "iq": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "me": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "ma": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "ps": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "pp": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "pe": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "pb": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "spd": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "hp": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "sdc": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "mdc": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "attacks_per_melee": { "$ref": "#/$defs/attributeStatAdjustment" },
+        "physical_attributes": { "$ref": "#/$defs/statAdjustment" },
+        "mental_attributes": { "$ref": "#/$defs/statAdjustment" }
+      }
+    },
+    "globalSkillModifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value"],
+      "description": "Flat percentile adjustment applied to every existing skill on the affected character while the effect is active (e.g. Sickness −40%, Luck Curse −15%). Distinct from `grantedSkills`, which add new temporary proficiencies.",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "description": "Signed percentage delta applied to all skill proficiencies (e.g. `-40` reduces skills by 40%, `15` grants +15%)."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exceptions or stacking rules (e.g. excludes combat bonuses, does not affect skills below 5%)."
+        }
+      }
+    },
+    "damageReflection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reflectionFraction", "damageTypes"],
+      "description": "Retribution or thorns mechanics — damage taken by the protected subject is mirrored back to the attacker (e.g. Ritual: An Eye for an Eye).",
+      "properties": {
+        "reflectionFraction": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Fraction of incoming qualifying damage reflected to the attacker (e.g. `1.0` for identical wounds, `0.5` for half)."
+        },
+        "damageTypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Damage categories that trigger reflection (e.g. `physical`, `energy`, `all`)."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pool or scaling restrictions (e.g. only S.D.C. and Hit Point damage, not M.D.C.)."
+        }
+      }
+    },
+    "damageProgression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "baseFormula", "tickInterval"],
+      "description": "Escalating damage over time — geometric doubling (Fatal Growth: 1D6, 2D6, 4D6…), linear additive ticks, or custom cadence. Combat trackers resolve `baseFormula` on tick 1 then apply `kind` rules each `tickInterval`.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["geometric", "linear", "additive", "custom"],
+          "description": "`geometric` — multiply the dice pool by `multiplierPerTick` each tick (e.g. ×2); `linear` / `additive` — add `addPerTick` each tick; `custom` — engine defers to `notes`."
+        },
+        "baseFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Damage dice or formula on the first tick (e.g. `1D6` for Fatal Growth round 1)."
+        },
+        "multiplierPerTick": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Required when `kind` is `geometric` — factor applied to the dice pool each tick (e.g. `2` doubles: 1D6 → 2D6 → 4D6)."
+        },
+        "addPerTick": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Required when `kind` is `linear` or `additive` — extra dice or flat damage appended each tick (e.g. `1D6`, `+2`)."
+        },
+        "tickInterval": {
+          "type": "string",
+          "enum": ["melee_round", "minute", "hour", "special"],
+          "description": "How often the damage track advances while the effect persists."
+        },
+        "startingTick": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "First tick index (default 1). Use when damage does not begin until a delay."
+        },
+        "maxTicks": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional cap on escalation ticks when the book specifies a ceiling."
+        },
+        "terminatesWhen": {
+          "type": "string",
+          "enum": ["death", "duration_end", "save_success", "dispelled", "other"],
+          "description": "`death` — track runs until the victim dies (Fatal Growth); `duration_end` — stops when parent duration expires."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Non-automatable cadence or pool rules when `kind` is `custom`."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "geometric" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["multiplierPerTick"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "linear" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["addPerTick"] }
+        },
+        {
+          "if": {
+            "properties": { "kind": { "const": "additive" } },
+            "required": ["kind"]
+          },
+          "then": { "required": ["addPerTick"] }
+        }
+      ]
+    },
+    "personalityOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Sheet-level alignment and insanity transformations inflicted on a target (e.g. Someone Makes Them — permanent alignment shift, implant or remove insanities). Distinct from temporary `statusEffects` tags.",
+      "properties": {
+        "alignment": {
+          "type": "string",
+          "enum": [
+            "Principled",
+            "Scrupulous",
+            "Unprincipled",
+            "Anarchist",
+            "Miscreant",
+            "Aberrant",
+            "Diabolic"
+          ],
+          "description": "Explicit Palladium alignment applied to the target when `alignmentMode` is `set`."
+        },
+        "alignmentMode": {
+          "type": "string",
+          "enum": ["set", "shift_category", "restore_original"],
+          "description": "`set` — replace with `alignment`; `shift_category` — move one step on the good/selfish/evil axis per `notes`; `restore_original` — revert a prior magical alignment change."
+        },
+        "insanitiesAdded": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Insanity or neurosis ids/tags implanted on the target (e.g. `obsession`, `phobia_silver`)."
+        },
+        "insanitiesRemoved": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Insanities or neuroses stripped from the target by the effect."
+        },
+        "permanent": {
+          "type": "boolean",
+          "description": "When true (default for Someone Makes Them), changes persist after the spell duration ends."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Prose qualifiers (e.g. `any evil alignment`, obsession must involve the caster)."
+        }
+      },
+      "anyOf": [
+        { "required": ["alignment"] },
+        { "required": ["alignmentMode"] },
+        { "required": ["insanitiesAdded"] },
+        { "required": ["insanitiesRemoved"] }
+      ]
+    },
+    "alarmTriggerCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "description": "One environmental predicate that can fire a dormant ward or watching enchantment.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "supernatural",
+            "undead",
+            "magic_presence",
+            "psionic_presence",
+            "creature_category",
+            "intruder",
+            "alignment",
+            "proximity",
+            "other"
+          ],
+          "description": "What the ward listens for (e.g. `supernatural` — supernatural beings enter range)."
+        },
+        "creatureCategories": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Fine-grained filters when `kind` is `creature_category` (e.g. `nightbane`, `vampire`)."
+        },
+        "proximityFeet": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ],
+          "description": "Detection radius for this condition (e.g. `1000` or `100 feet per level`)."
+        },
+        "proximityPerLevel": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Scaling prose when radius grows with caster level."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "alarmTriggerResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effect"],
+      "description": "What happens when an `alarmTrigger` condition is satisfied.",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "enum": [
+            "mental_alert",
+            "audible_alarm",
+            "visual_signal",
+            "reveal_aura",
+            "reveal_magic",
+            "other"
+          ],
+          "description": "`mental_alert` — psychic ping to `alertTarget` (Watching Enchantment)."
+        },
+        "alertTarget": {
+          "type": "string",
+          "enum": ["caster", "touch_target", "ritual_site", "area_occupants", "other"],
+          "description": "Who receives the alarm when conditions are met."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing outcome prose for the trigger."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "alarmTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conditions", "onTrigger"],
+      "description": "Dormant ward or watching enchantment — sits idle until `conditions` are met, then fires `onTrigger` (e.g. Watching Enchantment alerts the caster when supernatural beings approach within 1000 ft). Distinct from active `reveals` scanning.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short ward label shown on the caster sheet while the enchantment is active."
+        },
+        "satisfy": {
+          "type": "string",
+          "enum": ["any_condition", "all_conditions"],
+          "description": "`any_condition` (default) — one predicate fires the alarm; `all_conditions` — every predicate must be true."
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/alarmTriggerCondition" }
+        },
+        "onTrigger": { "$ref": "#/$defs/alarmTriggerResponse" },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "targetConditionState": {
+      "type": "string",
+      "enum": [
+        "willing",
+        "sedated",
+        "restrained",
+        "unconscious",
+        "paralyzed",
+        "asleep",
+        "helpless",
+        "immobilized",
+        "other"
+      ],
+      "description": "Observable target state checked before surgical or consent-sensitive magic is applied."
+    },
+    "targetConditionGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["states"],
+      "description": "One bundle of acceptable target states (e.g. sedated OR restrained).",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UI label for this bundle (e.g. Placid, Willing consent)."
+        },
+        "match": {
+          "type": "string",
+          "enum": ["all", "any"],
+          "description": "`any` — one listed state is enough; `all` — every listed state must be true."
+        },
+        "states": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/targetConditionState" },
+          "uniqueItems": true
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "castingTargetPreconditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["groups"],
+      "description": "Structured casting gates on target state — Fleshsculptor surgery requires the subject be placid (sedated or restrained) or willing. Surfaces in creation/combat UI instead of burying consent rules in `limitations` prose.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing precondition reminder (e.g. Target must be placid or willing)."
+        },
+        "satisfy": {
+          "type": "string",
+          "enum": ["any_group", "all_groups"],
+          "description": "`any_group` (default) — at least one group must pass; `all_groups` — every group must pass."
+        },
+        "groups": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/targetConditionGroup" }
+        },
+        "blocksIfUnmet": {
+          "type": "boolean",
+          "description": "When true (default), the client blocks cast until preconditions are confirmed; when false, show a visible warning only (Total GM Agency override)."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "temporalInterval": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Named time span for effect duration clocks and upkeep cycles.",
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "melee_round",
+            "minute",
+            "hour",
+            "day",
+            "week",
+            "month",
+            "year",
+            "special"
+          ]
+        },
+        "durationValue": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ],
+          "description": "Fixed amount or dice formula (e.g. `1D6`) for the interval length."
+        },
+        "perLevel": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Scaling prose when the interval grows with caster level."
+        }
+      }
+    },
+    "resourceCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource"],
+      "description": "Structured spend of P.P.E., I.S.P., or another pool.",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": ["ppe", "isp", "hp", "none", "other"]
+        },
+        "amount": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice or scaling formula when a fixed `amount` is insufficient."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [{ "required": ["amount"] }, { "required": ["formula"] }]
+    },
+    "upkeepFailureState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "description": "Mechanical or narrative consequence when upkeep is not paid before the effect expires.",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short outcome label (e.g. Fatal gangrene, Limb rejection)."
+        },
+        "statusEffects": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "damage": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Direct damage formula applied on failure (if any)."
+        },
+        "catastrophic": {
+          "type": "boolean",
+          "description": "When true, failure is typically lethal or irreversible without intervention."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "effectUpkeep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interval", "cost"],
+      "description": "Periodic maintenance that sustains or renews a timed biological or enchanted effect (e.g. pump P.P.E. into a Fleshsculptor graft before it expires).",
+      "properties": {
+        "interval": { "$ref": "#/$defs/temporalInterval" },
+        "cost": { "$ref": "#/$defs/resourceCost" },
+        "timing": {
+          "type": "string",
+          "enum": ["before_expiry", "on_expiry", "each_interval"],
+          "description": "`before_expiry` — pay to reset the parent duration clock; `on_expiry` — roll consequence if unpaid at expiry; `each_interval` — recurring tick."
+        },
+        "resetsDuration": {
+          "type": "boolean",
+          "description": "When true, paying upkeep resets the parent `duration` to its initial span."
+        },
+        "failureState": { "$ref": "#/$defs/upkeepFailureState" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
     "permanentPoolReduction": {
       "type": "object",
       "additionalProperties": false,
@@ -373,7 +943,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["resource", "reduction"],
-      "description": "One permanent sacrifice applied when the feature succeeds (distinct from activation economy).",
+      "description": "One irreversible maximum-pool or attribute sacrifice (distinct from activation `ppe` / `isp` spend). When `trigger` is omitted, engines default to `on_success` for backward compatibility.",
       "properties": {
         "resource": {
           "type": "string",
@@ -395,6 +965,11 @@
           "description": "Maximum pool or attribute permanently reduced."
         },
         "reduction": { "$ref": "#/$defs/permanentPoolReduction" },
+        "trigger": {
+          "type": "string",
+          "enum": ["on_cast", "on_success"],
+          "description": "`on_cast` — sacrifice is applied when the feature is invoked regardless of outcome (e.g. Close Rift drains 2 P.P.E. even on failure); `on_success` — sacrifice applies only after successful resolution (default when omitted)."
+        },
         "notes": { "type": "string", "minLength": 1 }
       }
     },
@@ -480,7 +1055,7 @@
     "spawnedPresenceCreatureControl": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Control or obedience save for a summoned catalog creature.",
+      "description": "Control or obedience save for a summoned creature (catalog or categorical).",
       "properties": {
         "saveKind": {
           "type": "string",
@@ -512,14 +1087,32 @@
     "spawnedPresenceCreature": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind", "catalogRaceId"],
-      "description": "True creature summoning from the race/NPC catalog (full stat block loaded from `catalogRaceId`).",
+      "required": ["kind"],
+      "description": "Creature summoning — either a fixed catalog race (full stat block from `catalogRaceId`) or a categorical/variable summon resolved when the caster chooses a valid bestiary entry at cast time.",
       "properties": {
         "kind": { "const": "creature" },
         "catalogRaceId": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_-]*$",
-          "minLength": 1
+          "minLength": 1,
+          "description": "Canonical race id from `content/races/npc.json` or `gm_approval.json` — loads the full stat block (e.g. `race_wolf`)."
+        },
+        "summonTemplateId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Lightweight summon template when no single catalog race row applies yet (e.g. `template_minor_astral_being`)."
+        },
+        "entityCategory": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1,
+          "description": "Machine-filterable summon pool slug — engine queries the bestiary for valid `catalogRaceId` rows tagged with this category at cast time (e.g. `astral_being_minor`, `dream_entity_minor`)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing prose when the summon pool is open-ended and no catalog row or template exists yet (e.g. `Any minor astral being`)."
         },
         "countFormula": {
           "type": "string",
@@ -531,9 +1124,45 @@
         "notes": {
           "type": "string",
           "minLength": 1,
-          "description": "Summoned creature behavior not implied by the catalog race (e.g. permanent loyalty, command wording)."
+          "description": "Summoned creature behavior not implied by the catalog race or category (e.g. permanent loyalty, command wording)."
         }
-      }
+      },
+      "oneOf": [
+        {
+          "required": ["catalogRaceId"],
+          "not": {
+            "anyOf": [
+              { "required": ["summonTemplateId"] },
+              { "required": ["entityCategory"] },
+              { "required": ["label"] }
+            ]
+          }
+        },
+        {
+          "required": ["summonTemplateId"],
+          "not": {
+            "anyOf": [
+              { "required": ["catalogRaceId"] },
+              { "required": ["entityCategory"] },
+              { "required": ["label"] }
+            ]
+          }
+        },
+        {
+          "required": ["entityCategory"],
+          "not": { "required": ["catalogRaceId", "summonTemplateId"] }
+        },
+        {
+          "required": ["label"],
+          "not": {
+            "anyOf": [
+              { "required": ["catalogRaceId"] },
+              { "required": ["summonTemplateId"] },
+              { "required": ["entityCategory"] }
+            ]
+          }
+        }
+      ]
     },
     "spawnedPresence": {
       "description": "Physical construct or catalog creature spawned by a spell or power.",

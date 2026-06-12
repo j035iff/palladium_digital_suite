@@ -28,7 +28,7 @@ console.log(`wizard.json: ${wizard.length} spells`)
 
 const examplesDir = 'src/data/schemas/examples'
 for (const file of fs.readdirSync(examplesDir)) {
-  if (!file.startsWith('palladium-magic.example') || !file.endsWith('.json')) continue
+  if (!file.startsWith('palladium-magic.example-') || !file.endsWith('.json')) continue
   const fp = path.join(examplesDir, file)
   const data = JSON.parse(fs.readFileSync(fp, 'utf8'))
   if (data.school) continue

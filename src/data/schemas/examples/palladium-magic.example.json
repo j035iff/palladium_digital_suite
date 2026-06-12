@@ -1,39 +1,455 @@
 {
   "$schema": "../palladium-magic.schema.json",
-  "id": "magic_wizard_example_invocation_pattern",
-  "name": "Example: Magic Invocation (pattern)",
-  "description": "Illustrates spell level, P.P.E. economy, range/duration/save blocks, and optional genre placement.",
-  "gameSystems": [
-    "nightbane"
-  ],
+  "id": "magic_wizard_schema_exemplar",
+  "name": "Schema Exemplar: Palladium Magic",
+  "description": "Single reference row exercising the palladium-magic.schema.json surface — invocation economy, offensive debuffs, granted buffs, healing, variable targets, percentile resolution, ritual crafting, permanent costs, forged outputs, summons, legacy constructs, modal effect profiles, metamorphosis, and Fleshsculptor surgical preconditions, fractional statAdjustments, and duration upkeep.",
+  "descriptionMorphus": "Optional Morphus-only prose when dual-form casting differs.",
+  "gameSystems": ["nightbane"],
   "sources": [
     {
       "gameSystem": "nightbane",
-      "reference": "Nightbane RPG (example)",
+      "reference": "Nightbane RPG / Through the Glass Darkly (schema exemplar)",
       "pageNumber": 128
     }
   ],
   "school": "wizard",
-  "spellLevel": 1,
-  "magicKind": "invocation",
-  "spellStrengthBase": 12,
+  "spellLevel": 11,
+  "magicKind": "ritual",
+  "isRitual": true,
+  "spellStrengthBase": 16,
   "tags": [
-    "utility"
+    "utility",
+    "offensive",
+    "healing",
+    "summoning",
+    "fleshsculpting",
+    "schema-exemplar"
+  ],
+  "genrePlacements": [
+    {
+      "genreId": "rifts",
+      "spellLevel": 12,
+      "ppe": { "baseActivation": 15 },
+      "notes": "Optional per-genre override."
+    }
   ],
   "ppe": {
-    "baseActivation": 2
+    "baseActivation": 200,
+    "perLevel": "2D6",
+    "notes": "Base ritual cost before material investment.",
+    "dynamicCosts": [
+      {
+        "trigger": "Additional target beyond the first",
+        "costFormula": "10 P.P.E. each"
+      }
+    ],
+    "enhancement": {
+      "summary": "Optional power boost",
+      "costPerStep": 5,
+      "stepDefinition": "+1 spell strength per 5 P.P.E."
+    }
   },
+  "limitations": {
+    "touchRequired": true,
+    "lineOfSightRequired": true,
+    "concentrationRequired": false,
+    "cancellableAtWill": true,
+    "cannotUseWhile": ["combat"],
+    "otherLimitations": "Prose catch-all when no structured flag exists."
+  },
+  "targetPreconditions": {
+    "summary": "Fleshsculptor pattern — target must be placid (sedated or restrained) or willing.",
+    "satisfy": "any_group",
+    "groups": [
+      {
+        "label": "Placid",
+        "match": "any",
+        "states": ["sedated", "restrained", "unconscious"]
+      },
+      {
+        "label": "Willing",
+        "match": "all",
+        "states": ["willing"]
+      }
+    ],
+    "blocksIfUnmet": true
+  },
+  "ranges": [
+    {
+      "summary": "Touch or 60 ft (18.3 m).",
+      "kind": "distance",
+      "distanceValue": 60,
+      "distanceUnit": "feet"
+    }
+  ],
   "range": {
-    "summary": "Self"
+    "summary": "Touch; secondary modes may extend to 60 ft (18.3 m)."
   },
   "duration": {
-    "summary": "2 minutes per level of experience.",
-    "kind": "minute",
-    "perLevel": "2 minutes"
+    "summary": "1D6 weeks for biological grafts; other modes vary.",
+    "kind": "week",
+    "durationValue": "1D6",
+    "perLevel": "1 week",
+    "upkeep": {
+      "interval": {
+        "summary": "Before each weekly expiry",
+        "kind": "week",
+        "durationValue": 1
+      },
+      "cost": {
+        "resource": "ppe",
+        "amount": 15,
+        "notes": "Replace Limb — pump P.P.E. into the graft to reset the clock."
+      },
+      "timing": "before_expiry",
+      "resetsDuration": true,
+      "failureState": {
+        "summary": "Fatal gangrene — limb rejects and necrosis spreads.",
+        "statusEffects": ["gangrene", "limb_rejection"],
+        "catastrophic": true,
+        "notes": "Typically fatal without immediate intervention."
+      }
+    }
+  },
+  "areaOfEffect": {
+    "summary": "10 ft (3.0 m) radius when an area mode is selected."
+  },
+  "damage": {
+    "progression": {
+      "kind": "geometric",
+      "baseFormula": "1D6",
+      "multiplierPerTick": 2,
+      "tickInterval": "melee_round",
+      "terminatesWhen": "death",
+      "notes": "Fatal Growth — doubles each melee round (1D6, 2D6, 4D6…) until the victim dies."
+    },
+    "summary": "Escalating tick damage when an offensive profile is chosen."
+  },
+  "alarmTrigger": {
+    "summary": "Watching Enchantment — dormant ward on the protected subject or site.",
+    "satisfy": "any_condition",
+    "conditions": [
+      {
+        "kind": "supernatural",
+        "proximityFeet": 1000,
+        "notes": "Supernatural creatures approaching within 1000 ft (305 m)."
+      }
+    ],
+    "onTrigger": {
+      "effect": "mental_alert",
+      "alertTarget": "caster",
+      "summary": "Caster receives an immediate psychic alert with approximate direction."
+    }
+  },
+  "healing": {
+    "hpFormula": "2D6",
+    "sdcFormula": "3D6",
+    "cures": ["poison", "toxin"],
+    "notes": "Negate Poisons/Toxins pattern."
   },
   "save": {
-    "summary": "None",
-    "saveKind": "none"
+    "summary": "Standard; Horror Factor on intimidation profiles.",
+    "saveKind": "standard"
   },
-  "durationType": "narrative"
+  "targetCountFormula": "1D6 per level of experience",
+  "horrorFactor": 8,
+  "reveals": ["magic", "aura"],
+  "combatBonuses": {
+    "saveMagic": 1
+  },
+  "grantedModifiers": {
+    "target": "touch",
+    "immunities": ["see_the_invisible"],
+    "resistances": ["fire", "heat"],
+    "forceField": {
+      "sdcFormula": "10 per level of experience"
+    },
+    "movement": {
+      "flightSpeed": "60 mph (97 km/h)",
+      "hover": true
+    },
+    "combatModifiers": {
+      "initiative": 5,
+      "strike": 1,
+      "parry": 1,
+      "dodge": 1,
+      "saveMagic": 2,
+      "damageBonus": "1D6",
+      "damageMultiplier": 2,
+      "damageCondition": "against supernatural beings"
+    },
+    "statModifiers": {
+      "ps": 10,
+      "pb": { "kind": "multiplier", "value": 1.5, "rounding": "floor" },
+      "spd": { "kind": "override", "value": 44, "notes": "Superhuman Speed — incredible speed attribute." }
+    },
+    "grantedSkills": [
+      {
+        "name": "Climbing",
+        "basePercentage": "98%",
+        "notes": "60% on smooth surfaces; rappelling included."
+      }
+    ],
+    "damageReflection": {
+      "reflectionFraction": 1,
+      "damageTypes": ["physical"],
+      "notes": "Ritual: An Eye for an Eye — identical S.D.C./H.P. wounds appear on the attacker."
+    }
+  },
+  "inflictedModifiers": {
+    "statusEffects": ["blinded", "disfigured"],
+    "combatModifiers": {
+      "strike": -5,
+      "parry": -10,
+      "dodge": -10,
+      "speedMultiplier": 0.5,
+      "attacksPerMelee": -1
+    },
+    "statAdjustments": {
+      "pb": { "kind": "multiplier", "value": 0.5, "rounding": "floor" },
+      "sdc": { "kind": "multiplier", "value": 0.5, "rounding": "floor" },
+      "physical_attributes": {
+        "kind": "multiplier",
+        "value": 0.5,
+        "rounding": "floor",
+        "notes": "Age — halves physical attributes and attacks per melee."
+      },
+      "attacks_per_melee": { "kind": "multiplier", "value": 0.5, "rounding": "floor" }
+    },
+    "globalSkillModifier": {
+      "value": -40,
+      "notes": "Sickness pattern — all skills reduced by 40%."
+    },
+    "personalityOverride": {
+      "alignment": "Miscreant",
+      "alignmentMode": "set",
+      "insanitiesAdded": ["obsession_caster"],
+      "permanent": true,
+      "notes": "Someone Makes Them — permanent alignment shift and implanted obsession."
+    }
+  },
+  "resolutionTable": {
+    "rollKind": "d100",
+    "label": "Teleport arrival accuracy",
+    "resolutionTrigger": {
+      "when": "on_cast",
+      "rollKind": "d100"
+    },
+    "entries": [
+      {
+        "percentile": { "min": 1, "max": 20 },
+        "label": "On target",
+        "effect": "Arrive at the intended destination."
+      },
+      {
+        "percentile": { "min": 21, "max": 80 },
+        "label": "Off course",
+        "effect": "Arrive 2D6×100 feet (30.5 m) from the intended destination."
+      },
+      {
+        "percentile": { "min": 81, "max": 100 },
+        "label": "Disastrous",
+        "effect": "Arrive 4D6 miles away in a random direction.",
+        "inflictedModifiers": {
+          "statusEffects": ["disoriented"]
+        }
+      }
+    ]
+  },
+  "materialComponents": {
+    "label": "Amulet materials",
+    "entries": [
+      {
+        "catalogItemId": "item_gold",
+        "quantity": { "kind": "fixed", "value": 2 },
+        "unit": "oz",
+        "consumption": "destroyed",
+        "timing": "on_ritual_completion"
+      },
+      {
+        "label": "Rare herbs",
+        "quantity": { "kind": "formula", "formula": "1D4 doses" },
+        "unit": "dose",
+        "consumption": "destroyed"
+      }
+    ]
+  },
+  "permanentCosts": [
+    {
+      "resource": "ppe_max",
+      "reduction": { "kind": "fixed", "value": 5 },
+      "trigger": "on_success",
+      "notes": "Familiar Link — permanent maximum P.P.E. loss on successful binding."
+    },
+    {
+      "resource": "ppe_max",
+      "reduction": { "kind": "fixed", "value": 2 },
+      "trigger": "on_cast",
+      "notes": "Close Rift — 2 P.P.E. drained from maximum pool whether the rift closes or not."
+    },
+    {
+      "resource": "hp_max",
+      "reduction": { "kind": "fraction", "numerator": 1, "denominator": 2 },
+      "notes": "Permanent — half maximum Hit Points (defaults to on_success when trigger omitted)."
+    }
+  ],
+  "forgedOutputs": [
+    {
+      "catalogItemId": "item_amulet_of_protection",
+      "count": 1,
+      "destination": "caster_inventory",
+      "initialPresence": "carried",
+      "bindToCaster": false,
+      "encodedSpellId": "magic_wizard_schema_exemplar"
+    }
+  ],
+  "ritualProfile": {
+    "craftingDuration": {
+      "summary": "Months of labor.",
+      "kind": "special"
+    },
+    "workspace": {
+      "summary": "Fully equipped wizard's laboratory or sanctum."
+    },
+    "assistantsRequired": 0,
+    "failureHandling": "lose_materials_and_ppe",
+    "materialComponents": {
+      "label": "Golem construction materials",
+      "entries": [
+        {
+          "label": "Clay",
+          "quantity": { "kind": "fixed", "value": 600 },
+          "unit": "lb",
+          "consumption": "destroyed",
+          "timing": "over_crafting_period"
+        },
+        {
+          "catalogItemId": "item_silver",
+          "quantity": { "kind": "formula", "formula": "50 oz" },
+          "unit": "oz",
+          "consumption": "destroyed",
+          "timing": "on_ritual_completion"
+        },
+        {
+          "label": "Fresh animal heart",
+          "quantity": { "kind": "fixed", "value": 1 },
+          "unit": "each",
+          "condition": "fresh",
+          "consumption": "destroyed",
+          "timing": "on_ritual_completion"
+        }
+      ]
+    },
+    "notes": "Create Golem / high-level crafting wrapper."
+  },
+  "spawnedPresence": {
+    "kind": "creature",
+    "catalogRaceId": "race_wolf",
+    "countFormula": "1D6",
+    "control": {
+      "saveKind": "magic",
+      "summary": "Standard save to resist control each melee round."
+    },
+    "duration": {
+      "summary": "1 hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "notes": "Summon Wolves — obey simple commands but flee if badly wounded."
+  },
+  "summonedEntity": {
+    "name": "Magic Net",
+    "derivedHealth": "20 S.D.C. per level of experience"
+  },
+  "effectProfiles": [
+    {
+      "name": "Charm",
+      "description": "Victims regard the caster as a trusted friend.",
+      "save": { "summary": "Standard", "saveKind": "standard" }
+    },
+    {
+      "name": "Fear",
+      "description": "Victims are intimidated by the caster's presence.",
+      "save": { "summary": "Save vs Horror Factor", "saveKind": "horror_factor" },
+      "horrorFactor": 14
+    },
+    {
+      "name": "Summon Minor Astral Being",
+      "description": "Caster chooses any valid minor astral being from the bestiary at cast time.",
+      "spawnedPresence": {
+        "kind": "creature",
+        "entityCategory": "astral_being_minor",
+        "label": "Any minor astral being",
+        "countFormula": "1",
+        "control": {
+          "saveKind": "magic",
+          "summary": "Standard save to resist control each melee round."
+        },
+        "duration": {
+          "summary": "1 hour per level of experience.",
+          "kind": "hour",
+          "perLevel": "1 hour"
+        }
+      }
+    },
+    {
+      "name": "Wolf Metamorphosis",
+      "description": "Transform into a wolf; use wolf natural attacks and movement.",
+      "formTransformation": {
+        "mode": "sheet_replacement",
+        "targetCatalogRaceId": "race_wolf",
+        "masksCharacterSheet": true,
+        "preservedAspects": ["mind", "alignment", "ppe_pool"],
+        "notes": "Metamorphosis: Animal pattern."
+      }
+    },
+    {
+      "name": "Amulet — See the Invisible",
+      "description": "Forges a medallion that lets the wearer see the invisible.",
+      "ppeOverride": { "baseActivation": 500 }
+    },
+    {
+      "name": "Amulet — Charm",
+      "description": "Forges a general ward against magic (+1 to save vs magic/psychic).",
+      "ppeOverride": { "baseActivation": 290 }
+    },
+    {
+      "name": "Surgical Graft",
+      "description": "Fleshsculptor modal mutation requiring placid or willing subject.",
+      "targetPreconditions": {
+        "summary": "Target must be placid or willing.",
+        "groups": [
+          { "label": "Placid", "match": "any", "states": ["sedated", "restrained"] },
+          { "label": "Willing", "match": "all", "states": ["willing"] }
+        ]
+      },
+      "inflictedModifiers": {
+        "statAdjustments": {
+          "pb": { "kind": "multiplier", "value": 0.5, "rounding": "floor" }
+        }
+      }
+    }
+  ],
+  "prerequisites": [
+    {
+      "type": "level_minimum",
+      "level": 5,
+      "label": "5th level wizard or higher."
+    }
+  ],
+  "incompatibleSpellIds": ["magic_wizard_example_legacy_conflict"],
+  "notes": "Authoring notes and book citations not modeled elsewhere.",
+  "formRequirement": "either",
+  "activation": {
+    "cost": { "type": "ppe", "value": 200 },
+    "range": "Touch / 60 ft",
+    "duration": "Varies by profile",
+    "save": "Standard"
+  },
+  "durationType": "narrative",
+  "pumpable": {
+    "capPerLevel": 4,
+    "energyPerDice": 5,
+    "diceSides": 6
+  }
 }
