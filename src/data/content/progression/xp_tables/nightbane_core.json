@@ -23,7 +23,8 @@
         "occ_nightbane_basic",
         "occ_nightbane_resistance_spook_squad",
         "occ_nightbane_nocturne_seeker_lightbringer",
-        "occ_nightbane_warlord"
+        "occ_nightbane_warlord",
+        "occ_guardian_rcc"
       ],
       "notes": "Nightbane RPG p.233 — Nightbane R.C.C. & Guardian R.C.C. O.C.C.s."
     },
@@ -89,8 +90,10 @@
         0, 2701, 5401, 10801, 21601, 31601, 42801, 62001, 90001, 120001, 170001, 220001, 290001,
         400001, 500001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Wampyr R.C.C. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_wampyr_rcc"
+      ],
+      "notes": "Nightbane RPG p.233 — Wampyr R.C.C. (shadow O.C.C. occ_wampyr_rcc)."
     },
     {
       "id": "nightbane_core_priest_of_night",

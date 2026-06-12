@@ -7,6 +7,7 @@ import {
 } from '../../data/library/registry'
 import { occCharacterCategory } from '../../lib/occCatalogEngine'
 import type { PalladiumOcc, Race } from '../../types'
+import { creationUsesOccSkillProgram, raceForcedOccId } from '../../lib/shadowOcc'
 import {
   assessOccConfiguratorTier,
   assessRaceConfiguratorTier,
@@ -46,6 +47,7 @@ export function ConfiguratorPanel() {
     activeOcc,
     activeRace,
     raceCanPickOcc,
+    shadowOccMountNotice,
     setSelectedOcc,
     setOccSpecializationId,
     setRaceId,
@@ -625,15 +627,34 @@ export function ConfiguratorPanel() {
           />
         ) : (
           <div className={`rounded-lg border-2 p-4 ${panel}`}>
-            <p className="text-sm opacity-90">
-              {activeRace?.name ?? 'This race'} is an R.C.C. — no separate O.C.C.
-            </p>
+            {shadowOccMountNotice ? (
+              <>
+                <p
+                  className={`text-xs font-bold uppercase tracking-wide ${
+                    morphus ? 'text-emerald-300' : 'text-emerald-800'
+                  }`}
+                >
+                  Shadow O.C.C. auto-mounted
+                </p>
+                <p className="mt-1 text-sm opacity-90">{shadowOccMountNotice}</p>
+                <p className="mt-2 text-xs opacity-75">
+                  Skill program loaded from{' '}
+                  <span className="font-mono">{raceForcedOccId(activeRace)}</span> — manual
+                  O.C.C. selection is skipped.
+                </p>
+              </>
+            ) : (
+              <p className="text-sm opacity-90">
+                {activeRace?.name ?? 'This race'} is an R.C.C. with no separate O.C.C. or
+                skill program.
+              </p>
+            )}
           </div>
         )}
 
       </div>
 
-      {raceCanPickOcc && specializationBranches.length > 0 ? (
+      {creationUsesOccSkillProgram(activeRace) && specializationBranches.length > 0 ? (
         <div className={`mt-4 grid gap-2 sm:grid-cols-2 ${panel} rounded-lg border-2 p-4`}>
           <p
             className="sm:col-span-2 text-xs font-semibold uppercase tracking-wide opacity-80"

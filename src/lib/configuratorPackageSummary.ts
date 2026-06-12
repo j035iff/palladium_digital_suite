@@ -608,9 +608,18 @@ function buildRaceSections(race: Race | undefined): ConfiguratorPackageSection[]
 
 
   if (!race.canPickOcc) {
-    pushSection(sections, 'race-rcc', 'R.C.C.', [
-      'Self-contained — no separate O.C.C. selection.',
-    ])
+    const forced = race.forcedOccId?.trim()
+    pushSection(
+      sections,
+      'race-rcc',
+      'R.C.C.',
+      forced
+        ? [
+            `Shadow O.C.C. (${forced}) auto-mounts this race's skill program.`,
+            'Manual O.C.C. selection is skipped.',
+          ]
+        : ['Self-contained — no separate O.C.C. selection or skill program.'],
+    )
   }
 
 

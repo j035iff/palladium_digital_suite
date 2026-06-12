@@ -282,6 +282,10 @@ export type Race = {
   /** One or more book citations; use one entry per book when page numbers differ. */
   sources: readonly PalladiumSourceRef[]
   canPickOcc: boolean
+  /**
+   * Shadow O.C.C. — when {@link canPickOcc} is false, auto-mount this O.C.C. id for skills.
+   */
+  forcedOccId?: string
   lineage?: 'nightbane' | 'megaversal'
   /** When set, master forge Tab 6 hosts this sub-forge manifest (e.g. `morphus_forge_manifest`). */
   creationSubForgeId?: string

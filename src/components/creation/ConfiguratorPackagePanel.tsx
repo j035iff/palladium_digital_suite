@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { PalladiumOcc, Race } from '../../types'
 import { buildConfiguratorPackageSummary } from '../../lib/configuratorPackageSummary'
+import { creationUsesOccSkillProgram } from '../../lib/shadowOcc'
 
 function sectionTitleClass(sectionId: string, morphus: boolean): string {
   if (sectionId === 'race-heading' || sectionId.startsWith('race-')) {
@@ -30,9 +31,9 @@ export function ConfiguratorPackagePanel({
   const summary = useMemo(
     () =>
       buildConfiguratorPackageSummary(race, occ, specializationId, {
-        showOcc: raceCanPickOcc,
+        showOcc: creationUsesOccSkillProgram(race),
       }),
-    [race, occ, specializationId, raceCanPickOcc],
+    [race, occ, specializationId],
   )
 
   const subStyle = morphus ? 'text-violet-200/90' : 'text-slate-700'

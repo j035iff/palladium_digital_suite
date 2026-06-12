@@ -6,7 +6,7 @@ import {
 } from './creationAbilityBudget'
 import type { CharacterRootState } from '../types'
 import { occRelatedSkillSlotBudget } from './occCreationDerivation'
-import { raceCanPickOcc } from './raceEngine'
+import { creationUsesOccSkillProgram, resolveCreationOccLibraryRow } from './shadowOcc'
 import {
   assessAttributesBlockers,
   assessConfiguratorBlockers,
@@ -65,8 +65,9 @@ export function assessCreationReviewBlockers(
   const race = character.raceId?.trim()
     ? getRaceById(character.raceId)
     : undefined
-  const picksOcc = raceCanPickOcc(race)
-  const occLib = picksOcc ? getLibraryOccById(character.occ.id) : undefined
+  const occLib = creationUsesOccSkillProgram(race)
+    ? resolveCreationOccLibraryRow(race, character.occ.id)
+    : undefined
 
   blockers.push(...assessConfiguratorBlockers(character, race, occLib))
   blockers.push(...assessAttributesBlockers(character, occLib, race))
@@ -81,7 +82,7 @@ export function assessCreationReviewBlockers(
     blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'morphus'))
   }
 
-  if (picksOcc && occLib) {
+  if (occLib) {
     blockers.push(
       ...assessOccCoreVoucherBlockers(
         occLib,

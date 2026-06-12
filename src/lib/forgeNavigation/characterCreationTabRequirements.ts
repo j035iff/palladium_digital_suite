@@ -50,6 +50,7 @@ import {
   sumRelatedPoolSlotUsage,
 } from '../creationSkillPicks'
 import { raceCanPickOcc } from '../raceEngine'
+import { creationUsesOccSkillProgram, raceForcedOccId } from '../shadowOcc'
 import {
   listOccVariableAttributeBonusTasks,
   occVariableBonusTasksComplete,
@@ -79,20 +80,30 @@ function tab1Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     character.occ?.id && character.occ?.xpTable?.floors?.length,
   )
   const picksOcc = race ? raceCanPickOcc(race) : false
+  const shadowForcedOcc = race ? raceForcedOccId(race) : undefined
+  const occProgramRequired = race ? creationUsesOccSkillProgram(race) : false
 
   const pairConflict =
     raceSelected && occSelected && race && occ && picksOcc
       ? assessConfiguratorPairConflict(race, occ, null)
       : null
 
-  const pairSatisfied = picksOcc
-    ? raceSelected && occSelected && pairConflict == null
+  const pairSatisfied = occProgramRequired
+    ? raceSelected && occSelected && (picksOcc ? pairConflict == null : true)
     : raceSelected
+
+  const pairLabel = pairConflict
+    ? pairConflict
+    : shadowForcedOcc
+      ? 'R.C.C. skill package auto-mounted'
+      : picksOcc
+        ? 'Select a valid race and O.C.C. combination'
+        : 'Select a race'
 
   const requirements: ForgeTabRequirement[] = [
     {
       id: 'race-occ-pair',
-      label: pairConflict ?? 'Select a valid race and O.C.C. combination',
+      label: pairLabel,
       satisfied: pairSatisfied,
     },
   ]
@@ -185,7 +196,7 @@ function tab3Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
 
 function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
   const { character, race, occ } = ctx
-  if (!raceCanPickOcc(race) || !occ) return []
+  if (!creationUsesOccSkillProgram(race) || !occ) return []
 
   const effectiveOcc = resolveEffectivePalladiumOcc(occ, character.occSpecializationId)
   const voucherTasks = listOccCoreVoucherTasks(occ, character.occSpecializationId)

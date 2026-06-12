@@ -44,7 +44,6 @@ import {
   skillSlotMultiplierForTier,
 } from '../lib/psychicGate'
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
-import { rollFacadeSdcMaximum } from '../lib/spawnFinalVitality'
 import { computeMaxApm } from '../lib/meleeCombat'
 import {
   resolveHandToHandCombatProfile,
@@ -218,30 +217,15 @@ import {
 import {
   mergeOccSkillIdsWithVouchers,
 } from '../lib/occCoreSkillVouchers'
+import { syncRaceOccFacadeSdc } from '../lib/creationRaceOccSync'
+import {
+  applyOccSelectionToCharacterState,
+  clearOccSelectionState,
+  raceForcedOccId,
+  shadowOccMountMessage,
+} from '../lib/shadowOcc'
 
 export type AppViewport = 'launcher' | 'sheet'
-
-/** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
-function syncRaceOccFacadeSdc(prev: CharacterRootState): CharacterRootState {
-  if (prev.creationVitalityCommitted) return prev
-  const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
-  const lib = getLibraryOccById(prev.occ.id)
-  if (!race || !lib || race.vitals?.sdc == null) return prev
-  const occ = resolveEffectivePalladiumOcc(lib, prev.occSpecializationId)
-  const max = rollFacadeSdcMaximum(prev.facade.attributes, { race, occ })
-  const cur = Math.min(prev.facade.structuralDamageCapacity.current, max)
-  return {
-    ...prev,
-    facade: {
-      ...prev.facade,
-      structuralDamageCapacity: {
-        ...prev.facade.structuralDamageCapacity,
-        maximum: max,
-        current: cur,
-      },
-    },
-  }
-}
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
 type ActiveStats = {
@@ -379,6 +363,8 @@ type CharacterContextValue = {
   handToHandCombatProfile: HandToHandCombatProfile
   /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */
   raceCanPickOcc: boolean
+  /** Shadow O.C.C. auto-mount notice for R.C.C.s with forcedOccId. */
+  shadowOccMountNotice: string | null
   /** Display label for the race strength scale (sheet / Attribute Forge). */
   raceStrengthLabel: string
   /** Library race id; drives conditional base S.D.C. with O.C.C. tags. */
@@ -941,6 +927,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const raceCanPickOcc = useMemo(
     () => raceAllowsOccPick(activeRace),
     [activeRace],
+  )
+
+  const shadowOccMountNotice = useMemo(
+    () => shadowOccMountMessage(activeRace, activeOcc),
+    [activeRace, activeOcc],
   )
 
   const raceStrengthLabel = useMemo(
@@ -1757,62 +1748,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     (occId: string) => {
       if (!occId.trim()) {
         setPsychicTierState('none')
-        setRawCharacter((prev) => {
-          const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
-          return syncRaceOccFacadeSdc({
-            ...prev,
-            ...creationInvalidationPatch(prev, 'occ'),
-            occ: CREATION_PLACEHOLDER_OCC,
-            occSpecializationId: undefined,
-            creationPsychicTier: 'none',
-            creationPsychicTierChosen: false,
-            [form]: getFormState(prev, form),
-          })
-        })
+        setRawCharacter((prev) => clearOccSelectionState(prev, activeForm))
         return
       }
-      const def = getOccById(occId)
       const lib = getLibraryOccById(occId)
-      if (!def || !lib) return
+      if (!lib) return
       const race = character.raceId?.trim()
         ? getRaceById(character.raceId)
         : undefined
       if (!raceAllowsOccPick(race)) return
       if (!isOccAllowedForRace(race, lib)) return
-      const isPsychicOcc = def.category === 'psychic'
-      const tier: PsychicTier = isPsychicOcc ? 'master' : 'none'
+      const tier: PsychicTier = lib && getOccById(occId)?.category === 'psychic' ? 'master' : 'none'
       setPsychicTierState(tier)
-      setRawCharacter((prev) => {
-        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
-        const gateBypassed = resolvePsychicGateBypassed(
-          prev.raceId,
-          lib,
-          prev.creationGenreId,
-        )
-        const nextBranch = gateBypassed
-          ? getFormState(prev, form)
-          : applyPsychicTierToFormState(getFormState(prev, form), tier)
-        const invalidated = {
-          ...prev,
-          ...creationInvalidationPatch(prev, 'occ'),
-          [form]: nextBranch,
-          occ: snapshotOccForCharacter(def),
-          occSpecializationId: undefined,
-          creationPsychicTier: tier,
-          creationPsychicTierChosen: isPsychicOcc && !gateBypassed,
-        }
-        const withOcc = applyOccStartingSkillPicks(
-          patchCharacterCreationFromOcc(invalidated, lib),
-          lib,
-        )
-        const occRow = lib
-        return syncRaceOccFacadeSdc(
-          syncCreationAttributeBranches(
-            retainCharacterRoot(prev, withOcc),
-            occRow,
-          ),
-        )
-      })
+      setRawCharacter((prev) =>
+        applyOccSelectionToCharacterState(prev, occId, { activeForm }),
+      )
     },
     [activeForm, rawCharacter.raceId],
   )
@@ -1875,7 +1825,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     const psTier = mapRaceStrengthToPsTier(race.strengthCategory)
     setActiveForm('facade')
     setRawCharacter((prev) => {
-      const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
       const withRace = syncRaceOccFacadeSdc({
         ...prev,
         ...creationInvalidationPatch(prev, 'race'),
@@ -1883,11 +1832,32 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         lineage,
         psychicGateBypassed: resolvePsychicGateBypassed(
           race.id,
-          occRow,
+          prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined,
           prev.creationGenreId,
         ),
       })
-      let next = syncCreationAttributeBranches(withRace, occRow ?? undefined)
+
+      let next: CharacterRootState = withRace
+      if (raceAllowsOccPick(race)) {
+        const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+        if (occRow && isOccAllowedForRace(race, occRow)) {
+          next = syncCreationAttributeBranches(withRace, occRow)
+        } else {
+          next = clearOccSelectionState(withRace, activeForm)
+        }
+      } else {
+        const forcedId = raceForcedOccId(race)
+        if (forcedId) {
+          next = applyOccSelectionToCharacterState(withRace, forcedId, {
+            activeForm,
+            invalidateScope: 'race',
+            autoMountFromRace: { name: race.name },
+          })
+        } else {
+          next = clearOccSelectionState(withRace, activeForm)
+        }
+      }
+
       if (!psTier) return next
       const applyTier = (attrs: Character['facade']['attributes']) => ({
         ...attrs,
@@ -1905,7 +1875,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         },
       }
     })
-  }, [rawCharacter.hostGenreId])
+    if (!raceAllowsOccPick(race)) {
+      const forcedId = raceForcedOccId(race)
+      if (forcedId) {
+        const def = getOccById(forcedId)
+        setPsychicTierState(def?.category === 'psychic' ? 'master' : 'none')
+      } else {
+        setPsychicTierState('none')
+      }
+    }
+  }, [activeForm, rawCharacter.hostGenreId])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setRawCharacter((prev) => {
@@ -2581,6 +2560,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       occCreationDerived,
       handToHandCombatProfile,
       raceCanPickOcc,
+      shadowOccMountNotice,
       raceStrengthLabel,
       activeFormState,
       activeStats,
@@ -2722,6 +2702,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       occCreationDerived,
       handToHandCombatProfile,
       raceCanPickOcc,
+      shadowOccMountNotice,
       raceStrengthLabel,
       activeFormState,
       activeStats,

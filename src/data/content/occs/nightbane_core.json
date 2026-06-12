@@ -541,5 +541,363 @@
       { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
       { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
     ]
+  },
+  {
+    "id": "occ_guardian_rcc",
+    "name": "Guardian R.C.C. Skills",
+    "description": "Shadow O.C.C. for the Guardian R.C.C. — simple, mostly non-technological related skills after memory loss. Auto-mounted when race_guardian is selected.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "guardian",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 192
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_guardian"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "only",
+          "exceptions": [
+            "skill_radio_basic"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": [
+            "skill_first_aid",
+            "skill_holistic_medicine",
+            "skill_paramedic"
+          ],
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "only",
+          "exceptions": [
+            "skill_automobile",
+            "skill_motorcycle",
+            "skill_horsemanship"
+          ],
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 8,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hand_to_hand_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hand_to_hand_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 3
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Limited skill memory",
+        "description": "Guardians retain only a handful of simple, non-technological skills. Most prefer natural abilities over firearms."
+      }
+    ],
+    "finances": {
+      "startingCashFormula": "2D4*10"
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "One set of street clothing."
+      ],
+      "weapons": [
+        "Rarely armed — prefers natural abilities over guns."
+      ]
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_nightbane_guardian"
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ]
+  },
+  {
+    "id": "occ_wampyr_rcc",
+    "name": "Wampyr R.C.C. Skills",
+    "description": "Shadow O.C.C. for the Wampyr R.C.C. — related skills reflect pre-transformation occupation and education. Auto-mounted when race_wampyr is selected.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "wampyr",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 188
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_wampyr"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 8,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hand_to_hand_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hand_to_hand_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hand_to_hand_martial_arts",
+          "electiveSlotCost": 3
+        },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Pre-transformation skills",
+        "description": "Select related and secondary skills that match the character's former life before vampiric transformation."
+      }
+    ],
+    "finances": {
+      "startingCashFormula": "2D4*100",
+      "blackMarketAssets": "2D6*1000 in property (vehicles and equipment)"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_wampyr"
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 4,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 7,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ]
   }
 ]

@@ -2,6 +2,10 @@ import { useCharacter } from '../../context/CharacterContext'
 import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
 import {
+  configuratorAlignmentLabel,
+  effectiveConfiguratorAlignment,
+} from '../../lib/configuratorMatrix'
+import {
   CHARACTER_NAME_PLACEHOLDER,
   identityHeightFeetError,
   identityHeightInchesError,
@@ -16,6 +20,18 @@ type IdentityHeaderProps = {
   morphusActive: boolean
   creationGenreId: string
   hostGenreId: string
+  collapsed: boolean
+  onCollapsedChange: (collapsed: boolean) => void
+}
+
+function identityToggleButtonClass(morphusActive: boolean): string {
+  return morphusActive
+    ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
+    : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
+}
+
+function identitySummarySeparatorClass(morphusActive: boolean): string {
+  return morphusActive ? 'text-violet-400/60' : 'text-slate-400'
 }
 
 function identityFieldClass(morphusActive: boolean): string {
@@ -140,6 +156,8 @@ export function IdentityHeader({
   morphusActive,
   creationGenreId,
   hostGenreId,
+  collapsed,
+  onCollapsedChange,
 }: IdentityHeaderProps) {
   const {
     character,
@@ -166,17 +184,94 @@ export function IdentityHeader({
   const formatGenreStamp = (genreId: string) =>
     genreId.replace(/_/g, ' ').toUpperCase()
   const genreStamp = `${formatGenreStamp(creationGenreId)} → HOST ${formatGenreStamp(hostGenreId)}`
+  const alignmentLabel = configuratorAlignmentLabel(
+    effectiveConfiguratorAlignment(character.facade.alignment),
+  )
+  const toggleButtonClass = identityToggleButtonClass(morphusActive)
+  const nameInputClass = collapsed
+    ? 'max-w-[14rem] border-0 bg-transparent text-lg font-bold tracking-tight outline-none sm:max-w-xs sm:text-xl'
+    : 'mt-0.5 w-full max-w-xl border-0 border-b-2 bg-transparent text-2xl font-bold tracking-tight outline-none transition-colors sm:text-3xl'
+  const nameInputToneClass = morphusActive
+    ? collapsed
+      ? 'text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:underline focus:decoration-violet-400'
+      : 'border-transparent text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:border-violet-400'
+    : collapsed
+      ? 'text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:underline focus:decoration-blue-600'
+      : 'border-transparent text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600'
 
   return (
     <div className="flex min-w-0 flex-1 gap-4">
       <div className="min-w-0 flex-1">
-        <p
-          className="text-[10px] font-semibold uppercase tracking-widest"
-          style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-        >
-          Identity
-        </p>
+        <div className="flex items-center justify-between gap-2">
+          <p
+            className="text-[10px] font-semibold uppercase tracking-widest"
+            style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
+          >
+            Identity
+          </p>
+          <button
+            type="button"
+            className={toggleButtonClass}
+            aria-expanded={!collapsed}
+            aria-controls="identity-header-details"
+            onClick={() => onCollapsedChange(!collapsed)}
+          >
+            {collapsed ? 'Expand' : 'Minimize'}
+          </button>
+        </div>
 
+        {collapsed ? (
+          <div
+            id="identity-header-details"
+            className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1"
+          >
+            <input
+              type="text"
+              value={character.name}
+              onChange={(e) => setCharacterName(e.target.value)}
+              onFocus={(e) => {
+                const el = e.currentTarget
+                if (
+                  el.value === LEGACY_DEFAULT_CHARACTER_NAME ||
+                  el.value === CHARACTER_NAME_PLACEHOLDER
+                ) {
+                  setCharacterName('')
+                }
+              }}
+              placeholder={CHARACTER_NAME_PLACEHOLDER}
+              aria-label="Character name"
+              className={`${nameInputClass} ${nameInputToneClass}`}
+            />
+            <span
+              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+              aria-hidden
+            >
+              ·
+            </span>
+            <span className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}>
+              {raceLabel}
+            </span>
+            <span
+              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+              aria-hidden
+            >
+              ·
+            </span>
+            <span className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}>
+              {occLabel}
+            </span>
+            <span
+              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+              aria-hidden
+            >
+              ·
+            </span>
+            <span className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}>
+              {alignmentLabel}
+            </span>
+          </div>
+        ) : (
+          <>
         <input
           type="text"
           value={character.name}
@@ -192,14 +287,10 @@ export function IdentityHeader({
           }}
           placeholder={CHARACTER_NAME_PLACEHOLDER}
           aria-label="Character name"
-          className={`mt-0.5 w-full max-w-xl border-0 border-b-2 bg-transparent text-2xl font-bold tracking-tight outline-none transition-colors sm:text-3xl ${
-            morphusActive
-              ? 'border-transparent text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:border-violet-400'
-              : 'border-transparent text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600'
-          }`}
+          className={`${nameInputClass} ${nameInputToneClass}`}
         />
 
-        <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4">
+        <div id="identity-header-details" className="mt-4 flex flex-wrap gap-x-10 gap-y-4">
           <div className="flex min-w-[9rem] flex-col gap-3">
             <div>
               <p className={identityLabelClass(morphusActive)}>Race</p>
@@ -333,15 +424,19 @@ export function IdentityHeader({
         >
           {genreStamp}
         </p>
+          </>
+        )}
       </div>
 
-      <div
-        className={`hidden shrink-0 sm:block ${
-          morphusActive ? 'border-violet-800' : 'border-slate-200'
-        } h-36 w-28 border-2 bg-black`}
-        role="img"
-        aria-label="Character portrait placeholder"
-      />
+      {!collapsed ? (
+        <div
+          className={`hidden shrink-0 sm:block ${
+            morphusActive ? 'border-violet-800' : 'border-slate-200'
+          } h-36 w-28 border-2 bg-black`}
+          role="img"
+          aria-label="Character portrait placeholder"
+        />
+      ) : null}
     </div>
   )
 }

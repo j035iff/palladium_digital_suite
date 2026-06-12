@@ -46,7 +46,8 @@ import {
 } from '../occCreationDerivation'
 import { traitForgeTabApplicable, traitForgeTabLabel } from '../creationSubForge'
 import { isMorphusForgeComplete } from '../morphusForgeNavigation'
-import { raceCanPickOcc, raceLineageFromDefinition } from '../raceEngine'
+import { raceLineageFromDefinition } from '../raceEngine'
+import { creationUsesOccSkillProgram } from '../shadowOcc'
 import {
   assessAbilitiesBudgetBlockers,
   resolveEffectiveCreationAbilityBudget,
@@ -384,9 +385,7 @@ function assessAbilitiesTabBlockers(ctx: CharacterCreationForgeContext): string[
 function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
   const blockers: string[] = []
   const { character, race, occ } = ctx
-  const picksOcc = raceCanPickOcc(race)
-
-  if (picksOcc && occ) {
+  if (creationUsesOccSkillProgram(race) && occ) {
     const effectiveOcc = resolveEffectivePalladiumOcc(
       occ,
       character.occSpecializationId,

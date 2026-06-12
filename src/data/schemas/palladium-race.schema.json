@@ -66,6 +66,11 @@
       "type": "boolean",
       "description": "When true, the character may select a separate O.C.C. after choosing this race (e.g. Humans). When false, the race is a self-contained R.C.C. with no secondary O.C.C. step (e.g. Guardians)."
     },
+    "forcedOccId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "When canPickOcc is false, this id points to the O.C.C. JSON row that holds the R.C.C. skill program (the Shadow O.C.C.). The engine auto-mounts that O.C.C. at creation and skips manual O.C.C. selection."
+    },
     "lineage": {
       "type": "string",
       "enum": ["nightbane", "megaversal"],

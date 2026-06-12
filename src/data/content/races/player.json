@@ -171,5 +171,182 @@
         "Any"
       ]
     }
+  },
+  {
+    "id": "race_guardian",
+    "name": "Guardian",
+    "description": "An ancient, enigmatic race of supernatural beings composed of light and energy, dedicated to fighting the Ba'al and other dark forces. They assume a humanoid shape on Earth but are beings of pure power.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 189
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_guardian_rcc",
+    "attributes": {
+      "iq": "2D4+16",
+      "me": "2D6+16",
+      "ma": "2D6+12",
+      "ps": "2D4+14",
+      "pp": "2D4+16",
+      "pe": "2D6+14",
+      "pb": "1D6+14",
+      "spd": "2D6+20"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE + 2D6",
+      "averageStandardPpe": 100,
+      "sdc": "2D6*10+100"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME + 1D6*10"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_magic": 4,
+        "save_psionics": 3,
+        "pullPunch": 4,
+        "dodge": 1,
+        "rollWithImpact": 2,
+        "horrorFactor": 5
+      }
+    },
+    "demographics": {
+      "averageLifespan": "300 to 400 years",
+      "alignmentTendencies": [
+        "Principled",
+        "Scrupulous"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Guardian P.P.E. Pool",
+        "description": "A Guardian's true base P.P.E. is equal to their P.E. attribute multiplied by 5, plus 20 per level of experience."
+      },
+      {
+        "name": "Precognitive & Supernatural Senses",
+        "description": "Instinctive precognitive sense guides them to those in need. Perfect Nightvision 500 ft (152 m). Can see the invisible, recognize illusions, and see all spectrums of light. Grants +1 on initiative and +3 on all perception rolls."
+      },
+      {
+        "name": "Super-Regeneration & Healing Touch",
+        "description": "Heals 2D6 points of damage every hour naturally. Can expend P.P.E. to heal others (1 P.P.E. restores 1 HP/SDC up to the Guardian's P.E. limit) once per minute."
+      },
+      {
+        "name": "Nullify Magic",
+        "description": "Can counteract spells by spending P.P.E. exceeding the incoming spell's cost. Acts as an automatic defense."
+      },
+      {
+        "name": "Powers of Light",
+        "description": "Creates light energy blasts (1D6 S.D.C. per P.P.E., +3 to strike) or shields (5 S.D.C. per P.P.E.). Can illuminate areas with true sunlight that harms vampires."
+      },
+      {
+        "name": "Flight & Sustenance",
+        "description": "Can hover (2 P.P.E.) or fly at 40 mph (6 P.P.E.). Does not need to eat, drink, or breathe; fed entirely by light."
+      },
+      {
+        "name": "Vulnerability to Light Deprivation",
+        "description": "If trapped in darkness/Nightlands for more than 48 hours, S.D.C., H.P., and attributes diminish drastically over time."
+      }
+    ]
+  },
+  {
+    "id": "race_wampyr",
+    "name": "Wampyr",
+    "description": "A tragic offshoot of humanity turned by vampires, but who inexplicably retained their souls and free will. They possess vampiric powers and thirst for blood, but actively fight against their undead creators.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 188
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_wampyr_rcc",
+    "attributes": {
+      "iq": "3D6+1",
+      "me": "1D6+14",
+      "ma": "3D6+6",
+      "ps": "3D6+12",
+      "pp": "3D6+6",
+      "pe": "3D6+8",
+      "pb": "3D6+3",
+      "spd": "3D6+6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE * 2 + 1D6",
+      "averageStandardPpe": "1D4+2",
+      "sdc": "2D6*10+20"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME + 2D4*10"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "horrorFactor": 5
+      }
+    },
+    "demographics": {
+      "averageLifespan": "Unknown, possibly limitless",
+      "alignmentTendencies": [
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant",
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Supernatural Senses & Perception",
+        "description": "Nightvision 500 ft (152 m). Can smell blood up to a mile away (1.6 km) and track the scent at a 70% proficiency. Grants +1 on initiative and +3 on all perception rolls."
+      },
+      {
+        "name": "Mind Control Immunity",
+        "description": "Grants +5 to save versus all forms of mind control and possession, and is completely immune to vampire mind control powers."
+      },
+      {
+        "name": "Blood Dependency",
+        "description": "Must consume at least one pint of human or animal blood every three days. Failure to do so results in starvation penalties, reduced attributes, and eventual feral frenzy."
+      },
+      {
+        "name": "Vulnerability to Sunlight",
+        "description": "Direct sunlight inflicts 2D6 points of damage per minute of exposure and blinds the Wampyr (-8 to strike, parry, dodge). Shade allows their regeneration to kick in."
+      },
+      {
+        "name": "Vampiric Invulnerability & Regeneration",
+        "description": "Takes half damage from metal weapons. Immune to normal weapons (bullets, knives) which inflict half damage. Instantly regenerates 2D6 S.D.C./Hit points per melee round."
+      },
+      {
+        "name": "Vampiric Vulnerabilities",
+        "description": "Takes double damage from silver and wood weapons. Holy water inflicts 2D4 damage per vial."
+      }
+    ]
   }
 ]

@@ -15,6 +15,7 @@
     }
   ],
   "canPickOcc": false,
+  "forcedOccId": "example_occ_guardian_shadow",
   "lineage": "nightbane",
   "creationSubForgeId": "morphus_forge_manifest",
   "attributes": {

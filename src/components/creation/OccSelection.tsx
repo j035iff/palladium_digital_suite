@@ -6,6 +6,7 @@ import {
 } from '../../data/library/registry'
 import { DEFAULT_RACE_ID } from '../../lib/raceFormPolicy'
 import { isOccAllowedForRace } from '../../lib/raceEngine'
+import { creationUsesOccSkillProgram } from '../../lib/shadowOcc'
 import { formatPalladiumSources } from '../../lib/formatPalladiumSources'
 import {
   occBaseStatsDice,
@@ -23,6 +24,7 @@ export function OccSelection() {
     activeOcc,
     activeRace,
     raceCanPickOcc,
+    shadowOccMountNotice,
     setSelectedOcc,
     setOccSpecializationId,
     setRaceId,
@@ -109,13 +111,21 @@ export function OccSelection() {
       {!raceCanPickOcc ? (
         <div
           className={`mb-4 rounded-lg border-2 border-dashed px-4 py-3 text-sm leading-snug ${
-            morphus ? 'border-amber-500/70 bg-amber-950/30 text-amber-100' : 'border-amber-500/80 bg-amber-50 text-amber-950'
+            shadowOccMountNotice
+              ? morphus
+                ? 'border-emerald-500/70 bg-emerald-950/30 text-emerald-100'
+                : 'border-emerald-600/80 bg-emerald-50 text-emerald-950'
+              : morphus
+                ? 'border-amber-500/70 bg-amber-950/30 text-amber-100'
+                : 'border-amber-500/80 bg-amber-50 text-amber-950'
           }`}
         >
-          <p className="font-bold uppercase tracking-wide">R.C.C. — no separate O.C.C.</p>
+          <p className="font-bold uppercase tracking-wide">
+            {shadowOccMountNotice ? 'Shadow O.C.C. auto-mounted' : 'R.C.C. — no separate O.C.C.'}
+          </p>
           <p className="mt-1 opacity-90">
-            {activeRace?.name ?? 'This race'} is self-contained. Character creation skips
-            secondary O.C.C. selection; use the R.C.C. package on your sheet.
+            {shadowOccMountNotice ??
+              `${activeRace?.name ?? 'This race'} is self-contained. Character creation skips secondary O.C.C. selection.`}
           </p>
           {activeRace?.sources?.length ? (
             <p
@@ -177,7 +187,7 @@ export function OccSelection() {
         })}
       </div>
       ) : null}
-      {raceCanPickOcc && specializationBranches.length > 0 ? (
+      {creationUsesOccSkillProgram(activeRace) && specializationBranches.length > 0 ? (
         <div className={`mt-4 grid gap-2 sm:grid-cols-2 ${panel} rounded-lg border-2 p-4`}>
           <p
             className="sm:col-span-2 text-xs font-semibold uppercase tracking-wide opacity-80"

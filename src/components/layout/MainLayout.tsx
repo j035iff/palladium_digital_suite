@@ -30,6 +30,7 @@ export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
   const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_COMBAT_SIDEBAR_PX)
   const [isResizing, setIsResizing] = useState(false)
+  const [identityCollapsed, setIdentityCollapsed] = useState(false)
   const {
     character,
     creationGenreId,
@@ -158,8 +159,10 @@ export function MainLayout() {
               morphusActive={morphusActive}
               creationGenreId={creationGenreId}
               hostGenreId={hostGenreId}
+              collapsed={identityCollapsed}
+              onCollapsedChange={setIdentityCollapsed}
             />
-            {!showCreation ? (
+            {!identityCollapsed && !showCreation ? (
               <div className="mt-2">
                 <p
                   className="text-sm font-medium"
@@ -171,7 +174,7 @@ export function MainLayout() {
                 <IdentityXpBar />
               </div>
             ) : null}
-            {morphusActive ? (
+            {!identityCollapsed && morphusActive ? (
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 <label className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-violet-300/90">
                   Surface
@@ -211,7 +214,8 @@ export function MainLayout() {
                 ) : null}
               </div>
             ) : null}
-            {morphusActive &&
+            {!identityCollapsed &&
+            morphusActive &&
             (morphusRelativeArShift !== 0 || morphusNaturalAr != null) ? (
               <p
                 className="mt-1 font-mono text-[10px] uppercase tracking-wide opacity-70"

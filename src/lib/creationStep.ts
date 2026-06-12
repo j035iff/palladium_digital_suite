@@ -12,6 +12,7 @@ import {
   valueFitsRaceNotation,
 } from './creationAttributeSync'
 import { raceCanPickOcc, raceLineageFromDefinition } from './raceEngine'
+import { raceForcedOccId, resolveCreationOccLibraryRow } from './shadowOcc'
 import { assessConfiguratorPairConflict } from './configuratorMatrix'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
@@ -150,6 +151,7 @@ export function assessConfiguratorBlockers(
     return blockers
   }
   const picksOcc = raceCanPickOcc(race)
+  const forcedShadowOcc = raceForcedOccId(race)
   if (picksOcc) {
     if (!character.occ?.id || !character.occ?.xpTable?.floors?.length) {
       blockers.push('Select an O.C.C.')
@@ -159,6 +161,15 @@ export function assessConfiguratorBlockers(
     }
     if (occ?.specializations?.length && !character.occSpecializationId) {
       blockers.push('Select an O.C.C. specialization.')
+    }
+  } else if (forcedShadowOcc) {
+    const mounted = resolveCreationOccLibraryRow(race, character.occ?.id)
+    if (!mounted || character.occ?.id !== forcedShadowOcc) {
+      blockers.push(
+        `${race.name} R.C.C. skill package failed to mount — reselect the race.`,
+      )
+    } else if (mounted.specializations?.length && !character.occSpecializationId) {
+      blockers.push('Select an R.C.C. specialization.')
     }
   }
   return blockers
