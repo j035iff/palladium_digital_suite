@@ -112,6 +112,12 @@ export const PALLADIUM_TALENT_CATALOG_JSON_PATH =
 export const PALLADIUM_PSIONIC_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumPsionics.json` as const
 
+/** One JSON array per magic school (`schemas/palladium-magic.schema.json`). */
+export const PALLADIUM_MAGIC_DIR = `${PALLADIUM_CONTENT_DIR}/magic` as const
+
+export const PALLADIUM_WIZARD_MAGIC_JSON_PATH =
+  `${PALLADIUM_MAGIC_DIR}/wizard.json` as const
+
 export const WEAPON_PROFICIENCIES_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/weapon_proficiencies.json` as const
 

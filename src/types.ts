@@ -519,6 +519,77 @@ export type TalentPrerequisite = {
   label?: string
 }
 
+export type MagicKind =
+  | 'invocation'
+  | 'ritual'
+  | 'ward'
+  | 'circle'
+  | 'enchantment'
+  | 'summoning'
+  | 'necromancy'
+  | 'other'
+
+export type MagicPpeEconomy = {
+  baseActivation?: number | string | Record<string, unknown>
+  perLevel?: number | string
+  perMinute?: number | string
+  perTarget?: number | string
+  notes?: string
+  dynamicCosts?: readonly { trigger: string; costFormula: string }[]
+  enhancement?: Record<string, unknown>
+}
+
+export type MagicLimitations = {
+  selfOnly?: boolean
+  cannotAffectSelf?: boolean
+  lineOfSightRequired?: boolean
+  lineOfVisionRequired?: boolean
+  touchRequired?: boolean
+  concentrationRequired?: boolean
+  cancellableAtWill?: boolean
+  cannotUseWhile?: readonly string[]
+  otherLimitations?: string
+}
+
+export type MagicRangeEntry = {
+  summary: string
+  kind?: string
+  distanceValue?: number | string
+  distanceUnit?: string
+  distancePerLevel?: number
+  radiusValue?: number | string
+}
+
+export type MagicDurationBlock = {
+  summary?: string
+  kind?: string
+  durationValue?: number | string
+  perLevel?: string
+}
+
+export type MagicGenrePlacement = {
+  genreId: string
+  spellLevel?: number
+  ppe?: MagicPpeEconomy
+  notes?: string
+}
+
+export type MagicPrerequisite = {
+  type:
+    | 'spell'
+    | 'attribute_minimum'
+    | 'level_minimum'
+    | 'other_spell_any_of'
+    | 'occ'
+    | 'other'
+  spellId?: string
+  spellIds?: readonly string[]
+  attribute?: keyof CharacterAttributes
+  minimum?: number
+  level?: number
+  label?: string
+}
+
 export type MorphusTablePrerequisites = {
   morphusTableIds?: readonly string[]
 }
@@ -1579,6 +1650,46 @@ export type MorphusForgeState = {
   characteristicsPickCount?: number
   /** Nightbane base Morphus attribute bonuses applied to the morphus branch. */
   baseStatsApplied?: boolean
+}
+
+/**
+ * Magic invocation catalog row (`content/magic/<school>.json`, palladium-magic.schema.json).
+ */
+export type PalladiumMagicSpell = {
+  id: string
+  name: string
+  description: string
+  descriptionMorphus?: string
+  gameSystems: readonly string[]
+  sources: readonly PalladiumSourceRef[]
+  spellLevel: number
+  magicKind?: MagicKind
+  isRitual?: boolean
+  spellStrengthBase?: 12 | 16
+  tags?: readonly string[]
+  genrePlacements?: readonly MagicGenrePlacement[]
+  ppe?: MagicPpeEconomy
+  limitations?: MagicLimitations
+  ranges?: readonly MagicRangeEntry[]
+  range?: Record<string, unknown>
+  duration?: MagicDurationBlock
+  areaOfEffect?: Record<string, unknown>
+  damage?: string | Record<string, unknown>
+  healing?: Record<string, unknown>
+  save?: unknown
+  horrorFactor?: number
+  reveals?: readonly string[]
+  combatBonuses?: FeatureModifiers
+  grantedModifiers?: Record<string, unknown>
+  inflictedModifiers?: Record<string, unknown>
+  prerequisites?: readonly MagicPrerequisite[]
+  incompatibleSpellIds?: readonly string[]
+  notes?: string
+  formRequirement?: TalentFormRequirement
+  activation?: FeatureActivation
+  durationType?: string
+  pumpable?: Record<string, unknown>
+  [key: string]: unknown
 }
 
 /**

@@ -38,6 +38,7 @@ const standardModernWeaponProgressionSchema = loadJson(
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
 const psionicSchema = loadJson(join(schemasDir, 'palladium-psionic.schema.json'))
+const magicSchema = loadJson(join(schemasDir, 'palladium-magic.schema.json'))
 const morphusCharacteristicSchema = loadJson(
   join(schemasDir, 'palladium-morphus.schema.json'),
 )
@@ -68,6 +69,7 @@ for (const [label, schema] of [
   ['palladium-hth.schema.json', handToHandSchema],
   ['palladium-talent.schema.json', talentSchema],
   ['palladium-psionic.schema.json', psionicSchema],
+  ['palladium-magic.schema.json', magicSchema],
   ['palladium-morphus.schema.json', morphusCharacteristicSchema],
   ['palladium-morphus-table.schema.json', morphusTableSchema],
   ['palladium-xp-table.schema.json', xpTableSchema],
@@ -90,6 +92,7 @@ const validateOccRow = ajv.compile(occSchema)
 const validateHandToHandRow = ajv.compile(handToHandSchema)
 const validateTalentRow = ajv.compile(talentSchema)
 const validatePsionicRow = ajv.compile(psionicSchema)
+const validateMagicRow = ajv.compile(magicSchema)
 const validateMorphusCharacteristic = ajv.compile(morphusCharacteristicSchema)
 const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
@@ -572,6 +575,78 @@ if (palladiumPsionicsLoaded) {
   }
 }
 
+const magicDir = join(contentDir, 'magic')
+let magicSchoolFiles = []
+try {
+  magicSchoolFiles = readdirSync(magicDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR magic/ — directory missing')
+  failed = true
+}
+if (magicSchoolFiles.length > 0) {
+  const seenMagicIds = new Set()
+  let magicBad = 0
+  let magicDup = 0
+  let magicIdPrefixBad = 0
+  let magicTotal = 0
+  for (const file of magicSchoolFiles) {
+    const school = file.replace(/\.json$/, '')
+    const expectedIdPrefix = `magic_${school}_`
+    const rows = loadJson(join(magicDir, file))
+    if (!Array.isArray(rows)) {
+      failed = true
+      console.error(`ERR magic/${file} — expected top-level array`)
+      continue
+    }
+    magicTotal += rows.length
+    for (const row of rows) {
+      const id = row?.id
+      if (typeof id === 'string' && !id.startsWith(expectedIdPrefix)) {
+        magicIdPrefixBad++
+        if (magicIdPrefixBad <= 5) {
+          console.error(
+            `ERR magic/${file} id=${id}: expected id prefix "${expectedIdPrefix}"`,
+          )
+        }
+      }
+      if (id) {
+        if (seenMagicIds.has(id)) {
+          magicDup++
+          if (magicDup <= 5) {
+            console.error(`ERR magic/${file} duplicate id=${id}`)
+          }
+        } else {
+          seenMagicIds.add(id)
+        }
+      }
+      if (!validateMagicRow(row)) {
+        magicBad++
+        if (magicBad <= 5) {
+          console.error(`ERR magic/${file} id=${row?.id ?? '?'}:`, validateMagicRow.errors)
+        }
+      }
+    }
+  }
+  if (magicBad === 0 && magicDup === 0 && magicIdPrefixBad === 0) {
+    console.log(
+      `OK  magic/ — ${magicSchoolFiles.length} school file(s), ${magicTotal} spell(s) validate`,
+    )
+  } else {
+    failed = true
+    if (magicBad > 0) {
+      console.error(`ERR magic/ — ${magicBad} spell row(s) failed schema validation`)
+    }
+    if (magicDup > 0) {
+      console.error(`ERR magic/ — ${magicDup} duplicate id(s)`)
+    }
+    if (magicIdPrefixBad > 0) {
+      console.error(`ERR magic/ — ${magicIdPrefixBad} id prefix mismatch(es)`)
+    }
+  }
+}
+
 const morphusTablesDir = join(contentDir, 'morphus/tables')
 let morphusTableFiles = []
 try {
@@ -633,6 +708,7 @@ const exampleValidators = [
   { prefix: 'palladium-hth', compile: validateHandToHandRow },
   { prefix: 'palladium-talent', compile: validateTalentRow },
   { prefix: 'palladium-psionic', compile: validatePsionicRow },
+  { prefix: 'palladium-magic', compile: validateMagicRow },
   { prefix: 'palladium-morphus-table', compile: validateMorphusTableDoc },
   {
     prefix: 'palladium-morphus-characteristic',

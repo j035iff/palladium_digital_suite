@@ -1,0 +1,36 @@
+{
+  "$schema": "../palladium-magic.schema.json",
+  "id": "magic_wizard_climb",
+  "name": "Climb",
+  "description": "Grants exceptional climbing skill for the spell duration.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 130
+    }
+  ],
+  "spellLevel": 2,
+  "magicKind": "invocation",
+  "spellStrengthBase": 12,
+  "ppe": { "baseActivation": 3 },
+  "range": { "summary": "Self, or others up to 40 ft (12.2 m) away." },
+  "duration": {
+    "summary": "5 minutes (20 melees) per level of experience.",
+    "kind": "minute",
+    "perLevel": "5 minutes"
+  },
+  "save": { "summary": "None", "saveKind": "none" },
+  "grantedModifiers": {
+    "target": "touch",
+    "grantedSkills": [
+      {
+        "name": "Climbing",
+        "basePercentage": "98%",
+        "notes": "60% on smooth or extremely difficult surfaces; rappelling included."
+      }
+    ]
+  },
+  "durationType": "narrative"
+}

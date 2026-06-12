@@ -1,0 +1,50 @@
+{
+  "$schema": "../palladium-magic.schema.json",
+  "id": "magic_wizard_charismatic_aura",
+  "name": "Charismatic Aura",
+  "description": "The caster chooses one distinct aura effect when the spell is invoked.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 132
+    }
+  ],
+  "spellLevel": 4,
+  "magicKind": "invocation",
+  "spellStrengthBase": 12,
+  "ppe": { "baseActivation": 7 },
+  "range": { "summary": "Self; affects those within 10 ft (3.0 m)." },
+  "duration": {
+    "summary": "2 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "2 minutes"
+  },
+  "effectProfiles": [
+    {
+      "name": "Charm",
+      "description": "Victims regard the caster as a trusted friend; save vs magic to resist.",
+      "save": { "summary": "Standard", "saveKind": "standard" }
+    },
+    {
+      "name": "Fear",
+      "description": "Victims are intimidated by the caster's presence.",
+      "save": { "summary": "Save vs Horror Factor", "saveKind": "horror_factor" },
+      "horrorFactor": 14
+    },
+    {
+      "name": "Authority",
+      "description": "Victims defer to the caster as a figure of command.",
+      "grantedModifiers": {
+        "target": "self",
+        "combatModifiers": {
+          "strike": 2,
+          "parry": 2,
+          "dodge": 2
+        }
+      }
+    }
+  ],
+  "durationType": "narrative"
+}

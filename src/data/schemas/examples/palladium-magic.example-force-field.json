@@ -1,0 +1,32 @@
+{
+  "$schema": "../palladium-magic.schema.json",
+  "id": "magic_wizard_armor_of_ithan",
+  "name": "Armor of Ithan",
+  "description": "Creates a shimmering magical force field around the recipient.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG (example)",
+      "pageNumber": 131
+    }
+  ],
+  "spellLevel": 3,
+  "magicKind": "invocation",
+  "spellStrengthBase": 12,
+  "ppe": { "baseActivation": 10 },
+  "range": { "summary": "Self or others within 10 ft (3.0 m)." },
+  "duration": {
+    "summary": "2 minutes per level of experience.",
+    "kind": "minute",
+    "perLevel": "2 minutes"
+  },
+  "save": { "summary": "None", "saveKind": "none" },
+  "grantedModifiers": {
+    "target": "touch",
+    "forceField": {
+      "sdcFormula": "10 per level of experience"
+    }
+  },
+  "durationType": "narrative"
+}
