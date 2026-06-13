@@ -120,7 +120,7 @@
     },
     "duration": {
       "summary": "6D6 melees",
-      "kind": "melee",
+      "kind": "melee_round",
       "dice": "6D6"
     },
     "lengthOfTrance": {
@@ -128,7 +128,8 @@
       "preparationMelees": "2D4"
     },
     "baseSkill": {
-      "base": 58,
+      "label": "Success ratio",
+      "basePercent": 58,
       "perLevel": 2
     }
   },
@@ -199,7 +200,8 @@
       "preparationMinutes": "15-20"
     },
     "baseSkill": {
-      "base": 42,
+      "label": "Success ratio",
+      "basePercent": 42,
       "perLevel": 2
     }
   },
@@ -342,7 +344,8 @@
       "preparationMinutes": "3D4"
     },
     "baseSkill": {
-      "base": 30,
+      "label": "Success ratio",
+      "basePercent": 30,
       "perLevel": 0,
       "notes": "+2% for every P.P.E point that can be drawn on."
     }
@@ -422,7 +425,8 @@
       "saveKind": "none"
     },
     "baseSkill": {
-      "base": 56,
+      "label": "Impressions",
+      "basePercent": 56,
       "perLevel": 2,
       "notes": "Impressions: 56%+2% per level. Images: 48%+2% per level. Present: 38%+2% per level."
     }
@@ -491,7 +495,7 @@
     },
     "duration": {
       "summary": "2 melees (30 seconds)",
-      "kind": "melee",
+      "kind": "melee_round",
       "flat": 2
     },
     "save": {
@@ -1188,7 +1192,8 @@
           "notes": "Per every 2 minutes."
         },
         "baseSkill": {
-          "base": 55,
+          "label": "Success ratio",
+          "basePercent": 55,
           "perLevel": 5
         }
       }
@@ -1242,7 +1247,8 @@
           "baseActivation": 2
         },
         "baseSkill": {
-          "base": 70,
+          "label": "Purity check",
+          "basePercent": 70,
           "perLevel": 5,
           "notes": "To determine if pure/drinkable. 35% + 5% per level to identify general nature of pollutant."
         }
@@ -1416,7 +1422,8 @@
       "flat": 2
     },
     "baseSkill": {
-      "base": 30,
+      "label": "Poison identification",
+      "basePercent": 30,
       "perLevel": 4,
       "notes": "To identify poisons."
     },
@@ -1600,7 +1607,8 @@
           "notes": "Per every 2 minutes."
         },
         "baseSkill": {
-          "base": 90,
+          "label": "Success ratio",
+          "basePercent": 90,
           "perLevel": 0
         }
       }
@@ -1898,7 +1906,8 @@
       "preparationMinutes": "30"
     },
     "baseSkill": {
-      "base": 28,
+      "label": "Expulsion",
+      "basePercent": 28,
       "perLevel": 7,
       "notes": "First, roll to see if the being has been expelled from its victim's body. [cite: 26] Success ratio: 28%+7% per each additional level of experience. [cite: 27] Second, roll to see if the thing is forced back into its own dimension. [cite: 27] Success Ratio: 21%+7% per each additional level of experience. [cite: 28] The chance of a successful exorcism on a nega-psychic is reduced by half, as is the success ratio for sending the being back to its own dimension. [cite: 29] The same is true of some of the more powerful supernatural beings. [cite: 30]"
     },
@@ -2487,7 +2496,7 @@
     },
     "duration": {
       "summary": "1D4 melee rounds (15 to 60 seconds).",
-      "kind": "melee",
+      "kind": "melee_round",
       "dice": "1D4"
     },
     "save": {
@@ -3083,7 +3092,8 @@
       "saveKind": "none"
     },
     "baseSkill": {
-      "base": 80,
+      "label": "Machine empathy",
+      "basePercent": 80,
       "perLevel": 0,
       "notes": "Expertise is equal to 80% (88% for computers) and applies to all aspects of the machine, repair, access codes, etc."
     }
@@ -3327,12 +3337,12 @@
     },
     "duration": {
       "summary": "One melee round per level of experience.",
-      "kind": "melee",
+      "kind": "melee_round",
       "perLevel": "1 melee round"
     },
     "save": {
-      "summary": "Dodge",
-      "saveKind": "dodge"
+      "summary": "Targets may dodge normally.",
+      "saveKind": "special"
     },
     "damage": {
       "formula": "1D4 per level of experience",
@@ -3386,7 +3396,8 @@
       "saveKind": "none"
     },
     "baseSkill": {
-      "base": 45,
+      "label": "Success ratio",
+      "basePercent": 45,
       "perLevel": 4,
       "notes": "Skill rolls can be made once every hour. Greatly modified by familiarity with destination."
     },
@@ -3587,7 +3598,7 @@
     },
     "duration": {
       "summary": "One melee round per level of experience.",
-      "kind": "melee",
+      "kind": "melee_round",
       "perLevel": "1 melee round"
     },
     "save": {
@@ -3680,7 +3691,7 @@
     },
     "duration": {
       "summary": "One melee attack/action (leap)",
-      "kind": "melee"
+      "kind": "melee_round"
     },
     "save": {
       "summary": "None",

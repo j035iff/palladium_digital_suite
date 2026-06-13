@@ -27,6 +27,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -54,6 +57,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -85,6 +91,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -107,6 +116,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -129,6 +141,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -151,6 +166,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -191,6 +209,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -215,7 +236,8 @@
       }
     ],
     "skillTraits": [
-      "requires_timing"
+      "requires_timing",
+      "work_education_related"
     ]
   },
   {
@@ -240,7 +262,8 @@
       }
     ],
     "skillTraits": [
-      "requires_timing"
+      "requires_timing",
+      "work_education_related"
     ]
   }
 ]

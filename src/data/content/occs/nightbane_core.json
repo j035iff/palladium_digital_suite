@@ -201,7 +201,8 @@
     ],
     "ppeEngine": {
       "baseFormula": "PE + 3D6*10+20",
-      "perLevelFormula": "3D6"
+      "perLevelFormula": "3D6",
+      "progressionRoadmap": []
     },
     "finances": {
       "startingCashFormula": "3D6*100"
@@ -314,7 +315,7 @@
         "description": "Hand to Hand: Basic is included. Upgrade to Expert for one related skill, or Martial Arts/Assassin for two related skills. Facade only — Morphus has innate Martial Arts."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
     "finances": { "startingCashFormula": "3D6*100" },
     "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
     "levelUpSkillChoices": [
@@ -418,7 +419,7 @@
         "description": "Related W.P. selections are limited to civilian weapons."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
     "finances": { "startingCashFormula": "3D6*100" },
     "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
     "levelUpSkillChoices": [
@@ -530,7 +531,7 @@
         "description": "Hand to Hand: Basic included. Upgrade to Expert for one related skill, or Martial Arts/Assassin for two. Facade only."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6" },
+    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
     "finances": { "startingCashFormula": "3D6*100" },
     "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
     "levelUpSkillChoices": [
@@ -898,6 +899,999 @@
         "quantity": 1,
         "poolSource": "related"
       }
+    ]
+  },
+  {
+    "id": "occ_sorcerer",
+    "name": "Sorcerer O.C.C.",
+    "description": "Bookish arcane scholar — meticulous study of formulas, rituals, and incantations. Sorcerers sense ley lines and nexus points, may learn spells of any level through study (Pursuit of Magic), and wield wizard magic with strong saves versus the supernatural.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 116
+      }
+    ],
+    "occType": "magic_user",
+    "tags": ["occult", "scholar", "arcane", "ley_line"],
+    "attributeRequirements": {
+      "iq": 12,
+      "me": 10,
+      "pe": 12
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_math_basic", "bonusPercent": 25 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      { "skillId": "skill_research", "bonusPercent": 25 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 20,
+        "allowedSkillIds": [
+          "skill_lore_astral",
+          "skill_lore_demons_and_monsters",
+          "skill_lore_dreamstream",
+          "skill_lore_faction",
+          "skill_lore_factions",
+          "skill_lore_geomancy",
+          "skill_lore_magic",
+          "skill_lore_nightbane",
+          "skill_lore_nightlands",
+          "skill_lore_psychic",
+          "skill_lore_religion",
+          "skill_lore_secret_societies",
+          "skill_lore_vampires"
+        ],
+        "label": "Two Lore skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "label": "Two languages of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedCategories": ["Technical"],
+        "label": "One additional Technical skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryMinimums": [
+        {
+          "categoryName": "Science",
+          "minimumCount": 2,
+          "label": "Science (two required)"
+        }
+      ],
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Understand the Principles of Magic",
+        "description": "Recognize authentic occult materials, determine general purpose of items, and identify supernatural forces involved.",
+        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Sense Ley Lines and Nexus Points",
+        "description": "See ley lines and nexus psychic energy within line of sight or one mile (1.6 km), whichever is less."
+      },
+      {
+        "name": "Learning New Spells",
+        "description": "Additional spells and rituals of any magic level may be learned or purchased at any time regardless of experience level (Pursuit of Magic, Nightbane RPG p. 121+)."
+      }
+    ],
+    "staticBonuses": {
+      "saves": {
+        "save_magic": 4,
+        "save_possession": 4,
+        "save_mind_control": 2,
+        "save_horror": 4
+      }
+    },
+    "ppeEngine": {
+      "baseFormula": "1D6*10+PE",
+      "perLevelFormula": "2D6",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "open",
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 12, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Small occult library (history, occult, myths and legends)",
+        "Personal computer",
+        "Pocket tape recorder",
+        "Notepad",
+        "Magnifying glass",
+        "Backpack",
+        "Work, casual, and dress clothes",
+        "Inexpensive car or jeep"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "3D6*100+200",
+      "blackMarketAssets": "3D6*1000 in property (equipment, vehicles and similar items)"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_ashmedai_psychic_sorcerer",
+      "characterOccCategory": "standard",
+      "startingSpellLevelCap": 4
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_mystic",
+    "name": "Mystic O.C.C.",
+    "description": "Shamanistic intuitive magic-user and major psionic — rainmakers, medicine men, and spiritual paths from cultures worldwide. Spell knowledge is gained through inner revelation; cannot learn spells independently outside the O.C.C. roadmap.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 118
+      }
+    ],
+    "occType": "magic_user",
+    "tags": ["occult", "shaman", "intuitive", "psionic"],
+    "attributeRequirements": {
+      "iq": 9,
+      "me": 9,
+      "ma": 9
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "label": "One additional language of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 20,
+        "allowedSkillIds": [
+          "skill_lore_astral",
+          "skill_lore_demons_and_monsters",
+          "skill_lore_dreamstream",
+          "skill_lore_faction",
+          "skill_lore_factions",
+          "skill_lore_geomancy",
+          "skill_lore_magic",
+          "skill_lore_nightbane",
+          "skill_lore_nightlands",
+          "skill_lore_psychic",
+          "skill_lore_religion",
+          "skill_lore_secret_societies",
+          "skill_lore_vampires"
+        ],
+        "label": "One Lore skill of choice"
+      },
+      { "skillId": "skill_dance", "bonusPercent": 10 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "One Domestic skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryMinimums": [
+        {
+          "categoryName": "Technical",
+          "minimumCount": 2,
+          "label": "Technical (two required)"
+        }
+      ],
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 10
+        },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_holistic_medicine"],
+          "bonusPercent": 10
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Intuitive Spell Knowledge",
+        "description": "Cannot learn or purchase spells independently; all magic comes from intuitive roadmap selections at each level of experience."
+      },
+      {
+        "name": "Initial Psionic Grants",
+        "description": "At 1st level, select three additional Sensitive abilities and two Healer abilities beyond the four auto-granted powers (Clairvoyance, Exorcism, Sense Evil, Sixth Sense)."
+      }
+    ],
+    "staticBonuses": {
+      "saves": {
+        "save_psionics": 1,
+        "save_horror": 3
+      },
+      "levelGatedSaves": {
+        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+      }
+    },
+    "ppeEngine": {
+      "baseFormula": "1D4*10+PE",
+      "perLevelFormula": "1D6+1",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "roadmap_only",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 6, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 2, "selectionsGained": 3, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 3, "selectionsGained": 3, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 4, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 2, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 2, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 2, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 2, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 2, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 2, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 2, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 2, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 2, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 2, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 2, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "1D4*10+ME",
+      "perLevelFormula": "1D6+1",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": [
+        "psionic_clairvoyance",
+        "psionic_exorcism",
+        "psionic_sense_evil",
+        "psionic_sixth_sense"
+      ],
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 5,
+          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+        }
+      ]
+    },
+    "specializations": [
+      {
+        "id": "wealth_oriented_mystic",
+        "name": "Wealth-oriented Mystic",
+        "description": "Rare mystic with substantial property, vehicles, and prestige — easily targeted after Dark Day.",
+        "finances": {
+          "startingCashFormula": "4D4*1000",
+          "blackMarketAssets": "4D6*10000 in possessions (housing, vehicles and equipment)"
+        },
+        "startingEquipment": {
+          "miscellaneous": [
+            "Mansion or estate",
+            "Fleet of vehicles",
+            "Symbols of wealth and prestige"
+          ]
+        }
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "Walking shoes and boots",
+        "Gloves and hat",
+        "Travelling clothes and rain/trench coat",
+        "Knapsack and backpack",
+        "Mirror",
+        "Portable radio or CD player",
+        "Staff or walking stick",
+        "Personal items"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*100",
+      "blackMarketAssets": "1D6*1000 in possessions"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_snakebird_mystic",
+      "characterOccCategory": "psychic",
+      "startingSpellLevelCap": 2
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_nightbane_sorcerer",
+    "name": "Nightbane Sorcerer O.C.C.",
+    "description": "Rare Nightbane trained in arcane scholarship — draws on both wizard magic and a single Nightbane Talent, with full Nightbane R.C.C. powers. P.P.E. is often spent acquiring additional Talents at the cost of spell flexibility.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 119
+      }
+    ],
+    "occType": "magic_user",
+    "tags": ["nightbane", "occult", "arcane", "ley_line"],
+    "raceRestrictions": { "allowed": ["nightbane"] },
+    "attributeRequirements": {
+      "iq": 12,
+      "me": 12
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_math_basic", "bonusPercent": 25 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 10 },
+      { "skillId": "skill_research", "bonusPercent": 20 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedSkillIds": [
+          "skill_lore_astral",
+          "skill_lore_demons_and_monsters",
+          "skill_lore_dreamstream",
+          "skill_lore_faction",
+          "skill_lore_factions",
+          "skill_lore_geomancy",
+          "skill_lore_magic",
+          "skill_lore_nightbane",
+          "skill_lore_nightlands",
+          "skill_lore_psychic",
+          "skill_lore_religion",
+          "skill_lore_secret_societies",
+          "skill_lore_vampires"
+        ],
+        "label": "Two Lore skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "label": "Two languages of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Technical"],
+        "label": "One additional Technical skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryMinimums": [
+        {
+          "categoryName": "Science",
+          "minimumCount": 2,
+          "label": "Science (two required)"
+        }
+      ],
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 4, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Understand the Principles of Magic",
+        "description": "Same as the Sorcerer O.C.C.",
+        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Sense Ley Lines and Nexus Points",
+        "description": "Same as the Sorcerer O.C.C."
+      },
+      {
+        "name": "Nightbane R.C.C. Abilities",
+        "description": "Retains all natural Nightbane R.C.C. powers (Becoming, Morphus, Mirror Walk, etc.)."
+      },
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand selections apply to the Facade only; Morphus has innate Martial Arts."
+      },
+      {
+        "name": "Talent and P.P.E. Trade-off",
+        "description": "Gains only one Talent at 1st level with no further Talent levels; additional Talents may be purchased with permanent P.P.E. expenditure."
+      },
+      {
+        "name": "Learning New Spells",
+        "description": "May learn or purchase spells of any level anytime (Pursuit of Magic)."
+      }
+    ],
+    "staticBonuses": {
+      "saves": {
+        "save_magic": 3,
+        "save_possession": 2,
+        "save_horror": 2
+      }
+    },
+    "ppeEngine": {
+      "baseFormula": "3D6*10+20+PE",
+      "perLevelFormula": "2D6+6",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "open",
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 12, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "customAbilityEngines": [
+      {
+        "engineId": "nightbane_talents",
+        "label": "Nightbane Talents",
+        "progressionRoadmap": [{ "level": 1, "selectionsGained": 1 }]
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "Small occult library",
+        "Personal computer",
+        "Useful adventuring gear"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "3D4*100+200",
+      "blackMarketAssets": "2D4*1000 in property (equipment, vehicles and similar items)"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_sorcerer_mystic",
+      "characterOccCategory": "standard",
+      "startingSpellLevelCap": 4
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_nightbane_mystic",
+    "name": "Nightbane Mystic O.C.C.",
+    "description": "The most common magic-practicing Nightbane — intuitive shaman of Nightlands energies with no psionic potential, relying on Talents and a restrictive spell roadmap. Retains full Nightbane R.C.C. powers.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 120
+      }
+    ],
+    "occType": "magic_user",
+    "tags": ["nightbane", "occult", "shaman", "intuitive"],
+    "raceRestrictions": { "allowed": ["nightbane"] },
+    "attributeRequirements": {
+      "iq": 10,
+      "me": 9,
+      "ma": 9
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "label": "One additional language of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedSkillIds": [
+          "skill_lore_astral",
+          "skill_lore_demons_and_monsters",
+          "skill_lore_dreamstream",
+          "skill_lore_faction",
+          "skill_lore_factions",
+          "skill_lore_geomancy",
+          "skill_lore_magic",
+          "skill_lore_nightbane",
+          "skill_lore_nightlands",
+          "skill_lore_psychic",
+          "skill_lore_religion",
+          "skill_lore_secret_societies",
+          "skill_lore_vampires"
+        ],
+        "label": "One Lore skill of choice"
+      },
+      { "skillId": "skill_dance", "bonusPercent": 10 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 7,
+      "categoryMinimums": [
+        {
+          "categoryName": "Technical",
+          "minimumCount": 2,
+          "label": "Technical (two required)"
+        }
+      ],
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 10
+        },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_holistic_medicine"],
+          "bonusPercent": 10
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 4, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "No Psionic Potential",
+        "description": "Unlike human mystics, Nightbane mystics have no I.S.P. or psionic powers; they rely on Talents to remain in tune with the world."
+      },
+      {
+        "name": "Intuitive Spell Knowledge",
+        "description": "Cannot learn spells independently; spell selections follow the O.C.C. roadmap only."
+      },
+      {
+        "name": "Nightbane R.C.C. Abilities",
+        "description": "Retains all natural Nightbane R.C.C. powers."
+      },
+      {
+        "name": "Facade Hand to Hand",
+        "description": "Hand to Hand selections apply to the Facade only; Morphus has innate Martial Arts."
+      },
+      {
+        "name": "Talent and P.P.E. Trade-off",
+        "description": "Additional Talents may be purchased with P.P.E., but seldom more than one or two beyond the level grants."
+      }
+    ],
+    "staticBonuses": {
+      "saves": {
+        "save_horror": 2
+      },
+      "levelGatedSaves": {
+        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+      }
+    },
+    "ppeEngine": {
+      "baseFormula": "3D6*10+20+PE",
+      "perLevelFormula": "2D6+6",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "roadmap_only",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 5, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 2, "selectionsGained": 4, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 3, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "customAbilityEngines": [
+      {
+        "engineId": "nightbane_talents",
+        "label": "Nightbane Talents",
+        "progressionRoadmap": [
+          { "level": 1, "selectionsGained": 1 },
+          { "level": 3, "selectionsGained": 1 },
+          { "level": 7, "selectionsGained": 1 },
+          { "level": 11, "selectionsGained": 1 },
+          { "level": 15, "selectionsGained": 1 }
+        ]
+      }
+    ],
+    "specializations": [
+      {
+        "id": "wealth_oriented_mystic",
+        "name": "Wealth-oriented Mystic",
+        "description": "Rare Nightbane mystic with property and investments — high visibility after Dark Day.",
+        "finances": {
+          "startingCashFormula": "2D4*1000",
+          "blackMarketAssets": "4D6*10000 in possessions (housing, vehicles and equipment)"
+        }
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "Walking shoes and boots",
+        "Travelling clothes",
+        "Knapsack or backpack",
+        "Personal items"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*100",
+      "blackMarketAssets": "1D6*1000 in possessions"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_sorcerer_mystic",
+      "characterOccCategory": "standard",
+      "startingSpellLevelCap": 2
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_psychic_pcc",
+    "name": "Psychic P.C.C.",
+    "description": "Human whose latent psychic gifts surged after Dark Day — sensing the supernatural, manipulating the world with the mind, and healing wounds. Persecuted by the monster-controlled government; many join Nightbane, secret societies, or fight back as mercenaries and adventurers.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 69
+      }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "master_psionic", "civilian"],
+    "packageNotes": [
+      "High I.Q. and M.E. are strongly recommended.",
+      "Requires a race that permits psionic abilities.",
+      "Only psionic powers are required — no minimum attribute scores."
+    ],
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "choiceCount": 4,
+        "bonusPercent": 15,
+        "allowedSkillTraits": ["work_education_related"],
+        "label": "Four work-related or educational skills of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "One Domestic skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0,
+          "selectionSlotCost": 2,
+          "skillSpecificSelectionSlotCosts": {
+            "skill_first_aid": 1,
+            "skill_holistic_medicine": 1,
+            "skill_paramedic": 1
+          }
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hand_to_hand_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Master Psionic",
+        "description": "Save vs psionic attack on a d20 roll of 10 or higher (plus M.E. and other bonuses)."
+      },
+      {
+        "name": "Background Skills",
+        "description": "Work or education background determines the four core skill picks — college students lean scientific/technical; blue-collar workers lean mechanical, electronic, or domestic trades."
+      }
+    ],
+    "ppeEngine": {
+      "baseFormula": "1D6",
+      "perLevelFormula": "0",
+      "progressionRoadmap": []
+    },
+    "ispEngine": {
+      "baseFormula": "1D4*10+ME",
+      "perLevelFormula": "10",
+      "savingThrowClass": "master",
+      "grantedAbilityIds": [
+        "psionic_see_aura",
+        "psionic_sense_evil",
+        "psionic_meditation",
+        "psionic_presence_sense"
+      ],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 6,
+          "label": "1st level psionics",
+          "selectionMode": {
+            "kind": "per_category",
+            "buckets": {
+              "sensitive": 2,
+              "physical": 2,
+              "healer": 2
+            }
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "Additional psionic per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["sensitive", "physical", "healer"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Occupation-appropriate gear (varies with background)",
+        "Basic car, pick-up truck, or motorcycle"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "3D6*100",
+      "blackMarketAssets": "1D6*1000 in possessions"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_ashmedai_psychic_sorcerer",
+      "characterOccCategory": "psychic"
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
     ]
   }
 ]

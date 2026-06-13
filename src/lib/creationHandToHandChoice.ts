@@ -6,6 +6,10 @@ import {
 } from './handToHandPipeline'
 
 import { occGrantsDefaultHandToHand } from './occComposition'
+import {
+  alignmentSatisfiesRestrictions,
+  formatAlignmentRestrictionReason,
+} from './occAlignmentGate'
 
 
 
@@ -78,6 +82,10 @@ export type OccHandToHandOption = {
   label: string
 
   electiveSlotCost: number
+
+  disabled?: boolean
+
+  disabledReason?: string
 
 }
 
@@ -221,7 +229,10 @@ function occOffersUntrainedHandToHandDefault(occ: PalladiumOcc): boolean {
   )
 }
 
-export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption[] {
+export function listOccHandToHandOptions(
+  occ: PalladiumOcc,
+  alignment?: string,
+): OccHandToHandOption[] {
 
   const rules = occ.handToHandRules
 
@@ -273,6 +284,16 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
 
     seen.add(tier)
 
+    const alignmentOk = alignmentSatisfiesRestrictions(
+      alignment,
+      path.alignmentRestrictions,
+    )
+    const disabledReason = alignmentOk
+      ? undefined
+      : path.alignmentRestrictions
+        ? formatAlignmentRestrictionReason(path.alignmentRestrictions)
+        : undefined
+
     options.push({
 
       tier,
@@ -280,6 +301,10 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
       label: formatHandToHandOptionLabel(tier, path.electiveSlotCost, false),
 
       electiveSlotCost: path.electiveSlotCost,
+
+      disabled: !alignmentOk,
+
+      disabledReason,
 
     })
 
@@ -299,12 +324,17 @@ export function listOccHandToHandOptions(occ: PalladiumOcc): OccHandToHandOption
  * (e.g. A.D.A. Assassination Specialist requires Assassin before the player opens the dropdown).
  */
 export function effectiveCreationHandToHandTier(
-  character: Pick<Character, 'creationHandToHandTier'>,
+  character: Pick<Character, 'creationHandToHandTier' | 'facade'>,
   occ: PalladiumOcc | undefined,
 ): CreationHandToHandTier {
   if (!occ) return character.creationHandToHandTier ?? 'none'
   const stored = character.creationHandToHandTier
-  const allowed = new Set(listOccHandToHandOptions(occ).map((o) => o.tier))
+  const alignment = character.facade?.alignment
+  const allowed = new Set(
+    listOccHandToHandOptions(occ, alignment)
+      .filter((o) => !o.disabled)
+      .map((o) => o.tier),
+  )
   if (stored && allowed.has(stored)) return stored
   return occStartingHandToHandTier(occ)
 }

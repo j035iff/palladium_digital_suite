@@ -134,7 +134,10 @@
         "skillId": "skill_math_basic"
       }
     ],
-    "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor."
+    "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_computer_operation",
@@ -164,7 +167,8 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -207,7 +211,8 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -232,7 +237,8 @@
     "prerequisites": [],
     "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing.",
     "skillTraits": [
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -305,7 +311,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves."
+    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_firefighting",
@@ -327,7 +336,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear."
+    "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_general_repair_and_maintenance",
@@ -385,7 +397,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects."
+    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_jury_rig",
@@ -454,6 +469,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -477,7 +495,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement."
+    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_literacy",
@@ -510,6 +531,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 56
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -547,6 +571,9 @@
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -579,6 +606,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -607,6 +637,9 @@
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -637,7 +670,10 @@
         "ruleId": "lore_faction_occ_rcc_bonus"
       }
     ],
-    "description": "Provides intimate knowledge of the inner workings, mythology, and legends surrounding a specific faction. Such information as the history of the faction, known leaders, mythical figureheads, methods of operation, bases of operation and safe houses, etc., are all available through the use of this skill. This skill must be taken separately for each individual faction the character has knowledge about."
+    "description": "Provides intimate knowledge of the inner workings, mythology, and legends surrounding a specific faction. Such information as the history of the faction, known leaders, mythical figureheads, methods of operation, bases of operation and safe houses, etc., are all available through the use of this skill. This skill must be taken separately for each individual faction the character has knowledge about.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_lore_factions",
@@ -660,7 +696,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions."
+    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_lore_geomancy",
@@ -682,6 +721,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -725,7 +767,10 @@
         "description": "Identify Magic Artifact (+10% if the item is famous or he's seen pictures or drawings, but -15% to identify an unknown or alien magic item.)"
       }
     ],
-    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners."
+    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_lore_nightbane",
@@ -747,6 +792,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -769,6 +817,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -797,6 +848,9 @@
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -819,6 +873,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -841,7 +898,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Provides knowledge of the myths, rumors, and background of the most notorious secret societies, their historical roots and precedents, if any, and some idea how these societies operate. This skill applies to cults, secret religions, brotherhoods, and full-blown societies. Knowledge gleaned from this skill applies to myth and legends (and rumors) surrounding a given society, not necessarily facts or details about current day operations or members."
+    "description": "Provides knowledge of the myths, rumors, and background of the most notorious secret societies, their historical roots and precedents, if any, and some idea how these societies operate. This skill applies to cults, secret religions, brotherhoods, and full-blown societies. Knowledge gleaned from this skill applies to myth and legends (and rumors) surrounding a given society, not necessarily facts or details about current day operations or members.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_lore_vampires",
@@ -869,6 +929,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -903,7 +966,10 @@
       }
     ],
     "prerequisites": [],
-    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic."
+    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_philosophy",
@@ -937,7 +1003,10 @@
       }
     ],
     "prerequisites": [],
-    "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness."
+    "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_photography",
@@ -959,6 +1028,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -1015,6 +1087,9 @@
         "reference": "Through the Glass Darkly",
         "pageNumber": 9
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -1047,6 +1122,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 57
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {
@@ -1094,7 +1172,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts."
+    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_writing",
@@ -1134,6 +1215,9 @@
         "reference": "Nightbane RPG",
         "pageNumber": 58
       }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   }
 ]

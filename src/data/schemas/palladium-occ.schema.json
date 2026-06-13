@@ -37,6 +37,16 @@
       "type": "string",
       "minLength": 1
     },
+    "genresAvailable": {
+      "type": "array",
+      "description": "Optional genre gate for campaign filtering (e.g. nightbane). When omitted, derived from gameSystems.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
     "gameSystems": {
       "type": "array",
       "minItems": 1,
@@ -146,6 +156,14 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*$",
       "description": "When set, master character creation Tab 6 hosts this sub-forge manifest (overrides race default)."
+    },
+    "packageNotes": {
+      "type": "array",
+      "description": "Player-facing O.C.C. package summary notes (e.g. recommended attributes, race prerequisites) shown in the configurator detail panel.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "supernaturalRuleOverrides": {
+      "$ref": "#/$defs/supernaturalRuleOverrides"
     }
   },
   "$defs": {
@@ -351,11 +369,23 @@
           "type": "string",
           "enum": ["ancient", "modern"],
           "description": "Optional era lock for Weapon Proficiencies vouchers. When set, only ancient or modern W.P. ids are eligible; omit to allow the player to toggle era in creation UI."
+        },
+        "allowedSkillTraits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "Restrict picks to catalog skills tagged with any listed trait (skill_trait_registry.json / skill_trait_lists/*.txt)."
         }
       },
       "anyOf": [
         { "required": ["allowedCategories"] },
-        { "required": ["allowedSkillIds"] }
+        { "required": ["allowedSkillIds"] },
+        { "required": ["allowedSkillTraits"] }
       ]
     },
     "occCoreSkillEntry": {
@@ -364,6 +394,59 @@
         { "$ref": "#/$defs/occCoreSkillChoiceVoucher" }
       ],
       "description": "Either a fixed catalog skill grant or an open-choice voucher in the automatic core package."
+    },
+    "supernaturalGrantedAbilityIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Spells, psionics, or talents auto-granted at creation; do not consume progressionRoadmap selection budget."
+    },
+    "occRelatedSkillCategoryMinimum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["categoryName", "minimumCount"],
+      "properties": {
+        "categoryName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Skill category label (matches palladiumSkills categories[])."
+        },
+        "minimumCount": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Minimum related-skill picks required from this category at creation."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing summary (e.g. \"Two must be from Science\")."
+        }
+      }
+    },
+    "occClassAbilityPercentileProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basePercent", "perLevelPercent"],
+      "properties": {
+        "basePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98
+        },
+        "perLevelPercent": {
+          "type": "integer",
+          "description": "Additive % per character level (e.g. Understand the Principles of Magic +2%/level)."
+        },
+        "skillId": {
+          "type": "string",
+          "pattern": "^skill_[a-z][a-z0-9_]*$",
+          "description": "Optional catalog skill anchor when a matching palladiumSkills row exists."
+        }
+      }
     },
     "occCategoryAccessRule": {
       "type": "object",
@@ -402,6 +485,22 @@
           "additionalProperties": {
             "type": "integer"
           }
+        },
+        "selectionSlotCost": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Related/secondary skill slots consumed per pick from this category (default 1). Distinct from professional-quality repeat tiers."
+        },
+        "skillSpecificSelectionSlotCosts": {
+          "type": "object",
+          "description": "Per-skill slot costs that override selectionSlotCost for listed ids (e.g. Medical default 2, First Aid 1).",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
         }
       }
     },
@@ -421,6 +520,10 @@
         "categoryRules": {
           "type": "array",
           "items": { "$ref": "#/$defs/occCategoryAccessRule" }
+        },
+        "categoryMinimums": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occRelatedSkillCategoryMinimum" }
         }
       }
     },
@@ -486,6 +589,10 @@
         "description": {
           "type": "string",
           "minLength": 1
+        },
+        "percentileProfile": {
+          "$ref": "#/$defs/occClassAbilityPercentileProfile",
+          "description": "Structured percentile O.C.C. ability (e.g. Understand the Principles of Magic 70% +2%/level)."
         }
       }
     },
@@ -511,6 +618,11 @@
           "items": {
             "$ref": "#/$defs/occCategoryAccessRule"
           }
+        },
+        "categoryMinimums": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occRelatedSkillCategoryMinimum" },
+          "description": "Mandatory related-skill category quotas at creation (e.g. two Science skills)."
         }
       }
     },
@@ -586,6 +698,10 @@
           "type": "integer",
           "minimum": 0,
           "description": "Related or secondary slots spent to acquire this hand-to-hand tier."
+        },
+        "alignmentRestrictions": {
+          "$ref": "#/$defs/alignmentRestrictions",
+          "description": "When set, path is only offered when character alignment satisfies allowed/forbidden (e.g. Assassin for evil alignments)."
         }
       }
     },
@@ -649,6 +765,200 @@
         "saves": {
           "$ref": "#/$defs/numericBonusMap",
           "description": "save_poison, save_magic, save_psionics, etc."
+        },
+        "levelGatedSaves": {
+          "type": "object",
+          "description": "Per-save additive bonuses unlocked at character levels (keys summed when level ≥ milestone).",
+          "additionalProperties": {
+            "$ref": "#/$defs/spellStrengthProgression"
+          },
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        }
+      }
+    },
+    "supernaturalSelectionModePool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "selections", "categories"],
+      "properties": {
+        "kind": { "const": "pool" },
+        "selections": { "type": "integer", "minimum": 1 },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "Psionic pool ids (sensitive, physical, healer, super) or spell restriction tags."
+        }
+      }
+    },
+    "supernaturalSelectionModePerCategory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "buckets"],
+      "properties": {
+        "kind": { "const": "per_category" },
+        "buckets": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "description": "Independent pick counts per category (e.g. sensitive: 2, physical: 2, healer: 2)."
+        }
+      }
+    },
+    "supernaturalSelectionModeSingleCategory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "selections", "categories"],
+      "properties": {
+        "kind": { "const": "single_category" },
+        "selections": { "type": "integer", "minimum": 1 },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "Player locks one category from this list, then selects N powers from that pool (Psychic Gate minor/major single-pool model)."
+        }
+      }
+    },
+    "supernaturalSelectionMode": {
+      "oneOf": [
+        { "$ref": "#/$defs/supernaturalSelectionModePool" },
+        { "$ref": "#/$defs/supernaturalSelectionModePerCategory" },
+        { "$ref": "#/$defs/supernaturalSelectionModeSingleCategory" }
+      ]
+    },
+    "supernaturalCreationSelectionStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selectionsGained", "selectionMode"],
+      "properties": {
+        "selectionsGained": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Redundant with mode.selections / sum(buckets) for validation; kept for legacy budget rollups."
+        },
+        "selectionMode": {
+          "$ref": "#/$defs/supernaturalSelectionMode"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing summary for package summary / abilities forge."
+        }
+      }
+    },
+    "supernaturalPerLevelSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromLevel", "selectionsGained", "selectionMode"],
+      "properties": {
+        "fromLevel": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "First character level that receives this repeating grant (inclusive)."
+        },
+        "toLevel": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Last character level that receives this grant (inclusive). Omit for no upper cap within campaign level band."
+        },
+        "selectionsGained": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selectionMode": {
+          "$ref": "#/$defs/supernaturalSelectionMode"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "supernaturalRuleOverrideLeyLine": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "useGlobalDefault": {
+          "type": "boolean",
+          "description": "When true or omitted, display global ley-line psionic modifiers. When false, use local multipliers and notes."
+        },
+        "rangeDurationNearLeyLineMultiplier": { "type": "number", "minimum": 0 },
+        "rangeDurationAtNexusMultiplier": { "type": "number", "minimum": 0 },
+        "damageAtNexusMultiplier": { "type": "number", "minimum": 0 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "supernaturalRuleOverrideMeditation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "useGlobalDefault": { "type": "boolean" },
+        "ispPerHour": { "type": "integer", "minimum": 0 },
+        "sleepRestIspPerHour": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "supernaturalRuleOverridePsychicApm": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "useGlobalDefault": { "type": "boolean" },
+        "linkedToHandToHand": {
+          "type": "boolean",
+          "description": "When true, psionic attacks per melee equal hand-to-hand APM unless adjusted below."
+        },
+        "bonusTotalActions": {
+          "type": "integer",
+          "description": "Additive APM usable for any action including psionics."
+        },
+        "additionalPsionicOnlyActions": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Extra melee actions that may only be spent on psionic powers."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "supernaturalRuleOverrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "leyLine": { "$ref": "#/$defs/supernaturalRuleOverrideLeyLine" },
+        "meditation": { "$ref": "#/$defs/supernaturalRuleOverrideMeditation" },
+        "psychicApm": { "$ref": "#/$defs/supernaturalRuleOverridePsychicApm" }
+      }
+    },
+    "supernaturalEngineSelectionFields": {
+      "type": "object",
+      "properties": {
+        "creationSelectionPlan": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/supernaturalCreationSelectionStep" },
+          "description": "Structured 1st-level supernatural pick plan (replaces verbose duplicate progressionRoadmap rows when set)."
+        },
+        "perLevelSelection": {
+          "$ref": "#/$defs/supernaturalPerLevelSelection",
+          "description": "Repeating per-level supernatural grants (e.g. +1 psionic/level from any minor category)."
         }
       }
     },
@@ -669,7 +979,11 @@
           "type": "array",
           "items": { "type": "string", "minLength": 1 },
           "uniqueItems": true,
-          "description": "e.g. Level 1 Spells Only, Necromancy Only, Sensitive Only."
+          "description": "Legacy restriction tags (e.g. Level 1 Spells Only, Sensitive Only). Prefer creationSelectionPlan when authoring new rows."
+        },
+        "selectionMode": {
+          "$ref": "#/$defs/supernaturalSelectionMode",
+          "description": "Optional structured mode on a single roadmap step (alternative to flat categoryRestrictions)."
         }
       }
     },
@@ -723,6 +1037,22 @@
           "type": "array",
           "items": { "$ref": "#/$defs/occSpellAccessRule" },
           "description": "Cross-school borrow rules (e.g. Mirrormage wizard spells via mirror focus). Spells with no access path are hidden in UI."
+        },
+        "grantedAbilityIds": {
+          "$ref": "#/$defs/supernaturalGrantedAbilityIds"
+        },
+        "spellAcquisition": {
+          "type": "string",
+          "enum": ["open", "roadmap_only"],
+          "description": "open = may learn/purchase spells of any level anytime (Sorcerer); roadmap_only = intuitive roadmap picks only (Mystic)."
+        },
+        "creationSelectionPlan": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/supernaturalCreationSelectionStep" }
+        },
+        "perLevelSelection": {
+          "$ref": "#/$defs/supernaturalPerLevelSelection"
         }
       }
     },
@@ -749,6 +1079,17 @@
           "items": {
             "$ref": "#/$defs/supernaturalProgressionStep"
           }
+        },
+        "grantedAbilityIds": {
+          "$ref": "#/$defs/supernaturalGrantedAbilityIds"
+        },
+        "creationSelectionPlan": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/supernaturalCreationSelectionStep" }
+        },
+        "perLevelSelection": {
+          "$ref": "#/$defs/supernaturalPerLevelSelection"
         }
       }
     },
@@ -779,6 +1120,14 @@
           "items": {
             "$ref": "#/$defs/supernaturalProgressionStep"
           }
+        },
+        "creationSelectionPlan": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/supernaturalCreationSelectionStep" }
+        },
+        "perLevelSelection": {
+          "$ref": "#/$defs/supernaturalPerLevelSelection"
         }
       }
     },

@@ -203,6 +203,7 @@ import {
   applyOccStartingSkillPicks,
   patchCharacterCreationFromOcc,
 } from '../lib/occCreationDerivation'
+import { occSupernaturalGrantedAbilityIds } from '../lib/occSupernaturalGrants'
 import {
   getOccSpecialization,
   resolveEffectivePalladiumOcc,
@@ -601,8 +602,13 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
     return null
   }
 
+  const grantedIds = new Set(
+    occSupernaturalGrantedAbilityIds(occRow, prev.occSpecializationId),
+  )
+
   const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
     selected.filter((x) => {
+      if (grantedIds.has(x)) return false
       const f = getFeatureById(x)
       return f != null && featureBudgetCategory(f) === c
     }).length
@@ -2414,10 +2420,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const removeSelectedAbility = useCallback((id: string) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      selectedAbilities: (prev.selectedAbilities ?? []).filter((x) => x !== id),
-    }))
+    setRawCharacter((prev) => {
+      const occRow = getLibraryOccById(prev.occ.id)
+      const granted = new Set(
+        occSupernaturalGrantedAbilityIds(occRow, prev.occSpecializationId),
+      )
+      if (granted.has(id)) return prev
+      return {
+        ...prev,
+        selectedAbilities: (prev.selectedAbilities ?? []).filter((x) => x !== id),
+      }
+    })
   }, [])
 
   const spendEnergy = useCallback(

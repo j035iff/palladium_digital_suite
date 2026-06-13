@@ -38,8 +38,10 @@
         0, 2051, 4101, 8251, 16501, 24601, 34701, 49801, 69901, 95001, 130101, 180201, 230301,
         280401, 340501
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Snakebird & Mystic R.C.C.s. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_mystic"
+      ],
+      "notes": "Nightbane RPG p.233 — Snakebird & Mystic R.C.C.s. O.C.C.s: occ_mystic."
     },
     {
       "id": "nightbane_core_doppleganger",
@@ -77,8 +79,11 @@
         0, 2601, 5001, 10001, 20001, 30001, 50001, 80001, 120001, 170001, 230001, 300001, 380001,
         470001, 600001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Nightbane Sorcerer & Nightbane Mystic O.C.C.s. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_nightbane_sorcerer",
+        "occ_nightbane_mystic"
+      ],
+      "notes": "Nightbane RPG p.233 — Nightbane Sorcerer & Nightbane Mystic O.C.C.s."
     },
     {
       "id": "nightbane_core_wampyr",
@@ -131,8 +136,11 @@
         0, 2241, 4481, 8961, 17921, 25921, 35921, 50921, 70921, 95921, 135921, 185921, 225921, 275921,
         335921
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Ashmedai, Psychic P.C.C., and Sorceror; first column (0–2,240)."
+      "occIds": [
+        "occ_sorcerer",
+        "occ_psychic_pcc"
+      ],
+      "notes": "Nightbane RPG p.233 — Ashmedai, Psychic P.C.C., and Sorceror; first column (0–2,240). O.C.C.s: occ_sorcerer, occ_psychic_pcc."
     },
     {
       "id": "nightbane_core_night_prince_vampire",

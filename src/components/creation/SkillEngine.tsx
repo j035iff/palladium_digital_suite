@@ -296,15 +296,25 @@ export function SkillEngine() {
 
   const relatedSkillCap = relatedCap
 
-  const relatedPickSlots = sumCreationSkillPickSlots(relatedSelected)
+  const relatedPickSlots = sumCreationSkillPickSlots(relatedSelected, {
+    occ: effectiveOcc ?? undefined,
+    specializationId: character.occSpecializationId,
+  })
 
   const relatedSlotsUsed = sumRelatedPoolSlotUsage(
     relatedSelected,
     resolvedOccPicks,
     handToHandReserved,
+    {
+      occ: effectiveOcc ?? undefined,
+      specializationId: character.occSpecializationId,
+    },
   )
 
-  const secondaryPickSlots = sumCreationSkillPickSlots(secondarySelected)
+  const secondaryPickSlots = sumCreationSkillPickSlots(secondarySelected, {
+    occ: effectiveOcc ?? undefined,
+    specializationId: character.occSpecializationId,
+  })
 
   const secondaryCap = occCreationDerived?.secondarySkillSlots ?? 0
 
@@ -313,8 +323,11 @@ export function SkillEngine() {
     : (character.creationHandToHandTier ?? 'none')
 
   const handToHandOptions = useMemo(
-    () => (effectiveOcc ? listOccHandToHandOptions(effectiveOcc) : []),
-    [effectiveOcc],
+    () =>
+      effectiveOcc
+        ? listOccHandToHandOptions(effectiveOcc, character.facade?.alignment)
+        : [],
+    [effectiveOcc, character.facade?.alignment],
   )
 
   const handToHandInputClass = morphus
@@ -752,16 +765,19 @@ export function SkillEngine() {
                   relatedSlotsUsed - handToHandReserved,
                 )
                 const isCurrent = opt.tier === handToHandTier
+                const blocked = opt.disabled || (!affordable && !isCurrent)
                 return (
                   <option
                     key={opt.tier}
                     value={opt.tier}
-                    disabled={!affordable && !isCurrent}
+                    disabled={blocked}
                   >
                     {opt.label}
-                    {!affordable && !isCurrent
-                      ? ' — insufficient related slots'
-                      : ''}
+                    {opt.disabledReason
+                      ? ` — ${opt.disabledReason}`
+                      : !affordable && !isCurrent
+                        ? ' — insufficient related slots'
+                        : ''}
                   </option>
                 )
               })}

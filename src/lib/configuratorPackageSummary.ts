@@ -27,7 +27,13 @@ import { occPsychicGateBypassed } from './occCatalogEngine'
 import { formatOccCategoryRuleHeader } from './occCategoryRuleDisplay'
 import { racePassiveModifiers } from './raceEngine'
 import { formatPassiveAttributeBonuses } from './sheetBonuses'
-import { isDiceNotation } from './diceNotationBounds'
+import { formatPsionicGlobalRuleSummaryLines } from './psionicGlobalRules'
+import {
+  formatCreationSelectionPlanLines,
+  formatPerLevelSelectionLine,
+  occIspCreationSelectionPlan,
+  occIspPerLevelSelection,
+} from './occSupernaturalSelection'
 
 
 
@@ -48,6 +54,7 @@ export type ConfiguratorPackageSummary = {
 /** Canonical O.C.C. detail section order (after the O.C.C. heading). */
 export const OCC_PACKAGE_SECTION_ORDER = [
   'occ-attributes-reqs',
+  'occ-package-notes',
   'occ-special-abilities',
   'occ-supernatural',
   'occ-vitals',
@@ -344,14 +351,24 @@ function formatOccSupernaturalAbilityLines(
       lines.push(`I.S.P.: ${occ.baseStats.ispDice} (base dice)`)
     }
     if (budget.psionicSlots > 0) {
-      lines.push(
-        `${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'} to select at creation`,
-      )
-      const psionicRestrictions = occCreationPsionicRestrictions(occ, 1)
-      if (psionicRestrictions.length) {
-        lines.push(`Psionic categories: ${psionicRestrictions.join('; ')}`)
+      const planLines = formatCreationSelectionPlanLines(occIspCreationSelectionPlan(occ))
+      if (planLines.length) {
+        for (const line of planLines) {
+          lines.push(line)
+        }
+      } else {
+        lines.push(
+          `${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'} to select at creation`,
+        )
+        const psionicRestrictions = occCreationPsionicRestrictions(occ, 1)
+        if (psionicRestrictions.length) {
+          lines.push(`Psionic categories: ${psionicRestrictions.join('; ')}`)
+        }
       }
+      const perLevel = formatPerLevelSelectionLine(occIspPerLevelSelection(occ))
+      if (perLevel) lines.push(perLevel)
     }
+    lines.push(...formatPsionicGlobalRuleSummaryLines(occ))
   }
 
   if (budget.talentSlots > 0) {
@@ -644,7 +661,9 @@ function buildOccSections(
     ...formatOccAttributeBonusLines(effective.staticBonuses?.attributes),
   ])
 
-
+  pushSection(sections, 'occ-package-notes', 'Package notes', [
+    ...(occ.packageNotes ?? []),
+  ])
 
   pushSection(
     sections,

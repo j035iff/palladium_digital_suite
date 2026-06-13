@@ -107,7 +107,7 @@
     "vitals": {
       "hpFormula": "PE + 1D6",
       "averageStandardPpe": "PE + 3D6*10+20",
-      "sdc": "30"
+      "sdc": 30
     },
     "psionics": {
       "capabilityType": "none",
@@ -120,7 +120,9 @@
         "occ_nightbane_basic",
         "occ_nightbane_resistance_spook_squad",
         "occ_nightbane_nocturne_seeker_lightbringer",
-        "occ_nightbane_warlord"
+        "occ_nightbane_warlord",
+        "occ_nightbane_sorcerer",
+        "occ_nightbane_mystic"
       ]
     },
     "innateSkills": [],

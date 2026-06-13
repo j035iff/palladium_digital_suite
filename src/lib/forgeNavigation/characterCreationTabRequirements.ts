@@ -27,6 +27,8 @@ import {
   assessSecondarySkillSlotBlockers,
   creationRelatedSkillCap,
 } from '../creationPsychicSkills'
+import { assessRelatedSkillCategoryMinimumBlockers } from '../occRelatedSkillMinimums'
+import { occSupernaturalGrantedAbilityIds } from '../occSupernaturalGrants'
 import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
   occRelatedSkillSlotBudget,
@@ -265,13 +267,29 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
       occ,
       handToHandReserved,
     )
+    const categoryMinimumBlockers = assessRelatedSkillCategoryMinimumBlockers(
+      occ,
+      relatedPicks,
+      character.occSpecializationId,
+    )
     requirements.push({
       id: 'related-slots',
       label:
         relatedBlockers[0] ??
+        categoryMinimumBlockers[0] ??
         `Fill all O.C.C. related skill slots (${relatedSelected} / ${relatedCap})`,
-      satisfied: relatedBlockers.length === 0,
+      satisfied:
+        relatedBlockers.length === 0 && categoryMinimumBlockers.length === 0,
     })
+    if (categoryMinimumBlockers.length > 1) {
+      for (const [index, blocker] of categoryMinimumBlockers.slice(1).entries()) {
+        requirements.push({
+          id: `related-category-min-${index}`,
+          label: blocker,
+          satisfied: false,
+        })
+      }
+    }
   }
 
   if (secondaryBase > 0) {
@@ -377,6 +395,7 @@ function tab7Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
   }
   const counts = countSelectedAbilitiesByBudgetCategory(
     ctx.character.selectedAbilities,
+    occSupernaturalGrantedAbilityIds(ctx.occ, ctx.character.occSpecializationId),
   )
   const requirements: ForgeTabRequirement[] = []
   if (budget.spellSlots > 0) {

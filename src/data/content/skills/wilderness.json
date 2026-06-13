@@ -55,7 +55,8 @@
     ],
     "skillTraits": [
       "related_to_repair",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {

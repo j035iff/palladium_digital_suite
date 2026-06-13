@@ -71,7 +71,7 @@ function readLines(fileName) {
   return readFileSync(join(listsDir, fileName), 'utf8')
     .split(/\r?\n/)
     .map((l) => l.trim())
-    .filter(Boolean)
+    .filter((line) => line.length > 0 && !line.startsWith('#'))
 }
 
 function resolveSkillId(line, skills, byNorm) {

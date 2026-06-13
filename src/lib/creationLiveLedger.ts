@@ -372,11 +372,19 @@ function occSaveLedgerParts(
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
   keys: readonly string[],
+  characterLevel = 1,
 ): SaveDeductionLine[] {
   if (!occ?.id?.trim()) return []
   let total = 0
   for (const key of keys) {
-    total += occStaticNumericBonus(occ, specializationId, 'saves', key, {})
+    total += occStaticNumericBonus(
+      occ,
+      specializationId,
+      'saves',
+      key,
+      {},
+      characterLevel,
+    )
   }
   return total > 0 ? [{ label: 'O.C.C.', amount: total }] : []
 }
@@ -891,7 +899,10 @@ export function buildCreationSavesBlock(
   return [
     saveLineWithAttribution(
       'Magic',
-      pe.saveMagic ? [{ label: 'P.E.', amount: pe.saveMagic }] : [],
+      [
+        ...(pe.saveMagic ? [{ label: 'P.E.', amount: pe.saveMagic }] : []),
+        ...occSaveLedgerParts(occ, specId, [...magicKeys], character.level),
+      ],
       character,
       activeForm,
       magicKeys,
@@ -901,7 +912,7 @@ export function buildCreationSavesBlock(
       'Psionics',
       [
         ...(me.savePsionics ? [{ label: 'M.E.', amount: me.savePsionics }] : []),
-        ...occSaveLedgerParts(occ, specId, ['save_psionics', 'save_isp']),
+        ...occSaveLedgerParts(occ, specId, ['save_psionics', 'save_isp'], character.level),
       ],
       character,
       activeForm,
@@ -910,7 +921,12 @@ export function buildCreationSavesBlock(
     ),
     saveLineWithAttribution(
       'Horror Factor',
-      occSaveLedgerParts(occ, specId, ['save_horror', 'save_horror_factor']),
+      occSaveLedgerParts(
+        occ,
+        specId,
+        ['save_horror', 'save_horror_factor'],
+        character.level,
+      ),
       character,
       activeForm,
       ['save_horror', 'save_horror_factor'],
@@ -956,7 +972,10 @@ export function buildCreationSavesBlock(
     ),
     saveLineWithAttribution(
       'Possession',
-      me.savePossession ? [{ label: 'M.E. (31+)', amount: me.savePossession }] : [],
+      [
+        ...(me.savePossession ? [{ label: 'M.E. (31+)', amount: me.savePossession }] : []),
+        ...occSaveLedgerParts(occ, specId, ['save_possession'], character.level),
+      ],
       character,
       activeForm,
       ['save_possession'],
@@ -964,7 +983,7 @@ export function buildCreationSavesBlock(
     ),
     saveLineWithAttribution(
       'Mind Control',
-      occSaveLedgerParts(occ, specId, ['save_mind_control']),
+      occSaveLedgerParts(occ, specId, ['save_mind_control'], character.level),
       character,
       activeForm,
       ['save_mind_control'],

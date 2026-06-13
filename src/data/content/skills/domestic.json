@@ -138,7 +138,10 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively."
+    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively.",
+    "skillTraits": [
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_play_musical_instrument",

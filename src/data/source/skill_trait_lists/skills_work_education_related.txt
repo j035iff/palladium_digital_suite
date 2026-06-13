@@ -1,0 +1,81 @@
+# Nightbane Psychic P.C.C. — work-related / educational core picks (p. 69).
+# Policy: all Electrical, Mechanical, Medical, and Science skills; Technical except
+# Art, Barter, Begging, Jury-Rig, Rope Works, and Divination; Communications:
+# Radio: Basic and T.V./Video; Computer: operation, programming, and repair
+# (not Computer Hacking); plus Carpentry (trade).
+# Housekeeping is listed for vocational backgrounds — the P.C.C. also grants a
+# separate Domestic pick (+10%); prefer that voucher for pure domestic skills.
+# Sculpting & Whittling is excluded but not in the Nightbane catalog yet.
+# Run: npm run apply:skill-traits
+
+# --- Electrical ---
+basic electronics
+electrical engineer
+
+# --- Computer (except Hacking) ---
+computer operation
+computer programming
+computer repair
+
+# --- Communications ---
+radio basic
+tv/video
+
+# --- Mechanical ---
+locksmith
+vehicle armorer
+
+# --- Medical ---
+criminal sciences & forensics
+first aid
+holistic medicine
+medical doctor
+paramedic
+pathology
+toxicology
+
+# --- Science ---
+anthropology
+archaeology
+astronomy
+biology
+botany
+chemistry
+chemistry analytical
+math: advanced
+math: basic
+
+# --- Technical (vocational / academic; exclusions applied) ---
+business & finance
+construction
+excavation
+firefighting
+general repair & maintenance
+history
+language
+law
+literacy
+lore: astral
+lore: demons and monsters
+lore: dreamstream
+lore: faction
+lore: factions
+lore: geomancy or lines of power
+lore: magic
+lore: nightbane
+lore: nightlands
+lore: psychic
+lore: religion
+lore: secret societies
+lore: vampires
+mythology
+philosophy
+photography
+principles of magic
+research
+salvage
+writing
+
+# --- Additional trade / vocational ---
+carpentry
+housekeeping

@@ -10,6 +10,7 @@ export function occStaticNumericBonus(
   section: 'vitals' | 'combat' | 'saves',
   statKey: string,
   resolutions: Readonly<Record<string, number>> = {},
+  characterLevel = 1,
 ): number {
   if (!occ) return 0
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
@@ -20,6 +21,27 @@ export function occStaticNumericBonus(
   if (typeof resolved === 'number' && Number.isFinite(resolved)) {
     if (typeof raw === 'string' && isDiceNotation(raw)) {
       total += resolved
+    }
+  }
+  if (section === 'saves') {
+    total += occLevelGatedSaveBonus(effective, statKey, characterLevel)
+  }
+  return total
+}
+
+/** Sum level-gated save bonuses for keys at or below character level. */
+export function occLevelGatedSaveBonus(
+  occ: PalladiumOcc,
+  saveKey: string,
+  characterLevel: number,
+): number {
+  const progression = occ.staticBonuses?.levelGatedSaves?.[saveKey]
+  if (!progression) return 0
+  let total = 0
+  for (const [levelStr, value] of Object.entries(progression)) {
+    const level = Number.parseInt(levelStr, 10)
+    if (Number.isFinite(level) && characterLevel >= level && typeof value === 'number') {
+      total += value
     }
   }
   return total

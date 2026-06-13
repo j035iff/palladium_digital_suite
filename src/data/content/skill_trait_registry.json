@@ -42,6 +42,12 @@
       "name": "Skills requiring focus",
       "description": "Skills that demand sustained concentration or mental focus (see skills_requiring_focus.txt).",
       "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "work_education_related",
+      "name": "Work / education related skills",
+      "description": "College, trade, and vocational P.C.C. core picks (Nightbane Psychic P.C.C. — see skills_work_education_related.txt). Includes computer skills except Hacking; Radio: Basic and T.V./Video.",
+      "gameSystems": ["nightbane"]
     }
   ],
   "membershipNotes": {

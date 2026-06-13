@@ -97,7 +97,8 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -189,7 +190,8 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_focus"
+      "requires_focus",
+      "work_education_related"
     ]
   }
 ]

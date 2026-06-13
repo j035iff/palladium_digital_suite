@@ -5,6 +5,7 @@ import { getFeatureById } from '../data/library/registry'
 import { abilityPassesOccSupernaturalRules } from './occCreationDerivation'
 import { magicSchoolFilterLabel } from './magicSchoolLabels'
 import { psychicGatePsionicPickAllowed } from './psychicGatePsionicBudget'
+import { occEnginePsionicPickAllowed } from './occSupernaturalSelection'
 import { psionicCategoryFilterLabel } from './psionicCategoryLabels'
 import type {
   PalladiumOcc,
@@ -71,6 +72,15 @@ export function psionicRowIsSelectable(
     viewingCategory: ctx.viewingCategory,
   })
   if (psychicGate && !psychicGate.allowed) return false
+
+  const occEngine = occEnginePsionicPickAllowed({
+    occ: ctx.activeOcc,
+    selectedIds: ctx.selectedIds,
+    candidateId: catalog.id,
+    genreId: ctx.genreId,
+    viewingCategory: ctx.viewingCategory,
+  })
+  if (occEngine && !occEngine.allowed) return false
   return true
 }
 

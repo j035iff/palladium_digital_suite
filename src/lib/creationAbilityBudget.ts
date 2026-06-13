@@ -11,6 +11,8 @@ import {
   resolveGateAwareCreationAbilityBudget,
   type PsychicGateMajorAllocation,
 } from './psychicGatePsionicBudget'
+import { assessOccEnginePsionicBlockers, occEnginePsionicRulesApply } from './occSupernaturalSelection'
+import { occSupernaturalGrantedAbilityIds } from './occSupernaturalGrants'
 import type { PalladiumOcc, PsychicTier } from '../types'
 
 export type AbilityBudgetCounts = {
@@ -30,8 +32,10 @@ export type AbilityBudgetShortfall = {
 
 export function countSelectedAbilitiesByBudgetCategory(
   selectedIds: readonly string[] | undefined | null,
+  excludeGrantedIds?: readonly string[],
 ): AbilityBudgetCounts {
-  const ids = selectedIds ?? []
+  const granted = new Set(excludeGrantedIds ?? [])
+  const ids = (selectedIds ?? []).filter((id) => !granted.has(id))
   return {
     spell: ids.filter((id) => getAbilityById(id)?.category === 'Spell').length,
     psionic: ids.filter((id) => getAbilityById(id)?.category === 'Psionic').length,
@@ -172,7 +176,19 @@ export function assessAbilitiesBudgetBlockers(
     return gateBlockers
   }
 
-  const counts = countSelectedAbilitiesByBudgetCategory(picks)
+  const occEngineBlockers = assessOccEnginePsionicBlockers({
+    occ,
+    selectedIds: picks,
+    genreId,
+  })
+  if (occEnginePsionicRulesApply(occ)) {
+    return occEngineBlockers
+  }
+
+  const grantedIds = occ
+    ? occSupernaturalGrantedAbilityIds(occ, undefined)
+    : []
+  const counts = countSelectedAbilitiesByBudgetCategory(picks, grantedIds)
   return listAbilityBudgetShortfalls(budget, counts).map(formatAbilityBudgetShortfall)
 }
 

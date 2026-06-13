@@ -112,6 +112,47 @@ function hasStartingEquipment(block: OccStartingEquipment | undefined): boolean 
   )
 }
 
+function mergeLevelGatedSaves(
+  base: OccStaticBonuses['levelGatedSaves'] | undefined,
+  patch: OccStaticBonuses['levelGatedSaves'] | undefined,
+): OccStaticBonuses['levelGatedSaves'] | undefined {
+  if (!patch || Object.keys(patch).length === 0) return base
+  if (!base) return patch
+  const out: Record<string, Record<string, number>> = {}
+  for (const saveKey of new Set([...Object.keys(base), ...Object.keys(patch)])) {
+    const merged: Record<string, number> = { ...(base[saveKey] ?? {}) }
+    for (const [level, value] of Object.entries(patch[saveKey] ?? {})) {
+      merged[level] = (merged[level] ?? 0) + value
+    }
+    out[saveKey] = merged
+  }
+  return out
+}
+
+function mergeCategoryMinimums(
+  base: OccRelatedSkills['categoryMinimums'] | undefined,
+  patch: OccRelatedSkills['categoryMinimums'] | undefined,
+): OccRelatedSkills['categoryMinimums'] | undefined {
+  if (!patch?.length) return base
+  if (!base?.length) return patch
+  const byName = new Map(base.map((m) => [m.categoryName.toLowerCase(), { ...m }]))
+  for (const rule of patch) {
+    const key = rule.categoryName.toLowerCase()
+    const prev = byName.get(key)
+    byName.set(
+      key,
+      prev
+        ? {
+            ...prev,
+            ...rule,
+            minimumCount: Math.max(prev.minimumCount, rule.minimumCount),
+          }
+        : rule,
+    )
+  }
+  return [...byName.values()]
+}
+
 function mergeStaticBonuses(
   base: OccStaticBonuses | undefined,
   patch: OccStaticBonuses | undefined,
@@ -123,6 +164,7 @@ function mergeStaticBonuses(
     vitals: mergeNumericBonusMaps(base.vitals, patch.vitals),
     combat: mergeNumericBonusMaps(base.combat, patch.combat),
     saves: mergeNumericBonusMaps(base.saves, patch.saves),
+    levelGatedSaves: mergeLevelGatedSaves(base.levelGatedSaves, patch.levelGatedSaves),
   }
 }
 
@@ -160,6 +202,10 @@ function mergeRelatedSkills(
       ...new Set([...(base.startingSkillIds ?? []), ...(patch.startingSkillIds ?? [])]),
     ],
     categoryRules: mergeCategoryRules(base.categoryRules, patch.categoryRules),
+    categoryMinimums: mergeCategoryMinimums(
+      base.categoryMinimums,
+      patch.categoryMinimums,
+    ),
   }
 }
 

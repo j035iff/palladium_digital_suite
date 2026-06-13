@@ -22,7 +22,8 @@ import {
   occGrantPickComplete,
   skillRequiresSpecialization,
 } from './creationSkillPicks'
-import { resolveCatalogSkillId } from '../data/library/skillsCatalogLoader'
+import { resolveCatalogSkillId, getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import { skillHasTrait } from '../data/library/skillTraitRegistryLoader'
 import {
   isOccCoreSkillChoiceVoucher,
   resolveEffectivePalladiumOcc,
@@ -65,6 +66,12 @@ export function formatOccCoreVoucherCategoryScope(
     const eraLabel =
       entry.weaponProficiencyEra === 'ancient' ? 'Ancient' : 'Modern'
     return `${eraLabel} Weapon Proficiencies`
+  }
+  if (entry.allowedSkillTraits?.length) {
+    const scope = entry.allowedSkillTraits
+      .map((id) => id.replace(/_/g, ' '))
+      .join(', ')
+    return scope
   }
   if (entry.allowedCategories?.length) {
     return entry.allowedCategories.join(', ')
@@ -254,6 +261,15 @@ function skillMatchesVoucher(
 ): boolean {
   if (!libraryIds.has(skillId)) return false
 
+  if (entry.allowedSkillTraits?.length) {
+    const row = getPalladiumSkillCatalogEntryById(skillId)
+    if (!row) return false
+    const hasTrait = entry.allowedSkillTraits.some((traitId) =>
+      skillHasTrait(row, traitId),
+    )
+    if (!hasTrait) return false
+  }
+
   if (entry.allowedSkillIds?.length) {
     if (!entry.allowedSkillIds.includes(skillId)) return false
   } else if (entry.allowedCategories?.length) {
@@ -262,6 +278,8 @@ function skillMatchesVoucher(
       voucherAllowedCategoryMatches(c, skillId, cats),
     )
     if (!categoryMatch) return false
+  } else if (!entry.allowedSkillTraits?.length) {
+    return false
   }
 
   const lockedEra = resolveVoucherWeaponProficiencyEra(entry)

@@ -29,9 +29,10 @@
         "occ_ex_government_agent",
         "occ_team_epsilon_trooper",
         "occ_ada_field_agent",
-        "occ_pandora_project_researcher"
+        "occ_pandora_project_researcher",
+        "occ_pab_field_agent"
       ],
-      "notes": "Spook Squad field O.C.C.s (not P.A.B. Psychic Agent). O.C.C.s: occ_ex_government_agent, occ_team_epsilon_trooper, occ_ada_field_agent, occ_pandora_project_researcher."
+      "notes": "Spook Squad field O.C.C.s (not P.A.B. Psychic Agent). O.C.C.s: occ_ex_government_agent, occ_team_epsilon_trooper, occ_ada_field_agent, occ_pandora_project_researcher, occ_pab_field_agent."
     },
     {
       "id": "between_shadows_dream_astral",

@@ -23,7 +23,9 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_dexterity"
+      "related_to_repair",
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -57,7 +59,8 @@
       "related_to_electrical",
       "related_to_repair",
       "requires_dexterity",
-      "requires_light_touch"
+      "requires_light_touch",
+      "work_education_related"
     ]
   },
   {
@@ -89,7 +92,8 @@
     ],
     "skillTraits": [
       "related_to_electrical",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   }
 ]

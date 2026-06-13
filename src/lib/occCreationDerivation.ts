@@ -17,6 +17,10 @@ import {
   resolvePsychicGateBypassed,
 } from './creationPhases'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
+import {
+  mergeOccGrantedAbilities,
+  occSupernaturalGrantedAbilityIds,
+} from './occSupernaturalGrants'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { initialOccCoreVoucherPicks } from './creationInvalidate'
 import { occStartingHandToHandTier } from './creationHandToHandChoice'
@@ -29,6 +33,13 @@ import {
 } from './magicSchool'
 import { spellAccessibleToOcc } from './spellAccessPath'
 import { evaluateSpellPickGate } from './spellAccessResolver'
+import {
+  formatCreationSelectionPlanLines,
+  formatPerLevelSelectionLine,
+  occCreationPsionicSlotBudget,
+  occIspCreationSelectionPlan,
+  occIspPerLevelSelection,
+} from './occSupernaturalSelection'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -83,7 +94,9 @@ function customEngineTalentSlots(occ: PalladiumOcc, maxLevel: number): number {
 /** Starting (level ≤ 1) supernatural pick budgets from engines; progression hooks override when set. */
 export function occCreationAbilityBudget(occ: PalladiumOcc): OccCreationAbilityBudget {
   const fromPpe = sumRoadmapSelections(occ.ppeEngine?.progressionRoadmap, 1)
-  const fromIsp = sumRoadmapSelections(occ.ispEngine?.progressionRoadmap, 1)
+  const fromIspPlan = occCreationPsionicSlotBudget(occ)
+  const fromIspRoadmap = sumRoadmapSelections(occ.ispEngine?.progressionRoadmap, 1)
+  const fromIsp = fromIspPlan > 0 ? fromIspPlan : fromIspRoadmap
   const fromTalents = customEngineTalentSlots(occ, 1)
 
   const derived: OccCreationAbilityBudget = {
@@ -143,6 +156,10 @@ export function occCreationPsionicRestrictions(
   occ: PalladiumOcc,
   maxLevel = 1,
 ): readonly string[] {
+  const plan = occIspCreationSelectionPlan(occ)
+  if (plan?.length && maxLevel <= 1) {
+    return formatCreationSelectionPlanLines(plan)
+  }
   return flattenRestrictions(occ.ispEngine?.progressionRoadmap, maxLevel)
 }
 
@@ -309,6 +326,15 @@ function buildSupernaturalSummary(occ: PalladiumOcc): string[] {
     )
     const spellCap = occStartingSpellLevelCap(occ)
     lines.push(`Spell strength cap at 1st level: ${spellCap}`)
+    if (occ.ppeEngine.spellAcquisition === 'open') {
+      lines.push('Spell acquisition: open (Pursuit of Magic)')
+    } else if (occ.ppeEngine.spellAcquisition === 'roadmap_only') {
+      lines.push('Spell acquisition: intuitive roadmap only')
+    }
+    const granted = occ.ppeEngine.grantedAbilityIds
+    if (granted?.length) {
+      lines.push(`Granted spells: ${granted.length}`)
+    }
     const restrictions = occCreationSpellRestrictions(occ, 1)
     if (restrictions.length) {
       lines.push(`Spell picks: ${restrictions.join('; ')}`)
@@ -318,10 +344,21 @@ function buildSupernaturalSummary(occ: PalladiumOcc): string[] {
     lines.push(
       `I.S.P.: ${occ.ispEngine.baseFormula} (+ ${occ.ispEngine.perLevelFormula}/level) · save class ${occ.ispEngine.savingThrowClass}`,
     )
-    const restrictions = occCreationPsionicRestrictions(occ, 1)
-    if (restrictions.length) {
-      lines.push(`Psionic picks: ${restrictions.join('; ')}`)
+    const granted = occ.ispEngine.grantedAbilityIds
+    if (granted?.length) {
+      lines.push(`Granted psionics: ${granted.length}`)
     }
+    const planLines = formatCreationSelectionPlanLines(occIspCreationSelectionPlan(occ))
+    if (planLines.length) {
+      lines.push(...planLines.map((l) => `Psionic picks: ${l}`))
+    } else {
+      const restrictions = occCreationPsionicRestrictions(occ, 1)
+      if (restrictions.length) {
+        lines.push(`Psionic picks: ${restrictions.join('; ')}`)
+      }
+    }
+    const perLevel = formatPerLevelSelectionLine(occIspPerLevelSelection(occ))
+    if (perLevel) lines.push(perLevel)
   }
   for (const engine of occ.customAbilityEngines ?? []) {
     const n = sumRoadmapSelections(engine.progressionRoadmap, 1)
@@ -425,27 +462,30 @@ export function abilityPassesOccSupernaturalRules(
   }
 
   if (cat === 'Psionic') {
-    const allowedCategories = occCreationPsionicAllowedCategories(occ, 1)
-    if (allowedCategories.length > 0 && genreId) {
-      const powerCategories = psionicCategoriesForFeature(feature, genreId)
-      if (powerCategories.length === 0) {
-        return {
-          allowed: false,
-          reason: 'Not listed in this genre psionic catalog.',
+    const plan = occIspCreationSelectionPlan(occ)
+    if (!plan?.length) {
+      const allowedCategories = occCreationPsionicAllowedCategories(occ, 1)
+      if (allowedCategories.length > 0 && genreId) {
+        const powerCategories = psionicCategoriesForFeature(feature, genreId)
+        if (powerCategories.length === 0) {
+          return {
+            allowed: false,
+            reason: 'Not listed in this genre psionic catalog.',
+          }
+        }
+        const permitted = powerCategories.some((c) => allowedCategories.includes(c))
+        if (!permitted) {
+          return {
+            allowed: false,
+            reason: `O.C.C. permits ${allowedCategories.join(', ')} psionics only at 1st level.`,
+          }
         }
       }
-      const permitted = powerCategories.some((c) => allowedCategories.includes(c))
-      if (!permitted) {
-        return {
-          allowed: false,
-          reason: `O.C.C. permits ${allowedCategories.join(', ')} psionics only at 1st level.`,
-        }
-      }
-    }
 
-    for (const r of occCreationPsionicRestrictions(occ, 1)) {
-      if (!restrictionMatches(r, { psionicTier })) {
-        return { allowed: false, reason: r }
+      for (const r of occCreationPsionicRestrictions(occ, 1)) {
+        if (!restrictionMatches(r, { psionicTier })) {
+          return { allowed: false, reason: r }
+        }
       }
     }
   }
@@ -463,6 +503,9 @@ export function patchCharacterCreationFromOcc(
   const abilityBudget = mundaneGenre
     ? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
     : derived.abilityBudget
+  const grantedIds = mundaneGenre
+    ? []
+    : occSupernaturalGrantedAbilityIds(occ, prev.occSpecializationId)
 
   return {
     ...prev,
@@ -472,7 +515,9 @@ export function patchCharacterCreationFromOcc(
       prev.creationGenreId,
     ),
     creationAbilityBudget: abilityBudget,
-    selectedAbilities: mundaneGenre ? [] : prev.selectedAbilities,
+    selectedAbilities: mundaneGenre
+      ? []
+      : mergeOccGrantedAbilities(prev.selectedAbilities, grantedIds),
     startingSpellLevelCap: derived.startingSpellLevelCap,
     occSkillSlotBudget: derived.occSkillSlotBudget,
     occRelatedSkillSlotBudget: derived.occRelatedSkillSlotBudget,

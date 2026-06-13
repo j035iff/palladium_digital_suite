@@ -10,7 +10,8 @@ import {
   isSecondarySkillAllowed,
 } from './occCreationDerivation'
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
-import type { CreationSkillPick } from '../types'
+import type { CreationSkillPick, PalladiumOcc } from '../types'
+import { occRelatedSkillSelectionSlotCost } from './occRelatedSkillSlotCosts'
 import {
   hasPairedWeaponSupportWp,
   isPairedWeaponsSkillId,
@@ -144,15 +145,31 @@ type CharacterRootStateLike = {
   creationSecondarySkillIds?: readonly string[]
 }
 
-export function creationSkillPickSlotWeight(pick: CreationSkillPick): number {
+export type CreationSkillPickSlotWeightOpts = {
+  occ?: PalladiumOcc
+  specializationId?: string | null
+}
+
+export function creationSkillPickSlotWeight(
+  pick: CreationSkillPick,
+  opts?: CreationSkillPickSlotWeightOpts,
+): number {
   if (pick.grantedBySkillId) return 0
-  return pick.professionalQuality ? 2 : 1
+  const professionalWeight = pick.professionalQuality ? 2 : 1
+  if (!opts?.occ) return professionalWeight
+  const occCost = occRelatedSkillSelectionSlotCost(
+    opts.occ,
+    pick.skillId,
+    opts.specializationId,
+  )
+  return Math.max(professionalWeight, occCost)
 }
 
 export function sumCreationSkillPickSlots(
   picks: readonly CreationSkillPick[],
+  opts?: CreationSkillPickSlotWeightOpts,
 ): number {
-  return picks.reduce((sum, p) => sum + creationSkillPickSlotWeight(p), 0)
+  return picks.reduce((sum, p) => sum + creationSkillPickSlotWeight(p, opts), 0)
 }
 
 export function flattenCreationSkillIds(
@@ -412,9 +429,10 @@ export function sumRelatedPoolSlotUsage(
   relatedPicks: readonly CreationSkillPick[],
   occPicks: readonly CreationSkillPick[],
   handToHandReserved = 0,
+  slotWeightOpts?: CreationSkillPickSlotWeightOpts,
 ): number {
   return (
-    sumCreationSkillPickSlots(relatedPicks) +
+    sumCreationSkillPickSlots(relatedPicks, slotWeightOpts) +
     handToHandReserved +
     sumOccCoreProfessionalRelatedSlotSurcharges(occPicks)
   )

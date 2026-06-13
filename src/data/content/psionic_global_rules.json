@@ -1,0 +1,18 @@
+{
+  "description": "Default Nightbane psionic rules (Nightbane RPG pp. 67–68). O.C.C. rows may override via supernaturalRuleOverrides.",
+  "leyLine": {
+    "rangeDurationNearLeyLineMultiplier": 1.5,
+    "rangeDurationAtNexusMultiplier": 2,
+    "damageAtNexusMultiplier": 2,
+    "notes": "Range and duration +50% within 2 miles (3.2 km) of a ley line; doubled within 1 mile (1.6 km) of a nexus. Damage from psionic energy attacks doubles at a nexus (not from ley lines alone)."
+  },
+  "meditation": {
+    "ispPerHour": 6,
+    "sleepRestIspPerHour": 2,
+    "notes": "One hour of meditation restores 6 I.S.P. and counts as two hours of sleep. Sleep or total relaxation restores 2 I.S.P. per hour. Meditation costs no I.S.P."
+  },
+  "psychicApm": {
+    "linkedToHandToHand": true,
+    "notes": "Psionic attacks per melee equal physical hand-to-hand attacks per melee (see Psychic Combat)."
+  }
+}

@@ -46,7 +46,8 @@
     ],
     "skillTraits": [
       "related_to_mechanics",
-      "requires_dexterity"
+      "requires_dexterity",
+      "work_education_related"
     ]
   },
   {
@@ -83,7 +84,8 @@
       }
     ],
     "skillTraits": [
-      "related_to_mechanics"
+      "related_to_mechanics",
+      "work_education_related"
     ]
   }
 ]

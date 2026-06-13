@@ -2,7 +2,7 @@
   "$schema": "../palladium-occ.schema.json",
   "id": "example_nightbane_sorcerer_pattern",
   "name": "Example: Nightbane Sorcerer (O.C.C. composition pattern)",
-  "description": "Illustrates composition-first O.C.C.: core grants, related category rules, hand-to-hand, P.P.E. engine, custom talent engine, and progression hooks.",
+  "description": "Illustrates composition-first O.C.C.: core grants, related category rules and minimums, alignment-gated hand-to-hand, P.P.E./I.S.P. engines with granted abilities, level-gated saves, custom talent engine, and progression hooks.",
   "gameSystems": [
     "nightbane"
   ],
@@ -16,6 +16,28 @@
   "occType": "magic_user",
   "tags": [
     "occult"
+  ],
+  "packageNotes": [
+    "High I.Q. and M.E. are strongly recommended.",
+    "Requires a race that permits psionic abilities."
+  ],
+  "supernaturalRuleOverrides": {
+    "psychicApm": {
+      "useGlobalDefault": false,
+      "linkedToHandToHand": true,
+      "additionalPsionicOnlyActions": 1,
+      "notes": "One melee action per round may be spent only on a psionic power, in addition to normal Hand-to-Hand APM."
+    }
+  },
+  "classAbilities": [
+    {
+      "name": "Understand the Principles of Magic",
+      "description": "Distinguish authentic occult materials from forgeries; determine general purpose and supernatural forces involved.",
+      "percentileProfile": {
+        "basePercent": 70,
+        "perLevelPercent": 2
+      }
+    }
   ],
   "occSkillsCore": [
     {
@@ -33,12 +55,25 @@
       "skill_electronics",
       "skill_hand_to_hand_basic"
     ],
+    "categoryMinimums": [
+      {
+        "categoryName": "Science",
+        "minimumCount": 2,
+        "label": "Science (two required)"
+      }
+    ],
     "categoryRules": [
       {
-        "categoryName": "Technical",
+        "categoryName": "Medical",
         "accessType": "any",
         "exceptions": [],
-        "bonusPercent": 5
+        "bonusPercent": 5,
+        "selectionSlotCost": 2,
+        "skillSpecificSelectionSlotCosts": {
+          "skill_first_aid": 1,
+          "skill_holistic_medicine": 1,
+          "skill_paramedic": 1
+        }
       }
     ]
   },
@@ -51,18 +86,50 @@
     "forbiddenWps": []
   },
   "handToHandRules": {
-    "defaultSkillId": "hand_to_hand_basic",
+    "defaultSkillId": "hth_none",
     "upgradePaths": [
       {
-        "targetSkillId": "hand_to_hand_expert",
+        "targetSkillId": "hand_to_hand_basic",
         "electiveSlotCost": 1
+      },
+      {
+        "targetSkillId": "hand_to_hand_expert",
+        "electiveSlotCost": 2
+      },
+      {
+        "targetSkillId": "hand_to_hand_martial_arts",
+        "electiveSlotCost": 3
+      },
+      {
+        "targetSkillId": "hand_to_hand_assassin",
+        "electiveSlotCost": 3,
+        "alignmentRestrictions": {
+          "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+        }
       }
     ]
+  },
+  "staticBonuses": {
+    "saves": {
+      "save_magic": 4,
+      "save_possession": 4,
+      "save_mind_control": 2,
+      "save_horror": 4
+    },
+    "levelGatedSaves": {
+      "save_magic": {
+        "3": 1,
+        "6": 1,
+        "9": 1,
+        "12": 1
+      }
+    }
   },
   "ppeEngine": {
     "baseFormula": "2D6+12",
     "perLevelFormula": "2D6",
     "magicSchools": ["wizard"],
+    "spellAcquisition": "open",
     "spellStrengthProgression": {
       "1": 4,
       "2": 5,
@@ -84,6 +151,43 @@
       }
     ]
   },
+  "ispEngine": {
+    "baseFormula": "1D4*10+ME",
+    "perLevelFormula": "1D6+1",
+    "savingThrowClass": "major",
+    "grantedAbilityIds": [
+      "psionic_see_aura",
+      "psionic_sense_evil",
+      "psionic_meditation",
+      "psionic_presence_sense"
+    ],
+    "creationSelectionPlan": [
+      {
+        "selectionsGained": 6,
+        "label": "1st level psionics",
+        "selectionMode": {
+          "kind": "per_category",
+          "buckets": {
+            "sensitive": 2,
+            "physical": 2,
+            "healer": 2
+          }
+        }
+      }
+    ],
+    "perLevelSelection": {
+      "fromLevel": 2,
+      "toLevel": 15,
+      "selectionsGained": 1,
+      "selectionMode": {
+        "kind": "pool",
+        "selections": 1,
+        "categories": ["sensitive", "physical", "healer"]
+      },
+      "label": "Additional psionic per level"
+    },
+    "progressionRoadmap": []
+  },
   "customAbilityEngines": [
     {
       "engineId": "nightbane_talents",
@@ -100,6 +204,17 @@
           "categoryRestrictions": []
         }
       ]
+    }
+  ],
+  "specializations": [
+    {
+      "id": "wealth_oriented_mystic",
+      "name": "Wealth-oriented Mystic",
+      "description": "Rare mystic with substantial property and vehicles (Nightbane RPG p. 119 variant).",
+      "finances": {
+        "startingCashFormula": "4D4*1000",
+        "blackMarketAssets": "4D6*10000 in possessions (housing, vehicles, equipment)"
+      }
     }
   ],
   "progression": {

@@ -332,6 +332,8 @@ export type OccCoreSkillChoiceVoucher = {
   bonusPercent: number
   allowedCategories?: readonly string[]
   allowedSkillIds?: readonly string[]
+  /** Trait ids from skill_trait_registry.json (membership in skill_trait_lists/*.txt). */
+  allowedSkillTraits?: readonly string[]
   label?: string
   /**
    * When set on a Weapon Proficiencies voucher, restricts picks to that era
@@ -351,12 +353,23 @@ export type OccCategoryAccessRule = {
   bonusPercent: number
   /** Per-skill % that supersedes {@link OccCategoryAccessRule.bonusPercent} for listed ids. */
   skillSpecificOverrides?: Readonly<Record<string, number>>
+  /** Related/secondary slots consumed per pick (default 1). Not professional-quality tiering. */
+  selectionSlotCost?: number
+  /** Per-skill slot costs overriding {@link OccCategoryAccessRule.selectionSlotCost}. */
+  skillSpecificSelectionSlotCosts?: Readonly<Record<string, number>>
+}
+
+export type OccRelatedSkillCategoryMinimum = {
+  categoryName: string
+  minimumCount: number
+  label?: string
 }
 
 export type OccRelatedSkillsOverride = {
   initialSlotsCount?: number
   startingSkillIds?: readonly string[]
   categoryRules?: readonly OccCategoryAccessRule[]
+  categoryMinimums?: readonly OccRelatedSkillCategoryMinimum[]
 }
 
 /** Flat additive bonus or dice/formula string (e.g. `4D6+25`, `1D4`). */
@@ -365,9 +378,18 @@ export type OccStaticBonusValue = number | string
 export type OccNumericBonusMap = Readonly<Record<string, OccStaticBonusValue>>
 
 /** O.C.C.- or R.C.C.-unique ability not represented as a catalog skill (e.g. Recognize the Supernatural). */
+export type OccClassAbilityPercentileProfile = {
+  basePercent: number
+  perLevelPercent: number
+  skillId?: string
+}
+
+/** O.C.C.- or R.C.C.-unique ability not represented as a catalog skill (e.g. Recognize the Supernatural). */
 export type OccClassAbility = {
   name: string
   description: string
+  /** Structured percentile ability when the book gives base % + per-level growth. */
+  percentileProfile?: OccClassAbilityPercentileProfile
 }
 
 export type OccSpecialization = {
@@ -392,6 +414,8 @@ export type OccRelatedSkills = {
   initialSlotsCount: number
   startingSkillIds?: readonly string[]
   categoryRules: readonly OccCategoryAccessRule[]
+  /** Mandatory related-skill picks from specific categories (e.g. two Science). */
+  categoryMinimums?: readonly OccRelatedSkillCategoryMinimum[]
 }
 
 export type OccSecondarySkills = {
@@ -413,6 +437,8 @@ export type OccWpRules = {
 export type OccHandToHandUpgradePath = {
   targetSkillId: string
   electiveSlotCost: number
+  /** When set, tier is only selectable when alignment satisfies these rules. */
+  alignmentRestrictions?: OccAlignmentRestrictions
 }
 
 export type OccHandToHandRules = {
@@ -1845,15 +1871,90 @@ export type OccStaticBonuses = {
   vitals?: OccNumericBonusMap
   combat?: OccNumericBonusMap
   saves?: OccNumericBonusMap
+  /** Per-save bonuses unlocked at character levels (values summed when level ≥ milestone). */
+  levelGatedSaves?: Readonly<Record<string, Readonly<Record<string, number>>>>
+}
+
+export type OccSpellAcquisitionPolicy = 'open' | 'roadmap_only'
+
+export type OccSupernaturalSelectionModePool = {
+  kind: 'pool'
+  selections: number
+  categories: readonly string[]
+}
+
+export type OccSupernaturalSelectionModePerCategory = {
+  kind: 'per_category'
+  buckets: Readonly<Record<string, number>>
+}
+
+export type OccSupernaturalSelectionModeSingleCategory = {
+  kind: 'single_category'
+  selections: number
+  categories: readonly string[]
+}
+
+export type OccSupernaturalSelectionMode =
+  | OccSupernaturalSelectionModePool
+  | OccSupernaturalSelectionModePerCategory
+  | OccSupernaturalSelectionModeSingleCategory
+
+export type OccSupernaturalCreationSelectionStep = {
+  selectionsGained: number
+  selectionMode: OccSupernaturalSelectionMode
+  label?: string
+}
+
+export type OccSupernaturalPerLevelSelection = {
+  fromLevel: number
+  toLevel?: number
+  selectionsGained: number
+  selectionMode: OccSupernaturalSelectionMode
+  label?: string
+}
+
+export type OccSupernaturalRuleOverrideLeyLine = {
+  useGlobalDefault?: boolean
+  rangeDurationNearLeyLineMultiplier?: number
+  rangeDurationAtNexusMultiplier?: number
+  damageAtNexusMultiplier?: number
+  notes?: string
+}
+
+export type OccSupernaturalRuleOverrideMeditation = {
+  useGlobalDefault?: boolean
+  ispPerHour?: number
+  sleepRestIspPerHour?: number
+  notes?: string
+}
+
+export type OccSupernaturalRuleOverridePsychicApm = {
+  useGlobalDefault?: boolean
+  linkedToHandToHand?: boolean
+  bonusTotalActions?: number
+  additionalPsionicOnlyActions?: number
+  notes?: string
+}
+
+export type OccSupernaturalRuleOverrides = {
+  leyLine?: OccSupernaturalRuleOverrideLeyLine
+  meditation?: OccSupernaturalRuleOverrideMeditation
+  psychicApm?: OccSupernaturalRuleOverridePsychicApm
 }
 
 export type OccSupernaturalProgressionStep = {
   level: number
   selectionsGained: number
   categoryRestrictions?: readonly string[]
+  selectionMode?: OccSupernaturalSelectionMode
 }
 
-export type OccPpeEngine = {
+export type OccSupernaturalEngineSelectionFields = {
+  creationSelectionPlan?: readonly OccSupernaturalCreationSelectionStep[]
+  perLevelSelection?: OccSupernaturalPerLevelSelection
+}
+
+export type OccPpeEngine = OccSupernaturalEngineSelectionFields & {
   baseFormula: string
   perLevelFormula: string
   spellStrengthProgression?: Readonly<Record<string, number>>
@@ -1862,18 +1963,24 @@ export type OccPpeEngine = {
   magicSchools?: readonly string[]
   /** Cross-school borrow rules (e.g. Mirrormage wizard spells via mirror focus). */
   spellAccessRules?: readonly OccSpellAccessRule[]
+  /** Auto-granted spells at creation; excluded from selection budget. */
+  grantedAbilityIds?: readonly string[]
+  /** open = Pursuit of Magic anytime; roadmap_only = intuitive picks only. */
+  spellAcquisition?: OccSpellAcquisitionPolicy
 }
 
 export type OccIspSavingThrowClass = 'minor' | 'major' | 'master'
 
-export type OccIspEngine = {
+export type OccIspEngine = OccSupernaturalEngineSelectionFields & {
   baseFormula: string
   perLevelFormula: string
   savingThrowClass: OccIspSavingThrowClass
   progressionRoadmap: readonly OccSupernaturalProgressionStep[]
+  /** Auto-granted psionics at creation; excluded from selection budget. */
+  grantedAbilityIds?: readonly string[]
 }
 
-export type OccCustomAbilityEngine = {
+export type OccCustomAbilityEngine = OccSupernaturalEngineSelectionFields & {
   engineId: string
   label: string
   baseFormula?: string
@@ -1962,6 +2069,10 @@ export type PalladiumOcc = {
   baseStats?: OccBaseStatsDice
   /** When set, master forge Tab 6 hosts this sub-forge manifest (overrides race default). */
   creationSubForgeId?: string
+  /** Configurator package summary notes (recommended attributes, prerequisites, etc.). */
+  packageNotes?: readonly string[]
+  /** O.C.C.-specific overrides to global psionic rules (ley line, meditation, psychic APM). */
+  supernaturalRuleOverrides?: OccSupernaturalRuleOverrides
 }
 
 /** Alias for {@link PalladiumOcc} — full O.C.C. composition document. */

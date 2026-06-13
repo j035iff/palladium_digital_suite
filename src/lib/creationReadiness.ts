@@ -17,6 +17,7 @@ import {
   creationRelatedSkillCap,
   resolveCreationPsychicTier,
 } from './creationPsychicSkills'
+import { assessRelatedSkillCategoryMinimumBlockers } from './occRelatedSkillMinimums'
 import {
   assessOccCoreVoucherBlockers,
   resolveOccCoreSkillPicks,
@@ -128,6 +129,13 @@ export function assessCreationReviewBlockers(
         psychicTier,
         occLib,
         handToHandReserved,
+      ),
+    )
+    blockers.push(
+      ...assessRelatedSkillCategoryMinimumBlockers(
+        occLib,
+        relatedPicks,
+        character.occSpecializationId,
       ),
     )
   }

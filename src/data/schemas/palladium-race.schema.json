@@ -58,6 +58,16 @@
       },
       "uniqueItems": true
     },
+    "genresAvailable": {
+      "type": "array",
+      "description": "Optional genre gate for campaign filtering (e.g. nightbane). When omitted, derived from gameSystems.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
     "sources": {
       "$ref": "#/$defs/sources",
       "description": "Book references keyed by gameSystem slug (same vocabulary as gameSystems)."
@@ -192,6 +202,9 @@
           "$ref": "#/$defs/diceNotationString"
         },
         {
+          "$ref": "#/$defs/ispAttributeFormulaString"
+        },
+        {
           "type": "number",
           "description": "Fixed starting P.P.E. when the book gives a constant."
         }
@@ -258,6 +271,11 @@
         {
           "$ref": "#/$defs/diceNotationString",
           "description": "Flat S.D.C. roll notation."
+        },
+        {
+          "type": "number",
+          "minimum": 0,
+          "description": "Fixed starting S.D.C. when the book gives a constant (e.g. Nightbane Facade)."
         },
         {
           "$ref": "#/$defs/raceSdcConditional"
@@ -415,6 +433,8 @@
         "save_insanity": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
         "save_coma_death": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
         "save_harmful_drugs": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_disease": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
+        "save_horror_factor": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" },
         "horrorFactor": { "$ref": "#/$defs/integerOrConditionalIntegerBonus" }
       }
     },
