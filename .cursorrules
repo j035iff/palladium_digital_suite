@@ -1,5 +1,5 @@
 ###AI Interaction Protocol
-Refer to the 'Product Vision Document' and 'Master SRS' as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 8 Core Pillars (specifically Mechanical Integrity, Visual Continuity, or Radical Visibility), you MUST:
+Refer to vision.md as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 8 Core Pillars (specifically Mechanical Integrity, Visual Continuity, or Radical Visibility), you MUST:
 Flag the conflict to the user immediately.
 Explain which Pillar is being violated.
 Propose an alternative solution that satisfies the user's functional goal while remaining compliant with the Pillars.
@@ -25,6 +25,9 @@ Anchored UI elements ensure players never lose their bearings when swapping stat
 Surface-level results for speed, with deep math and rule references accessible via tap-to-expand.
 8. Radical Visibility
 Unless explicitly directed, choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
+9. Sophisticated Calculator
+The app is strictly a tool for taking the friction out of playing at a table. It is NOT a video game that plays Palladium for you.
 
 ###Core guidelines
-If a content schema is updated, update the associated example json to account for the update.
+If a content schema is updated, update the associated example json to account for the update. Do not create new example jsons of that data type, always update the base example json so we have all examples in one file.
+

@@ -1,7 +1,8 @@
 # Product Vision: Palladium Digital Suite
 
 📌 Core Project Philosophy
-Character Nexus is a multi-genre, data-driven tabletop RPG character manager and automation engine designed explicitly to handle the complex, cross-compatible rule ecosystems of the Palladium Megaverse. The core objective is providing absolute rules enforcement and automated calculations while shielding the user from the dense layout complexity of multi-column print materials.
+Character Nexus is a multi-genre, data-driven tabletop RPG character manager and automation engine designed explicitly to handle the complex, cross-compatible rule ecosystems of the Palladium Megaverse. The core objective is providing absolute rules enforcement and automated calculations while shielding the user from the dense layout complexity of multi-column print materials. 
+In short, the app is a "sophisticated calculator". Its explicit purpose is that is strictly a tool for taking the friction out of playing at a table. It is NOT a video game that plays Palladium for you.
 
 🏛️ Pillars of Architecture
 1. Setting-First Orchestration (Genre Gating)
