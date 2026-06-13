@@ -9,6 +9,11 @@ import {
   psychicGateEngineSummaryLines,
   psychicGatePsionicRulesApply,
 } from './psychicGatePsionicBudget'
+import {
+  formatOccEnginePsionicRequirementLabel,
+  occEnginePsionicRulesApply,
+} from './occSupernaturalSelection'
+import { occSupernaturalGrantedAbilityIds } from './occSupernaturalGrants'
 import type { PsychicGateMajorAllocation, PsychicTier } from '../types'
 import type { OccSupernaturalProgressionStep, PalladiumOcc } from '../types'
 
@@ -34,6 +39,8 @@ export function buildSupernaturalLaneEngineLines(
     psychicGateBypassed?: boolean
     majorAllocation?: PsychicGateMajorAllocation | null
   },
+  selectedIds?: readonly string[] | null,
+  genreId?: string,
 ): readonly string[] {
   if (!occ || !derived) return []
 
@@ -90,9 +97,20 @@ export function buildSupernaturalLaneEngineLines(
       if (derived.psionicRestrictions.length) {
         lines.push(`Psionic categories: ${derived.psionicRestrictions.join('; ')}`)
       }
-      lines.push(
-        `Selection budget: ${selectionCount}/${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'}`,
-      )
+      if (occEnginePsionicRulesApply(occ) && selectedIds) {
+        lines.push(
+          formatOccEnginePsionicRequirementLabel(
+            occ,
+            selectedIds,
+            genreId ?? 'nightbane',
+            occSupernaturalGrantedAbilityIds(occ, undefined),
+          ),
+        )
+      } else {
+        lines.push(
+          `Selection budget: ${selectionCount}/${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'}`,
+        )
+      }
     }
     return lines
   }

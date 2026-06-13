@@ -158,6 +158,10 @@ export function assessAbilitiesBudgetBlockers(
     return []
   }
 
+  const grantedIds = occ
+    ? occSupernaturalGrantedAbilityIds(occ, undefined)
+    : []
+
   const gateBlockers = assessPsychicGatePsionicBlockers({
     occ,
     tier: psychicGateBypassed ? 'none' : psychicTier,
@@ -180,14 +184,12 @@ export function assessAbilitiesBudgetBlockers(
     occ,
     selectedIds: picks,
     genreId,
+    grantedIds,
   })
   if (occEnginePsionicRulesApply(occ)) {
     return occEngineBlockers
   }
 
-  const grantedIds = occ
-    ? occSupernaturalGrantedAbilityIds(occ, undefined)
-    : []
   const counts = countSelectedAbilitiesByBudgetCategory(picks, grantedIds)
   return listAbilityBudgetShortfalls(budget, counts).map(formatAbilityBudgetShortfall)
 }

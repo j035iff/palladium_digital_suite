@@ -79,6 +79,7 @@ export function SupernaturalAbilitiesForge() {
     psychicTier,
     psychicGateBypassed,
     majorAllocation,
+    selectedIds,
   } = useSupernaturalAbilitiesForge()
 
 
@@ -152,7 +153,8 @@ export function SupernaturalAbilitiesForge() {
                 psychicGateBypassed,
                 majorAllocation,
               }}
-
+              selectedIds={selectedIds}
+              genreId={genreId}
             />
 
           )}

@@ -117,25 +117,26 @@ export function formatPsionicGlobalRuleSummaryLines(
   const lines: string[] = []
 
   const ley = rules.leyLine
-  lines.push(
-    ley.source === 'occ'
-      ? `Ley line / nexus (O.C.C. override): near ley line ×${ley.rangeDurationNearLeyLineMultiplier} range/duration; at nexus ×${ley.rangeDurationAtNexusMultiplier} range/duration, ×${ley.damageAtNexusMultiplier} damage`
-      : `Ley line / nexus: near ley line +50% range/duration; at nexus doubled range/duration and damage`,
-  )
-  if (ley.notes) lines.push(ley.notes)
+  if (ley.source === 'occ') {
+    lines.push(
+      `Ley line / nexus (O.C.C. override): near ley line ×${ley.rangeDurationNearLeyLineMultiplier} range/duration; at nexus ×${ley.rangeDurationAtNexusMultiplier} range/duration, ×${ley.damageAtNexusMultiplier} damage`,
+    )
+    if (ley.notes) lines.push(ley.notes)
+  }
 
   const med = rules.meditation
-  lines.push(
-    med.source === 'occ'
-      ? `Meditation (O.C.C. override): ${med.ispPerHour} I.S.P./hour; rest ${med.sleepRestIspPerHour}/hour`
-      : `Meditation: ${med.ispPerHour} I.S.P./hour; rest ${med.sleepRestIspPerHour}/hour`,
-  )
-  if (med.notes && med.source === 'occ') lines.push(med.notes)
+  if (med.source === 'occ') {
+    lines.push(
+      `Meditation (O.C.C. override): ${med.ispPerHour} I.S.P./hour; rest ${med.sleepRestIspPerHour}/hour`,
+    )
+    if (med.notes) lines.push(med.notes)
+  }
 
   const apm = rules.psychicApm
-  if (apm.additionalPsionicOnlyActions > 0 || apm.bonusTotalActions !== 0) {
+  if (apm.source === 'occ') {
     const parts: string[] = []
     if (apm.linkedToHandToHand) parts.push('linked to Hand-to-Hand APM')
+    else parts.push('not linked to Hand-to-Hand APM')
     if (apm.bonusTotalActions !== 0) {
       parts.push(`${apm.bonusTotalActions >= 0 ? '+' : ''}${apm.bonusTotalActions} total APM`)
     }
@@ -146,8 +147,6 @@ export function formatPsionicGlobalRuleSummaryLines(
     }
     lines.push(`Psychic APM (O.C.C. override): ${parts.join('; ')}`)
     if (apm.notes) lines.push(apm.notes)
-  } else if (apm.linkedToHandToHand) {
-    lines.push('Psychic APM: equal to Hand-to-Hand attacks per melee')
   }
 
   return lines

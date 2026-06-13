@@ -167,6 +167,10 @@ import {
   psychicGateRequiredPickCount,
 } from '../lib/psychicGatePsionicBudget'
 import {
+  occEnginePsionicPickAllowed,
+  occEnginePsionicRulesApply,
+} from '../lib/occSupernaturalSelection'
+import {
   creationNeedsAbilitySelection,
   resolvePsychicGateBypassed,
 } from '../lib/creationPhases'
@@ -624,6 +628,15 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
       genreId: genreId ?? 'nightbane',
     })
     if (psychicGate && !psychicGate.allowed) return null
+
+    const occEngine = occEnginePsionicPickAllowed({
+      occ: occRow,
+      selectedIds: selected,
+      candidateId: id,
+      genreId: genreId ?? 'nightbane',
+      grantedIds: [...grantedIds],
+    })
+    if (occEngine && !occEngine.allowed) return null
   }
 
   if (cat === 'Spell' && countCat('Spell') >= abilityBudget.spellSlots) return null
@@ -642,8 +655,8 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
         genreId ?? 'nightbane',
       ).length
       if (gateTotal >= required) return null
-    } else if (countCat('Psionic') >= abilityBudget.psionicSlots) {
-      return null
+    } else if (!occEnginePsionicRulesApply(occRow)) {
+      if (countCat('Psionic') >= abilityBudget.psionicSlots) return null
     }
   }
   if (cat === 'Talent' && countCat('Talent') >= abilityBudget.talentSlots) return null

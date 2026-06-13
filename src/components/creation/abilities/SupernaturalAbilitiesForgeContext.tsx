@@ -6,14 +6,15 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { getAbilityById } from '../../../data/abilityLibrary'
 import { useCharacter } from '../../../context/CharacterContext'
 import {
   allowedSupernaturalAbilityLanes,
   isSupernaturalAbilityLaneAllowed,
   type SupernaturalAbilityForgeLane,
 } from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
+import { countSelectedAbilitiesByBudgetCategory } from '../../../lib/creationAbilityBudget'
 import { resolveEffectiveCreationAbilityBudget } from '../../../lib/creationAbilityBudget'
+import { occSupernaturalGrantedAbilityIds } from '../../../lib/occSupernaturalGrants'
 import type { OccCreationAbilityBudget } from '../../../lib/occCreationDerivation'
 
 type SupernaturalAbilitiesForgeContextValue = {
@@ -33,6 +34,7 @@ type SupernaturalAbilitiesForgeContextValue = {
   activeLane: SupernaturalAbilityForgeLane
   setActiveLane: (lane: SupernaturalAbilityForgeLane) => void
   counts: { spell: number; psionic: number; talent: number }
+  selectedIds: readonly string[]
   activeLaneAllowed: boolean
 }
 
@@ -98,17 +100,12 @@ export function SupernaturalAbilitiesForgeProvider({
 
   const selectedIds = character.selectedAbilities ?? []
   const counts = useMemo(() => {
-    const spell = selectedIds.filter(
-      (id) => getAbilityById(id)?.category === 'Spell',
-    ).length
-    const psionic = selectedIds.filter(
-      (id) => getAbilityById(id)?.category === 'Psionic',
-    ).length
-    const talent = selectedIds.filter(
-      (id) => getAbilityById(id)?.category === 'Talent',
-    ).length
-    return { spell, psionic, talent }
-  }, [selectedIds])
+    const grantedIds = occSupernaturalGrantedAbilityIds(
+      activeOcc,
+      character.occSpecializationId,
+    )
+    return countSelectedAbilitiesByBudgetCategory(selectedIds, grantedIds)
+  }, [selectedIds, activeOcc, character.occSpecializationId])
 
   const activeLaneAllowed = isSupernaturalAbilityLaneAllowed(budget, activeLane)
 
@@ -128,6 +125,7 @@ export function SupernaturalAbilitiesForgeProvider({
       activeLane,
       setActiveLane,
       counts,
+      selectedIds,
       activeLaneAllowed,
     }),
     [
@@ -144,6 +142,7 @@ export function SupernaturalAbilitiesForgeProvider({
       spellCap,
       activeLane,
       counts,
+      selectedIds,
       activeLaneAllowed,
     ],
   )

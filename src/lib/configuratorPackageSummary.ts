@@ -1,4 +1,5 @@
 import { getSkillById } from '../data/skillLibrary'
+import { getAbilityById } from '../data/abilityLibrary'
 import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import { getPalladiumTalentById } from '../data/library/talentCatalogLoader'
 import type { OccClassAbility, PalladiumOcc, Race } from '../types'
@@ -8,7 +9,6 @@ import {
   occStartingHandToHandTier,
 } from './creationHandToHandChoice'
 import {
-  deriveOccCreation,
   occCreationAbilityBudget,
   occCreationPsionicRestrictions,
   occCreationSpellRestrictions,
@@ -28,19 +28,42 @@ import { formatOccCategoryRuleHeader } from './occCategoryRuleDisplay'
 import { racePassiveModifiers } from './raceEngine'
 import { formatPassiveAttributeBonuses } from './sheetBonuses'
 import { formatPsionicGlobalRuleSummaryLines } from './psionicGlobalRules'
+import { isDiceNotation } from './diceNotationBounds'
 import {
-  formatCreationSelectionPlanLines,
-  formatPerLevelSelectionLine,
+  formatSupernaturalSelectionModeLabel,
   occIspCreationSelectionPlan,
   occIspPerLevelSelection,
 } from './occSupernaturalSelection'
+import type { OccSupernaturalCreationSelectionStep, OccSupernaturalPerLevelSelection } from '../types'
 
+export type ConfiguratorPackageStructuredItem =
+  | { kind: 'lane'; label: string }
+  | { kind: 'subheading'; text: string }
+  | { kind: 'choice'; detail: string }
+  | { kind: 'text'; text: string }
 
+export type ConfiguratorPackageItem = string | ConfiguratorPackageStructuredItem
+
+export function packageItemText(item: ConfiguratorPackageItem): string {
+  if (typeof item === 'string') return item
+  switch (item.kind) {
+    case 'lane':
+      return item.label
+    case 'subheading':
+      return item.text
+    case 'choice':
+      return `Choice of: ${item.detail}`
+    case 'text':
+      return item.text
+    default:
+      return ''
+  }
+}
 
 export type ConfiguratorPackageSection = {
   id: string
   title: string
-  items: readonly string[]
+  items: readonly ConfiguratorPackageItem[]
 }
 
 
@@ -78,8 +101,7 @@ export const RACE_PACKAGE_SECTION_ORDER = [
   'race-special-abilities',
   'race-supernatural',
   'race-vitals',
-  'race-non-combat',
-  'race-combat',
+  'race-bonuses',
   'race-innate-skills',
   'race-rcc',
 ] as const
@@ -122,6 +144,7 @@ const SAVE_LABELS: Record<string, string> = {
   save_possession: 'Save vs possession',
   save_poison: 'Save vs poison',
   save_insanity: 'Save vs insanity',
+  save_disease: 'Save vs disease',
 }
 
 
@@ -150,6 +173,99 @@ function formatClassAbilityLines(abilities: readonly OccClassAbility[] | undefin
   )
 }
 
+/** Skill-program notes and class-type boilerplate — not O.C.C.-unique abilities for package summary. */
+const OCC_SKILL_PROGRAM_ABILITY_PATTERN =
+  /background skill|pre-transformation skill|limited skill memory|facade hand to hand|civilian weapon|native literacy|^literacy$|related skill|secondary skill|weapon proficienc|hand to hand:|hand to hand must|core skill|skill pick|skill program|skill package|select literacy/i
+
+const OCC_STAT_BUNDLE_ABILITY_PATTERN = /^physical bonuses$|^combat bonuses$/i
+
+const OCC_PSIONIC_CLASS_BOILERPLATE_PATTERN =
+  /^master psionic$|^major psionic$|^minor psionic$/i
+
+function isSpecializedOccClassAbility(
+  ability: OccClassAbility,
+  occ: PalladiumOcc,
+): boolean {
+  const name = ability.name.trim()
+  const haystack = `${name} ${ability.description}`.toLowerCase()
+
+  if (OCC_STAT_BUNDLE_ABILITY_PATTERN.test(name)) return false
+  if (OCC_SKILL_PROGRAM_ABILITY_PATTERN.test(haystack)) return false
+  if (occ.occType === 'psychic' && OCC_PSIONIC_CLASS_BOILERPLATE_PATTERN.test(name.toLowerCase())) {
+    return false
+  }
+  if (/^initial psionic grants$/i.test(name)) return false
+
+  return true
+}
+
+function formatSpecializedOccClassAbilityLines(
+  occ: PalladiumOcc,
+  abilities: readonly OccClassAbility[] | undefined,
+): string[] {
+  const specialized = (abilities ?? []).filter((ability) =>
+    isSpecializedOccClassAbility(ability, occ),
+  )
+  return formatClassAbilityLines(specialized)
+}
+
+function formatRaceSdcDisplayLine(race: Race): string {
+  const sdc = race.vitals.sdc
+  if (sdc == null) return 'S.D.C.: Per OCC and Skills'
+  if (typeof sdc === 'number' || typeof sdc === 'string') return `S.D.C.: ${sdc}`
+  return 'S.D.C.: Per OCC and Skills'
+}
+
+function buildRaceVitalItems(race: Race): string[] {
+  const items: string[] = []
+  if (race.vitals.hpFormula) {
+    items.push(`H.P.: ${race.vitals.hpFormula}`)
+  }
+  items.push(formatRaceSdcDisplayLine(race))
+  return items
+}
+
+const RACE_ATTRIBUTE_MODIFIER_KEYS = new Set([
+  'iq',
+  'me',
+  'ma',
+  'ps',
+  'pp',
+  'pe',
+  'pb',
+  'spd',
+])
+
+const RACE_BONUS_LABELS: Record<string, string> = {
+  ...COMBAT_LABELS,
+  ...SAVE_LABELS,
+  horrorFactor: 'Horror factor',
+  rollWithImpact: 'Roll w/ impact',
+  sdc: 'S.D.C.',
+}
+
+function buildRaceBonusItems(race: Race): string[] {
+  const items: string[] = []
+  const modifiers = race.innateBonuses?.modifiers ?? {}
+
+  const attrLine = formatPassiveAttributeBonuses(racePassiveModifiers(race))
+  if (attrLine) items.push(attrLine)
+
+  const { combat, nonCombat } = splitInnateCombatModifiers(modifiers)
+  items.push(...formatModifierLines({ ...nonCombat, ...combat }, COMBAT_LABELS))
+
+  const remainder: Record<string, number> = {}
+  for (const [key, value] of Object.entries(modifiers)) {
+    if (typeof value !== 'number' || value === 0) continue
+    if (RACE_ATTRIBUTE_MODIFIER_KEYS.has(key)) continue
+    if (COMBAT_LABELS[key] || NON_COMBAT_COMBAT_KEYS.has(key)) continue
+    remainder[key] = value
+  }
+  items.push(...formatModifierLines(remainder, RACE_BONUS_LABELS))
+
+  return items
+}
+
 
 
 function skillDisplayName(skillId: string): string {
@@ -158,6 +274,71 @@ function skillDisplayName(skillId: string): string {
     getWeaponProficiencyCatalogEntryById(skillId)?.name ??
     skillId.replace(/^skill_/, '').replace(/_/g, ' ')
   )
+}
+
+function supernaturalAbilityDisplayName(abilityId: string): string {
+  return (
+    getAbilityById(abilityId)?.name ??
+    abilityId.replace(/^(psionic_|spell_|talent_)/, '').replace(/_/g, ' ')
+  )
+}
+
+function appendGrantedSupernaturalAbilities(
+  lines: ConfiguratorPackageItem[],
+  grantedIds: readonly string[] | undefined,
+): void {
+  for (const abilityId of grantedIds ?? []) {
+    lines.push({ kind: 'text', text: supernaturalAbilityDisplayName(abilityId) })
+  }
+}
+
+function formatPackagePerLevelSelectionLine(
+  rule: OccSupernaturalPerLevelSelection | undefined,
+): string | undefined {
+  if (!rule) return undefined
+  const modeLabel = formatSupernaturalSelectionModeLabel(rule.selectionMode)
+  const prefix = rule.label?.trim() ?? 'Per level'
+  if (
+    rule.selectionMode.kind === 'pool' ||
+    rule.selectionMode.kind === 'single_category'
+  ) {
+    return `${prefix}: ${modeLabel}`
+  }
+  return `${prefix}: ${rule.selectionsGained} ${modeLabel}`
+}
+
+function appendFirstLevelSupernaturalBlock(
+  lines: ConfiguratorPackageItem[],
+  params: {
+    grantedIds: readonly string[] | undefined
+    plan: readonly OccSupernaturalCreationSelectionStep[] | undefined
+    pickCount: number
+    fallbackChoiceDetail?: string
+  },
+): void {
+  const granted = params.grantedIds ?? []
+  const plan = params.plan ?? []
+  const hasChoices = params.pickCount > 0
+  if (granted.length === 0 && !hasChoices) return
+
+  lines.push({ kind: 'subheading', text: 'Abilities at 1st Level' })
+  appendGrantedSupernaturalAbilities(lines, granted)
+
+  if (!hasChoices) return
+
+  if (plan.length > 0) {
+    for (const step of plan) {
+      lines.push({
+        kind: 'choice',
+        detail: formatSupernaturalSelectionModeLabel(step.selectionMode),
+      })
+    }
+    return
+  }
+
+  if (params.fallbackChoiceDetail) {
+    lines.push({ kind: 'choice', detail: params.fallbackChoiceDetail })
+  }
 }
 
 
@@ -243,7 +424,7 @@ function pushSection(
   sections: ConfiguratorPackageSection[],
   id: string,
   title: string,
-  items: string[],
+  items: ConfiguratorPackageItem[],
 ): void {
   if (items.length === 0) return
   sections.push({ id, title, items })
@@ -308,74 +489,102 @@ function formatVitalSubset(
 function formatOccSupernaturalAbilityLines(
   occ: PalladiumOcc,
   specializationId: string | null | undefined,
-): string[] {
-  const lines: string[] = []
+): ConfiguratorPackageItem[] {
+  const lines: ConfiguratorPackageItem[] = []
   const budget = occCreationAbilityBudget(occ)
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
-  const hasMagic = Boolean(occ.ppeEngine) || budget.spellSlots > 0
+  const hasSpellPicks = budget.spellSlots > 0
+  const hasMagicSchool = (occ.ppeEngine?.magicSchools?.length ?? 0) > 0
+  const hasMagic = hasSpellPicks || hasMagicSchool
   const hasPsionics = Boolean(occ.ispEngine) || budget.psionicSlots > 0
 
   if (hasMagic) {
-    lines.push('Magic')
+    lines.push({ kind: 'lane', label: 'Magic' })
     if (occ.ppeEngine) {
-      lines.push(
-        `P.P.E.: ${occ.ppeEngine.baseFormula} (+ ${occ.ppeEngine.perLevelFormula}/level)`,
-      )
+      lines.push({
+        kind: 'text',
+        text: `P.P.E.: ${occ.ppeEngine.baseFormula} (+ ${occ.ppeEngine.perLevelFormula}/level)`,
+      })
     }
-    lines.push(...formatVitalSubset(effective.staticBonuses?.vitals, new Set(['ppe'])))
+    for (const line of formatVitalSubset(effective.staticBonuses?.vitals, new Set(['ppe']))) {
+      lines.push({ kind: 'text', text: line })
+    }
     if (occ.baseStats?.ppeDice) {
-      lines.push(`P.P.E.: ${occ.baseStats.ppeDice} (base dice)`)
+      lines.push({ kind: 'text', text: `P.P.E.: ${occ.baseStats.ppeDice} (base dice)` })
     }
-    if (budget.spellSlots > 0) {
-      lines.push(
-        `${budget.spellSlots} spell${budget.spellSlots === 1 ? '' : 's'} to select at creation`,
-      )
-      lines.push(`Spell strength cap at 1st level: ${occStartingSpellLevelCap(occ)}`)
+    appendFirstLevelSupernaturalBlock(lines, {
+      grantedIds: occ.ppeEngine?.grantedAbilityIds,
+      plan: occ.ppeEngine?.creationSelectionPlan,
+      pickCount: budget.spellSlots,
+      fallbackChoiceDetail:
+        budget.spellSlots > 0
+          ? `${budget.spellSlots} spell${budget.spellSlots === 1 ? '' : 's'} to select at creation`
+          : undefined,
+    })
+    if (budget.spellSlots > 0 && !occ.ppeEngine?.creationSelectionPlan?.length) {
+      lines.push({
+        kind: 'text',
+        text: `Spell strength cap at 1st level: ${occStartingSpellLevelCap(occ)}`,
+      })
       const spellRestrictions = occCreationSpellRestrictions(occ, 1)
       if (spellRestrictions.length) {
-        lines.push(`Spell categories: ${spellRestrictions.join('; ')}`)
+        lines.push({
+          kind: 'text',
+          text: `Spell categories: ${spellRestrictions.join('; ')}`,
+        })
       }
     }
   }
 
   if (hasPsionics) {
-    lines.push('Psionic')
+    lines.push({ kind: 'lane', label: 'Psionic' })
     if (occ.ispEngine) {
-      lines.push(
-        `I.S.P.: ${occ.ispEngine.baseFormula} (+ ${occ.ispEngine.perLevelFormula}/level)`,
-      )
-      lines.push(`Save class: ${occ.ispEngine.savingThrowClass}`)
+      lines.push({
+        kind: 'text',
+        text: `I.S.P.: ${occ.ispEngine.baseFormula} (+ ${occ.ispEngine.perLevelFormula}/level)`,
+      })
+      lines.push({
+        kind: 'text',
+        text: `Save class: ${occ.ispEngine.savingThrowClass}`,
+      })
     }
-    lines.push(...formatVitalSubset(effective.staticBonuses?.vitals, new Set(['isp'])))
+    for (const line of formatVitalSubset(effective.staticBonuses?.vitals, new Set(['isp']))) {
+      lines.push({ kind: 'text', text: line })
+    }
     if (occ.baseStats?.ispDice) {
-      lines.push(`I.S.P.: ${occ.baseStats.ispDice} (base dice)`)
+      lines.push({ kind: 'text', text: `I.S.P.: ${occ.baseStats.ispDice} (base dice)` })
     }
-    if (budget.psionicSlots > 0) {
-      const planLines = formatCreationSelectionPlanLines(occIspCreationSelectionPlan(occ))
-      if (planLines.length) {
-        for (const line of planLines) {
-          lines.push(line)
-        }
-      } else {
-        lines.push(
-          `${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'} to select at creation`,
-        )
-        const psionicRestrictions = occCreationPsionicRestrictions(occ, 1)
-        if (psionicRestrictions.length) {
-          lines.push(`Psionic categories: ${psionicRestrictions.join('; ')}`)
-        }
+    appendFirstLevelSupernaturalBlock(lines, {
+      grantedIds: occ.ispEngine?.grantedAbilityIds,
+      plan: occIspCreationSelectionPlan(occ),
+      pickCount: budget.psionicSlots,
+      fallbackChoiceDetail:
+        budget.psionicSlots > 0
+          ? `${budget.psionicSlots} psionic power${budget.psionicSlots === 1 ? '' : 's'} to select at creation`
+          : undefined,
+    })
+    if (budget.psionicSlots > 0 && !occIspCreationSelectionPlan(occ)?.length) {
+      const psionicRestrictions = occCreationPsionicRestrictions(occ, 1)
+      if (psionicRestrictions.length) {
+        lines.push({
+          kind: 'text',
+          text: `Psionic categories: ${psionicRestrictions.join('; ')}`,
+        })
       }
-      const perLevel = formatPerLevelSelectionLine(occIspPerLevelSelection(occ))
-      if (perLevel) lines.push(perLevel)
     }
-    lines.push(...formatPsionicGlobalRuleSummaryLines(occ))
+    const perLevel = formatPackagePerLevelSelectionLine(occIspPerLevelSelection(occ))
+    if (perLevel) lines.push({ kind: 'text', text: perLevel })
+    for (const line of formatPsionicGlobalRuleSummaryLines(occ)) {
+      lines.push({ kind: 'text', text: line })
+    }
   }
 
   if (budget.talentSlots > 0) {
-    lines.push('Talents')
-    lines.push(
-      `${budget.talentSlots} talent${budget.talentSlots === 1 ? '' : 's'} to select at creation`,
-    )
+    lines.push({ kind: 'lane', label: 'Talents' })
+    lines.push({
+      kind: 'text',
+      text: `${budget.talentSlots} talent${budget.talentSlots === 1 ? '' : 's'} to select at creation`,
+    })
   }
 
   for (const engine of occ.customAbilityEngines ?? []) {
@@ -383,27 +592,19 @@ function formatOccSupernaturalAbilityLines(
       ?.filter((step) => step.level <= 1)
       .reduce((sum, step) => sum + step.selectionsGained, 0)
     if (picks && picks > 0) {
-      lines.push(engine.label)
-      lines.push(`${picks} pick${picks === 1 ? '' : 's'} at level 1`)
+      lines.push({ kind: 'lane', label: engine.label })
+      lines.push({
+        kind: 'text',
+        text: `${picks} pick${picks === 1 ? '' : 's'} at level 1`,
+      })
     }
   }
 
   if (occPsychicGateBypassed(occ)) {
-    lines.push('Natural psychic — no Psychic Matrix tier choice.')
-  }
-
-  const derived = deriveOccCreation(occ, specializationId)
-  for (const line of derived.supernaturalSummary) {
-    if (
-      line.startsWith('P.P.E.:') ||
-      line.startsWith('I.S.P.:') ||
-      line.startsWith('Spell strength cap') ||
-      line.startsWith('Spell picks:') ||
-      line.startsWith('Psionic picks:')
-    ) {
-      continue
-    }
-    lines.push(line)
+    lines.push({
+      kind: 'text',
+      text: 'Natural psychic — no Psychic Matrix tier choice.',
+    })
   }
 
   return lines
@@ -532,12 +733,7 @@ function buildRaceSections(race: Race | undefined): ConfiguratorPackageSection[]
 
 
   const attrReqLines = formatRaceAttributeDiceLines(race)
-  const passive = racePassiveModifiers(race)
-  const attrBonusLine = formatPassiveAttributeBonuses(passive)
-  const attrItems = [
-    ...attrReqLines.map((line) => `${line} (base roll)`),
-    ...(attrBonusLine ? [attrBonusLine] : []),
-  ]
+  const attrItems = attrReqLines.map((line) => `${line} (base roll)`)
   pushSection(sections, 'race-attributes-reqs', 'Attribute bonuses & requirements', attrItems)
 
 
@@ -558,55 +754,34 @@ function buildRaceSections(race: Race | undefined): ConfiguratorPackageSection[]
 
 
   const supernaturalItems: string[] = []
-  const ppe = race.vitals.averageStandardPpe ?? race.vitals.basePpe
-  if (ppe != null && String(ppe).trim() && String(ppe) !== '0') {
-    supernaturalItems.push('Magic')
-    supernaturalItems.push(`P.P.E.: ${ppe}`)
-  }
-  const ispFormula = race.psionics?.naturalIspFormula?.trim()
-  if (ispFormula && ispFormula !== '0') {
+  const ispFormula = race.psionics.naturalIspFormula?.trim()
+  if (
+    race.psionics.capabilityType === 'innate' &&
+    ispFormula &&
+    ispFormula !== '0'
+  ) {
     supernaturalItems.push('Psionic')
     supernaturalItems.push(
       `I.S.P.: ${ispFormula.replace(/\bME\b/gi, 'M.E.')}`,
     )
   }
-  pushSection(sections, 'race-supernatural', 'Supernatural abilities', supernaturalItems)
-
-  const vitalItems: string[] = []
-  if (race.vitals.hpFormula) {
-    vitalItems.push(`H.P.: ${race.vitals.hpFormula}`)
-  }
-  pushSection(sections, 'race-vitals', 'Hit points', vitalItems)
-
-
-
-  const { combat: combatMods, nonCombat: nonCombatMods } = splitInnateCombatModifiers(
-    race.innateBonuses?.modifiers,
+  pushSection(
+    sections,
+    'race-supernatural',
+    'Supernatural abilities',
+    supernaturalItems.length > 0 ? supernaturalItems : ['N/A'],
   )
-  const saveMods: Record<string, number> = {}
-  for (const [key, value] of Object.entries(race.innateBonuses?.modifiers ?? {})) {
-    if (typeof value !== 'number' || value === 0) continue
-    if (key.startsWith('save_')) saveMods[key] = value
-  }
-  pushSection(sections, 'race-non-combat', 'Non-combat bonuses', [
-    ...formatModifierLines(nonCombatMods, COMBAT_LABELS),
-    ...formatModifierLines(saveMods, SAVE_LABELS),
-  ])
 
+  const vitalItems = buildRaceVitalItems(race)
+  pushSection(sections, 'race-vitals', 'Vitals', vitalItems)
 
-
-  const raceSdcLines: string[] = []
-  if (race.vitals.sdc != null) {
-    const sdc =
-      typeof race.vitals.sdc === 'string'
-        ? race.vitals.sdc
-        : race.vitals.sdc.defaultFormula
-    raceSdcLines.push(`S.D.C.: ${sdc}`)
-  }
-  pushSection(sections, 'race-combat', 'Combat bonuses', [
-    ...raceSdcLines,
-    ...formatModifierLines(combatMods, COMBAT_LABELS),
-  ])
+  const bonusItems = buildRaceBonusItems(race)
+  pushSection(
+    sections,
+    'race-bonuses',
+    'Bonuses',
+    bonusItems.length > 0 ? bonusItems : ['N/A'],
+  )
 
 
 
@@ -665,11 +840,15 @@ function buildOccSections(
     ...(occ.packageNotes ?? []),
   ])
 
+  const specializedOccAbilities = formatSpecializedOccClassAbilityLines(
+    occ,
+    effective.classAbilities,
+  )
   pushSection(
     sections,
     'occ-special-abilities',
-    'Special abilities & skills',
-    formatClassAbilityLines(effective.classAbilities),
+    'Specialized OCC abilities and skills',
+    specializedOccAbilities.length > 0 ? specializedOccAbilities : ['N/A'],
   )
 
 
@@ -776,9 +955,7 @@ export function buildConfiguratorPackageSummary(
     sections.push({
       id: 'race-heading',
       title: race.name,
-      items: race.canPickOcc
-        ? ['Racial package']
-        : ['Racial Character Class (R.C.C.)'],
+      items: [],
     })
     sections.push(...buildRaceSections(race))
   }
@@ -791,7 +968,7 @@ export function buildConfiguratorPackageSummary(
     sections.push({
       id: 'occ-heading',
       title: occTitle,
-      items: ['O.C.C. package'],
+      items: [],
     })
     sections.push(...buildOccSections(occ, specializationId))
   }

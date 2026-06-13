@@ -11,12 +11,16 @@ import {
 import { useCharacter } from '../../../context/CharacterContext'
 import { abilityPassesOccSupernaturalRules } from '../../../lib/occCreationDerivation'
 import {
-  listGatePsionicSelections,
   psychicGatePsionicPickAllowed,
   psychicGatePsionicRulesApply,
   psychicGateRequiredPickCount,
 } from '../../../lib/psychicGatePsionicBudget'
 import { psionicCategoryFilterLabel } from '../../../lib/psionicCategoryLabels'
+import {
+  occEnginePsionicPickAllowed,
+  occEnginePsionicRulesApply,
+} from '../../../lib/occSupernaturalSelection'
+import { occSupernaturalGrantedAbilityIds } from '../../../lib/occSupernaturalGrants'
 import {
   abilityDurationBadgeLabel,
   psionicCategoryTags,
@@ -45,6 +49,19 @@ export function PsionicsForgePanel({
 }: PsionicsForgePanelProps) {
   const { character, psychicTier, addSelectedAbility } = useCharacter()
   const selectedIds = character.selectedAbilities ?? []
+  const grantedIds = useMemo(
+    () =>
+      occSupernaturalGrantedAbilityIds(activeOcc, character.occSpecializationId),
+    [activeOcc, character.occSpecializationId],
+  )
+  const playerPsionicCount = useMemo(
+    () =>
+      selectedIds.filter((id) => {
+        if (grantedIds.includes(id)) return false
+        return getAbilityById(id)?.category === 'Psionic'
+      }).length,
+    [selectedIds, grantedIds],
+  )
   const [search, setSearch] = useState('')
   const [psionicCategoryFilter, setPsionicCategoryFilter] =
     useState<string>('sensitive')
@@ -75,13 +92,12 @@ export function PsionicsForgePanel({
     psychicTier,
     character.psychicGateBypassed === true,
   )
-  const gatePickCount = listGatePsionicSelections(selectedIds, genreId).length
+  const occEngineRules = occEnginePsionicRulesApply(activeOcc)
   const gateRequired =
     psychicGateRequiredPickCount(
       psychicTier,
       character.creationPsychicGateMajorAllocation,
     ) ?? psionicBudget
-  const effectivePsionicCount = gatePsionics ? gatePickCount : psionicCount
   const effectivePsionicBudget = gatePsionics ? gateRequired : psionicBudget
 
   const availablePsionicCategories = useMemo(
@@ -229,16 +245,31 @@ export function PsionicsForgePanel({
               ? undefined
               : psionicCategoryFilter,
           })
+          const occEngine = occEnginePsionicPickAllowed({
+            occ: activeOcc,
+            selectedIds,
+            candidateId: catalog.id,
+            genreId,
+            viewingCategory: searchAllPsionicPools
+              ? undefined
+              : psionicCategoryFilter,
+            grantedIds,
+          })
           const blocked =
-            !occGate.allowed || (psychicGate != null && !psychicGate.allowed)
+            !occGate.allowed ||
+            (psychicGate != null && !psychicGate.allowed) ||
+            (occEngine != null && !occEngine.allowed)
           const innateStarter = a.innateStarter === true
           const already = selectedIds.includes(catalog.id)
-          const atCap = effectivePsionicCount >= effectivePsionicBudget
+          const atCap =
+            !occEngineRules &&
+            !gatePsionics &&
+            playerPsionicCount >= effectivePsionicBudget
           const canSelect = !blocked && !innateStarter && !already && !atCap
           const lockedReason = innateStarter
             ? 'Granted automatically at 1st level (innate starter).'
             : blocked
-              ? `Locked: ${psychicGate?.reason ?? occGate.reason ?? 'O.C.C. restriction.'}`
+              ? `Locked: ${occEngine?.reason ?? psychicGate?.reason ?? occGate.reason ?? 'O.C.C. restriction.'}`
               : already
                 ? 'Already selected.'
                 : atCap

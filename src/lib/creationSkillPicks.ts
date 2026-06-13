@@ -3,14 +3,13 @@ import {
   getPalladiumSkillCatalogEntryById,
   resolveCatalogSkillId,
 } from '../data/library/skillsCatalogLoader'
-import type { PalladiumOcc } from '../types'
+import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
   isOccRelatedSkillAllowed,
   isSecondarySkillAllowed,
 } from './occCreationDerivation'
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
-import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { occRelatedSkillSelectionSlotCost } from './occRelatedSkillSlotCosts'
 import {
   hasPairedWeaponSupportWp,

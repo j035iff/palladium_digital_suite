@@ -100,8 +100,8 @@ export function occCreationAbilityBudget(occ: PalladiumOcc): OccCreationAbilityB
   const fromTalents = customEngineTalentSlots(occ, 1)
 
   const derived: OccCreationAbilityBudget = {
-    spellSlots: occ.ppeEngine ? Math.max(fromPpe, fromPpe > 0 ? fromPpe : 4) : 0,
-    psionicSlots: occ.ispEngine ? Math.max(fromIsp, fromIsp > 0 ? fromIsp : 4) : 0,
+    spellSlots: fromPpe,
+    psionicSlots: fromIsp,
     talentSlots: fromTalents,
   }
 

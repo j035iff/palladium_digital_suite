@@ -3,6 +3,7 @@ import type { PalladiumPsionicCatalogEntry } from '../data/library/catalogTypes'
 import type { PalladiumMagicSpell } from '../types'
 import { getFeatureById } from '../data/library/registry'
 import { abilityPassesOccSupernaturalRules } from './occCreationDerivation'
+import { occSupernaturalGrantedAbilityIds } from './occSupernaturalGrants'
 import { magicSchoolFilterLabel } from './magicSchoolLabels'
 import { psychicGatePsionicPickAllowed } from './psychicGatePsionicBudget'
 import { occEnginePsionicPickAllowed } from './occSupernaturalSelection'
@@ -73,12 +74,18 @@ export function psionicRowIsSelectable(
   })
   if (psychicGate && !psychicGate.allowed) return false
 
+  const grantedIds =
+    ctx.activeOcc != null
+      ? occSupernaturalGrantedAbilityIds(ctx.activeOcc, undefined)
+      : []
+
   const occEngine = occEnginePsionicPickAllowed({
     occ: ctx.activeOcc,
     selectedIds: ctx.selectedIds,
     candidateId: catalog.id,
     genreId: ctx.genreId,
     viewingCategory: ctx.viewingCategory,
+    grantedIds,
   })
   if (occEngine && !occEngine.allowed) return false
   return true

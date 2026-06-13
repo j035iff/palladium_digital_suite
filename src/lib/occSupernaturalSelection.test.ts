@@ -3,6 +3,7 @@ import type { PalladiumOcc } from '../types'
 import {
   assessOccEnginePsionicBlockers,
   occCreationPsionicSlotBudget,
+  occEnginePsionicPickAllowed,
   sumCreationSelectionPlanPicks,
   supernaturalSelectionModeRequiredPicks,
 } from './occSupernaturalSelection'
@@ -62,6 +63,63 @@ describe('occSupernaturalSelection', () => {
         genreId: 'nightbane',
       }).length,
     ).toBe(1)
+  })
+
+  const grantedSensitive = [
+    'psionic_see_aura',
+    'psionic_sense_evil',
+    'psionic_meditation',
+    'psionic_presence_sense',
+  ]
+
+  it('excludes granted psionics from per-category pick budget', () => {
+    const grantedIds = grantedSensitive
+    const twoSensitivePicks = ['psionic_clairvoyance', 'psionic_telepathy']
+
+    expect(
+      occEnginePsionicPickAllowed({
+        occ: psychicOcc,
+        selectedIds: [...grantedIds, ...twoSensitivePicks],
+        candidateId: 'psionic_telekinesis',
+        genreId: 'nightbane',
+        viewingCategory: 'physical',
+        grantedIds,
+      }),
+    ).toEqual({ allowed: true })
+
+    expect(
+      occEnginePsionicPickAllowed({
+        occ: psychicOcc,
+        selectedIds: [...grantedIds, ...twoSensitivePicks],
+        candidateId: 'psionic_clairvoyance',
+        genreId: 'nightbane',
+        viewingCategory: 'sensitive',
+        grantedIds,
+      }),
+    ).toEqual({ allowed: true })
+  })
+
+  it('blocks a third pick in the same per-category bucket', () => {
+    const grantedIds = grantedSensitive
+    const threeSensitivePicks = [
+      'psionic_clairvoyance',
+      'psionic_telepathy',
+      'psionic_see_the_invisible',
+    ]
+
+    expect(
+      occEnginePsionicPickAllowed({
+        occ: psychicOcc,
+        selectedIds: [...grantedIds, ...threeSensitivePicks],
+        candidateId: 'psionic_sense_magic',
+        genreId: 'nightbane',
+        viewingCategory: 'sensitive',
+        grantedIds,
+      }),
+    ).toEqual({
+      allowed: false,
+      reason: 'Sensitive pick budget is full (2).',
+    })
   })
 })
 

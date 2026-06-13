@@ -113,13 +113,75 @@ export type StructuredPsionicSelection = {
   planIndex: number
 }
 
+export type OccPsionicPerCategoryBucket = {
+  planIndex: number
+  pool: string
+  label: string
+  cap: number
+  pickIds: string[]
+  filledCount: number
+}
+
+function excludeGrantedAbilityIds(
+  selectedIds: readonly string[] | undefined | null,
+  grantedIds?: readonly string[] | undefined,
+): readonly string[] {
+  if (!grantedIds?.length) return selectedIds ?? []
+  const granted = new Set(grantedIds)
+  return (selectedIds ?? []).filter((id) => !granted.has(id))
+}
+
+export function occEngineHasPerCategoryPsionicPlan(
+  occ: PalladiumOcc | undefined,
+): boolean {
+  const plan = occIspCreationSelectionPlan(occ)
+  return plan?.some((step) => step.selectionMode.kind === 'per_category') ?? false
+}
+
+export function listOccEnginePerCategoryBuckets(
+  occ: PalladiumOcc | undefined,
+  selectedIds: readonly string[] | undefined | null,
+  genreId: string,
+  grantedIds?: readonly string[],
+): OccPsionicPerCategoryBucket[] {
+  const plan = occIspCreationSelectionPlan(occ)
+  if (!plan?.length) return []
+
+  const playerIds = excludeGrantedAbilityIds(selectedIds, grantedIds)
+  const selections = listStructuredPsionicSelections(plan, playerIds, genreId)
+  const out: OccPsionicPerCategoryBucket[] = []
+
+  for (let planIndex = 0; planIndex < plan.length; planIndex++) {
+    const step = plan[planIndex]
+    if (step.selectionMode.kind !== 'per_category') continue
+    for (const [pool, cap] of Object.entries(step.selectionMode.buckets)) {
+      if (cap <= 0) continue
+      const normalized = normalizePoolCategory(pool)
+      const pickIds = selections
+        .filter((s) => s.planIndex === planIndex && s.pool === normalized)
+        .map((s) => s.id)
+      out.push({
+        planIndex,
+        pool: normalized,
+        label: poolLabel(pool),
+        cap,
+        pickIds,
+        filledCount: pickIds.length,
+      })
+    }
+  }
+
+  return out
+}
+
 export function listStructuredPsionicSelections(
   plan: readonly OccSupernaturalCreationSelectionStep[],
   selectedIds: readonly string[] | undefined | null,
   genreId: string,
+  grantedIds?: readonly string[],
 ): StructuredPsionicSelection[] {
   const out: StructuredPsionicSelection[] = []
-  for (const id of selectedIds ?? []) {
+  for (const id of excludeGrantedAbilityIds(selectedIds, grantedIds)) {
     if (getAbilityById(id)?.category !== 'Psionic') continue
     const feature = getFeatureById(id)
     if (!feature) continue
@@ -248,8 +310,10 @@ export function occEnginePsionicPickAllowed(params: {
   candidateId: string
   genreId: string
   viewingCategory?: string | null
+  grantedIds?: readonly string[]
 }): { allowed: boolean; reason?: string } | null {
-  const { occ, selectedIds, candidateId, genreId, viewingCategory } = params
+  const { occ, selectedIds, candidateId, genreId, viewingCategory, grantedIds } =
+    params
   const plan = occIspCreationSelectionPlan(occ)
   if (!plan?.length) return null
 
@@ -273,8 +337,9 @@ export function occEnginePsionicPickAllowed(params: {
     }
   }
 
-  const selections = listStructuredPsionicSelections(plan, selectedIds, genreId)
-  const already = (selectedIds ?? []).includes(candidateId)
+  const playerIds = excludeGrantedAbilityIds(selectedIds, grantedIds)
+  const selections = listStructuredPsionicSelections(plan, playerIds, genreId)
+  const already = playerIds.includes(candidateId)
   const totalCap = sumCreationSelectionPlanPicks(plan)
   if (!already && selections.length >= totalCap) {
     return { allowed: false, reason: 'O.C.C. psionic pick budget is full.' }
@@ -320,7 +385,7 @@ export function occEnginePsionicPickAllowed(params: {
     if (mode.kind === 'single_category') {
       const allowedPools = mode.categories.map(normalizePoolCategory)
       if (!candidatePools.some((p) => allowedPools.includes(p))) continue
-      const locked = lockedSingleCategoryPool(mode, selectedIds, genreId)
+      const locked = lockedSingleCategoryPool(mode, playerIds, genreId)
       if (locked) {
         if (!candidatePools.includes(locked)) {
           return {
@@ -353,11 +418,18 @@ export function formatOccEnginePsionicRequirementLabel(
   occ: PalladiumOcc | undefined,
   selectedIds: readonly string[] | undefined | null,
   genreId: string,
+  grantedIds?: readonly string[],
 ): string {
   const plan = occIspCreationSelectionPlan(occ)
   if (!plan?.length) return 'Select psionic powers'
 
-  const selections = listStructuredPsionicSelections(plan, selectedIds, genreId)
+  const selections = listStructuredPsionicSelections(
+    plan,
+    selectedIds,
+    genreId,
+    grantedIds,
+  )
+  const playerIds = excludeGrantedAbilityIds(selectedIds, grantedIds)
   const total = selections.length
   const required = sumCreationSelectionPlanPicks(plan)
   const remaining = Math.max(0, required - total)
@@ -382,7 +454,7 @@ export function formatOccEnginePsionicRequirementLabel(
         const used = countSelectionsForPlanStep(planIndex, step, selections)
         const left = Math.max(0, mode.selections - used)
         if (left <= 0) return null
-        const locked = lockedSingleCategoryPool(mode, selectedIds, genreId)
+        const locked = lockedSingleCategoryPool(mode, playerIds, genreId)
         return locked
           ? `${left} more ${poolLabel(locked)}`
           : `${left} from one category (${mode.categories.map(poolLabel).join(', ')})`
@@ -406,18 +478,26 @@ export function assessOccEnginePsionicBlockers(params: {
   occ?: PalladiumOcc
   selectedIds?: readonly string[] | null
   genreId?: string
+  grantedIds?: readonly string[]
 }): string[] {
-  const { occ, selectedIds, genreId = 'nightbane' } = params
+  const { occ, selectedIds, genreId = 'nightbane', grantedIds } = params
   if (!occEnginePsionicRulesApply(occ)) return []
 
   const plan = occIspCreationSelectionPlan(occ)
   if (!plan?.length) return []
 
-  const selections = listStructuredPsionicSelections(plan, selectedIds, genreId)
+  const selections = listStructuredPsionicSelections(
+    plan,
+    selectedIds,
+    genreId,
+    grantedIds,
+  )
   const required = sumCreationSelectionPlanPicks(plan)
   if (selections.length >= required) return []
 
-  return [formatOccEnginePsionicRequirementLabel(occ, selectedIds, genreId)]
+  return [
+    formatOccEnginePsionicRequirementLabel(occ, selectedIds, genreId, grantedIds),
+  ]
 }
 
 export { PSYCHIC_GATE_POOL_CATEGORIES }

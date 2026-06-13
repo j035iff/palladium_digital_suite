@@ -22,6 +22,8 @@ type SupernaturalAbilityLaneEngineBarProps = {
     psychicGateBypassed?: boolean
     majorAllocation?: PsychicGateMajorAllocation | null
   }
+  selectedIds?: readonly string[]
+  genreId?: string
 }
 
 export function SupernaturalAbilityLaneEngineBar({
@@ -32,6 +34,8 @@ export function SupernaturalAbilityLaneEngineBar({
   selectionCount,
   effectiveBudget,
   psychicGateContext,
+  selectedIds,
+  genreId,
 }: SupernaturalAbilityLaneEngineBarProps) {
   const lines = buildSupernaturalLaneEngineLines(
     lane,
@@ -40,6 +44,8 @@ export function SupernaturalAbilityLaneEngineBar({
     selectionCount,
     effectiveBudget,
     psychicGateContext,
+    selectedIds,
+    genreId,
   )
   if (lines.length === 0) return null
 
