@@ -20,11 +20,15 @@ import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { initialOccCoreVoucherPicks } from './creationInvalidate'
 import { occStartingHandToHandTier } from './creationHandToHandChoice'
+import { getPalladiumMagicSpellById } from '../data/library/registry'
 import {
   magicSchoolForFeature,
+  occMagicSchools,
   spellLevelForFeature,
   spellSchoolAllowedForOcc,
 } from './magicSchool'
+import { spellAccessibleToOcc } from './spellAccessPath'
+import { evaluateSpellPickGate } from './spellAccessResolver'
 
 export type OccCreationAbilityBudget = {
   spellSlots: number
@@ -398,20 +402,25 @@ export function abilityPassesOccSupernaturalRules(
       : undefined
 
   if (cat === 'Spell') {
-    if (level != null && level > spellCap) {
-      return {
-        allowed: false,
-        reason: `Spell level ${level} exceeds O.C.C. spell strength cap (${spellCap}).`,
+    const spellRow = getPalladiumMagicSpellById(feature.identity.id)
+    if (spellRow) {
+      if (!spellAccessibleToOcc(occ, spellRow)) {
+        const allowed = occMagicSchools(occ)
+        const reason = allowed.length
+          ? `O.C.C. permits ${allowed.join(', ')} magic only.`
+          : 'Spell is outside this O.C.C. magic disciplines.'
+        return { allowed: false, reason }
+      }
+    } else {
+      const schoolGate = spellSchoolAllowedForOcc(occ, school)
+      if (!schoolGate.allowed) {
+        return schoolGate
       }
     }
-    const schoolGate = spellSchoolAllowedForOcc(occ, school)
-    if (!schoolGate.allowed) {
-      return schoolGate
-    }
-    for (const r of occCreationSpellRestrictions(occ, 1)) {
-      if (!restrictionMatches(r, { level, school, structuredSchoolGate })) {
-        return { allowed: false, reason: r }
-      }
+
+    const pickGate = evaluateSpellPickGate(occ, feature, spellCap)
+    if (!pickGate.allowed) {
+      return pickGate
     }
   }
 

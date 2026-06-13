@@ -1,0 +1,200 @@
+{
+  "description": "Enumerated cross-school spell borrow lists. O.C.C. spellAccessRules reference crossListId; per-spell focus and target caveats merge with rule defaults.",
+  "crossLists": {
+    "mirrormage_borrowed_nightbane_core": {
+      "label": "Mirrormage borrowed Nightbane core wizard spells",
+      "source": "Nightbane RPG",
+      "sourcePage": 72,
+      "defaultCaveats": [
+        {
+          "kind": "focus",
+          "summary": "Requires mirror focus",
+          "detail": "Cast through a mirror or reflective surface (TTGD p. 72)."
+        }
+      ],
+      "spellIds": [
+        "magic_wizard_banishment",
+        "magic_wizard_close_rift",
+        "magic_wizard_detect_concealment",
+        "magic_wizard_locate",
+        "magic_wizard_mystic_alarm",
+        "magic_wizard_nightlands_passage",
+        "magic_wizard_nightlands_portal",
+        "magic_wizard_oracle",
+        "magic_wizard_second_sight",
+        "magic_wizard_see_aura",
+        "magic_wizard_see_the_invisible",
+        "magic_wizard_sense_evil",
+        "magic_wizard_sense_magic",
+        "magic_wizard_sense_nightbane",
+        "magic_wizard_sense_ppe",
+        "magic_wizard_summon_nightlord_avatar",
+        "magic_wizard_summon_nightlord",
+        "magic_wizard_ritual_call_creature_of_light",
+        "magic_wizard_ritual_call_nightlands_denizen",
+        "magic_wizard_ritual_call_nightlord",
+        "magic_wizard_talisman",
+        "magic_wizard_teleport_lesser",
+        "magic_wizard_teleport_superior"
+      ],
+      "spellOverrides": {
+        "magic_wizard_locate": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "See the general area reflected in a mirror"
+            }
+          ]
+        },
+        "magic_wizard_mystic_alarm": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Alarmed object must be in view of a mirror"
+            }
+          ]
+        },
+        "magic_wizard_nightlands_portal": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Portal starts from a large mirror"
+            }
+          ]
+        },
+        "magic_wizard_oracle": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Visions appear in a mirror or reflective surface"
+            }
+          ]
+        },
+        "magic_wizard_second_sight": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Cast by looking into a mirror"
+            }
+          ]
+        },
+        "magic_wizard_talisman": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Uses a mirror as the talisman focus"
+            }
+          ]
+        },
+        "magic_wizard_teleport_lesser": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Send the object through a mirror"
+            }
+          ]
+        },
+        "magic_wizard_teleport_superior": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Accomplished by stepping through a large mirror"
+            }
+          ]
+        }
+      }
+    },
+    "mirrormage_borrowed_bts": {
+      "label": "Mirrormage borrowed Between the Shadows spells",
+      "source": "Between the Shadows",
+      "sourcePage": 72,
+      "defaultCaveats": [
+        {
+          "kind": "focus",
+          "summary": "Requires mirror focus",
+          "detail": "Cast through a mirror or reflective surface (TTGD p. 72)."
+        }
+      ],
+      "spellIds": [
+        "magic_wizard_astral_portal",
+        "magic_wizard_dream_window",
+        "magic_wizard_dream_senses",
+        "magic_wizard_observe_dream"
+      ],
+      "spellOverrides": {
+        "magic_wizard_dream_window": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Use a mirror as the window surface"
+            }
+          ]
+        },
+        "magic_wizard_dream_senses": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Perceive through a mirror"
+            }
+          ]
+        },
+        "magic_wizard_observe_dream": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Mirror placed close to the sleeping person"
+            }
+          ]
+        }
+      }
+    },
+    "mirrormage_borrowed_ttgd_wizard": {
+      "label": "Mirrormage borrowed Through the Glass Darkly wizard spells",
+      "source": "Through the Glass Darkly",
+      "sourcePage": 72,
+      "defaultCaveats": [
+        {
+          "kind": "focus",
+          "summary": "Requires mirror focus",
+          "detail": "Cast through a mirror or reflective surface (TTGD p. 72)."
+        }
+      ],
+      "spellIds": [
+        "magic_wizard_soul_in_a_bottle",
+        "magic_wizard_open_pathway",
+        "magic_wizard_psychic_drain"
+      ],
+      "spellOverrides": {
+        "magic_wizard_soul_in_a_bottle": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Uses a mirror instead of a bottle"
+            }
+          ]
+        },
+        "magic_wizard_psychic_drain": {
+          "caveats": [
+            {
+              "kind": "focus",
+              "summary": "Uses a mirror as the focus"
+            }
+          ]
+        }
+      }
+    },
+    "mirrormage_borrowed_ttgd_fleshsculptor": {
+      "label": "Mirrormage borrowed Through the Glass Darkly fleshsculptor spell",
+      "source": "Through the Glass Darkly",
+      "sourcePage": 72,
+      "defaultCaveats": [
+        {
+          "kind": "focus",
+          "summary": "Requires mirror focus",
+          "detail": "Cast through a mirror or reflective surface (TTGD p. 72)."
+        }
+      ],
+      "spellIds": ["magic_fleshsculptor_see_through_lifeless_eyes"]
+    }
+  }
+}

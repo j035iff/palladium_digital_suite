@@ -1,0 +1,115 @@
+amount of energy one can draw into oneself is always random: 5D6 
+P.P.E. - and one may expend more to cast the spell than s/he gets back 
+in return. Whatever P.P.E. returns to the mage, s/he can hold on to it for 
+five minutes per level of experience. If it's not used in magic before that 
+time elapses, the P.P.E. syphoned from the Mirrorwall disa ppears . 
+Note: Frequent use of this spell may tear a hole into the Mirrorwall 
+and/or open a dimensional portal (Too? G. M.'s choic e). 
+Hidden Reflection 
+Range: Self 
+Duration : One minute per level of experience. 
+Saving Throw : None 
+P.P.E. : 25 
+The spell caster can literally step into a mirror to hide ! Even if some­
+body looks directly into the mirror, the character hidden ins ide is a sub­
+tle part of the the background, and barely noticeable unless s/he moves 
+or lunges forward (can only leap out of the mirror, and cannot attack or 
+pull in the person looking in) . While in the mirror, the character can see 
+and hear everything as if s/he were standing in front of it, but cannot 
+communicate, attack, or use magic or psionic s. 
+The danger of this spell is that if the mirror is shattered, the charac­
+ter's grasp of reality is also shattered and his or her life esse nce could 
+be hurled into another plane of exi stence or destroyed ! Roll on the fol­
+lowing table when shattered: 
+01-20 Hurled into the Dreamstream. The physical body is perma­
+nently destroyed, and the character 's mind and spirit becomes a phan­
+tom-li ke creature who haunts the dreams of others . 
+21 -30 Body, mind and soul are hurled into the Astral Plane. Finding 
+one's way back to the physical plane (without an Astral Guide) is slim 
+to none (0 1 -06% chance) . Will perish from starvation and thirst within 
+4D4 days unless a denizen of the Astral Plane can be convinced to take 
+the character home (at what price ?). If the physical. body dies on the As­
+tral Plane , there is a 01 -40% chance of becoming an Astral Being (no 
+physical body; must spend the rest of his/her days in the Astral Plane). 
+31 -40 Trapped in a broken shard of the mirror for what seems to be 
+days, but is really only 2D6 hours . Finall y, reappears whole and un­
+harmed; roll on the table listed under 61 -80, below, for aftereffects. 
+41-60 Hurled into the Nightland s. The character is physically and 
+mentally unharmed, but is trapped in the homeland of the Nightlor ds. 
+The only way back is to know how to Mirrorwalk (or simila r magic) or 
+find somebody to take him or her home (for what price ?). 
+61 -80 White noise and swirling images seem to last an eternity as 
+the character 's body feels as if it 's being dis solve d into atoms. Sud­
+denly , s/he is standing in front of the shattered mirror 3D4 minutes after 
+it was smashed. S/he is physica lly whole and unharmed. Roll percentile 
+to determine aftereffects : 
+01-15 Shaken but okay . Appears standing in front of the shattered 
+mirror. 
+16 -30 Afraid to use mirrors for ID 6 days. 
+31 -55 Afraid to use mirror magic for 2D6 days; mirrors, in general , 
+make the character nervous. 
+56-7 5 Afraid the reflection in the mirror is not his own for 4D6 
+days; avoids mirrors and mirror magic as much as possible. 
+76-00 From the corner of his or her eye, s/he sees movement in the 
+image of mirror reflecti ons; paranoid for ID 6 days. 
+81 -00 Vomited from the mirror with a thud the instant the mirror is 
+shattered! Suffers 2D6 damage and loses initiative for the first melee 
+round, but is otherwise okay . 
+Note : The mage inside the mirror can step out at any time, and is 
+forced out when the spell elapses, without negative side effects. 
+74 
+LEVEL SIX 
+Opening the Mirrorwall 
+Range: 10 0 feet (30 meters ). 
+Duration : One melee per level of experience. 
+Saving Throw : None 
+P.P.E.: 40 
+In order to cast this spell, the Mirrormage must smash one reason­
+ably large mirror (at least two feet/60 cm/0.6 m across). Where the glass 
+shatters, a huge gaping void in space is left. A black abyss roaring with 
+a cold wind (What happens if a character leaps into this void? That's up 
+to the G.M., but expect it to be nasty) . By accessing this void - this 
+breach in the Mirrorwall - the caster may negate any one basic law of 
+reality in the plane or world that s/he is currently in. The range of this 
+effect is the range of the spell. 
+So, this breach may suspend gravity, or stop combustion (so, no fire­
+arms !), stop magic from working, suspend the laws of mathematics 
+(jamming compute rs) , etc., for the duration of the spell. Note that this 
+may only be used to temporarily negate a phenomenon, not to reverse it 
+or change it in any other way . So, for example, gravity cannot be made 
+to pull upwards. Further, liv ing things cannot be made to stop living, 
+solids cannot be turned to gasses, etc. 
+At the G. M.'s dis cretion , the spell may also be used to import a phe­
+nomenon from a reality beyond the Mirrorwall. So, for example, if the 
+caster knows of a world where all creatures are automatically able to 
+fly, then that phenomenon could be imported through the breach to the 
+cast er's present reality . 
+LEVEL SE VEN 
+Amend Reflection (Ritual) 
+Range: Special (s ee below) 
+Duration : Indefinite 
+Saving Throw : Standard 
+P.P.E. : 50 
+This spell is identical to Manipulate Reflection, except that its dura­
+tion is effectively permanent. It may be used to curse, to mark servants 
+and enemi es, or just to create disturbing or intriguing mirrors. In order 
+to cast this spell, either the Mirrormage must have the target/victim pre­
+sent for the duration of the ritual, or (if the target is a person) the caster 
+must have an object intimately associa ted with the person (an item of 
+clothing or lock of hair, for example ). 
+LEVEL EIGHT 
+Steal Reflection 
+Range: 10 0 feet (30 meters) 
+Duration : One week per level of experien ce. 
+Saving Throw : Standard 
+P.P.E. : 50 
+This spell allows a magician to "steal" any person or creature 's re­
+flection, or the reflection of any object up to human-size. This reflection 
+is stored in a specific mirror, which the Mirrormage must have in 
+his/her posses sion when the spell is cast. 
+Cons equently , the target of the spell no longer casts a reflection, and 
+the Mirrormage (or whoever owns the mirror) can see the person at any 
+time (including clothing , objects held, book being read, etc., but no 
+sound, sight of those around him, or details of environment or context) 
+regardless of dist ance ! 
+Joe Sifferman (Order #46323384)

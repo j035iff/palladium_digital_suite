@@ -18,13 +18,20 @@
           "notes": "Fleshsculptor O.C.C. only (Through the Glass Darkly pp. 64–71). Distinct from per-spell magicKind fleshsculpting delivery."
         },
         {
+          "id": "mirror",
+          "label": "Mirror Magic",
+          "contentFile": "content/magic/mirror.json",
+          "sourcePage": 72,
+          "notes": "Mirrormage O.C.C. only (TTGD pp. 71–76). P.P.E. values are Mirrormage-only; other O.C.C.s pay double. May also cast listed wizard/BTS spells through a mirror focus — see TTGD p. 72 cross-list."
+        },
+        {
           "id": "necromancy",
           "label": "Necromancy",
           "contentFile": "content/magic/necromancy.json",
           "notes": "Necromancer O.C.C. only; distinct from per-spell magicKind necromancy delivery."
         }
       ],
-      "selectionRules": "Spell picks are gated by O.C.C. magicSchools and progressionRoadmap level caps (e.g. Level 1 Spells Only at 1st level)."
+      "selectionRules": "Spell picks use resolveSpellsForOcc: native magicSchools plus spellAccessRules cross-lists. Spells outside the O.C.C. disciplines are hidden (Radical Visibility exception). Eligible-but-blocked spells (level cap, roadmap) remain visible and locked."
     }
   }
 }

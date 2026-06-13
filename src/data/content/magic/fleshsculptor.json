@@ -23,6 +23,9 @@
       "necromancy",
       "destruction"
     ],
+    "spellAccess": {
+      "replacesSpellId": "magic_wizard_destroy_dead_flesh"
+    },
     "ppe": {
       "baseActivation": 1,
       "dynamicCosts": [
@@ -116,6 +119,9 @@
       "necromancy",
       "animation"
     ],
+    "spellAccess": {
+      "replacesSpellId": "magic_wizard_reanimate_flesh"
+    },
     "ppe": {
       "baseActivation": 2
     },

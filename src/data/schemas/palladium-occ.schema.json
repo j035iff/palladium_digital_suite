@@ -149,6 +149,63 @@
     }
   },
   "$defs": {
+    "spellCaveat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "summary"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["focus", "target", "ppe", "ritual", "note"]
+        },
+        "summary": { "type": "string", "minLength": 1 },
+        "detail": { "type": "string", "minLength": 1 },
+        "sourcePage": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "occSpellAccessRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["school", "accessType"],
+      "properties": {
+        "school": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "description": "Foreign school slug to borrow from (e.g. wizard)."
+        },
+        "accessType": {
+          "type": "string",
+          "enum": ["only", "except"],
+          "description": "only = matching spells allowed; except = all in school except spellIds."
+        },
+        "tagFilter": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Semantic filter (e.g. affects_flesh) matched against spell tags and spellAccess."
+        },
+        "spellIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^magic_" },
+          "uniqueItems": true
+        },
+        "crossListId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Key in content/magic_cross_lists.json for enumerated borrow lists."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UI label for this borrow rule."
+        },
+        "defaultCaveats": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/spellCaveat" }
+        }
+      }
+    },
     "catalogSkillId": {
       "type": "string",
       "pattern": "^skill_[a-z][a-z0-9_]*$",
@@ -660,7 +717,12 @@
             "minLength": 1
           },
           "uniqueItems": true,
-          "description": "Magic schools this O.C.C. may learn (e.g. wizard, necromancy). When omitted, school is not gated at creation — use progressionRoadmap categoryRestrictions for level caps only."
+          "description": "Native magic schools this O.C.C. may learn (e.g. wizard, fleshsculptor). When omitted with no spellAccessRules, school is not gated."
+        },
+        "spellAccessRules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occSpellAccessRule" },
+          "description": "Cross-school borrow rules (e.g. Mirrormage wizard spells via mirror focus). Spells with no access path are hidden in UI."
         }
       }
     },

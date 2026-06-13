@@ -1653,6 +1653,52 @@ export type MorphusForgeState = {
   baseStatsApplied?: boolean
 }
 
+export type SpellCaveatKind = 'focus' | 'target' | 'ppe' | 'ritual' | 'note'
+
+export type SpellCaveat = {
+  kind: SpellCaveatKind
+  summary: string
+  detail?: string
+  sourcePage?: number
+}
+
+export type SpellAccessMetadata = {
+  /** Wizard flesh-only cross-list eligibility (Fleshsculptor). */
+  affectsFlesh?: boolean
+  /** When a native-school row supersedes a borrowed catalog id for the same O.C.C. */
+  replacesSpellId?: string
+  /** Per-O.C.C.-kind caveats when borrowed (key = occ slug prefix, e.g. fleshsculptor). */
+  borrowedCaveats?: Readonly<Record<string, readonly SpellCaveat[]>>
+  /** Cross-list registry ids this spell belongs to (Mirrormage enumerated borrow). */
+  crossLists?: readonly string[]
+}
+
+export type OccSpellAccessRule = {
+  school: string
+  accessType: 'only' | 'except'
+  tagFilter?: readonly string[]
+  spellIds?: readonly string[]
+  crossListId?: string
+  label?: string
+  defaultCaveats?: readonly SpellCaveat[]
+}
+
+export type MagicCrossList = {
+  label: string
+  source?: string
+  sourcePage?: number
+  defaultCaveats?: readonly SpellCaveat[]
+  spellIds: readonly string[]
+  spellOverrides?: Readonly<
+    Record<string, { caveats?: readonly SpellCaveat[] }>
+  >
+}
+
+export type MagicCrossListsRef = {
+  description?: string
+  crossLists: Readonly<Record<string, MagicCrossList>>
+}
+
 /**
  * Magic invocation catalog row (`content/magic/<school>.json`, palladium-magic.schema.json).
  */
@@ -1670,6 +1716,7 @@ export type PalladiumMagicSpell = {
   isRitual?: boolean
   spellStrengthBase?: 12 | 16
   tags?: readonly string[]
+  spellAccess?: SpellAccessMetadata
   genrePlacements?: readonly MagicGenrePlacement[]
   ppe?: MagicPpeEconomy
   limitations?: MagicLimitations
@@ -1811,8 +1858,10 @@ export type OccPpeEngine = {
   perLevelFormula: string
   spellStrengthProgression?: Readonly<Record<string, number>>
   progressionRoadmap: readonly OccSupernaturalProgressionStep[]
-  /** School slugs this O.C.C. may learn (e.g. wizard, necromancy). Empty/omitted = no school gate. */
+  /** School slugs this O.C.C. may learn natively (e.g. wizard, necromancy). Empty/omitted = no school gate. */
   magicSchools?: readonly string[]
+  /** Cross-school borrow rules (e.g. Mirrormage wizard spells via mirror focus). */
+  spellAccessRules?: readonly OccSpellAccessRule[]
 }
 
 export type OccIspSavingThrowClass = 'minor' | 'major' | 'master'
