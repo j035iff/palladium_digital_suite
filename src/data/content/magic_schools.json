@@ -11,6 +11,13 @@
           "sourcePage": 127
         },
         {
+          "id": "fleshsculptor",
+          "label": "Fleshsculptor Magic",
+          "contentFile": "content/magic/fleshsculptor.json",
+          "sourcePage": 64,
+          "notes": "Fleshsculptor O.C.C. only (Through the Glass Darkly pp. 64–71). Distinct from per-spell magicKind fleshsculpting delivery."
+        },
+        {
           "id": "necromancy",
           "label": "Necromancy",
           "contentFile": "content/magic/necromancy.json",

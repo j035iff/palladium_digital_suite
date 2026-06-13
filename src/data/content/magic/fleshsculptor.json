@@ -1,1 +1,3137 @@
-[]
+[
+  {
+    "id": "magic_fleshsculptor_destroy_dead_flesh",
+    "name": "Destroy Dead Flesh",
+    "description": "Fundamentally the same as the sorcerer's spell, which utterly destroys the dead flesh of one carcass or corpse, up to 600 lbs (270 kg) in weight. The flesh smolders for several minutes (taking one minute per 100 lbs/45 kg), crumbling into a black ashen residue which then evaporates. Very handy for destroying the evidence of fights and murders, or for covering up the destructions of supernatural creatures. Has no effect upon magically animated or otherwise \"undead\" flesh. Casting the spell requires the expenditure of 1 P.P.E. per 100 lbs (45 kg) or part thereof of the target's weight: usually costing 2-3 P.P.E. for most humans.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 64
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 1,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "necromancy",
+      "destruction"
+    ],
+    "ppe": {
+      "baseActivation": 1,
+      "dynamicCosts": [
+        {
+          "trigger": "Per 100 lbs (45 kg) or part thereof of corpse weight",
+          "costFormula": "1 P.P.E. each"
+        }
+      ],
+      "notes": "Typically 2-3 P.P.E. for most humans."
+    },
+    "range": {
+      "summary": "10 feet (3 m)",
+      "kind": "distance",
+      "distanceValue": 10,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "Permanent — flesh smolders ~1 minute per 100 lbs.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "limitations": {
+      "otherLimitations": "No effect on magically animated or undead flesh."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_preserve_living_flesh",
+    "name": "Preserve Living Flesh",
+    "description": "A spell that will keep living skin/flesh/tissue (including small organs like eyes, liver, spleen, etc.) alive for weeks. The flesh can be placed in a container or left out in the open air (though the latter is more vulnerable to accidental damage or theft).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 64
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 1,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "preservation"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "1D4 weeks per level of experience.",
+      "kind": "week",
+      "durationValue": "1D4",
+      "perLevel": "1D4 weeks"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_reanimate_flesh",
+    "name": "Reanimate Flesh",
+    "description": "Same as the Sorcerer/Wizard spell, only longer duration and less P.P.E. cost. With this spell, a mage can animate and control up to 15 lbs (6 kg) of dead flesh. It is used to animate a body part such as a hand, arm, foot, or the jaw of a head. The reanimated flesh can be given simple verbal instructions by the caster. The body part cannot be dead more than 72 hours or it will not work.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 64
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 1,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "necromancy",
+      "animation"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Reanimated flesh",
+      "notes": "Up to 15 lbs (6 kg); part cannot be dead more than 72 hours."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_sense_life_essence",
+    "name": "Sense Life Essence",
+    "description": "A spell that enables the Fleshsculptor to sense the presence of life in an individual who may otherwise appear dead (coma, death trance), or locate the living (even a worm buried in the soil) where none seems to exist. This spell can also sense the presence of a possessing entity, as well other entities, fragmented life essences, invisible spirits and Astral beings. With concentration and the expenditure of another 2 P.P.E., the character can see these life essences either as an aura or as the energy beings/people/creatures they are.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 64
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 1,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "detection"
+    ],
+    "ppe": {
+      "baseActivation": 2,
+      "dynamicCosts": [
+        {
+          "trigger": "See life essences as aura or visible forms",
+          "costFormula": "2 P.P.E."
+        }
+      ]
+    },
+    "range": {
+      "summary": "5 feet (1.5 m) per level of experience.",
+      "kind": "distance",
+      "distanceValue": "5 * level",
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "One minute.",
+      "kind": "minute",
+      "durationValue": 1
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "life_presence",
+      "possessing_entity",
+      "astral_beings",
+      "coma_vitality"
+    ]
+  },
+  {
+    "id": "magic_fleshsculptor_fuse_bones",
+    "name": "Fuse Bones",
+    "description": "A spell that enables the Fleshsculptor to magically fuse or join bones from the dead as components/pieces to build strange constructs, bone sculptures/works of art, bone charms and jewelry, weapons, and so on. Note: This spell does not work on the bones of living creatures.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 65
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 2,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "crafting"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Fusion ability lasts five minutes per level; fusion is permanent.",
+      "kind": "minute",
+      "durationValue": 5,
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "limitations": {
+      "otherLimitations": "Does not work on bones of living creatures."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_replace_flesh",
+    "name": "Replace Flesh",
+    "description": "This spell allows a Fleshsculptor to replace or add a small amount of flesh to repair damaged or lost (through cuts or burns) areas of skin. Restores 1D4 S.D.C.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 65
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 2,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 5
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "sdcFormula": "1D4"
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_see_through_lifeless_eyes",
+    "name": "See Through Lifeless Eyes",
+    "description": "This spell allows the caster to look into the eyes of any dead person, animal, or creature, and to see reflected in their pupils the last image they saw. This is a frozen image, like a photograph. The spell also allows the caster to look into the eyes of those in a coma in the same way (seeing the image that they saw as they slipped into unconsciousness), and to see the current thoughts and concerns of someone in a trance. In each case, this is done by staring into their eyes.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 65
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 2,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "scrying"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "5 feet (1.5 m) or closer — line of sight.",
+      "kind": "distance",
+      "distanceValue": 5,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "last_image_seen",
+      "coma_entry_image",
+      "trance_thoughts"
+    ],
+    "limitations": {
+      "lineOfSightRequired": true
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_disfigure_flesh_skin",
+    "name": "Disfigure Flesh/Skin",
+    "description": "The touch of the Fleshsculptor over an area the size of a human head or the length of a limb (arm or leg) will cause that area of flesh to become disfigured in one of the following ways (spell caster's choice): covered in red, white and black pimples or acne scars; discolored blotches (lighter or darker than natural skin); strangely lumpy or scaly; scarred; aged with heavy wrinkles (looks 90 years old); or flaky patches of skin that resemble scabs. In any case, the P.B. attribute of the victim is reduced by half.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 65
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 2,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "disfigurement"
+    ],
+    "ppe": {
+      "baseActivation": 10,
+      "notes": "10 temporary disfigurement, 50 permanent."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "1D4 days per level of experience.",
+      "kind": "day",
+      "durationValue": "1D4",
+      "perLevel": "1D4 days"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "effectProfiles": [
+      {
+        "name": "Temporary disfigurement",
+        "description": "Disfigure an area the size of a head or limb for days per level.",
+        "ppeOverride": {
+          "baseActivation": 10
+        },
+        "duration": {
+          "summary": "1D4 days per level of experience.",
+          "kind": "day",
+          "durationValue": "1D4",
+          "perLevel": "1D4 days"
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          },
+          "statusEffects": [
+            "disfigured"
+          ]
+        }
+      },
+      {
+        "name": "Permanent disfigurement",
+        "description": "Permanent disfigurement of head- or limb-sized flesh.",
+        "ppeOverride": {
+          "baseActivation": 50
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          },
+          "statusEffects": [
+            "disfigured"
+          ]
+        }
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_sculpt_flesh",
+    "name": "Sculpt Flesh",
+    "description": "This magic enables the Fleshsculptor to push, move and change living or dead flesh as if he were working clay! This magic can be used to change a person's features to look like a different person or to look alien, monstrous or grotesque. It is especially useful in creating impersonations, tormenting captives by disfiguring their face, and so on. Note: There is no difficulty changing a subject's features with this magic, but to make an individual look exactly like another person requires both the skills disguise and art: sculpt. A Fleshsculptor can make the change permanent by expending 60 P.P.E. (recovers as usual; it is not permanently depleted from the mage's permanent P.P.E. base like other spells).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 66
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 3,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "disfigurement",
+      "impersonation"
+    ],
+    "ppe": {
+      "baseActivation": 8,
+      "notes": "8 temporary or 60 P.P.E. to make permanent."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Molding ability lasts five minutes per level; temporary changes last six hours per level.",
+      "kind": "minute",
+      "durationValue": 5,
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None unless used against the character's will, then standard.",
+      "saveKind": "conditional",
+      "notes": "Standard save when unwilling."
+    },
+    "effectProfiles": [
+      {
+        "name": "Temporary sculpt",
+        "description": "Reshape flesh for six hours per Fleshsculptor level.",
+        "ppeOverride": {
+          "baseActivation": 8
+        },
+        "duration": {
+          "summary": "Six hours per level of the Fleshsculptor.",
+          "kind": "hour",
+          "perLevel": "6 hours"
+        }
+      },
+      {
+        "name": "Permanent sculpt",
+        "description": "Permanent facial or flesh reshaping.",
+        "ppeOverride": {
+          "baseActivation": 60
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      }
+    ],
+    "limitations": {
+      "otherLimitations": "Exact likeness of another person requires Disguise and Art: Sculpt skills."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_see_health",
+    "name": "See Health",
+    "description": "The caster can \"see\" the general health of one lump of flesh (e.g. a tissue sample or an entire person, animal, etc.). If it is alive, s/he can tell how healthy it is, whether any spells, powers or psychic effects are currently causing it pain or physical inconvenience (but cannot identify the nature of the spell, psionics, or other power), and whether any major problems afflict it (e.g. tumors, infected wounds, poison). If the lump of flesh is dead (e.g. a corpse or joint of meat), the caster can see how long the flesh has been dead (establishing time of death to within an hour), the level of decay, the presence of disease, whether maggots have infested it, and similar. The spell also allows the mage to tell if a body or area of meat is magically animated or undead, or possessed in any way.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 66
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 3,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "diagnostic"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "5 feet per level of experience.",
+      "kind": "distance",
+      "distanceValue": "5 * level",
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "general_health",
+      "pain_sources",
+      "tumors",
+      "time_of_death",
+      "decay",
+      "undead_status",
+      "possession"
+    ]
+  },
+  {
+    "id": "magic_fleshsculptor_skin_rash",
+    "name": "Skin Rash",
+    "description": "The spell caster can create a rash by touch. The rash covers one entire limb (face/head, hand, arm, etc.) and is unsightly. It also itches or burns, and is a constant irritant and distraction. Penalties of those afflicted are -2 on initiative, -1 on all combat bonuses, -10% on skill performance, and reduce P.B. attribute by 20%. Make-up will not conceal the rash and only makes it itch worse.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 66
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 3,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "1D4 days per level of experience.",
+      "kind": "day",
+      "durationValue": "1D4",
+      "perLevel": "1D4 days"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "initiative": -2,
+        "strike": -1,
+        "parry": -1,
+        "dodge": -1
+      },
+      "globalSkillModifier": {
+        "value": -10,
+        "notes": "All skills reduced by 10%."
+      },
+      "statAdjustments": {
+        "pb": {
+          "kind": "multiplier",
+          "value": 0.8,
+          "rounding": "floor"
+        }
+      },
+      "statusEffects": [
+        "skin_rash"
+      ]
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_alter_flesh_skin",
+    "name": "Alter Flesh/Skin",
+    "description": "The touch of the Fleshsculptor can give ordinary skin a different look and texture. This spell affects the entire body, with the following results; it is usually cast to disfigure and hurt people, even though it offers additional S.D.C. protection.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 66
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 4,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "disfigurement",
+      "defense"
+    ],
+    "ppe": {
+      "baseActivation": 12
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One day per level of experience.",
+      "kind": "day",
+      "perLevel": "1 day"
+    },
+    "save": {
+      "summary": "None if wanted; standard if an attack meant to harm.",
+      "saveKind": "conditional"
+    },
+    "effectProfiles": [
+      {
+        "name": "Paper thin and semi-transparent",
+        "description": "Light colored; every vein visible. Reduce S.D.C. and P.B. by one third.",
+        "ppeOverride": {
+          "baseActivation": 12
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.67,
+              "rounding": "floor"
+            },
+            "sdc": {
+              "kind": "multiplier",
+              "value": 0.67,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "White and soft",
+        "description": "Unusually light skin; easily sunburned and bruised. Reduce S.D.C. and P.B. by half.",
+        "ppeOverride": {
+          "baseActivation": 15
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            },
+            "sdc": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Firm, cold and scaly",
+        "description": "Like a snake with tight scales. Adds 3D6 S.D.C.; reduces P.B. by half.",
+        "ppeOverride": {
+          "baseActivation": 12
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Saggy, rough and scaly",
+        "description": "Like an iguana. Adds 3D4 S.D.C.; reduces P.B. by one third.",
+        "ppeOverride": {
+          "baseActivation": 12
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.67,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Thick, rough and wrinkled",
+        "description": "Tree bark appearance. Adds 3D6 S.D.C.; reduce P.B. and Spd by one third.",
+        "ppeOverride": {
+          "baseActivation": 14
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.67,
+              "rounding": "floor"
+            },
+            "spd": {
+              "kind": "multiplier",
+              "value": 0.67,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Thick, lumpy and scaly",
+        "description": "Like a crocodile. Adds 3D6+6 S.D.C.; reduces P.B. by half.",
+        "ppeOverride": {
+          "baseActivation": 16
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Thick, tough hide",
+        "description": "Like rhinoceros or hippo hide. Adds 1D4×10 S.D.C.; reduce P.B. and Spd by half.",
+        "ppeOverride": {
+          "baseActivation": 20
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "pb": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            },
+            "spd": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          }
+        }
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_crawling_flesh",
+    "name": "Crawling Flesh",
+    "description": "An impressive and eerie spell that makes the skin of its victim undulate and move as if something is percolating or crawling underneath it. The effect covers the entire body and is quite horrific, although painless. Penalties: The victim has a horror factor of 14 (scaring most people who see him/her), loses some sensation of touch, is incredibly distracted: -6 on initiative, -25% on skill performance, reduce all combat bonuses by half and P.B. attribute by half. Worse, those afflicted for more than five hours can be driven crazy by the constant crawling sensation (01-50% chance of getting a phobia; typically a fear of crawling things like worms or other squirming or burrowing insects, snakes, or of Fleshsculptors).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 67
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 4,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "debuff",
+      "horror"
+    ],
+    "ppe": {
+      "baseActivation": 15
+    },
+    "range": {
+      "summary": "Touch or 5 feet (1.5 m) per level of experience.",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "Standard, but -2 to save.",
+      "saveKind": "standard",
+      "bonus": "-2"
+    },
+    "horrorFactor": 14,
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "initiative": -6,
+        "notes": "All combat bonuses halved."
+      },
+      "globalSkillModifier": {
+        "value": -25
+      },
+      "statAdjustments": {
+        "pb": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        }
+      },
+      "statusEffects": [
+        "crawling_flesh",
+        "reduced_touch"
+      ]
+    },
+    "notes": "Afflicted 5+ hours: 01-50% chance of phobia (crawling things, snakes, Fleshsculptors)."
+  },
+  {
+    "id": "magic_fleshsculptor_elongated_appendage",
+    "name": "Elongated Appendage",
+    "description": "The spell caster can make one pair of limbs (fingers, hands, arms, or legs) twice as long as normal and still function as normal. Likewise, this spell can be made to stretch a person's neck or face.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 67
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 4,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "mutation"
+    ],
+    "ppe": {
+      "baseActivation": 15,
+      "notes": "15 or 30 for double duration."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None unless used against the character's will, then standard.",
+      "saveKind": "conditional"
+    },
+    "effectProfiles": [
+      {
+        "name": "Standard duration",
+        "description": "Double length appendages for one hour per level.",
+        "ppeOverride": {
+          "baseActivation": 15
+        },
+        "duration": {
+          "summary": "One hour per level of experience.",
+          "kind": "hour",
+          "perLevel": "1 hour"
+        }
+      },
+      {
+        "name": "Extended duration",
+        "description": "Double P.P.E. for one day per level.",
+        "ppeOverride": {
+          "baseActivation": 30
+        },
+        "duration": {
+          "summary": "One day per level of experience.",
+          "kind": "day",
+          "perLevel": "1 day"
+        }
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_heal_living_flesh",
+    "name": "Heal Living Flesh",
+    "description": "The Fleshsculptor can stop bleeding, heal bruises, and cause wounds to close and heal without scarring; restores 2D6 hit points and S.D.C. This spell can also be used to painlessly remove boils and pimples and cure nonmagical skin rashes.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 67
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 4,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "2D6",
+      "sdcFormula": "2D6",
+      "cures": [
+        "boils",
+        "pimples",
+        "nonmagical_skin_rash"
+      ]
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_heal_living_bone",
+    "name": "Heal Living Bone",
+    "description": "With the touch of his hands and concentration, the Fleshsculptor can magically heal broken, fractured and even splintered bones in a matter of minutes! Restores 3D6 hit points and S.D.C. points.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 67
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 5,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 15
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "3D6",
+      "sdcFormula": "3D6"
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_paralysis",
+    "name": "Paralysis",
+    "description": "This magic attack temporarily paralyzes a part of its victim's body, immobilizing that particular limb. A paralyzed hand means that the person cannot pick up or hold objects, write, or use the hand in any way. A paralyzed arm means the limb dangles uselessly at the person's side. A paralyzed leg will make standing difficult and movement almost impossible; reduce speed by 90%, and -2 to parry and dodge. Note: The incantation will paralyze only one limb per each invoking of the magic. Internal organs cannot be affected, so the mage can't paralyze a heart, lung, etc. Note: Paralysis cannot affect people inside a vehicle or body armor.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 68
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 5,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 12
+    },
+    "range": {
+      "summary": "Touch or 30 feet (9 m).",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "partial_paralysis"
+      ],
+      "combatModifiers": {
+        "notes": "Paralyzed leg: -90% speed, -2 parry/dodge."
+      }
+    },
+    "limitations": {
+      "otherLimitations": "One limb per cast; no internal organs; cannot affect targets in vehicle or body armor."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_spoil_meat",
+    "name": "Spoil Meat",
+    "description": "In this case, the mage can instantly spoil/rot all types of dead/processed meats (beef, pork, chicken, fish, etc.), affecting 50 pounds (22 kg) of flesh. The spoiled food is inedible. Anybody who forces themselves to eat the horrible tasting meat will get sick with stomach cramps and diarrhea. Penalties: -2 on initiative, -1 to strike, parry and dodge. Note: This spell has no affect on living flesh/creatures.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 68
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 5,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "destruction"
+    ],
+    "ppe": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch or 3 feet (0.9 m).",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "initiative": -2,
+        "strike": -1,
+        "parry": -1,
+        "dodge": -1
+      },
+      "statusEffects": [
+        "food_poisoning"
+      ]
+    },
+    "limitations": {
+      "otherLimitations": "Affects 50 lbs (22 kg) dead/processed meat only; no effect on living creatures."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_summon_tattoo",
+    "name": "Summon Tattoo",
+    "description": "This spell enables the spell caster to instantly and painlessly create a tattoo on the skin by placing his/her hand over the area to be marked and concentrating for one minute. The mage must imagine the image in his/her mind, and for best results, s/he should stare at a drawing or photograph of the desired image (animal, graphic design, cartoon, logo, etc.).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 68
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 5,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "enchantment"
+    ],
+    "ppe": {
+      "baseActivation": 10,
+      "notes": "10 temporary, or 30 to make permanent."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "2D4 weeks per level of experience or permanent.",
+      "kind": "week",
+      "durationValue": "2D4",
+      "perLevel": "2D4 weeks"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "effectProfiles": [
+      {
+        "name": "Temporary tattoo",
+        "description": "Instant painless tattoo for weeks per level.",
+        "ppeOverride": {
+          "baseActivation": 10
+        },
+        "duration": {
+          "summary": "2D4 weeks per level of experience.",
+          "kind": "week",
+          "durationValue": "2D4",
+          "perLevel": "2D4 weeks"
+        }
+      },
+      {
+        "name": "Permanent tattoo",
+        "description": "Permanent tattoo image.",
+        "ppeOverride": {
+          "baseActivation": 30
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      }
+    ],
+    "limitations": {
+      "concentrationRequired": true,
+      "otherLimitations": "One minute concentration; reference image recommended."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_open_living_flesh",
+    "name": "Open Living Flesh",
+    "description": "The Fleshsculptor can make flesh/skin open as if cut by a knife and invisible hands spread it open. The mage can also cause muscle to spread apart with a touch of his finger. Note that none of this hurts, unless the mage physically grabs, pulls, strikes, cuts or stabs a muscle, bone or internal organ with the deliberate intention to inflict pain and/or cause injury. This spell is typically used in pain free (or pain reduced) surgery. The muscles resume their normal shape and the skin closes at will or at the end of the spell without leaving any scarring.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 68
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 6,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "utility",
+      "surgery",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 25
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Two minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None unless the subject resists, then standard.",
+      "saveKind": "conditional"
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_restore_living_flesh",
+    "name": "Restore Living Flesh",
+    "description": "The Fleshsculptor can restore flesh (skin and muscle) that has been damaged from acne, fire/burns, disease, poison, injury or torture by erasing scars and blemishes, and restoring the flesh to its natural health and vitality. It can erase tattoos too. It can even repair/restore a diseased or injured heart. Likewise, it can close open wounds and restores up to 4D6 hit points and S.D.C. If the flesh is diseased, e.g. plagued by cancer or a disease that ravages the muscles or tissue (not bones), the mage can temporarily restore the flesh, but the disease will remain and slowly begin to ravage the healed flesh again. However, this magic will restore the person to complete and total health for 2D4 months, plus there is a 01-40% chance the disease will remain in remission for an additional 4D4 months; roll percentile dice. If a 01-03 is rolled, the healing is permanent! However, in most cases the disease resurfaces within 6-24 months. It can also be used to cure magical disfigurement, skin rashes, elongation, flesh sculpting, and remove magically attached appendages placed against one's will by another Fleshsculptor, unless they are permanent. Note: In the alternative, this spell can be used on spoiled and/or rotting meat to make it fresh and edible.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 68
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 6,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "fleshsculpting",
+      "restoration"
+    ],
+    "ppe": {
+      "baseActivation": 35
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "4D6",
+      "sdcFormula": "4D6",
+      "cures": [
+        "scars",
+        "burns",
+        "magical_disfigurement",
+        "skin_rash",
+        "elongation",
+        "flesh_sculpting",
+        "nonpermanent_magical_appendages"
+      ],
+      "notes": "Diseased tissue: 2D4 months full health; 01-40% extra 4D4 months remission; 01-03 permanent cure."
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Disease remission after Restore Living Flesh",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "percentile": {
+            "min": 1,
+            "max": 3
+          },
+          "label": "Permanent cure",
+          "effect": "Disease permanently cured."
+        },
+        {
+          "percentile": {
+            "min": 4,
+            "max": 40
+          },
+          "label": "Extended remission",
+          "effect": "Disease in remission for an additional 4D4 months after initial 2D4 months of health."
+        },
+        {
+          "percentile": {
+            "min": 41,
+            "max": 100
+          },
+          "label": "Temporary restoration",
+          "effect": "Full health for 2D4 months; disease typically resurfaces within 6-24 months."
+        }
+      ]
+    },
+    "effectProfiles": [
+      {
+        "name": "Restore living flesh",
+        "description": "Heal scars, burns, disease damage, and magical FS effects on a living subject."
+      },
+      {
+        "name": "Freshen meat",
+        "description": "Alternative use — restore spoiled or rotting meat to fresh and edible; no healing roll on meat."
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_remove_skin",
+    "name": "Remove Skin",
+    "description": "The mage can magically remove a character's skin either by peeling it away in 2-4 large pieces or in one long piece! The procedure is painless (though horrifying) and the magic enables the person or animal to live and function without his skin. This reveals all the muscles, cartilage and goo under the skin and creates a horror factor of 17! The skinless person can function normally, but his or her S.D.C. is reduced by half and the sense of touch is diminished by about half normal. Note: The replace flesh spell can be used to completely recover the character with perfectly healthy and scar free skin.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 69
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 7,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "horror",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "Standard, but only if the magic healing is unwanted.",
+      "saveKind": "conditional"
+    },
+    "horrorFactor": 17,
+    "inflictedModifiers": {
+      "statusEffects": [
+        "skinless"
+      ],
+      "statAdjustments": {
+        "sdc": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        }
+      }
+    },
+    "notes": "Sense of touch diminished by half. Replace Flesh can fully recover skin.",
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_remove_tumor",
+    "name": "Remove Tumor",
+    "description": "The mage can magically sense and remove one tumor from anywhere in the body except the brain. Any benefit that comes from its removal will be noticeable within 24 hours.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 69
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 7,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 35
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "Standard, but only if the magic healing is unwanted.",
+      "saveKind": "conditional"
+    },
+    "healing": {
+      "cures": [
+        "tumor"
+      ],
+      "notes": "One tumor anywhere except the brain; benefits within 24 hours."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_replace_limb",
+    "name": "Replace Limb",
+    "description": "This spell is similar to the Meld Living Flesh and Bone (8th level) spell in that the spell caster can replace an appendage such as an entire hand, arm or leg. In this case, the donor limb must come from the same species and no extra limbs are possible. The attached limb is instantly and completely healed without pain and fully functional! However, it retains the appearance of the donor, so it may have different skin color or tone, different features, hair color, shape, and even length. If not permanent, the limb will eventually wither and rot. To keep the \"replacement\" for a longer period, the spell must be \"recharged.\" No ritual or new surgery is required, but the full P.P.E. amount invested must be renewed. To do this, the original spell caster or another Fleshsculptor who knows the spell must touch the area and imbue it with 30 P.P.E. This will extend it for another 2D6 weeks. If the magic energy is not replenished before the spell duration expires, then the appendage will cease to function, die, slowly rot and (unless swiftly removed) infect the poor recipient. This infection is, effectively, gangrene, and is fatal if not treated.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 69
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 7,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "graft",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 30,
+      "notes": "30 temporary; 325 P.P.E. or 30 permanent P.P.E. sacrifice for permanent."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "2D6 weeks or permanent.",
+      "kind": "week",
+      "durationValue": "2D6",
+      "upkeep": {
+        "interval": {
+          "summary": "Before weekly expiry",
+          "kind": "week",
+          "durationValue": "2D6"
+        },
+        "cost": {
+          "resource": "ppe",
+          "amount": 30,
+          "notes": "Recharge by original caster or another Fleshsculptor."
+        },
+        "timing": "before_expiry",
+        "resetsDuration": true,
+        "failureState": {
+          "summary": "Gangrene — appendage dies, rots, and may fatally infect recipient.",
+          "statusEffects": [
+            "gangrene"
+          ],
+          "catastrophic": true
+        }
+      }
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "graftProfile": {
+      "modes": [
+        "replace_limb"
+      ],
+      "donorRequirements": {
+        "sameSpeciesRequired": true,
+        "donorAppearanceRetained": true,
+        "extraAppendagesAllowed": false
+      },
+      "appearanceMismatch": true
+    },
+    "effectProfiles": [
+      {
+        "name": "Temporary replacement",
+        "description": "Replace hand, arm, or leg for 2D6 weeks with upkeep.",
+        "ppeOverride": {
+          "baseActivation": 30
+        },
+        "duration": {
+          "summary": "2D6 weeks.",
+          "kind": "week",
+          "durationValue": "2D6",
+          "upkeep": {
+            "interval": {
+              "summary": "Before expiry",
+              "kind": "week",
+              "durationValue": "2D6"
+            },
+            "cost": {
+              "resource": "ppe",
+              "amount": 30
+            },
+            "timing": "before_expiry",
+            "resetsDuration": true,
+            "failureState": {
+              "summary": "Gangrene",
+              "catastrophic": true
+            }
+          }
+        }
+      },
+      {
+        "name": "Permanent replacement (P.P.E. expenditure)",
+        "description": "Permanent limb via 325 P.P.E. at casting.",
+        "ppeOverride": {
+          "baseActivation": 325
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      },
+      {
+        "name": "Permanent replacement (P.P.E. sacrifice)",
+        "description": "Permanent limb by permanently sacrificing 30 P.P.E. from caster maximum pool.",
+        "ppeOverride": {
+          "baseActivation": 30
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      }
+    ],
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 30
+        },
+        "trigger": "on_success",
+        "notes": "Permanent replacement profile — 30 P.P.E. permanently sacrificed from caster maximum pool."
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_meld_living_flesh_and_bone",
+    "name": "Meld Living Flesh & Bone",
+    "description": "FIRST, this spell may be used to replace lost body parts, either parts lost through accident or illness, or parts deliberately removed. For example, to give a blind man another's eyes; to graft on a lion's paw in place of a hand; etc. SECOND, the spell may be used to replace damaged flesh or skin (e.g. as skin grafts), effectively returning 4D6 hit points to the victim, without scarring. THIRD, the spell can be used in conjunction with surgery to implant a new internal organ, including an animal organ of roughly equivalent size, into a human! FOURTH, transplant an entire head (with its brain, etc.) from one body to another (human or animal), and retain the original character's personality, mind and essence. This must be done within 20 minutes after decapitation or the subject dies. FIFTH, the spell may be used to add extra body parts to any living creature, from any living (or recently dead and preserved) creature. Unusual parts keep or confer their usual powers to the recipient. Furthermore, the alien body parts retain some characteristics of their original owners. The spell may be cast permanently by sacrificing the P.P.E. spent permanently. Alternatively, the spell may be cast in such a way that it will last only 1D6 weeks (the G.M. should roll, keeping the result secret). To keep the \"additions\" for a longer period the spell must be \"recharged\" with 50 P.P.E. If the magic energy is not replenished before the spell duration expires, then the new flesh will cease to function and die, slowly rot and (unless swiftly removed) infect the poor recipient with gangrene. Limitations: 1. Body parts of supernatural beings CANNOT be attached to mere mortals (including Nightbane). Supernatural-to-supernatural grafts are allowed. 2. Body parts must be from living donors or recently deceased (within three hours). Exceptions are those preserved by magic or science.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 69
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 8,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "graft",
+      "mutation",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 60,
+      "notes": "60 per appendage/transplant; 650 P.P.E. or permanent 60 P.P.E. sacrifice for permanent."
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "1D6 weeks or permanent.",
+      "kind": "week",
+      "durationValue": "1D6",
+      "upkeep": {
+        "interval": {
+          "summary": "Before expiry (GM rolls 1D6 weeks secretly)",
+          "kind": "week",
+          "durationValue": "1D6"
+        },
+        "cost": {
+          "resource": "ppe",
+          "amount": 50
+        },
+        "timing": "before_expiry",
+        "resetsDuration": true,
+        "failureState": {
+          "summary": "Gangrene",
+          "catastrophic": true
+        }
+      }
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "graftProfile": {
+      "modes": [
+        "replace_limb",
+        "skin_graft",
+        "organ_implant",
+        "head_transplant",
+        "add_appendage"
+      ],
+      "donorRequirements": {
+        "supernaturalToMortalForbidden": true,
+        "supernaturalToSupernaturalAllowed": true,
+        "tissueMaxAgeHours": 3,
+        "acceptLivingOrFreshDead": true,
+        "preserveMagicAccepted": true,
+        "behavioralBleedThrough": true,
+        "headTransplantWindowMinutes": 20,
+        "extraAppendagesAllowed": true
+      },
+      "retainsDonorPowers": true,
+      "appearanceMismatch": true
+    },
+    "effectProfiles": [
+      {
+        "name": "Replace lost body part",
+        "description": "Replace eyes, paw for hand, etc. Skin graft mode restores 4D6 H.P. without scarring."
+      },
+      {
+        "name": "Skin graft",
+        "description": "Replace damaged flesh or skin; restores 4D6 H.P."
+      },
+      {
+        "name": "Organ implant",
+        "description": "Implant internal organ including animal organ of equivalent size."
+      },
+      {
+        "name": "Head transplant",
+        "description": "Transplant entire head within 20 minutes of decapitation; retains original personality."
+      },
+      {
+        "name": "Add extra appendage",
+        "description": "Add extra hands, mouths, horns, stingers, etc. from any donor."
+      },
+      {
+        "name": "Permanent meld (P.P.E. expenditure)",
+        "description": "650 P.P.E. makes graft permanent.",
+        "ppeOverride": {
+          "baseActivation": 650
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      },
+      {
+        "name": "Permanent meld (P.P.E. sacrifice)",
+        "description": "Permanently sacrifice 60 P.P.E. per graft; never recovered even if recipient dies.",
+        "ppeOverride": {
+          "baseActivation": 60
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      }
+    ],
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 60
+        },
+        "trigger": "on_success",
+        "notes": "Permanent meld (P.P.E. sacrifice) profile — 60 P.P.E. per graft permanently sacrificed."
+      }
+    ],
+    "limitations": {
+      "otherLimitations": "Can remove/negate magical disfigurement, rashes, and unwanted melded appendages."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_sculpt_senses",
+    "name": "Sculpt Senses",
+    "description": "The Fleshsculptor can either shut off any one sense (including the psionic 6th sense!) or make any one sense hyper-sensitive (hears every sound, tastes or odors are overpowering, etc.). Turning a sense off has pretty obvious effects: blind, deaf, mute, no feeling from touch, cannot taste, or an inability to use psionic powers (they're still there, they just can't be found and used). Making a sense hyper-sensitive is not only distracting and confusing, but can be painful. Hyper-sensitivity of the five senses will inflict penalties of -4 on initiative, -4 on perception rolls, and reduce combat bonuses and skill performance by half. Hyper-sensitive psionic abilities will mean too much sensory information, so that the data sought is lost in a blur of sensations, sights, thoughts or sounds, or that the power used lashes out uncontrollably, hitting anybody nearby and accidentally inflicting double damage. In addition, the use of hyper-accentuated psionics is so disorienting that initiative and perception are completely lost and the psychic suffers 1D6 points of damage every time s/he uses an ability.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 69
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 8,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "debuff",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 40
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Instant and permanent.",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "effectProfiles": [
+      {
+        "name": "Shut off sense",
+        "description": "Blind, deaf, mute, numb, tasteless, or block psionic 6th sense.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "sense_blocked"
+          ]
+        }
+      },
+      {
+        "name": "Hyper-sensitive physical sense",
+        "description": "Overwhelming sight, hearing, touch, taste, or smell.",
+        "inflictedModifiers": {
+          "combatModifiers": {
+            "initiative": -4,
+            "notes": "Combat bonuses and skills halved; -4 perception."
+          }
+        }
+      },
+      {
+        "name": "Hyper-sensitive psionics",
+        "description": "Psionic powers lash out uncontrollably at double damage.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "psionic_lash_out"
+          ]
+        },
+        "damage": {
+          "formula": "1D6",
+          "notes": "Psychic suffers 1D6 H.P. each time a hyper-accentuated psionic is used."
+        }
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_absorb_object",
+    "name": "Absorb Object",
+    "description": "This spell allows the Fleshsculptor to absorb any object into his or her own flesh, subject to constraints of size: so, a dagger may be absorbed into the person's forearm, or a handgun may be drawn into his/her stomach, but there is no part of the body large enough to absorb and contain a sword, rifle, backpack, vehicle, or so on. There is also a 12 lb (5.4 kg) total, maximum weight limit. The Fleshsculptor's body can safely contain any inanimate object (even sharp items, like razor blades) or hazardous substances (like toxic powders). In theory, even living creatures may be absorbed. However, moving objects will cause damage to the Fleshsculptor, and explosions and animal attacks from inside the Fleshsculptor cause triple damage direct to hit points (ignoring S.D.C.). The Fleshsculptor may disgorge an absorbed object at any time. Disgorgement takes one full melee round, but costs no P.P.E.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 70
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 9,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "concealment"
+    ],
+    "ppe": {
+      "baseActivation": 50
+    },
+    "range": {
+      "summary": "Self",
+      "kind": "self"
+    },
+    "duration": {
+      "summary": "Indefinite",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "selfStorage": {
+      "maxTotalWeightLbs": 12,
+      "range": "self",
+      "disgorgementMeleeRounds": 1,
+      "disgorgementPpeCost": 0,
+      "internalAttackDamageMultiplier": 3,
+      "livingCreaturesAllowed": true,
+      "livingCreatureMovementDamage": "Movement inside caster damages the Fleshsculptor."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_remove_living_bone",
+    "name": "Remove Living Bone",
+    "description": "The spell enables the mage to pass his hands through flesh (without leaving a scar) to remove living bone! The action is not painful but can be used to debilitating effect — leaving a mass of flabby flesh and muscle for a lower leg or forearm. Often used to torture and intimidate. Note: The skull and spine cannot be removed (nor can muscles, cartilage, flesh or internal organs). The bone can be restored/replaced if it is done within 30 minutes or if the bone(s) are magically preserved.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 70
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 9,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "torture",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 60
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Indefinite until restored.",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "Standard, but -2.",
+      "saveKind": "standard",
+      "bonus": "-2"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "bone_removed"
+      ]
+    },
+    "limitations": {
+      "otherLimitations": "Skull and spine cannot be removed; restore within 30 minutes or with preserved bone."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_create_living_tattoo",
+    "name": "Create Living Tattoo",
+    "description": "This spell allows the spell caster to conjure forth a physical animal or object from an image tattooed onto a character's body. So, if the person has a tattoo of a scorpion, then a magical scorpion crawls out of the person's flesh. If there is a tattoo of a dagger, then a dagger rips its way out of the flesh. When the spell is cast, the flesh heaves, bulges, and rips, the tattoo becomes three dimensional and pulls itself free of the victim's body, leaving a great gaping gash in his or her flesh. The process is very painful, and causes hit point loss (1D6 hit points are lost if a small tattoo is \"summoned,\" like a scorpion which covers only a few square inches of flesh, up to 6D6 for a huge tattoo, like a charging leopard, which might cover the target's entire back). Once the tattoo has been summoned, it exists as a real object or animal for the duration of the spell. If an animal, it obeys the desires and mental commands of the caster; if an object, it behaves exactly as a normal object of that type would behave. Only tattoos of complex items (like firearms), and inherently magical objects (like Nightlands denizens) cannot be summoned from tattoos. If the summoned tattoo is placed back against the target's body before the spell expires, then it molds back into his or her flesh. This allows the recipient to recover lost hit points. If the spell expires before the tattoo is returned to its host, then the tattoo crumbles into a pile of shredded skin, the original tattoo picture reappearing on the target's body as the gashed skin heals over, but lost hit points are not recovered.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 70
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 10,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "summoning",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 70
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "8 melees"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "damage": {
+      "formula": "1D6 to 6D6",
+      "notes": "H.P. loss by tattoo size when summoned."
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "label": "Living tattoo manifestation",
+      "notes": "Animal obeys caster; object behaves normally. Cannot summon firearms or magical objects."
+    },
+    "healing": {
+      "notes": "Returning tattoo to host before expiry restores lost H.P."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_living_hell_temporary",
+    "name": "Living Hell - Temporary",
+    "description": "The Fleshsculptor may concentrate the doubled P.P.E. from a person at the moment of death, along with his own, to magically keep the head alive! The head remains alive and contains the character's mind and life essence! Of course, the brain must be undamaged. The head can then be removed from the body without ill effect. The subject remains conscious, able to hear and look around, and can mouth speech, but once the head has been removed, or the rest of the body has died, s/he cannot create any sounds since the lungs and vocal chords no longer function. The head created through a Living Hell spell has hit points equal to the original P.E. of the body, plus 1D6 S.D.C. When the spell duration expires, the person trapped in the head dies. This spell can be a useful temporary measure, e.g. to keep the person alive until a Total Replacement (12th level spell) can be performed or it is transplanted to a new, functioning body (see Meld Living Flesh and Bone, 8th level spell).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 70
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 10,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "necromancy",
+      "preservation",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 80
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One day",
+      "kind": "day",
+      "durationValue": 1
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "preserved_tissue",
+      "tissueType": "severed_head",
+      "label": "Temporary preserved severed head",
+      "hpFormula": "Original P.E. of the body",
+      "sdcFormula": "1D6",
+      "consciousnessRetained": true,
+      "speechLimited": true,
+      "duration": {
+        "summary": "One day",
+        "kind": "day",
+        "durationValue": 1
+      },
+      "notes": "Uses doubled P.P.E. from victim at moment of death plus caster P.P.E."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_age",
+    "name": "Age",
+    "description": "This spell magically transforms its victim, humanoid or animal, to the limit of their natural age! Only supernatural beings and creatures of magic, and dragons are not affected by this spell. The aged person will suffer the following: -4 on initiative, -5 to strike, -5 to dodge/parry, -4 to damage, reduce P.S. P.P., P.E., P.B. and Speed attributes by half, reduce attacks per melee round and combat bonuses also by half.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 11,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "debuff"
+    ],
+    "ppe": {
+      "baseActivation": 50
+    },
+    "range": {
+      "summary": "Touch or 30 feet (9 m).",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Three melee rounds per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "3 melee rounds"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "combatModifiers": {
+        "initiative": -4,
+        "strike": -5,
+        "parry": -5,
+        "dodge": -5,
+        "notes": "Attacks per melee and bonuses halved."
+      },
+      "statAdjustments": {
+        "ps": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        },
+        "pp": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        },
+        "pe": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        },
+        "pb": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        },
+        "spd": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        },
+        "attacks_per_melee": {
+          "kind": "multiplier",
+          "value": 0.5,
+          "rounding": "floor"
+        }
+      },
+      "statusEffects": [
+        "aged"
+      ]
+    },
+    "limitations": {
+      "otherLimitations": "No effect on supernatural beings, creatures of magic, or dragons."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_destroy_undead_flesh",
+    "name": "Destroy Undead Flesh",
+    "description": "This spell works exactly like Destroy Dead Flesh, causing a carcass of up to 600 lbs (270 kg) in weight to smolder, crumble and evaporate. The spell, however, also works on undead flesh. So the spell inflicts 1D6×10 damage per melee round on the undead (vampires, zombies, animated corpses, etc.). The target takes damage each melee round until either it saves vs the spell (roll once per round) or the spell ends. If the spell is still active when the target \"dies\", all of its flesh is then destroyed the following round by the magic.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 11,
+    "magicKind": "fleshsculpting",
+    "isRitual": false,
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "necromancy",
+      "destruction"
+    ],
+    "ppe": {
+      "baseActivation": 80
+    },
+    "range": {
+      "summary": "60 feet (18.2 m).",
+      "kind": "distance",
+      "distanceValue": 60,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "One melee round per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": {
+      "summary": "Standard, each melee round.",
+      "saveKind": "standard"
+    },
+    "damage": {
+      "formula": "1D6×10",
+      "notes": "Per melee round to undead; flesh destroyed round after death if spell still active."
+    },
+    "limitations": {
+      "otherLimitations": "Also destroys up to 600 lbs dead flesh like Destroy Dead Flesh."
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_total_replacement",
+    "name": "Total Replacement",
+    "description": "The most extreme extension of the Replace Flesh spell that enables the spell caster to replace as much of a body as s/he requires, up to and including giving a whole new body by transplanting the person's brain! Under this situation, the physical attributes, hit points and S.D.C. of the new body are half those of the original, but all mental faculties, memory, P.P.E., I.S.P. (if any) and personality are unchanged. The spell/flesh body may be made permanent if the mage permanently sacrifices the P.P.E. from his or her permanent P.P.E. base. If not cast permanently, the recipient of the new flesh dies as soon as the spell duration ends. If used for healing purposes — to provide huge swathes of flesh grafts, or to regenerate large amounts of lost muscle, for example — the spell completely replenishes the target's hit points and natural S.D.C. and is automatically permanent without any permanent loss of P.P.E.; it's only when an entire body is created that the mystical construct is not permanent. For this purpose, the spell can regenerate internal organs (except for the heart and brain), and restore up to one third of the entire body! However, if 20-33% of the body requires magical \"replacement,\" the character will permanently lose an equal amount of his hit points.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 12,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "graft",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 190
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "10 weeks per level of experience or permanent.",
+      "kind": "week",
+      "perLevel": "10 weeks"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "graftProfile": {
+      "modes": [
+        "total_replacement",
+        "skin_graft",
+        "organ_implant"
+      ],
+      "donorRequirements": {
+        "sameSpeciesRequired": false,
+        "notes": "Brain transplant to new body or massive flesh graft healing modes."
+      }
+    },
+    "effectProfiles": [
+      {
+        "name": "Brain transplant — temporary body",
+        "description": "New body at half physical stats; mental faculties, memory, P.P.E., I.S.P., and personality unchanged. Recipient dies when duration ends.",
+        "duration": {
+          "summary": "10 weeks per level of experience.",
+          "kind": "week",
+          "perLevel": "10 weeks"
+        },
+        "inflictedModifiers": {
+          "statAdjustments": {
+            "physical_attributes": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            },
+            "hp": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            },
+            "sdc": {
+              "kind": "multiplier",
+              "value": 0.5,
+              "rounding": "floor"
+            }
+          }
+        }
+      },
+      {
+        "name": "Brain transplant — permanent body",
+        "description": "Permanent new body by sacrificing 190 P.P.E. from caster permanent base.",
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      },
+      {
+        "name": "Healing graft",
+        "description": "Regenerate up to one third of body; restores full H.P. and S.D.C.; automatically permanent. If 20-33% replaced, permanently lose equal fraction of maximum H.P.",
+        "duration": {
+          "summary": "Permanent",
+          "kind": "permanent"
+        }
+      }
+    ],
+    "healing": {
+      "notes": "Healing graft profile replenishes H.P. and natural S.D.C.; regenerates organs except heart and brain."
+    },
+    "permanentCosts": [
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 190
+        },
+        "trigger": "on_success",
+        "notes": "Brain transplant — permanent body profile."
+      },
+      {
+        "resource": "hp_max",
+        "reduction": {
+          "kind": "fraction",
+          "numerator": 1,
+          "denominator": 3
+        },
+        "trigger": "on_success",
+        "notes": "Healing graft profile — if 20-33% of body replaced, lose equal fraction of maximum H.P."
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_living_hell_permanent",
+    "name": "Living Hell - Permanent",
+    "description": "The Fleshsculptor may concentrate the doubled P.P.E. from a person at the moment of death, along with his own, to magically keep the head alive indefinitely! This requires that most of the head and brain are undamaged. Through this ritual, the Fleshsculptor preserves the head so that it will not rot, seals the open wound where the head has been removed, and permanently seals the victim's life essence into their head. The head remains conscious, able to hear and look around, and can mouth speech. It needs neither air nor food, nor liquid. The spell ends only when the head is destroyed (i.e. its hit points, equal to its original P.E., plus 3D6 S.D.C., are exhausted). Note that a head saved via permanent Living Hell cannot be attached to a new body via a Meld Living Flesh and Bone spell.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 13,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "necromancy",
+      "preservation",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 180
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Indefinite",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "preserved_tissue",
+      "tissueType": "severed_head",
+      "label": "Permanent preserved severed head",
+      "hpFormula": "Original P.E.",
+      "sdcFormula": "3D6",
+      "consciousnessRetained": true,
+      "speechLimited": true,
+      "requiresNoRot": true,
+      "incompatibleReattachmentSpellIds": [
+        "magic_fleshsculptor_meld_living_flesh_and_bone"
+      ],
+      "ppeHarvestAtDeath": {
+        "doubled": true,
+        "summary": "Uses doubled P.P.E. from victim at moment of death."
+      },
+      "notes": "Needs neither air, food, nor liquid; ends when head destroyed."
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_embodiment",
+    "name": "Embodiment",
+    "description": "In this ritual, the Fleshsculptor climbs into the flesh of another living creature or person, hiding his or her own body within this new shell. The spell caster thereafter wears the body of the host, but does not gain any mental abilities, skills, memories, or mannerisms. The \"host\" flesh must be the same size or larger than the caster, must be incapacitated (unconscious or in a coma) for the duration of the ritual, and inevitably dies as a result of the spell being cast. The caster may shed this new skin at any time (taking one full melee, in which no other actions may be performed, to rip his or her way out of this new flesh), and at the end of the spell's duration, the new body falls away to reveal the caster beneath.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 14,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "transformation",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 200
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "One day per level of experience.",
+      "kind": "day",
+      "perLevel": "1 day"
+    },
+    "save": {
+      "summary": "Standard even if unconscious or comatose; psychics and Fleshsculptors +4 to save.",
+      "saveKind": "standard",
+      "bonus": "+4 for psychics and Fleshsculptors"
+    },
+    "casterAlignmentRestrictions": {
+      "summary": "Good or unprincipled alignments will not use this spell.",
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled"
+      ],
+      "blocksIfUnmet": true
+    },
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "formTransformation": {
+      "mode": "host_embodiment",
+      "targetTemplateId": "template_host_body",
+      "hostMustBeComatose": true,
+      "hostMinimumSize": "same_or_larger",
+      "hostDiesOnCast": true,
+      "shedDurationMeleeRounds": 1,
+      "preservedAspects": [
+        "mind",
+        "alignment",
+        "ppe_pool",
+        "skills",
+        "memories"
+      ],
+      "notes": "Caster gains no host mental abilities, skills, memories, or mannerisms."
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_mindsculpt",
+    "name": "Mindsculpt",
+    "description": "This is a gruesome version of brain surgery, using a blunt knife and a hammer in most versions of the spell. The caster removes the top of the subject's head and batters or slices away at the grey matter inside. The victim may make a standard saving throw to resist the effects of the spell, and must roll less than P.E. on D20 to avoid dying during the ritual. If the target survives and fails to save, then the caster may make any major, crass alterations desired to the victim's psyche. As examples, the caster may remove whole chunks of the victim's memory (stretches of time no less than one week in length); remove any skill(s) or knowledge that the person has; reduce (to one if desired) the victim's I.Q.; remove emotions (like the ability to love), or mental abilities (such as the ability to count, reason, use psionic powers, etc.); or implant primary desires and goals (e.g. overriding loyalty to the caster). The caster may NOT selectively modify elements of the person's memory, increase skill percentages or I.Q. scores, change the victim's alignment, or make complex changes to the person's preferences.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 14,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "offensive",
+      "mind_control",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 250
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "Standard to resist psyche alterations.",
+      "saveKind": "standard"
+    },
+    "cognitiveOverride": {
+      "iqFloor": 1,
+      "skillsRemoved": "all",
+      "mentalAbilitiesRemoved": [
+        "memory_selective_edit",
+        "reasoning",
+        "counting",
+        "psionic_powers"
+      ],
+      "loyaltyBinding": {
+        "toCaster": true
+      },
+      "memoryErasureMinWeeks": 1,
+      "cannotIncreaseIqOrSkills": true,
+      "deathAvoidanceSave": {
+        "summary": "Roll under P.E. on D20 or die during the ritual.",
+        "rollKind": "d20",
+        "attribute": "pe",
+        "mustRollUnder": true
+      }
+    },
+    "effectProfiles": [
+      {
+        "name": "Ritual death avoidance",
+        "description": "P.E. check before psyche surgery completes.",
+        "save": {
+          "summary": "Roll under P.E. on D20 or victim dies during ritual.",
+          "saveKind": "pe_check",
+          "attributeCheck": {
+            "attribute": "pe",
+            "rollKind": "d20",
+            "mustRollUnder": true
+          },
+          "effectsOnFailedSave": "Victim dies during Mindsculpt."
+        }
+      }
+    ],
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    }
+  },
+  {
+    "id": "magic_fleshsculptor_reconstructive_restoration",
+    "name": "Reconstructive Restoration",
+    "description": "This spell allows the Fleshsculptor to conduct major magical surgery on any one person, with the intention of curing all magical and mundane ills. The ritual takes at least twelve hours to perform, and allows the caster to surgically \"remove\" all magics which affect the person's body or mind, all illnesses or diseases from which s/he is suffering, cure all insanities, etc., placing the offending afflictions in jars for future inspection if required. This allows the caster to permanently cure any disease (cancer, MS, Aids, Parkinson's Disease, etc.), and counteract spells such as Mindsculpt. It does not allow the caster to selectively \"improve\" upon the subject's natural body or mind, and so cannot increase attributes, change alignment, add psionics, etc. The stress of even this amazingly restorative magic causes the following penalties: permanently reduce M.E. and P.P.E. by one point. If psionic, reduce I.S.P. by 10%.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 71
+      }
+    ],
+    "school": "fleshsculptor",
+    "spellLevel": 15,
+    "magicKind": "fleshsculpting",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "healing",
+      "restoration",
+      "fleshsculpting"
+    ],
+    "ppe": {
+      "baseActivation": 550
+    },
+    "range": {
+      "summary": "Touch",
+      "kind": "touch"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "permanent"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "ritualProfile": {
+      "workspace": {
+        "summary": "Surgical tools required (Fleshsculptor O.C.C. global rule, p. 64)."
+      }
+    },
+    "healing": {
+      "cures": [
+        "disease",
+        "magical_afflictions",
+        "mindsculpt",
+        "insanities",
+        "magical_body_effects",
+        "magical_mind_effects"
+      ],
+      "notes": "Cannot increase attributes, change alignment, or add psionics."
+    },
+    "permanentCosts": [
+      {
+        "resource": "me",
+        "reduction": {
+          "kind": "fixed",
+          "value": 1
+        },
+        "trigger": "on_success",
+        "notes": "Recipient permanently loses 1 M.E."
+      },
+      {
+        "resource": "ppe_max",
+        "reduction": {
+          "kind": "fixed",
+          "value": 1
+        },
+        "trigger": "on_success",
+        "notes": "Recipient permanently loses 1 maximum P.P.E."
+      },
+      {
+        "resource": "isp_max",
+        "reduction": {
+          "kind": "fraction",
+          "numerator": 1,
+          "denominator": 10
+        },
+        "trigger": "on_success",
+        "notes": "Psionic recipients permanently lose 10% I.S.P."
+      }
+    ],
+    "notes": "Extracted afflictions placed in jars for future inspection.",
+    "targetPreconditions": {
+      "summary": "Target must be placid (sedated or restrained) or willing.",
+      "satisfy": "any_group",
+      "groups": [
+        {
+          "label": "Placid",
+          "match": "any",
+          "states": [
+            "sedated",
+            "restrained"
+          ]
+        },
+        {
+          "label": "Willing",
+          "match": "all",
+          "states": [
+            "willing"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    }
+  }
+]

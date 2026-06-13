@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-magic.schema.json",
   "title": "Palladium magic spell / invocation",
-  "description": "Magic invocation catalog row (Nightbane RPG pp. 126–130 pattern; Rifts/Palladium Fantasy variants via optional genre placement). Documents P.P.E. economy, spell level (1–15), range/duration/save (including optional `upkeep` maintenance cycles), `targetPreconditions` for surgical/consent gates (Fleshsculptor), `targetCountFormula` for variable victim counts, offensive `damage`, sensory `reveals`, Horror Factor, ritual flag, `healing` (H.P./S.D.C. restoration and condition `cures`), `resolutionTable` for percentile outcome bands (Teleport, Exorcism), `materialComponents` for physical ritual reagents (Create Golem, Create Mummy), `permanentCosts` for irreversible maximum-pool sacrifices (Familiar Link), `forgedOutputs` for persistent enchanted items (Amulet, Talisman, Scroll), `ritualProfile` for downtime crafting metadata, `spawnedPresence` for constructs and catalog creature summons, `formTransformation` for sheet-replacement metamorphosis, legacy `summonedEntity` (construct alias), `effectProfiles` for modal spells, and optional mechanical automation (`grantedModifiers` / `inflictedModifiers` with `statAdjustments` multipliers and fractions via shared `statAdjustment`, `forceField`, `resistances`, temporary `grantedSkills`, `horrorFactor`). Shared fragments live in `palladium-feature-common.schema.json`. Runtime importers map rows to the universal Feature composer (`metadata.pickBucket`: `magic`). **Genre placement** records setting-specific spell level or P.P.E. overrides when the same invocation appears across Megaversal books.",
+  "description": "Magic invocation catalog row (Nightbane RPG pp. 126–130 pattern; Rifts/Palladium Fantasy variants via optional genre placement). Documents P.P.E. economy, spell level (1–15), range/duration/save (including optional `upkeep` maintenance cycles), `targetPreconditions` for surgical/consent gates (Fleshsculptor), `graftProfile`, `cognitiveOverride`, `selfStorage`, and `casterAlignmentRestrictions` for Fleshsculptor automation, `targetCountFormula` for variable victim counts, offensive `damage`, sensory `reveals`, Horror Factor, ritual flag, `healing` (H.P./S.D.C. restoration and condition `cures`), `resolutionTable` for percentile outcome bands (Teleport, Exorcism), `materialComponents` for physical ritual reagents (Create Golem, Create Mummy), `permanentCosts` for irreversible maximum-pool sacrifices (Familiar Link), `forgedOutputs` for persistent enchanted items (Amulet, Talisman, Scroll), `ritualProfile` for downtime crafting metadata, `spawnedPresence` for constructs, catalog creature summons, and preserved tissue (Living Hell), `formTransformation` for sheet-replacement metamorphosis and host embodiment, legacy `summonedEntity` (construct alias), `effectProfiles` for modal spells, and optional mechanical automation (`grantedModifiers` / `inflictedModifiers` with `statAdjustments` multipliers and fractions via shared `statAdjustment`, `forceField`, `resistances`, temporary `grantedSkills`, `horrorFactor`). Shared fragments live in `palladium-feature-common.schema.json`. Runtime importers map rows to the universal Feature composer (`metadata.pickBucket`: `magic`). **Genre placement** records setting-specific spell level or P.P.E. overrides when the same invocation appears across Megaversal books.",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -90,8 +90,24 @@
     "ppe": { "$ref": "#/$defs/magicPpeEconomy" },
     "limitations": { "$ref": "#/$defs/magicLimitations" },
     "targetPreconditions": {
-      "description": "Structured target state gates before cast (e.g. Fleshsculptor: placid or willing). Distinct from touch/LOS flags in `limitations`.",
+      "description": "Structured target state gates before cast (e.g. Fleshsculptor: placid or willing; Embodiment: comatose host). Distinct from touch/LOS flags in `limitations`.",
       "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/castingTargetPreconditions"
+    },
+    "graftProfile": {
+      "description": "Donor species, tissue freshness, and graft-mode rules for Fleshsculptor transplants (Meld, Replace Limb, Total Replacement).",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/graftProfile"
+    },
+    "cognitiveOverride": {
+      "description": "Mindsculpt cognitive surgery — skill removal, I.Q. floor, loyalty binding, and ritual death-avoidance checks.",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/cognitiveOverride"
+    },
+    "selfStorage": {
+      "description": "Internal object inventory held inside the caster's body (Absorb Object).",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/selfStorage"
+    },
+    "casterAlignmentRestrictions": {
+      "description": "Alignment gates on who may cast the spell (e.g. Embodiment barred to good alignments).",
+      "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/casterAlignmentRestrictions"
     },
     "ranges": {
       "type": "array",
@@ -170,11 +186,11 @@
       "$ref": "#/$defs/magicRitualProfile"
     },
     "spawnedPresence": {
-      "description": "Construct or catalog creature spawned by the spell (`kind`: `construct` | `creature`). Prefer over legacy `summonedEntity`.",
+      "description": "Construct, catalog creature, or preserved tissue spawned by the spell (`kind`: `construct` | `creature` | `preserved_tissue`). Prefer over legacy `summonedEntity`.",
       "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/spawnedPresence"
     },
     "formTransformation": {
-      "description": "Temporary sheet replacement while the spell is active (e.g. Metamorphosis: Animal, Mist). Distinct from `grantedModifiers` overlay buffs.",
+      "description": "Temporary sheet replacement or host embodiment while the spell is active (e.g. Metamorphosis: Animal, Embodiment). Distinct from `grantedModifiers` overlay buffs.",
       "$ref": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json#/$defs/formTransformation"
     },
     "summonedEntity": {
@@ -407,10 +423,31 @@
             "horror_factor",
             "dodge",
             "psionic",
+            "pe_check",
+            "attribute_check",
             "none",
             "conditional",
             "special"
           ]
+        },
+        "attributeCheck": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Attribute-vs-die check when `saveKind` is `pe_check` or `attribute_check` (e.g. Mindsculpt death avoidance — roll under P.E. on D20).",
+          "properties": {
+            "attribute": {
+              "type": "string",
+              "enum": ["pe", "me", "iq", "ps", "pp", "pb", "spd", "other"]
+            },
+            "rollKind": {
+              "type": "string",
+              "enum": ["d20", "d100", "percentile"]
+            },
+            "mustRollUnder": { "type": "boolean" },
+            "mustRollOver": { "type": "boolean" },
+            "notes": { "type": "string", "minLength": 1 }
+          },
+          "required": ["attribute", "rollKind"]
         },
         "targetNumber": { "type": "integer", "minimum": 1 },
         "bonus": { "type": "string", "minLength": 1 },

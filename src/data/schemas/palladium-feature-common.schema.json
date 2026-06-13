@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-feature-common.schema.json",
   "title": "Palladium feature common fragments",
-  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `materialRequirements`, `forgedItemOutput`, `spawnedPresence`, `formTransformation`, `castingTargetPreconditions`, `statAdjustment`, `globalSkillModifier`, `damageReflection`, `damageProgression`, `personalityOverride`, `alarmTrigger`, `effectUpkeep`).",
+  "description": "Shared JSON Schema fragments for magic, psionic, talent, and other Feature composer catalog rows. Referenced via `$ref` from domain schemas (e.g. `resolutionTable`, `materialRequirements`, `forgedItemOutput`, `spawnedPresence`, `formTransformation`, `castingTargetPreconditions`, `graftProfile`, `cognitiveOverride`, `selfStorage`, `casterAlignmentRestrictions`, `statAdjustment`, `globalSkillModifier`, `damageReflection`, `damageProgression`, `personalityOverride`, `alarmTrigger`, `effectUpkeep`).",
   "$defs": {
     "percentileRange": {
       "type": "object",
@@ -717,6 +717,8 @@
         "sedated",
         "restrained",
         "unconscious",
+        "comatose",
+        "incapacitated",
         "paralyzed",
         "asleep",
         "helpless",
@@ -724,6 +726,316 @@
         "other"
       ],
       "description": "Observable target state checked before surgical or consent-sensitive magic is applied."
+    },
+    "graftMode": {
+      "type": "string",
+      "enum": [
+        "replace_limb",
+        "skin_graft",
+        "organ_implant",
+        "head_transplant",
+        "add_appendage",
+        "total_replacement",
+        "other"
+      ],
+      "description": "Fleshsculptor graft or transplant delivery mode (e.g. Meld Living Flesh & Bone use cases)."
+    },
+    "graftDonorRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Donor tissue constraints for mystical grafts and transplants.",
+      "properties": {
+        "sameSpeciesRequired": {
+          "type": "boolean",
+          "description": "When true, donor and recipient must be the same species (Replace Limb pattern)."
+        },
+        "supernaturalToMortalForbidden": {
+          "type": "boolean",
+          "description": "When true, supernatural donor tissue cannot be grafted onto a mortal recipient."
+        },
+        "supernaturalToSupernaturalAllowed": {
+          "type": "boolean",
+          "description": "When true, supernatural-to-supernatural grafts are permitted where the book allows them."
+        },
+        "tissueMaxAgeHours": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum post-mortem age of donor tissue still eligible for grafting (e.g. 3 hours for Meld)."
+        },
+        "acceptLivingOrFreshDead": {
+          "type": "boolean",
+          "description": "When true, donor tissue may be living or freshly deceased within `tissueMaxAgeHours`."
+        },
+        "preserveMagicAccepted": {
+          "type": "boolean",
+          "description": "When true, magically preserved tissue qualifies even when not freshly harvested."
+        },
+        "donorAppearanceRetained": {
+          "type": "boolean",
+          "description": "When true, the graft retains the donor's visible appearance (skin, limb, head)."
+        },
+        "behavioralBleedThrough": {
+          "type": "boolean",
+          "description": "When true, donor instincts or mannerisms may influence the recipient."
+        },
+        "extraAppendagesAllowed": {
+          "type": "boolean",
+          "description": "When true, the spell may add non-symmetrical appendages rather than only replace missing parts."
+        },
+        "headTransplantWindowMinutes": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Minutes after decapitation within which a head transplant remains viable (e.g. 20 for Meld)."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "graftProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Structured donor, species, and appearance rules for Fleshsculptor grafts and transplants (Replace Limb, Meld, Total Replacement).",
+      "properties": {
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/graftMode" },
+          "uniqueItems": true,
+          "description": "Supported graft delivery modes exposed as cast-time or profile choices."
+        },
+        "donorRequirements": { "$ref": "#/$defs/graftDonorRequirement" },
+        "retainsDonorPowers": {
+          "type": "boolean",
+          "description": "When true, animal or supernatural donor powers may persist on the grafted tissue."
+        },
+        "appearanceMismatch": {
+          "type": "boolean",
+          "description": "When true, the recipient's overall appearance may not match the grafted part."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["modes"] },
+        { "required": ["donorRequirements"] },
+        { "required": ["notes"] }
+      ]
+    },
+    "cognitiveOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Deep cognitive surgery — Mindsculpt memory, skill, and loyalty rewriting beyond `personalityOverride` alignment/insanity shifts.",
+      "properties": {
+        "iqFloor": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Minimum I.Q. the victim retains after the procedure (Mindsculpt floor of 1)."
+        },
+        "skillsRemoved": {
+          "oneOf": [
+            { "const": "all" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 },
+              "uniqueItems": true
+            }
+          ],
+          "description": "`all` or explicit skill ids/names stripped from the victim."
+        },
+        "knowledgeCategoriesRemoved": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Broad knowledge domains erased (e.g. history, spell lore, streetwise)."
+        },
+        "emotionsRemoved": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "mentalAbilitiesRemoved": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "psionic_powers",
+              "reasoning",
+              "counting",
+              "memory_selective_edit",
+              "other"
+            ]
+          },
+          "uniqueItems": true,
+          "description": "`memory_selective_edit` — victim cannot selectively edit implanted memories."
+        },
+        "loyaltyBinding": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Implanted obedience or goal structure binding the victim to the caster.",
+          "properties": {
+            "toCaster": { "type": "boolean" },
+            "primaryGoalsImplanted": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 },
+              "uniqueItems": true
+            },
+            "notes": { "type": "string", "minLength": 1 }
+          },
+          "anyOf": [
+            { "required": ["toCaster"] },
+            { "required": ["primaryGoalsImplanted"] },
+            { "required": ["notes"] }
+          ]
+        },
+        "memoryErasureMinWeeks": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ],
+          "description": "Minimum retroactive memory span erased (fixed weeks or dice formula)."
+        },
+        "cannotIncreaseIqOrSkills": {
+          "type": "boolean",
+          "description": "When true, the procedure cannot raise I.Q. or add skills — only reduce or replace."
+        },
+        "deathAvoidanceSave": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Ritual death-risk check before Mindsculpt completes (roll under P.E. on D20).",
+          "properties": {
+            "summary": { "type": "string", "minLength": 1 },
+            "rollKind": {
+              "type": "string",
+              "enum": ["d20", "d100", "percentile"]
+            },
+            "attribute": {
+              "type": "string",
+              "enum": ["pe", "me", "iq", "ps", "pp", "pb", "spd", "other"]
+            },
+            "mustRollUnder": { "type": "boolean" },
+            "mustRollOver": { "type": "boolean" },
+            "notes": { "type": "string", "minLength": 1 }
+          },
+          "required": ["summary", "rollKind", "attribute"]
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["iqFloor"] },
+        { "required": ["skillsRemoved"] },
+        { "required": ["loyaltyBinding"] },
+        { "required": ["memoryErasureMinWeeks"] },
+        { "required": ["deathAvoidanceSave"] },
+        { "required": ["mentalAbilitiesRemoved"] },
+        { "required": ["notes"] }
+      ]
+    },
+    "selfStorage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxTotalWeightLbs"],
+      "description": "Internal object inventory held inside the caster's body (Absorb Object).",
+      "properties": {
+        "maxTotalWeightLbs": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Combined weight cap for all stored objects (e.g. 12 lbs)."
+        },
+        "maxSingleObjectWeightLbs": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Per-object weight cap when the book limits individual items separately."
+        },
+        "range": {
+          "type": "string",
+          "const": "self",
+          "description": "Storage applies only to the caster's own body."
+        },
+        "disgorgementMeleeRounds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Melee rounds required to expel one stored object."
+        },
+        "disgorgementPpeCost": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "P.P.E. spent to disgorge a stored object (0 when free)."
+        },
+        "internalAttackDamageMultiplier": {
+          "type": "number",
+          "minimum": 1,
+          "description": "Multiplier applied to damage dealt to stored objects from internal attacks (e.g. 3×)."
+        },
+        "livingCreaturesAllowed": {
+          "type": "boolean",
+          "description": "When true, living creatures may be stored with movement damage rules."
+        },
+        "livingCreatureMovementDamage": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Damage formula applied when a stored living creature moves inside the caster."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "casterAlignmentRestrictions": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Alignment gates on who may cast the spell (e.g. Embodiment barred to good alignments).",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing cast restriction reminder."
+        },
+        "excludedAlignments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Principled",
+              "Scrupulous",
+              "Unprincipled",
+              "Anarchist",
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "allowedAlignments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Principled",
+              "Scrupulous",
+              "Unprincipled",
+              "Anarchist",
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "blocksIfUnmet": {
+          "type": "boolean",
+          "description": "When true (default), the client blocks cast until alignment is confirmed; when false, show a visible warning only."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["excludedAlignments"] },
+        { "required": ["allowedAlignments"] },
+        { "required": ["summary"] }
+      ]
     },
     "targetConditionGroup": {
       "type": "object",
@@ -1084,6 +1396,73 @@
         "perLevel": { "type": "string", "minLength": 1 }
       }
     },
+    "spawnedPresencePreservedTissue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "tissueType"],
+      "description": "Preserved severed head, organ, or limb animated as a distinct presence (Living Hell pattern). Distinct from catalog creature summons.",
+      "properties": {
+        "kind": { "const": "preserved_tissue" },
+        "tissueType": {
+          "type": "string",
+          "enum": ["severed_head", "organ", "limb", "other"]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing label (e.g. Preserved severed head)."
+        },
+        "hpFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Remaining hit points formula (e.g. donor P.E. at time of severing)."
+        },
+        "sdcFormula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Structural damage capacity formula (e.g. 1D6 S.D.C.)."
+        },
+        "consciousnessRetained": {
+          "type": "boolean",
+          "description": "When true, the tissue remains awake and aware."
+        },
+        "speechLimited": {
+          "type": "boolean",
+          "description": "When true, speech is impaired (e.g. no lungs for a severed head)."
+        },
+        "requiresNoRot": {
+          "type": "boolean",
+          "description": "When true, the tissue must be free of decay to remain viable."
+        },
+        "incompatibleReattachmentSpellIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "Spell ids that cannot reattach this tissue (e.g. permanent Living Hell vs Meld)."
+        },
+        "ppeHarvestAtDeath": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "P.P.E. recovered from the victim when the preserved tissue dies.",
+          "properties": {
+            "doubled": { "type": "boolean" },
+            "summary": { "type": "string", "minLength": 1 },
+            "notes": { "type": "string", "minLength": 1 }
+          },
+          "anyOf": [
+            { "required": ["doubled"] },
+            { "required": ["summary"] }
+          ]
+        },
+        "duration": { "$ref": "#/$defs/temporalInterval" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
     "spawnedPresenceCreature": {
       "type": "object",
       "additionalProperties": false,
@@ -1165,10 +1544,11 @@
       ]
     },
     "spawnedPresence": {
-      "description": "Physical construct or catalog creature spawned by a spell or power.",
+      "description": "Physical construct, catalog creature, or preserved tissue spawned by a spell or power.",
       "oneOf": [
         { "$ref": "#/$defs/spawnedPresenceConstruct" },
-        { "$ref": "#/$defs/spawnedPresenceCreature" }
+        { "$ref": "#/$defs/spawnedPresenceCreature" },
+        { "$ref": "#/$defs/spawnedPresencePreservedTissue" }
       ]
     },
     "formTransformation": {
@@ -1179,8 +1559,8 @@
       "properties": {
         "mode": {
           "type": "string",
-          "enum": ["sheet_replacement", "facade_overlay"],
-          "description": "`sheet_replacement` swaps the active stat block; `facade_overlay` applies only when casting from Facade."
+          "enum": ["sheet_replacement", "facade_overlay", "host_embodiment"],
+          "description": "`sheet_replacement` swaps the active stat block; `facade_overlay` applies only when casting from Facade; `host_embodiment` wears an incapacitated host body (Embodiment)."
         },
         "targetCatalogRaceId": {
           "type": "string",
@@ -1204,11 +1584,54 @@
           "uniqueItems": true,
           "description": "Caster aspects that persist through transformation (e.g. mind, alignment, ppe_pool)."
         },
+        "hostMustBeComatose": {
+          "type": "boolean",
+          "description": "When true, the host must be comatose or otherwise incapacitated before embodiment (Embodiment)."
+        },
+        "hostMinimumSize": {
+          "type": "string",
+          "enum": ["same_or_larger", "same_species", "other"],
+          "description": "Host body size or species constraint relative to the caster."
+        },
+        "hostDiesOnCast": {
+          "type": "boolean",
+          "description": "When true, the host's original consciousness dies when the caster embodies them."
+        },
+        "shedDurationMeleeRounds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Melee rounds required to shed the host body and return to the caster's natural form."
+        },
         "notes": { "type": "string", "minLength": 1 }
       },
-      "oneOf": [
-        { "required": ["targetCatalogRaceId"] },
-        { "required": ["targetTemplateId"] }
+      "allOf": [
+        {
+          "if": {
+            "properties": { "mode": { "const": "host_embodiment" } },
+            "required": ["mode"]
+          },
+          "then": {
+            "anyOf": [
+              { "required": ["targetCatalogRaceId"] },
+              { "required": ["targetTemplateId"] },
+              { "required": ["notes"] }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": { "enum": ["sheet_replacement", "facade_overlay"] }
+            },
+            "required": ["mode"]
+          },
+          "then": {
+            "oneOf": [
+              { "required": ["targetCatalogRaceId"] },
+              { "required": ["targetTemplateId"] }
+            ]
+          }
+        }
       ]
     }
   }

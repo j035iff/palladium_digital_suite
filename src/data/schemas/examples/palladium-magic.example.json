@@ -2,7 +2,7 @@
   "$schema": "../palladium-magic.schema.json",
   "id": "magic_wizard_schema_exemplar",
   "name": "Schema Exemplar: Palladium Magic",
-  "description": "Single reference row exercising the palladium-magic.schema.json surface — invocation economy, offensive debuffs, granted buffs, healing, variable targets, percentile resolution, ritual crafting, permanent costs, forged outputs, summons, legacy constructs, modal effect profiles, metamorphosis, and Fleshsculptor surgical preconditions, fractional statAdjustments, and duration upkeep.",
+  "description": "Single reference row exercising the palladium-magic.schema.json surface — invocation economy, offensive debuffs, granted buffs, healing, variable targets, percentile resolution, ritual crafting, permanent costs, forged outputs, summons, legacy constructs, modal effect profiles, metamorphosis, and Fleshsculptor surgical preconditions, graft profiles, cognitive override, self storage, preserved tissue, host embodiment, caster alignment gates, fractional statAdjustments, and duration upkeep.",
   "descriptionMorphus": "Optional Morphus-only prose when dual-form casting differs.",
   "gameSystems": ["nightbane"],
   "sources": [
@@ -70,8 +70,64 @@
         "label": "Willing",
         "match": "all",
         "states": ["willing"]
+      },
+      {
+        "label": "Comatose host",
+        "match": "all",
+        "states": ["comatose", "incapacitated"],
+        "notes": "Embodiment — host must be comatose or otherwise incapacitated."
       }
     ],
+    "blocksIfUnmet": true
+  },
+  "graftProfile": {
+    "modes": ["replace_limb", "skin_graft", "organ_implant", "head_transplant", "add_appendage"],
+    "donorRequirements": {
+      "sameSpeciesRequired": true,
+      "supernaturalToMortalForbidden": true,
+      "supernaturalToSupernaturalAllowed": true,
+      "tissueMaxAgeHours": 3,
+      "acceptLivingOrFreshDead": true,
+      "preserveMagicAccepted": true,
+      "donorAppearanceRetained": true,
+      "behavioralBleedThrough": true,
+      "headTransplantWindowMinutes": 20
+    },
+    "retainsDonorPowers": true,
+    "appearanceMismatch": true,
+    "notes": "Meld Living Flesh & Bone pattern — donor constraints and multi-mode graft delivery."
+  },
+  "cognitiveOverride": {
+    "iqFloor": 1,
+    "skillsRemoved": "all",
+    "mentalAbilitiesRemoved": ["memory_selective_edit", "reasoning"],
+    "loyaltyBinding": {
+      "toCaster": true,
+      "primaryGoalsImplanted": ["protect_caster", "obey_caster_commands"]
+    },
+    "memoryErasureMinWeeks": 4,
+    "cannotIncreaseIqOrSkills": true,
+    "deathAvoidanceSave": {
+      "summary": "Roll under P.E. on D20 or the victim dies during Mindsculpt.",
+      "rollKind": "d20",
+      "attribute": "pe",
+      "mustRollUnder": true
+    },
+    "notes": "Mindsculpt — deep cognitive surgery beyond alignment/insanity shifts."
+  },
+  "selfStorage": {
+    "maxTotalWeightLbs": 12,
+    "range": "self",
+    "disgorgementMeleeRounds": 1,
+    "disgorgementPpeCost": 0,
+    "internalAttackDamageMultiplier": 3,
+    "livingCreaturesAllowed": true,
+    "livingCreatureMovementDamage": "1D6 H.P. per melee round of movement inside caster",
+    "notes": "Absorb Object — internal inventory held inside the caster's body."
+  },
+  "casterAlignmentRestrictions": {
+    "summary": "Good alignments cannot cast Embodiment.",
+    "excludedAlignments": ["Principled", "Scrupulous"],
     "blocksIfUnmet": true
   },
   "ranges": [
@@ -427,6 +483,65 @@
         "statAdjustments": {
           "pb": { "kind": "multiplier", "value": 0.5, "rounding": "floor" }
         }
+      }
+    },
+    {
+      "name": "Living Hell — Permanent Severed Head",
+      "description": "Animates a preserved severed head that cannot be reattached via Meld.",
+      "spawnedPresence": {
+        "kind": "preserved_tissue",
+        "tissueType": "severed_head",
+        "label": "Preserved severed head",
+        "hpFormula": "Donor P.E. at time of severing",
+        "sdcFormula": "1D6 S.D.C.",
+        "consciousnessRetained": true,
+        "speechLimited": true,
+        "requiresNoRot": true,
+        "incompatibleReattachmentSpellIds": ["magic_fleshsculptor_meld_living_flesh_and_bone"],
+        "ppeHarvestAtDeath": {
+          "doubled": true,
+          "summary": "Victim's remaining P.P.E. is doubled and harvested when the head dies."
+        },
+        "duration": {
+          "summary": "Permanent until destroyed.",
+          "kind": "special"
+        },
+        "notes": "Living Hell permanent variant — head remains aware but cannot speak normally without lungs."
+      }
+    },
+    {
+      "name": "Embodiment — Host Body",
+      "description": "Caster wears a comatose host body; host dies on cast; shed in one melee round.",
+      "formTransformation": {
+        "mode": "host_embodiment",
+        "targetTemplateId": "template_host_body",
+        "hostMustBeComatose": true,
+        "hostMinimumSize": "same_or_larger",
+        "hostDiesOnCast": true,
+        "shedDurationMeleeRounds": 1,
+        "preservedAspects": ["mind", "alignment", "ppe_pool"],
+        "notes": "Embodiment — caster inhabits incapacitated host; shedding returns caster to natural form."
+      },
+      "targetPreconditions": {
+        "summary": "Host must be comatose or incapacitated.",
+        "groups": [
+          { "label": "Comatose host", "match": "all", "states": ["comatose", "incapacitated"] }
+        ]
+      }
+    },
+    {
+      "name": "Mindsculpt — Death Avoidance",
+      "description": "Ritual P.E. check before cognitive surgery completes.",
+      "save": {
+        "summary": "Roll under P.E. on D20 or victim dies.",
+        "saveKind": "pe_check",
+        "attributeCheck": {
+          "attribute": "pe",
+          "rollKind": "d20",
+          "mustRollUnder": true
+        },
+        "effectsOnFailedSave": "Victim dies during the procedure.",
+        "effectsOnSuccessfulSave": "Mindsculpt completes; apply cognitive override."
       }
     }
   ],
