@@ -1,5 +1,10 @@
 import type { Character, MorphusForgeState } from '../types'
 import {
+  deriveMorphusSlotResolutionView,
+  morphusTraitForgeReady,
+  path2CharacteristicsCountValid,
+} from './morphusSlotResolution'
+import {
   MORPHUS_APPEARANCE_ROUTING_TABLE,
   MORPHUS_FORGE_MANIFEST,
 } from '../data/library/morphusForgeRoutingLoader'
@@ -54,14 +59,14 @@ export function isMorphusForgeCrossroadsComplete(state: MorphusForgeState): bool
   return true
 }
 
-export function isMorphusForgeTraitTabComplete(state: MorphusForgeState): boolean {
+export function isMorphusForgeTraitTabComplete(
+  state: MorphusForgeState,
+  character?: Pick<Character, 'morphusForgeSlotState'>,
+): boolean {
   if (!isMorphusForgeCrossroadsComplete(state)) return false
-  if (state.path === 'characteristics') {
-    const count = state.characteristicsPickCount
-    const { min, max } = MORPHUS_FORGE_MANIFEST.path2.countRoll
-    return count != null && count >= min && count <= max
-  }
-  return true
+  if (!path2CharacteristicsCountValid(state)) return false
+  if (!character) return state.path === 'appearance'
+  return morphusTraitForgeReady(state, character)
 }
 
 export function isMorphusForgeReviewDiceComplete(
@@ -95,7 +100,7 @@ export function isMorphusForgeComplete(
   },
 ): boolean {
   const state = resolveMorphusForgeState(character)
-  if (!isMorphusForgeTraitTabComplete(state)) return false
+  if (!isMorphusForgeTraitTabComplete(state, character)) return false
   if (!isMorphusForgeReviewDiceComplete(character, opts)) return false
   return character.creationTraitForgeStubComplete === true
 }
@@ -112,7 +117,10 @@ function crossroadsBlockers(state: MorphusForgeState): string[] {
   return blockers
 }
 
-function traitForgeBlockers(state: MorphusForgeState): string[] {
+function traitForgeBlockers(
+  state: MorphusForgeState,
+  character: Character,
+): string[] {
   const blockers = crossroadsBlockers(state)
   if (blockers.length > 0) {
     blockers.unshift('Complete the Crossroads step first.')
@@ -123,6 +131,17 @@ function traitForgeBlockers(state: MorphusForgeState): string[] {
     const { notation, min, max } = MORPHUS_FORGE_MANIFEST.path2.countRoll
     if (count == null || count < min || count > max) {
       blockers.push(`Enter your physical ${notation} die result (${min}–${max}).`)
+      return blockers
+    }
+  }
+  if (!morphusTraitForgeReady(state, character)) {
+    const { blockers: slotBlockers } = deriveMorphusSlotResolutionView(
+      state,
+      character.morphusForgeSlotState,
+    )
+    blockers.push(...slotBlockers.slice(0, 5))
+    if (slotBlockers.length > 5) {
+      blockers.push(`…and ${slotBlockers.length - 5} more unresolved slot(s).`)
     }
   }
   return blockers
@@ -133,7 +152,7 @@ function reviewBlockers(
   ctx: MorphusForgeNavContext,
 ): string[] {
   const state = resolveMorphusForgeState(character)
-  const blockers = traitForgeBlockers(state)
+  const blockers = traitForgeBlockers(state, character)
   if (blockers.length > 0) {
     blockers.unshift('Complete the Trait Forge step first.')
     return blockers
@@ -187,7 +206,7 @@ function buildMorphusSubTabDefs(
           label,
           isNa: () => false,
           validate: () => {
-            const blockers = traitForgeBlockers(state)
+            const blockers = traitForgeBlockers(state, character)
             return { ok: blockers.length === 0, blockers }
           },
           snapshot: () => tab6Snapshot(state),

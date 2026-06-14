@@ -58,6 +58,7 @@ export function ConfiguratorPanel() {
 
   const [configuratorFilterRoot, setConfiguratorFilterRoot] =
     useState<ConfiguratorFilterExpression | null>(null)
+  const [filterSectionExpanded, setFilterSectionExpanded] = useState(false)
   const [hideConfiguratorFilterMismatches, setHideConfiguratorFilterMismatches] =
     useState(true)
   const [hideRaceIncompatibleOccs, setHideRaceIncompatibleOccs] = useState(true)
@@ -318,35 +319,32 @@ export function ConfiguratorPanel() {
       >
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
       <p
-        className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
+        className="mb-2 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}
       >
-        Race and O.C.C. matrix — selections cross-filter each other. Tier 1 (active) · Tier
-        2 (red, conflict) · Tier 3 (grey, filter mismatch). Choose alignment in the
-        Identity header; restricted options are greyed out with a hover note.
+        Race and O.C.C. matrix -- Selections cross-filter each other.
       </p>
-
-      <div className="mb-3 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-wide">
-        <span className="rounded border border-blue-500/50 bg-blue-50 px-2 py-0.5 text-blue-900 dark:bg-blue-950 dark:text-blue-200">
-          Tier 1 — match
-        </span>
-        <span className="rounded border border-rose-500/60 bg-rose-50 px-2 py-0.5 text-rose-900 dark:bg-rose-950 dark:text-rose-200">
-          Tier 2 — conflict
-        </span>
-        <span className="rounded border border-slate-400/50 bg-slate-100 px-2 py-0.5 text-slate-600 dark:bg-slate-900 dark:text-slate-400">
-          Tier 3 — tag filter mismatch
-        </span>
-        <span className="rounded border border-amber-500/60 bg-amber-50 px-2 py-0.5 text-amber-950 dark:bg-amber-950 dark:text-amber-200">
-          Amber — selection vs filters
-        </span>
-      </div>
 
       {(raceCategories.length > 0 ||
         occCategories.length > 0 ||
         bookCategories.length > 0) &&
       raceCanPickOcc ? (
+        <div className="mb-4">
+          {!filterSectionExpanded ? (
+            <button
+              type="button"
+              onClick={() => setFilterSectionExpanded(true)}
+              className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${
+                morphus
+                  ? 'border-violet-500 text-violet-200 hover:bg-violet-950/60'
+                  : 'border-blue-500 text-blue-800 hover:bg-blue-50'
+              }`}
+            >
+              Expand Filter
+            </button>
+          ) : (
         <div
-          className={`mb-4 flex flex-col gap-3 rounded-lg border-2 p-3 ${panel}`}
+          className={`flex flex-col gap-3 rounded-lg border-2 p-3 ${panel}`}
           role="toolbar"
           aria-label="Configurator filters"
         >
@@ -355,19 +353,30 @@ export function ConfiguratorPanel() {
               Matrix filters — Race, O.C.C., Book conditions with AND, OR, NOT, and nested
               groups
             </span>
-            {isConfiguratorFilterActive(configuratorFilterRoot) ? (
-              <span
-                className={`font-mono text-[10px] ${
-                  morphus ? 'text-violet-300' : 'text-slate-600'
-                }`}
-              >
-                {formatConfiguratorFilterExpression(
-                  configuratorFilterRoot!,
-                  filterFormatOptions,
-                )}
-              </span>
-            ) : null}
+            <button
+              type="button"
+              onClick={() => setFilterSectionExpanded(false)}
+              className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-semibold ${
+                morphus
+                  ? 'border-slate-600 text-slate-400 hover:text-violet-100'
+                  : 'border-slate-300 text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              Collapse Filter
+            </button>
           </div>
+          {isConfiguratorFilterActive(configuratorFilterRoot) ? (
+            <span
+              className={`font-mono text-[10px] ${
+                morphus ? 'text-violet-300' : 'text-slate-600'
+              }`}
+            >
+              {formatConfiguratorFilterExpression(
+                configuratorFilterRoot!,
+                filterFormatOptions,
+              )}
+            </span>
+          ) : null}
           {configuratorFilterRoot ? (
             <ConfiguratorFilterBuilder
               root={configuratorFilterRoot}
@@ -468,6 +477,8 @@ export function ConfiguratorPanel() {
               </button>
             ) : null}
           </div>
+        </div>
+          )}
         </div>
       ) : null}
 

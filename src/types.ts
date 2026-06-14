@@ -1679,6 +1679,68 @@ export type MorphusForgeState = {
   baseStatsApplied?: boolean
 }
 
+/** Player picks and dice inputs for Morphus Sub-Forge slot resolution. */
+export type MorphusForgeSlotState = {
+  /** Trait catalog entry id chosen at a slot path. */
+  picks?: Readonly<Record<string, string>>
+  /** Characteristics routing entry id (characteristics.json rows). */
+  routingPicks?: Readonly<Record<string, string>>
+  /** Selected table id for choice / combination-pool branch slots. */
+  branchTableIds?: Readonly<Record<string, string>>
+  /** Manual dice for combination_pool count rolls and similar. */
+  diceValues?: Readonly<Record<string, number>>
+  /** Sub-trait pool picks keyed by `${path}#${index}`. */
+  subTraitPicks?: Readonly<Record<string, string>>
+  /** Variant / independent sub-roll label picks keyed by path. */
+  variantPicks?: Readonly<Record<string, string>>
+  /** Custom trait workshop overlays keyed by slot path. */
+  customInstances?: Readonly<Record<string, MorphusCustomTraitInstance>>
+}
+
+export type MorphusSlotNodeKind =
+  | 'choice'
+  | 'dice'
+  | 'table'
+  | 'characteristic'
+  | 'sub_trait_choice'
+  | 'variant_choice'
+  | 'custom_trait'
+
+export type MorphusSlotNodeStatus =
+  | 'blocked'
+  | 'ready'
+  | 'complete'
+  | 'incomplete_custom'
+
+export type MorphusSlotPickOption = {
+  id: string
+  name: string
+  band?: string
+  description?: string
+  /** Tables this pick routes into (characteristics rows, hubs, cross-table). */
+  tableRoute?: string
+  bonuses?: string[]
+  penalties?: string[]
+  /** Replaces bonus/penalty lists when modifiers depend on a variant pick. */
+  modifierNote?: string
+}
+
+export type MorphusSlotNode = {
+  path: string
+  label: string
+  kind: MorphusSlotNodeKind
+  status: MorphusSlotNodeStatus
+  tableId?: string
+  options?: readonly { tableId: string; label: string }[]
+  diceSpec?: MorphusForgeDiceRollSpec
+  pickEntries?: readonly MorphusSlotPickOption[]
+  resolvedEntryId?: string
+  resolvedEntryName?: string
+  customCatalogEntryId?: string
+  blockReason?: string
+  children: readonly MorphusSlotNode[]
+}
+
 export type SpellCaveatKind = 'focus' | 'target' | 'ppe' | 'ritual' | 'note'
 
 export type SpellCaveat = {
@@ -2258,6 +2320,8 @@ export type Character = {
   creationTraitForgeStubComplete?: boolean
   /** Nested Morphus / trait sub-forge state (creation only). */
   morphusForgeState?: MorphusForgeState
+  /** Morphus Sub-Forge slot picks (Trait Forge tab). */
+  morphusForgeSlotState?: MorphusForgeSlotState
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
   /** Finalize tab — facade / single-form physical dice applied. */

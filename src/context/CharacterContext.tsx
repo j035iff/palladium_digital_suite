@@ -194,11 +194,20 @@ import {
 import { patchPendingDiceResolution } from '../lib/pendingDiceLedger'
 import {
   defaultMorphusForgeState,
+  resolveMorphusForgeState,
   type MorphusForgeSubTabId,
 } from '../lib/morphusForgeNavigation'
+import {
+  clearMorphusForgeSlotState,
+  clearMorphusSlotPathState,
+  deriveMorphusSlotResolutionView,
+  patchMorphusForgeSlotState,
+} from '../lib/morphusSlotResolution'
+import { sanitizeMorphusCustomTraitInstance } from '../lib/morphusCustomTrait'
 import { applyNightbaneMorphusBaseAttributes } from '../lib/morphusNightbaneBase'
 import { markForgeTabComplete } from '../lib/forgeNavigation/engine'
-import type { MorphusForgeState } from '../types'
+import type { MorphusForgeState, MorphusForgeSlotState } from '../types'
+import type { SlotActions } from '../components/creation/morphus/MorphusSlotNodeView'
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
@@ -401,6 +410,7 @@ type CharacterContextValue = {
     instance: import('../types').MorphusCustomTraitInstance,
   ) => void
   removeMorphusCustomTraitSlot: (slotId: string) => void
+  morphusForgeSlotActions: SlotActions
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
   /** Set an attribute total directly (not tied to a pool slot). */
@@ -518,6 +528,27 @@ type CharacterContextValue = {
 }
 
 const CharacterContext = createContext<CharacterContextValue | null>(null)
+
+function withSyncedMorphusTraitSlots(prev: CharacterRootState): CharacterRootState {
+  const forgeState = resolveMorphusForgeState(prev)
+  const view = deriveMorphusSlotResolutionView(forgeState, prev.morphusForgeSlotState)
+  return {
+    ...prev,
+    morphusTraitSlotResolutions: view.traitSlots,
+    activeMorphusCharacteristicIds: view.traitSlots.map((slot) => slot.catalogEntryId),
+  }
+}
+
+function updateMorphusForgeSlotState(
+  prev: CharacterRootState,
+  nextSlotState: MorphusForgeSlotState,
+): CharacterRootState {
+  return withSyncedMorphusTraitSlots({
+    ...prev,
+    morphusForgeSlotState: nextSlotState,
+    creationTraitForgeStubComplete: false,
+  })
+}
 
 function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
   if (c.occ?.xpTable?.floors?.length) return c
@@ -2012,11 +2043,29 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           (patch.path != null && patch.path !== merged.path) ||
           (patch.appearanceEntryId != null &&
             patch.appearanceEntryId !== merged.appearanceEntryId)
+        const appearanceChanged =
+          typeof patch !== 'function' &&
+          patch.appearanceEntryId != null &&
+          patch.appearanceEntryId !== merged.appearanceEntryId
 
         let next: CharacterRootState = {
           ...prev,
           morphusForgeState: nextState,
-          ...(pathChanged ? { creationTraitForgeStubComplete: false } : {}),
+          ...(pathChanged
+            ? {
+                creationTraitForgeStubComplete: false,
+                morphusForgeSlotState: clearMorphusForgeSlotState(),
+                morphusTraitSlotResolutions: [],
+                activeMorphusCharacteristicIds: [],
+              }
+            : appearanceChanged
+              ? {
+                  creationTraitForgeStubComplete: false,
+                  morphusForgeSlotState: clearMorphusForgeSlotState(),
+                  morphusTraitSlotResolutions: [],
+                  activeMorphusCharacteristicIds: [],
+                }
+              : {}),
         }
         if (!nextState.baseStatsApplied) {
           next = applyNightbaneMorphusBaseAttributes(next, effectiveOcc ?? undefined)
@@ -2119,6 +2168,80 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       ),
     }))
   }, [])
+
+  const morphusForgeSlotActions = useMemo<SlotActions>(
+    () => ({
+      onTraitPick: (path, entryId, isCharacteristics) => {
+        setRawCharacter((prev) => {
+          const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
+          const next = patchMorphusForgeSlotState(cleared, {
+            ...(isCharacteristics
+              ? { routingPicks: { [path]: entryId } }
+              : { picks: { [path]: entryId } }),
+          })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onBranchPick: (path, tableId) => {
+        setRawCharacter((prev) => {
+          const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
+          const next = patchMorphusForgeSlotState(cleared, {
+            branchTableIds: { [path]: tableId },
+          })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onDiceValue: (path, value) => {
+        setRawCharacter((prev) => {
+          const parentPath = path.replace(/\/count$/, '')
+          const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, parentPath)
+          const next =
+            value == null
+              ? cleared
+              : patchMorphusForgeSlotState(cleared, {
+                  diceValues: { [path]: value },
+                })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onSubTraitPick: (path, index, tableId) => {
+        setRawCharacter((prev) => {
+          const subPath = `${path}/sub:${index}`
+          const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, subPath)
+          const next = patchMorphusForgeSlotState(cleared, {
+            subTraitPicks: { [`${path}#${index}`]: tableId },
+          })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onVariantPick: (path, label) => {
+        setRawCharacter((prev) => {
+          const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
+          const next = patchMorphusForgeSlotState(cleared, {
+            variantPicks: { [path]: label },
+          })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onCustomTrait: (path, instance) => {
+        setRawCharacter((prev) => {
+          const next = patchMorphusForgeSlotState(prev.morphusForgeSlotState, {
+            customInstances: {
+              [path]: sanitizeMorphusCustomTraitInstance(instance),
+            },
+          })
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+      onClearPick: (path) => {
+        setRawCharacter((prev) => {
+          const next = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
+          return updateMorphusForgeSlotState(prev, next)
+        })
+      },
+    }),
+    [],
+  )
 
   const setCreationAttributePoolSlot = useCallback(
     (index: number, value: number | null) => {
@@ -2632,6 +2755,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,
+      morphusForgeSlotActions,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       setCreationAttributeValue,
@@ -2774,6 +2898,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,
+      morphusForgeSlotActions,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
       setCreationAttributeValue,

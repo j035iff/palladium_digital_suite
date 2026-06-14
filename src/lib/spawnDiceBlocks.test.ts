@@ -128,6 +128,23 @@ describe('spawnDiceBlocks', () => {
     ).toBe(127)
   })
 
+  it('does not double Nightbane P.P.E. dice when O.C.C. already defines the formula', () => {
+    const nightbane = getRaceById('nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const blocks = buildPendingDiceBlocks(
+      { ...characterFixture, creationAttributeAssignments: { pe: 12 } },
+      nightbane,
+      occ,
+      { psychicTier: 'none' },
+    )
+    const ppe = blocks.find((block) => block.id === 'ppe')!
+    const diceRolls = ppe.groups.flatMap((group) => group.rolls)
+    expect(diceRolls).toHaveLength(1)
+    expect(diceRolls[0]?.notation).toBe('3D6x10')
+    expect(ppe.hint).toBe('P.E. + 3D6x10 + 20 (+3D6/level)')
+    expect(ppe.flatBaseline).toBe(12)
+  })
+
   it('splits facade and morphus pending dice blocks for dual-form builds', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')

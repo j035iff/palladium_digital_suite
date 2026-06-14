@@ -119,7 +119,7 @@
           "pageNumber": 140
         }
       ],
-      "description": "1D6 Small faces and heads dot the character’s body! These heads can be as small as a thumb or as large as a grapefruit. Some Nightbane can speak through these faces; others cannot stop the faces from screaming, laughing, gibbering, or mouthing expressions. The mouths of each face may also bite any enemy that gets within grappling distance; each can inflict 1D4 points of damage per bite. Bonuses: +4D6 to S.D.C. and +1D6 to Horror Factor.",
+      "description": "1D6 Small faces and heads dot the character’s body! These heads can be as small as a thumb or as large as a grapefruit. Some Nightbane can speak through these faces; others cannot stop the faces from screaming, laughing, gibbering, or mouthing expressions. The mouths of each face may also bite any enemy that gets within grappling distance.",
       "statModifiers": {
         "sdc": {
           "dice": "4D6"
@@ -128,6 +128,14 @@
           "dice": "1D6"
         }
       },
+      "naturalWeapons": [
+        {
+          "limbType": "bite",
+          "label": "Bite",
+          "damageFormula": "1D4",
+          "isAdditiveToHth": false
+        }
+      ],
       "skillModifiers": {
         "specificSkillOverrides": [
           {

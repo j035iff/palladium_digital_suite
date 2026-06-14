@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import {
   MORPHUS_APPEARANCE_ROUTING_TABLE,
   MORPHUS_FORGE_MANIFEST,
@@ -8,8 +7,8 @@ import {
   formatMorphusPercentileBand,
   morphusForgeStateAfterPathChange,
   resolveMorphusForgeState,
-  selectedAppearanceEntry,
 } from '../../../lib/morphusForgeNavigation'
+import { formatMorphusSlotPlanRoute } from '../../../lib/morphusTraitPickDisplay'
 import type { MorphusForgePath } from '../../../types'
 import { MorphusSlotPlanPreview } from './MorphusSlotPlanPreview'
 
@@ -24,7 +23,6 @@ type Props = {
 
 export function MorphusCrossroadsTab({ morphusForgeState, onPatchState }: Props) {
   const state = morphusForgeState
-  const selectedEntry = useMemo(() => selectedAppearanceEntry(state), [state])
 
   const setPath = (path: MorphusForgePath) => {
     onPatchState({ path })
@@ -126,23 +124,39 @@ export function MorphusCrossroadsTab({ morphusForgeState, onPatchState }: Props)
               const selected = state.appearanceEntryId === entry.id
               return (
                 <li key={entry.id}>
-                  <button
-                    type="button"
-                    onClick={() => setAppearance(entry.id)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left text-sm transition ${
+                  <div
+                    className={`overflow-hidden rounded-lg border transition ${
                       selected
-                        ? 'border-emerald-500 bg-emerald-950/50 text-emerald-50'
-                        : 'border-violet-800 bg-slate-900/80 text-violet-100 hover:border-violet-500'
+                        ? 'border-emerald-500 shadow-[0_0_0_1px_rgba(16,185,129,0.25)]'
+                        : 'border-violet-800'
                     }`}
                   >
-                    <span className="font-medium">{entry.name}</span>
-                    <span className="shrink-0 font-mono text-xs text-violet-300">{band}%</span>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => setAppearance(entry.id)}
+                      aria-expanded={selected}
+                      className={`flex w-full items-start justify-between gap-3 px-3 py-2.5 text-left text-sm transition ${
+                        selected
+                          ? 'bg-emerald-950 text-emerald-50'
+                          : 'bg-slate-900 text-violet-100 hover:border-violet-500 hover:bg-slate-800'
+                      }`}
+                    >
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-medium">{entry.name}</span>
+                        <span className="mt-0.5 block text-xs font-medium text-amber-200/90">
+                          {formatMorphusSlotPlanRoute(entry.slotPlan)}
+                        </span>
+                      </span>
+                      <span className="shrink-0 font-mono text-xs text-violet-300">{band}%</span>
+                    </button>
+                    {selected ? (
+                      <MorphusSlotPlanPreview entry={entry} variant="inline" />
+                    ) : null}
+                  </div>
                 </li>
               )
             })}
           </ul>
-          {selectedEntry ? <MorphusSlotPlanPreview entry={selectedEntry} /> : null}
         </section>
       ) : null}
 

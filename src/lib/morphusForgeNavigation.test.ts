@@ -29,7 +29,7 @@ describe('morphusForgeNavigation', () => {
     ).toBe(true)
   })
 
-  it('requires 1D4+2 count for path 2 trait tab', () => {
+  it('requires 1D4+2 count and slot resolution for path 2 trait tab', () => {
     expect(
       isMorphusForgeTraitTabComplete({ path: 'characteristics' }),
     ).toBe(false)
@@ -38,7 +38,7 @@ describe('morphusForgeNavigation', () => {
         path: 'characteristics',
         characteristicsPickCount: 5,
       }),
-    ).toBe(true)
+    ).toBe(false)
   })
 
   it('clears downstream state when path changes', () => {

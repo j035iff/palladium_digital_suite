@@ -106,7 +106,6 @@
     "strengthCategory": "standard",
     "vitals": {
       "hpFormula": "PE + 1D6",
-      "averageStandardPpe": "PE + 3D6*10+20",
       "sdc": 30
     },
     "psionics": {

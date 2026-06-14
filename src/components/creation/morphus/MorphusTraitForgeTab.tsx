@@ -3,7 +3,8 @@ import {
   resolveMorphusForgeState,
   selectedAppearanceEntry,
 } from '../../../lib/morphusForgeNavigation'
-import { MorphusSlotPlanPreview } from './MorphusSlotPlanPreview'
+import { MorphusSlotResolutionPanel } from './MorphusSlotResolutionPanel'
+import { MORPHUS_FORGE_FIELD_CLASS } from './MorphusTraitPickCard'
 
 type Props = {
   morphusForgeState: ReturnType<typeof resolveMorphusForgeState>
@@ -32,7 +33,7 @@ export function MorphusTraitForgeTab({
       value != null && (value < min || value > max || !Number.isFinite(value))
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         <p className="max-w-2xl text-sm text-violet-100/90">
           {MORPHUS_FORGE_MANIFEST.path2.description}
         </p>
@@ -55,12 +56,12 @@ export function MorphusTraitForgeTab({
               const n = Number.parseInt(raw, 10)
               onSetCharacteristicsCount(Number.isFinite(n) ? n : undefined)
             }}
-            className={`mt-1 w-full rounded-lg border-2 px-3 py-2 text-center font-mono text-lg font-bold tabular-nums ${
+            className={`mt-1 ${MORPHUS_FORGE_FIELD_CLASS} text-center text-lg font-bold tabular-nums ${
               invalid
-                ? 'border-rose-500 text-rose-100'
+                ? 'border-rose-500/90'
                 : value != null && value >= min && value <= max
-                  ? 'border-emerald-500 text-emerald-50'
-                  : 'border-violet-500 text-violet-50'
+                  ? 'border-emerald-500/90'
+                  : ''
             }`}
           />
           <span className="mt-1 block text-xs text-violet-400">
@@ -68,25 +69,8 @@ export function MorphusTraitForgeTab({
           </span>
         </label>
         {value != null && value >= min && value <= max ? (
-          <p className="rounded-lg border border-violet-700/50 bg-violet-950/30 px-3 py-2 text-sm text-violet-100">
-            <strong>{value}</strong> Characteristics selection slots will be generated here in a
-            future build. For now, continue to Review to roll Morphus vitality dice.
-          </p>
+          <MorphusSlotResolutionPanel morphusForgeState={state} />
         ) : null}
-        <section className="rounded-lg border border-dashed border-violet-600/40 px-3 py-2">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-bold uppercase tracking-wide text-violet-400">
-              Expert mode
-            </span>
-            <button
-              type="button"
-              disabled
-              className="cursor-not-allowed rounded-full border border-violet-700 px-3 py-1 text-[10px] font-bold uppercase text-violet-500 opacity-60"
-            >
-              Coming soon
-            </button>
-          </div>
-        </section>
       </div>
     )
   }
@@ -94,34 +78,10 @@ export function MorphusTraitForgeTab({
   return (
     <div className="space-y-4">
       <p className="text-sm text-violet-200/90">
-        Trait resolution for <strong>{appearanceEntry?.name ?? 'your archetype'}</strong> is stubbed
-        in this build. The slot plan below shows what the engine will require — pick-only, no d100
-        entry.
+        Resolve trait slots for <strong>{appearanceEntry?.name ?? 'your archetype'}</strong>.
+        Pick from each list — no d100 entry required.
       </p>
-      {appearanceEntry ? <MorphusSlotPlanPreview entry={appearanceEntry} /> : null}
-      <MorphusCustomTraitSlotsStub />
-      <section className="rounded-lg border border-dashed border-violet-600/40 px-3 py-2">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs font-bold uppercase tracking-wide text-violet-400">
-            Guided wizard / Expert mode
-          </span>
-          <button
-            type="button"
-            disabled
-            className="cursor-not-allowed rounded-full border border-violet-700 px-3 py-1 text-[10px] font-bold uppercase text-violet-500 opacity-60"
-          >
-            Expert — coming soon
-          </button>
-        </div>
-      </section>
+      <MorphusSlotResolutionPanel morphusForgeState={state} />
     </div>
-  )
-}
-
-function MorphusCustomTraitSlotsStub() {
-  return (
-    <p className="text-xs text-violet-400/90">
-      Custom trait workshop and router auto-spawn slots remain available on the Review tab.
-    </p>
   )
 }
