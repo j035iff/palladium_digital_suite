@@ -11,6 +11,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   isTier1ChargenComplete,
+  inferTalentUsableInNightbaneForm,
   listSchemaDriftKeys,
   listTier2KeysPresent,
   SCHEMA_TOP_LEVEL_KEYS,
@@ -95,6 +96,53 @@ function auditTalents(talents, morphusTableIds) {
           talent,
           `Undocumented top-level key \`${key}\` — not in talent engine contract / schema.`,
           'Add to `palladium-talent.schema.json` + `talent-engine-contract.mjs`, or rename to a Tier 2 block.',
+        ),
+      )
+    }
+
+    const inferredForm = inferTalentUsableInNightbaneForm(talent)
+    const storedForm = talent.limitations?.usableInNightbaneForm
+    if (storedForm != null && storedForm !== inferredForm) {
+      issues.push(
+        issue(
+          'warning',
+          'form_rule_mismatch',
+          talent,
+          `\`limitations.usableInNightbaneForm\` is \`${storedForm}\` but prose implies \`${inferredForm}\` (default: morphus_only).`,
+          'Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations.',
+        ),
+      )
+    }
+
+    const formUsage = talent.limitations?.formUsage
+    const storedScope = talent.limitations?.usableInNightbaneForm
+    if (
+      formUsage &&
+      storedScope !== 'varies_by_scope' &&
+      storedScope !== 'both_forms_note_special' &&
+      !(storedScope === 'morphus_only' && formUsage.phases?.activation && !formUsage.phases?.ongoingUse)
+    ) {
+      issues.push(
+        issue(
+          'warning',
+          'form_usage_scope_mismatch',
+          talent,
+          '`limitations.formUsage` is structured but `usableInNightbaneForm` should be `varies_by_scope` (or `morphus_only` when only an activation-phase rule applies).',
+          'Set `usableInNightbaneForm` to match structured form rules.',
+        ),
+      )
+    }
+    if (
+      (storedScope === 'varies_by_scope' || storedScope === 'both_forms_note_special') &&
+      !formUsage
+    ) {
+      issues.push(
+        issue(
+          'info',
+          'form_usage_missing',
+          talent,
+          '`usableInNightbaneForm` indicates varying form rules but `limitations.formUsage` is absent.',
+          'Add structured `formUsage.byTarget` or `formUsage.phases` instead of form prose in `otherLimitations`.',
         ),
       )
     }

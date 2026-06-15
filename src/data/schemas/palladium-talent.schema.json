@@ -284,18 +284,74 @@
         "resourceType": { "type": "string", "enum": ["ppe", "isp", "hit_points", "sdc", "other"] }
       }
     },
+    "talentFormRestriction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["form"],
+      "properties": {
+        "form": {
+          "type": "string",
+          "enum": ["morphus_only", "facade_only", "either_form"]
+        },
+        "effectiveness": {
+          "type": "string",
+          "description": "When P.P.E. enhancements or scaled effects differ at this scope.",
+          "enum": ["full", "base_only", "reduced"]
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentFormUsageByTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "self": { "$ref": "#/$defs/talentFormRestriction" },
+        "others": { "$ref": "#/$defs/talentFormRestriction" },
+        "willing": { "$ref": "#/$defs/talentFormRestriction" }
+      },
+      "minProperties": 1
+    },
+    "talentFormUsagePhases": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "activation": { "$ref": "#/$defs/talentFormRestriction" },
+        "ongoingUse": { "$ref": "#/$defs/talentFormRestriction" }
+      },
+      "minProperties": 1
+    },
+    "talentFormUsage": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Explicit Facade/Morphus rules when restrictions differ by who is affected or when during use.",
+      "properties": {
+        "byTarget": { "$ref": "#/$defs/talentFormUsageByTarget" },
+        "phases": { "$ref": "#/$defs/talentFormUsagePhases" }
+      },
+      "anyOf": [
+        { "required": ["byTarget"] },
+        { "required": ["phases"] }
+      ]
+    },
     "talentLimitations": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
         "usableInNightbaneForm": {
           "type": "string",
+          "description": "Simple form rule when uniform for all uses. **Default: morphus_only.** Use `varies_by_scope` with `formUsage` when rules differ by target or phase.",
           "enum": [
             "morphus_only",
             "facade_only",
             "either_form",
+            "varies_by_scope",
             "both_forms_note_special"
-          ]
+          ],
+          "default": "morphus_only"
+        },
+        "formUsage": {
+          "description": "Structured Facade/Morphus restrictions by target (self, others, willing) or phase (activation, ongoing use). Prefer over form prose in `otherLimitations`.",
+          "$ref": "#/$defs/talentFormUsage"
         },
         "minimumCharacterLevelToAcquire": {
           "type": "integer",

@@ -35,7 +35,7 @@ describe('talentSelectionGates', () => {
   })
 
   it('blocks creation picks above level 1', () => {
-    const talent = getPalladiumTalentById('talent_all_nighter')
+    const talent = getPalladiumTalentById('talent_ashes_to_ashes')
     expect(talent).toBeDefined()
     const gate = assessTalentSelectionGate(talent!, {
       characterLevel: CREATION_CHARACTER_LEVEL,
@@ -89,8 +89,8 @@ describe('talentSelectionGates', () => {
 
   it('groups talents with no level gate first, then by ascending level', () => {
     const noGate = getPalladiumTalentById('talent_jam_senses')
-    const level3 = getPalladiumTalentById('talent_all_nighter')
-    const level5 = getPalladiumTalentById('talent_chronosphere')
+    const level3 = getPalladiumTalentById('talent_ashes_to_ashes')
+    const level5 = getPalladiumTalentById('talent_darkblast')
     expect(noGate).toBeDefined()
     expect(level3).toBeDefined()
     expect(level5).toBeDefined()

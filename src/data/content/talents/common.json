@@ -29,7 +29,8 @@
       }
     },
     "limitations": {
-      "otherLimitations": "Maximum height above the ground is 15 feet (4.6 m) per level of experience. Speed is the same as Swimming."
+      "otherLimitations": "Maximum height above the ground is 15 feet (4.6 m) per level of experience. Speed is the same as Swimming.",
+      "usableInNightbaneForm": "morphus_only"
     }
   },
   {
@@ -79,7 +80,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Staves off the effects of sleep deprivation for an entire day at a time and enables the user to remain fully awake and be completely alert without sleep. Gives a Perception bonus of +1 and a +3 to save against sedatives or sleep-inducing powers.",
+    "description": "Staves off the effects of sleep deprivation for an entire day at a time, enabling the user to remain fully awake and completely alert without sleep. Useful on guard duty, when on the run from authorities, or when maintaining a dual identity as an average citizen and resistance fighter. Grants +1 to Perception and +3 to save against sedatives or sleep-inducing powers.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -92,9 +93,11 @@
       "baseActivation": 12
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "minimumCharacterLevelToAcquire": 3,
-      "otherLimitations": "Only delays the need for sleep; must eventually catch up on rest (4 hours per day skipped). Can only be activated once per day, and may not be used on an unwilling subject. After 7 consecutive days awake, roll for random insanity each day."
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Only delays the need for sleep; the character must eventually catch up with at least four hours of rest per day skipped. Can only be activated once per day and may not be used on an unwilling subject. Going more than 3–5 days without sleep feels uncomfortable; after 7 consecutive days awake, roll once per day on the Random Insanity Table (Nightbane RPG, p. 44). Insanities are temporary and disappear after sufficient rest."
+    },
+    "modifiers": {
+      "perception": 1
     },
     "ranges": [
       {
@@ -106,7 +109,11 @@
       "summary": "24 hours.",
       "kind": "hour",
       "durationValue": 24
-    }
+    },
+    "save": {
+      "summary": "+3 to save vs sedatives and sleep-inducing powers while active."
+    },
+    "notes": "Nightbane still need a relatively normal amount of sleep; this Talent postpones deprivation rather than replacing rest."
   },
   {
     "id": "talent_anti_arcane",
@@ -149,7 +156,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "The Nightbane sacrifices a combustible object to transfer fiery damage to an intended target. The object is reduced to ashes instantly, and the fire is directed at the target.",
+    "description": "The Nightbane must be holding or touching a combustible object to sacrifice, reducing it to ashes in a flash of flames. In the same instant, that fire is directed at a chosen target (line of sight required). Damage depends on the weight category of the sacrificed object.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -160,7 +167,7 @@
     "ppe": {
       "permanentBurnToAcquire": 13,
       "baseActivation": 2,
-      "notes": "Cost is 2 P.P.E. for every weight category of the object sacrificed."
+      "notes": "Two P.P.E. per weight category of the sacrificed object."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
@@ -168,11 +175,11 @@
       "cannotAffect": [
         "targets immune to fire"
       ],
-      "otherLimitations": "Object must be combustible (wood, paper, rubber, fabric). Cannot be magic, living plant/animal, ceramic, metal, plastic, stone, or concrete. Must sacrifice whole objects, not parts."
+      "otherLimitations": "Only a single combustible object (generally nothing larger than a love seat) may be sacrificed per use — not a house, porch, fence section, or wall portion. Combustible materials only: wood, paper, rubber, and fabric. Cannot use ceramic, metal, plastic, stone, concrete, magic items, living plants, or living beings. Whole objects only; portions cannot be sacrificed. Damage applies to armor or magical shields first. Fire-resistant targets take half damage; fire-impervious targets take no damage (though clothing may burn)."
     },
     "ranges": [
       {
-        "summary": "Touch for the sacrificed object, 100 feet for the attack on the real target.",
+        "summary": "Touch for the sacrificed object; 100 feet (30.5 m) for the attack on the target.",
         "kind": "distance",
         "distanceValue": 100,
         "distanceUnit": "foot"
@@ -182,11 +189,11 @@
       "summary": "Instant.",
       "kind": "instant"
     },
-    "damage": {
-      "primaryTargetDamage": "Variable based on weight (e.g., 1-2 lbs = 1D6, 85-120 lbs = 2D6x10).",
-      "notes": "Living targets get a save vs magic (15+) for 20% damage."
+    "save": {
+      "summary": "Living targets save vs magic (15+). Failure: full damage. Success: 20% damage (round down). No dodge — the target is suddenly consumed in flames.",
+      "target": "living_targets_only"
     },
-    "notes": "Weight to damage categories: 1-2 lbs = 1D6; 3-5 lbs = 2D6; 6-20 lbs = 4D6; 25-35 lbs = 1D4x10; 40-80 lbs = 2D4x10; 85-120 lbs = 2D6x10."
+    "notes": "Weight to damage: 1–2 lbs = 1D6; 3–5 lbs = 2D6; 6–20 lbs = 4D6; 25–35 lbs = 1D4×10; 40–80 lbs = 2D4×10; 85–120 lbs = 2D6×10. Non-living targets (objects, structures) take full damage with no save."
   },
   {
     "id": "talent_astral-self",
@@ -224,7 +231,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Generates a powerful concussive shock wave originating from the Nightbane, sending anyone and anything not secured flying and shattering fragile objects.",
+    "description": "Generates a powerful concussive shock wave originating from the Nightbane, expanding outward in all directions or only in front of him. Sends anyone and anything not sufficiently heavy or secured flying several yards away and shatters fragile objects such as windows. Primarily defensive, but can be lethal under the right circumstances (e.g., on a skyscraper roof).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -234,33 +241,34 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 6,
-      "baseActivation": 6,
-      "notes": "User can only expend 6 P.P.E. per level of experience on activation. Double the activation cost if used in Facade form."
+      "baseActivation": {
+        "summary": "Up to 6 P.P.E. per level of experience (maximum spend per activation)"
+      },
+      "maxEnhancementPpePerActivation": {
+        "ppePerCharacterLevel": 6
+      },
+      "notes": "Double total P.P.E. spent on activation if used in Facade form."
     },
     "limitations": {
       "usableInNightbaneForm": "either_form",
-      "minimumCharacterLevelToAcquire": 4,
-      "otherLimitations": "Cannot selectively affect targets within the radius/arc except those in physical contact willed to be protected."
+      "otherLimitations": "Cannot selectively affect targets within the radius or forward arc — everyone caught takes damage and is thrown. Exceptions: occupants inside a vehicle, or one to two people in physical contact with the Nightbane who are willed to be protected."
     },
     "ranges": [
       {
-        "summary": "20 foot radius around the Nightbane, or a 40 foot swath in front.",
+        "summary": "20 foot (6.1 m) radius around the Nightbane, or a 40 foot (12.2 m) swath in front; area may be reduced in 3 foot (1 m) increments.",
         "kind": "distance",
         "distanceValue": 20,
         "distanceUnit": "foot"
       }
     ],
     "areaOfEffect": {
-      "summary": "20 foot radius or 40 foot swath."
+      "summary": "20 foot radius or 40 foot forward swath (adjustable in 3 foot increments)."
     },
     "duration": {
       "summary": "Instant.",
       "kind": "instant"
     },
-    "damage": {
-      "primaryTargetDamage": "2D6",
-      "notes": "Victims are thrown 1D6 yards, take 2D6 damage, lose initiative, lose two melee attacks, and suffer -5% to skills for one melee. Save vs impact (16+) reduces damage by half."
-    }
+    "notes": "Victims are thrown 1D6 yards, take 2D6 damage, lose initiative, lose two melee attacks, and suffer −5% to all skills for one melee round. Save vs impact (16+) reduces damage by half (penalties unchanged)."
   },
   {
     "id": "talent_bomb_maker",
@@ -269,7 +277,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Transforms inert substances into a variety of lethal explosives. Material reverts back to its original form when the duration expires.",
+    "description": "Transforms inert substances into lethal explosives that mimic real-world properties (e.g., olive oil into a Molotov cocktail, sawdust into gunpowder, clay into C-4). Blast radius and damage depend on P.P.E. spent and the amount transformed. Created explosives are indistinguishable from genuine substances, detectable and neutralizable by normal means, and are not magical in nature.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -279,23 +287,35 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 17,
-      "baseActivation": 10,
-      "notes": "Base cost is an estimate for schema compliance as specific cost varies or is omitted in the summarized reprint."
+      "baseActivation": {
+        "summary": "10 P.P.E. per liter/pound of low-grade explosive; 15 P.P.E. per half pound of high-explosive"
+      },
+      "activationTiers": [
+        {
+          "summary": "Low-grade (TNT, gunpowder): 10 P.P.E. per liter or pound — 4D6 S.D.C., 4 ft blast radius"
+        },
+        {
+          "summary": "High-explosive (plastique): 15 P.P.E. per half pound — 1D4×10 S.D.C., 3 ft blast radius"
+        }
+      ]
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form"
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 4,
+      "otherLimitations": "Only the explosive substance is created — not containers or detonators. C-4 requires an electronic detonator; grenades and land mines require proper casings supplied separately. Material reverts to its original form when the duration expires."
     },
     "ranges": [
       {
-        "summary": "Touch.",
+        "summary": "Touch to transmute into an explosive material.",
         "kind": "touch"
       }
     ],
     "duration": {
-      "summary": "6 hours per level of experience.",
+      "summary": "6 hours per level of experience; then reverts to the original material.",
       "kind": "hour",
       "durationPerLevel": 6
-    }
+    },
+    "notes": "Common among Resistance and Warlords Nightbane. Does not deal extra damage to beings vulnerable to magic."
   },
   {
     "id": "talent_bookworm",
@@ -304,7 +324,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the Nightbane to instantly absorb written knowledge by devouring the physical pages. Grants temporary skill use and total recall of the text.",
+    "description": "Devours books, magazines, scrolls, or other written sources whole to instantly know every word — regardless of language. Mundane reading grants total recall as if just read; technical material also grants temporary use of 1–4 related skills at 90% (or boosts existing skills to 90%+1D6%). Spell books or scrolls may temporarily allow casting contained spells if the user can already cast magic.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -315,12 +335,19 @@
     "ppe": {
       "permanentBurnToAcquire": 7,
       "baseActivation": 1,
-      "notes": "1 P.P.E. per 25 pages of mundane text, or 2 P.P.E. per page of a spell book/scroll."
+      "notes": "1 P.P.E. per 25 pages of mundane text; 2 P.P.E. per page of a spell book or scroll page equivalent."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 3,
-      "otherLimitations": "Source material is utterly destroyed. Only biological material (paper, parchment) can be devoured."
+      "cannotAffect": [
+        "stone inscriptions",
+        "overhead transparencies",
+        "photographic prints",
+        "slides",
+        "non-biological writing media"
+      ],
+      "otherLimitations": "Any source devoured is utterly destroyed. Devoured text ceases to exist after being eaten; knowledge or abilities become available one melee round (15 seconds) later. Any knowledge gained is not permanent and disappears when the duration lapses. Devouring enchanted or cursed tomes may have unforeseen consequences (G.M. discretion). Cannot cast devoured spells without prior spell-casting ability."
     },
     "ranges": [
       {
@@ -333,7 +360,7 @@
       "kind": "hour",
       "durationPerLevel": 1
     },
-    "notes": "Temporarily grants 1-4 skills at 90% (or boosts existing skills to 90%+1D6%) required to use the knowledge."
+    "notes": "Diaries and journals may reveal investigation clues. Destroying written knowledge is controversial among Seekers but useful to Nocturne Nightbane in a pinch."
   },
   {
     "id": "talent_borrow_morphus",
@@ -382,7 +409,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Induces a severe, debilitating pain resembling a 'brain freeze' in a target, scrambling their thoughts and causing severe combat and skill penalties.",
+    "description": "Induces severe, debilitating head pain resembling an extreme “brain freeze,” scrambling the target’s thoughts and imposing heavy combat and skill penalties.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -394,34 +421,40 @@
       "permanentBurnToAcquire": 10,
       "baseActivation": 6,
       "enhancement": {
-        "summary": "Extend duration by one melee round up to eight times.",
+        "summary": "If the target fails to save, spend 6 P.P.E. at the start of each subsequent melee round to extend duration by one melee round.",
         "costPerStep": 6,
-        "stepDefinition": "+1 melee round duration"
-      }
+        "stepDefinition": "+1 melee round duration",
+        "differsFromBaseActivation": true
+      },
+      "notes": "Initial attack includes 1D4 melee round duration on failed save. May extend up to eight additional melee rounds in a row."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 3,
       "cannotAffect": [
         "immortal beings",
-        "creatures with radically different physiologies (Nightland Hounds, Hunters, Hollow Men, etc.)",
-        "Nightlords"
-      ]
+        "Nightlords",
+        "creatures with physiologies radically different from humans (Nightland Hounds, Hunters, Hollow Men, Tarantuloids, etc.)"
+      ],
+      "otherLimitations": "Affects Night Princes, vampires, and Nightbane in Facade form or very human-looking Morphus forms. Victim cannot remember what they were about to say or do unless obvious; if mid-skill, cannot remember the next step until the freeze ends."
     },
     "ranges": [
       {
-        "summary": "200 feet + 20 feet per level of experience; line of sight.",
+        "summary": "200 feet (61 m) + 20 feet (6 m) per level of experience; line of sight required.",
         "kind": "distance",
         "distanceValue": 200,
         "distanceUnit": "foot",
-        "distancePerLevel": 20
+        "distancePerLevel": 20,
+        "lineOfSightRequired": true
       }
     ],
     "duration": {
-      "summary": "1D4 melee rounds.",
+      "summary": "1D4 melee rounds (15–60 seconds); extendable.",
       "kind": "melee_round"
     },
-    "notes": "Target must save vs magic (15+). Failure results in -5 Perception, -2 all combat rolls, initiative last, -30% to skills, and inability to cast spells/psionics/talents."
+    "save": {
+      "summary": "Save vs magic (15+, including P.E. bonus). Failure: −5 Perception, −2 all combat rolls, initiative last, −30% to skills, and cannot cast spells, use psionics, or activate Talents until duration ends."
+    }
   },
   {
     "id": "talent_bypass",
@@ -430,7 +463,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Disables conventional and high-tech locks, electrical surveillance systems, and cameras.",
+    "description": "Disables conventional and high-tech locks, alarms, and tied surveillance (cameras, sensors) for padlocks, magnetic seals, deadbolts, handcuffs, car doors, safes, and high-security vault systems. Does not affect magical locks or protections.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -441,13 +474,38 @@
     "ppe": {
       "permanentBurnToAcquire": 6,
       "baseActivation": 1,
-      "notes": "1 P.P.E. for simple locks, 2 for standard, 6 for complex mechanical/simple electronic, 14 for advanced electronic/vault doors."
+      "activationTiers": [
+        {
+          "summary": "Simple lock (diary, cheap jewelry box, file cabinet, bedroom/bathroom door): 1 P.P.E. — instant, one melee action"
+        },
+        {
+          "summary": "Standard lock (most houses, padlocks, handcuffs, security doors, car doors/trunks/ignitions): 2 P.P.E. — 1D4 melee rounds"
+        },
+        {
+          "summary": "Complex lock (prison cells, hospital wards, commercial security doors, common safes, basic alarms/video): 6 P.P.E. — 1D4 minutes; feed goes dark without tripping alarm"
+        },
+        {
+          "summary": "Advanced lock (bank vaults, top-secret data centers, military facilities): 14 P.P.E. — 4D4 minutes"
+        }
+      ]
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "minimumCharacterLevelToAcquire": 2
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Only one lock (and its tied security systems) per activation. Disables locking mechanisms and linked alarms/cameras on that door. Does not work on magic locks or magical protections."
     },
-    "notes": "Requires a D20 roll against the lock's difficulty: 15 for advanced, 8 for complex, 5 for standard, 2 for simple."
+    "ranges": [
+      {
+        "summary": "Touch.",
+        "kind": "touch"
+      }
+    ],
+    "duration": {
+      "summary": "Varies by lock tier (instant to 4D4 minutes).",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "Lock difficulty on D20 (must roll higher): simple 2, standard 5, complex 8, advanced 15 (and alien locks). Failed roll — still locked; try again."
+    }
   },
   {
     "id": "talent_chain_lightning",
@@ -456,7 +514,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Unleashes a devastating electrical attack capable of striking multiple enemies in close proximity, with the bolt jumping from one target to the next.",
+    "description": "Unleashes a devastating electrical bolt that strikes multiple living targets within a 30 foot radius, jumping about one second apart. Each hop inflicts one die less damage than the prior target. Especially effective against Hounds, Hound Masters, Great Hounds, Hunters, and Darksteel users.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -468,19 +526,24 @@
       "permanentBurnToAcquire": 10,
       "baseActivation": 9,
       "enhancement": {
-        "summary": "Increase damage of the initial blast by 1D6 (max +7D6).",
+        "summary": "Increase initial-target damage by +1D6 per step (up to +7D6 / 10D6 total on the first target). Each hop reduces damage by 1D6.",
         "costPerStep": 3,
-        "stepDefinition": "+1D6 damage to initial target"
-      }
+        "stepDefinition": "+1D6 to initial target damage",
+        "differsFromBaseActivation": true
+      },
+      "maxEnhancementPpePerActivation": {
+        "ppePerCharacterLevel": 9
+      },
+      "notes": "9 P.P.E. base = 3D6 to first target, 2D6 to second, 1D6 to third. Maximum total activation spend is 9 P.P.E. per level of experience."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 2,
-      "otherLimitations": "Max P.P.E. to activate is limited to 9 per level of experience. Only damages living beings."
+      "otherLimitations": "Only damages living beings — not inanimate objects. Each individual can be struck only once per attack; leftover damage dissipates. Dictating target order beyond the first costs two melee attacks; otherwise hops follow proximity. Hounds/Hunters/Darksteel users save vs 12+ (including P.E.) or become dazed (−initiative, −2 attacks; cumulative). Hunters and other flying creatures take damage using eight-sided dice instead of six-sided."
     },
     "ranges": [
       {
-        "summary": "100 feet + 20 feet per level to a 30 foot radius.",
+        "summary": "100 feet (30.5 m) + 20 feet (6.1 m) per level to targets within a 30 foot (9.1 m) radius between victims (double range and radius in the Nightlands).",
         "kind": "distance",
         "distanceValue": 100,
         "distanceUnit": "foot",
@@ -488,16 +551,13 @@
       }
     ],
     "areaOfEffect": {
-      "summary": "30 foot radius between targets."
+      "summary": "30 foot radius between chain targets (60 foot in the Nightlands)."
     },
     "duration": {
       "summary": "Instant.",
       "kind": "instant"
     },
-    "damage": {
-      "primaryTargetDamage": "3D6 (base)",
-      "notes": "Damage reduces by 1D6 per subsequent target. Extremely effective against users of Darksteel and Nightlands creatures (Hunters take D8s for damage)."
-    }
+    "notes": "Typical attacks start around 6D6 on the first target rather than maximum output."
   },
   {
     "id": "talent_channel_speed",
@@ -506,7 +566,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Taps into Morphus power while in Facade form to temporarily boost Physical Prowess and Speed.",
+    "description": "One of a handful of Talents meant for use only in Facade form. Taps into the power of the supernatural Morphus form to temporarily add 6 points to P.P. and 10 points to Spd, plus +1 to initiative and +2 to strike, parry, and dodge (in addition to any bonuses from improved P.P.). While active, the user's eyes dim and wisps of shadow rise like thin smoke from the hands and feet. Even in Facade form, the Nightbane registers as a supernatural being to any beings able to sense such things.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -516,20 +576,21 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 8,
-      "baseActivation": 8
+      "baseActivation": 8,
+      "notes": "Eight P.P.E. per two melee rounds (30 seconds) of effect."
     },
     "limitations": {
       "usableInNightbaneForm": "facade_only",
-      "otherLimitations": "User's eyes dim and shadow wisps rise from hands and feet. Registers as supernatural to sensory abilities."
+      "otherLimitations": "Can only be used in Facade form. Only the bonuses listed in the talent text are added — do not add bonuses from Morphus features."
     },
     "ranges": [
       {
-        "summary": "Self.",
+        "summary": "Self only.",
         "kind": "self"
       }
     ],
     "duration": {
-      "summary": "Two melee rounds (30 seconds).",
+      "summary": "Two melee rounds (30 seconds) per activation.",
       "kind": "melee_round",
       "durationValue": 2
     },
@@ -542,7 +603,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Taps into Morphus power while in Facade form to temporarily boost Physical Strength, Endurance, and S.D.C.",
+    "description": "One of a handful of Talents meant for use only in Facade form. Temporarily adds 10 points to P.S. and 6 to P.E., plus 60 temporary S.D.C. (damage is subtracted from this S.D.C. first). The character also gains +2 to save vs poison and disease and +2 to save vs psionics. The Facade's strength is converted to Supernatural for the duration. While active, the user's eyes dim and wisps of shadow rise like steam from the body, arms, and legs. Even in Facade form, the Nightbane registers as a supernatural being to any beings able to sense such things.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -552,11 +613,12 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 9,
-      "baseActivation": 9
+      "baseActivation": 9,
+      "notes": "Nine P.P.E. per two melee rounds (30 seconds) of effect."
     },
     "limitations": {
       "usableInNightbaneForm": "facade_only",
-      "otherLimitations": "User's eyes dim and shadow wisps rise from body. Registers as supernatural to sensory abilities."
+      "otherLimitations": "Can only be used in Facade form. Only the bonuses listed in the talent text are added — do not add bonuses from Morphus features."
     },
     "ranges": [
       {
@@ -565,11 +627,11 @@
       }
     ],
     "duration": {
-      "summary": "Two melee rounds (30 seconds).",
+      "summary": "Two melee rounds (30 seconds) per activation.",
       "kind": "melee_round",
       "durationValue": 2
     },
-    "notes": "Adds +10 to P.S., +6 to P.E., and +60 S.D.C. Grants +2 to save vs poison/disease and +2 to save vs psionics. Strength becomes Supernatural."
+    "notes": "Adds +10 to P.S., +6 to P.E., and +60 temporary S.D.C. Grants +2 to save vs poison/disease and +2 to save vs psionics. Strength becomes Supernatural."
   },
   {
     "id": "talent_chronosphere",
@@ -578,7 +640,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Alters the temporal flow, causing anyone chosen within the radius to move at half normal speed.",
+    "description": "Alters the temporal flow in the Nightbane's immediate vicinity. Anyone of the user's choosing within the affected radius must save or move at half normal speed, with half the number of melee attacks (rounded up) and a -2 penalty to all combat rolls against anyone unaffected. Anyone entering the area after activation must save as well. Non-magical projectiles and attacks leveled against those within the field are -4 to strike and do half damage as they slow upon entering the area. Can be used in Facade form without any visual manifestation other than the slowed movement of those affected. The talent user is not affected; those who can sense magic or anomalies in space and time will detect the Chronosphere.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -589,28 +651,36 @@
     "ppe": {
       "permanentBurnToAcquire": 16,
       "baseActivation": 14,
-      "notes": "21 P.P.E. if used in Facade form."
+      "notes": "Fourteen P.P.E. per melee round of effect (21 P.P.E. in Facade form). Cannot be extended, but may be reactivated after the duration expires or it is canceled."
     },
     "limitations": {
       "usableInNightbaneForm": "either_form",
-      "minimumCharacterLevelToAcquire": 5,
-      "otherLimitations": "Can be used in Facade form without any visual manifestation other than the slowed movement of targets."
+      "minimumCharacterLevelToAcquire": 4,
+      "otherLimitations": "Not available until 4th level. The talent user is not affected by the slowing field."
     },
     "ranges": [
       {
-        "summary": "Five foot spherical radius per level of experience.",
+        "summary": "Five foot (1.5 m) spherical radius per level of experience; double the radius for those with a Morphus feature from the Athlete Table.",
         "kind": "distance",
         "distanceValue": 5,
         "distanceUnit": "foot",
         "distancePerLevel": 5
       }
     ],
+    "areaOfEffect": {
+      "summary": "Five foot (1.5 m) spherical radius per level (doubled for Athlete Table Morphus features)."
+    },
     "duration": {
-      "summary": "One melee round.",
+      "summary": "One melee round per activation.",
       "kind": "melee_round",
       "durationValue": 1
     },
-    "notes": "Targets save vs magic (16+). Failure halves melee attacks and imposes -2 to all combat rolls. Projectiles entering the field are -4 to strike and deal half damage."
+    "save": {
+      "summary": "Save vs magic (16+, including P.E. bonus). Failure: half speed, half melee attacks (rounded up), and -2 to all combat rolls against anyone unaffected by Chronosphere.",
+      "saveKind": "magic",
+      "targetNumber": 16
+    },
+    "notes": "Targets are chosen by the user. Entrants after activation must save or suffer the slowing effects."
   },
   {
     "id": "talent_dark_edge",
@@ -619,7 +689,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Temporarily imbues any mundane blade with the abilities of a Darkblade, turning its edge ebony. Allows parrying of Darkblades, ignores opponent's A.R., and doubles the normal damage.",
+    "description": "Many Nightbane refuse to wield liberated Darkblades lest they be marked as Ba'al sympathizers. Dark Edge temporarily imbues any mundane, non-magical blade with the same abilities as a Darkblade, turning the edge ebony. While active, the blade can parry Darkblades without fear of damage, ignores an opponent's A.R., and inflicts double the weapon's normal damage (e.g. a combat knife that normally does 1D6 would inflict 2D6). An imbued blade may be handed off to a friend or ally to use in combat.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -638,19 +708,26 @@
         "magical blades",
         "Darkblades",
         "weapons that are part of a Morphus"
-      ]
+      ],
+      "otherLimitations": "Non-magical blade weapons only."
+    },
+    "ranges": [
+      {
+        "summary": "Touch.",
+        "kind": "touch"
+      }
+    ],
+    "duration": {
+      "summary": "Four minutes per level of the talent user.",
+      "kind": "minute",
+      "durationPerLevel": 4,
+      "extendableByLevel": true
     },
     "rangeMechanics": {
       "summary": "Touch.",
       "rangeFixed": 0,
       "rangeUnit": "feet"
-    },
-    "duration": {
-      "kind": "minute",
-      "durationPerLevel": 4,
-      "extendableByLevel": true
-    },
-    "notes": "An imbued blade may be handed off to a friend or ally to use in combat."
+    }
   },
   {
     "id": "talent_darkblast",
@@ -659,7 +736,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "An improved Shadow Blast that fires a large stream of dark energy after charging.",
+    "description": "An improved Shadow Blast. Unlike Shadow Blast, which is almost instantaneous, Darkblast causes shadows to gather around two arms as the attack charges. Once fully charged, the limbs are brought together to fire a large stream of dark energy that packs even more punch than a Shadow Blast. Alternatively, the blast may be fired from the eyes or mouth (or approximate area thereof). Users are +2 to strike with this attack.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -671,25 +748,42 @@
       "permanentBurnToAcquire": 11,
       "baseActivation": 2,
       "enhancement": {
-        "summary": "Every 2 P.P.E. adds 2D4 damage, up to a maximum of 16 P.P.E. for 1D6x10 damage.",
+        "summary": "Two P.P.E. per 2D4 damage dealt, up to a maximum of 16 P.P.E. for a 1D6x10 damage blast.",
         "costPerStep": 2,
         "stepDefinition": "+2D4 damage",
         "differsFromBaseActivation": false
       },
       "maxEnhancementPpePerActivation": {
         "ppePerCharacterLevel": 3
-      }
+      },
+      "notes": "Maximum total P.P.E. spent on activation is 3 per level of experience."
     },
+    "prerequisites": [
+      {
+        "type": "level_minimum",
+        "level": 5
+      },
+      {
+        "type": "talent",
+        "talentId": "talent_shadow_blast",
+        "label": "Requires Shadow Blast."
+      }
+    ],
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 5,
-      "prerequisiteTalents": [
-        "Shadow Blast"
-      ]
+      "minimumCharacterLevelToAcquire": 5
     },
+    "ranges": [
+      {
+        "summary": "1,500 feet (457.2 m).",
+        "kind": "distance",
+        "distanceValue": 1500,
+        "distanceUnit": "foot"
+      }
+    ],
     "offensiveDamage": "2D4",
     "rangeMechanics": {
-      "summary": "Fires a large stream up to 1,500 feet.",
+      "summary": "Fires a large stream up to 1,500 feet (457.2 m).",
       "rangeFixed": 1500,
       "rangeUnit": "feet"
     },
@@ -705,7 +799,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Reinforces a single stationary object with the strength of Nightlands Darkmetal, blackening it and preventing penetration until the object's total S.D.C. is depleted.",
+    "description": "Reinforces a single stationary object (or portion thereof) with the strength of Nightlands Darkmetal. The targeted object blackens and takes on a dull sheen like Darkmetal ore. In addition to strengthening the object against attack, nothing can pierce the barrier and damage anything behind it — even high-power firearms and Darkblades cannot punch through the object's A.R. Only by depleting the object's total S.D.C. can it be breached.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -715,23 +809,47 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 8,
-      "baseActivation": 5
+      "baseActivation": 5,
+      "enhancement": {
+        "summary": "Five P.P.E. per 100 S.D.C. added to the reinforced object (maximum 500 S.D.C.).",
+        "costPerStep": 5,
+        "stepDefinition": "+100 S.D.C.",
+        "differsFromBaseActivation": false
+      },
+      "maxEnhancementPpePerActivation": {
+        "ppePerCharacterLevel": 8
+      },
+      "notes": "Total activation spend capped at 8 P.P.E. per level of experience."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 2
+      "minimumCharacterLevelToAcquire": 2,
+      "otherLimitations": "The object being reinforced cannot be moved in any way or this Talent's effects are immediately negated."
+    },
+    "ranges": [
+      {
+        "summary": "A 3 foot by 3 foot (1 x 1 m) area per level of experience, up to 3 feet (1 m) away.",
+        "kind": "distance",
+        "distanceValue": 3,
+        "distanceUnit": "foot",
+        "distancePerLevel": 0
+      }
+    ],
+    "areaOfEffect": {
+      "summary": "3 foot by 3 foot (1 x 1 m) section per level of experience."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "durationPerLevel": 1,
+      "extendableByLevel": true
     },
     "rangeMechanics": {
-      "summary": "Up to 3 feet away.",
+      "summary": "Up to 3 feet (1 m) away.",
       "rangeFixed": 3,
       "rangeUnit": "feet",
       "areaOfEffectPerLevel": 9,
       "areaOfEffectUnit": "square_feet"
-    },
-    "duration": {
-      "kind": "minute",
-      "durationPerLevel": 1,
-      "extendableByLevel": true
     },
     "structureReinforcements": [
       {
@@ -904,7 +1022,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the user to hold tight to objects or opponents with an unbreakable grip. Inflicts no damage.",
+    "description": "Despite the name, this Talent inflicts no damage. It allows the user to hold tight to objects or opponents with an unbreakable grip stronger than any vise. When subduing an opponent, breaking free requires total Supernatural Strength twice that of the talent user; even then, the target and rescuers must beat the Nightbane's P.S. x2. The Nightbane cannot be disarmed of handheld weapons, nor can an object be pulled or pried from his grip. Useful for clinging to moving vehicles, aircraft, flying monsters, or objects to avoid falling. Adds +20% to Climbing and +3 to entangle for the duration.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -915,13 +1033,22 @@
     "ppe": {
       "permanentBurnToAcquire": 4,
       "baseActivation": 6,
-      "baseActivationDuration": {
-        "kind": "melee_round",
-        "durationFixed": 1
-      }
+      "notes": "Six P.P.E. per melee round of use."
     },
     "limitations": {
-      "usableInNightbaneForm": "morphus_only"
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Even if used on a fragile object or a victim's throat, this grip delivers no damage — but the grip is strong."
+    },
+    "ranges": [
+      {
+        "summary": "Touch/grasp.",
+        "kind": "touch"
+      }
+    ],
+    "duration": {
+      "summary": "One melee round per activation (extendable by spending 6 P.P.E. each round).",
+      "kind": "melee_round",
+      "durationValue": 1
     },
     "rangeMechanics": {
       "summary": "Touch/grasp.",
@@ -930,7 +1057,7 @@
     },
     "physicalCombatStatModifiers": {
       "entangle": 3,
-      "notes": "Target requires Supernatural P.S. twice that of the user to break free. Cannot be disarmed."
+      "notes": "Target requires Supernatural P.S. twice that of the user to attempt break free; rescuers must beat the Nightbane's P.S. x2. Cannot be disarmed."
     },
     "grantedSkills": [
       {
@@ -1043,7 +1170,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Liquefies the user and up to two passengers and their belongings to travel through plumbing or sewer systems.",
+    "description": "Primarily an urban escape Talent. Liquefies the user and up to two passengers (plus personal clothing/gear) to travel through plumbing, pipes, or sewer systems. The Nightbane controls movement as liquid — including against water pressure, tide, waves, and gravity. If the duration ends before reaching a place that can accommodate returning to humanoid form, the traveler must automatically reactivate at the usual cost. Movement speed is a constant 1,000 feet (305 m) per minute unless the current is faster. In liquid form, travelers are immune to toxins/poisons and all physical attacks but cannot attack, even with psionics. Filtration systems have no detrimental effect, though the experience is disorienting and unpleasant.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1054,14 +1181,29 @@
     "ppe": {
       "permanentBurnToAcquire": 10,
       "baseActivation": 6,
-      "baseActivationDuration": {
-        "kind": "minute",
-        "durationFixed": 5
-      }
+      "notes": "Six P.P.E. per five minutes in liquefied form. Must reactivate at usual cost if duration ends before reaching a suitable exit."
     },
     "limitations": {
-      "usableInNightbaneForm": "morphus_only"
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Other than escaping down a drain, moving through plumbing, or extending/deactivating this Talent, a Nightbane in liquid form can take no other actions. Large, heavy objects (large suitcase, duffel bag, equipment) are left behind. Only the user and up to two others plus personal clothing/gear can be transformed."
     },
+    "ranges": [
+      {
+        "summary": "Self and up to two others by touch. Must be within 3 feet (0.9 m) of a drain or other open plumbing.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "Five minutes per activation (extendable at 6 P.P.E. per five minutes).",
+      "kind": "minute",
+      "durationValue": 5
+    },
+    "save": {
+      "summary": "Unwilling travelers save vs magic (12+). Success resists being transformed and transported in liquid form.",
+      "saveKind": "magic",
+      "targetNumber": 12
+    },
+    "notes": "Liquid appearance may vary (motor oil, sludge, sap, blood). All liquefied travelers are -4 on Perception Rolls.",
     "rangeMechanics": {
       "summary": "Self and up to two others by touch. Must be within 3 feet of a drain.",
       "rangeFixed": 3,
@@ -1128,7 +1270,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Triggered before reaching zero Hit Points, the user disintegrates into black dust particles whisked away to a safe point, where they reconstitute and fall into a coma until fully healed.",
+    "description": "Favored by ancient Nightbane who prize self-preservation. If activated before the character reaches zero Hit Points, instead of falling into a coma or perishing, the user disintegrates into millions of black dust particles whisked away on a magical breeze to a predetermined safe point (up to 2,000 feet/610 m away), then reconstitutes. The character falls into a coma in whatever form they were in when reduced to zero Hit Points until regenerating to full Hit Points and at least half S.D.C. If more than 20% of the dust is prevented from reaching the safe point, the Nightbane remains in dust form for 1 hour per M.E. attribute point, then reconstitutes wherever the dust is — minus an arm or leg and -10 Hit Points for every 10% missing (permanent losses).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1140,7 +1282,19 @@
       "permanentBurnToAcquire": 25,
       "baseActivation": 25
     },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 7,
+      "otherLimitations": "Before use, a return point or safe haven must be designated. While in dust form the Nightbane is unconscious and mindlessly homes in on that haven at 40 mph (64 kph). Immune to physical attacks in granular form, but any spell, psionic, or Talent that deals enough damage to reduce the dust form below zero Hit Points by more than the character's P.E. attribute kills him."
+    },
+    "ranges": [
+      {
+        "summary": "Self; dust travels up to 2,000 feet (610 m) to the designated safe point.",
+        "kind": "self"
+      }
+    ],
     "duration": {
+      "summary": "Transformation takes two melee attacks (~5–6 seconds). Remains dust in hiding until full Hit Points and half S.D.C. are regenerated.",
       "kind": "instant"
     },
     "recoveryStateUntilThreshold": {
@@ -1148,17 +1302,17 @@
         "hpPercent": 100,
         "sdcPercent": 50
       },
-      "notes": "Remains a pile of dust in hiding place until regeneration thresholds are met."
+      "notes": "Remains a pile of dust in the hiding place until regeneration thresholds are met."
     },
     "mobilityBlocks": [
       {
-        "summary": "Whisked away on a magical breeze up to 2,000 feet.",
+        "summary": "Dust cloud travels to safe haven at 40 mph (64 kph), up to 2,000 feet (610 m).",
         "movementType": "flight",
         "distanceFixed": 2000,
         "distanceUnit": "feet"
       }
     ],
-    "notes": "Takes two melee attacks to activate. Leaves character in a coma while recovering."
+    "notes": "Safe haven examples: car trunk/backseat, box truck, under stairs, abandoned building, dumpster, supply closet, parking-structure corner, rooftop, ditch."
   },
   {
     "id": "talent_earthworks",
@@ -1167,7 +1321,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Shapes natural ground or manmade materials to create defensive walls, trenches, or escape tunnels.",
+    "description": "Shapes the ground beneath the user at will — natural rock or dirt, or manmade asphalt or concrete — to create defensive walls, barriers, cover, trenches, or escape tunnels. Attacks that beat a barrier's Natural A.R. penetrate to the other side but strike as wild/blind shots. Offensive uses include rolling earth to knock enemies down (or force Piloting rolls at -20% for vehicles) and crash barriers placed in front of moving vehicles (initiative contest; Piloting -30% to dodge).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1177,7 +1331,16 @@
     ],
     "ppe": {
       "permanentBurnToAcquire": 6,
-      "baseActivation": 5
+      "baseActivation": 5,
+      "activationTiers": [
+        {
+          "summary": "Temporary barrier or earth shaping: 5 P.P.E."
+        },
+        {
+          "summary": "Permanent structure: 32 P.P.E."
+        }
+      ],
+      "notes": "One additional load can be affected per activation at levels 7, 11, and 15."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
@@ -1186,19 +1349,28 @@
         "plastic",
         "rubber",
         "metal"
-      ]
+      ],
+      "otherLimitations": "Total area per load is 360 cubic feet (10.2 m³) when shaping earth; doubled if tunneling only (6 ft × 6 ft × 20 ft tunnel). Control and shaping lasts one melee round (15 seconds)."
+    },
+    "ranges": [
+      {
+        "summary": "5 feet (1.5 m) + 5 feet (1.5 m) per level of experience.",
+        "kind": "distance",
+        "distanceValue": 5,
+        "distanceUnit": "foot",
+        "distancePerLevel": 5
+      }
+    ],
+    "duration": {
+      "summary": "Shaping control lasts one melee round. Walls, barriers, trenches, and tunnels remain 2D4+2 minutes unless made permanent; non-permanent earth returns to its original shape afterward.",
+      "kind": "melee_round",
+      "durationValue": 1
     },
     "rangeMechanics": {
-      "summary": "5 feet + 5 feet per level. Total volume 360 cubic feet (doubled if tunneling).",
+      "summary": "5 feet + 5 feet per level. Total volume 360 cubic feet (doubled if tunneling only).",
       "rangeBase": 5,
       "rangePerLevel": 5,
       "rangeUnit": "feet"
-    },
-    "duration": {
-      "kind": "minute",
-      "durationBase": 2,
-      "durationDice": "2D4",
-      "extendableByLevel": false
     },
     "environmentalConstructs": [
       {
@@ -1208,19 +1380,25 @@
         "dimensions": "10x10 foot section, 3 feet thick"
       },
       {
-        "materialKind": "clay",
+        "materialKind": "clay_sand_gravel",
         "structuralSdcFixed": 300,
         "naturalAr": 14,
         "dimensions": "10x10 foot section, 3 feet thick"
       },
       {
-        "materialKind": "concrete_asphalt",
+        "materialKind": "asphalt_cinder_block",
         "structuralSdcFixed": 400,
         "naturalAr": 16,
         "dimensions": "10x10 foot section, 3 feet thick"
+      },
+      {
+        "materialKind": "stone_concrete",
+        "structuralSdcFixed": 500,
+        "naturalAr": 18,
+        "dimensions": "10x10 foot section, 3 feet thick"
       }
     ],
-    "notes": "Can spend 32 P.P.E. to make the structure permanent."
+    "notes": "Barrier damage rules vary by material (see book). Penetrating stone/concrete hits on the other side at half damage, -6 to strike, no Called Shot without line of sight."
   },
   {
     "id": "talent_eavesdrop",
@@ -1229,7 +1407,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Hearing becomes equivalent to a parabolic listening device, focusing on a target and blocking out background noise. Can hear through thin walls.",
+    "description": "Hearing becomes equivalent to a parabolic listening device. The Nightbane can focus on one person or a small group and listen from hundreds of feet away while blocking out all but the loudest background noise. Conversations behind a thin wall or window can be heard as if standing in the room. Does not provide language translation.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1240,21 +1418,33 @@
     "ppe": {
       "permanentBurnToAcquire": 4,
       "baseActivation": 2,
-      "baseActivationDuration": {
-        "kind": "minute",
-        "durationFixed": 1
-      }
+      "notes": "Two P.P.E. per minute of use (one minute per 2 P.P.E. expended)."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form"
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "At least one target or a specific location (street corner, rooftop, window, etc.) must be visible. Phone conversations may be one-sided unless device audio could be overheard while adjacent to the target."
+    },
+    "ranges": [
+      {
+        "summary": "200 feet (61 m) + 50 feet (15.2 m) per level of experience; line of sight to target or location required.",
+        "kind": "distance",
+        "distanceValue": 200,
+        "distanceUnit": "foot",
+        "distancePerLevel": 50,
+        "lineOfSightRequired": true
+      }
+    ],
+    "duration": {
+      "summary": "One minute per 2 P.P.E. expended.",
+      "kind": "minute",
+      "durationValue": 1
     },
     "rangeMechanics": {
-      "summary": "200 feet + 50 feet per level.",
+      "summary": "200 feet + 50 feet per level; target or location must be visible.",
       "rangeBase": 200,
       "rangePerLevel": 50,
       "rangeUnit": "feet"
-    },
-    "notes": "Does not provide translation. Target must be visible."
+    }
   },
   {
     "id": "talent_encryption",
@@ -1263,7 +1453,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Automatically encrypts any form of communication. Writing appears as symbols, speech sounds like nonsense, and surface thoughts are scrambled against telepathy.",
+    "description": "Automatically encrypts any form of communication the Nightbane uses so only intended recipients hear and understand clearly. Written notes appear as symbols; shouted warnings sound like nonsense syllables or a roar to everyone else; surface thoughts are scrambled against Telepathy. Defeated only by magical translation (Tongues or Eyes of Thoth skill) or recording the message and attempting Cryptography at -40%.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1274,20 +1464,27 @@
     "ppe": {
       "permanentBurnToAcquire": 3,
       "baseActivation": 1,
-      "baseActivationDuration": {
-        "kind": "minute",
-        "durationFixed": 1
-      }
+      "notes": "One P.P.E. per minute of use."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form"
+      "usableInNightbaneForm": "morphus_only"
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "One minute per P.P.E. expended.",
+      "kind": "minute",
+      "durationValue": 1
     },
     "rangeMechanics": {
       "summary": "Self.",
       "rangeFixed": 0,
       "rangeUnit": "feet"
-    },
-    "notes": "Defeated only by magical translation (Tongues, Eyes of Thoth) or Cryptography at -40%."
+    }
   },
   {
     "id": "talent_fear_no_evil",
@@ -1296,7 +1493,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Renders the user immune to the effects of Horror Factor and temporary fear caused by Phobias.",
+    "description": "Temporarily negates fear before entering conflict with supernatural foes — Nightlords, Night Princes, demonic minions, monstrous enemies, or fellow Nightbane. For the duration, the user is immune to Horror Factor and temporarily negates fear caused by Phobias. Useful for newly inducted Nightbane who have not yet hardened to the war in the shadows.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1307,27 +1504,36 @@
     "ppe": {
       "permanentBurnToAcquire": 7,
       "baseActivation": 8,
-      "baseActivationDuration": {
-        "kind": "minute",
-        "durationFixed": 2
-      },
       "enhancement": {
-        "summary": "4 P.P.E. per additional minute",
+        "summary": "Four P.P.E. per additional minute beyond the base two minutes.",
         "costPerStep": 4,
         "stepDefinition": "+1 minute duration",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Base activation grants two minutes (8 melee rounds) of effect."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 2
+      "minimumCharacterLevelToAcquire": 2,
+      "otherLimitations": "If still engaged when Fear No Evil lapses and Horror Factor was not rolled or was failed, the character must immediately save vs Horror Factor. While active, -2 on all Perception Rolls."
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "Two minutes (8 melee rounds); extendable at 4 P.P.E. per additional minute.",
+      "kind": "minute",
+      "durationValue": 2
     },
     "rangeMechanics": {
       "summary": "Self.",
       "rangeFixed": 0,
       "rangeUnit": "feet"
     },
-    "physicalCombatStatModifiers": {
+    "modifiers": {
       "perception": -2
     }
   },
@@ -1372,7 +1578,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Grants preternatural combat speed, raining down blows upon opponents.",
+    "description": "Named for the volume of blows it enables. Upon activation, grants preternatural combat speed: +2 attacks per melee round, +2 initiative, +2 to strike, parry, and disarm, +3 to dodge. When directly fighting a Nightlord, Night Prince, Night Princess, Greater Demon, or dark god, gains an additional +1 melee attack and +1 to each of those bonuses.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1383,19 +1589,27 @@
     "ppe": {
       "permanentBurnToAcquire": 17,
       "baseActivation": 10,
-      "baseActivationDuration": {
-        "kind": "melee_round",
-        "durationFixed": 1
-      }
+      "notes": "Ten P.P.E. per melee round Flurry remains in place."
     },
+    "incompatibleTalentIds": [
+      "talent_fire_breather",
+      "talent_dervish-dance"
+    ],
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 4,
-      "incompatibleWith": [
-        "Firebreather",
-        "Dervish Dance",
-        "Other talents that provide bonus attacks"
-      ]
+      "otherLimitations": "Cannot be used in combination with other Talents that provide bonus attacks (e.g. Fire Breather, Dervish Dance)."
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "One melee round per 10 P.P.E. spent.",
+      "kind": "melee_round",
+      "durationValue": 1
     },
     "rangeMechanics": {
       "summary": "Self.",
@@ -1413,10 +1627,13 @@
     "opponentConditionalModifiers": [
       {
         "opponentKinds": [
-          "nightlords",
-          "nightlands_denizens"
+          "nightlord",
+          "night_prince",
+          "night_princess",
+          "greater_demon",
+          "dark_god"
         ],
-        "summary": "Additional +1 to combat stats against Nightlords, Night Princes, Greater Demons, or dark gods.",
+        "summary": "Additional +1 melee attack and +1 to initiative, strike, parry, dodge, and disarm when directly fighting a Nightlord, Night Prince, Night Princess, Greater Demon, or dark god.",
         "physicalCombatStatModifiers": {
           "meleeAttacks": 1,
           "initiative": 1,
@@ -1435,7 +1652,7 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Traps a shape-changing being in its current physical form. Prevents transformation via natural, magical, or other means.",
+    "description": "Neutralizes shape-changing abilities. When a shape-changing being is targeted and fails a save vs magic, it cannot alter its physical form or have it altered by any other means for two minutes (or longer with additional P.P.E.). Applies regardless of whether the ability is natural, magical, or otherwise — vampires cannot mist-shift, Nightlords cannot alter size or appearance (though altering other matter is unaffected), and Nightbane are trapped in their current Facade or Morphus form. Nightbane known to possess Form-Lock may face suspicion from their brethren.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1446,23 +1663,39 @@
     "ppe": {
       "permanentBurnToAcquire": 20,
       "baseActivation": 20,
-      "baseActivationDuration": {
-        "kind": "minute",
-        "durationFixed": 2
-      },
       "enhancement": {
-        "summary": "20 P.P.E. per additional minute.",
+        "summary": "Twenty P.P.E. per additional minute beyond the initial two minutes.",
         "costPerStep": 20,
         "stepDefinition": "+1 minute duration",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Twenty P.P.E. to Form-Lock one target for two minutes — P.P.E. is spent whether or not the save succeeds."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 7
     },
+    "ranges": [
+      {
+        "summary": "Line of sight up to 500 feet (152 m) away.",
+        "kind": "distance",
+        "distanceValue": 500,
+        "distanceUnit": "foot",
+        "lineOfSightRequired": true
+      }
+    ],
+    "duration": {
+      "summary": "Two minutes base; extendable at 20 P.P.E. per additional minute.",
+      "kind": "minute",
+      "durationValue": 2
+    },
+    "save": {
+      "summary": "Save vs magic (15+). Failure: cannot alter physical form or have it altered by any means for the duration.",
+      "saveKind": "magic",
+      "targetNumber": 15
+    },
     "rangeMechanics": {
-      "summary": "Line of sight up to 500 feet.",
+      "summary": "Line of sight up to 500 feet (152 m).",
       "rangeFixed": 500,
       "rangeUnit": "feet"
     },
@@ -1478,38 +1711,43 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Increases the terrifying nature of the character, imposing a Horror Factor or increasing an existing Awe/Horror Factor. The exact visual changes are magical illusions.",
+    "description": "For Nightbane who are not naturally terrifying — or who want to be more so. Even those with Awe Factor (such as many Barbies and Kens) see it become Horror Factor for the duration. Manifestation is individual (glowing eyes, black aura, bleeding eyes, deepened shadows, seeming to grow in stature, corpse-like appearance, etc.) but changes are magical illusions created by the Talent. The user cannot select who is affected; allies who know the Nightbane and this Talent are immune unless they must fight or restrain the character.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 71,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 8,
+      "baseActivation": 2,
+      "enhancement": {
+        "summary": "Two P.P.E. per +1 bonus to Horror Factor desired, up to a maximum Horror Factor of 15.",
+        "costPerStep": 2,
+        "stepDefinition": "+1 Horror Factor (max 15 total)",
+        "differsFromBaseActivation": false
+      }
+    },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 2,
-      "cannotAffect": [
-        "allies who know the character and this Talent (unless fighting/restraining)"
-      ]
+      "otherLimitations": "Cannot select who is and isn't affected. Allies who know the Nightbane and this Talent are immune to the Horror Factor unless fighting or restraining the character. Maximum Horror Factor while using this Talent is 15."
     },
-    "ppe": {
-      "permanentBurnToAcquire": 8,
-      "baseActivation": 0,
-      "enhancement": {
-        "summary": "2 P.P.E. per +1 bonus to Horror Factor desired, up to a maximum Horror Factor of 15.",
-        "costPerStep": 2,
-        "stepDefinition": "+1 Horror Factor (max 15)"
+    "ranges": [
+      {
+        "summary": "Self; added fear affects others who see the character up to 90 feet (27.4 m) + 10 feet (3 m) per level.",
+        "kind": "self"
       }
+    ],
+    "areaOfEffect": {
+      "summary": "90 feet (27.4 m) + 10 feet (3 m) per level — those who see the character."
     },
     "duration": {
-      "durationQuantity": 1,
-      "durationUnit": "melee_round"
-    },
-    "range": {
-      "distance": "Self; affects others seeing the character up to 90 feet + 10 feet per level of experience."
-    },
-    "notes": "Maximum Horror Factor possible is 15."
+      "summary": "One melee round (15 seconds).",
+      "kind": "melee_round",
+      "durationValue": 1
+    }
   },
   {
     "id": "talent_ghost_tag",
@@ -1518,14 +1756,42 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Leaves spectral messages by means of words or images that only Nightbane, Guardians, Astral Travelers, and beings who can See the Invisible can read.",
+    "description": "Leaves spectral messages (words or images) on surfaces — walls, sidewalks, vehicles, clothing, even people (who must remain still). Visible to Nightbane, Guardians, Astral Travelers, and those who can See the Invisible. Sensitive psychics may read tags with Perception 12+ when looking for them (16+ if unaware). Nightlords, avatars, and Night Princes can also see tags; Hounds and Hunters cannot. Other minions need See the Invisible or a Sensitive psychic actively searching.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 71,
         "reference": "Dark Designs"
       }
-    ]
+    ],
+    "ppe": {
+      "permanentBurnToAcquire": 3,
+      "baseActivation": 2,
+      "enhancement": {
+        "summary": "Two P.P.E. per additional minute to write another 30 words beyond the first 30.",
+        "costPerStep": 2,
+        "stepDefinition": "+30 words (requires one additional minute)",
+        "differsFromBaseActivation": true
+      },
+      "notes": "Two P.P.E. covers up to 30 words or a recognizable image (~30 words per minute at 4–6 inch lettering)."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "G.M. discretion on message size; ~30 words per minute at 4–6 inch (10–15 cm) lettering is a good guideline. Removed by creator at no P.P.E. cost, or overwritten by another Ghost Tag user."
+    },
+    "ranges": [
+      {
+        "summary": "Cast upon a surface up to 6 feet (1.8 m) away by writing in the air with a finger.",
+        "kind": "distance",
+        "distanceValue": 6,
+        "distanceUnit": "foot"
+      }
+    ],
+    "duration": {
+      "summary": "Up to one week per level of experience unless removed or overwritten.",
+      "kind": "special",
+      "durationValue": "1 week per level"
+    }
   },
   {
     "id": "talent_gunslinger",
@@ -1534,14 +1800,42 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Enhances firearms abilities and grants preternatural shooting accuracy.",
+    "description": "Turns the user into a savant with modern firearms — revolvers, pistols, rifles, assault weapons, rocket launchers, and any projectile-firing gun. The held weapon becomes an extension of the Morphus form, usable with expert precision regardless of prior training. While active: +1 attack per melee with firearms, +3 initiative when drawing/firing, +2 strike and disarm on Aimed/Called Shots (even on the move), +1 strike with bursts, +2 strike and parry using the gun as a melee weapon, no penalty for shooting while running, from vehicles, or unconventional positions. Can \"see\" through the weapon's sights/barrel for blindfolded or behind-the-back shots. Morphus/body-integrated firearms gain an additional +1 to strike on ranged attacks. Stacks with W.P. skill bonuses.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 72,
         "reference": "Dark Designs"
       }
-    ]
+    ],
+    "ppe": {
+      "permanentBurnToAcquire": 11,
+      "baseActivation": 10,
+      "notes": "Ten P.P.E. per melee round Gunslinger remains in place."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Only one type of firearm receives Gunslinger bonuses at a time (multiple weapons of that type do not multiply bonuses). Other weapons may be used simultaneously but do not gain these bonuses."
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "One full melee round (15 seconds) per 10 P.P.E. spent.",
+      "kind": "melee_round",
+      "durationValue": 1
+    },
+    "physicalCombatStatModifiers": {
+      "meleeAttacks": 1,
+      "initiative": 3,
+      "strike": 2,
+      "parry": 2,
+      "disarm": 2,
+      "notes": "+1 strike with bursts; +1 strike on ranged attacks when the firearm is part of the Morphus."
+    }
   },
   {
     "id": "talent_heal_facade",
@@ -1584,12 +1878,39 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the Nightbane to start electronic vehicles without a key or bypass electronic systems.",
+    "description": "Similar to the elite Deus ex Machina Talent. While seated behind the wheel, temporarily takes control of any motorized vehicle: unlock doors/trunk, start/stop without keys, deactivate alarms, operate minor automated systems (door locks, wipers), and pilot even without prior training at 66% + 2% per level. Stunt driving at half normal penalties; +15% to existing piloting skill for the vehicle type while active. Popular with Warlords for car theft; useful to Resistance and Nocturnes for hijacking aircraft, boats, and military vehicles.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 72,
         "reference": "Dark Designs"
+      }
+    ],
+    "ppe": {
+      "permanentBurnToAcquire": 14,
+      "baseActivation": 15,
+      "notes": "Fifteen minutes of control per level of experience per activation."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Motorized vehicles under their own power only; controls must be physically operated (minor electronics manipulated by will). While piloting, the user can only speak — contact broken or forced into combat ends control (one melee action to re-link if Talent still active). Another Hotwire user can usurp control (D20 + M.E. bonus, high roll wins, defender wins ties); Deus ex Machina always wins. Single-pilot vehicles only — larger crewed vehicles limit control to the pilot/helmsman station."
+    },
+    "ranges": [
+      {
+        "summary": "Touch (must be behind the wheel).",
+        "kind": "touch"
+      }
+    ],
+    "duration": {
+      "summary": "Fifteen minutes per level of experience.",
+      "kind": "minute",
+      "durationPerLevel": 15
+    },
+    "grantedSkills": [
+      {
+        "skillName": "Piloting (any motorized vehicle via Hotwire)",
+        "bonus": 66,
+        "notes": "Base 66% + 2% per level when the character lacks the skill; +15% if already trained in that vehicle type."
       }
     ]
   },
@@ -1600,14 +1921,53 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Magical control or restriction of Hound tracking abilities.",
+    "description": "Temporarily takes control of Hounds, Hunters, and Great Hounds (not Hound Masters), commanding them like trained guard dogs — even against other minions. Starts with one target; an additional Hound may be controlled at levels 6, 9, 12, and 15. If not all targets succumb, the Talent may be used again on remaining targets up to the maximum without releasing those already leashed. Leashed creatures can attack their own kind but cannot be ordered to destroy themselves or attack a Hound Master — doing so instantly breaks the Leash and may turn them on the controller.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 73,
         "reference": "Dark Designs"
       }
-    ]
+    ],
+    "ppe": {
+      "permanentBurnToAcquire": 13,
+      "baseActivation": 10,
+      "enhancement": {
+        "summary": "Five P.P.E. per each leashed Hound or Hunter to extend duration one additional minute (no new save).",
+        "costPerStep": 5,
+        "stepDefinition": "+1 minute per leashed target",
+        "differsFromBaseActivation": true
+      },
+      "notes": "Ten P.P.E. per Hound or Hunter leashed (or attempted — spent whether or not the save succeeds)."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 4,
+      "cannotAffect": [
+        "Hound Masters"
+      ],
+      "otherLimitations": "Must have previously encountered a Hound, Hunter, or similar before selecting this Talent. Each controlled Hound reduces the user's attacks per melee by one. Unconsciousness or moving beyond range breaks the Leash."
+    },
+    "ranges": [
+      {
+        "summary": "10 feet (3 m) + 2 feet (0.6 m) per level of experience.",
+        "kind": "distance",
+        "distanceValue": 10,
+        "distanceUnit": "foot",
+        "distancePerLevel": 2
+      }
+    ],
+    "duration": {
+      "summary": "One minute; extendable at 5 P.P.E. per leashed target per additional minute.",
+      "kind": "minute",
+      "durationValue": 1
+    },
+    "save": {
+      "summary": "Target Hound or Hunter saves vs magic (15+). Failure: temporarily enslaved to verbal commands.",
+      "saveKind": "magic",
+      "targetNumber": 15
+    },
+    "notes": "Hound Masters are impervious and become angry when control over their minions is stolen."
   },
   {
     "id": "talent_hyper_awareness",
@@ -1616,14 +1976,38 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Heightens combat senses and reaction times, providing initiative and defensive bonuses.",
+    "description": "Greatly increases awareness and observational capacity. Upon activation, the character's eyes glow faintly and ears enlarge slightly. Provides +3 to all Perception Rolls, +1 to dodge, and +10% to awareness skills such as Detect Ambush, Detect Concealment, Seduction, Surveillance Systems/Tailing, Tracking, and similar.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 73,
         "reference": "Dark Designs"
       }
-    ]
+    ],
+    "ppe": {
+      "permanentBurnToAcquire": 7,
+      "baseActivation": 5,
+      "notes": "Five P.P.E. to activate; five P.P.E. for each additional minute, as desired."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 2
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "One minute per 5 P.P.E. spent.",
+      "kind": "minute",
+      "durationValue": 1
+    },
+    "modifiers": {
+      "perception": 3
+    },
+    "notes": "+1 to dodge. +10% to awareness-based skills."
   },
   {
     "id": "talent_ignorance_is_bliss",
@@ -1632,14 +2016,45 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Erases the memory of recent events from the minds of targets, acting proactively or retroactively.",
+    "description": "Tricks mortal witnesses into seeing and remembering what they want to believe rather than supernatural truth — useful when loved ones or bystanders witness transformations or monster battles. Only affects those who do not believe or do not want to believe in the paranormal; supernatural beings, psychics, magic users, and experienced believers are unaffected. Skeptics who want the truth may save vs magic (15+); disbelievers auto-succumb with permanent false memories. Can cover recent events retroactively or run preemptively when trouble is expected.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 73,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 10,
+      "baseActivation": 10
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 3,
+      "otherLimitations": "Only disguises the supernatural from those who do not want to believe it exists. Effects are permanent false memories for those who succumb."
+    },
+    "ranges": [
+      {
+        "summary": "50 foot (15.2 m) radius per level of experience; cast up to 60 feet (18.3 m) away per level.",
+        "kind": "distance",
+        "distanceValue": 50,
+        "distanceUnit": "foot",
+        "distancePerLevel": 50
+      }
+    ],
+    "areaOfEffect": {
+      "summary": "50 foot (15.2 m) radius per level; center may be up to 60 feet (18.3 m) away per level."
+    },
+    "duration": {
+      "summary": "Retroactive: covers events up to 2 minutes per level before activation (witnesses still in area). Preemptive: stays active 2 minutes per level; entrants in range are affected.",
+      "kind": "minute",
+      "durationPerLevel": 2
+    },
+    "save": {
+      "summary": "Save vs magic (15+) to see through the enchantment if the witness suspects something is wrong and wants the truth. Those who do not want to believe auto-succumb without rolling.",
+      "saveKind": "magic",
+      "targetNumber": 15
+    },
     "retroactiveWindow": {
       "value": 2,
       "unit": "minute",
@@ -1716,34 +2131,36 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Ignites the character's hand in flames, allowing for devastating melee strikes that do not harm the character or held weapons.",
+    "description": "One appendage becomes wreathed in flame, adding 2D6 damage to punches. Allows parrying magic weapons and energy weapons with the fiery hand (+1 to parry conventional melee weapons with the bare fiery hand; -3 to parry an incoming energy blast). Upon a successful strike or parry, Inferno Fist is used up and must be reactivated. Will not work with a held weapon, though objects in the flaming hand are not damaged.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 74,
         "reference": "Dark Designs"
       }
     ],
-    "limitations": {
-      "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "Will not work in conjunction with a weapon. Only 2 P.P.E. may be spent on the activation of this Talent per level of the Nightbane's experience."
-    },
     "ppe": {
       "permanentBurnToAcquire": 5,
-      "baseActivation": 5
+      "baseActivation": 5,
+      "notes": "Five P.P.E. per activation for one melee round (15 seconds)."
     },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Will not work in conjunction with a weapon of any sort. Inferno Fist discharges after one successful strike or parry."
+    },
+    "ranges": [
+      {
+        "summary": "Self — melee combat / arm's length.",
+        "kind": "self"
+      }
+    ],
     "duration": {
-      "durationQuantity": 1,
-      "durationUnit": "melee_round",
-      "dischargesOn": [
-        "successful_strike",
-        "successful_parry"
-      ]
+      "summary": "One melee round (15 seconds); extinguishes if unused or if the Nightbane is knocked unconscious.",
+      "kind": "melee_round",
+      "durationValue": 1
     },
-    "range": {
-      "distance": "Self / Melee combat (arm's length)"
-    },
-    "notes": "If not used by the end of the melee round or if the Nightbane is knocked unconscious, the fire extinguishes."
+    "offensiveDamage": "2D6",
+    "notes": "If not used by end of the melee round or if knocked unconscious, the fire extinguishes."
   },
   {
     "id": "talent_iron_will",
@@ -1752,25 +2169,32 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Strengthens the mind's natural defenses against psychic and magical manipulation.",
+    "description": "Strengthens the mind's natural defenses for Nightbane without psychic abilities. +3 to save vs mind control, psionic attacks, illusions, and pain; +4 to save vs possession. Negates skill performance penalties for being under duress or under fire. The user knows when psionic powers are being used against him and that something is trying to breach his mental defenses.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 75,
         "reference": "Dark Designs"
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 6,
-      "baseActivation": 6
+      "baseActivation": 6,
+      "notes": "One melee round (15 seconds) per level of experience per activation."
     },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only"
+    },
+    "ranges": [
+      {
+        "summary": "Self.",
+        "kind": "self"
+      }
+    ],
     "duration": {
-      "durationQuantity": 1,
-      "durationUnit": "melee_round",
-      "scalesPerLevel": true
-    },
-    "range": {
-      "distance": "Self"
+      "summary": "One melee round (15 seconds) per level of experience.",
+      "kind": "melee_round",
+      "durationPerLevel": 1
     },
     "temporaryAbilitiesGranted": {
       "bonuses": [
@@ -1796,7 +2220,7 @@
         }
       ]
     },
-    "notes": "Negates skill performance penalties for being under duress or under fire. The Nightbane will know when psionic powers are being used against him and that something is trying to breach his mental defenses."
+    "notes": "Negates skill performance penalties for being under duress or under fire."
   },
   {
     "id": "talent_jam_senses",
@@ -1805,17 +2229,41 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Fouls the supernatural tracking senses of Hounds and their ilk, robbing them of their ability to track the supernatural and their immunity to illusions.",
+    "description": "Counters Hounds and similar Nightlands hunters by fouling their supernatural senses. Any targeted Hound that fails a save vs magic is temporarily robbed of its ability to sense and track the supernatural and its immunity to illusions and concealment powers. Affected creatures are also slightly disoriented (-1 initiative, strike, parry, and dodge). They can still hunt by sight, scent, and skill.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 75,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 5,
+      "baseActivation": 3,
+      "notes": "Three P.P.E. per enemy targeted. P.P.E. is spent whether the creature fails to save or succeeds."
+    },
     "limitations": {
-      "minimumCharacterLevelToAcquire": 1,
-      "otherLimitations": "Must have previously encountered a Hound or Hunter before selecting. Affects a single target per level of experience."
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Must have previously encountered a Hound, Hunter, or similar before selecting this Talent. One target may be affected per level of experience; activation cost is paid for each target. Only affects supernatural senses — not sight, scent, or conventional tracking skill."
+    },
+    "ranges": [
+      {
+        "summary": "20 feet (6.1 m) per level of experience.",
+        "kind": "distance",
+        "distanceValue": 20,
+        "distanceUnit": "foot",
+        "distancePerLevel": 20
+      }
+    ],
+    "duration": {
+      "summary": "One minute per level of the Nightbane's experience.",
+      "kind": "minute",
+      "durationPerLevel": 1
+    },
+    "save": {
+      "summary": "Save vs magic (16+). Failure: loses supernatural tracking, illusion/concealment immunity, and suffers -1 initiative, strike, parry, and dodge.",
+      "saveKind": "magic",
+      "targetNumber": 16
     },
     "combatMechanics": {
       "savingThrow": {
@@ -1832,19 +2280,41 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "A dark ability that fuels the Nightbane with the stolen energy of slain victims, succumbing to violent impulses.",
+    "description": "While active, half the remaining P.P.E. of any being the user kills is stolen and temporarily added to their own pool for the duration. Stolen P.P.E. is immediately available to fuel Talents and spells. Absorbing kill-P.P.E. can trigger a murderous frenzy: for every 50 P.P.E. absorbed within one hour, cumulative 10% chance of a mental endurance save (15+) or the Nightbane loses control. Frenzy rules vary by alignment; good/selfish characters rarely harm non-combatants, evil characters may slaughter indiscriminately.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 75,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 22,
+      "baseActivation": 10,
+      "notes": "Ten P.P.E. per melee round (15 seconds). Normally lasts one melee round; during frenzy, P.P.E. keeps burning to sustain Killing Spree until stolen P.P.E. is exhausted, 20 minutes pass without victims, the user is subdued for 20 minutes, or the user is slain."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 6,
+      "otherLimitations": "User must deliver the killing blow to absorb P.P.E. — not merely participate in the death. During frenzy: cannot share P.P.E., resists siphoning (+1 save), cannot draw from ley lines/nexuses, cannot cast spells, no ranged strike bonuses, offensive Talents only."
+    },
+    "ranges": [
+      {
+        "summary": "Self for the ability; touch (killing blow) to absorb victim P.P.E.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "Normally one melee round per activation; extends automatically during frenzy until end conditions are met.",
+      "kind": "melee_round",
+      "durationValue": 1
+    },
     "vampiricResourceRecovery": {
       "triggerKind": "on_kill",
       "recoveryFractionOrPercent": 0.5,
       "resourceType": "ppe"
-    }
+    },
+    "notes": "Frenzy bonuses/penalties: +2 initiative, +2 strike, +1 entangle, +2 save vs Horror Factor; -4 Perception, -3 parry/dodge/disarm/roll, -35% skills (except hunting/killing skills), immune to pain, will not pull punches."
   },
   {
     "id": "talent_launch",
@@ -1853,66 +2323,76 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the user to telekinetically hurl a single visible object at a visible target.",
+    "description": "Hurls a single visible inanimate object at a visible target in a telekinesis-like fashion (+2 to strike; no other strike bonuses). Weapon projectiles inflict normal damage +1D6. Objects over 30 lbs have a 33% chance to knock down human-sized opponents (lose initiative and one attack). Requires a gesture — arm wave or nod/glance toward the target.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 76,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 8,
+      "baseActivation": 4,
+      "notes": "Four P.P.E. per melee round. Each Launch counts as one of the user's melee attacks."
+    },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "cannotAffect": [
         "living beings"
       ],
-      "otherLimitations": "Only ONE object can be hurled at a time. Fine manipulation or holding an object suspended is not possible. Requires a gesture."
+      "otherLimitations": "Only one object hurled at a time. Object and target must be visible. No fine manipulation, suspended hold, or parrying with launched objects. Objects under 20 lbs (9 kg) may be parried at -2; larger must be dodged at -1."
     },
-    "ppe": {
-      "permanentBurnToAcquire": 8,
-      "baseActivation": 4
-    },
+    "ranges": [
+      {
+        "summary": "50 feet (15.2 m) + 20 feet (6.1 m) per level of experience.",
+        "kind": "distance",
+        "distanceValue": 50,
+        "distanceUnit": "foot",
+        "distancePerLevel": 20
+      }
+    ],
     "duration": {
-      "durationQuantity": 1,
-      "durationUnit": "melee_round"
+      "summary": "One melee round per activation; each Launch uses one melee attack.",
+      "kind": "melee_round",
+      "durationValue": 1
     },
-    "range": {
-      "distance": "50 feet + 20 feet per level of experience."
+    "physicalCombatStatModifiers": {
+      "strike": 2
     },
     "combatMechanics": {
       "damage": [
         {
-          "summary": "1D4 S.D.C. (up to 2 lbs)"
+          "summary": "1D4 S.D.C. (up to 2 lbs / 0.9 kg)"
         },
         {
-          "summary": "1D6 S.D.C. (up to 5 lbs)"
+          "summary": "1D6 S.D.C. (up to 5 lbs / 2.25 kg)"
         },
         {
-          "summary": "2D4 S.D.C. (up to 10 lbs)"
+          "summary": "2D4 S.D.C. (up to 10 lbs / 4.5 kg)"
         },
         {
-          "summary": "3D4 S.D.C. (up to 20 lbs)"
+          "summary": "3D4 S.D.C. (up to 20 lbs / 9 kg)"
         },
         {
-          "summary": "3D6 S.D.C. (up to 30 lbs)"
+          "summary": "3D6 S.D.C. (up to 30 lbs / 13.5 kg)"
         },
         {
-          "summary": "4D6 S.D.C. (up to 40 lbs)"
+          "summary": "4D6 S.D.C. (up to 40 lbs / 18 kg)"
         },
         {
-          "summary": "5D6 S.D.C. (up to 50 lbs)"
+          "summary": "5D6 S.D.C. (up to 50 lbs / 22.5 kg)"
         },
         {
-          "summary": "6D6 S.D.C. (up to 60 lbs - max limit)"
+          "summary": "6D6 S.D.C. (up to 60 lbs / 27 kg — maximum)"
         }
       ],
       "statusEffects": [
         {
-          "summary": "33% chance of knocking down a human-sized opponent if weight is greater than 30 lbs. Target loses initiative and 1 attack."
+          "summary": "33% chance of knocking down a human-sized opponent if weight exceeds 30 lbs. Target loses initiative and one attack."
         }
       ]
-    },
-    "notes": "Weapons flung point or blade first inflict normal damage +1D6. Objects under 20 lbs can be parried (-2 penalty); larger must be dodged (-1 penalty). Each Launch counts as one of the Talent user's melee attacks."
+    }
   },
   {
     "id": "talent_leap",
@@ -1921,14 +2401,36 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Grants enhanced jumping capabilities and the intuitive ability to judge distance precisely.",
+    "description": "Propels the user beyond normal jumping ability. Each P.P.E. spent adds 5 feet (1.5 m) to vertical jump height or 10 feet (3 m) to horizontal distance. Combined with a flying tackle or leap kick, adds 1D6 S.D.C. damage. May be used to dodge by leaping aside (usual dodge bonuses apply). Grants Judge Distance 60% + 3% per level for difficult jumps (moving targets or distances over 50 feet).",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "pageNumber": 1,
+        "pageNumber": 76,
         "reference": "Dark Designs"
       }
     ],
+    "ppe": {
+      "permanentBurnToAcquire": 6,
+      "baseActivation": 2,
+      "maxEnhancementPpePerActivation": {
+        "ppePerCharacterLevel": 4
+      },
+      "notes": "Two P.P.E. per Talent-assisted leap. Each 1 P.P.E. adds 5 ft vertical or 10 ft horizontal beyond normal jump limits. Maximum 4 P.P.E. per level of experience per activation."
+    },
+    "limitations": {
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "When attacking via Leap: -1 to strike per 20 feet (6.1 m) covered and costs an additional attack. Distance and P.P.E. cost are chosen at activation and cannot be altered mid-leap."
+    },
+    "ranges": [
+      {
+        "summary": "+5 feet (1.5 m) vertical or +10 feet (3 m) horizontal per P.P.E. spent (plus normal jump), up to 4 P.P.E. per level.",
+        "kind": "self"
+      }
+    ],
+    "duration": {
+      "summary": "Instant.",
+      "kind": "instant"
+    },
     "temporaryAbilitiesGranted": {
       "skills": [
         {
@@ -1939,7 +2441,7 @@
       ]
     },
     "jumpDistanceScaling": {
-      "summary": "Allows for drastically increased leaping distance."
+      "summary": "1 P.P.E. = +5 ft (1.5 m) vertical or +10 ft (3 m) horizontal beyond the character's normal jump."
     }
   },
   {
@@ -1949,49 +2451,56 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Erases the physical presence and tracks of the Nightbane and their companions, making tracking via scent or footprints impossible.",
+    "description": "Supernatural counter to modern forensic detection. Basic mode prevents trace evidence (hairs, fingerprints, blood droplets) and eliminates tracks or footprints. Boosted mode greatly obscures the user to electronic cameras, sensors, and listening devices — blurry security footage, garbled wire taps, and laser trip wires/motion detectors/microwave fences triggering only 01–30% of the time.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 77
       }
     ],
     "ppe": {
-      "permanentBurnToAcquire": 6,
-      "baseActivation": 4,
-      "enhancement": {
-        "summary": "Can affect an area larger than the base 10 foot radius.",
-        "costPerStep": 2,
-        "stepDefinition": "+10 feet (3 m) to the radius of effect",
-        "differsFromBaseActivation": true
-      }
+      "permanentBurnToAcquire": 9,
+      "baseActivation": 6,
+      "activationTiers": [
+        {
+          "summary": "Basic: no trace evidence, no tracks or footprints — 6 P.P.E."
+        },
+        {
+          "summary": "Boosted: basic effects plus electronic/camera/sensor obscurement — 10 P.P.E."
+        }
+      ],
+      "notes": "Double duration in the Nightlands."
     },
     "limitations": {
-      "usableInNightbaneForm": "both_forms_note_special",
-      "otherLimitations": "Can be used in Facade form to cover the Nightbane's own tracks, but to bestow the benefit on others, the Morphus form must be used. It does not erase physical damage (broken twigs, smashed doors, etc.), but obscures tracks and scent trails.",
-      "cannotAffect": [
-        "Physical damage or deliberate destruction"
-      ]
+      "usableInNightbaneForm": "varies_by_scope",
+      "minimumCharacterLevelToAcquire": 2,
+      "formUsage": {
+        "byTarget": {
+          "self": {
+            "form": "either_form",
+            "effectiveness": "full",
+            "notes": "Basic or boosted on self in Facade or Morphus."
+          },
+          "others": {
+            "form": "morphus_only",
+            "effectiveness": "base_only",
+            "notes": "Basic benefits only; boosted Leave No Trace cannot be used on another individual."
+          }
+        }
+      }
     },
     "ranges": [
       {
-        "summary": "Self, plus 10 foot (3 m) radius",
-        "kind": "radius",
-        "distanceValue": 10,
-        "distanceUnit": "feet",
-        "modifiableByLevel": false
+        "summary": "Self or other by touch.",
+        "kind": "touch"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "10 minutes per level of experience",
-      "kind": "minute"
-    },
-    "notes": "Electronic surveillance is also affected: cameras show blurry images and microphones pick up static for the duration. Trackers relying on footprints or scent automatically fail while this is active."
+      "summary": "Five minutes per level of the user's experience (doubled in the Nightlands).",
+      "kind": "minute",
+      "durationPerLevel": 5
+    }
   },
   {
     "id": "talent_lightning_rider",
@@ -2045,62 +2554,51 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Animates lengths of wire or cable to entangle, whip, and electrocute enemies.",
+    "description": "Commands a length of cable or wire like a serpent — ripping free from devices, walls, or telephone poles and writhing through the air at speed 36 (23 mph/37 kph). The wire has two attacks per melee and is +3 to strike, entangle, and dodge. If severed or destroyed, the enchantment ends. Alternatively, the user controls it by mind and gesture, but each attack counts as one of their own melee attacks.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 77
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 10,
+      "baseActivation": 5,
       "activationTiers": [
         {
-          "name": "Light Cable",
-          "tier": "Residential/Light",
-          "ppeCost": 5,
-          "effectDescription": "Animates light wire (lamp cords, speaker wire). Wire has ~10 S.D.C. per foot. Whip attacks inflict 1D6 damage. If electrically charged, adds +1D4 damage and has a 01-33% chance to stun opponent for 1D4 melee rounds. Break free requires Supernatural P.S. of 20 and uses two attacks."
+          "summary": "Light/residential cable: 5 P.P.E. — ~6 S.D.C./foot, 1D6 whip, shock 1D6+2 once (no stun), break free P.S. 18 (2 attacks)"
         },
         {
-          "name": "High-Gauge Cable",
-          "tier": "Commercial/High-Gauge",
-          "ppeCost": 8,
-          "effectDescription": "Animates medium wire (jumper cables, extension cords). Wire has ~20 S.D.C. per foot. Whip attacks inflict 2D6 damage. If electrically charged, adds +1D6 damage and has a 01-50% chance to stun opponent for 2D4 melee rounds. Break free requires Supernatural P.S. of 30 and uses two attacks."
+          "summary": "High-gauge cable (power lines, tow cables, etc.): 8 P.P.E. — ~20 S.D.C./foot, 2D6 whip, shock 2D6+4 (01–33% stun), break free P.S. 30 (2 attacks)"
         },
         {
-          "name": "Heavy-Duty Cable",
-          "tier": "Industrial/Heavy-Duty",
-          "ppeCost": 12,
-          "effectDescription": "Animates heavy wire (transmission lines, mooring cables). Wire has ~50 S.D.C. per foot. Whip attacks inflict 3D6 damage. If electrically charged, adds +1D6 damage and has a 01-66% chance to stun opponent for 2D4 melee rounds. Break free requires Supernatural P.S. of 40 and uses three attacks."
+          "summary": "Heavy-duty cable (transmission lines, mooring cable, etc.): 12 P.P.E. — ~50 S.D.C./foot, 3D6 whip, shock +1D6 (01–66% stun 2D4 melees), break free P.S. 40 (3 attacks)"
         }
       ]
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "Must be able to clearly see both the wire and the intended target, or know their exact location. Stun chance and duration are reduced by half against supernatural opponents."
+      "otherLimitations": "Must clearly see both wire and target, or know each location with certainty. Stun chance and duration halved against supernatural opponents. Save vs electricity (13+, P.E. applies) halves shock damage and prevents stun. Damage not increased vs Nightbane-vulnerable targets. Untangling while animated is impossible — break free or cut loose only."
     },
     "ranges": [
       {
         "summary": "Animates a 20 foot (6.1 m) length of wire/cable up to 100 feet (30.5 m) away.",
         "kind": "distance",
         "distanceValue": 100,
-        "distanceUnit": "feet",
+        "distanceUnit": "foot",
         "lineOfSightRequired": true
       }
     ],
     "duration": {
-      "summary": "30 seconds (2 melees) per level of experience",
-      "kind": "special"
+      "summary": "30 seconds (2 melee rounds) per level of experience.",
+      "kind": "melee_round",
+      "durationPerLevel": 2
     },
     "save": {
-      "summary": "Save vs electricity 13 or higher (P.E. bonus applies) reduces damage by half and prevents stun.",
+      "summary": "Shock victims save vs electricity (13+, P.E. bonus applies). Success: half damage, no stun. Failure: full damage and stunned (-2 attacks that round, -3 all combat rolls for 1D4 melee rounds; heavy cable may stun 2D4 melees).",
       "saveKind": "other",
-      "targetNumber": 13,
-      "damageMultiplierOnSuccess": 0.5,
-      "effectsOnSuccessfulSave": {
-        "notes": "Prevents stun penalties completely."
-      }
+      "targetNumber": 13
     }
   },
   {
@@ -2110,61 +2608,55 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Enables the Nightbane to steal P.P.E. from other beings.",
+    "description": "Attempts to steal P.P.E. from a visible target within range. One P.P.E. channeled into activation steals 1D6 P.P.E. (two points steals 2D6, and so on). Stolen P.P.E. is immediately usable but can only be held for five minutes per level of experience. Magic or psionic barriers (Magic Armor, Shadow Shield, etc.) block siphoning and instead take damage equal to the P.P.E. that would have been stolen. Metal plate mail and similar spell-casting interference halves P.P.E. stolen.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 77
       }
     ],
     "ppe": {
-      "permanentBurnToAcquire": 8,
-      "costSpendBasis": "cost_per_interaction",
+      "permanentBurnToAcquire": 9,
       "baseActivation": 1,
       "enhancement": {
-        "summary": "Spend additional P.P.E. to steal more P.P.E.",
+        "summary": "One P.P.E. spent steals 1D6 P.P.E. from the target (up to the per-level cap).",
         "costPerStep": 1,
-        "stepDefinition": "+1D6 P.P.E. stolen per 1 P.P.E. spent",
-        "differsFromBaseActivation": true
+        "stepDefinition": "+1D6 P.P.E. stolen",
+        "differsFromBaseActivation": false
       },
       "maxEnhancementPpePerActivation": {
-        "ppePerCharacterLevel": 2,
-        "notes": "Only two P.P.E. points per level of experience may be spent on each use (e.g. 1 pt = 1D6 stolen, 2 pts = 2D6 stolen)."
-      }
+        "ppePerCharacterLevel": 2
+      },
+      "notes": "Maximum 2 P.P.E. spent per level of experience per use (e.g. 2 P.P.E. at level 1 = up to 2D6 stolen)."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 2
+      "minimumCharacterLevelToAcquire": 2,
+      "otherLimitations": "Target must be visible and within range. Barriers absorb siphon damage instead (no save). Spell-casting armor halves amount stolen."
     },
     "ranges": [
       {
-        "summary": "Within 10 feet (3 m) per level of experience; line of sight required",
+        "summary": "10 feet (3 m) per level of experience; line of sight required.",
         "kind": "distance",
-        "distanceValue": "10 feet per level",
-        "distanceUnit": "feet",
+        "distanceValue": 10,
+        "distanceUnit": "foot",
+        "distancePerLevel": 10,
         "lineOfSightRequired": true
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "Instant",
+      "summary": "Instant siphon; stolen P.P.E. retained up to five minutes per level of experience.",
       "kind": "instant"
     },
     "save": {
-      "summary": "Save vs magic 14 to prevent P.P.E. drain",
+      "summary": "Save vs magic (14+). Success prevents P.P.E. from being siphoned. Does not apply when a barrier intercepts the siphon.",
       "saveKind": "magic",
-      "targetNumber": 14,
-      "effectsOnSuccessfulSave": {
-        "notes": "Target prevents energy from being siphoned away."
-      }
+      "targetNumber": 14
     },
     "vampiricResourceRecovery": {
       "triggerKind": "on_successful_direct_attack",
-      "triggerSummary": "On a successful activation where the target fails their save.",
+      "triggerSummary": "On successful activation when the target fails their save and no barrier blocks the siphon.",
       "sourceResource": "ppe",
       "recoverToPool": "ppe",
       "recoveryFractionOrPercent": "1D6 per P.P.E. spent",
@@ -2178,50 +2670,51 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Temporarily absorbs willing passengers into the Nightbane's own body for covert transport.",
+    "description": "Teleports the user between Earth and the Nightlands (and vice versa), bringing people and/or supplies along. Highly sought by Factions for troop and supply movements. The user must travel with everyone/everything transported, know the exact destination, and may only reach the corresponding point in the other dimension or a Nightlands location previously visited. Can grab specific people and objects within the radius of influence.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 78
       }
     ],
     "ppe": {
-      "permanentBurnToAcquire": 12,
-      "baseActivation": 15,
+      "permanentBurnToAcquire": 24,
+      "baseActivation": 20,
       "enhancement": {
-        "summary": "Can absorb additional passengers for 15 P.P.E. each.",
-        "costPerStep": 15,
-        "stepDefinition": "One additional passenger",
+        "summary": "Ten P.P.E. per additional individual or equivalent object (satchel, trunk, crate, or container up to 400 lbs / 180 kg).",
+        "costPerStep": 10,
+        "stepDefinition": "+1 passenger or equivalent cargo",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Twenty P.P.E. transports self; +10 P.P.E. per additional passenger or cargo item."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "otherLimitations": "Can only be used on willing subjects. Any damage to the Nightbane is also taken as full damage by each passenger (S.D.C. first, then H.P.). Nightbane's weight increases by 10% per passenger.",
-      "cannotAffect": [
-        "Unwilling targets"
-      ]
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 7,
+      "otherLimitations": "Only the corresponding point in the other dimension or a previously visited Nightlands location. User must accompany all passengers/cargo and know the exact destination. P.P.E. is expended even if unwilling targets resist and remain behind."
     },
     "ranges": [
       {
-        "summary": "Touch",
-        "kind": "touch"
+        "summary": "20 foot (6.1 m) radius at 7th level, +10 feet (3 m) radius per level beyond 7th.",
+        "kind": "distance",
+        "distanceValue": 20,
+        "distanceUnit": "foot"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
+    "areaOfEffect": {
+      "summary": "20 foot radius at 7th level (+10 feet per level above 7)."
     },
     "duration": {
-      "summary": "10 minutes per level of experience",
-      "kind": "minute"
+      "summary": "Must concentrate one melee round (15 seconds) per 10 P.P.E. expended before the dimensional jump occurs.",
+      "kind": "special"
     },
-    "passengerCompanionCapacity": {
-      "passengerCapacity": "1 per 15 P.P.E. spent",
-      "summary": "Can absorb any number of willing subjects provided P.P.E. is paid."
+    "save": {
+      "summary": "Unwilling passengers/targets save vs magic (12+). Success avoids being taken; P.P.E. is still spent.",
+      "saveKind": "magic",
+      "targetNumber": 12
     },
-    "notes": "Passengers enter a state of suspended animation, requiring no food or water, and are unaware of the passage of time."
+    "notes": "Activation requires concentration before the jump — one melee round per 10 P.P.E. spent."
   },
   {
     "id": "talent_mimic_spell",
@@ -2230,47 +2723,38 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Captures and copies a recently cast spell by expending P.P.E. to reactivate the spell's lingering echo.",
+    "description": "Reactivates the short-lived metaphysical echo of a recently observed spell, capturing and copying it at the same level it was originally cast. The Nightbane may direct it at a new target and adjust damage within the spell's usual parameters — useful for Sorcerers and Mystics to recast favorites quickly or use spells they do not know. Cannot mimic rituals or component-dependent spells unless the user has the required components. When multiple spells were cast in the same area, only the last spell can be mimicked.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 78
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 25,
-      "baseActivation": {
-        "relativeToSummary": "10 P.P.E. PLUS the usual P.P.E. cost required to cast the spell being mimicked.",
-        "notes": "Total activation cost is 10 + the spell's base cost."
-      }
+      "baseActivation": 10,
+      "notes": "Ten P.P.E. to activate plus the mimicked spell's usual P.P.E. cost (e.g. a 4 P.P.E. spell costs 14 total; a 25 P.P.E. spell costs 35 total)."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 4,
-      "otherLimitations": "Magic-using Nightbane can select at 2nd level. Cannot mimic rituals or spells requiring physical/spiritual components unless the user possesses them. Only mimics the last spell cast in a specific area.",
-      "cannotAffect": [
-        "Spells cast more than 6 minutes ago"
-      ]
+      "otherLimitations": "Magic-using Nightbane may select at 2nd level; all others require 4th level. Spell trace must have been cast within the last six minutes (trace fades entirely within 1D4×10 minutes). Captured spell must be cast within one melee round (15 seconds) or the mimic is lost."
     },
     "ranges": [
       {
-        "summary": "Can recreate a spell cast within 200 feet (61 m)",
+        "summary": "May recreate a spell cast within 200 feet (61 m).",
         "kind": "distance",
         "distanceValue": 200,
-        "distanceUnit": "feet",
-        "lineOfSightRequired": false
+        "distanceUnit": "foot"
       }
     ],
-    "activationTime": {
-      "summary": "The mimicked spell must be cast within one melee round (15 seconds) or it is gone.",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "Duration of the mimicked spell is the same as the original unless deliberately altered.",
-      "kind": "special"
+      "summary": "Mimicked spell must be cast within one melee round. Mimicked spell duration matches the original unless deliberately altered.",
+      "kind": "melee_round",
+      "durationValue": 1
     },
-    "notes": "The range, duration, damage, and effects are the same as the original, though the Mimic can adjust it within the usual parameters of the spell."
+    "notes": "Range, duration, damage, and effects of the reactivated spell match the original observed casting."
   },
   {
     "id": "talent_mimic_talent",
@@ -2279,44 +2763,37 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Duplicates the effects of almost any other Nightbane Talent witnessed within 100 feet.",
+    "description": "Duplicates the effects of almost any Nightbane Talent witnessed within 100 feet — one activation only, fully under the mimicker's control (e.g. a mimicked Doorway need not open to the same exit unless chosen). Must meet all requirements of the copied Talent (level gates, Morphus restrictions, HP/P.E. costs, etc.). Power level and capabilities match the observed user, not the mimicker's level. Duration of the mimicked Talent is halved.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 79
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 30,
-      "baseActivation": {
-        "relativeToSummary": "10 P.P.E. PLUS the usual P.P.E. costs required to use the Talent being mimicked.",
-        "notes": "Total activation cost is 10 + the mimicked Talent's cost."
-      }
+      "baseActivation": 10,
+      "notes": "Ten P.P.E. to activate Mimic Talent plus the usual P.P.E. costs required to use the Talent being mimicked."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 2,
-      "otherLimitations": "Must meet all requirements of the copied Talent (level, morphus restrictions, HP/PE loss, etc.). Can only duplicate the last Talent the user witnessed with their own eyes. Must be mimicked within 60 seconds (four melee rounds) after witnessing."
+      "otherLimitations": "Can only duplicate the last Talent witnessed with one's own eyes. Must mimic within 60 seconds (four melee rounds) of witnessing it. Mimicked Talent is used once; cannot duplicate again unless witnessed and mimicked anew."
     },
     "ranges": [
       {
-        "summary": "Must witness the Talent within 100 feet (30.5 m). Range of the copied Talent is roughly the same as observed.",
+        "summary": "Must witness the original Talent within 100 feet (30.5 m); line of sight required. Mimicked Talent range is roughly what was observed.",
         "kind": "distance",
         "distanceValue": 100,
-        "distanceUnit": "feet",
+        "distanceUnit": "foot",
         "lineOfSightRequired": true
       }
     ],
-    "activationTime": {
-      "summary": "Instantly available to the user after witnessing.",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "Half the duration of the mimicked Talent.",
+      "summary": "Mimicked Talent is instantly available; its own duration is half that of the original.",
       "kind": "special"
-    },
-    "notes": "The mimicked Talent is used once and cannot be duplicated again unless witnessed again. Retains the power level and capabilities of the original user, NOT the mimicking Nightbane's level."
+    }
   },
   {
     "id": "talent_mirror_search",
@@ -2369,11 +2846,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Senses the presence of any mirrors in the vicinity that have a connection to the Nightlands.",
+    "description": "Senses mirrors in the vicinity connected to the Nightlands with pinpoint precision — how many, their direction, and distance. Concentrating on a single mirror reveals whether it links to the Nightlands and shows a blurry, shadowy image of the Nightlands side (a shadowy reflection of the room the user stands in, not the surrounding Nightlands). Any Nightbane can tell by looking at a mirror whether it connects; this Talent senses them across a wide area before approaching.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 79
       }
     ],
@@ -2382,27 +2859,23 @@
       "baseActivation": 1
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "otherLimitations": "Only detects mirrors connected to the Nightlands, not other dimensional portals or anomalies."
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Only detects mirrors with a Nightlands counterpart — not other dimensional portals, breaches, or anomalies. Identifies which buildings contain linked mirrors; occupants are not necessarily hostile."
     },
     "ranges": [
       {
-        "summary": "500 foot (152.4 m) radius + 100 feet (30.5 m) per level of experience",
+        "summary": "500 foot (152.4 m) radius + 100 feet (30.5 m) per level of experience.",
         "kind": "radius",
         "distanceValue": 500,
-        "distanceUnit": "feet",
+        "distanceUnit": "foot",
         "distancePerLevel": 100
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "Five minutes per level of experience",
-      "kind": "minute"
-    },
-    "notes": "Reveals exactly how many mirrors there are, their direction, and distance. Concentrating on a mirror reveals a blurry, shadowy image of the room's reflection in the Nightlands."
+      "summary": "Five minutes per level of the Nightbane.",
+      "kind": "minute",
+      "durationPerLevel": 5
+    }
   },
   {
     "id": "talent_mirror_shield",
@@ -2411,11 +2884,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Summons a protective mirrored shield capable of deflecting physical, energy, and magical projectile attacks.",
+    "description": "Summons a mirrored protective shield (buckler to medium size) strong as steel with 75 S.D.C. (damaged only if targeted). Provides +3 to parry — no other parry bonuses apply except from a high P.P. attribute. Negates the normal penalty to parry projectiles, allowing parries against bullets, magical fireballs, and energy blasts. Parried attacks may strike nearby people or objects for half damage.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 79
       }
     ],
@@ -2426,21 +2899,18 @@
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 4,
-      "otherLimitations": "Remains on the user's arm/hand and cannot be dropped or passed. Can be canceled at any time."
+      "otherLimitations": "Shield remains on the user's arm or in hand for the duration — cannot be dropped or passed to another, but may be canceled at any time."
     },
     "ranges": [
       {
-        "summary": "Self",
+        "summary": "Self.",
         "kind": "self"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "10 minutes per level of experience or until destroyed",
-      "kind": "minute"
+      "summary": "Ten minutes per level of experience or until the shield is destroyed.",
+      "kind": "minute",
+      "durationPerLevel": 10
     },
     "createdObjects": [
       {
@@ -2482,7 +2952,7 @@
       "baseActivation": 2
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
+      "usableInNightbaneForm": "morphus_only",
       "otherLimitations": "Requires a mirror."
     },
     "duration": {
@@ -2498,44 +2968,42 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Interrupts and negates an incoming spell or Talent targeting the Nightbane by spending equivalent P.P.E.",
+    "description": "Counters and terminates any spell, Talent, or other supernatural ability fueled by P.P.E. that is directed at the Nightbane — including area effects, though only the user is spared. Does not work against true psionic attacks (I.S.P.). Once active, affecting powers are nullified; the user must spend P.P.E. matching the incoming power's cost or it resolves normally.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 80
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 14,
       "baseActivation": {
-        "relativeToSummary": "Requires the Nightbane to spend the same amount of P.P.E. as the spell or Talent directed at them.",
+        "relativeToSummary": "Spend the same P.P.E. as the spell or Talent directed at the user.",
         "referenceKind": "opposing_spell_activation",
         "fractionOfReference": {
           "numerator": 1,
           "denominator": 1
         }
-      }
+      },
+      "notes": "Can protect up to two others by touch at once for the P.P.E. cost of one (or self plus one other). Automatically lapses when the user reaches 0 P.P.E."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "otherLimitations": "Must be able to see the incoming attack (invisible attacks or attacks from behind cannot be negated). Does not work on true psionic attacks (I.S.P.)."
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 4,
+      "otherLimitations": "Cannot be selected until 4th level. Only negates abilities fueled by psychic or magic energy (P.P.E., etc.) — not true psionic attacks (I.S.P.). The user cannot choose what is countered; this includes their own active powers. If the user lacks enough P.P.E. to match the incoming power, it works normally."
     },
     "ranges": [
       {
-        "summary": "Self; or up to two other people by touch",
+        "summary": "Self; or expanded to a maximum of 2 feet (0.6 m) from the user at 4th level, plus 2 feet (0.6 m) at levels 6, 8, 10, 12, and 14. Up to two others may be protected by touch.",
         "kind": "self"
       }
     ],
-    "activationTime": {
-      "summary": "Reactionary",
-      "isReaction": true
-    },
     "duration": {
-      "summary": "Instant",
-      "kind": "instant"
+      "summary": "Determined by the activation cost paid; automatically lapses when the user reaches 0 P.P.E.",
+      "kind": "special"
     },
-    "notes": "Can be applied to up to two other people simultaneously by touching them, negating the spell on two people for the P.P.E. cost of one."
+    "notes": "Seekers and Nocturnes often assign a Nega user to teams hunting mages or powerful supernatural beings."
   },
   {
     "id": "talent_nightbringer",
@@ -2590,11 +3058,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Senses the presence of a specific species of supernatural being, while simultaneously alerting those beings to the Nightbane's presence.",
+    "description": "Opens to the supernatural to sense one chosen species of being in the area — while simultaneously alerting every member of that species to the Nightbane's presence.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 80
       }
     ],
@@ -2605,7 +3073,7 @@
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 2,
-      "otherLimitations": "Does not indicate exact location or numbers, only rough groupings (one or two, a few, several, many, great many). To sense a different species, must be reactivated. Practitioners of magic and psychics are NOT sensed.",
+      "otherLimitations": "Unavailable until 2nd level. Does not indicate exact location or numbers — only rough groupings (one or two, a few [3–6], several [7–16], many [17+], great many [50+]). 'Minions of the Nightlords' or 'creatures of the Nightlands' is too broad; choose a specific species (Hounds, Hunters, Guardians, Wampyrs, Namtars, a Night Prince, etc.). Nightbane in Morphus (not Facade) can also be sensed. Each sensed individual also senses the user. To sense a different species, must reactivate. The user may restrict sensing to a 100 foot (30.5 m) radius or expand in 100 foot (30.5 m) increments up to full range.",
       "cannotAffect": [
         "Magic users",
         "Psychics"
@@ -2613,22 +3081,18 @@
     },
     "ranges": [
       {
-        "summary": "100 feet (30.5 m) per level of experience",
+        "summary": "100 feet (30.5 m) per level of experience; may be restricted to 100 foot increments.",
         "kind": "radius",
         "distanceValue": "100 feet per level",
         "distanceUnit": "feet",
         "lineOfSightRequired": false
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
       "summary": "One minute per level of experience",
       "kind": "minute"
     },
-    "notes": "Every targeted individual inside the radius ALSO senses the Nightbane's presence."
+    "notes": "A gut-feeling sense for the user; a dead giveaway to beings like Hounds and Hunters that a Nightbane is nearby."
   },
   {
     "id": "talent_phantom_limb",
@@ -2637,11 +3101,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Summons translucent, ghostly extra appendages that function as additional limbs.",
+    "description": "Summons translucent, ghostly appendages (extra arms, claws, tentacles, etc.) that function as additional limbs — useful for combat, carrying loads, repairs, and climbing.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 80
       }
     ],
@@ -2649,15 +3113,16 @@
       "permanentBurnToAcquire": 10,
       "baseActivation": 6,
       "enhancement": {
-        "summary": "Summon additional limbs.",
+        "summary": "Summon additional phantom limbs.",
         "costPerStep": 6,
         "stepDefinition": "One additional phantom limb",
         "differsFromBaseActivation": false
-      }
+      },
+      "notes": "Six P.P.E. per phantom limb activated. One limb per 3 levels of experience (1 at 3rd, 2 at 6th, 3 at 9th, 4 at 12th, 5 at 15th)."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "Can summon one limb per 3 levels of experience (1 at level three, 2 at six, 3 at nine, 4 at 12, 5 at 15). If meant for complex tasks like shooting, they must have digits and opposable thumbs."
+      "otherLimitations": "One limb per 3 levels of experience (1 at 3rd, 2 at 6th, 3 at 9th, 4 at 12th, 5 at 15th). If meant for complex tasks like operating a computer or shooting, limbs must have digits and an opposable thumb."
     },
     "ranges": [
       {
@@ -2761,47 +3226,45 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Forms a shell of dark energy that absorbs incoming damage, but can be discharged on an opponent for explosive harm.",
+    "description": "Coalesces dark energy into a form-fitting shell resembling Shadow Shield. Absorbs incoming damage into the shell's S.D.C.; on depletion or command it explodes outward in a 15 foot (4.6 m) sphere — only the wearer is unscathed.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 81
       }
     ],
     "ppe": {
-      "permanentBurnToAcquire": 12,
+      "permanentBurnToAcquire": 10,
       "baseActivation": 2,
       "enhancement": {
-        "summary": "Scales shield S.D.C. and explosive payload.",
+        "summary": "Each 2 P.P.E. adds 10 S.D.C. to the shell and +1D6+1 explosive damage.",
         "costPerStep": 2,
         "stepDefinition": "+10 S.D.C. and +1D6+1 blast damage",
         "differsFromBaseActivation": true
       },
       "maxEnhancementPpePerActivation": {
         "ppePerCharacterLevel": 4
-      }
+      },
+      "notes": "Two P.P.E. = 10 S.D.C. and 1D6+1 damage; four = 20 S.D.C. and 2D6+2; eight = 40 S.D.C. and 4D6+4; twelve = 60 S.D.C. and 6D6+6. Total spend capped at 4 P.P.E. per level of experience."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "Can only strike opponents touched via a melee punch."
+      "otherLimitations": "Cannot select blast targets — everyone and everything in the blast radius takes damage. Intentionally detonating after activation counts as two separate melee attacks. If duration ends without detonation, the shell crumbles away without exploding. Can be cancelled at any time. Only other Nightbane can tell Pipe Bomb apart from Shadow Shield."
     },
     "ranges": [
       {
-        "summary": "Self / Touch (Punch)",
-        "kind": "touch"
+        "summary": "Self (15 foot / 4.6 m blast radius on detonation).",
+        "kind": "self"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
+    "areaOfEffect": {
+      "summary": "15 foot (4.6 m) blast radius on detonation."
     },
     "duration": {
-      "summary": "Until discharged, or one minute per level of experience",
-      "kind": "special",
-      "dischargesOn": [
-        "successful_strike"
-      ]
+      "summary": "10 minutes per level of experience, until S.D.C. is depleted, willfully detonated, or cancelled.",
+      "kind": "minute",
+      "extendableByLevel": true
     },
     "createdObjects": [
       {
@@ -2814,9 +3277,9 @@
           "linkedPpeSpendScope": "enhancement_only",
           "structuralSdcAddedPerStep": 10,
           "offensiveDamageAddedPerStep": "1D6+1",
-          "stepDefinition": "Each 2 P.P.E. adds 10 S.D.C. to the shield and +1D6+1 to the explosive blast."
+          "stepDefinition": "Each 2 P.P.E. adds 10 S.D.C. to the shell and +1D6+1 to the explosive blast."
         },
-        "damageRules": "Damage from incoming attacks is absorbed by the shield's S.D.C. first. Discharge damage ignores any damage already taken by the shield."
+        "damageRules": "Incoming damage is absorbed by the shell's S.D.C. first. On detonation, only the wearer is unscathed; blast damage is not reduced by prior shell damage."
       }
     ]
   },
@@ -2827,40 +3290,31 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Conjures actual physical currency out of thin air that vanishes after a limited time.",
+    "description": "Conjures physical currency out of thin air by picturing the amount required — coins or paper notes that pass any forgery inspection, but vanish when the duration ends.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 81
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 6,
       "baseActivation": 1,
-      "enhancement": {
-        "summary": "Creates additional currency.",
-        "costPerStep": 1,
-        "stepDefinition": "$1 (or local equivalent) per P.P.E. spent",
-        "differsFromBaseActivation": true
-      }
+      "notes": "One P.P.E. per dollar (or local equivalent) created. The Nightbane chooses coin or note form up to the P.P.E. spent."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "otherLimitations": "Must picture the exact currency to create and be familiar with its appearance. Money vanishes completely when duration ends."
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Must picture the currency to create and be familiar with its denominations and appearance — an example to focus on is best. Money vanishes completely when the duration ends."
     },
     "ranges": [
       {
-        "summary": "Self",
+        "summary": "Self.",
         "kind": "self"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "10 minutes per level of experience",
+      "summary": "10 minutes per level of experience, then vanishes completely.",
       "kind": "minute"
     }
   },
@@ -2900,11 +3354,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Manifests large black wings of solid shadow to grant magically powered flight.",
+    "description": "Manifests large black wings of solid shadow (or a winged flying apparatus) for magically powered flight. The wings have no physical substance, do not impair movement, and cannot be damaged.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 81
       }
     ],
@@ -2912,28 +3366,25 @@
       "permanentBurnToAcquire": 12,
       "baseActivation": 6,
       "enhancement": {
-        "summary": "Extends flight time.",
+        "summary": "Extend sustained flight.",
         "costPerStep": 4,
-        "stepDefinition": "+10 minutes of sustained flight",
+        "stepDefinition": "+10 minutes of flight",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Six P.P.E. for 10 minutes of flight; four P.P.E. per each additional 10 minutes sustained."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "No altitude limit, but air gets too thin to breathe around 20,000 feet (6,096 m). Flight speed limited to 20 mph (32 kph) per level of experience. Means of flight has no physical substance and cannot be damaged."
+      "otherLimitations": "No altitude limit, but air gets too thin to breathe around 20,000 feet (6,096 m). Flight speed limited to 20 mph (32 kph) per level of experience. No piloting skill required; no special combat bonuses other than +2 to dodge while in flight."
     },
     "ranges": [
       {
-        "summary": "Self",
+        "summary": "Self.",
         "kind": "self"
       }
     ],
-    "activationTime": {
-      "summary": "One melee action",
-      "meleeActions": 1
-    },
     "duration": {
-      "summary": "10 minutes base; +10 minutes per 4 P.P.E.",
+      "summary": "10 minutes base; +10 minutes per 4 P.P.E. spent after activation.",
       "kind": "minute",
       "extendableByPpe": true
     },
@@ -2952,25 +3403,27 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Forces incorporeal beings to manifest physically or retreat, and prevents astral projection or becoming intangible within its area of effect.",
+    "description": "Anchors incorporeal beings to the physical plane — forcing spirits, ghosts, Entities, and Astral Beings to manifest, flee, or become vulnerable to physical harm within its area of effect.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 82
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 16,
-      "baseActivation": 15
+      "baseActivation": 15,
+      "notes": "Fifteen P.P.E. per melee round of use."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 4
+      "minimumCharacterLevelToAcquire": 4,
+      "otherLimitations": "Cannot be selected before 4th level. Incorporeal beings must save vs magic (16+) or manifest physically or leave for 1D6 days. Astral Projectors are snapped back to their bodies and cannot Astral Project for 24 hours. Ghosts and Entities incapable of manifesting are forced outside the area and cannot return for 1D6 days. Characters within the area cannot Astral Project or become intangible for the duration. On the Astral Plane, only Astral Travelers are forced back. Forced physical manifestation has Horror Factor 15; affected beings suffer -2 Perception, -2 initiative, -1 attack, -2 to all combat rolls, and -20% to skills for 1D4 melee rounds. Use with caution — survivors may lash out in fear."
     },
     "ranges": [
       {
-        "summary": "15 feet (4.6 m) radius per level of experience",
+        "summary": "15 feet (4.6 m) radius per level of experience.",
         "kind": "radius",
         "distanceValue": "15 feet per level",
         "distanceUnit": "feet",
@@ -2978,12 +3431,12 @@
       }
     ],
     "duration": {
-      "summary": "One melee round (15 seconds)",
+      "summary": "One melee round (15 seconds).",
       "kind": "melee_round",
       "meleeRounds": 1
     },
     "save": {
-      "summary": "16 or better to save vs magic to prevent being forced to manifest on the physical plane or vanish.",
+      "summary": "16 or better to save vs magic; failure forces manifestation on the physical plane or banishment for 1D6 days.",
       "saveKind": "magic",
       "targetNumber": 16,
       "effectsOnSuccessfulSave": {
@@ -3082,7 +3535,7 @@
       }
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form"
+      "usableInNightbaneForm": "morphus_only"
     },
     "ranges": [
       {
@@ -3127,7 +3580,8 @@
     },
     "limitations": {
       "minimumCharacterLevelToAcquire": 4,
-      "otherLimitations": "Duration: One minute (4 melee rounds) per level of experience. Range: Self, only. Cuts off the user from casting magic or using other Talents while active."
+      "otherLimitations": "Duration: One minute (4 melee rounds) per level of experience. Range: Self, only. Cuts off the user from casting magic or using other Talents while active.",
+      "usableInNightbaneForm": "morphus_only"
     }
   },
   {
@@ -3390,11 +3844,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Temporarily robs another sentient being of a single skill and transfers that knowledge to the Nightbane.",
+    "description": "Temporarily robs a sentient target of a single chosen skill and transfers that knowledge to the Nightbane at the victim's skill percentage.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 82
       }
     ],
@@ -3406,14 +3860,13 @@
       "usableInNightbaneForm": "morphus_only",
       "minimumCharacterLevelToAcquire": 3,
       "cannotAffect": [
-        "Animals or monsters with instincts and innate abilities",
-        "Multiple skills at once"
+        "Animals or monsters with instincts and innate abilities"
       ],
-      "otherLimitations": "Only a single skill can be stolen per use. Cannot steal combat bonuses associated with physical skills or Weapon Proficiencies; only the base skill knowledge is gained."
+      "otherLimitations": "Unavailable until 3rd level. Only one skill per use. A newly stolen skill replaces any previously stolen skill still active. Works on physical skills and Weapon Proficiencies but grants only the skill knowledge — not associated combat bonuses (strike, parry, dodge, extra attacks, etc.); the Nightbane's P.P. and other attribute bonuses may still apply. Can target a skill the Nightbane already knows to deny the enemy its use or borrow a higher percentage from the victim."
     },
     "ranges": [
       {
-        "summary": "Touch or up to 40 feet (12.2 m) away; line of sight required",
+        "summary": "Touch or up to 40 feet (12.2 m) away; intended victim must be visible.",
         "kind": "distance",
         "distanceValue": 40,
         "distanceUnit": "feet",
@@ -3421,7 +3874,7 @@
       }
     ],
     "duration": {
-      "summary": "10 minutes per level of experience",
+      "summary": "10 minutes per level of experience; may be returned early at any time.",
       "kind": "minute"
     },
     "save": {
@@ -3432,7 +3885,7 @@
         "notes": "Target retains their skill and the Nightbane gains nothing."
       }
     },
-    "notes": "Grants the user the stolen skill at the victim's exact percentage of success. If the Nightbane already knows the skill, they may use the higher of the two percentages."
+    "notes": "Uses the victim's exact skill percentage. If the Nightbane already knows the skill at a higher percentage, the stolen version is ignored and the user's own level applies."
   },
   {
     "id": "talent_sky_writer",
@@ -3441,29 +3894,37 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Manipulates clouds to write messages, block light, or create dramatic tinting and artwork in the sky.",
+    "description": "Manipulates clouds to write sky messages visible within 5 miles (8 km), shift cloud cover, or tint and darken clouds for dramatic effect — conjuring thin clouds on clear days if needed.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 82
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 2,
-      "enhancement": {
-        "summary": "Cost varies based on the desired cloud manipulation effect. Double all P.P.E. costs if clouds must be conjured out of thin air.",
-        "costPerStep": 1,
-        "stepDefinition": "1 P.P.E. per 6 letters/symbols; 5 P.P.E. to shift cloud position; 10 P.P.E. to darken/tint clouds.",
-        "differsFromBaseActivation": false
-      }
+      "baseActivation": 1,
+      "activationTiers": [
+        {
+          "summary": "Write in the sky: 1 P.P.E. per 6 letters or symbols."
+        },
+        {
+          "summary": "Shift a cloud's position: 5 P.P.E."
+        },
+        {
+          "summary": "Darken or tint clouds within range: 10 P.P.E."
+        }
+      ],
+      "notes": "Double all P.P.E. costs if clouds must be conjured rather than manipulated from existing ones."
     },
     "limitations": {
-      "usableInNightbaneForm": "morphus_only"
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Tinting and darkening create dramatic storm-like appearance only — no actual weather change."
     },
     "ranges": [
       {
-        "summary": "Can affect any cloud within a 5 mile (8 km) radius.",
+        "summary": "Any cloud within a 5 mile (8 km) radius; sky writing visible to everyone in that radius.",
         "kind": "radius",
         "distanceValue": 5,
         "distanceUnit": "miles"
@@ -3481,45 +3942,49 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Summons a small orb of magical sunlight that can be used as a lantern, fired as a damaging bolt, or launched into the sky to create a blinding flash.",
+    "description": "Summons a small orb of magical sunlight usable as a 5 foot (1.5 m) lantern, a laser-like bolt (+3 to strike), or an aerial flash against creatures vulnerable to sunlight.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 83
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 8,
       "baseActivation": 4,
-      "enhancement": {
-        "summary": "When fired into the air as a flash, each 4 P.P.E. adds 2D6 damage to creatures vulnerable to sunlight.",
-        "costPerStep": 4,
-        "stepDefinition": "+2D6 damage in an area-of-effect flash",
-        "differsFromBaseActivation": true
-      },
+      "activationTiers": [
+        {
+          "summary": "Laser bolt at one target: 5D6 damage (double vs vampires and Shadow creatures); flare vanishes on impact."
+        },
+        {
+          "summary": "Aerial sunlight flash: 2D6 damage per 4 P.P.E. spent to all sunlight-vulnerable creatures within 100 feet (30.5 m) of the user."
+        }
+      ],
       "maxEnhancementPpePerActivation": {
         "ppePerCharacterLevel": 4
-      }
+      },
+      "notes": "Maximum 4 P.P.E. per level of experience per activation. Lantern mode keeps sunlight-vulnerable creatures out of the 5 foot radius but does not harm them. Aerial flash: no damage to targets shielded indoors or in darkness; Horror Factor 12 to sunlight-vulnerable creatures at night; visible 2D4 miles (3.2–12.8 km); +2 initiative for user and allies first melee while others are surprised."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 3
+      "minimumCharacterLevelToAcquire": 3,
+      "otherLimitations": "Not available for selection until 3rd level. Only 4 P.P.E. per level of experience may be spent per activation."
     },
     "ranges": [
       {
-        "summary": "As a lantern: 5 foot (1.5 m) radius. When fired/launched: up to 1,000 feet (305 m).",
+        "summary": "Lantern: 5 foot (1.5 m) radius. Bolt or launch: up to 1,000 feet (305 m). Aerial flash illuminates 1,000 foot (305 m) diameter; damages sunlight-vulnerable targets within 100 feet (30.5 m) of the user.",
         "kind": "distance",
         "distanceValue": 1000,
         "distanceUnit": "feet"
       }
     ],
     "duration": {
-      "summary": "Lantern mode lasts 1 melee round (15 seconds) per level. Instant when fired or launched.",
+      "summary": "Lantern: up to one melee round (15 seconds) per level of experience. Near-instant once fired or launched.",
       "kind": "special"
     },
-    "offensiveDamage": "5D6 (laser bolt)",
-    "notes": "Laser bolt does double damage to vampires and Shadow creatures. The aerial flash lights up a 1,000 foot diameter, inflicting area damage to sunlight-vulnerable creatures within 100 feet and causing a Horror Factor of 12 to them."
+    "offensiveDamage": "5D6 (laser bolt); 2D6 per 4 P.P.E. (aerial flash vs sunlight-vulnerable)",
+    "notes": "Unlike Globe of Daylight, this Talent has offensive applications. Aerial flash may blind light-sensitive creatures; does not blind otherwise."
   },
   {
     "id": "talent_soul_shield",
@@ -3620,7 +4085,15 @@
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "minimumCharacterLevelToAcquire": 5
+      "minimumCharacterLevelToAcquire": 5,
+      "formUsage": {
+        "phases": {
+          "activation": {
+            "form": "morphus_only",
+            "notes": "While active, Facade and Morphus exist as separate bodies; consciousness focuses on one at a time."
+          }
+        }
+      }
     },
     "duration": {
       "summary": "One or more hours depending on the amount of P.P.E. expended.",
@@ -3717,11 +4190,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Acts as a supernatural communications hub, creating an undetectable, short-range telepathic network between willing participants.",
+    "description": "Acts as a supernatural communications hub — a short-range, undetectable telepathic conference link between willing participants that cannot be hacked or jammed by technology.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 83
       }
     ],
@@ -3729,19 +4202,20 @@
       "permanentBurnToAcquire": 8,
       "baseActivation": 4,
       "enhancement": {
-        "summary": "Extend duration by 10 minutes.",
+        "summary": "Extend the network.",
         "costPerStep": 2,
         "stepDefinition": "+10 minutes of operation",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Four P.P.E. for the first 10 minutes; two P.P.E. per each additional 10 minutes."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
       "cannotAffect": [
-        "Unwilling targets",
-        "Those shielded by Mind Block or Anti-Magic Cloud"
+        "Unwilling participants",
+        "Those shielded by psionic Mind Block or Anti-Magic Cloud"
       ],
-      "otherLimitations": "Can use no other Talents while this is active. Participants must speak aloud (even a whisper) to be heard."
+      "otherLimitations": "Cannot use other Talents while active. The operator is the hub — an open line where all participants hear everything spoken. Up to two additional willing participants per level of experience may join; more than six people plus the operator imposes severe penalties on the operator (-4 initiative, -4 all combat, -2 attacks, -40% skills, Perception bonuses zeroed). Eight or more total participants imposes similar penalties on everyone (-2 initiative, -2 combat, -1 attack, -20% skills). Participants must speak aloud (even a whisper). Only participant voices are transmitted — no background noise. Third-party conversations are one-sided to the link. Telepathy can eavesdrop if the psychic knows the link is active and has access to a participant. Linked participants may move freely within range; only the operator immediately notices a disconnect."
     },
     "ranges": [
       {
@@ -3752,16 +4226,16 @@
       }
     ],
     "duration": {
-      "summary": "10 minutes for 4 P.P.E., extendable by 2 P.P.E. per additional 10 minutes.",
+      "summary": "10 minutes for 4 P.P.E.; +10 minutes per 2 P.P.E. spent.",
       "kind": "minute",
       "extendableByPpe": true
     },
     "activationRequirements": {
-      "summary": "Connecting more than 6 people causes severe penalties to the Nightbane. Connecting 8 or more causes penalties to all participants.",
-      "circumstance": "Situational network overload based on participant count."
+      "summary": "More than six participants plus the operator overloads the hub; eight or more total participants penalizes everyone.",
+      "circumstance": "Participant count thresholds."
     },
     "physicalBonusesPenalties": {
-      "notes": "If 7+ participants: Nightbane suffers 0 Perception bonuses, -4 initiative, -4 all combat rolls, -2 melee attacks, -40% skill performance. If 8+ participants: EVERYONE suffers 0 Perception bonuses, -2 initiative, -2 combat rolls, -1 melee attack, -20% skill performance."
+      "notes": "Operator with 7+ total linked (more than six besides self): Perception bonuses zeroed, -4 initiative, -4 all combat, -2 attacks, -40% skills. All participants when 8+ total: Perception bonuses zeroed, -2 initiative, -2 combat, -1 attack, -20% skills."
     }
   },
   {
@@ -3806,34 +4280,41 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Converts an ordinary patch of shadow into a booby-trap that lashes out at enemies, grabbing and holding them.",
+    "description": "Converts a patch of shadow into a programmable booby-trap — impaling spikes, grabbing tendrils, or crushing darkness that activates on set criteria or at the creator's command.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 84
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 11,
-      "baseActivation": 7
+      "baseActivation": 7,
+      "notes": "Seven P.P.E. per Trap Shadow created."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form"
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Requires a shadow or patch of darkness at least 5 square feet (0.46 m²). Affects one target per level of experience per trigger. Trap Shadows are mentally programmed (species, headcount, proximity, etc.) and may be triggered at will by the creator with line of sight. Victims dragged into the trap are heavily cloaked, barely visible, barely audible, temporarily removed from play, and cannot be attacked while trapped (must come within 4 feet / 1.2 m of the shadow). Damage is supernatural — minor welts remain on humans; those killed appear to have died from cardiac arrest. Re-entering the shadow or new enemies can retrigger it. Strong bright light (more than a flashlight) destroys the trap after 1D6+1 minutes of exposure."
     },
     "ranges": [
       {
-        "summary": "Trap reach is a 1 foot (0.3 m) radius per level. Can be triggered remotely up to 100 feet (30.5 m) per level.",
+        "summary": "Reach: 1 foot (0.3 m) radius per level. Remote trigger: up to 100 feet (30.5 m) per level (line of sight).",
         "kind": "radius",
-        "distanceValue": "1 foot per level",
+        "distanceValue": "1 foot reach per level; 100 feet remote trigger per level",
         "distanceUnit": "feet"
       }
     ],
     "duration": {
-      "summary": "Remains set for 10 minutes per level. Once triggered, it holds victims for 1 melee round per level.",
+      "summary": "Set trap lasts until triggered or 10 minutes per level; hold lasts 1 melee round per level on failed save (1 melee round on successful save).",
       "kind": "special"
     },
-    "notes": "Victims dragged into the shadow are heavily cloaked in darkness and temporarily removed from play. A strong, bright light destroys the Trap Shadow after 1D6+1 minutes."
+    "save": {
+      "summary": "15 or higher (including P.E. bonus). Failure: 3D6 damage and immobilized 1 melee round per creator level. Success: half damage, trapped 1 melee round (15 seconds).",
+      "saveKind": "standard",
+      "targetNumber": 15
+    },
+    "notes": "After the hold expires, victims are expelled from the shadow. Trap may be left behind when set."
   },
   {
     "id": "talent_ultra_vision",
@@ -3842,11 +4323,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Grants the ability to see in several spectrums of light, plus telescopic and microscopic vision.",
+    "description": "Grants multi-spectrum sight plus telescopic (4–8×30 magnification) and microscopic (2–20×) vision — useful for spotting laser trip wires, invisible inks, physical traces, and limited X-ray sight through low-density non-metallic materials.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 84
       }
     ],
@@ -3854,30 +4335,29 @@
       "permanentBurnToAcquire": 3,
       "baseActivation": 2,
       "enhancement": {
-        "summary": "Extend duration.",
+        "summary": "Extend sight duration.",
         "costPerStep": 1,
         "stepDefinition": "+2 minutes",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Two P.P.E. for the first two minutes; one P.P.E. per each subsequent two minutes."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "cannotAffect": [
-        "Microwave frequencies and lower",
-        "High-powered X-rays and above"
-      ]
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Electromagnetic frequencies in the microwave range and lower are not visible, nor are high-powered X-rays or above."
     },
     "ranges": [
       {
-        "summary": "2 feet for microscopic/X-ray; standard for infrared/ultraviolet; up to 2 miles for telescopic vision.",
+        "summary": "2 feet (0.6 m) for microscopic and X-ray vision; standard visual range for infrared and ultraviolet; up to 2 miles (3.2 km) for telescopic vision.",
         "kind": "special"
       }
     ],
     "duration": {
-      "summary": "2 minutes base, extendable.",
+      "summary": "Two minutes base; +2 minutes per 1 P.P.E. spent after activation.",
       "kind": "minute",
       "extendableByPpe": true
-    }
+    },
+    "notes": "Originally developed by Nightbane working with the Lightbringer faction."
   },
   {
     "id": "talent_wall_runner",
@@ -3886,11 +4366,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the Nightbane to defy gravity and move up or across vertical surfaces as if they were flat ground.",
+    "description": "Defies gravity to run up or across vertical surfaces as if they were flat ground — speed, carrying capacity, and combat ability are unaffected.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 85
       }
     ],
@@ -3898,28 +4378,29 @@
       "permanentBurnToAcquire": 5,
       "baseActivation": 4,
       "enhancement": {
-        "summary": "Extend duration.",
+        "summary": "Extend wall-running duration.",
         "costPerStep": 2,
         "stepDefinition": "+1 minute",
         "differsFromBaseActivation": true
-      }
+      },
+      "notes": "Four P.P.E. for the first two minutes; two P.P.E. per each additional minute."
     },
     "limitations": {
       "usableInNightbaneForm": "morphus_only",
-      "otherLimitations": "If contact with the vertical surface is lost, the defiance of gravity ends and the user will fall."
+      "otherLimitations": "Most skyscraper windows and glass sides support a runner's weight; smaller buildings and homes usually do not (G.M. discretion). Losing contact with the vertical surface ends the effect and the user falls. Falls from four stories or more are likely deadly."
     },
     "ranges": [
       {
-        "summary": "Self",
+        "summary": "Self.",
         "kind": "self"
       }
     ],
     "duration": {
-      "summary": "2 minutes base, extendable.",
+      "summary": "Two minutes base; +1 minute per 2 P.P.E. spent after activation.",
       "kind": "minute",
       "extendableByPpe": true
     },
-    "notes": "Opponents fighting the Wall Runner at a 90-degree angle are at a disadvantage, suffering -3 to strike, parry, and dodge."
+    "notes": "Opponents fighting the Wall Runner at a 90-degree angle suffer -3 to strike, parry, and dodge due to the unusual angles of attack."
   },
   {
     "id": "talent_wall_whisperer",
@@ -3928,41 +4409,43 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Allows the user to 'read' the memories of a wall or building section, witnessing past events that occurred within its vicinity.",
+    "description": "Reads psychic imprints left on a wall or building section — witnessing past events from construction onward via specific times, scrolling timelines, or emotionally charged occurrences nearby.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 85
       }
     ],
     "ppe": {
       "permanentBurnToAcquire": 9,
-      "baseActivation": 8
+      "baseActivation": 8,
+      "notes": "Eight P.P.E. per activation."
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
+      "usableInNightbaneForm": "morphus_only",
+      "minimumCharacterLevelToAcquire": 2,
       "cannotAffect": [
         "Areas protected by the Sanctum spell"
-      ]
+      ],
+      "otherLimitations": "Unavailable until 2nd level. Touch the wall to activate. Images and sound only — no smell or touch sensation; details may be sketchy. Conversations beyond 4 feet (1.2 m) from the wall may yield only snippets; foreign languages are heard as spoken. Momentous or traumatic events may force a save vs psionic attack (17+) or the user must relive them. Review takes 1D6 minutes for a known exact time/event, otherwise hours of sampling; the user enters a trance and may lose track of time. Careful viewing takes as long as the original events."
     },
     "ranges": [
       {
-        "summary": "Touch activation. Covers 20 feet (6.1 m) on both sides of a 20-foot wall length, +10 feet (3 m) per level.",
-        "kind": "distance",
-        "distanceValue": "20 feet + 10 feet per level"
+        "summary": "Touch to activate. 20 feet (6.1 m) on both sides of a 20-foot wall length, +10 feet (3 m) per level of experience.",
+        "kind": "touch"
       }
     ],
     "duration": {
-      "summary": "Max of one hour to review memories per activation.",
+      "summary": "Maximum one hour to review memories per activation.",
       "kind": "special"
     },
     "save": {
-      "summary": "Nightbane must save vs psionic attack 17 or better to avoid being forced to relive highly traumatic events recorded by the wall.",
+      "summary": "Save vs psionic attack 17 or better to avoid being forced to relive highly traumatic wall memories.",
       "saveKind": "psionic",
       "targetNumber": 17
     },
-    "notes": "The Talent user falls into a trance while reading the wall and may lose track of time."
+    "notes": "Similar to Object Read but scoped to an entire wall section. Perspective can be anywhere on the chosen wall, including glimpses through windows."
   },
   {
     "id": "talent_witch_hunters_sight",
@@ -3971,11 +4454,11 @@
       "nightbane"
     ],
     "talentTier": "common",
-    "description": "Enables the Nightbane to see P.P.E. as a bluish glow, spotting magical beings, items, and ley lines.",
+    "description": "Reveals P.P.E. as a bluish glow on beings and objects with significant reserves — spotting disguised supernaturals, magic users, Nightbane, magical items, and ley lines or nexuses even in daylight.",
     "sources": [
       {
         "gameSystem": "nightbane",
-        "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+        "reference": "Dark Designs",
         "pageNumber": 85
       }
     ],
@@ -3984,10 +4467,8 @@
       "baseActivation": 2
     },
     "limitations": {
-      "usableInNightbaneForm": "either_form",
-      "cannotAffect": [
-        "Non-magical objects and beings with less than 12 P.P.E."
-      ]
+      "usableInNightbaneForm": "morphus_only",
+      "otherLimitations": "Only registers beings or objects with more than 30 P.P.E.; those with less than 12 P.P.E. do not register. Smoke, mist, and thin cloth or cardboard do not hide the glow, but it does not shine through walls, doors, heavy crates, or similar barriers. While active: -3 to all Perception Rolls (focused on high-P.P.E. targets). On a ley line or at a nexus: -6 to Perception Rolls involving vision. Vs a target with 500+ P.P.E.: -4 to all combat rolls against that being. Vs 1,000+ P.P.E.: -8 to all combat rolls (blinding). Penalties end when the Talent expires or is canceled."
     },
     "ranges": [
       {
@@ -4000,11 +4481,9 @@
       "kind": "minute"
     },
     "save": {
-      "summary": "+4 to save versus illusion while active.",
+      "summary": "+4 to save vs illusion while active.",
       "saveKind": "magic"
     },
-    "physicalBonusesPenalties": {
-      "notes": "User suffers -3 to all Perception Rolls while active. Looking at targets with 500+ P.P.E. causes -4 to all combat rolls against that target. Looking at 1,000+ P.P.E. causes blindness, resulting in -8 to all combat rolls."
-    }
+    "notes": "With practice, can estimate a target's P.P.E. reserve within ±1D4×10%."
   }
 ]

@@ -10,6 +10,7 @@ import { resolveMorphusForgeState } from '../../../lib/morphusForgeNavigation'
 import { abilityDurationBadgeLabel } from '../../../lib/supernaturalAbilityDisplay'
 import {
   formatTalentActivationCost,
+  formatTalentFormRules,
   formatTalentPpeAcquireCost,
 } from '../../../lib/talentDisplay'
 import {
@@ -409,6 +410,7 @@ function TalentRow({
 
   const ppeAcquire = formatTalentPpeAcquireCost(talent.ppe)
   const activationCost = formatTalentActivationCost(talent.ppe, talent.activation?.cost)
+  const formRules = formatTalentFormRules(talent.limitations)
   const description =
     morphus && talent.descriptionMorphus
       ? talent.descriptionMorphus
@@ -486,6 +488,11 @@ function TalentRow({
             <span className="font-bold">Activation cost:</span>{' '}
             {activationCost ?? '—'}
           </div>
+          {formRules.map((line) => (
+            <div key={line.label}>
+              <span className="font-bold">{line.label}:</span> {line.value}
+            </div>
+          ))}
         </div>
       ) : null}
       {gate.reason && blocked ? (

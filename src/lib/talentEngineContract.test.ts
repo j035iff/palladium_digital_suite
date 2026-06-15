@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
+  inferTalentUsableInNightbaneForm,
   isTier1ChargenComplete,
   SCHEMA_TOP_LEVEL_KEYS,
+  TALENT_DEFAULT_USABLE_FORM,
   TALENT_TIER2_PLAY_KEYS,
 } from '../../scripts/talent-engine-contract.mjs'
 
@@ -40,5 +42,33 @@ describe('talent engine contract', () => {
     expect(TALENT_TIER2_PLAY_KEYS).toContain('powerModes')
     expect(TALENT_TIER2_PLAY_KEYS).toContain('combatMechanics')
     expect(TALENT_TIER2_PLAY_KEYS).toContain('vampiricResourceRecovery')
+  })
+
+  it('defaults talent form to morphus_only unless Facade use is stated', () => {
+    expect(
+      inferTalentUsableInNightbaneForm({
+        id: 'talent_example',
+        name: 'Example',
+        description: 'A morphus shock burst.',
+      }),
+    ).toBe(TALENT_DEFAULT_USABLE_FORM)
+
+    expect(
+      inferTalentUsableInNightbaneForm({
+        id: 'talent_blast_wave',
+        name: 'Blast Wave',
+        description: 'Concussive shock wave.',
+        ppe: { notes: 'Double total P.P.E. spent on activation if used in Facade form.' },
+      }),
+    ).toBe('either_form')
+
+    expect(
+      inferTalentUsableInNightbaneForm({
+        id: 'talent_see_truth',
+        name: 'See Truth',
+        description:
+          "Reveals a Nightbane's Facade and Morphus forms superimposed over each other.",
+      }),
+    ).toBe(TALENT_DEFAULT_USABLE_FORM)
   })
 })

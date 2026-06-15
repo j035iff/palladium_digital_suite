@@ -1,0 +1,36 @@
+{
+  "$schema": "../palladium-talent.schema.json",
+  "id": "example_talent_form_usage_by_target",
+  "name": "Example: Form usage by target",
+  "description": "Illustrates `limitations.formUsage.byTarget` when self and others have different Facade/Morphus rules.",
+  "gameSystems": [
+    "nightbane"
+  ],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Dark Designs (example)",
+      "pageNumber": 77
+    }
+  ],
+  "talentTier": "common",
+  "ppe": {
+    "permanentBurnToAcquire": 6,
+    "baseActivation": 4
+  },
+  "limitations": {
+    "usableInNightbaneForm": "varies_by_scope",
+    "formUsage": {
+      "byTarget": {
+        "self": {
+          "form": "either_form",
+          "effectiveness": "full"
+        },
+        "others": {
+          "form": "morphus_only",
+          "effectiveness": "base_only"
+        }
+      }
+    }
+  }
+}

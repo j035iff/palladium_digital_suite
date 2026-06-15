@@ -153,7 +153,7 @@ Content is **JSON-first**, validated by Ajv:
 | `palladium-skill.schema.json` | `palladiumSkills.json` |
 | `palladium-occ.schema.json` | `occs/*.json` |
 | `palladium-race.schema.json` | `races/player.json`, `races/npc.json`, `races/gm_approval.json` |
-| `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` |
+| `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest guide: [`docs/nightbane-talent-ingest.md`](nightbane-talent-ingest.md) |
 | `palladium-hth.schema.json` | `palladiumHandToHand.json` |
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |

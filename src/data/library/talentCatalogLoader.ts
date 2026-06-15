@@ -47,12 +47,18 @@ function formFromLimitations(
   return undefined
 }
 
+function resolveUsableInNightbaneForm(
+  row: PalladiumTalent,
+): TalentUsableInNightbaneForm {
+  return row.limitations?.usableInNightbaneForm ?? 'morphus_only'
+}
+
 function resolveFormRequirement(row: PalladiumTalent): ActiveForm | undefined {
   const explicit = row.formRequirement
   if (explicit === 'facade' || explicit === 'morphus') {
     return explicit
   }
-  return formFromLimitations(row.limitations?.usableInNightbaneForm)
+  return formFromLimitations(resolveUsableInNightbaneForm(row))
 }
 
 function ppeActivationCost(base: unknown): FeatureActivationCost | undefined {

@@ -502,7 +502,36 @@ export type TalentUsableInNightbaneForm =
   | 'morphus_only'
   | 'facade_only'
   | 'either_form'
+  | 'varies_by_scope'
   | 'both_forms_note_special'
+
+/** Facade/Morphus allowance for one scope (target or phase). */
+export type TalentFormRestrictionForm =
+  | 'morphus_only'
+  | 'facade_only'
+  | 'either_form'
+
+export type TalentFormEffectiveness = 'full' | 'base_only' | 'reduced'
+
+export type TalentFormRestriction = {
+  form: TalentFormRestrictionForm
+  /** When P.P.E. tiers or enhancements apply differently at this scope. */
+  effectiveness?: TalentFormEffectiveness
+  notes?: string
+}
+
+/** Structured form rules when self vs others or activation vs use differ. */
+export type TalentFormUsage = {
+  byTarget?: {
+    self?: TalentFormRestriction
+    others?: TalentFormRestriction
+    willing?: TalentFormRestriction
+  }
+  phases?: {
+    activation?: TalentFormRestriction
+    ongoingUse?: TalentFormRestriction
+  }
+}
 
 export type TalentPpeEconomy = {
   permanentBurnToAcquire?: number | string
@@ -514,6 +543,7 @@ export type TalentPpeEconomy = {
 
 export type TalentLimitations = {
   usableInNightbaneForm?: TalentUsableInNightbaneForm
+  formUsage?: TalentFormUsage
   minimumCharacterLevelToAcquire?: number
   cannotAffect?: readonly string[]
   otherLimitations?: string

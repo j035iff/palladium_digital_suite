@@ -31,3 +31,5 @@ The app is strictly a tool for taking the friction out of playing at a table. It
 ###Core guidelines
 If a content schema is updated, update the associated example json to account for the update. Do not create new example jsons of that data type, always update the base example json so we have all examples in one file.
 
+### Nightbane talent catalog ingest
+When adding, updating, or auditing Nightbane Talents (`src/data/content/talents/`), follow **`docs/nightbane-talent-ingest.md`** (Pass A/B workflow, form rules, P.P.E., batch template, validation commands). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
