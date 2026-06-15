@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Race } from '../types'
 import {
+  configuratorRaceColumnIgnoresActiveOcc,
   creationUsesOccSkillProgram,
   raceForcedOccId,
   resolveCreationOccLibraryRow,
@@ -57,5 +58,16 @@ describe('shadowOcc', () => {
         name: 'Other',
       } as never),
     ).toBeNull()
+  })
+
+  it('keeps the race catalog unlocked for R.C.C. shadow mounts', () => {
+    expect(configuratorRaceColumnIgnoresActiveOcc(guardianRace)).toBe(true)
+    expect(
+      configuratorRaceColumnIgnoresActiveOcc({
+        ...guardianRace,
+        canPickOcc: true,
+      }),
+    ).toBe(false)
+    expect(configuratorRaceColumnIgnoresActiveOcc(undefined)).toBe(false)
   })
 })

@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc } from '../../types'
+import { createBlankCharacterForGenre } from '../characterRoot'
+import { getRaceById, getLibraryOccById } from '../../data/library/registry'
+import { creationNeedsAbilitySelection } from '../creationPhases'
+import { resolveEffectiveCreationAbilityBudget } from '../creationAbilityBudget'
+import {
+  buildCharacterCreationForgeContext,
+  deriveCharacterCreationForgeNavigation,
+} from './characterCreationForge'
 import { listCharacterCreationTabRequirements } from './characterCreationTabRequirements'
 import type { CharacterCreationForgeContext } from './characterCreationForge'
 
@@ -97,5 +105,44 @@ describe('listCharacterCreationTabRequirements', () => {
     })
     expect(requirements.map((r) => r.id)).toEqual(['race-occ-pair', 'occ-spec'])
     expect(requirements[1]?.satisfied).toBe(false)
+  })
+
+  it('tab7 requires Nightbane R.C.C. 1st-level talent for basic O.C.C.', () => {
+    const race = getRaceById('nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    expect(race).toBeDefined()
+    expect(occ).toBeDefined()
+
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      raceId: 'nightbane',
+      occ: { id: 'occ_nightbane_basic', xpTable: occ!.xpTable },
+      creationGenreId: 'nightbane' as const,
+    }
+    const forgeCtx = buildCharacterCreationForgeContext(
+      character,
+      race,
+      occ,
+      'none',
+    )
+    const budget = resolveEffectiveCreationAbilityBudget({
+      occ,
+      raceId: 'nightbane',
+      psychicTier: 'none',
+      creationGenreId: 'nightbane',
+    })
+    expect(creationNeedsAbilitySelection(budget, 'nightbane')).toBe(true)
+
+    const requirements = listCharacterCreationTabRequirements(
+      'tab7_abilities',
+      forgeCtx,
+    )
+    expect(requirements.some((r) => r.id === 'ability-talents' && !r.satisfied)).toBe(
+      true,
+    )
+
+    const nav = deriveCharacterCreationForgeNavigation(forgeCtx, 'tab7_abilities')
+    const abilitiesTab = nav.tabs.find((t) => t.id === 'tab7_abilities')
+    expect(abilitiesTab?.visual).not.toBe('na')
   })
 })

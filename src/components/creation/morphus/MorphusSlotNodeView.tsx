@@ -3,8 +3,13 @@ import type {
   MorphusForgeSlotState,
   MorphusSlotNode,
 } from '../../../types'
+import { useMemo, useState } from 'react'
 import { MORPHUS_CHARACTERISTICS_ROUTING_TABLE } from '../../../data/library/morphusForgeRoutingLoader'
 import { getMorphusCharacteristicById } from '../../../data/library/morphusTableCatalogLoader'
+import {
+  buildMorphusChoiceBranchNode,
+  readMorphusChoiceBranchTableId,
+} from '../../../lib/morphusSlotResolution'
 import {
   enrichMorphusTraitPickOption,
   formatMorphusSlotPlanRoute,
@@ -112,6 +117,78 @@ function nodeShowsTraitModifiers(node: MorphusSlotNode): boolean {
   return node.kind === 'table' || node.kind === 'variant_choice'
 }
 
+export function isMorphusMultiOptionChoice(node: MorphusSlotNode): boolean {
+  return node.kind === 'choice' && (node.options?.length ?? 0) > 1
+}
+
+function choiceTabClass(selected: boolean): string {
+  if (selected) {
+    return 'border-violet-400 bg-violet-600 text-white ring-1 ring-violet-400/70'
+  }
+  return 'border-violet-900 bg-slate-950 text-violet-200 ring-1 ring-violet-900 hover:border-violet-700'
+}
+
+function MorphusChoiceSubTableTabs({
+  node,
+  actions,
+  slotState,
+}: {
+  node: MorphusSlotNode
+  actions: SlotActions
+  slotState?: MorphusForgeSlotState
+}) {
+  const options = node.options ?? []
+  const chosenTableId = readMorphusChoiceBranchTableId(slotState, node.path)
+  const [previewTableId, setPreviewTableId] = useState<string | undefined>(undefined)
+  const activeTableId = chosenTableId ?? previewTableId ?? options[0]?.tableId
+
+  const panelNode = useMemo(() => {
+    const option = options.find((row) => row.tableId === activeTableId)
+    if (!option) return null
+    if (chosenTableId === activeTableId && node.children[0]) {
+      return node.children[0]
+    }
+    return buildMorphusChoiceBranchNode(node.path, option, slotState)
+  }, [activeTableId, chosenTableId, node.children, node.path, options, slotState])
+
+  if (options.length === 0) return null
+
+  const selectTab = (tableId: string) => {
+    setPreviewTableId(tableId)
+    if (tableId !== chosenTableId) {
+      actions.onBranchPick(node.path, tableId)
+    }
+  }
+
+  return (
+    <div className="mt-3 space-y-3">
+      <div className="flex flex-wrap gap-2" role="tablist" aria-label={node.label}>
+        {options.map((option) => {
+          const selected = option.tableId === activeTableId
+          return (
+            <button
+              key={option.tableId}
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              onClick={() => selectTab(option.tableId)}
+              className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${choiceTabClass(selected)}`}
+            >
+              {option.label}
+            </button>
+          )
+        })}
+      </div>
+
+      {panelNode ? (
+        <div role="tabpanel" aria-label={options.find((o) => o.tableId === activeTableId)?.label}>
+          <MorphusSlotNodeView node={panelNode} actions={actions} slotState={slotState} />
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 function PickList({
   node,
   onPick,
@@ -151,6 +228,10 @@ function MorphusSlotNodeBody({
   const hasResolvedPick = Boolean(node.resolvedEntryName)
   const selectedEntry = hasResolvedPick ? resolvedPickEntry(node) : null
   const showModifiers = nodeShowsTraitModifiers(node)
+
+  if (isMorphusMultiOptionChoice(node)) {
+    return null
+  }
 
   if (selectedEntry && node.kind !== 'custom_trait') {
     return (
@@ -276,40 +357,90 @@ export function MorphusSlotNodeView({
   actions,
   slotState,
   depth = 0,
+  embedded = false,
 }: {
   node: MorphusSlotNode
   actions: SlotActions
   slotState?: MorphusForgeSlotState
   depth?: number
+  embedded?: boolean
 }) {
-  return (
-    <article className={`rounded-xl border-2 p-3 ${statusBorder(node.status)}`}>
-      <header className="flex flex-wrap items-center justify-between gap-2">
-        <h4 className="text-sm font-semibold text-violet-50">{node.label}</h4>
-        <span className="text-[10px] font-bold uppercase tracking-wide text-violet-400">
-          {node.status === 'complete'
-            ? 'Complete'
-            : node.status === 'incomplete_custom'
-              ? 'Custom trait'
+  if (isMorphusMultiOptionChoice(node) && !embedded) {
+    return (
+      <article className={`rounded-xl border-2 p-3 ${statusBorder(node.status)}`}>
+        <header className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-violet-50">{node.label}</h4>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-violet-400">
+            {node.status === 'complete'
+              ? 'Complete'
               : node.status === 'ready'
                 ? 'Pick required'
                 : 'Blocked'}
-        </span>
-      </header>
+          </span>
+        </header>
+        <MorphusChoiceSubTableTabs node={node} actions={actions} slotState={slotState} />
+      </article>
+    )
+  }
+
+  const content = (
+    <>
+      {!embedded ? (
+        <header className="flex flex-wrap items-center justify-between gap-2">
+          <h4 className="text-sm font-semibold text-violet-50">{node.label}</h4>
+          <span className="text-[10px] font-bold uppercase tracking-wide text-violet-400">
+            {node.status === 'complete'
+              ? 'Complete'
+              : node.status === 'incomplete_custom'
+                ? 'Custom trait'
+                : node.status === 'ready'
+                  ? 'Pick required'
+                  : 'Blocked'}
+          </span>
+        </header>
+      ) : null}
       <MorphusSlotNodeBody node={node} actions={actions} slotState={slotState} />
       {node.children.length > 0 ? (
-        <div className="mt-3 space-y-3 border-t border-violet-800/50 pt-3">
-          {node.children.map((child) => (
-            <MorphusSlotNodeView
-              key={child.path}
-              node={child}
-              actions={actions}
-              slotState={slotState}
-              depth={depth + 1}
-            />
-          ))}
+        <div
+          className={
+            embedded
+              ? 'mt-3 space-y-3'
+              : 'mt-3 space-y-3 border-t border-violet-800/50 pt-3'
+          }
+        >
+          {node.children.map((child) => {
+            if (isMorphusMultiOptionChoice(child)) {
+              return (
+                <MorphusChoiceSubTableTabs
+                  key={child.path}
+                  node={child}
+                  actions={actions}
+                  slotState={slotState}
+                />
+              )
+            }
+            return (
+              <MorphusSlotNodeView
+                key={child.path}
+                node={child}
+                actions={actions}
+                slotState={slotState}
+                depth={depth + 1}
+              />
+            )
+          })}
         </div>
       ) : null}
+    </>
+  )
+
+  if (embedded) {
+    return <div className="space-y-2">{content}</div>
+  }
+
+  return (
+    <article className={`rounded-xl border-2 p-3 ${statusBorder(node.status)}`}>
+      {content}
     </article>
   )
 }

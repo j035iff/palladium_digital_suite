@@ -25,6 +25,7 @@ import {
 import {
   buildAttrFormulaLedgerFields,
   diceTermsFromAttrFormula,
+  dualFormPpeLedgerFormulaOpts,
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
@@ -300,8 +301,12 @@ export function buildPendingDiceBlocks(
 
   const ppeFormula =
     race && occ?.id?.trim() ? resolvePpeCreationFormula(race, occ) : null
+  const facadePe = assignments.pe ?? character.facade.attributes.pe
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: occ?.ppeEngine?.perLevelFormula,
+    ...(opts?.supportsDualForm
+      ? dualFormPpeLedgerFormulaOpts(facadePe)
+      : {}),
   })
   const ppeDice = ppeFormula ? formulaDiceRolls('ppe', ppeFormula, 'die') : []
   if (ppeFields.hint || ppeDice.length > 0) {
@@ -358,9 +363,11 @@ export function buildPendingDiceBlocks(
     const morphHp = buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
       hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
     })
-    const morphSdc = buildAttrFormulaLedgerFields('PEx4 + PSx2 + 2D6*8', assignments, {
-      hintOverride: 'P.E.×4 + P.S.×2 + 2D6×8 (resolve at Spawn)',
-    })
+    const pendingResolutions = character.creationPendingDiceResolutions ?? {}
+    const facadeSdcBlock = vitalityBlocks.find((block) => block.id === 'sdc')
+    const facadeSdcBaseline = facadeSdcBlock
+      ? pendingDiceBlockRunningTotal(facadeSdcBlock, pendingResolutions)
+      : sdcDetails.flatTotal
     vitalityBlocks.push({
       id: 'morphus_hp',
       label: 'Morphus H.P.',
@@ -379,15 +386,15 @@ export function buildPendingDiceBlocks(
     vitalityBlocks.push({
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
-      flatBaseline: Number(morphSdc.value) || 0,
-      flatTooltip: morphSdc.valueTooltip,
-      hint: morphSdc.hint,
+      flatBaseline: facadeSdcBaseline,
+      flatTooltip: formatFlatValueTooltip(sdcDetails.flatBreakdown),
+      hint: 'Facade S.D.C. + 2D6×10 (resolve at Spawn)',
       groups: [
         {
           kind: 'race',
-          display: '2D6x8',
+          display: '2D6x10',
           tooltip: '(Morphus dice)',
-          rolls: formulaDiceRolls('morphus_sdc', '2D6*8', 'die'),
+          rolls: formulaDiceRolls('morphus_sdc', '2D6*10', 'die'),
         },
       ],
     })

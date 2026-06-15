@@ -47,6 +47,7 @@ import {
 import { traitForgeTabApplicable, traitForgeTabLabel } from '../creationSubForge'
 import { isMorphusForgeComplete } from '../morphusForgeNavigation'
 import { raceLineageFromDefinition } from '../raceEngine'
+import { characterHasDualForms } from '../raceFormPolicy'
 import { creationUsesOccSkillProgram } from '../shadowOcc'
 import {
   assessAbilitiesBudgetBlockers,
@@ -362,6 +363,7 @@ function assessPsychicTabBlockers(ctx: CharacterCreationForgeContext): string[] 
 function resolveCreationAbilityBudget(ctx: CharacterCreationForgeContext) {
   return resolveEffectiveCreationAbilityBudget({
     occ: ctx.occ,
+    raceId: ctx.character.raceId,
     psychicTier: ctx.psychicTier,
     psychicGateBypassed: ctx.character.psychicGateBypassed === true,
     majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
@@ -579,6 +581,7 @@ function buildTabDefinitions(
           isNa: () => {
             const budget = resolveEffectiveCreationAbilityBudget({
               occ,
+              raceId: character.raceId,
               psychicTier: ctx.psychicTier,
               psychicGateBypassed: character.psychicGateBypassed === true,
               majorAllocation: character.creationPsychicGateMajorAllocation,
@@ -709,4 +712,82 @@ export function buildCharacterCreationForgeContext(
     psychicTier,
     supportsDualForm: raceLineageFromDefinition(race) === 'nightbane',
   }
+}
+
+const MORPHUS_LEDGER_TRAITS_TAB: CharacterCreationForgeTabId = 'tab6_traits'
+
+function isAtOrPastForgeTab(
+  activeTabId: CharacterCreationForgeTabId,
+  targetTabId: CharacterCreationForgeTabId,
+): boolean {
+  const targetIndex = CHARACTER_CREATION_TAB_ORDER.indexOf(targetTabId)
+  const activeIndex = CHARACTER_CREATION_TAB_ORDER.indexOf(activeTabId)
+  return targetIndex >= 0 && activeIndex >= targetIndex
+}
+
+  /** Roll Pending done — required before the first Traits visit can set the sticky unlock. */
+export function isMorphusLedgerUnlockEligible(
+  character: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+): boolean {
+  if (!traitForgeTabApplicable(race, occ)) return false
+  const completed = readForgeCompletion(character).completed
+  return (
+    completed.tab5_finalize === true || character.creationFacadeDiceFinalized === true
+  )
+}
+
+/** Traits tab is navigable right now (sidebar clickable). */
+export function isTraitsForgeTabNavigable(
+  character: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  psychicTier: PsychicTier,
+): boolean {
+  if (!traitForgeTabApplicable(race, occ)) return false
+
+  const activeTabId = resolveActiveForgeTab(character)
+  const ctx = buildCharacterCreationForgeContext(character, race, occ, psychicTier)
+  const nav = deriveCharacterCreationForgeNavigation(ctx, activeTabId)
+  const traitsTab = nav.tabs.find((t) => t.id === 'tab6_traits')
+  return traitsTab?.clickable === true && traitsTab.visual !== 'na'
+}
+
+export function forgeTabVisitUnlocksMorphusLedger(
+  tabId: CharacterCreationForgeTabId,
+): boolean {
+  return isAtOrPastForgeTab(tabId, MORPHUS_LEDGER_TRAITS_TAB)
+}
+
+/** Set sticky Morphus ledger unlock when the player first opens Traits (or a later tab). */
+export function morphusLedgerUnlockPatchIfEligible(
+  character: CharacterRootState,
+  tabId: CharacterCreationForgeTabId,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  psychicTier: PsychicTier,
+): Partial<CharacterRootState> {
+  if (!characterHasDualForms(character)) return {}
+  if (!forgeTabVisitUnlocksMorphusLedger(tabId)) return {}
+  if (character.creationMorphusLedgerUnlocked === true) return {}
+  if (!isMorphusLedgerUnlockEligible(character, race, occ)) return {}
+  return { creationMorphusLedgerUnlocked: true }
+}
+
+/**
+ * Nightbane creation: Morphus Live Ledger unlocks on first Traits tab visit and
+ * stays available for the rest of the draft (only cleared by creation Reset).
+ */
+export function isMorphusLedgerUnlocked(
+  character: CharacterRootState,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  psychicTier: PsychicTier,
+): boolean {
+  void race
+  void occ
+  void psychicTier
+  if (!characterHasDualForms(character)) return false
+  return character.creationMorphusLedgerUnlocked === true
 }

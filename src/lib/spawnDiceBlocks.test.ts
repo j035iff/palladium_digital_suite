@@ -135,13 +135,13 @@ describe('spawnDiceBlocks', () => {
       { ...characterFixture, creationAttributeAssignments: { pe: 12 } },
       nightbane,
       occ,
-      { psychicTier: 'none' },
+      { psychicTier: 'none', supportsDualForm: true },
     )
     const ppe = blocks.find((block) => block.id === 'ppe')!
     const diceRolls = ppe.groups.flatMap((group) => group.rolls)
     expect(diceRolls).toHaveLength(1)
     expect(diceRolls[0]?.notation).toBe('3D6x10')
-    expect(ppe.hint).toBe('P.E. + 3D6x10 + 20 (+3D6/level)')
+    expect(ppe.hint).toBe('PE (facade) + 3D6x10 + 20 (+3D6/level)')
     expect(ppe.flatBaseline).toBe(12)
   })
 

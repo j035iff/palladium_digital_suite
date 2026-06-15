@@ -12,6 +12,18 @@ describe('ledgerStatBonuses', () => {
     expect(aggregateDiceNotations(['1D8', '1D6', '4D6'])).toBe('1D8 + 5D6')
   })
 
+  it('includes flat race S.D.C. base in the value column', () => {
+    const nightbane = getRaceById('nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const bundle = buildSdcStatBonuses(nightbane, occ, undefined, ['skill_running'], {})
+
+    expect(bundle.flatBreakdown.some((b) => b.label === 'Base' && b.amount === 30)).toBe(
+      true,
+    )
+    expect(bundle.flatTotal).toBeGreaterThanOrEqual(30)
+    expect(bundle.diceGroups.find((g) => g.kind === 'occ')).toBeUndefined()
+  })
+
   it('builds SDC preview for human law-enforcement skills example', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')

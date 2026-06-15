@@ -72,6 +72,7 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       creationVitalityCommitted: false,
       creationFacadeDiceFinalized: false,
       creationMorphusDiceFinalized: false,
+      creationMorphusLedgerUnlocked: false,
       selectedAbilities: [],
       creationAbilityBudget: {
         spellSlots: 0,

@@ -13,6 +13,7 @@ import {
 import { MorphusCrossroadsTab } from './morphus/MorphusCrossroadsTab'
 import { MorphusTraitForgeTab } from './morphus/MorphusTraitForgeTab'
 import { MorphusReviewTab } from './morphus/MorphusReviewTab'
+import { SelectedMorphusTraitsPanel } from './morphus/SelectedMorphusTraitsPanel'
 
 const SUB_TAB_TITLES: Record<MorphusForgeSubTabId, string> = {
   crossroads: 'Tab 1: Crossroads & Initialization',
@@ -88,7 +89,10 @@ export function MorphusForge() {
   }
 
   return (
-    <section aria-labelledby="forge-tab-page-heading" className="space-y-4">
+    <section
+      aria-labelledby="forge-tab-page-heading"
+      className="flex min-h-0 flex-1 flex-col space-y-4"
+    >
       <div className="rounded-xl border border-violet-800/60 bg-slate-950/30 p-3">
         <ForgeNavigationBar
           tabs={nav.tabs}
@@ -117,31 +121,36 @@ export function MorphusForge() {
         </div>
       </div>
 
-      {activeSubTab === 'crossroads' ? (
-        <MorphusCrossroadsTab
-          morphusForgeState={morphusState}
-          onPatchState={handlePatchCrossroads}
-        />
-      ) : null}
-      {activeSubTab === 'trait_forge' ? (
-        <MorphusTraitForgeTab
-          morphusForgeState={morphusState}
-          onSetCharacteristicsCount={(count) =>
-            patchMorphusForgeState((prev) => ({
-              ...prev,
-              characteristicsPickCount: count,
-            }))
-          }
-        />
-      ) : null}
-      {activeSubTab === 'review' ? (
-        <MorphusReviewTab
-          morphusForgeState={morphusState}
-          onFinalize={() => {
-            /* creationTraitForgeStubComplete set in MorphusReviewTab */
-          }}
-        />
-      ) : null}
+      <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+        <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
+          {activeSubTab === 'crossroads' ? (
+            <MorphusCrossroadsTab
+              morphusForgeState={morphusState}
+              onPatchState={handlePatchCrossroads}
+            />
+          ) : null}
+          {activeSubTab === 'trait_forge' ? (
+            <MorphusTraitForgeTab
+              morphusForgeState={morphusState}
+              onSetCharacteristicsCount={(count) =>
+                patchMorphusForgeState((prev) => ({
+                  ...prev,
+                  characteristicsPickCount: count,
+                }))
+              }
+            />
+          ) : null}
+          {activeSubTab === 'review' ? (
+            <MorphusReviewTab
+              morphusForgeState={morphusState}
+              onFinalize={() => {
+                /* creationTraitForgeStubComplete set in MorphusReviewTab */
+              }}
+            />
+          ) : null}
+        </div>
+        <SelectedMorphusTraitsPanel morphusForgeState={morphusState} />
+      </div>
     </section>
   )
 }

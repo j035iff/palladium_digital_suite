@@ -14,6 +14,9 @@ export function calculateBaseSdc(race: Race | undefined, occ: PalladiumOcc | und
   if (sdc == null) {
     return occ?.baseStats?.sdcDice?.trim() || '3D6'
   }
+  if (typeof sdc === 'number' && Number.isFinite(sdc)) {
+    return String(Math.trunc(sdc))
+  }
   if (typeof sdc === 'string') {
     const t = sdc.trim()
     return t.length > 0 ? t : '3D6'

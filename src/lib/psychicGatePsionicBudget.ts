@@ -2,8 +2,10 @@ import { getAbilityById } from '../data/abilityLibrary'
 import { getFeatureById } from '../data/library/registry'
 import { occIsNaturalPsychicClass } from './creationPhases'
 import {
+  mergeCreationAbilityBudgets,
   occCreationAbilityBudget,
   psionicCategoriesForFeature,
+  raceCreationAbilityBudget,
   type OccCreationAbilityBudget,
 } from './occCreationDerivation'
 import {
@@ -350,6 +352,7 @@ export function assessPsychicGatePsionicBlockers(params: {
 
 export function resolveGateAwareCreationAbilityBudget(input: {
   occ?: PalladiumOcc
+  raceId?: string
   psychicTier?: PsychicTier
   psychicGateBypassed?: boolean
   majorAllocation?: PsychicGateMajorAllocation | null
@@ -358,6 +361,7 @@ export function resolveGateAwareCreationAbilityBudget(input: {
 }): OccCreationAbilityBudget {
   const {
     occ,
+    raceId,
     psychicTier = 'none',
     psychicGateBypassed = false,
     majorAllocation,
@@ -369,9 +373,12 @@ export function resolveGateAwareCreationAbilityBudget(input: {
     // handled by parent
   }
 
-  const occBudget = occ
-    ? occCreationAbilityBudget(occ)
-    : (storedBudget ?? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 })
+  const occBudget = mergeCreationAbilityBudgets(
+    occ
+      ? occCreationAbilityBudget(occ)
+      : (storedBudget ?? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }),
+    raceCreationAbilityBudget(raceId),
+  )
 
   const tier = psychicGateBypassed ? 'none' : psychicTier
 

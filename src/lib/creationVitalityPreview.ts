@@ -9,6 +9,7 @@ import {
 import { formatVitalFormulaLedgerHint } from './ledgerVitalFormula'
 import {
   buildAttrFormulaLedgerFields,
+  dualFormPpeLedgerFormulaOpts,
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
@@ -52,6 +53,7 @@ export function creationVitalityPreview(
   opts?: {
     psychicTier?: string
     assignments?: Partial<Record<ForgeAttrKey, number>>
+    supportsDualForm?: boolean
   },
 ): CreationVitalityPreview {
   const assignments =
@@ -77,8 +79,13 @@ export function creationVitalityPreview(
     race && occ && isCreationOccSelected(occ)
       ? resolvePpeCreationFormula(race, occ)
       : null
+  const facadePe =
+    assignments.pe ?? character.facade.attributes.pe
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: occ?.ppeEngine?.perLevelFormula,
+    ...(opts?.supportsDualForm
+      ? dualFormPpeLedgerFormulaOpts(facadePe)
+      : {}),
   })
   const ppeValue = ppeFields.value
   const ppeRollHint = ppeFields.hint

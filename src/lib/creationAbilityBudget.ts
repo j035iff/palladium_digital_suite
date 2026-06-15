@@ -1,7 +1,9 @@
 import { getAbilityById } from '../data/abilityLibrary'
 import { creationNeedsAbilitySelection } from './creationPhases'
 import {
+  mergeCreationAbilityBudgets,
   occCreationAbilityBudget,
+  raceCreationAbilityBudget,
   type OccCreationAbilityBudget,
 } from './occCreationDerivation'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
@@ -102,6 +104,7 @@ export function formatAbilityBudgetRequirementLabel(
 
 export type ResolveCreationAbilityBudgetInput = {
   occ?: PalladiumOcc
+  raceId?: string
   psychicTier?: PsychicTier
   psychicGateBypassed?: boolean
   majorAllocation?: PsychicGateMajorAllocation | null

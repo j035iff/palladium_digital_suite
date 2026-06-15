@@ -2328,6 +2328,8 @@ export type Character = {
   creationFacadeDiceFinalized?: boolean
   /** Traits tab — morphus vitality dice applied (Nightbane). */
   creationMorphusDiceFinalized?: boolean
+  /** Live Ledger Morphus toggle unlocked after first Traits tab visit (cleared only by creation Reset). */
+  creationMorphusLedgerUnlocked?: boolean
   /** Step 3 — O.C.C. skill ids chosen in Skill Engine (mirrors sheet at Spawn). */
   creationOccSkillIds?: string[]
   /**

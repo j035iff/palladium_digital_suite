@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 
+import { useCharacter } from '../../context/CharacterContext'
+
 import { OccSelector } from './OccSelector'
 
 import { AttributeForge } from './AttributeForge'
@@ -21,8 +23,10 @@ import { OccVariableBonusPhase } from './OccVariableBonusPhase'
 import { CreationAttributeHeader } from './CreationAttributeHeader'
 
 import { LiveLedger } from './LiveLedger'
-
-import { useCharacter } from '../../context/CharacterContext'
+import {
+  MORPHUS_LEDGER_BORDER_CLASS,
+  MORPHUS_LEDGER_SURFACE_CLASS,
+} from './LedgerStatGrid'
 
 import { MorphusForge } from './MorphusForge'
 
@@ -135,11 +139,20 @@ export function CreationFlowShell({
 
     psychicTier,
 
+    activeForm,
+
+    supportsDualForm,
+
+    morphusLedgerUnlocked,
+
     setCreationForgeTab,
 
     markCreationForgeTabComplete,
 
   } = useCharacter()
+
+  const morphusLedger =
+    supportsDualForm && morphusLedgerUnlocked && activeForm === 'morphus'
 
 
 
@@ -215,17 +228,17 @@ export function CreationFlowShell({
 
       <aside
 
-        className="flex min-h-0 shrink-0 flex-col border-b border-blue-200 bg-white shadow-sm dark:border-blue-600 dark:bg-slate-950 md:w-72 md:border-b-0 md:border-r lg:w-80 xl:w-96"
+        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-b shadow-sm md:max-h-none md:w-54 md:border-b-0 md:border-r lg:w-60 xl:w-72 ${
+          morphusLedger
+            ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
+            : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
+        }`}
 
         aria-label="Live ledger panel"
 
       >
 
-        <div className="max-h-[min(36vh,16rem)] min-h-0 overflow-y-auto overscroll-contain md:max-h-none md:flex-1">
-
-          <LiveLedger variant="sidebar" />
-
-        </div>
+        <LiveLedger variant="sidebar" />
 
       </aside>
 
@@ -313,6 +326,7 @@ export function CreationFlowShell({
           className={
             activeTabId === 'tab4_skills' ||
             activeTabId === 'tab1_configurator' ||
+            activeTabId === 'tab6_traits' ||
             activeTabId === 'tab7_abilities'
               ? 'flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4 md:pl-4'
               : 'min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4 md:pl-4'
@@ -388,7 +402,9 @@ export function CreationFlowShell({
 
             </>
 
-          ) : activeTabId === 'tab4_skills' || activeTabId === 'tab1_configurator' ? (
+          ) : activeTabId === 'tab4_skills' ||
+            activeTabId === 'tab1_configurator' ||
+            activeTabId === 'tab6_traits' ? (
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 

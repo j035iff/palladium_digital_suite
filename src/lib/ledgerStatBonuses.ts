@@ -89,6 +89,14 @@ export function aggregateDiceNotations(notations: readonly string[]): string {
   return parts.join(' + ')
 }
 
+/** Plain integer vital bases (e.g. Nightbane R.C.C. S.D.C. 30) — not dice notation. */
+export function parsePlainIntegerFormula(notation: string): number | null {
+  const t = notation.trim()
+  if (!/^\d+$/.test(t)) return null
+  const n = Number(t)
+  return Number.isFinite(n) ? n : null
+}
+
 function buildDiceGroup(
   kind: LedgerStatDiceGroup['kind'],
   contributions: readonly LedgerDiceContribution[],
@@ -276,11 +284,20 @@ export function buildSdcStatBonusDetails(
   const occDice: LedgerDiceContribution[] = []
   const occFlat: LedgerFlatContribution[] = []
 
+  if (race) {
+    const baseSdc = calculateBaseSdc(race, occ)
+    const flatBase = parsePlainIntegerFormula(baseSdc)
+    if (flatBase != null) {
+      occFlat.push({ label: 'Base', amount: flatBase })
+    } else if (occ?.id?.trim()) {
+      occDice.push({
+        notation: baseSdc,
+        label: 'Base OCC',
+      })
+    }
+  }
+
   if (race && occ?.id?.trim()) {
-    occDice.push({
-      notation: calculateBaseSdc(race, occ),
-      label: 'Base OCC',
-    })
     const bonusDice = occStaticDiceNotation(occ, specializationId, 'vitals', 'sdc')
     if (bonusDice) {
       occDice.push({ notation: bonusDice, label: 'OCC bonus' })

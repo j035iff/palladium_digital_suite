@@ -384,6 +384,7 @@ function tab7Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
   const genreId = ctx.character.creationGenreId ?? 'nightbane'
   const budget = resolveEffectiveCreationAbilityBudget({
     occ: ctx.occ,
+    raceId: ctx.character.raceId,
     psychicTier: ctx.psychicTier,
     psychicGateBypassed: ctx.character.psychicGateBypassed === true,
     majorAllocation: ctx.character.creationPsychicGateMajorAllocation,

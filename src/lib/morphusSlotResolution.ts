@@ -742,6 +742,61 @@ export function deriveMorphusSlotResolutionView(
   }
 }
 
+export type MorphusSelectedTraitPanelRow = {
+  path: string
+  name: string
+  slotLabel: string
+  status: MorphusSlotNode['status']
+  pending: boolean
+}
+
+const SELECTED_TRAIT_PANEL_KINDS = new Set<MorphusSlotNode['kind']>([
+  'table',
+  'characteristic',
+  'variant_choice',
+  'sub_trait_choice',
+  'custom_trait',
+])
+
+/** Flat list of trait picks for the creation forge selected-traits sidebar. */
+export function collectMorphusSelectedTraitPanelRows(
+  nodes: readonly MorphusSlotNode[],
+  slotState: MorphusForgeSlotState | undefined,
+): MorphusSelectedTraitPanelRow[] {
+  const state = normalizeSlotState(slotState)
+  const rows: MorphusSelectedTraitPanelRow[] = []
+
+  for (const node of flattenMorphusSlotNodes(nodes)) {
+    if (!SELECTED_TRAIT_PANEL_KINDS.has(node.kind)) continue
+
+    if (node.kind === 'custom_trait') {
+      const instance = state.customInstances?.[node.path]
+      const displayName = instance?.displayName?.trim()
+      if (!displayName && node.status !== 'incomplete_custom' && !instance) continue
+      rows.push({
+        path: node.path,
+        name: displayName || 'Custom trait (incomplete)',
+        slotLabel: node.label,
+        status: node.status,
+        pending: node.status !== 'complete',
+      })
+      continue
+    }
+
+    if (!node.resolvedEntryName) continue
+
+    rows.push({
+      path: node.path,
+      name: node.resolvedEntryName,
+      slotLabel: node.label,
+      status: node.status,
+      pending: node.status !== 'complete',
+    })
+  }
+
+  return rows
+}
+
 export function clearMorphusForgeSlotState(): MorphusForgeSlotState {
   return {}
 }
@@ -835,4 +890,32 @@ export function morphusTraitForgeReady(
   if (!path2CharacteristicsCountValid(forgeState)) return false
   const view = deriveMorphusSlotResolutionView(forgeState, character.morphusForgeSlotState)
   return view.complete
+}
+
+/** Resolve a choice branch sub-table for tab preview or display (pick-only, no dice). */
+export function buildMorphusChoiceBranchNode(
+  choicePath: string,
+  option: { tableId: string; label?: string; rerollMultiRollResults?: boolean },
+  slotState: MorphusForgeSlotState | undefined,
+  opts?: ResolveOpts,
+): MorphusSlotNode {
+  return expandTableResolution(
+    `${choicePath}/branch`,
+    option.label ?? tableLabel(option.tableId),
+    option.tableId,
+    option,
+    normalizeSlotState(slotState),
+    {
+      rerollCharacteristicsAbove: option.rerollMultiRollResults
+        ? opts?.rerollCharacteristicsAbove ?? 90
+        : opts?.rerollCharacteristicsAbove,
+    },
+  )
+}
+
+export function readMorphusChoiceBranchTableId(
+  slotState: MorphusForgeSlotState | undefined,
+  choicePath: string,
+): string | undefined {
+  return normalizeSlotState(slotState).branchTableIds?.[choicePath]
 }

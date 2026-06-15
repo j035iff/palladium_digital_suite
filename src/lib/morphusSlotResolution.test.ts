@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   buildMorphusSlotTree,
+  collectMorphusSelectedTraitPanelRows,
   deriveMorphusSlotResolutionView,
   isMorphusSlotTreeComplete,
   rootMorphusSlotPlan,
@@ -109,6 +110,26 @@ describe('morphusSlotResolution', () => {
     expect(view.traitSlots.some((slot) => slot.catalogEntryId === 'dinosaur_sauropod_humanoid')).toBe(
       true,
     )
+  })
+
+  it('lists selected trait rows for the sidebar panel', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'appearance',
+      appearanceEntryId: 'amalgam',
+    }
+    const slotState: MorphusForgeSlotState = {
+      picks: {
+        'plan:0': 'animal_canine_router',
+      },
+    }
+    const nodes = buildMorphusSlotTree(forgeState, slotState)
+    const rows = collectMorphusSelectedTraitPanelRows(nodes, slotState)
+    expect(rows).toEqual([
+      expect.objectContaining({
+        name: 'Canine',
+        pending: true,
+      }),
+    ])
   })
 
   it('resolves animal trait variant picks at the variant node path', () => {

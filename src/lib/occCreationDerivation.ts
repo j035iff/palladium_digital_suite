@@ -5,6 +5,7 @@ import type {
   PalladiumOcc,
 } from '../types'
 import { featureBudgetCategory } from './featureEngine'
+import { getRaceById } from '../data/library/registry'
 import { getSkillBookCategories } from './creationSkillCatalog'
 import { mapFilterCategoryToOccCategory } from './occCategoryRuleDisplay'
 import { normalizeCatalogSkillId } from '../data/library/skillsCatalogLoader'
@@ -111,6 +112,35 @@ export function occCreationAbilityBudget(occ: PalladiumOcc): OccCreationAbilityB
     psionicSlots: hook?.psionicSlots ?? derived.psionicSlots,
     talentSlots: hook?.talentSlots ?? derived.talentSlots,
   }
+}
+
+/** R.C.C. / race-level creation supernatural pick budgets (e.g. Nightbane 1st-level Talent). */
+export function raceCreationAbilityBudget(
+  raceId: string | undefined,
+): OccCreationAbilityBudget {
+  const race = raceId?.trim() ? getRaceById(raceId) : undefined
+  if (!race) {
+    return { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
+  }
+  if (race.lineage === 'nightbane' || race.id === 'nightbane') {
+    return { spellSlots: 0, psionicSlots: 0, talentSlots: 1 }
+  }
+  return { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
+}
+
+export function mergeCreationAbilityBudgets(
+  ...budgets: readonly (OccCreationAbilityBudget | undefined | null)[]
+): OccCreationAbilityBudget {
+  let spellSlots = 0
+  let psionicSlots = 0
+  let talentSlots = 0
+  for (const budget of budgets) {
+    if (!budget) continue
+    spellSlots = Math.max(spellSlots, budget.spellSlots)
+    psionicSlots = Math.max(psionicSlots, budget.psionicSlots)
+    talentSlots = Math.max(talentSlots, budget.talentSlots)
+  }
+  return { spellSlots, psionicSlots, talentSlots }
 }
 
 export function occStartingSpellLevelCap(occ: PalladiumOcc): number {
@@ -502,7 +532,10 @@ export function patchCharacterCreationFromOcc(
   const mundaneGenre = isGenreSupernaturalAbilitiesDisallowed(prev.creationGenreId)
   const abilityBudget = mundaneGenre
     ? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
-    : derived.abilityBudget
+    : mergeCreationAbilityBudgets(
+        derived.abilityBudget,
+        raceCreationAbilityBudget(prev.raceId),
+      )
   const grantedIds = mundaneGenre
     ? []
     : occSupernaturalGrantedAbilityIds(occ, prev.occSpecializationId)

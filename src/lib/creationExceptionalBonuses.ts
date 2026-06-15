@@ -74,7 +74,7 @@ export function listExceptionalAttributeBonusLines(
     if (pe.comaDeathStandard) {
       lines.push({
         label: 'P.E. save vs coma / death',
-        value: `${pe.comaDeathStandard}%`,
+        value: `+${pe.comaDeathStandard}%`,
       })
     }
   }

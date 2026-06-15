@@ -44,6 +44,13 @@ export function resolveCreationOccLibraryRow(
   return id ? getLibraryOccById(id) : undefined
 }
 
+/** Shadow-mounted R.C.C. skill programs must not lock the race catalog. */
+export function configuratorRaceColumnIgnoresActiveOcc(
+  race: Race | undefined,
+): boolean {
+  return race != null && !raceCanPickOcc(race)
+}
+
 export function shadowOccMountMessage(
   race: Race | undefined,
   occ: PalladiumOcc | undefined,

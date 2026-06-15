@@ -102,4 +102,16 @@ describe('creationAbilityBudget', () => {
       }).psionicSlots,
     ).toBe(3)
   })
+
+  it('grants Nightbane R.C.C. 1st-level talent pick for basic O.C.C.', () => {
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    expect(occ).toBeDefined()
+    const budget = resolveEffectiveCreationAbilityBudget({
+      occ,
+      raceId: 'nightbane',
+      psychicTier: 'none',
+      creationGenreId: 'nightbane',
+    })
+    expect(budget).toEqual({ spellSlots: 0, psionicSlots: 0, talentSlots: 1 })
+  })
 })

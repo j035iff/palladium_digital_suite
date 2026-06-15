@@ -145,6 +145,7 @@ export function assessCreationReviewBlockers(
     ...assessAbilitiesBudgetBlockers({
       budget: resolveEffectiveCreationAbilityBudget({
         occ: occLib,
+        raceId: character.raceId,
         psychicTier,
         psychicGateBypassed: character.psychicGateBypassed === true,
         majorAllocation: character.creationPsychicGateMajorAllocation,

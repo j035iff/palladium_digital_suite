@@ -183,7 +183,9 @@ import {
   canSaveCreationForLater as raceOccStepAllowsSaveForLater,
   completeForgeTab,
   forgeTabToLegacyPhase,
+  isMorphusLedgerUnlocked,
   legacyPhaseToForgeTab,
+  morphusLedgerUnlockPatchIfEligible,
 } from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
 import {
@@ -305,6 +307,8 @@ type CharacterContextValue = {
   activeForm: ActiveForm
   /** Only Nightbane uses Facade/Morphus; all other races stay on Facade. */
   supportsDualForm: boolean
+  /** Nightbane creation: Morphus Live Ledger unlocks when the Traits tab is reachable. */
+  morphusLedgerUnlocked: boolean
   activeFormState: FormState
   /** Memoized H.P., S.D.C. pools, and natural bonuses for the active form. */
   activeStats: ActiveStats
@@ -604,6 +608,7 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
   const tier = resolveCreationPsychicTier(prev, prev.creationPsychicTier ?? 'none')
   const abilityBudget = resolveEffectiveCreationAbilityBudget({
     occ: occRow,
+    raceId: prev.raceId,
     psychicTier: tier,
     psychicGateBypassed: prev.psychicGateBypassed === true,
     majorAllocation: prev.creationPsychicGateMajorAllocation,
@@ -754,6 +759,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const gateBypassed = rawCharacter.psychicGateBypassed === true
   const psychicSeedRef = useRef(false)
   const wasFinalizedRef = useRef(false)
+  const prevMorphusLedgerUnlockedRef = useRef<boolean | null>(null)
 
   useEffect(() => {
     savePersistedAbilityIds(
@@ -852,6 +858,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setXpHistory([])
     setLevelUpQueue([])
     psychicSeedRef.current = false
+    prevMorphusLedgerUnlockedRef.current = null
   }, [])
 
   const persistCharacterSave = useCallback((state: CharacterRootState) => {
@@ -880,6 +887,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setActiveForm('facade')
     setXpHistory(loadXpHistory(hydrated.name))
     setLevelUpQueue(outstandingLevelUpTargets(hydrated))
+    prevMorphusLedgerUnlockedRef.current = null
   }, [])
 
   const startCreation = useCallback((genreId: GenreId) => {
@@ -971,6 +979,36 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined,
     [activeOcc, character.occSpecializationId],
   )
+
+  const morphusLedgerUnlocked = useMemo(
+    () =>
+      isMorphusLedgerUnlocked(
+        rawCharacter,
+        activeRace,
+        effectiveOcc ?? undefined,
+        psychicTier,
+      ),
+    [rawCharacter, activeRace, effectiveOcc, psychicTier],
+  )
+
+  useEffect(() => {
+    if (!supportsDualForm) {
+      prevMorphusLedgerUnlockedRef.current = morphusLedgerUnlocked
+      return
+    }
+
+    const prev = prevMorphusLedgerUnlockedRef.current
+    prevMorphusLedgerUnlockedRef.current = morphusLedgerUnlocked
+
+    if (!morphusLedgerUnlocked) {
+      setActiveForm((form) => (form === 'morphus' ? 'facade' : form))
+      return
+    }
+
+    if (prev === false) {
+      setActiveForm('morphus')
+    }
+  }, [morphusLedgerUnlocked, supportsDualForm])
 
   const occCreationDerived = useMemo(
     () =>
@@ -1849,21 +1887,22 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setRaceId = useCallback((raceId: string | null) => {
     if (!raceId?.trim()) {
       setActiveForm('facade')
+      setPsychicTierState('none')
       setRawCharacter((prev) => {
-        const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+        const cleared = clearOccSelectionState(prev, 'facade')
         return syncCreationAttributeBranches(
           syncRaceOccFacadeSdc({
-            ...prev,
+            ...cleared,
             ...creationInvalidationPatch(prev, 'race'),
             raceId: undefined,
             lineage: 'megaversal',
             psychicGateBypassed: resolvePsychicGateBypassed(
               undefined,
-              occRow,
+              undefined,
               prev.creationGenreId,
             ),
           }),
-          occRow ?? undefined,
+          undefined,
         )
       })
       return
@@ -1977,12 +2016,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const setCreationForgeTab = useCallback((tabId: CharacterCreationForgeTabId) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      creationForgeTab: tabId,
-      creationPhase: forgeTabToLegacyPhase(tabId),
-    }))
-  }, [])
+    setRawCharacter((prev) => {
+      const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+      const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+      const tier = resolveCreationPsychicTier(prev, psychicTier)
+      const occ = occLib
+        ? resolveEffectivePalladiumOcc(occLib, prev.occSpecializationId)
+        : undefined
+      return {
+        ...prev,
+        creationForgeTab: tabId,
+        creationPhase: forgeTabToLegacyPhase(tabId),
+        ...morphusLedgerUnlockPatchIfEligible(prev, tabId, race, occ, tier),
+      }
+    })
+  }, [psychicTier])
 
   const markCreationForgeTabComplete = useCallback(
     (tabId: CharacterCreationForgeTabId) => {
@@ -2707,6 +2755,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       toggleMorphusGimmickSwitch,
       activeForm: sheetActiveForm,
       supportsDualForm,
+      morphusLedgerUnlocked,
       activeRace,
       activeOcc,
       effectiveOcc,
@@ -2850,6 +2899,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       toggleMorphusGimmickSwitch,
       sheetActiveForm,
       supportsDualForm,
+      morphusLedgerUnlocked,
       activeRace,
       activeOcc,
       effectiveOcc,

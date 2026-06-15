@@ -7,7 +7,7 @@ import {
 } from '../../data/library/registry'
 import { occCharacterCategory } from '../../lib/occCatalogEngine'
 import type { PalladiumOcc, Race } from '../../types'
-import { creationUsesOccSkillProgram, raceForcedOccId } from '../../lib/shadowOcc'
+import { creationUsesOccSkillProgram, configuratorRaceColumnIgnoresActiveOcc, raceForcedOccId } from '../../lib/shadowOcc'
 import {
   assessOccConfiguratorTier,
   assessRaceConfiguratorTier,
@@ -146,14 +146,24 @@ export function ConfiguratorPanel() {
     ],
   )
 
+  const raceColumnIgnoresOcc = configuratorRaceColumnIgnoresActiveOcc(activeRace)
+
+  const raceMatrixCtx: ConfiguratorMatrixContext = useMemo(
+    () =>
+      raceColumnIgnoresOcc
+        ? { ...matrixCtx, selectedOccId: null }
+        : matrixCtx,
+    [matrixCtx, raceColumnIgnoresOcc],
+  )
+
   const visibleRacePool = useMemo(
     () =>
       filterConfiguratorRacePoolForOcc(
         playerRaces,
-        activeOcc,
-        hideOccIncompatibleRaces,
+        raceColumnIgnoresOcc ? undefined : activeOcc,
+        hideOccIncompatibleRaces && !raceColumnIgnoresOcc,
       ),
-    [playerRaces, activeOcc, hideOccIncompatibleRaces],
+    [playerRaces, activeOcc, hideOccIncompatibleRaces, raceColumnIgnoresOcc],
   )
 
   const hiddenRaceCount = playerRaces.length - visibleRacePool.length
@@ -162,10 +172,10 @@ export function ConfiguratorPanel() {
     () =>
       sortConfiguratorEntries(
         visibleRacePool,
-        (race) => assessRaceConfiguratorTier(race, matrixCtx, occById),
+        (race) => assessRaceConfiguratorTier(race, raceMatrixCtx, occById),
         (race) => race.name,
       ),
-    [visibleRacePool, matrixCtx, occById],
+    [visibleRacePool, raceMatrixCtx, occById],
   )
 
   const visibleOccPool = useMemo(
@@ -195,7 +205,7 @@ export function ConfiguratorPanel() {
   const raceLayout = useMemo(() => {
     const layout = buildConfiguratorScrollLayout(
       sortedRaces,
-      (race) => assessRaceConfiguratorTier(race, matrixCtx, occById),
+      (race) => assessRaceConfiguratorTier(race, raceMatrixCtx, occById),
       character.raceId,
       CONFIGURATOR_SELECT_RACE_LABEL,
     )
@@ -204,7 +214,7 @@ export function ConfiguratorPanel() {
     if (selectedId && !layout.pinned) {
       const pinnedRace = raceById.get(selectedId)
       if (pinnedRace) {
-        const tier = assessRaceConfiguratorTier(pinnedRace, matrixCtx, occById)
+        const tier = assessRaceConfiguratorTier(pinnedRace, raceMatrixCtx, occById)
         resolved = {
           ...layout,
           pinned: { item: pinnedRace, filterMismatch: tier.tier !== 1 },
@@ -216,7 +226,7 @@ export function ConfiguratorPanel() {
         ...resolved,
         scrollItems: filterConfiguratorListForActiveFilter(
           resolved.scrollItems,
-          (race) => assessRaceConfiguratorTier(race, matrixCtx, occById),
+          (race) => assessRaceConfiguratorTier(race, raceMatrixCtx, occById),
           true,
         ),
       }
@@ -224,7 +234,7 @@ export function ConfiguratorPanel() {
     return resolved
   }, [
     sortedRaces,
-    matrixCtx,
+    raceMatrixCtx,
     occById,
     character.raceId,
     raceById,
@@ -277,11 +287,11 @@ export function ConfiguratorPanel() {
     const selectedId = character.raceId?.trim()
     return sortedRaces.filter((race) => {
       if (selectedId && race.id === selectedId) return false
-      return assessRaceConfiguratorTier(race, matrixCtx, occById).tier === 3
+      return assessRaceConfiguratorTier(race, raceMatrixCtx, occById).tier === 3
     }).length
   }, [
     sortedRaces,
-    matrixCtx,
+    raceMatrixCtx,
     occById,
     character.raceId,
     hideConfiguratorFilterMismatches,
@@ -507,7 +517,7 @@ export function ConfiguratorPanel() {
               ) : null}
             </div>
           ) : null}
-          {activeOcc && isConfiguratorOccSelected(character.occ.id) ? (
+          {activeOcc && isConfiguratorOccSelected(character.occ.id) && raceCanPickOcc ? (
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <label className="flex cursor-pointer items-center gap-2 text-sm">
                 <input
@@ -547,7 +557,7 @@ export function ConfiguratorPanel() {
                 selected
                 tierResult={assessRaceConfiguratorTier(
                   raceLayout.pinned.item,
-                  matrixCtx,
+                  raceMatrixCtx,
                   occById,
                 )}
                 filterMismatch={raceLayout.pinned.filterMismatch}
@@ -577,7 +587,7 @@ export function ConfiguratorPanel() {
               race={race}
               morphus={morphus}
               selected={false}
-              tierResult={assessRaceConfiguratorTier(race, matrixCtx, occById)}
+              tierResult={assessRaceConfiguratorTier(race, raceMatrixCtx, occById)}
               onSelect={() => setRaceId(race.id)}
             />
           )}

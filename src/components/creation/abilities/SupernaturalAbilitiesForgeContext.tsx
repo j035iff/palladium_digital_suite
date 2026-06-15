@@ -64,6 +64,7 @@ export function SupernaturalAbilitiesForgeProvider({
     () =>
       resolveEffectiveCreationAbilityBudget({
         occ: activeOcc,
+        raceId: character.raceId,
         psychicTier,
         psychicGateBypassed: character.psychicGateBypassed === true,
         majorAllocation: character.creationPsychicGateMajorAllocation,
@@ -73,6 +74,7 @@ export function SupernaturalAbilitiesForgeProvider({
       }),
     [
       activeOcc,
+      character.raceId,
       psychicTier,
       character.psychicGateBypassed,
       character.creationPsychicGateMajorAllocation,

@@ -54,6 +54,8 @@ describe('creationLiveLedger', () => {
       [],
       1,
       {},
+      false,
+      {},
       hth,
     )
     const rollLine = block.find((l) => l.label === 'Roll w/ punch, fall, impact')
@@ -76,8 +78,11 @@ describe('creationLiveLedger', () => {
       [],
       1,
       {},
+      false,
+      {},
     )
     expect(block.find((l) => l.label === 'Attacks / melee')?.value).toBe('2')
+    expect(block.find((l) => l.label === 'Hand to Hand')?.value).toBe('None')
     expect(block.find((l) => l.label === 'Initiative')?.value).toBe(LEDGER_NA)
     expect(block.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value).toBe(
       LEDGER_NA,
@@ -150,7 +155,7 @@ describe('creationLiveLedger', () => {
     expect(effective.pe).toBe(19)
     const exceptional = buildCreationExceptionalStandardBlock(effective)
     const coma = exceptional.find((line) => line.label === 'P.E. save vs coma / death')
-    expect(coma?.value).toBe('8%')
+    expect(coma?.value).toBe('+8%')
   })
 
   it('shows O.C.C. flat bonuses in the value and dice under grouped rows', () => {
@@ -213,6 +218,8 @@ describe('creationLiveLedger', () => {
       [],
       1,
       {},
+      false,
+      {},
       hth,
     )
     expect(
@@ -231,6 +238,8 @@ describe('creationLiveLedger', () => {
       combat,
       ['skill_boxing'],
       1,
+      {},
+      false,
       {},
     )
     const parry = block.find((l) => l.label === 'Parry')
@@ -254,6 +263,8 @@ describe('creationLiveLedger', () => {
       combat,
       ['skill_boxing', 'skill_athletics_general'],
       1,
+      {},
+      false,
       {},
     )
     const parry = block.find((l) => l.label === 'Parry')
@@ -306,6 +317,8 @@ describe('creationLiveLedger', () => {
       ['skill_body_building_weight_lifting'],
       1,
       {},
+      false,
+      {},
       undefined,
       undefined,
       undefined,
@@ -337,6 +350,8 @@ describe('creationLiveLedger', () => {
       combat,
       [],
       7,
+      {},
+      false,
       {},
       hth,
       undefined,

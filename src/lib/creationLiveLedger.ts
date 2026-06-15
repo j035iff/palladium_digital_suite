@@ -8,6 +8,7 @@ import type {
   Race,
   StrengthCapacities,
 } from '../types'
+import { getFormState } from '../types'
 import { computeHorrorFactorAura } from './saveProfile'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { computeCombatMirrorBonuses } from './characterDerived'
@@ -23,11 +24,12 @@ import {
 import { creationVitalityPreview } from './creationVitalityPreview'
 import {
   buildAttrFormulaLedgerFields,
+  dualFormPpeLedgerFormulaOpts,
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
-import { creationHpLabel, creationSdcLabel, creationIspLabel } from './creationFormLabels'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
+import { characterHasDualForms } from './raceFormPolicy'
 import {
   flattenCreationSkillIds,
   getCreationRelatedPicks,
@@ -49,7 +51,6 @@ import {
   getPsBonuses,
   getPpBonuses,
 } from './attributeBonuses'
-import { aggregateAllPassiveModifiers } from './featureEngine'
 import { saveModifierAttribution, type SaveDeductionLine } from './saveProfile'
 import { formatSheetBonusEquation, type SheetBonusLine } from './sheetBonuses'
 import {
@@ -74,8 +75,27 @@ import {
   sumPendingAttributeDiceBonuses,
   type PendingDiceBlock,
 } from './spawnDiceBlocks'
+import {
+  applyLedgerAttributeScores,
+  applyMorphusVsFacadeCombatLedgerDiff,
+  applyMorphusVsFacadeExceptionalLedgerDiff,
+  applyMorphusVsFacadeExceptionalLedgerGroupDiff,
+  applyMorphusVsFacadeLedgerDiff,
+  applyMorphusVsFacadeLedgerGroupDiff,
+  buildMorphusCreationAttributeBlock,
+  buildMorphusCreationBasePassiveModifiers,
+  creationLedgerSavePassiveModifiers,
+  creationLedgerTraitPassiveModifiers,
+  morphusAttributeScoresFromLedgerLines,
+  resolveCreationLedgerHandToHandAccumulated,
+  strengthCapacitiesFromAttributes,
+  effectiveLedgerHandToHandTier,
+} from './morphusCreationLedger'
+import type { CreationHandToHandTier } from './creationHandToHandChoice'
 
 export const LEDGER_NA = 'N/A'
+/** Default Hand to Hand tier label in the creation ledger. */
+export const LEDGER_HTH_NONE = 'None'
 /** Unassigned creation attribute pool slot (not yet dragged onto the strip). */
 export const LEDGER_UNASSIGNED = '—'
 
@@ -220,15 +240,14 @@ function resolveCreationSkillIds(
 
 function hthLedgerDisplayName(
   catalogName: string | null,
-  character: Character,
-  occ: PalladiumOcc | undefined,
-): string | null {
+  tier: CreationHandToHandTier,
+): string {
   if (catalogName) {
     return catalogName.replace(/^Hand-to-Hand:\s*/i, 'Hand to Hand: ')
   }
-  const tier = effectiveCreationHandToHandTier(character, occ)
+  if (tier === 'none') return LEDGER_HTH_NONE
   const label = creationHandToHandTierLabel(tier)
-  return label ? `Hand to Hand: ${label}` : null
+  return label ? `Hand to Hand: ${label}` : LEDGER_HTH_NONE
 }
 
 function hthShortLabel(catalogName: string | null, tierLabel: string | null): string | null {
@@ -308,6 +327,7 @@ type OrderedCombatBonusInput = {
   occStatKey?: string
   occResolutions?: Readonly<Record<string, number>>
   passiveOcc?: number
+  baseModifier?: number
   hth?: number
   hthShort?: string | null
   skillIds: readonly string[]
@@ -340,6 +360,10 @@ function buildOrderedCombatBonusParts(
   const occTotal = occStatic + (input.passiveOcc ?? 0)
   if (occTotal) parts.push({ label: 'OCC', amount: occTotal })
 
+  if (input.baseModifier) {
+    parts.push({ label: 'Base', amount: input.baseModifier })
+  }
+
   if (input.hth && input.hthShort) {
     parts.push({ label: `HtH ${input.hthShort}`, amount: input.hth })
   }
@@ -368,13 +392,60 @@ function combatLedgerLineFromParts(
   }
 }
 
+export const MORPHUS_SDC_FORMULA_HINT = 'Facade S.D.C. + 2D6×10'
+
+function buildMindControlSaveLine(
+  passive: FeatureModifiers,
+  character: Character,
+  activeForm: ActiveForm,
+  occ: PalladiumOcc | undefined,
+  supportsDualForm: boolean,
+): CreationLedgerLine {
+  if (characterHasDualForms(character)) {
+    return {
+      label: 'Mind Control',
+      value: 'Immune',
+      valueModified: true,
+      hint: 'Nightbane R.C.C.',
+    }
+  }
+  const specId = character.occSpecializationId
+  return saveLineWithAttribution(
+    'Mind Control',
+    occSaveLedgerPartsForForm(
+      occ,
+      specId,
+      ['save_mind_control'],
+      character.level,
+      activeForm,
+      supportsDualForm,
+    ),
+    character,
+    activeForm,
+    ['save_mind_control'],
+    passive,
+    supportsDualForm,
+  )
+}
+
+function occSaveLedgerPartsForForm(
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  keys: readonly string[],
+  characterLevel: number,
+  activeForm: ActiveForm,
+  supportsDualForm: boolean,
+): SaveDeductionLine[] {
+  if (supportsDualForm && activeForm === 'morphus') return []
+  return occSaveLedgerParts(occ, specializationId, keys, characterLevel)
+}
+
 function occSaveLedgerParts(
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
   keys: readonly string[],
   characterLevel = 1,
 ): SaveDeductionLine[] {
-  if (!occ?.id?.trim()) return []
   let total = 0
   for (const key of keys) {
     total += occStaticNumericBonus(
@@ -590,8 +661,7 @@ export function buildCreationExceptionalStandardBlock(
     },
     {
       label: 'P.E. save vs coma / death',
-      value:
-        pe.comaDeathStandard > 0 ? `${pe.comaDeathStandard}%` : LEDGER_NA,
+      value: ledgerPercent(pe.comaDeathStandard),
     },
     { label: 'P.B. charm / impress', value: ledgerPercent(pb.charmStandard) },
   ]
@@ -691,7 +761,7 @@ export function buildCreationExceptionalSuperGroups(
     if (pe.comaDeathSuper > 0) {
       lines.push({
         label: 'P.E. save vs coma / death',
-        value: `${pe.comaDeathSuper}%`,
+        value: ledgerPercent(pe.comaDeathSuper),
       })
     }
     if (pe.halfFatigue) {
@@ -727,12 +797,16 @@ export function buildCreationVitalsBlock(opts: {
   passive: FeatureModifiers
   horrorFactorTotal: number | null
   skillIds: readonly string[]
+  /** Resolved attribute totals for vital formulas (Morphus ledger uses Morphus attrs). */
+  attrScores?: Partial<Record<ForgeAttrKey, number>>
 }): CreationLedgerLine[] {
   const assignments = opts.character.creationAttributeAssignments ?? {}
   const resolutions = opts.character.creationPendingDiceResolutions ?? {}
+  const formulaAttrOpts = { attrScores: opts.attrScores }
   const preview = creationVitalityPreview(opts.character, opts.race, opts.occ, {
     psychicTier: opts.psychicTier,
     assignments,
+    supportsDualForm: opts.supportsDualForm,
   })
   const showIsp =
     opts.psychicTier !== 'none' || opts.character.psychicGateBypassed === true
@@ -750,19 +824,29 @@ export function buildCreationVitalsBlock(opts: {
   const hpFormula = opts.race ? (opts.race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
     hintOverride: preview.facadeHpRollHint,
+    ...formulaAttrOpts,
   })
   const ppeFormula =
     opts.race && opts.occ?.id?.trim()
       ? resolvePpeCreationFormula(opts.race, opts.occ)
       : null
+  const facadePeScore =
+    assignments.pe ??
+    (opts.supportsDualForm
+      ? opts.character.facade.attributes.pe
+      : opts.attrs.pe)
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: opts.occ?.ppeEngine?.perLevelFormula,
+    ...(opts.supportsDualForm
+      ? dualFormPpeLedgerFormulaOpts(facadePeScore)
+      : formulaAttrOpts),
   })
   const ispFormula = resolveIspCreationFormula(opts.occ, opts.psychicTier, showIsp)
   const ispFields = ispFormula
     ? buildAttrFormulaLedgerFields(ispFormula.base, assignments, {
         perLevelFormula: ispFormula.perLevel,
         hintOverride: preview.ispRollHint,
+        ...formulaAttrOpts,
       })
     : null
 
@@ -781,22 +865,52 @@ export function buildCreationVitalsBlock(opts: {
     opts.character.creationOccVariableResolutions ?? {},
   )
 
+  const morphusLedger = opts.supportsDualForm && opts.activeForm === 'morphus'
+
+  const hpLine = morphusLedger
+    ? vitalityLedgerLineFromBlock('H.P.', pendingById.morphus_hp, resolutions, {
+        label: 'H.P.',
+        ...buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
+          hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
+          ...formulaAttrOpts,
+        }),
+      })
+    : vitalityLedgerLineFromBlock('H.P.', pendingById.hp, resolutions, {
+        label: 'H.P.',
+        ...hpFields,
+      })
+
+  const sdcLine = morphusLedger
+    ? vitalityLedgerLineFromBlock('S.D.C.', pendingById.morphus_sdc, resolutions, {
+        label: 'S.D.C.',
+        value:
+          pendingById.sdc
+            ? String(pendingDiceBlockRunningTotal(pendingById.sdc, resolutions))
+            : sdcBonuses.flatTotal > 0
+              ? String(sdcBonuses.flatTotal)
+              : preview.facadeSdcValue,
+        valueModified:
+          (pendingById.sdc?.flatBaseline ?? 0) > 0 ||
+          sdcBonuses.flatTotal > 0 ||
+          (pendingById.morphus_sdc?.flatBaseline ?? 0) > 0,
+        valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
+        hint: MORPHUS_SDC_FORMULA_HINT,
+      })
+    : vitalityLedgerLineFromBlock('S.D.C.', pendingById.sdc, resolutions, {
+        label: 'S.D.C.',
+        value:
+          sdcBonuses.flatTotal > 0
+            ? String(sdcBonuses.flatTotal)
+            : preview.facadeSdcValue,
+        valueModified: sdcBonuses.flatTotal > 0,
+        valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
+        diceGroups:
+          sdcBonuses.diceGroups.length > 0 ? sdcBonuses.diceGroups : undefined,
+      })
+
   const lines: CreationLedgerLine[] = [
-    vitalityLedgerLineFromBlock('H.P.', pendingById.hp, resolutions, {
-      label: 'H.P.',
-      ...hpFields,
-    }),
-    vitalityLedgerLineFromBlock('S.D.C.', pendingById.sdc, resolutions, {
-      label: 'S.D.C.',
-      value:
-        sdcBonuses.flatTotal > 0
-          ? String(sdcBonuses.flatTotal)
-          : preview.facadeSdcValue,
-      valueModified: sdcBonuses.flatTotal > 0,
-      valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
-      diceGroups:
-        sdcBonuses.diceGroups.length > 0 ? sdcBonuses.diceGroups : undefined,
-    }),
+    hpLine,
+    sdcLine,
     vitalityLedgerLineFromBlock('P.P.E.', pendingById.ppe, resolutions, {
       label: 'P.P.E.',
       ...ppeFields,
@@ -817,33 +931,6 @@ export function buildCreationVitalsBlock(opts: {
     { label: 'Natural A.R.', value: ar > 0 ? String(ar) : LEDGER_NA },
   ]
 
-  if (opts.supportsDualForm) {
-    lines.push(
-      vitalityLedgerLineFromBlock(
-        creationHpLabel(true, 'morphus'),
-        pendingById.morphus_hp,
-        resolutions,
-        {
-          label: creationHpLabel(true, 'morphus'),
-          ...buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
-            hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
-          }),
-        },
-      ),
-      vitalityLedgerLineFromBlock(
-        creationSdcLabel(true, 'morphus'),
-        pendingById.morphus_sdc,
-        resolutions,
-        {
-          label: creationSdcLabel(true, 'morphus'),
-          ...buildAttrFormulaLedgerFields('PEx4 + PSx2 + 2D6*8', assignments, {
-            hintOverride: 'P.E.×4 + P.S.×2 + 2D6×8 (resolve at Spawn)',
-          }),
-        },
-      ),
-    )
-  }
-
   return lines
 }
 
@@ -854,8 +941,12 @@ function saveLineWithAttribution(
   activeForm: ActiveForm,
   passiveKeys: readonly string[],
   passive: FeatureModifiers,
+  supportsDualForm = false,
 ): CreationLedgerLine {
-  const attrLines = saveModifierAttribution(passiveKeys, character, activeForm)
+  const attrLines =
+    supportsDualForm && activeForm === 'morphus'
+      ? []
+      : saveModifierAttribution(passiveKeys, character, activeForm)
   const allParts = [...parts, ...attrLines]
   const passiveTotal = passiveSum(passive, passiveKeys)
   const attributed = attrLines.reduce((s, l) => s + l.amount, 0)
@@ -873,6 +964,7 @@ export function buildCreationSavesBlock(
   character: Character,
   activeForm: ActiveForm,
   occ?: PalladiumOcc,
+  supportsDualForm = false,
 ): CreationLedgerLine[] {
   const specId = character.occSpecializationId
   const iq = getIqBonuses(attrs.iq)
@@ -901,36 +993,55 @@ export function buildCreationSavesBlock(
       'Magic',
       [
         ...(pe.saveMagic ? [{ label: 'P.E.', amount: pe.saveMagic }] : []),
-        ...occSaveLedgerParts(occ, specId, [...magicKeys], character.level),
+        ...occSaveLedgerPartsForForm(
+          occ,
+          specId,
+          [...magicKeys],
+          character.level,
+          activeForm,
+          supportsDualForm,
+        ),
       ],
       character,
       activeForm,
       magicKeys,
       passive,
+      supportsDualForm,
     ),
     saveLineWithAttribution(
       'Psionics',
       [
         ...(me.savePsionics ? [{ label: 'M.E.', amount: me.savePsionics }] : []),
-        ...occSaveLedgerParts(occ, specId, ['save_psionics', 'save_isp'], character.level),
+        ...occSaveLedgerPartsForForm(
+          occ,
+          specId,
+          ['save_psionics', 'save_isp'],
+          character.level,
+          activeForm,
+          supportsDualForm,
+        ),
       ],
       character,
       activeForm,
       psionicsKeys,
       passive,
+      supportsDualForm,
     ),
     saveLineWithAttribution(
       'Horror Factor',
-      occSaveLedgerParts(
+      occSaveLedgerPartsForForm(
         occ,
         specId,
         ['save_horror', 'save_horror_factor'],
         character.level,
+        activeForm,
+        supportsDualForm,
       ),
       character,
       activeForm,
       ['save_horror', 'save_horror_factor'],
       passive,
+      supportsDualForm,
     ),
     saveLineWithAttribution(
       'Illusions',
@@ -939,6 +1050,7 @@ export function buildCreationSavesBlock(
       activeForm,
       illusionKeys,
       passive,
+      supportsDualForm,
     ),
     pe.imperviousDisease
       ? {
@@ -953,6 +1065,7 @@ export function buildCreationSavesBlock(
           activeForm,
           ['save_disease'],
           passive,
+          supportsDualForm,
         ),
     saveLineWithAttribution(
       'Insanity',
@@ -961,6 +1074,7 @@ export function buildCreationSavesBlock(
       activeForm,
       ['save_insanity'],
       passive,
+      supportsDualForm,
     ),
     saveLineWithAttribution(
       'Poison / Toxins',
@@ -969,38 +1083,39 @@ export function buildCreationSavesBlock(
       activeForm,
       poisonKeys,
       passive,
+      supportsDualForm,
     ),
     saveLineWithAttribution(
       'Possession',
       [
         ...(me.savePossession ? [{ label: 'M.E. (31+)', amount: me.savePossession }] : []),
-        ...occSaveLedgerParts(occ, specId, ['save_possession'], character.level),
+        ...occSaveLedgerPartsForForm(
+          occ,
+          specId,
+          ['save_possession'],
+          character.level,
+          activeForm,
+          supportsDualForm,
+        ),
       ],
       character,
       activeForm,
       ['save_possession'],
       passive,
+      supportsDualForm,
     ),
-    saveLineWithAttribution(
-      'Mind Control',
-      occSaveLedgerParts(occ, specId, ['save_mind_control'], character.level),
-      character,
-      activeForm,
-      ['save_mind_control'],
-      passive,
-    ),
+    buildMindControlSaveLine(passive, character, activeForm, occ, supportsDualForm),
     {
       label: 'Coma / Death',
-      value:
-        pe.comaDeathPercent > 0 ? `${pe.comaDeathPercent}%` : LEDGER_NA,
+      value: ledgerPercent(pe.comaDeathPercent),
       hint:
         pe.comaDeathStandard > 0 || pe.comaDeathSuper > 0
           ? [
               pe.comaDeathStandard > 0
-                ? `P.E. (17–30): ${pe.comaDeathStandard}%`
+                ? `P.E. (17–30): ${ledgerPercent(pe.comaDeathStandard)}`
                 : null,
               pe.comaDeathSuper > 0
-                ? `P.E. (31+): +${pe.comaDeathSuper}%`
+                ? `P.E. (31+): ${ledgerPercent(pe.comaDeathSuper)}`
                 : null,
             ]
               .filter(Boolean)
@@ -1091,12 +1206,13 @@ function buildAttacksPerMeleeLine(
   level: number,
   hthAttackBonus: number,
   skillApm: number,
-  passiveApm: number,
+  traitApm: number,
+  baseApm: number,
   hthLabel: string | null,
 ): CreationLedgerLine {
   const levelBump = Math.min(3, Math.floor(level / 4))
   const core = computeMaxApm(attrs, level, hthAttackBonus)
-  const total = core + skillApm + passiveApm
+  const total = core + skillApm + traitApm + baseApm
 
   const hintParts = ['Base: 2']
   if (levelBump > 0) hintParts.push(`Level: +${levelBump}`)
@@ -1106,7 +1222,8 @@ function buildAttacksPerMeleeLine(
     )
   }
   if (skillApm > 0) hintParts.push(`Skills: +${skillApm}`)
-  if (passiveApm > 0) hintParts.push(`O.C.C. / features: +${passiveApm}`)
+  if (baseApm > 0) hintParts.push(`Base: +${baseApm}`)
+  if (traitApm > 0) hintParts.push(`O.C.C. / features: +${traitApm}`)
 
   return {
     label: 'Attacks / melee',
@@ -1119,15 +1236,24 @@ function buildCreationInitiativeLine(
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
   passive: FeatureModifiers,
+  morphusBase: FeatureModifiers,
   occ?: PalladiumOcc,
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
   const parts: SaveDeductionLine[] = []
-  const occAmt =
-    occStaticNumericBonus(occ, specializationId, 'combat', 'initiative', resolutions) +
-    (passive.initiative ?? 0)
+  const occAmt = occStaticNumericBonus(
+    occ,
+    specializationId,
+    'combat',
+    'initiative',
+    resolutions,
+  )
   if (occAmt) parts.push({ label: 'OCC', amount: occAmt })
+  const baseAmt = morphusBase.initiative ?? 0
+  if (baseAmt) parts.push({ label: 'Base', amount: baseAmt })
+  const traitAmt = passive.initiative ?? 0
+  if (traitAmt) parts.push({ label: 'Features', amount: traitAmt })
   if (handToHand?.initiative && hthShort) {
     parts.push({ label: `HtH ${hthShort}`, amount: handToHand.initiative })
   }
@@ -1146,6 +1272,7 @@ function buildCreationCombatStatLine(
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
   passive: FeatureModifiers,
+  morphusBase: FeatureModifiers,
   occ?: PalladiumOcc,
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
@@ -1160,6 +1287,7 @@ function buildCreationCombatStatLine(
     occStatKey: statKey,
     occResolutions: resolutions,
     passiveOcc: passive[statKey] ?? 0,
+    baseModifier: morphusBase[statKey] ?? 0,
     hth: handToHand?.[statKey] ?? 0,
     hthShort,
     skillIds,
@@ -1174,6 +1302,7 @@ function buildCreationRollLine(
   skill: SkillBonusAgg,
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
+  morphusBase: FeatureModifiers,
   occ?: PalladiumOcc,
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
@@ -1183,6 +1312,7 @@ function buildCreationRollLine(
     specializationId,
     occStatKey: 'rollWithPunch',
     occResolutions: resolutions,
+    baseModifier: morphusBase.rollWithPunch ?? 0,
     hth: handToHand?.rollWithPunch ?? 0,
     hthShort,
     skillIds,
@@ -1267,15 +1397,22 @@ export function buildCreationCombatBlock(
   skillIds: readonly string[],
   level: number,
   passive: FeatureModifiers,
+  supportsDualForm: boolean,
+  morphusBase: FeatureModifiers = {},
   handToHand?: AccumulatedHandToHandBonuses,
   strengthCapacities?: StrengthCapacities,
   occ?: PalladiumOcc,
   effectivePs?: number,
 ): CreationLedgerLine[] {
-  const hthTier = effectiveCreationHandToHandTier(character, occ)
+  const hthTier = effectiveLedgerHandToHandTier(
+    character,
+    occ,
+    activeForm,
+    supportsDualForm,
+  )
   const hthId = sheetSkillIdForCreationHandToHandTier(hthTier)
   const hthDef = hthId ? getSkillById(hthId) : undefined
-  const hthDisplay = hthLedgerDisplayName(hthDef?.name ?? null, character, occ)
+  const hthDisplay = hthLedgerDisplayName(hthDef?.name ?? null, hthTier)
   const hthShort = hthShortLabel(
     hthDef?.name ?? null,
     creationHandToHandTierLabel(hthTier),
@@ -1286,7 +1423,8 @@ export function buildCreationCombatBlock(
   const skill = aggregateSkillPhysicalBonuses(skillIds)
   const hthApm = handToHandAttackBonus(handToHand ?? createEmptyAccumulatedHandToHandBonuses())
   const skillApm = skill.combat.apm ?? 0
-  const passiveApm = passive.apm ?? 0
+  const baseApm = morphusBase.apm ?? 0
+  const traitApm = passive.apm ?? 0
 
   const entangleParts: SaveDeductionLine[] = []
   if (handToHand?.entangle && hthShort) {
@@ -1306,13 +1444,14 @@ export function buildCreationCombatBlock(
   return [
     {
       label: 'Hand to Hand',
-      value: hthDisplay ?? LEDGER_NA,
+      value: hthDisplay,
     },
-    buildAttacksPerMeleeLine(attrs, level, hthApm, skillApm, passiveApm, hthShort),
+    buildAttacksPerMeleeLine(attrs, level, hthApm, skillApm, traitApm, baseApm, hthShort),
     buildCreationInitiativeLine(
       handToHand,
       hthShort,
       passive,
+      morphusBase,
       occ,
       specId,
       occResolutions,
@@ -1326,6 +1465,7 @@ export function buildCreationCombatBlock(
       handToHand,
       hthShort,
       passive,
+      morphusBase,
       occ,
       specId,
       occResolutions,
@@ -1339,6 +1479,7 @@ export function buildCreationCombatBlock(
       handToHand,
       hthShort,
       passive,
+      morphusBase,
       occ,
       specId,
       occResolutions,
@@ -1352,6 +1493,7 @@ export function buildCreationCombatBlock(
       handToHand,
       hthShort,
       passive,
+      morphusBase,
       occ,
       specId,
       occResolutions,
@@ -1361,6 +1503,7 @@ export function buildCreationCombatBlock(
       skill,
       handToHand,
       hthShort,
+      morphusBase,
       occ,
       specId,
       occResolutions,
@@ -1446,15 +1589,11 @@ export type CreationLiveLedgerSnapshot = {
 
 export function buildCreationLiveLedgerSnapshot(opts: {
   character: Character
-  attrs: CharacterAttributes
   race: Race | undefined
   occ: PalladiumOcc | undefined
   supportsDualForm: boolean
   psychicTier: string
   activeForm: ActiveForm
-  strengthCapacities: StrengthCapacities
-  handToHand?: AccumulatedHandToHandBonuses
-  horrorFactorTotal?: number | null
 }): CreationLiveLedgerSnapshot {
   const skillIds = resolveCreationSkillIds(opts.character, opts.occ)
   const pendingBlocks = buildPendingDiceBlocks(
@@ -1470,24 +1609,10 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingBlocks,
     opts.character.creationPendingDiceResolutions ?? {},
   )
-  const passive = aggregateAllPassiveModifiers(
-    opts.character,
-    opts.activeForm,
-    {},
-    opts.occ,
-  )
 
-  const horrorFactorTotal =
-    opts.horrorFactorTotal ??
-    computeHorrorFactorAura(
-      opts.character,
-      opts.activeForm,
-      passive,
-      opts.supportsDualForm,
-    ).total
-
-  const effectiveAttrs = resolveLedgerEffectiveAttributes(
-    opts.attrs,
+  const facadeAttrs = getFormState(opts.character, 'facade').attributes
+  const facadeEffectiveAttrs = resolveLedgerEffectiveAttributes(
+    facadeAttrs,
     opts.character.creationAttributeAssignments,
     opts.race,
     opts.occ,
@@ -1497,68 +1622,153 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingAttrBonuses,
   )
 
-  const damageCtx: CreationCombatDamageContext = {
-    effectivePs: effectiveAttrs.ps.score,
-    occ: opts.occ,
-    specializationId: opts.character.occSpecializationId,
-    occResolutions: opts.character.creationOccVariableResolutions ?? {},
-    passive,
-  }
-
-  const combatLedger = buildCreationCombatLedger(
-    opts.attrs,
+  const facadeAttributeLines = buildCreationAttributeBlock(
+    facadeAttrs,
+    opts.character.creationAttributeAssignments,
+    opts.race,
+    opts.occ,
+    opts.character.occSpecializationId,
     skillIds,
-    opts.character.level,
-    opts.handToHand,
-    opts.strengthCapacities,
-    damageCtx,
+    opts.character.creationOccVariableResolutions ?? {},
+    pendingAttrBonuses,
   )
-  const exceptionalSuper = buildCreationExceptionalSuperGroups(effectiveAttrs)
 
-  return {
-    attributes: buildCreationAttributeBlock(
-      opts.attrs,
-      opts.character.creationAttributeAssignments,
-      opts.race,
+  const morphusLedger =
+    opts.activeForm === 'morphus' && opts.supportsDualForm === true
+
+  const attributeLines = morphusLedger
+    ? buildMorphusCreationAttributeBlock(facadeAttributeLines, opts.character)
+    : facadeAttributeLines
+
+  const buildFormSections = (
+    activeForm: ActiveForm,
+    effectiveAttrs: CharacterAttributes,
+    attrScores?: Partial<Record<ForgeAttrKey, number>>,
+  ) => {
+    const traitPassive = creationLedgerTraitPassiveModifiers(
+      opts.character,
+      activeForm,
       opts.occ,
-      opts.character.occSpecializationId,
-      skillIds,
-      opts.character.creationOccVariableResolutions ?? {},
-      pendingAttrBonuses,
-    ),
-    exceptional: buildCreationExceptionalStandardBlock(effectiveAttrs),
-    exceptionalSuper,
-    vitals: buildCreationVitalsBlock({
-      character: opts.character,
-      attrs: opts.attrs,
-      race: opts.race,
+    )
+    const savePassive = creationLedgerSavePassiveModifiers(
+      opts.character,
+      activeForm,
+      opts.occ,
+      opts.supportsDualForm,
+    )
+    const morphusBase =
+      activeForm === 'morphus' && opts.supportsDualForm
+        ? buildMorphusCreationBasePassiveModifiers()
+        : {}
+    const horrorFactorTotal = computeHorrorFactorAura(
+      opts.character,
+      activeForm,
+      savePassive,
+      opts.supportsDualForm,
+    ).total
+    const handToHand = resolveCreationLedgerHandToHandAccumulated(
+      opts.character,
+      activeForm,
+      opts.occ,
+      opts.supportsDualForm,
+    )
+    const strengthCapacities = strengthCapacitiesFromAttributes(effectiveAttrs)
+    const damageCtx: CreationCombatDamageContext = {
+      effectivePs: effectiveAttrs.ps.score,
       occ: opts.occ,
-      supportsDualForm: opts.supportsDualForm,
-      psychicTier: opts.psychicTier,
-      activeForm: opts.activeForm,
-      passive,
-      horrorFactorTotal,
-      skillIds,
-    }),
-    saves: buildCreationSavesBlock(
-      opts.attrs,
-      passive,
-      opts.character,
-      opts.activeForm,
-      opts.occ,
-    ),
-    combat: buildCreationCombatBlock(
-      opts.character,
-      opts.activeForm,
-      opts.attrs,
-      combatLedger,
+      specializationId: opts.character.occSpecializationId,
+      occResolutions: opts.character.creationOccVariableResolutions ?? {},
+      passive: traitPassive,
+    }
+    const combatLedger = buildCreationCombatLedger(
+      effectiveAttrs,
       skillIds,
       opts.character.level,
-      passive,
-      opts.handToHand,
-      opts.strengthCapacities,
-      opts.occ,
-      effectiveAttrs.ps.score,
+      handToHand,
+      strengthCapacities,
+      damageCtx,
+    )
+
+    return {
+      exceptional: buildCreationExceptionalStandardBlock(effectiveAttrs),
+      exceptionalSuper: buildCreationExceptionalSuperGroups(effectiveAttrs),
+      vitals: buildCreationVitalsBlock({
+        character: opts.character,
+        attrs: effectiveAttrs,
+        race: opts.race,
+        occ: opts.occ,
+        supportsDualForm: opts.supportsDualForm,
+        psychicTier: opts.psychicTier,
+        activeForm,
+        passive: savePassive,
+        horrorFactorTotal,
+        skillIds,
+        attrScores,
+      }),
+      saves: buildCreationSavesBlock(
+        effectiveAttrs,
+        savePassive,
+        opts.character,
+        activeForm,
+        opts.occ,
+        opts.supportsDualForm,
+      ),
+      combat: buildCreationCombatBlock(
+        opts.character,
+        activeForm,
+        effectiveAttrs,
+        combatLedger,
+        skillIds,
+        opts.character.level,
+        traitPassive,
+        opts.supportsDualForm,
+        morphusBase,
+        handToHand,
+        strengthCapacities,
+        opts.occ,
+        effectiveAttrs.ps.score,
+      ),
+    }
+  }
+
+  if (!morphusLedger) {
+    const sections = buildFormSections('facade', facadeEffectiveAttrs)
+    return {
+      attributes: attributeLines,
+      ...sections,
+    }
+  }
+
+  const morphusAttrScores = morphusAttributeScoresFromLedgerLines(attributeLines)
+  const morphusEffectiveAttrs = applyLedgerAttributeScores(
+    facadeEffectiveAttrs,
+    morphusAttrScores,
+  )
+  const facadeSections = buildFormSections('facade', facadeEffectiveAttrs)
+  const morphusSections = buildFormSections(
+    'morphus',
+    morphusEffectiveAttrs,
+    morphusAttrScores,
+  )
+
+  return {
+    attributes: attributeLines,
+    exceptional: applyMorphusVsFacadeExceptionalLedgerDiff(
+      morphusSections.exceptional,
+      facadeSections.exceptional,
+    ),
+    exceptionalSuper: applyMorphusVsFacadeExceptionalLedgerGroupDiff(
+      morphusSections.exceptionalSuper,
+      facadeSections.exceptionalSuper,
+    ),
+    vitals: applyMorphusVsFacadeLedgerDiff(
+      morphusSections.vitals,
+      facadeSections.vitals,
+    ),
+    saves: morphusSections.saves,
+    combat: applyMorphusVsFacadeCombatLedgerDiff(
+      morphusSections.combat,
+      facadeSections.combat,
     ),
   }
 }

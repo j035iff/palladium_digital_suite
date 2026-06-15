@@ -98,7 +98,7 @@ function readAssignedAttrScore(
 export function buildVitalAttrFlatBundle(
   formula: string | undefined,
   assignments: Partial<Record<ForgeAttrKey, number>>,
-  _attrs?: CharacterAttributes,
+  attrScores?: Partial<Record<ForgeAttrKey, number>>,
 ): VitalAttrFlatBundle {
   const terms: VitalAttrFlatTerm[] = []
   if (!formula?.trim()) {
@@ -108,7 +108,8 @@ export function buildVitalAttrFlatBundle(
   for (const part of splitFormulaTerms(formula)) {
     const parsed = parseVitalFormulaAttrTerm(part)
     if (!parsed) continue
-    const score = readAssignedAttrScore(parsed.attr, assignments)
+    const score =
+      attrScores?.[parsed.attr] ?? readAssignedAttrScore(parsed.attr, assignments)
     if (score == null) continue
     const amount = score * parsed.multiplier
     terms.push({
@@ -143,11 +144,18 @@ export function formatVitalAttrFlatTooltip(
 export function formatVitalFormulaLedgerHint(
   formula: string,
   perLevelFormula?: string,
+  attrFormLabels?: Partial<Record<ForgeAttrKey, string>>,
 ): string {
   const parts = splitFormulaTerms(formula).map((term) => {
     const parsed = parseVitalFormulaAttrTerm(term)
     if (parsed) {
       const abbr = FORGE_ATTR_FORMULA_ABBREV[parsed.attr]
+      const formLabel = attrFormLabels?.[parsed.attr]
+      if (formLabel) {
+        return parsed.multiplier > 1
+          ? `${abbr} (${formLabel})x${parsed.multiplier}`
+          : `${abbr} (${formLabel})`
+      }
       return parsed.multiplier > 1
         ? `${abbr}x${parsed.multiplier}`
         : FORGE_ATTR_LEDGER_LABEL[parsed.attr]
@@ -211,6 +219,9 @@ export function buildAttrFormulaLedgerFields(
     perLevelFormula?: string
     hintOverride?: string
     unassignedValue?: string
+    attrScores?: Partial<Record<ForgeAttrKey, number>>
+    /** Dual-form: label attribute terms in the hint (e.g. PE → `PE (facade)`). */
+    attrFormLabels?: Partial<Record<ForgeAttrKey, string>>
   },
 ): AttrFormulaLedgerFields {
   const unassigned = opts?.unassignedValue ?? UNASSIGNED
@@ -222,10 +233,14 @@ export function buildAttrFormulaLedgerFields(
     }
   }
 
-  const flat = buildVitalAttrFlatBundle(formula, assignments)
+  const flat = buildVitalAttrFlatBundle(formula, assignments, opts?.attrScores)
   const hint =
     opts?.hintOverride ??
-    formatVitalFormulaLedgerHint(formula, opts?.perLevelFormula)
+    formatVitalFormulaLedgerHint(
+      formula,
+      opts?.perLevelFormula,
+      opts?.attrFormLabels,
+    )
 
   return {
     value: vitalLedgerValueFromFlat(flat.flatTotal),
@@ -265,4 +280,19 @@ export function resolvePpeCreationFormula(
   const occPpe = occ?.ppeEngine?.baseFormula?.trim()
   if (occPpe) parts.push(occPpe)
   return parts.length > 0 ? parts.join(' + ') : null
+}
+
+/** Dual-form P.P.E. always derives from Facade P.E. — label and score overrides for the ledger. */
+export function dualFormPpeLedgerFormulaOpts(facadePe: number | null | undefined): {
+  attrFormLabels: Partial<Record<ForgeAttrKey, string>>
+  attrScores?: Partial<Record<ForgeAttrKey, number>>
+} {
+  const opts: {
+    attrFormLabels: Partial<Record<ForgeAttrKey, string>>
+    attrScores?: Partial<Record<ForgeAttrKey, number>>
+  } = { attrFormLabels: { pe: 'facade' } }
+  if (facadePe != null && Number.isFinite(facadePe)) {
+    opts.attrScores = { pe: facadePe }
+  }
+  return opts
 }
