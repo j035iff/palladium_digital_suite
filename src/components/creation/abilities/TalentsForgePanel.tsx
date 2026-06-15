@@ -1,13 +1,29 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
+import { getAbilityById } from '../../../data/abilityLibrary'
 import {
-  ABILITY_LIBRARY,
-  type AbilityDef,
-} from '../../../data/abilityLibrary'
-import { getFeatureById, listPalladiumTalentsForGameSystem } from '../../../data/library/registry'
+  getFeatureById,
+  listPalladiumTalentsForGameSystem,
+} from '../../../data/library/registry'
 import { useCharacter } from '../../../context/CharacterContext'
 import { abilityPassesOccSupernaturalRules } from '../../../lib/occCreationDerivation'
+import { resolveMorphusForgeState } from '../../../lib/morphusForgeNavigation'
 import { abilityDurationBadgeLabel } from '../../../lib/supernaturalAbilityDisplay'
-import type { PalladiumOcc } from '../../../types'
+import {
+  formatTalentActivationCost,
+  formatTalentPpeAcquireCost,
+} from '../../../lib/talentDisplay'
+import {
+  assessTalentSelectionGate,
+  collectCharacterMorphusTableIds,
+  CREATION_CHARACTER_LEVEL,
+  groupEntriesByTalentLevelGate,
+  talentCatalogTier,
+  talentMinimumLevelRequirement,
+  type TalentCatalogTier,
+  type TalentSelectionGateContext,
+} from '../../../lib/talentSelectionGates'
+import type { AbilityDef } from '../../../data/abilityLibrary'
+import type { PalladiumOcc, PalladiumTalent } from '../../../types'
 
 type TalentsForgePanelProps = {
   morphus: boolean
@@ -17,6 +33,12 @@ type TalentsForgePanelProps = {
   spellCap: number
   talentBudget: number
   talentCount: number
+}
+
+type TalentListEntry = {
+  talent: PalladiumTalent
+  ability: AbilityDef | undefined
+  gate: ReturnType<typeof assessTalentSelectionGate>
 }
 
 export function TalentsForgePanel({
@@ -30,28 +52,74 @@ export function TalentsForgePanel({
 }: TalentsForgePanelProps) {
   const { character, addSelectedAbility } = useCharacter()
   const [search, setSearch] = useState('')
+  const [hideMorphusLockedElite, setHideMorphusLockedElite] = useState(true)
   const selectedIds = character.selectedAbilities ?? []
 
-  const talentIdsForGenre = useMemo(
-    () =>
-      new Set(listPalladiumTalentsForGameSystem(genreId).map((row) => row.id)),
-    [genreId],
+  const morphusForgeState = useMemo(
+    () => resolveMorphusForgeState(character),
+    [character.morphusForgeState, character.creationTraitForgeStubComplete],
   )
 
-  const talents = useMemo(() => {
+  const gateContext = useMemo((): TalentSelectionGateContext => {
+    return {
+      characterLevel: CREATION_CHARACTER_LEVEL,
+      morphusTableIds: collectCharacterMorphusTableIds(
+        morphusForgeState,
+        character.morphusForgeSlotState,
+      ),
+      selectedTalentIds: selectedIds,
+      activeOcc,
+      spellCap,
+    }
+  }, [
+    morphusForgeState,
+    character.morphusForgeSlotState,
+    selectedIds,
+    activeOcc,
+    spellCap,
+  ])
+
+  const catalogEntries = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return ABILITY_LIBRARY.filter((a) => {
-      if (a.category !== 'Talent') return false
-      if (a.morphusOnly && !morphus) return false
-      if (!talentIdsForGenre.has(a.id)) return false
-      if (q === '') return true
-      return (
-        a.name.toLowerCase().includes(q) ||
-        a.description.toLowerCase().includes(q) ||
-        (a.descriptionMorphus?.toLowerCase().includes(q) ?? false)
-      )
-    }).sort((a, b) => a.name.localeCompare(b.name))
-  }, [search, morphus, talentIdsForGenre])
+    return listPalladiumTalentsForGameSystem(genreId)
+      .map((talent) => {
+        const ability = getAbilityById(talent.id)
+        if (ability?.morphusOnly && !morphus) return null
+        if (q) {
+          const haystack = [
+            talent.name,
+            talent.description,
+            talent.descriptionMorphus ?? '',
+          ]
+            .join(' ')
+            .toLowerCase()
+          if (!haystack.includes(q)) return null
+        }
+        return {
+          talent,
+          ability,
+          gate: assessTalentSelectionGate(talent, gateContext),
+        } satisfies TalentListEntry
+      })
+      .filter((row): row is TalentListEntry => row != null)
+  }, [genreId, search, morphus, gateContext])
+
+  const commonTalents = useMemo(
+    () => catalogEntries.filter((row) => talentCatalogTier(row.talent) === 'common'),
+    [catalogEntries],
+  )
+
+  const eliteTalents = useMemo(
+    () => catalogEntries.filter((row) => talentCatalogTier(row.talent) === 'elite'),
+    [catalogEntries],
+  )
+
+  const hiddenEliteCount = useMemo(() => {
+    if (!hideMorphusLockedElite) return 0
+    return eliteTalents.filter(
+      (row) => row.gate.morphusTraitMismatch && !selectedIds.includes(row.talent.id),
+    ).length
+  }, [eliteTalents, hideMorphusLockedElite, selectedIds])
 
   const panelStyle = morphus
     ? 'border-violet-700 bg-slate-950/80 text-violet-50'
@@ -84,11 +152,138 @@ export function TalentsForgePanel({
           aria-label="Search talents"
         />
       </div>
-      <ul
-        className={`max-h-[min(480px,55vh)] space-y-2 overflow-y-auto p-3 ${drawerStyle}`}
-        aria-label="Talent library"
+
+      <div className="grid gap-3 p-3 lg:grid-cols-2">
+        <TalentColumn
+          title="Common Talents"
+          subtitle="Available to all Nightbane"
+          tier="common"
+          entries={commonTalents}
+          morphus={morphus}
+          isNightbane={isNightbane}
+          activeOcc={activeOcc}
+          spellCap={spellCap}
+          selectedIds={selectedIds}
+          talentCount={talentCount}
+          talentBudget={talentBudget}
+          drawerStyle={drawerStyle}
+          descMorphus={descMorphus}
+          descFacade={descFacade}
+          onSelect={addSelectedAbility}
+        />
+        <TalentColumn
+          title="Elite Talents"
+          subtitle="Gated by Morphus traits"
+          tier="elite"
+          entries={eliteTalents}
+          morphus={morphus}
+          isNightbane={isNightbane}
+          activeOcc={activeOcc}
+          spellCap={spellCap}
+          selectedIds={selectedIds}
+          talentCount={talentCount}
+          talentBudget={talentBudget}
+          drawerStyle={drawerStyle}
+          descMorphus={descMorphus}
+          descFacade={descFacade}
+          onSelect={addSelectedAbility}
+          hideMorphusLocked={hideMorphusLockedElite}
+          onHideMorphusLockedChange={setHideMorphusLockedElite}
+          hiddenCount={hiddenEliteCount}
+        />
+      </div>
+    </div>
+  )
+}
+
+function TalentColumn({
+  title,
+  subtitle,
+  tier,
+  entries,
+  morphus,
+  isNightbane,
+  activeOcc,
+  spellCap,
+  selectedIds,
+  talentCount,
+  talentBudget,
+  drawerStyle,
+  descMorphus,
+  descFacade,
+  onSelect,
+  hideMorphusLocked,
+  onHideMorphusLockedChange,
+  hiddenCount,
+}: {
+  title: string
+  subtitle: string
+  tier: TalentCatalogTier
+  entries: TalentListEntry[]
+  morphus: boolean
+  isNightbane: boolean
+  activeOcc: PalladiumOcc | undefined
+  spellCap: number
+  selectedIds: readonly string[]
+  talentCount: number
+  talentBudget: number
+  drawerStyle: string
+  descMorphus: string
+  descFacade: string
+  onSelect: (id: string) => void
+  hideMorphusLocked?: boolean
+  onHideMorphusLockedChange?: (next: boolean) => void
+  hiddenCount?: number
+}) {
+  const visibleEntries = useMemo(() => {
+    if (tier !== 'elite' || !hideMorphusLocked) return entries
+    return entries.filter(
+      (row) =>
+        selectedIds.includes(row.talent.id) ||
+        !row.gate.morphusTraitMismatch,
+    )
+  }, [entries, tier, hideMorphusLocked, selectedIds])
+
+  const sections = useMemo(
+    () => groupEntriesByTalentLevelGate(visibleEntries),
+    [visibleEntries],
+  )
+
+  return (
+    <div className={`flex min-h-0 flex-col rounded-lg border ${drawerStyle}`}>
+      <div
+        className="border-b px-3 py-2"
+        style={{ borderColor: morphus ? '#4c1d95' : '#e2e8f0' }}
       >
-        {talents.length === 0 ? (
+        <p className="text-sm font-bold">{title}</p>
+        <p className="text-xs opacity-70">{subtitle}</p>
+        {tier === 'elite' && onHideMorphusLockedChange ? (
+          <div className="mt-2 flex flex-col gap-1">
+            <label className="flex cursor-pointer items-start gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={hideMorphusLocked}
+                onChange={(e) => onHideMorphusLockedChange(e.target.checked)}
+                className="mt-0.5 size-3.5 rounded border-slate-400"
+              />
+              <span>
+                Hide Elite talents your Morphus cannot select
+              </span>
+            </label>
+            {hideMorphusLocked && (hiddenCount ?? 0) > 0 ? (
+              <span className="text-[11px] opacity-70">
+                {visibleEntries.length} of {entries.length} shown · {hiddenCount}{' '}
+                hidden
+              </span>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+      <ul
+        className="max-h-[min(480px,55vh)] space-y-2 overflow-y-auto p-3"
+        aria-label={`${title} library`}
+      >
+        {visibleEntries.length === 0 ? (
           <li
             className={`rounded-md border p-4 text-sm ${
               morphus
@@ -96,32 +291,77 @@ export function TalentsForgePanel({
                 : 'border-slate-200 text-slate-600'
             }`}
           >
-            No talents match your search.
+            {entries.length === 0
+              ? 'No talents match your search.'
+              : hideMorphusLocked
+                ? 'No Elite talents match your Morphus traits. Turn off the hide filter to browse locked options.'
+                : 'No talents to display.'}
           </li>
         ) : null}
-        {talents.map((a) => (
-          <TalentRow
-            key={a.id}
-            ability={a}
-            morphus={morphus}
-            isNightbane={isNightbane}
-            activeOcc={activeOcc}
-            spellCap={spellCap}
-            selectedIds={selectedIds}
-            talentCount={talentCount}
-            talentBudget={talentBudget}
-            onSelect={() => addSelectedAbility(a.id)}
-            descMorphus={descMorphus}
-            descFacade={descFacade}
-          />
-        ))}
+        {sections.flatMap((section) => {
+          const nodes: ReactNode[] = []
+          if (section.kind === 'level_gate') {
+            nodes.push(
+              <li key={`break-${section.level}`} role="presentation" className="list-none">
+                <TalentListSectionBreak label={section.label} morphus={morphus} />
+              </li>,
+            )
+          }
+          for (const { talent, ability, gate } of section.entries) {
+            nodes.push(
+              <TalentRow
+                key={talent.id}
+                talent={talent}
+                ability={ability}
+                gate={gate}
+                morphus={morphus}
+                isNightbane={isNightbane}
+                activeOcc={activeOcc}
+                spellCap={spellCap}
+                selectedIds={selectedIds}
+                talentCount={talentCount}
+                talentBudget={talentBudget}
+                onSelect={() => onSelect(talent.id)}
+                descMorphus={descMorphus}
+                descFacade={descFacade}
+              />,
+            )
+          }
+          return nodes
+        })}
       </ul>
     </div>
   )
 }
 
+function TalentListSectionBreak({
+  label,
+  morphus,
+}: {
+  label: string
+  morphus: boolean
+}) {
+  return (
+    <div
+      className={`mb-2 mt-3 border-t pt-3 ${morphus ? 'border-violet-800' : 'border-slate-300'}`}
+      role="separator"
+      aria-label={label}
+    >
+      <p
+        className={`text-center text-[11px] font-bold uppercase tracking-wide ${
+          morphus ? 'text-violet-300' : 'text-slate-500'
+        }`}
+      >
+        {label}
+      </p>
+    </div>
+  )
+}
+
 function TalentRow({
-  ability: a,
+  talent,
+  ability,
+  gate,
   morphus,
   isNightbane,
   activeOcc,
@@ -133,7 +373,9 @@ function TalentRow({
   descMorphus,
   descFacade,
 }: {
-  ability: AbilityDef
+  talent: PalladiumTalent
+  ability: AbilityDef | undefined
+  gate: ReturnType<typeof assessTalentSelectionGate>
   morphus: boolean
   isNightbane: boolean
   activeOcc: PalladiumOcc | undefined
@@ -145,22 +387,35 @@ function TalentRow({
   descMorphus: string
   descFacade: string
 }) {
-  const feature = getFeatureById(a.id)
+  const feature = getFeatureById(talent.id)
   const occGate =
     activeOcc && feature
       ? abilityPassesOccSupernaturalRules(activeOcc, feature, spellCap)
       : { allowed: true as const }
-  const blocked = !occGate.allowed
-  const already = selectedIds.includes(a.id)
+
+  const blocked = !occGate.allowed || gate.locked
+  const already = selectedIds.includes(talent.id)
   const atCap = talentCount >= talentBudget
-  const canSelect = !blocked && !already && !atCap
-  const lockedReason = blocked
+  const canSelect = !blocked && !already && !atCap && gate.selectable
+  const lockedReason = !occGate.allowed
     ? `Locked: ${occGate.reason ?? 'O.C.C. restriction.'}`
-    : already
-      ? 'Already selected.'
-      : atCap
-        ? 'Talent budget full.'
-        : 'Select this talent'
+    : gate.reason
+      ? gate.reason
+      : already
+        ? 'Already selected.'
+        : atCap
+          ? 'Talent budget full.'
+          : 'Select this talent'
+
+  const ppeAcquire = formatTalentPpeAcquireCost(talent.ppe)
+  const activationCost = formatTalentActivationCost(talent.ppe, talent.activation?.cost)
+  const description =
+    morphus && talent.descriptionMorphus
+      ? talent.descriptionMorphus
+      : talent.description
+  const durationType =
+    (ability?.durationType as 'instant' | 'melee' | 'narrative' | undefined) ??
+    'narrative'
 
   return (
     <li
@@ -176,10 +431,21 @@ function TalentRow({
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <span className="font-semibold">{a.name}</span>
+          <span className="font-semibold">{talent.name}</span>
           <span className="ml-2 text-xs opacity-60">
-            Nightbane Talent · {a.energySource.toUpperCase()}
+            Nightbane Talent · PPE
           </span>
+          {talentMinimumLevelRequirement(talent) > CREATION_CHARACTER_LEVEL ? (
+            <span
+              className={`ml-2 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase ${
+                morphus
+                  ? 'bg-amber-950 text-amber-200'
+                  : 'bg-amber-100 text-amber-900'
+              }`}
+            >
+              Lvl {talentMinimumLevelRequirement(talent)}+
+            </span>
+          ) : null}
           {blocked ? (
             <span
               className={`ml-2 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase ${
@@ -203,7 +469,7 @@ function TalentRow({
         </button>
       </div>
       <p className={`mt-2 text-xs ${morphus ? descMorphus : descFacade}`}>
-        {morphus && a.descriptionMorphus ? a.descriptionMorphus : a.description}
+        {description}
       </p>
       {isNightbane ? (
         <div
@@ -214,14 +480,22 @@ function TalentRow({
           }`}
         >
           <div>
-            <span className="font-bold">P.P.E. cost:</span>{' '}
-            {a.ppeCost != null ? `${a.ppeCost}` : '—'}
+            <span className="font-bold">P.P.E. cost:</span> {ppeAcquire ?? '—'}
           </div>
           <div>
             <span className="font-bold">Activation cost:</span>{' '}
-            {a.activationCost ?? '—'}
+            {activationCost ?? '—'}
           </div>
         </div>
+      ) : null}
+      {gate.reason && blocked ? (
+        <p
+          className={`mt-2 text-[11px] ${
+            morphus ? 'text-rose-300/90' : 'text-rose-700'
+          }`}
+        >
+          {gate.reason}
+        </p>
       ) : null}
       <span
         className={`mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
@@ -230,7 +504,7 @@ function TalentRow({
             : 'bg-slate-200 text-slate-700'
         }`}
       >
-        {abilityDurationBadgeLabel(a.durationType)}
+        {abilityDurationBadgeLabel(durationType)}
       </span>
     </li>
   )

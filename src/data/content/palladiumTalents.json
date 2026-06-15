@@ -6058,6 +6058,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "The Nightbane can \"grab\" somebody up to 50 feet (15.2 m) away +10 feet (3 m) per additional level by making a grabbing gesture in the direction of the target. The grab simply holds a person for two melee actions, or roughly 5 seconds, during which time he cannot move or physically attack.",
       "sources": [
         {
@@ -6097,6 +6098,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "The Nightbane becomes an astral being with no physical body. In astral form, the character has all the abilities and limitations of an astral projection, but without a silver cord, or leaving his physical body behind. The S.D.C. of the astral-self is equal to the combined S.D.C. and Hit Points of the Nightbane, times two!",
       "sources": [
         {
@@ -6125,6 +6127,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "The Nightbane becomes an engulfing, semi-liquid mass of pure darkness that can engulf and suffocate opponents.",
       "sources": [
         {
@@ -6166,6 +6169,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "The Nightbane can move in a circular pattern and make spinning attacks with incredible speed. The character becomes a blur, as he spins at blurring speeds in a large circle - a circular area 10 feet (3 m) in diameter.",
       "sources": [
         {
@@ -6203,6 +6207,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "With this power the Nightbane can enter the Dreamstream body and soul. While in the Dreamstream, the Nightbane has a 'psychic S.D.C.' equal to his normal S.D.C. and Hit Points combined.",
       "sources": [
         {
@@ -6232,6 +6237,7 @@
       "gameSystems": [
         "nightbane"
       ],
+      "talentTier": "common",
       "description": "By using this power, the Nightbane can remove a part of his own flesh; some actually remove an eye, ear, or other sensory body parts, but a finger or toe will do just as well. The body part will be able to hear, see and feel everything around it.",
       "sources": [
         {

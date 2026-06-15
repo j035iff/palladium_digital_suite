@@ -14,22 +14,28 @@
       "pageNumber": 112
     }
   ],
-  "tier": "common",
+  "talentTier": "elite",
   "tags": [
     "flight",
     "armor"
   ],
   "formRequirement": "morphus",
+  "ppe": {
+    "permanentBurnToAcquire": 8,
+    "baseActivation": 6
+  },
+  "limitations": {
+    "usableInNightbaneForm": "morphus_only",
+    "minimumCharacterLevelToAcquire": 1
+  },
   "modifiers": {
     "sdc": 20,
     "horror_factor": 2
   },
   "durationType": "narrative",
-  "prerequisites": [
-    {
-      "type": "level_minimum",
-      "level": 1,
-      "label": "Available at 1st level Nightbane creation."
-    }
-  ]
+  "prerequisites": {
+    "morphusTableIds": [
+      "animal_avian"
+    ]
+  }
 }

@@ -4,6 +4,11 @@
 import type { Feature } from '../types'
 import { FEATURE_REGISTRY, getFeatureById as getFeature } from './library/registry'
 import { featureBudgetCategory, morphusRequired } from '../lib/featureEngine'
+import {
+  formatTalentActivationCost,
+  formatTalentPpeAcquireCost,
+} from '../lib/talentDisplay'
+import type { TalentPpeEconomy } from '../types'
 
 export type AbilityEnergySource = 'ppe' | 'isp'
 export type AbilityDurationType = 'instant' | 'melee' | 'narrative'
@@ -36,7 +41,7 @@ export type AbilityDef = {
   pumpable?: AbilityPumpRule
   spellLevel?: number
   morphusOnly?: boolean
-  ppeCost?: number
+  ppeCost?: number | string
   activationCost?: string
   innateStarter?: boolean
 }
@@ -53,6 +58,9 @@ function featureToAbilityDef(f: Feature): AbilityDef | null {
     typeof cost?.value === 'number' ? cost.value : Number(cost?.value) || 0
   const durationType =
     (f.metadata?.durationType as AbilityDurationType | undefined) ?? 'instant'
+  const ppeEconomy = f.metadata?.ppe as TalentPpeEconomy | undefined
+  const ppeAcquire = formatTalentPpeAcquireCost(ppeEconomy)
+  const activationLabel = formatTalentActivationCost(ppeEconomy, cost)
   return {
     id: f.identity.id,
     name: f.identity.name,
@@ -65,11 +73,14 @@ function featureToAbilityDef(f: Feature): AbilityDef | null {
     pumpable: f.metadata?.pumpable as AbilityPumpRule | undefined,
     spellLevel: typeof f.metadata?.level === 'number' ? f.metadata.level : undefined,
     morphusOnly: morphusRequired(f),
-    ppeCost: typeof f.metadata?.ppeCost === 'number' ? f.metadata.ppeCost : undefined,
+    ppeCost:
+      ppeAcquire ??
+      (typeof f.metadata?.ppeCost === 'number' ? f.metadata.ppeCost : undefined),
     activationCost:
-      typeof f.metadata?.activationCost === 'string'
+      activationLabel ??
+      (typeof f.metadata?.activationCost === 'string'
         ? f.metadata.activationCost
-        : undefined,
+        : undefined),
     innateStarter: f.metadata?.innateStarter === true,
   }
 }

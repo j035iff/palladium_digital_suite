@@ -517,6 +517,8 @@ export type TalentLimitations = {
   minimumCharacterLevelToAcquire?: number
   cannotAffect?: readonly string[]
   otherLimitations?: string
+  /** Prose Morphus trait gates when structured table ids are unavailable. */
+  morphusTablePrerequisites?: readonly string[]
 }
 
 export type TalentRangeEntry = {

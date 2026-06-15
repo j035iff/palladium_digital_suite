@@ -208,7 +208,12 @@
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
         },
-        "otherLimitations": { "type": "string", "minLength": 1 }
+        "otherLimitations": { "type": "string", "minLength": 1 },
+        "morphusTablePrerequisites": {
+          "type": "array",
+          "description": "Prose Morphus trait gates when structured `prerequisites.morphusTableIds` is unavailable. Prefer structured ids for chargen auto-gating.",
+          "items": { "type": "string", "minLength": 1 }
+        }
       }
     },
     "talentRangeEntry": {
