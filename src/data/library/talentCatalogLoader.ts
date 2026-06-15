@@ -6,11 +6,37 @@ import type {
   PalladiumTalent,
   TalentUsableInNightbaneForm,
 } from '../../types'
-import palladiumTalents from '../content/palladiumTalents.json'
+
+const talentModules = import.meta.glob('../content/talents/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, readonly PalladiumTalent[]>
+
+function tierFromModulePath(modulePath: string): 'common' | 'elite' | undefined {
+  const match = modulePath.match(/\/([^/]+)\.json$/)
+  const slug = match?.[1]
+  if (slug === 'common' || slug === 'elite') return slug
+  return undefined
+}
 
 function loadTalentCatalog(): readonly PalladiumTalent[] {
-  const rows = palladiumTalents as unknown
-  return Array.isArray(rows) ? (rows as PalladiumTalent[]) : []
+  const rows: PalladiumTalent[] = []
+
+  for (const [path, moduleRows] of Object.entries(talentModules)) {
+    const fileTier = tierFromModulePath(path)
+    const list = Array.isArray(moduleRows) ? moduleRows : []
+    for (const row of list) {
+      const rowTier = (row.talentTier ?? row.tier)?.toLowerCase()
+      if (fileTier && rowTier && rowTier !== fileTier) {
+        console.warn(
+          `[talentCatalog] ${row.id} has talentTier "${rowTier}" but lives in talents/${fileTier}.json`,
+        )
+      }
+      rows.push(row)
+    }
+  }
+
+  return rows.sort((a, b) => a.id.localeCompare(b.id))
 }
 
 function formFromLimitations(
@@ -113,7 +139,7 @@ export function palladiumTalentToFeature(row: PalladiumTalent): Feature {
   }
 }
 
-/** Nightbane talent catalog — `src/data/content/palladiumTalents.json`. */
+/** Nightbane talent catalog — `src/data/content/talents/*.json`. */
 export const PALLADIUM_TALENT_CATALOG: readonly PalladiumTalent[] = loadTalentCatalog()
 
 export const TALENT_FEATURES: Feature[] = PALLADIUM_TALENT_CATALOG.map(

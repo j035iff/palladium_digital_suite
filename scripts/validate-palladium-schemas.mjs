@@ -495,32 +495,82 @@ if (!Array.isArray(palladiumHandToHand)) {
   }
 }
 
-const palladiumTalents = loadJson(join(contentDir, 'palladiumTalents.json'))
-if (!Array.isArray(palladiumTalents)) {
+const talentsDir = join(contentDir, 'talents')
+let talentFiles = []
+try {
+  talentFiles = readdirSync(talentsDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+} catch {
+  console.error('ERR talents/ — directory missing')
   failed = true
-  console.error('ERR palladiumTalents.json — expected top-level array')
-} else {
+}
+if (talentFiles.length > 0) {
+  const seenTalentIds = new Set()
   let talentBad = 0
-  for (const row of palladiumTalents) {
-    if (!validateTalentRow(row)) {
-      talentBad++
-      if (talentBad <= 5) {
-        console.error(
-          `ERR palladiumTalents.json id=${row?.id ?? '?'}:`,
-          validateTalentRow.errors,
-        )
+  let talentDup = 0
+  let talentTierMismatch = 0
+  let talentTotal = 0
+  for (const file of talentFiles) {
+    const fileTier = file.replace(/\.json$/, '')
+    const rows = loadJson(join(talentsDir, file))
+    if (!Array.isArray(rows)) {
+      failed = true
+      console.error(`ERR talents/${file} — expected top-level array`)
+      continue
+    }
+    talentTotal += rows.length
+    for (const row of rows) {
+      const id = row?.id
+      const rowTier = row?.talentTier ?? row?.tier
+      if (
+        (fileTier === 'common' || fileTier === 'elite') &&
+        rowTier &&
+        rowTier !== fileTier
+      ) {
+        talentTierMismatch++
+        if (talentTierMismatch <= 5) {
+          console.error(
+            `ERR talents/${file} id=${id ?? '?'}: talentTier "${rowTier}" does not match file "${fileTier}"`,
+          )
+        }
+      }
+      if (id) {
+        if (seenTalentIds.has(id)) {
+          talentDup++
+          if (talentDup <= 5) {
+            console.error(`ERR talents/${file} duplicate id=${id}`)
+          }
+        } else {
+          seenTalentIds.add(id)
+        }
+      }
+      if (!validateTalentRow(row)) {
+        talentBad++
+        if (talentBad <= 5) {
+          console.error(
+            `ERR talents/${file} id=${row?.id ?? '?'}:`,
+            validateTalentRow.errors,
+          )
+        }
       }
     }
   }
-  if (talentBad === 0) {
+  if (talentBad === 0 && talentDup === 0 && talentTierMismatch === 0) {
     console.log(
-      `OK  palladiumTalents.json — ${palladiumTalents.length} rows validate`,
+      `OK  talents/ — ${talentFiles.length} file(s), ${talentTotal} row(s) validate`,
     )
   } else {
     failed = true
-    console.error(
-      `ERR palladiumTalents.json — ${talentBad} row(s) failed schema validation`,
-    )
+    if (talentBad > 0) {
+      console.error(`ERR talents/ — ${talentBad} row(s) failed schema validation`)
+    }
+    if (talentDup > 0) {
+      console.error(`ERR talents/ — ${talentDup} duplicate id(s)`)
+    }
+    if (talentTierMismatch > 0) {
+      console.error(`ERR talents/ — ${talentTierMismatch} tier/file mismatch(es)`)
+    }
   }
 }
 

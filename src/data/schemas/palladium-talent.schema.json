@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-talent.schema.json",
   "title": "Palladium Nightbane talent",
-  "description": "Nightbane **Talent** catalog row (Dark Designs / Survival Guide pattern). Documents P.P.E. economy, form limitations, structured range/duration/damage, optional `resolutionTable`, `permanentCosts`, `spawnedPresence`, and `formTransformation` (shared with magic/psionic via `palladium-feature-common.schema.json`), and book-specific mechanical extension blocks. Runtime importers map rows to the universal **Feature** composer (`metadata.pickBucket`: `talent`).",
+  "description": "Nightbane **Talent** catalog row (Dark Designs / Survival Guide pattern).\n\n**Engine contract (see `scripts/talent-engine-contract.mjs`):**\n- **Tier 1 (chargen)** — `talentTier`, `ppe`, `limitations`, `prerequisites`, `sources`, descriptions. Consumed by creation picker, gates, PPE display.\n- **Tier 2 (play)** — optional blocks (`powerModes`, `combatMechanics`, `vampiricResourceRecovery`, …). For FeatureCard / combat when wired; not required for chargen ingest Pass A.\n\nRuntime importers map rows to the universal **Feature** composer (`metadata.pickBucket`: `talent`).",
   "type": "object",
   "additionalProperties": true,
   "required": ["id", "name", "description", "gameSystems", "sources"],
@@ -131,7 +131,52 @@
       "type": "string",
       "enum": ["instant", "melee", "narrative"]
     },
-    "pumpable": { "$ref": "#/$defs/pumpRule" }
+    "pumpable": { "$ref": "#/$defs/pumpRule" },
+    "powerModes": { "$ref": "#/$defs/talentPowerModes" },
+    "combatMechanics": { "$ref": "#/$defs/talentCombatMechanics" },
+    "vampiricResourceRecovery": { "$ref": "#/$defs/talentVampiricResourceRecovery" },
+    "activationTime": { "$ref": "#/$defs/tier2PlayBlock" },
+    "rangeMechanics": { "$ref": "#/$defs/tier2PlayBlock" },
+    "createdObjects": { "$ref": "#/$defs/tier2PlayBlock" },
+    "rangeAndArea": { "$ref": "#/$defs/tier2PlayBlock" },
+    "penaltiesOnAffectedCharacters": { "$ref": "#/$defs/tier2PlayBlock" },
+    "statusAlterations": { "$ref": "#/$defs/tier2PlayBlock" },
+    "physicalCombatStatModifiers": { "$ref": "#/$defs/tier2PlayBlock" },
+    "savingThrows": { "$ref": "#/$defs/tier2PlayBlock" },
+    "physicalBonusesPenalties": { "$ref": "#/$defs/tier2PlayBlock" },
+    "attacksAndDamage": { "$ref": "#/$defs/tier2PlayBlock" },
+    "damageModifiersNote": { "$ref": "#/$defs/tier2PlayBlock" },
+    "offensiveDamage": { "$ref": "#/$defs/tier2PlayBlock" },
+    "mobilityBlocks": { "$ref": "#/$defs/tier2PlayBlock" },
+    "statusEffects": { "$ref": "#/$defs/tier2PlayBlock" },
+    "temporaryAbilitiesGranted": { "$ref": "#/$defs/tier2PlayBlock" },
+    "structureReinforcements": { "$ref": "#/$defs/tier2PlayBlock" },
+    "grantedSkills": { "$ref": "#/$defs/tier2PlayBlock" },
+    "passengerLimits": { "$ref": "#/$defs/tier2PlayBlock" },
+    "recoveryStateUntilThreshold": { "$ref": "#/$defs/tier2PlayBlock" },
+    "environmentalConstructs": { "$ref": "#/$defs/tier2PlayBlock" },
+    "opponentConditionalModifiers": { "$ref": "#/$defs/tier2PlayBlock" },
+    "retroactiveWindow": { "$ref": "#/$defs/tier2PlayBlock" },
+    "jumpDistanceScaling": { "$ref": "#/$defs/tier2PlayBlock" },
+    "passengerCompanionCapacity": { "$ref": "#/$defs/tier2PlayBlock" },
+    "activationRequirements": { "$ref": "#/$defs/tier2PlayBlock" },
+    "activationDamage": { "$ref": "#/$defs/tier2PlayBlock" },
+    "alignmentGatedEffects": { "$ref": "#/$defs/tier2PlayBlock" },
+    "bonusDamageVsNightlandsDenizens": { "$ref": "#/$defs/tier2PlayBlock" },
+    "temporaryResourcePools": { "$ref": "#/$defs/tier2PlayBlock" },
+    "environmentalAmplifiers": { "$ref": "#/$defs/tier2PlayBlock" },
+    "reflectionMechanics": { "$ref": "#/$defs/tier2PlayBlock" },
+    "attributeCost": { "$ref": "#/$defs/tier2PlayBlock" },
+    "bonusesOnAlliedTargets": { "$ref": "#/$defs/tier2PlayBlock" },
+    "attributeBurn": { "$ref": "#/$defs/tier2PlayBlock" },
+    "comaHitPointBuffer": { "$ref": "#/$defs/tier2PlayBlock" },
+    "skillsGranted": { "$ref": "#/$defs/tier2PlayBlock" },
+    "penaltiesOnCaster": { "$ref": "#/$defs/tier2PlayBlock" },
+    "healing": { "$ref": "#/$defs/tier2PlayBlock" },
+    "objectsAffected": { "$ref": "#/$defs/tier2PlayBlock" },
+    "swarmMechanics": { "$ref": "#/$defs/tier2PlayBlock" },
+    "holdsAndEscapes": { "$ref": "#/$defs/tier2PlayBlock" },
+    "damageTakenModifiers": { "$ref": "#/$defs/tier2PlayBlock" }
   },
   "$defs": {
     "sourceRef": {
@@ -183,7 +228,60 @@
             "costPerStep": { "type": "integer", "minimum": 0 },
             "stepDefinition": { "type": "string", "minLength": 1 }
           }
+        },
+        "activationTiers": {
+          "type": "array",
+          "description": "Tiered activation P.P.E. brackets (e.g. by effect scale).",
+          "minItems": 1,
+          "items": { "type": "object", "additionalProperties": true }
         }
+      }
+    },
+    "tier2PlayBlock": {
+      "description": "Tier 2 play-mechanics fragment. Structured object when possible; prose string or array of sub-blocks also valid during ingest.",
+      "oneOf": [
+        { "type": "object", "additionalProperties": true },
+        { "type": "array", "minItems": 1 },
+        { "type": "string", "minLength": 1 }
+      ]
+    },
+    "talentPowerModeEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["modeName"],
+      "properties": {
+        "modeName": { "type": "string", "minLength": 1 },
+        "effectsDescription": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentPowerModes": {
+      "type": "array",
+      "description": "Modal talent — pick one boost or effect mode at activation.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/talentPowerModeEntry" }
+    },
+    "talentCombatMechanics": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Saves, strike bonuses, and combat consequences for play resolution.",
+      "properties": {
+        "savingThrow": { "type": "object", "additionalProperties": true },
+        "rangeSummary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "talentVampiricResourceRecovery": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "P.P.E./H.P. recovery triggered by kills or drains.",
+      "properties": {
+        "triggerKind": { "type": "string", "minLength": 1 },
+        "recoveryFractionOrPercent": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "resourceType": { "type": "string", "enum": ["ppe", "isp", "hit_points", "sdc", "other"] }
       }
     },
     "talentLimitations": {

@@ -1850,7 +1850,7 @@ export type PalladiumMagicSpell = {
 }
 
 /**
- * Nightbane talent catalog row (`content/palladiumTalents.json`, palladium-talent.schema.json).
+ * Nightbane talent catalog row (`content/talents/*.json`, palladium-talent.schema.json).
  */
 export type PalladiumTalent = {
   id: string

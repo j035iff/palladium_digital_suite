@@ -153,7 +153,7 @@ Content is **JSON-first**, validated by Ajv:
 | `palladium-skill.schema.json` | `palladiumSkills.json` |
 | `palladium-occ.schema.json` | `occs/*.json` |
 | `palladium-race.schema.json` | `races/player.json`, `races/npc.json`, `races/gm_approval.json` |
-| `palladium-talent.schema.json` | `palladiumTalents.json` |
+| `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` |
 | `palladium-hth.schema.json` | `palladiumHandToHand.json` |
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |
@@ -201,7 +201,7 @@ Reference PDFs live in `src/data/reference/nightbane/` (not committed).
 
 - Ingesting Morphus category tables from Nightbane core + worldbooks (Infernal, Mineral, Stigmata, Undead, Unearthly Beauty, Unnatural Limbs, Unusual Facial Features, Victim, etc.).
 - Feature engine + `FeatureCard` unifying talents, racial traits, and O.C.C. abilities.
-- Morphus gating on ability/talent selection (`palladiumTalents.json` references allowed morphus table IDs).
+- Morphus gating on ability/talent selection (`content/talents/*.json` references allowed morphus table IDs).
 - Schema hardening (`limbDurability.quantity` polymorphic, `flySpdAttribute`, aggregation coverage reports).
 
 **Roadmap genres** (visible in launcher, not all wired): Rifts Aftermath, generic Fantasy/Sci-Fi stubs.

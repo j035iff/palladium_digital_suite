@@ -11,15 +11,25 @@
       "pageNumber": 1
     }
   ],
-  "talentTier": "rare",
-  "ppe": { "baseActivation": 15 },
   "range": { "summary": "Self." },
   "duration": {
     "summary": "5 minutes per level of experience.",
     "kind": "minute",
     "perLevel": "5 minutes"
   },
+  "talentTier": "elite",
+  "ppe": {
+    "permanentBurnToAcquire": 8,
+    "baseActivation": 6
+  },
   "formRequirement": "morphus",
+  "combatMechanics": {
+    "savingThrow": {
+      "stat": "save_vs_magic",
+      "targetNumber": 16,
+      "consequenceOfFailure": "Example Tier 2 play block for schema validation."
+    }
+  },
   "formTransformation": {
     "mode": "sheet_replacement",
     "targetCatalogRaceId": "race_wolf",

@@ -53,7 +53,7 @@ export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 /** Row from `content/palladiumHandToHand.json` — see `schemas/palladium-hth.schema.json`. */
 export type PalladiumHandToHandCatalogEntry = import('../../types').HandToHandSkill
 
-/** Row from `content/palladiumTalents.json` — see `schemas/palladium-talent.schema.json`. */
+/** Row from `content/talents/*.json` — see `schemas/palladium-talent.schema.json`. */
 export type PalladiumTalentCatalogEntry = import('../../types').PalladiumTalent
 
 /** Row from `content/magic/<school>.json` — see `schemas/palladium-magic.schema.json`. */

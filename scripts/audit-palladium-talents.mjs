@@ -1,5 +1,7 @@
 /**
- * Chargen-focused audit for `src/data/content/palladiumTalents.json`.
+ * Chargen-focused audit for `src/data/content/talents/*.json`.
+ *
+ * Engine contract: `scripts/talent-engine-contract.mjs`
  *
  * Run: npm run audit:talents
  * JSON report: npm run audit:talents -- --json reports/talent-audit.json
@@ -7,48 +9,19 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import {
+  isTier1ChargenComplete,
+  listSchemaDriftKeys,
+  listTier2KeysPresent,
+  SCHEMA_TOP_LEVEL_KEYS,
+  TALENT_ENGINE_CONTRACT,
+} from './talent-engine-contract.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const contentDir = join(root, 'src/data/content')
-const talentsPath = join(contentDir, 'palladiumTalents.json')
+const talentsDir = join(contentDir, 'talents')
 const morphusTablesDir = join(contentDir, 'morphus/tables')
 const forgeDir = join(contentDir, 'morphus/forge')
-
-const KNOWN_TOP_LEVEL_KEYS = new Set([
-  '$schema',
-  'id',
-  'name',
-  'description',
-  'descriptionMorphus',
-  'gameSystems',
-  'sources',
-  'talentTier',
-  'tier',
-  'tags',
-  'ppe',
-  'limitations',
-  'ranges',
-  'range',
-  'duration',
-  'areaOfEffect',
-  'damage',
-  'save',
-  'combat',
-  'resolutionTable',
-  'permanentCosts',
-  'spawnedPresence',
-  'formTransformation',
-  'materialComponents',
-  'forgedOutputs',
-  'prerequisites',
-  'incompatibleTalentIds',
-  'notes',
-  'modifiers',
-  'formRequirement',
-  'activation',
-  'durationType',
-  'pumpable',
-])
 
 function loadJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'))
@@ -106,19 +79,48 @@ function issue(severity, code, talent, detail, fix) {
 
 function auditTalents(talents, morphusTableIds) {
   const issues = []
-  const extensionFieldCounts = new Map()
+  let tier1Complete = 0
+  let tier2Present = 0
 
   for (const talent of talents) {
-    if (!talent.ppe) {
+    if (isTier1ChargenComplete(talent)) tier1Complete++
+    if (listTier2KeysPresent(talent).length > 0) tier2Present++
+
+    const driftKeys = listSchemaDriftKeys(talent)
+    for (const key of driftKeys) {
       issues.push(
         issue(
           'critical',
-          'missing_ppe',
+          'schema_drift',
           talent,
-          'No `ppe` block — acquire/activation costs cannot display in chargen.',
-          'Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry.',
+          `Undocumented top-level key \`${key}\` — not in talent engine contract / schema.`,
+          'Add to `palladium-talent.schema.json` + `talent-engine-contract.mjs`, or rename to a Tier 2 block.',
         ),
       )
+    }
+
+    if (!isTier1ChargenComplete(talent)) {
+      const missing = []
+      if (!tierOf(talent)) missing.push('tier')
+      if (!talent.ppe) missing.push('ppe')
+      else {
+        if (talent.ppe.permanentBurnToAcquire == null) missing.push('ppe.permanentBurnToAcquire')
+        if (talent.ppe.baseActivation == null) missing.push('ppe.baseActivation')
+      }
+      if (!(talent.sources ?? []).some((s) => String(s?.reference ?? '').toLowerCase().includes('dark designs'))) {
+        missing.push('sources (Dark Designs)')
+      }
+      issues.push(
+        issue(
+          'critical',
+          'tier1_incomplete',
+          talent,
+          `Tier 1 chargen contract incomplete — missing: ${missing.join(', ')}.`,
+          'Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks.',
+        ),
+      )
+    } else if (!talent.ppe) {
+      // unreachable if isTier1ChargenComplete is accurate
     } else {
       if (talent.ppe.permanentBurnToAcquire == null) {
         issues.push(
@@ -144,17 +146,7 @@ function auditTalents(talents, morphusTableIds) {
       }
     }
 
-    if (!tierOf(talent)) {
-      issues.push(
-        issue(
-          'critical',
-          'missing_tier',
-          talent,
-          'No `talentTier` or `tier` — talent will not appear in Common/Elite columns.',
-          'Set `talentTier` to `common` or `elite`.',
-        ),
-      )
-    } else if (!['common', 'elite'].includes(tierOf(talent))) {
+    if (!['common', 'elite'].includes(tierOf(talent) ?? '') && tierOf(talent)) {
       issues.push(
         issue(
           'warning',
@@ -201,7 +193,7 @@ function auditTalents(talents, morphusTableIds) {
           'info',
           'redundant_prose_morphus_gate',
           talent,
-          `Both prose and structured Morphus gates present (prose: ${proseMorphus.join(' ')}; tables: ${structuredMorphus.join(', ')}).`,
+          `Both prose and structured Morphus gates (prose: ${proseMorphus.join(' ')}; tables: ${structuredMorphus.join(', ')}).`,
           'Remove `limitations.morphusTablePrerequisites` if structured ids are authoritative.',
         ),
       )
@@ -233,14 +225,9 @@ function auditTalents(talents, morphusTableIds) {
           'likely_stub_row',
           talent,
           'Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.',
-          'Ingest full rulebook mechanics or mark as draft in `notes`.',
+          'Ingest full Dark Designs mechanics (Pass A) before Tier 2 play blocks (Pass B).',
         ),
       )
-    }
-
-    for (const key of Object.keys(talent)) {
-      if (KNOWN_TOP_LEVEL_KEYS.has(key)) continue
-      extensionFieldCounts.set(key, (extensionFieldCounts.get(key) ?? 0) + 1)
     }
   }
 
@@ -257,24 +244,24 @@ function auditTalents(talents, morphusTableIds) {
   }
 
   return {
+    contract: TALENT_ENGINE_CONTRACT,
     summary: {
       totalTalents: talents.length,
+      tier1ChargenComplete: tier1Complete,
+      tier2PlayBlocksPresent: tier2Present,
+      schemaTopLevelKeyCount: SCHEMA_TOP_LEVEL_KEYS.size,
       issueCount: issues.length,
       critical: bySeverity.critical.length,
       warning: bySeverity.warning.length,
       info: bySeverity.info.length,
-      extensionFieldKinds: extensionFieldCounts.size,
     },
     fixList: {
-      missing_ppe: byCode.get('missing_ppe') ?? [],
-      missing_tier: byCode.get('missing_tier') ?? [],
+      schema_drift: byCode.get('schema_drift') ?? [],
+      tier1_incomplete: byCode.get('tier1_incomplete') ?? [],
       prose_morphus_gate: byCode.get('prose_morphus_gate') ?? [],
       invalid_morphus_table_id: byCode.get('invalid_morphus_table_id') ?? [],
       likely_stub_row: byCode.get('likely_stub_row') ?? [],
     },
-    extensionFields: [...extensionFieldCounts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .map(([field, count]) => ({ field, count })),
     issues,
   }
 }
@@ -283,13 +270,16 @@ function printReport(report) {
   const { summary, fixList } = report
   console.log(`Talent catalog audit — ${summary.totalTalents} rows`)
   console.log(
+    `Tier 1 chargen-complete: ${summary.tier1ChargenComplete}/${summary.totalTalents} · Tier 2 blocks: ${summary.tier2PlayBlocksPresent} rows`,
+  )
+  console.log(
     `Issues: ${summary.issueCount} (${summary.critical} critical, ${summary.warning} warning, ${summary.info} info)`,
   )
   console.log('')
 
   const sections = [
-    ['CRITICAL — missing P.P.E.', fixList.missing_ppe],
-    ['CRITICAL — missing tier', fixList.missing_tier],
+    ['CRITICAL — schema drift (unknown keys)', fixList.schema_drift],
+    ['CRITICAL — Tier 1 incomplete', fixList.tier1_incomplete.slice(0, 15)],
     ['CRITICAL — invalid morphus table id', fixList.invalid_morphus_table_id],
     ['WARNING — prose-only Morphus gate', fixList.prose_morphus_gate],
     ['WARNING — likely stub rows', fixList.likely_stub_row],
@@ -298,29 +288,39 @@ function printReport(report) {
   for (const [heading, rows] of sections) {
     if (rows.length === 0) continue
     console.log(heading)
-    for (const row of rows) {
+    const shown = heading.includes('Tier 1 incomplete') && fixList.tier1_incomplete.length > 15
+      ? rows
+      : rows
+    for (const row of shown) {
       console.log(`  • ${row.id} — ${row.name}`)
       console.log(`    ${row.detail}`)
       console.log(`    Fix: ${row.fix}`)
     }
+    if (heading.includes('Tier 1 incomplete') && fixList.tier1_incomplete.length > 15) {
+      console.log(`  … and ${fixList.tier1_incomplete.length - 15} more Tier 1 incomplete rows`)
+    }
     console.log('')
   }
 
-  if (report.extensionFields.length > 0) {
-    console.log('Extension fields (authoring-only until runtime consumes them):')
-    for (const { field, count } of report.extensionFields.slice(0, 12)) {
-      console.log(`  • ${field} (${count})`)
-    }
-    if (report.extensionFields.length > 12) {
-      console.log(`  … and ${report.extensionFields.length - 12} more`)
-    }
-    console.log('')
-  }
+  console.log('Ingest guidance: Pass A = Tier 1 (4/batch) · Pass B = Tier 2 play blocks (2–3/batch when schema extends)')
+  console.log('')
 }
 
-const talents = loadJson(talentsPath)
-if (!Array.isArray(talents)) {
-  console.error('ERR palladiumTalents.json — expected top-level array')
+function loadTalentsFromDir() {
+  const rows = []
+  for (const file of readdirSync(talentsDir).filter((f) => f.endsWith('.json')).sort()) {
+    const doc = loadJson(join(talentsDir, file))
+    if (!Array.isArray(doc)) {
+      throw new Error(`talents/${file} — expected top-level array`)
+    }
+    rows.push(...doc)
+  }
+  return rows
+}
+
+const talents = loadTalentsFromDir()
+if (!Array.isArray(talents) || talents.length === 0) {
+  console.error('ERR talents/ — no talent rows loaded')
   process.exit(1)
 }
 

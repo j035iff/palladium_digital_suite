@@ -117,6 +117,16 @@ export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const
 export const PALLADIUM_HAND_TO_HAND_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumHandToHand.json` as const
 
+/** One JSON array per talent tier band (`common`, `elite`). */
+export const PALLADIUM_TALENTS_DIR = `${PALLADIUM_CONTENT_DIR}/talents` as const
+
+export const PALLADIUM_TALENT_COMMON_JSON_PATH =
+  `${PALLADIUM_TALENTS_DIR}/common.json` as const
+
+export const PALLADIUM_TALENT_ELITE_JSON_PATH =
+  `${PALLADIUM_TALENTS_DIR}/elite.json` as const
+
+/** @deprecated Use {@link PALLADIUM_TALENTS_DIR} — legacy single-file path. */
 export const PALLADIUM_TALENT_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumTalents.json` as const
 
