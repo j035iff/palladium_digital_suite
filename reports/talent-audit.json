@@ -80,73 +80,17 @@
   },
   "summary": {
     "totalTalents": 151,
-    "tier1ChargenComplete": 142,
-    "tier2PlayBlocksPresent": 71,
+    "tier1ChargenComplete": 149,
+    "tier2PlayBlocksPresent": 74,
     "schemaTopLevelKeyCount": 78,
-    "issueCount": 74,
-    "critical": 9,
-    "warning": 3,
+    "issueCount": 66,
+    "critical": 2,
+    "warning": 2,
     "info": 62
   },
   "fixList": {
     "schema_drift": [],
     "tier1_incomplete": [
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_corrupting_influence",
-        "name": "Corrupting Influence",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_dark_dreams",
-        "name": "Dark Dreams",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_epic_proportions",
-        "name": "Epic Proportions",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_master_stroke",
-        "name": "Master Stroke",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_mystic_amplifier",
-        "name": "Mystic Amplifier",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_necrosis",
-        "name": "Necrosis",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
-      {
-        "severity": "critical",
-        "code": "tier1_incomplete",
-        "id": "talent_payday",
-        "name": "Payday",
-        "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
-        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-      },
       {
         "severity": "critical",
         "code": "tier1_incomplete",
@@ -427,6 +371,14 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
+      "severity": "warning",
+      "code": "form_rule_mismatch",
+      "id": "talent_mirror_sight",
+      "name": "Mirror Sight",
+      "detail": "`limitations.usableInNightbaneForm` is `either_form` but prose implies `morphus_only` (default: morphus_only).",
+      "fix": "Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations."
+    },
+    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_mirror_sight",
@@ -619,30 +571,6 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_corrupting_influence",
-      "name": "Corrupting Influence",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_dark_dreams",
-      "name": "Dark Dreams",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_epic_proportions",
-      "name": "Epic Proportions",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_living_nightmare",
@@ -651,36 +579,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_master_stroke",
-      "name": "Master Stroke",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_master_stroke",
       "name": "Master Stroke",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_mystic_amplifier",
-      "name": "Mystic Amplifier",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_necrosis",
-      "name": "Necrosis",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
     },
     {
       "severity": "info",
@@ -699,36 +603,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "tier1_incomplete",
-      "id": "talent_payday",
-      "name": "Payday",
-      "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
-      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_rallying_cry",
       "name": "Rallying Cry",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "form_rule_mismatch",
-      "id": "talent_rigor_mortis",
-      "name": "Rigor Mortis",
-      "detail": "`limitations.usableInNightbaneForm` is `either_form` but prose implies `morphus_only` (default: morphus_only).",
-      "fix": "Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations."
-    },
-    {
-      "severity": "warning",
-      "code": "form_rule_mismatch",
-      "id": "talent_seedling",
-      "name": "Seedling",
-      "detail": "`limitations.usableInNightbaneForm` is `morphus_only` but prose implies `both_forms_note_special` (default: morphus_only).",
-      "fix": "Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations."
     },
     {
       "severity": "info",

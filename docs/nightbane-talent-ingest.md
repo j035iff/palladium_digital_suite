@@ -326,6 +326,8 @@ Documented table rulings when book text is ambiguous or contradictory. Encode in
 | Inferno Fist | Dark Designs p. 74 lists **5 P.P.E.** per melee round but also “only 2 P.P.E. may be spent on activation per level.” | **Flat 5 P.P.E. per activation**, one melee round. Ignore the per-level cap. |
 | Darksong | Save is “roll under 10” with P.E. bonuses — book failure wording for save vs 10. | `saveKind: base_pe`, `targetNumber: 10`. Area targets save at +4. |
 | Attribute-only saves | Nightbane talents often use P.E. or M.E. bonuses only (no racial/O.C.C./skill save stacks). | `saveKind`: `base_pe`, `base_me`, or `vs_becoming`. Sheet shows **vs target** + **bonus to roll**. Saver wins ties. |
+| A Face in the Crowd | Prerequisite is prose-only (“monstrous or alien trait from any appropriate table”). | Keep `limitations.morphusTablePrerequisites` + `prerequisites.summary`; no structured `morphusTableIds` until forge can express “monstrous/alien, not attractive/human.” |
+| Forbidding Woods | Effect prose cites 5 P.P.E. per 100 ft radius; **Cost** line cites 7 P.P.E. per 100 ft (both books). | **7 P.P.E. per 100 foot radius** per Cost line. |
 
 ---
 
