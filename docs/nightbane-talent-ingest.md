@@ -328,6 +328,7 @@ Documented table rulings when book text is ambiguous or contradictory. Encode in
 | Attribute-only saves | Nightbane talents often use P.E. or M.E. bonuses only (no racial/O.C.C./skill save stacks). | `saveKind`: `base_pe`, `base_me`, or `vs_becoming`. Sheet shows **vs target** + **bonus to roll**. Saver wins ties. |
 | A Face in the Crowd | Prerequisite is prose-only (“monstrous or alien trait from any appropriate table”). | Keep `limitations.morphusTablePrerequisites` + `prerequisites.summary`; no structured `morphusTableIds` until forge can express “monstrous/alien, not attractive/human.” |
 | Forbidding Woods | Effect prose cites 5 P.P.E. per 100 ft radius; **Cost** line cites 7 P.P.E. per 100 ft (both books). | **7 P.P.E. per 100 foot radius** per Cost line. |
+| Pariah's Mantle | Book calls for "saving throw of 15 or better using any bonuses from a high M.E. attribute" — not save vs magic. | `saveKind: base_me`, `targetNumber: 15`. Good alignment +2 and pacifist +5 are flat save modifiers. |
 
 ---
 
