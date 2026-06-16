@@ -33,6 +33,19 @@ export function listMorphusForgeRoutingTables(): readonly PalladiumMorphusForgeR
   return [MORPHUS_APPEARANCE_ROUTING_TABLE, MORPHUS_CHARACTERISTICS_ROUTING_TABLE]
 }
 
+/** Player-facing characteristic / appearance rows (excludes `playerSelectable: false`). */
+export function isMorphusForgeRoutingEntryPlayerSelectable(
+  entry: MorphusForgeRoutingEntry,
+): boolean {
+  return entry.playerSelectable !== false
+}
+
+export function listPlayerSelectableMorphusForgeRoutingEntries(
+  table: PalladiumMorphusForgeRoutingTable,
+): MorphusForgeRoutingEntry[] {
+  return table.entries.filter(isMorphusForgeRoutingEntryPlayerSelectable)
+}
+
 /** Resolve appearance/characteristics percentile row by 1–100 roll. */
 export function resolveMorphusForgeRoutingEntry(
   table: PalladiumMorphusForgeRoutingTable,
@@ -40,7 +53,10 @@ export function resolveMorphusForgeRoutingEntry(
 ): MorphusForgeRoutingEntry | undefined {
   const roll = Math.min(100, Math.max(1, Math.round(percentileRoll)))
   return table.entries.find(
-    (entry) => roll >= entry.percentile.min && roll <= entry.percentile.max,
+    (entry) =>
+      isMorphusForgeRoutingEntryPlayerSelectable(entry) &&
+      roll >= entry.percentile.min &&
+      roll <= entry.percentile.max,
   )
 }
 

@@ -164,6 +164,11 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "#/$defs/slotRequirement" }
+        },
+        "playerSelectable": {
+          "type": "boolean",
+          "default": true,
+          "description": "When false, entry is retained in data but omitted from player characteristic pick lists and percentile resolution."
         }
       }
     },

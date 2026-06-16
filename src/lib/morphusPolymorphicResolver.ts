@@ -1,5 +1,30 @@
-import type { MorphusPolymorphicModifier } from '../types'
+import type {
+  MorphusCharacteristic,
+  MorphusPolymorphicModifier,
+  MorphusStatModifiers,
+} from '../types'
 import { rollDiceNotation } from './diceNotation'
+
+export type PolymorphicResolveOptions = {
+  rollDice?: (notation: string) => number
+  /**
+   * When false, minValue/maxValue are deferred (creation preview until Finalize Morphus).
+   * Defaults to true.
+   */
+  applyFloors?: boolean
+}
+
+function normalizeResolveOptions(
+  opts?: PolymorphicResolveOptions | ((notation: string) => number),
+): PolymorphicResolveOptions {
+  if (typeof opts === 'function') {
+    return { rollDice: opts, applyFloors: true }
+  }
+  return {
+    rollDice: opts?.rollDice ?? evaluatePolymorphicDice,
+    applyFloors: opts?.applyFloors ?? true,
+  }
+}
 
 /**
  * Evaluate one Morphus polymorphic block (flat / dice / percent).
@@ -35,6 +60,39 @@ export function hasPolymorphicPayload(mod?: MorphusPolymorphicModifier): boolean
   )
 }
 
+/** Highest minValue floor declared on active traits for one attribute axis. */
+export function collectMorphusAttributeMinFloor(
+  traits: readonly Pick<MorphusCharacteristic, 'statModifiers'>[],
+  key: keyof MorphusStatModifiers,
+): number | undefined {
+  let min: number | undefined
+  for (const trait of traits) {
+    const block = trait.statModifiers?.[key]
+    if (typeof block?.minValue !== 'number') continue
+    min = min == null ? block.minValue : Math.max(min, block.minValue)
+  }
+  return min
+}
+
+function applyModifierFloors(
+  value: number,
+  modifiers: readonly MorphusPolymorphicModifier[],
+): number {
+  let minFloor: number | undefined
+  let maxCeil: number | undefined
+  for (const m of modifiers) {
+    if (typeof m.minValue === 'number') {
+      minFloor = minFloor == null ? m.minValue : Math.max(minFloor, m.minValue)
+    }
+    if (typeof m.maxValue === 'number') {
+      maxCeil = maxCeil == null ? m.maxValue : Math.min(maxCeil, m.maxValue)
+    }
+  }
+  if (minFloor != null) value = Math.max(value, minFloor)
+  if (maxCeil != null) value = Math.min(value, maxCeil)
+  return value
+}
+
 /**
  * Resolve a single stat from base + stacked modifiers on one axis.
  * Override blocks (last override wins) replace the pipeline; otherwise flat → percent → dice.
@@ -42,15 +100,22 @@ export function hasPolymorphicPayload(mod?: MorphusPolymorphicModifier): boolean
 export function resolveStatWithPolymorphicModifiers(
   base: number,
   modifiers: readonly MorphusPolymorphicModifier[],
-  rollDice: (notation: string) => number = evaluatePolymorphicDice,
+  opts?: PolymorphicResolveOptions | ((notation: string) => number),
 ): number {
   if (!modifiers.length) return base
+
+  const { rollDice, applyFloors } = normalizeResolveOptions(opts)
 
   const overrides = modifiers.filter(
     (m) => m.isOverride === true && hasPolymorphicPayload(m),
   )
   if (overrides.length > 0) {
-    return resolveOverrideValue(base, overrides[overrides.length - 1]!, rollDice)
+    const resolved = resolveOverrideValue(
+      base,
+      overrides[overrides.length - 1]!,
+      rollDice,
+    )
+    return applyFloors ? applyModifierFloors(resolved, modifiers) : resolved
   }
 
   let value = base
@@ -68,6 +133,11 @@ export function resolveStatWithPolymorphicModifiers(
   for (const m of modifiers) {
     if (m.dice) value += rollDice(m.dice)
   }
+
+  if (applyFloors) {
+    value = applyModifierFloors(value, modifiers)
+  }
+
   return value
 }
 
@@ -88,8 +158,17 @@ function resolveOverrideValue(
 export function polymorphicDeltaFromBase(
   base: number,
   modifiers: readonly MorphusPolymorphicModifier[],
-  rollDice?: (notation: string) => number,
+  opts?: PolymorphicResolveOptions | ((notation: string) => number),
 ): number {
   if (!modifiers.length) return 0
-  return resolveStatWithPolymorphicModifiers(base, modifiers, rollDice) - base
+  return resolveStatWithPolymorphicModifiers(base, modifiers, opts) - base
+}
+
+/** Apply deferred attribute minimums after all Morphus trait bonuses are summed. */
+export function applyMorphusAttributeMinFloor(
+  total: number,
+  minFloor: number | undefined,
+): number {
+  if (minFloor == null) return total
+  return Math.max(total, minFloor)
 }

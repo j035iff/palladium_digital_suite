@@ -87,6 +87,41 @@ describe('talentSelectionGates', () => {
     expect(ids.has('angelic')).toBe(true)
   })
 
+  it('collects unearthly beauty from resolved trait picks', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'appearance',
+      appearanceEntryId: 'bizarre',
+    }
+    const slotState: MorphusForgeSlotState = {
+      picks: {
+        'plan:0': 'unearthly_beauty_animal_magnetism',
+      },
+    }
+    const ids = collectCharacterMorphusTableIds(forgeState, slotState)
+    expect(ids.has('unearthly_beauty')).toBe(true)
+  })
+
+  it('collects morphus table ids from synced trait slot resolutions', () => {
+    const ids = collectCharacterMorphusTableIds(
+      { activeSubTab: 'crossroads', subTabCompleted: {} },
+      undefined,
+      [{ slotId: 'plan:0', catalogEntryId: 'unearthly_beauty_animal_magnetism' }],
+    )
+    expect(ids.has('unearthly_beauty')).toBe(true)
+  })
+
+  it('unlocks unearthly beauty elite talents when morphus traits match', () => {
+    const talent = getPalladiumTalentById('talent_beguiling_beauty')
+    expect(talent).toBeDefined()
+    const gate = assessTalentSelectionGate(talent!, {
+      characterLevel: 6,
+      morphusTableIds: new Set(['unearthly_beauty']),
+      selectedTalentIds: [],
+      spellCap: 4,
+    })
+    expect(gate.selectable).toBe(true)
+  })
+
   it('groups talents with no level gate first, then by ascending level', () => {
     const noGate = getPalladiumTalentById('talent_jam_senses')
     const level3 = getPalladiumTalentById('talent_ashes_to_ashes')

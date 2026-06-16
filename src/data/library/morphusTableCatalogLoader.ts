@@ -16,13 +16,27 @@ export const MORPHUS_TABLE_CATALOG: readonly PalladiumMorphusTable[] =
 const byId = new Map(MORPHUS_TABLE_CATALOG.map((t) => [t.id, t]))
 
 const characteristicById = new Map<string, MorphusCharacteristic>()
+const characteristicTableIds = new Map<string, readonly string[]>()
 for (const table of MORPHUS_TABLE_CATALOG) {
+  if (table.kind !== 'morphus_trait_table' && table.kind !== 'category_hub') continue
+  const tableIds: string[] = [table.id]
+  if (table.parentTable?.trim()) tableIds.push(table.parentTable.trim())
+  const registerCharacteristic = (entryId: string) => {
+    characteristicTableIds.set(entryId, tableIds)
+  }
   for (const entry of table.entries) {
     characteristicById.set(entry.id, entry)
+    registerCharacteristic(entry.id)
     for (const variant of entry.variantPercentiles ?? []) {
       const merged = mergeVariantIntoCharacteristic(entry, variant)
-      characteristicById.set(`${entry.id}::variant:${variant.roll}`, merged)
-      characteristicById.set(`${entry.id}::variant:${variant.label}`, merged)
+      const variantIds = [
+        `${entry.id}::variant:${variant.roll}`,
+        `${entry.id}::variant:${variant.label}`,
+      ]
+      for (const variantId of variantIds) {
+        characteristicById.set(variantId, merged)
+        registerCharacteristic(variantId)
+      }
     }
   }
 }
@@ -88,6 +102,17 @@ export function getMorphusCharacteristicById(
   id: string,
 ): MorphusCharacteristic | undefined {
   return characteristicById.get(id)
+}
+
+/** Trait table ids (and parent hub ids) that own a characteristic entry. */
+export function resolveMorphusTableIdsForCharacteristic(
+  characteristicId: string,
+): readonly string[] {
+  const direct = characteristicTableIds.get(characteristicId)
+  if (direct?.length) return direct
+  const baseId = characteristicId.split('::')[0]?.trim()
+  if (!baseId) return []
+  return characteristicTableIds.get(baseId) ?? []
 }
 
 export function resolveMorphusCharacteristicsByIds(

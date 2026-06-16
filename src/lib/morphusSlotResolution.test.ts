@@ -2,7 +2,10 @@ import { describe, expect, it } from 'vitest'
 import {
   buildMorphusSlotTree,
   collectMorphusSelectedTraitPanelRows,
+  collectSelectedMorphusCatalogEntryIds,
   deriveMorphusSlotResolutionView,
+  isMorphusSubTraitTablePickBlocked,
+  isMorphusTraitPickAlreadySelected,
   isMorphusSlotTreeComplete,
   rootMorphusSlotPlan,
 } from './morphusSlotResolution'
@@ -174,5 +177,231 @@ describe('morphusSlotResolution', () => {
     expect(
       view.traitSlots.some((slot) => slot.catalogEntryId === 'animal_arachnid_full'),
     ).toBe(false)
+  })
+
+  it('treats traits already chosen on another slot as unavailable picks', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'characteristics',
+      characteristicsPickCount: 2,
+    }
+    const slotState: MorphusForgeSlotState = {
+      routingPicks: {
+        'plan:0': 'alien_creature',
+        'plan:1': 'alien_creature',
+      },
+      branchTableIds: {
+        'plan:0/plan:0': 'alien_shape',
+        'plan:1/plan:0': 'alien_shape',
+      },
+      picks: {
+        'plan:0/plan:0/branch': 'alien_shape_baggy_flaps_of_skin',
+      },
+    }
+
+    const nodes = buildMorphusSlotTree(forgeState, slotState)
+    const selectedIds = collectSelectedMorphusCatalogEntryIds(nodes, slotState)
+    expect(selectedIds.has('alien_shape_baggy_flaps_of_skin')).toBe(true)
+    expect(selectedIds.has('alien_creature')).toBe(false)
+
+    const secondAlienShape = findMorphusSlotNode(
+      nodes,
+      (node) =>
+        node.path === 'plan:1/plan:0/branch' &&
+        node.kind === 'table' &&
+        node.status === 'ready',
+    )
+    expect(secondAlienShape).toBeDefined()
+    expect(
+      isMorphusTraitPickAlreadySelected(
+        secondAlienShape!,
+        'alien_shape_baggy_flaps_of_skin',
+        selectedIds,
+        slotState,
+      ),
+    ).toBe(true)
+    expect(
+      isMorphusTraitPickAlreadySelected(
+        secondAlienShape!,
+        'alien_shape_armored_scales',
+        selectedIds,
+        slotState,
+      ),
+    ).toBe(false)
+
+    const secondCharacteristic = findMorphusSlotNode(
+      buildMorphusSlotTree(forgeState, {
+        routingPicks: { 'plan:0': 'alien_creature' },
+        branchTableIds: { 'plan:0/plan:0': 'alien_shape' },
+        picks: { 'plan:0/plan:0/branch': 'alien_shape_baggy_flaps_of_skin' },
+      }),
+      (node) => node.path === 'plan:1' && node.kind === 'characteristic' && node.status === 'ready',
+    )
+    expect(secondCharacteristic).toBeDefined()
+    expect(
+      isMorphusTraitPickAlreadySelected(
+        secondCharacteristic!,
+        'alien_creature',
+        selectedIds,
+        slotState,
+      ),
+    ).toBe(false)
+  })
+
+  it('blocks duplicate sub-trait table picks unless house rule allows them', () => {
+    const slotState: MorphusForgeSlotState = {
+      subTraitPicks: {
+        'plan:0/plan:0/branch#0': 'animal_arachnid',
+      },
+    }
+    expect(isMorphusSubTraitTablePickBlocked('animal_arachnid', slotState)).toBe(true)
+    expect(isMorphusSubTraitTablePickBlocked('animal_canine', slotState)).toBe(false)
+    expect(
+      isMorphusSubTraitTablePickBlocked('animal_arachnid', slotState, {
+        allowDuplicateSubTraitTablePicks: true,
+      }),
+    ).toBe(false)
+  })
+
+  it('exposes sub-trait table blocking on animal combo second pick', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'appearance',
+      appearanceEntryId: 'amalgam',
+    }
+    const slotState: MorphusForgeSlotState = {
+      picks: { 'plan:0': 'animal_combo_of_two' },
+      subTraitPicks: { 'plan:0#0': 'animal_arachnid' },
+    }
+    const nodes = buildMorphusSlotTree(forgeState, slotState)
+    const secondSubPick = findMorphusSlotNode(
+      nodes,
+      (node) => node.path === 'plan:0/sub:1' && node.kind === 'sub_trait_choice',
+    )
+    expect(secondSubPick).toBeDefined()
+    expect(
+      isMorphusSubTraitTablePickBlocked(
+        'animal_arachnid',
+        slotState,
+        undefined,
+        'plan:0#1',
+      ),
+    ).toBe(true)
+    expect(
+      isMorphusSubTraitTablePickBlocked(
+        'animal_canine',
+        slotState,
+        undefined,
+        'plan:0#1',
+      ),
+    ).toBe(false)
+  })
+
+  it('expands Gadgeteer with dice count and gadget pick slots', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'characteristics',
+      characteristicsPickCount: 1,
+    }
+    const slotState: MorphusForgeSlotState = {
+      routingPicks: { 'plan:0': 'comic_book' },
+      branchTableIds: { 'plan:0/plan:0': 'super_being' },
+      picks: { 'plan:0/plan:0/branch': 'super_being_gadgeteer' },
+      diceValues: { 'plan:0/plan:0/branch/gadget-budget/count': 3 },
+    }
+
+    const nodes = buildMorphusSlotTree(forgeState, slotState)
+    const gadgeteerNode = findMorphusSlotNode(
+      nodes,
+      (node) => node.resolvedEntryId === 'super_being_gadgeteer',
+    )
+    expect(gadgeteerNode).toBeDefined()
+
+    const diceNode = findMorphusSlotNode(
+      nodes,
+      (node) => node.path === 'plan:0/plan:0/branch/gadget-budget',
+    )
+    expect(diceNode?.kind).toBe('dice')
+    expect(diceNode?.children).toHaveLength(3)
+
+    const firstPick = findMorphusSlotNode(
+      nodes,
+      (node) =>
+        node.path === 'plan:0/plan:0/branch/sub:0' &&
+        node.kind === 'sub_trait_choice' &&
+        node.status === 'ready',
+    )
+    expect(firstPick?.subTraitPoolMode).toBe('gimmick')
+    expect(firstPick?.pickEntries?.some((row) => row.id === 'gadget_lock_pick')).toBe(true)
+  })
+
+  it('blocks duplicate gadget picks within the same Gadgeteer trait', () => {
+    const slotState: MorphusForgeSlotState = {
+      subTraitPicks: {
+        'plan:0/plan:0/branch#0': 'gadget_lock_pick',
+      },
+    }
+    expect(
+      isMorphusSubTraitTablePickBlocked(
+        'gadget_lock_pick',
+        slotState,
+        undefined,
+        'plan:0/plan:0/branch#1',
+      ),
+    ).toBe(true)
+    expect(
+      isMorphusSubTraitTablePickBlocked(
+        'gadget_glide_pack',
+        slotState,
+        undefined,
+        'plan:0/plan:0/branch#1',
+      ),
+    ).toBe(false)
+    expect(
+      isMorphusSubTraitTablePickBlocked(
+        'gadget_lock_pick',
+        slotState,
+        undefined,
+        'plan:0/plan:1/branch#0',
+      ),
+    ).toBe(false)
+  })
+
+  it('resolves selected gimmicks on the trait slot', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'characteristics',
+      characteristicsPickCount: 1,
+    }
+    const slotState: MorphusForgeSlotState = {
+      routingPicks: { 'plan:0': 'comic_book' },
+      branchTableIds: { 'plan:0/plan:0': 'super_being' },
+      picks: { 'plan:0/plan:0/branch': 'super_being_gadgeteer' },
+      diceValues: { 'plan:0/plan:0/branch/gadget-budget/count': 3 },
+      subTraitPicks: {
+        'plan:0/plan:0/branch#0': 'gadget_lock_pick',
+        'plan:0/plan:0/branch#1': 'gadget_glide_pack',
+        'plan:0/plan:0/branch#2': 'gadget_grapple_gun',
+      },
+    }
+
+    const nodes = buildMorphusSlotTree(forgeState, slotState)
+    const diceNode = findMorphusSlotNode(
+      nodes,
+      (node) => node.path === 'plan:0/plan:0/branch/gadget-budget',
+    )
+    expect(diceNode?.children).toHaveLength(3)
+    expect(
+      findMorphusSlotNode(nodes, (node) => node.resolvedEntryId === 'super_being_gadgeteer'),
+    ).toBeDefined()
+    const view = deriveMorphusSlotResolutionView(forgeState, slotState)
+    expect(view.blockers).toEqual([])
+    expect(view.complete).toBe(true)
+    expect(view.traitSlots.map((row) => row.catalogEntryId)).toContain('super_being_gadgeteer')
+    const gadgeteerSlot = view.traitSlots.find(
+      (row) => row.catalogEntryId === 'super_being_gadgeteer',
+    )
+    expect(gadgeteerSlot?.selectedSubTraitIds).toEqual([
+      'gadget_lock_pick',
+      'gadget_glide_pack',
+      'gadget_grapple_gun',
+    ])
+    expect(view.complete).toBe(true)
   })
 })

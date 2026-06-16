@@ -14,7 +14,11 @@ import {
   type MorphusStatModifiers,
 } from './morphusCharacteristicAggregation'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
-import { polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
+import {
+  collectMorphusAttributeMinFloor,
+  polymorphicDeltaFromBase,
+  applyMorphusAttributeMinFloor,
+} from './morphusPolymorphicResolver'
 import {
   NIGHTBANE_MORPHUS_BASE_PROFILE,
   type NightbaneMorphusBaseProfile,
@@ -424,7 +428,9 @@ function collectTraitAttributeDeltas(
   for (const trait of traits) {
     const blocks = collectMorphusStatModifierBlocks([trait], statKey)
     if (!blocks.length) continue
-    const delta = polymorphicDeltaFromBase(polymorphicBase, blocks)
+    const delta = polymorphicDeltaFromBase(polymorphicBase, blocks, {
+      applyFloors: false,
+    })
     if (delta === 0) continue
     out.push({ label: trait.name, amount: delta })
   }
@@ -439,10 +445,14 @@ function resolveMorphusAttributeTotal(
 ): {
   morphusTotal: number | null
   morphusDeltas: LedgerFlatContribution[]
+  pendingMinFloor?: number
 } {
   const baseBump = nightbaneBaseAttributeBump(baseProfile, attr)
   const baseApplied = character.morphusForgeState?.baseStatsApplied === true
   const traits = resolveActiveMorphusTraits(character)
+  const finalized = character.creationTraitForgeStubComplete === true
+  const statKey = attr as keyof MorphusStatModifiers
+  const pendingMinFloor = collectMorphusAttributeMinFloor(traits, statKey)
 
   const morphusDeltas: LedgerFlatContribution[] = []
   if (baseBump !== 0) {
@@ -461,17 +471,24 @@ function resolveMorphusAttributeTotal(
     const traitSum = morphusDeltas
       .filter((d) => d.label !== 'Base')
       .reduce((sum, d) => sum + d.amount, 0)
-    const morphusTotal = readMorphusStoredScalar(character, attr) + traitSum
-    return { morphusTotal, morphusDeltas }
+    const morphusTotal = applyMorphusAttributeMinFloor(
+      readMorphusStoredScalar(character, attr) + traitSum,
+      finalized ? pendingMinFloor : undefined,
+    )
+    return { morphusTotal, morphusDeltas, pendingMinFloor }
   }
 
   if (facadeTotal == null) {
-    return { morphusTotal: null, morphusDeltas: [] }
+    return { morphusTotal: null, morphusDeltas: [], pendingMinFloor }
   }
 
-  const morphusTotal =
+  const rawTotal =
     facadeTotal + morphusDeltas.reduce((sum, delta) => sum + delta.amount, 0)
-  return { morphusTotal, morphusDeltas }
+  const morphusTotal = applyMorphusAttributeMinFloor(
+    rawTotal,
+    finalized ? pendingMinFloor : undefined,
+  )
+  return { morphusTotal, morphusDeltas, pendingMinFloor }
 }
 
 /**
@@ -489,12 +506,17 @@ export function buildMorphusCreationAttributeBlock(
       value: LEDGER_UNASSIGNED,
     }
     const facadeTotal = parseCreationLedgerNumericValue(facadeLine.value)
-    const { morphusTotal, morphusDeltas } = resolveMorphusAttributeTotal(
+    const { morphusTotal, morphusDeltas, pendingMinFloor } = resolveMorphusAttributeTotal(
       character,
       attr,
       facadeTotal,
       baseProfile,
     )
+
+    const finalized = character.creationTraitForgeStubComplete === true
+    const minSuffix =
+      !finalized && pendingMinFloor != null ? `(min ${pendingMinFloor})` : undefined
+    const labelSuffix = [facadeLine.labelSuffix, minSuffix].filter(Boolean).join(' ') || undefined
 
     const differsFromFacade =
       morphusTotal != null && facadeTotal != null && morphusTotal !== facadeTotal
@@ -502,7 +524,7 @@ export function buildMorphusCreationAttributeBlock(
     return {
       label: facadeLine.label,
       inlineRaceRoll: facadeLine.inlineRaceRoll,
-      labelSuffix: facadeLine.labelSuffix,
+      labelSuffix,
       value: morphusTotal != null ? String(morphusTotal) : facadeLine.value,
       valueModified: differsFromFacade,
       valueTooltip:

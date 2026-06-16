@@ -27,10 +27,12 @@
       "description": "The Nightbane’s P.B. and M.A. are increased by 8 (minimum P.B. and M.A. is 20!). Not only is his/her Morphus incredibly beautiful, it radiates charisma. This is a mixed blessing, however, for the attraction the character exerts cannot be turned off. This can lead to a number of distractions, annoyances and even hazards, as total strangers make advances towards the character, or try to force their affections on him/her.",
       "statModifiers": {
         "pb": {
-          "flat": 8
+          "flat": 8,
+          "minValue": 20
         },
         "ma": {
-          "flat": 8
+          "flat": 8,
+          "minValue": 20
         }
       },
       "customOneOffs": [
@@ -67,7 +69,7 @@
           "flat": 6
         },
         "hf": {
-          "flat": 10
+          "flat": 4
         }
       },
       "percentile": {
@@ -100,7 +102,7 @@
           "flat": 7
         },
         "hf": {
-          "flat": 6
+          "flat": 1
         }
       },
       "appearanceConstraints": {
@@ -191,7 +193,7 @@
           "dice": "4D6"
         },
         "hf": {
-          "flat": 6
+          "flat": 1
         }
       },
       "percentile": {

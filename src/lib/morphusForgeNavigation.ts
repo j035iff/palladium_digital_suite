@@ -181,6 +181,19 @@ function tab6Snapshot(state: MorphusForgeState): string {
   })
 }
 
+/** Snapshot for Crossroads only — excludes Path 2 count (entered on Trait Forge). */
+export function morphusCrossroadsSnapshot(state: MorphusForgeState): string {
+  return JSON.stringify({
+    path: state.path,
+    appearanceEntryId: state.appearanceEntryId,
+  })
+}
+
+/** Snapshot for Trait Forge — upstream path/archetype plus Path 2 count. */
+export function morphusTraitForgeSnapshot(state: MorphusForgeState): string {
+  return tab6Snapshot(state)
+}
+
 function buildMorphusSubTabDefs(
   character: Character,
   ctx: MorphusForgeNavContext,
@@ -198,7 +211,7 @@ function buildMorphusSubTabDefs(
             const blockers = crossroadsBlockers(state)
             return { ok: blockers.length === 0, blockers }
           },
-          snapshot: () => tab6Snapshot(state),
+          snapshot: () => morphusCrossroadsSnapshot(state),
         }
       case 'trait_forge':
         return {
@@ -209,7 +222,7 @@ function buildMorphusSubTabDefs(
             const blockers = traitForgeBlockers(state, character)
             return { ok: blockers.length === 0, blockers }
           },
-          snapshot: () => tab6Snapshot(state),
+          snapshot: () => morphusTraitForgeSnapshot(state),
         }
       case 'review':
         return {

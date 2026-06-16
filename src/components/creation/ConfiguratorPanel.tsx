@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -36,6 +36,14 @@ import { ConfiguratorFilterBuilder } from './ConfiguratorFilterBuilder'
 import { ConfiguratorListItem } from './ConfiguratorListItem'
 import { ConfiguratorPackagePanel } from './ConfiguratorPackagePanel'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
+
+const DevSkipToMorphusButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevSkipToMorphusButton').then((m) => ({
+        default: m.DevSkipToMorphusButton,
+      })),
+    )
+  : null
 
 /**
  * Step 2 — Race / O.C.C. matrix with three-tier rendering; alignment lives in the tab header.
@@ -328,6 +336,11 @@ export function ConfiguratorPanel() {
         aria-labelledby="forge-tab-page-heading"
       >
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
+      {DevSkipToMorphusButton ? (
+        <Suspense fallback={null}>
+          <DevSkipToMorphusButton />
+        </Suspense>
+      ) : null}
       <p
         className="mb-2 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}

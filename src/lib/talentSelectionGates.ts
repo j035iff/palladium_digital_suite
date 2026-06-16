@@ -1,4 +1,7 @@
-import { getMorphusTableById } from '../data/library/morphusTableCatalogLoader'
+import {
+  getMorphusTableById,
+  resolveMorphusTableIdsForCharacteristic,
+} from '../data/library/morphusTableCatalogLoader'
 import {
   buildMorphusSlotTree,
   flattenMorphusSlotNodes,
@@ -7,6 +10,7 @@ import {
 import type {
   MorphusForgeSlotState,
   MorphusForgeState,
+  MorphusTraitSlotResolution,
   PalladiumOcc,
   PalladiumTalent,
   TalentPrerequisite,
@@ -40,8 +44,13 @@ export function talentCatalogTier(talent: PalladiumTalent): TalentCatalogTier {
 export function collectCharacterMorphusTableIds(
   forgeState: MorphusForgeState,
   slotState: MorphusForgeSlotState | undefined,
+  traitResolutions?: readonly Pick<MorphusTraitSlotResolution, 'catalogEntryId'>[],
 ): Set<string> {
   const ids = new Set<string>()
+
+  for (const tableId of resolveMorphusTableIdsFromTraitResolutions(traitResolutions)) {
+    ids.add(tableId)
+  }
 
   for (const tableId of Object.values(slotState?.branchTableIds ?? {})) {
     const trimmed = tableId.trim()
@@ -60,8 +69,26 @@ export function collectCharacterMorphusTableIds(
     ) {
       ids.add(node.tableId)
     }
+
+    if (node.resolvedEntryId) {
+      for (const tableId of resolveMorphusTableIdsForCharacteristic(node.resolvedEntryId)) {
+        ids.add(tableId)
+      }
+    }
   }
 
+  return ids
+}
+
+function resolveMorphusTableIdsFromTraitResolutions(
+  traitResolutions?: readonly Pick<MorphusTraitSlotResolution, 'catalogEntryId'>[],
+): Set<string> {
+  const ids = new Set<string>()
+  for (const slot of traitResolutions ?? []) {
+    for (const tableId of resolveMorphusTableIdsForCharacteristic(slot.catalogEntryId)) {
+      ids.add(tableId)
+    }
+  }
   return ids
 }
 

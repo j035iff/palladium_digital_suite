@@ -67,6 +67,7 @@ export function TalentsForgePanel({
       morphusTableIds: collectCharacterMorphusTableIds(
         morphusForgeState,
         character.morphusForgeSlotState,
+        character.morphusTraitSlotResolutions,
       ),
       selectedTalentIds: selectedIds,
       activeOcc,
@@ -75,6 +76,7 @@ export function TalentsForgePanel({
   }, [
     morphusForgeState,
     character.morphusForgeSlotState,
+    character.morphusTraitSlotResolutions,
     selectedIds,
     activeOcc,
     spellCap,

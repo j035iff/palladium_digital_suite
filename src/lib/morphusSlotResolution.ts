@@ -2,6 +2,7 @@ import {
   MORPHUS_APPEARANCE_ROUTING_TABLE,
   MORPHUS_CHARACTERISTICS_ROUTING_TABLE,
   MORPHUS_FORGE_MANIFEST,
+  listPlayerSelectableMorphusForgeRoutingEntries,
 } from '../data/library/morphusForgeRoutingLoader'
 import {
   getMorphusCharacteristicById,
@@ -16,6 +17,16 @@ import {
   morphusVariantMergedEntryId,
 } from './morphusTraitPickDisplay'
 import {
+  buildMorphusGimmickPickOption,
+  buildMorphusTraitEntryPickOption,
+  collectMorphusSubTraitPicksForPath,
+  morphusSubTraitBudgetDiceSpec,
+  morphusSubTraitBudgetPickCount,
+  morphusSubTraitPoolMode,
+  resolveMorphusSubTraitPickLabel,
+  type MorphusSubTraitPoolMode,
+} from './morphusSubTraitBudget'
+import {
   emptyMorphusCustomTraitInstance,
   isMorphusCustomTraitSlotComplete,
   sanitizeMorphusCustomTraitInstance,
@@ -28,6 +39,7 @@ import type {
   MorphusForgeSlotState,
   MorphusForgeState,
   MorphusForgeTableTarget,
+  MorphusHouseRules,
   MorphusSlotNode,
   MorphusSlotPickOption,
   MorphusTraitSlotResolution,
@@ -99,7 +111,9 @@ function traitPickOptions(
 ): MorphusSlotPickOption[] {
   if (tableId === 'characteristics') {
     const rerollAbove = opts.rerollCharacteristicsAbove
-    return MORPHUS_CHARACTERISTICS_ROUTING_TABLE.entries
+    return listPlayerSelectableMorphusForgeRoutingEntries(
+      MORPHUS_CHARACTERISTICS_ROUTING_TABLE,
+    )
       .filter((entry) => {
         if (rerollAbove == null) return true
         return entry.percentile.max <= rerollAbove
@@ -151,6 +165,169 @@ function isCustomTraitPending(
 
 function variantPickPath(parentPath: string): string {
   return `${parentPath}/variant`
+}
+
+function buildSubTraitPickEntries(
+  entry: MorphusCharacteristic,
+  budget: MorphusCharacteristic['subTraitChoicesBudget'],
+  poolMode: MorphusSubTraitPoolMode,
+): MorphusSlotPickOption[] {
+  if (!budget) return []
+  if (poolMode === 'gimmick') {
+    return budget.allowedChoicesPool
+      .map((id) => buildMorphusGimmickPickOption(entry, id))
+      .filter((row): row is MorphusSlotPickOption => row != null)
+  }
+  if (poolMode === 'trait_entry') {
+    return budget.allowedChoicesPool.map((id) => buildMorphusTraitEntryPickOption(id))
+  }
+  return budget.allowedChoicesPool.map((tableId) => ({
+    id: tableId,
+    name: tableLabel(tableId),
+    tableRoute: `Pick one trait from ${tableLabel(tableId)}`,
+    bonuses: [],
+    penalties: [],
+  }))
+}
+
+function buildSubTraitPickSlotNode(
+  parentPath: string,
+  index: number,
+  count: number,
+  subPath: string,
+  entry: MorphusCharacteristic,
+  budget: NonNullable<MorphusCharacteristic['subTraitChoicesBudget']>,
+  poolMode: MorphusSubTraitPoolMode,
+  state: MorphusForgeSlotState,
+  opts: ResolveOpts,
+): MorphusSlotNode {
+  const chosen = subTraitPick(state, parentPath, index)
+  const pickLabel =
+    poolMode === 'gimmick'
+      ? 'Gadget'
+      : poolMode === 'trait_entry'
+        ? 'Trait'
+        : 'Sub-trait'
+  if (!chosen) {
+    return {
+      path: subPath,
+      label: `${pickLabel} pick ${index + 1} of ${count}`,
+      kind: 'sub_trait_choice',
+      status: 'ready',
+      subTraitPoolMode: poolMode,
+      pickEntries: buildSubTraitPickEntries(entry, budget, poolMode),
+      children: [],
+    }
+  }
+  if (poolMode === 'morphus_table') {
+    return expandTableResolution(
+      subPath,
+      tableLabel(chosen),
+      chosen,
+      undefined,
+      state,
+      opts,
+    )
+  }
+  return {
+    path: subPath,
+    label: `${pickLabel} pick ${index + 1} of ${count}`,
+    kind: 'sub_trait_choice',
+    status: 'complete',
+    subTraitPoolMode: poolMode,
+    resolvedEntryId: chosen,
+    resolvedEntryName: resolveMorphusSubTraitPickLabel(entry, poolMode, chosen),
+    pickEntries: buildSubTraitPickEntries(entry, budget, poolMode),
+    children: [],
+  }
+}
+
+function expandSubTraitChoicesBudget(
+  path: string,
+  entry: MorphusCharacteristic,
+  state: MorphusForgeSlotState,
+  opts: ResolveOpts,
+): MorphusSlotNode[] {
+  const budget = entry.subTraitChoicesBudget
+  if (!budget) return []
+
+  const poolMode = morphusSubTraitPoolMode(entry, budget)
+  const diceSpec = morphusSubTraitBudgetDiceSpec(budget)
+  const nodes: MorphusSlotNode[] = []
+
+  if (diceSpec) {
+    const budgetPath = `${path}/gadget-budget`
+    const count = diceValue(state, `${budgetPath}/count`)
+    if (count == null) {
+      nodes.push({
+        path: budgetPath,
+        label: `${diceSpec.notation} — how many to select?`,
+        kind: 'dice',
+        status: 'ready',
+        diceSpec,
+        children: [],
+      })
+      return nodes
+    }
+    if (count < diceSpec.min || count > diceSpec.max) {
+      nodes.push({
+        path: budgetPath,
+        label: `${diceSpec.notation} — how many to select?`,
+        kind: 'dice',
+        status: 'ready',
+        diceSpec,
+        blockReason: `Enter ${diceSpec.notation} (${diceSpec.min}–${diceSpec.max}).`,
+        children: [],
+      })
+      return nodes
+    }
+    const pickChildren: MorphusSlotNode[] = []
+    for (let i = 0; i < count; i += 1) {
+      pickChildren.push(
+        buildSubTraitPickSlotNode(
+          path,
+          i,
+          count,
+          `${path}/sub:${i}`,
+          entry,
+          budget,
+          poolMode,
+          state,
+          opts,
+        ),
+      )
+    }
+    nodes.push({
+      path: budgetPath,
+      label: `Choose ${count} ${poolMode === 'gimmick' ? 'gadget' : 'trait'}(s)`,
+      kind: 'dice',
+      status: aggregateStatus(
+        pickChildren.every((child) => child.status === 'complete') ? 'complete' : 'ready',
+        pickChildren,
+      ),
+      diceSpec,
+      children: pickChildren,
+    })
+    return nodes
+  }
+
+  const count = morphusSubTraitBudgetPickCount(budget)
+  for (let i = 0; i < count; i += 1) {
+    nodes.push(
+      buildSubTraitPickSlotNode(
+        path,
+        i,
+        count,
+        `${path}/sub:${i}`,
+        entry,
+        budget,
+        poolMode,
+        state,
+        opts,
+      ),
+    )
+  }
+  return nodes
 }
 
 function expandPostPickChildren(
@@ -218,39 +395,7 @@ function expandPostPickChildren(
   }
 
   if (entry.subTraitChoicesBudget) {
-    const budget = entry.subTraitChoicesBudget
-    const count = budget.slotsAvailable ?? 0
-    for (let i = 0; i < count; i += 1) {
-      const subPath = `${path}/sub:${i}`
-      const chosenTable = subTraitPick(state, path, i)
-      if (!chosenTable) {
-        nodes.push({
-          path: subPath,
-          label: `Sub-trait pick ${i + 1} of ${count}`,
-          kind: 'sub_trait_choice',
-          status: 'ready',
-          pickEntries: budget.allowedChoicesPool.map((tableId) => ({
-            id: tableId,
-            name: tableLabel(tableId),
-            tableRoute: `Pick one trait from ${tableLabel(tableId)}`,
-            bonuses: [],
-            penalties: [],
-          })),
-          children: [],
-        })
-      } else {
-        nodes.push(
-          expandTableResolution(
-            subPath,
-            tableLabel(chosenTable),
-            chosenTable,
-            undefined,
-            state,
-            opts,
-          ),
-        )
-      }
-    }
+    nodes.push(...expandSubTraitChoicesBudget(path, entry, state, opts))
   }
 
   if (entry.tableWorkflow?.stepOneRollCount) {
@@ -641,6 +786,87 @@ export function buildMorphusSlotTree(
   })
 }
 
+/** Resolved leaf-trait catalog ids (excludes routing characteristics and in-progress picks). */
+export function collectSelectedMorphusCatalogEntryIds(
+  nodes: readonly MorphusSlotNode[],
+  slotState?: MorphusForgeSlotState,
+): ReadonlySet<string> {
+  const resolutions = syncMorphusTraitSlotsFromForgeState(slotState, nodes)
+  return new Set(resolutions.map((row) => row.catalogEntryId))
+}
+
+/** Sub-trait table ids already chosen in subTraitChoicesBudget picks. */
+export function collectUsedMorphusSubTraitTableIds(
+  slotState?: MorphusForgeSlotState,
+  excludeSubTraitKey?: string,
+): ReadonlySet<string> {
+  const picks = normalizeSlotState(slotState).subTraitPicks ?? {}
+  const scopeParent =
+    excludeSubTraitKey != null
+      ? excludeSubTraitKey.replace(/#\d+$/, '')
+      : undefined
+  const ids = new Set<string>()
+  for (const [key, tableId] of Object.entries(picks)) {
+    if (excludeSubTraitKey && key === excludeSubTraitKey) continue
+    if (scopeParent != null && !key.startsWith(`${scopeParent}#`)) continue
+    ids.add(tableId)
+  }
+  return ids
+}
+
+export function morphusBlockDuplicateSubTraitTables(
+  houseRules?: MorphusHouseRules,
+): boolean {
+  return houseRules?.allowDuplicateSubTraitTablePicks !== true
+}
+
+export function isMorphusSubTraitTablePickBlocked(
+  tableId: string,
+  slotState?: MorphusForgeSlotState,
+  houseRules?: MorphusHouseRules,
+  excludeSubTraitKey?: string,
+): boolean {
+  if (!morphusBlockDuplicateSubTraitTables(houseRules)) return false
+  return collectUsedMorphusSubTraitTableIds(slotState, excludeSubTraitKey).has(tableId)
+}
+
+export function resolveMorphusPickCatalogEntryId(
+  node: Pick<MorphusSlotNode, 'kind' | 'path'>,
+  pickEntryId: string,
+  slotState?: MorphusForgeSlotState,
+): string {
+  if (node.kind === 'variant_choice') {
+    const parentPath = node.path.replace(/\/variant$/, '')
+    const baseId = slotState?.picks?.[parentPath]
+    if (!baseId) return pickEntryId
+    return morphusVariantMergedEntryId(baseId, { label: pickEntryId, roll: '' })
+  }
+  return pickEntryId
+}
+
+export function isMorphusTraitPickAlreadySelected(
+  node: Pick<MorphusSlotNode, 'kind' | 'path' | 'subTraitPoolMode'>,
+  pickEntryId: string,
+  selectedIds: ReadonlySet<string>,
+  slotState?: MorphusForgeSlotState,
+): boolean {
+  if (node.kind === 'characteristic') {
+    return false
+  }
+  if (node.kind === 'sub_trait_choice') {
+    if (node.subTraitPoolMode === 'morphus_table') {
+      return false
+    }
+    if (node.subTraitPoolMode === 'gimmick') {
+      return false
+    }
+    // trait_entry — duplicate full traits
+    return selectedIds.has(pickEntryId)
+  }
+  const catalogId = resolveMorphusPickCatalogEntryId(node, pickEntryId, slotState)
+  return selectedIds.has(catalogId)
+}
+
 export function flattenMorphusSlotNodes(
   nodes: readonly MorphusSlotNode[],
 ): MorphusSlotNode[] {
@@ -709,9 +935,14 @@ export function syncMorphusTraitSlotsFromForgeState(
       continue
     }
     if (entry.customTraitResolution) continue
+    const selectedSubTraitIds = collectMorphusSubTraitPicksForPath(
+      state.subTraitPicks,
+      node.path,
+    )
     resolutions.push({
       slotId: node.path,
       catalogEntryId: node.resolvedEntryId,
+      ...(selectedSubTraitIds.length > 0 ? { selectedSubTraitIds } : {}),
     })
   }
 

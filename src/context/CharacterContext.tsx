@@ -196,19 +196,25 @@ import {
 import { patchPendingDiceResolution } from '../lib/pendingDiceLedger'
 import {
   defaultMorphusForgeState,
+  morphusCrossroadsSnapshot,
+  morphusTraitForgeSnapshot,
   resolveMorphusForgeState,
   type MorphusForgeSubTabId,
 } from '../lib/morphusForgeNavigation'
 import {
   clearMorphusForgeSlotState,
   clearMorphusSlotPathState,
+  buildMorphusSlotTree,
+  collectSelectedMorphusCatalogEntryIds,
   deriveMorphusSlotResolutionView,
+  isMorphusSubTraitTablePickBlocked,
+  isMorphusTraitPickAlreadySelected,
   patchMorphusForgeSlotState,
 } from '../lib/morphusSlotResolution'
 import { sanitizeMorphusCustomTraitInstance } from '../lib/morphusCustomTrait'
 import { applyNightbaneMorphusBaseAttributes } from '../lib/morphusNightbaneBase'
 import { markForgeTabComplete } from '../lib/forgeNavigation/engine'
-import type { MorphusForgeState, MorphusForgeSlotState } from '../types'
+import type { MorphusForgeState, MorphusForgeSlotState, MorphusHouseRules, MorphusSlotNode } from '../types'
 import type { SlotActions } from '../components/creation/morphus/MorphusSlotNodeView'
 import {
   abilityPassesOccSupernaturalRules,
@@ -414,6 +420,7 @@ type CharacterContextValue = {
     instance: import('../types').MorphusCustomTraitInstance,
   ) => void
   removeMorphusCustomTraitSlot: (slotId: string) => void
+  setMorphusHouseRules: (patch: MorphusHouseRules) => void
   morphusForgeSlotActions: SlotActions
   setCreationAttributePoolSlot: (index: number, value: number | null) => void
   setCreationAttributeAssignment: (attr: ForgeAttrKey, poolIndex: number) => void
@@ -428,6 +435,8 @@ type CharacterContextValue = {
   devAutoFillAllSkillSelections?: () => void
   /** Dev-only — rolls every pending spawn dice field on Review & Spawn. */
   devAutoRollAllPendingDice?: () => void
+  /** Dev-only — Nightbane Basic through facade dice, then open Morphus Sub-Forge. */
+  devSkipToMorphusCreation?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (
     voucherId: string,
@@ -552,6 +561,22 @@ function updateMorphusForgeSlotState(
     morphusForgeSlotState: nextSlotState,
     creationTraitForgeStubComplete: false,
   })
+}
+
+function morphusTraitPickWouldDuplicate(
+  prev: CharacterRootState,
+  node: Pick<MorphusSlotNode, 'kind' | 'path'>,
+  pickEntryId: string,
+): boolean {
+  const forgeState = resolveMorphusForgeState(prev)
+  const nodes = buildMorphusSlotTree(forgeState, prev.morphusForgeSlotState)
+  const selectedIds = collectSelectedMorphusCatalogEntryIds(nodes, prev.morphusForgeSlotState)
+  return isMorphusTraitPickAlreadySelected(
+    node,
+    pickEntryId,
+    selectedIds,
+    prev.morphusForgeSlotState,
+  )
 }
 
 function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
@@ -2141,15 +2166,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         const state = { ...defaultMorphusForgeState(), ...prev.morphusForgeState }
         const snapshot =
           tabId === 'crossroads'
-            ? JSON.stringify({
-                path: state.path,
-                appearanceEntryId: state.appearanceEntryId,
-              })
+            ? morphusCrossroadsSnapshot(state)
             : tabId === 'trait_forge'
-              ? JSON.stringify({
-                  path: state.path,
-                  characteristicsPickCount: state.characteristicsPickCount,
-                })
+              ? morphusTraitForgeSnapshot(state)
               : JSON.stringify({
                   finalized: prev.creationTraitForgeStubComplete === true,
                 })
@@ -2217,10 +2236,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  const setMorphusHouseRules = useCallback((patch: MorphusHouseRules) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      morphusHouseRules: {
+        ...prev.morphusHouseRules,
+        ...patch,
+      },
+    }))
+  }, [])
+
   const morphusForgeSlotActions = useMemo<SlotActions>(
     () => ({
       onTraitPick: (path, entryId, isCharacteristics) => {
         setRawCharacter((prev) => {
+          if (
+            !isCharacteristics &&
+            morphusTraitPickWouldDuplicate(prev, { kind: 'table', path }, entryId)
+          ) {
+            return prev
+          }
           const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
           const next = patchMorphusForgeSlotState(cleared, {
             ...(isCharacteristics
@@ -2254,6 +2289,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       },
       onSubTraitPick: (path, index, tableId) => {
         setRawCharacter((prev) => {
+          const subTraitKey = `${path}#${index}`
+          if (
+            isMorphusSubTraitTablePickBlocked(
+              tableId,
+              prev.morphusForgeSlotState,
+              prev.morphusHouseRules,
+              subTraitKey,
+            )
+          ) {
+            return prev
+          }
           const subPath = `${path}/sub:${index}`
           const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, subPath)
           const next = patchMorphusForgeSlotState(cleared, {
@@ -2264,6 +2310,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       },
       onVariantPick: (path, label) => {
         setRawCharacter((prev) => {
+          if (morphusTraitPickWouldDuplicate(prev, { kind: 'variant_choice', path }, label)) {
+            return prev
+          }
           const cleared = clearMorphusSlotPathState(prev.morphusForgeSlotState, path)
           const next = patchMorphusForgeSlotState(cleared, {
             variantPicks: { [path]: label },
@@ -2474,6 +2523,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       },
     )
   }, [psychicTier])
+
+  const devSkipToMorphusCreation = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devSkipToMorphusCreation').then(
+      ({ buildDevSkipToMorphusCreationState }) => {
+        setActiveForm('facade')
+        setPsychicTierState('none')
+        setRawCharacter((prev) => buildDevSkipToMorphusCreationState(prev))
+      },
+    )
+  }, [])
 
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
@@ -2804,6 +2864,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,
+      setMorphusHouseRules,
       morphusForgeSlotActions,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
@@ -2820,6 +2881,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined,
       devAutoRollAllPendingDice: import.meta.env.DEV
         ? devAutoRollAllPendingDice
+        : undefined,
+      devSkipToMorphusCreation: import.meta.env.DEV
+        ? devSkipToMorphusCreation
         : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
@@ -2948,6 +3012,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       addMorphusCustomTraitSlot,
       setMorphusCustomTraitInstance,
       removeMorphusCustomTraitSlot,
+      setMorphusHouseRules,
       morphusForgeSlotActions,
       setCreationAttributePoolSlot,
       setCreationAttributeAssignment,
@@ -2957,6 +3022,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devMakeAttributeExceptional,
       devAutoFillAllSkillSelections,
       devAutoRollAllPendingDice,
+      devSkipToMorphusCreation,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccGrantPickDetail,

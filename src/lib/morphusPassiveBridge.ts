@@ -237,7 +237,8 @@ export function buildMorphusPassiveBundle(
     else if (key === 'ppe') base = character.ppe.maximum
     else if (key in attrs) base = attrs[key as keyof typeof attrs] as number
 
-    const delta = polymorphicDeltaFromBase(base, blocks)
+    const applyFloors = character.creationTraitForgeStubComplete === true
+    const delta = polymorphicDeltaFromBase(base, blocks, { applyFloors })
     if (delta !== 0) modifiers[pk] = (modifiers[pk] ?? 0) + delta
   }
 

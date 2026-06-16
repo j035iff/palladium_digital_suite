@@ -51,6 +51,48 @@ describe('buildMorphusCreationAttributeBlock', () => {
     expect(iq.value).toBe('10')
     expect(iq.valueModified).toBeFalsy()
   })
+
+  it('defers Animal Magnetism minimum until Finalize Morphus', () => {
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: {
+        ma: 11,
+        pb: 11,
+      },
+      morphusTraitSlotResolutions: [
+        {
+          slotId: 'plan:0',
+          catalogEntryId: 'unearthly_beauty_animal_magnetism',
+        },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+
+    const facadeLines = buildCreationAttributeBlock(
+      character.facade.attributes,
+      character.creationAttributeAssignments,
+    )
+    const previewLines = buildMorphusCreationAttributeBlock(facadeLines, character)
+    const maPreview = previewLines.find((line) => line.label === 'M.A.')!
+    const pbPreview = previewLines.find((line) => line.label === 'P.B.')!
+
+    expect(maPreview.value).toBe('19')
+    expect(maPreview.labelSuffix).toBe('(min 20)')
+    expect(pbPreview.value).toBe('19')
+    expect(pbPreview.labelSuffix).toBe('(min 20)')
+
+    const finalizedLines = buildMorphusCreationAttributeBlock(facadeLines, {
+      ...character,
+      creationTraitForgeStubComplete: true,
+    })
+    const maFinal = finalizedLines.find((line) => line.label === 'M.A.')!
+    const pbFinal = finalizedLines.find((line) => line.label === 'P.B.')!
+
+    expect(maFinal.value).toBe('20')
+    expect(maFinal.labelSuffix).toBeUndefined()
+    expect(pbFinal.value).toBe('20')
+    expect(pbFinal.labelSuffix).toBeUndefined()
+  })
 })
 
 describe('formatMorphusVsFacadeTooltip', () => {

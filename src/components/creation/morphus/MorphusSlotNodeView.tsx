@@ -1,6 +1,7 @@
 import type {
   MorphusCustomTraitInstance,
   MorphusForgeSlotState,
+  MorphusHouseRules,
   MorphusSlotNode,
 } from '../../../types'
 import { useMemo, useState } from 'react'
@@ -8,6 +9,8 @@ import { MORPHUS_CHARACTERISTICS_ROUTING_TABLE } from '../../../data/library/mor
 import { getMorphusCharacteristicById } from '../../../data/library/morphusTableCatalogLoader'
 import {
   buildMorphusChoiceBranchNode,
+  isMorphusSubTraitTablePickBlocked,
+  isMorphusTraitPickAlreadySelected,
   readMorphusChoiceBranchTableId,
 } from '../../../lib/morphusSlotResolution'
 import {
@@ -125,24 +128,29 @@ function choiceTabClass(selected: boolean): string {
   if (selected) {
     return 'border-violet-400 bg-violet-600 text-white ring-1 ring-violet-400/70'
   }
-  return 'border-violet-900 bg-slate-950 text-violet-200 ring-1 ring-violet-900 hover:border-violet-700'
+  return 'border-slate-800 bg-black text-slate-200 ring-1 ring-slate-900 hover:border-violet-700 hover:bg-slate-950'
 }
 
 function MorphusChoiceSubTableTabs({
   node,
   actions,
   slotState,
+  selectedCatalogIds,
+  morphusHouseRules,
 }: {
   node: MorphusSlotNode
   actions: SlotActions
   slotState?: MorphusForgeSlotState
+  selectedCatalogIds?: ReadonlySet<string>
+  morphusHouseRules?: MorphusHouseRules
 }) {
   const options = node.options ?? []
   const chosenTableId = readMorphusChoiceBranchTableId(slotState, node.path)
   const [previewTableId, setPreviewTableId] = useState<string | undefined>(undefined)
-  const activeTableId = chosenTableId ?? previewTableId ?? options[0]?.tableId
+  const activeTableId = chosenTableId ?? previewTableId
 
   const panelNode = useMemo(() => {
+    if (!activeTableId) return null
     const option = options.find((row) => row.tableId === activeTableId)
     if (!option) return null
     if (chosenTableId === activeTableId && node.children[0]) {
@@ -155,16 +163,14 @@ function MorphusChoiceSubTableTabs({
 
   const selectTab = (tableId: string) => {
     setPreviewTableId(tableId)
-    if (tableId !== chosenTableId) {
-      actions.onBranchPick(node.path, tableId)
-    }
+    actions.onBranchPick(node.path, tableId)
   }
 
   return (
     <div className="mt-3 space-y-3">
       <div className="flex flex-wrap gap-2" role="tablist" aria-label={node.label}>
         {options.map((option) => {
-          const selected = option.tableId === activeTableId
+          const selected = option.tableId === chosenTableId
           return (
             <button
               key={option.tableId}
@@ -182,9 +188,17 @@ function MorphusChoiceSubTableTabs({
 
       {panelNode ? (
         <div role="tabpanel" aria-label={options.find((o) => o.tableId === activeTableId)?.label}>
-          <MorphusSlotNodeView node={panelNode} actions={actions} slotState={slotState} />
+          <MorphusSlotNodeView
+            node={panelNode}
+            actions={actions}
+            slotState={slotState}
+            selectedCatalogIds={selectedCatalogIds}
+            morphusHouseRules={morphusHouseRules}
+          />
         </div>
-      ) : null}
+      ) : (
+        <p className="text-xs text-violet-400">Select a table above to continue.</p>
+      )}
     </div>
   )
 }
@@ -193,25 +207,62 @@ function PickList({
   node,
   onPick,
   showModifiers = false,
+  selectedCatalogIds,
+  slotState,
+  morphusHouseRules,
+  subTraitPickKey,
 }: {
   node: MorphusSlotNode
   onPick: (entryId: string) => void
   showModifiers?: boolean
+  selectedCatalogIds?: ReadonlySet<string>
+  slotState?: MorphusForgeSlotState
+  morphusHouseRules?: MorphusHouseRules
+  subTraitPickKey?: string
 }) {
   if (!node.pickEntries?.length) {
     return <p className="text-xs text-violet-400">No selectable entries for this table.</p>
   }
   return (
     <ul className="mt-2 max-h-[min(70vh,32rem)] space-y-2 overflow-y-auto pr-1">
-      {node.pickEntries.map((entry) => (
-        <li key={entry.id}>
-          <MorphusTraitPickCard
-            entry={entry}
-            showModifiers={showModifiers}
-            onPick={() => onPick(entry.id)}
-          />
-        </li>
-      ))}
+      {node.pickEntries.map((entry) => {
+        const traitAlreadySelected =
+          node.kind === 'sub_trait_choice' &&
+          node.subTraitPoolMode === 'trait_entry' &&
+          selectedCatalogIds != null &&
+          isMorphusTraitPickAlreadySelected(node, entry.id, selectedCatalogIds, slotState)
+        const subTableBlocked =
+          node.kind === 'sub_trait_choice' &&
+          (node.subTraitPoolMode === 'morphus_table' ||
+            node.subTraitPoolMode === 'gimmick' ||
+            node.subTraitPoolMode == null) &&
+          isMorphusSubTraitTablePickBlocked(
+            entry.id,
+            slotState,
+            morphusHouseRules,
+            subTraitPickKey,
+          )
+        const blocked = traitAlreadySelected || subTableBlocked
+        const pickEntry: MorphusSlotPickOption = blocked
+          ? {
+              ...entry,
+              disabled: true,
+              disabledReason:
+                subTableBlocked && node.subTraitPoolMode === 'morphus_table'
+                  ? 'Already have a trait from this table'
+                  : 'Already selected',
+            }
+          : entry
+        return (
+          <li key={entry.id}>
+            <MorphusTraitPickCard
+              entry={pickEntry}
+              showModifiers={showModifiers}
+              onPick={() => onPick(entry.id)}
+            />
+          </li>
+        )
+      })}
     </ul>
   )
 }
@@ -220,10 +271,14 @@ function MorphusSlotNodeBody({
   node,
   actions,
   slotState,
+  selectedCatalogIds,
+  morphusHouseRules,
 }: {
   node: MorphusSlotNode
   actions: SlotActions
   slotState?: MorphusForgeSlotState
+  selectedCatalogIds?: ReadonlySet<string>
+  morphusHouseRules?: MorphusHouseRules
 }) {
   const hasResolvedPick = Boolean(node.resolvedEntryName)
   const selectedEntry = hasResolvedPick ? resolvedPickEntry(node) : null
@@ -299,6 +354,10 @@ function MorphusSlotNodeBody({
         <PickList
           node={node}
           onPick={(tableId) => actions.onSubTraitPick(match[1]!, Number(match[2]), tableId)}
+          selectedCatalogIds={selectedCatalogIds}
+          slotState={slotState}
+          morphusHouseRules={morphusHouseRules}
+          subTraitPickKey={`${match[1]}#${match[2]}`}
         />
       )
     }
@@ -309,6 +368,9 @@ function MorphusSlotNodeBody({
       <PickList
         node={node}
         showModifiers
+        selectedCatalogIds={selectedCatalogIds}
+        slotState={slotState}
+        morphusHouseRules={morphusHouseRules}
         onPick={(label) => actions.onVariantPick(node.path, label)}
       />
     )
@@ -323,6 +385,9 @@ function MorphusSlotNodeBody({
       <PickList
         node={node}
         showModifiers={showModifiers}
+        selectedCatalogIds={selectedCatalogIds}
+        slotState={slotState}
+        morphusHouseRules={morphusHouseRules}
         onPick={(entryId) =>
           actions.onTraitPick(node.path, entryId, node.kind === 'characteristic')
         }
@@ -356,12 +421,16 @@ export function MorphusSlotNodeView({
   node,
   actions,
   slotState,
+  selectedCatalogIds,
+  morphusHouseRules,
   depth = 0,
   embedded = false,
 }: {
   node: MorphusSlotNode
   actions: SlotActions
   slotState?: MorphusForgeSlotState
+  selectedCatalogIds?: ReadonlySet<string>
+  morphusHouseRules?: MorphusHouseRules
   depth?: number
   embedded?: boolean
 }) {
@@ -378,7 +447,13 @@ export function MorphusSlotNodeView({
                 : 'Blocked'}
           </span>
         </header>
-        <MorphusChoiceSubTableTabs node={node} actions={actions} slotState={slotState} />
+        <MorphusChoiceSubTableTabs
+          node={node}
+          actions={actions}
+          slotState={slotState}
+          selectedCatalogIds={selectedCatalogIds}
+          morphusHouseRules={morphusHouseRules}
+        />
       </article>
     )
   }
@@ -399,7 +474,13 @@ export function MorphusSlotNodeView({
           </span>
         </header>
       ) : null}
-      <MorphusSlotNodeBody node={node} actions={actions} slotState={slotState} />
+      <MorphusSlotNodeBody
+        node={node}
+        actions={actions}
+        slotState={slotState}
+        selectedCatalogIds={selectedCatalogIds}
+        morphusHouseRules={morphusHouseRules}
+      />
       {node.children.length > 0 ? (
         <div
           className={
@@ -416,6 +497,8 @@ export function MorphusSlotNodeView({
                   node={child}
                   actions={actions}
                   slotState={slotState}
+                  selectedCatalogIds={selectedCatalogIds}
+                  morphusHouseRules={morphusHouseRules}
                 />
               )
             }
@@ -425,6 +508,8 @@ export function MorphusSlotNodeView({
                 node={child}
                 actions={actions}
                 slotState={slotState}
+                selectedCatalogIds={selectedCatalogIds}
+                morphusHouseRules={morphusHouseRules}
                 depth={depth + 1}
               />
             )

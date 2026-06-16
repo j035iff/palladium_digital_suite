@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import type { Race } from '../types'
+import type { Character, Race } from '../types'
 import {
+  deriveMorphusForgeNavigation,
   formatMorphusPercentileBand,
   isMorphusForgeCrossroadsComplete,
   isMorphusForgeTraitTabComplete,
+  morphusCrossroadsSnapshot,
   morphusForgeStateAfterPathChange,
+  morphusTraitForgeSnapshot,
 } from './morphusForgeNavigation'
 import { traitForgeTabApplicable } from './creationSubForge'
 
@@ -53,6 +56,38 @@ describe('morphusForgeNavigation', () => {
     expect(next.path).toBe('characteristics')
     expect(next.appearanceEntryId).toBeUndefined()
     expect(next.subTabCompleted).toEqual({})
+  })
+
+  it('does not invalidate crossroads after Path 2 count is entered on Trait Forge', () => {
+    const forgeState = {
+      path: 'characteristics' as const,
+      activeSubTab: 'trait_forge' as const,
+      subTabCompleted: { crossroads: true },
+      subTabSnapshots: {
+        crossroads: morphusCrossroadsSnapshot({ path: 'characteristics' }),
+      },
+      characteristicsPickCount: 4,
+    }
+    const character = {
+      morphusForgeState: forgeState,
+      morphusForgeSlotState: {},
+    } as Character
+
+    const nav = deriveMorphusForgeNavigation(character, {
+      supportsDualForm: true,
+      psychicTier: 'none',
+      race: undefined,
+      occ: undefined,
+    })
+
+    expect(nav.firstRepairTabId).toBeNull()
+    expect(nav.tabs.find((t) => t.id === 'crossroads')?.visual).not.toBe('conflict')
+    expect(morphusTraitForgeSnapshot(forgeState)).toBe(
+      JSON.stringify({
+        path: 'characteristics',
+        characteristicsPickCount: 4,
+      }),
+    )
   })
 })
 

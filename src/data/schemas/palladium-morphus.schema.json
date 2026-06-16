@@ -321,6 +321,10 @@
           "type": "integer",
           "description": "Percentage adjustment applied to the underlying metric."
         },
+        "minValue": {
+          "type": "integer",
+          "description": "Optional lower floor after applying modifier math (e.g. minimum M.A./P.B. 20 after flat bonus)."
+        },
         "maxValue": {
           "type": "integer",
           "description": "Optional upper cap after applying modifier math (e.g. maximum A.R. 19)."

@@ -3,6 +3,9 @@ import type { MorphusSlotPickOption } from '../../../types'
 const PICK_CARD_CLASS =
   'w-full rounded-lg border border-violet-600 bg-slate-900 px-3 py-3 text-left text-sm text-violet-100 shadow-sm transition hover:border-violet-400 hover:bg-slate-800'
 
+const DISABLED_PICK_CARD_CLASS =
+  'w-full cursor-not-allowed rounded-lg border border-slate-700 bg-slate-950/80 px-3 py-3 text-left text-sm text-slate-500 opacity-70'
+
 const SELECTED_CARD_CLASS =
   'rounded-lg border border-emerald-600/50 bg-emerald-950 px-3 py-2 text-sm text-emerald-50'
 
@@ -43,13 +46,21 @@ export function MorphusTraitPickDetail({
 }) {
   const bonuses = entry.bonuses ?? []
   const penalties = entry.penalties ?? []
-  const titleClass = selected ? 'text-emerald-50' : 'text-violet-50'
-  const descClass = selected ? 'text-emerald-100/85' : 'text-violet-200/85'
+  const disabled = entry.disabled === true
+  const titleClass = selected ? 'text-emerald-50' : disabled ? 'text-slate-500' : 'text-violet-50'
+  const descClass = selected
+    ? 'text-emerald-100/85'
+    : disabled
+      ? 'text-slate-600'
+      : 'text-violet-200/85'
 
   return (
     <div className="flex items-start justify-between gap-3">
       <span className="min-w-0 flex-1">
         <span className={`block font-semibold ${titleClass}`}>{entry.name}</span>
+        {entry.disabledReason ? (
+          <span className="mt-1 block text-xs font-medium text-slate-500">{entry.disabledReason}</span>
+        ) : null}
         {entry.tableRoute ? (
           <span className="mt-1 block text-xs font-medium text-amber-200/90">{entry.tableRoute}</span>
         ) : null}
@@ -91,9 +102,16 @@ export function MorphusTraitPickCard({
   onPick: () => void
   showModifiers?: boolean
 }) {
+  const disabled = entry.disabled === true
   return (
-    <button type="button" onClick={onPick} className={PICK_CARD_CLASS}>
-      <MorphusTraitPickDetail entry={entry} showModifiers={showModifiers} />
+    <button
+      type="button"
+      onClick={disabled ? undefined : onPick}
+      disabled={disabled}
+      aria-disabled={disabled}
+      className={disabled ? DISABLED_PICK_CARD_CLASS : PICK_CARD_CLASS}
+    >
+      <MorphusTraitPickDetail entry={entry} showModifiers={showModifiers && !disabled} />
     </button>
   )
 }

@@ -666,6 +666,10 @@ export type MorphusPolymorphicModifier = {
   flat?: number
   dice?: string
   percent?: number
+  /** Lower bound after modifier math (e.g. Animal Magnetism — minimum M.A./P.B. 20). */
+  minValue?: number
+  /** Upper bound after modifier math (e.g. Angelic — maximum A.R. 19). */
+  maxValue?: number
   /**
    * When true, the resolver replaces the underlying base value entirely
    * instead of additive stacking.
@@ -1509,6 +1513,8 @@ export type MorphusTraitSlotResolution = {
   catalogEntryId: string
   percentileRoll?: number
   branchChoice?: string
+  /** Gimmick or other sub-trait pool picks resolved under this trait slot. */
+  selectedSubTraitIds?: readonly string[]
   customInstance?: MorphusCustomTraitInstance
 }
 
@@ -1655,6 +1661,8 @@ export type MorphusForgeRoutingEntry = {
   name: string
   percentile: { min: number; max: number }
   slotPlan: readonly MorphusForgeSlotRequirement[]
+  /** When false, hidden from player pick lists and dice resolution (data retained). */
+  playerSelectable?: boolean
 }
 
 export type MorphusForgeRoutingRole =
@@ -1696,6 +1704,15 @@ export type MorphusForgeManifest = {
 export type MorphusForgePath = 'appearance' | 'characteristics'
 
 export type MorphusForgeSubTabId = 'crossroads' | 'trait_forge' | 'review'
+
+/** GM-overridable Morphus creation constraints (house rules). */
+export type MorphusHouseRules = {
+  /**
+   * When true, a player may pick multiple sub-traits from the same morphus table
+   * (e.g. two Arachnid picks on Animal Combo of Two). Default: false (restricted).
+   */
+  allowDuplicateSubTraitTablePicks?: boolean
+}
 
 /** Creation-time Morphus Sub-Forge progress (Tab 6 nested forge). */
 export type MorphusForgeState = {
@@ -1755,6 +1772,8 @@ export type MorphusSlotPickOption = {
   penalties?: string[]
   /** Replaces bonus/penalty lists when modifiers depend on a variant pick. */
   modifierNote?: string
+  disabled?: boolean
+  disabledReason?: string
 }
 
 export type MorphusSlotNode = {
@@ -1766,6 +1785,8 @@ export type MorphusSlotNode = {
   options?: readonly { tableId: string; label: string }[]
   diceSpec?: MorphusForgeDiceRollSpec
   pickEntries?: readonly MorphusSlotPickOption[]
+  /** When kind is sub_trait_choice — pool semantics for duplicate blocking and labels. */
+  subTraitPoolMode?: 'morphus_table' | 'gimmick' | 'trait_entry'
   resolvedEntryId?: string
   resolvedEntryName?: string
   customCatalogEntryId?: string
@@ -2354,6 +2375,8 @@ export type Character = {
   morphusForgeState?: MorphusForgeState
   /** Morphus Sub-Forge slot picks (Trait Forge tab). */
   morphusForgeSlotState?: MorphusForgeSlotState
+  /** GM house rules for Morphus trait selection during creation. */
+  morphusHouseRules?: MorphusHouseRules
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
   /** Finalize tab — facade / single-form physical dice applied. */
