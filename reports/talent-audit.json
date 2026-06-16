@@ -1,104 +1,169 @@
 {
+  "contract": {
+    "tier1": {
+      "purpose": "Character creation — picker, gates, PPE display, sources",
+      "consumers": [
+        "talentCatalogLoader.palladiumTalentToFeature",
+        "talentSelectionGates",
+        "TalentsForgePanel",
+        "creationAbilityBudget / abilityLibrary"
+      ],
+      "completeRowRequires": {
+        "identity": [
+          "id",
+          "name",
+          "description",
+          "descriptionMorphus",
+          "gameSystems",
+          "sources"
+        ],
+        "tier": "talentTier or tier (common | elite)",
+        "ppe": "permanentBurnToAcquire + baseActivation",
+        "sources": "at least one Dark Designs entry with pageNumber",
+        "form": "limitations.usableInNightbaneForm defaults to morphus_only; use limitations.formUsage when rules differ by target or phase"
+      }
+    },
+    "tier2": {
+      "purpose": "Active play — FeatureCard, combat, resource recovery (planned)",
+      "consumers": [
+        "FeatureCard (display partial)",
+        "combat / feature engine (planned)"
+      ],
+      "keys": [
+        "activationTime",
+        "rangeMechanics",
+        "createdObjects",
+        "rangeAndArea",
+        "penaltiesOnAffectedCharacters",
+        "statusAlterations",
+        "physicalCombatStatModifiers",
+        "savingThrows",
+        "physicalBonusesPenalties",
+        "powerModes",
+        "attacksAndDamage",
+        "damageModifiersNote",
+        "offensiveDamage",
+        "mobilityBlocks",
+        "statusEffects",
+        "temporaryAbilitiesGranted",
+        "combatMechanics",
+        "vampiricResourceRecovery",
+        "structureReinforcements",
+        "grantedSkills",
+        "passengerLimits",
+        "recoveryStateUntilThreshold",
+        "environmentalConstructs",
+        "opponentConditionalModifiers",
+        "retroactiveWindow",
+        "jumpDistanceScaling",
+        "passengerCompanionCapacity",
+        "activationRequirements",
+        "activationDamage",
+        "alignmentGatedEffects",
+        "bonusDamageVsNightlandsDenizens",
+        "temporaryResourcePools",
+        "environmentalAmplifiers",
+        "reflectionMechanics",
+        "attributeCost",
+        "bonusesOnAlliedTargets",
+        "attributeBurn",
+        "comaHitPointBuffer",
+        "skillsGranted",
+        "penaltiesOnCaster",
+        "healing",
+        "objectsAffected",
+        "swarmMechanics",
+        "holdsAndEscapes",
+        "damageTakenModifiers"
+      ]
+    }
+  },
   "summary": {
     "totalTalents": 151,
-    "issueCount": 97,
-    "critical": 11,
-    "warning": 18,
-    "info": 68,
-    "extensionFieldKinds": 45
+    "tier1ChargenComplete": 142,
+    "tier2PlayBlocksPresent": 71,
+    "schemaTopLevelKeyCount": 78,
+    "issueCount": 74,
+    "critical": 9,
+    "warning": 3,
+    "info": 62
   },
   "fixList": {
-    "missing_ppe": [
+    "schema_drift": [],
+    "tier1_incomplete": [
       {
         "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_ghost_tag",
-        "name": "Ghost Tag",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
+        "code": "tier1_incomplete",
+        "id": "talent_corrupting_influence",
+        "name": "Corrupting Influence",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
       },
       {
         "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_gunslinger",
-        "name": "Gunslinger",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_hotwire",
-        "name": "Hotwire",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_hound_leash",
-        "name": "Hound Leash",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_hyper_awareness",
-        "name": "Hyper-Awareness",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_ignorance_is_bliss",
-        "name": "Ignorance is Bliss",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_jam_senses",
-        "name": "Jam Senses",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_killing_spree",
-        "name": "Killing Spree",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
-        "id": "talent_leap",
-        "name": "Leap",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-      },
-      {
-        "severity": "critical",
-        "code": "missing_ppe",
+        "code": "tier1_incomplete",
         "id": "talent_dark_dreams",
         "name": "Dark Dreams",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
       },
       {
         "severity": "critical",
-        "code": "missing_ppe",
+        "code": "tier1_incomplete",
+        "id": "talent_epic_proportions",
+        "name": "Epic Proportions",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
+        "id": "talent_master_stroke",
+        "name": "Master Stroke",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
+        "id": "talent_mystic_amplifier",
+        "name": "Mystic Amplifier",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
+        "id": "talent_necrosis",
+        "name": "Necrosis",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
         "id": "talent_payday",
         "name": "Payday",
-        "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-        "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
+        "id": "talent_spelljack",
+        "name": "Spelljack",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+      },
+      {
+        "severity": "critical",
+        "code": "tier1_incomplete",
+        "id": "talent_true_reflection",
+        "name": "True Reflection",
+        "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+        "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
       }
     ],
-    "missing_tier": [],
     "prose_morphus_gate": [
       {
         "severity": "warning",
@@ -110,261 +175,54 @@
       }
     ],
     "invalid_morphus_table_id": [],
-    "likely_stub_row": [
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_ghost_tag",
-        "name": "Ghost Tag",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_gunslinger",
-        "name": "Gunslinger",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_hotwire",
-        "name": "Hotwire",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_hound_leash",
-        "name": "Hound Leash",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_hyper_awareness",
-        "name": "Hyper-Awareness",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_ignorance_is_bliss",
-        "name": "Ignorance is Bliss",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_killing_spree",
-        "name": "Killing Spree",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      },
-      {
-        "severity": "warning",
-        "code": "likely_stub_row",
-        "id": "talent_leap",
-        "name": "Leap",
-        "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-        "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-      }
-    ]
+    "likely_stub_row": []
   },
-  "extensionFields": [
-    {
-      "field": "activationTime",
-      "count": 17
-    },
-    {
-      "field": "rangeMechanics",
-      "count": 11
-    },
-    {
-      "field": "createdObjects",
-      "count": 9
-    },
-    {
-      "field": "rangeAndArea",
-      "count": 9
-    },
-    {
-      "field": "penaltiesOnAffectedCharacters",
-      "count": 8
-    },
-    {
-      "field": "statusAlterations",
-      "count": 8
-    },
-    {
-      "field": "physicalCombatStatModifiers",
-      "count": 7
-    },
-    {
-      "field": "savingThrows",
-      "count": 7
-    },
-    {
-      "field": "physicalBonusesPenalties",
-      "count": 6
-    },
-    {
-      "field": "powerModes",
-      "count": 3
-    },
-    {
-      "field": "attacksAndDamage",
-      "count": 3
-    },
-    {
-      "field": "damageModifiersNote",
-      "count": 3
-    },
-    {
-      "field": "offensiveDamage",
-      "count": 2
-    },
-    {
-      "field": "mobilityBlocks",
-      "count": 2
-    },
-    {
-      "field": "statusEffects",
-      "count": 2
-    },
-    {
-      "field": "temporaryAbilitiesGranted",
-      "count": 2
-    },
-    {
-      "field": "combatMechanics",
-      "count": 2
-    },
-    {
-      "field": "vampiricResourceRecovery",
-      "count": 2
-    },
-    {
-      "field": "structureReinforcements",
-      "count": 1
-    },
-    {
-      "field": "grantedSkills",
-      "count": 1
-    },
-    {
-      "field": "passengerLimits",
-      "count": 1
-    },
-    {
-      "field": "recoveryStateUntilThreshold",
-      "count": 1
-    },
-    {
-      "field": "environmentalConstructs",
-      "count": 1
-    },
-    {
-      "field": "opponentConditionalModifiers",
-      "count": 1
-    },
-    {
-      "field": "retroactiveWindow",
-      "count": 1
-    },
-    {
-      "field": "jumpDistanceScaling",
-      "count": 1
-    },
-    {
-      "field": "passengerCompanionCapacity",
-      "count": 1
-    },
-    {
-      "field": "activationRequirements",
-      "count": 1
-    },
-    {
-      "field": "activationDamage",
-      "count": 1
-    },
-    {
-      "field": "alignmentGatedEffects",
-      "count": 1
-    },
-    {
-      "field": "bonusDamageVsNightlandsDenizens",
-      "count": 1
-    },
-    {
-      "field": "temporaryResourcePools",
-      "count": 1
-    },
-    {
-      "field": "environmentalAmplifiers",
-      "count": 1
-    },
-    {
-      "field": "reflectionMechanics",
-      "count": 1
-    },
-    {
-      "field": "attributeCost",
-      "count": 1
-    },
-    {
-      "field": "bonusesOnAlliedTargets",
-      "count": 1
-    },
-    {
-      "field": "attributeBurn",
-      "count": 1
-    },
-    {
-      "field": "comaHitPointBuffer",
-      "count": 1
-    },
-    {
-      "field": "skillsGranted",
-      "count": 1
-    },
-    {
-      "field": "penaltiesOnCaster",
-      "count": 1
-    },
-    {
-      "field": "healing",
-      "count": 1
-    },
-    {
-      "field": "objectsAffected",
-      "count": 1
-    },
-    {
-      "field": "swarmMechanics",
-      "count": 1
-    },
-    {
-      "field": "holdsAndEscapes",
-      "count": 1
-    },
-    {
-      "field": "damageTakenModifiers",
-      "count": 1
-    }
-  ],
   "issues": [
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_bomb_maker",
-      "name": "Bomb-Maker",
+      "id": "talent_air_swim",
+      "name": "Air Swim",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_air-grab",
+      "name": "Air Grab",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_all_nighter",
+      "name": "All-Nighter",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_astral-self",
+      "name": "Astral Self",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_blast_wave",
+      "name": "Blast Wave",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_bypass",
+      "name": "Bypass",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -387,8 +245,40 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
+      "id": "talent_darksong",
+      "name": "Darksong",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_darkwave",
+      "name": "Darkwave",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_darkwhip",
+      "name": "Darkwhip",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
       "id": "talent_death_grip",
       "name": "Death-Grip",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_dervish-dance",
+      "name": "Dervish Dance",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -403,8 +293,8 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_dust_in_the_wind",
-      "name": "Dust in the Wind",
+      "id": "talent_dreamer",
+      "name": "Dreamer",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -425,12 +315,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_ghost_tag",
-      "name": "Ghost Tag",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_fire_breather",
+      "name": "Fire Breather",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
       "severity": "info",
@@ -441,22 +331,6 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_ghost_tag",
-      "name": "Ghost Tag",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_gunslinger",
-      "name": "Gunslinger",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_gunslinger",
@@ -465,20 +339,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_gunslinger",
-      "name": "Gunslinger",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_hotwire",
-      "name": "Hotwire",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_heal_facade",
+      "name": "Heal Facade",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
       "severity": "info",
@@ -487,86 +353,6 @@
       "name": "Hotwire",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_hotwire",
-      "name": "Hotwire",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_hound_leash",
-      "name": "Hound Leash",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_hound_leash",
-      "name": "Hound Leash",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_hound_leash",
-      "name": "Hound Leash",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_hyper_awareness",
-      "name": "Hyper-Awareness",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_hyper_awareness",
-      "name": "Hyper-Awareness",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_hyper_awareness",
-      "name": "Hyper-Awareness",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_ignorance_is_bliss",
-      "name": "Ignorance is Bliss",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_ignorance_is_bliss",
-      "name": "Ignorance is Bliss",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_ignorance_is_bliss",
-      "name": "Ignorance is Bliss",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
     },
     {
       "severity": "info",
@@ -585,36 +371,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_jam_senses",
-      "name": "Jam Senses",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_killing_spree",
-      "name": "Killing Spree",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_killing_spree",
-      "name": "Killing Spree",
+      "id": "talent_jam_senses",
+      "name": "Jam Senses",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_killing_spree",
-      "name": "Killing Spree",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
     },
     {
       "severity": "info",
@@ -625,14 +387,6 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_leap",
-      "name": "Leap",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
       "id": "talent_leap",
@@ -641,28 +395,12 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
-      "severity": "warning",
-      "code": "likely_stub_row",
-      "id": "talent_leap",
-      "name": "Leap",
-      "detail": "Short description and no P.P.E./limitations/prerequisites — row may be a placeholder.",
-      "fix": "Ingest full rulebook mechanics or mark as draft in `notes`."
-    },
-    {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_leave_no_trace",
-      "name": "Leave No Trace",
+      "id": "talent_lightning_rider",
+      "name": "Lightning Rider",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_livewire",
-      "name": "Livewire",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
     },
     {
       "severity": "info",
@@ -675,8 +413,8 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_mass_transit",
-      "name": "Mass Transit",
+      "id": "talent_mirror_search",
+      "name": "Mirror Search",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -691,8 +429,16 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_nega",
-      "name": "Nega",
+      "id": "talent_mirror_sight",
+      "name": "Mirror Sight",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_nightbringer",
+      "name": "Nightbringer",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -701,6 +447,14 @@
       "code": "implicit_level_one",
       "id": "talent_phantom_limb",
       "name": "Phantom Limb",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_piece-work",
+      "name": "Piece Work",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -723,224 +477,16 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_raven_wings",
-      "name": "Raven Wings",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_sky_writer",
-      "name": "Sky Writer",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_sky_writer",
-      "name": "Sky Writer",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_switchboard_operator",
-      "name": "Switchboard Operator",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_trap_shadow",
-      "name": "Trap Shadow",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_ultra_vision",
-      "name": "Ultra-Vision",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_wall_runner",
-      "name": "Wall Runner",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_wall_whisperer",
-      "name": "Wall Whisperer",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_witch_hunters_sight",
-      "name": "Witch-Hunter's Sight",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_corrupting_influence",
-      "name": "Corrupting Influence",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_dark_dreams",
-      "name": "Dark Dreams",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_epic_proportions",
-      "name": "Epic Proportions",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_living_nightmare",
-      "name": "Living Nightmare",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_master_stroke",
-      "name": "Master Stroke",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_master_stroke",
-      "name": "Master Stroke",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_mystic_amplifier",
-      "name": "Mystic Amplifier",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_necrosis",
-      "name": "Necrosis",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_pariahs_mantle",
-      "name": "Pariah's Mantle",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "critical",
-      "code": "missing_ppe",
-      "id": "talent_payday",
-      "name": "Payday",
-      "detail": "No `ppe` block — acquire/activation costs cannot display in chargen.",
-      "fix": "Add `ppe.permanentBurnToAcquire` and `ppe.baseActivation` from the rulebook entry."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_rallying_cry",
-      "name": "Rallying Cry",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_shadows_of_despair",
-      "name": "Shadows of Despair",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_darksong",
-      "name": "Darksong",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_darkwhip",
-      "name": "Darkwhip",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_lightning_rider",
-      "name": "Lightning Rider",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_mirror_sight",
-      "name": "Mirror Sight",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_mirror_search",
-      "name": "Mirror Search",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_nightbringer",
-      "name": "Nightbringer",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
       "id": "talent_premonition",
       "name": "Premonition",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_raven_wings",
+      "name": "Raven Wings",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -971,6 +517,14 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
+      "id": "talent_shadow_slide",
+      "name": "Shadow Slide",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
       "id": "talent_sharing_the_flesh",
       "name": "Sharing the Flesh",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
@@ -979,16 +533,8 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_the_shroud",
-      "name": "The Shroud",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_shadow_slide",
-      "name": "Shadow Slide",
+      "id": "talent_sky_writer",
+      "name": "Sky Writer",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -1003,88 +549,56 @@
     {
       "severity": "info",
       "code": "implicit_level_one",
-      "id": "talent_swarm_self",
-      "name": "Swarm Self",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_air-grab",
-      "name": "Air Grab",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_astral-self",
-      "name": "Astral Self",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_darkwave",
-      "name": "Darkwave",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_dervish-dance",
-      "name": "Dervish Dance",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_dreamer",
-      "name": "Dreamer",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_piece-work",
-      "name": "Piece Work",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_air_swim",
-      "name": "Air Swim",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_fire_breather",
-      "name": "Fire Breather",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
-      "id": "talent_heal_facade",
-      "name": "Heal Facade",
-      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
-      "fix": "Confirm rulebook level and set explicitly when not 1st level."
-    },
-    {
-      "severity": "info",
-      "code": "implicit_level_one",
       "id": "talent_speed_darkling",
       "name": "Speed Darkling",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_switchboard_operator",
+      "name": "Switchboard Operator",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_the_shroud",
+      "name": "The Shroud",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_trap_shadow",
+      "name": "Trap Shadow",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_ultra_vision",
+      "name": "Ultra-Vision",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_wall_runner",
+      "name": "Wall Runner",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_witch_hunters_sight",
+      "name": "Witch-Hunter's Sight",
       "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
@@ -1105,28 +619,148 @@
       "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_corrupting_influence",
+      "name": "Corrupting Influence",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_dark_dreams",
+      "name": "Dark Dreams",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_epic_proportions",
+      "name": "Epic Proportions",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_living_nightmare",
+      "name": "Living Nightmare",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_master_stroke",
+      "name": "Master Stroke",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_master_stroke",
+      "name": "Master Stroke",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_mystic_amplifier",
+      "name": "Mystic Amplifier",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_necrosis",
+      "name": "Necrosis",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
       "severity": "info",
       "code": "redundant_prose_morphus_gate",
       "id": "talent_nightshade",
       "name": "Nightshade",
-      "detail": "Both prose and structured Morphus gates present (prose: Plant; tables: extraterrestrial).",
+      "detail": "Both prose and structured Morphus gates (prose: Plant; tables: extraterrestrial).",
       "fix": "Remove `limitations.morphusTablePrerequisites` if structured ids are authoritative."
     },
     {
-      "severity": "warning",
-      "code": "missing_ppe_activation",
-      "id": "talent_spelljack",
-      "name": "Spelljack",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_pariahs_mantle",
+      "name": "Pariah's Mantle",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_payday",
+      "name": "Payday",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_rallying_cry",
+      "name": "Rallying Cry",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
     },
     {
       "severity": "warning",
-      "code": "missing_ppe_activation",
+      "code": "form_rule_mismatch",
+      "id": "talent_rigor_mortis",
+      "name": "Rigor Mortis",
+      "detail": "`limitations.usableInNightbaneForm` is `either_form` but prose implies `morphus_only` (default: morphus_only).",
+      "fix": "Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations."
+    },
+    {
+      "severity": "warning",
+      "code": "form_rule_mismatch",
+      "id": "talent_seedling",
+      "name": "Seedling",
+      "detail": "`limitations.usableInNightbaneForm` is `morphus_only` but prose implies `both_forms_note_special` (default: morphus_only).",
+      "fix": "Align stored form with catalog prose, or clarify Facade-use language in description/notes/limitations."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_shadows_of_despair",
+      "name": "Shadows of Despair",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
+      "id": "talent_spelljack",
+      "name": "Spelljack",
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
+    },
+    {
+      "severity": "info",
+      "code": "implicit_level_one",
+      "id": "talent_swarm_self",
+      "name": "Swarm Self",
+      "detail": "No explicit `minimumCharacterLevelToAcquire` (defaults to level 1).",
+      "fix": "Confirm rulebook level and set explicitly when not 1st level."
+    },
+    {
+      "severity": "critical",
+      "code": "tier1_incomplete",
       "id": "talent_true_reflection",
       "name": "True Reflection",
-      "detail": "`ppe` present but `baseActivation` is missing.",
-      "fix": "Set activation P.P.E. cost."
+      "detail": "Tier 1 chargen contract incomplete — missing: ppe.baseActivation.",
+      "fix": "Ingest Pass A: mechanics from Dark Designs + verified sources before play-mechanics blocks."
     },
     {
       "severity": "info",

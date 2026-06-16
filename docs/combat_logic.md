@@ -41,12 +41,28 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 ---
 
 ## 4. The Save System (Dynamic Targets)
+
+The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet shows the **base target** and the **total bonus to add to the roll** — not a pre-reduced threshold.
+
 | Save Type | Base Target (Human) |
 | :--- | :--- |
 | **Lethal Poison** | 14+ |
 | **Non-Lethal Poison** | 16+ |
 | **Magic (Standard)** | 12+ |
 | **Magic (Ritual)** | 16+ |
+
+### 4.1 Defender wins ties (global)
+
+Unless an ability explicitly overrides it:
+
+| Context | Tie goes to |
+| :--- | :--- |
+| **Saving throw** | The character rolling the save |
+| **Opposed combat defense** (parry/dodge vs strike) | The defender |
+
+Implementation: `src/lib/opposedRollRules.ts` (`DEFENDER_WINS_TIES`).
+
+Book wording like Darksong’s “roll under 10” means **fail the save vs 10** — encode as `saveKind: base_pe`, `targetNumber: 10` (same as any other roll-over save).
 
 
 ## 5. Damage Multiplier Stacking

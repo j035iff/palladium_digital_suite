@@ -161,8 +161,9 @@ describe('creation OCC live ledger integration', () => {
     expect(ispScaled?.valueTooltip).toBe('(M.E.(10) × 3)')
     expect(ispScaled?.hint).toBe('MEx3 + 5D6 (+2D4/level)')
 
-    const saves = buildCreationSavesBlock(attrs, {}, character, 'facade', pab)
-    expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('+1')
+    const saves = buildCreationSavesBlock(attrs, {}, character, 'facade', pab, false, undefined, 'major')
+    expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('vs 12')
+    expect(saves.find((l) => l.label === 'Psionics')?.hint).toContain('+1 to roll')
     expect(saves.find((l) => l.label === 'Mind Control')?.value).toBe('+1')
     expect(saves.find((l) => l.label === 'Horror Factor')?.value).toBe('+3')
 

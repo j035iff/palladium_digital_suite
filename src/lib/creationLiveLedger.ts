@@ -5,11 +5,18 @@ import type {
   CharacterAttributes,
   FeatureModifiers,
   PalladiumOcc,
+  PsychicTier,
   Race,
   StrengthCapacities,
 } from '../types'
 import { getFormState } from '../types'
 import { computeHorrorFactorAura } from './saveProfile'
+import { computeAttributeSaveProfile } from './attributeSaves'
+import { saveVsPsionicsForTier } from './psychicGate'
+import {
+  formatSaveRollBonus,
+  formatSaveVsTarget,
+} from './saveRollDisplay'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { computeCombatMirrorBonuses } from './characterDerived'
 import { occAttributeRequirementSuffix } from './creationAttributeSync'
@@ -152,12 +159,23 @@ function formatBonusBreakdown(parts: readonly SaveDeductionLine[]): string | und
   return active.map((p) => `${p.label}: ${formatBonus(p.amount)}`).join(' · ')
 }
 
-function ledgerFromParts(parts: readonly SaveDeductionLine[]): CreationLedgerLine {
+function ledgerFromParts(
+  parts: readonly SaveDeductionLine[],
+  baseTarget: number | null = null,
+): CreationLedgerLine {
   const total = parts.reduce((sum, p) => sum + p.amount, 0)
+  const breakdown = formatBonusBreakdown(parts)
+  if (baseTarget != null) {
+    return {
+      label: '',
+      value: formatSaveVsTarget(baseTarget),
+      hint: [formatSaveRollBonus(total), breakdown].filter(Boolean).join(' · ') || undefined,
+    }
+  }
   return {
     label: '',
     value: ledgerBonus(total),
-    hint: formatBonusBreakdown(parts),
+    hint: breakdown,
   }
 }
 
@@ -942,6 +960,7 @@ function saveLineWithAttribution(
   passiveKeys: readonly string[],
   passive: FeatureModifiers,
   supportsDualForm = false,
+  baseTarget: number | null = null,
 ): CreationLedgerLine {
   const attrLines =
     supportsDualForm && activeForm === 'morphus'
@@ -954,7 +973,7 @@ function saveLineWithAttribution(
   if (orphan !== 0) {
     allParts.push({ label: 'Other modifiers', amount: orphan })
   }
-  const line = ledgerFromParts(allParts)
+  const line = ledgerFromParts(allParts, baseTarget)
   return { ...line, label }
 }
 
@@ -965,6 +984,8 @@ export function buildCreationSavesBlock(
   activeForm: ActiveForm,
   occ?: PalladiumOcc,
   supportsDualForm = false,
+  facadeMe?: number,
+  psychicTier: PsychicTier = 'none',
 ): CreationLedgerLine[] {
   const specId = character.occSpecializationId
   const iq = getIqBonuses(attrs.iq)
@@ -988,6 +1009,8 @@ export function buildCreationSavesBlock(
     'save_harmful_drugs',
   ] as const
 
+  const psionicSaveTarget = saveVsPsionicsForTier(psychicTier)
+
   return [
     saveLineWithAttribution(
       'Magic',
@@ -1007,6 +1030,7 @@ export function buildCreationSavesBlock(
       magicKeys,
       passive,
       supportsDualForm,
+      12,
     ),
     saveLineWithAttribution(
       'Psionics',
@@ -1026,6 +1050,7 @@ export function buildCreationSavesBlock(
       psionicsKeys,
       passive,
       supportsDualForm,
+      psionicSaveTarget,
     ),
     saveLineWithAttribution(
       'Horror Factor',
@@ -1075,6 +1100,7 @@ export function buildCreationSavesBlock(
       ['save_insanity'],
       passive,
       supportsDualForm,
+      12,
     ),
     saveLineWithAttribution(
       'Poison / Toxins',
@@ -1084,6 +1110,7 @@ export function buildCreationSavesBlock(
       poisonKeys,
       passive,
       supportsDualForm,
+      null,
     ),
     saveLineWithAttribution(
       'Possession',
@@ -1122,6 +1149,31 @@ export function buildCreationSavesBlock(
               .join(' · ')
           : undefined,
     },
+    ...computeAttributeSaveProfile(attrs.pe, attrs.me, character.level, supportsDualForm, {
+      facadeMe,
+    }).map((row) => {
+      if (row.rollStyle === 'bonus_only') {
+        return {
+          label: row.sheetLabel,
+          value:
+            row.totalRollBonus != null && row.totalRollBonus > 0
+              ? formatSaveRollBonus(row.totalRollBonus)
+              : '—',
+          hint: row.notes,
+        }
+      }
+      return {
+        label: row.sheetLabel,
+        value: row.baseTarget != null ? formatSaveVsTarget(row.baseTarget) : '—',
+        hint:
+          [
+            row.totalRollBonus != null ? formatSaveRollBonus(row.totalRollBonus) : null,
+            row.notes,
+          ]
+            .filter(Boolean)
+            .join(' · ') || undefined,
+      }
+    }),
   ]
 }
 
@@ -1712,6 +1764,8 @@ export function buildCreationLiveLedgerSnapshot(opts: {
         activeForm,
         opts.occ,
         opts.supportsDualForm,
+        opts.supportsDualForm ? facadeEffectiveAttrs.me : undefined,
+        (opts.psychicTier as PsychicTier) ?? 'none',
       ),
       combat: buildCreationCombatBlock(
         opts.character,

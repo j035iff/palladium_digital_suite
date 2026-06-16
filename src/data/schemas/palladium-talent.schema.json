@@ -428,7 +428,32 @@
       "additionalProperties": true,
       "properties": {
         "summary": { "type": "string", "minLength": 1 },
-        "saveKind": { "type": "string", "minLength": 1 },
+        "saveKind": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "magic",
+            "horror_factor",
+            "dodge",
+            "psionic",
+            "psionics",
+            "pe_check",
+            "attribute_check",
+            "none",
+            "conditional",
+            "special",
+            "other",
+            "non_lethal_poison",
+            "base_pe",
+            "base_me",
+            "vs_becoming"
+          ]
+        },
+        "rollStyle": {
+          "type": "string",
+          "enum": ["high", "under"],
+          "description": "Roll-high (d20 ≥ target) default. Use `under` for roll-under saves (e.g. Darksong) with `base_pe`."
+        },
         "targetNumber": { "type": "integer", "minimum": 1 },
         "effectsOnFailedSave": { "type": "string", "minLength": 1 }
       }

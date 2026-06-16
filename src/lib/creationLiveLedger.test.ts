@@ -89,10 +89,11 @@ describe('creationLiveLedger', () => {
     )
   })
 
-  it('shows N/A for inactive save bonuses', () => {
+  it('shows save target even when roll bonus is zero', () => {
     const attrs = { ...characterFixture.facade.attributes, pe: 10, me: 10, iq: 10 }
     const saves = buildCreationSavesBlock(attrs, {}, characterFixture, 'facade')
-    expect(saves.find((s) => s.label === 'Magic')?.value).toBe(LEDGER_NA)
+    expect(saves.find((s) => s.label === 'Magic')?.value).toBe('vs 12')
+    expect(saves.find((s) => s.label === 'Magic')?.hint).toBe('+0 to roll')
     expect(saves.find((s) => s.label === 'Mind Control')?.value).toBe(LEDGER_NA)
   })
 

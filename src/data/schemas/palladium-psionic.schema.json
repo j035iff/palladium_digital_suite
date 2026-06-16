@@ -378,8 +378,15 @@
             "magic",
             "none",
             "conditional",
-            "special"
+            "special",
+            "base_pe",
+            "base_me",
+            "vs_becoming"
           ]
+        },
+        "rollStyle": {
+          "type": "string",
+          "enum": ["high", "under"]
         },
         "targetNumber": { "type": "integer", "minimum": 1 },
         "bonus": { "type": "string", "minLength": 1 },

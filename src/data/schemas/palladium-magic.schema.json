@@ -470,8 +470,17 @@
             "attribute_check",
             "none",
             "conditional",
-            "special"
+            "special",
+            "other",
+            "base_pe",
+            "base_me",
+            "vs_becoming"
           ]
+        },
+        "rollStyle": {
+          "type": "string",
+          "enum": ["high", "under"],
+          "description": "Roll-high (d20 ≥ target) default. Use `under` with `base_pe` for roll-under saves."
         },
         "attributeCheck": {
           "type": "object",

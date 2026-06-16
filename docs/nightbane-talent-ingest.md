@@ -201,9 +201,31 @@ Re-apply defaults across the catalog: `node scripts/backfill-talent-form-default
 
 ---
 
-## Level gates
+## Attribute-only saves (`saveKind`)
 
-Dark Designs talent lists often prefix names with **`[N]`** = minimum character level to acquire (e.g. `[3] Brain Freeze` → level 3).
+Nightbane talents often call for **P.E. or M.E. bonuses only** — no stacked `save_magic`, racial, O.C.C., or skill modifiers.
+
+| `saveKind` | Use when | Sheet / resolution |
+|------------|----------|-------------------|
+| `base_pe` | Book says P.E. bonus only (e.g. Darksong save vs 10) | `targetNumber` is the GM-called save; add P.E. exceptional bonus to d20 |
+| `base_me` | Book says M.E. bonus only | Add M.E. exceptional bonus to d20 |
+| `vs_becoming` | Facade ↔ Morphus shift save | Target **12**; **Facade M.E.** bonus + Nightbane level progression. Add both to d20. |
+
+Runtime: `src/lib/attributeSaves.ts`, `src/data/saveKinds.ts`, `src/lib/saveRollDisplay.ts`. Character sheet shows **vs N** and **+bonus to roll**.
+
+**Roll resolution:** GM calls the save number. Player rolls d20 + bonuses; total ≥ target succeeds. **Saver wins ties** (`opposedRollRules.ts`). Book “roll under N” failure wording (Darksong) = fail save vs N — same encoding.
+
+```json
+"save": {
+  "summary": "Save vs 10 (P.E. bonus only). Failure stuns for 1D4 melee rounds.",
+  "saveKind": "base_pe",
+  "targetNumber": 10
+}
+```
+
+---
+
+## Level gates
 
 ```json
 "limitations": {
@@ -302,6 +324,8 @@ Documented table rulings when book text is ambiguous or contradictory. Encode in
 | Talent | Issue | Ruling |
 |--------|-------|--------|
 | Inferno Fist | Dark Designs p. 74 lists **5 P.P.E.** per melee round but also “only 2 P.P.E. may be spent on activation per level.” | **Flat 5 P.P.E. per activation**, one melee round. Ignore the per-level cap. |
+| Darksong | Save is “roll under 10” with P.E. bonuses — book failure wording for save vs 10. | `saveKind: base_pe`, `targetNumber: 10`. Area targets save at +4. |
+| Attribute-only saves | Nightbane talents often use P.E. or M.E. bonuses only (no racial/O.C.C./skill save stacks). | `saveKind`: `base_pe`, `base_me`, or `vs_becoming`. Sheet shows **vs target** + **bonus to roll**. Saver wins ties. |
 
 ---
 
