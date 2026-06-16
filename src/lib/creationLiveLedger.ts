@@ -26,6 +26,7 @@ import {
   buildSdcStatBonuses,
   formatAttributeValueTooltip,
   formatFlatValueTooltip,
+  normalizeDiceDisplay,
   type LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
 import { creationVitalityPreview } from './creationVitalityPreview'
@@ -91,6 +92,7 @@ import {
   applyMorphusVsFacadeLedgerGroupDiff,
   buildMorphusCreationAttributeBlock,
   buildMorphusCreationBasePassiveModifiers,
+  buildMorphusTraitSdcBonusDetails,
   creationLedgerSavePassiveModifiers,
   creationLedgerTraitPassiveModifiers,
   morphusAttributeScoresFromLedgerLines,
@@ -98,6 +100,11 @@ import {
   strengthCapacitiesFromAttributes,
   effectiveLedgerHandToHandTier,
 } from './morphusCreationLedger'
+import {
+  MORPHUS_HIT_POINTS_FORMULA,
+  MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
+  MORPHUS_SDC_BONUS_DICE,
+} from './morphusNightbaneBase'
 import type { CreationHandToHandTier } from './creationHandToHandChoice'
 
 export const LEDGER_NA = 'N/A'
@@ -410,7 +417,7 @@ function combatLedgerLineFromParts(
   }
 }
 
-export const MORPHUS_SDC_FORMULA_HINT = 'Facade S.D.C. + 2D6×10'
+export const MORPHUS_SDC_FORMULA_HINT = `Facade S.D.C. + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)}`
 
 function buildMindControlSaveLine(
   passive: FeatureModifiers,
@@ -884,12 +891,15 @@ export function buildCreationVitalsBlock(opts: {
   )
 
   const morphusLedger = opts.supportsDualForm && opts.activeForm === 'morphus'
+  const traitSdc = morphusLedger
+    ? buildMorphusTraitSdcBonusDetails(opts.character)
+    : { flatTotal: 0, flatBreakdown: [], diceContributions: [] }
 
   const hpLine = morphusLedger
     ? vitalityLedgerLineFromBlock('H.P.', pendingById.morphus_hp, resolutions, {
         label: 'H.P.',
-        ...buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
-          hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
+        ...buildAttrFormulaLedgerFields(MORPHUS_HIT_POINTS_FORMULA, assignments, {
+          hintOverride: `P.E. ×2 + ${normalizeDiceDisplay(MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA)}/level`,
           ...formulaAttrOpts,
         }),
       })
@@ -898,21 +908,37 @@ export function buildCreationVitalsBlock(opts: {
         ...hpFields,
       })
 
+  const morphusSdcFlatBreakdown = [
+    ...(pendingById.sdc
+      ? [{ label: 'Facade S.D.C.', amount: pendingDiceBlockRunningTotal(pendingById.sdc, resolutions) }]
+      : sdcBonuses.flatBreakdown),
+    ...traitSdc.flatBreakdown,
+  ]
+  const morphusSdcFlatTotal =
+    (pendingById.sdc
+      ? pendingDiceBlockRunningTotal(pendingById.sdc, resolutions)
+      : sdcBonuses.flatTotal) + traitSdc.flatTotal
+
   const sdcLine = morphusLedger
     ? vitalityLedgerLineFromBlock('S.D.C.', pendingById.morphus_sdc, resolutions, {
         label: 'S.D.C.',
         value:
-          pendingById.sdc
-            ? String(pendingDiceBlockRunningTotal(pendingById.sdc, resolutions))
-            : sdcBonuses.flatTotal > 0
-              ? String(sdcBonuses.flatTotal)
-              : preview.facadeSdcValue,
+          morphusSdcFlatTotal > 0 || pendingById.morphus_sdc
+            ? String(
+                pendingById.morphus_sdc
+                  ? pendingDiceBlockRunningTotal(pendingById.morphus_sdc, resolutions)
+                  : morphusSdcFlatTotal,
+              )
+            : preview.facadeSdcValue,
         valueModified:
-          (pendingById.sdc?.flatBaseline ?? 0) > 0 ||
-          sdcBonuses.flatTotal > 0 ||
+          morphusSdcFlatTotal > 0 ||
+          traitSdc.diceContributions.length > 0 ||
           (pendingById.morphus_sdc?.flatBaseline ?? 0) > 0,
-        valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
-        hint: MORPHUS_SDC_FORMULA_HINT,
+        valueTooltip: formatFlatValueTooltip(morphusSdcFlatBreakdown),
+        hint:
+          traitSdc.diceContributions.length > 0
+            ? `${MORPHUS_SDC_FORMULA_HINT} + traits`
+            : MORPHUS_SDC_FORMULA_HINT,
       })
     : vitalityLedgerLineFromBlock('S.D.C.', pendingById.sdc, resolutions, {
         label: 'S.D.C.',

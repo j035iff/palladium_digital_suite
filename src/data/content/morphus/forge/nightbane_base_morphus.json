@@ -27,6 +27,11 @@
     "saveDisease": 3,
     "saveHorrorFactor": 3
   },
+  "vitals": {
+    "hitPointsFormula": "PEx2",
+    "hitPointsPerLevelFormula": "2D6",
+    "sdcBonusDice": "2D6*10"
+  },
   "vitalsNotes": {
     "sdc": "Add 2D6×10 S.D.C. to the Facade total (rolled on Review tab).",
     "hitPoints": "P.E. ×2 plus 2D6 per level of experience (Morphus H.P. rolled on Review tab)."

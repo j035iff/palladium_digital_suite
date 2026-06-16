@@ -30,6 +30,14 @@ import {
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
 import { formatRaceHpRollHint } from './creationVitalityPreview'
+import { isDiceNotation } from './diceNotationBounds'
+import {
+  MORPHUS_HIT_POINTS_FORMULA,
+  MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
+  MORPHUS_SDC_BONUS_DICE,
+  NIGHTBANE_MORPHUS_BASE_PROFILE,
+} from './morphusNightbaneBase'
+import { buildMorphusTraitSdcBonusDetails } from './morphusCreationLedger'
 
 export type PendingDiceRoll = {
   id: string
@@ -111,6 +119,57 @@ function formulaDiceRolls(
       source: term.label,
     }
   })
+}
+
+function perLevelDiceRolls(
+  blockId: string,
+  perLevelFormula: string | undefined,
+): PendingDiceRoll[] {
+  const per = perLevelFormula?.trim()
+  if (!per || !isDiceNotation(per)) return []
+  const bounds = diceNotationBounds(per)
+  return [
+    {
+      id: `spawn.${blockId}.per_level.0`,
+      notation: normalizeDiceDisplay(per),
+      min: bounds.min,
+      max: bounds.max,
+      source: `${normalizeDiceDisplay(per)}/level`,
+    },
+  ]
+}
+
+function appendPerLevelRolls(
+  block: PendingDiceBlock,
+  perLevelFormula: string | undefined,
+  kind: PendingDiceGroup['kind'] = 'occ',
+): PendingDiceBlock {
+  const rolls = perLevelDiceRolls(block.id, perLevelFormula)
+  if (!rolls.length) return block
+  return {
+    ...block,
+    groups: [
+      ...block.groups,
+      {
+        kind,
+        display: `${rolls[0]!.notation}/level`,
+        tooltip: `(Per level: ${rolls[0]!.notation})`,
+        rolls,
+      },
+    ],
+  }
+}
+
+function resolveMorphusPeForSpawn(
+  character: Character,
+  assignments: Partial<Record<ForgeAttrKey, number>>,
+): number {
+  if (character.morphusForgeState?.baseStatsApplied === true) {
+    return character.morphus.attributes.pe
+  }
+  const facadePe = assignments.pe ?? character.facade.attributes.pe
+  const baseBump = NIGHTBANE_MORPHUS_BASE_PROFILE.attributeBonuses.pe ?? 0
+  return facadePe + baseBump
 }
 
 function buildAttributePendingDiceBlocks(
@@ -310,24 +369,31 @@ export function buildPendingDiceBlocks(
   })
   const ppeDice = ppeFormula ? formulaDiceRolls('ppe', ppeFormula, 'die') : []
   if (ppeFields.hint || ppeDice.length > 0) {
-    vitalityBlocks.push({
-      id: 'ppe',
-      label: 'P.P.E.',
-      flatBaseline: Number(ppeFields.value) || 0,
-      flatTooltip: ppeFields.valueModified ? ppeFields.valueTooltip : undefined,
-      hint: ppeFields.hint,
-      groups:
-        ppeDice.length > 0
-          ? [
-              {
-                kind: 'race',
-                display: ppeFields.hint?.split(' + ').filter((p) => /D/i.test(p)).join(' + ') ?? ppeDice.map((r) => r.notation).join(' + '),
-                tooltip: ppeFields.hint ? `(${ppeFields.hint})` : '(Dice)',
-                rolls: ppeDice,
-              },
-            ]
-          : [],
-    })
+    vitalityBlocks.push(
+      appendPerLevelRolls(
+        {
+          id: 'ppe',
+          label: 'P.P.E.',
+          flatBaseline: Number(ppeFields.value) || 0,
+          flatTooltip: ppeFields.valueModified ? ppeFields.valueTooltip : undefined,
+          hint: ppeFields.hint,
+          groups:
+            ppeDice.length > 0
+              ? [
+                  {
+                    kind: 'race',
+                    display:
+                      ppeFields.hint?.split(' + ').filter((p) => /D/i.test(p)).join(' + ') ??
+                      ppeDice.map((r) => r.notation).join(' + '),
+                    tooltip: ppeFields.hint ? `(${ppeFields.hint})` : '(Dice)',
+                    rolls: ppeDice,
+                  },
+                ]
+              : [],
+        },
+        occ?.ppeEngine?.perLevelFormula,
+      ),
+    )
   }
 
   const ispFormula = resolveIspCreationFormula(occ, psychicTier, showIsp)
@@ -339,64 +405,99 @@ export function buildPendingDiceBlocks(
     : null
   const ispDice = ispFormula ? formulaDiceRolls('isp', ispFormula.base, 'die') : []
   if (showIsp && ispFields && (ispFields.hint || ispDice.length > 0)) {
-    vitalityBlocks.push({
-      id: 'isp',
-      label: 'I.S.P.',
-      flatBaseline: Number(ispFields.value) || 0,
-      flatTooltip: ispFields.valueModified ? ispFields.valueTooltip : undefined,
-      hint: ispFields.hint,
-      groups:
-        ispDice.length > 0
-          ? [
-              {
-                kind: 'occ',
-                display: ispDice.map((r) => r.notation).join('+'),
-                tooltip: ispFields.hint ? `(${ispFields.hint})` : '(OCC)',
-                rolls: ispDice,
-              },
-            ]
-          : [],
-    })
+    vitalityBlocks.push(
+      appendPerLevelRolls(
+        {
+          id: 'isp',
+          label: 'I.S.P.',
+          flatBaseline: Number(ispFields.value) || 0,
+          flatTooltip: ispFields.valueModified ? ispFields.valueTooltip : undefined,
+          hint: ispFields.hint,
+          groups:
+            ispDice.length > 0
+              ? [
+                  {
+                    kind: 'occ',
+                    display: ispDice.map((r) => r.notation).join('+'),
+                    tooltip: ispFields.hint ? `(${ispFields.hint})` : '(OCC)',
+                    rolls: ispDice,
+                  },
+                ]
+              : [],
+        },
+        ispFormula?.perLevel,
+      ),
+    )
   }
 
   if (opts?.supportsDualForm) {
-    const morphHp = buildAttrFormulaLedgerFields('PEx3 + 2D6*4', assignments, {
-      hintOverride: 'P.E. ×3 + 2D6×4 (resolve at Spawn)',
+    const morphusPe = resolveMorphusPeForSpawn(character, assignments)
+    const morphHp = buildAttrFormulaLedgerFields(MORPHUS_HIT_POINTS_FORMULA, assignments, {
+      hintOverride: `P.E. ×2 + ${normalizeDiceDisplay(MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA)}/level`,
+      attrScores: { pe: morphusPe },
     })
     const pendingResolutions = character.creationPendingDiceResolutions ?? {}
     const facadeSdcBlock = vitalityBlocks.find((block) => block.id === 'sdc')
     const facadeSdcBaseline = facadeSdcBlock
       ? pendingDiceBlockRunningTotal(facadeSdcBlock, pendingResolutions)
       : sdcDetails.flatTotal
-    vitalityBlocks.push({
-      id: 'morphus_hp',
-      label: 'Morphus H.P.',
-      flatBaseline: Number(morphHp.value) || 0,
-      flatTooltip: morphHp.valueTooltip,
-      hint: morphHp.hint,
-      groups: [
-        {
-          kind: 'race',
-          display: '2D6x4',
-          tooltip: '(Morphus dice)',
-          rolls: formulaDiceRolls('morphus_hp', '2D6*4', 'die'),
-        },
-      ],
+    const traitSdc = buildMorphusTraitSdcBonusDetails(character)
+    const morphusSdcRolls = formulaDiceRolls('morphus_sdc', MORPHUS_SDC_BONUS_DICE, 'base')
+    const traitSdcRolls = traitSdc.diceContributions.map((contribution, index) => {
+      const bounds = diceNotationBounds(contribution.notation)
+      return {
+        id: `spawn.morphus_sdc.trait.${index}`,
+        notation: normalizeDiceDisplay(contribution.notation),
+        min: bounds.min,
+        max: bounds.max,
+        source: contribution.label,
+      }
     })
+    const morphusSdcGroups: PendingDiceGroup[] = []
+    if (morphusSdcRolls.length > 0) {
+      morphusSdcGroups.push({
+        kind: 'race',
+        display: normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE),
+        tooltip: '(Morphus base dice)',
+        rolls: morphusSdcRolls,
+      })
+    }
+    if (traitSdcRolls.length > 0) {
+      morphusSdcGroups.push({
+        kind: 'skills',
+        display: traitSdcRolls.map((roll) => roll.notation).join(' + '),
+        tooltip: `(${traitSdc.diceContributions
+          .map((row) => `${row.label}: ${normalizeDiceDisplay(row.notation)}`)
+          .join(', ')})`,
+        rolls: traitSdcRolls,
+      })
+    }
+    vitalityBlocks.push(
+      appendPerLevelRolls(
+        {
+          id: 'morphus_hp',
+          label: 'Morphus H.P.',
+          flatBaseline: Number(morphHp.value) || 0,
+          flatTooltip: morphHp.valueTooltip,
+          hint: morphHp.hint,
+          groups: [],
+        },
+        MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
+        'race',
+      ),
+    )
     vitalityBlocks.push({
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
-      flatBaseline: facadeSdcBaseline,
-      flatTooltip: formatFlatValueTooltip(sdcDetails.flatBreakdown),
-      hint: 'Facade S.D.C. + 2D6×10 (resolve at Spawn)',
-      groups: [
-        {
-          kind: 'race',
-          display: '2D6x10',
-          tooltip: '(Morphus dice)',
-          rolls: formulaDiceRolls('morphus_sdc', '2D6*10', 'die'),
-        },
-      ],
+      flatBaseline: facadeSdcBaseline + traitSdc.flatTotal,
+      flatTooltip: formatFlatValueTooltip([
+        ...(facadeSdcBaseline > 0
+          ? [{ label: 'Facade S.D.C.', amount: facadeSdcBaseline }]
+          : []),
+        ...traitSdc.flatBreakdown,
+      ]),
+      hint: `Facade S.D.C. + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
+      groups: morphusSdcGroups,
     })
   }
 

@@ -23,8 +23,11 @@ import {
   NIGHTBANE_MORPHUS_BASE_PROFILE,
   type NightbaneMorphusBaseProfile,
 } from './morphusNightbaneBase'
-import type { LedgerFlatContribution } from './ledgerStatBonuses'
-import type { LedgerStatDiceGroup } from './ledgerStatBonuses'
+import type {
+  LedgerDiceContribution,
+  LedgerFlatContribution,
+  LedgerStatDiceGroup,
+} from './ledgerStatBonuses'
 import {
   type CreationHandToHandTier,
   effectiveCreationHandToHandTier,
@@ -547,6 +550,40 @@ export function morphusAttributeScoresFromLedgerLines(
     if (value != null) scores[attr] = value
   }
   return scores
+}
+
+/** Morphus trait S.D.C. bonuses (flat totals + dice to roll at Spawn). */
+export function buildMorphusTraitSdcBonusDetails(
+  character: Pick<
+    Character,
+    'activeMorphusCharacteristicIds' | 'morphusTraitSlotResolutions'
+  >,
+): {
+  flatTotal: number
+  flatBreakdown: LedgerFlatContribution[]
+  diceContributions: LedgerDiceContribution[]
+} {
+  const traits = resolveActiveMorphusTraits(character)
+  const flatBreakdown: LedgerFlatContribution[] = []
+  const diceContributions: LedgerDiceContribution[] = []
+
+  for (const trait of traits) {
+    const blocks = collectMorphusStatModifierBlocks([trait], 'sdc')
+    for (const mod of blocks) {
+      if (mod.dice?.trim()) {
+        diceContributions.push({ notation: mod.dice.trim(), label: trait.name })
+      }
+      if (typeof mod.flat === 'number' && mod.flat !== 0) {
+        flatBreakdown.push({ label: trait.name, amount: mod.flat })
+      }
+    }
+  }
+
+  return {
+    flatTotal: flatBreakdown.reduce((sum, item) => sum + item.amount, 0),
+    flatBreakdown,
+    diceContributions,
+  }
 }
 
 export function applyLedgerAttributeScores(

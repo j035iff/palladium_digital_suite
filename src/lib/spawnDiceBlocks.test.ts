@@ -139,10 +139,35 @@ describe('spawnDiceBlocks', () => {
     )
     const ppe = blocks.find((block) => block.id === 'ppe')!
     const diceRolls = ppe.groups.flatMap((group) => group.rolls)
-    expect(diceRolls).toHaveLength(1)
-    expect(diceRolls[0]?.notation).toBe('3D6x10')
+    expect(diceRolls).toHaveLength(2)
+    expect(diceRolls.map((roll) => roll.notation)).toEqual(['3D6x10', '3D6'])
     expect(ppe.hint).toBe('PE (facade) + 3D6x10 + 20 (+3D6/level)')
     expect(ppe.flatBaseline).toBe(12)
+  })
+
+  it('includes morphus trait S.D.C. dice on the morphus pending block', () => {
+    const nightbane = getRaceById('nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const blocks = buildPendingDiceBlocks(
+      {
+        ...characterFixture,
+        creationAttributeAssignments: { pe: 12 },
+        morphusTraitSlotResolutions: [
+          {
+            slotId: 'plan:0',
+            catalogEntryId: 'animal_arachnid_full',
+          },
+        ],
+      },
+      nightbane,
+      occ,
+      { psychicTier: 'none', supportsDualForm: true },
+    )
+    const morphusSdc = blocks.find((block) => block.id === 'morphus_sdc')
+    expect(morphusSdc).toBeDefined()
+    const rollNotations = morphusSdc?.groups.flatMap((group) => group.rolls.map((r) => r.notation)) ?? []
+    expect(rollNotations).toContain('2D6x10')
+    expect(rollNotations).toContain('3D6X10')
   })
 
   it('splits facade and morphus pending dice blocks for dual-form builds', () => {
@@ -157,5 +182,9 @@ describe('spawnDiceBlocks', () => {
     expect(facade.some((block) => block.id === 'hp')).toBe(true)
     expect(facade.some((block) => block.id.startsWith('morphus_'))).toBe(false)
     expect(morphus.map((block) => block.id)).toEqual(['morphus_hp', 'morphus_sdc'])
+    const morphusHp = morphus.find((block) => block.id === 'morphus_hp')
+    const morphusHpRolls = morphusHp?.groups.flatMap((group) => group.rolls) ?? []
+    expect(morphusHpRolls).toHaveLength(1)
+    expect(morphusHpRolls[0]?.notation).toBe('2D6')
   })
 })

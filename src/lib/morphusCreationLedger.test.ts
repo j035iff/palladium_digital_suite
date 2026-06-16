@@ -4,8 +4,22 @@ import { createBlankCharacterForGenre } from './characterRoot'
 import { buildCreationAttributeBlock, buildCreationLiveLedgerSnapshot, buildCreationVitalsBlock, LEDGER_HTH_NONE } from './creationLiveLedger'
 import {
   buildMorphusCreationAttributeBlock,
+  buildMorphusTraitSdcBonusDetails,
   formatMorphusVsFacadeTooltip,
 } from './morphusCreationLedger'
+
+describe('buildMorphusTraitSdcBonusDetails', () => {
+  it('collects trait S.D.C. dice for pending spawn rolls', () => {
+    const details = buildMorphusTraitSdcBonusDetails({
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'animal_arachnid_full' },
+      ],
+    })
+    expect(details.diceContributions).toEqual([
+      { notation: '3D6x10', label: 'Full Arachnid' },
+    ])
+  })
+})
 
 describe('buildMorphusCreationAttributeBlock', () => {
   it('shows R.C.C. base bumps in green with Facade-relative tooltips', () => {
@@ -151,8 +165,9 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
     expect(morphusHpLabels).toHaveLength(1)
     expect(morphusSdcLabels).toHaveLength(1)
     expect(morphusHpLabels[0]?.label).toBe('H.P.')
-    expect(morphusHpLabels[0]?.hint).toContain('P.E. ×3')
-    expect(morphusSdcLabels[0]?.hint).toBe('Facade S.D.C. + 2D6×10')
+    expect(morphusHpLabels[0]?.hint).toContain('P.E. ×2')
+    expect(morphusHpLabels[0]?.hint).toContain('2D6/level')
+    expect(morphusSdcLabels[0]?.hint).toBe('Facade S.D.C. + 2D6x10')
   })
 
   it('shows Mind Control immunity on Facade and Morphus ledgers', () => {
@@ -237,7 +252,7 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
       },
       creationHandToHandTier: 'basic' as const,
     }
-    const race = getRaceById('race_nightbane')
+    const race = getRaceById('nightbane')
 
     const morphusSnapshot = buildCreationLiveLedgerSnapshot({
       character,
@@ -257,7 +272,7 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
     expect(strike?.valueModified).toBe(true)
 
     const magic = morphusSnapshot.saves.find((line) => line.label === 'Magic')
-    expect(magic?.value).toBe('+9')
+    expect(magic?.value).toBe('vs 12')
     expect(magic?.hint).toContain('P.E.: +5')
     expect(magic?.hint).toContain('Other modifiers: +4')
     expect(magic?.valueTooltip ?? '').not.toContain('Facade')

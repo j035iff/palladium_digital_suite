@@ -12,6 +12,15 @@ export type NightbaneMorphusBaseProfile = typeof nightbaneBaseMorphus
 export const NIGHTBANE_MORPHUS_BASE_PROFILE =
   nightbaneBaseMorphus as NightbaneMorphusBaseProfile
 
+export const MORPHUS_HIT_POINTS_FORMULA =
+  NIGHTBANE_MORPHUS_BASE_PROFILE.vitals?.hitPointsFormula ?? 'PEx2'
+
+export const MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA =
+  NIGHTBANE_MORPHUS_BASE_PROFILE.vitals?.hitPointsPerLevelFormula ?? '2D6'
+
+export const MORPHUS_SDC_BONUS_DICE =
+  NIGHTBANE_MORPHUS_BASE_PROFILE.vitals?.sdcBonusDice ?? '2D6*10'
+
 function readScalar(
   attrs: CharacterRootState['morphus']['attributes'],
   attr: ForgeAttrKey,
