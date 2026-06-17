@@ -19,6 +19,10 @@ import {
   createEmptyAccumulatedHandToHandBonuses,
 } from '../utils/combatCalculator'
 import { getHandToHandSkillById } from '../data/library/handToHandCatalogLoader'
+import {
+  buildPendingDiceBlocks,
+  flattenPendingDiceRolls,
+} from './spawnDiceBlocks'
 
 describe('creationLiveLedger', () => {
   it('aggregates boxing combat and staging bonuses', () => {
@@ -89,11 +93,11 @@ describe('creationLiveLedger', () => {
     )
   })
 
-  it('shows save target even when roll bonus is zero', () => {
+  it('shows save modifier when roll bonus is zero', () => {
     const attrs = { ...characterFixture.primary.attributes, pe: 10, me: 10, iq: 10 }
     const saves = buildCreationSavesBlock(attrs, {}, characterFixture, 'primary')
-    expect(saves.find((s) => s.label === 'Magic')?.value).toBe('vs 12')
-    expect(saves.find((s) => s.label === 'Magic')?.hint).toBe('+0 to roll')
+    expect(saves.find((s) => s.label === 'Magic')?.value).toBe(LEDGER_NA)
+    expect(saves.find((s) => s.label === 'Magic')?.valueTooltip).toBeUndefined()
     expect(saves.find((s) => s.label === 'Mind Control')?.value).toBe(LEDGER_NA)
   })
 
@@ -139,6 +143,43 @@ describe('creationLiveLedger', () => {
     expect(ps?.value).toBe('11')
     expect(ps?.valueModified).toBe(true)
     expect(ps?.valueTooltip).toBe('(Roll 10, O.C.C. +1)')
+  })
+
+  it('includes entered physical-skill dice in attribute value tooltips', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const character = {
+      ...characterFixture,
+      creationAttributeAssignments: { spd: 14 },
+      creationOccSkillIds: [],
+      creationSecondarySkillPicks: [
+        { instanceId: 'ath', skillId: 'skill_athletics_general' },
+      ],
+    }
+    const pendingBlocks = buildPendingDiceBlocks(character, human, occ, {
+      psychicTier: 'major',
+    })
+    const athleticsRoll = flattenPendingDiceRolls(pendingBlocks).find(
+      (roll) => roll.source === 'Athletics (general)',
+    )!
+    const pendingAttrDiceBreakdown = {
+      spd: [{ label: 'Athletics (general)', amount: 4 }],
+    }
+    const block = buildCreationAttributeBlock(
+      character.primary.attributes,
+      character.creationAttributeAssignments,
+      human,
+      occ,
+      undefined,
+      ['skill_athletics_general'],
+      {},
+      { spd: 4 },
+      pendingAttrDiceBreakdown,
+    )
+    const spd = block.find((line) => line.label === 'Spd')
+    expect(spd?.value).toBe('18')
+    expect(spd?.valueTooltip).toBe('(Roll 14, Athletics (general) +4)')
+    expect(athleticsRoll.notation).toBe('1D6')
   })
 
   it('exceptional P.E. bonuses use effective attribute total', () => {

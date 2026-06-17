@@ -2,6 +2,13 @@ import { describe, expect, it } from 'vitest'
 import { getRaceById, getLibraryOccById } from '../data/library/registry'
 import { createBlankCharacterForGenre } from './characterRoot'
 import { buildCreationAttributeBlock, buildCreationLiveLedgerSnapshot, buildCreationVitalsBlock, LEDGER_HTH_NONE } from './creationLiveLedger'
+import type { HorrorFactorProfile } from './saveProfile'
+
+const EMPTY_HORROR_FACTOR_PROFILE: HorrorFactorProfile = {
+  total: null,
+  contributions: [],
+  tooltipEquation: '',
+}
 import {
   buildMorphusCreationAttributeBlock,
   buildMorphusTraitSdcBonusDetails,
@@ -48,19 +55,19 @@ describe('buildMorphusCreationAttributeBlock', () => {
 
     expect(ps.value).toBe('22')
     expect(ps.valueModified).toBe(true)
-    expect(ps.valueTooltip).toBe('Facade 12, Base +10')
+    expect(ps.valueTooltip).toBe('Facade 12, Race +10')
 
     expect(pe.value).toBe('24')
     expect(pe.valueModified).toBe(true)
-    expect(pe.valueTooltip).toBe('Facade 14, Base +10')
+    expect(pe.valueTooltip).toBe('Facade 14, Race +10')
 
     expect(pp.value).toBe('17')
     expect(pp.valueModified).toBe(true)
-    expect(pp.valueTooltip).toBe('Facade 11, Base +6')
+    expect(pp.valueTooltip).toBe('Facade 11, Race +6')
 
     expect(spd.value).toBe('20')
     expect(spd.valueModified).toBe(true)
-    expect(spd.valueTooltip).toBe('Facade 10, Base +10')
+    expect(spd.valueTooltip).toBe('Facade 10, Race +10')
 
     expect(iq.value).toBe('10')
     expect(iq.valueModified).toBeFalsy()
@@ -112,8 +119,8 @@ describe('buildMorphusCreationAttributeBlock', () => {
 describe('formatMorphusVsPrimaryTooltip', () => {
   it('lists Facade total then each Morphus delta', () => {
     expect(
-      formatMorphusVsPrimaryTooltip(12, [{ label: 'Base', amount: 10 }]),
-    ).toBe('Facade 12, Base +10')
+      formatMorphusVsPrimaryTooltip(12, [{ label: 'Race', amount: 10 }]),
+    ).toBe('Facade 12, Race +10')
   })
 })
 
@@ -136,7 +143,7 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
       psychicTier: 'none',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
 
@@ -149,7 +156,7 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
       psychicTier: 'none',
       activeForm: 'morphus',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
       attrScores: morphusAttrScores,
     })
@@ -167,7 +174,7 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
     expect(morphusHpLabels[0]?.label).toBe('H.P.')
     expect(morphusHpLabels[0]?.hint).toContain('P.E. ×2')
     expect(morphusHpLabels[0]?.hint).toContain('2D6/level')
-    expect(morphusSdcLabels[0]?.hint).toBe('Facade S.D.C. + 2D6x10')
+    expect(morphusSdcLabels[0]?.hint).toBe('Facade + 2D6x10')
   })
 
   it('shows Mind Control immunity on Facade and Morphus ledgers', () => {
@@ -218,7 +225,7 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
       supportsDualForm: true,
       psychicTier: 'none',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     }
 
@@ -232,9 +239,9 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
       attrScores: { pe: 24, ps: 22 },
     }).find((line) => line.label === 'P.P.E.')
 
-    expect(primaryPpe?.value).toBe('14')
+    expect(primaryPpe?.value).toBe('34')
     expect(primaryPpe?.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
-    expect(morphusPpe?.value).toBe('14')
+    expect(morphusPpe?.value).toBe('34')
     expect(morphusPpe?.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
   })
 })
@@ -272,9 +279,9 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
     expect(strike?.valueModified).toBe(true)
 
     const magic = morphusSnapshot.saves.find((line) => line.label === 'Magic')
-    expect(magic?.value).toBe('vs 12')
-    expect(magic?.hint).toContain('P.E.: +5')
-    expect(magic?.hint).toContain('Other modifiers: +4')
+    expect(magic?.value).toBe('+9')
+    expect(magic?.valueTooltip).toContain('P.E. +5')
+    expect(magic?.valueTooltip).toContain('Race +4')
     expect(magic?.valueTooltip ?? '').not.toContain('Facade')
 
     const mindControl = morphusSnapshot.saves.find((line) => line.label === 'Mind Control')

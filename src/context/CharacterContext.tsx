@@ -44,12 +44,11 @@ import {
   skillSlotMultiplierForTier,
 } from '../lib/psychicGate'
 import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
-import { computeMaxApm } from '../lib/meleeCombat'
+import { computeMaxApm, resolveCharacterMaxApm } from '../lib/meleeCombat'
 import {
   resolveHandToHandCombatProfile,
   type HandToHandCombatProfile,
 } from '../lib/handToHandPipeline'
-import { handToHandAttackBonus } from '../utils/combatCalculator'
 import { evaluateStrengthFromPhysicalStat } from '../utils/strengthCalculator'
 import type { StrengthCapacities } from '../types'
 import { computeCombatVitalityDelta } from '../lib/combatVitalityApply'
@@ -1261,11 +1260,22 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const sheetCombatDerived = useMemo(
     () =>
-      computeSheetCombatDerived(character, sheetActiveForm, {
-        skillName: handToHandCombatProfile.skillName,
-        accumulated: handToHandCombatProfile.accumulated,
-      }),
-    [character, sheetActiveForm, handToHandCombatProfile],
+      computeSheetCombatDerived(
+        character,
+        sheetActiveForm,
+        {
+          skillName: handToHandCombatProfile.skillName,
+          accumulated: handToHandCombatProfile.accumulated,
+        },
+        { occ: activeOcc, supportsDualForm },
+      ),
+    [
+      character,
+      sheetActiveForm,
+      handToHandCombatProfile,
+      activeOcc,
+      supportsDualForm,
+    ],
   )
 
   const isMDC = useMemo(
@@ -1373,12 +1383,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const maxApm = useMemo(
     () =>
-      computeMaxApm(
-        activeFormState.attributes,
-        character.level,
-        handToHandAttackBonus(handToHandCombatProfile.accumulated),
+      resolveCharacterMaxApm(
+        character,
+        sheetActiveForm,
+        supportsDualForm,
+        handToHandCombatProfile.accumulated,
+        sheetPassiveModifiers,
       ),
-    [activeFormState.attributes, character.level, handToHandCombatProfile.accumulated],
+    [
+      character,
+      sheetActiveForm,
+      supportsDualForm,
+      handToHandCombatProfile.accumulated,
+      sheetPassiveModifiers,
+    ],
   )
 
   const attacksPerMelee = useMemo<AttacksPerMeleeState>(

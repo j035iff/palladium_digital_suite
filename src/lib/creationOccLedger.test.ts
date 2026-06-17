@@ -8,11 +8,19 @@ import {
   buildCreationSavesBlock,
   buildCreationVitalsBlock,
 } from './creationLiveLedger'
+import { buildPendingDiceBlocks } from './spawnDiceBlocks'
+import type { HorrorFactorProfile } from './saveProfile'
 import {
   accumulateHandToHandBonuses,
   createEmptyAccumulatedHandToHandBonuses,
 } from '../utils/combatCalculator'
 import { getHandToHandSkillById } from '../data/library/handToHandCatalogLoader'
+
+const EMPTY_HORROR_FACTOR_PROFILE: HorrorFactorProfile = {
+  total: null,
+  contributions: [],
+  tooltipEquation: '',
+}
 
 describe('creation OCC live ledger integration', () => {
   const human = getRaceById('race_human')
@@ -54,7 +62,7 @@ describe('creation OCC live ledger integration', () => {
       psychicTier: 'major',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
     expect(vitals.find((l) => l.label === 'H.P.')?.value).toBe('—')
@@ -71,13 +79,46 @@ describe('creation OCC live ledger integration', () => {
       psychicTier: 'major',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
     const hp = vitalsWithPe.find((l) => l.label === 'H.P.')
     expect(hp?.value).toBe('11')
     expect(hp?.valueModified).toBe(true)
-    expect(hp?.valueTooltip).toBe('(P.E. +11)')
+    expect(hp?.valueTooltip).toBe('(PE 11)')
+
+    const hpRollId = buildPendingDiceBlocks(
+      {
+        ...character,
+        creationAttributeAssignments: { pe: 11 },
+      },
+      human,
+      pab,
+      { psychicTier: 'major' },
+    )
+      .find((block) => block.id === 'hp')
+      ?.groups.flatMap((group) => group.rolls)
+      .find((roll) => roll.id.includes('.per_level.'))?.id
+
+    const vitalsWithHpRoll = buildCreationVitalsBlock({
+      character: {
+        ...character,
+        creationAttributeAssignments: { pe: 11 },
+        creationPendingDiceResolutions: { [hpRollId!]: 5 },
+      },
+      attrs: { ...attrs, pe: 11 },
+      race: human,
+      occ: pab,
+      supportsDualForm: false,
+      psychicTier: 'major',
+      activeForm: 'primary',
+      passive: {},
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
+      skillIds: [],
+    })
+    expect(vitalsWithHpRoll.find((l) => l.label === 'H.P.')?.valueTooltip).toBe(
+      '(PE 11, perLevel(1D6) 5)',
+    )
     expect(hp?.hint).toBe('P.E. + 1D6/level')
 
     const ppeMagic = buildCreationVitalsBlock({
@@ -99,18 +140,18 @@ describe('creation OCC live ledger integration', () => {
       psychicTier: 'major',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
     const ppe = ppeMagic.find((l) => l.label === 'P.P.E.')
     expect(ppe?.value).toBe('120')
     expect(ppe?.valueModified).toBe(true)
-    expect(ppe?.valueTooltip).toBe('(P.E.(12) × 10)')
+    expect(ppe?.valueTooltip).toBe('(PE(12) × 10)')
     expect(ppe?.hint).toBe('2D6 + PEx10 + 2D6 (+1D6/level)')
 
-    expect(vitals.find((l) => l.label === 'S.D.C.')?.diceGroups?.[0]?.display).toBe(
-      '1D4x10+2D6',
-    )
+    const sdcDiceGroups = vitals.find((l) => l.label === 'S.D.C.')?.diceGroups ?? []
+    expect(sdcDiceGroups.find((g) => g.kind === 'race')?.display).toBe('1D4x10')
+    expect(sdcDiceGroups.find((g) => g.kind === 'occ')?.display).toBe('2D6')
     const isp = vitals.find((l) => l.label === 'I.S.P.')
     expect(isp?.hint).toBe('M.E. + 5D6 (+2D4/level)')
     expect(isp?.value).toBe('—')
@@ -127,13 +168,13 @@ describe('creation OCC live ledger integration', () => {
       psychicTier: 'major',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
     const ispAssigned = vitalsWithMe.find((l) => l.label === 'I.S.P.')
     expect(ispAssigned?.value).toBe('10')
     expect(ispAssigned?.valueModified).toBe(true)
-    expect(ispAssigned?.valueTooltip).toBe('(M.E. +10)')
+    expect(ispAssigned?.valueTooltip).toBe('(ME 10)')
 
     const vitalsMex3 = buildCreationVitalsBlock({
       character: {
@@ -153,17 +194,17 @@ describe('creation OCC live ledger integration', () => {
       psychicTier: 'major',
       activeForm: 'primary',
       passive: {},
-      horrorFactorTotal: null,
+      horrorFactorProfile: EMPTY_HORROR_FACTOR_PROFILE,
       skillIds: [],
     })
     const ispScaled = vitalsMex3.find((l) => l.label === 'I.S.P.')
     expect(ispScaled?.value).toBe('30')
-    expect(ispScaled?.valueTooltip).toBe('(M.E.(10) × 3)')
+    expect(ispScaled?.valueTooltip).toBe('(ME(10) × 3)')
     expect(ispScaled?.hint).toBe('MEx3 + 5D6 (+2D4/level)')
 
     const saves = buildCreationSavesBlock(attrs, {}, character, 'primary', pab, false, undefined, 'major')
-    expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('vs 12')
-    expect(saves.find((l) => l.label === 'Psionics')?.hint).toContain('+1 to roll')
+    expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('+1')
+    expect(saves.find((l) => l.label === 'Psionics')?.valueTooltip).toContain('O.C.C.')
     expect(saves.find((l) => l.label === 'Mind Control')?.value).toBe('+1')
     expect(saves.find((l) => l.label === 'Horror Factor')?.value).toBe('+3')
 

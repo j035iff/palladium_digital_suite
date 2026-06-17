@@ -113,11 +113,11 @@ Derived from **current** attribute scores (not separate inputs).
 
 **Implementation:** `ledgerVitalFormula.ts`, `buildCreationVitalsBlock()`, `buildPendingDiceBlocks()`, `computeSpawnVitalityFromResolutions()`.
 
-**Status:** ✅ Ledger preview · ✅ Pending dice blocks · ✅ Commit on Tab 7 · ⚠️ Flat integer terms in formulas (e.g. `+20` on P.P.E.) may not all be in ledger flat column yet
+**Status:** ✅ Ledger preview · ✅ Pending dice blocks · ✅ Commit on Tab 7 · ✅ Flat integer terms in formulas (e.g. `+20` on P.P.E.) in ledger flat column
 
 ### 4.4 Saves
 
-Display: **base target** (e.g. `vs 12`) + **bonus breakdown** in hint — not a pre-reduced threshold (`combat_logic.md` §4).
+Display: **save modifier** (e.g. `+3`) with **bonus breakdown** in `valueTooltip` — not the GM-called target number (`combat_logic.md` §4 still applies at the table; targets come from the book).
 
 ```
 Save bonus = Attr>16 (where applicable) + Race + OCC + Skills + misc
@@ -149,7 +149,7 @@ There is **no** character-level APM bump — only HtH extra attacks feed the cor
 
 **Implementation:** `buildCreationCombatBlock()`, `buildCreationCombatLedger()`, `computeMaxApm()`, `handToHandAttackBonus()`.
 
-**Status:** ✅ Ledger (full stack) · ⚠️ Live HUD APM uses **core + HtH only** (see §8)
+**Status:** ✅ Ledger (full stack) · ✅ Live HUD APM (full stack via `resolveCharacterMaxApm()`)
 
 ---
 
@@ -252,7 +252,7 @@ Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr
 
 **Running total:** `flatBaseline + Σ(entered dice)` per block (`pendingDiceBlockRunningTotal()`).
 
-**Scope filter:** `filterPendingDiceBlocksByScope('primary' | 'morphus')` — `facade` scope = Facade / single-form dice.
+**Scope filter:** `filterPendingDiceBlocksByScope('primary' | 'morphus')` — `primary` scope = default / single-form dice.
 
 ---
 
@@ -262,11 +262,11 @@ Update this table when closing gaps.
 
 | Area | Ledger (Phase A) | Live sheet (Phase E) | Notes |
 |------|------------------|----------------------|-------|
-| APM full stack | ✅ Skills + mBase + traits | ❌ HtH + base only | `CharacterContext` → `computeMaxApm()` |
-| Combat bonuses | ✅ Full hints | Partial via `featureEngine` | Strike/parry/dodge on HUD |
+| APM full stack | ✅ Skills + mBase + traits | ✅ `resolveCharacterMaxApm()` | `CharacterContext.attacksPerMelee.max` |
+| Combat bonuses | ✅ Full hints | ✅ OCC + mBase via `computeSheetCombatDerived()` | Strike/parry/dodge on HUD |
 | Morphus passive bundle | ✅ Preview | ✅ `morphusPassiveBridge` | Active play middleware |
-| Perception stat line | ⚠️ Partial | — | Formula in live_ledger; verify ledger row |
-| P.P.E. `+20` flat | ⚠️ Hint only | Commit uses dice+PE | May need flat term in `buildVitalAttrFlatBundle` |
+| Perception stat line | ✅ Combat block + exceptional | — | `buildCreationPerceptionLine()` |
+| P.P.E. `+20` flat | ✅ Flat column | Commit uses dice+PE+flat | `parseVitalFormulaFlatIntegerTerm()` |
 | Level-up stat bumps | — | Partial | Not creation ledger scope |
 
 ---
@@ -283,7 +283,7 @@ Update this table when closing gaps.
 | Vitals formulas | `ledgerVitalFormula.ts`, `creationVitalityPreview.ts` |
 | Pending / spawn dice | `spawnDiceBlocks.ts`, `spawnVitalityManual.ts` |
 | Exceptional attributes | `attributeBonuses.ts` |
-| APM core | `meleeCombat.ts` |
+| APM core + live stack | `meleeCombat.ts` → `resolveAttacksPerMelee()`, `resolveCharacterMaxApm()` |
 | Hand-to-Hand accumulation | `utils/combatCalculator.ts` |
 | Saves display | `saveProfile.ts`, `buildCreationSavesBlock()` |
 | Skill physical mods | `skillPhysicalBonuses.ts`, `ledgerStatBonuses.ts` |

@@ -1,4 +1,4 @@
-import type { ActiveForm, Character, Feature, FeatureModifiers } from '../types'
+import type { ActiveForm, Character, Feature, FeatureModifiers, PalladiumOcc } from '../types'
 import { getFormState } from '../types'
 import {
   aggregateAllPassiveModifiers,
@@ -7,6 +7,11 @@ import {
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import { getPpBonuses } from './attributeBonuses'
 import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
+import { occStaticNumericBonus } from './creationOccBonuses'
+import {
+  buildMorphusCreationBasePassiveModifiers,
+  MORPHUS_LEDGER_RACE_LABEL,
+} from './morphusCreationLedger'
 import type { AccumulatedHandToHandBonuses } from '../types'
 
 export type SheetBonusLine = { label: string; amount: number }
@@ -124,9 +129,20 @@ export function computeSheetCombatDerived(
     skillName: string | null
     accumulated: AccumulatedHandToHandBonuses
   },
-  opts?: { extraSkillIds?: readonly string[] },
+  opts?: {
+    extraSkillIds?: readonly string[]
+    occ?: PalladiumOcc
+    supportsDualForm?: boolean
+  },
 ): SheetCombatDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
+  const morphusBase =
+    opts?.supportsDualForm && activeForm === 'morphus'
+      ? buildMorphusCreationBasePassiveModifiers()
+      : {}
+  const occResolutions = character.creationOccVariableResolutions ?? {}
+  const specId = character.occSpecializationId
+  const occ = opts?.occ
   const unlocked = collectUnlockedSkillIds(character, activeForm)
   for (const id of opts?.extraSkillIds ?? []) unlocked.add(id)
   const displayed = computeDisplayScalars(character, activeForm, passive)
@@ -170,6 +186,22 @@ export function computeSheetCombatDerived(
   if (orphanDodge)
     dodgeLines.push({ label: 'Skill / other modifiers', amount: orphanDodge })
 
+  const appendOccAndBase = (
+    lines: SheetBonusLine[],
+    occStatKey: string,
+    baseAmt: number,
+  ) => {
+    const occAmt = occ
+      ? occStaticNumericBonus(occ, specId, 'combat', occStatKey, occResolutions)
+      : 0
+    if (occAmt) lines.push({ label: 'O.C.C.', amount: occAmt })
+    if (baseAmt) lines.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseAmt })
+  }
+
+  appendOccAndBase(strikeLines, 'strike', morphusBase.strike ?? 0)
+  appendOccAndBase(parryLines, 'parry', morphusBase.parry ?? 0)
+  appendOccAndBase(dodgeLines, 'dodge', morphusBase.dodge ?? 0)
+
   const peDiv = Math.floor(displayed.pe / 10)
   const spdDiv = Math.floor(displayed.spd / 10)
   const initExtra = passive.initiative ?? 0
@@ -180,6 +212,12 @@ export function computeSheetCombatDerived(
   if (initExtra) initiativeLines.push({ label: 'Passive initiative', amount: initExtra })
   const ppInit = getPpBonuses(displayed.pp).initiative
   if (ppInit) initiativeLines.push({ label: 'P.P. (31+)', amount: ppInit })
+  const occInit = occ
+    ? occStaticNumericBonus(occ, specId, 'combat', 'initiative', occResolutions)
+    : 0
+  if (occInit) initiativeLines.push({ label: 'O.C.C.', amount: occInit })
+  const baseInit = morphusBase.initiative ?? 0
+  if (baseInit) initiativeLines.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseInit })
 
   appendHandToHandLines(
     handToHand?.accumulated,
@@ -214,6 +252,12 @@ export function computeSheetCombatDerived(
       amount: rollHth,
     })
   }
+  const occRoll = occ
+    ? occStaticNumericBonus(occ, specId, 'combat', 'rollWithPunch', occResolutions)
+    : 0
+  if (occRoll) rollLines.push({ label: 'O.C.C.', amount: occRoll })
+  const baseRoll = morphusBase.rollWithPunch ?? 0
+  if (baseRoll) rollLines.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseRoll })
 
   const initiativeTotal = sumLines(initiativeLines)
   const rollTotal = sumLines(rollLines)

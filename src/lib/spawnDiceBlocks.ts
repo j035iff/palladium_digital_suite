@@ -14,10 +14,11 @@ import {
 } from './creationSkillPicks'
 import {
   buildForgeAttributeStatBonusDetails,
+  buildForgeAttributeStatBonuses,
   buildSdcStatBonusDetails,
-  formatFlatValueTooltip,
   ledgerDiceGroupRowLabel,
   normalizeDiceDisplay,
+  formatFlatValueTooltip,
   type LedgerDiceContribution,
   type LedgerFlatContribution,
   type LedgerStatDiceGroupDetail,
@@ -26,10 +27,17 @@ import {
   buildAttrFormulaLedgerFields,
   diceTermsFromAttrFormula,
   dualFormPpeLedgerFormulaOpts,
+  formatVitalDiceTooltipTerm,
+  formatVitalLedgerTooltip,
+  formatMorphusSdcValueTooltip,
+  hitPointsPerLevelDiceFormula,
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
+  resolvePpeFormulaParts,
+  type VitalAttrFlatTerm,
+  type VitalDiceTooltipTerm,
 } from './ledgerVitalFormula'
-import { primaryFormSdcBreakdownLabel } from './creationFormLabels'
+import { FACADE_LABEL } from './creationFormLabels'
 import { formatRaceHpRollHint } from './creationVitalityPreview'
 import { isDiceNotation } from './diceNotationBounds'
 import {
@@ -60,6 +68,10 @@ export type PendingDiceBlock = {
   label: string
   flatBaseline: number
   flatTooltip?: string
+  flatTerms?: VitalAttrFlatTerm[]
+  skillFlatTerms?: LedgerFlatContribution[]
+  /** Facade S.D.C. total carried into Morphus S.D.C. (dual-form only). */
+  morphusFacadeSdc?: number
   hint?: string
   groups: PendingDiceGroup[]
 }
@@ -103,6 +115,62 @@ function groupFromLedgerDetail(
       rollFromContribution(blockId, group.kind, index, contribution),
     ),
   }
+}
+
+function racePpeFormulaPart(race: Race | undefined): string | null {
+  return resolvePpeFormulaParts(race, undefined).race ?? null
+}
+
+/** Entered vitality dice with Race / O.C.C. / per-level labels for ledger tooltips. */
+export function collectVitalityDiceTooltipTerms(
+  block: PendingDiceBlock,
+  resolutions: Readonly<Record<string, number>>,
+): VitalDiceTooltipTerm[] {
+  const out: VitalDiceTooltipTerm[] = []
+  for (const group of block.groups) {
+    for (const roll of group.rolls) {
+      const value = resolutions[roll.id]
+      if (value == null || !Number.isFinite(value)) continue
+      if (roll.id.includes('.per_level.')) {
+        out.push({ kind: 'perLevel', notation: roll.notation, amount: value })
+        continue
+      }
+      if (group.kind === 'race') {
+        out.push({ kind: 'raceRoll', notation: roll.notation, amount: value })
+      } else if (group.kind === 'occ') {
+        out.push({ kind: 'occRoll', notation: roll.notation, amount: value })
+      } else {
+        out.push({
+          kind: 'skillRoll',
+          label: roll.source,
+          notation: roll.notation,
+          amount: value,
+        })
+      }
+    }
+  }
+  return out
+}
+
+export function formatVitalityBlockValueTooltip(
+  flatTerms: readonly VitalAttrFlatTerm[],
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+  skillFlats: readonly LedgerFlatContribution[] = [],
+): string | undefined {
+  if (block?.id === 'morphus_sdc') {
+    return formatMorphusSdcValueTooltip(
+      block.morphusFacadeSdc ?? 0,
+      block ? collectVitalityDiceTooltipTerms(block, resolutions) : [],
+      [...skillFlats, ...(block.skillFlatTerms ?? [])],
+    )
+  }
+  const diceTerms = block ? collectVitalityDiceTooltipTerms(block, resolutions) : []
+  const mergedSkillFlats = [
+    ...skillFlats,
+    ...(block?.skillFlatTerms ?? []),
+  ]
+  return formatVitalLedgerTooltip(flatTerms, diceTerms, mergedSkillFlats)
 }
 
 function formulaDiceRolls(
@@ -161,16 +229,57 @@ function appendPerLevelRolls(
   }
 }
 
+function resolveForgeEffectiveAttributeScore(
+  attr: ForgeAttrKey,
+  character: Character,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  skillIds: readonly string[],
+  assignments: Partial<Record<ForgeAttrKey, number>>,
+  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>>,
+): number {
+  const bundle = buildForgeAttributeStatBonuses(
+    attr,
+    race,
+    occ,
+    character.occSpecializationId,
+    skillIds,
+  )
+  const pool =
+    assignments[attr] ??
+    (attr === 'ps' ? character.primary.attributes.ps.score : character.primary.attributes[attr])
+  const variableBonus = occVariableAttributeResolution(
+    attr,
+    occ,
+    character.occSpecializationId,
+    character.creationOccVariableResolutions ?? {},
+  )
+  const pending = pendingAttrBonuses[attr] ?? 0
+  return pool + bundle.flatTotal + variableBonus + pending
+}
+
 function resolveMorphusPeForSpawn(
   character: Character,
   assignments: Partial<Record<ForgeAttrKey, number>>,
+  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>>,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  skillIds: readonly string[],
 ): number {
   if (character.morphusForgeState?.baseStatsApplied === true) {
     return character.morphus.attributes.pe
   }
-  const primaryPe = assignments.pe ?? character.primary.attributes.pe
+  const effectivePrimaryPe = resolveForgeEffectiveAttributeScore(
+    'pe',
+    character,
+    race,
+    occ,
+    skillIds,
+    assignments,
+    pendingAttrBonuses,
+  )
   const baseBump = NIGHTBANE_MORPHUS_BASE_PROFILE.attributeBonuses.pe ?? 0
-  return primaryPe + baseBump
+  return effectivePrimaryPe + baseBump
 }
 
 function buildAttributePendingDiceBlocks(
@@ -277,32 +386,43 @@ export function buildPendingDiceBlocks(
     psychicTier !== 'none' || character.psychicGateBypassed === true
   const skillIds = resolveCreationSkillIds(character, occ)
   const attributeBlocks = buildAttributePendingDiceBlocks(character, occ, skillIds)
+  const pendingAttrBonuses = sumPendingAttributeDiceBonuses(
+    attributeBlocks,
+    character.creationPendingDiceResolutions ?? {},
+  )
+  const effectivePe = resolveForgeEffectiveAttributeScore(
+    'pe',
+    character,
+    race,
+    occ,
+    skillIds,
+    assignments,
+    pendingAttrBonuses,
+  )
   const vitalityBlocks: PendingDiceBlock[] = []
 
   const hpFormula = race ? (race.vitals?.hpFormula ?? 'PE + 1D6') : null
+  const hpPerLevel = hitPointsPerLevelDiceFormula(hpFormula)
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
     hintOverride: race ? formatRaceHpRollHint(race.vitals?.hpFormula) : undefined,
+    formulaSources: hpFormula ? { race: hpFormula } : undefined,
   })
-  const hpDice = hpFormula ? formulaDiceRolls('hp', hpFormula, 'die') : []
-  if (hpFields.hint || hpDice.length > 0) {
-    vitalityBlocks.push({
-      id: 'hp',
-      label: 'H.P.',
-      flatBaseline: Number(hpFields.value) || 0,
-      flatTooltip: hpFields.valueModified ? hpFields.valueTooltip : undefined,
-      hint: hpFields.hint,
-      groups:
-        hpDice.length > 0
-          ? [
-              {
-                kind: 'race',
-                display: hpDice.map((r) => r.notation).join(' + '),
-                tooltip: hpFields.hint ? `(${hpFields.hint})` : '(Race)',
-                rolls: hpDice,
-              },
-            ]
-          : [],
-    })
+  if (hpFields.hint || hpPerLevel) {
+    vitalityBlocks.push(
+      appendPerLevelRolls(
+        {
+          id: 'hp',
+          label: 'H.P.',
+          flatBaseline: Number(hpFields.value) || 0,
+          flatTooltip: hpFields.valueModified ? hpFields.valueTooltip : undefined,
+          flatTerms: hpFields.flatTerms,
+          hint: hpFields.hint,
+          groups: [],
+        },
+        hpPerLevel,
+        'race',
+      ),
+    )
   }
 
   const sdcDetails = buildSdcStatBonusDetails(
@@ -354,22 +474,52 @@ export function buildPendingDiceBlocks(
       id: 'sdc',
       label: 'S.D.C.',
       flatBaseline: sdcDetails.flatTotal,
-      flatTooltip: formatFlatValueTooltip(sdcDetails.flatBreakdown),
+      flatTooltip: formatVitalLedgerTooltip(
+        sdcDetails.flatVitalTerms,
+        [],
+        sdcDetails.skillFlats,
+      ),
+      flatTerms: sdcDetails.flatVitalTerms,
+      skillFlatTerms: sdcDetails.skillFlats,
       groups: sdcGroups,
     })
   }
 
   const ppeFormula =
     race && occ?.id?.trim() ? resolvePpeCreationFormula(race, occ) : null
-  const primaryPe = assignments.pe ?? character.primary.attributes.pe
+  const racePpePart = racePpeFormulaPart(race)
+  const occPpePart = occ?.ppeEngine?.baseFormula?.trim() || null
+  const ppeDualOpts = opts?.supportsDualForm
+    ? dualFormPpeLedgerFormulaOpts(effectivePe)
+    : {}
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: occ?.ppeEngine?.perLevelFormula,
-    ...(opts?.supportsDualForm
-      ? dualFormPpeLedgerFormulaOpts(primaryPe)
-      : {}),
+    formulaSources: {
+      race: racePpePart,
+      occ: occPpePart,
+    },
+    ...ppeDualOpts,
   })
-  const ppeDice = ppeFormula ? formulaDiceRolls('ppe', ppeFormula, 'die') : []
-  if (ppeFields.hint || ppeDice.length > 0) {
+  const ppeRaceDice = racePpePart ? formulaDiceRolls('ppe', racePpePart, 'race') : []
+  const ppeOccDice = occPpePart ? formulaDiceRolls('ppe', occPpePart, 'occ') : []
+  const ppeGroups: PendingDiceGroup[] = []
+  if (ppeRaceDice.length > 0) {
+    ppeGroups.push({
+      kind: 'race',
+      display: ppeRaceDice.map((roll) => roll.notation).join(' + '),
+      tooltip: racePpePart ? `(${normalizeDiceDisplay(racePpePart)})` : '(Race)',
+      rolls: ppeRaceDice,
+    })
+  }
+  if (ppeOccDice.length > 0) {
+    ppeGroups.push({
+      kind: 'occ',
+      display: ppeOccDice.map((roll) => roll.notation).join(' + '),
+      tooltip: occPpePart ? `(${normalizeDiceDisplay(occPpePart)})` : '(O.C.C.)',
+      rolls: ppeOccDice,
+    })
+  }
+  if (ppeFields.hint || ppeGroups.length > 0) {
     vitalityBlocks.push(
       appendPerLevelRolls(
         {
@@ -377,20 +527,9 @@ export function buildPendingDiceBlocks(
           label: 'P.P.E.',
           flatBaseline: Number(ppeFields.value) || 0,
           flatTooltip: ppeFields.valueModified ? ppeFields.valueTooltip : undefined,
+          flatTerms: ppeFields.flatTerms,
           hint: ppeFields.hint,
-          groups:
-            ppeDice.length > 0
-              ? [
-                  {
-                    kind: 'race',
-                    display:
-                      ppeFields.hint?.split(' + ').filter((p) => /D/i.test(p)).join(' + ') ??
-                      ppeDice.map((r) => r.notation).join(' + '),
-                    tooltip: ppeFields.hint ? `(${ppeFields.hint})` : '(Dice)',
-                    rolls: ppeDice,
-                  },
-                ]
-              : [],
+          groups: ppeGroups,
         },
         occ?.ppeEngine?.perLevelFormula,
       ),
@@ -402,9 +541,10 @@ export function buildPendingDiceBlocks(
     ? buildAttrFormulaLedgerFields(ispFormula.base, assignments, {
         perLevelFormula: ispFormula.perLevel,
         hintOverride: undefined,
+        formulaSources: { occ: ispFormula.base },
       })
     : null
-  const ispDice = ispFormula ? formulaDiceRolls('isp', ispFormula.base, 'die') : []
+  const ispDice = ispFormula ? formulaDiceRolls('isp', ispFormula.base, 'occ') : []
   if (showIsp && ispFields && (ispFields.hint || ispDice.length > 0)) {
     vitalityBlocks.push(
       appendPerLevelRolls(
@@ -413,6 +553,7 @@ export function buildPendingDiceBlocks(
           label: 'I.S.P.',
           flatBaseline: Number(ispFields.value) || 0,
           flatTooltip: ispFields.valueModified ? ispFields.valueTooltip : undefined,
+          flatTerms: ispFields.flatTerms,
           hint: ispFields.hint,
           groups:
             ispDice.length > 0
@@ -420,7 +561,7 @@ export function buildPendingDiceBlocks(
                   {
                     kind: 'occ',
                     display: ispDice.map((r) => r.notation).join('+'),
-                    tooltip: ispFields.hint ? `(${ispFields.hint})` : '(OCC)',
+                    tooltip: ispFields.hint ? `(${ispFields.hint})` : '(O.C.C.)',
                     rolls: ispDice,
                   },
                 ]
@@ -432,10 +573,18 @@ export function buildPendingDiceBlocks(
   }
 
   if (opts?.supportsDualForm) {
-    const morphusPe = resolveMorphusPeForSpawn(character, assignments)
+    const morphusPe = resolveMorphusPeForSpawn(
+      character,
+      assignments,
+      pendingAttrBonuses,
+      race,
+      occ,
+      skillIds,
+    )
     const morphHp = buildAttrFormulaLedgerFields(MORPHUS_HIT_POINTS_FORMULA, assignments, {
       hintOverride: `P.E. ×2 + ${normalizeDiceDisplay(MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA)}/level`,
       attrScores: { pe: morphusPe },
+      formulaSources: { race: MORPHUS_HIT_POINTS_FORMULA },
     })
     const pendingResolutions = character.creationPendingDiceResolutions ?? {}
     const primarySdcBlock = vitalityBlocks.find((block) => block.id === 'sdc')
@@ -480,6 +629,7 @@ export function buildPendingDiceBlocks(
           label: 'Morphus H.P.',
           flatBaseline: Number(morphHp.value) || 0,
           flatTooltip: morphHp.valueTooltip,
+          flatTerms: morphHp.flatTerms,
           hint: morphHp.hint,
           groups: [],
         },
@@ -491,13 +641,14 @@ export function buildPendingDiceBlocks(
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
       flatBaseline: primarySdcBaseline + traitSdc.flatTotal,
-      flatTooltip: formatFlatValueTooltip([
-        ...(primarySdcBaseline > 0
-          ? [{ label: primaryFormSdcBreakdownLabel(), amount: primarySdcBaseline }]
-          : []),
-        ...traitSdc.flatBreakdown,
-      ]),
-      hint: `${primaryFormSdcBreakdownLabel()} + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
+      morphusFacadeSdc: primarySdcBaseline,
+      skillFlatTerms: traitSdc.flatBreakdown,
+      flatTooltip: formatMorphusSdcValueTooltip(
+        primarySdcBaseline,
+        [],
+        traitSdc.flatBreakdown,
+      ),
+      hint: `${FACADE_LABEL} + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
       groups: morphusSdcGroups,
     })
   }
@@ -523,19 +674,44 @@ export function sumPendingAttributeDiceBonuses(
   blocks: readonly PendingDiceBlock[],
   resolutions: Readonly<Record<string, number>>,
 ): Partial<Record<ForgeAttrKey, number>> {
+  const breakdown = pendingAttributeDiceBreakdown(blocks, resolutions)
   const out: Partial<Record<ForgeAttrKey, number>> = {}
+  for (const [attr, rolls] of Object.entries(breakdown)) {
+    const sum = rolls.reduce((total, roll) => total + roll.amount, 0)
+    if (sum !== 0) out[attr as ForgeAttrKey] = sum
+  }
+  return out
+}
+
+/** Per-source entered attribute dice for ledger value tooltips. */
+export function pendingAttributeDiceBreakdown(
+  blocks: readonly PendingDiceBlock[],
+  resolutions: Readonly<Record<string, number>>,
+): Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> {
+  const out: Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> = {}
   for (const block of blocks) {
     if (!block.id.startsWith('attr_')) continue
     const attr = block.id.slice('attr_'.length) as ForgeAttrKey
     if (!FORGE_ATTRIBUTE_KEYS.includes(attr)) continue
-    let sum = 0
-    for (const group of block.groups) {
-      for (const roll of group.rolls) {
-        const value = resolutions[roll.id]
-        if (value != null && Number.isFinite(value)) sum += value
-      }
+    const rolls = collectEnteredPendingDiceContributions(block, resolutions)
+    if (rolls.length > 0) out[attr] = rolls
+  }
+  return out
+}
+
+/** Entered spawn dice rolls with catalog source labels (for ledger tooltips). */
+export function collectEnteredPendingDiceContributions(
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+): LedgerFlatContribution[] {
+  if (!block) return []
+  const out: LedgerFlatContribution[] = []
+  for (const group of block.groups) {
+    for (const roll of group.rolls) {
+      const value = resolutions[roll.id]
+      if (value == null || !Number.isFinite(value)) continue
+      out.push({ label: roll.source, amount: value, notation: roll.notation })
     }
-    if (sum !== 0) out[attr] = sum
   }
   return out
 }

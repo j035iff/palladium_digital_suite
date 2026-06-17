@@ -26,7 +26,8 @@ describe('spawnDiceBlocks', () => {
       psychicTier: 'major',
     })
     const sdc = blocks.find((block) => block.id === 'sdc')
-    expect(sdc?.groups.find((g) => g.kind === 'occ')?.display).toBe('1D4x10+2D6')
+    expect(sdc?.groups.find((g) => g.kind === 'race')?.display).toBe('1D4x10')
+    expect(sdc?.groups.find((g) => g.kind === 'occ')?.display).toBe('2D6')
     expect(sdc?.groups.find((g) => g.kind === 'skills')?.display).toBe('1D8 + 5D6')
   })
 
@@ -119,11 +120,13 @@ describe('spawnDiceBlocks', () => {
       { psychicTier: 'major' },
     )
     const ppe = blocks.find((block) => block.id === 'ppe')!
-    const rollId = ppe.groups[0]?.rolls[1]?.id
+    const occRoll = ppe.groups
+      .find((group) => group.kind === 'occ')
+      ?.rolls.find((roll) => roll.notation === '2D6')
     expect(ppe.flatBaseline).toBe(120)
     expect(
       pendingDiceBlockRunningTotal(ppe, {
-        [rollId!]: 7,
+        [occRoll!.id]: 7,
       }),
     ).toBe(127)
   })
@@ -142,7 +145,7 @@ describe('spawnDiceBlocks', () => {
     expect(diceRolls).toHaveLength(2)
     expect(diceRolls.map((roll) => roll.notation)).toEqual(['3D6x10', '3D6'])
     expect(ppe.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
-    expect(ppe.flatBaseline).toBe(12)
+    expect(ppe.flatBaseline).toBe(32)
   })
 
   it('includes morphus trait S.D.C. dice on the morphus pending block', () => {

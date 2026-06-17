@@ -1,5 +1,6 @@
 import type { ForgeAttrKey } from './attributeKeys'
 import type { PalladiumOcc, Race } from '../types'
+import type { VitalAttrFlatTerm } from './ledgerVitalFormula'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { calculateBaseSdc } from '../utils/vitalsCalculator'
 import { occFlatVitalBonus, occStaticDiceNotation } from './creationOccBonuses'
@@ -20,6 +21,8 @@ export type LedgerStatDiceGroup = {
 export type LedgerFlatContribution = {
   label: string
   amount: number
+  /** Spawn dice notation when this term came from a rolled die (e.g. `1D6`). */
+  notation?: string
 }
 
 export type LedgerStatBonusBundle = {
@@ -243,24 +246,46 @@ export function buildSdcStatBonuses(
   }
 }
 
+function formatLedgerTooltipTerm(term: LedgerFlatContribution): string {
+  const label = term.notation
+    ? `${term.label} (${normalizeDiceDisplay(term.notation)})`
+    : term.label
+  return `${label} ${term.amount >= 0 ? '+' : ''}${term.amount}`
+}
+
 export function formatFlatValueTooltip(
   breakdown: readonly LedgerFlatContribution[],
 ): string | undefined {
   if (breakdown.length === 0) return undefined
-  return `(${breakdown.map((f) => `${f.label} ${f.amount >= 0 ? '+' : ''}${f.amount}`).join(', ')})`
+  return `(${breakdown.map((f) => formatLedgerTooltipTerm(f)).join(', ')})`
+}
+
+/** Append entered spawn dice (with source labels) to an existing flat tooltip. */
+export function appendEnteredRollsToFlatTooltip(
+  flatTooltip: string | undefined,
+  enteredRolls: readonly LedgerFlatContribution[],
+): string | undefined {
+  if (enteredRolls.length === 0) return flatTooltip
+  const rollText = enteredRolls.map((r) => formatLedgerTooltipTerm(r)).join(', ')
+  if (!flatTooltip?.trim()) return `(${rollText})`
+  return flatTooltip.replace(/\)\s*$/, `, ${rollText})`)
 }
 
 export function formatAttributeValueTooltip(
   poolRoll: number | null,
   flatBreakdown: readonly LedgerFlatContribution[],
   variableBonus = 0,
+  enteredDice: readonly LedgerFlatContribution[] = [],
 ): string | undefined {
   const parts: string[] = []
   if (poolRoll != null) parts.push(`Roll ${poolRoll}`)
   for (const item of flatBreakdown) {
-    parts.push(`${item.label} ${item.amount >= 0 ? '+' : ''}${item.amount}`)
+    parts.push(formatLedgerTooltipTerm(item))
   }
   if (variableBonus > 0) parts.push(`O.C.C. dice +${variableBonus}`)
+  for (const roll of enteredDice) {
+    parts.push(formatLedgerTooltipTerm(roll))
+  }
   if (parts.length === 0) return undefined
   return `(${parts.join(', ')})`
 }
@@ -278,22 +303,41 @@ export function buildSdcStatBonusDetails(
 ): {
   flatTotal: number
   flatBreakdown: LedgerFlatContribution[]
+  flatVitalTerms: VitalAttrFlatTerm[]
+  skillFlats: LedgerFlatContribution[]
   diceGroups: LedgerStatDiceGroupDetail[]
 } {
   const skill = collectSkillBonuses('sdc', skillIds)
+  const raceDice: LedgerDiceContribution[] = []
   const occDice: LedgerDiceContribution[] = []
-  const occFlat: LedgerFlatContribution[] = []
+  const flatVitalTerms: VitalAttrFlatTerm[] = []
 
   if (race) {
     const baseSdc = calculateBaseSdc(race, occ)
     const flatBase = parsePlainIntegerFormula(baseSdc)
+    const raceDefinesSdc = race.vitals?.sdc != null
     if (flatBase != null) {
-      occFlat.push({ label: 'Base', amount: flatBase })
-    } else if (occ?.id?.trim()) {
-      occDice.push({
-        notation: baseSdc,
-        label: 'Base OCC',
-      })
+      if (raceDefinesSdc) {
+        flatVitalTerms.push({
+          kind: 'flat',
+          source: 'race',
+          label: 'RaceFlat',
+          amount: flatBase,
+        })
+      } else {
+        flatVitalTerms.push({
+          kind: 'flat',
+          source: 'occ',
+          label: 'OCCFlat',
+          amount: flatBase,
+        })
+      }
+    } else if (isDiceNotation(baseSdc)) {
+      if (raceDefinesSdc) {
+        raceDice.push({ notation: baseSdc, label: 'Race' })
+      } else {
+        occDice.push({ notation: baseSdc, label: 'OCC' })
+      }
     }
   }
 
@@ -304,7 +348,12 @@ export function buildSdcStatBonusDetails(
     }
     const flat = occFlatVitalBonus(occ, specializationId, 'sdc', resolutions)
     if (flat > 0) {
-      occFlat.push({ label: 'O.C.C.', amount: flat })
+      flatVitalTerms.push({
+        kind: 'flat',
+        source: 'occ',
+        label: 'OCCFlat',
+        amount: flat,
+      })
     }
   } else if (occ?.id?.trim()) {
     const bonusDice = occStaticDiceNotation(occ, specializationId, 'vitals', 'sdc')
@@ -312,6 +361,10 @@ export function buildSdcStatBonusDetails(
   }
 
   const diceGroups: LedgerStatDiceGroupDetail[] = []
+  const raceGroup = buildDiceGroup('race', raceDice)
+  if (raceGroup) {
+    diceGroups.push({ ...raceGroup, contributions: [...raceDice] })
+  }
   const occGroup = buildDiceGroup('occ', occDice)
   if (occGroup) {
     diceGroups.push({ ...occGroup, contributions: [...occDice] })
@@ -321,10 +374,18 @@ export function buildSdcStatBonusDetails(
     diceGroups.push({ ...skillGroup, contributions: [...skill.dice] })
   }
 
-  const flatBreakdown = [...occFlat, ...skill.flat]
+  const flatBreakdown: LedgerFlatContribution[] = [
+    ...flatVitalTerms.map((term) => ({
+      label: term.label,
+      amount: term.amount,
+    })),
+    ...skill.flat,
+  ]
   return {
     flatTotal: flatBreakdown.reduce((sum, item) => sum + item.amount, 0),
     flatBreakdown,
+    flatVitalTerms,
+    skillFlats: [...skill.flat],
     diceGroups,
   }
 }

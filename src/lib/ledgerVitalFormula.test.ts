@@ -2,9 +2,13 @@ import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc, Race } from '../types'
 import {
   buildAttrFormulaLedgerFields,
+  buildSourcedVitalFlatTerms,
   buildVitalAttrFlatBundle,
   formatVitalAttrFlatTooltip,
   formatVitalFormulaLedgerHint,
+  formatVitalLedgerTooltip,
+  formatMorphusSdcValueTooltip,
+  hitPointsPerLevelDiceFormula,
   parseVitalFormulaAttrTerm,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
@@ -19,13 +23,13 @@ describe('ledgerVitalFormula', () => {
   it('sums P.E. into HP flat value', () => {
     const bundle = buildVitalAttrFlatBundle('PE + 1D6', { pe: 14 })
     expect(bundle.flatTotal).toBe(14)
-    expect(formatVitalAttrFlatTooltip(bundle.terms)).toBe('(P.E. +14)')
+    expect(formatVitalAttrFlatTooltip(bundle.terms)).toBe('(PE 14)')
   })
 
   it('sums M.E. × multiplier into ISP flat value', () => {
     const bundle = buildVitalAttrFlatBundle('MEx3 + 5D6', { me: 10 })
     expect(bundle.flatTotal).toBe(30)
-    expect(formatVitalAttrFlatTooltip(bundle.terms)).toBe('(M.E.(10) × 3)')
+    expect(formatVitalAttrFlatTooltip(bundle.terms)).toBe('(ME(10) × 3)')
     expect(formatVitalFormulaLedgerHint('MEx3 + 5D6')).toBe('MEx3 + 5D6')
   })
 
@@ -41,11 +45,87 @@ describe('ledgerVitalFormula', () => {
     ).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
   })
 
+  it('sums flat integer terms into P.P.E. flat value', () => {
+    const bundle = buildSourcedVitalFlatTerms(
+      [{ source: 'occ', formula: 'PE + 3D6*10+20' }],
+      { pe: 14 },
+    )
+    expect(bundle.reduce((sum, term) => sum + term.amount, 0)).toBe(34)
+    expect(formatVitalAttrFlatTooltip(bundle)).toBe('(PE 14, OCCFlat +20)')
+    const fields = buildAttrFormulaLedgerFields('PE + 3D6*10+20', { pe: 14 }, {
+      formulaSources: { occ: 'PE + 3D6*10+20' },
+    })
+    expect(fields.value).toBe('34')
+    expect(fields.valueModified).toBe(true)
+  })
+
+  it('labels Facade P.E. in dual-form P.P.E. tooltips', () => {
+    const terms = buildSourcedVitalFlatTerms(
+      [{ source: 'occ', formula: 'PE + 3D6*10+20' }],
+      { pe: 13 },
+      { pe: 13 },
+      { pe: 'Facade' },
+    )
+    expect(formatVitalAttrFlatTooltip(terms)).toBe('(PE(Facade) 13, OCCFlat +20)')
+  })
+
+  it('formats per-level dice in vitality tooltips', () => {
+    expect(
+      formatVitalLedgerTooltip(
+        [{ kind: 'attr', attr: 'pe', label: 'P.E.', score: 12, multiplier: 1, amount: 12 }],
+        [{ kind: 'perLevel', notation: '1D6', amount: 3 }],
+      ),
+    ).toBe('(PE 12, perLevel(1D6) 3)')
+  })
+
+  it('orders rolls before flats within each race / O.C.C. source', () => {
+    expect(
+      formatVitalLedgerTooltip(
+        [
+          {
+            kind: 'attr',
+            attr: 'pe',
+            label: 'P.E.',
+            score: 13,
+            multiplier: 1,
+            amount: 13,
+            formLabel: 'Facade',
+          },
+          { kind: 'flat', source: 'race', label: 'RaceFlat', amount: 10 },
+          { kind: 'flat', source: 'occ', label: 'OCCFlat', amount: 30 },
+        ],
+        [
+          { kind: 'raceRoll', notation: '3D6', amount: 13 },
+          { kind: 'occRoll', notation: '1D4x10', amount: 20 },
+          { kind: 'perLevel', notation: '3D6', amount: 14 },
+        ],
+      ),
+    ).toBe(
+      '(PE(Facade) 13, RaceRoll(3D6) +13, RaceFlat +10, OCCRoll(1D4X10) +20, OCCFlat +30, perLevel(3D6) 14)',
+    )
+  })
+
+  it('formats morphus S.D.C. tooltips with facade, race roll, and trait flats', () => {
+    expect(
+      formatMorphusSdcValueTooltip(
+        30,
+        [{ kind: 'raceRoll', notation: '2D6x10', amount: 45 }],
+        [{ label: 'Arachnid', amount: 50 }],
+      ),
+    ).toBe('(Facade 30, RaceRoll(2D6X10) +45, +50)')
+  })
+
+  it('extracts per-level dice from race H.P. formulas', () => {
+    expect(hitPointsPerLevelDiceFormula('PE + 1D6')).toBe('1D6')
+    expect(hitPointsPerLevelDiceFormula('PE + 2D6')).toBe('2D6')
+    expect(hitPointsPerLevelDiceFormula('PEx2')).toBeNull()
+  })
+
   it('builds universal ledger fields for magic P.P.E. with P.E. multiplier', () => {
     const fields = buildAttrFormulaLedgerFields('PEx10 + 2D6', { pe: 12 })
     expect(fields.value).toBe('120')
     expect(fields.valueModified).toBe(true)
-    expect(fields.valueTooltip).toBe('(P.E.(12) × 10)')
+    expect(fields.valueTooltip).toBe('(PE(12) × 10)')
     expect(fields.hint).toBe('PEx10 + 2D6')
   })
 

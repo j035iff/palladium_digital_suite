@@ -2,12 +2,25 @@ import { describe, expect, it } from 'vitest'
 import { getRaceById, getLibraryOccById } from '../data/library/registry'
 import {
   aggregateDiceNotations,
+  appendEnteredRollsToFlatTooltip,
   buildForgeAttributeStatBonuses,
   buildSdcStatBonuses,
   ledgerDiceGroupRowLabel,
 } from './ledgerStatBonuses'
 
 describe('ledgerStatBonuses', () => {
+  it('appends entered spawn dice to flat tooltips', () => {
+    expect(
+      appendEnteredRollsToFlatTooltip('(P.E. +14)', [
+        { label: '1D6', amount: 5 },
+      ]),
+    ).toBe('(P.E. +14, 1D6 +5)')
+    expect(
+      appendEnteredRollsToFlatTooltip(undefined, [
+        { label: 'Athletics (general)', amount: 4 },
+      ]),
+    ).toBe('(Athletics (general) +4)')
+  })
   it('aggregates skill dice by face count', () => {
     expect(aggregateDiceNotations(['1D8', '1D6', '4D6'])).toBe('1D8 + 5D6')
   })
@@ -17,7 +30,7 @@ describe('ledgerStatBonuses', () => {
     const occ = getLibraryOccById('occ_nightbane_basic')
     const bundle = buildSdcStatBonuses(nightbane, occ, undefined, ['skill_running'], {})
 
-    expect(bundle.flatBreakdown.some((b) => b.label === 'Base' && b.amount === 30)).toBe(
+    expect(bundle.flatBreakdown.some((b) => b.label === 'RaceFlat' && b.amount === 30)).toBe(
       true,
     )
     expect(bundle.flatTotal).toBeGreaterThanOrEqual(30)
@@ -38,9 +51,12 @@ describe('ledgerStatBonuses', () => {
     expect(bundle.flatTotal).toBe(10)
     expect(bundle.flatBreakdown[0]?.label).toBe('Body Building & Weight Lifting')
 
+    const raceGroup = bundle.diceGroups.find((g) => g.kind === 'race')
+    expect(raceGroup?.display).toBe('1D4x10')
+    expect(raceGroup?.tooltip).toContain('Race: 1D4x10')
+
     const occGroup = bundle.diceGroups.find((g) => g.kind === 'occ')
-    expect(occGroup?.display).toBe('1D4x10+2D6')
-    expect(occGroup?.tooltip).toContain('Base OCC: 1D4x10')
+    expect(occGroup?.display).toBe('2D6')
     expect(occGroup?.tooltip).toContain('OCC bonus: 2D6')
 
     const skillGroup = bundle.diceGroups.find((g) => g.kind === 'skills')

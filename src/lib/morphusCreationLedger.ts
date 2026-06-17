@@ -23,6 +23,9 @@ import {
   NIGHTBANE_MORPHUS_BASE_PROFILE,
   type NightbaneMorphusBaseProfile,
 } from './morphusNightbaneBase'
+
+/** Ledger tooltip bucket for Nightbane Morphus innate package (`stat_engine_spec.md` Race / mBase). */
+export const MORPHUS_LEDGER_RACE_LABEL = 'Race'
 import type {
   LedgerDiceContribution,
   LedgerFlatContribution,
@@ -42,7 +45,7 @@ import { evaluateStrengthFromPhysicalStat } from '../utils/strengthCalculator'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
 
-const LEDGER_NA = 'N/A'
+const LEDGER_NA = '—'
 const LEDGER_UNASSIGNED = '—'
 
 export type MorphusDiffLedgerLine = {
@@ -271,9 +274,9 @@ function hintPartsDelta(
 function morphusTextTooltip(primaryValue: string, morphusValue: string): string {
   if (primaryValue === morphusValue) return morphusValue
   if (primaryValue === LEDGER_NA || primaryValue === LEDGER_UNASSIGNED) {
-    return `Facade ${primaryValue}, Base ${morphusValue}`
+    return `Facade ${primaryValue}, ${MORPHUS_LEDGER_RACE_LABEL} ${morphusValue}`
   }
-  return `Facade ${primaryValue}, Base ${morphusValue}`
+  return `Facade ${primaryValue}, ${MORPHUS_LEDGER_RACE_LABEL} ${morphusValue}`
 }
 
 function formatNativeCombatTooltip(line: MorphusDiffLedgerLine): string | undefined {
@@ -314,6 +317,14 @@ export function applyMorphusVsPrimaryLedgerDiff<
     const primaryLine = primaryByLabel.get(morphusLine.label)
     if (!primaryLine || morphusLine.value === primaryLine.value) {
       return { ...morphusLine, valueModified: morphusLine.valueModified === true }
+    }
+
+    if (morphusLine.valueTooltip?.trim()) {
+      return {
+        ...morphusLine,
+        valueModified: true,
+        valueTooltip: morphusLine.valueTooltip,
+      }
     }
 
     const primaryNum =
@@ -459,7 +470,7 @@ function resolveMorphusAttributeTotal(
 
   const morphusDeltas: LedgerFlatContribution[] = []
   if (baseBump !== 0) {
-    morphusDeltas.push({ label: 'Base', amount: baseBump })
+    morphusDeltas.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseBump })
   }
 
   const polymorphicBase = baseApplied
@@ -472,7 +483,7 @@ function resolveMorphusAttributeTotal(
 
   if (baseApplied) {
     const traitSum = morphusDeltas
-      .filter((d) => d.label !== 'Base')
+      .filter((d) => d.label !== MORPHUS_LEDGER_RACE_LABEL)
       .reduce((sum, d) => sum + d.amount, 0)
     const morphusTotal = applyMorphusAttributeMinFloor(
       readMorphusStoredScalar(character, attr) + traitSum,

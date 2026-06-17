@@ -3,7 +3,7 @@ import type { ForgeAttrKey } from './attributeKeys'
 import { isDiceNotation } from './diceNotationBounds'
 import { normalizeDiceDisplay } from './ledgerStatBonuses'
 import { getRacePpeNotation } from './raceEngine'
-import { dualFormPeHintLabel } from './creationFormLabels'
+import { dualFormPeHintLabel, FACADE_LABEL } from './creationFormLabels'
 
 const UNASSIGNED = '—'
 
@@ -40,13 +40,30 @@ const FORGE_ATTR_FORMULA_ABBREV: Record<ForgeAttrKey, string> = {
   spd: 'Spd',
 }
 
-export type VitalAttrFlatTerm = {
-  attr: ForgeAttrKey
-  label: string
-  score: number
-  multiplier: number
-  amount: number
-}
+export type VitalFlatSource = 'race' | 'occ'
+
+export type VitalAttrFlatTerm =
+  | {
+      kind: 'attr'
+      attr: ForgeAttrKey
+      label: string
+      score: number
+      multiplier: number
+      amount: number
+      formLabel?: string
+    }
+  | {
+      kind: 'flat'
+      source: VitalFlatSource
+      label: string
+      amount: number
+    }
+
+export type VitalDiceTooltipTerm =
+  | { kind: 'perLevel'; notation: string; amount: number }
+  | { kind: 'raceRoll'; notation: string; amount: number }
+  | { kind: 'occRoll'; notation: string; amount: number }
+  | { kind: 'skillRoll'; label: string; notation: string; amount: number }
 
 export type VitalAttrFlatBundle = {
   flatTotal: number
@@ -87,6 +104,17 @@ export function parseVitalFormulaAttrTerm(
   return null
 }
 
+/** Parse a plain integer flat bonus (e.g. `20`, `+20`) — not dice or attributes. */
+export function parseVitalFormulaFlatIntegerTerm(term: string): number | null {
+  const compact = term.trim()
+  if (parseVitalFormulaAttrTerm(term)) return null
+  if (isDiceNotation(compact)) return null
+  const matched = /^\+?(\d+)$/.exec(compact)
+  if (!matched) return null
+  const amount = Number(matched[1])
+  return Number.isFinite(amount) && amount > 0 ? amount : null
+}
+
 function readAssignedAttrScore(
   attr: ForgeAttrKey,
   assignments: Partial<Record<ForgeAttrKey, number>>,
@@ -108,18 +136,30 @@ export function buildVitalAttrFlatBundle(
 
   for (const part of splitFormulaTerms(formula)) {
     const parsed = parseVitalFormulaAttrTerm(part)
-    if (!parsed) continue
-    const score =
-      attrScores?.[parsed.attr] ?? readAssignedAttrScore(parsed.attr, assignments)
-    if (score == null) continue
-    const amount = score * parsed.multiplier
-    terms.push({
-      attr: parsed.attr,
-      label: FORGE_ATTR_LEDGER_LABEL[parsed.attr],
-      score,
-      multiplier: parsed.multiplier,
-      amount,
-    })
+    if (parsed) {
+      const score =
+        attrScores?.[parsed.attr] ?? readAssignedAttrScore(parsed.attr, assignments)
+      if (score == null) continue
+      const amount = score * parsed.multiplier
+      terms.push({
+        kind: 'attr',
+        attr: parsed.attr,
+        label: FORGE_ATTR_LEDGER_LABEL[parsed.attr],
+        score,
+        multiplier: parsed.multiplier,
+        amount,
+      })
+      continue
+    }
+    const flatAmount = parseVitalFormulaFlatIntegerTerm(part)
+    if (flatAmount != null) {
+      terms.push({
+        kind: 'flat',
+        source: 'race',
+        label: 'RaceFlat',
+        amount: flatAmount,
+      })
+    }
   }
 
   return {
@@ -128,17 +168,156 @@ export function buildVitalAttrFlatBundle(
   }
 }
 
+/** Attribute and integer-flat terms from one or more race / O.C.C. formula strings. */
+export function buildSourcedVitalFlatTerms(
+  sources: ReadonlyArray<{ source: VitalFlatSource; formula: string }>,
+  assignments: Partial<Record<ForgeAttrKey, number>>,
+  attrScores?: Partial<Record<ForgeAttrKey, number>>,
+  attrFormLabels?: Partial<Record<ForgeAttrKey, string>>,
+): VitalAttrFlatTerm[] {
+  const terms: VitalAttrFlatTerm[] = []
+  const seenAttrs = new Set<ForgeAttrKey>()
+
+  for (const { source, formula } of sources) {
+    if (!formula.trim()) continue
+    const flatLabel = source === 'race' ? 'RaceFlat' : 'OCCFlat'
+    for (const part of splitFormulaTerms(formula)) {
+      const parsed = parseVitalFormulaAttrTerm(part)
+      if (parsed) {
+        if (seenAttrs.has(parsed.attr)) continue
+        const score =
+          attrScores?.[parsed.attr] ?? readAssignedAttrScore(parsed.attr, assignments)
+        if (score == null) continue
+        seenAttrs.add(parsed.attr)
+        const amount = score * parsed.multiplier
+        terms.push({
+          kind: 'attr',
+          attr: parsed.attr,
+          label: FORGE_ATTR_LEDGER_LABEL[parsed.attr],
+          score,
+          multiplier: parsed.multiplier,
+          amount,
+          formLabel: attrFormLabels?.[parsed.attr],
+        })
+        continue
+      }
+      const flatAmount = parseVitalFormulaFlatIntegerTerm(part)
+      if (flatAmount != null) {
+        terms.push({
+          kind: 'flat',
+          source,
+          label: flatLabel,
+          amount: flatAmount,
+        })
+      }
+    }
+  }
+
+  return terms
+}
+
+function formatVitalFlatTooltipTerm(term: VitalAttrFlatTerm): string {
+  if (term.kind === 'flat') {
+    return `${term.label} +${term.amount}`
+  }
+  const abbr = FORGE_ATTR_FORMULA_ABBREV[term.attr]
+  if (term.formLabel) {
+    return `${abbr}(${term.formLabel}) ${term.score}`
+  }
+  if (term.multiplier > 1) {
+    return `${abbr}(${term.score}) × ${term.multiplier}`
+  }
+  return `${abbr} ${term.score}`
+}
+
+export function formatVitalDiceTooltipTerm(term: VitalDiceTooltipTerm): string {
+  const notation = normalizeDiceDisplay(term.notation)
+  switch (term.kind) {
+    case 'perLevel':
+      return `perLevel(${notation}) ${term.amount}`
+    case 'raceRoll':
+      return `RaceRoll(${notation}) +${term.amount}`
+    case 'occRoll':
+      return `OCCRoll(${notation}) +${term.amount}`
+    case 'skillRoll':
+      return `${term.label}(${notation}) +${term.amount}`
+  }
+}
+
+export function formatVitalLedgerTooltip(
+  flatTerms: readonly VitalAttrFlatTerm[],
+  diceTerms: readonly VitalDiceTooltipTerm[] = [],
+  skillFlats: readonly { label: string; amount: number }[] = [],
+): string | undefined {
+  const attrParts = flatTerms
+    .filter((term): term is Extract<VitalAttrFlatTerm, { kind: 'attr' }> => term.kind === 'attr')
+    .map((term) => formatVitalFlatTooltipTerm(term))
+  const raceFlatParts = flatTerms
+    .filter(
+      (term): term is Extract<VitalAttrFlatTerm, { kind: 'flat' }> =>
+        term.kind === 'flat' && term.source === 'race',
+    )
+    .map((term) => formatVitalFlatTooltipTerm(term))
+  const occFlatParts = flatTerms
+    .filter(
+      (term): term is Extract<VitalAttrFlatTerm, { kind: 'flat' }> =>
+        term.kind === 'flat' && term.source === 'occ',
+    )
+    .map((term) => formatVitalFlatTooltipTerm(term))
+  const raceRollParts = diceTerms
+    .filter((term) => term.kind === 'raceRoll')
+    .map((term) => formatVitalDiceTooltipTerm(term))
+  const occRollParts = diceTerms
+    .filter((term) => term.kind === 'occRoll')
+    .map((term) => formatVitalDiceTooltipTerm(term))
+  const skillRollParts = diceTerms
+    .filter((term) => term.kind === 'skillRoll')
+    .map((term) => formatVitalDiceTooltipTerm(term))
+  const perLevelParts = diceTerms
+    .filter((term) => term.kind === 'perLevel')
+    .map((term) => formatVitalDiceTooltipTerm(term))
+  const skillFlatParts = skillFlats.map((term) => `${term.label} +${term.amount}`)
+
+  const parts = [
+    ...attrParts,
+    ...raceRollParts,
+    ...raceFlatParts,
+    ...occRollParts,
+    ...occFlatParts,
+    ...skillRollParts,
+    ...skillFlatParts,
+    ...perLevelParts,
+  ]
+  if (parts.length === 0) return undefined
+  return `(${parts.join(', ')})`
+}
+
+/** Morphus S.D.C. = Facade total + Morphus race roll + trait flats/dice. */
+export function formatMorphusSdcValueTooltip(
+  facadeSdc: number,
+  diceTerms: readonly VitalDiceTooltipTerm[],
+  traitFlats: readonly { label: string; amount: number }[] = [],
+): string | undefined {
+  const parts: string[] = []
+  if (facadeSdc > 0) parts.push(`${FACADE_LABEL} ${facadeSdc}`)
+  for (const term of diceTerms) {
+    if (term.kind === 'raceRoll' || term.kind === 'skillRoll') {
+      parts.push(formatVitalDiceTooltipTerm(term))
+    }
+  }
+  for (const flat of traitFlats) {
+    if (flat.amount !== 0) {
+      parts.push(flat.amount > 0 ? `+${flat.amount}` : String(flat.amount))
+    }
+  }
+  if (parts.length === 0) return undefined
+  return `(${parts.join(', ')})`
+}
+
 export function formatVitalAttrFlatTooltip(
   terms: readonly VitalAttrFlatTerm[],
 ): string | undefined {
-  if (terms.length === 0) return undefined
-  return `(${terms
-    .map((term) =>
-      term.multiplier > 1
-        ? `${term.label}(${term.score}) × ${term.multiplier}`
-        : `${term.label} +${term.amount}`,
-    )
-    .join(', ')})`
+  return formatVitalLedgerTooltip(terms)
 }
 
 /** Ledger hint row — compact attr notation for multipliers (e.g. `MEx3 + 5D6`). */
@@ -206,6 +385,7 @@ export type AttrFormulaLedgerFields = {
   value: string
   valueModified: boolean
   valueTooltip?: string
+  flatTerms?: VitalAttrFlatTerm[]
   hint?: string
 }
 
@@ -223,6 +403,8 @@ export function buildAttrFormulaLedgerFields(
     attrScores?: Partial<Record<ForgeAttrKey, number>>
     /** Dual-form: label attribute terms in the hint (e.g. PE → `PE (Facade)`). */
     attrFormLabels?: Partial<Record<ForgeAttrKey, string>>
+    /** Split race / O.C.C. formulas for flat-term attribution in tooltips. */
+    formulaSources?: Partial<Record<VitalFlatSource, string | null | undefined>>
   },
 ): AttrFormulaLedgerFields {
   const unassigned = opts?.unassignedValue ?? UNASSIGNED
@@ -234,7 +416,32 @@ export function buildAttrFormulaLedgerFields(
     }
   }
 
-  const flat = buildVitalAttrFlatBundle(formula, assignments, opts?.attrScores)
+  const sourcedTerms = opts?.formulaSources
+    ? buildSourcedVitalFlatTerms(
+        (
+          [
+            opts.formulaSources.race
+              ? { source: 'race' as const, formula: opts.formulaSources.race }
+              : null,
+            opts.formulaSources.occ
+              ? { source: 'occ' as const, formula: opts.formulaSources.occ }
+              : null,
+          ] as const
+        ).filter(
+          (entry): entry is { source: VitalFlatSource; formula: string } =>
+            entry != null && entry.formula.trim().length > 0,
+        ),
+        assignments,
+        opts.attrScores,
+        opts.attrFormLabels,
+      )
+    : buildVitalAttrFlatBundle(formula, assignments, opts?.attrScores).terms.map(
+        (term) =>
+          term.kind === 'attr'
+            ? { ...term, formLabel: opts?.attrFormLabels?.[term.attr] }
+            : term,
+      )
+  const flatTotal = sourcedTerms.reduce((sum, term) => sum + term.amount, 0)
   const hint =
     opts?.hintOverride ??
     formatVitalFormulaLedgerHint(
@@ -244,9 +451,10 @@ export function buildAttrFormulaLedgerFields(
     )
 
   return {
-    value: vitalLedgerValueFromFlat(flat.flatTotal),
-    valueModified: flat.flatTotal > 0,
-    valueTooltip: formatVitalAttrFlatTooltip(flat.terms),
+    value: vitalLedgerValueFromFlat(flatTotal),
+    valueModified: flatTotal > 0,
+    valueTooltip: formatVitalAttrFlatTooltip(sourcedTerms),
+    flatTerms: sourcedTerms,
     hint,
   }
 }
@@ -269,18 +477,41 @@ export function diceTermsFromAttrFormula(
   return out
 }
 
+/**
+ * Race H.P. formulas (e.g. `PE + 1D6`) treat dice as per-level rolls at creation —
+ * level 1's die is entered on the Roll tab, not as a one-shot race roll.
+ */
+export function hitPointsPerLevelDiceFormula(hpFormula: string | null | undefined): string | null {
+  if (!hpFormula?.trim()) return null
+  const dice = diceTermsFromAttrFormula(hpFormula)
+  if (dice.length === 0) return null
+  if (dice.length === 1) return dice[0]!.notation
+  return dice.map((term) => normalizeDiceDisplay(term.notation)).join(' + ')
+}
+
 export function resolvePpeCreationFormula(
   race: Race | undefined,
   occ: PalladiumOcc | undefined,
 ): string | null {
-  const parts: string[] = []
-  const racePpe = race ? getRacePpeNotation(race) : undefined
-  if (racePpe != null && String(racePpe).trim() !== '') {
-    parts.push(String(racePpe).trim())
+  const parts = resolvePpeFormulaParts(race, occ)
+  const merged: string[] = []
+  if (parts.race?.trim()) merged.push(parts.race.trim())
+  if (parts.occ?.trim()) merged.push(parts.occ.trim())
+  return merged.length > 0 ? merged.join(' + ') : null
+}
+
+export function resolvePpeFormulaParts(
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+): { race?: string; occ?: string } {
+  const raw = race ? getRacePpeNotation(race) : undefined
+  let racePart: string | undefined
+  if (raw != null) {
+    const text = typeof raw === 'number' ? String(raw) : String(raw).trim()
+    if (text.length > 0) racePart = text
   }
-  const occPpe = occ?.ppeEngine?.baseFormula?.trim()
-  if (occPpe) parts.push(occPpe)
-  return parts.length > 0 ? parts.join(' + ') : null
+  const occPart = occ?.ppeEngine?.baseFormula?.trim() || undefined
+  return { race: racePart, occ: occPart }
 }
 
 /** Dual-form P.P.E. always derives from Facade P.E. — label and score overrides for the ledger. */

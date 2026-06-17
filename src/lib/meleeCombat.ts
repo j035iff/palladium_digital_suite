@@ -1,4 +1,15 @@
-import type { CharacterAttributes } from '../types'
+import type {
+  ActiveForm,
+  AccumulatedHandToHandBonuses,
+  Character,
+  CharacterAttributes,
+  FeatureModifiers,
+} from '../types'
+import { getFormState } from '../types'
+import { handToHandAttackBonus } from '../utils/combatCalculator'
+import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import { buildMorphusCreationBasePassiveModifiers } from './morphusCreationLedger'
+import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
 
 /**
  * PC base attacks per melee plus Hand-to-Hand extra attacks (`stat_engine_spec.md` §4.5).
@@ -12,6 +23,61 @@ export function computeMaxApm(
   const base = 2
   const hth = Math.max(0, Math.round(hthAttackBonus))
   return base + hth
+}
+
+export type AttacksPerMeleeStack = {
+  core: number
+  skillApm: number
+  traitApm: number
+  baseApm: number
+  total: number
+}
+
+/** Full APM stack — mirrors `buildAttacksPerMeleeLine()` in creationLiveLedger.ts. */
+export function resolveAttacksPerMelee(
+  attrs: CharacterAttributes,
+  level: number,
+  hthAttackBonus: number,
+  skillApm = 0,
+  traitApm = 0,
+  baseApm = 0,
+): AttacksPerMeleeStack {
+  const core = computeMaxApm(attrs, level, hthAttackBonus)
+  return {
+    core,
+    skillApm,
+    traitApm,
+    baseApm,
+    total: core + skillApm + traitApm + baseApm,
+  }
+}
+
+/** Live-play max APM for the active form (skills + traits + Nightbane mBase when Morphus). */
+export function resolveCharacterMaxApm(
+  character: Character,
+  activeForm: ActiveForm,
+  supportsDualForm: boolean,
+  handToHand: AccumulatedHandToHandBonuses,
+  passive: FeatureModifiers,
+): number {
+  const attrs = getFormState(character, activeForm).attributes
+  const skillApm =
+    aggregatePhysicalSkillCombatBonuses([
+      ...collectUnlockedSkillIds(character, activeForm),
+    ]).combat.apm ?? 0
+  const traitApm = passive.apm ?? 0
+  const baseApm =
+    supportsDualForm && activeForm === 'morphus'
+      ? (buildMorphusCreationBasePassiveModifiers().apm ?? 0)
+      : 0
+  return resolveAttacksPerMelee(
+    attrs,
+    character.level,
+    handToHandAttackBonus(handToHand),
+    skillApm,
+    traitApm,
+    baseApm,
+  ).total
 }
 
 export type ScaledDamageResult = {
