@@ -22,7 +22,7 @@ function patchFormPool(
 
 /**
  * Apply numeric sheet updates used at Spawn (vitality + shared P.P.E.).
- * Paths: `ppe.current`, `ppe.maximum`, `facade.hitPoints.maximum`, `morphus.isp.current`, …
+ * Paths: `ppe.current`, `ppe.maximum`, `primary.hitPoints.maximum`, `morphus.isp.current`, …
  */
 export function tryApplyNumericSheetPath(
   character: Character,
@@ -44,7 +44,7 @@ export function tryApplyNumericSheetPath(
   }
 
   const formKey = parts[0]
-  if (formKey !== 'facade' && formKey !== 'morphus') return null
+  if (formKey !== 'primary' && formKey !== 'morphus') return null
 
   const poolName = parts[1]
   if (poolName !== 'hitPoints' && poolName !== 'structuralDamageCapacity') {
@@ -80,9 +80,9 @@ export function tryApplyNumericSheetPath(
 export function isNumericSheetPath(path: string): boolean {
   const p = path.trim()
   if (/^ppe\.(current|maximum)$/.test(p)) return true
-  if (/^(facade|morphus)\.isp\.(current|maximum)$/.test(p)) return true
+  if (/^(primary|morphus)\.isp\.(current|maximum)$/.test(p)) return true
   if (
-    /^(facade|morphus)\.(hitPoints|structuralDamageCapacity)\.(current|maximum)$/.test(
+    /^(primary|morphus)\.(hitPoints|structuralDamageCapacity)\.(current|maximum)$/.test(
       p,
     )
   ) {

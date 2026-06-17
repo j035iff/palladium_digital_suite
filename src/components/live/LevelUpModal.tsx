@@ -34,7 +34,7 @@ export function LevelUpModal({
     () =>
       summarizeSkillImprovementsForLevel(character, prevLevel, targetLevel, {
         maxRows: 6,
-        form: 'facade',
+        form: 'primary',
       }),
     [character, prevLevel, targetLevel],
   )
@@ -71,7 +71,7 @@ export function LevelUpModal({
       >
         <div
           className={`pointer-events-none absolute inset-0 rounded-xl opacity-40 ${
-            morphus ? 'pds-level-up-void-pulse' : 'pds-level-up-facade-pulse'
+            morphus ? 'pds-level-up-void-pulse' : 'pds-level-up-primary-pulse'
           }`}
           aria-hidden
         />

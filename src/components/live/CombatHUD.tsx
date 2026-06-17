@@ -163,9 +163,9 @@ function CompactApmPips({
     <div className="flex flex-wrap items-center gap-0.5" aria-hidden>
       {Array.from({ length: maxApm }, (_, i) => {
         const spent = i < actionsUsed
-        const facadeActive =
+        const primaryActive =
           'inline-flex h-6 w-6 items-center justify-center rounded-full border border-blue-800 bg-blue-600 text-[10px] font-bold text-white'
-        const facadeSpent =
+        const primarySpent =
           'inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-400/80 bg-slate-200/90 text-[10px] font-bold text-slate-600 opacity-25'
         const morphActive =
           'inline-flex h-6 w-6 items-center justify-center rounded-full border border-violet-200 bg-violet-600 text-[10px] font-bold text-white'
@@ -176,8 +176,8 @@ function CompactApmPips({
             ? morphSpent
             : morphActive
           : spent
-            ? facadeSpent
-            : facadeActive
+            ? primarySpent
+            : primaryActive
         return (
           <span key={i} className={cls}>
             {spent ? '○' : '⚔'}
@@ -572,9 +572,9 @@ export function CombatHUD() {
             {maxApm > 0
               ? Array.from({ length: maxApm }, (_, i) => {
                   const spent = i < actionsUsed
-                  const facadeActive =
+                  const primaryActive =
                     'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-blue-800 bg-blue-600 text-lg font-bold text-white shadow-md'
-                  const facadeSpent =
+                  const primarySpent =
                     'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-400/80 bg-slate-200/90 text-lg font-bold text-slate-600 opacity-20'
                   const morphActive =
                     'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-violet-200 bg-violet-600 text-lg font-bold text-white shadow-md'
@@ -585,8 +585,8 @@ export function CombatHUD() {
                       ? morphSpent
                       : morphActive
                     : spent
-                      ? facadeSpent
-                      : facadeActive
+                      ? primarySpent
+                      : primaryActive
                   return (
                     <span
                       key={i}

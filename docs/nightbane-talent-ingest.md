@@ -121,7 +121,7 @@ Do **not** infer Facade permission from:
 | Value | When |
 |-------|------|
 | `morphus_only` | Default; Morphus-only talents |
-| `facade_only` | Book says Facade only (Channel Speed, Heal Facade, etc.) |
+| `primary_only` | Book says Facade only (Channel Speed, Heal Facade, etc.) |
 | `either_form` | Book allows both (Blast Wave with Facade double cost, Chronosphere, Shadow Pockets) |
 | `varies_by_scope` | Structured rules in `formUsage` (see below) |
 
@@ -157,7 +157,7 @@ Use when rules **differ by target or phase**. Do **not** bury this in `otherLimi
 
 Each rule supports:
 
-- `form`: `morphus_only` | `facade_only` | `either_form`
+- `form`: `morphus_only` | `primary_only` | `either_form`
 - `effectiveness` (optional): `full` | `base_only` | `reduced`
 - `notes` (optional): short clarifier
 

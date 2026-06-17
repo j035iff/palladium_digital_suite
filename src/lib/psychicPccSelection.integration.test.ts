@@ -26,7 +26,7 @@ describe('Psychic P.C.C. selection integration', () => {
     let root = createBlankCharacterForGenre('nightbane')
     root = { ...root, raceId: 'race_human' }
     root = applyOccSelectionToCharacterState(root, 'occ_psychic_pcc', {
-      activeForm: 'facade',
+      activeForm: 'primary',
     })
 
     expect(root.occ.id).toBe('occ_psychic_pcc')

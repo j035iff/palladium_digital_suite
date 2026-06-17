@@ -24,7 +24,7 @@ describe('creation OCC live ledger integration', () => {
       ...characterFixture,
       creationHandToHandTier: 'basic' as const,
     }
-    const attrs = character.facade.attributes
+    const attrs = character.primary.attributes
     const hth = hthBasic
       ? accumulateHandToHandBonuses(hthBasic, 1)
       : createEmptyAccumulatedHandToHandBonuses()
@@ -52,7 +52,7 @@ describe('creation OCC live ledger integration', () => {
       occ: pab,
       supportsDualForm: false,
       psychicTier: 'major',
-      activeForm: 'facade',
+      activeForm: 'primary',
       passive: {},
       horrorFactorTotal: null,
       skillIds: [],
@@ -69,7 +69,7 @@ describe('creation OCC live ledger integration', () => {
       occ: pab,
       supportsDualForm: false,
       psychicTier: 'major',
-      activeForm: 'facade',
+      activeForm: 'primary',
       passive: {},
       horrorFactorTotal: null,
       skillIds: [],
@@ -97,7 +97,7 @@ describe('creation OCC live ledger integration', () => {
       },
       supportsDualForm: false,
       psychicTier: 'major',
-      activeForm: 'facade',
+      activeForm: 'primary',
       passive: {},
       horrorFactorTotal: null,
       skillIds: [],
@@ -125,7 +125,7 @@ describe('creation OCC live ledger integration', () => {
       occ: pab,
       supportsDualForm: false,
       psychicTier: 'major',
-      activeForm: 'facade',
+      activeForm: 'primary',
       passive: {},
       horrorFactorTotal: null,
       skillIds: [],
@@ -151,7 +151,7 @@ describe('creation OCC live ledger integration', () => {
       },
       supportsDualForm: false,
       psychicTier: 'major',
-      activeForm: 'facade',
+      activeForm: 'primary',
       passive: {},
       horrorFactorTotal: null,
       skillIds: [],
@@ -161,7 +161,7 @@ describe('creation OCC live ledger integration', () => {
     expect(ispScaled?.valueTooltip).toBe('(M.E.(10) × 3)')
     expect(ispScaled?.hint).toBe('MEx3 + 5D6 (+2D4/level)')
 
-    const saves = buildCreationSavesBlock(attrs, {}, character, 'facade', pab, false, undefined, 'major')
+    const saves = buildCreationSavesBlock(attrs, {}, character, 'primary', pab, false, undefined, 'major')
     expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('vs 12')
     expect(saves.find((l) => l.label === 'Psionics')?.hint).toContain('+1 to roll')
     expect(saves.find((l) => l.label === 'Mind Control')?.value).toBe('+1')
@@ -170,7 +170,7 @@ describe('creation OCC live ledger integration', () => {
     const combatLedger = buildCreationCombatLedger(attrs, [], 1, hth)
     const combat = buildCreationCombatBlock(
       character,
-      'facade',
+      'primary',
       attrs,
       combatLedger,
       [],
@@ -203,7 +203,7 @@ describe('creation OCC live ledger integration', () => {
 
   it('shows granted physical skill dice on attributes for Team Epsilon Trooper', () => {
     const trooper = getLibraryOccById('occ_team_epsilon_trooper')
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const block = buildCreationAttributeBlock(
       attrs,
       {},

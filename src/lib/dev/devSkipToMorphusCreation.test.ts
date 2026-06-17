@@ -19,7 +19,7 @@ describe('buildDevSkipToMorphusCreationState', () => {
     expect(next.occ.id).toBe('occ_nightbane_basic')
     expect(next.creationForgeTab).toBe('tab6_traits')
     expect(next.creationPhase).toBe('morphus')
-    expect(next.creationFacadeDiceFinalized).toBe(true)
+    expect(next.creationPrimaryDiceFinalized).toBe(true)
     expect(next.creationTraitForgeStubComplete).toBe(false)
     expect(next.morphusForgeState?.activeSubTab).toBe('crossroads')
     expect(isMorphusLedgerUnlocked(next, race, occ, 'none')).toBe(true)

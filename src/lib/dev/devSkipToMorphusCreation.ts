@@ -3,10 +3,10 @@ import { getRaceById, getLibraryOccById } from '../../data/library/registry'
 import { syncCreationAttributeBranches } from '../creationAttributeSync'
 import { creationInvalidationPatch } from '../creationInvalidate'
 import { resolvePsychicGateBypassed } from '../creationPhases'
-import { syncRaceOccFacadeSdc } from '../creationRaceOccSync'
+import { syncRaceOccPrimarySdc } from '../creationRaceOccSync'
 import { raceLineageFromDefinition } from '../raceEngine'
 import { applyOccSelectionToCharacterState } from '../shadowOcc'
-import { applyFacadePendingDiceResolutions } from '../spawnVitalityManual'
+import { applyPrimaryPendingDiceResolutions } from '../spawnVitalityManual'
 import {
   buildCharacterCreationForgeContext,
   completeForgeTab,
@@ -60,7 +60,7 @@ export function buildDevSkipToMorphusCreationState(
   const occ = getLibraryOccById(DEV_NIGHTBANE_MORPHUS_OCC_ID)
   if (!race || !occ) return prev
 
-  let next = syncRaceOccFacadeSdc({
+  let next = syncRaceOccPrimarySdc({
     ...prev,
     ...creationInvalidationPatch(prev, 'race'),
     raceId: DEV_NIGHTBANE_MORPHUS_RACE_ID,
@@ -73,20 +73,20 @@ export function buildDevSkipToMorphusCreationState(
   })
 
   next = applyOccSelectionToCharacterState(next, DEV_NIGHTBANE_MORPHUS_OCC_ID, {
-    activeForm: 'facade',
+    activeForm: 'primary',
     invalidateScope: 'race',
   })
 
   next = {
     ...next,
-    facade: {
-      ...next.facade,
+    primary: {
+      ...next.primary,
       alignment: DEV_NIGHTBANE_MORPHUS_ALIGNMENT,
     },
   }
 
   next = buildDevAutoAttributeCreationState(next, race.attributes, occ)
-  next = syncRaceOccFacadeSdc(syncCreationAttributeBranches(next, occ))
+  next = syncRaceOccPrimarySdc(syncCreationAttributeBranches(next, occ))
 
   next = buildDevAutoFillCreationSkillsState(
     next,
@@ -104,7 +104,7 @@ export function buildDevSkipToMorphusCreationState(
     creationPendingDiceResolutions: resolutions,
   }
 
-  next = applyFacadePendingDiceResolutions(next, race, occ, {
+  next = applyPrimaryPendingDiceResolutions(next, race, occ, {
     supportsDualForm: true,
     psychicTier: PSYCHIC_TIER,
   })

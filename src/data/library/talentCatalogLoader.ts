@@ -42,7 +42,7 @@ function loadTalentCatalog(): readonly PalladiumTalent[] {
 function formFromLimitations(
   usable?: TalentUsableInNightbaneForm,
 ): ActiveForm | undefined {
-  if (usable === 'facade_only') return 'facade'
+  if (usable === 'primary_only') return 'primary'
   if (usable === 'morphus_only') return 'morphus'
   return undefined
 }
@@ -55,7 +55,7 @@ function resolveUsableInNightbaneForm(
 
 function resolveFormRequirement(row: PalladiumTalent): ActiveForm | undefined {
   const explicit = row.formRequirement
-  if (explicit === 'facade' || explicit === 'morphus') {
+  if (explicit === 'primary' || explicit === 'morphus') {
     return explicit
   }
   return formFromLimitations(resolveUsableInNightbaneForm(row))

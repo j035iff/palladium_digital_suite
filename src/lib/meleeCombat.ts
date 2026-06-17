@@ -1,18 +1,17 @@
 import type { CharacterAttributes } from '../types'
 
 /**
- * Attacks Per Melee ceiling (combat_logic.md §3).
- * `hthAttackBonus` — extra attacks from accumulated Hand-to-Hand progression.
+ * PC base attacks per melee plus Hand-to-Hand extra attacks (`stat_engine_spec.md` §4.5).
+ * No engine cap — only GM rulings limit total APM after other modifiers are applied.
  */
 export function computeMaxApm(
   _attrs: CharacterAttributes,
-  level: number,
+  _level: number,
   hthAttackBonus = 0,
 ): number {
   const base = 2
-  const levelBump = Math.min(3, Math.floor(level / 4))
   const hth = Math.max(0, Math.round(hthAttackBonus))
-  return Math.min(12, Math.max(2, base + levelBump + hth))
+  return base + hth
 }
 
 export type ScaledDamageResult = {

@@ -185,7 +185,7 @@ export function IdentityHeader({
     genreId.replace(/_/g, ' ').toUpperCase()
   const genreStamp = `${formatGenreStamp(creationGenreId)} → HOST ${formatGenreStamp(hostGenreId)}`
   const alignmentLabel = configuratorAlignmentLabel(
-    effectiveConfiguratorAlignment(character.facade.alignment),
+    effectiveConfiguratorAlignment(character.primary.alignment),
   )
   const toggleButtonClass = identityToggleButtonClass(morphusActive)
   const nameInputClass = collapsed

@@ -29,6 +29,7 @@ import {
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
+import { primaryFormSdcBreakdownLabel } from './creationFormLabels'
 import { formatRaceHpRollHint } from './creationVitalityPreview'
 import { isDiceNotation } from './diceNotationBounds'
 import {
@@ -167,9 +168,9 @@ function resolveMorphusPeForSpawn(
   if (character.morphusForgeState?.baseStatsApplied === true) {
     return character.morphus.attributes.pe
   }
-  const facadePe = assignments.pe ?? character.facade.attributes.pe
+  const primaryPe = assignments.pe ?? character.primary.attributes.pe
   const baseBump = NIGHTBANE_MORPHUS_BASE_PROFILE.attributeBonuses.pe ?? 0
-  return facadePe + baseBump
+  return primaryPe + baseBump
 }
 
 function buildAttributePendingDiceBlocks(
@@ -360,11 +361,11 @@ export function buildPendingDiceBlocks(
 
   const ppeFormula =
     race && occ?.id?.trim() ? resolvePpeCreationFormula(race, occ) : null
-  const facadePe = assignments.pe ?? character.facade.attributes.pe
+  const primaryPe = assignments.pe ?? character.primary.attributes.pe
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: occ?.ppeEngine?.perLevelFormula,
     ...(opts?.supportsDualForm
-      ? dualFormPpeLedgerFormulaOpts(facadePe)
+      ? dualFormPpeLedgerFormulaOpts(primaryPe)
       : {}),
   })
   const ppeDice = ppeFormula ? formulaDiceRolls('ppe', ppeFormula, 'die') : []
@@ -437,9 +438,9 @@ export function buildPendingDiceBlocks(
       attrScores: { pe: morphusPe },
     })
     const pendingResolutions = character.creationPendingDiceResolutions ?? {}
-    const facadeSdcBlock = vitalityBlocks.find((block) => block.id === 'sdc')
-    const facadeSdcBaseline = facadeSdcBlock
-      ? pendingDiceBlockRunningTotal(facadeSdcBlock, pendingResolutions)
+    const primarySdcBlock = vitalityBlocks.find((block) => block.id === 'sdc')
+    const primarySdcBaseline = primarySdcBlock
+      ? pendingDiceBlockRunningTotal(primarySdcBlock, pendingResolutions)
       : sdcDetails.flatTotal
     const traitSdc = buildMorphusTraitSdcBonusDetails(character)
     const morphusSdcRolls = formulaDiceRolls('morphus_sdc', MORPHUS_SDC_BONUS_DICE, 'base')
@@ -489,14 +490,14 @@ export function buildPendingDiceBlocks(
     vitalityBlocks.push({
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
-      flatBaseline: facadeSdcBaseline + traitSdc.flatTotal,
+      flatBaseline: primarySdcBaseline + traitSdc.flatTotal,
       flatTooltip: formatFlatValueTooltip([
-        ...(facadeSdcBaseline > 0
-          ? [{ label: 'Facade S.D.C.', amount: facadeSdcBaseline }]
+        ...(primarySdcBaseline > 0
+          ? [{ label: primaryFormSdcBreakdownLabel(), amount: primarySdcBaseline }]
           : []),
         ...traitSdc.flatBreakdown,
       ]),
-      hint: `Facade S.D.C. + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
+      hint: `${primaryFormSdcBreakdownLabel()} + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
       groups: morphusSdcGroups,
     })
   }
@@ -504,14 +505,14 @@ export function buildPendingDiceBlocks(
   return [...attributeBlocks, ...vitalityBlocks]
 }
 
-export type PendingDiceBlockScope = 'facade' | 'morphus' | 'all'
+export type PendingDiceBlockScope = 'primary' | 'morphus' | 'all'
 
 export function filterPendingDiceBlocksByScope(
   blocks: readonly PendingDiceBlock[],
   scope: PendingDiceBlockScope,
 ): PendingDiceBlock[] {
   if (scope === 'all') return [...blocks]
-  if (scope === 'facade') {
+  if (scope === 'primary') {
     return blocks.filter((block) => !block.id.startsWith('morphus_'))
   }
   return blocks.filter((block) => block.id.startsWith('morphus_'))

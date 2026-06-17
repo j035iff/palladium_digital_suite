@@ -11,7 +11,7 @@ export const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
   xpTable: { floors: [] },
 }
 
-function blankFormState(): Character['facade'] {
+function blankFormState(): Character['primary'] {
   return {
     alignment: '',
     hitPoints: { current: 0, maximum: 0, scaling: 'sdc_hp' },
@@ -56,7 +56,7 @@ export function toCharacterRoot(
 }
 
 export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootState {
-  const facade = blankFormState()
+  const primary = blankFormState()
   return toCharacterRoot(
     {
       name: '',
@@ -70,7 +70,7 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       psychicGateBypassed: resolvePsychicGateBypassed(undefined, undefined, genreId),
       isFinalized: false,
       creationVitalityCommitted: false,
-      creationFacadeDiceFinalized: false,
+      creationPrimaryDiceFinalized: false,
       creationMorphusDiceFinalized: false,
       creationMorphusLedgerUnlocked: false,
       selectedAbilities: [],
@@ -95,8 +95,8 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       creationOccVariableResolutions: {},
       creationOccCoreVoucherPicks: {},
       creationPendingDiceResolutions: {},
-      facade,
-      morphus: structuredClone(facade),
+      primary,
+      morphus: structuredClone(primary),
     },
     { creationGenreId: genreId, hostGenreId: genreId },
   )

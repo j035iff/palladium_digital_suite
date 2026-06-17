@@ -141,7 +141,7 @@ describe('spawnDiceBlocks', () => {
     const diceRolls = ppe.groups.flatMap((group) => group.rolls)
     expect(diceRolls).toHaveLength(2)
     expect(diceRolls.map((roll) => roll.notation)).toEqual(['3D6x10', '3D6'])
-    expect(ppe.hint).toBe('PE (facade) + 3D6x10 + 20 (+3D6/level)')
+    expect(ppe.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
     expect(ppe.flatBaseline).toBe(12)
   })
 
@@ -177,10 +177,10 @@ describe('spawnDiceBlocks', () => {
       supportsDualForm: true,
       psychicTier: 'major',
     })
-    const facade = filterPendingDiceBlocksByScope(blocks, 'facade')
+    const primary = filterPendingDiceBlocksByScope(blocks, 'primary')
     const morphus = filterPendingDiceBlocksByScope(blocks, 'morphus')
-    expect(facade.some((block) => block.id === 'hp')).toBe(true)
-    expect(facade.some((block) => block.id.startsWith('morphus_'))).toBe(false)
+    expect(primary.some((block) => block.id === 'hp')).toBe(true)
+    expect(primary.some((block) => block.id.startsWith('morphus_'))).toBe(false)
     expect(morphus.map((block) => block.id)).toEqual(['morphus_hp', 'morphus_sdc'])
     const morphusHp = morphus.find((block) => block.id === 'morphus_hp')
     const morphusHpRolls = morphusHp?.groups.flatMap((group) => group.rolls) ?? []

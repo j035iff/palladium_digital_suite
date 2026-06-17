@@ -34,7 +34,7 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 3. **Selection** — `loadSavedCharacter(id)`:
    - Loads raw JSON via `loadCharacterSave`.
    - Hydrates root stamps (`id`, `creationGenreId`, `hostGenreId`) with `hydrateCharacterFromStorage` / `ensureCharacterRoot`.
-   - If vitality was not committed at save time, may run `syncRaceOccFacadeSdc` for consistency.
+   - If vitality was not committed at save time, may run `syncRaceOccPrimarySdc` for consistency.
    - Sets viewport to `sheet`; does **not** enter a blank creation template.
 4. **Runtime display** — The active `character` object exposed to React is **`transformCharacterToHostEnvironment(rawCharacter, hostGenreId)`** (`src/utils/genreTransformer.ts`). Saves remain in **native** `creationGenreId` layout; host-only flags (e.g. `isHostGenreLocked`) are derived at read time and stripped on save (see [master_flow.md](./master_flow.md) §2).
 

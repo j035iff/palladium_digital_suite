@@ -146,7 +146,7 @@ export function PsionicsForgePanel({
     ? 'border-violet-800 bg-slate-900/90'
     : 'border-slate-200 bg-slate-50'
   const descMorphus = 'text-violet-200/90 italic leading-relaxed'
-  const descFacade = 'text-slate-600 leading-relaxed'
+  const descPrimaryTheme = 'text-slate-600 leading-relaxed'
 
   return (
     <div className={`flex flex-col rounded-lg border ${panelStyle}`}>
@@ -348,7 +348,7 @@ export function PsionicsForgePanel({
               ) : null}
               <p
                 className={`mt-2 text-xs leading-relaxed ${
-                  morphus ? descMorphus : descFacade
+                  morphus ? descMorphus : descPrimaryTheme
                 }`}
               >
                 {morphus && a.descriptionMorphus

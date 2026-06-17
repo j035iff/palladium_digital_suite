@@ -18,7 +18,7 @@ export function ConfiguratorAlignmentSelect({
 }) {
   const { character, activeRace, activeOcc, setAlignment } = useCharacter()
 
-  const currentAlignment = effectiveConfiguratorAlignment(character.facade.alignment)
+  const currentAlignment = effectiveConfiguratorAlignment(character.primary.alignment)
 
   const options = useMemo(
     () =>

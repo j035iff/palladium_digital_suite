@@ -76,7 +76,7 @@ export function assessCreationReviewBlockers(
 
   const supportsDualForm = raceLineageFromDefinition(race) === 'nightbane'
 
-  if (!attrsPlausible(character.facade.attributes)) {
+  if (!attrsPlausible(character.primary.attributes)) {
     blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'human'))
   }
   if (supportsDualForm && !attrsPlausible(character.morphus.attributes)) {
@@ -179,7 +179,7 @@ export function assessCreationSpawnBlockers(
       character.raceId?.trim() ? getRaceById(character.raceId) : undefined,
     ) === 'nightbane'
 
-  if (character.creationFacadeDiceFinalized !== true) {
+  if (character.creationPrimaryDiceFinalized !== true) {
     blockers.push(
       'Complete all pending dice on the Roll Pending tab before Review & Spawn.',
     )

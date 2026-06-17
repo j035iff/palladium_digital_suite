@@ -131,16 +131,16 @@ export function computeHorrorFactorAura(
   const morphusBaseline = horrorFactorMorphusBaseline(supportsDualForm, activeForm)
   const baseline = explicitBase ?? morphusBaseline
 
-  const hfAttr = saveModifierAttribution(
+  const hpAttr = saveModifierAttribution(
     [...HF_AURA_MODIFIER_KEYS],
     character,
     activeForm,
   )
   const passiveAura = passiveSumForKeys(passive, HF_AURA_MODIFIER_KEYS)
-  const hfAttributed = hfAttr.reduce((s, l) => s + l.amount, 0)
-  const hfOrphan = passiveAura - hfAttributed
+  const hpAttributed = hpAttr.reduce((s, l) => s + l.amount, 0)
+  const hfOrphan = passiveAura - hpAttributed
 
-  const hfContributions: SaveRollBonusLine[] = [...hfAttr]
+  const hfContributions: SaveRollBonusLine[] = [...hpAttr]
   if (hfOrphan !== 0) {
     hfContributions.push({ label: 'Other modifiers', amount: hfOrphan })
   }
@@ -188,11 +188,11 @@ export function computeSaveProfile(
 ): SaveProfileDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
   const display = computeDisplayScalars(character, activeForm, passive)
-  const facadePassive = supportsDualForm
-    ? aggregateAllPassiveModifiers(character, 'facade')
+  const primaryPassive = supportsDualForm
+    ? aggregateAllPassiveModifiers(character, 'primary')
     : passive
-  const facadeDisplay = supportsDualForm
-    ? computeDisplayScalars(character, 'facade', facadePassive)
+  const primaryDisplay = supportsDualForm
+    ? computeDisplayScalars(character, 'primary', primaryPassive)
     : display
   const peSave = getPeBonuses(display.pe).saveMagic
   const meSavePsionics = getMeBonuses(display.me).savePsionics
@@ -246,7 +246,7 @@ export function computeSaveProfile(
     display.me,
     characterLevel,
     supportsDualForm,
-    { facadeMe: facadeDisplay.me },
+    { primaryMe: primaryDisplay.me },
   )
 
   return { saves, attributeSaves, horrorFactor }

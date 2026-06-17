@@ -22,7 +22,7 @@ import { getHandToHandSkillById } from '../data/library/handToHandCatalogLoader'
 
 describe('creationLiveLedger', () => {
   it('aggregates boxing combat and staging bonuses', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const combat = buildCreationCombatLedger(attrs, ['skill_boxing'], 1)
     expect(combat.parry).toBeGreaterThanOrEqual(2)
     expect(combat.dodge).toBeGreaterThanOrEqual(2)
@@ -34,7 +34,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('keeps pull punch separate from roll w/ punch, fall, impact', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const hth = createEmptyAccumulatedHandToHandBonuses()
     hth.pullPunch = 2
     hth.rollWithPunch = 3
@@ -48,7 +48,7 @@ describe('creationLiveLedger', () => {
     }
     const block = buildCreationCombatBlock(
       character,
-      'facade',
+      'primary',
       attrs,
       combat,
       [],
@@ -68,11 +68,11 @@ describe('creationLiveLedger', () => {
   })
 
   it('starts attacks per melee at 2 with no bonuses', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const combat = buildCreationCombatLedger(attrs, [], 1)
     const block = buildCreationCombatBlock(
       characterFixture,
-      'facade',
+      'primary',
       attrs,
       combat,
       [],
@@ -90,15 +90,15 @@ describe('creationLiveLedger', () => {
   })
 
   it('shows save target even when roll bonus is zero', () => {
-    const attrs = { ...characterFixture.facade.attributes, pe: 10, me: 10, iq: 10 }
-    const saves = buildCreationSavesBlock(attrs, {}, characterFixture, 'facade')
+    const attrs = { ...characterFixture.primary.attributes, pe: 10, me: 10, iq: 10 }
+    const saves = buildCreationSavesBlock(attrs, {}, characterFixture, 'primary')
     expect(saves.find((s) => s.label === 'Magic')?.value).toBe('vs 12')
     expect(saves.find((s) => s.label === 'Magic')?.hint).toBe('+0 to roll')
     expect(saves.find((s) => s.label === 'Mind Control')?.value).toBe(LEDGER_NA)
   })
 
   it('shows dashes for unassigned attributes instead of placeholder tens', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const unassigned = buildCreationAttributeBlock(attrs, {})
     expect(unassigned.every((line) => line.value === LEDGER_UNASSIGNED)).toBe(true)
     expect(unassigned.every((line) => line.inlineRaceRoll == null)).toBe(true)
@@ -127,7 +127,7 @@ describe('creationLiveLedger', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')
     const block = buildCreationAttributeBlock(
-      characterFixture.facade.attributes,
+      characterFixture.primary.attributes,
       { ps: 10 },
       human,
       occ,
@@ -145,7 +145,7 @@ describe('creationLiveLedger', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')
     const effective = resolveLedgerEffectiveAttributes(
-      characterFixture.facade.attributes,
+      characterFixture.primary.attributes,
       { pe: 18 },
       human,
       occ,
@@ -160,7 +160,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('shows O.C.C. flat bonuses in the value and dice under grouped rows', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_ex_government_agent')
     const block = buildCreationAttributeBlock(attrs, {}, human, occ)
@@ -172,7 +172,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('shows O.C.C. bonuses without a race and attribute minimums in red suffixes', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const occ = getLibraryOccById('occ_ex_government_agent')
     const block = buildCreationAttributeBlock(attrs, {}, undefined, occ)
     const ps = block.find((l) => l.label === 'P.S.')
@@ -184,7 +184,7 @@ describe('creationLiveLedger', () => {
 
   it('lists standard exceptional rows starting at 17', () => {
     const low = buildCreationExceptionalStandardBlock({
-      ...characterFixture.facade.attributes,
+      ...characterFixture.primary.attributes,
       iq: 16,
       me: 16,
       pp: 16,
@@ -192,7 +192,7 @@ describe('creationLiveLedger', () => {
     expect(low.find((l) => l.label === 'I.Q. skill bonus')?.value).toBe(LEDGER_NA)
 
     const high = buildCreationExceptionalStandardBlock({
-      ...characterFixture.facade.attributes,
+      ...characterFixture.primary.attributes,
       iq: 17,
     })
     expect(high.find((l) => l.label === 'I.Q. skill bonus')?.value).toBe('+3%')
@@ -206,14 +206,14 @@ describe('creationLiveLedger', () => {
     expect(hth.rollWithPunch).toBe(2)
     expect(hth.pullPunch).toBe(2)
 
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const combat = buildCreationCombatLedger(attrs, [], 1, hth)
     expect(combat.rollWithPunchFallImpact).toBe(2)
     expect(combat.pullPunch).toBe(2)
 
     const block = buildCreationCombatBlock(
       { ...characterFixture, creationHandToHandTier: 'basic' as const },
-      'facade',
+      'primary',
       attrs,
       combat,
       [],
@@ -230,11 +230,11 @@ describe('creationLiveLedger', () => {
   })
 
   it('shows boxing parry in combat breakdown with catalog attribution', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const combat = buildCreationCombatLedger(attrs, ['skill_boxing'], 1)
     const block = buildCreationCombatBlock(
       characterFixture,
-      'facade',
+      'primary',
       attrs,
       combat,
       ['skill_boxing'],
@@ -251,7 +251,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('aggregates multiple skill sources into one Skills line with hover detail', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const combat = buildCreationCombatLedger(
       attrs,
       ['skill_boxing', 'skill_athletics_general'],
@@ -259,7 +259,7 @@ describe('creationLiveLedger', () => {
     )
     const block = buildCreationCombatBlock(
       characterFixture,
-      'facade',
+      'primary',
       attrs,
       combat,
       ['skill_boxing', 'skill_athletics_general'],
@@ -278,7 +278,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('includes effective P.S. in hand-to-hand damage', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const belowThreshold = buildCreationCombatLedger(
       attrs,
       [],
@@ -312,7 +312,7 @@ describe('creationLiveLedger', () => {
         ...characterFixture,
         creationAttributeAssignments: { ps: 17 },
       },
-      'facade',
+      'primary',
       attrs,
       withSkillBoost,
       ['skill_body_building_weight_lifting'],
@@ -331,7 +331,7 @@ describe('creationLiveLedger', () => {
   })
 
   it('includes hand-to-hand damage bonuses in the combat ledger total', () => {
-    const attrs = characterFixture.facade.attributes
+    const attrs = characterFixture.primary.attributes
     const hth = createEmptyAccumulatedHandToHandBonuses()
     hth.damage = 2
     const combat = buildCreationCombatLedger(
@@ -346,7 +346,7 @@ describe('creationLiveLedger', () => {
 
     const block = buildCreationCombatBlock(
       characterFixture,
-      'facade',
+      'primary',
       attrs,
       combat,
       [],
@@ -366,7 +366,7 @@ describe('creationLiveLedger', () => {
 
   it('only shows 31+ exceptional groups for attributes above 30', () => {
     const groups = buildCreationExceptionalSuperGroups({
-      ...characterFixture.facade.attributes,
+      ...characterFixture.primary.attributes,
       iq: 32,
       me: 20,
       pe: 30,

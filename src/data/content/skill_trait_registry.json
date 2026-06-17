@@ -53,6 +53,6 @@
   "membershipNotes": {
     "basicElectronics": "Referenced in prerequisites and trait lists; add catalog row or alias when ingested.",
     "performance": "Listed in skills_requiring_timing.txt; no Nightbane catalog row (intentionally omitted).",
-    "facadePpPenalties": "Optional low facade P.P. penalties map to requires_dexterity / requires_light_touch via facadePpSkillTraitPenalties.ts (ported from v0 highManualDexterity / otherManualDexterity)."
+    "primaryPpPenalties": "Optional low facade P.P. penalties map to requires_dexterity / requires_light_touch via primaryPpSkillTraitPenalties.ts (ported from v0 highManualDexterity / otherManualDexterity)."
   }
 }

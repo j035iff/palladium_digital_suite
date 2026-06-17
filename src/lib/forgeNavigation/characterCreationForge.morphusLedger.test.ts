@@ -25,7 +25,7 @@ describe('Morphus ledger unlock', () => {
       raceId: 'nightbane',
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: throughRollPending,
-      creationFacadeDiceFinalized: true,
+      creationPrimaryDiceFinalized: true,
     }
     expect(isMorphusLedgerUnlocked(character, nightbane, occ, 'none')).toBe(false)
   })
@@ -37,7 +37,7 @@ describe('Morphus ledger unlock', () => {
       creationMorphusLedgerUnlocked: true,
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: {},
-      creationFacadeDiceFinalized: false,
+      creationPrimaryDiceFinalized: false,
     }
     expect(isMorphusLedgerUnlocked(character, nightbane, occ, 'none')).toBe(true)
   })
@@ -48,7 +48,7 @@ describe('Morphus ledger unlock', () => {
       raceId: 'nightbane',
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: throughRollPending,
-      creationFacadeDiceFinalized: true,
+      creationPrimaryDiceFinalized: true,
     }
     expect(forgeTabVisitUnlocksMorphusLedger('tab6_traits')).toBe(true)
     expect(
@@ -68,7 +68,7 @@ describe('Morphus ledger unlock', () => {
         {
           ...prev,
           creationForgeCompleted: {},
-          creationFacadeDiceFinalized: false,
+          creationPrimaryDiceFinalized: false,
         },
         'tab6_traits',
         nightbane,

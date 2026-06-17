@@ -8,6 +8,7 @@ import {
   MORPHUS_LEDGER_BORDER_CLASS,
   MORPHUS_LEDGER_SURFACE_CLASS,
 } from './LedgerStatGrid'
+import { FACADE_LABEL } from '../../lib/creationFormLabels'
 
 function LedgerSection({
   title,
@@ -49,7 +50,7 @@ function LedgerFormToggle({
   morphusLocked?: boolean
   onSelect: (form: ActiveForm) => void
 }) {
-  const facadeActive = activeForm === 'facade'
+  const primaryActive = activeForm === 'primary'
   const morphusActive = activeForm === 'morphus'
   const morphusLockTitle = morphusLocked
     ? 'Morphus unlocks when you reach the Traits tab (complete Roll Pending first).'
@@ -57,7 +58,7 @@ function LedgerFormToggle({
   return (
     <div
       className={`grid grid-cols-2 gap-1 rounded-lg border-2 p-1 ${
-        facadeActive
+        primaryActive
           ? 'border-blue-200 bg-blue-50 dark:border-blue-700 dark:bg-slate-900'
           : `border-[#3a0a0a] ${MORPHUS_LEDGER_SURFACE_CLASS}`
       }`}
@@ -66,15 +67,15 @@ function LedgerFormToggle({
     >
       <button
         type="button"
-        onClick={() => onSelect('facade')}
-        aria-pressed={facadeActive}
+        onClick={() => onSelect('primary')}
+        aria-pressed={primaryActive}
         className={`rounded-md px-2 py-1.5 text-[10px] font-black uppercase tracking-wide transition-colors ${
-          facadeActive
+          primaryActive
             ? 'bg-blue-600 text-white shadow-sm'
             : 'bg-transparent text-orange-100/80 hover:bg-[#1a0404] hover:text-orange-50'
         }`}
       >
-        Facade
+        {FACADE_LABEL}
       </button>
       <button
         type="button"
@@ -154,7 +155,7 @@ export function LiveLedger({ variant = 'card' }: { variant?: 'card' | 'sidebar' 
   const ledgerForm: ActiveForm =
     supportsDualForm && morphusLedgerUnlocked && activeForm === 'morphus'
       ? 'morphus'
-      : 'facade'
+      : 'primary'
   const morphus = ledgerForm === 'morphus'
   const morphusLocked = supportsDualForm && !morphusLedgerUnlocked
 

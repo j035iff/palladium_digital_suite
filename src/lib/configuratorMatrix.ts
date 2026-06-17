@@ -427,9 +427,9 @@ export const PALLADIUM_ALIGNMENT_VALUES: readonly [
 ]
 
 export function effectiveConfiguratorAlignment(
-  facadeAlignment: string | undefined,
+  primaryAlignment: string | undefined,
 ): string {
-  return facadeAlignment?.trim() ?? ''
+  return primaryAlignment?.trim() ?? ''
 }
 
 const ALIGNMENT_CATEGORY_LABELS = {

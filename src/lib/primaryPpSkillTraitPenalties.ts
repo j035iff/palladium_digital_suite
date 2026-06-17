@@ -35,11 +35,11 @@ export function getLowPpTraitPenaltyTable(pp: number): PpTraitPenaltyTable | nul
 }
 
 /** Sum trait penalties for a catalog skill from facade P.P. (stacks both traits when present). */
-export function sumFacadePpTraitPenaltiesForSkill(
+export function sumPrimaryPpTraitPenaltiesForSkill(
   skillTraits: readonly string[] | undefined,
-  facadePp: number,
+  primaryPp: number,
 ): number {
-  const table = getLowPpTraitPenaltyTable(facadePp)
+  const table = getLowPpTraitPenaltyTable(primaryPp)
   if (!table || !skillTraits?.length) return 0
   let total = 0
   for (const trait of skillTraits) {

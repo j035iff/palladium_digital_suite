@@ -74,7 +74,7 @@ Nightbane characters use **two complete mechanical profiles** toggled by `active
 | | Skills (percentiles re-resolve per form) |
 | | Morphus-only traits, Horror Factor, supernatural P.S. tier |
 
-The UI theme shifts when Morphus is active (dark violet gradient vs light facade sheet).
+The UI theme shifts when Morphus is active (dark violet gradient vs light Facade sheet).
 
 **Morphus** is the Nightbane’s supernatural shape. Players roll on category tables (Athlete, Stigmata, Undead, etc.); each table entry is a structured JSON characteristic with stat modifiers, skill overrides, natural weapons, damage affinities, mobility, and narrative `customOneOffs`.
 
@@ -220,7 +220,8 @@ Reference PDFs live in `src/data/reference/nightbane/` (not committed).
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
 | `docs/character_creation.md` | Documentation map (links above + configurator tiers) |
 | `docs/universal_forge_navigation_engine.md` | Universal Forge Navigation Engine (tabs, Continue, colors) |
-| `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage |
+| `docs/stat_engine_spec.md` | **Stat formulas** — attributes, vitals, saves, combat stacking (Live Ledger SoT) |
+| `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage, APM tracker UX |
 | `docs/morphus_authoring.md` | How to encode Morphus traits for the engine |
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
 | `docs/psychic_gate.md` | Psionic tiers |

@@ -33,8 +33,8 @@ export function MorphusForge() {
     setMorphusForgeSubTab,
   } = useCharacter()
 
-  const facadeReady =
-    !supportsDualForm || character.creationFacadeDiceFinalized === true
+  const primaryReady =
+    !supportsDualForm || character.creationPrimaryDiceFinalized === true
 
   const navCtx = useMemo(
     () => ({
@@ -74,7 +74,7 @@ export function MorphusForge() {
     if (nextId) setMorphusForgeSubTab(nextId)
   }
 
-  if (!facadeReady) {
+  if (!primaryReady) {
     return (
       <section aria-labelledby="forge-tab-page-heading">
         <p

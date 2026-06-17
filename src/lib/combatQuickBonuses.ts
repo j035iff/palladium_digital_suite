@@ -31,7 +31,7 @@ function skillMeleeBonusFromIds(ids: Iterable<string>): {
 
 export function collectUnlockedSkillIds(
   character: Character,
-  activeForm: 'facade' | 'morphus',
+  activeForm: 'primary' | 'morphus',
 ): Set<string> {
   const ids = new Set<string>()
   const branch = getFormState(character, activeForm)
@@ -60,7 +60,7 @@ export function collectUnlockedSkillIds(
  */
 export function computeQuickActionTotals(
   character: Character,
-  activeForm: 'facade' | 'morphus',
+  activeForm: 'primary' | 'morphus',
 ): QuickActionTotals {
   const attrs = getFormState(character, activeForm).attributes
   const mirror = computeCombatMirrorBonuses(attrs)

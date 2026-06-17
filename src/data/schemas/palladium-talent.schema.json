@@ -291,7 +291,7 @@
       "properties": {
         "form": {
           "type": "string",
-          "enum": ["morphus_only", "facade_only", "either_form"]
+          "enum": ["morphus_only", "primary_only", "either_form"]
         },
         "effectiveness": {
           "type": "string",
@@ -342,7 +342,7 @@
           "description": "Simple form rule when uniform for all uses. **Default: morphus_only.** Use `varies_by_scope` with `formUsage` when rules differ by target or phase.",
           "enum": [
             "morphus_only",
-            "facade_only",
+            "primary_only",
             "either_form",
             "varies_by_scope",
             "both_forms_note_special"

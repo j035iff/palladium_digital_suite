@@ -5,7 +5,7 @@ import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 /** Roll Pending tab — facade (or single-form) physical dice only; Morphus is on Traits. */
 export function CreationFinalizeDice() {
   const { supportsDualForm } = useCharacter()
-  const scope = supportsDualForm ? 'facade' : 'all'
+  const scope = supportsDualForm ? 'primary' : 'all'
 
   return (
     <section aria-labelledby="forge-tab-page-heading">

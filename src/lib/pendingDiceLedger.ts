@@ -113,17 +113,17 @@ export function patchPendingDiceResolution(
     creationPendingDiceResolutions: resolutions,
   }
 
-  const facadeScope = opts.supportsDualForm ? ('facade' as const) : ('all' as const)
-  const facadeRollIds = rollIdsForScope(prev, opts.race, opts.occ, {
+  const primaryScope = opts.supportsDualForm ? ('primary' as const) : ('all' as const)
+  const primaryRollIds = rollIdsForScope(prev, opts.race, opts.occ, {
     supportsDualForm: opts.supportsDualForm,
     psychicTier: opts.psychicTier,
-    scope: facadeScope,
+    scope: primaryScope,
   })
-  if (prev.creationFacadeDiceFinalized === true && facadeRollIds.has(entryId)) {
+  if (prev.creationPrimaryDiceFinalized === true && primaryRollIds.has(entryId)) {
     next = {
       ...next,
       ...clearForgeTabMark(next, 'tab5_finalize'),
-      creationFacadeDiceFinalized: false,
+      creationPrimaryDiceFinalized: false,
     }
   }
 

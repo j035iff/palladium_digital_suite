@@ -325,9 +325,9 @@ export function SkillEngine() {
   const handToHandOptions = useMemo(
     () =>
       effectiveOcc
-        ? listOccHandToHandOptions(effectiveOcc, character.facade?.alignment)
+        ? listOccHandToHandOptions(effectiveOcc, character.primary?.alignment)
         : [],
-    [effectiveOcc, character.facade?.alignment],
+    [effectiveOcc, character.primary?.alignment],
   )
 
   const handToHandInputClass = morphus

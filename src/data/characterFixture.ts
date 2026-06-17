@@ -39,7 +39,7 @@ export const characterFixture: Character = {
     psionicSlots: 0,
     talentSlots: 0,
   },
-  facade: {
+  primary: {
     alignment: 'Scrupulous',
     hitPoints: { current: 12, maximum: 18, scaling: 'sdc_hp' },
     structuralDamageCapacity: {

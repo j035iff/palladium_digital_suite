@@ -4,14 +4,14 @@ import { characterFixture } from '../data/characterFixture'
 
 describe('computeHorrorFactorAura', () => {
   it('returns null for megaversal races on facade (no HF aura)', () => {
-    const aura = computeHorrorFactorAura(characterFixture, 'facade', {}, false)
+    const aura = computeHorrorFactorAura(characterFixture, 'primary', {}, false)
     expect(aura.total).toBeNull()
   })
 
   it('does not treat save_horror as Horror Factor aura', () => {
     const aura = computeHorrorFactorAura(
       characterFixture,
-      'facade',
+      'primary',
       { save_horror: 2, save_horror_factor: 2 },
       false,
     )
@@ -19,8 +19,8 @@ describe('computeHorrorFactorAura', () => {
   })
 
   it('applies morphus baseline only for dual-form races', () => {
-    const facade = computeHorrorFactorAura(characterFixture, 'facade', {}, true)
-    expect(facade.total).toBeNull()
+    const primary = computeHorrorFactorAura(characterFixture, 'primary', {}, true)
+    expect(primary.total).toBeNull()
 
     const morphus = computeHorrorFactorAura(characterFixture, 'morphus', {}, true)
     expect(morphus.total).toBe(6)
@@ -29,7 +29,7 @@ describe('computeHorrorFactorAura', () => {
   it('includes explicit horror_factor modifiers for any race', () => {
     const aura = computeHorrorFactorAura(
       characterFixture,
-      'facade',
+      'primary',
       { horror_factor: 3 },
       false,
     )

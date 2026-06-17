@@ -22,6 +22,8 @@ Determines % chance to Charm/Impress. Scales Skill: Seduction.
 Spd (Speed)
 Feeds the Land Spd attribute; derived MPH and yards/melee are calculated by the movement engine (`docs/movement_engine_spec.md`).
 
+**Stacking formulas** (attributes, vitals, saves, combat during creation and on the sheet) live in `docs/stat_engine_spec.md`. This document covers the attribute **model** and broadcast architecture only.
+
 2. Threshold & Bonus Logic
 The engine utilizes a look-up table for "Natural Bonuses." In alignment with the Palladium system, exceptional bonuses generally trigger at a value of 17 or higher.
 The Null Rule: If the Current Value is 16 or lower, the attribute-based bonus is 0 (unless a specific status effect applies a direct penalty to the bonus itself).

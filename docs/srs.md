@@ -3,7 +3,7 @@
 ## 1. Data Schema (The "Nightbane" Model)
 Characters use a "Total Reconfiguration" engine.
 - **Shared:** XP, PPE.
-- **State-Dependent:** All 8 Attributes, HP, SDC, Alignment, and Skills swap when toggling between Facade and Morphus.
+- **State-Dependent (Nightbane):** All 8 Attributes, HP, SDC, Alignment, and Skills swap when toggling between Facade and Morphus.
 
 ## 2. Attribute Forge
 - Support "Pool and Assign" logic.

@@ -195,7 +195,7 @@ code {
   }
 }
 
-.pds-level-up-facade-pulse {
+.pds-level-up-primary-pulse {
   animation: pds-level-up-facade-flash 2.2s ease-in-out infinite;
 }
 
@@ -223,7 +223,7 @@ code {
   }
 }
 
-.pds-xp-pending-facade {
+.pds-xp-pending-primary {
   animation: pds-xp-pending-ring-facade 1.4s ease-in-out infinite;
 }
 

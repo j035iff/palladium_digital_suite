@@ -16,10 +16,10 @@ export function summarizeSkillImprovementsForLevel(
   character: Character,
   fromLevel: number,
   toLevel: number,
-  opts?: { maxRows?: number; form?: 'facade' | 'morphus' },
+  opts?: { maxRows?: number; form?: 'primary' | 'morphus' },
 ): SkillImprovementRow[] {
   const maxRows = opts?.maxRows ?? 5
-  const form = opts?.form ?? 'facade'
+  const form = opts?.form ?? 'primary'
   const branch = character[form]
   const iq = branch.attributes.iq
   const rows: SkillImprovementRow[] = []

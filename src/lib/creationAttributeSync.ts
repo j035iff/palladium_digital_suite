@@ -347,7 +347,7 @@ export function applyPendingAttributeDiceToForms(
   prev: CharacterRootState,
   blocks: readonly PendingDiceBlock[],
   resolutions: Readonly<Record<string, number>>,
-  forms: readonly ('facade' | 'morphus')[] = ['facade', 'morphus'],
+  forms: readonly ('primary' | 'morphus')[] = ['primary', 'morphus'],
 ): CharacterRootState {
   const bonuses = sumPendingAttributeDiceBonuses(blocks, resolutions)
   if (Object.keys(bonuses).length === 0) return prev
@@ -369,12 +369,12 @@ export function applyPendingAttributeDiceToForms(
 export function syncCreationAttributeBranches(
   prev: CharacterRootState,
   occ: PalladiumOcc | undefined,
-  opts?: { forms?: ('facade' | 'morphus')[] },
+  opts?: { forms?: ('primary' | 'morphus')[] },
 ): CharacterRootState {
   const assignments = prev.creationAttributeAssignments ?? {}
   const resolutions = prev.creationOccVariableResolutions ?? {}
   const specId = prev.occSpecializationId
-  const forms = opts?.forms ?? (['facade', 'morphus'] as const)
+  const forms = opts?.forms ?? (['primary', 'morphus'] as const)
 
   let next = prev
   for (const key of forms) {

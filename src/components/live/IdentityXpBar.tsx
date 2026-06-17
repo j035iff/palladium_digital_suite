@@ -46,7 +46,7 @@ export function IdentityXpBar() {
           pendingRing
             ? morphus
               ? 'border-amber-400 pds-xp-pending-void'
-              : 'border-amber-500 pds-xp-pending-facade'
+              : 'border-amber-500 pds-xp-pending-primary'
             : morphus
               ? 'border-violet-500/80 bg-slate-950/80'
               : 'border-blue-400 bg-blue-50/90'

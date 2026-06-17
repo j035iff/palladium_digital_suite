@@ -317,7 +317,7 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
 }
 
 function tab5Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequirement[] {
-  const scope = ctx.supportsDualForm ? 'facade' : 'all'
+  const scope = ctx.supportsDualForm ? 'primary' : 'all'
   const blocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
     supportsDualForm: ctx.supportsDualForm,
     psychicTier: ctx.psychicTier,
@@ -352,9 +352,9 @@ function tab6Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
   const requirements: ForgeTabRequirement[] = []
   if (ctx.supportsDualForm) {
     requirements.push({
-      id: 'facade-finalized',
+      id: 'primary-finalized',
       label: 'Complete Facade dice on the Roll Pending tab',
-      satisfied: ctx.character.creationFacadeDiceFinalized === true,
+      satisfied: ctx.character.creationPrimaryDiceFinalized === true,
     })
     const morphusBlocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
       supportsDualForm: true,

@@ -324,12 +324,12 @@ export function listOccHandToHandOptions(
  * (e.g. A.D.A. Assassination Specialist requires Assassin before the player opens the dropdown).
  */
 export function effectiveCreationHandToHandTier(
-  character: Pick<Character, 'creationHandToHandTier' | 'facade'>,
+  character: Pick<Character, 'creationHandToHandTier' | 'primary'>,
   occ: PalladiumOcc | undefined,
 ): CreationHandToHandTier {
   if (!occ) return character.creationHandToHandTier ?? 'none'
   const stored = character.creationHandToHandTier
-  const alignment = character.facade?.alignment
+  const alignment = character.primary?.alignment
   const allowed = new Set(
     listOccHandToHandOptions(occ, alignment)
       .filter((o) => !o.disabled)

@@ -18,7 +18,7 @@ describe('skillCreationDisplay voucher bonuses', () => {
     const character = createBlankCharacterForGenre('nightbane')
     const skillPercentCtx = buildSkillPercentContext(
       character,
-      'facade',
+      'primary',
       0,
       0,
       undefined,
@@ -58,7 +58,7 @@ describe('skillCreationDisplay percent summary', () => {
     const character = createBlankCharacterForGenre('nightbane')
     const skillPercentCtx = buildSkillPercentContext(
       character,
-      'facade',
+      'primary',
       4,
       0,
       undefined,

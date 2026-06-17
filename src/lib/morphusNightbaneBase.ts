@@ -46,15 +46,15 @@ export function applyNightbaneMorphusBaseAttributes(
   prev: CharacterRootState,
   occ: PalladiumOcc | undefined,
 ): CharacterRootState {
-  const facadeBranch = applyCreationAttributesToForm(
-    prev.facade,
+  const primaryBranch = applyCreationAttributesToForm(
+    prev.primary,
     prev.creationAttributeAssignments ?? {},
     occ,
     prev.occSpecializationId,
     prev.creationOccVariableResolutions ?? {},
   )
   let attrs = buildCreationAttributes(
-    facadeBranch.attributes,
+    primaryBranch.attributes,
     prev.creationAttributeAssignments ?? {},
     occ,
     prev.occSpecializationId,

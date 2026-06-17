@@ -107,7 +107,7 @@ export function CreationReviewFinalize({
     [forgeCtx],
   )
 
-  const currentAlignment = effectiveConfiguratorAlignment(character.facade.alignment)
+  const currentAlignment = effectiveConfiguratorAlignment(character.primary.alignment)
 
   const occIds = character.creationOccSkillIds ?? []
   const relPicks = getCreationRelatedPicks(character)

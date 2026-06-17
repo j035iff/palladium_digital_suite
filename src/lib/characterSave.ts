@@ -45,7 +45,7 @@ export function serializeCharacterRootForSave(
 ): CharacterRootState {
   return {
     ...state,
-    facade: stripFormBranch(state.facade),
+    primary: stripFormBranch(state.primary),
     morphus: stripFormBranch(state.morphus),
   }
 }

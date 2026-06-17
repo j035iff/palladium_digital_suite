@@ -1,6 +1,6 @@
 Technical Specification: Derived Movement Engine
 
-This document is the **source of truth** for all derived movement calculations (ground, swim, fly, leap) in the Palladium Digital Suite. Attribute wiring lives in `docs/attribute_and_stat.md`; this spec owns the math.
+This document is the **source of truth** for all derived movement calculations (ground, swim, fly, leap) in the Palladium Digital Suite. Attribute wiring lives in `docs/attribute_and_stat.md`; stat stacking formulas live in `docs/stat_engine_spec.md`; this spec owns movement math only.
 
 ---
 

@@ -62,12 +62,12 @@ describe('magicFeatureCrafting', () => {
 
 describe('magicCatalogLoader', () => {
   it('maps catalog rows into Feature metadata with crafting fields', () => {
-    const row = getPalladiumMagicSpellById('magic_wizard_magic_net')
+    const row = getPalladiumMagicSpellById('magic_wizard_ritual_call_creature_of_light')
     expect(row).toBeDefined()
     const feature = palladiumMagicToFeature(row!)
     expect(feature.identity.system).toBe('magic')
     expect(feature.metadata?.pickBucket).toBe('magic')
     expect(feature.metadata?.spawnedPresence).toBeDefined()
-    expect(getMagicFeatureById('magic_wizard_magic_net')).toEqual(feature)
+    expect(getMagicFeatureById('magic_wizard_ritual_call_creature_of_light')).toEqual(feature)
   })
 })

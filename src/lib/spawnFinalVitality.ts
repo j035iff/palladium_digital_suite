@@ -8,8 +8,8 @@ import { calculateBaseSdc } from '../utils/vitalsCalculator'
 
 /** One-shot Spawn commit payload (vitalityPathUpdate + CharacterContext). */
 export type SpawnVitalityRolls = {
-  facadeHp: number
-  facadeSdc: number
+  primaryHp: number
+  primarySdc: number
   morphusHp: number
   morphusSdc: number
   ppeMax: number
@@ -20,14 +20,14 @@ export type SpawnVitalityRolls = {
  * Facade H.P. maximum at Spawn — P.E. anchors the body (attribute_and_stat.md §1, §4).
  * Formula: P.E. + 1d6, floor 4.
  */
-export function rollFacadeHpMaximum(pe: number, race?: Race): number {
+export function rollPrimaryHpMaximum(pe: number, race?: Race): number {
   return rollRaceHpMaximum(pe, race?.vitals?.hpFormula)
 }
 
 /**
  * Facade S.D.C. maximum — race vitals + O.C.C. tags when defined; otherwise derived baseline + 1d6.
  */
-export function rollFacadeSdcMaximum(
+export function rollPrimarySdcMaximum(
   attrs: CharacterAttributes,
   opts?: { race?: Race; occ?: PalladiumOcc },
 ): number {

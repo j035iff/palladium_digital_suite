@@ -1196,7 +1196,7 @@
       "notes": "Eight P.P.E. per two melee rounds (30 seconds) of effect."
     },
     "limitations": {
-      "usableInNightbaneForm": "facade_only",
+      "usableInNightbaneForm": "primary_only",
       "otherLimitations": "Can only be used in Facade form. Only the bonuses listed in the talent text are added — do not add bonuses from Morphus features."
     },
     "ranges": [
@@ -1254,7 +1254,7 @@
       "notes": "Nine P.P.E. per two melee rounds (30 seconds) of effect."
     },
     "limitations": {
-      "usableInNightbaneForm": "facade_only",
+      "usableInNightbaneForm": "primary_only",
       "otherLimitations": "Can only be used in Facade form. Only the bonuses listed in the talent text are added — do not add bonuses from Morphus features."
     },
     "ranges": [
@@ -3356,7 +3356,7 @@
       "notes": "10 P.P.E. for the first melee round; 5 P.P.E. per each additional melee round."
     },
     "limitations": {
-      "usableInNightbaneForm": "facade_only",
+      "usableInNightbaneForm": "primary_only",
       "otherLimitations": "Healing applies only to the Facade."
     },
     "ranges": [
@@ -6134,7 +6134,7 @@
       "notes": "More extensive Facade changes cost more P.P.E. beyond the base activation."
     },
     "limitations": {
-      "usableInNightbaneForm": "facade_only",
+      "usableInNightbaneForm": "primary_only",
       "minimumCharacterLevelToAcquire": 3,
       "otherLimitations": "Impersonating a particular person: 20% + I.Q. bonus + 3% per level of experience to pass convincingly."
     },

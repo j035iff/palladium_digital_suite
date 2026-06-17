@@ -131,7 +131,7 @@ export function TalentsForgePanel({
     ? 'border-violet-800 bg-slate-900/90'
     : 'border-slate-200 bg-slate-50'
   const descMorphus = 'text-violet-200/90 italic leading-relaxed'
-  const descFacade = 'text-slate-600 leading-relaxed'
+  const descPrimaryTheme = 'text-slate-600 leading-relaxed'
 
   return (
     <div className={`flex flex-col rounded-lg border ${panelStyle}`}>
@@ -171,7 +171,7 @@ export function TalentsForgePanel({
           talentBudget={talentBudget}
           drawerStyle={drawerStyle}
           descMorphus={descMorphus}
-          descFacade={descFacade}
+          descPrimaryTheme={descPrimaryTheme}
           onSelect={addSelectedAbility}
         />
         <TalentColumn
@@ -188,7 +188,7 @@ export function TalentsForgePanel({
           talentBudget={talentBudget}
           drawerStyle={drawerStyle}
           descMorphus={descMorphus}
-          descFacade={descFacade}
+          descPrimaryTheme={descPrimaryTheme}
           onSelect={addSelectedAbility}
           hideMorphusLocked={hideMorphusLockedElite}
           onHideMorphusLockedChange={setHideMorphusLockedElite}
@@ -213,7 +213,7 @@ function TalentColumn({
   talentBudget,
   drawerStyle,
   descMorphus,
-  descFacade,
+  descPrimaryTheme,
   onSelect,
   hideMorphusLocked,
   onHideMorphusLockedChange,
@@ -232,7 +232,7 @@ function TalentColumn({
   talentBudget: number
   drawerStyle: string
   descMorphus: string
-  descFacade: string
+  descPrimaryTheme: string
   onSelect: (id: string) => void
   hideMorphusLocked?: boolean
   onHideMorphusLockedChange?: (next: boolean) => void
@@ -326,7 +326,7 @@ function TalentColumn({
                 talentBudget={talentBudget}
                 onSelect={() => onSelect(talent.id)}
                 descMorphus={descMorphus}
-                descFacade={descFacade}
+                descPrimaryTheme={descPrimaryTheme}
               />,
             )
           }
@@ -374,7 +374,7 @@ function TalentRow({
   talentBudget,
   onSelect,
   descMorphus,
-  descFacade,
+  descPrimaryTheme,
 }: {
   talent: PalladiumTalent
   ability: AbilityDef | undefined
@@ -388,7 +388,7 @@ function TalentRow({
   talentBudget: number
   onSelect: () => void
   descMorphus: string
-  descFacade: string
+  descPrimaryTheme: string
 }) {
   const feature = getFeatureById(talent.id)
   const occGate =
@@ -472,7 +472,7 @@ function TalentRow({
           Select
         </button>
       </div>
-      <p className={`mt-2 text-xs ${morphus ? descMorphus : descFacade}`}>
+      <p className={`mt-2 text-xs ${morphus ? descMorphus : descPrimaryTheme}`}>
         {description}
       </p>
       {isNightbane ? (

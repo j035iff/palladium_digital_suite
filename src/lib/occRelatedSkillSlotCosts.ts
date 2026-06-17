@@ -31,16 +31,22 @@ export function occRelatedSkillSelectionSlotCost(
     if (!rule) continue
 
     const specific = rule.skillSpecificSelectionSlotCosts
+    let specificCost: number | undefined
     if (specific) {
       for (const [ruleSkillId, cost] of Object.entries(specific)) {
-        if (skillIdMatches(ruleSkillId, skillId) && cost > best) {
-          best = cost
+        if (skillIdMatches(ruleSkillId, skillId)) {
+          specificCost = cost
+          break
         }
       }
     }
 
-    const defaultCost = rule.selectionSlotCost ?? 1
-    if (defaultCost > best) best = defaultCost
+    if (specificCost != null) {
+      if (specificCost > best) best = specificCost
+    } else {
+      const defaultCost = rule.selectionSlotCost ?? 1
+      if (defaultCost > best) best = defaultCost
+    }
   }
 
   return best

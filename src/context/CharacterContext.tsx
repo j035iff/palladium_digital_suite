@@ -95,6 +95,7 @@ import {
   ensureCharacterRoot,
   retainCharacterRoot,
 } from '../lib/characterRoot'
+import { migrateCharacterFromLegacyFacade } from '../lib/characterMigrate'
 import {
   deriveInventoryForHost,
   transformCharacterToHostEnvironment,
@@ -189,7 +190,7 @@ import {
 } from '../lib/forgeNavigation/characterCreationForge'
 import type { ForgeAttrKey } from '../lib/attributeKeys'
 import {
-  applyFacadePendingDiceResolutions,
+  applyPrimaryPendingDiceResolutions,
   applyMorphusPendingDiceResolutions,
   applyPendingDiceResolutionsToCharacter,
 } from '../lib/spawnVitalityManual'
@@ -239,7 +240,7 @@ import {
 import {
   mergeOccSkillIdsWithVouchers,
 } from '../lib/occCoreSkillVouchers'
-import { syncRaceOccFacadeSdc } from '../lib/creationRaceOccSync'
+import { syncRaceOccPrimarySdc } from '../lib/creationRaceOccSync'
 import {
   applyOccSelectionToCharacterState,
   clearOccSelectionState,
@@ -348,7 +349,7 @@ type CharacterContextValue = {
   /**
    * Dot-path setter for attributes and numeric sheet pools.
    * Attributes: `facade.attributes.iq`, `attributes.pp` (active form), `morphus.attributes.ps.score`, …
-   * Vitality / P.P.E.: `facade.hitPoints.maximum`, `ppe.current`, `morphus.isp.maximum`, …
+   * Vitality / P.P.E.: `primary.hitPoints.maximum`, `ppe.current`, `morphus.isp.maximum`, …
    */
   updateAttribute: (path: string, value: number | string) => void
   /** Vitality header scale from current form pools (combat_logic.md §1). */
@@ -587,7 +588,8 @@ function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
 }
 
 function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootState {
-  const rooted = ensureCharacterRoot(base, {
+  const migrated = migrateCharacterFromLegacyFacade(base)
+  const rooted = ensureCharacterRoot(migrated, {
     creationGenreId: base.creationGenreId,
     hostGenreId: base.hostGenreId,
   })
@@ -618,7 +620,7 @@ const INITIAL_CHARACTER_SNAPSHOT: CharacterRootState = (() => {
   const hydrated = hydrateCharacterFromStorage(root)
   return hydrated.creationVitalityCommitted === true
     ? hydrated
-    : syncRaceOccFacadeSdc(hydrated)
+    : syncRaceOccPrimarySdc(hydrated)
 })()
 
 /** Returns updated character if the pick is legal; otherwise null. */
@@ -737,7 +739,7 @@ function bumpAllHitPoints(prev: CharacterRootState, roll: number): CharacterRoot
   })
   return {
     ...prev,
-    facade: bump(prev.facade),
+    primary: bump(prev.primary),
     morphus: bump(prev.morphus),
   }
 }
@@ -764,7 +766,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const [xpHistory, setXpHistory] = useState<XpGainEvent[]>(() =>
     loadXpHistory(INITIAL_CHARACTER_SNAPSHOT.name),
   )
-  const [activeForm, setActiveForm] = useState<ActiveForm>('facade')
+  const [activeForm, setActiveForm] = useState<ActiveForm>('primary')
   const [morphusSurfaceType, setMorphusSurfaceType] =
     useState<MorphusSurfaceType>('hard_flat')
   const [morphusStanceType, setMorphusStanceType] =
@@ -822,7 +824,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     psychicSeedRef.current = true
     setPsychicTierState('master')
     setRawCharacter((prev) => {
-      const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+      const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'primary'
       const branch = getFormState(prev, form)
       return {
         ...prev,
@@ -877,8 +879,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const applyFreshCreationSession = useCallback((blank: CharacterRootState) => {
-    setRawCharacter(syncRaceOccFacadeSdc(blank))
-    setActiveForm('facade')
+    setRawCharacter(syncRaceOccPrimarySdc(blank))
+    setActiveForm('primary')
     setPsychicTierState('none')
     setXpHistory([])
     setLevelUpQueue([])
@@ -905,11 +907,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       }),
     )
     setRawCharacter(
-      hydrated.creationVitalityCommitted ? hydrated : syncRaceOccFacadeSdc(hydrated),
+      hydrated.creationVitalityCommitted ? hydrated : syncRaceOccPrimarySdc(hydrated),
     )
     setPsychicTierState(resolveCreationPsychicTier(hydrated))
     setViewport('sheet')
-    setActiveForm('facade')
+    setActiveForm('primary')
     setXpHistory(loadXpHistory(hydrated.name))
     setLevelUpQueue(outstandingLevelUpTargets(hydrated))
     prevMorphusLedgerUnlockedRef.current = null
@@ -1026,7 +1028,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     prevMorphusLedgerUnlockedRef.current = morphusLedgerUnlocked
 
     if (!morphusLedgerUnlocked) {
-      setActiveForm((form) => (form === 'morphus' ? 'facade' : form))
+      setActiveForm((form) => (form === 'morphus' ? 'primary' : form))
       return
     }
 
@@ -1059,7 +1061,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [activeRace],
   )
 
-  const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'facade'
+  const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'primary'
 
   const handToHandCombatProfile = useMemo(
     () => resolveHandToHandCombatProfile(character, sheetActiveForm, activeOcc),
@@ -1363,7 +1365,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     useState<CombatHudDamagePulse>('none')
   const [durationCheckPulse, setDurationCheckPulse] = useState(false)
   const [apmCurrentRaw, setApmCurrentRaw] = useState(() =>
-    computeMaxApm(characterFixture.facade.attributes, characterFixture.level),
+    computeMaxApm(characterFixture.primary.attributes, characterFixture.level),
   )
   const [activeMeleeDurations, setActiveMeleeDurations] = useState<
     ActiveMeleeDuration[]
@@ -1757,7 +1759,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const toggleForm = useCallback(() => {
     if (!characterHasDualForms(character)) return
-    setActiveForm((f) => (f === 'facade' ? 'morphus' : 'facade'))
+    setActiveForm((f) => (f === 'primary' ? 'morphus' : 'primary'))
   }, [character])
 
   const stripPsionicSelections = useCallback((ids: readonly string[]) => {
@@ -1772,7 +1774,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
       setPsychicTierState(tier)
       setRawCharacter((prev) => {
-        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'primary'
         const branch = getFormState(prev, form)
         const tierChanged = prev.creationPsychicTier !== tier
         return {
@@ -1894,7 +1896,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         ...creationInvalidationPatch(prev, 'specialization'),
         occSpecializationId: specializationId,
       }
-      return syncRaceOccFacadeSdc(
+      return syncRaceOccPrimarySdc(
         syncCreationAttributeBranches(
           retainCharacterRoot(
             prev,
@@ -1911,12 +1913,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setRaceId = useCallback((raceId: string | null) => {
     if (!raceId?.trim()) {
-      setActiveForm('facade')
+      setActiveForm('primary')
       setPsychicTierState('none')
       setRawCharacter((prev) => {
-        const cleared = clearOccSelectionState(prev, 'facade')
+        const cleared = clearOccSelectionState(prev, 'primary')
         return syncCreationAttributeBranches(
-          syncRaceOccFacadeSdc({
+          syncRaceOccPrimarySdc({
             ...cleared,
             ...creationInvalidationPatch(prev, 'race'),
             raceId: undefined,
@@ -1941,9 +1943,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }
     const lineage = raceLineageFromDefinition(race)
     const psTier = mapRaceStrengthToPsTier(race.strengthCategory)
-    setActiveForm('facade')
+    setActiveForm('primary')
     setRawCharacter((prev) => {
-      const withRace = syncRaceOccFacadeSdc({
+      const withRace = syncRaceOccPrimarySdc({
         ...prev,
         ...creationInvalidationPatch(prev, 'race'),
         raceId: race.id,
@@ -1977,15 +1979,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       }
 
       if (!psTier) return next
-      const applyTier = (attrs: Character['facade']['attributes']) => ({
+      const applyTier = (attrs: Character['primary']['attributes']) => ({
         ...attrs,
         ps: { ...attrs.ps, tier: psTier },
       })
       return {
         ...next,
-        facade: {
-          ...next.facade,
-          attributes: applyTier(next.facade.attributes),
+        primary: {
+          ...next.primary,
+          attributes: applyTier(next.primary.attributes),
         },
         morphus: {
           ...next.morphus,
@@ -2007,10 +2009,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setRawCharacter((prev) => {
       const pairs: [string, number][] = [
-        ['facade.hitPoints.maximum', rolls.facadeHp],
-        ['facade.hitPoints.current', rolls.facadeHp],
-        ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
-        ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+        ['primary.hitPoints.maximum', rolls.primaryHp],
+        ['primary.hitPoints.current', rolls.primaryHp],
+        ['primary.structuralDamageCapacity.maximum', rolls.primarySdc],
+        ['primary.structuralDamageCapacity.current', rolls.primarySdc],
         ['morphus.hitPoints.maximum', rolls.morphusHp],
         ['morphus.hitPoints.current', rolls.morphusHp],
         ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
@@ -2066,7 +2068,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         const dual = characterHasDualForms(prev)
         let next: CharacterRootState = prev
         if (tabId === 'tab5_finalize') {
-          next = applyFacadePendingDiceResolutions(next, race, occLib, {
+          next = applyPrimaryPendingDiceResolutions(next, race, occLib, {
             supportsDualForm: dual,
             psychicTier: tier,
           })
@@ -2380,7 +2382,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           creationAttributeAssignments: assignments,
           creationAttributePoolSlots: poolSlots,
         }
-        return syncRaceOccFacadeSdc(
+        return syncRaceOccPrimarySdc(
           syncCreationAttributeBranches(withAssignments, occ),
         )
       })
@@ -2408,7 +2410,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           creationAttributeAssignments: assignments,
           creationAttributePoolSlots: poolSlots,
         }
-        return syncRaceOccFacadeSdc(
+        return syncRaceOccPrimarySdc(
           syncCreationAttributeBranches(withAssignments, occ),
         )
       })
@@ -2449,7 +2451,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             race?.attributes,
             occ,
           )
-          return syncRaceOccFacadeSdc(
+          return syncRaceOccPrimarySdc(
             syncCreationAttributeBranches(withPool, occ),
           )
         })
@@ -2469,7 +2471,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             attr,
             race?.attributes,
           )
-          return syncRaceOccFacadeSdc(
+          return syncRaceOccPrimarySdc(
             syncCreationAttributeBranches(withAttr, occ),
           )
         })
@@ -2528,7 +2530,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     if (!import.meta.env.DEV) return
     void import('../lib/dev/devSkipToMorphusCreation').then(
       ({ buildDevSkipToMorphusCreationState }) => {
-        setActiveForm('facade')
+        setActiveForm('primary')
         setPsychicTierState('none')
         setRawCharacter((prev) => buildDevSkipToMorphusCreationState(prev))
       },
@@ -2546,7 +2548,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             [taskId]: value,
           },
         }
-        return syncRaceOccFacadeSdc(
+        return syncRaceOccPrimarySdc(
           syncCreationAttributeBranches(withResolution, occ),
         )
       })
@@ -2615,7 +2617,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setAlignment = useCallback((alignment: string) => {
     setRawCharacter((prev) => ({
       ...prev,
-      facade: { ...prev.facade, alignment },
+      primary: { ...prev.primary, alignment },
       morphus: { ...prev.morphus, alignment },
     }))
   }, [])
@@ -2694,7 +2696,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             ppe: { ...prev.ppe, current: prev.ppe.current - amount },
           }
         }
-        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
+        const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'primary'
         const branch = getFormState(prev, form)
         if (branch.isp.current < amount) return prev
         return {

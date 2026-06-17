@@ -3,6 +3,7 @@ import type { ForgeAttrKey } from './attributeKeys'
 import { isDiceNotation } from './diceNotationBounds'
 import { normalizeDiceDisplay } from './ledgerStatBonuses'
 import { getRacePpeNotation } from './raceEngine'
+import { dualFormPeHintLabel } from './creationFormLabels'
 
 const UNASSIGNED = '—'
 
@@ -220,7 +221,7 @@ export function buildAttrFormulaLedgerFields(
     hintOverride?: string
     unassignedValue?: string
     attrScores?: Partial<Record<ForgeAttrKey, number>>
-    /** Dual-form: label attribute terms in the hint (e.g. PE → `PE (facade)`). */
+    /** Dual-form: label attribute terms in the hint (e.g. PE → `PE (Facade)`). */
     attrFormLabels?: Partial<Record<ForgeAttrKey, string>>
   },
 ): AttrFormulaLedgerFields {
@@ -283,16 +284,16 @@ export function resolvePpeCreationFormula(
 }
 
 /** Dual-form P.P.E. always derives from Facade P.E. — label and score overrides for the ledger. */
-export function dualFormPpeLedgerFormulaOpts(facadePe: number | null | undefined): {
+export function dualFormPpeLedgerFormulaOpts(primaryPe: number | null | undefined): {
   attrFormLabels: Partial<Record<ForgeAttrKey, string>>
   attrScores?: Partial<Record<ForgeAttrKey, number>>
 } {
   const opts: {
     attrFormLabels: Partial<Record<ForgeAttrKey, string>>
     attrScores?: Partial<Record<ForgeAttrKey, number>>
-  } = { attrFormLabels: { pe: 'facade' } }
-  if (facadePe != null && Number.isFinite(facadePe)) {
-    opts.attrScores = { pe: facadePe }
+  } = { attrFormLabels: { pe: dualFormPeHintLabel() } }
+  if (primaryPe != null && Number.isFinite(primaryPe)) {
+    opts.attrScores = { pe: primaryPe }
   }
   return opts
 }

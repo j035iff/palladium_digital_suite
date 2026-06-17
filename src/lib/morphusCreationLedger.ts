@@ -92,12 +92,12 @@ export function parseCreationLedgerNumericValue(value: string): number | null {
   return Number.isFinite(n) ? n : null
 }
 
-/** Morphus attribute tooltip — Facade total plus each Morphus-only delta. */
-export function formatMorphusVsFacadeTooltip(
-  facadeTotal: number,
+/** Morphus attribute tooltip — human-form total plus each Morphus-only delta. */
+export function formatMorphusVsPrimaryTooltip(
+  primaryTotal: number,
   morphusDeltas: readonly LedgerFlatContribution[],
 ): string {
-  const parts = [`Facade ${facadeTotal}`]
+  const parts = [`Facade ${primaryTotal}`]
   for (const item of morphusDeltas) {
     parts.push(`${item.label} ${item.amount >= 0 ? '+' : ''}${item.amount}`)
   }
@@ -250,17 +250,17 @@ export function parseLedgerHintParts(
 }
 
 function hintPartsDelta(
-  facadeParts: readonly { label: string; amount: number }[],
+  primaryParts: readonly { label: string; amount: number }[],
   morphusParts: readonly { label: string; amount: number }[],
 ): LedgerFlatContribution[] {
-  const facadeMap = new Map(facadeParts.map((part) => [part.label, part.amount]))
+  const primaryMap = new Map(primaryParts.map((part) => [part.label, part.amount]))
   const deltas: LedgerFlatContribution[] = []
   for (const part of morphusParts) {
-    const facadeAmount = facadeMap.get(part.label) ?? 0
-    const delta = part.amount - facadeAmount
+    const primaryAmount = primaryMap.get(part.label) ?? 0
+    const delta = part.amount - primaryAmount
     if (delta !== 0) deltas.push({ label: part.label, amount: delta })
   }
-  for (const [label, amount] of facadeMap) {
+  for (const [label, amount] of primaryMap) {
     if (!morphusParts.some((part) => part.label === label) && amount !== 0) {
       deltas.push({ label, amount: -amount })
     }
@@ -268,12 +268,12 @@ function hintPartsDelta(
   return deltas
 }
 
-function morphusTextTooltip(facadeValue: string, morphusValue: string): string {
-  if (facadeValue === morphusValue) return morphusValue
-  if (facadeValue === LEDGER_NA || facadeValue === LEDGER_UNASSIGNED) {
-    return `Facade ${facadeValue}, Base ${morphusValue}`
+function morphusTextTooltip(primaryValue: string, morphusValue: string): string {
+  if (primaryValue === morphusValue) return morphusValue
+  if (primaryValue === LEDGER_NA || primaryValue === LEDGER_UNASSIGNED) {
+    return `Facade ${primaryValue}, Base ${morphusValue}`
   }
-  return `Facade ${facadeValue}, Base ${morphusValue}`
+  return `Facade ${primaryValue}, Base ${morphusValue}`
 }
 
 function formatNativeCombatTooltip(line: MorphusDiffLedgerLine): string | undefined {
@@ -287,13 +287,13 @@ function formatNativeCombatTooltip(line: MorphusDiffLedgerLine): string | undefi
 }
 
 /** Combat rows: form-native breakdown only (no Facade prefix — combat is computed per form). */
-export function applyMorphusVsFacadeCombatLedgerDiff<
+export function applyMorphusVsPrimaryCombatLedgerDiff<
   T extends MorphusDiffLedgerLine,
->(morphusLines: readonly T[], facadeLines: readonly MorphusDiffLedgerLine[]): T[] {
-  const facadeByLabel = new Map(facadeLines.map((line) => [line.label, line]))
+>(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+  const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
   return morphusLines.map((morphusLine) => {
-    const facadeLine = facadeByLabel.get(morphusLine.label)
-    if (!facadeLine || morphusLine.value === facadeLine.value) {
+    const primaryLine = primaryByLabel.get(morphusLine.label)
+    if (!primaryLine || morphusLine.value === primaryLine.value) {
       return { ...morphusLine, valueModified: morphusLine.valueModified === true }
     }
 
@@ -306,70 +306,70 @@ export function applyMorphusVsFacadeCombatLedgerDiff<
 }
 
 /** Green highlight + Facade-relative tooltip for Morphus ledger rows. */
-export function applyMorphusVsFacadeLedgerDiff<
+export function applyMorphusVsPrimaryLedgerDiff<
   T extends MorphusDiffLedgerLine,
->(morphusLines: readonly T[], facadeLines: readonly MorphusDiffLedgerLine[]): T[] {
-  const facadeByLabel = new Map(facadeLines.map((line) => [line.label, line]))
+>(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+  const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
   return morphusLines.map((morphusLine) => {
-    const facadeLine = facadeByLabel.get(morphusLine.label)
-    if (!facadeLine || morphusLine.value === facadeLine.value) {
+    const primaryLine = primaryByLabel.get(morphusLine.label)
+    if (!primaryLine || morphusLine.value === primaryLine.value) {
       return { ...morphusLine, valueModified: morphusLine.valueModified === true }
     }
 
-    const facadeNum =
-      parseCreationLedgerNumericValue(facadeLine.value) ??
-      parseLedgerSignedBonus(facadeLine.value)
+    const primaryNum =
+      parseCreationLedgerNumericValue(primaryLine.value) ??
+      parseLedgerSignedBonus(primaryLine.value)
     const morphusNum =
       parseCreationLedgerNumericValue(morphusLine.value) ??
       parseLedgerSignedBonus(morphusLine.value)
 
-    if (facadeNum != null && morphusNum != null) {
+    if (primaryNum != null && morphusNum != null) {
       let deltas = hintPartsDelta(
-        parseLedgerHintParts(facadeLine.hint),
+        parseLedgerHintParts(primaryLine.hint),
         parseLedgerHintParts(morphusLine.hint),
       )
-      if (deltas.length === 0 && morphusNum !== facadeNum) {
-        deltas = [{ label: 'Morphus', amount: morphusNum - facadeNum }]
+      if (deltas.length === 0 && morphusNum !== primaryNum) {
+        deltas = [{ label: 'Morphus', amount: morphusNum - primaryNum }]
       }
       return {
         ...morphusLine,
         valueModified: true,
-        valueTooltip: formatMorphusVsFacadeTooltip(facadeNum, deltas),
+        valueTooltip: formatMorphusVsPrimaryTooltip(primaryNum, deltas),
       }
     }
 
     return {
       ...morphusLine,
       valueModified: true,
-      valueTooltip: morphusTextTooltip(facadeLine.value, morphusLine.value),
+      valueTooltip: morphusTextTooltip(primaryLine.value, morphusLine.value),
     }
   })
 }
 
-export function applyMorphusVsFacadeLedgerGroupDiff<
+export function applyMorphusVsPrimaryLedgerGroupDiff<
   T extends MorphusDiffLedgerLine,
 >(
   morphusGroups: readonly { title: string; lines: readonly T[] }[],
-  facadeGroups: readonly MorphusDiffLedgerGroup[],
+  primaryGroups: readonly MorphusDiffLedgerGroup[],
 ): { title: string; lines: T[] }[] {
-  const facadeByTitle = new Map(facadeGroups.map((group) => [group.title, group.lines]))
+  const primaryByTitle = new Map(primaryGroups.map((group) => [group.title, group.lines]))
   return morphusGroups.map((group) => ({
     title: group.title,
-    lines: applyMorphusVsFacadeLedgerDiff(
+    lines: applyMorphusVsPrimaryLedgerDiff(
       group.lines,
-      facadeByTitle.get(group.title) ?? [],
+      primaryByTitle.get(group.title) ?? [],
     ),
   }))
 }
 
 /** Exceptional bonuses: green when Morphus differs from Facade — no Facade-relative tooltip. */
-export function applyMorphusVsFacadeExceptionalLedgerDiff<
+export function applyMorphusVsPrimaryExceptionalLedgerDiff<
   T extends MorphusDiffLedgerLine,
->(morphusLines: readonly T[], facadeLines: readonly MorphusDiffLedgerLine[]): T[] {
-  const facadeByLabel = new Map(facadeLines.map((line) => [line.label, line]))
+>(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+  const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
   return morphusLines.map((morphusLine) => {
-    const facadeLine = facadeByLabel.get(morphusLine.label)
-    if (!facadeLine || morphusLine.value === facadeLine.value) {
+    const primaryLine = primaryByLabel.get(morphusLine.label)
+    if (!primaryLine || morphusLine.value === primaryLine.value) {
       return { ...morphusLine, valueModified: morphusLine.valueModified === true }
     }
     return {
@@ -380,18 +380,18 @@ export function applyMorphusVsFacadeExceptionalLedgerDiff<
   })
 }
 
-export function applyMorphusVsFacadeExceptionalLedgerGroupDiff<
+export function applyMorphusVsPrimaryExceptionalLedgerGroupDiff<
   T extends MorphusDiffLedgerLine,
 >(
   morphusGroups: readonly { title: string; lines: readonly T[] }[],
-  facadeGroups: readonly MorphusDiffLedgerGroup[],
+  primaryGroups: readonly MorphusDiffLedgerGroup[],
 ): { title: string; lines: T[] }[] {
-  const facadeByTitle = new Map(facadeGroups.map((group) => [group.title, group.lines]))
+  const primaryByTitle = new Map(primaryGroups.map((group) => [group.title, group.lines]))
   return morphusGroups.map((group) => ({
     title: group.title,
-    lines: applyMorphusVsFacadeExceptionalLedgerDiff(
+    lines: applyMorphusVsPrimaryExceptionalLedgerDiff(
       group.lines,
-      facadeByTitle.get(group.title) ?? [],
+      primaryByTitle.get(group.title) ?? [],
     ),
   }))
 }
@@ -443,7 +443,7 @@ function collectTraitAttributeDeltas(
 function resolveMorphusAttributeTotal(
   character: Character,
   attr: ForgeAttrKey,
-  facadeTotal: number | null,
+  primaryTotal: number | null,
   baseProfile: NightbaneMorphusBaseProfile,
 ): {
   morphusTotal: number | null
@@ -464,7 +464,7 @@ function resolveMorphusAttributeTotal(
 
   const polymorphicBase = baseApplied
     ? readMorphusStoredScalar(character, attr)
-    : (facadeTotal ?? 0) + baseBump
+    : (primaryTotal ?? 0) + baseBump
 
   for (const traitDelta of collectTraitAttributeDeltas(traits, attr, polymorphicBase)) {
     morphusDeltas.push(traitDelta)
@@ -481,12 +481,12 @@ function resolveMorphusAttributeTotal(
     return { morphusTotal, morphusDeltas, pendingMinFloor }
   }
 
-  if (facadeTotal == null) {
+  if (primaryTotal == null) {
     return { morphusTotal: null, morphusDeltas: [], pendingMinFloor }
   }
 
   const rawTotal =
-    facadeTotal + morphusDeltas.reduce((sum, delta) => sum + delta.amount, 0)
+    primaryTotal + morphusDeltas.reduce((sum, delta) => sum + delta.amount, 0)
   const morphusTotal = applyMorphusAttributeMinFloor(
     rawTotal,
     finalized ? pendingMinFloor : undefined,
@@ -498,43 +498,43 @@ function resolveMorphusAttributeTotal(
  * Morphus Live Ledger attributes: Facade totals as baseline, Morphus-only bumps in green.
  */
 export function buildMorphusCreationAttributeBlock(
-  facadeLines: readonly MorphusAttributeLedgerLine[],
+  primaryLines: readonly MorphusAttributeLedgerLine[],
   character: Character,
 ): MorphusAttributeLedgerLine[] {
   const baseProfile = NIGHTBANE_MORPHUS_BASE_PROFILE
 
   return FORGE_ATTRIBUTE_KEYS.map((attr, index) => {
-    const facadeLine = facadeLines[index] ?? {
+    const primaryLine = primaryLines[index] ?? {
       label: ATTR_LEDGER_LABELS[attr],
       value: LEDGER_UNASSIGNED,
     }
-    const facadeTotal = parseCreationLedgerNumericValue(facadeLine.value)
+    const primaryTotal = parseCreationLedgerNumericValue(primaryLine.value)
     const { morphusTotal, morphusDeltas, pendingMinFloor } = resolveMorphusAttributeTotal(
       character,
       attr,
-      facadeTotal,
+      primaryTotal,
       baseProfile,
     )
 
     const finalized = character.creationTraitForgeStubComplete === true
     const minSuffix =
       !finalized && pendingMinFloor != null ? `(min ${pendingMinFloor})` : undefined
-    const labelSuffix = [facadeLine.labelSuffix, minSuffix].filter(Boolean).join(' ') || undefined
+    const labelSuffix = [primaryLine.labelSuffix, minSuffix].filter(Boolean).join(' ') || undefined
 
-    const differsFromFacade =
-      morphusTotal != null && facadeTotal != null && morphusTotal !== facadeTotal
+    const differsFromPrimary =
+      morphusTotal != null && primaryTotal != null && morphusTotal !== primaryTotal
 
     return {
-      label: facadeLine.label,
-      inlineRaceRoll: facadeLine.inlineRaceRoll,
+      label: primaryLine.label,
+      inlineRaceRoll: primaryLine.inlineRaceRoll,
       labelSuffix,
-      value: morphusTotal != null ? String(morphusTotal) : facadeLine.value,
-      valueModified: differsFromFacade,
+      value: morphusTotal != null ? String(morphusTotal) : primaryLine.value,
+      valueModified: differsFromPrimary,
       valueTooltip:
-        differsFromFacade && facadeTotal != null
-          ? formatMorphusVsFacadeTooltip(facadeTotal, morphusDeltas)
-          : facadeLine.valueTooltip,
-      diceGroups: facadeLine.diceGroups,
+        differsFromPrimary && primaryTotal != null
+          ? formatMorphusVsPrimaryTooltip(primaryTotal, morphusDeltas)
+          : primaryLine.valueTooltip,
+      diceGroups: primaryLine.diceGroups,
     }
   })
 }

@@ -62,9 +62,11 @@ Options are never hidden; they are sorted and color-coded:
 
 | Topic | Doc |
 |-------|-----|
-| Attribute pool & Live Ledger | `docs/attribute_and_stat.md` |
+| **Stat formulas (source of truth)** | `docs/stat_engine_spec.md` |
+| Live Ledger quick reference | `docs/live_ledger.md` |
+| Attribute architecture & exceptional tables | `docs/attribute_and_stat.md` |
 | Psychic Gate | `docs/psychic_gate.md` |
-| Morphus (future Sub-Forge) | Separate Morphus spec; `src/data/content/morphus/` |
+| Morphus (future Sub-Forge) | `docs/forge-morphus_creation.md`; `src/data/content/morphus/` |
 | Combat / vitals scaling | `docs/combat_logic.md` |
 
 ---

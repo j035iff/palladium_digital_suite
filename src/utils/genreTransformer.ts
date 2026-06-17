@@ -85,7 +85,7 @@ export function transformCharacterToHostEnvironment(
   const derived: DerivedActiveState = {
     ...rawCharacter,
     hostGenreId: host,
-    facade: deriveFormBranch(rawCharacter.facade, host),
+    primary: deriveFormBranch(rawCharacter.primary, host),
     morphus: deriveFormBranch(rawCharacter.morphus, host),
   }
 

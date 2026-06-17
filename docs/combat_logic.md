@@ -33,10 +33,13 @@ To satisfy the "Megaversal Bridge," P.S. is not just a number; it has a **Power 
 ## 3. The Melee Economy (APM Tracker)
 Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per Melee" (A.P.M.).
 
+**APM stacking formula** (PC base, HtH, Race, OCC, Skills, Morphus base, traits): `docs/stat_engine_spec.md` §4.5 and §5.4.  
+**Core term** (`2 + HtH`, uncapped): `src/lib/meleeCombat.ts`.
+
 ### The APM Sequence:
 1. **Reset Event**: At the start of a round, the character's `Current_APM` is set to their `Max_APM`.
 2. **Spend Action**: Every offensive, defensive (active), or magical action decrements `Current_APM` by 1.
-3. **The "Out of Actions" State**: When `Current_APM` hits 0, the character can no longer Parry or Strike.
+3. **The "Out of Actions" State**: When `Current_APM` hits 0, the character can no longer Dodge or Strike, character may still Parry as that is a "free" action.
 
 ---
 

@@ -35,7 +35,7 @@ export type StrikeBreakdown = {
  */
 export function computeWeaponStrikeBreakdown(
   character: Character,
-  activeForm: 'facade' | 'morphus',
+  activeForm: 'primary' | 'morphus',
   weapon: Weapon,
   handToHandAccumulated?: AccumulatedHandToHandBonuses,
 ): StrikeBreakdown {
@@ -49,7 +49,7 @@ export function computeWeaponStrikeBreakdown(
  */
 export function computeUnarmedStrikeBreakdown(
   character: Character,
-  activeForm: 'facade' | 'morphus',
+  activeForm: 'primary' | 'morphus',
   handToHand?: { skillName: string | null; accumulated: AccumulatedHandToHandBonuses },
 ): StrikeBreakdown {
   const attrs = getFormState(character, activeForm).attributes
@@ -70,7 +70,7 @@ export function computeUnarmedStrikeBreakdown(
 /** Display string for unarmed damage (standard/extraordinary or supernatural punch grid). */
 export function unarmedDamageLabel(
   character: Character,
-  activeForm: 'facade' | 'morphus',
+  activeForm: 'primary' | 'morphus',
   hthDamageBonus = 0,
 ): string {
   const ps = getFormState(character, activeForm).attributes.ps

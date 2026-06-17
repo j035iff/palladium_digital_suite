@@ -67,7 +67,7 @@ function buildSkillEquationInput(
 export function projectCreationSkillsToSheet(
   character: CharacterRootState,
   occ?: PalladiumOcc,
-  activeForm: ActiveForm = 'facade',
+  activeForm: ActiveForm = 'primary',
   psychicTier?: PsychicTier,
 ): SheetSkill[] {
   const occIds = character.creationOccSkillIds ?? []
@@ -109,7 +109,7 @@ export function projectCreationSkillsToSheet(
     secondaryPicks,
   )
   if (hthId) selectedSet.add(hthId)
-  const branch = activeForm === 'morphus' ? character.morphus : character.facade
+  const branch = activeForm === 'morphus' ? character.morphus : character.primary
   const attrs = branch.attributes
   const tier = psychicTier ?? resolveCreationPsychicTier(character)
 
@@ -244,13 +244,13 @@ export function applySpawnSheetHandoff(
     ]),
   ]
 
-  const facadeSkills = projectCreationSkillsToSheet(prev, occ, 'facade', tier)
+  const primarySkills = projectCreationSkillsToSheet(prev, occ, 'primary', tier)
   const morphusSkills = projectCreationSkillsToSheet(prev, occ, 'morphus', tier)
 
   return {
     ...prev,
     creationPsychicTier: tier,
-    facade: finalizeFormBranch(prev.facade, facadeSkills, skillIds),
+    primary: finalizeFormBranch(prev.primary, primarySkills, skillIds),
     morphus: finalizeFormBranch(prev.morphus, morphusSkills, skillIds),
     isFinalized: true,
   }

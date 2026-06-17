@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { getRaceById } from '../data/library/registry'
 import { getPalladiumOccById } from '../data/library/occCatalogLoader'
-import { rollFacadeSdcMaximum } from './spawnFinalVitality'
+import { rollPrimarySdcMaximum } from './spawnFinalVitality'
 import { rollDiceNotation } from './diceNotation'
 
 const blankAttrs = {
@@ -15,13 +15,13 @@ const blankAttrs = {
   spd: 10,
 }
 
-describe('rollFacadeSdcMaximum', () => {
+describe('rollPrimarySdcMaximum', () => {
   it('accepts flat race S.D.C. bases (Nightbane R.C.C. = 30)', () => {
     const race = getRaceById('nightbane')
     const occ = getPalladiumOccById('occ_nightbane_basic')
     expect(race).toBeDefined()
     expect(occ).toBeDefined()
-    expect(rollFacadeSdcMaximum(blankAttrs, { race, occ })).toBe(30)
+    expect(rollPrimarySdcMaximum(blankAttrs, { race, occ })).toBe(30)
   })
 })
 

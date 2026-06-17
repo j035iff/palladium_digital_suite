@@ -25,7 +25,7 @@ describe('resolveAttributeOnlySave', () => {
       saveKind: 'vs_becoming',
       displayPe: 12,
       displayMe: 25,
-      facadeMe: 19,
+      primaryMe: 19,
       characterLevel: 5,
     })
     expect(resolved.baseTarget).toBe(12)
@@ -40,7 +40,7 @@ describe('computeAttributeSaveProfile', () => {
     const megaversal = computeAttributeSaveProfile(18, 16, 1, false)
     expect(megaversal.map((r) => r.id)).toEqual(['base_pe_bonus', 'base_me_bonus'])
 
-    const nightbane = computeAttributeSaveProfile(18, 19, 3, true, { facadeMe: 19 })
+    const nightbane = computeAttributeSaveProfile(18, 19, 3, true, { primaryMe: 19 })
     expect(nightbane.map((r) => r.id)).toEqual([
       'base_pe_bonus',
       'base_me_bonus',
@@ -52,7 +52,7 @@ describe('computeAttributeSaveProfile', () => {
   })
 
   it('uses Facade M.E. for Becoming even when Morphus M.E. is higher', () => {
-    const rows = computeAttributeSaveProfile(18, 30, 3, true, { facadeMe: 12 })
+    const rows = computeAttributeSaveProfile(18, 30, 3, true, { primaryMe: 12 })
     const becoming = rows.find((r) => r.id === 'vs_becoming')
     expect(becoming?.totalRollBonus).toBe(2)
   })
@@ -60,7 +60,7 @@ describe('computeAttributeSaveProfile', () => {
 
 describe('computeSaveProfile', () => {
   it('shows GM target and roll bonus separately', () => {
-    const profile = computeSaveProfile(characterFixture, 'facade', 15, false)
+    const profile = computeSaveProfile(characterFixture, 'primary', 15, false)
     const magic = profile.saves.find((s) => s.id === 'magic_spell')
     expect(magic?.baseTarget).toBe(12)
     expect(magic?.totalBonus).toBeGreaterThanOrEqual(0)
@@ -70,7 +70,7 @@ describe('computeSaveProfile', () => {
   })
 
   it('exposes attribute saves on the sheet profile', () => {
-    const profile = computeSaveProfile(characterFixture, 'facade', 15, false)
+    const profile = computeSaveProfile(characterFixture, 'primary', 15, false)
     expect(profile.attributeSaves.length).toBe(2)
     expect(profile.attributeSaves[0]?.id).toBe('base_pe_bonus')
   })

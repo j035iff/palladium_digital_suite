@@ -37,7 +37,7 @@ export function parseAttributePath(
   const parts = path.trim().split('.').filter(Boolean)
   if (parts.length < 2) return null
 
-  if (parts[0] === 'facade' || parts[0] === 'morphus') {
+  if (parts[0] === 'primary' || parts[0] === 'morphus') {
     if (parts[1] !== 'attributes') return null
     return { formKey: parts[0], tail: parts.slice(2) }
   }

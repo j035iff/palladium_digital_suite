@@ -26,7 +26,7 @@ export type SkillPercentBreakdown = {
 export function buildSkillPercentContext(
   character: Pick<
     Character,
-    'level' | 'facade' | 'activeMorphusCharacteristicIds'
+    'level' | 'primary' | 'activeMorphusCharacteristicIds'
   >,
   activeForm: ActiveForm,
   iqBonus: number,
@@ -38,7 +38,7 @@ export function buildSkillPercentContext(
     iqBonus,
     maPbBonus,
     activeForm,
-    facadePp: character.facade.attributes.pp,
+    primaryPp: character.primary.attributes.pp,
     morphusSurfaceType,
     activeMorphusCharacteristics: resolveActiveMorphusTraits(character),
   }
@@ -50,7 +50,7 @@ export type SkillPercentResolutionContext = {
   maPbBonus?: number
   activeForm: ActiveForm
   /** Facade P.P. for optional low-dexterity / light-touch penalties. */
-  facadePp: number
+  primaryPp: number
   activeMorphusCharacteristics?: readonly MorphusCharacteristic[]
   /** Terrain surface for Morphus mobility-isolated skill rows (default hard_flat). */
   morphusSurfaceType?: MorphusSurfaceType

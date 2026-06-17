@@ -8,7 +8,7 @@ import type {
 
 const FORM_LABELS: Record<TalentFormRestriction['form'], string> = {
   morphus_only: 'Morphus only',
-  facade_only: 'Facade only',
+  primary_only: 'Facade only',
   either_form: 'Facade or Morphus',
 }
 
@@ -23,7 +23,7 @@ const EFFECTIVENESS_LABELS: Record<
 
 const SIMPLE_FORM_LABELS: Record<TalentUsableInNightbaneForm, string> = {
   morphus_only: 'Morphus only',
-  facade_only: 'Facade only',
+  primary_only: 'Facade only',
   either_form: 'Facade or Morphus',
   varies_by_scope: 'Varies by target or phase',
   both_forms_note_special: 'Varies by target or phase',

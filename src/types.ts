@@ -7,8 +7,8 @@ import type { CreationPhase } from './lib/creationStep'
 import type { ForgeAttrKey } from './lib/attributeKeys'
 import type { CreationHandToHandTier } from './lib/creationHandToHandChoice'
 
-/** Facade vs Morphus toggle drives which FormState is authoritative for mechanical values. */
-export type ActiveForm = 'facade' | 'morphus'
+/** Nightbane dual-form toggle — primary sheet vs Morphus. */
+export type ActiveForm = 'primary' | 'morphus'
 
 /** Psychic Gate tier (psychic_gate.md). */
 export type PsychicTier = 'none' | 'minor' | 'major' | 'master'
@@ -489,7 +489,7 @@ export type HandToHandProgressionLevel = {
   fromBehindDamageMultiplier?: number
 }
 
-export type TalentFormRequirement = 'morphus' | 'facade' | 'either'
+export type TalentFormRequirement = 'morphus' | 'primary' | 'either'
 
 export type TalentTier =
   | 'common'
@@ -500,7 +500,7 @@ export type TalentTier =
 
 export type TalentUsableInNightbaneForm =
   | 'morphus_only'
-  | 'facade_only'
+  | 'primary_only'
   | 'either_form'
   | 'varies_by_scope'
   | 'both_forms_note_special'
@@ -508,7 +508,7 @@ export type TalentUsableInNightbaneForm =
 /** Facade/Morphus allowance for one scope (target or phase). */
 export type TalentFormRestrictionForm =
   | 'morphus_only'
-  | 'facade_only'
+  | 'primary_only'
   | 'either_form'
 
 export type TalentFormEffectiveness = 'full' | 'base_only' | 'reduced'
@@ -2288,7 +2288,7 @@ export type DerivedFormState = Omit<FormState, 'skills'> & {
 
 /** UI-facing payload emitted by genreTransformer (read-only for presentation). */
 export type DerivedActiveState = CharacterRootState & {
-  facade: DerivedFormState
+  primary: DerivedFormState
   morphus: DerivedFormState
 }
 
@@ -2379,8 +2379,8 @@ export type Character = {
   morphusHouseRules?: MorphusHouseRules
   /** Spawn panel: player committed rolled H.P./S.D.C./P.P.E./I.S.P. */
   creationVitalityCommitted?: boolean
-  /** Finalize tab — facade / single-form physical dice applied. */
-  creationFacadeDiceFinalized?: boolean
+  /** Finalize tab — primary / single-form physical dice applied. */
+  creationPrimaryDiceFinalized?: boolean
   /** Traits tab — morphus vitality dice applied (Nightbane). */
   creationMorphusDiceFinalized?: boolean
   /** Live Ledger Morphus toggle unlocked after first Traits tab visit (cleared only by creation Reset). */
@@ -2431,7 +2431,7 @@ export type Character = {
   activeMorphusCharacteristicIds?: readonly string[]
   /** Sub-Forge trait slots (catalog + optional custom instance). Preferred over bare ids. */
   morphusTraitSlotResolutions?: readonly MorphusTraitSlotResolution[]
-  facade: FormState
+  primary: FormState
   morphus: FormState
 }
 
@@ -2554,5 +2554,5 @@ export function getFormState(
   character: Character,
   activeForm: ActiveForm,
 ): FormState {
-  return activeForm === 'facade' ? character.facade : character.morphus
+  return activeForm === 'primary' ? character.primary : character.morphus
 }

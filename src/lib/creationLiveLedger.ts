@@ -38,6 +38,7 @@ import {
 } from './ledgerVitalFormula'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
 import { characterHasDualForms } from './raceFormPolicy'
+import { primaryFormSdcBreakdownLabel } from './creationFormLabels'
 import {
   flattenCreationSkillIds,
   getCreationRelatedPicks,
@@ -85,11 +86,11 @@ import {
 } from './spawnDiceBlocks'
 import {
   applyLedgerAttributeScores,
-  applyMorphusVsFacadeCombatLedgerDiff,
-  applyMorphusVsFacadeExceptionalLedgerDiff,
-  applyMorphusVsFacadeExceptionalLedgerGroupDiff,
-  applyMorphusVsFacadeLedgerDiff,
-  applyMorphusVsFacadeLedgerGroupDiff,
+  applyMorphusVsPrimaryCombatLedgerDiff,
+  applyMorphusVsPrimaryExceptionalLedgerDiff,
+  applyMorphusVsPrimaryExceptionalLedgerGroupDiff,
+  applyMorphusVsPrimaryLedgerDiff,
+  applyMorphusVsPrimaryLedgerGroupDiff,
   buildMorphusCreationAttributeBlock,
   buildMorphusCreationBasePassiveModifiers,
   buildMorphusTraitSdcBonusDetails,
@@ -848,22 +849,22 @@ export function buildCreationVitalsBlock(opts: {
 
   const hpFormula = opts.race ? (opts.race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
-    hintOverride: preview.facadeHpRollHint,
+    hintOverride: preview.primaryHpRollHint,
     ...formulaAttrOpts,
   })
   const ppeFormula =
     opts.race && opts.occ?.id?.trim()
       ? resolvePpeCreationFormula(opts.race, opts.occ)
       : null
-  const facadePeScore =
+  const primaryPeScore =
     assignments.pe ??
     (opts.supportsDualForm
-      ? opts.character.facade.attributes.pe
+      ? opts.character.primary.attributes.pe
       : opts.attrs.pe)
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: opts.occ?.ppeEngine?.perLevelFormula,
     ...(opts.supportsDualForm
-      ? dualFormPpeLedgerFormulaOpts(facadePeScore)
+      ? dualFormPpeLedgerFormulaOpts(primaryPeScore)
       : formulaAttrOpts),
   })
   const ispFormula = resolveIspCreationFormula(opts.occ, opts.psychicTier, showIsp)
@@ -910,7 +911,7 @@ export function buildCreationVitalsBlock(opts: {
 
   const morphusSdcFlatBreakdown = [
     ...(pendingById.sdc
-      ? [{ label: 'Facade S.D.C.', amount: pendingDiceBlockRunningTotal(pendingById.sdc, resolutions) }]
+      ? [{ label: primaryFormSdcBreakdownLabel(), amount: pendingDiceBlockRunningTotal(pendingById.sdc, resolutions) }]
       : sdcBonuses.flatBreakdown),
     ...traitSdc.flatBreakdown,
   ]
@@ -929,7 +930,7 @@ export function buildCreationVitalsBlock(opts: {
                   ? pendingDiceBlockRunningTotal(pendingById.morphus_sdc, resolutions)
                   : morphusSdcFlatTotal,
               )
-            : preview.facadeSdcValue,
+            : preview.primarySdcValue,
         valueModified:
           morphusSdcFlatTotal > 0 ||
           traitSdc.diceContributions.length > 0 ||
@@ -945,7 +946,7 @@ export function buildCreationVitalsBlock(opts: {
         value:
           sdcBonuses.flatTotal > 0
             ? String(sdcBonuses.flatTotal)
-            : preview.facadeSdcValue,
+            : preview.primarySdcValue,
         valueModified: sdcBonuses.flatTotal > 0,
         valueTooltip: formatFlatValueTooltip(sdcBonuses.flatBreakdown),
         diceGroups:
@@ -1010,7 +1011,7 @@ export function buildCreationSavesBlock(
   activeForm: ActiveForm,
   occ?: PalladiumOcc,
   supportsDualForm = false,
-  facadeMe?: number,
+  primaryMe?: number,
   psychicTier: PsychicTier = 'none',
 ): CreationLedgerLine[] {
   const specId = character.occSpecializationId
@@ -1176,7 +1177,7 @@ export function buildCreationSavesBlock(
           : undefined,
     },
     ...computeAttributeSaveProfile(attrs.pe, attrs.me, character.level, supportsDualForm, {
-      facadeMe,
+      primaryMe,
     }).map((row) => {
       if (row.rollStyle === 'bonus_only') {
         return {
@@ -1288,12 +1289,10 @@ function buildAttacksPerMeleeLine(
   baseApm: number,
   hthLabel: string | null,
 ): CreationLedgerLine {
-  const levelBump = Math.min(3, Math.floor(level / 4))
   const core = computeMaxApm(attrs, level, hthAttackBonus)
   const total = core + skillApm + traitApm + baseApm
 
   const hintParts = ['Base: 2']
-  if (levelBump > 0) hintParts.push(`Level: +${levelBump}`)
   if (hthAttackBonus > 0) {
     hintParts.push(
       hthLabel ? `HtH ${hthLabel}: +${hthAttackBonus}` : `Hand-to-hand: +${hthAttackBonus}`,
@@ -1688,9 +1687,9 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     opts.character.creationPendingDiceResolutions ?? {},
   )
 
-  const facadeAttrs = getFormState(opts.character, 'facade').attributes
-  const facadeEffectiveAttrs = resolveLedgerEffectiveAttributes(
-    facadeAttrs,
+  const primaryAttrs = getFormState(opts.character, 'primary').attributes
+  const primaryEffectiveAttrs = resolveLedgerEffectiveAttributes(
+    primaryAttrs,
     opts.character.creationAttributeAssignments,
     opts.race,
     opts.occ,
@@ -1700,8 +1699,8 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingAttrBonuses,
   )
 
-  const facadeAttributeLines = buildCreationAttributeBlock(
-    facadeAttrs,
+  const primaryAttributeLines = buildCreationAttributeBlock(
+    primaryAttrs,
     opts.character.creationAttributeAssignments,
     opts.race,
     opts.occ,
@@ -1715,8 +1714,8 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     opts.activeForm === 'morphus' && opts.supportsDualForm === true
 
   const attributeLines = morphusLedger
-    ? buildMorphusCreationAttributeBlock(facadeAttributeLines, opts.character)
-    : facadeAttributeLines
+    ? buildMorphusCreationAttributeBlock(primaryAttributeLines, opts.character)
+    : primaryAttributeLines
 
   const buildFormSections = (
     activeForm: ActiveForm,
@@ -1790,7 +1789,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
         activeForm,
         opts.occ,
         opts.supportsDualForm,
-        opts.supportsDualForm ? facadeEffectiveAttrs.me : undefined,
+        opts.supportsDualForm ? primaryEffectiveAttrs.me : undefined,
         (opts.psychicTier as PsychicTier) ?? 'none',
       ),
       combat: buildCreationCombatBlock(
@@ -1812,7 +1811,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
   }
 
   if (!morphusLedger) {
-    const sections = buildFormSections('facade', facadeEffectiveAttrs)
+    const sections = buildFormSections('primary', primaryEffectiveAttrs)
     return {
       attributes: attributeLines,
       ...sections,
@@ -1821,10 +1820,10 @@ export function buildCreationLiveLedgerSnapshot(opts: {
 
   const morphusAttrScores = morphusAttributeScoresFromLedgerLines(attributeLines)
   const morphusEffectiveAttrs = applyLedgerAttributeScores(
-    facadeEffectiveAttrs,
+    primaryEffectiveAttrs,
     morphusAttrScores,
   )
-  const facadeSections = buildFormSections('facade', facadeEffectiveAttrs)
+  const primarySections = buildFormSections('primary', primaryEffectiveAttrs)
   const morphusSections = buildFormSections(
     'morphus',
     morphusEffectiveAttrs,
@@ -1833,22 +1832,22 @@ export function buildCreationLiveLedgerSnapshot(opts: {
 
   return {
     attributes: attributeLines,
-    exceptional: applyMorphusVsFacadeExceptionalLedgerDiff(
+    exceptional: applyMorphusVsPrimaryExceptionalLedgerDiff(
       morphusSections.exceptional,
-      facadeSections.exceptional,
+      primarySections.exceptional,
     ),
-    exceptionalSuper: applyMorphusVsFacadeExceptionalLedgerGroupDiff(
+    exceptionalSuper: applyMorphusVsPrimaryExceptionalLedgerGroupDiff(
       morphusSections.exceptionalSuper,
-      facadeSections.exceptionalSuper,
+      primarySections.exceptionalSuper,
     ),
-    vitals: applyMorphusVsFacadeLedgerDiff(
+    vitals: applyMorphusVsPrimaryLedgerDiff(
       morphusSections.vitals,
-      facadeSections.vitals,
+      primarySections.vitals,
     ),
     saves: morphusSections.saves,
-    combat: applyMorphusVsFacadeCombatLedgerDiff(
+    combat: applyMorphusVsPrimaryCombatLedgerDiff(
       morphusSections.combat,
-      facadeSections.combat,
+      primarySections.combat,
     ),
   }
 }

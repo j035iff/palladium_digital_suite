@@ -36,7 +36,7 @@ function ctx(
       creationRelatedSkillPicks: [],
       creationSecondarySkillPicks: [],
       creationHandToHandTier: 'none',
-      facade: { alignment: 'Principled' },
+      primary: { alignment: 'Principled' },
       ...overrides,
     } as CharacterCreationForgeContext['character'],
     race: {

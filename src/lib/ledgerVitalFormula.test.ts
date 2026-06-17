@@ -37,8 +37,8 @@ describe('ledgerVitalFormula', () => {
 
   it('labels Facade P.E. in dual-form P.P.E. hints', () => {
     expect(
-      formatVitalFormulaLedgerHint('PE + 3D6*10+20', '3D6', { pe: 'facade' }),
-    ).toBe('PE (facade) + 3D6x10 + 20 (+3D6/level)')
+      formatVitalFormulaLedgerHint('PE + 3D6*10+20', '3D6', { pe: 'Facade' }),
+    ).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
   })
 
   it('builds universal ledger fields for magic P.P.E. with P.E. multiplier', () => {

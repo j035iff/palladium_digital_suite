@@ -2,7 +2,7 @@ import { getOccById, getLibraryOccById, snapshotOccForCharacter } from '../data/
 import { CREATION_PLACEHOLDER_OCC, retainCharacterRoot } from './characterRoot'
 import { syncCreationAttributeBranches } from './creationAttributeSync'
 import { creationInvalidationPatch } from './creationInvalidate'
-import { syncRaceOccFacadeSdc } from './creationRaceOccSync'
+import { syncRaceOccPrimarySdc } from './creationRaceOccSync'
 import { characterHasDualForms } from './raceFormPolicy'
 import { raceCanPickOcc } from './raceEngine'
 import { resolvePsychicGateBypassed } from './creationPhases'
@@ -76,7 +76,7 @@ export function applyOccSelectionToCharacterState(
   const lib = getLibraryOccById(occId)
   if (!def || !lib) return prev
 
-  const form: ActiveForm = characterHasDualForms(prev) ? options.activeForm : 'facade'
+  const form: ActiveForm = characterHasDualForms(prev) ? options.activeForm : 'primary'
   const isPsychicOcc = def.category === 'psychic'
   const tier: PsychicTier = isPsychicOcc ? 'master' : 'none'
   const gateBypassed = resolvePsychicGateBypassed(
@@ -100,7 +100,7 @@ export function applyOccSelectionToCharacterState(
     patchCharacterCreationFromOcc(invalidated, lib),
     lib,
   )
-  const next = syncRaceOccFacadeSdc(
+  const next = syncRaceOccPrimarySdc(
     syncCreationAttributeBranches(retainCharacterRoot(prev, withOcc), lib),
   )
 
@@ -117,8 +117,8 @@ export function clearOccSelectionState(
   prev: CharacterRootState,
   activeForm: ActiveForm,
 ): CharacterRootState {
-  const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'facade'
-  return syncRaceOccFacadeSdc({
+  const form: ActiveForm = characterHasDualForms(prev) ? activeForm : 'primary'
+  return syncRaceOccPrimarySdc({
     ...prev,
     ...creationInvalidationPatch(prev, 'occ'),
     occ: CREATION_PLACEHOLDER_OCC,

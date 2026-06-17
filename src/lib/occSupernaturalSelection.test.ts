@@ -142,14 +142,14 @@ describe('occRelatedSkillSlotCosts', () => {
   } as PalladiumOcc
 
   it('applies category selectionSlotCost', () => {
-    expect(occRelatedSkillSelectionSlotCost(occ, 'skill_surgery')).toBe(2)
+    expect(occRelatedSkillSelectionSlotCost(occ, 'skill_medical_doctor')).toBe(2)
     expect(occRelatedSkillSelectionSlotCost(occ, 'skill_first_aid')).toBe(1)
   })
 
   it('folds selection slot cost into pick weight', () => {
     expect(
       creationSkillPickSlotWeight(
-        { instanceId: 'a', skillId: 'skill_surgery' },
+        { instanceId: 'a', skillId: 'skill_medical_doctor' },
         { occ },
       ),
     ).toBe(2)

@@ -53,9 +53,9 @@ describe('spawnSheetHandoff', () => {
 
     const finalized = applySpawnSheetHandoff(root)
     expect(finalized.isFinalized).toBe(true)
-    expect(finalized.facade.skills.length).toBeGreaterThan(0)
-    expect(finalized.morphus.skills.length).toBe(finalized.facade.skills.length)
-    expect(finalized.facade.skills[0]?.name).not.toMatch(/^skill_/)
+    expect(finalized.primary.skills.length).toBeGreaterThan(0)
+    expect(finalized.morphus.skills.length).toBe(finalized.primary.skills.length)
+    expect(finalized.primary.skills[0]?.name).not.toMatch(/^skill_/)
   })
 
   it('halves O.C.C. related skill bonus % for Major psychic on spawn', () => {
@@ -85,8 +85,8 @@ describe('spawnSheetHandoff', () => {
     )
     expect(rawBonus).toBeGreaterThan(0)
 
-    const noneRows = projectCreationSkillsToSheet(root, occLib, 'facade', 'none')
-    const majorRows = projectCreationSkillsToSheet(root, occLib, 'facade', 'major')
+    const noneRows = projectCreationSkillsToSheet(root, occLib, 'primary', 'none')
+    const majorRows = projectCreationSkillsToSheet(root, occLib, 'primary', 'major')
     const nonePick = noneRows.find((r) => r.id === 'skill_pick_locks')
     const majorPick = majorRows.find((r) => r.id === 'skill_pick_locks')
     expect(nonePick).toBeDefined()

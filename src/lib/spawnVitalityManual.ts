@@ -39,13 +39,13 @@ export function computeSpawnVitalityFromResolutions(
   const showIsp =
     opts.psychicTier !== 'none' || character.psychicGateBypassed === true
 
-  const facadeHp = Math.max(
+  const primaryHp = Math.max(
     4,
     byId.hp
       ? pendingDiceBlockRunningTotal(byId.hp, resolutions)
-      : character.facade.attributes.pe,
+      : character.primary.attributes.pe,
   )
-  const facadeSdc = Math.max(
+  const primarySdc = Math.max(
     4,
     byId.sdc
       ? pendingDiceBlockRunningTotal(byId.sdc, resolutions)
@@ -55,7 +55,7 @@ export function computeSpawnVitalityFromResolutions(
     0,
     byId.ppe ? pendingDiceBlockRunningTotal(byId.ppe, resolutions) : 0,
   )
-  const facadeIsp = showIsp && byId.isp
+  const primaryIsp = showIsp && byId.isp
     ? Math.max(0, pendingDiceBlockRunningTotal(byId.isp, resolutions))
     : 0
 
@@ -73,27 +73,27 @@ export function computeSpawnVitalityFromResolutions(
         : 0,
     )
     return {
-      facadeHp,
-      facadeSdc,
+      primaryHp,
+      primarySdc,
       morphusHp,
       morphusSdc,
       ppeMax,
-      morphusIspMax: facadeIsp,
+      morphusIspMax: primaryIsp,
     }
   }
 
   return {
-    facadeHp,
-    facadeSdc,
-    morphusHp: facadeHp,
-    morphusSdc: facadeSdc,
+    primaryHp,
+    primarySdc,
+    morphusHp: primaryHp,
+    morphusSdc: primarySdc,
     ppeMax,
-    morphusIspMax: facadeIsp,
+    morphusIspMax: primaryIsp,
   }
 }
 
 /** Facade / single-form dice — attributes + H.P./S.D.C./P.P.E./I.S.P. (excludes morphus vitality). */
-export function applyFacadePendingDiceResolutions(
+export function applyPrimaryPendingDiceResolutions(
   prev: CharacterRootState,
   race: Race | undefined,
   occ: PalladiumOcc | undefined,
@@ -104,9 +104,9 @@ export function applyFacadePendingDiceResolutions(
 ): CharacterRootState {
   const resolutions = prev.creationPendingDiceResolutions ?? {}
   const allBlocks = buildPendingDiceBlocks(prev, race, occ, opts)
-  const facadeBlocks = filterPendingDiceBlocksByScope(
+  const primaryBlocks = filterPendingDiceBlocksByScope(
     allBlocks,
-    opts.supportsDualForm ? 'facade' : 'all',
+    opts.supportsDualForm ? 'primary' : 'all',
   )
   const byId = blockById(allBlocks)
   const rolls = computeSpawnVitalityFromResolutions(
@@ -118,10 +118,10 @@ export function applyFacadePendingDiceResolutions(
   )
 
   const pairs: [string, number][] = [
-    ['facade.hitPoints.maximum', rolls.facadeHp],
-    ['facade.hitPoints.current', rolls.facadeHp],
-    ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
-    ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+    ['primary.hitPoints.maximum', rolls.primaryHp],
+    ['primary.hitPoints.current', rolls.primaryHp],
+    ['primary.structuralDamageCapacity.maximum', rolls.primarySdc],
+    ['primary.structuralDamageCapacity.current', rolls.primarySdc],
     ['ppe.maximum', rolls.ppeMax],
     ['ppe.current', rolls.ppeMax],
   ]
@@ -148,19 +148,19 @@ export function applyFacadePendingDiceResolutions(
     next = applied ? retainCharacterRoot(prev, applied) : next
   }
 
-  const attrForms: ('facade' | 'morphus')[] = opts.supportsDualForm
-    ? ['facade']
-    : ['facade', 'morphus']
+  const attrForms: ('primary' | 'morphus')[] = opts.supportsDualForm
+    ? ['primary']
+    : ['primary', 'morphus']
   next = applyPendingAttributeDiceToForms(
     next,
-    facadeBlocks,
+    primaryBlocks,
     resolutions,
     attrForms,
   )
 
   return {
     ...next,
-    creationFacadeDiceFinalized: true,
+    creationPrimaryDiceFinalized: true,
     creationMorphusDiceFinalized: opts.supportsDualForm
       ? next.creationMorphusDiceFinalized
       : true,
@@ -235,10 +235,10 @@ export function applyPendingDiceResolutionsToCharacter(
     },
   )
   const pairs: [string, number][] = [
-    ['facade.hitPoints.maximum', rolls.facadeHp],
-    ['facade.hitPoints.current', rolls.facadeHp],
-    ['facade.structuralDamageCapacity.maximum', rolls.facadeSdc],
-    ['facade.structuralDamageCapacity.current', rolls.facadeSdc],
+    ['primary.hitPoints.maximum', rolls.primaryHp],
+    ['primary.hitPoints.current', rolls.primaryHp],
+    ['primary.structuralDamageCapacity.maximum', rolls.primarySdc],
+    ['primary.structuralDamageCapacity.current', rolls.primarySdc],
     ['morphus.hitPoints.maximum', rolls.morphusHp],
     ['morphus.hitPoints.current', rolls.morphusHp],
     ['morphus.structuralDamageCapacity.maximum', rolls.morphusSdc],
@@ -278,11 +278,11 @@ export function vitalityPreviewLines(
   const lines = [
     {
       label: `${creationHpLabel(dual, 'human')} max`,
-      value: String(rolls.facadeHp),
+      value: String(rolls.primaryHp),
     },
     {
       label: `${creationSdcLabel(dual, 'human')} max`,
-      value: String(rolls.facadeSdc),
+      value: String(rolls.primarySdc),
     },
     { label: 'P.P.E. max', value: String(rolls.ppeMax) },
   ]

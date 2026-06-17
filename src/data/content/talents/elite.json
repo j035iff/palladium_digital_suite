@@ -4125,7 +4125,7 @@
             "form": "morphus_only"
           },
           "ongoingUse": {
-            "form": "facade_only",
+            "form": "primary_only",
             "notes": "While temporary Passing the Torch is active, the Talent user is limited to Facade form and reverts immediately on activation."
           }
         }

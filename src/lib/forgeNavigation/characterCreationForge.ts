@@ -447,7 +447,7 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
 }
 
 function finalizeDiceScope(ctx: CharacterCreationForgeContext) {
-  return ctx.supportsDualForm ? ('facade' as const) : ('all' as const)
+  return ctx.supportsDualForm ? ('primary' as const) : ('all' as const)
 }
 
 function assessFinalizeTabBlockers(ctx: CharacterCreationForgeContext): string[] {
@@ -470,7 +470,7 @@ function assessFinalizeTabBlockers(ctx: CharacterCreationForgeContext): string[]
 
 function assessTraitsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
   const blockers: string[] = []
-  if (ctx.supportsDualForm && ctx.character.creationFacadeDiceFinalized !== true) {
+  if (ctx.supportsDualForm && ctx.character.creationPrimaryDiceFinalized !== true) {
     blockers.push('Complete Facade dice on the Roll Pending tab first.')
   }
   if (
@@ -662,7 +662,7 @@ export function invalidateForgeFromConfiguratorChange(
     creationForgeSnapshots: next.snapshots,
     creationTraitForgeStubComplete: false,
     morphusForgeState: undefined,
-    creationFacadeDiceFinalized: false,
+    creationPrimaryDiceFinalized: false,
     creationMorphusDiceFinalized: false,
   }
 }
@@ -679,7 +679,7 @@ export function characterCreationTraitsTabPageTitle(
 export function assessTab8SpawnBlockers(
   ctx: CharacterCreationForgeContext,
 ): string[] {
-  const alignment = ctx.character.facade.alignment?.trim()
+  const alignment = ctx.character.primary.alignment?.trim()
   const blockers = assessCreationSpawnBlockers(ctx.character, {
     psychicTier: ctx.psychicTier,
     supportsDualForm: ctx.supportsDualForm,
@@ -734,7 +734,7 @@ export function isMorphusLedgerUnlockEligible(
   if (!traitForgeTabApplicable(race, occ)) return false
   const completed = readForgeCompletion(character).completed
   return (
-    completed.tab5_finalize === true || character.creationFacadeDiceFinalized === true
+    completed.tab5_finalize === true || character.creationPrimaryDiceFinalized === true
   )
 }
 

@@ -5,7 +5,7 @@
 
 /** Morphus Horror Factor aura baseline (Nightbane lineage only; facade / most races have none). */
 export const DEFAULT_HORROR_FACTOR_BY_FORM = {
-  facade: 0,
+  primary: 0,
   morphus: 6,
 } as const
 

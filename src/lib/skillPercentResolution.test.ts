@@ -15,7 +15,7 @@ describe('resolveSkillPercent', () => {
         characterLevel: 1,
         iqBonus: 0,
         activeForm: 'morphus',
-        facadePp: 2,
+        primaryPp: 2,
         activeMorphusCharacteristics: [],
       },
       {
@@ -43,7 +43,7 @@ describe('resolveSkillPercent', () => {
         characterLevel: 1,
         iqBonus: 0,
         activeForm: 'morphus',
-        facadePp: 2,
+        primaryPp: 2,
         activeMorphusCharacteristics: [
           {
             id: 'test_bear',

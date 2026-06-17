@@ -18,13 +18,13 @@ const UNASSIGNED = '—'
 
 export type CreationVitalityPreview = {
   /** Resolved H.P. line value (— until P.E. is assigned, then P.E. score + dice). */
-  facadeHpValue: string
+  primaryHpValue: string
   /** Race H.P. roll template shown under H.P. once a race is selected. */
-  facadeHpRollHint: string | undefined
+  primaryHpRollHint: string | undefined
   /** S.D.C. stays — during creation; resolved at Spawn. */
-  facadeSdcValue: string
+  primarySdcValue: string
   /** Race/O.C.C. S.D.C. dice once both are selected. */
-  facadeSdcRollHint: string | undefined
+  primarySdcRollHint: string | undefined
   /** P.P.E. stays — during creation; resolved at Spawn. */
   ppeValue: string
   /** Race/O.C.C. P.P.E. dice once both are selected. */
@@ -61,16 +61,16 @@ export function creationVitalityPreview(
   const showIsp =
     opts?.psychicTier !== 'none' || character.psychicGateBypassed === true
 
-  const facadeHpRollHint = race
+  const primaryHpRollHint = race
     ? formatRaceHpRollHint(race.vitals?.hpFormula)
     : undefined
   const hpFormula = race ? (race.vitals?.hpFormula ?? 'PE + 1D6') : null
-  const facadeHpValue = buildAttrFormulaLedgerFields(hpFormula, assignments, {
-    hintOverride: facadeHpRollHint,
+  const primaryHpValue = buildAttrFormulaLedgerFields(hpFormula, assignments, {
+    hintOverride: primaryHpRollHint,
   }).value
 
-  const facadeSdcValue = UNASSIGNED
-  const facadeSdcRollHint =
+  const primarySdcValue = UNASSIGNED
+  const primarySdcRollHint =
     race && occ && isCreationOccSelected(occ)
       ? formatOccSdcRollHint(race, occ, character)
       : undefined
@@ -79,12 +79,12 @@ export function creationVitalityPreview(
     race && occ && isCreationOccSelected(occ)
       ? resolvePpeCreationFormula(race, occ)
       : null
-  const facadePe =
-    assignments.pe ?? character.facade.attributes.pe
+  const primaryPe =
+    assignments.pe ?? character.primary.attributes.pe
   const ppeFields = buildAttrFormulaLedgerFields(ppeFormula, assignments, {
     perLevelFormula: occ?.ppeEngine?.perLevelFormula,
     ...(opts?.supportsDualForm
-      ? dualFormPpeLedgerFormulaOpts(facadePe)
+      ? dualFormPpeLedgerFormulaOpts(primaryPe)
       : {}),
   })
   const ppeValue = ppeFields.value
@@ -109,10 +109,10 @@ export function creationVitalityPreview(
   const ispValue = showIsp ? (ispFields?.value ?? UNASSIGNED) : UNASSIGNED
 
   return {
-    facadeHpValue,
-    facadeHpRollHint,
-    facadeSdcValue,
-    facadeSdcRollHint,
+    primaryHpValue,
+    primaryHpRollHint,
+    primarySdcValue,
+    primarySdcRollHint,
     ppeValue,
     ppeRollHint,
     ispValue,
@@ -127,13 +127,13 @@ export function creationVitalityPreviewLines(
   const lines = [
     {
       label: creationHpLabel(supportsDualForm, 'human'),
-      value: preview.facadeHpValue,
-      hint: preview.facadeHpRollHint,
+      value: preview.primaryHpValue,
+      hint: preview.primaryHpRollHint,
     },
     {
       label: creationSdcLabel(supportsDualForm, 'human'),
-      value: preview.facadeSdcValue,
-      hint: preview.facadeSdcRollHint,
+      value: preview.primarySdcValue,
+      hint: preview.primarySdcRollHint,
     },
     { label: 'P.P.E.', value: preview.ppeValue, hint: preview.ppeRollHint },
   ]
