@@ -2114,7 +2114,7 @@ export type OccFinances = {
   blackMarketAssets?: string
 }
 
-/** Catalog id under `content/progression/xp_tables/` (legacy: `standard` | `psychic` | `borg`). */
+/** Catalog id under `content/progression/xp_tables/<genre>/` (legacy: `standard` | `psychic` | `borg`). */
 export type OccXpTableId = string
 
 export type OccSkillSlotPolicy =
@@ -2148,7 +2148,7 @@ export type OccBaseStatsDice = {
 }
 
 /**
- * Library O.C.C. catalog row (`content/occs/*.json`, palladium-occ.schema.json).
+ * Library O.C.C. catalog row (`content/occs/<genre>/*.json`, palladium-occ.schema.json).
  * Alias: {@link OCC}.
  */
 export type PalladiumOcc = {

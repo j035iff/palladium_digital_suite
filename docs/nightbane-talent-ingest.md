@@ -2,6 +2,51 @@
 
 How agents should add or update **Nightbane Talents** (Dark Designs / Survival Guide) so every row matches the schema, engine contract, and character-creation UI.
 
+---
+
+## What you need to provide
+
+Send one batch per message (or per agent session). **Default to Pass A** unless you explicitly want play-time mechanics encoded in the same batch.
+
+### Batch sizes
+
+| Pass | Scope | Items per batch | Use a smaller batch when… |
+|------|-------|-----------------|---------------------------|
+| **Pass A** | Chargen — picker, gates, P.P.E., sources, form rules | **4 talents** | Variable P.P.E., nested `formUsage`, or long prerequisite/incompatibility lists |
+| **Pass B** | Play mechanics — damage, modes, recovery, combat blocks | **2–3 talents** | Tier 2 keys (`powerModes`, `combatMechanics`, damage chains) are heavy |
+
+Pass B is optional and can follow Pass A in a separate batch for the same talents.
+
+### Required in every batch request
+
+| Field | Required | Example |
+|-------|----------|---------|
+| **PDF + page range** | Yes | `@src/data/reference/nightbane/WB6-Dark_Designs.pdf pp. 64–66` |
+| **Scope** | Yes | `chargen-only` (Pass A) or `include play mechanics` (Pass B) |
+| **Talent names** | Yes | Exact printed names; count should match batch size (4 Pass A, 2–3 Pass B) |
+
+Optional: `Original: Nightbane RPG pp. X–Y` when Dark Designs references core book text; `common` vs `elite` if not obvious from the book section.
+
+### Copy-paste template (Pass A)
+
+```text
+Batch: @src/data/reference/nightbane/WB6-Dark_Designs.pdf pp. 64–66
+Scope: chargen-only (Pass A)
+Talents: Bookworm, Brain Freeze, Bypass, Chain Lightning
+```
+
+### Copy-paste template (Pass B)
+
+```text
+Batch: @src/data/reference/nightbane/WB6-Dark_Designs.pdf pp. 64–65
+Scope: include play mechanics (Pass B)
+Talents: Blast Wave, Blood Boil
+```
+
+After each batch the agent runs `npm run validate:schemas` and `npm run audit:talents`. **Flag ambiguous book text and ask for a ruling** before encoding — do not guess.
+
+---
+
 **Source of truth (code):**
 
 | Artifact | Path |
@@ -48,7 +93,7 @@ Flag when you see:
 
 **Goal:** Character creation picker, gates, P.P.E. display, sources, form rules.
 
-**Batch size:** **4 talents** per batch (user provides page range + names).
+**Batch size:** **4 talents** — see **What you need to provide** at the top of this doc.
 
 **Required Tier 1 fields for a “complete” row:**
 
@@ -65,7 +110,7 @@ Flag when you see:
 
 **Goal:** Structured blocks for combat / FeatureCard when the engine consumes them.
 
-**Batch size:** **2–3 talents** when adding or extending Tier 2 keys.
+**Batch size:** **2–3 talents** — see **What you need to provide** at the top of this doc.
 
 Use documented Tier 2 keys from `TALENT_TIER2_PLAY_KEYS` in `scripts/talent-engine-contract.mjs`. Prefer schema keys over ad-hoc top-level fields (audit flags **schema drift**).
 
@@ -259,19 +304,13 @@ Add supplemental books (Nightbane RPG, Survival Guide, Between the Shadows) as a
 
 ## User batch request template
 
-Users should send batches like:
-
-```text
-Batch: only @src/data/reference/nightbane/WB6-Dark_Designs.pdf : pp 64–66
-Scope: chargen-only
-Talents: Bookworm, Brain Freeze, Bypass, Chain Lightning
-```
+Use the copy-paste templates in **What you need to provide** (top of this doc). Field reference:
 
 | Field | Meaning |
 |-------|---------|
 | PDF + pages | Primary book evidence for the batch |
-| Scope | `chargen-only` (Pass A) or include play mechanics (Pass B) |
-| Talents | Exact names (4 default for Pass A) |
+| Scope | `chargen-only` (Pass A) or `include play mechanics` (Pass B) |
+| Talents | Exact names (**4** Pass A · **2–3** Pass B) |
 
 Optional: `Original: Nightbane RPG pp. X–Y` when DD references core book text.
 

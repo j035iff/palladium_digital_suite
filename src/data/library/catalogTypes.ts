@@ -47,7 +47,7 @@ export type PalladiumSkillCatalogEntry = {
   skillTraits?: readonly string[]
 }
 
-/** Row from `content/occs/*.json` — see `schemas/palladium-occ.schema.json`. */
+/** Row from `content/occs/<genre>/*.json` — see `schemas/palladium-occ.schema.json`. */
 export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 
 /** Row from `content/palladiumHandToHand.json` — see `schemas/palladium-hth.schema.json`. */
@@ -59,7 +59,7 @@ export type PalladiumTalentCatalogEntry = import('../../types').PalladiumTalent
 /** Row from `content/magic/<school>.json` — see `schemas/palladium-magic.schema.json`. */
 export type PalladiumMagicCatalogEntry = import('../../types').PalladiumMagicSpell
 
-/** Row from `content/palladiumPsionics.json` — see `schemas/palladium-psionic.schema.json`. */
+/** Row from `content/psionics/<category>.json` — see `schemas/palladium-psionic.schema.json`. */
 export type PalladiumPsionicCatalogEntry = {
   id: string
   name: string

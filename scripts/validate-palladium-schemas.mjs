@@ -8,6 +8,10 @@ import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
 import addFormats from 'ajv-formats'
 import { loadSkillsFromDir } from './lib/skills-catalog-fs.mjs'
+import {
+  expectedPsionicCategoryFile,
+  loadPsionicsFromDir,
+} from './lib/psionics-catalog-fs.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const schemasDir = join(root, 'src/data/schemas')
@@ -267,22 +271,32 @@ try {
 
 const occsDir = join(contentDir, 'occs')
 const palladiumOccs = []
-let occFiles = []
+let occBookFiles = []
 try {
-  occFiles = readdirSync(occsDir)
-    .filter((f) => f.endsWith('.json'))
+  const genreDirs = readdirSync(occsDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
     .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(occsDir, genre)
+    const books = readdirSync(genrePath)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+    for (const book of books) {
+      occBookFiles.push({ genre, book, path: join(genrePath, book) })
+    }
+  }
 } catch {
   console.error('ERR occs — directory missing')
   failed = true
 }
 
-if (occFiles.length > 0) {
+if (occBookFiles.length > 0) {
   const occIdsSeen = new Set()
   let occBad = 0
-  for (const file of occFiles) {
-    const label = `occs/${file}`
-    const rows = loadJson(join(occsDir, file))
+  for (const { genre, book, path: bookPath } of occBookFiles) {
+    const label = `occs/${genre}/${book}`
+    const rows = loadJson(bookPath)
     if (!Array.isArray(rows)) {
       failed = true
       console.error(`ERR ${label} — expected top-level array`)
@@ -314,7 +328,7 @@ if (occFiles.length > 0) {
   }
   if (occBad === 0) {
     console.log(
-      `OK  occs — ${occFiles.length} book file(s), ${palladiumOccs.length} row(s) validate`,
+      `OK  occs — ${occBookFiles.length} book file(s) in ${new Set(occBookFiles.map((f) => f.genre)).size} genre folder(s), ${palladiumOccs.length} row(s) validate`,
     )
   } else {
     failed = true
@@ -324,11 +338,21 @@ if (occFiles.length > 0) {
 
 const xpTablesDir = join(contentDir, 'progression/xp_tables')
 const tableById = new Map()
-let xpTableFiles = []
+let xpTableBookFiles = []
 try {
-  xpTableFiles = readdirSync(xpTablesDir)
-    .filter((f) => f.endsWith('.json'))
+  const genreDirs = readdirSync(xpTablesDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
     .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(xpTablesDir, genre)
+    const books = readdirSync(genrePath)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+    for (const book of books) {
+      xpTableBookFiles.push({ genre, book, path: join(genrePath, book) })
+    }
+  }
 } catch {
   console.error('ERR progression/xp_tables — directory missing')
   failed = true
@@ -369,29 +393,27 @@ function validateXpTableRow(table, label) {
   return true
 }
 
-if (xpTableFiles.length > 0) {
+if (xpTableBookFiles.length > 0) {
   let xpBad = 0
   let tableCount = 0
-  for (const file of xpTableFiles) {
-    const doc = loadJson(join(xpTablesDir, file))
+  for (const { genre, book, path: bookPath } of xpTableBookFiles) {
+    const relPath = `progression/xp_tables/${genre}/${book}`
+    const doc = loadJson(bookPath)
     if (doc?.tables && Array.isArray(doc.tables)) {
       if (!validateXpTableBookDoc(doc)) {
         xpBad++
         if (xpBad <= 5) {
-          console.error(
-            `ERR progression/xp_tables/${file}:`,
-            validateXpTableBookDoc.errors,
-          )
+          console.error(`ERR ${relPath}:`, validateXpTableBookDoc.errors)
         }
         continue
       }
       for (const table of doc.tables) {
         tableCount++
-        if (!validateXpTableRow(table, `progression/xp_tables/${file} → ${table.id}`)) {
+        if (!validateXpTableRow(table, `${relPath} → ${table.id}`)) {
           xpBad++
         }
       }
-    } else if (!validateXpTableRow(doc, `progression/xp_tables/${file}`)) {
+    } else if (!validateXpTableRow(doc, relPath)) {
       xpBad++
     } else {
       tableCount++
@@ -399,7 +421,7 @@ if (xpTableFiles.length > 0) {
   }
   if (xpBad === 0) {
     console.log(
-      `OK  progression/xp_tables — ${xpTableFiles.length} book file(s), ${tableCount} table(s) validate`,
+      `OK  progression/xp_tables — ${xpTableBookFiles.length} book file(s) in ${new Set(xpTableBookFiles.map((f) => f.genre)).size} genre folder(s), ${tableCount} table(s) validate`,
     )
   } else {
     failed = true
@@ -574,23 +596,40 @@ if (talentFiles.length > 0) {
   }
 }
 
-const palladiumPsionicsPath = join(contentDir, 'palladiumPsionics.json')
+const psionicsDir = join(contentDir, 'psionics')
 let palladiumPsionics = []
-let palladiumPsionicsLoaded = false
+let psionicCategoryMismatch = 0
 try {
-  palladiumPsionics = loadJson(palladiumPsionicsPath)
-  palladiumPsionicsLoaded = true
+  const psionicFileById = new Map()
+  for (const file of readdirSync(psionicsDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()) {
+    for (const row of loadJson(join(psionicsDir, file))) {
+      if (row?.id) psionicFileById.set(row.id, file)
+    }
+  }
+  palladiumPsionics = loadPsionicsFromDir(psionicsDir)
+  for (const row of palladiumPsionics) {
+    const actual = psionicFileById.get(row.id)
+    const expected = expectedPsionicCategoryFile(row)
+    if (actual && actual !== expected) {
+      psionicCategoryMismatch++
+      if (psionicCategoryMismatch <= 5) {
+        console.error(
+          `ERR psionics/${actual} id=${row.id}: expected file "${expected}" from genrePlacements[0].category`,
+        )
+      }
+    }
+  }
 } catch (err) {
-  if (err.code !== 'ENOENT') {
+  if (err.code === 'ENOENT') {
+    console.error('ERR psionics/ — directory missing')
+  } else {
     failed = true
-    console.error('ERR palladiumPsionics.json —', err.message)
+    console.error('ERR psionics/ —', err.message)
   }
 }
-if (palladiumPsionicsLoaded) {
-  if (!Array.isArray(palladiumPsionics)) {
-    failed = true
-    console.error('ERR palladiumPsionics.json — expected top-level array')
-  } else if (palladiumPsionics.length > 0) {
+if (palladiumPsionics.length > 0) {
   const seenPsionicIds = new Set()
   let psionicBad = 0
   let psionicDup = 0
@@ -599,7 +638,7 @@ if (palladiumPsionicsLoaded) {
       if (seenPsionicIds.has(row.id)) {
         psionicDup++
         if (psionicDup <= 5) {
-          console.error(`ERR palladiumPsionics.json duplicate id=${row.id}`)
+          console.error(`ERR psionics/ duplicate id=${row.id}`)
         }
       } else {
         seenPsionicIds.add(row.id)
@@ -609,30 +648,33 @@ if (palladiumPsionicsLoaded) {
       psionicBad++
       if (psionicBad <= 5) {
         console.error(
-          `ERR palladiumPsionics.json id=${row?.id ?? '?'}:`,
+          `ERR psionics/ id=${row?.id ?? '?'}:`,
           validatePsionicRow.errors,
         )
       }
     }
   }
-  if (psionicBad === 0 && psionicDup === 0) {
+  if (psionicBad === 0 && psionicDup === 0 && psionicCategoryMismatch === 0) {
+    const categoryFiles = readdirSync(psionicsDir).filter((f) => f.endsWith('.json')).length
     console.log(
-      `OK  palladiumPsionics.json — ${palladiumPsionics.length} rows validate`,
+      `OK  psionics/ — ${categoryFiles} category file(s), ${palladiumPsionics.length} rows validate`,
     )
   } else {
     failed = true
     if (psionicBad > 0) {
-      console.error(
-        `ERR palladiumPsionics.json — ${psionicBad} row(s) failed schema validation`,
-      )
+      console.error(`ERR psionics/ — ${psionicBad} row(s) failed schema validation`)
     }
     if (psionicDup > 0) {
-      console.error(`ERR palladiumPsionics.json — ${psionicDup} duplicate id(s)`)
+      console.error(`ERR psionics/ — ${psionicDup} duplicate id(s)`)
+    }
+    if (psionicCategoryMismatch > 0) {
+      console.error(
+        `ERR psionics/ — ${psionicCategoryMismatch} category file placement mismatch(es)`,
+      )
     }
   }
-  } else {
-    console.log('OK  palladiumPsionics.json — empty catalog')
-  }
+} else if (!failed) {
+  console.log('OK  psionics/ — empty catalog')
 }
 
 const magicDir = join(contentDir, 'magic')

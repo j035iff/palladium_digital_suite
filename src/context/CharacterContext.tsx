@@ -374,7 +374,7 @@ type CharacterContextValue = {
   setOccSpecializationId: (specializationId: string) => void
   /** Resolved library race row for the active character. */
   activeRace: Race | undefined
-  /** Resolved O.C.C. catalog row (`content/occs/*.json`). */
+  /** Resolved O.C.C. catalog row (`content/occs/<genre>/*.json`). */
   activeOcc: PalladiumOcc | undefined
   /** Baseline O.C.C. merged with {@link Character.occSpecializationId} when set. */
   effectiveOcc: PalladiumOcc | undefined

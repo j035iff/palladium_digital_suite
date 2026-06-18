@@ -59,6 +59,56 @@
     ]
   },
   {
+    "id": "skill_con_artistry",
+    "name": "Con Artistry",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 25,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The practiced ability to run cons and scams through deception, misdirection, and fast-talking to bilk or manipulate others.",
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
+    "id": "skill_fast_talk",
+    "name": "Fast Talk",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Rogue"
+    ],
+    "basePercent": 20,
+    "percentPerLevel": 4,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 55
+      }
+    ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to think and speak quickly to bluff, confuse, distract, or deceive others in conversation.",
+    "skillTraits": [
+      "requires_focus"
+    ]
+  },
+  {
     "id": "skill_concealment",
     "name": "Concealment",
     "gameSystems": [

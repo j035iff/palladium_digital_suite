@@ -1,0 +1,724 @@
+[
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_astral_transference",
+    "name": "Astral Transference",
+    "description": "This powerful ability transforms the character's body into an astral construct, similar to an entity or other energy beings, and able to travel astrally. One might consider this power a sort of \"super\" astral projection. Unlike normal astral projection, the entire body of the character is transformed into an astral energy being, so the body is not left behind and the duration for astral travel is much greater. All the abilities and benefits of the astral projection power apply to this form as well, except there is no silver cord involved.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 15
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One hour per level of experience",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "psionicPrerequisites": [
+      "psionic_astral_projection"
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_bio_regeneration_superior",
+    "name": "Bio-Regeneration (Superior)",
+    "description": "Another bio-manipulation power that enables the psionic to direct his psychic energy to immediate self-healing. The character must concentrate for one full minute while his body instantly heals itself. 4D6 hit points and 4D6 S.D.C points are simultaneously restored at the end of 60 seconds. As usual, there is no scarring.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 20
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "4D6",
+      "sdcFormula": "4D6",
+      "notes": "Simultaneously restored at the end of 60 seconds. No scarring."
+    },
+    "lengthOfTrance": {
+      "summary": "One full minute of concentration.",
+      "preparationMinutes": "1"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_block_breaker",
+    "name": "Block Breaker",
+    "description": "This power attacks a psychic's mind block in an attempt to temporarily lower the target's defenses. If the block breaker is successful, the character's mind block is removed for 1D4 melee rounds, during which time he or she cannot shield himself from psionic probes and other psionic influences. At the end of the duration, the victim may restore the block by spending I.S.P. normally. The attacker can raise the save difficulty by spending more I.S.P.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30,
+      "dynamicCosts": [
+        {
+          "trigger": "Penalty to defender's save",
+          "costFormula": "+10 I.S.P. per -1 penalty inflicted to the defender's saving throw."
+        }
+      ]
+    },
+    "range": {
+      "summary": "60 feet (18.3 m) plus 10 feet (3.0 m) per level of experience."
+    },
+    "duration": {
+      "summary": "1D4 melee rounds (15 to 60 seconds).",
+      "kind": "melee_round",
+      "dice": "1D4"
+    },
+    "save": {
+      "summary": "Standard, but penalized by the attacker's spent I.S.P.",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_dreamdance_superior",
+    "name": "Dreamdance (Superior)",
+    "description": "This power transforms the psychic's body into a dream creature, enabling the character to enter the Dreamstream body and soul. Doing this has its dangers, including the fact that the dream traveler is not able to escape the Dreamstream by waking up. While in the Dreamstream, the psychic can enter other people's Dream Pools, and use psionics or other abilities to affect the dreams of the dreamer. At the end of the power's duration, or whenever the character decides to return to the waking world, the Dream Dancer will reappear at the physical location he originally left.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 20
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "psionicPrerequisites": [
+      "psionic_dreamdance_minor"
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_gestalt_circle",
+    "name": "Gestalt Circle",
+    "description": "The psionic character can link a group of psychics (one per level of experience, max 8) together and pool their powers. While linked in a gestalt circle, the group can only use those powers they have in common, but those powers can be manipulated at a level equal to their combined levels of experience. The combined number of I.S.P. is available to the group (use is divided equally), and the range of the psionic powers are increased by 20% per each psychic in the circle (if the range is not affected by level). One psychic is designated as the 'key' through which powers are directed. Breaking hands instantly shatters the circle.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 113
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30,
+      "notes": "Cost is 30 I.S.P. to initiate. Rebuilding a broken circle costs another 30 I.S.P."
+    },
+    "range": {
+      "summary": "Touch; psychics must form a circle and hold hands."
+    },
+    "duration": {
+      "summary": "One minute per participant.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "limitations": {
+      "otherLimitations": "Maximum of 8 participants. Participants cannot perform other skills, physical combat, or parry without breaking the circle. Dodging without breaking ranks is at -5."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_group_mind_block",
+    "name": "Group Mind Block",
+    "description": "The master psionic can instantly erect a mental barrier or mind block to protect himself and those around him, within a 120 foot (36.5 m) area. The group mind block works just like the individual mind block power. Everyone within the area of effect will be automatically blocked, but the effect is not detectable so they are not likely to know they are being mind blocked.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 22
+    },
+    "range": {
+      "summary": "120 feet (36.5 m) area."
+    },
+    "duration": {
+      "summary": "10 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "10 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "area",
+      "immunities": [
+        "psionic probes",
+        "mind attacks",
+        "telepathy",
+        "empathy"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_mind_block_auto_defense",
+    "name": "Mind Block Auto-Defense",
+    "description": "The moment the psychic is being mind probed, a personal mind block automatically snaps into place. It also alerts the psionic to the fact he or she is being probed or attacked by empathy or telepathy. The character must consciously and willingly lower the mind shield to open himself to psychic probes. Otherwise, the automatic defense mind block will stay in effect until the probe/attack is over.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 0,
+      "notes": "The character must permanently give up 10 I.S.P. when this power is selected. Automatic activations cost 0 I.S.P."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Special; until the probe/attack is over.",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_mind_bond",
+    "name": "Mind Bond",
+    "description": "This creates an instant mind link between the psychic and the victim. When this happens, each will learn everything there is to know about the other. This includes all skills, secret identities, phobias, etc. In both cases, the memory is complete for only 3D4 hours; after that, the character must roll under 15% to recall any particular item. After one month, all memories completely disappear. Skills and skill bonuses are temporarily absorbed. Physical attributes and physical training bonuses are not gained. Bonding with alien or extremely disturbed minds can cause permanent insanity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "Special; full memory for 3D4 hours, fading completely over one month.",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_mind_wipe",
+    "name": "Mind Wipe",
+    "description": "To mind wipe an intelligent creature, the psychic must make physical contact, touching his victim's temples to erase whatever he desires. This is done by verbal suggestion and can erase any past event, knowledge, skill, and so on. The process takes about three minutes to complete. The memory can be erased temporarily or permanently depending on the I.S.P. invested.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10,
+      "dynamicCosts": [
+        {
+          "trigger": "Temporary Wipe (1D4 days)",
+          "costFormula": "10 I.S.P."
+        },
+        {
+          "trigger": "Permanent Specific Wipe",
+          "costFormula": "50 I.S.P."
+        },
+        {
+          "trigger": "Complete Blank Mind Wipe",
+          "costFormula": "50 I.S.P. and permanently sacrifice 4 M.E. points."
+        }
+      ]
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "Special; 1D4 days per 10 I.S.P., or Permanent.",
+      "kind": "special"
+    },
+    "lengthOfTrance": {
+      "summary": "Takes about three minutes to complete.",
+      "preparationMinutes": "3"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_possession",
+    "name": "Possession",
+    "description": "The psychic can completely take over and control another person. The psychic essence of the controlling mind is transferred into the body of another individual. While in the victim's body/mind, the psychic retains all his own knowledge and identity. He cannot read the mind of the person he now possesses, nor access any knowledge from the victim's memory. Only the physical body can be controlled, like a living robot. The victim goes into a trance state and remembers nothing. The psychic's natural body falls into a coma-like state.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "5 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_ppe_shield",
+    "name": "P.P.E. Shield",
+    "description": "A psionic defense that can be used to prevent P.P.E. vampires, mages and other entities from siphoning off one's psychic energy. The shield works similarly to a mind block, only it prevents others from draining one's P.P.E.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 114
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "6 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "6 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "immunities": [
+        "P.P.E. drain",
+        "energy siphoning"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psi_shield",
+    "name": "Psi-Shield",
+    "description": "A companion power to the psi-sword, in which the psychic can create an energy shield out of thin air. The shield can be used to parry all hand to hand attacks, but not against projectiles/bullets.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "5 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Psi-Shield",
+      "derivedHealth": "120 S.D.C."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psi_sword",
+    "name": "Psi-Sword",
+    "description": "Psi-swords are psychic energy weapons that the character can mentally will into existence. The sword appears out of thin air as a shimmering blade of energy that resembles a glowing sword. Its appearance usually reflects its creator. Each weapon is equally powerful regardless of its form and size.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "5 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "damage": {
+      "formula": "6D6 + 1D6 per additional plateau level",
+      "notes": "6D6 at level 3. Adds 1D6 at levels 4, 7, 9, 12, and 15. Can be adjusted to inflict a minimum of 2D6."
+    },
+    "limitations": {
+      "otherLimitations": "Prerequisite: Third level of experience."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psychic_mirage_superior",
+    "name": "Psychic Mirage (Superior)",
+    "description": "A powerful illusion that affects all senses. The illusion will move and act out any mental commands given by its creator, and will fool the ears, sense of touch and pain centers of those who face it. Illusionary damage will not do any permanent damage, although people who think they have been killed will collapse into unconsciousness. This illusion can be created in most planes of existence.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 40
+    },
+    "range": {
+      "summary": "120 feet (36.5 m); size of illusion is 3 feet (0.9 m) per level of experience."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_supercharge",
+    "name": "Supercharge",
+    "description": "This power channels the character's psychic energies into his own body, temporarily granting him +6 to P.S., which becomes supernatural, and an additional 40 S.D.C. for the duration of the power. This power is especially handy when combating vampires and other superhuman monstrosities.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30,
+      "notes": "Cost is 40 I.S.P. in games where supernatural P.S. inflicts mega-damage (like Rifts)."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "statModifiers": {
+        "sdc": 40,
+        "ps": 6
+      },
+      "combatModifiers": {
+        "notes": "P.S. becomes Supernatural for the duration."
+      }
+    },
+    "psionicPrerequisites": [
+      "psionic_summon_inner_strength"
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_telekinetic_force_field",
+    "name": "Telekinetic Force Field",
+    "description": "The psychic can instantly erect a force field around himself or others in the blink of an eye. If the creation of the force field is to parry an attack, the psionic must roll a successful parry to see if he was able to create the field before the attack struck. The force field can be made so that it only encircles its creator or as large as a 10 foot (3.0 m) area per level of experience. The field protects with 130 S.D.C., plus 20 S.D.C. per level of experience. The psychic can create additional force fields as I.S.P. allows.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "Self or 40 feet (12.2 m) per level of experience."
+    },
+    "duration": {
+      "summary": "Five minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Telekinetic Force Field",
+      "derivedHealth": "130 S.D.C., plus 20 S.D.C. per level of experience."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_telemechanics",
+    "name": "Telemechanics",
+    "description": "This ability allows the psionic to mentally communicate with and understand machines. A bizarre combination of object read and telepathy, except that it applies to mechanical devices only. By touching any non-artificially intelligent machine, the psychic will instantly have a complete (although temporary) knowledge of exactly how the machine is operated, including schematics. When touching a computer, the psychic can actually communicate with it telepathically and tap into memory banks directly.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 115
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "super"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch or up to 5 feet (1.5 m) away."
+    },
+    "duration": {
+      "summary": "10 minutes plus 2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "baseSkill": {
+      "label": "Machine empathy",
+      "basePercent": 80,
+      "perLevel": 0,
+      "notes": "Expertise is equal to 80% (88% for computers) and applies to all aspects of the machine, repair, access codes, etc."
+    }
+  }
+]

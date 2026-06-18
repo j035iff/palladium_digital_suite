@@ -1,5 +1,68 @@
 [
   {
+    "id": "skill_basic_mechanics",
+    "name": "Basic Mechanics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Mechanical"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A fundamental understanding of mechanical devices, engines, gears, and simple machines. The character can maintain, repair, and build basic mechanical devices and tools.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ],
+    "skillTraits": [
+      "related_to_mechanics",
+      "related_to_repair",
+      "requires_dexterity",
+      "work_education_related"
+    ]
+  },
+  {
+    "id": "skill_automotive_mechanics",
+    "name": "Automotive Mechanics",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Mechanical"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_basic_mechanics"
+      }
+    ],
+    "description": "Training in the repair, maintenance, and modification of automobiles, trucks, and other standard combustion-engine vehicles.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
+      }
+    ],
+    "skillTraits": [
+      "related_to_mechanics",
+      "related_to_repair",
+      "requires_dexterity",
+      "work_education_related"
+    ]
+  },
+  {
     "id": "skill_locksmith",
     "name": "Locksmith",
     "gameSystems": [

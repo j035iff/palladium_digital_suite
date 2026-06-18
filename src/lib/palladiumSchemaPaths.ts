@@ -111,7 +111,7 @@ export const PALLADIUM_RACE_GM_APPROVAL_JSON_PATH =
 export const PALLADIUM_RACE_CATALOG_JSON_PATH =
   PALLADIUM_RACE_PLAYER_JSON_PATH
 
-/** One JSON array per source book (same slug as `progression/xp_tables/`). */
+/** One JSON array per source book (genre folder mirrors `occs/<genre>/`). */
 export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const
 
 export const PALLADIUM_HAND_TO_HAND_CATALOG_JSON_PATH =
@@ -131,6 +131,10 @@ export const PALLADIUM_TALENT_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumTalents.json` as const
 
 /** Psionic power catalog (`schemas/palladium-psionic.schema.json`). */
+export const PALLADIUM_PSIONICS_DIR =
+  `${PALLADIUM_CONTENT_DIR}/psionics` as const
+
+/** @deprecated Use {@link PALLADIUM_PSIONICS_DIR} — legacy monolithic path removed. */
 export const PALLADIUM_PSIONIC_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumPsionics.json` as const
 
@@ -169,6 +173,6 @@ export const PALLADIUM_XP_TABLE_SCHEMA_ID =
 export const PALLADIUM_XP_TABLE_BOOK_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-xp-table-book.schema.json' as const
 
-/** One JSON file per source book (`tables[]` bundles). */
+/** One JSON file per source book (`tables[]` bundles), grouped under `progression/xp_tables/<genre>/`. */
 export const PALLADIUM_XP_TABLES_DIR =
   `${PALLADIUM_CONTENT_DIR}/progression/xp_tables` as const

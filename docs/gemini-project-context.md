@@ -41,6 +41,7 @@ npm run preview              # Serve production build (http://localhost:4173)
 npm test                     # Vitest — full suite
 npm run validate:schemas     # All Palladium content schemas + catalogs
 npm run audit:talents        # Tier 1 chargen completeness report (talents)
+npm run audit:skills         # Pass A catalog completeness report (skills, all genres)
 npm run validate:morphus     # Morphus table JSON only
 npm run morphus:ingest -- <cmd> <tableId>   # PDF → JSON pipeline
 ```
@@ -189,12 +190,12 @@ Validated catalogs under `src/data/content/`:
 
 | Catalog | Count | Location |
 |---------|-------|----------|
-| Skills | 154 | `skills/*.json` (14 category files; loader: `library/skillsCatalogLoader.ts`) |
+| Skills | 160 | `skills/*.json` (14 category files; loader: `library/skillsCatalogLoader.ts`) |
 | Talents | 151 | `talents/common.json` (94) + `talents/elite.json` (57) |
 | Morphus tables | 56 | `morphus/tables/*.json` |
-| Psionics | 78 | `palladiumPsionics.json` |
+| Psionics | 78 | `psionics/*.json` (4 category files) |
 | Magic spells | 156 | `magic/wizard.json`, `magic/mirror.json`, `magic/fleshsculptor.json` |
-| O.C.C.s | 17 | `occs/nightbane_core.json` (11) + `occs/between_the_shadows.json` (6) |
+| O.C.C.s | 17 | `occs/nightbane/` — `nightbane_core.json` (11) + `between_the_shadows.json` (6) |
 | Player races | 4 | `races/player.json` |
 | Hand-to-Hand | 5 | `palladiumHandToHand.json` |
 
@@ -208,16 +209,16 @@ Content is **JSON-first**, validated by Ajv:
 
 | Schema | Content file(s) |
 |--------|-----------------|
-| `palladium-skill.schema.json` | `skills/*.json` (category-split; monolithic `palladiumSkills.json` removed) |
-| `palladium-occ.schema.json` | `occs/*.json` |
-| `palladium-race.schema.json` | `races/player.json`, `races/npc.json`, `races/gm_approval.json` |
+| `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`) — ingest: [`docs/palladium-skill-ingest.md`](palladium-skill-ingest.md) |
+| `palladium-occ.schema.json` | `occs/<genre>/*.json` — ingest: [`docs/palladium-occ-ingest.md`](palladium-occ-ingest.md) |
+| `palladium-race.schema.json` | `races/player.json`, `races/npc.json`, `races/gm_approval.json` — ingest: [`docs/palladium-race-ingest.md`](palladium-race-ingest.md) |
 | `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest: [`docs/nightbane-talent-ingest.md`](nightbane-talent-ingest.md) |
-| `palladium-psionic.schema.json` | `palladiumPsionics.json` |
-| `palladium-magic.schema.json` | `magic/*.json` |
+| `palladium-psionic.schema.json` | `psionics/*.json` (category files) — ingest: [`docs/palladium-psionic-ingest.md`](palladium-psionic-ingest.md) |
+| `palladium-magic.schema.json` | `magic/*.json` — ingest: [`docs/palladium-magic-ingest.md`](palladium-magic-ingest.md) |
 | `palladium-hth.schema.json` | `palladiumHandToHand.json` |
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |
-| `palladium-xp-table.schema.json` | `progression/xp_tables/*.json` |
+| `palladium-xp-table.schema.json` | `progression/xp_tables/<genre>/*.json` |
 
 Morphus characteristic entries support structured fields such as:
 
@@ -227,7 +228,7 @@ Morphus characteristic entries support structured fields such as:
 - `naturalWeapons`, `mobility.flightEngine`, `limbDurability`, `saveModifiers`
 - `appearanceConstraints`, `combatContextModifiers`, `customOneOffs` (narrative edge cases)
 
-Authoring guides: `docs/morphus_authoring.md`, `docs/nightbane-talent-ingest.md`.
+Authoring guides: `docs/morphus_authoring.md`, `docs/nightbane-talent-ingest.md`, `docs/palladium-skill-ingest.md`, `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md`.
 
 ### Saving throws (catalog + sheet)
 
@@ -253,6 +254,21 @@ Two-pass model (`docs/nightbane-talent-ingest.md`):
 Workflow: Pass A/B per batch → `npm run validate:schemas` → `npm run audit:talents`. Engine contract: `scripts/talent-engine-contract.mjs`. Flag ambiguous book mechanics and ask the user before encoding.
 
 **Source note:** `WB3-Through_the_Glass_Darkly.pdf` p. 133–134 is adventure/NPC content, not talents. Between the Shadows talents cite `"Between the Shadows"` as secondary source.
+
+---
+
+## Palladium skill catalog ingest (all genres)
+
+**Status:** Pass A catalog rows exist for **160** skills — `npm run audit:skills` reports 160/160 Pass A complete, **0 critical**.
+
+Genre-agnostic workflow (`docs/palladium-skill-ingest.md`):
+
+| Pass | Scope | Status |
+|------|-------|--------|
+| **A — Catalog** | Picker, %, prerequisites, synergies, sources, `gameSystems`, categories | Complete |
+| **B — Play** | Physical bonuses, sub-tasks, attacks, advanced roll rules | Partial on rows; play wiring is future work |
+
+Workflow: Pass A/B per batch → `npm run validate:schemas` → `npm run audit:skills`. Engine contract: `scripts/skill-engine-contract.mjs`. Tag `gameSystems` for the source line (Nightbane, Rifts, Fantasy, etc.); flag ambiguous book mechanics and ask the user before encoding.
 
 ---
 
@@ -324,6 +340,11 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 | `docs/live_ledger.md` | Formula cheat sheet (defers to stat engine spec) |
 | `docs/movement_engine_spec.md` | Ground / swim / fly / leap from Spd |
 | `docs/nightbane-talent-ingest.md` | Talent Pass A/B ingest workflow and encoding rules |
+| `docs/palladium-skill-ingest.md` | Skill catalog Pass A/B ingest (genre-agnostic) |
+| `docs/palladium-magic-ingest.md` | Magic spell catalog Pass A/B ingest |
+| `docs/palladium-psionic-ingest.md` | Psionic power catalog Pass A/B ingest (category-split target) |
+| `docs/palladium-occ-ingest.md` | O.C.C. composition ingest |
+| `docs/palladium-race-ingest.md` | Race / R.C.C. ingest (audience pools) |
 | `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage, APM tracker UX |
 | `docs/morphus_authoring.md` | How to encode Morphus traits for the engine |
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
@@ -337,12 +358,14 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 1. **Do not guess Palladium rules** — derive behavior from JSON schemas, `docs/`, and book-accurate content files.
 2. **Prefer structured Morphus/talent fields** over stuffing mechanics into `description` or `customOneOffs` when the schema supports them.
 3. **Keep UI dumb** — business logic belongs in `src/lib/`, not React components.
-4. **Validate after content changes:** `npm run validate:schemas`, `npm run audit:talents` (talents), and/or `npm run validate:morphus`.
+4. **Validate after content changes:** `npm run validate:schemas`, `npm run audit:talents` (talents), `npm run audit:skills` (skills), and/or `npm run validate:morphus`.
 5. **Talent ingest** — follow `docs/nightbane-talent-ingest.md`; flag ambiguous mechanics and ask the user before encoding.
-6. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
-7. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
-8. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
-9. **Commits** — only when the user explicitly asks.
+6. **Skill ingest** — follow `docs/palladium-skill-ingest.md`; same flag-and-ask rule (any Palladium genre).
+7. **Magic / psionic / O.C.C. / race ingest** — follow `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md` respectively.
+8. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
+9. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
+10. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
+11. **Commits** — only when the user explicitly asks.
 
 ---
 

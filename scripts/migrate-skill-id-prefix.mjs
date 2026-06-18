@@ -102,8 +102,8 @@ function migrateJsonFile(relPath) {
   writeFileSync(abs, `${JSON.stringify(migrated, null, 2)}\n`, 'utf8')
 }
 
-migrateJsonFile('src/data/content/occs/between_the_shadows.json')
-migrateJsonFile('src/data/content/occs/nightbane_core.json')
+migrateJsonFile('src/data/content/occs/nightbane/between_the_shadows.json')
+migrateJsonFile('src/data/content/occs/nightbane/nightbane_core.json')
 
 const examplesDir = join(root, 'src/data/schemas/examples')
 for (const name of readdirSync(examplesDir)) {

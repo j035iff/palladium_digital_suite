@@ -1,14 +1,17 @@
 /**
- * Rebuild Nightbane sensitive psionics (RPG pp. 70–78) in the unified catalog.
- * Merges into `palladiumPsionics.json`, preserving any other rows already present.
+ * Rebuild Nightbane sensitive psionics (RPG pp. 70–78) in the category-split catalog.
+ * Merges into `psionics/sensitive.json`, preserving other category files.
  * Run: node scripts/build-nightbane-sensitive-psionics.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import {
+  loadPsionicsFromDir,
+  writePsionicsToDir,
+} from './lib/psionics-catalog-fs.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const outPath = join(root, 'src/data/content/palladiumPsionics.json')
+const psionicsDir = join(root, 'src/data/content/psionics')
 
 const source = (page) => ({
   gameSystem: 'nightbane',
@@ -460,18 +463,12 @@ const catalog = [
 ]
 
 const sensitiveIds = new Set(catalog.map((row) => row.id))
-let existing = []
-try {
-  const parsed = JSON.parse(readFileSync(outPath, 'utf8'))
-  if (Array.isArray(parsed)) {
-    existing = parsed.filter((row) => row?.id && !sensitiveIds.has(row.id))
-  }
-} catch (err) {
-  if (err.code !== 'ENOENT') throw err
-}
+const existing = loadPsionicsFromDir(psionicsDir).filter(
+  (row) => row?.id && !sensitiveIds.has(row.id),
+)
 
 const merged = [...existing, ...catalog].sort((a, b) => a.id.localeCompare(b.id))
-writeFileSync(outPath, `${JSON.stringify(merged, null, 2)}\n`, 'utf8')
+writePsionicsToDir(psionicsDir, merged)
 console.log(
-  `Wrote ${catalog.length} sensitive psionics (${merged.length} total) to ${outPath}`,
+  `Wrote ${catalog.length} sensitive psionics (${merged.length} total) under ${psionicsDir}`,
 )

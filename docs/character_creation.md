@@ -85,6 +85,11 @@ Options are never hidden; they are sorted and color-coded:
 | Psychic Gate | `docs/psychic_gate.md` |
 | Morphus Sub-Forge (Tab 6) | `docs/forge-morphus_creation.md`; `src/data/content/morphus/` |
 | Nightbane talent catalog ingest | `docs/nightbane-talent-ingest.md` |
+| Palladium skill catalog ingest | `docs/palladium-skill-ingest.md` |
+| Palladium magic catalog ingest | `docs/palladium-magic-ingest.md` |
+| Palladium psionic catalog ingest | `docs/palladium-psionic-ingest.md` |
+| Palladium O.C.C. catalog ingest | `docs/palladium-occ-ingest.md` |
+| Palladium race catalog ingest | `docs/palladium-race-ingest.md` |
 | Combat / vitals scaling | `docs/combat_logic.md` |
 
 ---
@@ -95,8 +100,9 @@ Options are never hidden; they are sorted and color-coded:
 |---------|----------|
 | Genre manifest | `src/data/genres.ts` — `GENRE_MANIFEST` |
 | Player races | `src/data/content/races/player.json` |
-| O.C.C. pool | `src/data/content/occs/*.json` |
+| O.C.C. pool | `src/data/content/occs/<genre>/*.json` |
 | Skills | `src/data/content/skills/*.json` (loader: `src/data/library/skillsCatalogLoader.ts`) |
 | Talents | `src/data/content/talents/common.json`, `talents/elite.json` |
+| Psionics | `src/data/content/psionics/*.json` |
 
 **Psychic Gate bypass:** Genre forbids supernatural play; race `psionics.capabilityType` is `none` or `innate`; or O.C.C. `progression.psychicGateBypassed`. Standard humans in supernatural-allowed genres still get the gate for optional minor psionics.

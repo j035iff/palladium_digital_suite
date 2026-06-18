@@ -1,5 +1,36 @@
 [
   {
+    "id": "skill_creative_writing",
+    "name": "Creative Writing",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 25,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "description": "The ability to write prose, poetry, articles, and other creative written works. May be taken twice for professional quality (+10% bonus).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "work_education_related"
+    ]
+  },
+  {
     "id": "skill_cryptography",
     "name": "Cryptography",
     "gameSystems": [
@@ -72,6 +103,32 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
+    ]
+  },
+  {
+    "id": "skill_public_speaking",
+    "name": "Public Speaking",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Communications"
+    ],
+    "allowedAsSecondarySkill": true,
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Training in effective public speaking, debate, and presentation before an audience.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 49
+      }
+    ],
+    "skillTraits": [
+      "work_education_related"
     ]
   },
   {

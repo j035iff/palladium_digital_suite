@@ -1,0 +1,1098 @@
+[
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_astral_bolts",
+    "name": "Astral Bolts",
+    "description": "This power can only be used in the Astral Plane, because it draws on ambient ectoplasm. The astral bolts inflict 1D4 S.D.C. per level of the caster, and are +3 to strike. Targets can dodge normally.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "30 feet (9.1 m) plus 10 feet (3.0 m) per level of experience."
+    },
+    "duration": {
+      "summary": "One melee round per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": {
+      "summary": "Targets may dodge normally.",
+      "saveKind": "special"
+    },
+    "damage": {
+      "formula": "1D4 per level of experience",
+      "notes": "Only functions in the Astral Plane."
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "combatModifiers": {
+        "strike": 3,
+        "notes": "Bonus specifically applies to the Astral Bolt attacks."
+      }
+    },
+    "psionicPrerequisites": [
+      "psionic_astral_projection"
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_astral_navigation",
+    "name": "Astral Navigation",
+    "description": "Astral travelers with this power are in a state of communion with the Astral Plane, and are able to find their way more easily. This power can be used in many different ways, depending on where in the Astral Plane the user is at the moment. In the Outer Layer, the psychic can return to his body. In the Inner Plane, the psychic can travel through the Dragon Roads.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One hour per level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "baseSkill": {
+      "label": "Success ratio",
+      "basePercent": 45,
+      "perLevel": 4,
+      "notes": "Skill rolls can be made once every hour. Greatly modified by familiarity with destination."
+    },
+    "psionicPrerequisites": [
+      "psionic_astral_projection"
+    ]
+  },
+  {
+    "id": "psionic_astral_projection",
+    "name": "Astral Projection",
+    "description": "The psychic frees his astral body from his physical form. A silver cord links astral and physical selves; severing it is likely fatal (only a 30% chance the astral self can locate the physical body without it). The physical body falls into a helpless coma-like trance. The astral form can coexist in the material world (ghostly, visible to psychics, children under 13, animals, and most supernatural beings) or enter the astral plane. The material-world astral form can float, fly, see the invisible, pass through solid objects, and is impervious to physical harm, but cannot speak, smell, or touch the material plane except via telepathy or empathy. The astral body and silver cord each have Astral S.D.C. equal to twice the combined physical H.P. and S.D.C. of the psychic; the cord is -6 to strike. Magic and psychic influence affect the astral body fully. Traveling in the astral plane distorts time and space, requiring percentile rolls to successfully return to the physical body.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 71
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 8
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "5 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "lengthOfTrance": {
+      "summary": "4D4 minutes of preparatory meditation.",
+      "preparationMinutes": "4D4"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Return to physical body accuracy",
+      "resolutionTrigger": {
+        "when": "on_duration_end",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "Hopelessly Lost (roll again).",
+          "percentile": {
+            "min": 1,
+            "max": 30
+          }
+        },
+        {
+          "effect": "Uncertain, confused (roll again).",
+          "percentile": {
+            "min": 31,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Fairly certain of location; on the right track (roll again).",
+          "percentile": {
+            "min": 51,
+            "max": 76
+          }
+        },
+        {
+          "effect": "Definitely certain of location. (Whew! Made it Back).",
+          "percentile": {
+            "min": 77,
+            "max": 100
+          }
+        }
+      ]
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "physical harm",
+        "cold",
+        "heat",
+        "energy"
+      ],
+      "movement": {
+        "flightSpeed": "Mach 1 / 670 mph maximum"
+      }
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Astral Body and Silver Cord",
+      "derivedHealth": "Twice the combined physical H.P. and S.D.C. of the psychic.",
+      "combatModifiers": {
+        "strike": -6
+      }
+    }
+  },
+  {
+    "id": "psionic_clairvoyance",
+    "name": "Clairvoyance",
+    "description": "Allows the psychic to see or feel glimpses of the possible future through meditation or intense concentration. The psychic thinks about a particular person, event or place to receive these brief snippets of insight, like a snippet of film or a dream. It is unpredictable and requires a base skill roll to work. A failed roll means no insight, but I.S.P. and time are still consumed. Can be attempted twice a day. Add +5% to the base skill if the person involved is a friend or loved one. Sometimes, an image will occur unintentionally as a dream or nightmare.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 72
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self (although the image could pertain to people or places thousands of miles away)."
+    },
+    "duration": {
+      "summary": "6D6 melees",
+      "kind": "melee_round",
+      "dice": "6D6"
+    },
+    "lengthOfTrance": {
+      "summary": "2D4 melees of concentration or meditation before the image occurs.",
+      "preparationMelees": "2D4"
+    },
+    "baseSkill": {
+      "label": "Success ratio",
+      "basePercent": 58,
+      "perLevel": 2
+    }
+  },
+  {
+    "id": "psionic_death_trance",
+    "name": "Death Trance",
+    "description": "A state of mind over matter that slows the metabolism to such a degree that it creates a temporary state of suspended animation, simulating death. Without hospital facilities, even a medical doctor is likely to believe the character is dead (1-89% likelihood). The effects of drugs, toxins and chemicals are slowed to a crawl, but will take full effect the instant the death trance is stopped. While in this state, the psychic cannot be roused or respond to any type of stimulation, including psychic probes, and is incapable of attacking or defending himself.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 72
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "As long as the psychic senses he must feign death, up to a maximum of four days.",
+      "kind": "special"
+    }
+  },
+  {
+    "id": "psionic_divination",
+    "name": "Divination",
+    "description": "A precognitive ability to sense the future by reading random patterns from tools or items (e.g., tarot cards, sticks, tea leaves). It is less accurate and detailed than clairvoyance, providing only impressions rather than images or sounds. The diviner must select one or two specific focuses/objects needed for divination. The psychic can attempt to divine their own future (with a -10% skill penalty) or the future of one person at a time, who can ask up to 13 questions. A base skill roll is required for each question; failure means no answer can be given.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 73
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 3
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "2D4 minutes",
+      "kind": "minute",
+      "dice": "2D4"
+    },
+    "lengthOfTrance": {
+      "summary": "Meditate for at least 15 or 20 minutes.",
+      "preparationMinutes": "15-20"
+    },
+    "baseSkill": {
+      "label": "Success ratio",
+      "basePercent": 42,
+      "perLevel": 2
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_dreamdance_minor",
+    "name": "Dreamdance (Minor)",
+    "description": "This psychic power allows the character to enter the Dreamstream. The psychic's body remains in a trance, much like when traveling via astral projection. A dream projection is similar to an astral projection but without the silver cord link. This dream projection has S.D.C. points equal to the total S.D.C. and hit points of the character. While in the Dreamstream, the character can search for the Dream Pool of any given individual who is asleep and dreaming.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 8
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "5 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Find Dream Pool success",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "Find Pool (Roll every minute): Intimately knows the person or feels great love/hatred.",
+          "percentile": {
+            "min": 1,
+            "max": 70
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every five minutes): Knows the person.",
+          "percentile": {
+            "min": 1,
+            "max": 60
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every ten minutes): Acquainted with the person.",
+          "percentile": {
+            "min": 1,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every half hour): Has seen the person at least once.",
+          "percentile": {
+            "min": 1,
+            "max": 35
+          }
+        },
+        {
+          "effect": "Find Pool (Roll every hour): Has heard of the person, or seen pictures (includes famous people).",
+          "percentile": {
+            "min": 1,
+            "max": 20
+          }
+        }
+      ]
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Dream Projection",
+      "derivedHealth": "Equal to the total S.D.C. and hit points of the character."
+    }
+  },
+  {
+    "id": "psionic_empathic_transmission",
+    "name": "Empathic Transmission",
+    "description": "Enables the psychic to instill a powerful emotion into another living creature (person, animal, or supernatural being). Each attack can only affect one creature at a time. The psychic can invoke Despair/Sorrow (50% chance of surrendering/leaving; -2 parry/dodge), Confusion (-3 strike/parry/dodge, loses initiative), Fear (-3 strike/parry/dodge, 66% chance to flee), Hate/Anger (60% chance to attack/betray; +1 strike, -1 parry/dodge), Love/Peacefulness (60% chance to reconsider actions/halt rampage), or Trust (believe everything the psychic says while influenced; +3 to save against life-threatening suggestions).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 74
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "60 feet (18.2 m)"
+    },
+    "duration": {
+      "summary": "2D6 minutes (2 to 12 minutes)",
+      "kind": "minute",
+      "dice": "2D6"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "id": "psionic_empathy",
+    "name": "Empathy",
+    "description": "Makes the psychic aware of, or feel, the emotions of other people, animals and supernatural creatures. The strongest emotions are easiest to sense: hate, anger, terror, love. It can often be used to establish that somebody or something is nearby, but cannot pinpoint an invisible or hiding person/creature. It is especially helpful in recognizing and communicating with ghosts and other supernatural creatures, and can be used in a limited sense like a lie detector.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 74
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "100 foot area (30.5 m)"
+    },
+    "duration": {
+      "summary": "Two minutes (8 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "Standard; a save vs empathy means the psychic can not get a clear sense of the emotions of that particular person. Must roll to save once each melee. Mind block prevents emanations.",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_ethereal_mirage_minor",
+    "name": "Ethereal Mirage (Minor)",
+    "description": "Creates a visual illusion projected directly into the mind of the people in range of the power. If a successful save is made the target realizes he is seeing an illusion. The illusion can have any shape and form the character wishes it to have, but cannot produce any sound, nor is it substantial.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "10 feet (3.0 m) per level of experience. Size of the illusion is limited to 3 square feet (0.28 square meter) per level of experience."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "limitations": {
+      "otherLimitations": "This power only works in the Dreamstream and Astral Plane."
+    }
+  },
+  {
+    "id": "psionic_meditation",
+    "name": "Meditation",
+    "description": "A mental discipline allowing the character to achieve a deep relaxation, focus, or to gain insight into one's inner self and the universe by dwelling upon a single notion, mental object, or mantra. It is often required to use psychic and magic powers.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 74
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 0
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Varies with the person's needs.",
+      "kind": "special"
+    }
+  },
+  {
+    "id": "psionic_mediumship_clairsentience",
+    "name": "Mediumship/Clairsentience (Seance)",
+    "description": "The psychic acts as a beacon to call out to haunting ghosts or other entities, and acts as a medium through which the entity can speak (temporary possession) or as the mediator. A seance chain is composed of a group of people holding hands to create a circle. The group can be 2 to a dozen people. Each person in the chain can temporarily contribute up to half of his/her P.P.E. Every P.P.E. point increases the base skill by +2%. Every P.P.E. point from a person opposed reduces the success by -2% (nega-psychics reduce by -4% per P.P.E.). The seance can be broken instantly at any time by letting go of hands, which dispels the entity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 74
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "2D4 minutes",
+      "kind": "minute",
+      "dice": "2D4"
+    },
+    "lengthOfTrance": {
+      "summary": "3D4 minutes of preparation",
+      "preparationMinutes": "3D4"
+    },
+    "baseSkill": {
+      "label": "Success ratio",
+      "basePercent": 30,
+      "perLevel": 0,
+      "notes": "+2% for every P.P.E point that can be drawn on."
+    }
+  },
+  {
+    "id": "psionic_mind_block",
+    "name": "Mind Block",
+    "description": "The ability to completely close or block oneself from all psychic/mental emanations. The character cannot sense anything, use psychic abilities, or be influenced by others. It prevents penetration of telepathy, empathy, hypnotic suggestion, and empathic transfer. Adds a bonus of +1 to save vs all psychic and mental attacks.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 75
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is per duration period."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "10 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "10 minutes"
+    },
+    "grantedModifiers": {
+      "combatModifiers": {
+        "savePsionics": 1
+      }
+    }
+  },
+  {
+    "id": "psionic_object_read",
+    "name": "Object Read (Psychometry)",
+    "description": "Enables the psychic sensitive to receive impressions and images from an object regarding its use, history and last owner. Impressions (general alignment, emotional state, general purpose) and Images (snippets of isolated past events and physical descriptions) require separate percentile rolls. The present can also be glimpsed for an additional 4 I.S.P., if an impression or image roll was successful. Once an object has been read it cannot be read again by the same psychic.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 75
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6,
+      "notes": "Glimpsing the present costs an additional 4 I.S.P."
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "Varies; usually about 2D6 minutes.",
+      "kind": "minute",
+      "dice": "2D6"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "baseSkill": {
+      "label": "Impressions",
+      "basePercent": 56,
+      "perLevel": 2,
+      "notes": "Impressions: 56%+2% per level. Images: 48%+2% per level. Present: 38%+2% per level."
+    }
+  },
+  {
+    "id": "psionic_presence_sense",
+    "name": "Presence Sense",
+    "description": "A sixth sense which alerts the character to the presence of supernatural and magic creatures in the area. The ability cannot pinpoint the location, but will give the impression of whether it is near (within 50 feet/15.2 m) or far (beyond 90 feet/27.4 m), and a vague idea of how many presences there are. The psychic can also sense human presences, but with much less accuracy (more of a feeling of 'We are not alone').",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 75
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "120 foot/36 m area"
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "psionic_see_aura",
+    "name": "See Aura",
+    "description": "All things, organic and inorganic, have an aura. Seeing an aura will indicate the following: estimate general level of experience, the presence of magic, the presence of psychic abilities, high or low base P.P.E., the presence of a possessing entity, or the presence of an unusual human aberration (serious illness, non-human, or mutant). Cannot tell one's alignment.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 76
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "60 feet (18.3 m) and must be visible."
+    },
+    "duration": {
+      "summary": "2 melees (30 seconds)",
+      "kind": "melee_round",
+      "flat": 2
+    },
+    "save": {
+      "summary": "None, but a mind block will hide the presence of psychic abilities, the level of P.P.E., and possession by a supernatural force.",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "psionic_see_the_invisible",
+    "name": "See The Invisible",
+    "description": "The character can see forces, objects and creatures which can turn invisible or are naturally invisible. Even if the creatures have no form per se, the psychic will be able to discern the vaporous image or energy sphere which is the being. This includes ghosts, entities and the astral body.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 76
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "120 foot/36 m distances."
+    },
+    "duration": {
+      "summary": "1 minute per each level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_sense_dimensional_anomaly",
+    "name": "Sense Dimensional Anomaly",
+    "description": "This power will detect the presence of a dimensional anomaly like a dimensional portal or Rift leading to an astral or dream domain, as well as any disturbances caused by teleportation, temporal magic or other powers that disrupt the fabric of reality.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "120 feet/36.5 m area."
+    },
+    "duration": {
+      "summary": "2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "psionic_sense_evil",
+    "name": "Sense Evil",
+    "description": "A refined ability to feel the presence of supernatural evil. While a psychic automatically feels supernatural evil without spending I.S.P., using this power provides a clearer picture. It indicates the general number of supernatural evil presences, the intensity of the evil, and can pinpoint the general location (very near, near, or far). The character can track the source like a bloodhound. Evil emanations from human beings cannot be felt unless they have immediate evil intentions and possess psychic powers or are psychotic (and psychic humans can mask this with a mind block).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 76
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "140 foot/42.7 m area."
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "psionic_sense_magic",
+    "name": "Sense Magic",
+    "description": "The psychic can feel magic energy, tell whether it is near (within 20 feet/6.1 m) or far (up to 120 feet/36 m away) and follow the emanations to pinpoint their source. Invisible magical supernatural creatures or objects can only be traced to a general area. The psychic can also sense if an object has magic powers, if a person or item is enchanted/under a spell, when magic is being used in the area, and when a person is casting a spell.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 76
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 3
+    },
+    "range": {
+      "summary": "120 foot/36 m area"
+    },
+    "duration": {
+      "summary": "2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "psionic_sixth_sense",
+    "name": "Sixth Sense",
+    "description": "Gives the psychic a precognitive flash of imminent danger to himself or somebody near him. The character will not know what the danger is, where it will come from, or who it is directed at, only that something life-threatening will happen within the next 60 seconds (4 melees). It is triggered automatically when life is in great peril; it cannot be called upon at will. If the character has no I.S.P., the power is temporarily inoperative. The flash provides combat bonuses for the initial melee when the attack occurs, and the character cannot be surprised from behind.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 76
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "90 feet/27.4 m"
+    },
+    "duration": {
+      "summary": "Until the danger passes or happens.",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "combatModifiers": {
+        "initiative": 6,
+        "parry": 2,
+        "dodge": 3
+      }
+    }
+  },
+  {
+    "id": "psionic_speed_reading",
+    "name": "Speed Reading",
+    "description": "The ability to read and comprehend the written word extremely quickly. Speed of reading is 30 pages per minute/4 melees, retaining information normally. Highly technical texts will reduce the speed reading by half (15 pages per minute) and may require two readings.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "3 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "3 minutes"
+    }
+  },
+  {
+    "id": "psionic_suggestion",
+    "name": "Suggestion (Hypnosis)",
+    "description": "A psychically boosted form of simple hypnosis. It is limited to relaxing/calming somebody down, putting a person or animal in a light sleep, helping a person to relax and focus on a thought, and implanting subtle ideas. The suggestion must be subtly worked into a comment and kept simple and clear. It can also be used to make the victim imagine sounds and images. It cannot make someone act against their nature or become a zombie slave. A successful save means the idea is not implanted, but the psychic may try again.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      },
+      {
+        "genreId": "nightbane",
+        "category": "healer",
+        "isp": {
+          "baseActivation": 4,
+          "notes": "4 I.S.P. per idea or implant attempt (p. 84)."
+        },
+        "notes": "Identical to Sensitive Suggestion; 10 ft range, one melee preparatory meditation."
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Cost is per idea or attempt to implant an idea."
+    },
+    "range": {
+      "summary": "12 feet/3.6 m, with eye contact."
+    },
+    "duration": {
+      "summary": "Varies with each circumstance and subject; rarely more than a few hours maximum.",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "id": "psionic_telepathy",
+    "name": "Telepathy",
+    "description": "Allows the psychic to eavesdrop on what a person is thinking at a particular moment by focusing on them and picking up surface thoughts. A deep probe into memory is not possible. The psychic can only read one person at a time. Limited telepathic communication is possible, sending a brief, directed thought message to one person at a time. Two-way telepathic communication is only possible between two telepathic psychics.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Read surface thoughts up to 60 feet/18.3 m away or two-way telepathic communication - 140 feet/32.7 m."
+    },
+    "duration": {
+      "summary": "2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "Conditional. When a person suspects that he is being telepathically probed he can resist, getting the standard saving throw. Mind blocks completely prevent probes or communications.",
+      "saveKind": "conditional"
+    }
+  },
+  {
+    "id": "psionic_total_recall",
+    "name": "Total Recall",
+    "description": "The character remembers every word he reads. Specific blocks of information can be recalled in perfect detail at will. If all I.S.P. have been expended the memory is a little fuzzy, so exact quotes and details may be impossible to recall, requiring a percentile roll to determine clarity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Each block of information costs 3 I.S.P. to recall in absolute detail."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "special"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Recall clarity when I.S.P. is exhausted",
+      "resolutionTrigger": {
+        "when": "on_duration_end",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "Remembered in full detail, word for word.",
+          "percentile": {
+            "min": 1,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Details are forgotten, but the full essence of the ideas are clear.",
+          "percentile": {
+            "min": 51,
+            "max": 80
+          }
+        },
+        {
+          "effect": "Can only recall the most basic concepts; no details nor strong comprehension.",
+          "percentile": {
+            "min": 81,
+            "max": 100
+          }
+        }
+      ]
+    }
+  }
+]
