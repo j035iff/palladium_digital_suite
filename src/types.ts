@@ -448,6 +448,8 @@ export type OccHandToHandRules = {
    */
   defaultSkillId: string | null
   upgradePaths: readonly OccHandToHandUpgradePath[]
+  /** Creation floor — tiers below this are disabled (specialization branches may set this). */
+  minimumCreationHandToHandTier?: Exclude<CreationHandToHandTier, 'none'>
 }
 
 /** Kick damage unlocked at a Hand-to-Hand level row (palladium-hth.schema.json). */
@@ -475,7 +477,11 @@ export type HandToHandProgressionLevel = {
   rollWithPunch?: number
   damage?: number
   entangle?: number
+  /** Unlocks the entangle maneuver at this level (separate from numeric entangle bonuses). */
+  entangleUnlocked?: boolean
   disarm?: number
+  /** Unlocks the disarm maneuver at this level (separate from numeric disarm bonuses). */
+  disarmUnlocked?: boolean
   pairedWeapons?: boolean
   kickAttack?: HandToHandKickAttack
   bodyThrowFlip?: HandToHandBodyThrowFlip
@@ -1967,6 +1973,8 @@ export type AccumulatedHandToHandBonuses = {
   damage: number
   entangle: number
   disarm: number
+  entangleUnlocked: boolean
+  disarmUnlocked: boolean
   pairedWeapons: boolean
   kickAttack?: HandToHandKickAttack
   bodyThrowFlip?: HandToHandBodyThrowFlip

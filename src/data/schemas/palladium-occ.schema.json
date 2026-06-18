@@ -726,6 +726,11 @@
           "items": {
             "$ref": "#/$defs/handToHandUpgradePath"
           }
+        },
+        "minimumCreationHandToHandTier": {
+          "type": "string",
+          "enum": ["basic", "expert", "martial_arts", "assassin"],
+          "description": "Creation floor for the player's Hand-to-Hand pick (e.g. A.D.A. Assassination Specialist must reach Expert). Tiers below this are shown disabled in the Skill tab."
         }
       }
     },

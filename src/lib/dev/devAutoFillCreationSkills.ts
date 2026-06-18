@@ -58,8 +58,13 @@ function resolveHandToHandTier(
   const options = listOccHandToHandOptions(effective)
   if (options.length === 0) return 'none'
 
-  const preferred = options.find((o) => o.tier === current) ?? options[0]
+  const preferred =
+    options.find((o) => o.tier === current && !o.disabled) ??
+    options.find((o) => !o.disabled) ??
+    options[0]
   if (
+    preferred &&
+    !preferred.disabled &&
     canAffordHandToHandTier(
       effective,
       preferred.tier,
@@ -71,6 +76,7 @@ function resolveHandToHandTier(
   }
 
   for (const opt of options) {
+    if (opt.disabled) continue
     if (
       canAffordHandToHandTier(
         effective,

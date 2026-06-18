@@ -1248,7 +1248,9 @@ export type CreationCombatLedger = {
   initiative: number
   attacksPerMelee: number
   entangle: number
+  entangleUnlocked: boolean
   disarm: number
+  disarmUnlocked: boolean
   handToHandDamage: number
 }
 
@@ -1309,8 +1311,10 @@ export function buildCreationCombatLedger(
     pullPunch,
     initiative,
     attacksPerMelee,
-    entangle: hth.entangle,
-    disarm: hth.disarm,
+    entangle: hth.entangleUnlocked ? hth.entangle : 0,
+    entangleUnlocked: hth.entangleUnlocked,
+    disarm: hth.disarmUnlocked ? hth.disarm : 0,
+    disarmUnlocked: hth.disarmUnlocked,
     handToHandDamage,
   }
 }
@@ -1522,6 +1526,66 @@ function buildHandToHandDamageLine(
   }
 }
 
+/** Entangle row — maneuver gated; numeric bonuses apply only when unlocked. */
+function buildCreationEntangleLine(
+  handToHand: AccumulatedHandToHandBonuses | undefined,
+  hthShort: string | null,
+  morphusBase: FeatureModifiers,
+  passive: FeatureModifiers,
+): CreationLedgerLine {
+  if (!handToHand?.entangleUnlocked) {
+    return { label: 'Entangle', value: LEDGER_NA, valueModified: false }
+  }
+
+  const parts: SaveDeductionLine[] = []
+  if (handToHand.entangle && hthShort) {
+    parts.push({ label: `HtH ${hthShort}`, amount: handToHand.entangle })
+  }
+  const baseAmt = morphusBase.entangle ?? 0
+  if (baseAmt !== 0) parts.push({ label: 'Race', amount: baseAmt })
+  const traitAmt = passive.entangle ?? 0
+  if (traitAmt !== 0) parts.push({ label: 'Traits', amount: traitAmt })
+
+  const total = parts.reduce((sum, p) => sum + p.amount, 0)
+  return {
+    label: 'Entangle',
+    value: formatBonus(total),
+    valueModified: true,
+    hint: formatBonusBreakdown(parts),
+    valueTooltip: formatCombatValueTooltip(parts),
+  }
+}
+
+/** Disarm row — maneuver gated; numeric bonuses apply only when unlocked. */
+function buildCreationDisarmLine(
+  handToHand: AccumulatedHandToHandBonuses | undefined,
+  hthShort: string | null,
+  morphusBase: FeatureModifiers,
+  passive: FeatureModifiers,
+): CreationLedgerLine {
+  if (!handToHand?.disarmUnlocked) {
+    return { label: 'Disarm', value: LEDGER_NA, valueModified: false }
+  }
+
+  const parts: SaveDeductionLine[] = []
+  if (handToHand.disarm && hthShort) {
+    parts.push({ label: `HtH ${hthShort}`, amount: handToHand.disarm })
+  }
+  const baseAmt = morphusBase.disarm ?? 0
+  if (baseAmt !== 0) parts.push({ label: 'Race', amount: baseAmt })
+  const traitAmt = passive.disarm ?? 0
+  if (traitAmt !== 0) parts.push({ label: 'Traits', amount: traitAmt })
+
+  const total = parts.reduce((sum, p) => sum + p.amount, 0)
+  return {
+    label: 'Disarm',
+    value: formatBonus(total),
+    valueModified: true,
+    hint: formatBonusBreakdown(parts),
+    valueTooltip: formatCombatValueTooltip(parts),
+  }
+}
+
 /** Dedicated combat block — summed totals with per-source breakdown hints. */
 export function buildCreationCombatBlock(
   character: Character,
@@ -1560,18 +1624,18 @@ export function buildCreationCombatBlock(
   const baseApm = morphusBase.apm ?? 0
   const traitApm = passive.apm ?? 0
 
-  const entangleParts: SaveDeductionLine[] = []
-  if (handToHand?.entangle && hthShort) {
-    entangleParts.push({ label: `HtH ${hthShort}`, amount: handToHand.entangle })
-  }
-
-  const disarmParts: SaveDeductionLine[] = []
-  if (handToHand?.disarm && hthShort) {
-    disarmParts.push({ label: `HtH ${hthShort}`, amount: handToHand.disarm })
-  }
-
-  const entangleLine = combatLedgerLineFromParts('Entangle', entangleParts)
-  const disarmLine = combatLedgerLineFromParts('Disarm', disarmParts)
+  const entangleLine = buildCreationEntangleLine(
+    handToHand,
+    hthShort,
+    morphusBase,
+    passive,
+  )
+  const disarmLine = buildCreationDisarmLine(
+    handToHand,
+    hthShort,
+    morphusBase,
+    passive,
+  )
 
   const psForDamage = effectivePs ?? attrs.ps.score
 

@@ -133,7 +133,15 @@
           "description": "Flat damage bonus to hand-to-hand damage rolls."
         },
         "entangle": { "type": "integer" },
+        "entangleUnlocked": {
+          "type": "boolean",
+          "description": "Unlocks the entangle maneuver (pin/snare weapon or limb). Numeric entangle bonuses on other rows or sources apply only when this is true at the character's level."
+        },
         "disarm": { "type": "integer" },
+        "disarmUnlocked": {
+          "type": "boolean",
+          "description": "Unlocks the disarm maneuver. Numeric disarm bonuses on other rows or sources apply only when this is true at the character's level."
+        },
         "pairedWeapons": {
           "type": "boolean",
           "description": "Unlocks simultaneous strike/parry paired-weapon configurations."

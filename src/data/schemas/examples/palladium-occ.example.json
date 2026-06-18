@@ -53,7 +53,7 @@
     "initialSlotsCount": 10,
     "startingSkillIds": [
       "skill_electronics",
-      "skill_hand_to_hand_basic"
+      "skill_hth_basic"
     ],
     "categoryMinimums": [
       {
@@ -89,19 +89,19 @@
     "defaultSkillId": "hth_none",
     "upgradePaths": [
       {
-        "targetSkillId": "hand_to_hand_basic",
+        "targetSkillId": "hth_basic",
         "electiveSlotCost": 1
       },
       {
-        "targetSkillId": "hand_to_hand_expert",
+        "targetSkillId": "hth_expert",
         "electiveSlotCost": 2
       },
       {
-        "targetSkillId": "hand_to_hand_martial_arts",
+        "targetSkillId": "hth_martial_arts",
         "electiveSlotCost": 3
       },
       {
-        "targetSkillId": "hand_to_hand_assassin",
+        "targetSkillId": "hth_assassin",
         "electiveSlotCost": 3,
         "alignmentRestrictions": {
           "allowed": ["Miscreant", "Aberrant", "Diabolic"]

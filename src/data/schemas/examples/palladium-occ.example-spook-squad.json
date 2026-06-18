@@ -82,7 +82,7 @@
     "defaultSkillId": null,
     "upgradePaths": [
       {
-        "targetSkillId": "hand_to_hand_basic",
+        "targetSkillId": "hth_basic",
         "electiveSlotCost": 1
       }
     ]
@@ -140,7 +140,7 @@
       },
       "occSkillsCore": [
         {
-          "skillId": "skill_hand_to_hand_basic",
+          "skillId": "skill_hth_basic",
           "bonusPercent": 0
         },
         {

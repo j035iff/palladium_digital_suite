@@ -100,6 +100,8 @@ function mergeHandToHandRules(
       patch.upgradePaths != null && patch.upgradePaths.length > 0
         ? patch.upgradePaths
         : base.upgradePaths,
+    minimumCreationHandToHandTier:
+      patch.minimumCreationHandToHandTier ?? base.minimumCreationHandToHandTier,
   }
 }
 

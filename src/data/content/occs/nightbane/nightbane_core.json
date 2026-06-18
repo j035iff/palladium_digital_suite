@@ -172,19 +172,19 @@
       "defaultSkillId": "hth_none",
       "upgradePaths": [
         {
-          "targetSkillId": "hand_to_hand_basic",
+          "targetSkillId": "hth_basic",
           "electiveSlotCost": 1
         },
         {
-          "targetSkillId": "hand_to_hand_expert",
+          "targetSkillId": "hth_expert",
           "electiveSlotCost": 2
         },
         {
-          "targetSkillId": "hand_to_hand_martial_arts",
+          "targetSkillId": "hth_martial_arts",
           "electiveSlotCost": 3
         },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3
         }
       ]
@@ -302,11 +302,11 @@
     "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
     "wpRules": { "coreWps": [], "forbiddenWps": [] },
     "handToHandRules": {
-      "defaultSkillId": "hand_to_hand_basic",
+      "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 2 }
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_assassin", "electiveSlotCost": 2 }
       ]
     },
     "classAbilities": [
@@ -403,10 +403,10 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
-        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 3 }
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_assassin", "electiveSlotCost": 3 }
       ]
     },
     "classAbilities": [
@@ -514,11 +514,11 @@
     "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
     "wpRules": { "coreWps": [], "forbiddenWps": [] },
     "handToHandRules": {
-      "defaultSkillId": "hand_to_hand_basic",
+      "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_assassin", "electiveSlotCost": 2 }
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_assassin", "electiveSlotCost": 2 }
       ]
     },
     "classAbilities": [
@@ -674,15 +674,15 @@
       "defaultSkillId": "hth_none",
       "upgradePaths": [
         {
-          "targetSkillId": "hand_to_hand_basic",
+          "targetSkillId": "hth_basic",
           "electiveSlotCost": 1
         },
         {
-          "targetSkillId": "hand_to_hand_expert",
+          "targetSkillId": "hth_expert",
           "electiveSlotCost": 2
         },
         {
-          "targetSkillId": "hand_to_hand_martial_arts",
+          "targetSkillId": "hth_martial_arts",
           "electiveSlotCost": 3
         }
       ]
@@ -848,19 +848,19 @@
       "defaultSkillId": "hth_none",
       "upgradePaths": [
         {
-          "targetSkillId": "hand_to_hand_basic",
+          "targetSkillId": "hth_basic",
           "electiveSlotCost": 1
         },
         {
-          "targetSkillId": "hand_to_hand_expert",
+          "targetSkillId": "hth_expert",
           "electiveSlotCost": 2
         },
         {
-          "targetSkillId": "hand_to_hand_martial_arts",
+          "targetSkillId": "hth_martial_arts",
           "electiveSlotCost": 3
         },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3
         }
       ]
@@ -997,11 +997,11 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]
@@ -1181,11 +1181,11 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]
@@ -1421,11 +1421,11 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]
@@ -1613,11 +1613,11 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]
@@ -1808,11 +1808,11 @@
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hand_to_hand_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hand_to_hand_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hand_to_hand_martial_arts", "electiveSlotCost": 3 },
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
         {
-          "targetSkillId": "hand_to_hand_assassin",
+          "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]

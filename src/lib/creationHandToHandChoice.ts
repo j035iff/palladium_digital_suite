@@ -41,6 +41,40 @@ const TIER_LABELS: Record<Exclude<CreationHandToHandTier, 'none'>, string> = {
 
 }
 
+const CREATION_HAND_TO_HAND_TIER_RANK: Record<CreationHandToHandTier, number> = {
+  none: 0,
+  basic: 1,
+  expert: 2,
+  martial_arts: 3,
+  assassin: 3,
+}
+
+function creationHandToHandTierRank(tier: CreationHandToHandTier): number {
+  return CREATION_HAND_TO_HAND_TIER_RANK[tier]
+}
+
+export function occMinimumCreationHandToHandTier(
+  occ: PalladiumOcc,
+): Exclude<CreationHandToHandTier, 'none'> | undefined {
+  return occ.handToHandRules.minimumCreationHandToHandTier
+}
+
+export function creationHandToHandMeetsMinimumTier(
+  occ: PalladiumOcc,
+  tier: CreationHandToHandTier | undefined,
+): boolean {
+  const minimum = occMinimumCreationHandToHandTier(occ)
+  if (!minimum) return true
+  return creationHandToHandTierRank(tier ?? 'none') >= creationHandToHandTierRank(minimum)
+}
+
+function formatMinimumHandToHandTierReason(
+  minimum: Exclude<CreationHandToHandTier, 'none'>,
+): string {
+  const label = TIER_LABELS[minimum]
+  return `This O.C.C. branch requires Hand-to-Hand: ${label} or higher.`
+}
+
 
 
 export const CREATION_HAND_TO_HAND_OPTIONS: ReadonlyArray<{
@@ -140,6 +174,19 @@ export function creationHandToHandTierFromSkillId(
 
   if (!skillId || skillId === HTH_NONE_CATALOG_ID) return 'none'
 
+  if (skillId.startsWith('hth_')) {
+    const suffix = skillId.slice(4)
+    const fromCatalog: Record<string, CreationHandToHandTier> = {
+      basic: 'basic',
+      expert: 'expert',
+      martial_arts: 'martial_arts',
+      assassin: 'assassin',
+      none: 'none',
+    }
+    const tier = fromCatalog[suffix]
+    if (tier) return tier
+  }
+
   const normalized = skillId.replace(/^hand_to_hand_/, 'skill_hand_to_hand_')
 
   const match = CREATION_HAND_TO_HAND_OPTIONS.find(
@@ -238,6 +285,8 @@ export function listOccHandToHandOptions(
 
   const grantedTier = occGrantedHandToHandTier(occ)
 
+  const minimumTier = occMinimumCreationHandToHandTier(occ)
+
   const seen = new Set<CreationHandToHandTier>()
 
   const options: OccHandToHandOption[] = []
@@ -308,6 +357,17 @@ export function listOccHandToHandOptions(
 
     })
 
+  }
+
+  if (minimumTier != null) {
+    for (const option of options) {
+      if (
+        creationHandToHandTierRank(option.tier) < creationHandToHandTierRank(minimumTier)
+      ) {
+        option.disabled = true
+        option.disabledReason = formatMinimumHandToHandTierReason(minimumTier)
+      }
+    }
   }
 
 

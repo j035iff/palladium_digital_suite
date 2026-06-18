@@ -15,7 +15,7 @@ const pandoraOcc = {
   id: 'occ_pandora',
   handToHandRules: {
     defaultSkillId: 'hth_none',
-    upgradePaths: [{ targetSkillId: 'hand_to_hand_basic', electiveSlotCost: 1 }],
+    upgradePaths: [{ targetSkillId: 'hth_basic', electiveSlotCost: 1 }],
   },
   occSkillsCore: [
     { choiceCount: 2, bonusPercent: 20, allowedCategories: ['Science'] },

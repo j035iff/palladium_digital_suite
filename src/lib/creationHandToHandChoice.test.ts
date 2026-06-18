@@ -5,9 +5,11 @@ import type { PalladiumOcc } from '../types'
 import {
 
   canAffordHandToHandTier,
+  creationHandToHandTierFromSkillId,
 
   creationHandToHandElectiveSlotCost,
 
+  creationHandToHandMeetsMinimumTier,
   creationHandToHandReservedRelatedSlots,
 
   effectiveCreationHandToHandTier,
@@ -18,21 +20,23 @@ import {
 
 } from './creationHandToHandChoice'
 
+import { resolveEffectivePalladiumOcc } from './occComposition'
+
 
 
 const exGovernmentOcc = {
 
   handToHandRules: {
 
-    defaultSkillId: 'hand_to_hand_basic',
+    defaultSkillId: 'hth_basic',
 
     upgradePaths: [
 
-      { targetSkillId: 'hand_to_hand_expert', electiveSlotCost: 2 },
+      { targetSkillId: 'hth_expert', electiveSlotCost: 2 },
 
-      { targetSkillId: 'hand_to_hand_martial_arts', electiveSlotCost: 3 },
+      { targetSkillId: 'hth_martial_arts', electiveSlotCost: 3 },
 
-      { targetSkillId: 'hand_to_hand_assassin', electiveSlotCost: 3 },
+      { targetSkillId: 'hth_assassin', electiveSlotCost: 3 },
 
     ],
 
@@ -50,9 +54,9 @@ const pandoraOcc = {
 
     upgradePaths: [
 
-      { targetSkillId: 'hand_to_hand_basic', electiveSlotCost: 1 },
+      { targetSkillId: 'hth_basic', electiveSlotCost: 1 },
 
-      { targetSkillId: 'hand_to_hand_expert', electiveSlotCost: 2 },
+      { targetSkillId: 'hth_expert', electiveSlotCost: 2 },
 
     ],
 
@@ -63,6 +67,14 @@ const pandoraOcc = {
 
 
 describe('creationHandToHandChoice', () => {
+
+  it('resolves hth_* catalog ids to creation tiers', () => {
+    expect(creationHandToHandTierFromSkillId('hth_basic')).toBe('basic')
+    expect(creationHandToHandTierFromSkillId('hth_expert')).toBe('expert')
+    expect(creationHandToHandTierFromSkillId('hth_martial_arts')).toBe('martial_arts')
+    expect(creationHandToHandTierFromSkillId('hth_assassin')).toBe('assassin')
+    expect(creationHandToHandTierFromSkillId('hth_none')).toBe('none')
+  })
 
   it('defaults to O.C.C. granted Hand-to-Hand tier', () => {
 
@@ -84,7 +96,7 @@ describe('creationHandToHandChoice', () => {
 
         upgradePaths: [
 
-          { targetSkillId: 'hand_to_hand_assassin', electiveSlotCost: 2 },
+          { targetSkillId: 'hth_assassin', electiveSlotCost: 2 },
 
         ],
 
@@ -165,6 +177,49 @@ describe('creationHandToHandChoice', () => {
 
     expect(canAffordHandToHandTier(exGovernmentOcc, 'expert', 8, 6)).toBe(true)
 
+  })
+
+  it('disables tiers below minimumCreationHandToHandTier on effective O.C.C.', () => {
+    const adaBase = {
+      specializations: [
+        {
+          id: 'occ_ada_assassin_specialist',
+          name: 'Assassination Specialist',
+          description: 'test',
+          handToHandRules: {
+            upgradePaths: [],
+            minimumCreationHandToHandTier: 'expert',
+          },
+        },
+      ],
+      handToHandRules: {
+        defaultSkillId: 'hth_basic',
+        upgradePaths: [
+          { targetSkillId: 'hth_expert', electiveSlotCost: 1 },
+          { targetSkillId: 'hth_martial_arts', electiveSlotCost: 2 },
+          { targetSkillId: 'hth_assassin', electiveSlotCost: 2 },
+        ],
+      },
+    } as PalladiumOcc
+
+    const effective = resolveEffectivePalladiumOcc(adaBase, 'occ_ada_assassin_specialist')
+
+    const options = listOccHandToHandOptions(effective)
+    const basic = options.find((o) => o.tier === 'basic')
+    const expert = options.find((o) => o.tier === 'expert')
+
+    expect(basic?.disabled).toBe(true)
+    expect(basic?.disabledReason).toMatch(/Expert or higher/)
+    expect(expert?.disabled).toBe(false)
+    expect(creationHandToHandMeetsMinimumTier(effective, 'basic')).toBe(false)
+    expect(creationHandToHandMeetsMinimumTier(effective, 'expert')).toBe(true)
+    expect(creationHandToHandMeetsMinimumTier(effective, 'assassin')).toBe(true)
+    expect(effectiveCreationHandToHandTier({ creationHandToHandTier: 'basic' }, effective)).toBe(
+      'basic',
+    )
+    expect(
+      effectiveCreationHandToHandTier({ creationHandToHandTier: 'expert' }, effective),
+    ).toBe('expert')
   })
 
 })

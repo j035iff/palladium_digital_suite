@@ -32,6 +32,8 @@ export function createEmptyAccumulatedHandToHandBonuses(): AccumulatedHandToHand
     damage: 0,
     entangle: 0,
     disarm: 0,
+    entangleUnlocked: false,
+    disarmUnlocked: false,
     pairedWeapons: false,
     criticalStrikeFromBehind: false,
     knockoutFromBehind: false,
@@ -92,6 +94,8 @@ function applyLevelRow(
   if (row.knockoutFromBehind != null) acc.knockoutFromBehind = row.knockoutFromBehind
   if (row.jumpKick === true) acc.jumpKick = true
   if (row.leapAttack === true) acc.leapAttack = true
+  if (row.entangleUnlocked === true) acc.entangleUnlocked = true
+  if (row.disarmUnlocked === true) acc.disarmUnlocked = true
   if (row.fromBehindDamageMultiplier != null) {
     acc.fromBehindDamageMultiplier = row.fromBehindDamageMultiplier
   }

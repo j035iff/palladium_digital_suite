@@ -102,16 +102,20 @@ Flag when you see:
 
 - Numeric fields on a level row are **incremental** bonuses unlocked at that character level.
 - `kickAttack`, `bodyThrowFlip` — structured objects with `damageFormula` (+ optional `effects` / `description`).
-- Boolean flags (`pairedWeapons`, `criticalStrikeFromBehind`, …) unlock at the listed level.
+- Boolean flags (`pairedWeapons`, `criticalStrikeFromBehind`, `entangleUnlocked`, `disarmUnlocked`, …) unlock at the listed level.
 - Window arrays (`criticalStrikeWindow`, …) **replace** prior tiers when a higher level defines them (per schema description).
 
 **Do not block Pass A on:** O.C.C. `handToHandRules` unless the user asked for O.C.C. linkage in the same batch.
 
 ### Pass B — O.C.C. linkage (optional)
 
-**Goal:** `handToHandRules` on O.C.C. rows — `coreHandToHand`, `upgradePaths`, forbidden styles.
+**Goal:** `handToHandRules` on O.C.C. rows — `defaultSkillId`, `upgradePaths`, alignment gates.
 
 See [`occs.md`](occs.md). Every referenced `hth_*` id must exist in `hand_to_hand.json`.
+
+**Slot costs:** There is **no** genre-wide or style-wide default `electiveSlotCost`. Each O.C.C. (or specialization override) defines costs in its own book prose — transcribe from **that O.C.C.'s cited pages**, not from p. 65 combat tables or other O.C.C. rows. Flag ambiguous wording and ask for a ruling.
+
+Encode `electiveSlotCost` on each `upgradePaths[]` entry exactly as the O.C.C. specifies for that row.
 
 ---
 
@@ -143,7 +147,14 @@ No dedicated `audit:hth` script.
 | Topic | Issue | Ruling |
 |-------|-------|--------|
 | File placement | Under `skills/` | **`hand_to_hand.json` at `skills/` root** — documented exception in content-catalog-layout |
-| Id prefix | Slug shape | **`hth_*`** referenced from O.C.C. `handToHandRules` |
+| Id prefix | Slug shape | **`hth_*`** referenced from O.C.C. `handToHandRules` (`defaultSkillId`, `upgradePaths[].targetSkillId`) |
+| Expert default | O.C.C. grants Expert at creation | `defaultSkillId: "hth_expert"` (e.g. Team Epsilon Trooper, BtS) — upgrade paths list only higher tiers |
+| Entangle maneuver | Bare "Entangle" on printed tables | **`entangleUnlocked: true`** on the level row; numeric `entangle` is a separate bonus field |
+| Disarm maneuver | Bare "Disarm" on printed tables | **`disarmUnlocked: true`** on the level row; numeric `disarm` is a separate bonus field |
+| Martial Arts L13 | Expert uses behind-attack flags at L13; Martial Arts does not | **`knockoutStunWindow: [18, 19, 20]`** only — no `criticalStrikeFromBehind` / `knockoutFromBehind` on Martial Arts |
+| Assassin L12 death blow | Printed at L12 (Expert places death blow at L15) | **`deathBlowWindow: [20]`** on level 12 only |
+| Assassin L7 KO/stun | Wider window than Expert (18–20 at L11) | **`knockoutStunWindow: [17, 18, 19, 20]`** |
+| Assassin alignment gate | Only when O.C.C. prose says “if evil” / “evil alignment” | `alignmentRestrictions` on that O.C.C.’s `upgradePaths[]` row — not genre-wide |
 
 ---
 
@@ -161,6 +172,7 @@ No dedicated `audit:hth` script.
 - File HtH rows in category skill JSON files (`rogue.json`, etc.).
 - Store cumulative totals per level in `progression` — use incremental unlocks only.
 - Invent `hth_*` ids on O.C.C. rows without catalog rows.
+- **Guess** `electiveSlotCost` or copy costs from another O.C.C. — each O.C.C. defines its own.
 - **Guess** window ranges or bonus stacking — flag and ask.
 - Skip `npm run validate:schemas` after edits.
 

@@ -33,7 +33,8 @@
       "attacks": 1
     },
     "5": {
-      "strike": 1
+      "strike": 1,
+      "entangleUnlocked": true
     },
     "6": {
       "criticalStrikeWindow": [

@@ -7,6 +7,12 @@ import {
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from '../attributeKeys'
 import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
 import {
+  creationHandToHandMeetsMinimumTier,
+  effectiveCreationHandToHandTier,
+  occMinimumCreationHandToHandTier,
+  creationHandToHandTierLabel,
+} from '../creationHandToHandChoice'
+import {
   countSelectedAbilitiesByBudgetCategory,
   formatAbilityBudgetRequirementLabel,
   resolveEffectiveCreationAbilityBudget,
@@ -312,6 +318,16 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     label: 'Remove duplicate skill selections',
     satisfied: findDuplicateSkillIdentityKeys(allPicks).length === 0,
   })
+
+  const minimumHandToHand = occMinimumCreationHandToHandTier(effectiveOcc)
+  if (minimumHandToHand) {
+    const handToHandTier = effectiveCreationHandToHandTier(character, effectiveOcc)
+    requirements.push({
+      id: 'hand-to-hand-minimum',
+      label: `Upgrade Hand-to-Hand to ${creationHandToHandTierLabel(minimumHandToHand) ?? minimumHandToHand} or higher`,
+      satisfied: creationHandToHandMeetsMinimumTier(effectiveOcc, handToHandTier),
+    })
+  }
 
   return requirements
 }

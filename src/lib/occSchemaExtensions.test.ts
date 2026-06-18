@@ -35,7 +35,7 @@ const mysticPattern: PalladiumOcc = {
     defaultSkillId: 'hth_none',
     upgradePaths: [
       {
-        targetSkillId: 'hand_to_hand_assassin',
+        targetSkillId: 'hth_assassin',
         electiveSlotCost: 3,
         alignmentRestrictions: { allowed: ['Miscreant', 'Aberrant', 'Diabolic'] },
       },
