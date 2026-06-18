@@ -399,7 +399,7 @@ type CharacterContextValue = {
    * Sets creationVitalityCommitted.
    */
   commitSpawnVitalityRolls: (rolls: SpawnVitalityRolls) => void
-  /** Locks the sheet and hides creation UI (forge-character_creation.md Tab 7). */
+  /** Locks the sheet and hides creation UI (docs/forge/character_creation.md Tab 7). */
   finalizeCharacter: () => void
   /** Creation state machine — active phase. */
   setCreationPhase: (phase: CreationPhase) => void

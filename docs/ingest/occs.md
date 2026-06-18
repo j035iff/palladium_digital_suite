@@ -68,7 +68,7 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`../content-catalog-layout.md`](../content-catalog-layout.md). **Doc sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 ---
 
@@ -107,7 +107,7 @@ src/data/content/progression/xp_tables/
 
 Book file basenames should match the paired O.C.C. book file under `occs/<genre>/` when they share a source.
 
-**Shadow O.C.C. / R.C.C. pairing:** R.C.C. races use `canPickOcc: false` + `forcedOccId` pointing at a hidden O.C.C. row (`occType: nightbane_rcc` or `rcc_skill_program`). Ingest race + Shadow O.C.C. in the **same session** when possible — see `docs/palladium-race-ingest.md`.
+**Shadow O.C.C. / R.C.C. pairing:** R.C.C. races use `canPickOcc: false` + `forcedOccId` pointing at a hidden O.C.C. row (`occType: nightbane_rcc` or `rcc_skill_program`). Ingest race + Shadow O.C.C. in the **same session** when possible — see `docs/ingest/races.md`.
 
 ---
 
@@ -168,7 +168,7 @@ Typical keys: `specializations[]`, `classAbilities[]` with `percentileProfile`, 
 
 Every `skillId` in `occSkillsCore`, related picks, and prerequisites must resolve in `src/data/content/skills/*.json`. Run `npm run audit:skills` after large skill-catalog changes that O.C.C. batches depend on.
 
-W.P. ids use `wp_*` / hand-to-hand ids use `hth_*` per existing catalog conventions.
+W.P. ids use `wp_*` / hand-to-hand ids use `hth_*` per existing catalog conventions. Ingest new styles via [`hth.md`](hth.md) and new W.P. rows via [`weapon_proficiencies.md`](weapon_proficiencies.md). XP floor transcription: [`xp_tables.md`](xp_tables.md).
 
 ---
 
@@ -178,9 +178,9 @@ W.P. ids use `wp_*` / hand-to-hand ids use `hth_*` per existing catalog conventi
 2. **Flag ambiguity; get user ruling.**
 3. Choose genre folder + book file (`occs/<genre>/<book>.json`); create folder/file if new supplement.
 4. Fill **Pass A** composition blocks.
-5. Link **XP table** bidirectionally if not default.
+5. Link **XP table** bidirectionally if not default — see [`xp_tables.md`](xp_tables.md).
 6. If magic O.C.C.: align `ppeEngine.magicSchools` with `magic_schools.json`; update cross-lists if borrow rules change.
-7. If psychic O.C.C.: align with `docs/psychic_gate.md` and `ispEngine`.
+7. If psychic O.C.C.: align with `../psychic_gate.md` and `ispEngine`.
 8. If R.C.C. paired: coordinate with race ingest (`forcedOccId`).
 9. **Update this doc** if precedents changed.
 10. Run `npm run validate:schemas`.
@@ -229,9 +229,12 @@ No `audit:occs` script yet.
 
 ## Related docs
 
-- `docs/palladium-race-ingest.md` — R.C.C. pairing, `forcedOccId`
-- `docs/palladium-skill-ingest.md` — skill catalog ids
-- `docs/palladium-magic-ingest.md` — `spellAccessRules`, cross-lists
-- `docs/psychic_gate.md` — psychic O.C.C. gate behavior
-- `docs/character_creation.md` — Tab 1 configurator
+- [`races.md`](races.md) — R.C.C. pairing, `forcedOccId`
+- [`skills.md`](skills.md) — skill catalog ids
+- [`hth.md`](hth.md) — Hand-to-Hand `hth_*` ids
+- [`weapon_proficiencies.md`](weapon_proficiencies.md) — W.P. `wp_*` ids
+- [`xp_tables.md`](xp_tables.md) — XP floor transcription
+- [`magic.md`](magic.md) — `spellAccessRules`, cross-lists
+- `../psychic_gate.md` — psychic O.C.C. gate behavior
+- `../character_creation.md` — Tab 1 configurator
 - `.cursorrules`

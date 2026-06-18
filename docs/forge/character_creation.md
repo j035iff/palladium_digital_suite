@@ -2,11 +2,11 @@
 
 ## Overview
 
-The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](./universal_forge_navigation_engine.md). It begins **after** [Create Character](./app_viewport_launcher.md) — not at app launch. All eight primary tabs are permanently rendered in the header viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
+The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All eight primary tabs are permanently rendered in the header viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
 
-**Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](./character_spawn_handoff.md).
+**Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
 
-**Nightbane Morphus:** Tab 6 hosts the nested [Morphus Sub-Forge](./forge-morphus_creation.md). Facade dice are finalized on Tab 5; all Morphus trait generation and Morphus vitality dice live on Tab 6 only.
+**Nightbane Morphus:** Tab 6 hosts the nested [Morphus Sub-Forge](morphus_creation.md). Facade dice are finalized on Tab 5; all Morphus trait generation and Morphus vitality dice live on Tab 6 only.
 
 ---
 
@@ -35,7 +35,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Location | Rule |
 |----------|------|
 | **Tab 5 — Roll Pending** | All Facade / single-form physical dice (attributes, H.P., S.D.C., P.P.E., I.S.P.). Nightbane: **Facade only** — no Morphus blocks. |
-| **Tab 6 — Traits** | Nightbane only: Morphus vitality dice and the full [Morphus Sub-Forge](./forge-morphus_creation.md). Requires Tab 5 complete. |
+| **Tab 6 — Traits** | Nightbane only: Morphus vitality dice and the full [Morphus Sub-Forge](morphus_creation.md). Requires Tab 5 complete. |
 | **Tab 8 — Review & Spawn** | **Summary only** — no dice entry. Spawn blocked until Tabs 5 and 6 (when applicable) have finalized all pending rolls. |
 
 ---
@@ -79,13 +79,13 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 6: Character Trait Forges (Sub-Forge Container)
 
-- **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](./forge-morphus_creation.md) — a 3-step Sub-Forge with progressive slot resolution and Morphus Live Ledger compilation. **Guided / basic flow** is the active implementation focus; **Expert Mode** (dual-panel index + trait cart) is spec-only — no pass yet.
+- **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](morphus_creation.md) — a 3-step Sub-Forge with progressive slot resolution and Morphus Live Ledger compilation. **Guided / basic flow** is the active implementation focus; **Expert Mode** (dual-panel index + trait cart) is spec-only — no pass yet.
 - **Black (N/A) Condition:** **Black** when the selected Race line does not use a trait sub-system (e.g., non–Nightbane builds).
 - **Nightbane completion:**
   - Tab 5 (Roll Pending) must be Green first.
   - Morphus vitality dice entered on this tab.
   - Sub-Forge **Finalize Morphus** passes Complete state up to turn Tab 6 Green on the master forge.
-- **Implementation (current):** [Morphus Sub-Forge](./forge-morphus_creation.md) in `MorphusForge.tsx` — crossroads, trait forge, slot resolution, review dice. Guided/basic UX still in active development; Sub-Forge Expert Mode not started. (`MorphusForgeStub.tsx` is a deprecated re-export alias.)
+- **Implementation (current):** [Morphus Sub-Forge](morphus_creation.md) in `MorphusForge.tsx` — crossroads, trait forge, slot resolution, review dice. Guided/basic UX still in active development; Sub-Forge Expert Mode not started. (`MorphusForgeStub.tsx` is a deprecated re-export alias.)
 
 ### Tab 7: Resource-Based Abilities Selection
 
@@ -103,7 +103,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Terminal completion:**
   - **Select alignment** (required here even if skipped on Tab 1).
   - **Spawn Character** enables only when `assessTab8SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
-  - Confirmation modal → [spawn handoff](./character_spawn_handoff.md) → live sheet; creation UI hidden.
+  - Confirmation modal → [spawn handoff](../character_spawn_handoff.md) → live sheet; creation UI hidden.
 
 ---
 
@@ -119,4 +119,4 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Tab 5 Roll Pending | `src/components/creation/CreationFinalizeDice.tsx` |
 | Tab 6 Traits / Morphus Sub-Forge | `src/components/creation/MorphusForge.tsx` |
 | Tab 8 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
-| Morphus Sub-Forge spec | [forge-morphus_creation.md](./forge-morphus_creation.md) |
+| Morphus Sub-Forge spec | [morphus_creation.md](morphus_creation.md) |

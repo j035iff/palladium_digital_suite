@@ -9,8 +9,8 @@ The Palladium Digital Suite splits **session entry**, **in-forge assembly**, and
 ```
 App Launch
   └─ app_viewport_launcher.md     Open Character | Create Character
-        └─ forge-character_creation.md   (Create only) 8-tab Forge
-              ├─ forge-morphus_creation.md   Tab 6 Morphus Sub-Forge (Nightbane)
+        └─ forge/character_creation.md   (Create only) 8-tab Forge
+              ├─ forge/morphus_creation.md   Tab 6 Morphus Sub-Forge (Nightbane)
               └─ universal_forge_navigation_engine.md   Continue, colors, yellow/red
                     └─ character_spawn_handoff.md   Tab 8 confirm → live sheet
 ```
@@ -24,8 +24,8 @@ App Launch
 | Document | Scope |
 |----------|--------|
 | [app_viewport_launcher.md](./app_viewport_launcher.md) | Gate Check: launcher viewport, open vs create, genre manifest, `creationGenreId` / `hostGenreId` |
-| [forge-character_creation.md](./forge-character_creation.md) | Eight-tab Forge sequence, alignment Tab 1 vs 8, conflict/yellow rules |
-| [forge-morphus_creation.md](./forge-morphus_creation.md) | Morphus Sub-Forge nested in Tab 6 (Nightbane) |
+| [forge/character_creation.md](./forge/character_creation.md) | Eight-tab Forge sequence, alignment Tab 1 vs 8, conflict/yellow rules |
+| [forge/morphus_creation.md](./forge/morphus_creation.md) | Morphus Sub-Forge nested in Tab 6 (Nightbane) |
 | [universal_forge_navigation_engine.md](./universal_forge_navigation_engine.md) | Generic Forge engine: tab colors, Continue, Sub-Forges |
 | [character_spawn_handoff.md](./character_spawn_handoff.md) | Spawn modal, `applySpawnSheetHandoff`, `isFinalized`, persistence |
 | [master_flow.md](./master_flow.md) | Cross-cutting runtime pipeline and saves |
@@ -43,7 +43,7 @@ App Launch
 | 7 | Resource-based abilities | Magic, psionics, talents |
 | 8 | Review & Spawn | Alignment required; spawn handoff — no Continue |
 
-Full criteria per tab: [forge-character_creation.md](./forge-character_creation.md).
+Full criteria per tab: [forge/character_creation.md](./forge/character_creation.md).
 
 ---
 
@@ -83,13 +83,17 @@ Options are never hidden; they are sorted and color-coded:
 | Live Ledger quick reference | `docs/live_ledger.md` |
 | Attribute architecture & exceptional tables | `docs/attribute_and_stat.md` |
 | Psychic Gate | `docs/psychic_gate.md` |
-| Morphus Sub-Forge (Tab 6) | `docs/forge-morphus_creation.md`; `src/data/content/morphus/` |
-| Nightbane talent catalog ingest | `docs/nightbane-talent-ingest.md` |
-| Palladium skill catalog ingest | `docs/palladium-skill-ingest.md` |
-| Palladium magic catalog ingest | `docs/palladium-magic-ingest.md` |
-| Palladium psionic catalog ingest | `docs/palladium-psionic-ingest.md` |
-| Palladium O.C.C. catalog ingest | `docs/palladium-occ-ingest.md` |
-| Palladium race catalog ingest | `docs/palladium-race-ingest.md` |
+| Morphus Sub-Forge (Tab 6) | `docs/forge/morphus_creation.md`; `docs/ingest/morphus.md`; `src/data/content/morphus/` |
+| Nightbane Morphus trait ingest | `docs/ingest/morphus.md` |
+| Nightbane talent catalog ingest | `docs/ingest/talents.md` |
+| Palladium skill catalog ingest | `docs/ingest/skills.md` |
+| Palladium magic catalog ingest | `docs/ingest/magic.md` |
+| Palladium psionic catalog ingest | `docs/ingest/psionics.md` |
+| Palladium O.C.C. catalog ingest | `docs/ingest/occs.md` |
+| Palladium race catalog ingest | `docs/ingest/races.md` |
+| Palladium XP table ingest | `docs/ingest/xp_tables.md` |
+| Palladium Hand-to-Hand ingest | `docs/ingest/hth.md` |
+| Palladium W.P. catalog ingest | `docs/ingest/weapon_proficiencies.md` |
 | Content catalog folder layout (`utils/`, genre pools) | `docs/content-catalog-layout.md` |
 | Agent workflow & doc-sync checklist | `docs/gemini-project-context.md` § Development workflow |
 | Combat / vitals scaling | `docs/combat_logic.md` |
@@ -106,6 +110,6 @@ Options are never hidden; they are sorted and color-coded:
 | O.C.C. pool | `src/data/content/occs/<genre>/*.json` |
 | Skills | `src/data/content/skills/*.json` (loader: `src/data/library/skillsCatalogLoader.ts`) |
 | Talents | `src/data/content/talents/common.json`, `talents/elite.json` |
-| Psionics | `src/data/content/psionics/*.json` |
+| Morphus | `src/data/content/morphus/tables/*.json` — ingest: `docs/ingest/morphus.md` |
 
 **Psychic Gate bypass:** Genre forbids supernatural play; race `psionics.capabilityType` is `none` or `innate`; or O.C.C. `progression.psychicGateBypassed`. Standard humans in supernatural-allowed genres still get the gate for optional minor psionics.

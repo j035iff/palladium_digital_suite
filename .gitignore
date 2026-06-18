@@ -25,4 +25,4 @@ dist-ssr
 
 # Local Palladium reference books (PDFs on disk only; not committed)
 src/data/reference/**
-!src/data/reference/README.md
+!src/data/reference/_README.md

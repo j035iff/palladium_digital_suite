@@ -1,5 +1,8 @@
 # Morphus ingest (per-table pipeline)
 
+**Agent playbook:** [`docs/ingest/morphus.md`](../../../docs/ingest/morphus.md)  
+**Field encoding:** [`docs/morphus_authoring.md`](../../../docs/morphus_authoring.md)
+
 Orchestrates one or more books → schema-ready → JSON → validation → aggregation coverage for one Morphus trait table.
 
 ## High-level pipeline

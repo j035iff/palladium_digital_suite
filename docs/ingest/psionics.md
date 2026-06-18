@@ -69,7 +69,7 @@ After each batch the agent runs `npm run validate:schemas`. **Flag ambiguous boo
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it in the same PR/session when ingest conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**This file is the shared ingest playbook.** Update it in the same PR/session when ingest conventions change. See `.cursorrules`. **Layout:** [`../content-catalog-layout.md`](../content-catalog-layout.md). **Doc sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 ---
 
@@ -220,7 +220,7 @@ No `audit:psionics` script yet.
 
 ## Related docs
 
-- `docs/psychic_gate.md` — Tab 3 gate, category budgets, innate starters
-- `docs/palladium-magic-ingest.md` — parallel Pass A/B pattern
-- `docs/palladium-occ-ingest.md` — `ispEngine` on psychic O.C.C.s
+- `../psychic_gate.md` — Tab 3 gate, category budgets, innate starters
+- `docs/ingest/magic.md` — parallel Pass A/B pattern
+- `docs/ingest/occs.md` — `ispEngine` on psychic O.C.C.s
 - `.cursorrules`

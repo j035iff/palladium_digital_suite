@@ -137,7 +137,7 @@ export function AttributeForge() {
         Physical dice priority — type each attribute directly above, or optionally use
         the pool below to record rolls and drag them onto the strip. Flat 3D6 accepts
         exceptional totals up to 30; flat 2D6 up to 18. The engine does not roll for
-        you (forge-character_creation.md Tab 2).
+        you (docs/forge/character_creation.md Tab 2).
       </p>
 
       <div className={`space-y-4 rounded-lg border p-4 ${panelStyle}`}>

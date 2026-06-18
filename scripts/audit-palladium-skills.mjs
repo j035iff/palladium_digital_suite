@@ -315,7 +315,7 @@ function printReport(report) {
   }
 
   console.log(
-    'Ingest guidance: Pass A = catalog (6/batch) · Pass B = mechanics (3–4/batch) — `docs/palladium-skill-ingest.md`',
+    'Ingest guidance: Pass A = catalog (6/batch) · Pass B = mechanics (3–4/batch) — `docs/ingest/skills.md`',
   )
   console.log('')
 }

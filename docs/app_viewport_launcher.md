@@ -7,7 +7,7 @@ This specification covers **application bootstrap and session initialization** �
 Related docs:
 
 - [Master flow — runtime pipeline](./master_flow.md) (ingest → `hostGenreId` → `genreTransformer` → UI)
-- [Character Creation Forge](./forge-character_creation.md) (eight-tab flow after **Create Character**)
+- [Character Creation Forge](./forge/character_creation.md) (eight-tab flow after **Create Character**)
 - [Character spawn handoff](./character_spawn_handoff.md) (lock-in after Tab 8)
 
 ---
@@ -52,7 +52,7 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
    - Sets **`creationGenreId`** and initial **`hostGenreId`** to the chosen genre (immutable creation stamp vs active host context).
    - Applies `genreSupernaturalAbilitiesDisallowed` from manifest via psychic gate bypass on the blank record.
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).
-3. **Downstream** — User completes the [Character Creation Forge](./forge-character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
+3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
 ### Genre manifest flags
 

@@ -71,13 +71,13 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`../content-catalog-layout.md`](../content-catalog-layout.md). **Doc sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 ---
 
 ## Catalog layout (genre folder → audience pool)
 
-**See [`docs/content-catalog-layout.md`](content-catalog-layout.md)** for the shared layout contract (`utils/` ancillary files, loader rules, and move checklist). Genre-scoped race pools:
+**See [`../content-catalog-layout.md`](../content-catalog-layout.md)** for the shared layout contract (`utils/` ancillary files, loader rules, and move checklist). Genre-scoped race pools:
 
 ```
 src/data/content/races/
@@ -189,7 +189,7 @@ Flag when you see:
 
 - **`canPickOcc` vs R.C.C.** — separate O.C.C. step vs self-contained skill program
 - **`forcedOccId`** — which Shadow O.C.C. row holds the R.C.C. package
-- **`psionics.capabilityType`** — Psychic Gate bypass (`none`, `innate`, `standard`, …) — see `docs/psychic_gate.md`
+- **`psionics.capabilityType`** — Psychic Gate bypass (`none`, `innate`, `standard`, …) — see `../psychic_gate.md`
 - **Vitals** — `conditional_by_occ_tags` vs flat formulas; align `tags` with O.C.C. `tags`
 - **Strength category** — normal vs supernatural vs augmented
 - **`lineage`** — `nightbane` vs `megaversal`; `creationSubForgeId` for Morphus Tab 6
@@ -242,7 +242,7 @@ Typical keys: structured `innateBonuses.modifiers`, `defaultTraitIds`, `combatCo
 | `innate` | Fixed I.S.P. / powers; gate bypass patterns |
 | `standard` | Full Psychic Gate when O.C.C. allows |
 
-See `docs/psychic_gate.md` for bypass vs pick workflows.
+See `../psychic_gate.md` for bypass vs pick workflows.
 
 ---
 
@@ -253,7 +253,7 @@ See `docs/psychic_gate.md` for bypass vs pick workflows.
 3. Choose **audience pool file** (`player` / `npc` / `gm_approval`).
 4. Confirm genre manifest will expose `player` races for target `gameSystems`.
 5. Fill **Pass A** required blocks.
-6. If R.C.C.: ingest paired Shadow O.C.C. first or same session (`docs/palladium-occ-ingest.md`).
+6. If R.C.C.: ingest paired Shadow O.C.C. first or same session (`docs/ingest/occs.md`).
 7. Align `occLimitations` / vitals conditionals with O.C.C. `tags` when used.
 8. **Update this doc** if precedents changed.
 9. Run `npm run validate:schemas`.
@@ -305,9 +305,9 @@ No `audit:races` script yet.
 
 ## Related docs
 
-- `docs/palladium-occ-ingest.md` — Shadow O.C.C. pairing
-- `docs/psychic_gate.md` — `psionics.capabilityType`
-- `docs/stat_engine_spec.md` — racial bonuses at spawn
-- `docs/forge-morphus_creation.md` — Tab 6 when `creationSubForgeId` set
-- `docs/character_creation.md` — Tab 1 configurator
+- `docs/ingest/occs.md` — Shadow O.C.C. pairing
+- `../psychic_gate.md` — `psionics.capabilityType`
+- `../stat_engine_spec.md` — racial bonuses at spawn
+- `../forge/morphus_creation.md` — Tab 6 when `creationSubForgeId` set
+- `../character_creation.md` — Tab 1 configurator
 - `.cursorrules`

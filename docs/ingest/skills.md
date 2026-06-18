@@ -72,7 +72,7 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 **This file is the shared ingest playbook.** When ingest conventions change — category file rules, batch sizes, prerequisite shapes, trait tagging, split-base patterns, validation expectations — **update this document in the same PR/session** as the catalog change. Do not rely on chat history alone; future agents should read this file (see `.cursorrules`).
 
-**Also update when paths or layout change:** [`docs/content-catalog-layout.md`](content-catalog-layout.md) (`utils/` placement, loader exclusions). **Any behavior or workflow change:** follow the doc-sync checklist in [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**Also update when paths or layout change:** [`../content-catalog-layout.md`](../content-catalog-layout.md) (`utils/` placement, loader exclusions). **Any behavior or workflow change:** follow the doc-sync checklist in [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 If you establish a new pattern (e.g. a new `logical_group` prerequisite or `splitBaseTracks` shape), add a short example here so the next batch stays consistent.
 
@@ -298,7 +298,7 @@ See `skill_history` in `technical.json`.
 
 Parent may still carry `physicalSkillBonuses` at root. See `skill_acrobatics` in `physical.json`.
 
-**Master equation at runtime:** `docs/skill_selection.md`, `src/lib/skillPercentResolution.ts`.
+**Master equation at runtime:** `../skill_selection.md`, `src/lib/skillPercentResolution.ts`.
 
 ---
 
@@ -419,7 +419,7 @@ Then tag rows:
 "skillTraits": ["requires_dexterity", "related_to_electrical"]
 ```
 
-**Morphus ingest:** book phrases like “manual dexterity related skills” map to **`skill_trait`** overrides on morphus characteristics — not hand-enumerated skill ids. See `docs/morphus_authoring.md`.
+**Morphus ingest:** book phrases like “manual dexterity related skills” map to **`skill_trait`** overrides on morphus characteristics — not hand-enumerated skill ids. See `../morphus_authoring.md`.
 
 ---
 
@@ -505,7 +505,7 @@ Skills: Acrobatics, Climbing, Gymnastics, Prowl, Swimming, Wrestling
 5. Add **Pass B** blocks only when in scope for the batch.
 6. If `categories[0]` changed or unsure of file placement: `npm run split:skills`.
 7. If trait lists changed: `npm run apply:skill-traits`.
-8. **Update `docs/palladium-skill-ingest.md`** if ingest rules or precedents changed this session.
+8. **Update `docs/ingest/skills.md`** if ingest rules or precedents changed this session.
 9. Run validation:
    ```bash
    npm run validate:schemas
@@ -588,7 +588,7 @@ Schema examples: `src/data/schemas/examples/palladium-skill.example.json`, `pall
 - Hide O.C.C.-blocked or prerequisite-failed skills — grey out with reason (Pillar 8).
 - Encode Morphus-only impossibility on the skill row when the morphus table should carry `skillModifiers` / `skill_trait` overrides.
 - Invent `skillTraits` ids not in `skill_trait_registry.json`.
-- Change ingest conventions without updating **`docs/palladium-skill-ingest.md`**.
+- Change ingest conventions without updating **`docs/ingest/skills.md`**.
 - Commit or open PRs unless the user requests it.
 - Skip `npm run validate:schemas` and `npm run audit:skills` after schema or catalog edits.
 
@@ -596,9 +596,11 @@ Schema examples: `src/data/schemas/examples/palladium-skill.example.json`, `pall
 
 ## Related docs
 
-- `docs/skill_selection.md` — Master equation & commitment workflow (forge tabs)
-- `docs/morphus_authoring.md` — Morphus `skill_trait` lists and `apply:skill-traits`
-- `docs/forge-character_creation.md` — Tab 4 skill selection
-- `docs/stat_engine_spec.md` — Skill physical mods at spawn
-- `docs/gemini-project-context.md` — project-wide content map
+- [`hth.md`](hth.md) — Hand-to-Hand progression (`hand_to_hand.json`)
+- [`weapon_proficiencies.md`](weapon_proficiencies.md) — W.P. catalog
+- `../skill_selection.md` — Master equation & commitment workflow (forge tabs)
+- `../morphus_authoring.md` — Morphus `skill_trait` lists and `apply:skill-traits`
+- `../forge/character_creation.md` — Tab 4 skill selection
+- `../stat_engine_spec.md` — Skill physical mods at spawn
+- `../gemini-project-context.md` — project-wide content map
 - `.cursorrules` — Core Design Pillars

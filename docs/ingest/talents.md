@@ -64,7 +64,7 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 **This file is the shared ingest playbook.** When ingest conventions change — form defaults, batch sizes, new schema fields, audit expectations, worked examples, user rulings on ambiguous mechanics — **update this document in the same PR/session** as the code or catalog change. Do not rely on chat history alone; future agents read this file via `.cursorrules`.
 
-**Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**Layout:** [`../content-catalog-layout.md`](../content-catalog-layout.md). **Doc sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 If you establish a new pattern (e.g. a new `formUsage` shape or P.P.E. structure), add a short example here so the next batch stays consistent.
 
@@ -325,7 +325,7 @@ Optional: `Original: Nightbane RPG pp. X–Y` when DD references core book text.
 3. Locate or create rows in the correct file (`common.json` vs `elite.json`).
 4. Fill **Tier 1** fields; align form with rules above.
 5. Move form rules out of `otherLimitations` into `formUsage` when they vary by target/phase.
-6. **Update `docs/nightbane-talent-ingest.md`** if ingest rules or precedents changed this session.
+6. **Update `docs/ingest/talents.md`** if ingest rules or precedents changed this session.
 7. Run validation:
    ```bash
    npm run validate:schemas
@@ -396,7 +396,7 @@ Schema example file: `src/data/schemas/examples/palladium-talent.example-form-us
 - **Guess when book mechanics are ambiguous** — flag and ask the user (see **Rules ambiguity — flag and ask**).
 - Hide level-gated talents in the UI — show them locked with level labels.
 - Add undocumented top-level JSON keys (causes `schema_drift`).
-- Change ingest conventions without updating **`docs/nightbane-talent-ingest.md`**.
+- Change ingest conventions without updating **`docs/ingest/talents.md`**.
 - Commit or open PRs unless the user requests it.
 - Skip `npm run validate:schemas` after schema or catalog edits.
 
@@ -404,6 +404,6 @@ Schema example file: `src/data/schemas/examples/palladium-talent.example-form-us
 
 ## Related docs
 
-- `docs/gemini-project-context.md` — project-wide schema ↔ content map
-- `docs/forge-character_creation.md` — creation forge flow
+- `../gemini-project-context.md` — project-wide schema ↔ content map
+- `../forge/character_creation.md` — creation forge flow
 - `.cursorrules` — Core Design Pillars (Mechanical Integrity, Radical Visibility, etc.)

@@ -1,18 +1,21 @@
 ---
-description: Morphus table ingest — skip router/non-trait rows; manifests use excludeOther
+description: Nightbane Morphus trait ingest — follow docs/ingest/morphus.md
 globs: src/data/content/morphus/**/*.json,src/data/source/morphus-ingest/**/*
 alwaysApply: false
 ---
 
-# Morphus table ingest
+# Nightbane Morphus trait ingest
 
-When ingesting or editing Morphus trait tables:
+Follow **`docs/ingest/morphus.md`** for batch templates, Pass A/B scope, validation, and PDF pipeline steps. Use **`docs/morphus_authoring.md`** for prose → JSON field mapping.
+
+Quick rules:
 
 - **Do not add JSON entries** for cross-table routers or meta rows, including:
   - `Other` / roll on another table
   - `Roll twice` / `Combination of Two` / `Combination of Three`
-  - `Step One` / `Step Two` disproportion routers
+  - `Step One` / `Step Two` disproportion routers on **leaf** trait tables
   - Any row whose body only directs rolling elsewhere without its own bonuses/penalties
 - **Manifests:** keep `"excludeOther": true` and `"excludeNonPlayable": true` so PDF extract skips these rows.
 - **Playable traits only:** each entry must be an explicit Morphus characteristic with real mechanics (stats, weapons, skills, etc.), not a pointer to another table.
 - If the book lists an "Other" band, omit it from `entries[]`; document roll-or-mix behavior in the table `description` when useful.
+- After changes: `npm run validate:schemas` and `npm run validate:morphus`.

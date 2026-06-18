@@ -71,7 +71,7 @@ When the schema changes, **update `palladium-magic.example.json`** (do not creat
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** When ingest conventions change — school files, batch sizes, cross-list workflow, Pass A minimums — **update this document in the same PR/session** as the catalog change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+**This file is the shared ingest playbook.** When ingest conventions change — school files, batch sizes, cross-list workflow, Pass A minimums — **update this document in the same PR/session** as the catalog change. See `.cursorrules`. **Layout:** [`../content-catalog-layout.md`](../content-catalog-layout.md). **Doc sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.
 
 ---
 
@@ -237,8 +237,8 @@ There is **no** `audit:magic` script yet. Pass A completeness is enforced by rev
 
 ## Related docs
 
-- `docs/psychic_gate.md` — Tab 3 (contrast with Tab 7 magic)
-- `docs/character_creation.md` — Forge tab index
-- `docs/palladium-skill-ingest.md` — parallel Pass A/B ingest pattern
-- `docs/gemini-project-context.md` — project-wide content map
+- `../psychic_gate.md` — Tab 3 (contrast with Tab 7 magic)
+- `../character_creation.md` — Forge tab index
+- `docs/ingest/skills.md` — parallel Pass A/B ingest pattern
+- `../gemini-project-context.md` — project-wide content map
 - `.cursorrules` — Core Design Pillars

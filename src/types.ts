@@ -16,7 +16,7 @@ export type PsychicTier = 'none' | 'minor' | 'major' | 'master'
 /** Major Psychic Gate: 8 from one pool vs 6 mixed across Sensitive/Physical/Healing. */
 export type PsychicGateMajorAllocation = 'single_pool' | 'mixed_pools'
 
-/** Character Creation Forge tabs (forge-character_creation.md). */
+/** Character Creation Forge tabs (forge/character_creation.md). */
 export type CharacterCreationForgeTabId =
   | 'tab1_configurator'
   | 'tab2_attributes'
@@ -2352,7 +2352,7 @@ export type Character = {
   startingSpellLevelCap?: number
   /** Nightbane-only: Talent costs and supernatural pick UX; mirrors `raceId` nightbane in the library. */
   lineage?: 'nightbane' | 'megaversal'
-  /** After Spawn — creation chrome hidden; persisted (forge-character_creation.md Tab 7). */
+  /** After Spawn — creation chrome hidden; persisted (docs/forge/character_creation.md Tab 7). */
   isFinalized?: boolean
   /** Psychic Gate tier chosen during creation (psychic_gate.md). */
   creationPsychicTier?: PsychicTier
@@ -2403,7 +2403,7 @@ export type Character = {
   creationSecondarySkillPicks?: readonly CreationSkillPick[]
   /** O.C.C. core — Hand-to-Hand fighting style (defaults to none). */
   creationHandToHandTier?: CreationHandToHandTier
-  /** Active creation phase (forge-character_creation.md / Forge engine). */
+  /** Active creation phase (docs/forge/character_creation.md / Forge engine). */
   creationPhase?: CreationPhase
   /** Phase I — eight manually entered pool values (physical dice). */
   creationAttributePool?: readonly (number | null)[]

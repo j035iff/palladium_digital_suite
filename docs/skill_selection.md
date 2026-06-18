@@ -2,7 +2,7 @@
 
 This document defines skill synergies, attribute scaling, prerequisites, and the commitment workflow. All modifiers are **signed integers** (positive or negative).
 
-**Forge placement:** Skill picks on [Tab 4](./forge-character_creation.md). Physical dice and vitality commit on **Tab 5**. Spawn projection on **Tab 8** ([spawn handoff](./character_spawn_handoff.md)).
+**Forge placement:** Skill picks on [Tab 4](./forge/character_creation.md). Physical dice and vitality commit on **Tab 5**. Spawn projection on **Tab 8** ([spawn handoff](./character_spawn_handoff.md)).
 
 **Master equation authority:** `docs/stat_engine_spec.md` §6 cross-links here for percent formulas.
 

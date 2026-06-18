@@ -106,6 +106,8 @@ Inner rolls inside one trait (Junk Golem body type, Mirror Man mirror style):
 
 ## Ingest workflow
 
+**Playbook:** [`docs/ingest/morphus.md`](ingest/morphus.md) (Pass A/B batches, PDF pipeline, validation). **This section** covers encoding layers and CLI commands.
+
 Ingest **playable traits only**. The pipeline skips table routers (Disproportion Step One rows like Head/Torso), "Other" / roll-twice rows, instruction-only percentile bands, and **cross-table redirect rows** (e.g. Modern Soldier 91–00% “Biomechanical” → roll Biomechanical tables) that have no `Bonuses:`/`Penalties:` on the row itself. Traits that include their own mechanics plus an optional roll on another table (e.g. Stuffed Animal → Animal Form with halved stats) are kept. Percentile ranges are used for PDF extraction only — they are not stored on catalog entries. Manifest flag `excludeNonPlayable` (default `true`) controls this; pass `--include-non-playable` to `init` to disable.
 
 **Multi-section tables (Disproportion, Animal):** use a `category_hub` parent (`disproportion.json`) with leaf `morphus_trait_table` files per book section (`disproportion_head.json`, etc.). Step One routing stays in the hub `description`; traits live on leaf tables with `parentTable: "disproportion"`.

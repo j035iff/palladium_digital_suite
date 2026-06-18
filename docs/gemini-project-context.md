@@ -92,7 +92,7 @@ The UI theme shifts when Morphus is active (dark violet gradient vs light Facade
 ```
 App Launch (AppLauncher) — docs/app_viewport_launcher.md
   ├─ Open Character → load JSON → genreTransformer → CharacterContext → MainLayout
-  └─ Create Character → pick genre → Forge (docs/forge-character_creation.md) → spawn (docs/character_spawn_handoff.md)
+  └─ Create Character → pick genre → Forge (docs/forge/character_creation.md) → spawn (docs/character_spawn_handoff.md)
 
 MainLayout (live sheet)
   ├─ Identity / XP / form toggle
@@ -107,7 +107,7 @@ MainLayout (live sheet)
 
 ### Character Creation Forge (8 tabs)
 
-See `docs/forge-character_creation.md` and `docs/universal_forge_navigation_engine.md`.
+See `docs/forge/character_creation.md` and `docs/universal_forge_navigation_engine.md`.
 
 | Tab | Purpose |
 |-----|---------|
@@ -212,16 +212,18 @@ Content is **JSON-first**, validated by Ajv:
 
 | Schema | Content file(s) |
 |--------|-----------------|
-| `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`) — ingest: [`docs/palladium-skill-ingest.md`](palladium-skill-ingest.md) |
-| `palladium-occ.schema.json` | `occs/<genre>/*.json` — ingest: [`docs/palladium-occ-ingest.md`](palladium-occ-ingest.md) |
-| `palladium-race.schema.json` | `races/<genre>/{player,npc,gm_approval}.json` — ingest: [`docs/palladium-race-ingest.md`](palladium-race-ingest.md) |
-| `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest: [`docs/nightbane-talent-ingest.md`](nightbane-talent-ingest.md) |
-| `palladium-psionic.schema.json` | `psionics/*.json` (category files); registries in `psionics/utils/` — ingest: [`docs/palladium-psionic-ingest.md`](palladium-psionic-ingest.md) |
-| `palladium-magic.schema.json` | `magic/*.json` (school files); registries in `magic/utils/` — ingest: [`docs/palladium-magic-ingest.md`](palladium-magic-ingest.md) |
-| `palladium-hth.schema.json` | `skills/hand_to_hand.json` |
-| `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables |
+| `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`) — ingest: [`docs/ingest/skills.md`](ingest/skills.md) |
+| `palladium-occ.schema.json` | `occs/<genre>/*.json` — ingest: [`docs/ingest/occs.md`](ingest/occs.md) |
+| `palladium-race.schema.json` | `races/<genre>/{player,npc,gm_approval}.json` — ingest: [`docs/ingest/races.md`](ingest/races.md) |
+| `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest: [`docs/ingest/talents.md`](ingest/talents.md) |
+| `palladium-psionic.schema.json` | `psionics/*.json` (category files); registries in `psionics/utils/` — ingest: [`docs/ingest/psionics.md`](ingest/psionics.md) |
+| `palladium-magic.schema.json` | `magic/*.json` (school files); registries in `magic/utils/` — ingest: [`docs/ingest/magic.md`](ingest/magic.md) |
+| `palladium-hth.schema.json` | `skills/hand_to_hand.json` — ingest: [`docs/ingest/hth.md`](ingest/hth.md) |
+| `palladium-weapon-proficiency.schema.json` | `skills/weapon_proficiencies.json`; modern ladder in `skills/utils/` — ingest: [`docs/ingest/weapon_proficiencies.md`](ingest/weapon_proficiencies.md) |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |
-| `palladium-xp-table.schema.json` | `progression/xp_tables/<genre>/*.json` |
+| `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) |
+| `palladium-morphus-forge-routing.schema.json` | `morphus/forge/*.json` — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) § Sub-Forge routing |
+| `palladium-xp-table.schema.json` | `progression/xp_tables/<genre>/*.json` — ingest: [`docs/ingest/xp_tables.md`](ingest/xp_tables.md) |
 
 Morphus characteristic entries support structured fields such as:
 
@@ -231,7 +233,7 @@ Morphus characteristic entries support structured fields such as:
 - `naturalWeapons`, `mobility.flightEngine`, `limbDurability`, `saveModifiers`
 - `appearanceConstraints`, `combatContextModifiers`, `customOneOffs` (narrative edge cases)
 
-Authoring guides: `docs/morphus_authoring.md`, `docs/nightbane-talent-ingest.md`, `docs/palladium-skill-ingest.md`, `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md`.
+Authoring guides: `docs/morphus_authoring.md`, `docs/ingest/morphus.md`, `docs/ingest/talents.md`, `docs/ingest/skills.md`, `docs/ingest/magic.md`, `docs/ingest/psionics.md`, `docs/ingest/occs.md`, `docs/ingest/races.md`.
 
 ### Saving throws (catalog + sheet)
 
@@ -247,7 +249,7 @@ Authoring guides: `docs/morphus_authoring.md`, `docs/nightbane-talent-ingest.md`
 
 **Status:** Pass A (chargen-only) is **complete** for all 151 talents — `npm run audit:talents` reports 151/151 Tier 1 complete, 0 critical.
 
-Two-pass model (`docs/nightbane-talent-ingest.md`):
+Two-pass model (`docs/ingest/talents.md`):
 
 | Pass | Scope | Status |
 |------|-------|--------|
@@ -264,7 +266,7 @@ Workflow: Pass A/B per batch → `npm run validate:schemas` → `npm run audit:t
 
 **Status:** Pass A catalog rows exist for **160** skills — `npm run audit:skills` reports 160/160 Pass A complete, **0 critical**.
 
-Genre-agnostic workflow (`docs/palladium-skill-ingest.md`):
+Genre-agnostic workflow (`docs/ingest/skills.md`):
 
 | Pass | Scope | Status |
 |------|-------|--------|
@@ -277,7 +279,16 @@ Workflow: Pass A/B per batch → `npm run validate:schemas` → `npm run audit:s
 
 ## Morphus content pipeline
 
-56 morphus table JSON files under `src/data/content/morphus/tables/`. Most were ingested from Palladium PDFs via:
+56 morphus table JSON files under `src/data/content/morphus/tables/`. Genre-agnostic ingest workflow (`docs/ingest/morphus.md`):
+
+| Pass | Scope | Status |
+|------|-------|--------|
+| **A — Morphus Forge** | Identity, sources, description, core `statModifiers`, Tab 6 picker | Most tables ingested; ongoing touch-ups |
+| **B — Mechanical depth** | `skillModifiers`, capability fields, aggregation-verified hooks | Partial; use `finalize` report to find gaps |
+
+Workflow: Pass A/B per trait batch (or full-table PDF pipeline) → `npm run validate:schemas` → `npm run validate:morphus`. PDF pipeline: `npm run morphus:ingest`. Flag ambiguous book mechanics and ask the user before encoding.
+
+Most tables were ingested from Palladium PDFs via:
 
 ```
 prepare → extract PDF + schema-loop → scaffold → structure-entries
@@ -295,7 +306,7 @@ Rules:
 
 Reference PDFs live in `src/data/reference/nightbane/` (not committed).
 
-Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) — slot resolution engine and 3-step shell are shipped; **guided/basic flow** is the active UX focus; **Expert Mode** (master index + trait cart) has not had an implementation pass.
+Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) — slot resolution engine and 3-step shell are shipped; **guided/basic flow** is the active UX focus; **Expert Mode** (master index + trait cart) has not had an implementation pass.
 
 ---
 
@@ -334,8 +345,8 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
 | `docs/app_viewport_launcher.md` | Gate Check — Open vs Create, genre manifest, viewports |
-| `docs/forge-character_creation.md` | Character Creation Forge — **8-tab** sequence & state |
-| `docs/forge-morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
+| `docs/forge/character_creation.md` | Character Creation Forge — **8-tab** sequence & state |
+| `docs/forge/morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
 | `docs/character_creation.md` | Documentation map (links above + configurator tiers) |
 | `docs/universal_forge_navigation_engine.md` | Universal Forge Navigation Engine (tabs, Continue, colors) |
@@ -343,18 +354,20 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 | `docs/live_ledger.md` | Formula cheat sheet (defers to stat engine spec) |
 | `docs/movement_engine_spec.md` | Ground / swim / fly / leap from Spd |
 | `docs/content-catalog-layout.md` | Catalog folder layout — primary pools vs `utils/` ancillary JSON |
-| `docs/content-catalog-layout.md` | Catalog folder layout — primary pools vs `utils/` ancillary JSON |
-| `docs/nightbane-talent-ingest.md` | Talent Pass A/B ingest workflow and encoding rules |
-| `docs/palladium-skill-ingest.md` | Skill catalog Pass A/B ingest (genre-agnostic) |
-| `docs/palladium-magic-ingest.md` | Magic spell catalog Pass A/B ingest |
-| `docs/palladium-psionic-ingest.md` | Psionic power catalog Pass A/B ingest (category-split target) |
-| `docs/palladium-occ-ingest.md` | O.C.C. composition ingest |
-| `docs/palladium-race-ingest.md` | Race / R.C.C. ingest (audience pools) |
+| `docs/ingest/morphus.md` | Morphus trait Pass A/B ingest + PDF pipeline workflow |
+| `docs/ingest/talents.md` | Talent Pass A/B ingest workflow and encoding rules |
+| `docs/ingest/skills.md` | Skill catalog Pass A/B ingest (genre-agnostic) |
+| `docs/ingest/magic.md` | Magic spell catalog Pass A/B ingest |
+| `docs/ingest/psionics.md` | Psionic power catalog Pass A/B ingest (category-split target) |
+| `docs/ingest/occs.md` | O.C.C. composition ingest |
+| `docs/ingest/xp_tables.md` | XP progression table ingest (O.C.C. bidirectional links) |
+| `docs/ingest/hth.md` | Hand-to-Hand progression ingest |
+| `docs/ingest/weapon_proficiencies.md` | Weapon Proficiency (W.P.) catalog ingest |
 | `docs/combat_logic.md` | S.D.C./M.D.C., P.S. tiers, damage, APM tracker UX |
 | `docs/morphus_authoring.md` | How to encode Morphus traits for the engine |
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
 | `docs/psychic_gate.md` | Psionic tiers |
-| `src/data/source/morphus-ingest/README.md` | PDF ingest CLI |
+| `src/data/source/morphus-ingest/_README.md` | PDF ingest CLI |
 
 ---
 
@@ -375,10 +388,10 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | You changed… | Update these docs |
 |--------------|-------------------|
 | Content JSON paths, folder layout, `utils/` placement | [`docs/content-catalog-layout.md`](content-catalog-layout.md), [`docs/gemini-project-context.md`](gemini-project-context.md) content tables, relevant ingest playbook path tables, `palladiumSchemaPaths.ts` comments if needed |
-| Ingest batch rules, Pass A/B scope, validation commands | Matching ingest playbook (`docs/palladium-*-ingest.md`, `docs/nightbane-talent-ingest.md`), `.cursorrules` if agent routing changes |
+| Ingest batch rules, Pass A/B scope, validation commands | Matching ingest playbook under `docs/ingest/`, `.cursorrules` if agent routing changes |
 | JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
-| Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge-character_creation.md`](forge-character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
-| Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/forge-morphus_creation.md`](forge-morphus_creation.md) |
+| Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge/character_creation.md`](forge/character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
+| Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
 | Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md) |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
 | Product pillars or AI protocol | [`docs/vision.md`](vision.md) |
@@ -396,13 +409,15 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 4. **Validate after content changes:** `npm run validate:schemas`, `npm run audit:talents` (talents), `npm run audit:skills` (skills), and/or `npm run validate:morphus`.
 5. **Documentation sync** — when behavior, layout, or workflow changes, update docs in the same session (see **Development workflow** above). Ingest playbooks are living documents.
 6. **Content catalog layout** — follow `docs/content-catalog-layout.md`; ancillary JSON → `<catalog-dir>/utils/` unless documented root exception.
-7. **Talent ingest** — follow `docs/nightbane-talent-ingest.md`; flag ambiguous mechanics and ask the user before encoding.
-8. **Skill ingest** — follow `docs/palladium-skill-ingest.md`; same flag-and-ask rule (any Palladium genre).
-9. **Magic / psionic / O.C.C. / race ingest** — follow `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md` respectively.
-10. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
-11. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
-12. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
-13. **Commits** — only when the user explicitly asks.
+7. **Talent ingest** — follow `docs/ingest/talents.md`; flag ambiguous mechanics and ask the user before encoding.
+8. **Skill ingest** — follow `docs/ingest/skills.md`; same flag-and-ask rule (any Palladium genre).
+9. **Magic / psionic / O.C.C. / race ingest** — follow `docs/ingest/magic.md`, `docs/ingest/psionics.md`, `docs/ingest/occs.md`, `docs/ingest/races.md` respectively.
+10. **XP tables / HtH / W.P. ingest** — follow `docs/ingest/xp_tables.md`, `docs/ingest/hth.md`, `docs/ingest/weapon_proficiencies.md` respectively.
+11. **Morphus trait ingest** — follow `docs/ingest/morphus.md` (+ `docs/morphus_authoring.md` for field encoding); flag ambiguous mechanics and ask the user before encoding.
+12. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
+13. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
+14. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
+15. **Commits** — only when the user explicitly asks.
 
 ---
 

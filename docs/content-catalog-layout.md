@@ -61,7 +61,7 @@ Loader: `psionicCatalogLoader.ts` globs `psionics/*.json` only.
 | **O.C.C.s** | `occs/<genre>/<book>.json` | One file per source book |
 | **XP tables** | `progression/xp_tables/<genre>/<book>.json` | Mirrors O.C.C. genre folders |
 | **Talents** | `talents/common.json`, `talents/elite.json` | Tier-band split |
-| **Morphus** | `morphus/tables/*.json`, `morphus/forge/*.json` | Per-table files |
+| **Morphus** | `morphus/tables/*.json`, `morphus/forge/*.json` | Per-table trait files; Sub-Forge routing in `forge/` |
 
 When a new ancillary file is needed for these catalogs (e.g. a shared progression doc), add `utils/` under that catalog folder and follow the same pattern.
 
@@ -83,11 +83,15 @@ When a new ancillary file is needed for these catalogs (e.g. a shared progressio
 
 Row authoring rules stay in the per-type ingest docs:
 
-- `docs/palladium-skill-ingest.md`
-- `docs/palladium-magic-ingest.md`
-- `docs/palladium-psionic-ingest.md`
-- `docs/palladium-occ-ingest.md`
-- `docs/palladium-race-ingest.md`
-- `docs/nightbane-talent-ingest.md`
+- `docs/ingest/skills.md`
+- `docs/ingest/hth.md`
+- `docs/ingest/weapon_proficiencies.md`
+- `docs/ingest/magic.md`
+- `docs/ingest/psionics.md`
+- `docs/ingest/occs.md`
+- `docs/ingest/races.md`
+- `docs/ingest/xp_tables.md`
+- `docs/ingest/talents.md`
+- `docs/ingest/morphus.md`
 
 **This file** is the shared **layout** contract; ingest docs link here for paths and `utils/` rules.
