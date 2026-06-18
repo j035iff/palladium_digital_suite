@@ -12,13 +12,69 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "This skill enables the character to build a variety of rafts, small rowboats, large flatbed boats, and canoes. Construction times: A small raft (two man) can be made within 1D6+1 hours if materials are available; large raft 4D6 hours; canoe 2D6 days; rowboat 4D4 days; large flatbed 1D4x10 days. Time is doubled or tripled if trees must be cut down and wood prepared. Time can be reduced with extra help.",
-    "failureResults": "A failed skill roll means the boat has leaks. Trying to patch it will require 4D4 hours.",
+    "description": "This skill enables the character to build a variety of rafts, small rowboats, large flatbed boats, and canoes.",
+    "performanceFormulas": [
+      {
+        "stat": "duration",
+        "formula": "1D6+1",
+        "unit": "hours",
+        "metricKey": "boat_small_raft",
+        "linkSummary": "Two-man small raft when lumber, materials, and tools are readily available."
+      },
+      {
+        "stat": "duration",
+        "formula": "4D6",
+        "unit": "hours",
+        "metricKey": "boat_large_raft",
+        "linkSummary": "Large raft when materials and tools are readily available."
+      },
+      {
+        "stat": "duration",
+        "formula": "2D6",
+        "unit": "days",
+        "metricKey": "boat_canoe",
+        "linkSummary": "Canoe when materials and tools are readily available."
+      },
+      {
+        "stat": "duration",
+        "formula": "4D4",
+        "unit": "days",
+        "metricKey": "boat_rowboat",
+        "linkSummary": "Rowboat when materials and tools are readily available."
+      },
+      {
+        "stat": "duration",
+        "formula": "1D4x10",
+        "unit": "days",
+        "metricKey": "boat_large_flatbed",
+        "linkSummary": "Large flatbed boat when materials and tools are readily available."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Construction time is doubled or tripled if trees must be cut down and wood prepared rather than using readily available lumber.",
+        "appliesWhen": "When materials are not readily available."
+      },
+      {
+        "summary": "Construction time can be reduced when several knowledgeable people work on the build together.",
+        "appliesWhen": "When multiple characters with boat-building knowledge assist."
+      }
+    ],
+    "failureResults": "The boat has leaks.",
+    "failureFormulas": [
+      {
+        "consequence": "patch_duration",
+        "formula": "4D4",
+        "unit": "hours",
+        "metricKey": "boat_leak_patch",
+        "linkSummary": "Time required to try patching a leaky boat after a failed skill roll."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "skillTraits": [
@@ -45,12 +101,17 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "A fundamental knowledge of working with wood. The character knows how to prepare, treat, and preserve wood, recognize quality craftsmanship, can repair damaged wood and wood items, and build (chests, chairs, tables, cabinets, houses, etc.).",
+    "description": "A fundamental knowledge of working with wood.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows how to prepare, treat, and preserve wood, recognize quality craftsmanship, repair damaged wood and wood items, and build chests, chairs, tables, cabinets, houses, and similar woodwork."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "skillTraits": [
@@ -91,17 +152,27 @@
       },
       {
         "skillId": "skill_cook",
-        "description": "Provides a +5% to cook the catch only.",
-        "bonusPercent": 5
+        "description": "Provides +5% to Cook when preparing the hunt catch only.",
+        "bonusPercent": 5,
+        "applicability": {
+          "summary": "When cooking the hunt catch only",
+          "appliesWhen": "When using Cook to prepare game from a hunt."
+        }
       }
     ],
     "prerequisites": [],
-    "description": "The skill of killing and preparing an animal for food. This skill has no base percent, but provides distinct bonuses to related hunting and survival skills.",
+    "description": "The skill of killing and preparing an animal for food.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Synergy-only skill with no base percent; grants bonuses to other wilderness skills when hunting.",
+        "appliesWhen": "When the character has taken the Hunting skill."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ]
   },
@@ -118,12 +189,17 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Training in the recognition of the many different types of plants and vegetation and where they grow. The emphasis is placed on edible, herbal, and poisonous plants.",
+    "description": "Training in the recognition of the many different types of plants and vegetation and where they grow.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Emphasis is placed on edible, herbal, and poisonous plants."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ]
   },
@@ -140,8 +216,19 @@
     "prerequisites": [],
     "basePercent": 36,
     "percentPerLevel": 4,
-    "description": "This skill enables the person to stay on course while traveling over land by means of observation. It includes mentally marking/recognizing geographic landmarks, estimating distance and movement, recognizing sounds, night travel, and other navigational tricks.",
-    "failureResults": "The character is drifting off course. Consecutive failed rolls means the individual does not realize that he's off course and continues in the wrong direction.",
+    "description": "This skill enables the person to stay on course while traveling over land by means of observation.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes mentally marking and recognizing geographic landmarks, estimating distance and movement, recognizing sounds, night travel, and other navigational tricks."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "A group of average men can cover about five miles (8 km) an hour at a brisk, but relaxed, pace through grassland, along dirt roads or pavement. Travel through dense forest or jungle, at a cautious pace, with eyes open for danger, is about one mile (1.6 km) an hour. Heavy rain or snow, fog, swamps, etc., will also reduce speed.",
+        "appliesWhen": "When estimating overland travel pace for navigation checks."
+      }
+    ],
+    "failureResults": "A failed roll means the character is drifting off course. Consecutive failed rolls mean the individual does not realize that they are off course and continues in the wrong direction.",
     "failureFormulas": [
       {
         "consequence": "distance_off_course",
@@ -163,7 +250,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "skillTraits": [
@@ -183,12 +270,17 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Knowledge in the preparation of foods for storage and later consumption. Includes canning fresh fruit and vegetables, making jams and honey, drying fruit, vegetables, and herbs, drying meat and fish, plus various smoking, salting, and pickling methods.",
+    "description": "Knowledge in the preparation of foods for storage and later consumption.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes canning fresh fruit and vegetables, making jams and honey, drying fruit, vegetables, and herbs, drying meat and fish, plus various smoking, salting, and pickling methods."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ]
   },
@@ -211,12 +303,17 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "Training in the methods and techniques in skinning, tanning, stretching, and preserving animal hides as fur or leather.",
+    "description": "Training in the methods and techniques of working animal hides as fur or leather.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Covers skinning, tanning, stretching, and preserving hides."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ]
   },
@@ -233,20 +330,28 @@
     "prerequisites": [],
     "basePercent": 20,
     "percentPerLevel": 5,
-    "description": "This skill enables the character to identify an animal by its tracks, scent, droppings, and habits. The individual can also follow the animal's tracks and other signs. This means he can also estimate how fresh the tracks are, what direction they are heading, whether the animal is hurt or sick, and guess its age. The habits and habitats of animals and animal behavior are also learned.",
+    "description": "This skill enables the character to identify an animal by its tracks, scent, droppings, and habits, and to follow the animal's tracks and other signs.",
+    "narrativeAdvantages": [
+      {
+        "summary": "The character learns animal habits, habitats, and behavior."
+      }
+    ],
+    "successOutcomes": "Can estimate how fresh tracks are, what direction they are heading, whether the animal is hurt or sick, and guess its age.",
     "situationalModifiers": [
       {
+        "ruleId": "track_humans_penalty",
         "task": "Tracking humans",
         "percentModifier": -20,
         "appliesTo": "self",
-        "target": "Human tracks"
+        "target": "Human tracks",
+        "condition": "Tracking humans is possible with this skill but at a penalty."
       }
     ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ]
   }

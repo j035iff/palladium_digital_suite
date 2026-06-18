@@ -9,12 +9,7 @@
       "Pilot"
     ],
     "synergies": [],
-    "prerequisites": [
-      {
-        "type": "skill",
-        "skillId": "skill_read_sensory_equipment"
-      }
-    ],
+    "prerequisites": [],
     "basePercent": 50,
     "percentPerLevel": 4,
     "description": "Includes old propeller, single and twin engine types.",
@@ -59,16 +54,55 @@
     ],
     "basePercent": 44,
     "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The character knows how to ride bicycles and can ride over rough terrain, reach two times normal running speed, travel cross-country at normal running speed, and perform tricks and jumps on a bike. Maximum speed can be maintained for a time equal to P.E. x5 in minutes. The skill also includes basic maintenance and repairs of bicycles.",
+    "successOutcomes": {
+      "summary": "Maintains control over rough terrain, cross-country travel, tricks, jumps, and routine bicycle maintenance."
+    },
+    "failureResults": {
+      "summary": "A failed roll when performing tricks or jumps means a crash."
+    },
+    "performanceFormulas": [
+      {
+        "stat": "max_speed",
+        "formula": "2x normal running speed",
+        "unit": "speed",
+        "metricKey": "bicycling_rough_terrain_speed",
+        "linkSummary": "On rough terrain the character can reach two times normal running speed."
+      },
+      {
+        "stat": "cross_country_speed",
+        "formula": "normal running speed",
+        "unit": "speed",
+        "metricKey": "bicycling_cross_country_speed",
+        "linkSummary": "Cross-country travel is at normal running speed."
+      },
+      {
+        "stat": "duration",
+        "formula": "P.E. x5",
+        "unit": "minutes",
+        "metricKey": "bicycling_max_speed_duration",
+        "linkSummary": "Maximum speed can be maintained for a time equal to P.E. x5 in minutes."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Tricks and jumps require a skill roll at the character's bicycling skill level.",
+        "appliesWhen": "When performing tricks or jumps on a bicycle."
+      },
+      {
+        "summary": "Includes basic maintenance and repairs of bicycles.",
+        "appliesWhen": "When servicing a bicycle."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "The character knows how to ride bicycles and can ride over rough terrain, reach two times normal running speed, travel cross-country at normal running speed, and perform tricks and jumps on a bike."
+    ]
   },
   {
     "id": "skill_boat_motor_and_hydrofoils",
@@ -156,16 +190,48 @@
     ],
     "basePercent": 50,
     "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes paddled boats and canoes, rowboats and knee boards, as well as the kayak. Speed in still water is usually equal to the character's P.S. attribute (treated for all purposes as Spd) and can be maintained for P.E. x5 in minutes without pause. The skill also includes basic principles behind using currents, maintenance, and even tricks like sculling and right-siding a flipped canoe.",
+    "successOutcomes": {
+      "summary": "Handles paddled craft confidently in still water, uses currents effectively, and performs maintenance or recovery maneuvers such as sculling and righting a flipped canoe."
+    },
+    "failureResults": {
+      "summary": "Loses control of the craft, mishandles currents, or fails a trick maneuver such as sculling or righting a flipped canoe."
+    },
+    "performanceFormulas": [
+      {
+        "stat": "speed",
+        "formula": "P.S.",
+        "unit": "speed (treated as Spd)",
+        "metricKey": "paddle_boat_speed",
+        "linkSummary": "Speed in still water is usually equal to the character's P.S. attribute, treated for all purposes as Spd."
+      },
+      {
+        "stat": "duration",
+        "formula": "P.E. x5",
+        "unit": "minutes",
+        "metricKey": "paddle_boat_duration",
+        "linkSummary": "Speed can be maintained for P.E. x5 in minutes without pause."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Includes basic principles behind using currents and vessel maintenance.",
+        "appliesWhen": "When paddling in moving water or maintaining paddle craft."
+      },
+      {
+        "summary": "Includes tricks such as sculling and right-siding a flipped canoe.",
+        "appliesWhen": "When performing advanced paddle-craft maneuvers."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "Includes paddled boats and canoes, rowboats and knee boards, as well as the Kayak. Speed in still water is usually equal to the character's P.S. attribute and can be maintained for P.E. x5 in minutes without pause. The skill also includes basic principles behind using currents, maintenance, and 'tricks'."
+    ]
   },
   {
     "id": "skill_combat_driving",
@@ -176,28 +242,70 @@
     "categories": [
       "Pilot"
     ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "This skill supplements other driving skills by helping to make the character a master of the roads when driving automobiles, jeeps, trucks, motorcycles, and other ground vehicles. It helps turn the character into an aggressive road hog and cool-headed \"chicken\" player. Tricks, dangerous maneuvers, and high-speed car chases are no sweat for this character, although passengers are likely to fear for their lives. This is a supplemental piloting skill applicable only to ground vehicles and does not have a base skill or level of progression other than reducing penalties an additional one point per three levels of the driver's experience.",
+    "physicalSkillBonuses": {
+      "dodge": {
+        "value": 2,
+        "condition": "When driving a ground vehicle"
+      },
+      "rollWithImpact": {
+        "value": 2,
+        "condition": "When driving a ground vehicle and rolling with a crash or impact"
+      }
+    },
+    "mechanicProgressions": [
+      {
+        "summary": "Penalties for tricks, vehicular attacks (ram, sideswipe, etc.), and evasive maneuvers are reduced by half when this character is at the wheel.",
+        "everyNCharacterLevels": 3,
+        "integerDeltaPerStep": -1,
+        "targetKind": "penalty_modifier",
+        "targetLabel": "Tricks, vehicular attacks, and evasive maneuver penalties (after halving)",
+        "progressesWith": "character_level",
+        "ruleId": "combat_driving_penalty_reduction"
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Supplements other ground-vehicle piloting skills (automobiles, jeeps, trucks, motorcycles, etc.); it is not a standalone vehicle operation skill.",
+        "relatedSkillLabels": [
+          "Automobile",
+          "Motorcycle",
+          "Truck"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Penalties for tricks, vehicular attacks (ram, sideswipe, etc.), and evasive maneuvers are reduced by half when this character is at the wheel.",
+        "appliesWhen": "When driving a ground vehicle."
+      },
+      {
+        "summary": "Can fire a weapon from a moving vehicle at only a -2 penalty.",
+        "appliesWhen": "When firing from a moving ground vehicle."
+      },
+      {
+        "summary": "Can make an Aimed or Called Shot at -2 to strike while in a moving vehicle, or talk or engage in some other activity while driving without the usual penalty.",
+        "appliesWhen": "When performing secondary actions while driving a moving ground vehicle."
+      },
+      {
+        "summary": "Penalty reductions improve by one additional point per three levels of the driver's experience.",
+        "appliesWhen": "When resolving tricks, vehicular attacks, or evasive maneuver penalties while driving."
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "Passengers are likely to fear for their lives during aggressive driving, tricks, and high-speed chases.",
+        "appliesWhen": "When others ride with this character during combat driving."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
-      }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "This skill supplements other driving skills by helping to make the character a master of the roads when driving automobiles, jeeps, trucks, motorcycles and other ground vehicles. It helps to turn the character into an aggressive road hog and cool-headed 'chicken' player. Tricks, dangerous maneuvers, and high-speed car chases are no sweat for this character.",
-    "physicalSkillBonuses": {
-      "dodge": 2,
-      "rollWithImpact": 2
-    },
-    "mechanicProgressions": [
-      {
-        "summary": "Baseline (Survival Guide): penalties for tricks, vehicular attacks (ram, sideswipe, etc.), and evasive maneuvers are halved when this character is driving. Progression: penalties are reduced by one additional point per three levels of the driver's experience (e.g. at levels 3, 6, 9…). Also at the wheel: fire from a moving vehicle at −2; aimed/called shots at −2 while moving; may act while driving without the usual penalty.",
-        "everyNCharacterLevels": 3,
-        "integerDeltaPerStep": -1,
-        "targetKind": "penalty_modifier",
-        "targetLabel": "Tricks, vehicular attacks, and evasive maneuver penalties (after halving)",
-        "ruleId": "combat_driving_penalty_reduction"
       }
     ]
   },
@@ -212,10 +320,6 @@
     ],
     "synergies": [],
     "prerequisites": [
-      {
-        "type": "skill",
-        "skillId": "skill_read_sensory_equipment"
-      },
       {
         "type": "skill",
         "skillId": "skill_weapon_systems",
@@ -250,13 +354,23 @@
         "Supernatural animal/monster"
       ],
       "allowsMultipleInstances": false,
-      "notes": "Riding supernatural animals/monsters (not applicable to intelligent creatures) has a base skill of 24% + 4% per level."
+      "notes": "At the G.M.'s discretion, this skill can also apply to riding supernatural animals/monsters (not applicable to intelligent creatures) at a base skill of 24% +4% per level of experience."
     },
     "synergies": [],
     "prerequisites": [],
     "basePercent": 40,
     "percentPerLevel": 4,
-    "description": "The skill includes the basic principles of riding, the care and feeding of the animal, recognizing breed and quality, charging, and jumps. The percentile number is used whenever the character tries to determine breed and quality, and for special jumps or maneuvers.",
+    "description": "In certain places, the horse is a popular means of transportation. The skill includes the basic principles of riding, the care and feeding of the animal, recognizing breed and quality, charging, and jumps. The percentile number is used whenever the character tries to determine breed and quality, and for special jumps or maneuvers.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "A person cannot shoot a projectile weapon of any kind (bow and arrow or gun) with any degree of accuracy from a moving animal.",
+        "appliesWhen": "Firing projectile weapons from a moving mount."
+      },
+      {
+        "summary": "Bursts are possible if the horse is moving quickly, but not at a full gallop.",
+        "appliesWhen": "Firing burst or automatic fire from a mount that is moving quickly but not at a full gallop."
+      }
+    ],
     "physicalSkillBonuses": {
       "parry": {
         "value": 1,
@@ -314,7 +428,7 @@
     "prerequisites": [],
     "basePercent": 50,
     "percentPerLevel": 5,
-    "description": "The knowledge needed in piloting hover cycles and other hover vehicles used for ground transport. These vehicles utilize several air jets and directional thrusters that pushes the craft along, above the ground, on a cushion of air.",
+    "description": "The knowledge needed in piloting hover cycles and other hover vehicles used for ground transport. These vehicles can be tricky, because they utilize several air jets and directional thrusters that pushes the craft along, above the ground, on a cushion of air. The vehicles can usually attain great speeds and are capable of driving over incredibly rugged terrains and make sensational jumps over craters and ravines.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -333,12 +447,7 @@
       "Pilot"
     ],
     "synergies": [],
-    "prerequisites": [
-      {
-        "type": "skill",
-        "skillId": "skill_read_sensory_equipment"
-      }
-    ],
+    "prerequisites": [],
     "basePercent": 40,
     "percentPerLevel": 4,
     "description": "Includes large and small commercial transport jets.",
@@ -360,12 +469,7 @@
       "Pilot"
     ],
     "synergies": [],
-    "prerequisites": [
-      {
-        "type": "skill",
-        "skillId": "skill_read_sensory_equipment"
-      }
-    ],
+    "prerequisites": [],
     "basePercent": 40,
     "percentPerLevel": 4,
     "description": "Training includes flying, maneuvering, aerial combat strategies, and typical fighter jet weapon systems.",
@@ -390,7 +494,7 @@
     "prerequisites": [],
     "basePercent": 42,
     "percentPerLevel": 4,
-    "description": "The piloting skill of backpack like units that strap to the back of an individual to carry him airborne. The typical jet pack is a one person unit capable of hovering above the ground and flying at an average altitude of 300 feet (91.5 m).",
+    "description": "This is the piloting skill of backpack like units that strap to the back of an individual to carry him airborne. The typical jet pack is a one person unit capable of hovering above the ground and flying at an average altitude of 300 feet (91.5 m).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -434,12 +538,12 @@
     "prerequisites": [],
     "basePercent": 36,
     "percentPerLevel": 4,
-    "description": "Piloting for many ton, armored, combat vehicles such as tanks and armored personnel carriers (APC) which have unconventional controls and handle differently than conventional vehicles.",
+    "description": "Military vehicles often have unconventional controls and handle differently than conventional vehicles, especially the many ton, armored, combat vehicles such as tanks and armored personnel carriers (APC). Thus, special training is required to pilot them.",
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 54
+        "pageNumber": 55
       }
     ]
   },
@@ -454,16 +558,44 @@
     ],
     "basePercent": 40,
     "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Includes landcrawlers, half-tracks, light tanks, and big-wheeled heavy construction vehicles and earthmovers like bulldozers, steam shovels/excavators, scrapers, graders, tractors, loaders, backhoes, dump trucks, haulers, and similar equipment.",
+    "successOutcomes": {
+      "summary": "Operates tracked and construction vehicles effectively for their intended role."
+    },
+    "failureResults": {
+      "summary": "Mishandles the vehicle, loses control, or fails a difficult maneuver."
+    },
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Tanks and APCs",
+        "percentModifier": -15,
+        "ruleId": "tracked_vehicles_tank_apc_penalty"
+      }
+    ],
+    "situationalRuleOverrides": [
+      {
+        "ruleId": "tracked_vehicles_tank_apc_attack_penalty",
+        "summary": "When piloting tanks and APCs with this skill, the character suffers -1 attack per melee round.",
+        "domain": "general",
+        "whenContext": "When piloting tanks or APCs using this skill."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Can pilot tanks and APCs but at a -15% penalty and -1 attack per melee round.",
+        "appliesWhen": "When operating tanks or armored personnel carriers."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "Includes landcrawlers, half-tracks, light tanks, and big-wheeled heavy construction vehicles and Earthmovers like bulldozers, steam shovels/excavators, scrapers, graders, tractors, loaders, backhoes, dump trucks, haulers, etc."
+    ]
   },
   {
     "id": "skill_truck",

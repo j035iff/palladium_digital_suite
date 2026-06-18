@@ -121,7 +121,7 @@
     "prerequisites": [],
     "basePercent": 20,
     "percentPerLevel": 4,
-    "description": "The practiced ability to hide small items on one's body or in hand, usually by continually moving it around from hand to hand or place to place unnoticed. Larger items such as a book, scroll, club, statue, or similarly large or heavy object are more difficult to conceal on one's person for obvious reasons.",
+    "description": "The practiced ability to hide small items on one's body or in hand, usually by continually moving it around from hand to hand or place to place unnoticed.",
     "physicalConstraints": {
       "summary": "Objects must be no larger than 14 inches in height and length, and six inches in width. The weight must also be 10 pounds or less (4.5 kg).",
       "maxWeightLbs": 10,
@@ -135,6 +135,12 @@
         "task": "Concealing a smaller and lighter object, such as a knife, gem, key, credit card, etc.",
         "percentModifier": 5,
         "appliesTo": "self"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Larger items such as a book, scroll, club, statue, or similarly large or heavy object are more difficult to conceal on one's person for obvious reasons.",
+        "appliesWhen": "When concealing objects at the upper end of the allowed size/weight limits."
       }
     ],
     "sources": [
@@ -167,13 +173,31 @@
       {
         "skillId": "skill_id_undercover_agent",
         "bonusPercent": 10,
-        "description": "+10% bonus to I.D. Undercover Agents."
+        "description": "+10% bonus to I.D. Undercover Agent."
       }
     ],
-    "prerequisites": [],
-    "description": "The character with this skill knows where to find illegal arms dealers, the Black Market, smugglers, thieves, forgers (mainly fake I.D.s), fences, pawn shops, blind pigs (illegal gambling establishments), exotic animal dealers (illegal wild animals, endangered species, and the bizarre), automobile chop-shops, slavers, prostitutes, drug dealers, illegal medical treatment, stolen antiquities, and other people and places that traffic in illegal goods and services.",
-    "skillTraits": [
-      "requires_focus"
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Typically taught to military police and armed forces personnel occupying other countries."
+      }
+    ],
+    "description": "The character with this skill knows where to find illegal arms dealers, the Black Market, smugglers, thieves, forgers (mainly fake I.D.s), fences, pawn shops, blind pigs (illegal gambling establishments), exotic animal dealers (illegal wild animals, endangered species, and the bizarre), automobile chop-shops, slavers, prostitutes, drug dealers, illegal medical treatment, stolen antiquities, and other people and places that traffic in illegal goods and services. The skill makes the character familiar with underworld hangouts, gangs, criminal operations, and the general practices, codes of conduct, pricing structures and modes of operation of the criminal underworld. Likewise, the character has a good idea of what illegal weapons, ammo, and items should cost and what these people pay for contraband items (typically only 20% of the retail market price). The character also knows the penalties for being caught with contraband.",
+    "successOutcomes": {
+      "summary": "Locates illicit dealers, fences, smugglers, and other contraband sources; understands underworld pricing, codes of conduct, and legal penalties."
+    },
+    "failureResults": {
+      "summary": "Fails to locate a reliable source, misjudges underworld pricing or practices, or draws unwanted attention while searching."
+    },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Underworld buyers typically pay only 20% of the retail market price for contraband items.",
+        "appliesWhen": "When buying or selling contraband through criminal contacts."
+      },
+      {
+        "summary": "The character knows the penalties for being caught with contraband.",
+        "appliesWhen": "When assessing legal risk around illegal goods or services."
+      }
     ]
   },
   {
@@ -195,23 +219,20 @@
       }
     ],
     "synergies": [],
-    "prerequisites": [
+    "prerequisites": [],
+    "description": "A combination skill, good eye, and knack for identifying undercover agents; typically members of law enforcement, but may also include NSB agents, private detectives, spies, bounty hunters, and anybody snooping around.",
+    "successOutcomes": {
+      "summary": "Correctly identifies an undercover agent, spy, bounty hunter, or other person operating under a cover identity."
+    },
+    "failureResults": {
+      "summary": "Fails to spot the undercover operative or misidentifies an ordinary person as an agent."
+    },
+    "narrativeAdvantages": [
       {
-        "type": "skill_any_of",
-        "alternatives": [
-          {
-            "skillId": "skill_undercover_ops"
-          },
-          {
-            "skillId": "skill_intelligence"
-          },
-          {
-            "skillId": "skill_streetwise"
-          }
-        ]
+        "summary": "Can recognize undercover law enforcement, NSB agents, private detectives, spies, bounty hunters, and other people snooping under cover.",
+        "appliesWhen": "On a successful identification roll."
       }
-    ],
-    "description": "A combination skill, good eye, and knack for identifying undercover agents; typically members of law enforcement, but may also include NSB agents, private detectives, spies, bounty hunters, and anybody snooping around."
+    ]
   },
   {
     "id": "skill_locate_librarian",
@@ -323,6 +344,71 @@
         "skillId": "skill_computer_hacking",
         "bonusPercent": 5,
         "description": "+5% bonus to Computer Hacking."
+      },
+      {
+        "skillId": "skill_lore_astral",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_dreamstream",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_faction",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_factions",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_geomancy",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_magic",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_nightbane",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_nightlands",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_psychic",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_religion",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_secret_societies",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
+      },
+      {
+        "skillId": "skill_lore_vampires",
+        "bonusPercent": 5,
+        "description": "+5% bonus to any Lore skill when the character has Netwise."
       }
     ],
     "prerequisites": [
@@ -331,7 +417,53 @@
         "skillId": "skill_computer_operation"
       }
     ],
-    "description": "Similar to the Streetwise skill, the character is familiar with the ins and outs of the World Wide Web. This includes navigating the Internet, using search engines and social networks, and all the usual with a focus on finding obscure sites and information, locating and accessing hidden boards and chat rooms such as the Shadowboard, finding and using backdoors into various databases, a knowledge of what sites are frequented by hackers, Nightbane, factions, NSB agents, and other special interest groups."
+    "description": "Similar to the Streetwise skill, the character is familiar with the ins and outs of the World Wide Web. This includes navigating the Internet, using search engines and social networks, and all the usual with a focus on finding obscure sites and information, locating and accessing hidden boards and chat rooms such as the Shadowboard, finding and using backdoors into various databases, a knowledge of what sites are frequented by hackers, Nightbane, factions, NSB agents, and other special interest groups, as well as the reputations of various online service providers (email clients, file sharing programs, etc.), where to download free programs (such as anti-virus and anti-spyware tools), popular rumors floating around the net, Internet jargon (such as afk and rofl), and other bits of net culture. The character can generally find data on even the most obscure topics rather quickly (on a successful skill roll), but whether it is reliable is another issue entirely. The character is also likely to have 1D8 online contacts of various ages and professions who he may be able to ask for help when searching for information.",
+    "successOutcomes": {
+      "summary": "Finds obscure online information, hidden boards, useful contacts, or backdoor access quickly on a successful roll."
+    },
+    "failureResults": {
+      "summary": "Cannot locate the desired information or contact in time; any information found may be partially incorrect (1D4x10% wrong)."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "Similar to Streetwise, but focused on Internet culture, hidden boards, and online special-interest communities rather than street-level criminal networks.",
+        "relatedSkillIds": [
+          "skill_streetwise"
+        ],
+        "effectKind": "implicit_knowledge"
+      },
+      {
+        "summary": "Distinct from the Research skill: Netwise focuses entirely on using the Internet to find information and contact others, usually in half the time of traditional research or quicker.",
+        "relatedSkillIds": [
+          "skill_research"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "This skill is distinct from the Research skill as it focuses entirely on using the Internet to find information and contact others.",
+        "appliesWhen": "When comparing Netwise to Research."
+      },
+      {
+        "summary": "Most information can be located rather quickly (half the time of traditional research if not quicker), although such information also has a higher likelihood of being at least partially incorrect (1D4x10%).",
+        "appliesWhen": "When using Netwise to find information online."
+      },
+      {
+        "summary": "Exactly who the character's online contacts are and what help they may be able to provide is left up to the G.M. and player to work out.",
+        "appliesWhen": "When using the 1D8 online contacts gained from Netwise."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "The character is likely to have 1D8 online contacts of various ages and professions who may help when searching for information.",
+        "appliesWhen": "When establishing or using Netwise online contacts."
+      },
+      {
+        "summary": "Online information found through Netwise has a higher likelihood of being at least partially incorrect (1D4x10%).",
+        "appliesWhen": "When assessing the reliability of information found online."
+      }
+    ]
   },
   {
     "id": "skill_palming",
@@ -383,8 +515,31 @@
       }
     ],
     "synergies": [],
-    "prerequisites": [],
-    "description": "A regional skill in which the character knows the streets, alleys, back roads, shortcuts, fastest routes, construction zones, speed traps, highways, police stations and posts in his city and state (or province) like the back of his hand. Also knows all the local junkyards, the best mechanic garages (including a few who don't ask questions), and the best places to hide a vehicle or lay low for a few hours or a few days."
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Typically reserved for characters who live on the street, patrol officers, delivery drivers, paramedics, car thieves and other criminal types."
+      }
+    ],
+    "description": "A regional skill in which the character knows the streets, alleys, back roads, shortcuts, fastest routes, construction zones, speed traps, highways, police stations and posts in his city and state (or province) like the back of his hand. Also knows all the local junkyards, the best mechanic garages (including a few who don't ask questions), and the best places to hide a vehicle or lay low for a few hours or a few days, as well as the best place to abandon a vehicle where it will not be found any time soon (authorities or an enemy must conduct a serious and expansive search to find it).",
+    "successOutcomes": {
+      "summary": "Finds the fastest route, a safe hideout, a discreet garage, or an abandonment spot where a vehicle is unlikely to be found quickly."
+    },
+    "failureResults": {
+      "summary": "Chooses a poor route, hideout, or abandonment site; authorities or enemies may locate a dumped vehicle sooner than intended."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows local junkyards, no-questions-asked mechanic garages, and good places to hide a vehicle or lay low for hours or days.",
+        "appliesWhen": "When operating in the character's home city and state or province."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "If authorities or an enemy conduct a serious and expansive search for an abandoned vehicle, roll percentile to see how quickly it is found: 01-25%: 2D4 days; 26-50%: 3D6 days; 51-75%: 3D6 weeks; 76-90%: 1D4 years; 91-96%: 1D4x10 years; 97-00%: never.",
+        "appliesWhen": "When locating a vehicle abandoned using Roadwise knowledge."
+      }
+    ]
   },
   {
     "id": "skill_safe_cracking",
@@ -414,16 +569,11 @@
         "skillId": "skill_demolitions",
         "bonusPercent": 5,
         "description": "+5% bonus to Demolitions."
-      },
-      {
-        "skillId": "skill_locksmith",
-        "bonusPercent": 4,
-        "description": "+4% bonus if the character has Locksmith."
       }
     ],
     "prerequisites": [],
     "skillPercentAttributeModifiers": {
-      "summary": "Characters with M.E. of 14 or lower suffer −10% to this skill.",
+      "summary": "Characters with M.E. of 14 or less suffer −10% to this skill.",
       "rules": [
         {
           "kind": "penaltyWhenBelow",
@@ -433,7 +583,33 @@
         }
       ]
     },
-    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms.",
+    "description": "A specialized skill in which the character studies the strengths, weaknesses, and construction of safes and how to open them without damaging the contents inside. The fingers of the safecracker are so sensitive that they can feel the subtle calibration of combination locks and other locking mechanisms. When using explosives, they can use their abilities to such precision that they can blow the lock off a safe, security door, safe deposit box and similar without creating a big, area effect explosion or inflicting damage to the contents.",
+    "successOutcomes": {
+      "summary": "Opens the safe or secured container without damaging the contents, including precision explosive lock removal when applicable."
+    },
+    "failureResults": {
+      "summary": "Fails to open the safe cleanly; a failed Safe-Cracking or Demolitions roll when blowing a lock means the explosion was too much and the contents are damaged."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "+4% bonus to Safe-Cracking if the character is a Locksmith; +6% if a Mechanical Engineer.",
+        "relatedSkillIds": [
+          "skill_locksmith",
+          "skill_mechanical_engineer"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Can blow the lock off a safe, security door, or safe deposit box without a large area-effect explosion or damaging the contents on a successful roll.",
+        "appliesWhen": "When using explosives with Safe-Cracking precision."
+      },
+      {
+        "summary": "A failed Safe-Cracking skill or Demolitions roll when blowing a lock means the explosion was too much and the contents are damaged.",
+        "appliesWhen": "When using explosives to open a safe or similar secured container."
+      }
+    ],
     "skillTraits": [
       "requires_dexterity",
       "requires_focus",
@@ -506,6 +682,30 @@
             "victim_of_seduction"
           ]
         }
+      },
+      {
+        "skillId": "skill_sing",
+        "bonusPercent": 5,
+        "description": "+5% to Sing against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_dance",
+        "bonusPercent": 5,
+        "description": "+5% to Dance against the victim of seduction.",
+        "applicability": {
+          "summary": "Against the victim of seduction",
+          "appliesWhen": "Used against the seduced victim.",
+          "contextTags": [
+            "victim_of_seduction"
+          ]
+        }
       }
     ],
     "prerequisites": [],
@@ -527,7 +727,63 @@
         }
       ]
     },
-    "description": "This is the ability to make the opposite sex melt with desire. This skill is somewhat similar to the Interrogation skill in that the seducer knows how to ask the right questions to get information without being obvious."
+    "description": "This is the ability to make the opposite sex melt with desire. This skill is somewhat similar to the Interrogation skill in that the seducer knows how to ask the right questions to get information without being obvious. The seducer usually seems attentive, sympathetic, alluring and sexy. Men and women who are seduced tend to have loose lips and will spill secrets. They also lose track of time, spend big money to impress and please their seducer, and lavish her or him with their affection, time and attention while oblivious to everything else around them.",
+    "successOutcomes": {
+      "summary": "The target is seduced: loose lips, distracted, vulnerable to the seducer, and likely to spill secrets or lavish money and attention."
+    },
+    "failureResults": {
+      "summary": "The target is not swayed; seduction bonuses against that victim do not apply."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "Somewhat similar to Interrogation in using subtle questions to extract information without being obvious.",
+        "relatedSkillLabels": [
+          "Interrogation"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "mechanicProgressions": [
+      {
+        "summary": "The seducer can influence more than one person at a time — one additional victim per every three levels of experience.",
+        "everyNCharacterLevels": 3,
+        "integerDeltaPerStep": 1,
+        "targetKind": "other",
+        "targetLabel": "Additional seduction victims",
+        "progressesWith": "character_level",
+        "ruleId": "seduction_additional_victims_per_three_levels"
+      }
+    ],
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Target intoxicated or drugged",
+        "percentModifier": 5,
+        "ruleId": "seduction_intoxicated_target_bonus"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Anyone successfully seduced is distracted: skill performance is half and takes twice as long, does not notice people and events around them, and is easily caught off guard (no initiative and all bonuses are at half when attacked by a character other than the seducer).",
+        "appliesWhen": "When a Seduction roll succeeds against a victim."
+      },
+      {
+        "summary": "Seduced victims are completely vulnerable to the seducer: the seducer always gets the first attack/strike/action, the victim has no chance at self-defense against that first attack, and the victim loses one attack/action from surprise or horror.",
+        "appliesWhen": "When a Seduction roll succeeds against a victim."
+      },
+      {
+        "summary": "The seducer can influence more than one person at a time — one additional victim per every three levels of experience.",
+        "appliesWhen": "When attempting to seduce multiple targets."
+      },
+      {
+        "summary": "Seduction victims who are intoxicated or drugged are easier to seduce (+5%).",
+        "appliesWhen": "When the target is intoxicated or drugged."
+      },
+      {
+        "summary": "+5% to any gambling-related skills against the victim of seduction.",
+        "appliesWhen": "When using gambling-related skills against a seduced victim."
+      }
+    ]
   },
   {
     "id": "skill_streetwise",
@@ -542,14 +798,24 @@
     "prerequisites": [],
     "basePercent": 20,
     "percentPerLevel": 4,
-    "description": "This skill instills an understanding of the darker side of city life and the scoundrels who roam those streets. The streetwise character will be able to recognize gang members by their actions and philosophies, gang colors, gang symbols and mannerisms, and dangerous locations and gangland haunts. The individual will also recognize a potential brawl situation, assess a gang member's rank/power in the organization, and know some of the hangouts, modes of operation, rituals, ethics, and perhaps even notorious gang leaders of the more infamous street gangs. This skill also includes the ability to recognize and locate black market dealers/organizations, illegal clinics, drugs and arms dealers, and similar criminal outfits.",
+    "description": "This skill instills an understanding of the darker side of city life and the scoundrels who roam those streets. The streetwise character will be able to recognize gang members by their actions and philosophies, gang colors (emblems and clothing that denote membership to a particular organization), gang symbols and mannerisms, and dangerous locations and gangland haunts. The individual will also recognize a potential brawl situation, assess a gang member's rank/power in the organization, and know some of the hangouts, modes of operation, rituals, ethics, and perhaps even notorious gang leaders of the more infamous street gangs. This skill also includes the ability to recognize and locate black market dealers/organizations, illegal clinics, drugs and arms dealers, and similar criminal outfits.",
     "subSkills": [
       {
         "id": "drugs",
         "name": "Drugs",
         "basePercent": 20,
         "percentPerLevel": 4,
-        "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability). Uses the base Streetwise proficiency when included as part of the regular streetwise skill."
+        "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. Similarly, the character has a good idea what drugs cost, how to use them, and where to buy them (even if he doesn't use them himself). The character also knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "When drugs knowledge is bundled with Streetwise, use the base Streetwise proficiency rather than the separate 25%+5% skill.",
+        "appliesWhen": "When using the Drugs sub-skill included in Streetwise rather than Streetwise - Drugs (Special) as a separate skill."
+      },
+      {
+        "summary": "Can guess what drug a user may be high on with reasonable accuracy (roll under skill ability).",
+        "appliesWhen": "When using the Drugs street knowledge sub-skill."
       }
     ],
     "sources": [
@@ -557,12 +823,17 @@
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 55
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 56
       }
     ]
   },
   {
     "id": "skill_streetwise_drugs",
-    "name": "Streetwise - Drugs (special)",
+    "name": "Streetwise - Drugs (Special)",
     "gameSystems": [
       "nightbane"
     ],
@@ -573,7 +844,7 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. The character has a good idea what drugs cost, how to use them, and where to buy them, knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others and can guess what drug a user may be high on with reasonable accuracy (roll under skill ability).",
+    "description": "The streetwise: drugs skill gives the character the ability to recognize characters addicted to drugs, street corner pushers, big time dealers, drug smugglers, DEA agents, and undercover agents looking to bust dealers. Similarly, the character has a good idea what drugs cost, how to use them, and where to buy them (even if he doesn't use them himself). The character also knows most of the \"street names\" of common drugs, recognizes the drug when he sees it and knows the general effects and dangers it represents. He can also recognize the symptoms in others.",
     "optionalStandaloneStatus": {
       "summary": "G.M.'s choice whether this is included as part of the regular streetwise skill or used as an additional rogue skill. If used as a separate skill, the Base Skill proficiency is 25%+5% per level.",
       "nestedPlacement": {
@@ -581,6 +852,12 @@
         "subSkillId": "drugs"
       }
     },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Can guess what drug a user may be high on with reasonable accuracy (roll under skill ability).",
+        "appliesWhen": "When identifying what drug a user may be high on."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -609,9 +886,35 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The practiced ability to follow someone without their knowledge. Includes basic stake-out procedures. A failed Tailing roll indicates that the character being tailed has noticed that he is being followed and may take evasive action.",
-    "skillTraits": [
-      "requires_focus"
+    "description": "The practiced ability to follow someone without their knowledge. Includes basic stake-out procedures. A failed Tailing roll indicates that the character being tailed has noticed that he is being followed and may take evasive action to lose the tail, or confront or attack the person (unless he makes a run for it). Either way, the subject of the tail is likely to escape being followed any further.",
+    "successOutcomes": {
+      "summary": "Follows the subject without their knowledge, including basic stake-out work."
+    },
+    "failureResults": {
+      "summary": "The subject notices the tail and may flee, confront, or attack; the tail is likely lost either way."
+    },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Includes basic stake-out procedures as part of tailing tradecraft.",
+        "appliesWhen": "When conducting surveillance or waiting on a subject."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "+5% bonus to Tailing when the character also has Prowl.",
+        "relatedSkillIds": [
+          "skill_prowl"
+        ],
+        "effectKind": "other",
+        "ruleId": "tailing_prowl_bonus"
+      },
+      {
+        "summary": "Tailing is also part of the Surveillance skill. (Distinct from Surveillance Systems, a communications/electronics skill.)",
+        "relatedSkillLabels": [
+          "Surveillance"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
     ]
   }
 ]

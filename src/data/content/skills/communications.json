@@ -42,8 +42,28 @@
     "basePercent": 25,
     "percentPerLevel": 5,
     "synergies": [],
-    "prerequisites": [],
-    "description": "Skill in recognizing, designing, and cracking secret codes and messages.",
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
+      }
+    ],
+    "description": "Skill in recognizing, designing, and cracking secret codes and messages. The character must study the code for two hours to attempt to break it successfully. A failed roll means the individual must study the code for an additional two hours before he can try to break it again. The character may attempt to break the code sooner, after only 10 minutes of study, but suffers a penalty of -30%.",
+    "failureResults": "The individual must study the code for an additional two hours before he can try to break it again.",
+    "situationalModifiers": [
+      {
+        "task": "Break code",
+        "percentModifier": -30,
+        "appliesTo": "self",
+        "condition": "After only 10 minutes of study instead of the usual two hours."
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "The character must study the code for two hours to attempt to break it successfully.",
+        "appliesWhen": "Before a standard attempt to break a code."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -67,14 +87,31 @@
     "basePercent": 30,
     "percentPerLevel": 5,
     "synergies": [],
-    "prerequisites": [],
-    "description": "Familiarity with laser communication systems and their operation.",
+    "prerequisites": [
+      {
+        "type": "skill",
+        "skillId": "skill_radio_basic"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_electrical_engineer"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_computer_operation"
+      }
+    ],
+    "description": "In-depth knowledge of sophisticated laser communication systems and fiber optic communications.",
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
+    ],
+    "skillTraits": [
+      "related_to_electrical",
+      "work_education_related"
     ]
   },
   {
@@ -96,7 +133,7 @@
       }
     ],
     "prerequisites": [],
-    "description": "Training in the use of special optical equipment, ranging from night vision goggles to advanced targeting sensors.",
+    "description": "Expert training in the use of special optical enhancement equipment such as telescopic lens, laser targeting, thermo-imagers, passive light intensifiers, infrared and ultraviolet systems, polarization, light filters, optical scanners, and related devices.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -144,7 +181,7 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "Basic familiarity with the operation and maintenance of field radios and communication networks.",
+    "description": "Rudimentary knowledge of the operation and maintenance of field radios and walkie-talkies, wire laying, installation, radio procedure, communication security and visual signs/communications, as well as Morse code. It does not include repairs.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -171,7 +208,7 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "Knowledge of electronic scrambling and descrambling equipment used in secure communications.",
+    "description": "Training in the use of electronic masking, scrambling and unscrambling equipment, and codes for the transmission of radio signals.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -209,9 +246,15 @@
         "type": "skill",
         "skillId": "skill_computer_operation",
         "condition": "only for complex, high-tech systems"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy",
+        "condition": "only for complex, high-tech systems"
       }
     ],
-    "description": "The study and operation of surveillance systems, listening devices, and security cameras.",
+    "description": "Study and understanding of the operation, methods, and techniques in the use of surveillance systems. Includes motion detectors, simple and complex alarm systems, audio/visual recording and display equipment, recording methods, amplified sound systems, miniature listening devices (bugs, line tapping), and some optical enhancement systems (specifically as they relate to camera lenses). Tailing, or following someone without their knowledge, is another form of surveillance; this also includes stake-out procedures.",
+    "failureResults": "A failed surveillance roll (tailing or stake-out) indicates that the tail was spotted and the subject is aware of being followed/observed. A failed roll in the use of surveillance equipment means that the equipment does not function as desired, impairing or preventing surveillance (e.g. bug does not transmit, recording garbled, film blurred or fails to record). A failed roll when hiding listening devices means the bug does not function and is easily discovered through the course of casual activity.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -234,10 +277,10 @@
       "Communications"
     ],
     "basePercent": 25,
-    "percentPerLevel": 5,
+    "percentPerLevel": 4,
     "synergies": [],
     "prerequisites": [],
-    "description": "Familiarity with operating television broadcasting and video recording equipment.",
+    "description": "In-depth training in the use of video and audio recording equipment, filming, editing, dubbing, title making, duplication, and transmission. Includes the use of field equipment (e.g. portable video camera) and studio equipment (e.g. editing and transmission).",
     "sources": [
       {
         "gameSystem": "nightbane",

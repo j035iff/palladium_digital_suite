@@ -97,7 +97,7 @@
     "id": "skill_fieldcraft",
     "name": "Fieldcraft",
     "gameSystems": [
-      "between_the_shadows"
+      "nightbane"
     ],
     "categories": [
       "Espionage"
@@ -107,10 +107,29 @@
     "allowedAsSecondarySkill": true,
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill covers the common \"tricks\" spies use to exchange information covertly. Some fieldcraft methods include \"dead drops\" (the information is placed in a hiding place such as taped under a park bench, behind a brick, and so on; the other agent then comes by and picks it up, avoiding ever seeing his \"contact\"), ways to notice and avoid being shadowed (use this skill in conjunction with the Perception rules), selecting code words and passwords to recognize other agents, and similar techniques.",
+    "description": "This skill covers the common \"tricks\" spies use to exchange information covertly.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Covers dead drops: information left in a hiding place (e.g. taped under a park bench or behind a brick) for another agent to retrieve without ever meeting the contact.",
+        "appliesWhen": "When exchanging information covertly via dead drop."
+      },
+      {
+        "summary": "Can select and use code words and passwords to recognize other agents.",
+        "appliesWhen": "When identifying fellow agents or handlers."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Noticing and avoiding being shadowed uses this skill in conjunction with the Perception rules (Nightbane RPG, page 66).",
+        "relatedSkillLabels": [
+          "Perception"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
     "sources": [
       {
-        "gameSystem": "between_the_shadows",
+        "gameSystem": "nightbane",
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
@@ -176,7 +195,7 @@
     "percentPerLevel": 4,
     "synergies": [],
     "prerequisites": [],
-    "description": "The ability to imitate the voice, accent and expressions of another person or regional dialect. This skill is common among thieves and assassins, as well as demons and other villains. The first number indicates the character's ability to change his voice and imitate accents, inflections and expressions from other regions. A successful roll means s/he has disguised his normal/true speaking voice and accent, and convincingly sounds like s/he is from another region or part of the world. The second number indicates the character's ability to accurately imitate the voice, inflections and attitude of a specific person! This is much more difficult, and the character will either need to know the person being imitated very well, or have spent hours studying him/her. Base Skill: 36%/16% +4% per level of experience. Impersonation Note: When combined with the disguise and intelligence skills, the character is able to completely impersonate a specific person or person of a particular occupation (soldier, knight, wizard, priest, etc.). This is likely to include knowledge of the subject being impersonated, military procedure, dress, heraldry/rank, and will usually require speaking the language fluently. This means the character can convincingly impersonate a general type of person/soldier/advisor with an accurate disguise, proper action, and language. Base Skill: 16% +4% per level of experience for a regional disguise of an average local person (farmer, laborer, vagabond, etc.), +12% +4% to impersonate a person in a specific occupation (sheriff, guard, inspector, messenger, merchant, priest, etc.), and 10% +4% per level of experience to impersonate a specific, known person.",
+    "description": "The ability to imitate the voice, accent, and expressions of another person or regional dialect. Common among thieves, assassins, and other villains.",
     "subTasks": [
       {
         "name": "Regional disguise of an average local person (farmer, laborer, vagabond, etc.)",
@@ -196,7 +215,7 @@
     ],
     "interdependentKnowledge": [
       {
-        "summary": "The impersonation sub-tasks (average local, occupation, or known person) require Disguise and Intelligence in addition to this skill; voice mimicry alone uses the split base tracks above.",
+        "summary": "Full impersonation sub-tasks require successful Disguise and Intelligence rolls in addition to this skill. Convincing impersonation typically includes knowledge of the subject, military procedure, dress, heraldry/rank, and fluent use of the relevant language.",
         "relatedSkillIds": [
           "skill_disguise",
           "skill_intelligence"
@@ -204,7 +223,51 @@
         "effectKind": "procedure_quality"
       }
     ],
-    "failureResults": "A failed impersonation roll (with Disguise and Intelligence) means some element of the impersonation is flawed—most likely incorrect behavior or a character trait, or lack of information about the person being impersonated (\"Tell me again what you said that night,\" etc.). Such holes will give the character away sooner or later; the longer the character remains under scrutiny, the more likely something reveals the impostor.",
+    "sequentialChecks": [
+      {
+        "skillId": "skill_disguise",
+        "summary": "Disguise must succeed before attempting an impersonation sub-task.",
+        "condition": "When attempting an impersonation sub-task (average local, occupation, or known person)."
+      },
+      {
+        "skillId": "skill_intelligence",
+        "summary": "Intelligence must succeed before attempting an impersonation sub-task.",
+        "condition": "When attempting an impersonation sub-task (average local, occupation, or known person)."
+      }
+    ],
+    "situationalRuleOverrides": [
+      {
+        "ruleId": "impersonation_voice_requires_familiarity",
+        "summary": "Specific-person voice mimicry requires knowing the person very well or spending hours studying them.",
+        "domain": "skill_roll",
+        "whenContext": "When using the specific_person_voice track."
+      },
+      {
+        "ruleId": "impersonation_scrutiny_exposure",
+        "summary": "The longer the character remains under others' scrutiny while impersonating, the more likely something reveals the impostor.",
+        "domain": "skill_roll",
+        "whenContext": "During sustained impersonation."
+      }
+    ],
+    "successOutcomes": {
+      "yields": [
+        {
+          "summary": "Disguised normal/true speaking voice; convincingly sounds from another region or part of the world.",
+          "contextMatch": "regional_accent track"
+        },
+        {
+          "summary": "Accurately imitates the target's voice, inflections, and attitude.",
+          "contextMatch": "specific_person_voice track"
+        },
+        {
+          "summary": "With successful Disguise and Intelligence rolls, convincingly impersonates the chosen subject using accurate disguise, proper action, and fluent language.",
+          "contextMatch": "impersonation sub-tasks"
+        }
+      ]
+    },
+    "failureResults": {
+      "summary": "Voice mimicry failure: the regional accent or specific-person imitation is unconvincing. Impersonation failure (with Disguise and Intelligence): some element of the impersonation is flawed—most likely incorrect behavior or a character trait, or lack of information about the person being impersonated (\"Tell me again what you said that night,\" etc.). Such holes give the character away sooner or later."
+    },
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -229,8 +292,8 @@
     "percentPerLevel": 4,
     "synergies": [],
     "prerequisites": [],
-    "description": "This is the specific training in the practices and principles of recognizing and analyzing sources of information about the enemy, observation techniques, counterintelligence measures and proper procedure. This includes the practical assessment of sights and sounds, estimation of ranges, what to report, handling prisoners of war, and handling captured documents and equipment. Further intelligence training includes a working knowledge of indigenous guerrilla warfare, enemy practices, appearance, and current activities. Another area of training made available to intelligence is the identification of enemy troops, officers, and foreign advisors.",
-    "failureResults": "A failed roll in any of the areas of intelligence means that evidence is inconclusive, or that the character has incorrectly assessed the information/situation and is uncertain. A failed roll involving individual clues may mean the person has dismissed it entirely as being meaningless.",
+    "description": "This is the specific training in the practices and principles of recognizing and analyzing sources of information about the enemy, observation techniques, counterintelligence measures and proper procedure. This includes the practical assessment of sights and sounds, estimation of ranges, what to report, handling prisoners of war, and handling captured documents and equipment (tagging and reporting to group leaders or proper authorities). This means the character will be able to accurately estimate ranges, the number of enemies, direction, purpose, and assess the importance of specific information. Further intelligence training includes a working knowledge of indigenous guerrilla warfare, enemy practices, appearance, and current activities. This enables the intelligence officer to recognize suspicious activity as guerrilla actions and identify guerrilla operatives. For example: A particular booby trap, or weapon or mode of operation may be indicative of guerrilla activity in the area. It may be up to the character to confirm the existence of the enemy and their strengths, number, and location. Another area of training made available to intelligence is the identification of enemy troops, officers, and foreign advisors. This means the person learns the many distinguishing ranks and marks that identify specific military units, special forces, groups, and leaders of the enemy. Such identification can pinpoint and confirm enemy operations, goals, and movement, as well as confirm outside intervention/aid.",
+    "failureResults": "A failed roll in any of the areas of intelligence means that evidence is inconclusive, or that the character has incorrectly assessed the information/situation and is uncertain. A failed roll involving individual clues may mean the person has dismissed it entirely as being meaningless (game masters use your discretion).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -255,7 +318,13 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill is learned by policemen, intelligence officers, etc. The character knows the techniques to get information from (typically unwilling) subjects. This includes such old methods as \"good cop/bad cop\" (one interrogator is threatening and intimidating, the other is sympathetic and friendly), deceiving and misleading the subject into giving away information, and similar methods. The character can also judge if the subject is lying. This skill also includes some basic knowledge on methods of torture, from basic tactics like depriving the subject of sleep, to the old \"medieval\" instruments and new, sophisticated techniques like sensory deprivation, partial electrocution, and drugs.",
+    "description": "This skill is learned by policemen, intelligence officers, etc. The character knows the techniques to get information from (typically unwilling) subjects. This includes such old methods as \"good cop/bad cop\" (one interrogator is threatening and intimidating, the other is sympathetic and friendly), deceiving and misleading the subject into giving away information, and similar methods. This skill also includes some basic knowledge on methods of torture, from basic tactics like depriving the subject of sleep, to the old \"medieval\" instruments and new, sophisticated techniques like sensory deprivation, partial electrocution, and drugs. Note: Only evil characters will engage in torture routinely.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "The character can judge if the subject is lying; the game master may assess bonuses and penalties depending on how good a liar the subject is.",
+        "appliesWhen": "When using interrogation to detect deception."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -278,8 +347,17 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "The character knows the methods and tools for picking/opening key and basic tumbler type locks. This does not include sophisticated computer or electronic locks. It takes 1D6 melee rounds for each attempt to pick a lock.",
+    "description": "The character knows the methods and tools for picking/opening key and basic tumbler type locks. This does not include sophisticated computer or electronic locks.",
     "failureResults": "The lock holds; try again.",
+    "performanceFormulas": [
+      {
+        "stat": "duration",
+        "formula": "1D6",
+        "unit": "melee_rounds",
+        "metricKey": "pick_lock_attempt_duration",
+        "linkSummary": "Each attempt to pick a lock takes 1D6 melee rounds."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -356,8 +434,9 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Helps the character to move with stealth; quietly, slowly, and carefully. Techniques include balance and footing, short steps and pacing, rifle positioning, prone positions for low visibility, and crawling. A successful roll allows a sneak attack.",
+    "description": "This skill helps the character to move with stealth; quietly, slowly, and carefully. Techniques include balance and footing, short steps and pacing, rifle positioning, prone positions for low visibility, and crawling.",
     "failureResults": "The character has been seen or heard.",
+    "successOutcomes": "The character is not seen or heard and may make a sneak attack.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -368,6 +447,15 @@
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG, (Espionage & Rogue)",
         "pageNumber": 55
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "skill_tailing",
+        "summary": "+5% bonus to Tailing when the character also has Prowl.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 5
+        }
       }
     ],
     "skillTraits": [
@@ -388,12 +476,24 @@
     "physicalSkillBonuses": {
       "strike": {
         "value": 2,
-        "condition": "On an aimed shot. Only rifles that can be made to fire a single round or blast can be used for sniping (no automatic/multi-firing rifles)."
+        "condition": "On an aimed shot."
       }
     },
     "synergies": [],
     "prerequisites": [],
     "description": "This skill represents special training in long-range rifle firing and marksmanship.",
+    "situationalRuleOverrides": [
+      {
+        "summary": "Only rifles that can be made to fire a single round or blast can be used for sniping (no automatic/multi-firing rifles).",
+        "domain": "ranged_combat",
+        "whenContext": "When using the Sniper skill.",
+        "constraint": "prohibited",
+        "targets": [
+          "automatic_fire",
+          "burst_fire"
+        ]
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -427,13 +527,27 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Visual tracking is the identification of tracks, and following the path of men or animals by the signs they leave on the ground and vegetation. Tracking is a precise art, requiring much practice. The skill includes the evaluation of tracks, indicating whether the person being tracked is loaded down with equipment, running, moving slowly (by measuring the space between steps), and so on. By this means, the tracker can estimate the person's rate of movement, apparent direction, the number of persons in the party, and whether the person knows he is being followed. Other methods of tracking require recognizing other telltale signs, such as blood and other stains, broken and displaced vegetation, overturned rocks, litter, and even odors carried by the wind. Tracking also includes the recognizing of dangerous animals by their tracks, habits and feces. Likewise, tire tracks of vehicles can reveal much, such as size and type of the vehicle, the weight of its load, etc. Counter-Tracking techniques are also known, such as covering one's trail, misdirection, parallel trails, avoiding obvious pitfalls like littering and others. Roll once every 40 yards/meters when following a trail.",
-    "failureResults": "A failed roll means that the signs are inconclusive, vague or misleading. Additional signs must be found to verify or clarify (roll again). Three consecutive failed rolls means the tracker has completely lost the trail.",
+    "description": "Visual tracking is the identification of tracks, and following the path of men or animals by the signs they leave on the ground and vegetation. Tracking is a precise art, requiring much practice. The skill includes the evaluation of tracks, indicating whether the person being tracked is loaded down with equipment, running, moving slowly (by measuring the space between steps), and so on. By this means, the tracker can estimate the person's rate of movement, apparent direction, the number of persons in the party, and whether the person knows he is being followed. Other methods of tracking require recognizing other telltale signs, such as blood and other stains, broken and displaced vegetation, overturned rocks, litter (such as cigarette butts, ration cans, candy wrappers, soiled bandages and camp fire remains), and even odors carried by the wind. Tracking also includes the recognizing of dangerous animals by their tracks, habits and feces. Likewise, tire tracks of vehicles can reveal much, such as size and type of the vehicle, the weight of its load, etc. Counter-Tracking techniques are also known, such as covering one's trail, misdirection, parallel trails, avoiding obvious pitfalls like littering and others.",
+    "failureResults": "A failed roll means that the signs are inconclusive, vague or misleading. Additional signs must be found to verify or clarify (roll again).",
+    "resolutionLogic": {
+      "type": "standard",
+      "summary": "Three consecutive failed rolls means the tracker has completely lost the trail.",
+      "recurrence": {
+        "summary": "Roll once every 40 yards/meters when following a trail.",
+        "intervalValue": 40,
+        "intervalUnit": "custom"
+      }
+    },
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 51
       }
     ],
     "skillTraits": [
@@ -452,6 +566,42 @@
     ],
     "basePercent": 30,
     "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Typically reserved for law enforcement, espionage agents, military Special Forces, mercenaries, con artists, and other criminal types."
+      }
+    ],
+    "description": "Training in undercover operations in which the character learns the methods and techniques of blending smoothly into the background and appearing as if he belongs there (just another unmemorable face in the crowd or one of the guys), as well as assuming a false identity and playing a role to track, spy upon, or gather information or evidence. Also includes methods for the covert exchange of information necessary for keeping in touch with the individual's handler, such as dead drops, ways to avoid or notice someone tailing them, selecting passwords or phrases, and similar techniques.",
+    "successOutcomes": {
+      "summary": "Blends into the background convincingly, maintains cover while playing a role, and executes covert handler contact without exposing the operation."
+    },
+    "failureResults": {
+      "summary": "Cover is compromised, the false identity rings false under scrutiny, or covert exchanges risk exposure."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "Ways to avoid or notice someone tailing the character overlap with Tailing skill knowledge.",
+        "relatedSkillIds": [
+          "skill_tailing"
+        ],
+        "effectKind": "implicit_knowledge"
+      },
+      {
+        "summary": "False identities and cover roles are often supported by Disguise and related tradecraft.",
+        "relatedSkillIds": [
+          "skill_disguise"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Covert handler contact may use dead drops (leaving information in a hiding place for another agent or courier), passwords or phrases, and similar tradecraft.",
+        "appliesWhen": "When maintaining contact with a handler or organization while undercover."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -459,9 +609,6 @@
         "pageNumber": 55
       }
     ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "Training in undercover operations in which the character learns the methods and techniques of blending smoothly into the background and appearing as if he belongs there (just another unmemorable face in the crowd or one of the guys), as well as assuming a false identity and playing a 'role' to track, spy upon, or gather information or evidence. Also includes methods for the covert exchange of information, necessary for keeping in touch with the individual's 'handler'.",
     "skillTraits": [
       "requires_focus"
     ]
@@ -479,7 +626,13 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "Techniques for getting water, food, shelter, and help when stranded in wild forests, deserts, or mountains. Characters without this skill will not be able to stay healthy for more than a few days in the wilderness once their supplies run out.",
+    "description": "Techniques for getting water, food, shelter, and help when stranded in wild forests, deserts, or mountains.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "Characters without this skill will not be able to stay healthy for more than a few days in the wilderness once their supplies run out.",
+        "appliesWhen": "When stranded without adequate supplies."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",

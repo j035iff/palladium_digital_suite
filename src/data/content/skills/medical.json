@@ -33,7 +33,13 @@
       }
     ],
     "synergies": [],
-    "description": "Basic knowledge of police skills, including basic criminal law, fingerprinting, ballistics (matching bullets to weapons and angles of impact), and general investigative techniques. Forensic medicine is the method and techniques which enables the character to find evidence regarding the cause of death, time of death, and other details when examining a corpse.",
+    "description": "Basic knowledge of police skills, including basic criminal law, fingerprinting, ballistics (matching bullets to weapons and angles of impact), and general investigative techniques.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Forensic medicine: find evidence regarding the cause of death, time of death, and other details when examining a corpse.",
+        "appliesWhen": "When examining a corpse."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -86,11 +92,18 @@
     "synergies": [],
     "narrativeAdvantages": [
       {
-        "summary": "Heal wounds faster (twice as quick as normal)."
+        "summary": "Heal wounds faster (twice as quick as normal).",
+        "appliesWhen": "When using holistic treatments on wounds."
       }
     ],
-    "description": "Training in the recognition, preparation, and application of natural medicines usually made from plants and their parts (roots, leaves, fruit). The holistic doctor is basically a natural pharmacist and naturalist who creates drugs from vegetation and studies common ailments. He can find and use plants to create salves, balms, ointments, and lotions to soothe burns, boils, rashes, and insect bites, reduce swelling, as well as create local anesthetics, and to heal wounds faster (twice as quick as normal). Potions and tonics are created to settle upset stomachs, induce drowsiness, or hallucinations. The individual can also make alcohol and poison (hemlock and mandrake, for example). The student of herbology also has a good knowledge of plant lore and when and where to find healing plants, edible fruit, berries, roots, and bark, as well as how to use and/or avoid dangerous flora. The character can also preserve foods and knows how to set and mend bones, bandage cuts, and suture cuts.",
+    "description": "Training in the recognition, preparation, and application of natural medicines usually made from plants and their parts (roots, leaves, fruit). The holistic doctor is basically a natural pharmacist and naturalist who creates drugs from vegetation and studies common ailments. He can find and use plants to create salves, balms, ointments, and lotions to soothe burns, boils, rashes, and insect bites, reduce swelling, as well as create local anesthetics. Potions and tonics are created to settle upset stomachs, induce drowsiness, or hallucinations. The individual can also make alcohol and poison (hemlock and mandrake, for example). The student of herbology also has a good knowledge of plant lore and when and where to find healing plants, edible fruit, berries, roots, and bark, as well as how to use and/or avoid dangerous flora. The character can also preserve foods and knows how to set and mend bones, bandage cuts, and suture cuts.",
     "failureResults": "The treatment or concoction did not work.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "Plants are seasonal and the right root or leaf may not be readily available in certain times of the year/season, or may be found exclusively in remote regions. Game masters should use a certain amount of common sense and drama with this skill.",
+        "appliesWhen": "When sourcing ingredients for treatments or concoctions."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -112,10 +125,18 @@
       "Medical"
     ],
     "basePercent": {
-      "splitBase": {
-        "diagnosis": 60,
-        "treatment": 50
-      }
+      "splitBaseTracks": [
+        {
+          "trackId": "diagnosis",
+          "label": "Accurately diagnose the problem",
+          "basePercent": 60
+        },
+        {
+          "trackId": "treatment",
+          "label": "Successfully treat the problem",
+          "basePercent": 50
+        }
+      ]
     },
     "percentPerLevel": 5,
     "prerequisites": [
@@ -175,11 +196,18 @@
         "type": "best_of_x",
         "count": 3,
         "requiredSuccesses": 2,
-        "condition": "Applied to serious injury or coma"
+        "condition": "Applied to serious injury or coma",
+        "summary": "Roll three times consecutively on percentile dice; two successes out of three means the wound has been properly treated or the patient's condition has been stabilized. Failure means the patient's condition is unchanged."
       }
     ],
     "description": "An advanced form of emergency medical treatment which includes all first aid techniques, the setting of broken bones, suturing of wounds, use of oxygen and emergency medical equipment, administering of drugs, knowledge of how to move a critically injured person, and other life saving techniques.",
-    "failureResults": "The patient has not responded to treatment or that the treatment has been improperly administered. For serious injury or coma, failure means the patient's condition is unchanged. Another character can immediately attempt to apply medical aid or the same player can try again, but only after the character has spent six minutes for reexamining and/or concentration on the problem.",
+    "failureResults": "A failed roll means the patient has not responded to treatment or that the treatment has been improperly administered.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "Another character can immediately attempt to apply medical aid, or the same player can try again after six minutes for reexamining and/or concentration on the problem.",
+        "appliesWhen": "After a failed paramedic roll."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -256,7 +284,17 @@
       }
     ],
     "synergies": [],
-    "description": "This is a specialty in medicine that deals with poisons, venoms and toxins, their manufacture, composition and antidotes. This skill is useful for both healers and assassins. A successful skill roll will help determine if poisons have been used on somebody and even the general type of poison/toxin used (a definite answer may require an autopsy and the forensics skill).",
+    "description": "This is a specialty in medicine that deals with poisons, venoms and toxins, their manufacture, composition and antidotes. This skill is useful for both healers and assassins.",
+    "successOutcomes": "A successful skill roll will help determine if poisons have been used on somebody and even the general type of poison/toxin used.",
+    "interdependentKnowledge": [
+      {
+        "summary": "A definite answer may require an autopsy and Criminal Sciences & Forensics.",
+        "relatedSkillIds": [
+          "skill_criminal_sciences_and_forensics"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",

@@ -10,7 +10,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Aerial feats of agility and strength, such as walking a tightrope, high wire, trapeze, and stunts performed above ground. Other physical abilities include rolls, somersaults, leaps, and falls.",
+    "description": "Aerial feats of agility and strength, such as walking a tightrope, high wire, trapeze, and stunts performed above ground. Other physical abilities include rolls, somersaults, leaps, and falls. Provides all of the following.",
     "physicalSkillBonuses": {
       "ps": 1,
       "pp": 1,
@@ -86,13 +86,6 @@
     "categories": [
       "Physical"
     ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane Survival Guide",
-        "pageNumber": 56
-      }
-    ],
     "synergies": [],
     "prerequisites": [],
     "description": "A type of aerobic exercise to build the body, develop reflexes and grace, and learn a few very basic self-defense moves.",
@@ -108,7 +101,26 @@
         "name": "Sense of Balance",
         "basePercent": 30,
         "percentPerLevel": 5,
-        "description": "Balance conditioning developed through aerobic practices."
+        "description": "Balance conditioning developed through aerobic practices. Base Skill: 30% +5% per level of experience."
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes a few very basic self-defense moves learned through aerobic conditioning.",
+        "appliesWhen": "When using unarmed defensive techniques gained from this training."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Bonuses: +1 to disarm, +1 to pull punch, +2D4 S.D.C., and +2 to kicking damage.",
+        "appliesWhen": "While the character retains training from Aerobic Athletics."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
       }
     ]
   },
@@ -123,7 +135,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Training in, and enjoyment of, vigorous exertion for competitive sports, exercises, and contests of strength, endurance, and agility.",
+    "description": "Training in, and enjoyment of, vigorous exertion for competitive sports, exercises, and contests of strength, endurance, and agility. Provides the following bonuses.",
     "physicalSkillBonuses": {
       "ps": 1,
       "spd": "1D6",
@@ -151,7 +163,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The building of muscle tone and body strength through weight lifting and exercise.",
+    "description": "The building of muscle tone and body strength through weight lifting and exercise. Provides the following.",
     "physicalSkillBonuses": {
       "ps": 2,
       "sdc": 10
@@ -177,7 +189,7 @@
     "allowedAsSecondarySkill": false,
     "synergies": [],
     "prerequisites": [],
-    "description": "Classic art of fighting with fists. Training helps build the body and reflexes.",
+    "description": "Classic art of fighting with fists. Training helps build the body and reflexes. Skilled boxers will automatically knock out opponents on a roll of a natural twenty. The victim of a knockout will remain unconscious for 1D6 melees. Unlike normal knockout/stun, the player does not have to announce that he is trying to knock out his opponent before making a roll to strike. The following bonuses are provided.",
     "physicalSkillBonuses": {
       "ps": 2,
       "sdc": "3D6",
@@ -221,13 +233,18 @@
     "prerequisites": [],
     "basePercent": 40,
     "percentPerLevel": 5,
-    "description": "Knowledge of the tools and techniques for climbing up sheer surfaces. Players should roll once for every 20 feet (6 m) of a vertical climb.",
+    "description": "Knowledge of the tools and techniques for climbing up sheer surfaces. Players should roll once for every 20 feet (6 m) of a vertical climb. If the roll fails, it means he is losing his grip; however, every \"skilled\" climber gets a chance to regain his grip, roll again. Two consecutive failed rolls means the character falls. Rappelling is a specialized, rope climbing skill used in descending from helicopters, scaling walls and cliff facings. For game purposes, rappelling will include ascending and descending climbs.",
     "failureResults": "Falling.",
     "resolutionLogic": {
       "type": "reroll_on_failure",
       "maxRerolls": 1,
-      "condition": "Roll once for every 20 feet (6 m) of a vertical climb. If the roll fails, it means he is losing his grip.",
-      "summary": "Every 'skilled' climber gets a chance to regain his grip, roll again. Two consecutive failed rolls means the character falls."
+      "condition": "If the roll fails, it means he is losing his grip.",
+      "summary": "Every 'skilled' climber gets a chance to regain his grip, roll again. Two consecutive failed rolls means the character falls.",
+      "recurrence": {
+        "summary": "Roll once for every 20 feet (6 m) of a vertical climb.",
+        "intervalValue": 20,
+        "intervalUnit": "custom"
+      }
     },
     "subSkills": [
       {
@@ -257,7 +274,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Learning to do falls, rolls, tumbles, cartwheels, somersaults and to work the parallel bars and rings. Builds great upper body strength, grace, and balance.",
+    "description": "Learning to do falls, rolls, tumbles, cartwheels, somersaults and to work the parallel bars and rings. This sport builds great upper body strength, grace, and balance. Provides all of the following.",
     "physicalSkillBonuses": {
       "ps": 2,
       "pp": 1,
@@ -321,6 +338,11 @@
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 53
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 54
       }
     ]
   },
@@ -332,13 +354,6 @@
     ],
     "categories": [
       "Physical"
-    ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane Survival Guide",
-        "pageNumber": 56
-      }
     ],
     "synergies": [],
     "prerequisites": [],
@@ -366,6 +381,28 @@
         "damage": "3D8",
         "notes": "Counts as two melee attacks."
       }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Casual kick-boxing training supplements the character's usual Hand to Hand Combat skill; the listed kicks are added to the usual list of known attacks.",
+        "relatedSkillLabels": [
+          "Hand to Hand Combat"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Bonuses: +1 to P.E., +1 to P.S., and +1D10 to S.D.C.",
+        "appliesWhen": "While the character retains training from Kick Boxing."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
     ]
   },
   {
@@ -377,25 +414,21 @@
     "categories": [
       "Physical"
     ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane Survival Guide",
-        "pageNumber": 56
-      }
-    ],
     "synergies": [
       {
         "skillId": "skill_identify_plants_and_fruits",
-        "description": "+5% bonus to Identify Plants and Fruit."
+        "bonusPercent": 5,
+        "description": "+5% bonus to Identify Plants & Fruits when the character has Outdoorsmanship."
       },
       {
         "skillId": "skill_land_navigation",
-        "description": "+5% bonus to Land Navigation."
+        "bonusPercent": 5,
+        "description": "+5% bonus to Land Navigation when the character has Outdoorsmanship."
       },
       {
         "skillId": "skill_wilderness_survival",
-        "description": "+5% bonus to Wilderness Survival."
+        "bonusPercent": 5,
+        "description": "+5% bonus to Wilderness Survival when the character has Outdoorsmanship."
       }
     ],
     "prerequisites": [
@@ -404,11 +437,30 @@
         "skillId": "skill_wilderness_survival"
       }
     ],
-    "description": "Being an avid outdoorsman and survivalist, this character has spent a significant portion of his/her life living off the land or in the wild. As a result, the character is hardened to the rigors of outdoor life.",
+    "description": "Being an avid outdoorsman and survivalist, this character has spent a significant portion of his or her life living off the land or in the wild. As a result, the character is hardened to the rigors of outdoor life.",
     "physicalSkillBonuses": {
       "pe": 1,
       "sdc": "2D6"
-    }
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Hardened to the rigors of outdoor life from significant time living off the land or in the wild.",
+        "appliesWhen": "When enduring outdoor hardship, exposure, or extended wilderness living."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Bonuses: +1 to P.E., +2D6 to S.D.C., and +5% to Identify Plants & Fruits, Land Navigation, and Wilderness Survival.",
+        "appliesWhen": "While the character retains training from Outdoorsmanship."
+      }
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide",
+        "pageNumber": 56
+      }
+    ]
   },
   {
     "id": "skill_physical_labor",
@@ -419,21 +471,33 @@
     "categories": [
       "Physical"
     ],
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Not all strength and conditioning comes from deliberate training or sports; some comes from old-fashioned hard work. This skill represents the strength and endurance gained from hard physical labor either due to a physical occupation (such as construction, ditch digging, warehouse work loading and unloading boxes, etc.) or really demanding chores at home such as chopping wood, baling hay, mending fences, and similar work.",
+    "physicalSkillBonuses": {
+      "ps": 2,
+      "pe": 1,
+      "sdc": "2D8"
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Represents strength and endurance from demanding physical occupations or heavy household chores rather than formal athletic training.",
+        "appliesWhen": "When the character's background involves construction, warehouse work, farm labor, or similar hard labor."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Bonuses: +2 to P.S., +1 to P.E., and +2D8 to S.D.C.",
+        "appliesWhen": "While the character retains conditioning from Physical Labor."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "Not all strength and conditioning comes from deliberate training or sports, some comes from old-fashioned hard work. This skill represents the strength and endurance gained from hard physical labor either due to a physical occupation (such as construction, ditch digging, warehouse work) or really demanding chores at home.",
-    "physicalSkillBonuses": {
-      "ps": 2,
-      "pe": 1,
-      "sdc": "2D8"
-    }
+    ]
   },
   {
     "id": "skill_running",
@@ -446,7 +510,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A routine of running and exercise to build speed and endurance.",
+    "description": "A routine of running and exercise to build speed and endurance. Provides the following.",
     "physicalSkillBonuses": {
       "pe": 1,
       "spd": "4D4",
@@ -478,7 +542,7 @@
     ],
     "basePercent": 50,
     "percentPerLevel": 5,
-    "description": "Self-Contained Underwater Breathing Apparatus. Individuals learn the methods and equipment needed for skin diving and underwater swimming. The maximum safe depth without getting the bends is about 120 feet (36.5 m).",
+    "description": "The letters S.C.U.B.A. stand for Self-Contained Underwater Breathing Apparatus. Individuals learn the methods and equipment needed for skin diving and underwater swimming. A character can swim a distance equal to 2x his P.S. in yards/meters per melee. This pace can be maintained for a total of minutes equal to his P.E./Endurance. Note: The maximum safe depth without getting the bends is about 120 feet (36.5 m). Deeper depths are possible with depressurization, special suits and submarines. Swimming is required to S.C.U.B.A.",
     "performanceFormulas": [
       {
         "stat": "distance",
@@ -517,7 +581,7 @@
     "prerequisites": [],
     "basePercent": 50,
     "percentPerLevel": 5,
-    "description": "The rudimentary skill of keeping afloat, dives, swimming and lifesaving techniques.",
+    "description": "The rudimentary skill of keeping afloat, dives, swimming and lifesaving techniques. The percentile number indicates the overall quality of form as well as skill of execution. A character can swim a distance equal to 3x his P.S. in yards/meters per melee. This pace can be maintained for a total of minutes equal to his P.E./endurance.",
     "performanceFormulas": [
       {
         "stat": "distance",
@@ -554,7 +618,7 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "As taught in old high schools and colleges, wrestling is more of a sport than a combat skill, but it does provide some useful combat moves.",
+    "description": "As taught in old high schools and colleges, wrestling is more of a sport than a combat skill, but it does provide some useful combat moves. Provides the following: Body block/tackle does 1D4 damage and the opponent must dodge or parry to avoid being knocked down (lose one melee attack if knocked down). Pin/incapacitate on a roll of 18, 19, or 20. Crush/squeeze does 1D4 damage per squeeze attack.",
     "physicalSkillBonuses": {
       "ps": 2,
       "pe": 1,

@@ -46,7 +46,8 @@
     "description": "A practiced skill in the art of dancing. The character is especially smooth and graceful, a joy to dance with.",
     "unquantifiedMechanics": [
       {
-        "summary": "Can learn new dance steps/moves much more quickly than somebody who can not dance."
+        "summary": "Can learn new dance steps/moves much more quickly than somebody who can not dance.",
+        "appliesWhen": "When learning new dance steps or moves."
       }
     ],
     "categoryMechanicsInheritance": {
@@ -107,16 +108,50 @@
     ],
     "basePercent": 36,
     "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Basic understanding of plant care, aesthetic garden design, growing garden crops, and creating decorative gardens with flowers, plants, shrubs, trees, and decorative rocks that create a feeling of tranquility and harmony with nature. This skill can be practiced by anyone, but selecting it twice provides a +12% bonus and the skill is that of a professional groundskeeper.",
+    "successOutcomes": {
+      "summary": "Healthy garden crops and attractive decorative gardens with thoughtful plant placement, shrubs, trees, and decorative rock features."
+    },
+    "failureResults": {
+      "summary": "Plants fail to thrive, the layout looks haphazard, or crop yield is poor for the season."
+    },
+    "repeatSelection": {
+      "summary": "Selecting the skill twice provides a +12% bonus and professional groundskeeper quality.",
+      "maxSelections": 2,
+      "trackScope": "skill",
+      "categoryTrackInteraction": {
+        "mode": "replace",
+        "summary": "Uses the book's +12% second-selection bonus instead of the standard Domestic category +10%."
+      },
+      "ranks": [
+        {
+          "selectionNumber": 1,
+          "label": "Standard",
+          "effect": "Basic gardening and plant care."
+        },
+        {
+          "selectionNumber": 2,
+          "label": "Professional groundskeeper",
+          "effect": "Professional groundskeeper quality.",
+          "skillPercentBonus": 12
+        }
+      ]
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "replace",
+        "summary": "Gardening uses +12% on second selection per the Survival Guide instead of inherited Domestic +10%."
+      }
+    },
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 55
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "This skill offers a basic understanding of plant care and aesthetic garden design as well as the ability to grow garden crops, and the skill to create beautiful, decorative gardens with flowers, plants, shrubs, trees, and decorative rocks that create a feeling of tranquility and harmony with nature. This skill can be practiced by anyone, but selecting it twice provides a +12% bonus and the skill is that of a professional groundskeeper."
+    ]
   },
   {
     "id": "skill_housekeeping",
@@ -138,7 +173,24 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers will know additional 'tricks of the trade' to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively.",
+    "description": "Techniques and methods of cleaning clothes, bedding, bathrooms, floors, and surfaces, as well as knowledge of the types of cleaners, solvents, soaps and materials for housekeeping. Professional maintenance personnel, maids, and hotel housekeepers know additional tricks of the trade to make a room look spotless, sparkling and inviting; everything in its place, folded properly and presented attractively.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Professional maintenance personnel, maids, and hotel housekeepers know additional tricks of the trade for spotless, sparkling, inviting presentation.",
+        "appliesWhen": "When the character has professional housekeeping experience or background."
+      }
+    ],
+    "successOutcomes": {
+      "summary": "Clothes, bedding, bathrooms, floors, and surfaces are clean; rooms look spotless, sparkling, and inviting with items in their place, folded properly, and presented attractively."
+    },
+    "failureResults": {
+      "summary": "Cleaning is incomplete, streaks or stains remain, or the room still looks untidy and uninviting."
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
     "skillTraits": [
       "work_education_related"
     ]
@@ -156,7 +208,9 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "The individual has learned to play a particular musical instrument with a fair amount of skill. The sound is generally pleasant (except when a bad roll is made). Note that each specific instrument requires the selection of this skill.",
+    "requiresSpecialization": true,
+    "description": "The individual has learned to play a particular musical instrument with a fair amount of skill. The sound is generally pleasant. Note that each specific instrument requires the selection of this skill. For example: a character who can play the guitar, violin, and harmonica must select the play musical instrument skill three different times.",
+    "failureResults": "The performance sounds unpleasant.",
     "specialization": {
       "kind": "instrument",
       "prompt": "Which instrument?",
@@ -274,34 +328,66 @@
     ],
     "basePercent": 50,
     "percentPerLevel": 4,
+    "synergies": [
+      {
+        "skillId": "skill_disguise",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Disguise when dressed to impress.",
+        "applicability": {
+          "summary": "When dressed to impress",
+          "appliesWhen": "Character has applied Wardrobe & Grooming to create the intended look.",
+          "contextTags": [
+            "dressed_to_impress"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_undercover_ops",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Undercover Ops when dressed to impress.",
+        "applicability": {
+          "summary": "When dressed to impress",
+          "appliesWhen": "Character has applied Wardrobe & Grooming to create the intended look.",
+          "contextTags": [
+            "dressed_to_impress"
+          ]
+        }
+      },
+      {
+        "skillId": "skill_seduction",
+        "bonusPercent": 2,
+        "description": "+2% bonus to Seduction when dressed to impress.",
+        "applicability": {
+          "summary": "When dressed to impress",
+          "appliesWhen": "Character has applied Wardrobe & Grooming to create the intended look.",
+          "contextTags": [
+            "dressed_to_impress"
+          ]
+        }
+      }
+    ],
+    "prerequisites": [],
+    "description": "Knowledge of clothing, make-up, hair style, perfume, walking, talking, and how one carries oneself to create a particular look or style. In short, this is how to dress to kill or make the right impression. Keeps an eye on fashion and trends.",
+    "physicalSkillBonuses": {
+      "pb": {
+        "value": 1,
+        "condition": "when dressed to impress"
+      }
+    },
+    "successOutcomes": {
+      "summary": "Creates a convincing look or style through clothing, grooming, poise, and presentation — dressed to impress with +1 P.B. and +2% to Disguise, Undercover Ops, and Seduction while that look holds."
+    },
+    "categoryMechanicsInheritance": {
+      "repeatSelection": {
+        "mode": "inherit"
+      }
+    },
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 55
       }
-    ],
-    "synergies": [
-      {
-        "skillId": "skill_disguise",
-        "description": "+2% bonus when using Wardrobe & Grooming."
-      },
-      {
-        "skillId": "skill_undercover_ops",
-        "description": "+2% bonus when using Wardrobe & Grooming."
-      },
-      {
-        "skillId": "skill_seduction",
-        "description": "+2% bonus when using Wardrobe & Grooming."
-      }
-    ],
-    "prerequisites": [],
-    "description": "This skill represents a knowledge of clothing, make-up, hair style, perfume, walking, talking and how one carries his or herself to create a particular 'look' or style. In short, this is how to dress to kill or make the right impression. Keeps an eye on fashion and trends.",
-    "physicalSkillBonuses": {
-      "pb": {
-        "value": 1,
-        "condition": "when dressed to impress"
-      }
-    }
+    ]
   }
 ]

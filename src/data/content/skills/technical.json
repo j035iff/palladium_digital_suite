@@ -55,20 +55,50 @@
         "pageNumber": 58
       }
     ],
-    "synergies": [
+    "synergies": [],
+    "prerequisites": [],
+    "description": "A skill at bargaining with merchants, businessmen, thieves, traders, smugglers, street persons, and other characters to get a fair price or fair exchange of trade goods or services. Depending on the character's point of view and effort at bartering, he can raise the amount he gets or lower the price he pays by 3D6+2%. Generally, if the haggler rolls under his Bartering skill percentage, he gets the discount when buying, or the better price when he is the one doing the selling or trading. If the price is disputed, the two bartering characters can each make rolls on percentile dice; the highest roll wins and gets their price and not a penny less or nickel more.",
+    "successOutcomes": {
+      "summary": "On a successful roll under Barter skill, the character gets the better price when selling or the discount when buying, adjusting the deal by 3D6+2%."
+    },
+    "failureResults": {
+      "summary": "On a failed roll, the character does not get the 3D6+2% adjustment. In a disputed price, the lower percentile roll loses."
+    },
+    "performanceFormulas": [
       {
-        "skillId": "skill_math_basic",
-        "bonusPercent": 2,
-        "description": "+2% bonus to Barter when the character has Math: Basic."
-      },
-      {
-        "skillId": "skill_literacy",
-        "bonusPercent": 2,
-        "description": "+2% bonus to Barter when the character has Literacy."
+        "stat": "price_adjustment",
+        "formula": "3D6+2",
+        "unit": "percent",
+        "metricKey": "barter_price_adjustment",
+        "linkSummary": "Can raise the amount received or lower the price paid by 3D6+2% on a successful barter roll."
       }
     ],
-    "prerequisites": [],
-    "description": "A skill at bargaining with merchants, businessmen, thieves, traders, smugglers, street persons, and other characters to get a fair price or fair exchange of trade goods or services. Depending on the character's point of view and effort at bartering, he can raise the amount he gets or lower the price he pays by 3D6+2%."
+    "interdependentKnowledge": [
+      {
+        "summary": "Mathematics and Literacy are not required but helpful, with each adding a +2% bonus to Barter.",
+        "relatedSkillIds": [
+          "skill_math_basic",
+          "skill_literacy"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "Mathematics and Literacy are not required but helpful, with each adding a +2% bonus to Barter.",
+        "appliesWhen": "When the character also has Math: Basic and/or Literacy."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "The 3D6+2% price adjustment is not applicable to rare items and alien technology.",
+        "appliesWhen": "When bartering for rare items or alien technology."
+      },
+      {
+        "summary": "If the price is disputed, both bartering characters roll percentile dice; the highest roll wins and gets their price exactly.",
+        "appliesWhen": "When haggling parties cannot agree on a price."
+      }
+    ]
   },
   {
     "id": "skill_begging",
@@ -135,6 +165,18 @@
       }
     ],
     "description": "This skill represents a basic understanding of business, management, banking, and the financial world. The character can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or get work as a stockbroker or advisor.",
+    "successOutcomes": {
+      "summary": "Handles business setup, management, banking, proposals, reports, supervision, or brokerage/advisory work competently for a small-business scale operation."
+    },
+    "failureResults": {
+      "summary": "Business planning, financial analysis, or management task is flawed, incomplete, or unconvincing."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Can set up a business, prepare mission statements, business proposals, and stockholder reports, manage and supervise others, handle all aspects of a small business, or work as a stockbroker or advisor.",
+        "appliesWhen": "On successful Business & Finance rolls for professional business tasks."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -157,7 +199,20 @@
     ],
     "basePercent": 40,
     "percentPerLevel": 5,
-    "description": "A knowledge of how computers work, along with the skills to operate peripherals like keyboards, printers, and modems. Characters can follow computer directions, enter and retrieve information, and similar basic computer operations. However, this does NOT include programming or hacking.",
+    "description": "Knowledge of how computers work, along with the skills to operate peripherals like keyboards, printers, and modems.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Can follow computer directions, enter and retrieve information, and perform similar basic computer operations."
+      }
+    ],
+    "situationalRuleOverrides": [
+      {
+        "summary": "Does not include programming or hacking.",
+        "domain": "skill_roll",
+        "whenContext": "When attempting computer programming or hacking tasks.",
+        "constraint": "prohibited"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -193,13 +248,20 @@
     ],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "Advance computer knowledge that includes designing, programming, debugging, and testing computer programs and software. Hacking is possible, but at a severe penalty unless the character is a trained hacker.",
+    "description": "Advanced computer knowledge that includes designing, programming, debugging, and testing computer programs and software.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Hacking is possible using this skill, but at a penalty unless the character also has Computer Hacking (Rogue).",
+        "appliesWhen": "When attempting to hack without the Computer Hacking skill."
+      }
+    ],
     "situationalModifiers": [
       {
+        "ruleId": "hack_without_computer_hacking",
         "task": "Hacking",
         "percentModifier": -40,
         "appliesTo": "self",
-        "condition": "Applies when attempting to hack, unless the character also has the Computer Hacking (Rogue) skill."
+        "condition": "Applies when attempting to hack without the Computer Hacking (Rogue) skill."
       }
     ],
     "sources": [
@@ -235,7 +297,28 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing.",
+    "description": "This skill includes the basic knowledge of construction and carpentry needed to build simple structures and buildings, roads and bridges, and similar construction projects. Characters with this skill make competent workers for major civil engineering projects as well. This skill includes a basic understanding of woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing, and the use of most common construction tools excluding heavy machinery.",
+    "successOutcomes": {
+      "summary": "Builds or assists on simple structures, roads, bridges, and similar projects competently; can contribute to major civil engineering work as a skilled laborer."
+    },
+    "failureResults": {
+      "summary": "Construction work is flawed, unsafe, or requires rework."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "Heavy construction machinery is covered by Pilot: Tracked & Construction Vehicles, not this skill.",
+        "relatedSkillIds": [
+          "skill_tracked_and_construction_vehicles"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Includes woodworking, welding, riveting, concrete and asphalt pouring, flooring and drywall installation, insulation, basic wiring and plumbing, painting and sealing, and common construction tools.",
+        "appliesWhen": "When performing construction or carpentry work."
+      }
+    ],
     "skillTraits": [
       "requires_dexterity",
       "work_education_related"
@@ -250,45 +333,87 @@
     "categories": [
       "Technical"
     ],
-    "basePercent": 30,
-    "percentPerLevel": 5,
+    "requiresSpecialization": true,
+    "basePercent": 24,
+    "percentPerLevel": 3,
     "specialization": {
       "kind": "other",
       "prompt": "Which divination method?",
       "examples": [
-        "Tarot cards",
-        "Crystal ball"
+        "Aeromancy (weather and clouds)",
+        "Animals (natural omens)",
+        "Astrology",
+        "Bibliomancy",
+        "Casting objects (runes, bones, yarrow stalks, etc.)",
+        "Cartomancy (playing cards or Tarot)",
+        "Crystal gazing",
+        "Palmistry"
       ],
       "allowsMultipleInstances": true,
-      "notes": "Player must choose a specific method (e.g., Tarot cards)."
-    },
-    "repeatSelection": {
-      "summary": "Taking the skill a second time for the same method grants a +15% bonus to represent professional mastery.",
-      "maxSelections": 2,
-      "trackScope": "specialization_instance",
-      "ranks": [
-        {
-          "selectionNumber": 1,
-          "label": "Standard",
-          "effect": "Competent use of the chosen divination method."
-        },
-        {
-          "selectionNumber": 2,
-          "label": "Professional quality",
-          "effect": "Professional mastery of the chosen divination method.",
-          "skillPercentBonus": 15
-        }
-      ]
+      "notes": "One method per skill selection. Take the skill again to learn another method. See Chapter 3 for method details."
     },
     "synergies": [],
-    "prerequisites": [],
-    "description": "The practice of foretelling the future or gaining hidden knowledge through specific conduits.",
+    "prerequisites": [
+      {
+        "type": "attribute",
+        "attribute": "me",
+        "minimum": 13
+      }
+    ],
+    "description": "Semi-magical skill to gain insights into the past, present, or future by manipulating one specific divination process chosen at selection.",
+    "resolutionLogic": {
+      "type": "standard",
+      "summary": "The G.M. rolls for divination, not the player, so the player does not know whether the character received genuine information or a false reading."
+    },
+    "situationalRuleOverrides": [
+      {
+        "ruleId": "divination_requires_calm",
+        "summary": "Requires several minutes (or more) of peace and tranquillity to attempt divination.",
+        "domain": "skill_roll",
+        "whenContext": "Before attempting any divination roll."
+      },
+      {
+        "ruleId": "divination_stress_prohibited",
+        "summary": "If the character is stressed out, under intense pressure, or in pain, they cannot find the calm and focus necessary to divine anything.",
+        "domain": "skill_roll",
+        "whenContext": "When attempting divination while stressed, pressured, or in pain."
+      },
+      {
+        "ruleId": "divination_method_exclusive",
+        "summary": "Characters cannot use another character's divination technique or tools (for example, cannot divine from another practitioner's tarot pack or recognize omens through another's method).",
+        "domain": "skill_roll",
+        "whenContext": "When using or borrowing another character's divination method."
+      }
+    ],
+    "successOutcomes": {
+      "summary": "Gains insights into the past, present, or future through the chosen method. Information gained is usually vague and general; exactly what is learned is at the G.M.'s discretion."
+    },
+    "failureResults": {
+      "summary": "May yield no usable insight or a false reading. While stressed, under intense pressure, or in pain, divination is impossible."
+    },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Information scope varies by method: palmistry reveals much about the person read but little about broader issues; aeromancy and animal omens reveal only general information about major events in the vicinity.",
+        "appliesWhen": "When interpreting results by chosen divination method (Chapter 3)."
+      },
+      {
+        "summary": "Divination impressions are usually vague and general—a 'stranger' or 'journey' may mean many different things.",
+        "appliesWhen": "When the G.M. narrates divination results."
+      },
+      {
+        "summary": "Optional G.M. balance rules: 5 P.P.E. per attempt; contemplation or fasting beforehand; dedicated personal tools for card, stone, or similar methods; +4% to +20% bonuses for atmospheric custom methods with real disadvantages.",
+        "appliesWhen": "Optional — when the G.M. applies Chapter 3 balance guidelines."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Through the Glass Darkly",
         "pageNumber": 10
       }
+    ],
+    "skillTraits": [
+      "requires_focus"
     ]
   },
   {
@@ -311,7 +436,33 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves.",
+    "description": "A mixed bag of abilities that includes finding one's direction in underground rooms, estimating one's approximate depth, digging out relics and evidence from debris, collapsed tunnels, and underground, as well as digging out and fording up/repairing collapsed tunnels, underground chambers, and caves. The skill gives the character a good understanding of how to best perform an excavation without any major setbacks, where to dig, what is the best type of soil, how deep to go, how to pack and secure tunnel walls and ceilings, where to place support beams and what building materials to use in underground construction. Included are techniques for rescuing victims of collapsed tunnels, structures, and similar circumstances, as well as for surviving such situations.",
+    "successOutcomes": {
+      "summary": "Excavates, shores, or repairs underground spaces safely; recovers relics or evidence; or rescues/survives collapse situations without major setbacks."
+    },
+    "failureResults": {
+      "summary": "Excavation causes setbacks, misjudges soil or support needs, or worsens a collapse; characters without this skill rely on pure luck."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes techniques for rescuing victims of collapsed tunnels, structures, and similar circumstances, as well as surviving such situations.",
+        "appliesWhen": "When responding to underground collapses or entrapment."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Covers underground orientation, depth estimation, soil assessment, support-beam placement, tunnel wall/ceiling packing, and underground construction materials.",
+        "appliesWhen": "When planning or performing an excavation."
+      },
+      {
+        "summary": "Tunnels and excavation sites that are made quickly are not permanent, and can be collapsed by gunfire, earthquakes, traffic vibrations, etc.",
+        "appliesWhen": "When relying on hastily dug tunnels or excavation sites."
+      },
+      {
+        "summary": "Trying excavations without this skill is just asking for trouble and is performed on pure luck.",
+        "appliesWhen": "When attempting excavation without the Excavation skill."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -337,6 +488,18 @@
     "synergies": [],
     "prerequisites": [],
     "description": "A basic understanding of fire and how it works. This includes how fire is fueled and how it spreads, as well as firefighting methods and techniques, rescue procedures, and the practiced use of firefighting tools, equipment and gear.",
+    "successOutcomes": {
+      "summary": "Controls, suppresses, or escapes fire effectively; performs rescues and uses firefighting tools and gear competently."
+    },
+    "failureResults": {
+      "summary": "Fire spreads, rescue fails, or firefighting methods and equipment are misused."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Understands how fire is fueled and how it spreads, and can apply firefighting methods, rescue procedures, and firefighting tools and gear.",
+        "appliesWhen": "When fighting fires or conducting fire-related rescues."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -361,7 +524,54 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "Not everyone can be a mechanic, blacksmith or carpenter, but many are good with their hands and capable of doing satisfactory repairs on simple mechanisms, gears, pulleys, wheels, and so on. The General Repair/Maintenance skill includes: sharpening blades, minor repairs on weapons, packing their own common bullets, sewing tears in clothes, changing a tire, shoeing a horse, repairing furniture, painting, varnishing, nailing and assisting in basic woodworking."
+    "description": "Not everyone can be a mechanic, blacksmith or carpenter, but many are good with their hands and capable of doing satisfactory repairs on simple mechanisms, gears, pulleys, wheels, and so on. The General Repair/Maintenance skill includes: sharpening blades, minor repairs on weapons, packing their own common bullets, sewing tears in clothes (it may not look pretty, but does the job), changing a tire, shoeing a horse, repairing furniture, painting, varnishing, nailing and assisting in basic woodworking, and even doing minor patchwork on armor (restores 2D6 S.D.C.).",
+    "successOutcomes": {
+      "summary": "Diagnoses the problem and completes a satisfactory repair on simple mechanisms, gear, clothing, weapons, furniture, or armor patchwork."
+    },
+    "sequentialChecks": [
+      {
+        "skillId": "skill_general_repair_and_maintenance",
+        "summary": "Roll once to figure out what is broken, what must be done to fix it, and whether it is beyond the character's meager abilities. Roll again to determine success or failure in making the actual repair.",
+        "condition": "When attempting a repair with this skill."
+      }
+    ],
+    "resolutionLogic": {
+      "type": "reroll_on_failure",
+      "maxRerolls": 2,
+      "condition": "When making the actual repair roll after diagnosis.",
+      "summary": "If the repair roll fails, the player may try again, but only twice."
+    },
+    "performanceFormulas": [
+      {
+        "stat": "armor_restored",
+        "formula": "2D6",
+        "unit": "S.D.C.",
+        "metricKey": "general_repair_armor_patch",
+        "linkSummary": "Minor patchwork on armor restores 2D6 S.D.C."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Includes sharpening blades, minor weapon repairs, packing common bullets, sewing clothes, changing tires, shoeing horses, furniture repair, painting, varnishing, nailing, basic woodworking assistance, and armor patchwork.",
+        "appliesWhen": "When performing general repair and maintenance tasks within this skill's scope."
+      }
+    ],
+    "failureResults": {
+      "summary": "If the repair roll fails, the player may try again, but only twice."
+    },
+    "situationalModifiers": [
+      {
+        "ruleId": "general_repair_complex_item_penalty",
+        "task": "Extremely damaged, complex, high-tech, or alien item",
+        "percentModifier": -50,
+        "appliesTo": "self",
+        "condition": "Reduce skill proficiency by half."
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "work_education_related"
+    ]
   },
   {
     "id": "skill_history",
@@ -373,6 +583,18 @@
       "Technical"
     ],
     "requiresSpecialization": true,
+    "specialization": {
+      "kind": "other",
+      "prompt": "Which region or historical subject?",
+      "examples": [
+        "North America",
+        "Western Europe",
+        "Russia",
+        "American military history"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Pick by nation, continent, or subject. Repeat the skill for additional regions or subjects."
+    },
     "basePercent": {
       "splitBaseTracks": [
         {
@@ -392,12 +614,33 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects.",
+    "description": "The first percentile number represents a very general historical knowledge of the world and the most famous myths, legends, people and events. The second percentile number indicates a more in-depth knowledge of a particular subject or region in the world (pick by nation or continent). For example: History of a region such as North America is a deep knowledge about the United States, Canada and Mexico, their origin, leaders, key figures in history and science, lore, religion, traditions, famous people, and so on, as well as the myths and legends of that land and culture. An example of a historical subject rather than a place might include American military history, industry, science, music, art, and so on. The History skill may be taken repeatedly to cover multiple regions of the world or various subjects. The two base skill percentages indicate the approximate degree of information the character has learned or can remember accurately; the first number is for general knowledge of world history and the second for a more specific subject.",
+    "successOutcomes": {
+      "summary": "Recalls accurate general world history on the first track, or detailed regional/subject history on the specialist track."
+    },
+    "failureResults": {
+      "summary": "Misremembers dates, figures, events, or regional/subject details."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "May be taken repeatedly for additional regions or historical subjects; each selection adds another specialized topic while retaining the general/specialist split-base tracks.",
+        "appliesWhen": "When the character selects History more than once for different regions or subjects."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "This skill will NOT cover subjects dealing with the paranormal, the various factions, or other such information. See Lore skills for those subjects.",
+        "relatedSkillLabels": [
+          "Lore skills"
+        ],
+        "effectKind": "context_only"
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -431,7 +674,51 @@
         "skillId": "skill_basic_electronics"
       }
     ],
-    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long (4D6 hours or 2D4 days, whichever is most appropriate), or will even work in the way intended.",
+    "description": "A character with this skill can repair almost anything, and even build something out of scrap components. There is no guarantee that the jury-rig will hold for very long, or will even work in the way intended, but it may well save a character's life until they can acquire the proper parts, buy a new unit or get a skilled mechanic to do the job right.",
+    "successOutcomes": {
+      "summary": "Repairs or builds a functional stopgap device from scrap or damaged components."
+    },
+    "failureResults": {
+      "summary": "The jury-rig fails outright, or a failed function-check roll means the system is only 50% functional or works at half its normal speed or power level."
+    },
+    "sequentialChecks": [
+      {
+        "skillId": "skill_jury_rig",
+        "summary": "After a successful jury-rig repair or build, roll again to confirm intended function.",
+        "condition": "When checking whether the jury-rig works as intended."
+      }
+    ],
+    "performanceFormulas": [
+      {
+        "stat": "duration",
+        "formula": "4D6 hours or 2D4 days",
+        "unit": "time",
+        "metricKey": "jury_rig_hold_duration",
+        "capRule": "custom",
+        "linkSummary": "A jury-rig typically holds for 4D6 hours or 2D4 days, whichever is most appropriate."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "+10% bonus if the character is an Electrical Engineer, Mechanical Engineer, or Field Armorer & Munitions Expert (one bonus even if multiple apply).",
+        "relatedSkillIds": [
+          "skill_electrical_engineer",
+          "skill_mechanical_engineer",
+          "skill_field_armorer_and_munitions_expert"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "A jury-rig typically holds for 4D6 hours or 2D4 days, whichever is most appropriate.",
+        "appliesWhen": "After a successful Jury-Rig repair or build."
+      },
+      {
+        "summary": "Roll again to confirm intended function; a failed roll means the system is only 50% functional or works at half its normal speed or power level.",
+        "appliesWhen": "When checking whether the jury-rig works as intended."
+      }
+    ],
     "skillTraits": [
       "related_to_mechanics",
       "related_to_repair",
@@ -447,6 +734,7 @@
     "categories": [
       "Technical"
     ],
+    "requiresSpecialization": true,
     "specialization": {
       "kind": "language",
       "prompt": "Which language?",
@@ -463,6 +751,12 @@
     "basePercent": 50,
     "percentPerLevel": 5,
     "description": "Characters with a language skill can understand and speak in a language other than his own native tongue.",
+    "narrativeAdvantages": [
+      {
+        "summary": "One of the few skills that can be selected repeatedly for different languages; each selection costs one skill pick.",
+        "appliesWhen": "When taking additional Language specializations."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -484,6 +778,15 @@
       "Technical"
     ],
     "requiresSpecialization": true,
+    "specialization": {
+      "kind": "other",
+      "prompt": "Which nation or region?",
+      "examples": [
+        "North America"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Covers criminal code, precedents, and enforcement protocol for a particular nation or region — not each specific state or small town."
+    },
     "basePercent": 35,
     "percentPerLevel": 5,
     "sources": [
@@ -495,7 +798,25 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement.",
+    "description": "The character knows the criminal code for his country, what constitutes a criminal act, the typical punishment and many legal precedents, procedures, and decisions common throughout a particular nation or region (e.g. North America, but not each specific state or small town). This can be an invaluable skill when trying to determine if someone is breaking the law, how grave or petty the criminal act is, as well as determining the likely punishment. The skill is also important for making a criminal charge stick, setting bail, using legal protocol, and defending those unjustly accused. The character also knows the legal protocol and proper conduct for conducting searches, police investigations and other aspects of law enforcement.",
+    "successOutcomes": {
+      "summary": "Correctly identifies criminal acts, likely punishments, legal precedents, bail considerations, and proper enforcement or defense protocol for the chosen nation or region."
+    },
+    "failureResults": {
+      "summary": "Misjudges legality, punishment severity, precedent, or proper legal/enforcement procedure."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Useful for determining whether someone is breaking the law, how grave an act is, making charges stick, setting bail, defending the unjustly accused, and conducting searches or police investigations by proper protocol.",
+        "appliesWhen": "When applying Law within the character's chosen nation or region."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Covers criminal code, punishments, precedents, and regional legal procedure — not each specific state or small town within the region.",
+        "appliesWhen": "When interpreting law for the specialized nation or region."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -509,6 +830,7 @@
     "categories": [
       "Technical"
     ],
+    "requiresSpecialization": true,
     "specialization": {
       "kind": "literacy",
       "prompt": "Which written language?",
@@ -524,12 +846,40 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "Characters must pick up literacy as a skill to determine that they can read beyond the most basic levels. Like the language skill, it must be selected specifically for each language.",
+    "description": "By the end of the 20th century, literacy has decreased even in industrialized nations, to the point that the U.S. enjoyed less than a 90% literacy rate among the adult population. Characters must thus pick up literacy as a skill to determine that they can read beyond the most basic levels.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Can read and write in the chosen specialized language."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Like Language, each written language requires a separate skill selection.",
+        "relatedSkillIds": [
+          "skill_language"
+        ],
+        "effectKind": "context_only"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 56
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 57
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "skill_barter",
+        "summary": "+2% bonus to Barter when the character also has Literacy.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 2
+        }
       }
     ],
     "skillTraits": [
@@ -540,7 +890,7 @@
     "id": "skill_lore_astral",
     "name": "Lore: Astral",
     "gameSystems": [
-      "between_the_shadows"
+      "nightbane"
     ],
     "categories": [
       "Technical"
@@ -549,7 +899,12 @@
     "percentPerLevel": 4,
     "allowedAsSecondarySkill": true,
     "synergies": [],
-    "description": "An in depth knowledge about the Astral Plane, Outer Plane, Inner Plane, Void, and major kingdoms, as well as a general knowledge about astral travel, methods of travel and navigation, astral beings, domains and dangers.",
+    "description": "In-depth knowledge about the Astral Plane, Outer Plane, Inner Plane, Void, and major kingdoms.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes general knowledge of astral travel, methods of travel and navigation, astral beings, domains, and dangers."
+      }
+    ],
     "prerequisites": [
       {
         "type": "narrative_gate",
@@ -560,14 +915,14 @@
       {
         "targetKind": "psionic_power",
         "targetName": "Astral Navigation",
-        "targetId": "astral_navigation",
+        "targetId": "psionic_astral_navigation",
         "bonusPercentPerLevel": 2,
-        "summary": "Having this skill adds an additional +2% per level to the Astral Navigation power."
+        "summary": "Adds an additional +2% per level to the Astral Navigation power."
       }
     ],
     "sources": [
       {
-        "gameSystem": "between_the_shadows",
+        "gameSystem": "nightbane",
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
@@ -589,9 +944,23 @@
     "prerequisites": [],
     "basePercent": 35,
     "percentPerLevel": 5,
-    "description": "This is a study of demonic entities and monster lore throughout the ages and around the world. It includes ancient and primitive cultures' belief in demons, possession, reputed demon places of habitation, appearances, habits, weaknesses, strengths and similar data. This knowledge also includes unusual creatures or monsters, past and present. As a skill, it can help the character to recognize what may be a particular type of demon or monster by description, drawings, photos, footprints, legends, ritual, or action.",
+    "description": "This is a study of demonic entities and monster lore throughout the ages and around the world. It includes ancient and primitive cultures' belief in demons, possession, reputed demon places of habitation, appearances, habits, weaknesses, strengths and similar data. This knowledge also includes unusual creatures or monsters, past and present, including the Loch Ness Monster, giants, bigfoot/yeti, sea serpents, and other unusual creatures, their habitats, characteristics and so on.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "successOutcomes": "Can help recognize what may be a particular type of demon or monster by description, drawings, photos, footprints, legends, ritual, or action.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "In Nightbane, this skill is not very useful for studying or understanding the Nightbane themselves, although it may help identify some servants of the Nightlords. The Nightbane's incredible variety has given rise to so many legends that only someone aware of this mysterious race could hope to make sense of them.",
+        "appliesWhen": "When applying this Lore skill to Nightbane rather than demons, monsters, or their servants."
+      }
+    ],
     "situationalModifiers": [
       {
+        "ruleId": "nightbane_halve_effective_skill",
         "task": "Dealing with Nightbane",
         "modifierType": "multiply",
         "operand": 0.5,
@@ -615,7 +984,7 @@
     "id": "skill_lore_dreamstream",
     "name": "Lore: Dreamstream",
     "gameSystems": [
-      "between_the_shadows"
+      "nightbane"
     ],
     "categories": [
       "Technical"
@@ -625,15 +994,21 @@
     "allowedAsSecondarySkill": true,
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill is helpful in understanding and identifying the \"landscape,\" dangers and inhabitants of the Dreamstream. Skill rolls are necessary to identify creatures and events/transformations of the Dreamstream.",
+    "description": "Helpful in understanding and identifying the landscape, dangers, and inhabitants of the Dreamstream.",
     "narrativeAdvantages": [
       {
-        "summary": "Even a beginner will automatically know of such things as Dream Pools and other major concepts regarding the dream lands."
+        "summary": "Even a beginner automatically knows of Dream Pools and other major concepts regarding the dream lands."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Skill rolls are necessary to identify creatures and events or transformations of the Dreamstream.",
+        "appliesWhen": "When identifying Dreamstream creatures or events/transformations."
       }
     ],
     "sources": [
       {
-        "gameSystem": "between_the_shadows",
+        "gameSystem": "nightbane",
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
@@ -684,7 +1059,6 @@
     "categories": [
       "Technical"
     ],
-    "requiresSpecialization": true,
     "basePercent": 30,
     "percentPerLevel": 5,
     "sources": [
@@ -696,7 +1070,34 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions.",
+    "description": "A general knowledge about the various factions including all of the most infamous (the Lightbringers, Underground Railroad, Warlords, etc.) and a little about the Nightbane in general. Includes a passing knowledge about the NSB and other agencies that sometimes interact with or battle factions. Local and smaller, lesser known factions are not known unless the character lives in the city, state or province in which they operate.",
+    "successOutcomes": {
+      "summary": "Recalls major factions, Nightbane basics, and NSB or related agency interactions; recognizes local factions when operating in the character's home region."
+    },
+    "failureResults": {
+      "summary": "Misidentifies faction allegiances, operations, or local groups; lacks knowledge of obscure local factions outside the character's home area."
+    },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Local and smaller, lesser known factions are not known unless the character lives in the city, state or province in which they operate.",
+        "appliesWhen": "When recalling obscure or regional faction activity."
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "For intimate knowledge of a specific faction's inner workings, use Lore: Faction (per-faction picks).",
+        "relatedSkillIds": [
+          "skill_lore_faction"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -714,7 +1115,14 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "A study of ley lines, burial mounds, places of power, megaliths, and geomancy beliefs, past and present. The study includes 'known' locations of such places, such as Stonehenge and the Bermuda Triangle, as well as the many theories behind them and the legacy of legends, mysteries, disappearances and dangers linked to each. The skill will provide the character with insight about the areas and enable him/her to recognize specific, known places of power, as well as recognize unknown megalithic markers of these revered or feared places.",
+    "description": "A study of ley lines, burial mounds, places of power, megaliths, and geomancy beliefs, past and present. Geomancy and ley lines are the belief that certain places on earth are polarized with an unknown energy or forces that can heal, cause paranormal phenomena, attract supernatural forces, or open dimensional gateways. The study includes \"known\" locations of such places, such as Stonehenge and the Bermuda Triangle, as well as the many theories behind them and the legacy of legends, mysteries, disappearances and dangers linked to each.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "successOutcomes": "Provides insight about these areas and enables the character to recognize specific, known places of power, as well as unknown megalithic markers of these revered or feared places.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -735,6 +1143,8 @@
     "categories": [
       "Technical"
     ],
+    "basePercent": 25,
+    "percentPerLevel": 5,
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -764,10 +1174,44 @@
         "name": "Identify Magic Artifact",
         "basePercent": 10,
         "percentPerLevel": 5,
-        "description": "Identify Magic Artifact (+10% if the item is famous or he's seen pictures or drawings, but -15% to identify an unknown or alien magic item.)"
+        "description": "May be able to identify a magic artifact. +10% if the item is famous or the character has seen pictures or drawings; −15% to identify an unknown or alien magic item."
       }
     ],
-    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic, places of reputed magical significance and power, and myths and legends about the most famous magic items and notorious practitioners.",
+    "description": "This area of study does not give the character any magic powers nor the ability to use Cybermagic devices or read magic symbols. It provides a scholarly general knowledge and history of the magic, how it works, common magical powers and spells, their effects, who possesses such magic, notable creatures of magic, the various types of practitioners of magic (Mystic, Sorcerer, Cybermage, Fleshsculptor, Mirrormage, etc.), places of reputed magical significance and power (Stonehenge, Kahokia Mounds, etc.), and myths and legends about the most famous magic items and notorious practitioners.",
+    "successOutcomes": {
+      "summary": "Recalls scholarly magical history, practitioners, sites of power, and related myths; sub-skills may recognize symbols, enchantment, or artifacts without granting spellcasting."
+    },
+    "failureResults": {
+      "summary": "Misidentifies magical history, practitioners, symbols, enchantment, or artifacts."
+    },
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Famous artifact or seen pictures or drawings",
+        "percentModifier": 10,
+        "ruleId": "lore_magic_artifact_famous_bonus",
+        "task": "Identify Magic Artifact sub-skill"
+      },
+      {
+        "rowKind": "condition_table",
+        "condition": "Unknown or alien magic item",
+        "percentModifier": -15,
+        "ruleId": "lore_magic_artifact_alien_penalty",
+        "task": "Identify Magic Artifact sub-skill"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Does not grant magic powers, the ability to use Cybermagic devices, or the ability to read or use magic symbols.",
+        "appliesWhen": "When distinguishing Lore: Magic from actual spellcasting or Cybermagic use."
+      }
+    ],
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -785,7 +1229,19 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "This is a comprehensive study of the Nightbane species, their powers, limitations, and the myths and beliefs associated with them. Very few non-Nightbane have the crucial pieces of evidence that would allow them to have this skill, and those fortunate few usually gained the knowledge from a Nightbane who was willing (or forced) to pass the knowledge on.",
+    "description": "This is a comprehensive study of the Nightbane species, their powers, limitations, and the myths and beliefs associated with them.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Very few non-Nightbane have the crucial pieces of evidence that would allow them to have this skill; those fortunate few usually gained the knowledge from a Nightbane who was willing (or forced) to pass the knowledge on.",
+        "appliesWhen": "When justifying how a non-Nightbane character acquired this Lore skill."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -810,7 +1266,19 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "The study of the shadowy parallel dimension ruled by the Ba'al. This skill includes knowledge about the inhabitants of the Nightlands, including the Nightlords, Dopplegangers, Hunters and Hounds, and others. This skill is most often found in the hands of mystics and psychics who have seen the Nightlands with their own eyes.",
+    "description": "The study of the shadowy parallel dimension ruled by the Ba'al. This skill includes knowledge about the inhabitants of the Nightlands, including the Nightlords, Dopplegangers, Hunters and Hounds, and others.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Most often found in the hands of mystics and psychics who have seen the Nightlands with their own eyes, but a number of occultists have also unearthed forbidden books discussing this mysterious plane of existence.",
+        "appliesWhen": "When establishing how the character acquired Nightlands Lore."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -826,7 +1294,7 @@
     "id": "skill_lore_psychic",
     "name": "Lore: Psychic",
     "gameSystems": [
-      "between_the_shadows"
+      "nightbane"
     ],
     "categories": [
       "Technical"
@@ -835,16 +1303,30 @@
     "percentPerLevel": 5,
     "allowedAsSecondarySkill": true,
     "synergies": [],
-    "description": "Characters with this skill have knowledge in the way psychic abilities are believed to work, and what types of psionic abilities exist. This knowledge includes a good idea of the limitations of most psychics and psychic abilities, major known types of P.C.C.s, famous psychics, and similar data. The character does not have to be a psychic himself.",
+    "description": "Knowledge of how psychic abilities are believed to work and what types of psionic abilities exist.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes a good idea of the limitations of most psychics and psychic abilities, major known types of P.C.C.s, famous psychics, and similar data."
+      },
+      {
+        "summary": "The character does not have to be a psychic to possess this lore."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "The character must believe that psychic powers exist. Psychic lore is most commonly known by psychics themselves, or people involved in the PAB, Pandora Project (Spook Squad), or similar organizations that study paranormal phenomena.",
+        "appliesWhen": "When justifying how the character acquired Psychic Lore."
+      }
+    ],
     "prerequisites": [
       {
         "type": "narrative_gate",
-        "narrativeRequirement": "Must believe that such powers exist. Most commonly known by people who are psychic themselves, or involved in the PAB, Pandora Project, or similar organizations that study paranormal phenomena."
+        "narrativeRequirement": "The character does not have to be a psychic, but must believe that such powers exist. Psychic lore is most commonly known by psychics themselves, or people involved in the PAB, Pandora Project (Spook Squad), or similar organizations that study paranormal phenomena."
       }
     ],
     "sources": [
       {
-        "gameSystem": "between_the_shadows",
+        "gameSystem": "nightbane",
         "reference": "Between the Shadows",
         "pageNumber": 128
       }
@@ -866,7 +1348,14 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "A comprehensive study of the world's religions, past and present, their beliefs, rituals, holy places, pantheons of deities and supernatural creatures (demons, spirits, angels), stories of creation, myths and legends. The skill will help the character recognize specific rituals, their purpose, the deity(s), icons, and similar information.",
+    "description": "A comprehensive study of the world's religions, past and present, their beliefs, rituals, holy places, pantheons of deities and supernatural creatures (demons, spirits, angels), stories of creation, myths and legends.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      }
+    ],
+    "successOutcomes": "Can help recognize specific rituals, their purpose, the deity(s), icons, and similar information.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -916,13 +1405,18 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "The study of the undead, their habits, origins, powers and weaknesses. The skill will help a character determine if a person is under the sway or control of a vampire, or whether or not a victim has been killed by the undead. It will also aid in differentiating fact from superstition regarding the vampire's vulnerabilities and strength, the few ways to truly destroy them, and basic vampire-hunting tactics.",
+    "description": "The study of the undead, their habits, origins, powers and weaknesses.",
     "narrativeAdvantages": [
+      {
+        "summary": "Lore is a study of historical and contemporary beliefs, myths, legends, folk-tales, stories and unorthodox theories regarding the supernatural or the unexplained. Each Lore skill focuses in depth on a particular area and includes historical and scientific viewpoints as well as less orthodox opinions. The skill percentage indicates the degree of current knowledge and recognizes a subject's or item's relationship (if any) to existing beliefs, myths, or occurrences.",
+        "appliesWhen": "Shared framework for all Lore skills."
+      },
       {
         "summary": "At the higher levels of knowledge (65%+), the character may have some idea about vampire intelligences, the Wampyr sub-race, and other detailed information.",
         "appliesWhen": "When effective skill is 65% or higher."
       }
     ],
+    "successOutcomes": "Can help determine if a person is under the sway or control of a vampire, or whether a victim has been killed by the undead. Also aids in differentiating fact from superstition regarding vampire vulnerabilities and strength, the few ways to truly destroy them, and basic vampire-hunting tactics.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -944,6 +1438,17 @@
       "Technical"
     ],
     "requiresSpecialization": true,
+    "specialization": {
+      "kind": "other",
+      "prompt": "Which country's or culture's myths?",
+      "examples": [
+        "North America",
+        "Japan",
+        "Celtic"
+      ],
+      "allowsMultipleInstances": true,
+      "notes": "Includes general world myths (Greek, Roman, Egyptian) plus extensive knowledge of one chosen culture's supernatural myths."
+    },
     "basePercent": 30,
     "percentPerLevel": 5,
     "sources": [
@@ -966,7 +1471,25 @@
       }
     ],
     "prerequisites": [],
-    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic.",
+    "description": "A general knowledge of the most well known world myths, including Greek, Roman and Egyptian, plus extensive knowledge of ONE particular country's or culture's myths relating to ghosts, spirits, demons, Goblins, Faerie Folk, monsters, dragons, immortals, undead, Elemental forces, supernatural animals, gods and magic. All countries have their share of unique myths. In North America that includes myths about Big Foot, Ogopogo, and the Chupacabra.",
+    "successOutcomes": {
+      "summary": "Recalls major world myths and detailed myths of the chosen culture, including local cryptids and supernatural folklore where applicable."
+    },
+    "failureResults": {
+      "summary": "Confuses myths, cultures, or supernatural folklore details."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes general world myths (Greek, Roman, Egyptian) plus extensive knowledge of one chosen culture's supernatural myths.",
+        "appliesWhen": "When using the specialized culture selection for this skill."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Regional examples include North American myths such as Big Foot, Ogopogo, and the Chupacabra.",
+        "appliesWhen": "When applying Mythology to North American folklore."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -980,7 +1503,6 @@
     "categories": [
       "Technical"
     ],
-    "requiresSpecialization": true,
     "basePercent": 30,
     "percentPerLevel": 5,
     "sources": [
@@ -1004,6 +1526,18 @@
     ],
     "prerequisites": [],
     "description": "The principles of philosophy, ethics and morals, methods for effective debating and examining a subject from a wide perspective, and touching upon aspects of sociology and social consciousness.",
+    "successOutcomes": {
+      "summary": "Applies ethical reasoning, effective debate, wide-perspective analysis, and social-consciousness insight to the subject at hand."
+    },
+    "failureResults": {
+      "summary": "Argument, ethical analysis, or social reasoning is weak, shallow, or unconvincing."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Covers philosophy, ethics, morals, effective debating, wide-perspective examination, sociology, and social consciousness.",
+        "appliesWhen": "When using Philosophy for academic, debate, or moral reasoning tasks."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
     ]
@@ -1021,7 +1555,12 @@
     "prerequisites": [],
     "basePercent": 35,
     "percentPerLevel": 5,
-    "description": "Training in the art of still photography, the use of lighting, cameras, lenses, filters, and other camera equipment, as well as storage, development, enlargement, and duplication of film/photos.",
+    "description": "Training in the art of still photography.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows the use of lighting, cameras, lenses, filters, and other camera equipment, as well as storage, development, enlargement, and duplication of film/photos."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1042,16 +1581,38 @@
     "categories": [
       "Technical"
     ],
+    "allowedAsSecondarySkill": false,
     "basePercent": 36,
-    "percentPerLevel": 4,
+    "percentPerLevel": 2,
     "occProgressionOverrides": [
+      {
+        "when": {
+          "summary": "Mystic O.C.C. — starts as non-mage progression",
+          "occIds": [
+            "occ_mystic",
+            "occ_nightbane_mystic"
+          ]
+        },
+        "basePercent": 36,
+        "percentPerLevel": 2
+      },
+      {
+        "when": {
+          "summary": "Acolyte O.C.C.",
+          "occIds": [
+            "occ_acolyte"
+          ]
+        },
+        "basePercent": 50,
+        "percentPerLevel": 2
+      },
       {
         "when": {
           "summary": "Practitioners of Magic",
           "practicesMagic": true
         },
         "basePercent": 60,
-        "percentPerLevel": 5
+        "percentPerLevel": 2
       }
     ],
     "synergies": [
@@ -1079,13 +1640,20 @@
         ]
       }
     ],
-    "prerequisites": [],
-    "description": "The foundational theory of magical energy, including identifying types of magic and understanding P.P.E. flow.",
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Exclusive to Magic O.C.C.s and the Parapsychologist. All practitioners of magic receive this skill automatically (some O.C.C.s may offer a bonus)."
+      }
+    ],
+    "description": "Know and understand the principles of magic, recognize ritual paraphernalia and symbols, utter incantations accurately, and distinguish genuine esoteric items from fakes.",
+    "successOutcomes": "Distinguishes fake occult materials from the real thing, determines the general purpose of specific items, and may identify which supernatural forces are involved.",
+    "failureResults": "The character does not realize or misunderstands the significance of the evidence—dismissing it as fake, or mistaking a forgery or charlatan's scribblings as authentic.",
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Through the Glass Darkly",
-        "pageNumber": 9
+        "pageNumber": 10
       }
     ],
     "skillTraits": [
@@ -1105,15 +1673,38 @@
     "prerequisites": [],
     "basePercent": 50,
     "percentPerLevel": 5,
-    "description": "Training in the use of methods, techniques, and locations, for finding information, including public records, libraries, federal information services, data bureaus, interviews, surveys, demographics, trade journals, clipping services, computer services, and legal searches.",
+    "description": "Training in the use of methods, techniques, and locations for finding information, including public records, libraries, federal information services, data bureaus, interviews, surveys, demographics, trade journals, clipping services, computer services, and legal searches. This skill is helpful in locating information about people, places and things. The game master will ultimately regulate the availability of accessible, known information regarding a particular subject. In some cases, there may be a ton of history and information, while in others, very little or nothing at all (which may reveal something by its sheer lack of info). The research skill simply gives characters access to available data.",
     "narrativeAdvantages": [
       {
         "summary": "The research skill reduces the amount of time required by half compared to an untrained person.",
-        "appliesWhen": "Always when researching."
+        "appliesWhen": "When researching with this skill."
       },
       {
         "summary": "The character is trained to notice relevant data that an untrained character is liable to overlook.",
-        "appliesWhen": "Always when researching."
+        "appliesWhen": "When researching with this skill."
+      },
+      {
+        "summary": "Any character can do research and ask questions without this skill.",
+        "appliesWhen": "When conducting research without the skill."
+      },
+      {
+        "summary": "Roll to determine success only on difficult, secret, or hushed-up information, including addresses, unlisted telephone numbers, car license plate numbers, and obscure or suppressed data.",
+        "appliesWhen": "When seeking difficult or secret information."
+      }
+    ],
+    "successOutcomes": "For truly mysterious, secret, or difficult information, a successful roll can uncover hushed-up data such as addresses, unlisted telephone numbers, car license plate numbers, and obscure or suppressed records.",
+    "unquantifiedMechanics": [
+      {
+        "summary": "G.M. Note: Let characters investigate or research as much as they want, but keep the game moving. If no information is available, narrate reasonable elapsed time and results rather than dragging out dead ends. Fast-forward through common-knowledge or easy lookups; use the character with the Research skill for difficult or secret subjects.",
+        "appliesWhen": "When adjudicating research at the table."
+      }
+    ],
+    "situationalRuleOverrides": [
+      {
+        "summary": "Do not roll for common knowledge or easy-to-locate information; fast-forward through routine research time.",
+        "domain": "skill_roll",
+        "whenContext": "When information is common knowledge or easy to locate.",
+        "constraint": "prohibited"
       }
     ],
     "sources": [
@@ -1121,6 +1712,11 @@
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 57
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 58
       }
     ],
     "skillTraits": [
@@ -1147,7 +1743,25 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope. A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained. Characters bound/tied by this character are -10% to escape/slip knots.",
+    "description": "This is a skill that takes into account the various needs and uses of rope. The character knows a variety of ways to tie knots, the advantages to various types of ropes and cords, their tensile strength, and how to weave/make rope.",
+    "successOutcomes": {
+      "summary": "Ties secure knots, selects appropriate rope or cord, and weaves or makes rope suitable for the task."
+    },
+    "failureResults": {
+      "summary": "A failed roll to tie a knot means that it is loose and sloppy and easy to untie, slip out of, or likely to unravel or snap when strained."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows knot types, rope and cord advantages, tensile strength, and how to weave or make rope.",
+        "appliesWhen": "When working with rope for climbing, binding, rigging, or fabrication."
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Characters bound or tied by this character are -10% to escape or slip knots.",
+        "appliesWhen": "When a victim attempts to escape knots tied by a character with Rope Works."
+      }
+    ],
     "skillTraits": [
       "requires_dexterity"
     ]
@@ -1172,9 +1786,80 @@
     ],
     "synergies": [],
     "prerequisites": [],
-    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts.",
+    "description": "This skill allows characters to find, identify, pick up, strip down, evaluate, and possibly sell any debris, wreckage, and junk that they can locate. Salvage covers everything, but typically includes paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts. Has a very rudimentary understanding of metallurgy.",
+    "successOutcomes": {
+      "summary": "Finds, identifies, strips down, evaluates, and may sell useful debris, wreckage, or junk; gathers materials suitable for repair or future construction."
+    },
+    "failureResults": {
+      "summary": "Overlooks useful salvage, misidentifies materials, or fails to recover usable components."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "This is not like the Jury-Rig skill; a character with Salvage cannot make something out of odd components but, given some time and equipment, they can strip down a damaged machine to its basic component parts or gather useful materials to repair an existing machine or build something new.",
+        "relatedSkillIds": [
+          "skill_jury_rig"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Typically covers paper, lumber, plastic, glass, scrap metal, electrical wiring and components, circuit boards, and machine parts.",
+        "appliesWhen": "When identifying or evaluating salvage."
+      },
+      {
+        "summary": "Has a very rudimentary understanding of metallurgy.",
+        "appliesWhen": "When evaluating metal scrap or components."
+      }
+    ],
     "skillTraits": [
       "work_education_related"
+    ]
+  },
+  {
+    "id": "skill_sculpting_and_whittling",
+    "name": "Sculpting & Whittling",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "categories": [
+      "Technical"
+    ],
+    "basePercent": 30,
+    "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The art of molding or carving a three-dimensional figure, object, or design out of clay, stone, or wood. The percentile indicates technique and appearance quality.",
+    "successOutcomes": "The roll reflects technique and appearance quality appropriate to the character's skill percentage and selection tier (talented amateur vs professional).",
+    "failureResults": "Poor technique and unappealing results; the finished piece is crude or flawed.",
+    "repeatSelection": {
+      "summary": "Selecting the skill once indicates a talented amateur; selecting it twice indicates professional quality and grants +10%.",
+      "maxSelections": 2,
+      "trackScope": "skill",
+      "ranks": [
+        {
+          "selectionNumber": 1,
+          "label": "Talented amateur",
+          "effect": "Talented amateur sculpting and whittling quality."
+        },
+        {
+          "selectionNumber": 2,
+          "label": "Professional quality",
+          "effect": "Professional sculpting and whittling quality.",
+          "skillPercentBonus": 10
+        }
+      ]
+    },
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Through the Glass Darkly",
+        "pageNumber": 10
+      }
+    ],
+    "skillTraits": [
+      "requires_dexterity",
+      "requires_light_touch"
     ]
   },
   {
@@ -1195,7 +1880,12 @@
     ],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "The ability to write prose (stories), poems, or journalistically (article, reports, news). Note that the written word can be a powerful tool in helping others understand the threats they are facing.",
+    "description": "The ability to write prose (stories), poems, or journalistically (articles, reports, news).",
+    "narrativeAdvantages": [
+      {
+        "summary": "The written word can be a powerful tool in helping others understand the threats they are facing."
+      }
+    ],
     "failureResults": "An awkward and poorly written work that is boring and difficult to understand. Try again.",
     "acquisitionEffects": [
       {

@@ -10,16 +10,32 @@
     ],
     "basePercent": 20,
     "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The skill of concealing a fixed base position, vehicle, equipment, or individual using natural and/or artificial materials. A fair amount of time is involved in the preparation of a larger position. Large cargo nets, cut branches, or underbrush are used most often in camouflage. This skill is also used to conceal traps.",
+    "successOutcomes": {
+      "summary": "The position, vehicle, equipment, individual, or trap is effectively concealed and blends with the surrounding environment."
+    },
+    "failureResults": {
+      "summary": "Concealment is incomplete or unconvincing; the hidden subject may be spotted under scrutiny or casual observation."
+    },
+    "unquantifiedMechanics": [
+      {
+        "summary": "Larger fixed positions require a fair amount of preparation time before camouflage is effective.",
+        "appliesWhen": "When concealing a base position, vehicle, or large installation."
+      },
+      {
+        "summary": "Large cargo nets, cut branches, and underbrush are the most common camouflage materials.",
+        "appliesWhen": "When selecting materials for natural or artificial concealment."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
-        "pageNumber": 56
+        "pageNumber": 55
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "The skill of concealing a fixed base position, vehicle, equipment or individual, using natural and/or artificial materials. A fair amount of time is involved in the preparation of a larger position. Large cargo nets, cut branches or underbrush are used most often in camouflage. This skill is also used to conceal traps."
+    ]
   },
   {
     "id": "skill_demolitions",
@@ -36,7 +52,8 @@
     "synergies": [],
     "narrativeAdvantages": [
       {
-        "summary": "Increase the character's awareness of suspicious rope, string, and wire."
+        "summary": "Increase the character's awareness of suspicious rope, string, and wire.",
+        "appliesWhen": "When surveying an area for traps or suspicious rigging."
       }
     ],
     "description": "Demolitions provides the person with an advanced knowledge in the use and workings of explosives and detonation devices for the purpose of blowing up bridges, buildings, and sabotage. This includes all types of explosives, such as mines, dynamite, plastics, nitro, blasting caps, etc. It also includes a basic understanding of the strategic placement of mines and booby traps.",
@@ -92,16 +109,49 @@
     ],
     "basePercent": 56,
     "percentPerLevel": 4,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound-wave damage, different types of explosives, as well as arming, disarming, and repairing torpedoes and depth charges.",
+    "successOutcomes": {
+      "summary": "Explosives detonate as intended underwater; torpedoes and depth charges are armed, disarmed, or repaired successfully."
+    },
+    "failureResults": {
+      "summary": "A failed roll means a dud; no explosion."
+    },
+    "interdependentKnowledge": [
+      {
+        "summary": "Any character with Demolitions but not this skill can use explosives underwater at -10%. Conversely, this skill used on dry land suffers the same -10% penalty.",
+        "relatedSkillIds": [
+          "skill_demolitions"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
+    "situationalModifiers": [
+      {
+        "rowKind": "condition_table",
+        "condition": "Dry land use",
+        "percentModifier": -10,
+        "ruleId": "demolitions_underwater_dry_land_penalty"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Underwater demolitions training covers area effect, sound-wave damage, and specialized underwater explosive types and techniques.",
+        "appliesWhen": "When placing or detonating explosives underwater."
+      },
+      {
+        "summary": "Includes arming, disarming, and repairing torpedoes and depth charges.",
+        "appliesWhen": "When working with torpedoes or depth charges."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
-        "pageNumber": 56
+        "pageNumber": 55
       }
     ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "Fundamentally the same basic skills and training as Demolitions, but with an emphasis on using explosives in an underwater environment, including underwater techniques, area effect, sound wave damage, different types of explosives, as well as arming, disarming and repairing torpedoes and depth charges.",
     "skillTraits": [
       "requires_dexterity",
       "requires_light_touch",
@@ -119,6 +169,59 @@
     ],
     "basePercent": 40,
     "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [
+      {
+        "type": "narrative_gate",
+        "narrativeRequirement": "Knowledge is typically limited to survivalists, gun enthusiasts, some street gang members or criminals, and select military personnel and field experts."
+      }
+    ],
+    "description": "Fundamental knowledge of infantry weapons, ammunition, and body armor. The character can maintain, unjam, fix, modify, mount, and reload ammunition (and can even produce most specialized rounds with the proper equipment), and figure out most small arms (conventional and military-grade pistols, rifles, shotguns, and submachine-guns). As an armorer, the character can repair such weapons, fix minor damage to body armor, adjust targeting sights, use and repair optical enhancements, reload missiles and ammo drums, install and mount machine-guns and rocket launchers on a vehicle, as well as sharpen blades, make arrows and arrowheads, make horseshoes and basic metal items (nails, spikes, and chain links). A major overhaul is not possible.",
+    "successOutcomes": {
+      "summary": "Weapons are maintained, repaired, modified, or mounted successfully; ammunition is reloaded or produced; minor body-armor damage is patched; sights and optics are adjusted or repaired."
+    },
+    "failureResults": {
+      "summary": "Repair or modification fails, ammunition is unsafe or unusable, or armor patching does not hold; a major overhaul remains impossible regardless of roll."
+    },
+    "grantsSkills": [
+      {
+        "skillId": "skill_basic_mechanics",
+        "startingPercent": 30,
+        "summary": "Automatically grants Basic Mechanics at 30% +5% per level as part of this package.",
+        "ruleId": "field_armorer_grants_basic_mechanics"
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Can produce most specialized ammunition rounds with proper equipment. Minor body-armor repair restores 20% of the armor's maximum S.D.C. A major overhaul is not possible.",
+        "relatedSkillIds": [
+          "skill_basic_mechanics"
+        ],
+        "effectKind": "procedure_quality"
+      },
+      {
+        "summary": "Vehicle-mounted machine-guns and rocket launchers may require coordination with Vehicle Armorer or Weapon Systems for full installation and hookup.",
+        "relatedSkillIds": [
+          "skill_vehicle_armorer",
+          "skill_weapon_systems"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
+    "unquantifiedMechanics": [
+      {
+        "summary": "Minor body-armor repair restores 20% of the armor's maximum S.D.C.",
+        "appliesWhen": "When fixing minor body-armor damage as an armorer."
+      },
+      {
+        "summary": "Can sharpen blades, make arrows and arrowheads, make horseshoes, and fabricate basic metal items such as nails, spikes, and chain links.",
+        "appliesWhen": "When performing basic metalwork as part of armorer duties."
+      },
+      {
+        "summary": "A major weapon or armor overhaul is not possible with this skill alone.",
+        "appliesWhen": "When attempting extensive restoration beyond field-level repair."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -126,15 +229,13 @@
         "pageNumber": 56
       }
     ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "This is a fundamental knowledge of infantry weapons, ammo and body armor. The character can maintain, unjam, fix, modify, mount, reload ammunition, and figure out most small arms. As an armorer, the character can repair such weapons, fix minor damage to body armor, adjust targeting sights, use and repair optical enhancements, reload missiles and ammo drums, install/mount machine-guns and rocket launchers on a vehicle, as well as sharpen blades, make arrows and arrowheads, make horseshoes and basic metal items.",
-    "grantsSkills": [
+    "conditionalRelatedSkills": [
       {
-        "skillId": "skill_basic_mechanics",
-        "startingPercent": 30,
-        "summary": "Automatically gets the Basic Mechanics skill at 30% +5% per level as part of this package.",
-        "ruleId": "field_armorer_grants_basic_mechanics"
+        "skillId": "skill_jury_rig",
+        "summary": "+10% bonus to Jury-Rig when the character is a Field Armorer & Munitions Expert.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 10
+        }
       }
     ]
   },
@@ -171,16 +272,38 @@
     ],
     "basePercent": 25,
     "percentPerLevel": 5,
+    "synergies": [],
+    "prerequisites": [],
+    "description": "The ability to accurately determine a weapon's durability, reliability, and quality by physically examining it. This includes knowing which manufacturers are reputed to make the best weapons, recognizing damage or signs of wear or misuse, modifications and customization, whether the weapon can be made as good as new with a little repair work and/or cleaning, whether it is a cheap or quality knock-off (copy/imitation), and so on. The character can also recognize if the weapon is stolen (serial numbers filed away, etc.), new, old, and whether it has any other special features or properties, as well as what the fair price should be.",
+    "successOutcomes": {
+      "summary": "Accurately assesses durability, reliability, quality, manufacturer reputation, wear, modifications, knock-off status, stolen indicators, age, special features, and fair market price."
+    },
+    "failureResults": {
+      "summary": "Misjudges the weapon's condition, origin, quality tier, or fair price; may overlook damage, knock-offs, or signs of theft."
+    },
+    "narrativeAdvantages": [
+      {
+        "summary": "Can determine whether a worn weapon can be restored to as-good-as-new condition with minor repair work and/or cleaning.",
+        "appliesWhen": "On a successful physical examination."
+      }
+    ],
+    "situationalModifiers": [
+      {
+        "ruleId": "recognize_weapon_quality_not_handled",
+        "task": "Weapon assessment without physical handling",
+        "modifierType": "multiply",
+        "operand": 0.5,
+        "appliesTo": "self",
+        "condition": "Reduce effective skill by half when the weapon is seen but not physically examined."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane Survival Guide",
         "pageNumber": 56
       }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "The ability to accurately determine a weapon's durability, reliability, and quality by physically examining it. This includes knowing which manufacturers are reputed to make the best weapons, the ability to recognize damage or signs of wear or misuse, modifications/customization, whether the weapon can be made as good as new with a little repair work and/or cleaning, whether it is a cheap knock-off, and so on."
+    ]
   },
   {
     "id": "skill_strategy_tactics",
@@ -195,12 +318,8 @@
     "percentPerLevel": 5,
     "prerequisites": [],
     "synergies": [],
-    "narrativeAdvantages": [
-      {
-        "summary": "A successful strategy/tactics roll will reveal some hints as to the best way to approach a potential combat or military situation, like recognizing potential attack/retreat areas, getting good fields of fire, recognizing a good location for a crossfire or booby trap, etc."
-      }
-    ],
     "description": "This is part of the training given to combat soldiers and officers, and includes a basic understanding of the \"military doctrine\" of the army in question, including preferred methods of fighting (on both a small scale engagement or a full battle), \"do's and don'ts,\" guerilla warfare, and other basic military methods.",
+    "successOutcomes": "A successful strategy/tactics roll will reveal some hints as to the best way to approach a potential combat or military situation, like recognizing potential attack/retreat areas, getting good fields of fire, recognizing a good location for a crossfire or booby trap, etc.",
     "sources": [
       {
         "gameSystem": "nightbane",

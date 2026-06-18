@@ -13,7 +13,7 @@
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [],
-    "description": "A rudimentary understanding of electricity, simple circuits, and wiring. The character can do basic wiring, repair appliances, and read schematics.",
+    "description": "A rudimentary understanding of the principles of electricity, simple circuits, wiring, and so on. This person can do basic wiring, repair appliances, and read schematics.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -38,16 +38,19 @@
       "Electrical"
     ],
     "allowedAsSecondarySkill": true,
-    "basePercent": 30,
+    "basePercent": 25,
     "percentPerLevel": 5,
     "synergies": [],
-    "prerequisites": [
+    "prerequisites": [],
+    "description": "Knowledge of the internal electronics of computers and related devices (terminals, printers, modems, etc.). The character can attempt to repair or sabotage computers. No computer operation or programming skills are included nor required to fix computers. Many computer repair personnel don't even know how to turn the computer on!",
+    "failureResults": "The repair is faulty and does not work (try again).",
+    "sequentialChecks": [
       {
-        "type": "skill",
-        "skillId": "skill_basic_electronics"
+        "skillId": "skill_computer_repair",
+        "summary": "Figuring out the repair or sabotage procedure is the first roll; the actual repair or sabotage is a second roll after the procedure roll succeeds.",
+        "condition": "When repairing or sabotaging computers and related devices."
       }
     ],
-    "description": "The ability to repair, diagnose, and maintain computers and related peripherals.",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -73,21 +76,53 @@
       "Electrical"
     ],
     "allowedAsSecondarySkill": true,
-    "basePercent": 35,
+    "basePercent": 30,
     "percentPerLevel": 5,
     "synergies": [],
     "prerequisites": [
       {
         "type": "skill",
-        "skillId": "skill_basic_electronics"
+        "skillId": "skill_math_advanced"
+      },
+      {
+        "type": "skill",
+        "skillId": "skill_literacy"
       }
     ],
-    "description": "Advanced training in electrical systems, schematics, and engineering work beyond basic electronics.",
+    "description": "Knowledge of electricity. Characters can diagnose and locate electrical problems, repair complex electrical devices, wire entire buildings or vehicles, and build electrical equipment. The character can also attempt to bypass security systems, alarms, and surveillance systems.",
+    "situationalModifiers": [
+      {
+        "task": "Bypass simple security systems, alarms, and surveillance systems",
+        "percentModifier": -20,
+        "appliesTo": "self",
+        "condition": "−10% instead if the character also has Surveillance Systems."
+      },
+      {
+        "task": "Bypass complex security systems, alarms, and surveillance systems",
+        "percentModifier": -50,
+        "appliesTo": "self",
+        "condition": "−25% instead if the character also has Surveillance Systems."
+      },
+      {
+        "task": "Alien or extremely unfamiliar electronics",
+        "percentModifier": -30,
+        "appliesTo": "self"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 49
+        "pageNumber": 50
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "skill_jury_rig",
+        "summary": "+10% bonus to Jury-Rig when the character is an Electrical Engineer.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 10
+        }
       }
     ],
     "skillTraits": [

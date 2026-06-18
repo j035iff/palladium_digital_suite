@@ -12,7 +12,27 @@
     "prerequisites": [],
     "basePercent": 20,
     "percentPerLevel": 5,
-    "description": "This is the behavioral study of man and other intelligent life forms and their environments. Studies include societies, customs and beliefs, religions, political structure, as well as rudimentary history and archaeological background. The skill can be used in the examination of items/artifacts and ruins to identify the probable people/race, purpose, and technological level, as well as identifying the period in which the item was used.",
+    "description": "This is the behavioral study of man and other intelligent life forms and their environments. Studies include societies, customs and beliefs, religions, political structure, as well as rudimentary history and archaeological background.",
+    "narrativeAdvantages": [
+      {
+        "summary": "More concerned with the study of modern races and societies than ancient ones—especially useful when dealing with other races and cultures in the present time to avoid accidentally breaking taboos or codes of behavior.",
+        "appliesWhen": "When assessing living cultures, customs, or present-day encounters."
+      },
+      {
+        "summary": "Can indicate whether the anthropologist may be dealing with a dangerous people (hate humans, fear technology or magic, are cannibals, worship demons, etc.).",
+        "appliesWhen": "When evaluating an unfamiliar people or society."
+      }
+    ],
+    "successOutcomes": "When examining items, artifacts, or ruins, a successful roll can identify the probable people/race, purpose, technological level, and period in which the item was used (contemporary or ancient).",
+    "interdependentKnowledge": [
+      {
+        "summary": "Includes a rudimentary history and archaeological background.",
+        "relatedSkillIds": [
+          "skill_archaeology"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
     "situationalRuleOverrides": [
       {
         "summary": "The character is not skilled enough to tell whether an item is an authentic artifact or a forgery.",
@@ -45,10 +65,19 @@
     "prerequisites": [],
     "basePercent": 20,
     "percentPerLevel": 5,
-    "description": "This is the scientific study of relics of ancient civilizations by excavation and analysis of artifacts. Studies include proper excavation (digs) techniques, preservation, restoration, and dating methods (including carbon dating).",
+    "description": "This is the scientific study of relics of ancient civilizations by excavation and analysis of artifacts.",
     "narrativeAdvantages": [
       {
-        "summary": "Provides a rudimentary history and anthropology background."
+        "summary": "Covers proper excavation (digs) techniques, preservation, restoration, and dating methods (including carbon dating)."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Includes a rudimentary history and anthropology background.",
+        "relatedSkillIds": [
+          "skill_anthropology"
+        ],
+        "effectKind": "implicit_knowledge"
       }
     ],
     "sources": [
@@ -74,17 +103,23 @@
     "synergies": [
       {
         "skillId": "skill_navigation",
-        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+        "description": "Complements pilot and instrument navigation when celestial references are available."
       },
       {
         "skillId": "skill_land_navigation",
-        "description": "This knowledge can be used to determine direction, approximate distances, identify seasons, and tell the time of day."
+        "description": "Complements land navigation when celestial references are available."
       }
     ],
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "The study of the stars and other celestial bodies, their movements, positions, cycles, alignments, and interrelations with the earth and each other. This knowledge can also be used to determine direction, approximate distances, identify seasons, and tell the time of day.",
+    "description": "The study of the stars and other celestial bodies, their movements, positions, cycles, alignments, and interrelations with the earth and each other.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Can be used to determine direction, approximate distances, identify seasons, and tell the time of day.",
+        "appliesWhen": "When applying astronomical knowledge in the field."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -109,7 +144,12 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "Basic understanding of cells, anatomy, physiology, evolution, and genetics. The character will know how to use a microscope, cultivate bacteria, and how to classify new organisms.",
+    "description": "Basic understanding of cells, anatomy, physiology, evolution, and genetics.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows how to use a microscope, cultivate bacteria, and classify new organisms."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -134,7 +174,12 @@
     "prerequisites": [],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Plants, their categories and functions, are studied extensively. Characters will know the basics of cross-fertilization and germinating, as well as growing experimental plants.",
+    "description": "Plants, their categories and functions, are studied extensively.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows the basics of cross-fertilization and germinating, as well as growing experimental plants."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -159,7 +204,21 @@
     "prerequisites": [],
     "basePercent": 30,
     "percentPerLevel": 5,
-    "description": "The basic understanding of chemical principles and formulae. Characters know enough chemical laboratory procedures for analyzing and synthesizing chemical compounds in order to be competent assistants.",
+    "description": "The basic understanding of chemical principles and formulae.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Knows enough chemical laboratory procedures for analyzing and synthesizing chemical compounds to be a competent assistant."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Foundation training required for Chemistry - Analytical and other advanced chemical work.",
+        "relatedSkillIds": [
+          "skill_chemistry_analytical"
+        ],
+        "effectKind": "procedure_quality"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -173,7 +232,7 @@
   },
   {
     "id": "skill_chemistry_analytical",
-    "name": "Chemistry Analytical",
+    "name": "Chemistry - Analytical",
     "gameSystems": [
       "nightbane"
     ],
@@ -202,7 +261,12 @@
     ],
     "basePercent": 25,
     "percentPerLevel": 5,
-    "description": "Training in chemical engineering theories useful in the analysis of compounds and their practical applications. Characters will be highly skilled in the use of laboratory equipment and can analyze and synthesize chemicals.",
+    "description": "Training in chemical engineering theories useful in the analysis of compounds and their practical applications.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Highly skilled in the use of laboratory equipment and can analyze and synthesize chemicals."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -227,7 +291,21 @@
     "prerequisites": [],
     "basePercent": 45,
     "percentPerLevel": 5,
-    "description": "Knowledge of all basic and advanced mathematics, including algebra, geometry, trigonometry, calculus, and techniques for advanced mathematical formulae.",
+    "description": "Knowledge of all basic and advanced mathematics.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes algebra, geometry, trigonometry, calculus, and techniques for advanced mathematical formulae."
+      }
+    ],
+    "interdependentKnowledge": [
+      {
+        "summary": "Encompasses all basic mathematics in addition to advanced topics.",
+        "relatedSkillIds": [
+          "skill_math_basic"
+        ],
+        "effectKind": "implicit_knowledge"
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -253,12 +331,26 @@
     "prerequisites": [],
     "basePercent": 45,
     "percentPerLevel": 5,
-    "description": "Knowledge of basic math, including the ability to count, addition, subtraction, multiplication, division, and fractions.",
+    "description": "Knowledge of basic math.",
+    "narrativeAdvantages": [
+      {
+        "summary": "Includes the ability to count, addition, subtraction, multiplication, division, and fractions."
+      }
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
         "pageNumber": 56
+      }
+    ],
+    "conditionalRelatedSkills": [
+      {
+        "skillId": "skill_barter",
+        "summary": "+2% bonus to Barter when the character also has Math: Basic.",
+        "bonusIfAlreadyHave": {
+          "skillPercentBonus": 2
+        }
       }
     ],
     "skillTraits": [
