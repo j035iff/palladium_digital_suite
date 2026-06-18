@@ -15,6 +15,7 @@ import {
   getFeatureById,
   getRaceById,
   raceAllowedInCharacterCreation,
+  raceCatalogGenreId,
 } from '../data/library/registry'
 import { getLibraryOccById } from '../data/occDefinitions'
 import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
@@ -640,6 +641,7 @@ function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): Charac
     majorAllocation: prev.creationPsychicGateMajorAllocation,
     storedBudget: prev.creationAbilityBudget,
     creationGenreId: prev.creationGenreId ?? prev.hostGenreId,
+    hostGenreId: prev.hostGenreId,
   })
   if (!creationNeedsAbilitySelection(abilityBudget, prev.creationGenreId)) {
     return null
@@ -989,8 +991,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const activeRace = useMemo(
     () =>
-      character.raceId?.trim() ? getRaceById(character.raceId) : undefined,
-    [character.raceId],
+      character.raceId?.trim()
+        ? getRaceById(
+            character.raceId,
+            raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
+          )
+        : undefined,
+    [character.raceId, character.hostGenreId, character.creationGenreId],
   )
 
   const activeOcc = useMemo(
@@ -1891,7 +1898,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       const lib = getLibraryOccById(occId)
       if (!lib) return
       const race = character.raceId?.trim()
-        ? getRaceById(character.raceId)
+        ? getRaceById(
+            character.raceId,
+            raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
+          )
         : undefined
       if (!raceAllowsOccPick(race)) return
       if (!isOccAllowedForRace(race, lib)) return
@@ -1952,7 +1962,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       })
       return
     }
-    const race = getRaceById(raceId)
+    const race = getRaceById(
+      raceId,
+      raceCatalogGenreId(rawCharacter.hostGenreId, rawCharacter.creationGenreId),
+    )
     if (
       !race ||
       !raceAllowedInCharacterCreation(race, rawCharacter.hostGenreId)
@@ -2062,7 +2075,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setCreationForgeTab = useCallback((tabId: CharacterCreationForgeTabId) => {
     setRawCharacter((prev) => {
-      const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+      const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
       const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
       const tier = resolveCreationPsychicTier(prev, psychicTier)
       const occ = occLib
@@ -2080,7 +2096,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const markCreationForgeTabComplete = useCallback(
     (tabId: CharacterCreationForgeTabId) => {
       setRawCharacter((prev) => {
-        const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+        const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
         const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
         const tier = resolveCreationPsychicTier(prev, psychicTier)
         const dual = characterHasDualForms(prev)
@@ -2463,7 +2482,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       ({ buildDevAutoAttributeCreationState }) => {
         setRawCharacter((prev) => {
           const occ = getLibraryOccById(prev.occ.id) ?? undefined
-          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
           const withPool = buildDevAutoAttributeCreationState(
             prev,
             race?.attributes,
@@ -2483,7 +2505,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       ({ buildDevExceptionalAttributeState }) => {
         setRawCharacter((prev) => {
           const occ = getLibraryOccById(prev.occ.id) ?? undefined
-          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
           const withAttr = buildDevExceptionalAttributeState(
             prev,
             attr,
@@ -2521,7 +2546,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     void import('../lib/dev/devAutoRollPendingDice').then(
       ({ buildAutoRolledPendingDiceResolutions }) => {
         setRawCharacter((prev) => {
-          const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+          const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
           const occ = getLibraryOccById(prev.occ.id)
           const resolutions = buildAutoRolledPendingDiceResolutions(
             prev,
@@ -2618,7 +2646,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setCreationPendingDiceResolution = useCallback(
     (entryId: string, value: number) => {
       setRawCharacter((prev) => {
-        const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+        const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
         const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
         const tier = resolveCreationPsychicTier(prev, psychicTier)
         return patchPendingDiceResolution(prev, entryId, value, {
@@ -2657,7 +2688,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => {
-      const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+      const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
       const occ = getLibraryOccById(prev.occ.id)
       const dual = characterHasDualForms(prev)
       const tier = prev.psychicGateBypassed ? 'none' : psychicTier

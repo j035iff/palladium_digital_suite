@@ -5,6 +5,7 @@ import { MAGIC_FEATURES } from './magicCatalogLoader'
 import { PSIONIC_FEATURES } from './psionicCatalogLoader'
 import { TALENT_FEATURES } from './talentCatalogLoader'
 import { loadRacesFromJson } from './racesLoader'
+import { getPalladiumRaceById } from './raceCatalogLoader'
 import type { XPTable } from '../../types'
 import { occXpTableId } from '../../lib/occCatalogEngine'
 import {
@@ -47,8 +48,8 @@ export function getFeatureById(id: string): Feature | undefined {
   return FEATURE_REGISTRY.find((f) => f.identity.id === id)
 }
 
-export function getRaceById(id: string): Race | undefined {
-  return RACE_REGISTRY.find((r) => r.id === id)
+export function getRaceById(id: string, genreId?: string): Race | undefined {
+  return getPalladiumRaceById(id, genreId)
 }
 
 export function getLibraryOccById(id: string): PalladiumOcc | undefined {
@@ -144,6 +145,8 @@ export {
 export {
   PALLADIUM_RACE_CATALOG,
   getPalladiumRaceById,
+  listPalladiumRacesForGenre,
+  type CatalogRace,
 } from './raceCatalogLoader'
 
 export {
@@ -152,6 +155,7 @@ export {
   listGmApprovalRaces,
   raceAllowedInCharacterCreation,
   type RaceAudience,
+  raceCatalogGenreId,
 } from '../../lib/raceCatalog'
 
 export {

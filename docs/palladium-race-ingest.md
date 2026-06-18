@@ -106,7 +106,7 @@ src/data/content/races/
 | **`npc`** | Monsters / NPC stat blocks for that setting only |
 | **`gm_approval`** | Playable with GM sign-off for that setting only |
 
-**Legacy:** flat `races/player.json` remains until loader migration; do not add new rows there once genre folders exist.
+**Loader:** `raceCatalogLoader.ts` globs `races/<genre>/{player,npc,gm_approval}.json`. Runtime resolves `(hostGenreId, raceId)` via `getRaceById(id, genreId)`.
 
 ---
 
@@ -177,9 +177,9 @@ Flag ambiguous book S.D.C. tables and ask the user before encoding tag→formula
 - **Do not** stuff all genres’ S.D.C. overrides into one row — tag vocabularies differ per line and O.C.C. ingest.
 - **Do not** hide genre differences in prose-only `description` — encode in `vitals` + `tags` alignment with O.C.C. catalog.
 
-### Loader implication (future code change)
+### Loader
 
-`getRaceById(id)` → `getRaceById(id, genreId)` (genre required for creation/runtime; tests pass `nightbane` explicitly). Creation picker lists only `races/{hostGenreId}/player.json`.
+`getRaceById(id, genreId)` — genre from `hostGenreId` / `creationGenreId`. Creation picker lists `races/{hostGenreId}/player.json` only.
 
 ---
 
@@ -289,7 +289,7 @@ No `audit:races` script yet.
 |----------|---------|
 | `palladium-race.example.json` | Human — `canPickOcc: true` |
 | `palladium-race.example-rcc.json` | Guardian R.C.C. — `forcedOccId`, innate I.S.P. |
-| `races/player.json` | Current playable pool |
+| `races/<genre>/player.json` | Playable pool per genre (e.g. `races/nightbane/player.json`) |
 
 ---
 

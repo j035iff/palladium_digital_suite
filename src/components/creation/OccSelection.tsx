@@ -1,6 +1,7 @@
 import { useCharacter } from '../../context/CharacterContext'
 import {
   getOccXpTableDisplayName,
+  listRacesForCharacterCreation,
   OCC_REGISTRY,
   RACE_REGISTRY,
 } from '../../data/library/registry'
@@ -20,6 +21,7 @@ import {
 export function OccSelection() {
   const {
     character,
+    hostGenreId,
     activeForm,
     activeOcc,
     activeRace,
@@ -35,6 +37,7 @@ export function OccSelection() {
   const panel = morphus
     ? 'border-violet-600 bg-slate-950/90 text-violet-50'
     : 'border-blue-300 bg-white text-slate-900'
+  const creationRaces = listRacesForCharacterCreation(RACE_REGISTRY, hostGenreId)
 
   return (
     <section
@@ -63,7 +66,7 @@ export function OccSelection() {
         >
           Race (library)
         </p>
-        {RACE_REGISTRY.map((race) => {
+        {creationRaces.map((race) => {
           const selected = (character.raceId ?? DEFAULT_RACE_ID) === race.id
           const citation = formatPalladiumSources(race.sources)
           return (

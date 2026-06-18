@@ -1,12 +1,13 @@
 import type {
   ActiveForm,
   Character,
+  CharacterRootState,
   Feature,
   FeatureModifiers,
   MorphusStanceType,
   MorphusSurfaceType,
 } from '../types'
-import { getFeatureById, getRaceById } from '../data/library/registry'
+import { getFeatureById, getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { racePassiveModifiers } from './raceEngine'
 import { getSkillById } from '../data/skillLibrary'
@@ -97,7 +98,7 @@ export type MorphusPassiveOptions = {
 }
 
 export function aggregateAllPassiveModifiers(
-  character: Character,
+  character: Character & Pick<Partial<CharacterRootState>, 'hostGenreId' | 'creationGenreId'>,
   activeForm: ActiveForm,
   morphusOptions: MorphusPassiveOptions = {},
   occ?: PalladiumOcc,
@@ -105,7 +106,10 @@ export function aggregateAllPassiveModifiers(
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
   const sk = aggregateCreationSkillModifiers(character, occ)
   const race = racePassiveModifiers(
-    getRaceById(character.raceId ?? DEFAULT_RACE_ID),
+    getRaceById(
+      character.raceId ?? DEFAULT_RACE_ID,
+      raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
+    ),
   )
   let out: FeatureModifiers = { ...a, ...race }
   for (const [k, v] of Object.entries(sk)) {

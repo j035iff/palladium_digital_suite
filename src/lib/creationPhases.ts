@@ -39,7 +39,9 @@ export function resolvePsychicGateBypassed(
   if (creationGenreId && isGenreSupernaturalAbilitiesDisallowed(creationGenreId)) {
     return true
   }
-  const race = raceId?.trim() ? getRaceById(raceId) : undefined
+  const race = raceId?.trim()
+    ? getRaceById(raceId, creationGenreId)
+    : undefined
   if (raceExplicitlyBypassesPsychicGate(race)) return true
   if (occ && occPsychicGateBypassed(occ)) return true
   return false

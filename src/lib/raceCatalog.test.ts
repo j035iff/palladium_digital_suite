@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { PALLADIUM_RACE_CATALOG } from '../data/library/raceCatalogLoader'
+import {
+  getPalladiumRaceById,
+  PALLADIUM_RACE_CATALOG,
+} from '../data/library/raceCatalogLoader'
 import {
   listRacesForCharacterCreation,
   listNpcRaces,
@@ -7,15 +10,30 @@ import {
 } from './raceCatalog'
 
 describe('race catalog pools', () => {
-  it('loads human from player pool', () => {
-    const human = PALLADIUM_RACE_CATALOG.find((r) => r.id === 'race_human')
+  it('loads human from nightbane player pool', () => {
+    const human = getPalladiumRaceById('race_human', 'nightbane')
     expect(human?.raceAudience).toBe('player')
+    expect(human?.catalogGenreId).toBe('nightbane')
   })
 
-  it('lists only player races for creation', () => {
+  it('resolves genre-scoped human rows with same id', () => {
+    const nightbane = getPalladiumRaceById('race_human', 'nightbane')
+    const rifts = getPalladiumRaceById('race_human', 'rifts')
+    expect(nightbane?.gameSystems).toEqual(['nightbane'])
+    expect(rifts?.gameSystems).toEqual(['rifts'])
+  })
+
+  it('lists only player races for creation in host genre', () => {
     const pool = listRacesForCharacterCreation(PALLADIUM_RACE_CATALOG, 'nightbane')
     expect(pool.some((r) => r.id === 'race_human')).toBe(true)
+    expect(pool.some((r) => r.id === 'nightbane')).toBe(true)
     expect(pool.every((r) => r.raceAudience === 'player')).toBe(true)
+    expect(pool.length).toBe(4)
+  })
+
+  it('excludes other genres from creation list', () => {
+    const riftsPool = listRacesForCharacterCreation(PALLADIUM_RACE_CATALOG, 'rifts')
+    expect(riftsPool.map((r) => r.id)).toEqual(['race_human'])
   })
 
   it('excludes npc pool from character creation', () => {

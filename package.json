@@ -16,6 +16,7 @@
     "apply:skill-traits": "node scripts/apply-skill-traits.mjs",
     "split:skills": "node scripts/split-skills-by-category.mjs",
     "split:psionics": "node scripts/split-psionics-by-category.mjs",
+    "split:races": "node scripts/split-races-by-genre.mjs",
     "migrate:morphus-skills": "node scripts/migrate-morphus-skill-modifiers.mjs",
     "dedupe:morphus-skill-prose": "node scripts/dedupe-morphus-skill-prose.mjs",
     "preview": "vite preview"

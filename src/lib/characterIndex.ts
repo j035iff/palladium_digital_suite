@@ -1,5 +1,5 @@
 import { formatGenreSlug } from '../data/genres'
-import { getRaceById } from '../data/library/registry'
+import { getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import { getLibraryOccById } from '../data/occDefinitions'
 import { isCharacterNameFilled } from './characterIdentity'
 import { CREATION_PLACEHOLDER_OCC } from './characterRoot'
@@ -46,7 +46,12 @@ function writeIndex(entries: CharacterIndexEntry[]): void {
 function resolveRaceNameForIndex(state: CharacterRootState): string {
   const raceId = state.raceId?.trim()
   if (!raceId) return '—'
-  return getRaceById(raceId)?.name ?? '—'
+  return (
+    getRaceById(
+      raceId,
+      raceCatalogGenreId(state.hostGenreId, state.creationGenreId),
+    )?.name ?? '—'
+  )
 }
 
 function resolveOccBaseNameForIndex(state: CharacterRootState): string {

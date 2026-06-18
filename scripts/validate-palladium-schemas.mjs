@@ -2,7 +2,7 @@
  * Ensures bundled Palladium JSON Schemas (draft 2020-12) compile under Ajv.
  * Run: npm run validate:schemas
  */
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
@@ -217,52 +217,77 @@ const POOL_AUDIENCE = {
   'gm_approval.json': 'gm_approval',
 }
 let raceTotal = 0
-const raceIds = new Set()
+const raceKeys = new Set()
 try {
-  for (const file of RACE_POOL_FILES) {
-    const poolPath = join(racesDir, file)
-    const rows = loadJson(poolPath)
-    if (!Array.isArray(rows)) {
-      failed = true
-      console.error(`ERR races/${file} — expected top-level array`)
-      continue
-    }
-    const expectedAudience = POOL_AUDIENCE[file]
-    let raceBad = 0
-    for (const row of rows) {
-      if (row?.id) {
-        if (raceIds.has(row.id)) {
-          failed = true
-          console.error(`ERR races — duplicate id "${row.id}" (e.g. ${file})`)
-        }
-        raceIds.add(row.id)
-      }
-      if (row?.raceAudience && row.raceAudience !== expectedAudience) {
+  const genreDirs = readdirSync(racesDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(racesDir, genre)
+    for (const file of RACE_POOL_FILES) {
+      const poolPath = join(genrePath, file)
+      if (!existsSync(poolPath)) continue
+      const rows = loadJson(poolPath)
+      if (!Array.isArray(rows)) {
         failed = true
-        console.error(
-          `ERR races/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
-        )
+        console.error(`ERR races/${genre}/${file} — expected top-level array`)
+        continue
       }
-      if (!validateRaceRow(row)) {
-        raceBad++
-        if (raceBad <= 3) {
+      const expectedAudience = POOL_AUDIENCE[file]
+      let raceBad = 0
+      for (const row of rows) {
+        if (row?.id) {
+          const key = `${genre}:${row.id}`
+          if (raceKeys.has(key)) {
+            failed = true
+            console.error(
+              `ERR races/${genre}/${file} — duplicate id "${row.id}" in genre`,
+            )
+          }
+          raceKeys.add(key)
+        }
+        const systems = row?.gameSystems ?? []
+        if (
+          systems.length &&
+          !systems.every((g) => String(g).toLowerCase() === genre.toLowerCase())
+        ) {
+          failed = true
           console.error(
-            `ERR races/${file} id=${row?.id ?? '?'}:`,
-            validateRaceRow.errors,
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: gameSystems must match folder "${genre}"`,
           )
         }
+        if (row?.raceAudience && row.raceAudience !== expectedAudience) {
+          failed = true
+          console.error(
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
+          )
+        }
+        if (!validateRaceRow(row)) {
+          raceBad++
+          if (raceBad <= 3) {
+            console.error(
+              `ERR races/${genre}/${file} id=${row?.id ?? '?'}:`,
+              validateRaceRow.errors,
+            )
+          }
+        }
       }
-    }
-    raceTotal += rows.length
-    if (raceBad > 0) {
-      failed = true
-      console.error(`ERR races/${file} — ${raceBad} row(s) failed schema validation`)
-    } else {
-      console.log(`OK  races/${file} — ${rows.length} row(s) validate`)
+      raceTotal += rows.length
+      if (raceBad > 0) {
+        failed = true
+        console.error(
+          `ERR races/${genre}/${file} — ${raceBad} row(s) failed schema validation`,
+        )
+      } else {
+        console.log(`OK  races/${genre}/${file} — ${rows.length} row(s) validate`)
+      }
     }
   }
   if (!failed) {
-    console.log(`OK  races — ${raceTotal} total row(s) across ${RACE_POOL_FILES.length} pools`)
+    console.log(
+      `OK  races — ${raceTotal} total row(s) across ${genreDirs.length} genre folder(s)`,
+    )
   }
 } catch (e) {
   failed = true

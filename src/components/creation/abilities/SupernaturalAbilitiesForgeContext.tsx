@@ -71,6 +71,7 @@ export function SupernaturalAbilitiesForgeProvider({
         storedBudget:
           occCreationDerived?.abilityBudget ?? character.creationAbilityBudget,
         creationGenreId: genreId,
+        hostGenreId: character.hostGenreId,
       }),
     [
       activeOcc,

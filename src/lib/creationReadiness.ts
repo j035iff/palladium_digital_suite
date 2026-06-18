@@ -1,5 +1,5 @@
 import type { Character } from '../types'
-import { getLibraryOccById, getRaceById } from '../data/library/registry'
+import { getLibraryOccById, getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import {
   assessAbilitiesBudgetBlockers,
   resolveEffectiveCreationAbilityBudget,
@@ -60,11 +60,12 @@ function attrsPlausible(attrs: {
  * Pending dice are resolved on the Roll Pending and Traits tabs before Review.
  */
 export function assessCreationReviewBlockers(
-  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
+  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId' | 'hostGenreId'>,
 ): string[] {
   const blockers: string[] = []
+  const raceGenre = raceCatalogGenreId(character.hostGenreId, character.creationGenreId)
   const race = character.raceId?.trim()
-    ? getRaceById(character.raceId)
+    ? getRaceById(character.raceId, raceGenre)
     : undefined
   const occLib = creationUsesOccSkillProgram(race)
     ? resolveCreationOccLibraryRow(race, character.occ.id)
@@ -151,6 +152,7 @@ export function assessCreationReviewBlockers(
         majorAllocation: character.creationPsychicGateMajorAllocation,
         storedBudget: character.creationAbilityBudget,
         creationGenreId: character.creationGenreId,
+        hostGenreId: character.hostGenreId,
       }),
       creationGenreId: character.creationGenreId,
       selectedIds: character.selectedAbilities,
@@ -168,7 +170,7 @@ export function assessCreationReviewBlockers(
  * Pillar 8 — radical visibility: block Spawn until the mirrored build is coherent.
  */
 export function assessCreationSpawnBlockers(
-  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId'>,
+  character: Character & Pick<Partial<CharacterRootState>, 'creationGenreId' | 'hostGenreId'>,
   opts?: { psychicTier?: string; supportsDualForm?: boolean },
 ): string[] {
   const blockers = assessCreationReviewBlockers(character)
@@ -176,7 +178,12 @@ export function assessCreationSpawnBlockers(
   const supportsDualForm =
     opts?.supportsDualForm ??
     raceLineageFromDefinition(
-      character.raceId?.trim() ? getRaceById(character.raceId) : undefined,
+      character.raceId?.trim()
+        ? getRaceById(
+            character.raceId,
+            raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
+          )
+        : undefined,
     ) === 'nightbane'
 
   if (character.creationPrimaryDiceFinalized !== true) {

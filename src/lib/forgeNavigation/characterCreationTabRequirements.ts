@@ -390,6 +390,7 @@ function tab7Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
     storedBudget: ctx.character.creationAbilityBudget,
     creationGenreId: genreId,
+    hostGenreId: ctx.character.hostGenreId,
   })
   if (!creationNeedsAbilitySelection(budget, genreId)) {
     return []

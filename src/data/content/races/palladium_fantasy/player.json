@@ -1,0 +1,76 @@
+[
+  {
+    "id": "race_human",
+    "name": "Human",
+    "description": "Standard baseline humanity across the Megaverse.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "palladium_fantasy"
+    ],
+    "sources": [
+      {
+        "gameSystem": "palladium_fantasy",
+        "reference": "Palladium Fantasy RPG",
+        "pageNumber": 1
+      }
+    ],
+    "canPickOcc": true,
+    "lineage": "megaversal",
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "3D6",
+      "pp": "3D6",
+      "pe": "3D6",
+      "pb": "3D6",
+      "spd": "3D6"
+    },
+    "strengthCategory": "standard",
+    "vitals": {
+      "hpFormula": "PE + 1D6",
+      "averageStandardPpe": "2D6",
+      "sdc": {
+        "strategy": "conditional_by_occ_tags",
+        "defaultFormula": "2D6",
+        "conditionalOverrides": [
+          {
+            "tags": [
+              "men_at_arms",
+              "soldier",
+              "knight",
+              "mercenary"
+            ],
+            "formula": "3D6+10"
+          },
+          {
+            "tags": [
+              "magic_user",
+              "scholar",
+              "cleric"
+            ],
+            "formula": "2D6"
+          }
+        ]
+      }
+    },
+    "psionics": {
+      "capabilityType": "standard",
+      "naturalIspFormula": "0"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {}
+    },
+    "demographics": {
+      "averageLifespan": "70-90 years",
+      "alignmentTendencies": [
+        "Any"
+      ]
+    }
+  }
+]

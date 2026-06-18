@@ -5,7 +5,7 @@ import type {
   PalladiumOcc,
 } from '../types'
 import { featureBudgetCategory } from './featureEngine'
-import { getRaceById } from '../data/library/registry'
+import { getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import { getSkillBookCategories } from './creationSkillCatalog'
 import { mapFilterCategoryToOccCategory } from './occCategoryRuleDisplay'
 import { normalizeCatalogSkillId } from '../data/library/skillsCatalogLoader'
@@ -117,8 +117,9 @@ export function occCreationAbilityBudget(occ: PalladiumOcc): OccCreationAbilityB
 /** R.C.C. / race-level creation supernatural pick budgets (e.g. Nightbane 1st-level Talent). */
 export function raceCreationAbilityBudget(
   raceId: string | undefined,
+  genreId?: string,
 ): OccCreationAbilityBudget {
-  const race = raceId?.trim() ? getRaceById(raceId) : undefined
+  const race = raceId?.trim() ? getRaceById(raceId, genreId) : undefined
   if (!race) {
     return { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
   }
@@ -534,7 +535,10 @@ export function patchCharacterCreationFromOcc(
     ? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
     : mergeCreationAbilityBudgets(
         derived.abilityBudget,
-        raceCreationAbilityBudget(prev.raceId),
+        raceCreationAbilityBudget(
+          prev.raceId,
+          raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+        ),
       )
   const grantedIds = mundaneGenre
     ? []

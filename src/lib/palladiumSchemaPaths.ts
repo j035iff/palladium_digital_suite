@@ -95,21 +95,27 @@ export const PALLADIUM_SKILLS_DIR = `${PALLADIUM_CONTENT_DIR}/skills` as const
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
   `${PALLADIUM_SKILLS_DIR}/communications.json` as const
 
-/** Merged player + npc + gm_approval race pools. */
+/** Genre-scoped race pools — `races/<genre>/{player,npc,gm_approval}.json`. */
 export const PALLADIUM_RACES_DIR = `${PALLADIUM_CONTENT_DIR}/races` as const
 
+export const PALLADIUM_RACE_NIGHTBANE_PLAYER_JSON_PATH =
+  `${PALLADIUM_RACES_DIR}/nightbane/player.json` as const
+
+/** @deprecated Use genre-scoped paths under {@link PALLADIUM_RACES_DIR}. */
 export const PALLADIUM_RACE_PLAYER_JSON_PATH =
-  `${PALLADIUM_RACES_DIR}/player.json` as const
+  PALLADIUM_RACE_NIGHTBANE_PLAYER_JSON_PATH
 
+/** @deprecated Use genre-scoped paths under {@link PALLADIUM_RACES_DIR}. */
 export const PALLADIUM_RACE_NPC_JSON_PATH =
-  `${PALLADIUM_RACES_DIR}/npc.json` as const
+  `${PALLADIUM_RACES_DIR}/nightbane/npc.json` as const
 
+/** @deprecated Use genre-scoped paths under {@link PALLADIUM_RACES_DIR}. */
 export const PALLADIUM_RACE_GM_APPROVAL_JSON_PATH =
-  `${PALLADIUM_RACES_DIR}/gm_approval.json` as const
+  `${PALLADIUM_RACES_DIR}/nightbane/gm_approval.json` as const
 
 /** @deprecated Use {@link PALLADIUM_RACES_DIR} — legacy single-file path. */
 export const PALLADIUM_RACE_CATALOG_JSON_PATH =
-  PALLADIUM_RACE_PLAYER_JSON_PATH
+  PALLADIUM_RACE_NIGHTBANE_PLAYER_JSON_PATH
 
 /** One JSON array per source book (genre folder mirrors `occs/<genre>/`). */
 export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const
