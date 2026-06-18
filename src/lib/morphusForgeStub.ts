@@ -1,9 +1,10 @@
 /**
- * Nightbane Morphus Forge — creation-time stub only.
+ * Nightbane Morphus Sub-Forge — implementation flag.
  *
- * Morphus Sub-Forge placeholder (forge-character_creation.md Tab 5).
- * Full table resolution and forge UI live under the morphus spec / content tables.
- * Set to true when the Morphus subsystem is ready to replace {@link MorphusForgeStub}.
+ * Tab 6 hosts {@link MorphusForge} (`src/components/creation/MorphusForge.tsx`).
+ * Slot resolution engine is shipped; guided/basic UX is still in active development.
+ * Sub-Forge Expert Mode (dual-panel index + trait cart) has not had an implementation pass.
+ *
+ * `MorphusForgeStub.tsx` is a deprecated re-export alias kept for import stability.
  */
-/** Crossroads + sub-forge shell shipped; full trait slot engine still in progress. */
 export const MORPHUS_FORGE_IMPLEMENTED = true

@@ -7,8 +7,8 @@ This specification covers **application bootstrap and session initialization** �
 Related docs:
 
 - [Master flow — runtime pipeline](./master_flow.md) (ingest → `hostGenreId` → `genreTransformer` → UI)
-- [Character Creation Forge](./forge-character_creation.md) (seven-tab flow after **Create Character**)
-- [Character spawn handoff](./character_spawn_handoff.md) (lock-in after Tab 7)
+- [Character Creation Forge](./forge-character_creation.md) (eight-tab flow after **Create Character**)
+- [Character spawn handoff](./character_spawn_handoff.md) (lock-in after Tab 8)
 
 ---
 
@@ -48,7 +48,7 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 
 1. **Genre menu** — `LAUNCHER_CREATE_OPTIONS` (`src/data/genres.ts`) lists playable genres from `GENRE_MANIFEST` plus roadmap rows (`playable: false`, visible but not selectable).
 2. **Selection** — `startCreation(genreId)` when `isGenreId(genreId)`:
-   - `createBlankCharacterForGenre(genreId)` — blank facade/morphus, placeholder O.C.C., Forge Tab 1 active, `isFinalized: false`.
+   - `createBlankCharacterForGenre(genreId)` — blank `primary` / `morphus` form branches, placeholder O.C.C., Forge Tab 1 active, `isFinalized: false`.
    - Sets **`creationGenreId`** and initial **`hostGenreId`** to the chosen genre (immutable creation stamp vs active host context).
    - Applies `genreSupernaturalAbilitiesDisallowed` from manifest via psychic gate bypass on the blank record.
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).

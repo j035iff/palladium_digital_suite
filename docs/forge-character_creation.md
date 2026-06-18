@@ -79,13 +79,13 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 6: Character Trait Forges (Sub-Forge Container)
 
-- **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](./forge-morphus_creation.md) — a 3-step Sub-Forge with Guided Wizard / Expert Mode, progressive slot resolution, and Morphus Live Ledger compilation.
+- **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](./forge-morphus_creation.md) — a 3-step Sub-Forge with progressive slot resolution and Morphus Live Ledger compilation. **Guided / basic flow** is the active implementation focus; **Expert Mode** (dual-panel index + trait cart) is spec-only — no pass yet.
 - **Black (N/A) Condition:** **Black** when the selected Race line does not use a trait sub-system (e.g., non–Nightbane builds).
 - **Nightbane completion:**
   - Tab 5 (Roll Pending) must be Green first.
   - Morphus vitality dice entered on this tab.
   - Sub-Forge **Finalize Morphus** passes Complete state up to turn Tab 6 Green on the master forge.
-- **Implementation (current):** Stub UI with Morphus dice panel; full Sub-Forge per [forge-morphus_creation.md](./forge-morphus_creation.md).
+- **Implementation (current):** [Morphus Sub-Forge](./forge-morphus_creation.md) in `MorphusForge.tsx` — crossroads, trait forge, slot resolution, review dice. Guided/basic UX still in active development; Sub-Forge Expert Mode not started. (`MorphusForgeStub.tsx` is a deprecated re-export alias.)
 
 ### Tab 7: Resource-Based Abilities Selection
 
@@ -114,9 +114,9 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Tab order, validators, snapshots | `src/lib/forgeNavigation/characterCreationForge.ts` |
 | Color states, Continue, top-down repair | `src/lib/forgeNavigation/engine.ts` |
 | Race/O.C.C. invalidation (retain data) | `src/lib/creationInvalidate.ts` |
-| Pending dice scope (facade / morphus) | `src/lib/spawnDiceBlocks.ts`, `src/lib/pendingDiceLedger.ts` |
+| Pending dice scope (`primary` / `morphus`) | `src/lib/spawnDiceBlocks.ts`, `src/lib/pendingDiceLedger.ts` |
 | Shell UI | `src/components/creation/CreationFlowShell.tsx` |
 | Tab 5 Roll Pending | `src/components/creation/CreationFinalizeDice.tsx` |
-| Tab 6 Traits / Morphus stub | `src/components/creation/MorphusForgeStub.tsx` |
+| Tab 6 Traits / Morphus Sub-Forge | `src/components/creation/MorphusForge.tsx` |
 | Tab 8 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
 | Morphus Sub-Forge spec | [forge-morphus_creation.md](./forge-morphus_creation.md) |

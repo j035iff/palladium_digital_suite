@@ -27,6 +27,43 @@
 
 ## 1. The Core Data Pipeline (Runtime Engine)
 
-The engine prevents data contamination by implementing a strict unidirectional runtime pipeline. The schema translation layers execute sequentially whenever a character file is loaded into the viewport.Step A: Raw File IngestionThe system reads the static, un-mutated JSON save payload directly from disk or local storage.Rule: The save file reflects only the data and rules layout present at the time of its initialization (creationGenreId). It contains zero host-specific properties or transformed metrics.Step B: Viewport State ResolutionThe engine captures the target ecosystem parameter via the viewport context (hostGenreId). This is explicitly set by either:The launcher splash card drop-down choices.An active, connected Game Master network session payload.Step C: Centralized Middleware Transformation (genreTransformer.ts)The payload is parsed through a pure execution loop:$$\text{genreTransformer}(\text{rawCharacterJSON}, \text{hostGenreId}) \longrightarrow \text{derivedActiveState}$$The transformer loops through the nested character asset nodes, cross-referencing global lookups:The Structural Conversion Pass: If creationGenreId !== hostGenreId, the engine automatically intercepts core pools—mapping properties like S.D.C. to M.D.C. thresholds or calculating environmental combat shifts based on conversion guide rules.The Asset Availability Pass: The engine checks every individual piece of equipment, trait, or skill against the host genre's whitelist map. Items flagged as illegal are injected with an absolute state flag: isHostGenreLocked: true.Step D: State Emitter to UIThe resulting derivedActiveState is emitted into the global application context sheet. UI presentation cards treat this layout as read-only for display purposes.
+The engine prevents data contamination via a strict unidirectional pipeline. Translation layers run whenever a character file loads into the viewport.
 
-💾 2. The Data Mutation Loop (Handling Edits & Saves)When a player updates their character sheet during live play (e.g., spending Experience Points, changing a stat baseline, tracking inventory weight), the mutation cycles back safely:User Action: The player clicks an editor element on the sheet.Reverse Serialization: The mutation handler intercepts the change and strips out all transient, runtime-derived host modifications.Immutable Base Override: The clean, raw update is written explicitly to the underlying original format parameters in the base payload.Instant Re-evaluation: The file automatically saves to disk in its native configuration, and immediately pushes back through Step C to refresh the active UI calculations seamlessly.
+### Step A — Raw file ingestion
+
+The system reads the static, un-mutated JSON save payload from disk or local storage.
+
+**Rule:** The save reflects only data and rules layout at initialization (`creationGenreId`). It contains **no** host-specific properties or transformed metrics.
+
+### Step B — Viewport state resolution
+
+The engine captures the target ecosystem via viewport context (`hostGenreId`), set by:
+
+- Launcher genre / host choices, or
+- A future connected GM session payload.
+
+### Step C — Centralized middleware (`genreTransformer.ts`)
+
+$$\text{genreTransformer}(\text{rawCharacterJSON}, \text{hostGenreId}) \longrightarrow \text{derivedActiveState}$$
+
+The transformer walks nested character nodes and cross-references global lookups:
+
+- **Structural conversion** — When `creationGenreId !== hostGenreId`, intercept core pools (e.g. S.D.C. ↔ M.D.C. thresholds, environmental combat shifts per conversion rules).
+- **Asset availability** — Equipment, traits, and skills are checked against the host genre whitelist. Illegal items get `isHostGenreLocked: true`.
+
+### Step D — State emitter to UI
+
+`derivedActiveState` is emitted into `CharacterContext`. Presentation components treat derived host transforms as **read-only** for display; mutations write back to native save layout (§2).
+
+---
+
+## 2. The Data Mutation Loop (Edits & Saves)
+
+When the player edits the sheet during live play (XP, stats, inventory, etc.):
+
+1. **User action** — Editor interaction on the sheet.
+2. **Reverse serialization** — Strip transient, runtime-derived host modifications.
+3. **Immutable base override** — Write the clean update to native `creationGenreId` fields in the root payload.
+4. **Re-evaluation** — Optionally persist via **Save**, then re-run Step C to refresh UI.
+
+See [character_spawn_handoff.md](./character_spawn_handoff.md) for spawn-time persistence rules.

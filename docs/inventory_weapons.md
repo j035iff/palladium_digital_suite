@@ -1,4 +1,7 @@
-Advanced Inventory & Custom Weapon Forge: Palladium Digital Suite
+# Advanced Inventory & Custom Weapon Forge
+
+> **Implementation status:** Target UX specification. Basic inventory/armory UI exists post-spawn; full currency smart-math, weapon forge, and Destiny-style HUD swap are **not fully implemented**.
+
 This document defines the logic for currency management, item presence states, and the creation of unique, rule-breaking weapons (like Rune Swords) with a focus on high-speed UI interaction.
 1. Currency & Resource Management
 Direct Entry Entry: All numerical fields (Currency, Ammo, Consumables) support direct text input via numeric keypad. Tapping the value allows for immediate typing of large numbers.

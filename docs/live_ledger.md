@@ -23,7 +23,7 @@
 | OCC | O.C.C. / R.C.C. |
 | Skills | Skill modifiers (often Physical) |
 | HtH | Hand-to-Hand progression |
-| mBase | `nightbane_base_morphus.json` |
+| mBase | `src/data/content/morphus/forge/nightbane_base_morphus.json` |
 | traits | Morphus characteristic picks |
 | mSkills | Skills only the Morphus has |
 | misc | Talents, gear, stance, GM overrides |
@@ -37,7 +37,7 @@
 
 **Vitals:** HP · SDC · PPE · ISP (if psychic) · HF · Natural A.R.
 
-**Saves:** Attr>16 + Race + OCC + Skills + misc
+**Saves:** Attr>16 + Race + OCC + Skills + misc — **sheet shows vs target + roll bonus** (see `stat_engine_spec.md` §4.4)
 
 **Combat:** APM `2 + HtH + …` · Initiative · Strike/Parry/Dodge `PP>16 + HtH + …` · etc.
 

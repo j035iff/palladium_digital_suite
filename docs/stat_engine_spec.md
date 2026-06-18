@@ -11,7 +11,7 @@ This document is the **canonical reference for how character statistics are calc
 | Skill **percent** Master Equation | `docs/skill_selection.md` |
 | Ground / swim / fly / leap from Spd | `docs/movement_engine_spec.md` |
 | Psychic tier & I.S.P. gate | `docs/psychic_gate.md` |
-| Tab 7 spawn commit & sheet projection | `docs/character_spawn_handoff.md` |
+| Tab 8 spawn commit & sheet projection | `docs/character_spawn_handoff.md` |
 | Morphus trait authoring | `docs/morphus_authoring.md` |
 
 **Legacy alias:** `docs/live_ledger.md` — formula cheat sheet; **this file is authoritative** when they disagree.
@@ -22,7 +22,7 @@ This document is the **canonical reference for how character statistics are calc
 
 1. **Signed modifiers** — Every bump is a signed integer (or explicit dice notation). Bonuses and penalties use the same pipeline.
 2. **Radical visibility (Pillar 8)** — Restricted options are greyed out with a reason, never hidden.
-3. **Physical dice first (Pillar 5)** — Dice formulas appear in hints during creation; values are entered manually on the Roll / Spawn tab (`creationPendingDiceResolutions`), not auto-rolled.
+3. **Physical dice first (Pillar 5)** — Dice formulas appear in hints during creation; values are entered manually on **Tab 5** (primary / Facade dice) and **Tab 6** (Morphus dice when applicable), stored in `creationPendingDiceResolutions` — not auto-rolled.
 4. **Primary form before Morphus (Nightbane)** — When building Morphus, primary-form totals are assumed **final** (attributes, skills, and primary vitality dice resolved).
 5. **Inspectable stacks** — Live Ledger hints show modifier buckets (`Race`, `OCC`, `HtH`, `traits`, etc.) so GMs can audit math (Pillar 4).
 6. **Form scope** — Nightbane maintains separate primary and Morphus attribute/vitality pools where the rules require it; some pools are **shared** (see §5). Single-form races use the primary pool only.
@@ -36,8 +36,8 @@ Stats are computed in different **phases**. The same formula may be preview-only
 | Phase | When | Engine entry points | Persisted? |
 |-------|------|---------------------|------------|
 | **A. Forge preview** | Tabs 1–6 during creation | `buildCreationLiveLedgerSnapshot()` | No — read-only ledger |
-| **B. Pending dice** | Roll tab — user enters physical dice | `buildPendingDiceBlocks()`, `patchPendingDiceResolution()` | `creationPendingDiceResolutions` |
-| **C. Vitality commit** | Tab 7 before spawn confirm | `commitVitalityFromPendingDice()`, `applyPrimaryPendingDiceResolutions()`, `applyMorphusPendingDiceResolutions()` | Form `hitPoints` / `structuralDamageCapacity`, `ppe` |
+| **B. Pending dice** | Tab 5 (primary) and Tab 6 (Morphus) — user enters physical dice | `buildPendingDiceBlocks()`, `patchPendingDiceResolution()` | `creationPendingDiceResolutions` |
+| **C. Vitality commit** | Tab 5–6 Continue (before Tab 8 spawn) | `commitVitalityFromPendingDice()`, `applyPrimaryPendingDiceResolutions()`, `applyMorphusPendingDiceResolutions()` | Form `hitPoints` / `structuralDamageCapacity`, `ppe` |
 | **D. Spawn handoff** | Spawn modal confirm | `applySpawnSheetHandoff()` — skill %, physical skill attribute/SDC apply | `isFinalized: true`, sheet skills |
 | **E. Live play** | Post-spawn HUD | `CharacterContext` derived state, `featureEngine`, `morphusPassiveBridge` | Combat state, toggles |
 
@@ -53,7 +53,7 @@ Use these bucket names consistently in docs, ledger hints, and code comments.
 |-------|---------|---------------------|
 | **Race** | Racial bonuses | `src/data/content/races/*.json` → `innateBonuses`, `vitals` |
 | **OCC** | O.C.C. / R.C.C. bonuses | `src/data/content/occs/*.json` → static + variable resolutions |
-| **Skills** | Physical (and other) skill combat/stat mods | `palladiumSkills.json`, `aggregateSkillPhysicalBonuses()` |
+| **Skills** | Physical (and other) skill combat/stat mods | `skills/*.json`, `aggregateSkillPhysicalBonuses()` |
 | **HtH** | Hand-to-Hand progression | Hand-to-hand catalog → `accumulateHandToHandBonuses()` |
 | **Pool** | Attribute pool assignment | `creationAttributeAssignments` |
 | **mBase** | Nightbane Morphus R.C.C. base package | `src/data/content/morphus/forge/nightbane_base_morphus.json` |
@@ -100,12 +100,12 @@ Derived from **current** attribute scores (not separate inputs).
 
 ### 4.3 Vitals
 
-| Stat | Formula (default / Nightbane) | Dice on Roll tab |
+| Stat | Formula (default / Nightbane) | Dice entry (forge tab) |
 |------|------------------------------|------------------|
-| **H.P.** | Race: `PE + 1D6/level` (Nightbane Facade) | Base formula dice + per-level die |
-| **S.D.C.** | Race flat/dice + OCC dice + skill dice | Race/OCC/skill dice groups |
-| **P.P.E.** | Race + OCC engine (`ppeEngine.baseFormula` + `perLevelFormula`) | All dice terms + per-level die |
-| **I.S.P.** | OCC `ispEngine` when psychic tier ≠ none | Base + per-level dice |
+| **H.P.** | Race: `PE + 1D6/level` (Nightbane Facade) | Tab 5 |
+| **S.D.C.** | Race flat/dice + OCC dice + skill dice | Tab 5 |
+| **P.P.E.** | Race + OCC engine (`ppeEngine.baseFormula` + `perLevelFormula`) | Tab 5 |
+| **I.S.P.** | OCC `ispEngine` when psychic tier ≠ none | Tab 5 |
 | **H.F.** | Race + OCC + traits (play) | Usually flat |
 | **Natural A.R.** | Race + OCC + trait `naturalAr` stacking | Flat |
 
@@ -113,19 +113,21 @@ Derived from **current** attribute scores (not separate inputs).
 
 **Implementation:** `ledgerVitalFormula.ts`, `buildCreationVitalsBlock()`, `buildPendingDiceBlocks()`, `computeSpawnVitalityFromResolutions()`.
 
-**Status:** ✅ Ledger preview · ✅ Pending dice blocks · ✅ Commit on Tab 7 · ✅ Flat integer terms in formulas (e.g. `+20` on P.P.E.) in ledger flat column
+**Status:** ✅ Ledger preview · ✅ Pending dice blocks · ✅ Commit on Tab 5–6 Continue · ✅ Flat integer terms in formulas (e.g. `+20` on P.P.E.) in ledger flat column
 
 ### 4.4 Saves
 
-Display: **save modifier** (e.g. `+3`) with **bonus breakdown** in `valueTooltip` — not the GM-called target number (`combat_logic.md` §4 still applies at the table; targets come from the book).
+**Live sheet display (additive rolls):** Each row shows the **base target** the GM calls (e.g. **vs 12**) and the **total bonus to add to d20** (e.g. **(+3)**). Hover/tooltip shows the full bonus breakdown. The app does **not** pre-subtract bonuses into a single “you need X” number.
 
 ```
-Save bonus = Attr>16 (where applicable) + Race + OCC + Skills + misc
+Save roll bonus = Attr>16 (where applicable) + Race + OCC + Skills + misc
 ```
 
-**Implementation:** `buildCreationSavesBlock()`, `saveProfile.ts`, `computeAttributeSaveProfile()`.
+**Attribute-only rows** (`base_pe`, `base_me`, `vs_becoming`) use exceptional P.E. / M.E. only (plus Becoming level progression). **Saver wins ties** unless an ability overrides (`opposedRollRules.ts`). See `combat_logic.md` §4.
 
-**Status:** ✅ Creation ledger · ✅ Live save display · Nightbane Mind Control: **Immune** (both forms)
+**Implementation:** `buildCreationSavesBlock()`, `saveProfile.ts`, `computeAttributeSaveProfile()`, `saveRollDisplay.ts`, `attributeSaves.ts`, `nightbaneBecomingSave.ts`.
+
+**Status:** ✅ Creation ledger · ✅ Live save display (`SavingThrowsPanel`) · Nightbane Mind Control: **Immune** (both forms)
 
 ### 4.5 Hand-to-hand combat
 
@@ -182,7 +184,7 @@ mAttr = pAttr + mBase + traits + mSkills + misc
 | **mH.F.** | `mBase + traits` |
 | **mNatural A.R.** | Trait stacking (`stackNaturalArmorFromTraits()`) |
 
-**Morphus-only dice on Roll tab:** `morphus_hp` (2D6/level), `morphus_sdc` (2D6×10 + trait S.D.C. dice).
+**Morphus-only dice on Tab 6 (Traits):** `morphus_hp` (2D6/level), `morphus_sdc` (2D6×10 + trait S.D.C. dice).
 
 **Implementation:** `spawnDiceBlocks.ts` (dual-form blocks), `buildMorphusTraitSdcBonusDetails()`, `buildCreationVitalsBlock()` when `activeForm === 'morphus'`.
 
@@ -220,7 +222,7 @@ Morphus ledger saves use **mBase + Morphus attributes + traits** — not Facade 
 
 **mBase combat package:** +1 APM, +1 init, +2 strike/parry/dodge, +3 roll, +4 magic save, +3 psionics/disease/HF saves; Hand-to-Hand **Martial Arts** on Morphus.
 
-**Status:** ✅ Ledger · ⚠️ Live HUD (same APM gap as Facade)
+**Status:** ✅ Ledger · ✅ Live HUD APM (`resolveCharacterMaxApm()` with Morphus mBase + traits)
 
 ---
 
@@ -242,13 +244,13 @@ Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr
 
 | Pool | When rolled | Block ids (examples) |
 |------|-------------|------------------------|
-| Facade H.P. (Nightbane) / character H.P. | Tab 7 Roll | `hp` |
-| Facade S.D.C. (Nightbane) / character S.D.C. | Tab 7 Roll | `sdc` |
-| P.P.E. | Tab 7 Roll | `ppe` (base dice + per-level) |
-| I.S.P. | Tab 7 Roll | `isp` |
-| Attribute OCC/skill dice | Tab 7 Roll | `attr_*` |
-| Morphus H.P. | Traits tab Roll (dual form) | `morphus_hp` |
-| Morphus S.D.C. | Traits tab Roll | `morphus_sdc` (+ trait dice) |
+| Facade H.P. (Nightbane) / character H.P. | Tab 5 Roll Pending | `hp` |
+| Facade S.D.C. (Nightbane) / character S.D.C. | Tab 5 Roll Pending | `sdc` |
+| P.P.E. | Tab 5 Roll Pending | `ppe` (base dice + per-level) |
+| I.S.P. | Tab 5 Roll Pending | `isp` |
+| Attribute OCC/skill dice | Tab 5 Roll Pending | `attr_*` |
+| Morphus H.P. | Tab 6 Traits (dual form) | `morphus_hp` |
+| Morphus S.D.C. | Tab 6 Traits | `morphus_sdc` (+ trait dice) |
 
 **Running total:** `flatBaseline + Σ(entered dice)` per block (`pendingDiceBlockRunningTotal()`).
 
@@ -285,11 +287,12 @@ Update this table when closing gaps.
 | Exceptional attributes | `attributeBonuses.ts` |
 | APM core + live stack | `meleeCombat.ts` → `resolveAttacksPerMelee()`, `resolveCharacterMaxApm()` |
 | Hand-to-Hand accumulation | `utils/combatCalculator.ts` |
-| Saves display | `saveProfile.ts`, `buildCreationSavesBlock()` |
+| Saves display & additive UI | `saveProfile.ts`, `saveRollDisplay.ts`, `attributeSaves.ts`, `nightbaneBecomingSave.ts`, `opposedRollRules.ts`, `buildCreationSavesBlock()` |
 | Skill physical mods | `skillPhysicalBonuses.ts`, `ledgerStatBonuses.ts` |
 | Live passive merge | `featureEngine.ts` |
 | UI — creation ledger | `src/components/creation/LiveLedger.tsx` |
 | UI — roll entry | `PendingDiceResolutionPanel.tsx`, `CreationFinalizeDice.tsx` |
+| UI — live saves | `src/components/live/SavingThrowsPanel.tsx` |
 | UI — combat APM | `CombatHUD.tsx` ← `CharacterContext.attacksPerMelee` |
 
 ---

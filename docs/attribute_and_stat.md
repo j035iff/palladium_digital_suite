@@ -1,4 +1,7 @@
-Core Attribute & Base Stat Engine: Palladium Digital Suite
+# Core Attribute & Base Stat Engine
+
+> **Implementation status:** Attribute model, exceptional bonuses, and subscriber updates are implemented. Full “base vs current” highlighting on every attribute cell is **partial** — see `CharacterContext` derived state.
+
 This document defines the technical architecture for managing the eight primary attributes and their derived statistics. It establishes how data flows from the central attribute core to the rest of the application modules.
 1. The Attribute Data Model
 Each attribute is treated as a dynamic variable. The system tracks a Base Value (permanent) and a Current Value (including all active modifiers). All modifiers are treated as signed integers.
@@ -32,7 +35,7 @@ Signed Recalculation: If a temporary status effect (e.g., "Weakness") drops an a
 3. Data "Push" Architecture
 The Attribute Engine acts as a broadcaster. When an attribute value changes, it sends a signal to all subscriber modules:
 Subscriber: Combat HUD — Updates Strike/Parry/Dodge/Damage totals.
-Subscriber: Saves Dashboard — Updates active Save modifiers.
+Subscriber: Saves panel — Updates **vs target** and **+bonus to d20** rows (`SavingThrowsPanel`, `saveRollDisplay.ts`).
 Subscriber: Skill Engine — Recalculates all percentages (I.Q. bonus) and checks physical skill dependencies.
 Subscriber: Movement Panel — Recomputes `DerivedMovementStats` (ground, swim, fly, leap) per `docs/movement_engine_spec.md`.
 

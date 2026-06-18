@@ -1,5 +1,8 @@
 /**
- * Prefix all palladiumSkills.json ids with `skill_` and update cross-references.
+ * @deprecated One-time migration for the removed monolithic `palladiumSkills.json`.
+ * The live catalog is `src/data/content/skills/*.json`. Do not run on current trees unless restoring legacy data.
+ *
+ * Prefix all skill ids with `skill_` and update cross-references.
  * Run once: node scripts/migrate-skill-id-prefix.mjs
  */
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs'

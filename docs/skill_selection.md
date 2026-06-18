@@ -1,41 +1,56 @@
-Technical Spec: Advanced Skill & Dependency Engine V2
+# Advanced Skill & Dependency Engine
 
-This document defines the logic for skill synergies, attribute scaling, prerequisites, and the commitment workflow for the Palladium Digital Suite. Update: All modifiers in this system are signed integers (positive or negative) to allow for universal application of buffs and penalties.
+This document defines skill synergies, attribute scaling, prerequisites, and the commitment workflow. All modifiers are **signed integers** (positive or negative).
 
+**Forge placement:** Skill picks on [Tab 4](./forge-character_creation.md). Physical dice and vitality commit on **Tab 5**. Spawn projection on **Tab 8** ([spawn handoff](./character_spawn_handoff.md)).
 
-1. Skill Acquisition & Leveling
-Acquisition Level: Each skill must store the character level at which it was gained.
-Proficiency Level = (Current Character Level) - (Acquisition Level) + 1.
-Selection Constraints: Skills can be tagged as O.C.C. Only or No Secondary to prevent invalid character builds.
-2. Synergy & Gating Logic
-The app uses a dependency graph to handle complex skill requirements.
-Type
-Logic Requirement
-Example
- 
-AND Gate
-Requires all listed skills to unlock.
-Mechanical Engineering requires Literacy AND Electronics.
-OR Gate
-Requires at least one listed skill to unlock.
-Mech. Engineering requires Math: Basic OR Math: Advanced.
-Synergy
-Presence of Skill A grants a % bonus to Skill B.
-Math: Advanced grants +10% to Astronomy.
+**Master equation authority:** `docs/stat_engine_spec.md` §6 cross-links here for percent formulas.
 
-3. Scaled Attribute & Status Modifiers
-The calculation engine treats all modifiers as signed values (e.g., +10 or -15).
-The Master Skill Equation:
-[Base% + (Per Level * (Eff. Level - 1))] + [O.C.C. Bonus] + [I.Q. Bonus] + [Synergy Bonuses] + [Scaled Att. Bonuses] + [Status Modifiers] = Final %
+---
 
-Universal Modifier Support: No modifier is hard-coded as a "penalty" or "benefit." The system simply sums the signed values.
-M.A. Scaling: +1% bonus for every 1 point above M.A. 20.
-P.B. Scaling: +1% bonus for every 2 points above P.B. 17.
-Status Modifiers: A global modifier variable (e.g., -20% for 'Confused' or +10% for 'Blessed') is added to the final calculated total.
+## 1. Skill acquisition & leveling
 
-4. The "Commitment" Workflow
-Physical skill bonuses (S.D.C., Attributes) are staged before being permanently applied.
-Stage: Skills are selected; bonuses are shown as "Pending."
-Review: A summary screen shows all attribute changes.
-Input: User enters manual dice rolls (e.g., 1D4 S.D.C.) into the summary fields.
-Commit: Data is written to the character sheet. Visual "toasts" confirm the changes to the UI.
+- **Acquisition level** — Each skill stores the character level at which it was gained.
+- **Proficiency level** = (current level) − (acquisition level) + 1.
+- **Selection constraints** — Skills may be tagged O.C.C. Only or No Secondary to block invalid builds.
+
+---
+
+## 2. Synergy & gating
+
+| Type | Logic | Example |
+|------|-------|---------|
+| **AND** | Requires all listed skills | Mechanical Engineering requires Literacy AND Electronics |
+| **OR** | Requires at least one listed skill | Mech. Engineering requires Math: Basic OR Math: Advanced |
+| **Synergy** | Skill A grants % bonus to Skill B | Math: Advanced grants +10% to Astronomy |
+
+**Catalog:** `src/data/content/skills/*.json` (loader: `skillsCatalogLoader.ts`).
+
+---
+
+## 3. Scaled attribute & status modifiers
+
+**Master skill equation:**
+
+```
+Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr scaling + status
+```
+
+- **M.A. scaling:** +1% per point above M.A. 20.
+- **P.B. scaling:** +1% per 2 points above P.B. 17.
+- **Status modifiers:** Global signed variable (e.g. −20% Confused, +10% Blessed).
+
+---
+
+## 4. Commitment workflow (forge tabs)
+
+Physical skill bonuses (S.D.C., attributes) are staged, then committed in phases:
+
+| Phase | Forge tab | What happens |
+|-------|-----------|----------------|
+| **Stage** | Tab 4 — Skills | Skills selected; physical bonuses shown as pending in Live Ledger preview. |
+| **Dice entry** | Tab 5 — Roll Pending | User enters manual dice for H.P., S.D.C., P.P.E., I.S.P., OCC/skill attribute dice, and skill S.D.C. groups. **Continue** commits primary vitality. |
+| **Morphus dice** | Tab 6 — Traits (Nightbane) | Morphus H.P./S.D.C. and trait-driven dice when applicable. |
+| **Commit to sheet** | Tab 8 — Spawn | `applySpawnSheetHandoff()` projects skill %, applies physical skill attribute/SDC deltas to `primary` / `morphus` branches, sets `isFinalized: true`. |
+
+**Rule:** Phase A ledger preview must match post-spawn sheet values for the same inputs (`stat_engine_spec.md` §2).

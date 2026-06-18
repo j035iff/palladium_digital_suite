@@ -1,5 +1,5 @@
 /**
- * Applies skill trait tags from source lists onto palladiumSkills.json.
+ * Applies skill trait tags from source lists onto src/data/content/skills/*.json.
  * Run after editing skill_trait_lists/*.txt: npm run apply:skill-traits
  */
 import { readFileSync } from 'node:fs'

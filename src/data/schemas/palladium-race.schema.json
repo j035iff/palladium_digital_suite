@@ -134,7 +134,7 @@
     },
     "classAbilities": {
       "type": "array",
-      "description": "Racial or R.C.C. abilities not modeled as palladiumSkills rows.",
+      "description": "Racial or R.C.C. abilities not modeled as skill catalog rows.",
       "items": {
         "$ref": "#/$defs/classAbility"
       }

@@ -118,7 +118,7 @@
     },
     "classAbilities": {
       "type": "array",
-      "description": "Unique O.C.C. abilities and special skills not represented as palladiumSkills rows (e.g. Recognize the Supernatural, Special Anti-Supernatural Bonuses).",
+      "description": "Unique O.C.C. abilities and special skills not represented as skill catalog rows (e.g. Recognize the Supernatural, Special Anti-Supernatural Bonuses).",
       "items": {
         "$ref": "#/$defs/classAbility"
       }
@@ -227,7 +227,7 @@
     "catalogSkillId": {
       "type": "string",
       "pattern": "^skill_[a-z][a-z0-9_]*$",
-      "description": "Reference to a row in **palladiumSkills.json**."
+      "description": "Reference to a row in the skills catalog (`src/data/content/skills/*.json`)."
     },
     "sources": {
       "type": "array",
@@ -348,7 +348,7 @@
           "minItems": 1,
           "items": { "type": "string", "minLength": 1 },
           "uniqueItems": true,
-          "description": "Restrict picks to skills whose palladiumSkills categories[] includes any listed category."
+          "description": "Restrict picks to skills whose skill catalog `categories[]` includes any listed category."
         },
         "allowedSkillIds": {
           "type": "array",
@@ -413,7 +413,7 @@
         "categoryName": {
           "type": "string",
           "minLength": 1,
-          "description": "Skill category label (matches palladiumSkills categories[])."
+          "description": "Skill category label (matches skill catalog `categories[]`)."
         },
         "minimumCount": {
           "type": "integer",
@@ -444,7 +444,7 @@
         "skillId": {
           "type": "string",
           "pattern": "^skill_[a-z][a-z0-9_]*$",
-          "description": "Optional catalog skill anchor when a matching palladiumSkills row exists."
+          "description": "Optional catalog skill anchor when a matching skill catalog row exists."
         }
       }
     },
@@ -456,7 +456,7 @@
         "categoryName": {
           "type": "string",
           "minLength": 1,
-          "description": "Skill category label (matches palladiumSkills categories[])."
+          "description": "Skill category label (matches skill catalog `categories[]`)."
         },
         "accessType": {
           "type": "string",

@@ -479,7 +479,7 @@ export function diceTermsFromAttrFormula(
 
 /**
  * Race H.P. formulas (e.g. `PE + 1D6`) treat dice as per-level rolls at creation —
- * level 1's die is entered on the Roll tab, not as a one-shot race roll.
+ * level 1's die is entered on Tab 5 (Roll Pending), not as a one-shot race roll.
  */
 export function hitPointsPerLevelDiceFormula(hpFormula: string | null | undefined): string | null {
   if (!hpFormula?.trim()) return null

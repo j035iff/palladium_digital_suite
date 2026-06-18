@@ -803,7 +803,7 @@
     "catalogSkillId": {
       "type": "string",
       "pattern": "^skill_[a-z][a-z0-9_]*$",
-      "description": "Reference to a row in **palladiumSkills.json** (always prefixed with **`skill_`**)."
+      "description": "Reference to a row in the **skills catalog** (`src/data/content/skills/*.json`; ids prefixed with `skill_`)."
     },
     "physicalSkillBonuses": {
       "type": "object",

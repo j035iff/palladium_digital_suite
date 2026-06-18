@@ -55,9 +55,9 @@ Because the Forge Engine is entirely non-destructive, users can navigate backwar
 
 ## 5. Sub-Forges (Nested Forge Instances)
 
-The engine supports embedding a complete Forge sequence inside a single tab of a parent Forge (e.g., embedding the "Morphus Creation Forge" entirely within Tab 5 of the "Character Creation Forge").
+The engine supports embedding a complete Forge sequence inside a single tab of a parent Forge (e.g., embedding the "Morphus Creation Forge" entirely within Tab 6 of the "Character Creation Forge").
 
 - **Nested Progression Gate:** When a parent tab contains a Sub-Forge, the parent tab's "Continue" button is strictly bound to the completion state of the Sub-Forge. The parent tab cannot be turned Green until the Sub-Forge has reached its own terminal completion state (i.e., all applicable tabs within the Sub-Forge are Green).
 - **Sub-Forge Terminal Resolution:** Unlike a top-level Forge, the terminal step of a Sub-Forge does not possess a "Spawn" or "Lock-in" button. Instead, completing the final step of a Sub-Forge simply satisfies the local data requirement, passing a validated state up to the parent tab and activating the parent tab's "Continue" button.
-- **Delayed Lock-In & Backward Navigation:** Completing a Sub-Forge does not permanently lock its data. If a player completes the Morphus Sub-Forge (Tab 5), proceeds to Resource Abilities (Tab 6), they can still click backward into Tab 5. Doing so re-opens the Morphus Sub-Forge. If they alter a choice, the Sub-Forge falls out of its completed state, the parent tab (Tab 5) turns Red or Yellow, and downstream progression is halted until the Sub-Forge is re-validated.
+- **Delayed Lock-In & Backward Navigation:** Completing a Sub-Forge does not permanently lock its data. If a player completes the Morphus Sub-Forge (Tab 6), proceeds to Resource Abilities (Tab 7), they can still click backward into Tab 6. Doing so re-opens the Morphus Sub-Forge. If they alter a choice, the Sub-Forge falls out of its completed state, the parent tab (Tab 6) turns Red or Yellow, and downstream progression is halted until the Sub-Forge is re-validated.
 - **Ultimate Authority:** No Sub-Forge is ever truly "locked-in" until the topmost master Forge (the ultimate parent) resolves its final confirmation modal (e.g., the final "Spawn Character" button).

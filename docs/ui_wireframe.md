@@ -1,4 +1,7 @@
-UI & Wireframe Specifications: Palladium Digital Suite
+# UI & Wireframe Specifications
+
+> **Implementation status:** Mixed. Identity header, attributes, saves panel, combat HUD, and form theming are partially implemented. Toast system, full tap-to-expand everywhere, and Destiny-style weapon HUD polish are **target UX** — see `src/components/` for current coverage.
+
 This document defines the layout, visual hierarchy, and interaction design for the Palladium Digital Suite character sheet. It adheres to the Visual Continuity and Intuitive Depth pillars, ensuring that the interface is robust for power users while remaining clean and anchored to prevent disorientation.
 1. The Persistent Core (Anchored Elements)
 These elements are "anchored" to specific screen coordinates and do not move when switching between Default and Combat states. This provides a consistent frame of reference for the player.
@@ -13,7 +16,7 @@ B. Vitality & Defense Header
 Health/Energy Bars: High-visibility progress bars for H.P., S.D.C., and (if applicable) M.D.C., P.P.E., and I.S.P.
 Defensive Stats: Small, always-visible indicators for Natural Armor Rating (A.R.), Horror Factor (H.F.), and Perception Modifier.
 C. Navigation & Saves (Sides/Bottom)
-Saves Dashboard: A filtered list showing only saves with active modifiers. (e.g., Save vs. Psionics, Save vs. Magic).
+Saving Throws panel: Standard saves show **vs N** (GM-called base target) and **(+bonus)** to add to d20; hover reveals full breakdown. A separate **attribute-only saves** block covers P.E./M.E. exceptional rows and Save vs Becoming. Horror Factor is a dedicated aura block. Implementation: `SavingThrowsPanel.tsx` — see `combat_logic.md` §4.
 Navigation Rail: Quick-access icons for Skills, Magic/Abilities, Inventory, and the "Combat Toggle" button.
 2. The Active Zone: State 1 (Default / Exploration)
 This state populates the center of the screen with information required for non-combat roleplay and world navigation.

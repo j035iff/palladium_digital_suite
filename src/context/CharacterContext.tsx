@@ -402,7 +402,7 @@ type CharacterContextValue = {
   finalizeCharacter: () => void
   /** Creation state machine — active phase. */
   setCreationPhase: (phase: CreationPhase) => void
-  /** Universal Forge — active tab (seven-tab creation flow). */
+  /** Universal Forge — active tab (eight-tab creation flow). */
   setCreationForgeTab: (tabId: CharacterCreationForgeTabId) => void
   /** Mark tab Green after explicit Continue (no viewport change). */
   markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void

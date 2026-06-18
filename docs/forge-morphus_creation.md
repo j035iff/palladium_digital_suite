@@ -6,17 +6,27 @@ The Morphus Creation Engine is a highly dynamic, nested Sub-Forge located within
 
 **Parent gate:** The master forge **Roll Pending** tab (Tab 5) must be complete before Morphus work begins — Facade stats are finalized upstream; all Morphus logic lives entirely inside this Sub-Forge.
 
+### Implementation status (June 2026)
+
+| Area | Status |
+|------|--------|
+| **3-step sub-forge shell** | Shipped — crossroads, trait forge, review dice (`MorphusForge.tsx`, `morphusForgeNavigation.ts`) |
+| **Slot resolution engine** | Shipped — progressive routing, recursion, combination pools (`morphusSlotResolution.ts`) |
+| **Guided / basic flow** | **Active focus** — cascading blocks, path selection, and validation are still being nailed down |
+| **Expert Mode (§2.2)** | **Not started** — dual-panel Master Index + Trait Cart has not had an implementation pass |
+| **Custom-trait “Expert mode” toggle** | Partial — `CustomTraitWorkshop` exposes extra stat keys for custom traits only; not the full Sub-Forge Expert Mode |
+
 ---
 
-## 2. UI Presentation & View Modes
+## 2. UI Presentation & View Modes (target UX)
 
-Because the Morphus tables include dozens of nested sub-categories, **Sub-Forge Tab 2** (The Dynamic Trait Forge) features a persistent view toggle:
+Because the Morphus tables include dozens of nested sub-categories, **Sub-Forge Tab 2** (The Dynamic Trait Forge) is designed to support a persistent view toggle:
 
-**[ Toggle View: Guided Wizard | Expert Mode ]**
+**[ Toggle View: Guided Wizard | Expert Mode ]** *(Expert Mode: not yet implemented)*
 
-The engine defaults to **Guided Wizard** for all new sessions to prevent decision paralysis for new players.
+The engine will default to **Guided Wizard** for new sessions to prevent decision paralysis. **Current build:** only the guided / basic cascading flow is in active development.
 
-### 2.1 Guided Wizard (Default)
+### 2.1 Guided Wizard (default — in progress)
 
 | Aspect | Behavior |
 |--------|----------|
@@ -24,13 +34,15 @@ The engine defaults to **Guided Wizard** for all new sessions to prevent decisio
 | **Dynamic generation** | Blocks only spawn when their immediate prerequisite is met. For example, if a prompt asks for a `1D4` roll to determine the number of traits, the subsequent dropdown blocks do not exist in the DOM until that integer is inputted. |
 | **Target audience** | New players and those requiring strict, step-by-step validation. |
 
-### 2.2 Expert Mode
+### 2.2 Expert Mode (planned — no implementation pass yet)
 
 | Aspect | Behavior |
 |--------|----------|
 | **Layout engine** | Splits the viewport into a dual-panel layout. The **left panel** houses a collapsible **Master Index** of all 25+ tables (supporting hierarchical nesting). The **right panel** houses a sticky **Trait Cart** tracking the exact required rolls based on the Archetype selection. |
 | **Interactive linking** | The player clicks an empty requirement slot in the Trait Cart, which automatically targets and expands the relevant table in the Left Panel Index. Clicking a trait in the Index assigns it to the Cart. |
 | **Target audience** | Veteran players who understand the rulebooks and want to build rapidly without vertical scrolling. |
+
+**Do not confuse** with the small **Expert mode** toggle inside `CustomTraitWorkshop` — that only unlocks additional fields when authoring a custom trait, not this Sub-Forge view mode.
 
 ---
 
