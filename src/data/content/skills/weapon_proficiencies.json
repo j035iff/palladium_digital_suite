@@ -332,7 +332,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "categories": [
@@ -381,7 +381,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "categories": [
@@ -397,12 +397,16 @@
     "gameSystems": [
       "nightbane"
     ],
-    "description": "Skill at whipping or snapping with long, flexible, light weapons. Notes: Grants +1 to entangle at 2nd, 6th, 8th, 10th, and 14th levels. A typical whip and Cat-o-Nine tails inflicts 1D6 damage, a bull whip 2D4 damage.",
-    "stackingRule": "Strike and damage bonuses from each tier are cumulative.",
+    "description": "Skill at whipping or snapping with long, flexible, light weapons. Notes: A typical whip and Cat-o-Nine tails inflicts 1D6 damage, a bull whip 2D4 damage.",
+    "stackingRule": "Strike, damage, and entangle bonuses from each tier are cumulative.",
     "levelTiers": [
       {
         "atCharacterLevel": 1,
         "strike": 1
+      },
+      {
+        "atCharacterLevel": 2,
+        "entangle": 1
       },
       {
         "atCharacterLevel": 3,
@@ -417,16 +421,25 @@
         "strike": 1
       },
       {
+        "atCharacterLevel": 6,
+        "entangle": 1
+      },
+      {
         "atCharacterLevel": 7,
         "strike": 1
       },
       {
         "atCharacterLevel": 8,
-        "damageBonusFlat": 1
+        "damageBonusFlat": 1,
+        "entangle": 1
       },
       {
         "atCharacterLevel": 9,
         "strike": 1
+      },
+      {
+        "atCharacterLevel": 10,
+        "entangle": 1
       },
       {
         "atCharacterLevel": 11,
@@ -439,13 +452,17 @@
       {
         "atCharacterLevel": 13,
         "strike": 1
+      },
+      {
+        "atCharacterLevel": 14,
+        "entangle": 1
       }
     ],
     "sources": [
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 58
+        "pageNumber": 59
       }
     ],
     "categories": [
@@ -593,22 +610,29 @@
     "gameSystems": [
       "nightbane"
     ],
-    "description": "A tactic in which a one-handed weapon is held in each hand (up to four) to be used in any combination of combat moves simultaneously. Negates the standard off-hand penalty for weapons in which the character is already proficient. Notes: Requires a W.P. in the specific weapons being used. Two-handed weapons or weapons that are too large/heavy negate this skill. Designed for melee weapons; when shooting two guns at once, there is a penalty of -2 to strike with the regular hand and -6 to strike with the off-hand. A character using both attacks simultaneously is vulnerable to attack from a second opponent. Four-armed characters only need to take this skill once.",
+    "description": "A tactic in which a one-handed weapon is held in each hand (up to four) to be used in any combination of combat moves simultaneously. For example, two short swords, a short sword and broadsword, sword and knife, or mace and shield. Two-handed weapons cannot be used as paired weapons.",
     "pairedWeapons": {
-      "summary": "Paired weapon fighting style; see description and special maneuvers for detailed rules."
+      "summary": "Dual-wield tactic: one suitable one-handed weapon per hand (up to four arms). Negates off-hand penalties for weapons in which the character has the corresponding W.P. Without the required W.P. per weapon, or if a weapon is too large or heavy, paired use is impossible—the character can attack only one opponent and each swipe counts as one melee attack.",
+      "requiresWpEachWeapon": true,
+      "weaponCoverage": [
+        "one-handed melee weapons with qualifying W.P.",
+        "not two-handed weapons",
+        "not oversized or heavy weapons"
+      ],
+      "notes": "Roll twice when striking two different opponents, parrying attacks from two separate opponents, or striking with one weapon and parrying with the other (against one or two targets). One roll to strike or parry only when striking the same opponent twice or parrying two attacks from the same opponent. When using both attacks simultaneously on one foe, the character is vulnerable to a second opponent; against three or more attackers, may parry two but cannot parry other blows before the next available action. Four-armed characters take this W.P. once; taking it again grants no additional bonuses. Dual pistols are not the focus of this skill: -2 to strike with the regular hand and -6 with the off-hand."
     },
     "specialManeuvers": [
       {
         "name": "Simultaneous Strike and Parry",
-        "description": "Strike and parry simultaneously. Performs two actions for every one melee action/attack. Requires available attacks to strike."
+        "description": "Strike and parry simultaneously—two actions for every one melee action/attack. Requires available attacks to strike; a character who has used all attacks cannot counterstrike until the next melee round but may still parry."
       },
       {
         "name": "Twin Strike",
-        "description": "Twin, simultaneous strikes against the same target. Both weapons hit the same opponent at once, making it ONE melee attack/action (roll only once to strike with both weapons). The defender can only parry one unless they also use paired weapons/shield."
+        "description": "Twin, simultaneous strikes against the same target. Both weapons hit at once as ONE melee attack/action (roll only once to strike with both weapons). The defender can parry only one weapon unless they also have W.P. Paired Weapons and use two weapons, or a weapon and shield, to block both (one parry roll)."
       },
       {
         "name": "Strike Multiple Targets",
-        "description": "Strike two different targets (or strike one and parry another incoming attack), simultaneously; both must be within reach."
+        "description": "Strike two different targets, or strike one and parry another incoming attack, simultaneously; both must be within reach."
       },
       {
         "name": "Simultaneous Parries",

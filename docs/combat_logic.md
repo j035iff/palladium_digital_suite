@@ -132,3 +132,43 @@ If the target **takes half damage from fire** (×0.5 incoming; no §5.1 step):
 ### 5.6 Flat bonuses (unchanged)
 
 Strike, parry, dodge, and **flat** damage bonuses still **add**; this section applies only to **multiplicative** (×N) damage factors, not to +N dice or +N flat damage.
+
+---
+
+## 6. Modern weapon proficiencies (Nightbane)
+
+Canonical ladder and shared mechanics live in `src/data/content/skills/utils/standard_modern_weapon_progression.json` (`nightbane_standard_modern`). Catalog rows with `usesStandardModernProgression: true` merge that bundle at runtime; **W.P. Revolver** overrides tier-1 aimed strike (+4 vs +3) via `weaponTypeOverrides`.
+
+### 6.1 Strike stacking
+
+Modern W.P. **aimed** and **burst** strike bonuses are **cumulative by character level** and **do not stack** with Hand-to-Hand or other combat-skill strike bonuses (see bundle `stackingRule` / `systemConstraints`).
+
+### 6.2 Firing modes
+
+| Mode | Behavior |
+| :--- | :--- |
+| **Aimed** | One melee attack per shot; roll to strike for each shot. Uses W.P. **aimed** strike bonus. |
+| **Burst** | Semi-auto/automatic weapons; **one** strike roll for the entire burst. Uses W.P. **burst** strike bonus. |
+| **Wild** | No strike bonus (untrained shooters always fire wild). |
+
+### 6.3 Untrained shooters
+
+Without the W.P., a character may fire a loaded weapon but **reloads take twice as long** and **every shot is wild** (no strike bonus). See bundle `untrainedPenalties`.
+
+### 6.4 Automatic burst table (summary)
+
+Magazine-fraction bursts (Nightbane RPG pp. 60–61) — roll damage for **one** round, then multiply:
+
+| Burst | Magazine used | Damage multiplier | Attacks |
+| :--- | :--- | :--- | :--- |
+| Short | 20% | ×2 | 1 |
+| Long | 50% | ×5 | 1 |
+| Full mag (one target) | 100% | ×10 | 2 (machineguns excepted) |
+
+Spray variants hit multiple targets at reduced per-target damage. If a burst **misses**, all rounds in that burst miss.
+
+### 6.5 O.C.C. W.P. gates
+
+O.C.C. `wpRules.forbiddenWps` removes military W.P.s from creation picks (e.g. civilian Nightbane packages forbid **W.P. Heavy** and **W.P. Automatic and Semi-automatic Rifles**). The Skill Engine greys out forbidden rows with a visible reason (Pillar 8).
+
+**Related:** `docs/ingest/weapon_proficiencies.md`, `docs/stat_engine_spec.md` §4.5 (HtH strike — separate from W.P. firearm strike).

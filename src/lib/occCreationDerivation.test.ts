@@ -129,3 +129,23 @@ describe('abilityPassesOccSupernaturalRules psionic categories', () => {
     expect(gate.allowed).toBe(true)
   })
 })
+
+describe('isOccRelatedSkillAllowed — forbidden weapon proficiencies', () => {
+  it('blocks military W.P.s on civilian Nightbane packages', () => {
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    expect(occ).toBeDefined()
+    expect(
+      isOccRelatedSkillAllowed(
+        occ!,
+        'wp_automatic_and_semiautomatic_rifles',
+        'WP: Modern',
+      ),
+    ).toBe(false)
+    expect(
+      isOccRelatedSkillAllowed(occ!, 'wp_heavy', 'WP: Modern'),
+    ).toBe(false)
+    expect(
+      isOccRelatedSkillAllowed(occ!, 'wp_revolver', 'WP: Modern'),
+    ).toBe(true)
+  })
+})

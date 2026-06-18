@@ -165,7 +165,8 @@
     "wpRules": {
       "coreWps": [],
       "forbiddenWps": [
-        "wp_heavy_weapons"
+        "wp_heavy",
+        "wp_automatic_and_semiautomatic_rifles"
       ]
     },
     "handToHandRules": {
@@ -399,7 +400,7 @@
       ]
     },
     "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": ["wp_heavy_weapons"] },
+    "wpRules": { "coreWps": [], "forbiddenWps": ["wp_heavy", "wp_automatic_and_semiautomatic_rifles"] },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [

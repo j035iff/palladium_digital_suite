@@ -35,7 +35,9 @@
         "basePercent": 30,
         "percentPerLevel": 6
       },
-      "untrainedPenalties": "Shoots wild. No strike bonus whatsoever.",
+      "untrainedPenalties": "May fire a loaded weapon without the W.P., but reloading takes twice as long and every shot is wild — no strike bonus whatsoever.",
+      "systemConstraints": "Modern W.P. strike bonuses do not stack with hand-to-hand strike bonuses.",
+      "combatNotes": "Aimed: one attack per shot. Burst: one strike roll for the whole burst. See Nightbane RPG Modern Weapon Proficiency Explanation for magazine-fraction burst tables.",
       "weaponTypeOverrides": {
         "revolver": {
           "matchesWeaponProficiencyIds": [

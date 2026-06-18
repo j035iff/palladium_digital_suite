@@ -7,6 +7,7 @@ import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
   isOccRelatedSkillAllowed,
+  isOccWeaponProficiencyForbidden,
   isSecondarySkillAllowed,
 } from './occCreationDerivation'
 import { isActiveFilterCategoryOccBlocked } from './occCategoryRuleDisplay'
@@ -40,6 +41,17 @@ function isSkillExcludedFromOccOrRace(
   activeFilterCategory?: string,
 ): boolean {
   if (opts.raceBlocked) return true
+
+  if (
+    opts.effectiveOcc != null &&
+    isOccWeaponProficiencyForbidden(
+      opts.effectiveOcc,
+      def.id,
+      opts.specializationId,
+    )
+  ) {
+    return true
+  }
 
   if (
     activeFilterCategory &&
@@ -619,6 +631,17 @@ export function resolveCreationLibrarySkillBlockReason(
 
   if (picked) return 'Already selected'
   if (opts.raceBlocked) return 'Not available to Race'
+
+  if (
+    opts.effectiveOcc != null &&
+    isOccWeaponProficiencyForbidden(
+      opts.effectiveOcc,
+      def.id,
+      opts.specializationId,
+    )
+  ) {
+    return 'Forbidden weapon proficiency for this O.C.C.'
+  }
 
   if (
     isActiveFilterCategoryOccBlocked(opts.activeFilterCategory, opts.effectiveOcc)

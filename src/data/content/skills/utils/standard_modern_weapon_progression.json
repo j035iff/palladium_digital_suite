@@ -38,7 +38,9 @@
         "basePercent": 30,
         "percentPerLevel": 6
       },
-      "untrainedPenalties": "Shoots wild. No strike bonus whatsoever.",
+      "untrainedPenalties": "May fire a loaded weapon without the W.P., but reloading takes twice as long and every shot is wild — no strike bonus whatsoever.",
+      "systemConstraints": "Modern W.P. strike bonuses do not stack with hand-to-hand or other combat skill strike bonuses. Per-level growth: +1 aimed and +1 burst strike at character levels 4, 7, 10, and 13 (cumulative with level-1 bases). Revolvers use the weaponTypeOverrides revolver tier-1 aimed bonus (+4 instead of +3).",
+      "combatNotes": "Three firing modes: Aimed (one shot per melee attack, roll to strike each shot), Burst (semi-auto/automatic weapons; one strike roll for the entire burst), and Wild (no strike bonus). Aimed shots use W.P. aimed strike bonuses; bursts use burst strike bonuses. Automatic/sub-machinegun burst options (Nightbane RPG p. 60–61): Short burst — 20% of magazine, normal round damage ×2, one attack, one target. Long burst — 50% of magazine, damage ×5, one attack, one target. Empty magazine on one target — 100% of rounds, damage ×10, two attacks (machineguns excepted). Spray variants hit multiple targets at reduced per-target damage. Roll once to strike for an entire burst; if the burst misses, all rounds in that burst miss. Shotgun buckshot may strike the target plus 1D4 others in the blast area (~15 ft); see W.P. Shotgun for double-barrel simultaneous fire.",
       "weaponTypeOverrides": {
         "revolver": {
           "matchesWeaponProficiencyIds": [
@@ -55,7 +57,7 @@
           "notes": "Revolvers receive a +4 to strike on an aimed shot instead of the standard +3."
         }
       },
-      "notes": "Source: Nightbane RPG, pages 59-60. Wild shooting provides no strike bonus whatsoever."
+      "notes": "Source: Nightbane RPG, pages 59–61 (skill list, Modern Weapon Proficiency Explanation, automatic burst table)."
     }
   }
 }

@@ -140,7 +140,7 @@ Flag when you see:
 - `occSkillsCore[]` — fixed grants and/or vouchers
 - `occRelatedSkills` — `initialSlotsCount`, `categoryRules` (and optional `categoryMinimums`, `startingSkillIds`)
 - `secondarySkills` — `initialSlotsCount`, `forbiddenCategories`
-- `wpRules` — `coreWps`, `forbiddenWps`
+- `wpRules` — `coreWps`, `forbiddenWps` (use catalog `wp_*` ids from [`weapon_proficiencies.md`](weapon_proficiencies.md); Skill Engine greys out `forbiddenWps` during creation)
 - `handToHandRules` — `defaultSkillId`, `upgradePaths` (`electiveSlotCost` is **per O.C.C.** — transcribe from that O.C.C.'s book text; see [`hth.md`](hth.md) Pass B). Optional `minimumCreationHandToHandTier` on specialization branches when book prose requires a floor (e.g. A.D.A. Assassination Specialist → Expert).
 
 **Practically required modules (by O.C.C. type):**

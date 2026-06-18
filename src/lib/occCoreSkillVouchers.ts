@@ -181,6 +181,7 @@ export function findOpenOccCoreVoucherSlot(
   voucherPicks: Readonly<Record<string, unknown>> | undefined,
   hostGenreId: string,
   catalogSkillIds: readonly string[],
+  forbiddenWpIds: readonly string[] = [],
 ): { taskId: string; slot: number; choiceCount: number } | null {
   for (const task of tasks) {
     if (voucherUsesDedicatedPickerUi(task.entry)) continue
@@ -189,6 +190,7 @@ export function findOpenOccCoreVoucherSlot(
         task.entry,
         hostGenreId,
         catalogSkillIds,
+        forbiddenWpIds,
       ).includes(skillId)
     ) {
       continue
@@ -217,6 +219,7 @@ export function canAddSkillViaOccCoreVoucher(
   hostGenreId: string,
   catalogSkillIds: readonly string[],
   allPicks: readonly CreationSkillPick[],
+  forbiddenWpIds: readonly string[] = [],
 ): boolean {
   if (findOccCoreVoucherPickForSkillId(skillId, tasks, voucherPicks) != null) {
     return false
@@ -228,6 +231,7 @@ export function canAddSkillViaOccCoreVoucher(
       voucherPicks,
       hostGenreId,
       catalogSkillIds,
+      forbiddenWpIds,
     ) == null
   ) {
     return false
@@ -303,10 +307,14 @@ export function listEligibleVoucherSkillIds(
   entry: OccCoreSkillChoiceVoucher,
   hostGenreId: string,
   catalogSkillIds: readonly string[],
+  forbiddenWpIds: readonly string[] = [],
 ): string[] {
   const libraryIds = new Set(catalogSkillIds)
-  return catalogSkillIds.filter((id) =>
-    skillMatchesVoucher(id, entry, hostGenreId, libraryIds),
+  const forbidden = new Set(forbiddenWpIds)
+  return catalogSkillIds.filter(
+    (id) =>
+      !forbidden.has(id) &&
+      skillMatchesVoucher(id, entry, hostGenreId, libraryIds),
   )
 }
 

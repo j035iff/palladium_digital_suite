@@ -88,6 +88,7 @@ export function SelectedOccCoreSkills({
     () => listCreationSkillLibrary(hostGenreId).map((s) => s.id),
     [hostGenreId],
   )
+  const forbiddenWpIds = effectiveOcc?.wpRules?.forbiddenWps ?? []
 
   const fixedGrantIds = useMemo(() => {
     if (!effectiveOcc) return []
@@ -247,6 +248,7 @@ export function SelectedOccCoreSkills({
             entry,
             hostGenreId,
             catalogIds,
+            forbiddenWpIds,
           )
           const slotPicks = getOccCoreVoucherSlotPicks(
             voucherPicks,

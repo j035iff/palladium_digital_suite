@@ -31,7 +31,7 @@ export const characterFixture: Character = {
   ],
   creationRelatedSkillPicks: [
     { instanceId: 'skill_electronics', skillId: 'skill_electronics' },
-    { instanceId: 'skill_wp_handguns', skillId: 'skill_wp_handguns' },
+    { instanceId: 'wp_revolver', skillId: 'wp_revolver' },
   ],
   selectedAbilities: ['energy_bolt'],
   creationAbilityBudget: {

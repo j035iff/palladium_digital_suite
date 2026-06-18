@@ -174,6 +174,9 @@ No dedicated `audit:wp` script.
 |-------|-------|--------|
 | File placement | Under `skills/` | **`weapon_proficiencies.json` at `skills/` root** — documented exception |
 | Modern Nightbane firearms | Duplicate full ladder per W.P. | Use **`usesStandardModernProgression`** + tier-1 override when book differs only at level 1 |
+| Untrained modern shooters | Reload + wild only in prose | Bundle **`untrainedPenalties`** includes double reload time + wild (no strike bonus) |
+| Modern combat modes / burst table | Combat section only | Bundle **`combatNotes`** + **`systemConstraints`**; see **`docs/combat_logic.md`** §6 |
+| Civilian O.C.C. military W.P.s | Prose-only class ability | **`wpRules.forbiddenWps`** lists `wp_heavy`, `wp_automatic_and_semiautomatic_rifles`; enforced in Skill Engine |
 | Weapon item stats | Damage/range of hardware | **`palladium-weapon-item.schema.json`** — not this catalog |
 
 ---

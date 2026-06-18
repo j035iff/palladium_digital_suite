@@ -1099,6 +1099,7 @@ export function SkillEngine() {
       voucherPicks,
       hostGenreId,
       catalogSkillIds,
+      effectiveOcc?.wpRules?.forbiddenWps ?? [],
     )
     if (!openSlot) return
 
@@ -1239,6 +1240,7 @@ export function SkillEngine() {
         hostGenreId,
         catalogSkillIds,
         allCreationPicks,
+        effectiveOcc?.wpRules?.forbiddenWps ?? [],
       ) &&
       prereqOk
     const prereqBlocked =

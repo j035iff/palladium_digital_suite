@@ -8,6 +8,7 @@ This document is the **canonical reference for how character statistics are calc
 |-------|----------|
 | Product pillars & GM override philosophy | `docs/vision.md` |
 | M.D.C. scaling, P.S. tiers, APM tracker UX | `docs/combat_logic.md` |
+| Modern firearm W.P. modes, burst table, untrained penalties | `docs/combat_logic.md` §6 |
 | Skill **percent** Master Equation | `docs/skill_selection.md` |
 | Ground / swim / fly / leap from Spd | `docs/movement_engine_spec.md` |
 | Psychic tier & I.S.P. gate | `docs/psychic_gate.md` |

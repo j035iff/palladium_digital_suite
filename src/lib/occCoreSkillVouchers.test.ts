@@ -102,6 +102,25 @@ describe('occCoreSkillVouchers', () => {
     ).toBe('ancient')
   })
 
+  it('excludes forbidden W.P.s from voucher eligibility', () => {
+    const catalogIds = listCreationSkillLibrary('nightbane').map((s) => s.id)
+    const forbidden = ['wp_heavy', 'wp_automatic_and_semiautomatic_rifles']
+    const eligible = listEligibleVoucherSkillIds(
+      {
+        choiceCount: 1,
+        bonusPercent: 0,
+        allowedCategories: ['Weapon Proficiencies'],
+        label: 'W.P. of choice',
+      },
+      'nightbane',
+      catalogIds,
+      forbidden,
+    )
+    expect(eligible).not.toContain('wp_heavy')
+    expect(eligible).not.toContain('wp_automatic_and_semiautomatic_rifles')
+    expect(eligible).toContain('wp_revolver')
+  })
+
   it('routes category vouchers to the library picker, not the dropdown', () => {
     expect(
       voucherUsesDedicatedPickerUi({

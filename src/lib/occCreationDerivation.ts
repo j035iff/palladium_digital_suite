@@ -261,6 +261,18 @@ function skillIdInRuleExceptions(
   )
 }
 
+/** O.C.C. `wpRules.forbiddenWps` — military/civilian gates for catalog `wp_*` ids. */
+export function isOccWeaponProficiencyForbidden(
+  occ: PalladiumOcc,
+  skillId: string,
+  specializationId?: string | null,
+): boolean {
+  if (!skillId.startsWith('wp_')) return false
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  const forbidden = effective.wpRules?.forbiddenWps ?? []
+  return forbidden.includes(skillId)
+}
+
 /** Whether a skill is allowed under one book category's O.C.C. rule. */
 export function occRelatedSkillAllowedInCategory(
   occ: PalladiumOcc,
@@ -293,6 +305,8 @@ export function isOccRelatedSkillAllowed(
   activeFilterCategory?: string,
 ): boolean {
   occ = resolveEffectivePalladiumOcc(occ, specializationId)
+  if (isOccWeaponProficiencyForbidden(occ, skillId)) return false
+
   const rules = occ.occRelatedSkills.categoryRules
   if (!rules.length) return true
 

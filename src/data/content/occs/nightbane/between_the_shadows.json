@@ -164,7 +164,7 @@
     },
     "wpRules": {
       "coreWps": [
-        "wp_handguns",
+        "wp_revolver",
         "wp_automatic_pistol"
       ],
       "forbiddenWps": []
@@ -346,8 +346,8 @@
     },
     "wpRules": {
       "coreWps": [
-        "wp_assault_rifles",
-        "wp_submachinegun"
+        "wp_automatic_and_semiautomatic_rifles",
+        "wp_sub_machinegun"
       ],
       "forbiddenWps": []
     },
@@ -587,8 +587,8 @@
         ],
         "wpRules": {
           "coreWps": [
-            "wp_handguns",
-            "wp_submachinegun"
+            "wp_revolver",
+            "wp_sub_machinegun"
           ],
           "forbiddenWps": []
         },
@@ -647,9 +647,9 @@
         ],
         "wpRules": {
           "coreWps": [
-            "wp_handguns",
-            "wp_submachinegun",
-            "wp_assault_rifles",
+            "wp_revolver",
+            "wp_sub_machinegun",
+            "wp_automatic_and_semiautomatic_rifles",
             "wp_knife"
           ],
           "forbiddenWps": []
@@ -704,8 +704,8 @@
         ],
         "wpRules": {
           "coreWps": [
-            "wp_handguns",
-            "wp_assault_rifles"
+            "wp_revolver",
+            "wp_automatic_and_semiautomatic_rifles"
           ],
           "forbiddenWps": []
         },
@@ -878,7 +878,7 @@
     "wpRules": {
       "coreWps": [],
       "forbiddenWps": [
-        "wp_heavy_weapons"
+        "wp_heavy"
       ]
     },
     "handToHandRules": {
@@ -1097,7 +1097,7 @@
     },
     "wpRules": {
       "coreWps": [
-        "wp_submachinegun"
+        "wp_sub_machinegun"
       ],
       "forbiddenWps": []
     },
@@ -1302,7 +1302,7 @@
     },
     "wpRules": {
       "coreWps": [
-        "wp_handguns"
+        "wp_revolver"
       ],
       "forbiddenWps": []
     },
