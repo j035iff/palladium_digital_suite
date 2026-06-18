@@ -2,7 +2,7 @@ import type {
   StandardModernProgressionBundle,
   StandardModernWeaponProgressionDoc,
 } from './catalogTypes'
-import progressionData from '../content/standard_modern_weapon_progression.json'
+import progressionData from '../content/skills/utils/standard_modern_weapon_progression.json'
 
 function loadProgression(): StandardModernWeaponProgressionDoc {
   const d = progressionData as unknown

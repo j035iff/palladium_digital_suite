@@ -91,6 +91,22 @@ export const PALLADIUM_MORPHUS_FORGE_ROUTING_SCHEMA_ID =
 /** One JSON array per Palladium skill category (`categories[0]`). */
 export const PALLADIUM_SKILLS_DIR = `${PALLADIUM_CONTENT_DIR}/skills` as const
 
+/** Non-skill JSON co-located at {@link PALLADIUM_SKILLS_DIR} root. Keep in sync with `scripts/lib/skills-catalog-fs.mjs`. */
+export const SKILLS_DIR_ANCILLARY_JSON = [
+  'hand_to_hand.json',
+  'weapon_proficiencies.json',
+] as const
+
+export const PALLADIUM_SKILLS_UTILS_DIR =
+  `${PALLADIUM_SKILLS_DIR}/utils` as const
+
+export function isSkillCategoryCatalogFile(filename: string): boolean {
+  return (
+    filename.endsWith('.json') &&
+    !(SKILLS_DIR_ANCILLARY_JSON as readonly string[]).includes(filename)
+  )
+}
+
 /** @deprecated Use {@link PALLADIUM_SKILLS_DIR} — legacy single-file path. */
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
   `${PALLADIUM_SKILLS_DIR}/communications.json` as const
@@ -121,7 +137,7 @@ export const PALLADIUM_RACE_CATALOG_JSON_PATH =
 export const PALLADIUM_OCCS_DIR = `${PALLADIUM_CONTENT_DIR}/occs` as const
 
 export const PALLADIUM_HAND_TO_HAND_CATALOG_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/palladiumHandToHand.json` as const
+  `${PALLADIUM_SKILLS_DIR}/hand_to_hand.json` as const
 
 /** One JSON array per talent tier band (`common`, `elite`). */
 export const PALLADIUM_TALENTS_DIR = `${PALLADIUM_CONTENT_DIR}/talents` as const
@@ -140,6 +156,9 @@ export const PALLADIUM_TALENT_CATALOG_JSON_PATH =
 export const PALLADIUM_PSIONICS_DIR =
   `${PALLADIUM_CONTENT_DIR}/psionics` as const
 
+export const PALLADIUM_PSIONICS_UTILS_DIR =
+  `${PALLADIUM_PSIONICS_DIR}/utils` as const
+
 /** @deprecated Use {@link PALLADIUM_PSIONICS_DIR} — legacy monolithic path removed. */
 export const PALLADIUM_PSIONIC_CATALOG_JSON_PATH =
   `${PALLADIUM_CONTENT_DIR}/palladiumPsionics.json` as const
@@ -147,14 +166,17 @@ export const PALLADIUM_PSIONIC_CATALOG_JSON_PATH =
 /** One JSON array per magic school (`schemas/palladium-magic.schema.json`). */
 export const PALLADIUM_MAGIC_DIR = `${PALLADIUM_CONTENT_DIR}/magic` as const
 
+export const PALLADIUM_MAGIC_UTILS_DIR =
+  `${PALLADIUM_MAGIC_DIR}/utils` as const
+
 export const PALLADIUM_WIZARD_MAGIC_JSON_PATH =
   `${PALLADIUM_MAGIC_DIR}/wizard.json` as const
 
 export const WEAPON_PROFICIENCIES_CATALOG_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/weapon_proficiencies.json` as const
+  `${PALLADIUM_SKILLS_DIR}/weapon_proficiencies.json` as const
 
 export const STANDARD_MODERN_WEAPON_PROGRESSION_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/standard_modern_weapon_progression.json` as const
+  `${PALLADIUM_SKILLS_UTILS_DIR}/standard_modern_weapon_progression.json` as const
 
 /** One JSON file per Morphus table (hubs and trait tables). */
 export const PALLADIUM_MORPHUS_TABLES_DIR =
@@ -165,7 +187,19 @@ export const PALLADIUM_MORPHUS_FORGE_DIR =
   `${PALLADIUM_CONTENT_DIR}/morphus/forge` as const
 
 export const SKILL_TRAIT_REGISTRY_JSON_PATH =
-  `${PALLADIUM_CONTENT_DIR}/skill_trait_registry.json` as const
+  `${PALLADIUM_SKILLS_UTILS_DIR}/skill_trait_registry.json` as const
+
+export const MAGIC_SCHOOLS_JSON_PATH =
+  `${PALLADIUM_MAGIC_UTILS_DIR}/magic_schools.json` as const
+
+export const MAGIC_CROSS_LISTS_JSON_PATH =
+  `${PALLADIUM_MAGIC_UTILS_DIR}/magic_cross_lists.json` as const
+
+export const PSIONIC_GENRE_CATEGORIES_JSON_PATH =
+  `${PALLADIUM_PSIONICS_UTILS_DIR}/psionic_genre_categories.json` as const
+
+export const PSIONIC_GLOBAL_RULES_JSON_PATH =
+  `${PALLADIUM_PSIONICS_UTILS_DIR}/psionic_global_rules.json` as const
 
 export const PALLADIUM_XP_TABLE_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-xp-table.schema.json` as const

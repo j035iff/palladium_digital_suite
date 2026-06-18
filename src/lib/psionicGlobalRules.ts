@@ -1,4 +1,4 @@
-import globalRules from '../data/content/psionic_global_rules.json'
+import globalRules from '../data/content/psionics/utils/psionic_global_rules.json'
 import type {
   OccSupernaturalRuleOverrideLeyLine,
   OccSupernaturalRuleOverrideMeditation,

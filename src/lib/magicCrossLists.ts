@@ -1,4 +1,4 @@
-import crossListsRef from '../data/content/magic_cross_lists.json'
+import crossListsRef from '../data/content/magic/utils/magic_cross_lists.json'
 import type { MagicCrossList, MagicCrossListsRef, SpellCaveat } from '../types'
 
 const ref = crossListsRef as MagicCrossListsRef

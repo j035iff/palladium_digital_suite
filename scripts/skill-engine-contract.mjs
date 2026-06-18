@@ -244,7 +244,7 @@ export function resolveCatalogSkillId(id, catalogIds) {
 
 export function loadSkillTraitRegistryIds() {
   const doc = JSON.parse(
-    readFileSync(join(root, 'src/data/content/skill_trait_registry.json'), 'utf8'),
+    readFileSync(join(root, 'src/data/content/skills/utils/skill_trait_registry.json'), 'utf8'),
   )
   return new Set((doc.traits ?? []).map((t) => t.id))
 }

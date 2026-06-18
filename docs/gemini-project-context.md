@@ -196,8 +196,11 @@ Validated catalogs under `src/data/content/`:
 | Psionics | 78 | `psionics/*.json` (4 category files) |
 | Magic spells | 156 | `magic/wizard.json`, `magic/mirror.json`, `magic/fleshsculptor.json` |
 | O.C.C.s | 17 | `occs/nightbane/` — `nightbane_core.json` (11) + `between_the_shadows.json` (6) |
-| Player races | 4 | `races/player.json` |
-| Hand-to-Hand | 5 | `palladiumHandToHand.json` |
+| Player races | 6 | `races/<genre>/{player,npc,gm_approval}.json` (3 genres) |
+| Hand-to-Hand | 5 | `skills/hand_to_hand.json` |
+| W.P. catalog | 16 | `skills/weapon_proficiencies.json` |
+
+**Layout contract:** ancillary/registry JSON → `<catalog-dir>/utils/` (see [`docs/content-catalog-layout.md`](content-catalog-layout.md)).
 
 Schemas: 18 Palladium content schemas + example JSON under `src/data/schemas/examples/`.
 
@@ -211,11 +214,11 @@ Content is **JSON-first**, validated by Ajv:
 |--------|-----------------|
 | `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`) — ingest: [`docs/palladium-skill-ingest.md`](palladium-skill-ingest.md) |
 | `palladium-occ.schema.json` | `occs/<genre>/*.json` — ingest: [`docs/palladium-occ-ingest.md`](palladium-occ-ingest.md) |
-| `palladium-race.schema.json` | `races/player.json`, `races/npc.json`, `races/gm_approval.json` — ingest: [`docs/palladium-race-ingest.md`](palladium-race-ingest.md) |
+| `palladium-race.schema.json` | `races/<genre>/{player,npc,gm_approval}.json` — ingest: [`docs/palladium-race-ingest.md`](palladium-race-ingest.md) |
 | `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest: [`docs/nightbane-talent-ingest.md`](nightbane-talent-ingest.md) |
-| `palladium-psionic.schema.json` | `psionics/*.json` (category files) — ingest: [`docs/palladium-psionic-ingest.md`](palladium-psionic-ingest.md) |
-| `palladium-magic.schema.json` | `magic/*.json` — ingest: [`docs/palladium-magic-ingest.md`](palladium-magic-ingest.md) |
-| `palladium-hth.schema.json` | `palladiumHandToHand.json` |
+| `palladium-psionic.schema.json` | `psionics/*.json` (category files); registries in `psionics/utils/` — ingest: [`docs/palladium-psionic-ingest.md`](palladium-psionic-ingest.md) |
+| `palladium-magic.schema.json` | `magic/*.json` (school files); registries in `magic/utils/` — ingest: [`docs/palladium-magic-ingest.md`](palladium-magic-ingest.md) |
+| `palladium-hth.schema.json` | `skills/hand_to_hand.json` |
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |
 | `palladium-xp-table.schema.json` | `progression/xp_tables/<genre>/*.json` |
@@ -339,6 +342,8 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 | `docs/stat_engine_spec.md` | **Stat formulas** — attributes, vitals, saves, combat stacking (Live Ledger SoT) |
 | `docs/live_ledger.md` | Formula cheat sheet (defers to stat engine spec) |
 | `docs/movement_engine_spec.md` | Ground / swim / fly / leap from Spd |
+| `docs/content-catalog-layout.md` | Catalog folder layout — primary pools vs `utils/` ancillary JSON |
+| `docs/content-catalog-layout.md` | Catalog folder layout — primary pools vs `utils/` ancillary JSON |
 | `docs/nightbane-talent-ingest.md` | Talent Pass A/B ingest workflow and encoding rules |
 | `docs/palladium-skill-ingest.md` | Skill catalog Pass A/B ingest (genre-agnostic) |
 | `docs/palladium-magic-ingest.md` | Magic spell catalog Pass A/B ingest |
@@ -353,19 +358,51 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge-morphus_creation.md`) 
 
 ---
 
+## Development workflow
+
+Use this checklist **in the same PR/session** as code changes. Skipping doc updates is how agents and future-you lose track of layout and behavior.
+
+### Always (any substantive change)
+
+| Step | Action |
+|------|--------|
+| 1 | Run the right validators — at minimum `npm run validate:schemas` after content/schema edits |
+| 2 | Run targeted tests if you touched loaders, creation flow, or engine math (`npm test` or focused vitest paths) |
+| 3 | **Update documentation** — see table below |
+
+### What to update when
+
+| You changed… | Update these docs |
+|--------------|-------------------|
+| Content JSON paths, folder layout, `utils/` placement | [`docs/content-catalog-layout.md`](content-catalog-layout.md), [`docs/gemini-project-context.md`](gemini-project-context.md) content tables, relevant ingest playbook path tables, `palladiumSchemaPaths.ts` comments if needed |
+| Ingest batch rules, Pass A/B scope, validation commands | Matching ingest playbook (`docs/palladium-*-ingest.md`, `docs/nightbane-talent-ingest.md`), `.cursorrules` if agent routing changes |
+| JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
+| Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge-character_creation.md`](forge-character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
+| Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/forge-morphus_creation.md`](forge-morphus_creation.md) |
+| Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md) |
+| Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
+| Product pillars or AI protocol | [`docs/vision.md`](vision.md) |
+| New catalog type or major content scale shift | [`docs/gemini-project-context.md`](gemini-project-context.md) — counts, paths, related doc index |
+
+When unsure, add a short note to the most specific doc (ingest playbook or feature doc) and cross-link from `gemini-project-context.md` if it affects agents broadly.
+
+---
+
 ## Conventions for AI assistants
 
 1. **Do not guess Palladium rules** — derive behavior from JSON schemas, `docs/`, and book-accurate content files.
 2. **Prefer structured Morphus/talent fields** over stuffing mechanics into `description` or `customOneOffs` when the schema supports them.
 3. **Keep UI dumb** — business logic belongs in `src/lib/`, not React components.
 4. **Validate after content changes:** `npm run validate:schemas`, `npm run audit:talents` (talents), `npm run audit:skills` (skills), and/or `npm run validate:morphus`.
-5. **Talent ingest** — follow `docs/nightbane-talent-ingest.md`; flag ambiguous mechanics and ask the user before encoding.
-6. **Skill ingest** — follow `docs/palladium-skill-ingest.md`; same flag-and-ask rule (any Palladium genre).
-7. **Magic / psionic / O.C.C. / race ingest** — follow `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md` respectively.
-8. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
-9. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
-10. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
-11. **Commits** — only when the user explicitly asks.
+5. **Documentation sync** — when behavior, layout, or workflow changes, update docs in the same session (see **Development workflow** above). Ingest playbooks are living documents.
+6. **Content catalog layout** — follow `docs/content-catalog-layout.md`; ancillary JSON → `<catalog-dir>/utils/` unless documented root exception.
+7. **Talent ingest** — follow `docs/nightbane-talent-ingest.md`; flag ambiguous mechanics and ask the user before encoding.
+8. **Skill ingest** — follow `docs/palladium-skill-ingest.md`; same flag-and-ask rule (any Palladium genre).
+9. **Magic / psionic / O.C.C. / race ingest** — follow `docs/palladium-magic-ingest.md`, `docs/palladium-psionic-ingest.md`, `docs/palladium-occ-ingest.md`, `docs/palladium-race-ingest.md` respectively.
+10. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
+11. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
+12. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
+13. **Commits** — only when the user explicitly asks.
 
 ---
 

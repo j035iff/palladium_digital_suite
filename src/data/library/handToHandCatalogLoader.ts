@@ -1,12 +1,12 @@
 import type { HandToHandSkill } from '../../types'
-import palladiumHandToHand from '../content/palladiumHandToHand.json'
+import handToHandCatalog from '../content/skills/hand_to_hand.json'
 
 function loadHandToHandCatalog(): readonly HandToHandSkill[] {
-  const rows = palladiumHandToHand as unknown
+  const rows = handToHandCatalog as unknown
   return Array.isArray(rows) ? (rows as HandToHandSkill[]) : []
 }
 
-/** Hand-to-Hand catalog — top-level array in `src/data/content/palladiumHandToHand.json`. */
+/** Hand-to-Hand catalog — top-level array in `src/data/content/skills/hand_to_hand.json`. */
 export const HAND_TO_HAND_CATALOG: readonly HandToHandSkill[] = loadHandToHandCatalog()
 
 export function getHandToHandSkillById(id: string): HandToHandSkill | undefined {

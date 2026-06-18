@@ -141,7 +141,7 @@ if (palladiumSkills.length > 0) {
     console.error(`ERR content/skills — ${bad} row(s) failed schema validation`)
   }
 
-  const traitRegistry = loadJson(join(contentDir, 'skill_trait_registry.json'))
+  const traitRegistry = loadJson(join(skillsDir, 'utils/skill_trait_registry.json'))
   const knownTraits = new Set((traitRegistry.traits ?? []).map((t) => t.id))
   let traitBad = 0
   for (const row of palladiumSkills) {
@@ -167,10 +167,10 @@ if (palladiumSkills.length > 0) {
   }
 }
 
-const weaponProficiencies = loadJson(join(contentDir, 'weapon_proficiencies.json'))
+const weaponProficiencies = loadJson(join(skillsDir, 'weapon_proficiencies.json'))
 if (!Array.isArray(weaponProficiencies)) {
   failed = true
-  console.error('ERR weapon_proficiencies.json — expected top-level array')
+  console.error('ERR skills/weapon_proficiencies.json — expected top-level array')
 } else {
   let bad = 0
   for (const row of weaponProficiencies) {
@@ -178,7 +178,7 @@ if (!Array.isArray(weaponProficiencies)) {
       bad++
       if (bad <= 5) {
         console.error(
-          `ERR weapon_proficiencies.json id=${row?.id ?? '?'}:`,
+          `ERR skills/weapon_proficiencies.json id=${row?.id ?? '?'}:`,
           validateWeaponProficiencyRow.errors,
         )
       }
@@ -186,27 +186,27 @@ if (!Array.isArray(weaponProficiencies)) {
   }
   if (bad === 0) {
     console.log(
-      `OK  weapon_proficiencies.json — ${weaponProficiencies.length} rows validate`,
+      `OK  skills/weapon_proficiencies.json — ${weaponProficiencies.length} rows validate`,
     )
   } else {
     failed = true
     console.error(
-      `ERR weapon_proficiencies.json — ${bad} row(s) failed schema validation`,
+      `ERR skills/weapon_proficiencies.json — ${bad} row(s) failed schema validation`,
     )
   }
 }
 
 const progressionJson = loadJson(
-  join(contentDir, 'standard_modern_weapon_progression.json'),
+  join(skillsDir, 'utils/standard_modern_weapon_progression.json'),
 )
 if (!validateProgressionDoc(progressionJson)) {
   failed = true
   console.error(
-    'ERR standard_modern_weapon_progression.json:',
+    'ERR skills/utils/standard_modern_weapon_progression.json:',
     validateProgressionDoc.errors,
   )
 } else {
-  console.log('OK  standard_modern_weapon_progression.json — document validates')
+  console.log('OK  skills/utils/standard_modern_weapon_progression.json — document validates')
 }
 
 const racesDir = join(contentDir, 'races')
@@ -513,10 +513,10 @@ if (Array.isArray(palladiumOccs) && tableById.size > 0) {
   }
 }
 
-const palladiumHandToHand = loadJson(join(contentDir, 'palladiumHandToHand.json'))
+const palladiumHandToHand = loadJson(join(skillsDir, 'hand_to_hand.json'))
 if (!Array.isArray(palladiumHandToHand)) {
   failed = true
-  console.error('ERR palladiumHandToHand.json — expected top-level array')
+  console.error('ERR skills/hand_to_hand.json — expected top-level array')
 } else {
   let hthBad = 0
   for (const row of palladiumHandToHand) {
@@ -524,7 +524,7 @@ if (!Array.isArray(palladiumHandToHand)) {
       hthBad++
       if (hthBad <= 5) {
         console.error(
-          `ERR palladiumHandToHand.json id=${row?.id ?? '?'}:`,
+          `ERR skills/hand_to_hand.json id=${row?.id ?? '?'}:`,
           validateHandToHandRow.errors,
         )
       }
@@ -532,12 +532,12 @@ if (!Array.isArray(palladiumHandToHand)) {
   }
   if (hthBad === 0) {
     console.log(
-      `OK  palladiumHandToHand.json — ${palladiumHandToHand.length} rows validate`,
+      `OK  skills/hand_to_hand.json — ${palladiumHandToHand.length} rows validate`,
     )
   } else {
     failed = true
     console.error(
-      `ERR palladiumHandToHand.json — ${hthBad} row(s) failed schema validation`,
+      `ERR skills/hand_to_hand.json — ${hthBad} row(s) failed schema validation`,
     )
   }
 }

@@ -1942,7 +1942,7 @@ export type PalladiumTalent = {
 export type HandToHandProgressionMap = Record<string, HandToHandProgressionLevel>
 
 /**
- * Hand-to-Hand combat skill catalog row (`content/palladiumHandToHand.json`, palladium-hth.schema.json).
+ * Hand-to-Hand combat skill catalog row (`content/skills/hand_to_hand.json`, palladium-hth.schema.json).
  */
 export type HandToHandSkill = {
   id: string

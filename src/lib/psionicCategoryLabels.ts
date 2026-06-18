@@ -1,4 +1,4 @@
-import psionicGenreCategories from '../data/content/psionic_genre_categories.json'
+import psionicGenreCategories from '../data/content/psionics/utils/psionic_genre_categories.json'
 
 type GenreCategoryRef = {
   id: string

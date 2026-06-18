@@ -61,8 +61,8 @@ After each batch the agent runs `npm run validate:schemas`. **Flag ambiguous boo
 | Shared feature fragments | `src/data/schemas/palladium-feature-common.schema.json` |
 | Example row | `src/data/schemas/examples/palladium-magic.example.json` |
 | Catalog | `src/data/content/magic/*.json` (one array per **school**) |
-| School registry | `src/data/content/magic_schools.json` |
-| Cross-school borrow lists | `src/data/content/magic_cross_lists.json` |
+| School registry | `src/data/content/magic/utils/magic_schools.json` |
+| Cross-school borrow lists | `src/data/content/magic/utils/magic_cross_lists.json` |
 | Loader | `src/data/library/magicCatalogLoader.ts` |
 | School resolution | `src/lib/magicSchool.ts`, `src/lib/magicCrossLists.ts` |
 | Reference PDFs (authoring) | `src/data/reference/<genre>/` (gitignored) |
@@ -71,7 +71,7 @@ When the schema changes, **update `palladium-magic.example.json`** (do not creat
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** When ingest conventions change — school files, batch sizes, cross-list workflow, Pass A minimums — **update this document in the same PR/session** as the catalog change. See `.cursorrules`.
+**This file is the shared ingest playbook.** When ingest conventions change — school files, batch sizes, cross-list workflow, Pass A minimums — **update this document in the same PR/session** as the catalog change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
 
 ---
 

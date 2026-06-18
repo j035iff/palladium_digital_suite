@@ -90,6 +90,8 @@ Options are never hidden; they are sorted and color-coded:
 | Palladium psionic catalog ingest | `docs/palladium-psionic-ingest.md` |
 | Palladium O.C.C. catalog ingest | `docs/palladium-occ-ingest.md` |
 | Palladium race catalog ingest | `docs/palladium-race-ingest.md` |
+| Content catalog folder layout (`utils/`, genre pools) | `docs/content-catalog-layout.md` |
+| Agent workflow & doc-sync checklist | `docs/gemini-project-context.md` § Development workflow |
 | Combat / vitals scaling | `docs/combat_logic.md` |
 
 ---
@@ -98,8 +100,9 @@ Options are never hidden; they are sorted and color-coded:
 
 | Concern | Location |
 |---------|----------|
+| Layout contract (pools vs `utils/`) | `docs/content-catalog-layout.md` |
 | Genre manifest | `src/data/genres.ts` — `GENRE_MANIFEST` |
-| Player races | `src/data/content/races/player.json` |
+| Player races | `src/data/content/races/<genre>/player.json` |
 | O.C.C. pool | `src/data/content/occs/<genre>/*.json` |
 | Skills | `src/data/content/skills/*.json` (loader: `src/data/library/skillsCatalogLoader.ts`) |
 | Talents | `src/data/content/talents/common.json`, `talents/elite.json` |

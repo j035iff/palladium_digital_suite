@@ -68,7 +68,7 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`.
+**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
 
 ---
 

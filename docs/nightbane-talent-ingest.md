@@ -64,6 +64,8 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 **This file is the shared ingest playbook.** When ingest conventions change — form defaults, batch sizes, new schema fields, audit expectations, worked examples, user rulings on ambiguous mechanics — **update this document in the same PR/session** as the code or catalog change. Do not rely on chat history alone; future agents read this file via `.cursorrules`.
 
+**Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
+
 If you establish a new pattern (e.g. a new `formUsage` shape or P.P.E. structure), add a short example here so the next batch stays consistent.
 
 ---

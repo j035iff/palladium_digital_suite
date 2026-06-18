@@ -61,7 +61,7 @@ After each batch the agent runs `npm run validate:schemas` and `npm run audit:sk
 | Example rows | `src/data/schemas/examples/palladium-skill.example.json`, `palladium-skill.example-specialization.json` |
 | Catalog | `src/data/content/skills/*.json` (category-split JSON files) |
 | Loader | `src/data/library/skillsCatalogLoader.ts` |
-| Trait registry | `src/data/content/skill_trait_registry.json` |
+| Trait registry | `src/data/content/skills/utils/skill_trait_registry.json` |
 | Trait list sources | `src/data/source/skill_trait_lists/*.txt` |
 | Category file I/O | `scripts/lib/skills-catalog-fs.mjs` |
 | Reference PDFs (authoring) | `src/data/reference/<genre>/` (gitignored) |
@@ -71,6 +71,8 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 ### Living document (process rules)
 
 **This file is the shared ingest playbook.** When ingest conventions change — category file rules, batch sizes, prerequisite shapes, trait tagging, split-base patterns, validation expectations — **update this document in the same PR/session** as the catalog change. Do not rely on chat history alone; future agents should read this file (see `.cursorrules`).
+
+**Also update when paths or layout change:** [`docs/content-catalog-layout.md`](content-catalog-layout.md) (`utils/` placement, loader exclusions). **Any behavior or workflow change:** follow the doc-sync checklist in [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
 
 If you establish a new pattern (e.g. a new `logical_group` prerequisite or `splitBaseTracks` shape), add a short example here so the next batch stays consistent.
 

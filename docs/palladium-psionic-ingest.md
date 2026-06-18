@@ -62,14 +62,14 @@ After each batch the agent runs `npm run validate:schemas`. **Flag ambiguous boo
 | Example rows | `src/data/schemas/examples/palladium-psionic.example-*.json` (pattern files — update the matching pattern when that shape changes) |
 | Catalog | `src/data/content/psionics/<category>.json` |
 | Category file I/O | `scripts/lib/psionics-catalog-fs.mjs` |
-| Category registry | `src/data/content/psionic_genre_categories.json` |
-| Global rules | `src/data/content/psionic_global_rules.json` |
+| Category registry | `src/data/content/psionics/utils/psionic_genre_categories.json` |
+| Global rules | `src/data/content/psionics/utils/psionic_global_rules.json` |
 | Loader | `src/data/library/psionicCatalogLoader.ts` |
 | Reference PDFs | `src/data/reference/<genre>/` (gitignored) |
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it in the same PR/session when ingest conventions change. See `.cursorrules`.
+**This file is the shared ingest playbook.** Update it in the same PR/session when ingest conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
 
 ---
 

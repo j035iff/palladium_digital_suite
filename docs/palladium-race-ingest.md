@@ -71,13 +71,13 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 
 ### Living document (process rules)
 
-**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`.
+**This file is the shared ingest playbook.** Update it when conventions change. See `.cursorrules`. **Layout:** [`docs/content-catalog-layout.md`](content-catalog-layout.md). **Doc sync:** [`docs/gemini-project-context.md`](gemini-project-context.md) § Development workflow.
 
 ---
 
 ## Catalog layout (genre folder → audience pool)
 
-**Target structure** (mirrors O.C.C. / XP table organization):
+**See [`docs/content-catalog-layout.md`](content-catalog-layout.md)** for the shared layout contract (`utils/` ancillary files, loader rules, and move checklist). Genre-scoped race pools:
 
 ```
 src/data/content/races/
