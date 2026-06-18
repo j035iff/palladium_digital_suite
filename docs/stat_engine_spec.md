@@ -52,7 +52,7 @@ Use these bucket names consistently in docs, ledger hints, and code comments.
 | Token | Meaning | Typical data source |
 |-------|---------|---------------------|
 | **Race** | Racial bonuses | `src/data/content/races/*.json` → `innateBonuses`, `vitals` |
-| **OCC** | O.C.C. / R.C.C. bonuses | `src/data/content/occs/*.json` → static + variable resolutions |
+| **OCC** | O.C.C. / R.C.C. bonuses | `src/data/content/occs/<genre>/*.json` → static + variable resolutions |
 | **Skills** | Physical (and other) skill combat/stat mods | `skills/*.json`, `aggregateSkillPhysicalBonuses()` |
 | **HtH** | Hand-to-Hand progression | Hand-to-hand catalog → `accumulateHandToHandBonuses()` |
 | **Pool** | Attribute pool assignment | `creationAttributeAssignments` |

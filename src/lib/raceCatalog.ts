@@ -1,5 +1,13 @@
+import type { CatalogRace } from '../data/library/raceCatalogLoader'
 import { isWhitelistedForHostGenre } from './genreGating'
 import type { Race } from '../types'
+
+export function raceCatalogGenreId(
+  hostGenreId?: string | null,
+  creationGenreId?: string | null,
+): string {
+  return (hostGenreId ?? creationGenreId ?? 'nightbane').toLowerCase()
+}
 
 export type RaceAudience = 'player' | 'npc' | 'gm_approval'
 
@@ -15,6 +23,17 @@ export function normalizeRaceAudience(
   poolAudience: RaceAudience,
 ): RaceAudience {
   return row.raceAudience ?? poolAudience
+}
+
+function matchesHostGenre(
+  race: Race | CatalogRace,
+  hostGenreId: string,
+): boolean {
+  const genre = hostGenreId.toLowerCase()
+  if ('catalogGenreId' in race && race.catalogGenreId) {
+    return race.catalogGenreId === genre
+  }
+  return isWhitelistedForHostGenre(race, hostGenreId)
 }
 
 /** Player character creation — standard selectable races. */
@@ -33,15 +52,15 @@ export function isGmApprovalRacePool(race: Race): boolean {
 }
 
 export function raceAllowedInCharacterCreation(
-  race: Race,
+  race: Race | CatalogRace,
   hostGenreId: string,
 ): boolean {
   if (!isPlayerRacePool(race)) return false
-  return isWhitelistedForHostGenre(race, hostGenreId)
+  return matchesHostGenre(race, hostGenreId)
 }
 
 export function listRacesForCharacterCreation(
-  registry: readonly Race[],
+  registry: readonly (Race | CatalogRace)[],
   hostGenreId: string,
 ): readonly Race[] {
   return registry
@@ -50,21 +69,21 @@ export function listRacesForCharacterCreation(
 }
 
 export function listNpcRaces(
-  registry: readonly Race[],
+  registry: readonly (Race | CatalogRace)[],
   hostGenreId: string,
 ): readonly Race[] {
   return registry
-    .filter((r) => isNpcRacePool(r) && isWhitelistedForHostGenre(r, hostGenreId))
+    .filter((r) => isNpcRacePool(r) && matchesHostGenre(r, hostGenreId))
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export function listGmApprovalRaces(
-  registry: readonly Race[],
+  registry: readonly (Race | CatalogRace)[],
   hostGenreId: string,
 ): readonly Race[] {
   return registry
     .filter(
-      (r) => isGmApprovalRacePool(r) && isWhitelistedForHostGenre(r, hostGenreId),
+      (r) => isGmApprovalRacePool(r) && matchesHostGenre(r, hostGenreId),
     )
     .sort((a, b) => a.name.localeCompare(b.name))
 }

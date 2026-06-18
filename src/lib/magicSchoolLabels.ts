@@ -1,4 +1,4 @@
-import magicSchoolsRef from '../data/content/magic_schools.json'
+import magicSchoolsRef from '../data/content/magic/utils/magic_schools.json'
 import { normalizeMagicSchool } from './magicSchool'
 
 type MagicSchoolsRef = {

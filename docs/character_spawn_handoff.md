@@ -2,7 +2,7 @@
 
 ## Overview
 
-This specification covers **what happens when the player commits a new character** — after the [Character Creation Forge](./forge-character_creation.md) Tab 8 gates pass and the user confirms the spawn modal. It is distinct from in-forge editing (Continue, yellow/red repair) and from [app launch](./app_viewport_launcher.md).
+This specification covers **what happens when the player commits a new character** — after the [Character Creation Forge](./forge/character_creation.md) Tab 8 gates pass and the user confirms the spawn modal. It is distinct from in-forge editing (Continue, yellow/red repair) and from [app launch](./app_viewport_launcher.md).
 
 **Terminology:** Nightbane UI labels **Facade** and **Morphus**. Persisted save JSON uses `character.primary` and `character.morphus` (`ActiveForm`: `'primary' | 'morphus'`).
 
@@ -98,8 +98,8 @@ Blockers render on Tab 8; spawn button stays disabled until resolved.
 
 | Phase | Document |
 |-------|----------|
-| Tab availability, alignment UI, summary, Continue N/A | [forge-character_creation.md](./forge-character_creation.md) Tab 8 |
-| Pending dice (Tabs 5–6), abilities (Tab 7) | [forge-character_creation.md](./forge-character_creation.md) Tabs 5–7 |
+| Tab availability, alignment UI, summary, Continue N/A | [forge/character_creation.md](./forge/character_creation.md) Tab 8 |
+| Pending dice (Tabs 5–6), abilities (Tab 7) | [forge/character_creation.md](./forge/character_creation.md) Tabs 5–7 |
 | Modal + `applySpawnSheetHandoff` + sheet mode | This document |
 
 ---

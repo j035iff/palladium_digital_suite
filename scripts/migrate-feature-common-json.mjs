@@ -4,7 +4,7 @@
  *
  * Run: node scripts/migrate-feature-common-json.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -127,15 +127,18 @@ function migrateJsonObjectFile(absPath) {
   writeFileSync(absPath, `${JSON.stringify(migrateRow({ ...doc }), null, 2)}\n`, 'utf8')
 }
 
+const psionicsDir = join(root, 'src/data/content/psionics')
 const targets = [
-  join(root, 'src/data/content/palladiumPsionics.json'),
+  ...readdirSync(psionicsDir)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => join(psionicsDir, f)),
   join(root, 'src/data/content/magic/wizard.json'),
   join(root, 'src/data/schemas/examples/palladium-psionic.example-mechanical.json'),
   join(root, 'src/data/schemas/examples/palladium-psionic.example-summoned.json'),
 ]
 
 for (const path of targets) {
-  if (path.endsWith('wizard.json') || path.includes('palladiumPsionics')) {
+  if (path.endsWith('wizard.json') || path.includes(`${join('content', 'psionics')}`)) {
     const count = migrateJsonArrayFile(path)
     console.log(`OK  ${path} — ${count} row(s) migrated`)
   } else {

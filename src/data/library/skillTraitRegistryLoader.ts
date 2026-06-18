@@ -1,5 +1,5 @@
 import type { PalladiumSkillCatalogEntry } from './catalogTypes'
-import registryData from '../content/skill_trait_registry.json'
+import registryData from '../content/skills/utils/skill_trait_registry.json'
 
 export type SkillTraitDefinition = {
   id: string

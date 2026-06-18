@@ -2,7 +2,7 @@
 
 ## 1. Overview & Architecture
 
-The Morphus Creation Engine is a highly dynamic, nested Sub-Forge located within **Tab 6 (Traits)** of the master [Character Creation Forge](./forge-character_creation.md) sequence. Built upon the [Universal Forge Navigation Engine](./universal_forge_navigation_engine.md), it is designed to seamlessly handle the complex, deeply recursive, and variable-driven tables of the Nightbane Morphus generation rules without overwhelming the user.
+The Morphus Creation Engine is a highly dynamic, nested Sub-Forge located within **Tab 6 (Traits)** of the master [Character Creation Forge](character_creation.md) sequence. Built upon the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md), it is designed to seamlessly handle the complex, deeply recursive, and variable-driven tables of the Nightbane Morphus generation rules without overwhelming the user.
 
 **Parent gate:** The master forge **Roll Pending** tab (Tab 5) must be complete before Morphus work begins — Facade stats are finalized upstream; all Morphus logic lives entirely inside this Sub-Forge.
 

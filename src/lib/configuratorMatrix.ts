@@ -132,7 +132,7 @@ export function buildConfiguratorScrollLayout<T extends { id: string }>(
   }
 }
 
-/** Configurator list tier (forge-character_creation.md Tab 1). */
+/** Configurator list tier (docs/forge/character_creation.md Tab 1). */
 export type ConfiguratorTier = 1 | 2 | 3
 
 export type ConfiguratorTierResult = {

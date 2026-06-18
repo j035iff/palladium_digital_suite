@@ -386,7 +386,7 @@
     ],
     "synergies": [
       {
-        "skillId": "skill_identify_plants_and_fruit",
+        "skillId": "skill_identify_plants_and_fruits",
         "description": "+5% bonus to Identify Plants and Fruit."
       },
       {

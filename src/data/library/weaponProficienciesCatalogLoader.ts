@@ -1,5 +1,5 @@
 import type { WeaponProficiencyCatalogEntry } from './catalogTypes'
-import weaponProficienciesData from '../content/weapon_proficiencies.json'
+import weaponProficienciesData from '../content/skills/weapon_proficiencies.json'
 
 const rows = weaponProficienciesData as unknown
 

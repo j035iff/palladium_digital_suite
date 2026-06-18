@@ -1,0 +1,1137 @@
+[
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_activate_dimensional_portal",
+    "name": "Activate Dimensional Portal",
+    "description": "This power allows psychics to open some dimensional portals. The portal must already exist (the character cannot create a dimensional portal). A protected portal will resist being opened by interlopers.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "One melee round per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "1 melee round"
+    },
+    "save": {
+      "summary": "None; protected portals will have a standard save, modified by any bonuses of its creator.",
+      "saveKind": "standard"
+    },
+    "limitations": {
+      "otherLimitations": "Applicable only to dimensional portals to and from the Astral Plane, astral domains, astral kingdoms, Dream Pools, the Dreamstream and the Nightlands."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_alter_aura",
+    "name": "Alter Aura",
+    "description": "A truly unique power that many psychic investigators claim is impossible and does not exist. Only a handful of physical psychics can manipulate their physical energy in such a way that it changes their aura. The altered aura will send the wrong message to those who can see auras. Alterations include: General level of experience can be made to seem much lower (level 1 or 2) or much higher (2D4 levels higher) than it really is; Conceal the presence of psychic powers; Conceal level of base P.P.E. (made to seem much lower); Conceal the presence of magic.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One hour per each level of experience.",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_bio_manipulation",
+    "name": "Bio-Manipulation (the evil eye)",
+    "description": "The psychic is able to induce physical trauma to the nervous system of others by sheer force of will and psychic energy. Intended victims must be within line of vision or their exact location known to the psychic. Each affects only one person per attack and can be used in any combination.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 78
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10,
+      "notes": "Cost is per each individual effect inflicted. The duration can be extended 4-16 (4D4) minutes per additional 6 I.S.P."
+    },
+    "range": {
+      "summary": "160 feet (48.8 m)"
+    },
+    "duration": {
+      "summary": "4-16 minutes (roll 4D4)",
+      "kind": "minute",
+      "dice": "4D4"
+    },
+    "save": {
+      "summary": "Standard; if a character successfully saves against the attack he is not affected at all.",
+      "saveKind": "standard"
+    },
+    "subAbilities": [
+      {
+        "name": "Blind",
+        "description": "Temporarily knocks out the victim's optic nerves.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "blind"
+          ],
+          "combatModifiers": {
+            "strike": -9,
+            "parry": -9,
+            "dodge": -9
+          }
+        }
+      },
+      {
+        "name": "Deafness",
+        "description": "Can be caused by manipulating the eardrum. Victims cannot hear anything.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "deaf"
+          ],
+          "combatModifiers": {
+            "strike": -3,
+            "parry": -3,
+            "dodge": -3,
+            "initiative": -99,
+            "notes": "-6 to parry or dodge attacks from behind."
+          }
+        }
+      },
+      {
+        "name": "Mute",
+        "description": "Impairs the victim's vocal cords, making speech impossible.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "mute"
+          ],
+          "combatModifiers": {
+            "strike": -2,
+            "parry": -2,
+            "dodge": -2,
+            "notes": "Penalties only apply for the first melee due to shock/panic."
+          }
+        }
+      },
+      {
+        "name": "Pain",
+        "description": "By manipulating the nerve centers, the psionic can induce terrible pain, shooting throughout the body.",
+        "damage": {
+          "formula": "1 point of H.P. per minute",
+          "isDirectToHp": true
+        },
+        "inflictedModifiers": {
+          "combatModifiers": {
+            "strike": -6,
+            "parry": -6,
+            "dodge": -6
+          }
+        }
+      },
+      {
+        "name": "Paralysis",
+        "description": "Immobilizes the motor part of the brain, causing legs and arms to stop functioning.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "paralyzed"
+          ]
+        }
+      },
+      {
+        "name": "Stun",
+        "description": "This attack disorients and confuses its victims.",
+        "inflictedModifiers": {
+          "statusEffects": [
+            "stunned"
+          ],
+          "combatModifiers": {
+            "strike": -4,
+            "parry": -4,
+            "dodge": -4,
+            "speedMultiplier": 0.5,
+            "attacksPerMelee": -1
+          }
+        }
+      },
+      {
+        "name": "Tissue Manipulation",
+        "description": "Irritates nerve fibers causing itching or temperature fluctuations.",
+        "inflictedModifiers": {
+          "combatModifiers": {
+            "strike": -1,
+            "parry": -1,
+            "dodge": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_death_trance_physical",
+    "name": "Death Trance",
+    "description": "A state of mind over matter that slows the metabolism to such a degree that it creates a temporary state of suspended animation, simulating death. Without hospital facilities, even a medical doctor is likely to believe the character is dead (1-89% likelihood). The effects of drugs, toxins and chemicals are slowed to a crawl, doing no damage or effect, but will take full effect the instant the death trance is stopped (unless treatment is administered first). While in the death-like state, the psychic can not be roused or respond to any type of stimulation, including psychic probes. This means he is incapable of attacking or defending himself in any way until the trance is broken.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 78
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 1,
+      "notes": "It's easier for the physical psychic to control his body, because that's the focus of his powers."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "As long as the psychic senses he must feign death, up to a maximum of four days.",
+      "kind": "special"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_ectoplasm",
+    "name": "Ectoplasm",
+    "description": "This mystifying ability enables the psychic to create a slightly luminous, vapor-like substance that is extruded from the pores. Ectoplasm has two forms: an invisible vapor and a luminous, solid state. The vapor is a sort of floating, probing finger that can snuff out candles, open doors, knock over or pick up small objects (weighing under 9 ounces/255 grams), tap somebody on the shoulder, rustle leaves and knock on a door. The vapor can not go through solid objects, it can slip through keyholes, cracks under doors or loose seals around a window. The solid state of ectoplasm can be shaped into an extra limb, such as a hand or arm and hand, or tentacle or even a foot. The ectoplasmic limb appears as a white, slightly luminous appendage connected to a trail of ectoplasm stretching back to its creator like a lifeline of silly putty. The solid ectoplasmic limb has much greater strength; able to carry, lift or hold up to 40 lbs/18 kg. A vapor or solid appendage must be controlled by its creator at all times (except the automatic dodge); thus, it has a number of attacks/actions equal to its creator's. However, each attack/action by the ectoplasm counts as one of the character's attacks/actions that melee.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 78
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 12,
+      "notes": "Vapor costs 6 I.S.P., Solid costs 12 I.S.P."
+    },
+    "range": {
+      "summary": "40 feet + 5 feet per level of experience (12.2 + 1.5 m)."
+    },
+    "duration": {
+      "summary": "4 minutes (16 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "4 minutes"
+    },
+    "spawnedPresence": {
+      "kind": "construct",
+      "name": "Ectoplasm Appendage",
+      "derivedHealth": "Astral S.D.C. is 40 plus one hit point. If destroyed, the creator takes 1 hit point and 10 S.D.C. of physical damage.",
+      "combatModifiers": {
+        "dodge": 5,
+        "parry": 1,
+        "strike": 1,
+        "notes": "Gets an automatic dodge against all attacks. Attacks per melee equal to creator."
+      },
+      "movement": {
+        "flightSpeed": "18 mph (29 km/h)"
+      },
+      "statModifiers": {
+        "ps": 4
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_electrokinesis",
+    "name": "Electrokinesis",
+    "description": "Electrokinesis is a psychic power that allows the psychic to exert amazing physical control over electricity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 79
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 0,
+      "notes": "Varies by effect."
+    },
+    "range": {
+      "summary": "Varies"
+    },
+    "duration": {
+      "summary": "Varies",
+      "kind": "special"
+    },
+    "subAbilities": [
+      {
+        "name": "Electrical Resistance",
+        "description": "The psychic can manipulate his body so to become resistant to electricity. Up to 60,000 volts will inflict no damage or ill effect. Currents greater than 60,000 volts, including lightning and magic electricity, do half damage.",
+        "range": {
+          "summary": "Self"
+        },
+        "duration": {
+          "summary": "3 minutes per level of experience.",
+          "kind": "minute",
+          "perLevel": "3 minutes"
+        },
+        "isp": {
+          "baseActivation": 4
+        },
+        "grantedModifiers": {
+          "immunities": [
+            "electricity"
+          ]
+        }
+      },
+      {
+        "name": "Electrical Discharge",
+        "description": "The character can cause static electricity within a six foot (1.8m) area, as well as emit an electrical discharge by touch.",
+        "range": {
+          "summary": "Touch or 2 foot distance."
+        },
+        "duration": {
+          "summary": "Instant",
+          "kind": "instant"
+        },
+        "isp": {
+          "baseActivation": 2
+        },
+        "damage": {
+          "formula": "1D6"
+        }
+      },
+      {
+        "name": "Manipulate Electrical Devices",
+        "description": "Through focused thought, the psychic can enforce a limited control over electrical devices.",
+        "range": {
+          "summary": "45 feet + 5 feet per level of experience."
+        },
+        "duration": {
+          "summary": "2 minutes per level of experience.",
+          "kind": "minute",
+          "perLevel": "2 minutes"
+        },
+        "isp": {
+          "baseActivation": 4
+        }
+      },
+      {
+        "name": "Sense Electricity",
+        "description": "The psychic can sense or feel electricity and pinpoint its exact location with fair expertise.",
+        "range": {
+          "summary": "45 feet + 5 feet per level of experience."
+        },
+        "duration": {
+          "summary": "2 minutes",
+          "kind": "minute",
+          "flat": 2
+        },
+        "isp": {
+          "baseActivation": 2,
+          "notes": "Per every 2 minutes."
+        },
+        "baseSkill": {
+          "label": "Success ratio",
+          "basePercent": 55,
+          "perLevel": 5
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_hydrokinesis",
+    "name": "Hydrokinesis",
+    "description": "This ability enables the character to use psychic energy to sense and influence water.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 79
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 0,
+      "notes": "Varies by effect."
+    },
+    "range": {
+      "summary": "Varies"
+    },
+    "duration": {
+      "summary": "Varies",
+      "kind": "special"
+    },
+    "subAbilities": [
+      {
+        "name": "Sense Chemical Impurities",
+        "description": "The psychic can sense whether or not water is polluted/contains other substances.",
+        "range": {
+          "summary": "Self/six inches"
+        },
+        "duration": {
+          "summary": "One minute (4 melees)",
+          "kind": "minute",
+          "flat": 1
+        },
+        "isp": {
+          "baseActivation": 2
+        },
+        "baseSkill": {
+          "label": "Purity check",
+          "basePercent": 70,
+          "perLevel": 5,
+          "notes": "To determine if pure/drinkable. 35% + 5% per level to identify general nature of pollutant."
+        }
+      },
+      {
+        "name": "Boil Water",
+        "description": "The psychic can increase the temperature of water, raising it to boiling level within one minute.",
+        "range": {
+          "summary": "8 feet + 2 feet per level of experience."
+        },
+        "duration": {
+          "summary": "One minute",
+          "kind": "minute",
+          "flat": 1
+        },
+        "isp": {
+          "baseActivation": 3,
+          "notes": "Per gallon of water."
+        }
+      },
+      {
+        "name": "Water Spout",
+        "description": "An ability that enables the psychic to control and hurl water.",
+        "range": {
+          "summary": "20 feet"
+        },
+        "duration": {
+          "summary": "Instant",
+          "kind": "instant"
+        },
+        "isp": {
+          "baseActivation": 5
+        },
+        "damage": {
+          "formula": "2D4",
+          "notes": "Only if boiling water is hurled."
+        },
+        "inflictedModifiers": {
+          "statusEffects": [
+            "blinded",
+            "loss of initiative"
+          ],
+          "combatModifiers": {
+            "attacksPerMelee": -1
+          }
+        }
+      },
+      {
+        "name": "Sense Water",
+        "description": "The character can sense the presence of any water exposed to the open air automatically.",
+        "range": {
+          "summary": "20 feet"
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "special"
+        },
+        "isp": {
+          "baseActivation": 0
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_impervious_to_cold",
+    "name": "Impervious to Cold",
+    "description": "A mind over matter discipline which enables the character to suffer absolutely no ill effects or discomfort from exposure to even extreme freezing conditions.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 80
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "20 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "20 minutes"
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "cold"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_impervious_to_fire_heat",
+    "name": "Impervious to Fire/Heat",
+    "description": "Another mind over matter discipline enabling the psychic to endure intense heat, fire, boiling water, hot coals, and so on without suffering pain, damage or scarring. Magic fires inflict half damage.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 80
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "3 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "3 minutes"
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "fire",
+        "heat"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_impervious_to_poison_toxin",
+    "name": "Impervious to Poison/Toxin",
+    "description": "The character can negate the full effects of poisons and toxic chemicals which he has ingested (eaten or drank) or introduced into the bloodstream, as long as he/she has advance knowledge of its deadly properties. A poison, toxin, or drug which has been unknowingly inflicted (and starting to take effect) can be negated too, but will do half damage or effect before it can be completely negated.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 80
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees)",
+      "kind": "minute",
+      "flat": 2
+    },
+    "baseSkill": {
+      "label": "Poison identification",
+      "basePercent": 30,
+      "perLevel": 4,
+      "notes": "To identify poisons."
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "poison",
+        "toxin"
+      ],
+      "combatModifiers": {
+        "savePoison": 2,
+        "saveToxin": 2
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_levitation",
+    "name": "Levitation",
+    "description": "Levitation is a limited form of telekinesis that can raise an object (or even a person) straight up into the air and suspend it there (hover). Small objects weighing two pounds (0.9 kg) or less are the easiest to levitate. Medium size objects weighing 3 to 20 pounds (1.4 to 9.1 kg) are more difficult, requiring greater concentration.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 80
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Small objects cost 2, Medium cost 6.",
+      "dynamicCosts": [
+        {
+          "trigger": "Weight: > 20 lbs",
+          "costFormula": "6 I.S.P. plus 1 I.S.P. per additional 10 lbs."
+        }
+      ]
+    },
+    "range": {
+      "summary": "Up to 60 feet/18.3 m away."
+    },
+    "duration": {
+      "summary": "2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_pyrokinesis",
+    "name": "Pyrokinesis",
+    "description": "Pyrokinesis is a psychic power that gives a character the power to manipulate fire.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 81
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 0,
+      "notes": "Varies by effect."
+    },
+    "range": {
+      "summary": "Varies"
+    },
+    "duration": {
+      "summary": "Varies",
+      "kind": "special"
+    },
+    "subAbilities": [
+      {
+        "name": "Fire Resistant",
+        "description": "The psychic can endure great heat and fire with minimal ill effect. Damage is reduced by half. Magic fires do full damage.",
+        "range": {
+          "summary": "Self"
+        },
+        "duration": {
+          "summary": "5 minutes per level of experience.",
+          "kind": "minute",
+          "perLevel": "5 minutes"
+        },
+        "isp": {
+          "baseActivation": 2
+        }
+      },
+      {
+        "name": "Spontaneous Combustion",
+        "description": "The ability to create a spark that will ignite combustible material.",
+        "range": {
+          "summary": "30 feet"
+        },
+        "duration": {
+          "summary": "Instant",
+          "kind": "instant"
+        },
+        "isp": {
+          "baseActivation": 2
+        }
+      },
+      {
+        "name": "Fuel Flame",
+        "description": "The character can feed the fire with psychic energy, doubling it in size.",
+        "range": {
+          "summary": "30 feet + 5 feet per level of experience."
+        },
+        "duration": {
+          "summary": "Instant",
+          "kind": "instant"
+        },
+        "isp": {
+          "baseActivation": 4
+        }
+      },
+      {
+        "name": "Extinguish Flames",
+        "description": "The power to instantly put out an area of fire.",
+        "range": {
+          "summary": "30 feet + 5 feet per level of experience."
+        },
+        "duration": {
+          "summary": "Permanent",
+          "kind": "special"
+        },
+        "isp": {
+          "baseActivation": 4
+        }
+      },
+      {
+        "name": "Create Flame",
+        "description": "The incredible ability to create fire out of thin air.",
+        "range": {
+          "summary": "30 feet + 2 feet per level of experience."
+        },
+        "duration": {
+          "summary": "2 minutes per level of experience.",
+          "kind": "minute",
+          "perLevel": "2 minutes"
+        },
+        "isp": {
+          "baseActivation": 20,
+          "notes": "25 I.S.P. for hurled fireball."
+        },
+        "damage": {
+          "formula": "4D6 (Pillar) or 6D6 (Wall/Fireball)"
+        }
+      },
+      {
+        "name": "Sense Fire",
+        "description": "The psychic can sense or feel the presence of fire and pinpoint its exact location.",
+        "range": {
+          "summary": "100 feet + 5 feet per level of experience."
+        },
+        "duration": {
+          "summary": "2 minutes",
+          "kind": "minute",
+          "flat": 2
+        },
+        "isp": {
+          "baseActivation": 2,
+          "notes": "Per every 2 minutes."
+        },
+        "baseSkill": {
+          "label": "Success ratio",
+          "basePercent": 90,
+          "perLevel": 0
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_resist_fatigue",
+    "name": "Resist Fatigue",
+    "description": "A mind over matter discipline which enables the character to engage in physical activity without suffering from exhaustion. Although fatigue is temporarily suspended, the psychic will feel extremely tired and may even collapse when the psi-power's time limit lapses.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 81
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "1 hour + 20 minutes per level of experience.",
+      "kind": "hour",
+      "perLevel": "20 minutes"
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "fatigue"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_resist_hunger",
+    "name": "Resist Hunger",
+    "description": "Another mind over matter discipline that subdues any feeling of hunger, allowing the character to function at full effectiveness without nourishment. It is important to point out that while the psi-power maintains full operations, the body is still suffering from malnutrition and starvation. Loses 3 lbs of weight per day.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 82
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "6 hours",
+      "kind": "hour",
+      "flat": 6
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "hunger"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_resist_thirst",
+    "name": "Resist Thirst",
+    "description": "This ability is identical to the resist hunger psi-power except it applies to the consumption of water. It does not negate the long-range damage from dehydration.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 82
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "6 hours",
+      "kind": "hour",
+      "flat": 6
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "thirst"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_summon_inner_strength",
+    "name": "Summon Inner Strength",
+    "description": "This psi-power enables the character to draw on his inner reserves of strength to ward off pain and fatigue. Every time the psychic calls upon his inner strength, the following bonuses apply: Add +10 S.D.C. Add +2 to save vs poison or toxins. Add +5% to save vs coma/death. Fatigue is temporarily forgotten and the character can function as if he was fully rested for the full duration of the summon inner strength power.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 82
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "10 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "10 minutes"
+    },
+    "grantedModifiers": {
+      "immunities": [
+        "fatigue",
+        "pain"
+      ],
+      "statModifiers": {
+        "sdc": 10
+      },
+      "combatModifiers": {
+        "savePoison": 2,
+        "saveToxin": 2
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_telekinesis",
+    "name": "Telekinesis",
+    "description": "Telekinesis is the ability to move objects without any other means than directed psychic energy. The character can make an object hop, fall, roll, rise into the air, suspend it there (hover) or make it fly across the room. In order to move an object by telekinesis, the item must be clearly visible, within the psychic's range and the point of focus. As usual, the psychic must concentrate on what he is doing; thus, each telekinetic feat counts as one of the character's physical attacks.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 82
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 3,
+      "notes": "Small objects cost 3, Medium cost 8.",
+      "dynamicCosts": [
+        {
+          "trigger": "Weight: > 20 lbs",
+          "costFormula": "8 I.S.P. for the first 20 lbs, plus 1 I.S.P. for each additional 10 lbs."
+        }
+      ]
+    },
+    "range": {
+      "summary": "Up to 60 feet (18.3 m) away."
+    },
+    "duration": {
+      "summary": "2 minutes per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "grantedModifiers": {
+      "combatModifiers": {
+        "strike": 3,
+        "parry": 4,
+        "notes": "Physical/skill bonuses do not apply to telekinesis strikes/parries."
+      }
+    },
+    "damage": {
+      "formula": "Varies by weight (1D4 to 4D6+)",
+      "notes": "Small: 1D4 to 1D6. Medium: 2D4 to 3D6. Large: 4D6 + 1D6 per additional 20 lbs."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_telekinetic_leap",
+    "name": "Telekinetic Leap",
+    "description": "Boosts leaping ability, propelling the psychic via telekinetic force. Can be used in conjunction with a leap kick attack.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 8
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "One melee attack/action (leap)",
+      "kind": "melee_round"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "movement": {
+        "leapHighBonus": "+3 feet (0.9 m) per level of experience",
+        "leapLongBonus": "+5 feet (1.5 m) per level of experience"
+      }
+    },
+    "damage": {
+      "formula": "6D6+6 + P.S. bonus",
+      "notes": "Damage applies if used as a leap kick attack."
+    },
+    "backlash": {
+      "damageFormula": "2D6",
+      "notes": "Psychic takes 2D6 damage from the hard impact of a leap kick. An acrobatics, gymnastics, or roll with punch/fall/impact roll may be needed to land safely."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_telekinetic_punch",
+    "name": "Telekinetic Punch",
+    "description": "Deliver a powerful punch or kick-like force through telekinetic energy. Used in conjunction with a normal, physical attack that can be parried or dodged by the enemy. The I.S.P. is spent whether or not the punch or kick actually hits the target.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 117
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "By touch or one foot (0.3 m) per level of experience."
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "damage": {
+      "attackProfiles": [
+        {
+          "name": "Telekinetic Punch",
+          "formula": "4D6 + P.S. bonus"
+        },
+        {
+          "name": "Telekinetic Kick",
+          "formula": "5D6 + P.S. bonus"
+        }
+      ]
+    },
+    "backlash": {
+      "damageFormula": "1D6",
+      "saveToAvoid": 14,
+      "notes": "Damage is from wrenched muscles or a dislocated joint from the extra strain on the body."
+    }
+  }
+]

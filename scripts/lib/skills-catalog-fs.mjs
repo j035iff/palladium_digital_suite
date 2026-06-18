@@ -12,6 +12,16 @@ export function skillCategoryFileName(category) {
   return `${category.toLowerCase().replace(/\s+/g, '_')}.json`
 }
 
+/** Non-skill catalog JSON at `content/skills/` root (category pools live alongside as `*.json`). */
+export const SKILLS_DIR_ANCILLARY_JSON = new Set([
+  'hand_to_hand.json',
+  'weapon_proficiencies.json',
+])
+
+export function isSkillCategoryCatalogFile(file) {
+  return file.endsWith('.json') && !SKILLS_DIR_ANCILLARY_JSON.has(file)
+}
+
 export function primarySkillCategory(skill) {
   const cats = skill?.categories
   if (!Array.isArray(cats) || cats.length === 0) {
@@ -36,7 +46,7 @@ export function groupSkillsByCategoryFile(skills) {
 
 export function loadSkillsFromDir(skillsDir) {
   const files = readdirSync(skillsDir)
-    .filter((f) => f.endsWith('.json'))
+    .filter((f) => isSkillCategoryCatalogFile(f))
     .sort()
   const skills = []
   const seenIds = new Map()
@@ -77,7 +87,7 @@ export function writeSkillsToDir(skillsDir, skills) {
 
 export function listSkillCatalogFiles(skillsDir) {
   return readdirSync(skillsDir)
-    .filter((f) => f.endsWith('.json'))
+    .filter((f) => isSkillCategoryCatalogFile(f))
     .map((f) => basename(f))
     .sort()
 }

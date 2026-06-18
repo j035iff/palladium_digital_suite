@@ -1,0 +1,763 @@
+[
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_bio_regeneration_healer",
+    "name": "Bio-Regeneration",
+    "description": "This is the ability to mentally heal oneself of disease, poison, or physical damage. Unfortunately, this ability is limited to the healing of oneself and cannot help others. The process requires one full minute of concentration. Bio-Regeneration does not restore missing limbs. When cuts and scrapes are healed through bio-regeneration, there is NO scarring. The psionic can regenerate as often as once every other minute.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "healing": {
+      "hpFormula": "2D6",
+      "sdcFormula": "3D6",
+      "notes": "Restores per melee round, leaves no scars."
+    },
+    "lengthOfTrance": {
+      "summary": "One full minute of concentration.",
+      "preparationMinutes": "1"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_deaden_pain",
+    "name": "Deaden Pain [cite: 10]",
+    "description": "The ability to deaden pain can be used as a painkiller which temporarily negates existing pain or as an anesthetic to be used for surgery. [cite: 13]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is 4 I.S.P. [cite: 12]"
+    },
+    "range": {
+      "summary": "Immediate proximity, touch or within 3 feet (0.9 m). [cite: 11]"
+    },
+    "duration": {
+      "summary": "One hour per level of experience. [cite: 11]",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "lengthOfTrance": {
+      "summary": "Two minutes (8 melee rounds). [cite: 12]",
+      "preparationMinutes": "2"
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "immunities": [
+        "pain"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_detect_psionics",
+    "name": "Detect Psionics",
+    "description": "This is a mental probe that will indicate the presence of psionic energy within the immediate area. The probe cannot be used to pinpoint the exact location of psychic energy nor the level of power other than a vague sense of weak, medium or powerful. It will indicate whether an individual is psychic by directing the probe at a specific person. It will also indicate whether a group mind block is in effect and if a person is psionically possessed.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "Self, sensing range is 30 feet (9.1 m) per level of experience."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_exorcism",
+    "name": "Exorcism [cite: 14]",
+    "description": "The healer can perform a rite of exorcism that uses psychic energy to expel the loathsome being from its mortal, host body. [cite: 19] A completely successful exorcism will free the victim of the supernatural force that controls him and send it back to it's own non-earthly world. [cite: 20] A partially successful exorcism will drive the evil force out of the possessed person or animal, but does not send the damnable thing back to it's own dimension. [cite: 21] Thus, it can try to possess the healer or flee to wander the Earth in search of new victims. [cite: 22] During the exorcism, the possessing force can use whatever powers it may have, as well as physical attacks or any special psychic abilities of its host body. [cite: 31] Fortunately, the rite of exorcism weakens the creature, reducing its number of attacks per melee by half. [cite: 32]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10,
+      "notes": "Cost is 10 I.S.P. [cite: 18]"
+    },
+    "range": {
+      "summary": "Immediate area, touch or within 8 feet (2.4 m). [cite: 15]"
+    },
+    "duration": {
+      "summary": "Instant, if successful. [cite: 15]",
+      "kind": "instant"
+    },
+    "lengthOfTrance": {
+      "summary": "30 minutes of preparation and 6D6 minutes with the possessed person or animal. [cite: 16]",
+      "preparationMinutes": "30"
+    },
+    "baseSkill": {
+      "label": "Expulsion",
+      "basePercent": 28,
+      "perLevel": 7,
+      "notes": "First, roll to see if the being has been expelled from its victim's body. [cite: 26] Success ratio: 28%+7% per each additional level of experience. [cite: 27] Second, roll to see if the thing is forced back into its own dimension. [cite: 27] Success Ratio: 21%+7% per each additional level of experience. [cite: 28] The chance of a successful exorcism on a nega-psychic is reduced by half, as is the success ratio for sending the being back to its own dimension. [cite: 29] The same is true of some of the more powerful supernatural beings. [cite: 30]"
+    },
+    "limitations": {
+      "otherLimitations": "Note: can only exorcise the living. [cite: 17] An exorcism can only be used on living persons or animals whose bodies are inhabited by a supernatural entity or creature. [cite: 23]"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_healing_touch",
+    "name": "Healing Touch [cite: 37]",
+    "description": "The healing touch is a remarkable healing ability that can instantly heal cuts, burns, bruises and similar physical wounds. [cite: 40]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 6,
+      "notes": "Cost is 6 I.S.P. [cite: 39]"
+    },
+    "range": {
+      "summary": "Touch. [cite: 38]"
+    },
+    "duration": {
+      "summary": "Instant, with lasting effects. [cite: 39]",
+      "kind": "instant"
+    },
+    "lengthOfTrance": {
+      "summary": "Two minutes (8 melee rounds). [cite: 39]",
+      "preparationMinutes": "2"
+    },
+    "healing": {
+      "hpFormula": "1D8",
+      "sdcFormula": "2D6",
+      "notes": "The touch restores 1D8 hit points or 2D6 S.D.C. [cite: 41]"
+    },
+    "limitations": {
+      "selfOnly": false,
+      "otherLimitations": "The healing touch can only be used on other living creatures, never on himself. [cite: 41]"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_impervious_to_cold_healer",
+    "name": "Impervious to Cold [cite: 42]",
+    "description": "A mind over matter discipline which enables the character to suffer absolutely no ill effects or discomfort from exposure to even extreme freezing conditions. [cite: 46]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Cost is 2 I.S.P. [cite: 45]"
+    },
+    "range": {
+      "summary": "Self [cite: 43]"
+    },
+    "duration": {
+      "summary": "20 minutes per level of experience. [cite: 44]",
+      "kind": "minute",
+      "perLevel": "20 minutes"
+    },
+    "lengthOfTrance": {
+      "summary": "1D4 melees for preparatory meditation. [cite: 45]",
+      "preparationMelees": "1D4"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "immunities": [
+        "cold"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_impervious_to_fire_healer",
+    "name": "Impervious to Fire [cite: 47]",
+    "description": "Another mind over matter discipline enabling the psychic to endure intense heat, fire, boiling water, hot coals, and so on, without suffering pain, damage or scarring. [cite: 50] Magic fires inflict half damage. [cite: 51]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is 4 I.S.P. [cite: 49]"
+    },
+    "range": {
+      "summary": "Self [cite: 48]"
+    },
+    "duration": {
+      "summary": "3 minutes per level of experience. [cite: 49]",
+      "kind": "minute",
+      "perLevel": "3 minutes"
+    },
+    "lengthOfTrance": {
+      "summary": "2D4 melees for preparatory meditation. [cite: 49]",
+      "preparationMelees": "2D4"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "immunities": [
+        "heat",
+        "fire",
+        "pain",
+        "damage",
+        "scarring"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_increased_healing",
+    "name": "Increased Healing [cite: 52]",
+    "description": "The healer is able to stimulate another person's healing energies, dramatically increasing one's recuperative powers. [cite: 56]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 10,
+      "notes": "Cost is 10 I.S.P. [cite: 55]"
+    },
+    "range": {
+      "summary": "Touch or within 3 feet (0.9 m). [cite: 53]"
+    },
+    "duration": {
+      "summary": "2D4 days. [cite: 54]",
+      "kind": "day",
+      "dice": "2D4"
+    },
+    "lengthOfTrance": {
+      "summary": "1D6 hours. [cite: 55]",
+      "preparationHours": "1D6"
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "statModifiers": {},
+      "combatModifiers": {
+        "notes": "Hit points and S.D.C. recovery are double the normal professional treatment rate. [cite: 56, 57]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_induce_pain",
+    "name": "Induce Pain [cite: 58]",
+    "description": "The ability to inflict a terrible, debilitating pain without physically damaging the living creature. [cite: 65] There is a good chance of the victim passing out after five minutes of continuous pain; [cite: 67] 50%+10% per each additional minute. [cite: 68]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Cost is 2 I.S.P. per minute. [cite: 63]"
+    },
+    "range": {
+      "summary": "Touch or within 6 feet (1.8 m). [cite: 59]"
+    },
+    "duration": {
+      "summary": "As long as the trance is maintained. [cite: 59]",
+      "kind": "special"
+    },
+    "lengthOfTrance": {
+      "summary": "One melee/15 seconds is needed to prepare, before pain can be inflicted. [cite: 60] The length of the pain inducing trance is completely up to the psychic. [cite: 61]"
+    },
+    "save": {
+      "summary": "Standard [cite: 64]",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "pain"
+      ],
+      "combatModifiers": {
+        "strike": -6,
+        "parry": -6,
+        "dodge": -6,
+        "notes": "Victims are -6 to strike, parry and dodge, lose initiative, skills are -30%, and attacks per melee are half. [cite: 66]"
+      }
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_induce_sleep",
+    "name": "Induce Sleep [cite: 69]",
+    "description": "This is not an offensive ability, but is intended to be a recuperative power to induce sleep on those who are ill, exhausted, or an insomniac. [cite: 73] The person will fall into a normal, restful sleep from which he can be easily roused. [cite: 74] Unwilling victims of the induce sleep psi-power get a +5 bonus to save (because this is not the intent of the ability) and can not be involved in combat at the time. [cite: 75]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is 4 I.S.P. [cite: 71]"
+    },
+    "range": {
+      "summary": "Touch or within 6 feet (1.8 m). [cite: 70]"
+    },
+    "duration": {
+      "summary": "One hour per level of experience (or until awakened). [cite: 71]",
+      "kind": "hour",
+      "perLevel": "1 hour"
+    },
+    "lengthOfTrance": {
+      "summary": "Two minute preparatory meditation. [cite: 71]",
+      "preparationMinutes": "2"
+    },
+    "save": {
+      "summary": "Standard; plus unwilling victims are +5 to save vs psychic attack. [cite: 72]",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psychic_diagnosis",
+    "name": "Psychic Diagnosis [cite: 76]",
+    "description": "The psychic healer can sense physical pain, damage, disease and possession with absolute clarity. [cite: 80] This pinpoint accuracy enables the character to suggest treatment or to conduct psychic surgery. [cite: 81]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is 4 I.S.P. [cite: 78]"
+    },
+    "range": {
+      "summary": "Touch or within 3 feet (0.9 m). [cite: 77]"
+    },
+    "duration": {
+      "summary": "Immediate knowledge. [cite: 77]",
+      "kind": "instant"
+    },
+    "lengthOfTrance": {
+      "summary": "2D4 melees of meditation. [cite: 78]",
+      "preparationMelees": "2D4"
+    },
+    "save": {
+      "summary": "None; except for the nega-psychic, standard. [cite: 79]",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psychic_purification",
+    "name": "Psychic Purification [cite: 82]",
+    "description": "The healer can use his abilities to slow a person's metabolism and destroy chemicals, drugs, poisons, and toxins in the body. [cite: 86] The effects of the drugs/impurities are immediately halted at the beginning of the meditation, and completely destroyed/negated by its end. [cite: 87] Damage sustained prior to the psychic's intervention still exists. [cite: 88]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 8,
+      "notes": "Cost is 8 I.S.P. [cite: 85]"
+    },
+    "range": {
+      "summary": "Touch [cite: 83]"
+    },
+    "duration": {
+      "summary": "Immediate [cite: 84]",
+      "kind": "instant"
+    },
+    "lengthOfTrance": {
+      "summary": "6D6 minutes of meditation. [cite: 85]",
+      "preparationMinutes": "6D6"
+    },
+    "save": {
+      "summary": "None; except for the nega-psychic, standard. [cite: 86]",
+      "saveKind": "standard"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_psychic_surgery",
+    "name": "Psychic Surgery [cite: 89]",
+    "description": "Psychic surgery is used to repair broken bones, internal injuries, the removal of foreign objects (bullets, etc.), or when a character has suffered so much damage that he or she has lapsed into a coma (zero or less hit points). [cite: 93] Note that there is absolutely no scarring from psychic surgery and minimal pain (no pain if the deaden pain psi-ability is used). [cite: 95] No tools are needed, only the psychic's hands. [cite: 96]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 14,
+      "notes": "Cost is 14 I.S.P. [cite: 92]"
+    },
+    "range": {
+      "summary": "Touch [cite: 89]"
+    },
+    "duration": {
+      "summary": "Varies with injury. [cite: 90]",
+      "kind": "special"
+    },
+    "lengthOfTrance": {
+      "summary": "2D6 minutes of preparatory meditation, plus the duration of the surgery (which is half the time of conventional modern medicine). [cite: 91]"
+    },
+    "psionicPrerequisites": [
+      "psionic_psychic_diagnosis"
+    ],
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Coma recovery success",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "The recovery from a coma (near death) is equal to treatment from a hospital, 1-66%, when psychic surgery is used. [cite: 94]",
+          "percentile": {
+            "min": 1,
+            "max": 66
+          }
+        }
+      ]
+    },
+    "limitations": {
+      "otherLimitations": "Note: A psychic diagnosis must be made before surgery is possible. [cite: 96]"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_resist_fatigue_healer",
+    "name": "Resist Fatigue [cite: 97]",
+    "description": "A mind over matter discipline which enables the character to engage in physical activity without suffering from exhaustion. [cite: 100] Although fatigue is temporarily suspended, the psychic will feel extremely tired and may even collapse when the psi-power's time limit lapses. [cite: 101]",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 84
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "notes": "Cost is 4 I.S.P. [cite: 99]"
+    },
+    "range": {
+      "summary": "Self [cite: 98]"
+    },
+    "duration": {
+      "summary": "One hour plus 20 minutes per level of experience. [cite: 99]",
+      "kind": "hour",
+      "perLevel": "20 minutes"
+    },
+    "lengthOfTrance": {
+      "summary": "1D6 melees of preparatory meditation. [cite: 99]",
+      "preparationMelees": "1D6"
+    },
+    "grantedModifiers": {
+      "target": "self",
+      "immunities": [
+        "fatigue"
+      ]
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_restore_isp",
+    "name": "Restore I.S.P.",
+    "description": "The psychic doesn't actually restore lost I.S.P., but transfers some of his I.S.P. to another psychic. A mind block will prevent this energy transfer.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "dynamicCosts": [
+        {
+          "trigger": "Energy Transfer",
+          "costFormula": "2 I.S.P. plus the total amount of I.S.P. being transferred to the target."
+        }
+      ]
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_restore_ppe",
+    "name": "Restore P.P.E.",
+    "description": "This power allows the psychic to convert some of his I.S.P. to P.P.E. energy and transfer the energy to another person. Two I.S.P. counts as one P.P.E. point. A mind block will prevent this energy transfer.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 4,
+      "dynamicCosts": [
+        {
+          "trigger": "Conversion and Transfer",
+          "costFormula": "4 I.S.P. plus the amount of I.S.P. being converted (at a 2:1 ratio for P.P.E.)."
+        }
+      ]
+    },
+    "range": {
+      "summary": "Touch"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_suppress_fear",
+    "name": "Suppress Fear",
+    "description": "This power temporarily suppresses the chemical and psychological components of fear in the subject. As a result, the character is unable to feel the emotion, even if intellectually he realizes he is in danger or is facing a terrifying situation. This enables the character to take perfectly rational actions rather than respond with 'fight or flight'. The character automatically succeeds on any check to resist horror factor, even if magically induced.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 116
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "healer"
+      }
+    ],
+    "isp": {
+      "baseActivation": 8
+    },
+    "range": {
+      "summary": "Self or others by touch."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "grantedModifiers": {
+      "target": "touch",
+      "immunities": [
+        "fear",
+        "horror factor"
+      ]
+    }
+  }
+]

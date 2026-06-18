@@ -211,7 +211,7 @@
         "crossListId": {
           "type": "string",
           "minLength": 1,
-          "description": "Key in content/magic_cross_lists.json for enumerated borrow lists."
+          "description": "Key in content/magic/utils/magic_cross_lists.json for enumerated borrow lists."
         },
         "label": {
           "type": "string",
@@ -1172,7 +1172,7 @@
         "xpTableId": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$",
-          "description": "Catalog id in content/progression/xp_tables/ (e.g. between_shadows_arcane_detective)."
+          "description": "Catalog id in content/progression/xp_tables/<genre>/ (e.g. between_shadows_arcane_detective)."
         },
         "characterOccCategory": {
           "type": "string",

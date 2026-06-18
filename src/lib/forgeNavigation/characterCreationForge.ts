@@ -369,6 +369,7 @@ function resolveCreationAbilityBudget(ctx: CharacterCreationForgeContext) {
     majorAllocation: ctx.character.creationPsychicGateMajorAllocation,
     storedBudget: ctx.character.creationAbilityBudget,
     creationGenreId: ctx.character.creationGenreId,
+    hostGenreId: ctx.character.hostGenreId,
   })
 }
 
@@ -587,6 +588,7 @@ function buildTabDefinitions(
               majorAllocation: character.creationPsychicGateMajorAllocation,
               storedBudget: character.creationAbilityBudget,
               creationGenreId: character.creationGenreId,
+              hostGenreId: character.hostGenreId,
             })
             return !creationNeedsAbilitySelection(
               budget,

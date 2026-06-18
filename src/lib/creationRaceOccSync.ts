@@ -1,4 +1,4 @@
-import { getLibraryOccById, getRaceById } from '../data/library/registry'
+import { getLibraryOccById, getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import { rollPrimarySdcMaximum } from './spawnFinalVitality'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
@@ -7,7 +7,10 @@ import type { CharacterRootState } from '../types'
 /** Recompute Facade max S.D.C. from race vitals + O.C.C. tags (pre–vitality commit only). */
 export function syncRaceOccPrimarySdc(prev: CharacterRootState): CharacterRootState {
   if (prev.creationVitalityCommitted) return prev
-  const race = getRaceById(prev.raceId ?? DEFAULT_RACE_ID)
+  const race = getRaceById(
+    prev.raceId ?? DEFAULT_RACE_ID,
+    raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+  )
   const lib = getLibraryOccById(prev.occ.id)
   if (!race || !lib || race.vitals?.sdc == null) return prev
   const occ = resolveEffectivePalladiumOcc(lib, prev.occSpecializationId)

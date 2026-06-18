@@ -2,7 +2,7 @@
 
 This document defines psionic tier determination during character creation and the resulting impacts on skills and energy pools.
 
-**Forge placement:** [Character Creation Forge](./forge-character_creation.md) **Tab 3** (after Race/O.C.C. on Tab 1 and attributes on Tab 2). Power picks happen on **Tab 7 — Abilities**.
+**Forge placement:** [Character Creation Forge](./forge/character_creation.md) **Tab 3** (after Race/O.C.C. on Tab 1 and attributes on Tab 2). Power picks happen on **Tab 7 — Abilities**.
 
 **Related:** `src/lib/psychicGate.ts`, `src/components/creation/PsychicGate.tsx`, `docs/stat_engine_spec.md` (I.S.P. vitals).
 

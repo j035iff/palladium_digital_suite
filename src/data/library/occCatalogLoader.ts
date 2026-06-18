@@ -4,7 +4,7 @@ import { isWhitelistedForHostGenre } from '../../lib/genreGating'
 import { normalizePalladiumOcc } from '../../lib/occCatalogEngine'
 import { occOffersSupernaturalCreation } from '../../lib/occSupernatural'
 
-const occModules = import.meta.glob('../content/occs/*.json', {
+const occModules = import.meta.glob('../content/occs/**/*.json', {
   eager: true,
   import: 'default',
 }) as Record<string, PalladiumOcc[]>

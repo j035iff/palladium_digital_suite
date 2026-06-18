@@ -1,4 +1,5 @@
 import type { PalladiumSkillCatalogEntry } from './catalogTypes'
+import { isSkillCategoryCatalogFile } from '../../lib/palladiumSchemaPaths'
 
 const skillModules = import.meta.glob('../content/skills/*.json', {
   eager: true,
@@ -8,6 +9,8 @@ const skillModules = import.meta.glob('../content/skills/*.json', {
 function loadSkills(): readonly PalladiumSkillCatalogEntry[] {
   const byId = new Map<string, PalladiumSkillCatalogEntry>()
   for (const [path, rows] of Object.entries(skillModules)) {
+    const file = path.split('/').pop() ?? path
+    if (!isSkillCategoryCatalogFile(file)) continue
     if (!Array.isArray(rows)) {
       throw new Error(`Skill pool ${path} must be a top-level JSON array`)
     }

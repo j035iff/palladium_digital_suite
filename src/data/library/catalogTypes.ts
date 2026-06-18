@@ -47,10 +47,10 @@ export type PalladiumSkillCatalogEntry = {
   skillTraits?: readonly string[]
 }
 
-/** Row from `content/occs/*.json` — see `schemas/palladium-occ.schema.json`. */
+/** Row from `content/occs/<genre>/*.json` — see `schemas/palladium-occ.schema.json`. */
 export type PalladiumOccCatalogEntry = import('../../types').PalladiumOcc
 
-/** Row from `content/palladiumHandToHand.json` — see `schemas/palladium-hth.schema.json`. */
+/** Row from `content/skills/hand_to_hand.json` — see `schemas/palladium-hth.schema.json`. */
 export type PalladiumHandToHandCatalogEntry = import('../../types').HandToHandSkill
 
 /** Row from `content/talents/*.json` — see `schemas/palladium-talent.schema.json`. */
@@ -59,7 +59,7 @@ export type PalladiumTalentCatalogEntry = import('../../types').PalladiumTalent
 /** Row from `content/magic/<school>.json` — see `schemas/palladium-magic.schema.json`. */
 export type PalladiumMagicCatalogEntry = import('../../types').PalladiumMagicSpell
 
-/** Row from `content/palladiumPsionics.json` — see `schemas/palladium-psionic.schema.json`. */
+/** Row from `content/psionics/<category>.json` — see `schemas/palladium-psionic.schema.json`. */
 export type PalladiumPsionicCatalogEntry = {
   id: string
   name: string
@@ -83,7 +83,7 @@ export type PalladiumPsionicCatalogEntry = {
   [key: string]: unknown
 }
 
-/** Row from `weapon_proficiencies.json` (ancient or modern W.P.). */
+/** Row from `skills/weapon_proficiencies.json` (ancient or modern W.P.). */
 export type WeaponProficiencyCatalogEntry = {
   kind: 'weapon_proficiency'
   weaponProficiencyCategory: 'ancient' | 'modern'
@@ -117,7 +117,7 @@ export type StandardModernProgressionBundle = {
   notes?: string
 }
 
-/** Document from `standard_modern_weapon_progression.json`. */
+/** Document from `skills/utils/standard_modern_weapon_progression.json`. */
 export type StandardModernWeaponProgressionDoc = {
   version?: number
   bundles: Readonly<Record<string, StandardModernProgressionBundle>>

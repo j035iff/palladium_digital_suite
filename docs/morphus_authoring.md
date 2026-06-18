@@ -106,6 +106,8 @@ Inner rolls inside one trait (Junk Golem body type, Mirror Man mirror style):
 
 ## Ingest workflow
 
+**Playbook:** [`docs/ingest/morphus.md`](ingest/morphus.md) (Pass A/B batches, PDF pipeline, validation). **This section** covers encoding layers and CLI commands.
+
 Ingest **playable traits only**. The pipeline skips table routers (Disproportion Step One rows like Head/Torso), "Other" / roll-twice rows, instruction-only percentile bands, and **cross-table redirect rows** (e.g. Modern Soldier 91–00% “Biomechanical” → roll Biomechanical tables) that have no `Bonuses:`/`Penalties:` on the row itself. Traits that include their own mechanics plus an optional roll on another table (e.g. Stuffed Animal → Animal Form with halved stats) are kept. Percentile ranges are used for PDF extraction only — they are not stored on catalog entries. Manifest flag `excludeNonPlayable` (default `true`) controls this; pass `--include-non-playable` to `init` to disable.
 
 **Multi-section tables (Disproportion, Animal):** use a `category_hub` parent (`disproportion.json`) with leaf `morphus_trait_table` files per book section (`disproportion_head.json`, etc.). Step One routing stays in the hub `description`; traits live on leaf tables with `parentTable: "disproportion"`.
@@ -137,7 +139,7 @@ npm run morphus:ingest -- structure-entries my_table --target --force
 
 Extend parsers in `scripts/lib/morphus-transcribe-structure.mjs`, `scripts/lib/morphus-skill-modifier-parse.mjs`, and `MECHANIC_PATTERNS` in `morphus-schema-analysis.mjs` when new book phrasing appears. Goal: **zero or minimal `customOneOffs`** per trait.
 
-**Skill trait lists:** Trait membership is defined in `src/data/source/skill_trait_lists/*.txt` (dexterity, light touch, electrical, repair, mechanics, timing, focus). Run `npm run apply:skill-traits` after editing any list so rows in `src/data/content/skills/*.json` carry `skillTraits` (written back via `scripts/lib/skills-catalog-fs.mjs`). Registry ids live in `src/data/content/skill_trait_registry.json`. Ingest maps book phrases like “manual dexterity related skills”, “skills related to electronics”, or “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids.
+**Skill trait lists:** Trait membership is defined in `src/data/source/skill_trait_lists/*.txt` (dexterity, light touch, electrical, repair, mechanics, timing, focus). Run `npm run apply:skill-traits` after editing any list so rows in `src/data/content/skills/*.json` carry `skillTraits` (written back via `scripts/lib/skills-catalog-fs.mjs`). Registry ids live in `src/data/content/skills/utils/skill_trait_registry.json`. Ingest maps book phrases like “manual dexterity related skills”, “skills related to electronics”, or “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids.
 
 **Impossible skills:** Use `impossibleInMorphus: true` on a `specificSkillOverrides` row (not `isNegated`). Conditional impossibility (“Prowl impossible while music plays”) stays in `description` / `skillContextModifiers` until modeled; `structure-entries` skips “is impossible while …” for auto-flagging.
 

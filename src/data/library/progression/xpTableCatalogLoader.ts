@@ -24,7 +24,7 @@ export type PalladiumXpTableBook = {
 type XpTableBookModule = PalladiumXpTableBook
 type XpTableSingleModule = PalladiumXpTable
 
-const bookModules = import.meta.glob('../../content/progression/xp_tables/*.json', {
+const bookModules = import.meta.glob('../../content/progression/xp_tables/**/*.json', {
   eager: true,
   import: 'default',
 }) as Record<string, XpTableBookModule | XpTableSingleModule>

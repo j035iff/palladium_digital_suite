@@ -1,78 +1,5 @@
 [
   {
-    "id": "race_human",
-    "name": "Human",
-    "description": "Standard baseline humanity across the Megaverse.",
-    "raceAudience": "player",
-    "gameSystems": [
-      "nightbane",
-      "rifts"
-    ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 24
-      },
-      {
-        "gameSystem": "rifts",
-        "reference": "Rifts Ultimate Edition",
-        "pageNumber": 44
-      }
-    ],
-    "canPickOcc": true,
-    "lineage": "megaversal",
-    "attributes": {
-      "iq": "3D6",
-      "me": "3D6",
-      "ma": "3D6",
-      "ps": "3D6",
-      "pp": "3D6",
-      "pe": "3D6",
-      "pb": "3D6",
-      "spd": "3D6"
-    },
-    "strengthCategory": "standard",
-    "vitals": {
-      "hpFormula": "PE + 1D6",
-      "averageStandardPpe": "2D6",
-      "sdc": {
-        "strategy": "conditional_by_occ_tags",
-        "defaultFormula": "3D6",
-        "conditionalOverrides": [
-          {
-            "tags": [
-              "military",
-              "police",
-              "detective",
-              "athletic",
-              "tactical"
-            ],
-            "formula": "1D4*10"
-          }
-        ]
-      }
-    },
-    "psionics": {
-      "capabilityType": "standard",
-      "naturalIspFormula": "0"
-    },
-    "occLimitations": {
-      "forbiddenCategories": [],
-      "forbiddenOccIds": []
-    },
-    "innateSkills": [],
-    "innateBonuses": {
-      "modifiers": {}
-    },
-    "demographics": {
-      "averageLifespan": "70-90 years",
-      "alignmentTendencies": [
-        "Any"
-      ]
-    }
-  },
-  {
     "id": "nightbane",
     "name": "Nightbane",
     "description": "Dual-form R.C.C. — Facade humans who manifest a unique Morphus after the Becoming. Select a Nightbane skill package (Basic, Resistance/Spook Squad, Nocturne, or Warlord).",
@@ -262,6 +189,73 @@
         "description": "If trapped in darkness/Nightlands for more than 48 hours, S.D.C., H.P., and attributes diminish drastically over time."
       }
     ]
+  },
+  {
+    "id": "race_human",
+    "name": "Human",
+    "description": "Standard baseline humanity across the Megaverse.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 24
+      }
+    ],
+    "canPickOcc": true,
+    "lineage": "megaversal",
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "3D6",
+      "pp": "3D6",
+      "pe": "3D6",
+      "pb": "3D6",
+      "spd": "3D6"
+    },
+    "strengthCategory": "standard",
+    "vitals": {
+      "hpFormula": "PE + 1D6",
+      "averageStandardPpe": "2D6",
+      "sdc": {
+        "strategy": "conditional_by_occ_tags",
+        "defaultFormula": "3D6",
+        "conditionalOverrides": [
+          {
+            "tags": [
+              "military",
+              "police",
+              "detective",
+              "athletic",
+              "tactical"
+            ],
+            "formula": "1D4*10"
+          }
+        ]
+      }
+    },
+    "psionics": {
+      "capabilityType": "standard",
+      "naturalIspFormula": "0"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {}
+    },
+    "demographics": {
+      "averageLifespan": "70-90 years",
+      "alignmentTendencies": [
+        "Any"
+      ]
+    }
   },
   {
     "id": "race_wampyr",

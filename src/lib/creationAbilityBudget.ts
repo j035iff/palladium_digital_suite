@@ -110,6 +110,7 @@ export type ResolveCreationAbilityBudgetInput = {
   majorAllocation?: PsychicGateMajorAllocation | null
   storedBudget?: OccCreationAbilityBudget | null
   creationGenreId?: string
+  hostGenreId?: string
 }
 
 /** O.C.C. engines plus Psychic Gate tier grants (Minor/Major). */

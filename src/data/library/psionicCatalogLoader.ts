@@ -4,11 +4,27 @@ import type {
   FeatureActivationCost,
 } from '../../types'
 import type { PalladiumPsionicCatalogEntry } from './catalogTypes'
-import palladiumPsionics from '../content/palladiumPsionics.json'
+
+const psionicModules = import.meta.glob('../content/psionics/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, PalladiumPsionicCatalogEntry[]>
 
 function loadPsionicCatalog(): readonly PalladiumPsionicCatalogEntry[] {
-  const rows = palladiumPsionics as unknown
-  return Array.isArray(rows) ? (rows as PalladiumPsionicCatalogEntry[]) : []
+  const byId = new Map<string, PalladiumPsionicCatalogEntry>()
+  for (const [path, rows] of Object.entries(psionicModules)) {
+    if (!Array.isArray(rows)) continue
+    for (const row of rows) {
+      if (!row?.id) continue
+      if (byId.has(row.id)) {
+        throw new Error(
+          `Duplicate psionic id "${row.id}" in catalog (e.g. ${path})`,
+        )
+      }
+      byId.set(row.id, row)
+    }
+  }
+  return [...byId.values()].sort((a, b) => a.id.localeCompare(b.id))
 }
 
 function resolveDurationType(
@@ -95,7 +111,7 @@ export function palladiumPsionicToFeature(
   }
 }
 
-/** Nightbane + megaversal psionic catalog — `src/data/content/palladiumPsionics.json`. */
+/** Palladium psionic catalog — `src/data/content/psionics/<category>.json`. */
 export const PALLADIUM_PSIONIC_CATALOG: readonly PalladiumPsionicCatalogEntry[] =
   loadPsionicCatalog()
 

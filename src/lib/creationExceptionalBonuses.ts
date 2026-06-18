@@ -15,7 +15,7 @@ export type ExceptionalBonusLine = {
   value: string
 }
 
-/** Rulebook 17+ attribute bonuses for the Live Ledger (forge-character_creation.md Tab 2). */
+/** Rulebook 17+ attribute bonuses for the Live Ledger (docs/forge/character_creation.md Tab 2). */
 export function listExceptionalAttributeBonusLines(
   attrs: CharacterAttributes,
 ): ExceptionalBonusLine[] {

@@ -1,5 +1,5 @@
 import { getAbilityById } from '../data/abilityLibrary'
-import { getFeatureById } from '../data/library/registry'
+import { getFeatureById, raceCatalogGenreId } from '../data/library/registry'
 import { occIsNaturalPsychicClass } from './creationPhases'
 import {
   mergeCreationAbilityBudgets,
@@ -358,6 +358,7 @@ export function resolveGateAwareCreationAbilityBudget(input: {
   majorAllocation?: PsychicGateMajorAllocation | null
   storedBudget?: OccCreationAbilityBudget | null
   creationGenreId?: string
+  hostGenreId?: string
 }): OccCreationAbilityBudget {
   const {
     occ,
@@ -367,6 +368,7 @@ export function resolveGateAwareCreationAbilityBudget(input: {
     majorAllocation,
     storedBudget,
     creationGenreId,
+    hostGenreId,
   } = input
 
   if (creationGenreId && psychicGateBypassed) {
@@ -377,7 +379,10 @@ export function resolveGateAwareCreationAbilityBudget(input: {
     occ
       ? occCreationAbilityBudget(occ)
       : (storedBudget ?? { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }),
-    raceCreationAbilityBudget(raceId),
+    raceCreationAbilityBudget(
+      raceId,
+      raceCatalogGenreId(hostGenreId, creationGenreId),
+    ),
   )
 
   const tier = psychicGateBypassed ? 'none' : psychicTier

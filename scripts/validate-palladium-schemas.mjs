@@ -2,12 +2,16 @@
  * Ensures bundled Palladium JSON Schemas (draft 2020-12) compile under Ajv.
  * Run: npm run validate:schemas
  */
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
 import addFormats from 'ajv-formats'
 import { loadSkillsFromDir } from './lib/skills-catalog-fs.mjs'
+import {
+  expectedPsionicCategoryFile,
+  loadPsionicsFromDir,
+} from './lib/psionics-catalog-fs.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const schemasDir = join(root, 'src/data/schemas')
@@ -137,7 +141,7 @@ if (palladiumSkills.length > 0) {
     console.error(`ERR content/skills — ${bad} row(s) failed schema validation`)
   }
 
-  const traitRegistry = loadJson(join(contentDir, 'skill_trait_registry.json'))
+  const traitRegistry = loadJson(join(skillsDir, 'utils/skill_trait_registry.json'))
   const knownTraits = new Set((traitRegistry.traits ?? []).map((t) => t.id))
   let traitBad = 0
   for (const row of palladiumSkills) {
@@ -163,10 +167,10 @@ if (palladiumSkills.length > 0) {
   }
 }
 
-const weaponProficiencies = loadJson(join(contentDir, 'weapon_proficiencies.json'))
+const weaponProficiencies = loadJson(join(skillsDir, 'weapon_proficiencies.json'))
 if (!Array.isArray(weaponProficiencies)) {
   failed = true
-  console.error('ERR weapon_proficiencies.json — expected top-level array')
+  console.error('ERR skills/weapon_proficiencies.json — expected top-level array')
 } else {
   let bad = 0
   for (const row of weaponProficiencies) {
@@ -174,7 +178,7 @@ if (!Array.isArray(weaponProficiencies)) {
       bad++
       if (bad <= 5) {
         console.error(
-          `ERR weapon_proficiencies.json id=${row?.id ?? '?'}:`,
+          `ERR skills/weapon_proficiencies.json id=${row?.id ?? '?'}:`,
           validateWeaponProficiencyRow.errors,
         )
       }
@@ -182,27 +186,27 @@ if (!Array.isArray(weaponProficiencies)) {
   }
   if (bad === 0) {
     console.log(
-      `OK  weapon_proficiencies.json — ${weaponProficiencies.length} rows validate`,
+      `OK  skills/weapon_proficiencies.json — ${weaponProficiencies.length} rows validate`,
     )
   } else {
     failed = true
     console.error(
-      `ERR weapon_proficiencies.json — ${bad} row(s) failed schema validation`,
+      `ERR skills/weapon_proficiencies.json — ${bad} row(s) failed schema validation`,
     )
   }
 }
 
 const progressionJson = loadJson(
-  join(contentDir, 'standard_modern_weapon_progression.json'),
+  join(skillsDir, 'utils/standard_modern_weapon_progression.json'),
 )
 if (!validateProgressionDoc(progressionJson)) {
   failed = true
   console.error(
-    'ERR standard_modern_weapon_progression.json:',
+    'ERR skills/utils/standard_modern_weapon_progression.json:',
     validateProgressionDoc.errors,
   )
 } else {
-  console.log('OK  standard_modern_weapon_progression.json — document validates')
+  console.log('OK  skills/utils/standard_modern_weapon_progression.json — document validates')
 }
 
 const racesDir = join(contentDir, 'races')
@@ -213,52 +217,77 @@ const POOL_AUDIENCE = {
   'gm_approval.json': 'gm_approval',
 }
 let raceTotal = 0
-const raceIds = new Set()
+const raceKeys = new Set()
 try {
-  for (const file of RACE_POOL_FILES) {
-    const poolPath = join(racesDir, file)
-    const rows = loadJson(poolPath)
-    if (!Array.isArray(rows)) {
-      failed = true
-      console.error(`ERR races/${file} — expected top-level array`)
-      continue
-    }
-    const expectedAudience = POOL_AUDIENCE[file]
-    let raceBad = 0
-    for (const row of rows) {
-      if (row?.id) {
-        if (raceIds.has(row.id)) {
-          failed = true
-          console.error(`ERR races — duplicate id "${row.id}" (e.g. ${file})`)
-        }
-        raceIds.add(row.id)
-      }
-      if (row?.raceAudience && row.raceAudience !== expectedAudience) {
+  const genreDirs = readdirSync(racesDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(racesDir, genre)
+    for (const file of RACE_POOL_FILES) {
+      const poolPath = join(genrePath, file)
+      if (!existsSync(poolPath)) continue
+      const rows = loadJson(poolPath)
+      if (!Array.isArray(rows)) {
         failed = true
-        console.error(
-          `ERR races/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
-        )
+        console.error(`ERR races/${genre}/${file} — expected top-level array`)
+        continue
       }
-      if (!validateRaceRow(row)) {
-        raceBad++
-        if (raceBad <= 3) {
+      const expectedAudience = POOL_AUDIENCE[file]
+      let raceBad = 0
+      for (const row of rows) {
+        if (row?.id) {
+          const key = `${genre}:${row.id}`
+          if (raceKeys.has(key)) {
+            failed = true
+            console.error(
+              `ERR races/${genre}/${file} — duplicate id "${row.id}" in genre`,
+            )
+          }
+          raceKeys.add(key)
+        }
+        const systems = row?.gameSystems ?? []
+        if (
+          systems.length &&
+          !systems.every((g) => String(g).toLowerCase() === genre.toLowerCase())
+        ) {
+          failed = true
           console.error(
-            `ERR races/${file} id=${row?.id ?? '?'}:`,
-            validateRaceRow.errors,
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: gameSystems must match folder "${genre}"`,
           )
         }
+        if (row?.raceAudience && row.raceAudience !== expectedAudience) {
+          failed = true
+          console.error(
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
+          )
+        }
+        if (!validateRaceRow(row)) {
+          raceBad++
+          if (raceBad <= 3) {
+            console.error(
+              `ERR races/${genre}/${file} id=${row?.id ?? '?'}:`,
+              validateRaceRow.errors,
+            )
+          }
+        }
       }
-    }
-    raceTotal += rows.length
-    if (raceBad > 0) {
-      failed = true
-      console.error(`ERR races/${file} — ${raceBad} row(s) failed schema validation`)
-    } else {
-      console.log(`OK  races/${file} — ${rows.length} row(s) validate`)
+      raceTotal += rows.length
+      if (raceBad > 0) {
+        failed = true
+        console.error(
+          `ERR races/${genre}/${file} — ${raceBad} row(s) failed schema validation`,
+        )
+      } else {
+        console.log(`OK  races/${genre}/${file} — ${rows.length} row(s) validate`)
+      }
     }
   }
   if (!failed) {
-    console.log(`OK  races — ${raceTotal} total row(s) across ${RACE_POOL_FILES.length} pools`)
+    console.log(
+      `OK  races — ${raceTotal} total row(s) across ${genreDirs.length} genre folder(s)`,
+    )
   }
 } catch (e) {
   failed = true
@@ -267,22 +296,32 @@ try {
 
 const occsDir = join(contentDir, 'occs')
 const palladiumOccs = []
-let occFiles = []
+let occBookFiles = []
 try {
-  occFiles = readdirSync(occsDir)
-    .filter((f) => f.endsWith('.json'))
+  const genreDirs = readdirSync(occsDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
     .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(occsDir, genre)
+    const books = readdirSync(genrePath)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+    for (const book of books) {
+      occBookFiles.push({ genre, book, path: join(genrePath, book) })
+    }
+  }
 } catch {
   console.error('ERR occs — directory missing')
   failed = true
 }
 
-if (occFiles.length > 0) {
+if (occBookFiles.length > 0) {
   const occIdsSeen = new Set()
   let occBad = 0
-  for (const file of occFiles) {
-    const label = `occs/${file}`
-    const rows = loadJson(join(occsDir, file))
+  for (const { genre, book, path: bookPath } of occBookFiles) {
+    const label = `occs/${genre}/${book}`
+    const rows = loadJson(bookPath)
     if (!Array.isArray(rows)) {
       failed = true
       console.error(`ERR ${label} — expected top-level array`)
@@ -314,7 +353,7 @@ if (occFiles.length > 0) {
   }
   if (occBad === 0) {
     console.log(
-      `OK  occs — ${occFiles.length} book file(s), ${palladiumOccs.length} row(s) validate`,
+      `OK  occs — ${occBookFiles.length} book file(s) in ${new Set(occBookFiles.map((f) => f.genre)).size} genre folder(s), ${palladiumOccs.length} row(s) validate`,
     )
   } else {
     failed = true
@@ -324,11 +363,21 @@ if (occFiles.length > 0) {
 
 const xpTablesDir = join(contentDir, 'progression/xp_tables')
 const tableById = new Map()
-let xpTableFiles = []
+let xpTableBookFiles = []
 try {
-  xpTableFiles = readdirSync(xpTablesDir)
-    .filter((f) => f.endsWith('.json'))
+  const genreDirs = readdirSync(xpTablesDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
     .sort()
+  for (const genre of genreDirs) {
+    const genrePath = join(xpTablesDir, genre)
+    const books = readdirSync(genrePath)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+    for (const book of books) {
+      xpTableBookFiles.push({ genre, book, path: join(genrePath, book) })
+    }
+  }
 } catch {
   console.error('ERR progression/xp_tables — directory missing')
   failed = true
@@ -369,29 +418,27 @@ function validateXpTableRow(table, label) {
   return true
 }
 
-if (xpTableFiles.length > 0) {
+if (xpTableBookFiles.length > 0) {
   let xpBad = 0
   let tableCount = 0
-  for (const file of xpTableFiles) {
-    const doc = loadJson(join(xpTablesDir, file))
+  for (const { genre, book, path: bookPath } of xpTableBookFiles) {
+    const relPath = `progression/xp_tables/${genre}/${book}`
+    const doc = loadJson(bookPath)
     if (doc?.tables && Array.isArray(doc.tables)) {
       if (!validateXpTableBookDoc(doc)) {
         xpBad++
         if (xpBad <= 5) {
-          console.error(
-            `ERR progression/xp_tables/${file}:`,
-            validateXpTableBookDoc.errors,
-          )
+          console.error(`ERR ${relPath}:`, validateXpTableBookDoc.errors)
         }
         continue
       }
       for (const table of doc.tables) {
         tableCount++
-        if (!validateXpTableRow(table, `progression/xp_tables/${file} → ${table.id}`)) {
+        if (!validateXpTableRow(table, `${relPath} → ${table.id}`)) {
           xpBad++
         }
       }
-    } else if (!validateXpTableRow(doc, `progression/xp_tables/${file}`)) {
+    } else if (!validateXpTableRow(doc, relPath)) {
       xpBad++
     } else {
       tableCount++
@@ -399,7 +446,7 @@ if (xpTableFiles.length > 0) {
   }
   if (xpBad === 0) {
     console.log(
-      `OK  progression/xp_tables — ${xpTableFiles.length} book file(s), ${tableCount} table(s) validate`,
+      `OK  progression/xp_tables — ${xpTableBookFiles.length} book file(s) in ${new Set(xpTableBookFiles.map((f) => f.genre)).size} genre folder(s), ${tableCount} table(s) validate`,
     )
   } else {
     failed = true
@@ -466,10 +513,10 @@ if (Array.isArray(palladiumOccs) && tableById.size > 0) {
   }
 }
 
-const palladiumHandToHand = loadJson(join(contentDir, 'palladiumHandToHand.json'))
+const palladiumHandToHand = loadJson(join(skillsDir, 'hand_to_hand.json'))
 if (!Array.isArray(palladiumHandToHand)) {
   failed = true
-  console.error('ERR palladiumHandToHand.json — expected top-level array')
+  console.error('ERR skills/hand_to_hand.json — expected top-level array')
 } else {
   let hthBad = 0
   for (const row of palladiumHandToHand) {
@@ -477,7 +524,7 @@ if (!Array.isArray(palladiumHandToHand)) {
       hthBad++
       if (hthBad <= 5) {
         console.error(
-          `ERR palladiumHandToHand.json id=${row?.id ?? '?'}:`,
+          `ERR skills/hand_to_hand.json id=${row?.id ?? '?'}:`,
           validateHandToHandRow.errors,
         )
       }
@@ -485,12 +532,12 @@ if (!Array.isArray(palladiumHandToHand)) {
   }
   if (hthBad === 0) {
     console.log(
-      `OK  palladiumHandToHand.json — ${palladiumHandToHand.length} rows validate`,
+      `OK  skills/hand_to_hand.json — ${palladiumHandToHand.length} rows validate`,
     )
   } else {
     failed = true
     console.error(
-      `ERR palladiumHandToHand.json — ${hthBad} row(s) failed schema validation`,
+      `ERR skills/hand_to_hand.json — ${hthBad} row(s) failed schema validation`,
     )
   }
 }
@@ -574,23 +621,40 @@ if (talentFiles.length > 0) {
   }
 }
 
-const palladiumPsionicsPath = join(contentDir, 'palladiumPsionics.json')
+const psionicsDir = join(contentDir, 'psionics')
 let palladiumPsionics = []
-let palladiumPsionicsLoaded = false
+let psionicCategoryMismatch = 0
 try {
-  palladiumPsionics = loadJson(palladiumPsionicsPath)
-  palladiumPsionicsLoaded = true
+  const psionicFileById = new Map()
+  for (const file of readdirSync(psionicsDir)
+    .filter((f) => f.endsWith('.json'))
+    .sort()) {
+    for (const row of loadJson(join(psionicsDir, file))) {
+      if (row?.id) psionicFileById.set(row.id, file)
+    }
+  }
+  palladiumPsionics = loadPsionicsFromDir(psionicsDir)
+  for (const row of palladiumPsionics) {
+    const actual = psionicFileById.get(row.id)
+    const expected = expectedPsionicCategoryFile(row)
+    if (actual && actual !== expected) {
+      psionicCategoryMismatch++
+      if (psionicCategoryMismatch <= 5) {
+        console.error(
+          `ERR psionics/${actual} id=${row.id}: expected file "${expected}" from genrePlacements[0].category`,
+        )
+      }
+    }
+  }
 } catch (err) {
-  if (err.code !== 'ENOENT') {
+  if (err.code === 'ENOENT') {
+    console.error('ERR psionics/ — directory missing')
+  } else {
     failed = true
-    console.error('ERR palladiumPsionics.json —', err.message)
+    console.error('ERR psionics/ —', err.message)
   }
 }
-if (palladiumPsionicsLoaded) {
-  if (!Array.isArray(palladiumPsionics)) {
-    failed = true
-    console.error('ERR palladiumPsionics.json — expected top-level array')
-  } else if (palladiumPsionics.length > 0) {
+if (palladiumPsionics.length > 0) {
   const seenPsionicIds = new Set()
   let psionicBad = 0
   let psionicDup = 0
@@ -599,7 +663,7 @@ if (palladiumPsionicsLoaded) {
       if (seenPsionicIds.has(row.id)) {
         psionicDup++
         if (psionicDup <= 5) {
-          console.error(`ERR palladiumPsionics.json duplicate id=${row.id}`)
+          console.error(`ERR psionics/ duplicate id=${row.id}`)
         }
       } else {
         seenPsionicIds.add(row.id)
@@ -609,30 +673,33 @@ if (palladiumPsionicsLoaded) {
       psionicBad++
       if (psionicBad <= 5) {
         console.error(
-          `ERR palladiumPsionics.json id=${row?.id ?? '?'}:`,
+          `ERR psionics/ id=${row?.id ?? '?'}:`,
           validatePsionicRow.errors,
         )
       }
     }
   }
-  if (psionicBad === 0 && psionicDup === 0) {
+  if (psionicBad === 0 && psionicDup === 0 && psionicCategoryMismatch === 0) {
+    const categoryFiles = readdirSync(psionicsDir).filter((f) => f.endsWith('.json')).length
     console.log(
-      `OK  palladiumPsionics.json — ${palladiumPsionics.length} rows validate`,
+      `OK  psionics/ — ${categoryFiles} category file(s), ${palladiumPsionics.length} rows validate`,
     )
   } else {
     failed = true
     if (psionicBad > 0) {
-      console.error(
-        `ERR palladiumPsionics.json — ${psionicBad} row(s) failed schema validation`,
-      )
+      console.error(`ERR psionics/ — ${psionicBad} row(s) failed schema validation`)
     }
     if (psionicDup > 0) {
-      console.error(`ERR palladiumPsionics.json — ${psionicDup} duplicate id(s)`)
+      console.error(`ERR psionics/ — ${psionicDup} duplicate id(s)`)
+    }
+    if (psionicCategoryMismatch > 0) {
+      console.error(
+        `ERR psionics/ — ${psionicCategoryMismatch} category file placement mismatch(es)`,
+      )
     }
   }
-  } else {
-    console.log('OK  palladiumPsionics.json — empty catalog')
-  }
+} else if (!failed) {
+  console.log('OK  psionics/ — empty catalog')
 }
 
 const magicDir = join(contentDir, 'magic')
