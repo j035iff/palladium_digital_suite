@@ -64,6 +64,7 @@ Loader: `psionicCatalogLoader.ts` globs `psionics/*.json` only.
 | **XP tables** | `progression/xp_tables/<genre>/<book>.json` | Mirrors O.C.C. genre folders |
 | **Talents** | `talents/common.json`, `talents/elite.json` | Tier-band split |
 | **Morphus** | `morphus/tables/*.json`, `morphus/forge/*.json` | Per-table trait files; Sub-Forge routing in `forge/` |
+| **Encounter archetypes** | `encounters/<genre>/<book>.json` | GM-only random/minor NPC templates — not forge-spawnable races or O.C.C.s |
 
 When a new ancillary file is needed for these catalogs (e.g. a shared progression doc), add `utils/` under that catalog folder and follow the same pattern.
 
@@ -95,5 +96,6 @@ Row authoring rules stay in the per-type ingest docs:
 - `docs/ingest/xp_tables.md`
 - `docs/ingest/talents.md`
 - `docs/ingest/morphus.md`
+- `docs/ingest/encounters.md`
 
 **This file** is the shared **layout** contract; ingest docs link here for paths and `utils/` rules.

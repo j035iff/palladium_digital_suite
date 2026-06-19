@@ -222,6 +222,19 @@ export const PALLADIUM_XP_TABLE_SCHEMA_ID =
 export const PALLADIUM_XP_TABLE_BOOK_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-xp-table-book.schema.json' as const
 
+export const PALLADIUM_ENCOUNTER_ARCHETYPE_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-encounter-archetype.schema.json` as const
+
+export const PALLADIUM_ENCOUNTER_ARCHETYPE_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-encounter-archetype.schema.json' as const
+
+/** GM encounter archetype pools — `encounters/<genre>/<book>.json`. Not player creation. */
+export const PALLADIUM_ENCOUNTERS_DIR =
+  `${PALLADIUM_CONTENT_DIR}/encounters` as const
+
+export const PALLADIUM_ENCOUNTERS_NIGHTBANE_CORE_JSON_PATH =
+  `${PALLADIUM_ENCOUNTERS_DIR}/nightbane/nightbane_core.json` as const
+
 /** One JSON file per source book (`tables[]` bundles), grouped under `progression/xp_tables/<genre>/`. */
 export const PALLADIUM_XP_TABLES_DIR =
   `${PALLADIUM_CONTENT_DIR}/progression/xp_tables` as const

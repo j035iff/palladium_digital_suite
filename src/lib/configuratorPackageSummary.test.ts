@@ -133,11 +133,15 @@ describe('buildConfiguratorPackageSummary', () => {
     expect(lines.some((line) => line.includes('Physical Bonuses'))).toBe(false)
   })
 
-  it('shows N/A for Psychic P.C.C. specialized abilities when only class boilerplate is present', () => {
+  it('lists Psychic P.C.C. Pass B specialized class modules', () => {
     const occ = getLibraryOccById('occ_psychic_pcc')
     const summary = buildConfiguratorPackageSummary(getRaceById('race_human'), occ, null)
     const abilities = summary.sections.find((s) => s.id === 'occ-special-abilities')
-    expect(sectionItemTexts(abilities)).toEqual(['N/A'])
+    const lines = sectionItemTexts(abilities)
+    expect(lines.some((line) => line.includes('Autostart Psionics'))).toBe(true)
+    expect(lines.some((line) => line.includes('Ley Line & Nexus'))).toBe(true)
+    expect(lines.some((line) => line.includes('Meditation & Rest Recovery'))).toBe(true)
+    expect(lines.some((line) => line.includes('Master Psionic'))).toBe(false)
   })
 
   it('lists Psychic P.C.C. granted psionics and picks without spell or default rule noise', () => {

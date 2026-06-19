@@ -66,3 +66,6 @@ When adding, updating, or auditing Hand-to-Hand styles (`src/data/content/skills
 
 ### Palladium weapon proficiency ingest
 When adding, updating, or auditing W.P. rows (`src/data/content/skills/weapon_proficiencies.json`) or the shared modern ladder (`skills/utils/standard_modern_weapon_progression.json`), follow **`docs/ingest/weapon_proficiencies.md`**. Coordinate O.C.C. `wpRules` via **`docs/ingest/occs.md`**. Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
+
+### Palladium encounter archetype ingest
+When adding, updating, or auditing GM encounter templates (`src/data/content/encounters/<genre>/`), follow **`docs/ingest/encounters.md`** (Pass A workflow, composition modes, cross-refs to races/O.C.C./H2H/W.P., batch template). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.

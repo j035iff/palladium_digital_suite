@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-encounter-archetype.schema.json",
+  "title": "Palladium encounter archetype",
+  "description": "Lightweight GM encounter template — random/minor NPC stat blocks (Palladium books' \"Enemies & Minor NPCs\" sections). Not forge-spawnable player characters. Consumed by the future GM module for quick ephemeral NPC generation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "description",
+    "gameSystems",
+    "sources",
+    "tags",
+    "numberAppearing",
+    "alignmentNotes",
+    "vitals",
+    "handToHand",
+    "levelOfExperience",
+    "modifiers",
+    "weaponProficiencies",
+    "equipment",
+    "dispositionNotes"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^encounter_[a-z0-9_]+$",
+      "minLength": 1,
+      "description": "Stable slug (e.g. encounter_preserver_activist)."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Printed archetype name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-paragraph summary of role and threat level."
+    },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceRef" }
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Faction/role filters for GM picker (e.g. preserver, nsb, cult)."
+    },
+    "packageNotes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Ingest/GM notes — reinforcements, variant guidance, cross-refs."
+    },
+    "composition": {
+      "$ref": "#/$defs/composition",
+      "description": "Optional base race overlay when the archetype composes atop a catalog race row."
+    },
+    "numberAppearing": {
+      "$ref": "#/$defs/numberAppearing"
+    },
+    "alignmentNotes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Typical alignment tendencies (prose from book)."
+    },
+    "attributeNotes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Attribute floors or special cases (e.g. P.S. 17 or P.P. 17)."
+    },
+    "vitals": {
+      "$ref": "#/$defs/vitalsBlock"
+    },
+    "handToHand": {
+      "$ref": "#/$defs/handToHandBlock"
+    },
+    "levelOfExperience": {
+      "$ref": "#/$defs/levelBlock"
+    },
+    "modifiers": {
+      "$ref": "#/$defs/modifierBlock",
+      "description": "Flat combat/save bonuses for the default variant (additive with H2H tier at GM discretion)."
+    },
+    "weaponProficiencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/weaponProficiencyRef" }
+    },
+    "equipment": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/equipmentEntry" }
+    },
+    "armor": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/armorEntry" },
+      "description": "Optional armor presets (vest, SWAT hard armor)."
+    },
+    "horrorFactorMorale": {
+      "$ref": "#/$defs/horrorFactorMorale"
+    },
+    "dispositionNotes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Behavior, morale, social reactions — tap-to-expand in GM UI."
+    },
+    "variants": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/archetypeVariant" },
+      "description": "Optional sub-templates (human vs Doppleganger cop, detective, etc.)."
+    },
+    "relatedRaceIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^race_[a-z0-9_]+$",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Cross-ref full race rows when swapping base composition."
+    },
+    "relatedOccIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^occ_[a-z0-9_]+$",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Cross-ref O.C.C. rows for leaders or upgraded roles (e.g. Priest of Night)."
+    }
+  },
+  "$defs": {
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameSystem", "reference", "pageNumber"],
+      "properties": {
+        "gameSystem": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "minLength": 1
+        },
+        "reference": { "type": "string", "minLength": 1 },
+        "pageNumber": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "composition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaultBaseRaceId": {
+          "type": "string",
+          "pattern": "^race_[a-z0-9_]+$",
+          "minLength": 1
+        },
+        "alternateBaseRaceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^race_[a-z0-9_]+$",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "speciesBaselineRaceId": {
+          "type": "string",
+          "pattern": "^race_[a-z0-9_]+$",
+          "minLength": 1,
+          "description": "Human baseline when default stats assume mundane human attributes."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "numberAppearing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formula"],
+      "properties": {
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Dice formula (e.g. 3D4, 3D6)."
+        },
+        "minimum": { "type": "integer", "minimum": 0 },
+        "maximum": { "type": "integer", "minimum": 1 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "vitalsBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sdc", "hp"],
+      "properties": {
+        "sdc": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "hp": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "handToHandBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skillId"],
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^hth_[a-z0-9_]+$",
+          "minLength": 1
+        },
+        "attacksPerMelee": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Printed attacks when book gives explicit APM separate from H2H tier."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "levelBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defaultLevel"],
+      "properties": {
+        "defaultLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 15
+        },
+        "distributionRoll": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Percentile or level roll (e.g. 1D100, 1D4)."
+        },
+        "outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max", "level"],
+            "properties": {
+              "min": { "type": "integer", "minimum": 1 },
+              "max": { "type": "integer", "minimum": 1 },
+              "level": { "type": "integer", "minimum": 1, "maximum": 15 }
+            }
+          }
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "modifierBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "initiative": { "type": "integer" },
+        "strike": { "type": "integer" },
+        "parry": { "type": "integer" },
+        "dodge": { "type": "integer" },
+        "pullPunch": { "type": "integer" },
+        "rollWithImpact": { "type": "integer" },
+        "rollWithPunch": { "type": "integer" },
+        "perception": { "type": "integer" },
+        "save_horror_factor": { "type": "integer" },
+        "save_magic": { "type": "integer" },
+        "save_psionics": { "type": "integer" },
+        "save_nightbane_horror_factor": {
+          "type": "integer",
+          "description": "Faction-specific save vs Nightbane Morphus H.F. (Warlord gangs)."
+        }
+      }
+    },
+    "weaponProficiencyRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notes"],
+      "properties": {
+        "skillId": {
+          "type": "string",
+          "pattern": "^wp_[a-z0-9_]+$",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "enum": ["ancient", "modern", "any"],
+          "description": "When book says 'any two W.P.' without listing catalog ids."
+        },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["skillId"] },
+        { "required": ["category"] }
+      ]
+    },
+    "equipmentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "damageFormula": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "armorEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "ar", "sdc"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "ar": { "type": "integer", "minimum": 1 },
+        "sdc": { "type": "integer", "minimum": 1 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "horrorFactorMorale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["saveTarget", "notes"],
+      "properties": {
+        "saveTarget": { "type": "integer", "minimum": 1 },
+        "useNightbaneHorrorFactor": { "type": "boolean" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "archetypeVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variantId", "label"],
+      "properties": {
+        "variantId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1
+        },
+        "label": { "type": "string", "minLength": 1 },
+        "baseRaceId": {
+          "type": "string",
+          "pattern": "^race_[a-z0-9_]+$",
+          "minLength": 1
+        },
+        "levelOffset": { "type": "integer" },
+        "vitals": { "$ref": "#/$defs/vitalsBlock" },
+        "modifiers": { "$ref": "#/$defs/modifierBlock" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

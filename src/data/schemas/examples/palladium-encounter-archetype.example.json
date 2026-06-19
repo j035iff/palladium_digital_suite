@@ -1,0 +1,83 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-encounter-archetype.schema.json",
+  "id": "encounter_preserver_activist",
+  "name": "Preserver Activist (\"Preevert\")",
+  "description": "Preserver Youth or Activist Group vigilante — swaggering bully armed thug; poorly trained; calls police when losing. GM quick-generate only.",
+  "gameSystems": ["nightbane"],
+  "sources": [
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 199
+    }
+  ],
+  "tags": ["preserver", "human", "thug", "modern"],
+  "composition": {
+    "defaultBaseRaceId": "race_human",
+    "speciesBaselineRaceId": "race_human",
+    "notes": "Average or below average attributes per book."
+  },
+  "numberAppearing": {
+    "formula": "3D4",
+    "minimum": 3,
+    "maximum": 12,
+    "notes": "Rarely travel in groups of less than four."
+  },
+  "alignmentNotes": "Typically any evil.",
+  "attributeNotes": "Average or below average attributes.",
+  "vitals": {
+    "sdc": 18,
+    "hp": 12
+  },
+  "handToHand": {
+    "skillId": "hth_basic",
+    "attacksPerMelee": 2
+  },
+  "levelOfExperience": {
+    "defaultLevel": 1
+  },
+  "modifiers": {
+    "strike": 1,
+    "parry": 1,
+    "pullPunch": 2
+  },
+  "weaponProficiencies": [
+    {
+      "skillId": "wp_blunt",
+      "notes": "One ancient W.P. (blunt or knife)."
+    },
+    {
+      "skillId": "wp_knife",
+      "notes": "One ancient W.P. (blunt or knife)."
+    },
+    {
+      "skillId": "wp_revolver",
+      "notes": "One or two modern W.P.s (revolver, pistol, rifle)."
+    }
+  ],
+  "equipment": [
+    {
+      "label": "Knife",
+      "damageFormula": "1D6"
+    },
+    {
+      "label": "Axe handle or baseball bat",
+      "damageFormula": "1D8"
+    },
+    {
+      "label": "9 mm pistol",
+      "damageFormula": "2D6"
+    }
+  ],
+  "horrorFactorMorale": {
+    "saveTarget": 10,
+    "useNightbaneHorrorFactor": true,
+    "notes": "Fail save in firefight or vs Morphus Nightbane — flee or surrender (flee first)."
+  },
+  "dispositionNotes": [
+    "White T-shirts with Preserver slogan, leather jackets, black jeans, combat boots; crew cuts or shaved heads.",
+    "Bullies — mock and push the weak; deferential to authority figures.",
+    "Not used to being shot at — roll H.F. 10 in firefights or vs Nightbane Morphus."
+  ],
+  "relatedRaceIds": ["race_human"]
+}

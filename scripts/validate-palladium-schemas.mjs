@@ -57,6 +57,9 @@ const morphusForgeRoutingSchema = loadJson(
 )
 const xpTableSchema = loadJson(join(schemasDir, 'palladium-xp-table.schema.json'))
 const xpTableBookSchema = loadJson(join(schemasDir, 'palladium-xp-table-book.schema.json'))
+const encounterArchetypeSchema = loadJson(
+  join(schemasDir, 'palladium-encounter-archetype.schema.json'),
+)
 const morphusDescriptionLeakRe =
   /\b(?:Talent Manifestations|New Common Talents|Appendix Talents|Common Talents from Nightbane|Elite Talents from Nightbane)\b/i
 
@@ -87,6 +90,7 @@ for (const [label, schema] of [
   ['palladium-morphus-forge-routing.schema.json', morphusForgeRoutingSchema],
   ['palladium-xp-table.schema.json', xpTableSchema],
   ['palladium-xp-table-book.schema.json', xpTableBookSchema],
+  ['palladium-encounter-archetype.schema.json', encounterArchetypeSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -111,6 +115,7 @@ const validateMorphusTableDoc = ajv.compile(morphusTableSchema)
 const validateMorphusForgeRoutingDoc = ajv.compile(morphusForgeRoutingSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
 const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
+const validateEncounterArchetypeRow = ajv.compile(encounterArchetypeSchema)
 
 const skillsDir = join(contentDir, 'skills')
 let palladiumSkills
@@ -219,6 +224,7 @@ const POOL_AUDIENCE = {
 }
 let raceTotal = 0
 const raceKeys = new Set()
+const allRaceIds = new Set()
 try {
   const genreDirs = readdirSync(racesDir, { withFileTypes: true })
     .filter((d) => d.isDirectory())
@@ -247,6 +253,7 @@ try {
             )
           }
           raceKeys.add(key)
+          allRaceIds.add(row.id)
         }
         const systems = row?.gameSystems ?? []
         if (
@@ -578,6 +585,146 @@ if (!Array.isArray(palladiumHandToHand)) {
     console.error(
       `ERR skills/hand_to_hand.json — ${hthBad} row(s) failed schema validation`,
     )
+  }
+}
+
+const encountersDir = join(contentDir, 'encounters')
+let encounterBookFiles = []
+try {
+  const encounterGenreDirs = readdirSync(encountersDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .sort()
+  for (const genre of encounterGenreDirs) {
+    const genrePath = join(encountersDir, genre)
+    const books = readdirSync(genrePath)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+    for (const book of books) {
+      encounterBookFiles.push({ genre, book, path: join(genrePath, book) })
+    }
+  }
+} catch {
+  console.error('ERR encounters — directory missing')
+  failed = true
+}
+
+if (encounterBookFiles.length > 0) {
+  const hthIds = new Set(
+    Array.isArray(palladiumHandToHand)
+      ? palladiumHandToHand.map((row) => row?.id).filter(Boolean)
+      : [],
+  )
+  const wpIds = new Set(
+    Array.isArray(weaponProficiencies)
+      ? weaponProficiencies.map((row) => row?.id).filter(Boolean)
+      : [],
+  )
+  const occIds = new Set(
+    Array.isArray(palladiumOccs) ? palladiumOccs.map((row) => row?.id).filter(Boolean) : [],
+  )
+  const encounterIdsSeen = new Set()
+  let encounterBad = 0
+  let encounterXrefBad = 0
+
+  const checkEncounterRaceRef = (raceId, label, archetypeId) => {
+    if (!raceId || allRaceIds.has(raceId)) return
+    encounterXrefBad++
+    if (encounterXrefBad <= 5) {
+      console.error(`ERR ${label} id=${archetypeId}: unknown race ref "${raceId}"`)
+    }
+  }
+
+  for (const { genre, book, path: bookPath } of encounterBookFiles) {
+    const label = `encounters/${genre}/${book}`
+    const rows = loadJson(bookPath)
+    if (!Array.isArray(rows)) {
+      failed = true
+      console.error(`ERR ${label} — expected top-level array`)
+      continue
+    }
+    for (const row of rows) {
+      const archetypeId = row?.id ?? '?'
+      if (row?.id) {
+        if (encounterIdsSeen.has(row.id)) {
+          encounterBad++
+          if (encounterBad <= 5) {
+            console.error(`ERR ${label} — duplicate encounter id "${row.id}"`)
+          }
+        } else {
+          encounterIdsSeen.add(row.id)
+        }
+      }
+      const systems = row?.gameSystems ?? []
+      if (
+        systems.length &&
+        !systems.every((g) => String(g).toLowerCase() === genre.toLowerCase())
+      ) {
+        failed = true
+        console.error(
+          `ERR ${label} id=${archetypeId}: gameSystems must match folder "${genre}"`,
+        )
+      }
+      if (!validateEncounterArchetypeRow(row)) {
+        encounterBad++
+        if (encounterBad <= 5) {
+          console.error(`ERR ${label} id=${archetypeId}:`, validateEncounterArchetypeRow.errors)
+        }
+        continue
+      }
+
+      const composition = row.composition ?? {}
+      checkEncounterRaceRef(composition.defaultBaseRaceId, label, archetypeId)
+      checkEncounterRaceRef(composition.speciesBaselineRaceId, label, archetypeId)
+      for (const raceId of composition.alternateBaseRaceIds ?? []) {
+        checkEncounterRaceRef(raceId, label, archetypeId)
+      }
+      for (const raceId of row.relatedRaceIds ?? []) {
+        checkEncounterRaceRef(raceId, label, archetypeId)
+      }
+      for (const variant of row.variants ?? []) {
+        checkEncounterRaceRef(variant.baseRaceId, label, archetypeId)
+      }
+      for (const occId of row.relatedOccIds ?? []) {
+        if (!occIds.has(occId)) {
+          encounterXrefBad++
+          if (encounterXrefBad <= 5) {
+            console.error(`ERR ${label} id=${archetypeId}: unknown O.C.C. ref "${occId}"`)
+          }
+        }
+      }
+      const hthId = row.handToHand?.skillId
+      if (hthId && !hthIds.has(hthId)) {
+        encounterXrefBad++
+        if (encounterXrefBad <= 5) {
+          console.error(`ERR ${label} id=${archetypeId}: unknown H2H ref "${hthId}"`)
+        }
+      }
+      for (const wp of row.weaponProficiencies ?? []) {
+        const wpId = wp?.skillId
+        if (wpId && !wpIds.has(wpId)) {
+          encounterXrefBad++
+          if (encounterXrefBad <= 5) {
+            console.error(`ERR ${label} id=${archetypeId}: unknown W.P. ref "${wpId}"`)
+          }
+        }
+      }
+    }
+  }
+
+  if (encounterBad === 0) {
+    console.log(
+      `OK  encounters — ${encounterBookFiles.length} book file(s) in ${new Set(encounterBookFiles.map((f) => f.genre)).size} genre folder(s), ${encounterIdsSeen.size} row(s) validate`,
+    )
+  } else {
+    failed = true
+    console.error(`ERR encounters — ${encounterBad} row(s) failed schema or duplicate-id validation`)
+  }
+  if (encounterXrefBad === 0) {
+    console.log('OK  encounters — race/O.C.C./H2H/W.P. cross-refs resolve')
+  } else {
+    failed = true
+    console.error(`ERR encounters — ${encounterXrefBad} cross-ref mismatch(es)`)
   }
 }
 
@@ -944,6 +1091,10 @@ const exampleValidators = [
   {
     prefix: 'palladium-weapon-proficiency',
     compile: validateWeaponProficiencyRow,
+  },
+  {
+    prefix: 'palladium-encounter-archetype',
+    compile: validateEncounterArchetypeRow,
   },
   {
     prefix: 'standard-modern-weapon-progression',

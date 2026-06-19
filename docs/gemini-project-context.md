@@ -199,10 +199,11 @@ Validated catalogs under `src/data/content/`:
 | Player races | 6 | `races/<genre>/{player,npc,gm_approval}.json` (3 genres) |
 | Hand-to-Hand | 5 | `skills/hand_to_hand.json` |
 | W.P. catalog | 16 | `skills/weapon_proficiencies.json` |
+| Encounter archetypes | 5 | `encounters/nightbane/nightbane_core.json` |
 
 **Layout contract:** ancillary/registry JSON → `<catalog-dir>/utils/` (see [`docs/content-catalog-layout.md`](content-catalog-layout.md)).
 
-Schemas: 18 Palladium content schemas + example JSON under `src/data/schemas/examples/`.
+Schemas: 19 Palladium content schemas + example JSON under `src/data/schemas/examples/`.
 
 ---
 
@@ -224,6 +225,7 @@ Content is **JSON-first**, validated by Ajv:
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) |
 | `palladium-morphus-forge-routing.schema.json` | `morphus/forge/*.json` — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) § Sub-Forge routing |
 | `palladium-xp-table.schema.json` | `progression/xp_tables/<genre>/*.json` — ingest: [`docs/ingest/xp_tables.md`](ingest/xp_tables.md) |
+| `palladium-encounter-archetype.schema.json` | `encounters/<genre>/*.json` — ingest: [`docs/ingest/encounters.md`](ingest/encounters.md) |
 
 Morphus characteristic entries support structured fields such as:
 
@@ -233,7 +235,7 @@ Morphus characteristic entries support structured fields such as:
 - `naturalWeapons`, `mobility.flightEngine`, `limbDurability`, `saveModifiers`
 - `appearanceConstraints`, `combatContextModifiers`, `customOneOffs` (narrative edge cases)
 
-Authoring guides: `docs/morphus_authoring.md`, `docs/ingest/morphus.md`, `docs/ingest/talents.md`, `docs/ingest/skills.md`, `docs/ingest/magic.md`, `docs/ingest/psionics.md`, `docs/ingest/occs.md`, `docs/ingest/races.md`.
+Authoring guides: `docs/morphus_authoring.md`, `docs/ingest/morphus.md`, `docs/ingest/talents.md`, `docs/ingest/skills.md`, `docs/ingest/magic.md`, `docs/ingest/psionics.md`, `docs/ingest/occs.md`, `docs/ingest/races.md`, `docs/ingest/encounters.md`.
 
 ### Saving throws (catalog + sheet)
 
@@ -412,12 +414,13 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 7. **Talent ingest** — follow `docs/ingest/talents.md`; flag ambiguous mechanics and ask the user before encoding.
 8. **Skill ingest** — follow `docs/ingest/skills.md`; same flag-and-ask rule (any Palladium genre).
 9. **Magic / psionic / O.C.C. / race ingest** — follow `docs/ingest/magic.md`, `docs/ingest/psionics.md`, `docs/ingest/occs.md`, `docs/ingest/races.md` respectively.
-10. **XP tables / HtH / W.P. ingest** — follow `docs/ingest/xp_tables.md`, `docs/ingest/hth.md`, `docs/ingest/weapon_proficiencies.md` respectively.
-11. **Morphus trait ingest** — follow `docs/ingest/morphus.md` (+ `docs/morphus_authoring.md` for field encoding); flag ambiguous mechanics and ask the user before encoding.
-12. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
-13. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
-14. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
-15. **Commits** — only when the user explicitly asks.
+10. **Encounter archetype ingest** — follow `docs/ingest/encounters.md`; GM-only templates, not player creation rows.
+11. **XP tables / HtH / W.P. ingest** — follow `docs/ingest/xp_tables.md`, `docs/ingest/hth.md`, `docs/ingest/weapon_proficiencies.md` respectively.
+12. **Morphus trait ingest** — follow `docs/ingest/morphus.md` (+ `docs/morphus_authoring.md` for field encoding); flag ambiguous mechanics and ask the user before encoding.
+13. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
+14. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
+15. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
+16. **Commits** — only when the user explicitly asks.
 
 ---
 

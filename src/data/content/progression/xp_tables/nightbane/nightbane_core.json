@@ -63,14 +63,17 @@
       "id": "nightbane_core_nemtar_hollow_men",
       "name": "Namtar / Hollow Men",
       "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 167 }],
       "maxLevel": 15,
       "floors": [
         0, 2001, 4001, 8501, 17001, 24501, 35601, 49701, 69801, 94901, 130001, 180001, 228101,
         279201, 339301
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Namtar & Hollow Men R.C.C.s. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_namtar_rcc",
+        "occ_hollow_man_rcc"
+      ],
+      "notes": "Nightbane RPG pp. 167–168 — Namtar & Hollow Men shared column (0–2,000). Same R.C.C. skill program on `occ_namtar_rcc` (pilot) and `occ_hollow_man_rcc` (construct). Typical 1D4+3."
     },
     {
       "id": "nightbane_core_sorcerer_mystic",
@@ -122,30 +125,34 @@
       "id": "nightbane_core_hound_hunter",
       "name": "Hound & Hunter",
       "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 161 }],
       "maxLevel": 15,
       "floors": [
         0, 2501, 5001, 10001, 20001, 35001, 55001, 85001, 130001, 180001, 235001, 285001, 350001,
         425001, 550001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Hound & Hunter R.C.C.s. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_hound_rcc",
+        "occ_hunter_rcc"
+      ],
+      "notes": "Nightbane RPG pp. 161–162 (Hound), pp. 164–165 (Hunter) — shared Hound & Hunter XP table. Hound typical 1D4+1 (rarely above 5th); Hunter typical 1D4+2 (rarely above 6th)."
     },
     {
       "id": "nightbane_core_ashmedai_psychic_sorcerer",
       "name": "Ashmedai, Psychic & Sorceror",
       "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 165 }],
       "maxLevel": 15,
       "floors": [
         0, 2241, 4481, 8961, 17921, 25921, 35921, 50921, 70921, 95921, 135921, 185921, 225921, 275921,
         335921
       ],
       "occIds": [
+        "occ_ashmedai_rcc",
         "occ_sorcerer",
         "occ_psychic_pcc"
       ],
-      "notes": "Nightbane RPG p.233 — Ashmedai, Psychic P.C.C., and Sorceror; first column (0–2,240). O.C.C.s: occ_sorcerer, occ_psychic_pcc."
+      "notes": "Nightbane RPG pp. 165–166 (Ashmedai), p.233 index — Ashmedai, Psychic P.C.C., and Sorcerer; first column (0–2,240). Ashmedai typical 1D6+1 (Psychic equivalent)."
     },
     {
       "id": "nightbane_core_night_prince_vampire",
@@ -163,7 +170,7 @@
         "occ_wild_vampire_rcc",
         "occ_night_prince_rcc"
       ],
-      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). O.C.C.s: occ_night_prince_rcc (`race_night_prince`), occ_master_vampire_rcc, occ_secondary_vampire_rcc, occ_wild_vampire_rcc."
+      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). O.C.C.s: occ_night_prince_rcc (`race_night_prince`, R.C.C. skills p. 177), occ_master_vampire_rcc (`race_master_vampire`, R.C.C. skills p. 181), occ_secondary_vampire_rcc (`race_secondary_vampire`, R.C.C. skills p. 182), occ_wild_vampire_rcc (`race_wild_vampire`, R.C.C. skills p. 183)."
     },
     {
       "id": "nightbane_core_nightlord",
@@ -175,8 +182,10 @@
         0, 8001, 16001, 32001, 56001, 86001, 120001, 180001, 250001, 325001, 400001, 500001, 600001,
         800001, 1200001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Nightlord; third column (0–8,000). Level 15 band tops at 2,400,000 XP."
+      "occIds": [
+        "occ_nightlord_rcc"
+      ],
+      "notes": "Nightbane RPG p.233 — Nightlord R.C.C. (`occ_nightlord_rcc`); third column (0–8,000). Typical starting level 2D4+5 (p. 175). Level 15 band tops at 2,400,000 XP."
     },
     {
       "id": "nightbane_core_hound_master",

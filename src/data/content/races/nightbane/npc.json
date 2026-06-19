@@ -2,8 +2,9 @@
   {
     "id": "race_hound",
     "name": "Hound",
-    "description": "Nightlord shock troops — magical constructs resembling black-metal skeletal warriors. They hunt for pain and fear, track supernatural prey by smell, and since Dark Day walk Earth in thousands. Not player characters (Diabolic predators). A.R. 13 vs normal weapons (zero vs magical/supernatural attacks). Typical experience level 1D4+1 (rarely above 5th).",
+    "description": "Nightlord shock troops — magical constructs resembling black-metal skeletal warriors. They hunt for pain and fear, track supernatural prey by smell, and since Dark Day walk Earth in thousands. Not player characters (Diabolic predators). Shadow O.C.C. `occ_hound_rcc` (auto-mounted). A.R. 13 vs normal weapons (zero vs magical/supernatural attacks). Typical experience level 1D4+1 (rarely above 5th).",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -11,10 +12,11 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 162
+        "pageNumber": 161
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_hound_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D4",
@@ -168,8 +170,9 @@
   {
     "id": "race_hunter",
     "name": "Hunter",
-    "description": "Flying aerial scouts and assassins of the Nightlords — black skeletal vulture-helmed warriors with bat-like wings (~one Hunter per ten Hounds). Not player characters (Diabolic predators). A.R. 13 vs normal weapons. Speed 1D4×10 on ground, 1D4×10+40 flying. Typical experience level 1D4+2 (rarely above 6th).",
+    "description": "Flying aerial scouts and assassins of the Nightlords — black skeletal vulture-helmed warriors with bat-like wings (~one Hunter per ten Hounds). Not player characters (Diabolic predators). Shadow O.C.C. `occ_hunter_rcc` (auto-mounted). A.R. 13 vs normal weapons. Speed 1D4×10 on ground, 1D4×10+40 flying. Typical experience level 1D4+2 (rarely above 6th).",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -177,10 +180,11 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 165
+        "pageNumber": 164
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_hunter_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D6",
@@ -354,8 +358,9 @@
   {
     "id": "race_ashmedai",
     "name": "Ashmedai",
-    "description": "The Crawling Horrors — worm-like Nightlord agents and independent predators who feed on victims' P.P.E. (doubled at death), not flesh. Master shape-shifters (mouse to elephant; not insects) used for espionage, NSB infiltration, and assassination; renegades hunt humans on Earth. Not player characters. True-form S.D.C. 3D6×10+150; H.P. 2D4×10+20 (constant in all shapes). Typical experience level 1D6+1 (Psychic equivalent). No special invulnerabilities or vulnerabilities.",
+    "description": "The Crawling Horrors — worm-like Nightlord agents and independent predators who feed on victims' P.P.E. (doubled at death), not flesh. Master shape-shifters (mouse to elephant; not insects) used for espionage, NSB infiltration, and assassination; renegades hunt humans on Earth. Not player characters. Shadow O.C.C. `occ_ashmedai_rcc` (auto-mounted). True-form S.D.C. 3D6×10+150; H.P. 2D4×10+20 (constant in all shapes). Typical experience level 1D6+1 (Psychic-equivalent XP table). No special invulnerabilities or vulnerabilities.",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -363,10 +368,11 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 166
+        "pageNumber": 165
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_ashmedai_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D6+12",
@@ -530,8 +536,9 @@
   {
     "id": "race_namtar",
     "name": "Namtar",
-    "description": "Tiny pseudo-insect Nightlord agents (beetle-like, eight legs, slimy carapace) that build and pilot Hollow Man constructs (`race_hollow_man`) — human-sized blood/mud puppets used as NSB \"Men in Black.\" Not player characters. Namtar true form: 1D6+6 inches, S.D.C. 10, H.P. P.E.+10, A.R. 12. Typical experience level 1D4+3. Horror Factor 9 (beetle), 11 (MIB construct), 15 (Namtar erupting from construct).",
+    "description": "Tiny pseudo-insect Nightlord agents (beetle-like, eight legs, slimy carapace) that build and pilot Hollow Man constructs (`race_hollow_man`) — human-sized blood/mud puppets used as NSB \"Men in Black.\" Not player characters. Shadow O.C.C. `occ_namtar_rcc` (auto-mounted). Namtar true form: 1D6+6 inches, S.D.C. 10, H.P. P.E.+10, A.R. 12. Typical experience level 1D4+3. Horror Factor 9 (beetle), 11 (MIB construct), 15 (Namtar erupting from construct).",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -543,6 +550,7 @@
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_namtar_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "3D6+6",
@@ -694,8 +702,9 @@
   {
     "id": "race_hollow_man",
     "name": "Hollow Man",
-    "description": "Magic-built humanoid construct (blood, mud, Namtar secretions) piloted by a `race_namtar` inside — the NSB \"Men in Black\" seen on Earth. Not player characters. No Hit Points (S.D.C. only). Typical experience level 1D4+3 (Namtar pilot). Horror Factor 11 (MIB); 15 when the Namtar erupts from the construct. Spawn this row for the construct alone; pair with `race_namtar` when the beetle pilot matters.",
+    "description": "Magic-built humanoid construct (blood, mud, Namtar secretions) piloted by a `race_namtar` inside — the NSB \"Men in Black\" seen on Earth. Not player characters. Shadow O.C.C. `occ_hollow_man_rcc` (auto-mounted). No Hit Points (S.D.C. only). Hand to Hand: Expert. Typical experience level 1D4+3 (Namtar pilot). Horror Factor 11 (MIB); 15 when the Namtar erupts from the construct. Spawn this row for the construct alone; pair with `race_namtar` when the beetle pilot matters.",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -707,6 +716,7 @@
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_hollow_man_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "3D6",
@@ -828,8 +838,9 @@
   {
     "id": "race_nightlord",
     "name": "Nightlord",
-    "description": "Ba'al arch-villains — supernatural energy vampires with matter/energy reality control, not conventional spell casters. NPC only; campaign-ending threats (seldom encountered directly; see pp. 173–174). Creates semi-independent `race_nightlord_avatar` extensions (typically 2–3 max). S.D.C. 3D6×100+500; H.P. P.E.×level; P.P.E. 2D6×100+1000 (+50/level). Typical experience 2D4+5. Horror Factor 18 when aura unmasked.",
+    "description": "Ba'al arch-villains — supernatural energy vampires with matter/energy reality control, not conventional spell casters. NPC only; campaign-ending threats (seldom encountered directly; see pp. 173–174). Shadow O.C.C. `occ_nightlord_rcc` (auto-mounted). Creates semi-independent `race_nightlord_avatar` extensions (typically 2–3 max). S.D.C. 3D6×100+500; H.P. P.E.×level; P.P.E. 2D6×100+1000 (+50/level). Typical experience 2D4+5. Horror Factor 18 when aura unmasked.",
     "raceAudience": "npc",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -841,6 +852,7 @@
       }
     ],
     "canPickOcc": false,
+    "forcedOccId": "occ_nightlord_rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "3D6+12",

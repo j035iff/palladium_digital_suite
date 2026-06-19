@@ -1,13 +1,38 @@
 {
   "id": "nightbane_true_vampire",
   "name": "True Vampire Powers",
-  "description": "Shared undead power suite for Master, Secondary, and Wild vampires (Nightbane RPG pp. 183–188). Excludes Wampyr R.C.C. Merge onto true-vampire race rows via trueVampirePowersModuleId.",
+  "description": "Shared undead power suite for Master, Secondary, and Wild vampires (Nightbane RPG pp. 183–188). Excludes `race_wampyr`. Merge onto true-vampire race rows via `trueVampirePowersModuleId: nightbane_true_vampire` (see `applyTrueVampirePowerModule`). Tier I.S.P., combat, saves, and slave caps stay on race + shadow O.C.C. rows.",
   "gameSystems": ["nightbane"],
   "sources": [
     {
       "gameSystem": "nightbane",
       "reference": "Nightbane RPG",
+      "pageNumber": 183
+    },
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
       "pageNumber": 184
+    },
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 185
+    },
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 186
+    },
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 187
+    },
+    {
+      "gameSystem": "nightbane",
+      "reference": "Nightbane RPG",
+      "pageNumber": 188
     }
   ],
   "excludedRaceIds": ["race_wampyr"],
@@ -22,75 +47,91 @@
     "psionic_induce_sleep",
     "psionic_suggestion"
   ],
-  "psionicNotes": "All granted powers operate at 4th-level potency. Super-Hypnotic Suggestion (vampire-exclusive; 20 I.S.P., line of sight, 5 min/level) is not in the psionics catalog — see classAbilities.",
+  "psionicNotes": "All nine catalog grants operate at 4th-level potency (p. 184). Hypnotic Suggestion is included via `psionic_suggestion`. Super-Hypnotic Suggestion is vampire-exclusive and not in the psionics catalog — see classAbilities. I.S.P. formulas and save tiers (master/major/minor) live on race + shadow O.C.C. `ispEngine` rows.",
   "classAbilities": [
     {
+      "name": "Shared True Vampire Suite",
+      "description": "All undead vampires except `race_wampyr` share these powers (pp. 183–188). Merged at load onto `race_master_vampire`, `race_secondary_vampire`, and `race_wild_vampire` when `trueVampirePowersModuleId` is set. Creation outcomes, hierarchy, and tier combat/I.S.P. remain on those race rows and shadow O.C.C.s."
+    },
+    {
       "name": "A Lust for Blood",
-      "description": "Feed on at least two pints (~1 L) of blood every 48 hours (preferably nightly). Night 3: stomach pains and junkie-level craving (can still resist). Night 4+: pale/waxy, −2 initiative, −10% all skills; within 500 ft (152 m) of human blood, save vs feeding frenzy (mind control, no usual bonuses) or succumb — anarchist/good alignments may avoid friends/innocents and stop after 2 pints with further saves per additional pint. −1 frenzy save per day after day 4. After 3 weeks without feeding: temporary animalistic insanity (attacks on sight; normal after feeding). After 6+ months: permanent insanity and rank degeneration (master→secondary, secondary→wild, wild→more savage)."
+      "description": "Feed at least two pints (~1 L) of blood every 48 hours (preferably nightly). Hunger intensifies each night of abstinence — vampires cannot die from starvation (p. 183). Night 3: stomach pains and junkie-level craving (can still resist). Night 4+: pale/waxy skin, dark circles, perspiration, weakness — −2 initiative, −10% all skills; within 500 ft (152 m) of human blood, save vs feeding frenzy (mind control, no usual bonuses) or succumb. Good/anarchist alignments may avoid friends/innocents and stop after two pints with further saves per additional pint. −1 frenzy save per day after day 4. After three weeks without feeding: temporary animalistic insanity (howls, attacks on sight; returns to normal minutes after feeding). After six+ months: permanent insanity and rank degeneration (master→secondary, secondary→wild, wild→more savage) — cannot be restored to former self or social ranking."
     },
     {
       "name": "The Vampire's Bite",
-      "description": "Deliberate slow-kill infection only — draining and slaying victims does not create vampires accidentally. Nightbane, Guardians, most supernatural creatures (Dopplegangers, Nightlord servants, Nightlords), and Ashmedai/Hollow Men/Hounds cannot be transformed; Nightbane/Guardians/Dopplegangers can still be fed upon."
+      "description": "Undead may feed normally or deliberately infect via slow kill — draining and slaying victims never creates vampires accidentally (pp. 183–184). Nightbane, Guardians, and most supernaturals (Dopplegangers, Nightlord servants, Nightlords) are immune to transformation and slow-kill domination; Nightbane, Guardians, and Dopplegangers can still be fed upon. Hounds, Hunters, and Hollow Men have no blood; Ashmedai have no link to true living blood. Unknown whether a Nightlord or Avatar can be fed — no known success (p. 183)."
     },
     {
       "name": "Slow Kill: Creating the Undead",
-      "description": "Drain the chosen victim a little each night for three consecutive nights; on the third night drain all blood and kill. Victim rises three days later. Master creator: always produces a secondary vampire. Secondary creator: 01–02% Wampyr, 03–44% secondary, 45–00% wild. Wild creators: only other wild undead (usually too savage to attempt)."
+      "description": "Deliberate three-night drain: a little each of three consecutive nights, then drain all blood and kill on the third night; victim rises three days later (pp. 183–184). Master creator: always `race_secondary_vampire`. Secondary creator: roll 01–02% `race_wampyr`, 03–44% secondary, 45–00% wild. Wild creators: only other wild undead — usually too savage and impatient to attempt."
     },
     {
       "name": "Passive Victim",
-      "description": "Slow-kill target is passive and subservient for the three days/nights before death: half skills and attacks per melee, waits for the vampire, obeys mental commands at 100 ft (30.5 m) ('come to me,' 'open the door,' 'remove the crucifix'). Vampire senses victim location up to 400 miles (640 km)."
+      "description": "Slow-kill target is passive and subservient during the three days/nights before death: half skills and attacks per melee, waits for the vampire, obeys mental commands at 100 ft (30.5 m) ('come to me,' 'open the door,' 'remove the crucifix'). Creator senses victim location up to 400 miles (640 km) away (pp. 183–184)."
     },
     {
       "name": "Vampire Slaves",
-      "description": "Non-lethal bite series creates a human slave who obeys and never betrays the master. Master vampire: up to two slaves. Secondary vampire: one slave."
+      "description": "Non-lethal bite series creates a human slave who obeys and never betrays the master — process similar to slow kill (pp. 183–184). Master vampire: up to two slaves (`race_master_vampire` metadata). Secondary vampire: one slave (`race_secondary_vampire` metadata). Wild vampires create no slaves."
     },
     {
       "name": "Mind Control: Vampire over Vampire",
-      "description": "Automatic (no I.S.P.) dominance contest — attacker's eyes glow, voice like thunder; target saves vs psionic attack or obeys totally for 2D6 hours. Vampires sense kindred, essence/creator, and rank (master/secondary/wild). Penalties to resist range from −10 (intelligence commanding wild) to −1 (older vampire vs peer)."
+      "description": "Extended family linked by shared vampire-intelligence essence — sense kindred, same essence/creator, and rank (master/secondary/wild); vampires of other intelligences recognized as rivals/enemies (pp. 184). Hierarchy of masters and servants — dominance often established via automatic mind control (no I.S.P.): attacker's eyes glow, voice like thunder; target saves vs psionic attack or obeys totally for 2D6 hours. Penalties to resist range from −10 (intelligence commanding wild) to −1 (older vampire vs peer)."
+    },
+    {
+      "name": "Psionic Powers of the Vampire",
+      "description": "Beyond vampire-over-vampire domination, all true vampires wield traditional psionics at 4th-level potency (I.S.P. required) (p. 184): Death Trance, Presence Sense, Alter Aura (Self), Sense Evil, Empathy, Deaden Pain, Mind Block, Induce Sleep, Hypnotic Suggestion — encoded as `psionicGrantIds` on this module and shadow O.C.C. `ispEngine` rows. Tier save targets and I.S.P. formulas (master 3D6×10, secondary 2D6×10, wild 1D6×10) stay on race + O.C.C., not this module."
+    },
+    {
+      "name": "Super-Hypnotic Suggestion (Vampire Exclusive)",
+      "description": "Not in the psionics catalog (pp. 184–185). Range: line of sight — victim must meet the vampire's eyes (eyes glow red or yellow). Duration: 5 minutes per level (20 minutes for the average vampire), or until the vampire is killed or releases the victim. I.S.P.: 20. Saving throw: standard. Places living creatures in a light trance; commands obeyed except those utterly against alignment — phrasing can bypass compunction. Documented on `occ_master_vampire_rcc` classAbilities; all tiers lack this power in `psionicGrantIds`."
     },
     {
       "name": "Telepathic Link with Minions (Master only)",
-      "description": "Master vampire only — automatic link to creations: sense minions within 10 miles (16 km), feel injury/death, summon all within 100 miles (160 km); minions distinguish general gather vs urgent danger calls and sense master's death."
+      "description": "Master vampire only — automatic link to creations (pp. 184–185): sense minions within 10 miles (16 km), feel injury/death, summon all within 100 miles (160 km). Minions distinguish general gather vs urgent danger calls and sense the master's death. Encoded on `race_master_vampire` metadata — secondary and wild tiers lack this power."
     },
     {
       "name": "Metamorphosis",
-      "description": "Transform into large bat, wolf, or mist (~7 seconds / 1 attack). Retain intelligence; cannot speak or use skills in animal forms; cannot use psionics in mist (can in bat/wolf). Clothing and small personal items vanish and return with human form."
+      "description": "Transform into large bat, wolf, or mist (~7 seconds / 1 attack) (pp. 185). Retain intelligence and identity; cannot speak or perform skills in animal forms; cannot use psionics in mist (can in bat/wolf). Clothing and small personal items vanish during transformation and return in human form."
     },
     {
       "name": "Vampire Bat Form",
-      "description": "Fly Spd 50 (35 mph / 56 km). Sonar/echolocation (fly full speed in darkness, see invisible), ultrasonic hearing, thermo-imaging 10 ft (3 m). Combat: +2 strike, +3 dodge, +8 dodge in flight, +5% prowl; half normal attacks; bite 2D6 S.D.C., claws 1D6 + P.S.; slow-kill bite and feeding allowed."
+      "description": "Fly Spd 50 (35 mph / 56 km) (pp. 185). Sonar/echolocation (full-speed flight in darkness, see invisible); ultrasonic hearing (acute — hears a moth's wings but cannot understand speech); thermo-imaging 10 ft (3 m) for warm blood (cannot see infrared light). Combat: +2 strike, +3 dodge, +8 dodge in flight, +5% prowl; half normal attacks; bite 2D6 S.D.C., claws 1D6 + P.S.; slow-kill bite and feeding allowed."
     },
     {
       "name": "Vampire Wolf Form",
-      "description": "Run Spd 58 (40 mph / 64 km). Track by scent 70%, leap 20 ft (6.1 m) across / 6 ft (1.8 m) high. Combat: +2 strike, +1 parry, +4 dodge, +1 initiative, +15% prowl; +1 attack per melee; bite 5D6 (no P.S. bonus)."
+      "description": "Run Spd 58 (40 mph / 64 km) (pp. 185). Track by scent 70%; leap 20 ft (6.1 m) across / 6 ft (1.8 m) high. Combat: +2 strike, +1 parry, +4 dodge, +1 initiative, +15% prowl; +1 attack per melee vs humanoid; bite 5D6 (no P.S. bonus)."
     },
     {
       "name": "Vampire Mist Form",
-      "description": "Spd 11 (7.5 mph / 12 km). Impervious to physical attacks including wood, silver, fire, and most magic; still vulnerable to water and elemental magic. Slides through cracks and keyholes. Cannot attack; +10% prowl (large obvious mist)."
+      "description": "Spd 11 (7.5 mph / 12 km) (pp. 185–186). Impervious to physical attacks including wood, silver, fire, and most magic; still vulnerable to water and elemental magic. Slides under doors, through cracks, keyholes. Cannot attack — move/flee only; +10% prowl (large, obvious mist). No psionics in mist; psionics usable in bat/wolf."
     },
     {
       "name": "Summoning Powers",
-      "description": "Summon vermin, canines, and (7th level+) fog. Vermin: 100 large or 500 small per level; large rats H.F. 9 bite 1D6+1/round, small H.F. 6 (−1 attack, −4 initiative, −1 strike, −2 parry/dodge). Canines: 6 per level, pack H.F. 8, 2–3 attacks, bite 1D6. Fog (7th+): up to 1 mile (1.6 km), visibility 4 ft (1.2 m) +10 ft shadows. Duration: 20 minutes per level."
+      "description": "Summon vermin, canines, and fog (7th level+) (pp. 186). Vermin (rats, mice, flies, gnats, cockroaches, etc.): 100 large or 500 small per level — large H.F. 9 bite 1D6+1/round; small H.F. 6 (−1 attack, −4 initiative, −1 strike, −2 parry/dodge). Canines: 6 per level, pack H.F. 8, 2–3 attacks, bite 1D6. Fog (7th+): up to 1 mile (1.6 km), visibility 4 ft (1.2 m) with blurred shapes to 10 ft (3 m). Duration: 20 minutes per level."
     },
     {
       "name": "Limited Invulnerability",
-      "description": "Immune to metal blades, bullets, fire, electricity, lasers, and explosives (may be knocked down or lose clothing). Wooden weapons (no metal/stone head), silver bullets/plated weapons, and magic harm hit points directly. Spell magic inflicts half damage. Nightbane and Guardian attacks inflict full direct hit point damage."
+      "description": "Immune to metal blades, bullets, fire, electricity, lasers, and explosives — may be knocked down or lose clothing, flesh untouched (pp. 186). Wooden weapons (no metal/stone head), silver bullets/plated weapons, enchanted/charged weapons, and magic harm hit points directly. Spell magic inflicts half damage. Nightbane and Guardian attacks inflict full direct hit point damage."
     },
     {
       "name": "Super-Regeneration",
-      "description": "Regenerate 2D6 H.P. per melee round. Fight until −20 H.P.; at −21 appear dead but enter healing trance (fully healed in minutes unless specific kill measures apply). Stake through heart: suspended animation — body may shrivel; removing stake restores life in seconds."
+      "description": "Regenerate 2D6 H.P. per melee round (pp. 186). Fight and function until −20 H.P.; at −21 appear dead but enter healing trance — fully healed in minutes unless specific kill measures apply (book caption: full restoration from stake removal in under ~15 seconds). Stake through heart: suspended animation — body may shrivel to ancient corpse/skeleton; removing stake restores life in seconds."
     },
     {
       "name": "To Kill the Vampire",
-      "description": "Four sure methods: (1) Ritual disposal — stake/wood or silver impalement, decapitate, burn head and body separately, scatter ashes. (2) Sunlight — 1D6×10 H.P./melee round exposure; powers weakened, speed/attacks −⅓; Globe of Daylight repels; Guardian light 5D6/round without other penalties. (3) Water — running water destroys (still water 6D6/round immersed; water gun 2D6/squirt; regen from water damage 6D6/minute); cannot cross running water without bridge (save vs H.F. 16). (4) Homeland soil — must sleep on soil of turning continent or face daylight destruction."
+      "description": "Four guaranteed kill methods (pp. 186–187): (1) Ritual disposal — immobilize with wooden/silver stake or spear through heart, decapitate, burn head and body in separate pyres, scatter ashes (vampires burn after wood impalement despite normal fire immunity). (2) Sunlight — 1D6×10 H.P./melee round; powers weakened, speed/attacks −⅓; destroyed in minutes. Globe of Daylight repels but does not destroy. Guardian light 5D6/round without other penalties. (3) Water — running water destroys (still water 6D6/round immersed; water gun 2D6/squirt; water-damage regen 6D6/minute); at −21 melts into oblivion. Cannot cross running water without bridge (save vs H.F. 16) — typically cross in sealed containers via servants. (4) Homeland soil — see Homeland Soil Requirement."
+    },
+    {
+      "name": "Homeland Soil Requirement",
+      "description": "Must sleep on soil of the continent where turned undead — e.g. North America covers continental U.S., Canada, and northern Mexico (pp. 187). Without native soil the vampire cannot sleep; if replacement soil cannot be found, must remain on the surface by day and is doomed to sunlight destruction. Wampyrs ignore this taboo (`race_wampyr` metadata.immuneHomelandSoilRequirement)."
     },
     {
       "name": "Means of Defense — Crosses",
-      "description": "Crucifix symbol/shadow causes recoil and pain; held cross forces vampire away, worn protects from bite. Touch: save vs H.F. 18 or paralyzed 1 melee; touch 2D6 damage; large shadow covering half+ of body 1D4×10 H.P. (regenerates)."
+      "description": "Non-lethal protection (pp. 187). Crucifix (T-shaped) symbol or shadow causes recoil and pain; held cross forces vampire away; worn cross protects from bite. Touch or shadow: save vs H.F. 18 or paralyzed 1 full melee by agony; touch 2D6 damage; large shadow covering half+ of body 1D4×10 H.P. — regenerates, no permanent harm."
     },
     {
       "name": "Means of Defense — Herbs of Protection",
-      "description": "Garlic and wolfbane on doors/windows/fireplace block entry; waved in face causes recoil; circle of either herb blocks entry; eating large quantities causes vampire to retch blood."
+      "description": "Garlic and wolfbane (pp. 187–188). Hang on door, window, or above fireplace to block entry; wave in face to cause recoil; circle of either herb blocks entry. Eating large quantities causes vampire to retch and vomit blood."
     }
   ]
 }

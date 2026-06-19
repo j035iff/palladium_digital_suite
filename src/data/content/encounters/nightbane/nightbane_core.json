@@ -1,0 +1,511 @@
+[
+  {
+    "id": "encounter_preserver_activist",
+    "name": "Preserver Activist (\"Preevert\")",
+    "description": "Preserver Youth or Activist Group vigilante — swaggering, poorly trained armed thugs who intimidate dissenters after Dark Day. Well-armed but rarely travel in groups smaller than four; call corrupt police when losing.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 199
+      }
+    ],
+    "tags": ["preserver", "human", "thug", "vigilante", "modern"],
+    "packageNotes": [
+      "Section: Enemies & Minor NPCs (pp. 199–202). GM-only encounter archetype — not player creation.",
+      "Favor pickup trucks, jeeps, and off-road vehicles even in cities.",
+      "Police (often non-human) side with Preeverts against their victims."
+    ],
+    "composition": {
+      "defaultBaseRaceId": "race_human",
+      "speciesBaselineRaceId": "race_human",
+      "notes": "Average or below average attributes."
+    },
+    "numberAppearing": {
+      "formula": "3D4",
+      "minimum": 3,
+      "maximum": 12,
+      "notes": "Rarely travel in groups of less than four."
+    },
+    "alignmentNotes": "Typically any evil.",
+    "attributeNotes": "Average or below average attributes.",
+    "vitals": {
+      "sdc": 18,
+      "hp": 12
+    },
+    "handToHand": {
+      "skillId": "hth_basic",
+      "attacksPerMelee": 2,
+      "notes": "Hand to Hand: Basic; two attacks per melee."
+    },
+    "levelOfExperience": {
+      "defaultLevel": 1
+    },
+    "modifiers": {
+      "strike": 1,
+      "parry": 1,
+      "pullPunch": 2
+    },
+    "weaponProficiencies": [
+      {
+        "skillId": "wp_blunt",
+        "notes": "One ancient W.P. — blunt or knife."
+      },
+      {
+        "skillId": "wp_knife",
+        "notes": "One ancient W.P. — blunt or knife."
+      },
+      {
+        "skillId": "wp_revolver",
+        "notes": "One or two modern W.P.s — revolver, pistol, or rifle."
+      },
+      {
+        "skillId": "wp_automatic_pistol",
+        "notes": "Optional second modern W.P."
+      },
+      {
+        "skillId": "wp_bolt_action_rifle",
+        "notes": "Semi-automatic hunting rifle (5D6) optional."
+      }
+    ],
+    "equipment": [
+      {
+        "label": "Knife",
+        "damageFormula": "1D6"
+      },
+      {
+        "label": "Axe handle or baseball bat",
+        "damageFormula": "1D8"
+      },
+      {
+        "label": "9 mm pistol",
+        "damageFormula": "2D6"
+      },
+      {
+        "label": ".45 pistol",
+        "damageFormula": "4D6"
+      },
+      {
+        "label": "Semi-automatic hunting rifle",
+        "damageFormula": "5D6"
+      }
+    ],
+    "horrorFactorMorale": {
+      "saveTarget": 10,
+      "useNightbaneHorrorFactor": true,
+      "notes": "Firefight or Morphus Nightbane confrontation — fail save: flee or surrender (flee always first choice)."
+    },
+    "dispositionNotes": [
+      "Dress: white T-shirts with Preserver slogan \"Save America for Americans,\" leather jackets, black jeans, combat boots; crew cuts or shaved heads.",
+      "Bullies — mock, insult, and push those they perceive as weaker; respectful and obedient to authority.",
+      "Not used to dangerous confrontation despite carrying weapons."
+    ],
+    "relatedRaceIds": ["race_human"]
+  },
+  {
+    "id": "encounter_nightbane_gang_member",
+    "name": "Nightbane Gang Member",
+    "description": "Golden Posse, Warlords, or street gang hardened criminal — inner-city veteran; bullies like Preeverts but hates them; Warlord gangs may know Nightbane and occasionally include Nightbane backers.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 199
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 200
+      }
+    ],
+    "tags": ["gang", "warlord", "golden_posse", "criminal", "modern"],
+    "packageNotes": [
+      "Occasionally one or two appear alone; similar gangs may include vampires, Wampyrs, or other supernaturals as members/leaders.",
+      "Warlord gangs: 10% Nightbane backing if 2–6 members (1D4+2); 15% if 7+ members.",
+      "Hates Preserver Activists — shoot on sight."
+    ],
+    "composition": {
+      "defaultBaseRaceId": "race_human",
+      "speciesBaselineRaceId": "race_human",
+      "notes": "Either P.S. 17 or P.P. 17; all other attributes average."
+    },
+    "numberAppearing": {
+      "formula": "3D4",
+      "minimum": 3,
+      "maximum": 12,
+      "notes": "Occasionally one or two."
+    },
+    "alignmentNotes": "Typically anarchist or any evil.",
+    "attributeNotes": "Either P.S. 17 or P.P. 17; all others average.",
+    "vitals": {
+      "sdc": 25,
+      "hp": 15
+    },
+    "handToHand": {
+      "skillId": "hth_expert"
+    },
+    "levelOfExperience": {
+      "defaultLevel": 2,
+      "notes": "1 in 5 are 3rd level with higher combat bonuses."
+    },
+    "modifiers": {
+      "initiative": 1,
+      "parry": 3,
+      "dodge": 3,
+      "pullPunch": 2,
+      "strike": 1,
+      "save_nightbane_horror_factor": 1
+    },
+    "weaponProficiencies": [
+      {
+        "skillId": "wp_blunt",
+        "notes": "One archaic W.P. — blunt, chain, or knife."
+      },
+      {
+        "skillId": "wp_chain",
+        "notes": "One archaic W.P. — blunt, chain, or knife."
+      },
+      {
+        "skillId": "wp_knife",
+        "notes": "One archaic W.P. — blunt, chain, or knife."
+      },
+      {
+        "skillId": "wp_automatic_pistol",
+        "notes": "Two modern W.P.s — automatic pistol, automatic rifle, or sub-machinegun."
+      },
+      {
+        "skillId": "wp_automatic_and_semiautomatic_rifles",
+        "notes": "AK-47 (4D6) typical."
+      },
+      {
+        "skillId": "wp_sub_machinegun",
+        "notes": "Uzi (2D6) typical."
+      }
+    ],
+    "equipment": [
+      {
+        "label": "9 mm handgun",
+        "damageFormula": "2D6"
+      },
+      {
+        "label": "Uzi",
+        "damageFormula": "2D6"
+      },
+      {
+        "label": "AK-47",
+        "damageFormula": "4D6"
+      }
+    ],
+    "horrorFactorMorale": {
+      "saveTarget": 8,
+      "useNightbaneHorrorFactor": false,
+      "notes": "Actual combat vs dangerous enemies — fail: flee. Warlord gangs less likely to flee from Nightbane (+1 save vs Nightbane H.F.)."
+    },
+    "dispositionNotes": [
+      "Swaggering bullies — loud music, graffiti tagging, street intimidation.",
+      "Golden Posse favors yellow; Warlords use speckled red gang colors (bandannas/jackets).",
+      "Used to attacking surprised victims — less comfortable when targets fight back."
+    ],
+    "relatedRaceIds": ["race_human", "race_nightbane"]
+  },
+  {
+    "id": "encounter_corrupted_police",
+    "name": "Corrupted Police",
+    "description": "Post–Dark Day Nightlord-aligned police — fanatical cultists, criminals, or corrupt officers; human or Doppleganger replacements. Call backup rapidly; SWAT and NSB for serious threats. Good cops exist as rare minority (see disposition).",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 200
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 201
+      }
+    ],
+    "tags": ["police", "nightlord", "cult", "modern", "doppleganger"],
+    "packageNotes": [
+      "Typical squad car: 2 officers; 2D6 additional officers in 1D6 minutes when confronted.",
+      "Detectives work in pairs or groups of 3–6 — half may be Dopplegangers, Hollow Men, or other minion disguises.",
+      "Add +1 level of experience for detectives and ranking officers.",
+      "Sideline crimes: protection, drugs, extortion, murder/robbery of Nightbane and dissidents."
+    ],
+    "composition": {
+      "defaultBaseRaceId": "race_human",
+      "alternateBaseRaceIds": ["race_doppleganger"],
+      "speciesBaselineRaceId": "race_human",
+      "notes": "One attribute at 17 (typically P.S., P.P., or P.E.); Dopplegangers have supernatural P.S."
+    },
+    "numberAppearing": {
+      "formula": "2",
+      "notes": "Patrol pair per squad car; 2D6 backup in 1D6 minutes; detectives 2–6; SWAT/NSB for heavy threats."
+    },
+    "alignmentNotes": "Anarchist or any evil (default archetype). Good peacekeepers are a rare minority — see dispositionNotes.",
+    "attributeNotes": "One attribute at 17 (P.S., P.P., or P.E. typical); Dopplegangers have supernatural P.S.",
+    "vitals": {
+      "sdc": 30,
+      "hp": 16,
+      "notes": "Human patrol default — Doppleganger variant: 50 S.D.C."
+    },
+    "handToHand": {
+      "skillId": "hth_expert"
+    },
+    "levelOfExperience": {
+      "defaultLevel": 1,
+      "distributionRoll": "1D100",
+      "outcomes": [
+        { "min": 1, "max": 20, "level": 1 },
+        { "min": 21, "max": 60, "level": 2 },
+        { "min": 61, "max": 80, "level": 3 },
+        { "min": 81, "max": 100, "level": 4 }
+      ],
+      "notes": "Bonuses below are for 1st-level patrol officers; +1 level for detectives and ranking officers."
+    },
+    "modifiers": {
+      "initiative": 1,
+      "pullPunch": 2,
+      "rollWithImpact": 1,
+      "strike": 1,
+      "parry": 1
+    },
+    "weaponProficiencies": [
+      { "skillId": "wp_blunt", "notes": "Nightstick (1D8)." },
+      { "skillId": "wp_automatic_pistol", "notes": "9 mm pistol (2D6)." },
+      { "skillId": "wp_shotgun", "notes": "Shotgun (4D6 or 5D6)." },
+      {
+        "skillId": "wp_automatic_and_semiautomatic_rifles",
+        "notes": "Rifle (5D6) — SWAT units only."
+      }
+    ],
+    "equipment": [
+      { "label": "Nightstick", "damageFormula": "1D8" },
+      { "label": "9 mm pistol", "damageFormula": "2D6" },
+      { "label": "Shotgun", "damageFormula": "4D6", "notes": "Or 5D6." },
+      { "label": "Rifle (SWAT)", "damageFormula": "5D6" }
+    ],
+    "armor": [
+      {
+        "label": "Bulletproof vest (when worn)",
+        "ar": 10,
+        "sdc": 50
+      },
+      {
+        "label": "SWAT hard armor",
+        "ar": 16,
+        "sdc": 260
+      }
+    ],
+    "dispositionNotes": [
+      "Evil majority: rude, cold, intimidating — abuse \"perps\" and Nightbane; minimum courtesy to \"solid citizens.\"",
+      "Rare good cops may curb abuses, let suspects escape, or secretly aid Spook Squad, Lightbringers, and trusted Nightbane — risk murder if exposed.",
+      "Many good officers resigned and work underground with resistance groups."
+    ],
+    "variants": [
+      {
+        "variantId": "patrol_doppleganger",
+        "label": "Patrol officer (Doppleganger)",
+        "baseRaceId": "race_doppleganger",
+        "vitals": { "sdc": 50, "hp": 16 },
+        "modifiers": {
+          "initiative": 1,
+          "pullPunch": 2,
+          "rollWithImpact": 1,
+          "strike": 1,
+          "parry": 1,
+          "save_horror_factor": 2
+        }
+      },
+      {
+        "variantId": "detective_evil",
+        "label": "Evil detective",
+        "levelOffset": 1,
+        "modifiers": {
+          "initiative": 2,
+          "perception": 3,
+          "rollWithImpact": 2,
+          "pullPunch": 2,
+          "strike": 2,
+          "parry": 2,
+          "save_horror_factor": 4
+        },
+        "notes": "Doppleganger detectives also receive +4 save vs Horror Factor."
+      }
+    ],
+    "relatedRaceIds": ["race_human", "race_doppleganger", "race_hollow_man"]
+  },
+  {
+    "id": "encounter_night_cultist",
+    "name": "Night Cultist",
+    "description": "Human, non-mystical follower of a Cult of Night — brainwashed recruit serving a Priest of Night or other Nightlord agent. Participates in ritual magic energy donation but has no spell knowledge. Fanaticism can negate fear.",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 201
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 202
+      }
+    ],
+    "tags": ["cult", "nightlord", "human", "fanatic"],
+    "packageNotes": [
+      "Small cult: 3D6 members; large cults up to ~100 including families.",
+      "Most recruits had low self-esteem or mental/social problems — optional Random Insanity Table at induction.",
+      "Leader may be Night Prince, Avatar, Doppleganger, Priest of Night, Sorcerer, evil Nightbane, or other shape-changer — pick from existing catalogs."
+    ],
+    "composition": {
+      "defaultBaseRaceId": "race_human",
+      "speciesBaselineRaceId": "race_human",
+      "notes": "Average attributes."
+    },
+    "numberAppearing": {
+      "formula": "3D6",
+      "minimum": 3,
+      "maximum": 18,
+      "notes": "Small cult cell; larger cults up to ~100 members."
+    },
+    "alignmentNotes": "Typically evil; occasionally anarchist.",
+    "attributeNotes": "Average attributes.",
+    "vitals": {
+      "sdc": 16,
+      "hp": 12
+    },
+    "handToHand": {
+      "skillId": "hth_basic"
+    },
+    "levelOfExperience": {
+      "defaultLevel": 1,
+      "distributionRoll": "1D4",
+      "outcomes": [
+        { "min": 1, "max": 1, "level": 1 },
+        { "min": 2, "max": 2, "level": 2 },
+        { "min": 3, "max": 3, "level": 3 },
+        { "min": 4, "max": 4, "level": 4 }
+      ],
+      "notes": "Bonuses below are for 1st-level cultists."
+    },
+    "modifiers": {
+      "rollWithPunch": 2,
+      "save_horror_factor": 3
+    },
+    "weaponProficiencies": [
+      {
+        "category": "any",
+        "notes": "Hand to Hand: Basic and two Weapon Proficiencies (any)."
+      },
+      {
+        "category": "any",
+        "notes": "Second W.P. (any)."
+      }
+    ],
+    "equipment": [
+      {
+        "label": "Improvised weapons (kitchen knives, tools)",
+        "damageFormula": "1D4 to 1D8",
+        "notes": "−1 to strike (unwieldy)."
+      },
+      {
+        "label": "Handguns and rifles",
+        "notes": "Some cults arm members with modern small-arms."
+      }
+    ],
+    "dispositionNotes": [
+      "Range from cheerful flower-offerers to dark-robed fanatics muttering over victims.",
+      "Insidious cultists may appear normal or successful — movers and shakers may be dupes.",
+      "Some lost souls may turn against masters if they learn the truth about the Nightlords; many simply do not care who they serve."
+    ],
+    "relatedRaceIds": ["race_human"],
+    "relatedOccIds": ["occ_priest_of_night_rcc"]
+  },
+  {
+    "id": "encounter_nsb_field_agent",
+    "name": "NSB Field Agent",
+    "description": "National Security Bureau federal operative — default Doppleganger field agent with Martial Arts training and heavy armor. Overwhelming-force raids (12+ agents per suspect). Alternate bases: Ashmedai or Hollow Man (see race RCC rows).",
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 202
+      }
+    ],
+    "tags": ["nsb", "federal", "doppleganger", "elite", "modern"],
+    "packageNotes": [
+      "Investigative team: 2 agents. Field team: 3D6. Major raid: up to 50 agents with heavy weapons and military vehicles.",
+      "Almost every NSB field agent is Doppleganger, Ashmedai, or Hollow Man — see `race_doppleganger`, `race_ashmedai`, `race_hollow_man` + paired `race_namtar`.",
+      "Armed confrontation usually lethal — fleeing is the best hope for targets."
+    ],
+    "composition": {
+      "defaultBaseRaceId": "race_doppleganger",
+      "alternateBaseRaceIds": ["race_ashmedai", "race_hollow_man"],
+      "notes": "Printed block assumes Doppleganger agent; swap base race for Ashmedai/Hollow Man and use that row's supernatural abilities."
+    },
+    "numberAppearing": {
+      "formula": "3D6",
+      "minimum": 2,
+      "notes": "2 for investigative team; 3D6 field team; up to 50 on major raid (12+ per suspected target in area)."
+    },
+    "alignmentNotes": "Any evil.",
+    "attributeNotes": "P.S. 17 (supernatural), P.E. 17.",
+    "vitals": {
+      "sdc": 65,
+      "hp": 30
+    },
+    "handToHand": {
+      "skillId": "hth_martial_arts"
+    },
+    "levelOfExperience": {
+      "defaultLevel": 4
+    },
+    "modifiers": {
+      "strike": 3,
+      "parry": 4,
+      "dodge": 4,
+      "pullPunch": 2,
+      "save_magic": 1,
+      "save_horror_factor": 2
+    },
+    "weaponProficiencies": [
+      {
+        "skillId": "wp_automatic_pistol",
+        "notes": "Beretta 95 machine pistol — 2D6, 20-round magazine, bursts/full auto."
+      },
+      {
+        "skillId": "wp_automatic_and_semiautomatic_rifles",
+        "notes": "M-16 or heavier weapons when situation demands."
+      }
+    ],
+    "equipment": [
+      {
+        "label": "Beretta 95 machine pistol",
+        "damageFormula": "2D6",
+        "notes": "20-round magazine; bursts and full automatic."
+      },
+      {
+        "label": "M-16 rifle",
+        "notes": "Heavier weapons as mission requires."
+      }
+    ],
+    "armor": [
+      {
+        "label": "Hazardous duty battle armor",
+        "ar": 16,
+        "sdc": 260
+      }
+    ],
+    "dispositionNotes": [
+      "Cold, distant, emotionless — \"just the facts, ma'am\" toward civilians.",
+      "Neither pleas nor threats affect them; kill witnesses who see too much.",
+      "Conservative dark suits and shades; raid gear: black body armor with white \"NSB\" marking.",
+      "Very rarely a Doppleganger may show mercy or turn against fellow agents."
+    ],
+    "relatedRaceIds": ["race_doppleganger", "race_ashmedai", "race_hollow_man", "race_namtar"]
+  }
+]
