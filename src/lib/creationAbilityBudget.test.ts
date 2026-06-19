@@ -108,7 +108,7 @@ describe('creationAbilityBudget', () => {
     expect(occ).toBeDefined()
     const budget = resolveEffectiveCreationAbilityBudget({
       occ,
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       psychicTier: 'none',
       creationGenreId: 'nightbane',
     })

@@ -17,7 +17,7 @@ const blankAttrs = {
 
 describe('rollPrimarySdcMaximum', () => {
   it('accepts flat race S.D.C. bases (Nightbane R.C.C. = 30)', () => {
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
     const occ = getPalladiumOccById('occ_nightbane_basic')
     expect(race).toBeDefined()
     expect(occ).toBeDefined()

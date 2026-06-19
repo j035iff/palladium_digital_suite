@@ -26,7 +26,7 @@ describe('ledgerStatBonuses', () => {
   })
 
   it('includes flat race S.D.C. base in the value column', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     const bundle = buildSdcStatBonuses(nightbane, occ, undefined, ['skill_running'], {})
 

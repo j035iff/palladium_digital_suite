@@ -56,6 +56,36 @@
         "save_magic": 4,
         "save_psionics": 4,
         "horrorFactor": 11
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "animalIntelligence": "2D4",
+        "naturalAttacksPerMelee": 3,
+        "initiativeBonus": 1,
+        "perceptionBonus": 4,
+        "trackingPercent": 78,
+        "trackingSightAndScent": true,
+        "biteDamage": "4D6",
+        "clawDamage": "supernaturalPS+2D6",
+        "packSizeTypical": "4-12",
+        "packSizeEarthRift": "2D6",
+        "ambushDecoyTactic": true,
+        "fearlessOfGuns": true,
+        "ambientPpeMetabolismTheory": true,
+        "famineSurvivalNote": "months to possibly years without eating",
+        "preySizeRange": "mouse to elephant",
+        "avoidsRaceId": "race_lizard_king",
+        "avoidsLargePartiesOf": [
+          "race_hound",
+          "race_hunter",
+          "race_nightbane"
+        ],
+        "predatorEnemyRaceIds": [
+          "race_hound",
+          "race_hunter"
+        ],
+        "habitat": "Nightlands deserts and mountains",
+        "earthArrivalVia": "dimensional Rifts, gates, or anomalies"
       }
     },
     "demographics": {
@@ -64,6 +94,14 @@
       "averageLifespan": "60 years",
       "alignmentTendencies": [
         "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Diabolic"
       ]
     },
     "classAbilities": [
@@ -77,15 +115,19 @@
       },
       {
         "name": "Natural Combat",
-        "description": "Natural abilities — three attacks per melee round; no Hand to Hand or O.C.C. skill program."
+        "description": "Natural abilities — three attacks per melee round (see metadata); no Hand to Hand or O.C.C. skill program."
       },
       {
         "name": "Combat Bonuses",
-        "description": "+1 initiative, +4 on all Perception rolls — apply at table in addition to attribute bonuses."
+        "description": "+1 initiative, +4 on all Perception rolls — apply at table in addition to strike/dodge modifiers."
       },
       {
         "name": "Damage",
         "description": "Bite 4D6 S.D.C. Claws inflict supernatural P.S. damage plus 2D6 S.D.C."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "Packs of 4–12 adults led by an alpha; ambushes often use the weakest member as a decoy while the pack strikes from other directions."
       },
       {
         "name": "Magic & Psionics",
@@ -97,7 +139,7 @@
       },
       {
         "name": "Enemies",
-        "description": "Hunted by Hounds and Hunters (pelts decorate Nightlord halls); preys on most life forms; avoids Lizard Kings and large minion war parties."
+        "description": "Hunted by Hounds (`race_hound`) and Hunters (`race_hunter`) — pelts decorate Nightlord halls. Preys on most life forms; avoids Lizard Kings (`race_lizard_king`) and large Hound/Hunter/Nightbane war parties."
       }
     ]
   },
@@ -159,6 +201,37 @@
         "save_psionics": 3,
         "save_horror_factor": 9,
         "horrorFactor": 11
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "animalIntelligence": "1D6",
+        "armorRatingNormal": 12,
+        "armorRatingMagicSupernatural": 0,
+        "naturalAttacksPerMelee": 4,
+        "perceptionBonus": 2,
+        "psychicVampireFeeding": true,
+        "feedingSource": "deathAgoniesAndPpe",
+        "famineSurvivalMonths": "1D4",
+        "leyLineNexusRangeMiles": 1,
+        "leyLineNexusIndefiniteFeeding": true,
+        "ppeLossPerWeekWithoutFeeding": 1,
+        "bioRegenerationPerMinute": "1D4*10",
+        "nightvisionFeet": 1000,
+        "trackingSmellPercent": 54,
+        "biteDamage": "5D6",
+        "kickDamage": "3D6",
+        "tailSwipeDamage": "4D6",
+        "headButtDamage": "2D6",
+        "bodyRamTrampleDamage": "5D6",
+        "fearlessPredator": true,
+        "huntedByRaceIds": [
+          "race_hunter",
+          "race_hound"
+        ],
+        "fearedByRaceId": "race_waste_coyote",
+        "warMountLegendsUnproven": true,
+        "habitatFavorsLeyLines": true,
+        "earthPresenceOccasional": true
       }
     },
     "demographics": {
@@ -167,6 +240,14 @@
       "averageLifespan": "40 years",
       "alignmentTendencies": [
         "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant"
       ]
     },
     "classAbilities": [
@@ -176,7 +257,7 @@
       },
       {
         "name": "Psychic Vampire Feeding",
-        "description": "Nourishment from death-agonies and P.P.E. Can survive 1D4 months without feeding, or indefinitely within one mile (1.6 km) of a ley line or nexus. Loses 1 P.P.E. per week without feeding unless near ley line/nexus."
+        "description": "Nourishment from death-agonies and P.P.E. Can survive 1D4 months without feeding, or indefinitely within one mile (1.6 km) of a ley line or nexus. Loses 1 P.P.E. per week without feeding unless near ley line/nexus — see metadata."
       },
       {
         "name": "Regeneration",
@@ -192,11 +273,11 @@
       },
       {
         "name": "Supernatural Combat",
-        "description": "Four attacks per melee round; no Hand to Hand or O.C.C. skill program."
+        "description": "Four attacks per melee round (see metadata); no Hand to Hand or O.C.C. skill program."
       },
       {
         "name": "Combat Bonuses",
-        "description": "+2 on all Perception rolls — apply at table in addition to attribute bonuses."
+        "description": "+2 on all Perception rolls — apply at table in addition to strike/dodge/save modifiers."
       },
       {
         "name": "Damage",
@@ -208,7 +289,7 @@
       },
       {
         "name": "Habitat & Enemies",
-        "description": "Any terrain; favors ley lines and nexuses. Nightlord minions hunt them; preys on most life forms."
+        "description": "Any terrain; favors ley lines and nexuses in the Nightlands and occasionally on Earth. Hunter patrols (`race_hunter`) slay on sight; Hounds (`race_hound`) and other Nightlord minions hunt them. Preys on most life forms without fear. Waste Coyotes (`race_waste_coyote`) typically avoid Lizard Kings. Unproven Waste legends of tamed war mounts."
       }
     ]
   }

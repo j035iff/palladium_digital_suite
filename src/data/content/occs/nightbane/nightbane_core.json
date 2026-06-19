@@ -24,7 +24,7 @@
     ],
     "raceRestrictions": {
       "allowed": [
-        "nightbane"
+        "race_nightbane"
       ]
     },
     "occSkillsCore": [
@@ -259,7 +259,7 @@
     ],
     "occType": "nightbane_rcc",
     "tags": ["nightbane", "resistance", "spook_squad", "military", "guerrilla", "tactical"],
-    "raceRestrictions": { "allowed": ["nightbane"] },
+    "raceRestrictions": { "allowed": ["race_nightbane"] },
     "occSkillsCore": [
       { "skillId": "skill_math_basic", "bonusPercent": 10 },
       { "skillId": "skill_radio_basic", "bonusPercent": 15 },
@@ -343,7 +343,7 @@
     ],
     "occType": "nightbane_rcc",
     "tags": ["nightbane", "nocturne", "seeker", "lightbringer", "scholastic", "scientific"],
-    "raceRestrictions": { "allowed": ["nightbane"] },
+    "raceRestrictions": { "allowed": ["race_nightbane"] },
     "occSkillsCore": [
       { "skillId": "skill_math_basic", "bonusPercent": 20 },
       { "skillId": "skill_math_advanced", "bonusPercent": 10 },
@@ -447,7 +447,7 @@
     ],
     "occType": "nightbane_rcc",
     "tags": ["nightbane", "warlord", "gang", "street", "rogue"],
-    "raceRestrictions": { "allowed": ["nightbane"] },
+    "raceRestrictions": { "allowed": ["race_nightbane"] },
     "occSkillsCore": [
       { "skillId": "skill_math_basic", "bonusPercent": 5 },
       { "skillId": "skill_language", "bonusPercent": 10 },
@@ -1045,9 +1045,34 @@
     "classAbilities": [
       {
         "name": "Counterpart skills",
-        "description": "Skill picks should reflect the Earth double's O.C.C. and background. Magician doubles may learn magic; psychic doubles use counterpart psionics at two-thirds I.S.P.; all others are mundane unless the 40% minor-psionic awakening applies."
+        "description": "Skill picks reflect the Earth double's O.C.C. and background. Magician doubles may learn magic; psychic doubles use counterpart psionics at two-thirds I.S.P.; others are mundane unless the 40% minor-psionic awakening applies."
+      },
+      {
+        "name": "Specific double skill mirror",
+        "description": "When mirroring a known individual, roll 1D6 per skill: 01-02 unknown, 03-04 at −10% of the double's level, 05-00 at the same level. Attributes identical to the double when known."
+      },
+      {
+        "name": "Minor psionic awakening (40%)",
+        "description": "Awakened Dopplegangers who are not psychic doubles: 40% chance — select two minor powers from one category (Physical, Healing, or Sensitive) via ispEngine roadmap."
       }
     ],
+    "ispEngine": {
+      "baseFormula": "ME+2D6",
+      "perLevelFormula": "0",
+      "savingThrowClass": "minor",
+      "grantedAbilityIds": [],
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Physical Only",
+            "Healer Only",
+            "Sensitive Only"
+          ]
+        }
+      ]
+    },
     "progression": {
       "xpTableId": "nightbane_core_doppleganger",
       "psychicGateBypassed": true
@@ -1101,6 +1126,16 @@
         "description": "All R.C.C. skills are granted on the race row. Starts with psionic Mind Block and Empathy plus Illusion Shells (see race class abilities)."
       }
     ],
+    "ispEngine": {
+      "baseFormula": "ME+1D6*10",
+      "perLevelFormula": "2D6",
+      "savingThrowClass": "minor",
+      "grantedAbilityIds": [
+        "psionic_mind_block",
+        "psionic_empathy"
+      ],
+      "progressionRoadmap": []
+    },
     "progression": {
       "xpTableId": "nightbane_core_hound_master",
       "psychicGateBypassed": true
@@ -1545,7 +1580,7 @@
     ],
     "occType": "magic_user",
     "tags": ["nightbane", "occult", "arcane", "ley_line"],
-    "raceRestrictions": { "allowed": ["nightbane"] },
+    "raceRestrictions": { "allowed": ["race_nightbane"] },
     "attributeRequirements": {
       "iq": 12,
       "me": 12
@@ -1740,7 +1775,7 @@
     ],
     "occType": "magic_user",
     "tags": ["nightbane", "occult", "shaman", "intuitive"],
-    "raceRestrictions": { "allowed": ["nightbane"] },
+    "raceRestrictions": { "allowed": ["race_nightbane"] },
     "attributeRequirements": {
       "iq": 10,
       "me": 9,
@@ -2838,6 +2873,158 @@
       "xpTableId": "nightbane_core_snakebird_mystic",
       "psychicGateBypassed": true,
       "startingSpellLevelCap": 3
+    }
+  },
+  {
+    "id": "occ_night_prince_rcc",
+    "name": "Night Prince R.C.C.",
+    "description": "Shadow O.C.C. for `race_night_prince` — Ba'al-Zebul illusion masters sharing the Night Prince & Vampire XP table. Occult Lore (+20%), eight languages at 98%, ten related skills (+10%, prerequisites required), twelve secondary skills. Hand to Hand: Assassin. Natural illusion powers only (P.P.E. on `ppeEngine`; no spell catalog picks).",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "night_prince",
+      "baal_zebul",
+      "illusion",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 177
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_night_prince"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "skillId": "skill_lore_nightlands",
+        "bonusPercent": 20
+      },
+      {
+        "choiceCount": 8,
+        "bonusPercent": 0,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "Eight languages at 98% (book Occult tongues)"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 10
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 12,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_assassin",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Natural Illusion Powers",
+        "description": "Illusion constructs only — no conventional spell learning. P.P.E. costs and tiers on race row innateBonuses."
+      },
+      {
+        "name": "Fake Spellcasting",
+        "description": "May replicate illusionary spell effects via natural illusion powers."
+      }
+    ],
+    "ppeEngine": {
+      "baseFormula": "1D4*100",
+      "perLevelFormula": "15",
+      "progressionRoadmap": []
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_night_prince_vampire"
     }
   }
 ]

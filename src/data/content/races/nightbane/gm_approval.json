@@ -4,6 +4,7 @@
     "name": "Hound Master",
     "description": "Optional R.C.C. (GM approval) — elite Hound troop leaders with horns, black capes, speech, minor psionics, and illusion shells to pass as humans. Diabolic or Miscreant only (never Aberrant or good); book discourages player characters except evil or ruthless anarchist renegades. Shadow O.C.C. `occ_hound_master_rcc` (auto-mounted). A.R. 14 vs normal weapons. Typical experience level 2D4+1.",
     "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -73,6 +74,47 @@
         "save_psionics": 3,
         "save_horror_factor": 6,
         "horrorFactor": 14
+      },
+      "activation": {
+        "cost": {
+          "type": "isp",
+          "value": "4 self / 8 up to five others"
+        },
+        "duration": "10 minutes per level (self) or 5 minutes per level (two to five disguised)",
+        "save": "Illusion Shells — psionic disguise; max five Hounds on undercover missions"
+      },
+      "metadata": {
+        "minionTier": "nightlord_troop_leader",
+        "upgradeFromRaceId": "race_hound",
+        "associatedMinionRaceId": "race_hound",
+        "associatedAllyRaceId": "race_hunter",
+        "armorRatingNormal": 14,
+        "armorRatingMagicSupernatural": 0,
+        "partialInvulnerabilityNonMagicalDamageFraction": 0.5,
+        "damageMultiplierMagicArtifactsWeaponsTalentsPowers": 2,
+        "immuneIllusionAndConcealment": true,
+        "nightvisionFeet": 2000,
+        "perceptionBonus": 4,
+        "initiativeBonus": 2,
+        "naturalTrackingPercent": 85,
+        "expertTrackerPercent": 80,
+        "supernaturalTrackingRangeFeet": 80,
+        "supernaturalTrackingBasePercent": 50,
+        "supernaturalTrackingPerLevelPercent": 5,
+        "selfHealTranceHours": 1,
+        "handToHandStyleId": "hth_assassin",
+        "typicalExperienceLevel": "2D4+1",
+        "illusionShellIspSelf": 4,
+        "illusionShellIspOthersMaxFive": 8,
+        "illusionShellMaxDisguisedHounds": 5,
+        "illusionShellDurationSelfMinutesPerLevel": 10,
+        "illusionShellDurationGroupMinutesPerLevel": 5,
+        "typicalLeadBodyCount": 20,
+        "undercoverTeamHoundCount": "3-5",
+        "darkbladeSpearDamage": "3D6+PS",
+        "languagesSpeakAllMagically": true,
+        "bodyArmorNoneExoskeleton": true,
+        "renegadeNotes": "May betray overlords for another Nightlord or go renegade; brigands, sorcerer pawns, or Earth street-gang controllers (conflict with Warlords)"
       }
     },
     "demographics": {
@@ -98,11 +140,11 @@
       },
       {
         "name": "Illusion Shells",
-        "description": "Psionic disguise: 4 I.S.P. to mask self; 8 I.S.P. to disguise up to five others (typically pass as normal humans). Duration 10 minutes per level (self only) or 5 minutes per level (two to five people). Maximum five Hounds can be disguised on undercover missions."
+        "description": "Psionic disguise: 4 I.S.P. to mask self; 8 I.S.P. to disguise up to five others (typically pass as normal humans). Duration 10 minutes per level (self) or 5 minutes per level (two to five people). Maximum five Hounds disguised on undercover missions — see innateBonuses.activation."
       },
       {
         "name": "Supernatural Senses",
-        "description": "Nightvision 2000 ft (610 m). Expert tracker (animals and humans at 80%). +4 on all Perception rolls; +2 on initiative (apply at table — not in racial modifier keys)."
+        "description": "Nightvision 2000 ft (610 m). Expert tracker (animals and humans at 80%). Natural tracking skill 85% on race row. +4 on all Perception rolls; +2 on initiative (apply at table — see metadata)."
       },
       {
         "name": "Supernatural Tracking",
@@ -126,11 +168,11 @@
       },
       {
         "name": "Innate Psionics",
-        "description": "Minor psychic — Mind Block and Empathy at 1st level, plus Illusion Shells above. +2D6 I.S.P. per level of experience."
+        "description": "Minor psychic — Mind Block and Empathy at 1st level (shadow O.C.C. ispEngine), plus Illusion Shells above. I.S.P. M.E. + 1D6×10 + 2D6 per level."
       },
       {
         "name": "Magic Vulnerability",
-        "description": "Takes double damage from magic artifacts, magic weapons, Talents, and powers/spells."
+        "description": "Takes double damage from magic artifacts, magic weapons, Nightbane Talents, and powers/spells."
       },
       {
         "name": "Languages",
@@ -142,15 +184,20 @@
       },
       {
         "name": "Alliances",
-        "description": "Serve Nightlords and avatars; lead Hounds (20+) or undercover teams of 3–5 Hounds. Sometimes commanded by Dopplegangers or Hollow Men; work alongside Hunters. Renegades may serve other Nightlords, hunt humans, or control street gangs."
+        "description": "Serve Nightlords and avatars; lead Hounds (`race_hound`, 20+) or undercover teams of 3–5 disguised Hounds. Sometimes commanded by Dopplegangers or Hollow Men; work alongside Hunters (`race_hunter`). Solo missions rare — usually left to Night Princes or Avatars. Renegades may serve other Nightlords, hunt humans, or control street gangs."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 2D4+1 (Hound & Hunter XP table via shadow O.C.C.)."
       }
     ]
   },
   {
     "id": "race_snake_bird",
     "name": "Snake Bird",
-    "description": "Optional R.C.C. (GM approval) — sentient feathered-serpent spellcasters resembling extinct feathered serpents; eagle-like fliers with squawking speech and natural wizard magic. Lone hunters or mated pairs; may befriend magicians or serve Nightlords as torturers. Player characters at GM discretion — uses Mystic experience table via shadow O.C.C. `occ_snake_bird_rcc`. Typical experience level 1D6+1.",
+    "description": "Optional R.C.C. (GM approval) — sentient feathered-serpent spellcasters resembling extinct feathered serpents; eagle-like fliers with squawking speech and natural wizard magic. Lone hunters or mated pairs; may befriend magicians or serve Nightlords as torturers. Player characters at GM discretion — uses Mystic experience table via shadow O.C.C. `occ_snake_bird_rcc`. Typical experience level 1D6+1; a few reach 12th level and beyond.",
     "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -209,6 +256,47 @@
         "save_magic": 2,
         "save_horror_factor": 3,
         "horrorFactor": 5
+      },
+      "activation": {
+        "cost": {
+          "type": "action",
+          "value": "bite attack"
+        },
+        "duration": "1D6 melees poison duration",
+        "save": "Lethal poison — save vs poison each melee or 3D6 direct to H.P. first round and 1D6 per melee (half on success); affects supernatural beings"
+      },
+      "metadata": {
+        "gmApprovalRcc": true,
+        "naturalAttacksPerMeleeLevel1": 3,
+        "naturalAttacksPerMeleeWhenCasting": 2,
+        "naturalAttacksBonusLevels": [
+          4,
+          8
+        ],
+        "initiativeBonus": 1,
+        "perceptionBonus": 1,
+        "strikeBonusFlying": 5,
+        "dodgeBonusFlying": 5,
+        "strikeBonusGround": 2,
+        "dodgeBonusGround": 2,
+        "swoopingDamageBonus": 6,
+        "regenerationPerMelee": 5,
+        "supernaturalSenseRangeFeet": 100,
+        "exceptionalVisionMiles": 2,
+        "nightvisionFeet": 500,
+        "clawDamage": "2D6",
+        "biteDamage": "1D6",
+        "poisonFirstRoundHpDamage": "3D6",
+        "poisonOngoingDamage": "1D6",
+        "poisonDurationMelees": "1D6",
+        "doesNotRequireFood": true,
+        "typicalHuntingUnit": "solitary or mated pair",
+        "dragonesePercent": 98,
+        "typicalExperienceLevel": "1D6+1",
+        "legendaryLevelNote": "12+ possible",
+        "spellPoolGmNote": "Nightbane, Palladium Fantasy, Rifts, Beyond the Supernatural",
+        "habitatPrefers": "mountains",
+        "distrustsBipedalRaces": true
       }
     },
     "demographics": {
@@ -240,11 +328,11 @@
       },
       {
         "name": "Combat — Natural Abilities",
-        "description": "Three attacks per melee at 1st level (or two by magic); +1 attack at levels 4 and 8. +1 initiative, +5 strike and +5 dodge in the air (+2 strike/dodge on ground); +6 damage on swooping attacks — apply at table in addition to attribute bonuses."
+        "description": "Three attacks per melee at 1st level (or two while casting by magic); +1 attack at levels 4 and 8. +1 initiative and +1 on all Perception rolls; +5 strike and +5 dodge in the air (+2 strike/dodge on ground); +6 damage on swooping attacks — apply at table (see metadata)."
       },
       {
         "name": "Claw & Poison Bite",
-        "description": "Claws 2D6 S.D.C. Bite 1D6 plus lethal poison: 3D6 direct to hit points first melee round and 1D6 for 1D6 melees unless save vs poison each melee (half damage on success). Affects supernatural beings."
+        "description": "Claws 2D6 S.D.C. Bite 1D6 plus lethal poison — see innateBonuses.activation. Affects supernatural beings."
       },
       {
         "name": "Languages",
@@ -253,6 +341,182 @@
       {
         "name": "Hit Points per Level",
         "description": "True H.P. = P.E. + 1D4 per level of experience (catalog `PE+1D4` is 1st-level baseline; add 1D4 each level)."
+      },
+      {
+        "name": "Habitat & Enemies",
+        "description": "Any terrain; prefers mountains. Nightlands, Earth, and other dimensions. Enemies: large predators, Nightlords and their minions. May befriend magicians or Nightbane; evil specimens sometimes serve Nightlords torturing humans and Dopplegangers."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D6+1 (Mystic / Snakebird XP table via shadow O.C.C.); a few reach near-legendary 12th+ levels."
+      }
+    ]
+  },
+  {
+    "id": "race_night_prince",
+    "name": "Night Prince",
+    "description": "Ba'al-Zebul — chief lieutenants of the `race_nightlord` (rank below Avatars). Human-looking illusion masters and energy vampires; infiltrators, cult leaders, and war commanders on Earth since antiquity. Also called Night Princes or Night Squires (low-level, undistinguished). GM approval only — player characters discouraged but possible at G.M. discretion. Shadow O.C.C. `occ_night_prince_rcc` (auto-mounted). S.D.C. 2D4×10+120; H.P. P.E.×2 (+2D6/level). P.P.E. 1D4×100 (+15/level). Typical experience 1D4+4. Horror Factor 9 (illusions up to 18).",
+    "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 177
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_night_prince_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6+6",
+      "me": "3D6+6",
+      "ma": "3D6+6",
+      "ps": "3D6+10",
+      "pp": "3D6+4",
+      "pe": "2D6+18",
+      "pb": "3D6+6",
+      "spd": "5D6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE*2+12",
+      "averageStandardPpe": "1D4*100+15",
+      "sdc": "2D4*10+120"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 1,
+        "parry": 1,
+        "dodge": 2,
+        "rollWithImpact": 2,
+        "pullPunch": 5,
+        "save_magic": 4,
+        "save_psionics": 3,
+        "save_horror_factor": 6,
+        "horrorFactor": 9
+      },
+      "activation": {
+        "cost": {
+          "type": "ppe",
+          "value": "2–60 per minute by illusion tier"
+        },
+        "duration": "Per minute (4 melees) unless noted",
+        "save": "Save vs magic when victim suspects illusion; Difficult Perception or worse for multi-sense illusions"
+      },
+      "metadata": {
+        "gmApprovalRcc": true,
+        "baalZebul": true,
+        "associatedBossRaceId": "race_nightlord",
+        "rankBelowRaceId": "race_nightlord_avatar",
+        "regenerationPerMinute": "1D4*10",
+        "nightvisionFeet": 500,
+        "leyLineNexusSenseMiles": 1,
+        "imperviousMindControl": true,
+        "seeInvisibleAndAllIllusions": true,
+        "noFoodWaterAirRequired": true,
+        "dailyFeedingMinimumPpe": 5,
+        "dailyFeedingSatisfiedPpe": "10-20",
+        "missedMealPpeLoss": 1,
+        "missedMealRestoreBonusPpe": 5,
+        "illusionRangeBaseFeet": 100,
+        "illusionRangePerLevelFeet": 20,
+        "illusionVolumeCubicFeetPerLevel": 10,
+        "illusionPpeSoundMinorVisualPerMinute": 2,
+        "illusionPpeSoundImageOrSmellPerMinute": 5,
+        "illusionPpeTouchPerMinute": 10,
+        "illusionPpeFullSensoryPerMinute": 20,
+        "illusionPpePanoramaPerMinute": 60,
+        "illusionHorrorFactorBase": 10,
+        "illusionHorrorFactorPer3Ppe": 1,
+        "illusionHorrorFactorMax": 18,
+        "deathByIllusionRules": true,
+        "perceptionBonus": 5,
+        "handToHandStyleId": "hth_assassin",
+        "damageMultiplierNightbaneAndGuardian": 2,
+        "typicalExperienceLevel": "1D4+4",
+        "nightSquireNote": true,
+        "pcAllowedGmDiscretion": true,
+        "renegadePossible": true,
+        "commandedMinionRaceIds": [
+          "race_hound_master",
+          "race_hollow_man",
+          "race_ashmedai"
+        ],
+        "recruitsFanaticRaceIds": [
+          "race_priest_of_night"
+        ]
+      }
+    },
+    "demographics": {
+      "averageHeight": "Normal human range",
+      "averageWeight": "Normal human range",
+      "averageLifespan": "Unknown — presumed immortal",
+      "alignmentTendencies": [
+        "Diabolic",
+        "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Hit Points & P.P.E. Scaling",
+        "description": "True H.P. = P.E.×2 + 2D6 per level (catalog `PE*2+12` approximates mid-tier). P.P.E. +15 per level after base 1D4×100 (shadow O.C.C. `ppeEngine`)."
+      },
+      {
+        "name": "Supernatural Endurance",
+        "description": "Heal 1D4×10 S.D.C./H.P. every minute (4 melees). See invisible and all illusions (including other Night Princes'). Impervious to mind control. Nightvision 500 ft (152 m). Sense ley lines/nexus 1 mile (1.6 km). No food, water, or air required."
+      },
+      {
+        "name": "Energy Vampirism",
+        "description": "5 H.P./P.P.E. per day minimum to survive; 10–20/day for satisfaction. Miss a meal: −1 P.P.E. (restore with +5 extra on next feeding). At 0 P.P.E., lose 1 P.E./day until dust."
+      },
+      {
+        "name": "Illusionary Powers",
+        "description": "P.P.E.-fueled constructs — see innateBonuses.activation and metadata for tier costs, range, volume, and Horror Factor caps. Death-by-illusion shock rules apply. May fake spellcasting with illusion effects."
+      },
+      {
+        "name": "Hand to Hand: Assassin",
+        "description": "Equivalent to Hand to Hand: Assassin with +1 attack per melee from 1st level (+1 APM in modifiers). Supernatural strength damage."
+      },
+      {
+        "name": "Perception Bonus",
+        "description": "+5 on Perception rolls (apply at table — see metadata)."
+      },
+      {
+        "name": "Vulnerabilities",
+        "description": "Double damage from Nightbane attacks/Talents and Guardian energy powers."
+      },
+      {
+        "name": "Night Squires",
+        "description": "Low-level, undistinguished Night Princes — same R.C.C., lower experience."
+      },
+      {
+        "name": "Alliances",
+        "description": "Often command Hound Masters (`race_hound_master`), Hollow Men (`race_hollow_man`), and Ashmedai (`race_ashmedai`); may lead full Nightlord armies. Infiltrate high society, Preserver Party networks, and NSB-adjacent power structures."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4+4 (Night Prince & Vampire XP table via shadow O.C.C.)."
       }
     ]
   }

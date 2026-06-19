@@ -39,7 +39,7 @@ export function raceCanPickOcc(race: Race | undefined): boolean {
 }
 
 export function raceLineageFromDefinition(race: Race | undefined): 'nightbane' | 'megaversal' {
-  if (race?.lineage === 'nightbane' || race?.id === 'nightbane') return 'nightbane'
+  if (race?.lineage === 'nightbane' || race?.id === 'race_nightbane') return 'nightbane'
   return 'megaversal'
 }
 

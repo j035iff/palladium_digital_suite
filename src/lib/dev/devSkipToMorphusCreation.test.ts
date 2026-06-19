@@ -12,10 +12,10 @@ describe('buildDevSkipToMorphusCreationState', () => {
   it('prepares Nightbane Basic through facade dice and opens Morphus tab', () => {
     const prev = createBlankCharacterForGenre('nightbane')
     const next = buildDevSkipToMorphusCreationState(prev)
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
 
-    expect(next.raceId).toBe('nightbane')
+    expect(next.raceId).toBe('race_nightbane')
     expect(next.occ.id).toBe('occ_nightbane_basic')
     expect(next.creationForgeTab).toBe('tab6_traits')
     expect(next.creationPhase).toBe('morphus')

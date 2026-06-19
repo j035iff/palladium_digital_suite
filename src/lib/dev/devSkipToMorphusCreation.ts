@@ -17,7 +17,7 @@ import { buildDevAutoAttributeCreationState } from './devAutoAssignCreationAttri
 import { buildDevAutoFillCreationSkillsState } from './devAutoFillCreationSkills'
 import { buildAutoRolledPendingDiceResolutions } from './devAutoRollPendingDice'
 
-export const DEV_NIGHTBANE_MORPHUS_RACE_ID = 'nightbane'
+export const DEV_NIGHTBANE_MORPHUS_RACE_ID = 'race_nightbane'
 export const DEV_NIGHTBANE_MORPHUS_OCC_ID = 'occ_nightbane_basic'
 export const DEV_NIGHTBANE_MORPHUS_ALIGNMENT = 'Unprincipled'
 

@@ -8,7 +8,7 @@ import {
 } from './characterCreationForge'
 
 describe('Morphus ledger unlock', () => {
-  const nightbane = getRaceById('nightbane')
+  const nightbane = getRaceById('race_nightbane')
   const occ = getLibraryOccById('occ_nightbane_basic')
 
   const throughRollPending = {
@@ -22,7 +22,7 @@ describe('Morphus ledger unlock', () => {
   it('does not unlock until Traits is visited', () => {
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: throughRollPending,
       creationPrimaryDiceFinalized: true,
@@ -33,7 +33,7 @@ describe('Morphus ledger unlock', () => {
   it('stays unlocked after upstream forge rollback once Traits was opened', () => {
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       creationMorphusLedgerUnlocked: true,
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: {},
@@ -45,7 +45,7 @@ describe('Morphus ledger unlock', () => {
   it('sets sticky unlock when navigating to Traits', () => {
     const prev = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       creationForgeTab: 'tab5_finalize' as const,
       creationForgeCompleted: throughRollPending,
       creationPrimaryDiceFinalized: true,

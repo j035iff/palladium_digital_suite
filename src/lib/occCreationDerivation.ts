@@ -123,7 +123,7 @@ export function raceCreationAbilityBudget(
   if (!race) {
     return { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }
   }
-  if (race.lineage === 'nightbane' || race.id === 'nightbane') {
+  if (race.lineage === 'nightbane' || race.id === 'race_nightbane') {
     return { spellSlots: 0, psionicSlots: 0, talentSlots: 1 }
   }
   return { spellSlots: 0, psionicSlots: 0, talentSlots: 0 }

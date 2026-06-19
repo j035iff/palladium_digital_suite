@@ -95,7 +95,7 @@ describe('creationSubForge', () => {
   it('applies morphus forge from nightbane lineage or race id', () => {
     expect(
       traitForgeTabApplicable(
-        { id: 'nightbane', lineage: 'nightbane' } as Race,
+        { id: 'race_nightbane', lineage: 'nightbane' } as Race,
         undefined,
       ),
     ).toBe(true)

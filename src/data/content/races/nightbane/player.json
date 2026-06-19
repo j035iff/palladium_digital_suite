@@ -1,8 +1,8 @@
 [
   {
-    "id": "nightbane",
+    "id": "race_nightbane",
     "name": "Nightbane",
-    "description": "Dual-form R.C.C. — ordinary humans who, after the Becoming, shift between a human Facade and a unique Morphus (the Race of the Thousand Shapes). Facade attributes roll 3D6 and use standard strength; Morphus adds +10 P.S./P.E./Spd, +6 P.P., supernatural strength damage, and innate Martial Arts. All Nightbane share the natural powers on pp. 86–88; Morphus shape and trait bonuses come from Tab 6 (Creating the Nightbane). At O.C.C. selection, choose a skill package (Basic, faction training, Sorcerer, Mystic, or Warlord). Six secondary skills at 1st level (+2 at levels 4 and 8).",
+    "description": "Dual-form player R.C.C. — ordinary humans who, after the Becoming, shift between a human Facade and a unique Morphus (the Race of the Thousand Shapes). Facade attributes 3D6 (standard strength); Morphus +10 P.S./P.E./Spd, +6 P.P., supernatural damage, innate Martial Arts. Shared natural powers pp. 86–88; Morphus shape and trait bonuses from Tab 6 (`morphus_forge_manifest`). Choose a skill package O.C.C. at creation (Basic, faction training, Sorcerer, Mystic, or Warlord). Six secondary skills (+2 at levels 4 and 8). Starting cash 3D6×100.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -11,7 +11,17 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 86
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 88
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 89
       }
     ],
     "canPickOcc": true,
@@ -54,61 +64,175 @@
         "save_magic": 2,
         "save_disease": 1,
         "save_horror_factor": 1
+      },
+      "activation": {
+        "cost": {
+          "type": "ppe",
+          "value": "2 (+1 per 2 lb passengers/cargo beyond clothes)"
+        },
+        "duration": "1 melee round (15 seconds)",
+        "save": "Morphus only — Mirror Walk to/from Nightlands via mirrored counterpart"
+      },
+      "metadata": {
+        "dualFormRcc": true,
+        "xpTableId": "nightbane_core_nightbane_guardian",
+        "facadeForm": "human",
+        "morphusForm": "nightbane_true_shape",
+        "becomingDurationMeleeRounds": 1,
+        "becomingMeSaveTarget": 12,
+        "becomingMeSaveBonusLevel1": 1,
+        "becomingMeSaveBonusPerTwoLevels": 1,
+        "becomingFastSeconds": 3,
+        "nightvisionFacadeFeet": 200,
+        "nightvisionMorphusFeet": 500,
+        "nightvisionMorphusTraitMaxFeet": 1000,
+        "senseNightbaneBaseFeet": 300,
+        "senseNightbanePerLevelFeet": 30,
+        "morphusPsBonus": 10,
+        "morphusPeBonus": 10,
+        "morphusSpdBonus": 10,
+        "morphusPpBonus": 6,
+        "facadeSdcBase": 30,
+        "morphusSdcBonus": "2D6*10",
+        "facadeHpFormula": "PE+1D6*level",
+        "morphusHpFormula": "PE*2+2D6*level",
+        "facadeStrengthCategory": "standard",
+        "morphusStrengthCategory": "supernatural",
+        "regenerationPerMelee": 10,
+        "regenerationOverwhelmedByAutomaticFire": true,
+        "mirrorWalkPpe": 2,
+        "mirrorWalkCargoLbs": 100,
+        "mirrorWalkPassengerPpePerTwoLbs": 1,
+        "mirrorWalkHorrorFactor": 12,
+        "mirrorWalkRequiresNightlandsCounterpart": true,
+        "vehicleMirrorsRarelyWork": true,
+        "imperviousMindControl": true,
+        "imperviousVampireMindControl": true,
+        "immuneVampireSlowKill": true,
+        "immunePhysicalTransformation": true,
+        "morphusHorrorFactorBase": 6,
+        "morphusHorrorFactorMax": 18,
+        "facadeHorrorFactor": 0,
+        "ppeBaseFormula": "PE+3D6*10+20",
+        "ppePerLevel": "3D6",
+        "ppeUsesFacadePe": true,
+        "freeTalentLevels": [
+          1,
+          4,
+          7,
+          10,
+          12
+        ],
+        "talentsPurchasableWithPermanentPpe": true,
+        "morphusHandToHandStyleId": "hth_martial_arts",
+        "morphusApmBonus": 1,
+        "morphusInitiativeBonus": 1,
+        "morphusStrikeParryDodgeBonus": 2,
+        "morphusRollPullPunchBonus": 3,
+        "facadeBonuses": {
+          "save_magic": 2,
+          "save_disease": 1,
+          "save_horror_factor": 1
+        },
+        "morphusBonuses": {
+          "apm": 1,
+          "initiative": 1,
+          "strike": 2,
+          "parry": 2,
+          "dodge": 2,
+          "rollWithImpact": 3,
+          "pullPunch": 3,
+          "save_magic": 4,
+          "save_psionics": 3,
+          "save_disease": 3,
+          "save_horror_factor": 3
+        },
+        "secondarySkillsInitial": 6,
+        "secondarySkillGainLevels": {
+          "4": 2,
+          "8": 2
+        },
+        "startingCashFormula": "3D6*100",
+        "noInnatePsionics": true,
+        "noInnateMagic": true,
+        "mostTalentsMorphusOnly": true,
+        "allowedOccPackageIds": [
+          "occ_nightbane_basic",
+          "occ_nightbane_resistance_spook_squad",
+          "occ_nightbane_nocturne_seeker_lightbringer",
+          "occ_nightbane_warlord",
+          "occ_nightbane_sorcerer",
+          "occ_nightbane_mystic"
+        ]
       }
     },
-    "classAbilities": [
-      {
-        "name": "The Becoming",
-        "description": "Shift between Facade and Morphus at will (one full melee round; M.E. save 12+ reduces to ~3 seconds). +1 to save at 1st level, +1 per two levels thereafter."
-      },
-      {
-        "name": "Supernatural Senses",
-        "description": "Nightvision 200 ft (Facade) or 500 ft (Morphus). Sense other Nightbane within 300 ft + 30 ft per level; automatic recognition when visible, Perception roll for direction/distance when not."
-      },
-      {
-        "name": "Supernatural Attributes & Regeneration",
-        "description": "Morphus: +10 P.S., P.E., and Spd; +6 P.P.; Supernatural Strength damage table. Regenerate 10 S.D.C./H.P. at the end of each melee round (overwhelmed by sustained automatic weapon fire). Not invulnerable — any weapon can harm or kill a Nightbane."
-      },
-      {
-        "name": "P.P.E. Pool",
-        "description": "Facade P.E. + 3D6×10 + 20 at 1st level; +3D6 P.P.E. per level of experience. Engine rolls resolve from the selected skill package (same formula for all Nightbane R.C.C. packages)."
-      },
-      {
-        "name": "Horror Factor (Morphus)",
-        "description": "Base Horror Factor 6 in Morphus regardless of appearance (none in Facade). Morphus traits from Creating the Nightbane may raise Horror Factor to a maximum of 18."
-      },
-      {
-        "name": "Mirror Walk",
-        "description": "Morphus only — cross to/from the Nightlands through a mirrored counterpart (2 P.P.E., one melee round; carry up to 100 lb, or 1 P.P.E. per 2 lb for passengers/cargo)."
-      },
-      {
-        "name": "Immunities",
-        "description": "Immune to all mind control (including vampiric control), spells, and psionics that impose mind control; immune to vampire slow-kill bite."
-      },
-      {
-        "name": "Morphus Combat",
-        "description": "Innate Hand to Hand: Martial Arts in Morphus (+1 attack per melee, +1 initiative, +2 strike/parry/dodge, +3 roll/pull punch, +4 save vs magic, +3 save vs psionics/disease/horror factor). Facade uses normal hand to hand only."
-      },
-      {
-        "name": "Talents",
-        "description": "One free Talent at 1st level; additional free Talents at levels 4, 7, 10, and 12. More may be purchased by permanently spending P.P.E."
-      },
-      {
-        "name": "Immune to Transformations",
-        "description": "Cannot be physically transformed by metamorphosis, petrification, vampire transformation, curses, wishes, or similar magic."
-      }
-    ],
     "demographics": {
+      "averageHeight": "Normal human range (Facade)",
+      "averageWeight": "Normal human range (Facade)",
       "averageLifespan": "Unknown — many live over 1,000 years; some rumored over 5,000",
       "alignmentTendencies": [
         "Any"
       ]
-    }
+    },
+    "classAbilities": [
+      {
+        "name": "Dual Identity",
+        "description": "Facade (human upbringing) vs Morphus (unique monstrous true shape). Identity question — gifted human, alien masquerader, or something else — drives roleplay. Morphus reflects personality/soul per Creating the Nightbane."
+      },
+      {
+        "name": "The Becoming",
+        "description": "Shift Facade ↔ Morphus at will after first Becoming — 1 melee round (M.E. save 12+ with +1 at 1st level and +1 per two levels reduces to ~3 seconds). Clothing behavior varies by character (G.M. approval)."
+      },
+      {
+        "name": "Supernatural Senses",
+        "description": "Nightvision 200 ft (Facade) or 500 ft (Morphus; trait may reach 1,000 ft). Sense other Nightbane within 300 ft + 30 ft/level — automatic recognition when visible; Perception roll for direction/distance when not."
+      },
+      {
+        "name": "Supernatural Attributes & Regeneration",
+        "description": "Morphus: +10 P.S./P.E./Spd, +6 P.P.; supernatural strength damage. Regenerate 10 S.D.C./H.P. per melee (overwhelmed by sustained automatic fire). Not invulnerable — any weapon can harm or kill."
+      },
+      {
+        "name": "P.P.E. Pool",
+        "description": "Facade P.E. + 3D6×10 + 20 at 1st level; +3D6 P.P.E. per level. Resolved from selected skill-package O.C.C. `ppeEngine` (same formula for all Nightbane packages)."
+      },
+      {
+        "name": "Horror Factor (Morphus)",
+        "description": "Base H.F. 6 in Morphus (none in Facade). Morphus traits may raise to maximum 18."
+      },
+      {
+        "name": "Mirror Walk",
+        "description": "Morphus only — cross to/from Nightlands through a mirrored counterpart. See innateBonuses.activation. Vehicle mirrors rarely have counterparts."
+      },
+      {
+        "name": "Immunities",
+        "description": "Impervious to mind control (including vampiric), vampire slow-kill bite, and physical transformation magic (metamorphosis, petrification, vampire transformation, curses, wishes, etc.)."
+      },
+      {
+        "name": "Morphus Combat",
+        "description": "Innate Hand to Hand: Martial Arts in Morphus (+1 APM and bonuses in metadata). Facade uses purchased/normal hand to hand only. Track combat bonuses separately per form."
+      },
+      {
+        "name": "Talents",
+        "description": "One free Talent at 1st level; additional free Talents at levels 4, 7, 10, and 12. More may be purchased by permanently spending P.P.E. Most Talents are Morphus-only."
+      },
+      {
+        "name": "R.C.C. Skill Packages",
+        "description": "Select one allowed O.C.C. skill package at creation — Basic (student), Resistance/Spook Squad, Nocturne/Seeker/Lightbringer, Warlord, Sorcerer, or Mystic. Facade Hand to Hand purchased per package rules."
+      },
+      {
+        "name": "Alliances & Resources",
+        "description": "Allies vary by faction — humans, Guardians, Wampyrs, other Nightbane. Typical gear: civilian vehicle, clothing, personal effects; militant factions may access arms and surveillance gear. Start 3D6×100 cash."
+      },
+      {
+        "name": "Experience",
+        "description": "Uses Nightbane & Guardian XP table (`nightbane_core_nightbane_guardian`, p. 233)."
+      }
+    ]
   },
   {
     "id": "race_guardian",
     "name": "Guardian",
-    "description": "Optional R.C.C. — supernatural beings of light and energy, often former humans transformed with faded memories but a drive to protect humankind. Not omnipotent; conventional, magic, psionic, and supernatural attacks can kill them. Shadow O.C.C. `occ_guardian_rcc` (auto-mounted): 10 related + 8 secondary skills from a restricted, mostly non-technological list (Communications: basic radio only; Domestic +10%; Medical: First Aid/Holistic/Paramedic +10%; Pilot: auto/motorcycle/horsemanship +5%; Technical +5%; Wilderness +5%; no Electrical/Espionage/Mechanical/Military/Rogue/Science); +1 related skill at levels 3, 6, 9, and 12; typically Hand to Hand: Basic; start in street clothes with 2D4×10 cash (may rise to 2D6×100 through allies). P.P.E. P.E.×5 + 20/level (on shadow O.C.C.).",
+    "description": "Optional player R.C.C. — supernatural beings of light and energy (~5 ft / 1.5 m albino-like appearance), often former humans transformed with faded memories but a drive to protect humankind. Not omnipotent; conventional, magic, psionic, and supernatural attacks can kill them. Shadow O.C.C. `occ_guardian_rcc` (auto-mounted). S.D.C. 2D6×10+100 (+ skill bonuses). H.P. P.E.×2 (+2D6/level). P.P.E. P.E.×5 (+20/level). I.S.P. M.E.+1D6×10 (+10/level). Horror Factor 9 (alien features) or 12 (energy powers). Typical P.C. levels 1–2; Elder NPCs average 1D6+6.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -117,11 +241,22 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 189
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 190
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 192
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_guardian_rcc",
+    "raceComposition": "rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D4+16",
@@ -158,59 +293,184 @@
         "dodge": 1,
         "rollWithImpact": 2,
         "horrorFactor": 9
+      },
+      "activation": {
+        "cost": {
+          "type": "ppe",
+          "value": "1 per point healed (max P.E. attribute per touch)"
+        },
+        "duration": "Once per minute (4 melees)",
+        "save": "Healing Touch — 2 melee actions; aura of light surrounds Guardian and patient"
+      },
+      "metadata": {
+        "optionalPlayerCharacter": true,
+        "shadowOccId": "occ_guardian_rcc",
+        "xpTableId": "nightbane_core_nightbane_guardian",
+        "voluntaryTransformationLikely": true,
+        "fadedMemories": true,
+        "averageHeightFeet": 5,
+        "albinoLikeAppearance": true,
+        "seeTruthRevealsLightAura": true,
+        "attributesBelievedCreatedNotGrown": true,
+        "initiativeBonus": 1,
+        "perceptionBonus": 3,
+        "horrorFactorAlienFeatures": 9,
+        "horrorFactorEnergyPowers": 12,
+        "horrorFactorOftenAweNotTerror": true,
+        "hitPointsFormulaTrue": "PE*2+2D6*level",
+        "sdcPlusSkillBonuses": true,
+        "passiveRegenPerHour": "2D6",
+        "healingTouchPpePerPoint": 1,
+        "healingTouchMaxPerUseEqualsPe": true,
+        "healingTouchActionCost": 2,
+        "healingTouchUsesPerMinute": 1,
+        "lightBlastSdCPerPpe": "1D6",
+        "lightBlastStrikeBonus": 3,
+        "lightShieldSdcPerPpe": 5,
+        "lightShieldDurationMinutesPerLevel": 1,
+        "bodyIlluminationNoPpeCost": true,
+        "bodyIlluminationSunlightHalfEffect": true,
+        "nullifyMagicMustExceedSpellPpe": true,
+        "nullifyMagicOneActionPerAttempt": true,
+        "hoverPpe": 2,
+        "hoverDurationMinutesPerLevel": 2,
+        "flyPpe": 6,
+        "flyDurationMinutesPerLevel": 2,
+        "flyMaxMph": 40,
+        "flyMaxAltitudeFeet": 2000,
+        "nightvisionFeet": 500,
+        "seeAllLightSpectrums": true,
+        "seeInvisiblePerceptionTarget": 10,
+        "noFoodWaterAirRequired": true,
+        "solarPowered": true,
+        "dailySunlightHoursRequired": "few",
+        "lightDeprivationBeginsAfterDays": 2,
+        "lightDeprivationSdcLossPerDay": 20,
+        "lightDeprivationHpFloor": 10,
+        "lightDeprivationHalfStatsAfterDays": 7,
+        "lightDeprivationMinimumStatsAfterDays": 14,
+        "lightDeprivationRecoveryDayPerDecade": 1,
+        "lightDeprivationFullRecoveryHoursUnderOneYear": 6,
+        "nightlandsCountsAsLightDeprivation": true,
+        "masterPsionicSaveTarget": 10,
+        "ispBaseFormula": "ME+1D6*10",
+        "ispPerLevel": 10,
+        "psionicGrantIdsCore": [
+          "psionic_empathy",
+          "psionic_mind_block",
+          "psionic_presence_sense",
+          "psionic_see_aura"
+        ],
+        "additionalPsionicPerLevel": 1,
+        "additionalPsionicCategories": [
+          "Sensitive",
+          "Healing"
+        ],
+        "ppeBaseFormula": "PEx5",
+        "ppePerLevel": 20,
+        "typicalPcStartLevel": "1-2",
+        "elderGuardianTypicalLevel": "1D6+6",
+        "evilGuardianMinority": true,
+        "guardiansSenseEvilGuardians": true,
+        "destroyTrueVampiresOnSight": true,
+        "destroyNightlordMinionsOnSight": true,
+        "preferredNonLethalResolution": true,
+        "enemySupernaturalRaceIds": [
+          "race_master_vampire",
+          "race_secondary_vampire",
+          "race_wild_vampire",
+          "race_hound",
+          "race_hunter",
+          "race_hollow_man",
+          "race_ashmedai"
+        ],
+        "allyRaceIds": [
+          "race_human",
+          "race_nightbane",
+          "race_wampyr"
+        ],
+        "wampyrGoodAlignmentMayJoin": true,
+        "typicalHangouts": [
+          "soup_kitchens",
+          "churches_temples",
+          "major_cities",
+          "urban_slums",
+          "wilderness_retreats"
+        ]
       }
     },
     "demographics": {
+      "averageHeight": "5 feet (1.5 m) average",
+      "averageWeight": "Normal human range for height",
       "averageLifespan": "300 to 400 years",
       "alignmentTendencies": [
         "Principled",
         "Scrupulous"
+      ],
+      "excludedAlignments": [
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant",
+        "Diabolic"
       ]
     },
     "classAbilities": [
       {
+        "name": "Origin & Role",
+        "description": "Mysterious protectors — outcasts serving a higher power or alien force (book leaves unanswered). Voluntary transformation with faded memories; resolve to help humankind. Prefer non-lethal solutions; destroy evil supernatural beings (true vampires, Nightlord minions) on sight when necessary."
+      },
+      {
         "name": "Precognitive Senses",
-        "description": "Instinctive gut feelings lead Guardians toward places their help may be needed — rarely clear or definite (flashes of locations/events). G.M. should not overuse; best at adventure openings or brief flashes that something is wrong."
+        "description": "Instinctive gut feelings toward places help may be needed — rarely clear (flashes of locations/events). G.M. should not overuse; best at adventure openings or brief flashes."
       },
       {
         "name": "Supernatural Senses",
-        "description": "Perfect nightvision 500 ft (152 m); see all light spectrums including infrared and ultraviolet; see perfectly in blinding light. See the invisible and recognize illusions on a Perception roll of 10+. +1 initiative and +3 on all Perception rolls (included in racial bonuses where modeled)."
+        "description": "Perfect nightvision 500 ft (152 m); all light spectrums including infrared/ultraviolet; see in blinding light. See invisible and recognize illusions on Perception 10+. +1 initiative and +3 Perception (metadata)."
       },
       {
         "name": "Super-Regeneration & Healing Touch",
-        "description": "Heal 2D6 damage every hour without P.P.E. Healing Touch: spend 1 P.P.E. per point healed (max one touch equal to P.E. attribute); usable once per minute (4 melees), costs two melee actions; aura of light surrounds Guardian and patient."
+        "description": "Passive 2D6 healing/hour. Healing Touch: see innateBonuses.activation — 1 P.P.E./point (max P.E. per touch), once/minute, 2 actions, light aura."
       },
       {
         "name": "Powers of Light",
-        "description": "Energy blasts: 1D6 S.D.C. per P.P.E., +3 to strike. Light shields: 5 S.D.C. protection per P.P.E., duration 1 minute (4 melees) per level. Body illumination as bright sunlight at no P.P.E. (half effectiveness vs. sun-hating entities)."
+        "description": "Energy blasts 1D6 S.D.C./P.P.E. (+3 strike). Shields 5 S.D.C./P.P.E., 1 minute/level. Body illumination as sunlight at no P.P.E. (half effect vs. sun-hating entities)."
       },
       {
         "name": "Nullify Magic",
-        "description": "Counteract spells by spending P.P.E. exceeding the spell's cost (flash of light; one melee action per attempt). Sense spellcasting or ongoing spell effects in presence. Must decide P.P.E. spent before knowing the spell's cost."
+        "description": "Spend P.P.E. exceeding spell cost to counteract (flash of light; 1 action/attempt). Sense casting or ongoing effects; must guess P.P.E. spent before knowing spell cost."
       },
       {
         "name": "Hover & Flight",
-        "description": "Hover/levitate: 2 P.P.E., lasts 2 minutes per level. Fly: 6 P.P.E., lasts 2 minutes per level, max 40 mph (64 km) and 2,000 ft (610 m) altitude."
+        "description": "Hover: 2 P.P.E., 2 minutes/level. Fly: 6 P.P.E., 2 minutes/level, max 40 mph (64 km) and 2,000 ft (610 m)."
       },
       {
-        "name": "Solar Sustenance",
-        "description": "No food, water, or air required — solar powered via light energy. A few hours of sunlight daily maintains health (overcast days count)."
-      },
-      {
-        "name": "Light Deprivation",
-        "description": "After 2+ days without light (including Nightlands): lose 20 S.D.C./day (then H.P. down to 10). After 7 days: attributes, powers, attacks, and bonuses halved; after 14 days reduced to one (can linger decades). Recovery: 1 day sunlight per decade deprived; under one year deprivation restores full strength in 6 hours of sunlight."
+        "name": "Solar Sustenance & Light Deprivation",
+        "description": "Solar powered — no food/water/air; few hours of daily light (overcast counts). After 2+ days without light: −20 S.D.C./day (H.P. floor 10); 7 days halved stats; 14 days minimum stats (can linger decades). Nightlands counts as deprivation. Recovery rules in metadata."
       },
       {
         "name": "Horror Factor",
-        "description": "Horror Factor 9 when alien features show; 12 when displaying energy powers — often manifests as awe or adoration instead of terror."
+        "description": "H.F. 9 (alien features visible) or 12 (energy powers) — often manifests as awe or adoration instead of terror."
       },
       {
         "name": "Guardian Psionics",
-        "description": "Master psionic. Start with Empathy, Mind Block, Presence Sense, and See Aura. +1 Sensitive or Healing power each level after first; +10 I.S.P. per level."
+        "description": "Master psionic (save 10+). Start with Empathy, Mind Block, Presence Sense, See Aura. +1 Sensitive or Healing power each level after first. I.S.P. M.E.+1D6×10 (+10/level)."
       },
       {
         "name": "No Magic",
-        "description": "Cannot learn or cast magic; nullify magic and innate light powers only."
+        "description": "Cannot learn or cast magic; nullify magic and innate light powers only (`occLimitations.forbiddenCategories` blocks Magic)."
+      },
+      {
+        "name": "Player Character Note",
+        "description": "Remember even less about origins than Nightbane. Social reactions range from worship to panic — fanatical followers, mobbing, or attacks by the disillusioned. Evil Guardians are a tiny hunted minority sensed by others."
+      },
+      {
+        "name": "R.C.C. Skills & Resources",
+        "description": "10 related + 8 secondary on shadow O.C.C. (restricted non-technological list; +1 related at levels 3, 6, 9, 12). Typically Hand to Hand: Basic. Start: street clothes, 2D4×10 cash (may rise to 2D6×100 via allies)."
+      },
+      {
+        "name": "Experience",
+        "description": "Uses Nightbane & Guardian XP table (`nightbane_core_nightbane_guardian`, p. 233). Typical P.C.s start 1st–2nd level; Elder NPCs average 1D6+6."
       }
     ]
   },
@@ -284,7 +544,7 @@
   {
     "id": "race_wampyr",
     "name": "Wampyr",
-    "description": "Optional R.C.C. — humans turned by the vampire slow-kill who retain free will and a soul. They need blood to survive, suffer in sunlight, and lack true-vampire shape-changing, but can be slain by conventional weapons and ignore many anti-vampire taboos (running water, holy symbols, native soil). Many hunt their undead cousins; vampire intelligences destroy them on sight. Shadow O.C.C. `occ_wampyr_rcc` (auto-mounted): 10 related skills + 8 secondary skills reflecting pre-transformation life; Hand to Hand purchased from related skills (Basic 1 slot, Expert 2, Martial Arts/Assassin 3); +1 related skill at levels 4, 7, 10, and 12; starting funds 2D4×100 cash and 2D6×1000 in property.",
+    "description": "Optional player R.C.C. — humans turned by the vampire slow-kill (01–02% of `race_secondary_vampire` outcomes) who retain free will and a soul. They need blood to survive, suffer in sunlight, and lack true-vampire shape-changing, but can be slain by conventional weapons and ignore many anti-vampire taboos (running water, holy symbols, native soil). Many hunt their undead cousins; vampire intelligences and master vampires destroy them on sight. Shadow O.C.C. `occ_wampyr_rcc` (auto-mounted). S.D.C. 2D6×10+20 (+ pre-transformation physical skills). H.P. P.E.×2 (+1D6/level). I.S.P. M.E.+2D4×10 (+8/level). Horror Factor 11.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -293,11 +553,17 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 188
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 189
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_wampyr_rcc",
+    "raceComposition": "rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "3D6+1",
@@ -330,9 +596,84 @@
       "modifiers": {
         "horrorFactor": 11,
         "save_horror_factor": 5
+      },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "direct sunlight exposure"
+        },
+        "duration": "Per minute (4 melees) while exposed",
+        "save": "2D6 damage/minute; -1 APM, -1 all combat rolls, -2 initiative/perception, -20% skills. Daytime shade/underground penalties apply even without direct sun"
+      },
+      "metadata": {
+        "optionalPlayerCharacter": true,
+        "shadowOccId": "occ_wampyr_rcc",
+        "xpTableId": "nightbane_core_wampyr",
+        "excludedFromTrueVampirePowersModule": true,
+        "formerHuman": true,
+        "retainsPastLifeMemories": true,
+        "retainsFreeWillAndSoul": true,
+        "slowKillOrigin": true,
+        "slowKillOutcomeRollSecondary": "01-02",
+        "regenerationPerMelee": "2D6",
+        "metalWeaponDamageFraction": 0.5,
+        "diesBelowZeroHitPoints": true,
+        "noVampireInvulnerability": true,
+        "noMetamorphosis": true,
+        "bloodPintsPer72Hours": 1,
+        "starvationFrenzyBeginsAfterDays": 7,
+        "starvationFrenzyAggravationDays": 3,
+        "sunlightDamagePerMinute": "2D6",
+        "sunlightExposurePenalties": {
+          "apm": -1,
+          "combat": -1,
+          "initiative": -2,
+          "perception": -2,
+          "skillsPercent": -20
+        },
+        "daytimeShadePenaltiesApply": true,
+        "immuneRunningWater": true,
+        "immuneHolySymbols": true,
+        "immuneHerbsOfProtection": true,
+        "immuneHomelandSoilRequirement": true,
+        "stakingDamagesButDoesNotIncapacitate": true,
+        "initiativeBonus": 1,
+        "perceptionBonus": 3,
+        "saveMindControlBonus": 5,
+        "savePossessionBonus": 5,
+        "immuneVampireMindControl": true,
+        "instinctiveTrueVampireLore": true,
+        "hitPointsFormulaTrue": "PE*2+1D6*level",
+        "sdcPlusPreTransformationPhysicalSkills": true,
+        "ispBaseFormula": "ME+2D4*10",
+        "ispPerLevel": 8,
+        "psionicGrantIdsExcludingSuperHypnotic": [
+          "psionic_death_trance",
+          "psionic_presence_sense",
+          "psionic_alter_aura",
+          "psionic_sense_evil",
+          "psionic_empathy",
+          "psionic_deaden_pain",
+          "psionic_mind_block",
+          "psionic_induce_sleep",
+          "psionic_suggestion"
+        ],
+        "additionalPsionicPerLevel": 1,
+        "additionalPsionicCategory": "any",
+        "preRebirthMagicLost": true,
+        "huntedByTrueVampireRaceIds": [
+          "race_master_vampire",
+          "race_secondary_vampire",
+          "race_wild_vampire"
+        ],
+        "scrupulousAvoidsUnwillingBlood": true,
+        "pcExcludedAlignment": "Principled",
+        "nocturnesFounderLore": "Iosef Pendragon"
       }
     },
     "demographics": {
+      "averageHeight": "Normal human range",
+      "averageWeight": "Normal human range",
       "averageLifespan": "Unknown, possibly limitless",
       "alignmentTendencies": [
         "Scrupulous",
@@ -348,20 +689,24 @@
     },
     "classAbilities": [
       {
+        "name": "Origin & Nature",
+        "description": "Rare slow-kill outcome (01–02% from `race_secondary_vampire` creators) — retain free will and a soul when true vampiric domination fails. Theories: pure soul, strong will, or latent Nightbane heritage. Not merged with the shared true-vampire powers module."
+      },
+      {
         "name": "Super-Regeneration",
-        "description": "Heal 2D6 S.D.C./Hit Points every melee round. Supernatural strength and endurance. Can be killed by conventional attacks when reduced below zero — not invulnerable like true vampires."
+        "description": "Heal 2D6 S.D.C./Hit Points every melee round (metadata). Supernatural strength and endurance. Can be killed by conventional attacks when reduced below zero — unlike true vampires (fight to −20)."
       },
       {
         "name": "Half Damage from Metal Weapons",
-        "description": "Metal weapons inflict half damage. No other normal vampire invulnerabilities (bullets and knives inflict full damage)."
+        "description": "Metal weapons inflict half damage. No other normal vampire invulnerabilities — guns and knives can kill."
       },
       {
         "name": "Vampire Psionics",
-        "description": "Starts with all vampire psionic powers except Super Hypnotic Suggestion. Select one additional power from any psychic category at every level after the first (+8 I.S.P. per level)."
+        "description": "Starts with all vampire psionic powers except Super-Hypnotic Suggestion (see metadata grant list). Select one additional power from any psychic category every level after the first. I.S.P. M.E.+2D4×10 (+8/level)."
       },
       {
         "name": "Combat Bonuses",
-        "description": "+1 on initiative, +3 on all Perception rolls, +5 to save vs horror factor, +5 to save vs mind control and possession; immune to vampire mind control."
+        "description": "+1 initiative, +3 Perception (metadata), +5 save vs Horror Factor (modifiers), +5 save vs mind control and possession (metadata), immune to vampire mind control."
       },
       {
         "name": "Vampire Lore",
@@ -369,31 +714,44 @@
       },
       {
         "name": "Blood Dependency",
-        "description": "Must drink one pint of blood every three days (72 hours). Starvation frenzy effects begin after the first week without blood; three days in frenzy state to reach full feeding frenzy."
+        "description": "Must drink one pint of blood every 72 hours. Starvation frenzy effects begin after the first week without blood; three days in frenzy state to reach full feeding frenzy (see Vampire Powers section for frenzy rules)."
       },
       {
         "name": "Vulnerability to Sunlight",
-        "description": "Direct sunlight: 2D6 damage per minute (4 melees). Shade allows regeneration to heal sun damage (dash in/out of shade to operate by day, painfully). While exposed: -1 attack per melee, -1 all combat rolls, -2 initiative and Perception, -20% all skills. Daytime penalties also apply in shade or underground."
+        "description": "Direct sunlight: 2D6 damage per minute — see innateBonuses.activation. Shade allows regeneration to heal sun damage. Daytime penalties apply even in shade or underground."
       },
       {
         "name": "Anti-Vampire Immunities",
-        "description": "Running water, holy symbols, herbs, and native-soil sleep requirements do not affect Wampyrs. Staking inflicts heavy damage but does not incapacitate."
+        "description": "Running water, holy symbols/crosses, herbs of protection, and native-soil sleep requirements do not affect Wampyrs. Staking inflicts heavy damage but does not incapacitate."
       },
       {
         "name": "No Magic",
-        "description": "Cannot work magic; any magic known before transformation is lost forever."
+        "description": "Cannot work magic; any magic known before transformation is lost forever (`occLimitations.forbiddenCategories` blocks Magic)."
       },
       {
         "name": "Missing Vampire Powers",
-        "description": "No mist form, bat/wolf shape-shifting, or other true-vampire transformation abilities."
+        "description": "No mist form, bat/wolf shape-shifting, telepathic minion link, or other true-vampire transformation abilities."
+      },
+      {
+        "name": "Alliances & Enemies",
+        "description": "Hunted on sight by vampire intelligences and `race_master_vampire`. May ally with vampire hunters, Nightbane, rebellious secondaries, or the Nocturnes (Iosef Pendragon). Evil/anarchist Wampyrs may serve Nightlords to hunt true vampires. Guardians avoid them but rarely destroy on sight; good Wampyrs may join Guardian groups."
+      },
+      {
+        "name": "R.C.C. Skills & Equipment",
+        "description": "Retain past-life memories — 10 related + 8 secondary skills on shadow O.C.C. (+1 related at levels 4, 7, 10, 12). Hand to Hand purchased from related slots. Starting funds: 2D4×100 cash and 2D6×1000 property."
+      },
+      {
+        "name": "Experience",
+        "description": "Uses Wampyr XP table (`nightbane_core_wampyr`, p. 233). Experience level varies for NPCs."
       }
     ]
   },
   {
     "id": "race_doppleganger",
     "name": "Doppleganger",
-    "description": "Optional R.C.C. — supernatural doubles of Earth humans living in the Nightlands; pale mirror images who know most of what their counterpart knows. Player characters are awakened (aware of their nature). Shadow O.C.C. `occ_doppleganger_rcc` (auto-mounted): skills same as normal humans — select related and secondary skills reflecting the Earth double's O.C.C./life. Attributes 3D6 each (human baseline); S.D.C. uses human rules +20; combat and Hand to Hand same as humans but hand-to-hand damage uses the Supernatural Strength table. P.P.E. 1D4 (magician doubles: two-thirds of counterpart's P.P.E.). I.S.P. M.E. + 2D6 (psychic doubles: all counterpart powers at two-thirds I.S.P.).",
+    "description": "Optional R.C.C. — supernatural doubles of Earth humans living in the Nightlands; pale mirror images who know most of what their counterpart knows. Player characters are awakened (aware of their nature). Shadow O.C.C. `occ_doppleganger_rcc` (auto-mounted): skills same as normal humans — select related and secondary skills reflecting the Earth double's O.C.C./life. Human-baseline attributes (`race_human` dice); S.D.C. human conditional rules +20; combat and Hand to Hand same as humans but hand-to-hand damage uses the Supernatural Strength table. P.P.E. 1D4 (magician doubles: two-thirds of counterpart's P.P.E.). I.S.P. M.E. + 2D6 (psychic doubles: all counterpart powers at two-thirds I.S.P.).",
     "raceAudience": "player",
+    "raceComposition": "rcc",
     "gameSystems": [
       "nightbane"
     ],
@@ -401,7 +759,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 160
+        "pageNumber": 159
       }
     ],
     "canPickOcc": false,
@@ -444,13 +802,55 @@
     },
     "occLimitations": {
       "forbiddenCategories": [],
-      "forbiddenOccIds": []
+      "forbiddenOccIds": [
+        "occ_nightbane_basic",
+        "occ_nightbane_resistance_spook_squad",
+        "occ_nightbane_nocturne_seeker_lightbringer",
+        "occ_nightbane_warlord",
+        "occ_guardian_rcc",
+        "occ_mystic",
+        "occ_sorcerer",
+        "occ_nightbane_sorcerer",
+        "occ_nightbane_mystic"
+      ]
     },
     "innateSkills": [],
     "innateBonuses": {
       "modifiers": {
-        "save_horror_factor": 2,
+        "save_horror_factor": {
+          "value": 2,
+          "condition": "Awakened Doppleganger only (all player characters)"
+        },
         "horrorFactor": 9
+      },
+      "metadata": {
+        "speciesBaselineRaceId": "race_human",
+        "sdcFlatBonus": 20,
+        "handToHandDamageTable": "supernatural",
+        "earthSurvivalHoursWithoutDoubleResolution": 48,
+        "earthSurvivalRequires": "Human double killed, or Doppleganger returns to Nightlands, or human double is in Nightlands while Doppleganger is on Earth",
+        "goodAlignmentEarthResistanceOutcome": "May resist murderous urges but still dies or vanishes 48 hours after Earth arrival unless returning to Nightlands",
+        "regenerationPerHour": "1 H.P./S.D.C. plus P.E. attribute bonus",
+        "ppeAbsorptionNoFoodOrWater": true,
+        "immuneSlowKillVampireBite": true,
+        "cannotBecomeVampire": true,
+        "damageMultiplierMagicArtifactsAndWeapons": 2,
+        "damageMultiplierMagicSpells": 1,
+        "magicianCounterpartPpeFraction": 0.67,
+        "psychicCounterpartIspFraction": 0.67,
+        "psychicAwakeningMinorChancePercent": 40,
+        "psychicAwakeningMinorPickCount": 2,
+        "psychicAwakeningMinorCategories": [
+          "Physical",
+          "Healing",
+          "Sensitive"
+        ],
+        "nightbaneNeverHasDoppleganger": true,
+        "doubleDeathFreezesAge": true,
+        "frozenAgeMaxLifespanYears": 100,
+        "counterpartSkillMirrorRoll": "1D6 per skill: 01-02 unknown, 03-04 known at -10% of double's level, 05-00 at same level",
+        "counterpartAttributeRule": "Identical to known double; otherwise roll as human 3D6 each",
+        "experienceWhenDoubleDies": "Starts at mirror image's level; may advance beyond double if more active"
       }
     },
     "demographics": {
@@ -462,15 +862,15 @@
     "classAbilities": [
       {
         "name": "Earth Double Link",
-        "description": "On Earth without the double present in the Nightlands, a Doppleganger dies within 48 hours unless the human double is killed or one of them returns to the Nightlands. To live on Earth permanently, the double must die (often murdered by the Doppleganger). If both are on opposite worlds simultaneously, both can survive. Good-aligned Dopplegangers swept to Earth may resist murderous urges but still perish after 48 hours unless they return."
+        "description": "On Earth without resolution, dies within 48 hours unless the human double is killed or one party returns to the Nightlands. Permanent Earth life requires the double's death. If the human is in the Nightlands while the Doppleganger is on Earth, both survive. Good-aligned visitors who resist murder still perish or vanish after 48 hours on Earth."
       },
       {
         "name": "P.P.E. Absorption",
-        "description": "No food or water required — survive by absorbing ambient P.P.E. May still taste and enjoy food."
+        "description": "No food or water required — survive on ambient P.P.E. May still taste and enjoy food."
       },
       {
         "name": "Regeneration",
-        "description": "Heal 1 H.P./S.D.C. plus P.E. attribute bonus per hour."
+        "description": "Heal 1 H.P./S.D.C. plus P.E. attribute bonus per hour (see innateBonuses.metadata.regenerationPerHour)."
       },
       {
         "name": "Vampire Immunities",
@@ -478,26 +878,34 @@
       },
       {
         "name": "Magic Artifact Vulnerability",
-        "description": "Magic artifacts and magic weapons inflict double damage. Magic spells do not gain this multiplier."
+        "description": "Magic artifacts and magic weapons inflict double damage. Magic spells inflict normal damage only."
       },
       {
         "name": "Awakened Psionics",
-        "description": "Before awakening, no psionic powers. Awakened Dopplegangers: 40% gain minor psionics — select two powers from one category (Physical, Healing, or Sensitive). Dopplegangers of psychic humans gain all counterpart powers at two-thirds I.S.P."
+        "description": "Before awakening, no psionic powers. Awakened: 40% gain minor psionics — select two powers from one category (Physical, Healing, or Sensitive). Dopplegangers of psychic humans gain all counterpart powers at two-thirds I.S.P. (M.E. + 2D6 when rolled independently)."
       },
       {
         "name": "Magician Doubles",
         "description": "Only Dopplegangers of human magicians can use magic; all others are mundane. Magician doubles have two-thirds of their counterpart's P.P.E."
       },
       {
+        "name": "Alignment Mirror (specific double)",
+        "description": "When creating a Doppleganger of a known individual: 01-20% same alignment; 21-50% one category down the scale; 51-70% one category up; 71-80% total opposite (good/selfish→evil, evil→good per book); 81-00% random shift — roll 1D6 counting right from the double's alignment."
+      },
+      {
+        "name": "Manifestation & Aging",
+        "description": "Manifest spontaneously in the Nightlands (usually youth/early adulthood), age with the double. If the human double dies, the Doppleganger freezes at that age and may live up to a century without further aging."
+      },
+      {
         "name": "No Nightbane Double",
-        "description": "Nightbane never have Dopplegangers — a separate species from Earth's mirror population."
+        "description": "Nightbane never have Dopplegangers — indicates Nightbane are a separate species."
       }
     ]
   },
   {
     "id": "race_secondary_vampire",
     "name": "Secondary Vampire",
-    "description": "Optional R.C.C. — second-generation undead created by a master vampire's slow kill. Retains more human memories than master or wild vampires; full vampire power suite but susceptible to master mind control. P.C.s often Unprincipled, Anarchist, or Aberrant rebels fighting blood hunger. Shadow O.C.C. `occ_secondary_vampire_rcc` (auto-mounted). Hit Point equivalent 3D4×10. P.P.E. 1D4×10 (frozen). Typical NPC experience 1D6+1 (2nd–7th); P.C.s start at 1st level. Horror Factor 12. Radiates supernatural evil.",
+    "description": "Optional player R.C.C. — second-generation undead created by a `race_master_vampire` slow kill. Retains more human memories than master or wild vampires; full vampire power suite but susceptible to master mind control. Slow-kill creation is inconsistent (58% wild per book; see metadata roll table). P.C.s often Unprincipled rebels fighting blood hunger; Anarchist and Aberrant more common. Shadow O.C.C. `occ_secondary_vampire_rcc` (auto-mounted). Hit Point equivalent 3D4×10. P.P.E. 1D4×10 (frozen). Typical NPC experience 1D6+1 (2nd–7th); P.C.s start at 1st level. Horror Factor 12. Radiates supernatural evil.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -506,11 +914,17 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 181
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 182
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_secondary_vampire_rcc",
+    "raceComposition": "rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "3D6+2",
@@ -543,9 +957,71 @@
         "save_psionics": 3,
         "horrorFactor": 12
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "three consecutive nights of draining"
+        },
+        "duration": "Victim rises three days after death",
+        "save": "Slow kill — roll 01–02% `race_wampyr`, 03–44% secondary, 45–00% `race_wild_vampire` (book: ~58% wild)"
+      },
       "metadata": {
+        "optionalPlayerCharacter": true,
+        "shadowOccId": "occ_secondary_vampire_rcc",
+        "xpTableId": "nightbane_core_night_prince_vampire",
         "trueVampirePowersModuleId": "nightbane_true_vampire",
+        "vampireTier": "secondary",
+        "radiatesSupernaturalEvil": true,
+        "typicalExperienceLevelNpc": "1D6+1",
+        "pcStartsAtLevel": 1,
+        "attacksPerMelee": 5,
+        "psionicAttacksPerMeleeMax": 2,
+        "psionicAttackActionCost": 2,
+        "killingBiteDamage": "2D6+PS",
+        "initiativeBonus": 2,
+        "perceptionBonus": 3,
+        "majorPsionicSaveTarget": 12,
+        "imperviousPsionicMagicSleep": true,
+        "imperviousParalysis": true,
+        "susceptibleToMasterMindControl": true,
+        "preRebirthMagicRetainedFraction": 0.5,
+        "preRebirthMagicFrozen": true,
+        "preRebirthPpeFrozen": true,
+        "retainedSkillsCount": 10,
+        "retainedSkillProficiencyLevel": 1,
+        "skillsNeverIncrease": true,
+        "levelUpRelatedSkillQuantities": {
+          "3": 2,
+          "6": 2,
+          "9": 2,
+          "11": 2,
+          "13": 2
+        },
+        "retainedSkillCategories": [
+          "Communications",
+          "Domestic",
+          "Pilot",
+          "Technical",
+          "Rogue",
+          "Wilderness",
+          "Weapon Proficiencies"
+        ],
+        "vampireSlaveCap": 1,
+        "slowKillWildChancePercentBook": 58,
+        "slowKillOutcomeRoll": {
+          "01-02": "race_wampyr",
+          "03-44": "race_secondary_vampire",
+          "45-00": "race_wild_vampire"
+        },
+        "hierarchyMasterRaceId": "race_master_vampire",
         "associatedNpcRaceId": "race_master_vampire",
+        "hierarchySubordinateRaceIds": [
+          "race_wild_vampire",
+          "race_wampyr"
+        ],
+        "remembersHumanPastMoreThanMasterOrWild": true,
+        "mayDefyVampireIntelligence": true,
+        "pcMaxGoodAlignment": "Unprincipled",
         "pairedRaceRole": "secondary",
         "pairedRaceRelationship": "Created by master vampire slow kill; subordinate to master and vampire intelligence mind control, but may retain vestiges of humanity as P.C.s."
       }
@@ -568,35 +1044,51 @@
     },
     "classAbilities": [
       {
+        "name": "Origin & Humanity",
+        "description": "Slow-kill victims of a `race_master_vampire` — possess full supernatural powers but slightly lower I.Q. and susceptibility to creator mind control. Remember more of their human lives than master or wild undead; may sometimes defy the vampire intelligence. Evil alignments accept undeath readily; good victims often loathe what they became."
+      },
+      {
         "name": "Hit Point Equivalent",
-        "description": "3D4×10 Hit Point equivalent (not normal S.D.C./H.P.)."
+        "description": "3D4×10 Hit Point equivalent (not normal S.D.C./H.P.). Nearly impervious to conventional weapons — see shared Vampire Powers module (`nightbane_true_vampire`, pp. 183–188)."
       },
       {
         "name": "Combat",
-        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions; secondary: two psionic + one hand-to-hand possible). Supernatural strength; killing bite 2D6 + P.S. bonus."
+        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions — two psionic + one hand-to-hand possible). Supernatural strength; killing bite 2D6 + P.S. bonus (damages other vampires)."
       },
       {
         "name": "Bonuses",
-        "description": "+2 initiative, +3 Perception (apply at table), impervious to psionic/magic sleep and paralysis — in addition to save modifiers on the race row."
+        "description": "+2 initiative, +3 Perception (metadata), +3 save vs Horror Factor and +3 save vs magic/psionic mind control (modifiers), impervious to psionic/magic sleep and paralysis — not impervious to all mind control (unlike master)."
       },
       {
         "name": "Psionic Powers",
-        "description": "Major psionic (save vs psionics 12+). I.S.P. 2D6×10. Granted catalog powers on shadow O.C.C. at 4th-level potency."
+        "description": "Major psionic (save vs psionics 12+). I.S.P. 2D6×10. Mind control over lesser vampires at no I.S.P. (shared module). Granted catalog powers on shadow O.C.C. at 4th-level potency."
       },
       {
-        "name": "Pre-Rebirth Magic",
-        "description": "If the vampire knew magic before undeath, retain about half of spells at frozen power levels; cannot learn new magic or increase P.P.E."
+        "name": "Slow Kill Creation",
+        "description": "Unlike masters, slow-kill results are inconsistent — often targets family/friends from shadow memories. See innateBonuses.activation and metadata for outcome roll (~58% wild per book prose)."
+      },
+      {
+        "name": "Pre-Rebirth Skills & Magic",
+        "description": "Ten retained skills at 1st-level proficiency (frozen; +2 related skills at levels 3, 6, 9, 11, 13). Optional frozen pre-rebirth magic — retain about half of remembered spells; cannot learn new magic or increase P.P.E."
       },
       {
         "name": "Player Character Note",
-        "description": "Unprincipled (selfish good) is the highest good alignment possible for P.C.s fighting blood hunger; Anarchist and Aberrant evil are more common."
+        "description": "Unprincipled (selfish good) is the highest good alignment possible for P.C.s fighting blood hunger; Anarchist and Aberrant evil are more common. Independent rebel P.C.s seldom feed indiscriminately on innocents."
+      },
+      {
+        "name": "Alliances & Equipment",
+        "description": "May work with Nightbane, ghouls, other supernatural forces, or humans when it serves their purpose. Prefer natural powers over technology — at most drive a car or rarely use a gun."
+      },
+      {
+        "name": "Experience",
+        "description": "NPCs typical level 1D6+1 (2nd–7th). Player characters start at 1st level. Uses Night Prince & Vampire XP column (`nightbane_core_night_prince_vampire`, p. 233)."
       }
     ]
   },
   {
     "id": "race_wild_vampire",
     "name": "Wild Vampire",
-    "description": "Optional R.C.C. — third-generation (or starved/insane) undead; savage predators created by secondary slow kills (58% of failures) or degeneration from starvation. Animalistic, easily provoked, subservient to vampire intelligence and most creators. Shadow O.C.C. `occ_wild_vampire_rcc` (auto-mounted). Hit Point equivalent 2D4×10. P.P.E. 6D6. Typical experience 1D4 (1st–4th). Horror Factor 12. Radiates supernatural evil.",
+    "description": "Optional player R.C.C. — third-generation (or starved/insane) undead; savage predators created by `race_secondary_vampire` slow kills (~58% of outcomes) or degeneration from prolonged starvation. Animalistic, easily provoked, subservient to vampire intelligence and most creators. Hunted mercilessly by Nightlord minions. Shadow O.C.C. `occ_wild_vampire_rcc` (auto-mounted). Hit Point equivalent 2D4×10. P.P.E. 6D6. Typical experience 1D4 (1st–4th). Horror Factor 12. Radiates supernatural evil.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -605,11 +1097,17 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 182
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 183
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_wild_vampire_rcc",
+    "raceComposition": "rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D6+1",
@@ -644,9 +1142,79 @@
         "save_psionics": 1,
         "horrorFactor": 12
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "three consecutive nights of draining"
+        },
+        "duration": "Victim rises three days after death",
+        "save": "Slow kill — wild creator produces only other wild undead (`race_wild_vampire`); usually too savage to attempt"
+      },
       "metadata": {
+        "optionalPlayerCharacter": true,
+        "shadowOccId": "occ_wild_vampire_rcc",
+        "xpTableId": "nightbane_core_night_prince_vampire",
         "trueVampirePowersModuleId": "nightbane_true_vampire",
+        "vampireTier": "wild",
+        "radiatesSupernaturalEvil": true,
+        "typicalExperienceLevel": "1D4",
+        "pcStartsAtLevel": 1,
+        "attacksPerMelee": 5,
+        "psionicAttacksPerMeleeMax": 2,
+        "psionicAttackActionCost": 2,
+        "killingBiteDamage": "2D6+PS",
+        "initiativeBonus": 2,
+        "minorPsionicSaveTarget": 12,
+        "imperviousPsionicMagicSleep": true,
+        "imperviousParalysis": true,
+        "preRebirthMagicForgotten": true,
+        "retainedSkillsCount": 6,
+        "retainedSkillProficiencyLevel": 2,
+        "skillsNeverIncrease": true,
+        "noOccSkillBonuses": true,
+        "levelUpSecondarySkillQuantities": {
+          "2": 1,
+          "4": 1,
+          "6": 1,
+          "8": 1,
+          "11": 1,
+          "14": 1
+        },
+        "retainedSkillCategories": [
+          "Communications",
+          "Domestic",
+          "Pilot",
+          "Technical",
+          "Rogue",
+          "Wilderness",
+          "Weapon Proficiencies"
+        ],
+        "slowKillCreatesTier": "wild",
+        "creationOrigins": [
+          "secondary_slow_kill",
+          "starvation_insanity"
+        ],
+        "hierarchyMasterRaceId": "race_master_vampire",
+        "hierarchySecondaryCreatorRaceId": "race_secondary_vampire",
         "associatedNpcRaceId": "race_master_vampire",
+        "subservientToVampireIntelligence": true,
+        "subservientToMasterAndSecondary": true,
+        "degenerationFromStarvation": true,
+        "easilyProvoked": true,
+        "berserkerRage": true,
+        "pcMaxAlignment": "Anarchist",
+        "typicalHabitats": [
+          "city_slums",
+          "remote_wilderness",
+          "nightlands_waste"
+        ],
+        "huntedByNightlordMinions": true,
+        "huntedByMinionRaceIds": [
+          "race_hound",
+          "race_hunter",
+          "race_hollow_man",
+          "race_ashmedai"
+        ],
         "pairedRaceRole": "wild",
         "pairedRaceRelationship": "Third-generation or degenerate undead — usually created by secondary vampire slow kill; subservient to master, secondary creators, and vampire intelligence. Hunted by Nightlord minions."
       }
@@ -669,28 +1237,48 @@
     },
     "classAbilities": [
       {
+        "name": "Origin & Temperament",
+        "description": "Created by `race_secondary_vampire` slow kill (~58% of outcomes) or driven insane by starvation. Primal predators — more animal than human; stalk, kill, and feed on instinct. Easily provoked, berserker rages, cruel; love human blood. Subservient to creator, `race_master_vampire`, most secondaries, and always the vampire intelligence."
+      },
+      {
         "name": "Hit Point Equivalent",
-        "description": "2D4×10 Hit Point equivalent (not normal S.D.C./H.P.)."
+        "description": "2D4×10 Hit Point equivalent (not normal S.D.C./H.P.). Nearly impervious to conventional weapons — see shared Vampire Powers module (`nightbane_true_vampire`, pp. 183–188)."
       },
       {
         "name": "Combat",
-        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks. Supernatural strength; killing bite 2D6 + P.S. bonus."
+        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions). Supernatural strength; killing bite 2D6 + P.S. bonus (damages other vampires). Prefer bare hands and fangs over technology."
       },
       {
         "name": "Bonuses",
-        "description": "+2 initiative, impervious to psionic/magic sleep and paralysis — in addition to save modifiers on the race row."
+        "description": "+2 initiative, +2 save vs Horror Factor, +1 save vs magic/psionic mind control (modifiers — plus possible M.E. bonus), impervious to psionic/magic sleep and paralysis."
       },
       {
         "name": "Psionic Powers",
         "description": "Minor psionic (save vs psionics 12+). I.S.P. 1D6×10. Granted catalog powers on shadow O.C.C. at 4th-level potency."
       },
       {
+        "name": "Slow Kill Creation",
+        "description": "Wild creators can only produce other wild undead and are usually too savage to attempt the three-night slow kill — see innateBonuses.activation."
+      },
+      {
         "name": "No Magic",
-        "description": "All pre-transformation spell knowledge is forgotten during transformation."
+        "description": "All pre-transformation spell knowledge is forgotten during transformation (`occLimitations.forbiddenCategories` blocks Magic)."
+      },
+      {
+        "name": "R.C.C. Skills",
+        "description": "Six retained skills at 2nd-level proficiency (frozen; no O.C.C. bonuses). +1 secondary skill at levels 2, 4, 6, 8, 11, and 14 (1st-level proficiency, frozen)."
+      },
+      {
+        "name": "Habitat & Enemies",
+        "description": "City slums, remote wilderness, and Nightlands Waste bands — prey on the poor and unwary. Hunted mercilessly by Nightlord minions (`race_hound`, `race_hunter`, `race_hollow_man`, `race_ashmedai`)."
       },
       {
         "name": "Player Character Note",
-        "description": "Anarchist is the best alignment possible; all wild P.C.s remain crazed, easily provoked, and blood-hungry despite alignment."
+        "description": "Anarchist is the best alignment possible; wild P.C.s remain crazed, easily provoked, and blood-hungry even when not completely evil. Attack when angered regardless of consequences."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4 (1st–4th). Player characters start at 1st level. Uses Night Prince & Vampire XP column (`nightbane_core_night_prince_vampire`, p. 233)."
       }
     ]
   }

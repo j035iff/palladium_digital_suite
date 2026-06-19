@@ -108,14 +108,14 @@ describe('listCharacterCreationTabRequirements', () => {
   })
 
   it('tab7 requires Nightbane R.C.C. 1st-level talent for basic O.C.C.', () => {
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     expect(race).toBeDefined()
     expect(occ).toBeDefined()
 
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       occ: { id: 'occ_nightbane_basic', xpTable: occ!.xpTable },
       creationGenreId: 'nightbane' as const,
     }
@@ -127,7 +127,7 @@ describe('listCharacterCreationTabRequirements', () => {
     )
     const budget = resolveEffectiveCreationAbilityBudget({
       occ,
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       psychicTier: 'none',
       creationGenreId: 'nightbane',
     })

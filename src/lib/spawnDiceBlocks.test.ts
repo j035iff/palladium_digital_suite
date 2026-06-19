@@ -132,7 +132,7 @@ describe('spawnDiceBlocks', () => {
   })
 
   it('does not double Nightbane P.P.E. dice when O.C.C. already defines the formula', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     const blocks = buildPendingDiceBlocks(
       { ...characterFixture, creationAttributeAssignments: { pe: 12 } },
@@ -149,7 +149,7 @@ describe('spawnDiceBlocks', () => {
   })
 
   it('includes morphus trait S.D.C. dice on the morphus pending block', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     const blocks = buildPendingDiceBlocks(
       {

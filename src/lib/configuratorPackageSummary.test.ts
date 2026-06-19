@@ -77,7 +77,7 @@ describe('buildConfiguratorPackageSummary', () => {
   })
 
   it('lists racial saves and other bonuses together under Bonuses', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const summary = buildConfiguratorPackageSummary(nightbane, undefined, null)
     const bonuses = summary.sections.find((s) => s.id === 'race-bonuses')
     expect(bonuses?.title).toBe('Bonuses')
@@ -89,14 +89,14 @@ describe('buildConfiguratorPackageSummary', () => {
   })
 
   it('shows fixed racial S.D.C. when the race specifies a flat value', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const summary = buildConfiguratorPackageSummary(nightbane, undefined, null)
     const vitals = summary.sections.find((s) => s.id === 'race-vitals')
     expect(vitals?.items).toContain('S.D.C.: 30')
   })
 
   it('shows N/A for Nightbane race supernatural abilities instead of P.P.E.', () => {
-    const nightbane = getRaceById('nightbane')
+    const nightbane = getRaceById('race_nightbane')
     const summary = buildConfiguratorPackageSummary(nightbane, undefined, null)
     const supernatural = summary.sections.find((s) => s.id === 'race-supernatural')
     expect(supernatural?.items).toEqual(['N/A'])

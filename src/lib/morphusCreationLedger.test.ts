@@ -174,16 +174,16 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
     expect(morphusHpLabels[0]?.label).toBe('H.P.')
     expect(morphusHpLabels[0]?.hint).toContain('P.E. ×2')
     expect(morphusHpLabels[0]?.hint).toContain('2D6/level')
-    expect(morphusSdcLabels[0]?.hint).toBe('Facade + 2D6x10')
+    expect(morphusSdcLabels[0]?.hint).toBe('Facade + 2D6x10 + traits')
   })
 
   it('shows Mind Control immunity on Facade and Morphus ledgers', () => {
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       creationAttributeAssignments: { pe: 14 },
     }
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     const baseOpts = {
       character,
@@ -214,7 +214,7 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
       ...createBlankCharacterForGenre('nightbane'),
       creationAttributeAssignments: { pe: 14, ps: 12 },
     }
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
     const attrs = character.primary.attributes
     const baseOpts = {
@@ -250,7 +250,7 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
   it('highlights Hand to Hand, combat, and H.F. that differ from Facade', () => {
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      raceId: 'nightbane',
+      raceId: 'race_nightbane',
       creationAttributeAssignments: {
         ps: 12,
         pe: 14,
@@ -259,7 +259,7 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
       },
       creationHandToHandTier: 'basic' as const,
     }
-    const race = getRaceById('nightbane')
+    const race = getRaceById('race_nightbane')
 
     const morphusSnapshot = buildCreationLiveLedgerSnapshot({
       character,

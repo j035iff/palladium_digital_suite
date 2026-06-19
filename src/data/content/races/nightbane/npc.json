@@ -70,6 +70,32 @@
         "save_psionics": 3,
         "save_horror_factor": 4,
         "horrorFactor": 13
+      },
+      "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "nightlord_shock_troop",
+        "armorRatingNormal": 13,
+        "armorRatingMagicSupernatural": 0,
+        "partialInvulnerabilityNonMagicalDamageFraction": 0.5,
+        "damageMultiplierMagicArtifactsWeaponsTalentsPowers": 2,
+        "immuneIllusionAndConcealment": true,
+        "nightvisionFeet": 2000,
+        "perceptionBonus": 4,
+        "naturalTrackingPercent": 80,
+        "supernaturalTrackingRangeFeet": 60,
+        "supernaturalTrackingBasePercent": 50,
+        "supernaturalTrackingPerLevelPercent": 5,
+        "tracksMorphusNightbaneSignature": true,
+        "selfHealTranceHours": 1,
+        "handToHandStyleId": "hth_assassin",
+        "typicalExperienceLevel": "1D4+1",
+        "maxTypicalLevel": 5,
+        "darkbladeSpearDamage": "3D6+PS",
+        "darkbladeCutsAllMaterials": true,
+        "languagesUnderstandOnlyMagically": true,
+        "bodyArmorNoneExoskeleton": true,
+        "associatedLeaderRaceId": "race_hound_master",
+        "typicalAllyRaceId": "race_hunter"
       }
     },
     "demographics": {
@@ -78,6 +104,14 @@
       "averageLifespan": "Unknown — may live centuries; usually killed in combat",
       "alignmentTendencies": [
         "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant"
       ]
     },
     "classAbilities": [
@@ -91,7 +125,7 @@
       },
       {
         "name": "Supernatural Tracking",
-        "description": "Smell and track supernatural creatures within 60 ft (18.3 m); base 50% + 5% per level. Very hard to shake once a target is acquired."
+        "description": "Smell and track supernatural creatures within 60 ft (18.3 m); base 50% + 5% per level. Tracks Nightbane Morphus supernatural signatures similar to Nightbane sensing their own kind. Very hard to shake once a target is acquired."
       },
       {
         "name": "Self-Healing",
@@ -111,7 +145,7 @@
       },
       {
         "name": "Magic Vulnerability",
-        "description": "Takes double damage from magic artifacts, magic weapons, Talents, and powers/spells."
+        "description": "Takes double damage from magic artifacts, magic weapons, Nightbane Talents, and powers/spells."
       },
       {
         "name": "Languages",
@@ -123,7 +157,11 @@
       },
       {
         "name": "Alliances",
-        "description": "Serve Nightlords and their avatars; sometimes commanded by Dopplegangers or Hollow Men. Typically operate alongside Hunters."
+        "description": "Serve Nightlords and their avatars; sometimes commanded by Dopplegangers or Hollow Men. Typically operate alongside Hunters (`race_hunter`). Led in large bodies by Hound Masters (`race_hound_master`)."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4+1; almost none progress beyond 5th level."
       }
     ]
   },
@@ -198,6 +236,40 @@
         "save_psionics": 3,
         "save_horror_factor": 5,
         "horrorFactor": 15
+      },
+      "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "nightlord_aerial_scout",
+        "armorRatingNormal": 13,
+        "armorRatingMagicSupernatural": 0,
+        "partialInvulnerabilityNonMagicalDamageFraction": 0.5,
+        "damageMultiplierArtifactWeaponsAndPowers": 2,
+        "immuneIllusionAndConcealment": true,
+        "nightvisionFeet": 2000,
+        "perceptionBonus": 4,
+        "expertTrackerPercent": 80,
+        "naturalTrackingSightPercent": 70,
+        "supernaturalTrackingRangeFeet": 100,
+        "supernaturalTrackingBasePercent": 40,
+        "supernaturalTrackingPerLevelPercent": 5,
+        "selfHealTranceHours": 1,
+        "handToHandStyleId": "hth_assassin",
+        "typicalExperienceLevel": "1D4+2",
+        "maxTypicalLevel": 6,
+        "flyingSpeedFormula": "1D4*10+40",
+        "groundSpeedFormula": "1D4*10",
+        "initiativeBonusGround": 1,
+        "initiativeBonusFlying": 3,
+        "dodgeBonusFlying": 2,
+        "beakDamage": "3D6",
+        "darkbladeScimitarDamage": "2D6+PS",
+        "darkbladeSpearDamageAlternate": "3D6+PS",
+        "patrolGroupSize": "4D4",
+        "typicalHoundRatio": "1:10",
+        "languagesUnderstandOnlyMagically": true,
+        "bodyArmorNoneExoskeleton": true,
+        "typicalAllyRaceId": "race_hound",
+        "associatedLeaderRaceId": "race_hound_master"
       }
     },
     "demographics": {
@@ -206,12 +278,20 @@
       "averageLifespan": "Unknown — may live centuries; usually killed in combat",
       "alignmentTendencies": [
         "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant"
       ]
     },
     "classAbilities": [
       {
         "name": "Flight",
-        "description": "Bat-like wings — flying speed 1D4×10+40 (ground speed uses Spd attribute: 1D4×10). Patrol in groups of 4–16 (4D4)."
+        "description": "Bat-like wings — flying speed 1D4×10+40 (ground speed uses Spd attribute: 1D4×10). Patrol in groups of 4–16 (4D4). Typically one Hunter per ten Hounds in a Nightlord army."
       },
       {
         "name": "Illusion & Concealment Immunity",
@@ -219,11 +299,11 @@
       },
       {
         "name": "Supernatural Senses",
-        "description": "Nightvision 2000 ft (610 m). Expert tracker (animals and humans at 80%). +4 on all Perception rolls (apply at table)."
+        "description": "Nightvision 2000 ft (610 m). Expert tracker (animals and humans at 80%). R.C.C. Tracking (sight) 70% on race row. +4 on all Perception rolls (apply at table — see metadata)."
       },
       {
         "name": "Supernatural Tracking",
-        "description": "Smell and track supernatural creatures within 100 ft (30.5 m); base 40% + 5% per level. R.C.C. lists Tracking (sight) at 70% separately (innate skill)."
+        "description": "Smell and track supernatural creatures within 100 ft (30.5 m); base 40% + 5% per level."
       },
       {
         "name": "Self-Healing",
@@ -239,7 +319,7 @@
       },
       {
         "name": "Combat Bonuses (Aerial)",
-        "description": "+1 initiative on the ground; +3 initiative in the air; +2 to dodge while flying (apply at table)."
+        "description": "+1 initiative on the ground; +3 initiative in the air; +2 to dodge while flying (apply at table — see metadata)."
       },
       {
         "name": "Beak Attack",
@@ -251,7 +331,7 @@
       },
       {
         "name": "Artifact Vulnerability",
-        "description": "Takes double damage from Artifact weapons and powers (book wording — narrower than Hound vulnerability)."
+        "description": "Takes double damage from Artifact weapons and powers (book wording — narrower than Hound full magic vulnerability)."
       },
       {
         "name": "Languages",
@@ -263,7 +343,11 @@
       },
       {
         "name": "Alliances",
-        "description": "Work alongside Hounds and other Nightlord minions; employed heavily in early Earth invasion for assassinations and high-rise attacks."
+        "description": "Work alongside Hounds (`race_hound`) and other Nightlord minions; typically one Hunter per ten Hounds. Employed heavily in early Earth invasion for assassinations and high-rise attacks; occasional night-sky patrols over Earth cities."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4+2; almost none progress beyond 6th level (Hound & Hunter XP table)."
       }
     ]
   },
@@ -322,6 +406,62 @@
         "save_psionics": 5,
         "save_horror_factor": 8,
         "horrorFactor": 14
+      },
+      "activation": {
+        "cost": {
+          "type": "action",
+          "value": "one melee attack"
+        },
+        "duration": "Until changed again",
+        "save": "Shape-shift at will (mouse to elephant; not insects); individual human mimicry 25% base"
+      },
+      "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "nightlord_special_agent",
+        "noSpecialInvulnerabilitiesOrVulnerabilities": true,
+        "nightvisionFeet": 2000,
+        "seeInvisible": true,
+        "bioRegenerationPerMinute": "1D6*10",
+        "shapeShiftSdcPenaltyHumanSized": 100,
+        "shapeShiftSdcPenaltyMediumDog": 120,
+        "shapeShiftSdcPenaltyTiny": 180,
+        "shapeShiftSdcMinimum": 10,
+        "shapeShiftSizeMin": "mouse",
+        "shapeShiftSizeMax": "elephant",
+        "shapeShiftInsectsForbidden": true,
+        "shapeShiftBioMechanicalForbidden": true,
+        "individualMimicryBasePercent": 25,
+        "hitPointsConstantAcrossShapes": true,
+        "tentacleDamageBonusTrueForm": "1D6+6",
+        "ppePredationDoublesAtDeath": true,
+        "typicalExperienceLevel": "1D6+1",
+        "experienceTableEquivalent": "psychic",
+        "rccSkillPicks": 8,
+        "rccSecondarySkillPicks": 12,
+        "rccSkillBonusPercent": 10,
+        "physicalSkillBonusesHumanoidShapeOnly": true,
+        "cannotLearnHandToHand": true,
+        "noNightbaneTalents": true,
+        "psionicGrantIds": [
+          "psionic_alter_aura",
+          "psionic_empathy",
+          "psionic_mind_block",
+          "psionic_see_aura",
+          "psionic_telepathy"
+        ],
+        "nightbanesSkinArtifactMaxKnown": 20,
+        "nightbanesSkinReadsAsNightbane": true,
+        "nightbanesSkinDrainsAllPpeWhileWorn": true,
+        "nsbBeretta95Damage": "2D6",
+        "nsbBeretta95Magazine": 20,
+        "nsbHazardousDutyArmorRating": 16,
+        "nsbHazardousDutySdc": 260,
+        "renegadeNestMaxSize": 6,
+        "associatedAllyRaceIds": [
+          "race_hound",
+          "race_hunter",
+          "race_hollow_man"
+        ]
       }
     },
     "demographics": {
@@ -332,6 +472,12 @@
         "Diabolic",
         "Miscreant",
         "Aberrant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist"
       ]
     },
     "classAbilities": [
@@ -345,7 +491,7 @@
       },
       {
         "name": "Shape-Shifting",
-        "description": "At will into any living creature from mouse to elephant (not insects). Uses animal-form abilities (flight, swim, etc.). May assume monstrous shapes with claws and teeth (see Nightbane Creation Tables). Bio-mechanical/inorganic forms impossible. Human-sized shape: −100 S.D.C.; medium-dog size: −120 S.D.C.; bird/rat size: −180 S.D.C. (minimum 10). H.P. unchanged. One melee action to change form. Individual imitation only 25% base success."
+        "description": "At will into any living creature from mouse to elephant (not insects). Uses animal-form abilities (flight, swim, etc.). May assume monstrous shapes with claws and teeth (see Nightbane Creation Tables). Bio-mechanical/inorganic forms impossible. Human-sized shape: −100 S.D.C.; medium-dog size: −120 S.D.C.; bird/rat size: −180 S.D.C. (minimum 10). H.P. unchanged. One melee action to change form — see innateBonuses.activation. Individual imitation only 25% base success."
       },
       {
         "name": "P.P.E. Predation",
@@ -353,7 +499,7 @@
       },
       {
         "name": "Innate Psionics",
-        "description": "Alter Aura, Empathy, Mind Block, See Aura, and Telepathy."
+        "description": "Alter Aura, Empathy, Mind Block, See Aura, and Telepathy at 1st level — catalog ids on innateBonuses.metadata.psionicGrantIds. I.S.P. 2D4×10+20."
       },
       {
         "name": "Supernatural Combat",
@@ -365,7 +511,7 @@
       },
       {
         "name": "Nightbane's Skin",
-        "description": "Elite agents may carry this artifact (<20 exist, Moloch's agents): reads as Nightbane to senses, detection magic, and psionics; drains all wearer P.P.E. until removed."
+        "description": "Elite agents may carry this artifact (<20 exist, Moloch's agents): reads as Nightbane to senses, detection magic, and psionics; drains all wearer P.P.E. until removed. Humans or vampires wearing it also register as Nightbane."
       },
       {
         "name": "NSB Equipment",
@@ -373,7 +519,11 @@
       },
       {
         "name": "Alliances",
-        "description": "Nightlord servants alongside Hounds, Hunters, and Hollow Men. Renegades may ally temporarily with vampires, murderous humans, or other evil supernatural beings."
+        "description": "Nightlord servants alongside Hounds (`race_hound`), Hunters (`race_hunter`), and Hollow Men (`race_hollow_man`). Renegades may ally temporarily with vampires, murderous humans, or other evil supernatural beings; rumored Earth nests up to six."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D6+1 (Psychic-equivalent XP table)."
       }
     ]
   },
@@ -434,10 +584,48 @@
         "save_horror_factor": 6,
         "horrorFactor": 9
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "4D6 hours"
+        },
+        "duration": "Until construct destroyed",
+        "save": "Build Hollow Man — mud, human blood, and Namtar secretions; fresh human blood required for human appearance"
+      },
       "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "nightlord_nsb_agent",
         "pairedNpcRaceId": "race_hollow_man",
         "pairedRaceRole": "pilot",
-        "pairedRaceRelationship": "Namtar builds, pilots, and repairs Hollow Man constructs; shared P.P.E. pool and NSB skill program."
+        "pairedRaceRelationship": "Namtar builds, pilots, and repairs Hollow Man constructs; shared P.P.E. pool and NSB skill program.",
+        "armorRatingBeetle": 12,
+        "horrorFactorBeetle": 9,
+        "horrorFactorConstruct": 11,
+        "horrorFactorErupting": 15,
+        "nightvisionFeet": 400,
+        "languagesMagicalPercent": 89,
+        "imperviousDisease": true,
+        "imperviousCold": true,
+        "wallCeilingClimbInsectForm": true,
+        "initiativeBonus": 1,
+        "perceptionBonus": 2,
+        "pilotingApmBonus": 1,
+        "buildHollowManHours": "4D6",
+        "constructArmorRating": 8,
+        "constructSdcFormula": "2D4*10+80",
+        "constructDestroyThresholdSdc": -25,
+        "constructRepairSdcPerHour": 10,
+        "constructImmuneIllusionAndInvisibility": true,
+        "handToHandConstructStyleId": "hth_expert",
+        "damageMultiplierMagicAndSupernaturalPhysical": 2,
+        "typicalExperienceLevel": "1D4+3",
+        "rccSkillPicks": 10,
+        "rccSecondarySkillPicks": 10,
+        "rccSkillBonusPercent": 10,
+        "typicalWeaponProficiencyCount": "2-3",
+        "nsbHazardousDutyArmorRating": 16,
+        "nsbHazardousDutySdc": 260,
+        "nsbTypicalWeapons": "handguns, sub-machineguns, M-16 assault rifles"
       }
     },
     "demographics": {
@@ -447,12 +635,19 @@
       "alignmentTendencies": [
         "Diabolic",
         "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
       ]
     },
     "classAbilities": [
       {
         "name": "Namtar Combat Bonuses",
-        "description": "+1 on initiative, +2 on all Perception rolls, +4 to dodge, +6 to save vs horror factor. +1 attack per melee when piloting a Hollow Man construct (apply at table)."
+        "description": "+1 on initiative, +2 on all Perception rolls, +4 to dodge, +6 to save vs horror factor (apply at table — see metadata). +1 attack per melee when piloting a Hollow Man construct."
       },
       {
         "name": "Senses & Movement",
@@ -464,7 +659,7 @@
       },
       {
         "name": "Build Hollow Man",
-        "description": "Mix mud, human blood, and Namtar secretions (4D6 hours). Fresh human blood required for human appearance; otherwise plaster-of-paris or rag-doll look. Construct speaks, walks, runs, and uses weapons. Namtar sees through construct eyes; impassive MIB demeanor (sunglasses/goggles at night)."
+        "description": "Mix mud, human blood, and Namtar secretions (4D6 hours — see innateBonuses.activation). Fresh human blood required for human appearance; otherwise plaster-of-paris or rag-doll look. Construct speaks, walks, runs, and uses weapons. Namtar sees through construct eyes; impassive MIB demeanor (sunglasses/goggles at night)."
       },
       {
         "name": "Construct Repair",
@@ -476,7 +671,7 @@
       },
       {
         "name": "Vulnerabilities",
-        "description": "Namtar and construct take double damage from magical attacks and physical attacks from other supernatural creatures."
+        "description": "Namtar and piloted construct take double damage from magical attacks and physical attacks from other supernatural creatures."
       },
       {
         "name": "R.C.C. Skills (NPC note)",
@@ -488,7 +683,11 @@
       },
       {
         "name": "Alliances",
-        "description": "Nightlords and minions; occasionally other powerful evil supernatural beings."
+        "description": "Nightlords and minions (Hounds, Hunters, Ashmedai); NSB \"Men in Black\" infiltration of Earth governments. Occasionally other powerful evil supernatural beings."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4+3 (shared with piloted `race_hollow_man` construct)."
       }
     ]
   },
@@ -539,9 +738,28 @@
         "horrorFactor": 11
       },
       "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "nightlord_nsb_construct",
         "pairedNpcRaceId": "race_namtar",
         "pairedRaceRole": "construct",
-        "pairedRaceRelationship": "Hollow Man is built and piloted by Namtar; P.P.E. and skills belong to the pilot. Destroy construct at −25 S.D.C. to expose the Namtar."
+        "pairedRaceRelationship": "Hollow Man is built and piloted by Namtar; P.P.E. and skills belong to the pilot. Destroy construct at −25 S.D.C. to expose the Namtar.",
+        "armorRatingConstruct": 8,
+        "horrorFactorConstruct": 11,
+        "horrorFactorPilotErupting": 15,
+        "noHitPoints": true,
+        "destroyThresholdSdc": -25,
+        "repairSdcPerHourViaPilot": 10,
+        "immuneIllusionAndInvisibility": true,
+        "handToHandStyleId": "hth_expert",
+        "damageMultiplierMagicAndSupernaturalPhysical": 2,
+        "typicalExperienceLevel": "1D4+3",
+        "ppeAndSkillsBelongToPilotRaceId": "race_namtar",
+        "pilotingApmBonusToNamtar": 1,
+        "impassiveMibDemeanor": true,
+        "typicalEyewear": "sunglasses or goggles (even at night)",
+        "nsbHazardousDutyArmorRating": 16,
+        "nsbHazardousDutySdc": 260,
+        "nsbTypicalWeapons": "handguns, sub-machineguns, M-16 assault rifles"
       }
     },
     "demographics": {
@@ -551,6 +769,13 @@
       "alignmentTendencies": [
         "Diabolic",
         "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
       ]
     },
     "classAbilities": [
@@ -560,7 +785,7 @@
       },
       {
         "name": "Construct Vitals",
-        "description": "Magical construct — no Hit Points; damage applies to S.D.C. only. Continues fighting until reduced to −25 S.D.C., then shatters and the Namtar leaps free (Horror Factor 15)."
+        "description": "Magical construct — no Hit Points (`hpFormula: 0`); damage applies to S.D.C. only. Continues fighting until reduced to −25 S.D.C. (see metadata), then shatters and the Namtar leaps free (Horror Factor 15)."
       },
       {
         "name": "Armor Rating",
@@ -572,11 +797,11 @@
       },
       {
         "name": "Hand to Hand: Expert",
-        "description": "Equivalent to Hand to Hand: Expert. Supernatural strength damage (see Supernatural Strength table)."
+        "description": "Equivalent to Hand to Hand: Expert (`hth_expert` in metadata). Supernatural strength damage (see Supernatural Strength table)."
       },
       {
         "name": "Construct Repair",
-        "description": "Piloting Namtar heals 10 S.D.C. per hour to a non-destroyed construct."
+        "description": "Piloting `race_namtar` heals 10 S.D.C. per hour to a non-destroyed construct."
       },
       {
         "name": "Vulnerabilities",
@@ -584,7 +809,7 @@
       },
       {
         "name": "R.C.C. Skills (NPC note)",
-        "description": "Book: 10 skills from any category (+10%) plus 10 secondary skills via pilot; typically police/military skills and 2–3 weapon proficiencies."
+        "description": "Book: 10 skills from any category (+10%) plus 10 secondary skills via `race_namtar` pilot; typically police/military skills and 2–3 weapon proficiencies."
       },
       {
         "name": "NSB Equipment",
@@ -592,14 +817,18 @@
       },
       {
         "name": "Alliances",
-        "description": "Nightlords and minions; occasionally other powerful evil supernatural beings."
+        "description": "Nightlords and minions (Hounds, Hunters, Ashmedai); NSB \"Men in Black\" Earth infiltration. Occasionally other powerful evil supernatural beings."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 1D4+3 — tracked on piloting `race_namtar`."
       }
     ]
   },
   {
     "id": "race_nightlord",
     "name": "Nightlord",
-    "description": "Ba'al arch-villains — supernatural energy vampires with matter/energy reality control, not conventional spell casters. NPC only; campaign-ending threats. Creates semi-independent `race_nightlord_avatar` extensions (typically 2–3 max). S.D.C. 3D6×100+500; H.P. P.E.×level; P.P.E. 2D6×100+1000 (+50/level). Typical experience 2D4+5. Horror Factor 18 when aura unmasked.",
+    "description": "Ba'al arch-villains — supernatural energy vampires with matter/energy reality control, not conventional spell casters. NPC only; campaign-ending threats (seldom encountered directly; see pp. 173–174). Creates semi-independent `race_nightlord_avatar` extensions (typically 2–3 max). S.D.C. 3D6×100+500; H.P. P.E.×level; P.P.E. 2D6×100+1000 (+50/level). Typical experience 2D4+5. Horror Factor 18 when aura unmasked.",
     "raceAudience": "npc",
     "gameSystems": [
       "nightbane"
@@ -648,10 +877,79 @@
         "save_horror_factor": 10,
         "horrorFactor": 18
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "1 minute; helpless victim"
+        },
+        "duration": "Up to 50 H.P./P.P.E. absorbed",
+        "save": "Life force vampirism — not usable in combat; humans/Nightbane 1:1 P.P.E., other minions 1 P.P.E. per 10 absorbed"
+      },
       "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "baal_arch_villain",
         "pairedNpcRaceId": "race_nightlord_avatar",
         "pairedRaceRole": "creator",
-        "pairedRaceRelationship": "Nightlord creates Physical and Astral Avatars sharing its personality. Destroying an Avatar costs the Nightlord all of that Avatar's S.D.C., H.P., and P.P.E. (heals 1 point/hour each)."
+        "pairedRaceRelationship": "Nightlord creates Physical and Astral Avatars sharing its personality. Destroying an Avatar costs the Nightlord all of that Avatar's S.D.C., H.P., and P.P.E. (heals 1 point/hour each).",
+        "maxAvatarsTypical": 3,
+        "avatarTypes": [
+          "physical",
+          "astral"
+        ],
+        "regenerationPerMelee": 20,
+        "partialInvulnerabilityNonMagicalDamageFraction": 0.5,
+        "nightvisionFeet": 2000,
+        "seeInvisibleIgnoresMasking": true,
+        "leyLineNexusSenseMilesPerLevel": 1,
+        "unmaskedHorrorFactor": 18,
+        "initiativeBonus": 3,
+        "perceptionBonus": 5,
+        "hitPointsFormulaTrue": "PE*level",
+        "ppePerLevel": 50,
+        "typicalExperienceLevel": "2D4+5",
+        "dailyFeedingMinimumPpe": 20,
+        "feedingMaxPerMinute": 50,
+        "feedingHumanNightbanePpeRatio": 1,
+        "feedingOtherMinionPpePerTen": 1,
+        "starvedHalfCapacityThreshold": true,
+        "matterEnergyControlActionsPerUse": 2,
+        "matterEnergyControlRangeMiles": 1,
+        "livingBeingsImmuneToMatterControl": true,
+        "magicArtifactsImmuneToMatterControl": true,
+        "energyBlastStrikeBonus": 3,
+        "telekinesisPpeMultiplier": 10,
+        "dimensionalSenseMilesPerLevel": 5,
+        "mirrorwallCrossPpe": 10,
+        "mirrorwallCrossMinutes": 1,
+        "mirrorwallNotInCombat": true,
+        "minionSendToEarthPpeEach": 5,
+        "minionSendMinutes": 1,
+        "dreamLinkViaAstralAvatar": true,
+        "damageMultiplierNightbaneAndGuardian": 3,
+        "damageMultiplierOtherSupernatural": 2,
+        "typicalHandToHandStyleIds": [
+          "hth_martial_arts",
+          "hth_assassin"
+        ],
+        "disdainsConventionalSpellcasting": true,
+        "occultLorePercent": 98,
+        "languagesPercent": 98,
+        "additionalSkillCount": "10-20",
+        "additionalSkillBonusPercent": 20,
+        "commandedForcesMinimum": {
+          "race_hound": 100,
+          "race_hunter": 10,
+          "race_hollow_man": 10,
+          "race_ashmedai": "5-10"
+        },
+        "associatedLieutenantRaceId": "race_night_prince",
+        "associatedMinionRaceIds": [
+          "race_hound",
+          "race_hunter",
+          "race_hollow_man",
+          "race_ashmedai",
+          "race_night_prince"
+        ]
       }
     },
     "demographics": {
@@ -659,7 +957,15 @@
       "averageWeight": "Varies; typically human range",
       "averageLifespan": "Unknown — presumed immortal",
       "alignmentTendencies": [
-        "Diabolic"
+        "Diabolic",
+        "Miscreant",
+        "Aberrant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist"
       ]
     },
     "classAbilities": [
@@ -677,7 +983,7 @@
       },
       {
         "name": "Life Force Vampirism",
-        "description": "Feed on helpless victims (1 minute; up to 50 H.P./P.P.E.). Humans/Nightbane 1:1 P.P.E.; other minions 1 P.P.E. per 10 absorbed. Minimum 20 P.P.E./day or lose 20 from base daily; at zero P.P.E. lose 1 P.E./day until dust."
+        "description": "Feed on helpless victims — see innateBonuses.activation. Minimum 20 P.P.E./day or lose 20 from base daily; at zero P.P.E. lose 1 P.E./day until dust. Starved Ba'al function at half capacity (attacks, S.D.C., bonuses, speed)."
       },
       {
         "name": "Matter & Energy Control",
@@ -693,7 +999,7 @@
       },
       {
         "name": "Combat",
-        "description": "Typically Hand to Hand Martial Arts or Assassin. +3 initiative, +5 Perception (apply at table). Supernatural strength damage."
+        "description": "Typically Hand to Hand Martial Arts or Assassin. +3 initiative, +5 Perception (apply at table — see metadata). Supernatural strength damage."
       },
       {
         "name": "Vulnerabilities",
@@ -705,14 +1011,18 @@
       },
       {
         "name": "Forces",
-        "description": "Commands at least 100 Hounds, 10 Hunters, 10 Hollow Men, 5–10 Ashmedai; powerful Ba'al command far larger armies."
+        "description": "Commands at least 100 Hounds (`race_hound`), 10 Hunters (`race_hunter`), 10 Hollow Men (`race_hollow_man`), 5–10 Ashmedai (`race_ashmedai`); powerful Ba'al command ten to twenty times more. Leadership often delegated to Night Princes (`race_night_prince`) and Avatars (`race_nightlord_avatar`)."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical level 2D4+5. Avatars typically half the creator's level."
       }
     ]
   },
   {
     "id": "race_nightlord_avatar",
     "name": "Nightlord Avatar",
-    "description": "Semi-independent extension of a `race_nightlord` — Physical (solid flesh) or Astral (psychic energy; dream/independent astral travel, no silver cord). Same I.Q./M.E./M.A. as creator; reduced body stats. Used as war leaders, spies, and world-leader replacements. Destroying an Avatar severely weakens the parent Nightlord. Typical level ≈ half the Nightlord's. Horror Factor 14.",
+    "description": "Semi-independent extension of a `race_nightlord` — Physical (solid flesh) or Astral (psychic energy; dream/independent astral travel, no silver cord). Same I.Q./M.E./M.A. as creator; reduced body stats. Used as war leaders, spies, and world-leader replacements (e.g. political infiltrations). Destroying an Avatar severely weakens the parent Nightlord. Typical level ≈ half the Nightlord's. Horror Factor 14.",
     "raceAudience": "npc",
     "gameSystems": [
       "nightbane"
@@ -761,10 +1071,54 @@
         "save_horror_factor": 10,
         "horrorFactor": 14
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "1 minute; helpless victim"
+        },
+        "duration": "Up to 50 H.P./P.P.E. absorbed",
+        "save": "Shared life-force vampirism with `race_nightlord` — not usable in combat"
+      },
       "metadata": {
+        "npcStatBlock": true,
+        "minionTier": "baal_avatar_extension",
         "pairedNpcRaceId": "race_nightlord",
         "pairedRaceRole": "avatar",
-        "pairedRaceRelationship": "Avatar shares creator personality and mental attributes. On destruction, parent Nightlord loses equivalent S.D.C., H.P., and P.P.E. (1/hour recovery). Most Nightlords maintain only 2–3 Avatars."
+        "pairedRaceRelationship": "Avatar shares creator personality and mental attributes. On destruction, parent Nightlord loses equivalent S.D.C., H.P., and P.P.E. (1/hour recovery). Most Nightlords maintain only 2–3 Avatars.",
+        "inheritsPowersFromParentRaceId": "race_nightlord",
+        "avatarTypes": [
+          "physical",
+          "astral"
+        ],
+        "astralAvatarNoSilverCord": true,
+        "mentalAttributesMatchParent": true,
+        "regenerationPerMelee": "2D6",
+        "partialInvulnerabilityNonMagicalDamageFraction": 0.5,
+        "nightvisionFeet": 2000,
+        "seeInvisibleIgnoresMasking": true,
+        "leyLineNexusSenseMilesPerLevel": 1,
+        "horrorFactor": 14,
+        "initiativeBonus": 3,
+        "perceptionBonus": 5,
+        "hitPointsFormulaTrue": "PE+1D6*10",
+        "ppePerLevel": 20,
+        "typicalExperienceLevel": "half creator",
+        "sharedPowerSetsWithParent": [
+          "lifeForceVampirism",
+          "matterEnergyControl",
+          "dimensionalSenses",
+          "mirrorwall"
+        ],
+        "destructionBacklashParentRecoveryPerHour": 1,
+        "damageMultiplierNightbaneAndGuardian": 3,
+        "damageMultiplierOtherSupernatural": 2,
+        "typicalHandToHandStyleIds": [
+          "hth_martial_arts",
+          "hth_assassin"
+        ],
+        "recruitsFanaticRaceIds": [
+          "race_priest_of_night"
+        ]
       }
     },
     "demographics": {
@@ -772,7 +1126,15 @@
       "averageWeight": "Varies by form",
       "averageLifespan": "Tied to creator — presumed immortal while Nightlord endures",
       "alignmentTendencies": [
-        "Diabolic"
+        "Diabolic",
+        "Miscreant",
+        "Aberrant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist"
       ]
     },
     "classAbilities": [
@@ -786,139 +1148,31 @@
       },
       {
         "name": "P.P.E. Scaling",
-        "description": "Base 1D6×100 + 20 P.P.E. per level of experience."
+        "description": "Base 1D6×100 + 20 P.P.E. per level of experience (see vitals `1D6*100+20` dice baseline)."
       },
       {
         "name": "Supernatural Regeneration",
-        "description": "Regenerate 2D6 S.D.C./H.P. per melee round. Half damage from non-magical attacks; same senses as Nightlord (see invisible, ley lines 1 mile/level, nightvision 2000 ft)."
+        "description": "Regenerate 2D6 S.D.C./H.P. per melee round (see metadata). Half damage from non-magical attacks; same senses as Nightlord (see invisible, ley lines 1 mile/level, nightvision 2000 ft)."
       },
       {
         "name": "Shared Nightlord Powers",
-        "description": "Same matter/energy control, feeding rules, dimensional senses, and Mirrorwall mechanics as the parent Nightlord (see `race_nightlord`), at Avatar P.P.E. budgets."
+        "description": "Same matter/energy control, feeding rules, dimensional senses, and Mirrorwall mechanics as `race_nightlord` — see parent row metadata and innateBonuses.activation; operates at Avatar P.P.E. budgets."
       },
       {
         "name": "Combat",
-        "description": "Typically Hand to Hand Martial Arts or Assassin. +3 initiative, +5 Perception (apply at table). Supernatural strength."
+        "description": "Typically Hand to Hand Martial Arts or Assassin. +3 initiative, +5 Perception (apply at table — see metadata). Supernatural strength."
       },
       {
         "name": "Vulnerabilities",
-        "description": "Triple damage from Nightbane and Guardians; double from all other supernatural creatures."
+        "description": "Triple damage from Nightbane and Guardians; double from all other supernatural creatures (including vampires and Wampyrs)."
       },
       {
         "name": "Destruction Backlash",
-        "description": "When killed, the creating Nightlord immediately loses S.D.C., H.P., and P.P.E. equal to this Avatar's totals (recovers 1 point each per hour)."
-      }
-    ]
-  },
-  {
-    "id": "race_night_prince",
-    "name": "Night Prince",
-    "description": "Ba'al-Zebul — chief lieutenants of the `race_nightlord` (rank below Avatars). Human-looking illusion masters and energy vampires; infiltrators, cult leaders, and war commanders on Earth since antiquity. Also called Night Princes or Squires (low-level Princes). NPC villains; G.M. may rarely allow PC renegades. S.D.C. 2D4×10+120; H.P. P.E.×2 (+2D6/level). P.P.E. 1D4×100 (+15/level). Typical experience 1D4+4. Horror Factor 9 (illusions up to 18).",
-    "raceAudience": "npc",
-    "gameSystems": [
-      "nightbane"
-    ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 177
-      }
-    ],
-    "canPickOcc": false,
-    "lineage": "nightbane",
-    "attributes": {
-      "iq": "3D6+6",
-      "me": "3D6+6",
-      "ma": "3D6+6",
-      "ps": "3D6+10",
-      "pp": "3D6+4",
-      "pe": "2D6+18",
-      "pb": "3D6+6",
-      "spd": "5D6"
-    },
-    "strengthCategory": "supernatural",
-    "vitals": {
-      "hpFormula": "PE*2+12",
-      "averageStandardPpe": "1D4*100+15",
-      "sdc": "2D4*10+120"
-    },
-    "psionics": {
-      "capabilityType": "none",
-      "naturalIspFormula": "0"
-    },
-    "occLimitations": {
-      "forbiddenCategories": [],
-      "forbiddenOccIds": []
-    },
-    "innateSkills": [],
-    "innateBonuses": {
-      "modifiers": {
-        "apm": 1,
-        "parry": 1,
-        "dodge": 2,
-        "rollWithImpact": 2,
-        "pullPunch": 5,
-        "save_magic": 4,
-        "save_psionics": 3,
-        "save_horror_factor": 6,
-        "horrorFactor": 9
-      },
-      "metadata": {
-        "associatedNpcRaceId": "race_nightlord",
-        "pairedRaceRole": "lieutenant",
-        "pairedRaceRelationship": "Ba'al-Zebul serve Nightlords as chief lieutenants — rank below `race_nightlord_avatar`, above Hound Masters and other minions."
-      }
-    },
-    "demographics": {
-      "averageHeight": "Normal human range",
-      "averageWeight": "Normal human range",
-      "averageLifespan": "Unknown — presumed immortal",
-      "alignmentTendencies": [
-        "Diabolic",
-        "Miscreant"
-      ]
-    },
-    "classAbilities": [
-      {
-        "name": "Hit Points & P.P.E. Scaling",
-        "description": "True H.P. = P.E.×2 + 2D6 per level (catalog `PE*2+12` approximates mid-tier). P.P.E. +15 per level after base 1D4×100."
+        "description": "When killed, the creating `race_nightlord` immediately loses S.D.C., H.P., and P.P.E. equal to this Avatar's totals (recovers 1 point each per hour)."
       },
       {
-        "name": "Supernatural Endurance",
-        "description": "Heal 1D4×10 S.D.C./H.P. every minute (4 melees). See invisible and all illusions (including other Night Princes'). Impervious to mind control. Nightvision 500 ft (152 m). Sense ley lines/nexus 1 mile (1.6 km). No food, water, or air required."
-      },
-      {
-        "name": "Energy Vampirism",
-        "description": "5 H.P./P.P.E. per day minimum to survive; 10–20/day for satisfaction. Miss a meal: −1 P.P.E. (restore with +5 extra on next feeding). At 0 P.P.E., lose 1 P.E./day until dust."
-      },
-      {
-        "name": "Illusionary Powers",
-        "description": "Create P.P.E.-fueled illusions (range 100 ft + 20 ft/level; 10 cu ft/level). Sound/minor visual 2 P.P.E./min; sound+image or smell 5; +touch 10; full sensory 20; large panorama 60. +1 H.F. per 3 extra P.P.E. (max H.F. 18). Death-by-illusion shock rules apply. May fake spellcasting with illusion effects."
-      },
-      {
-        "name": "Hand to Hand: Assassin",
-        "description": "Equivalent to Hand to Hand: Assassin with +1 attack per melee from 1st level (+1 APM in modifiers). Supernatural strength damage."
-      },
-      {
-        "name": "Perception Bonus",
-        "description": "+5 on Perception rolls (apply at table — not in racial modifier keys)."
-      },
-      {
-        "name": "Vulnerabilities",
-        "description": "Double damage from Nightbane attacks/Talents and Guardian energy powers."
-      },
-      {
-        "name": "R.C.C. Skills (NPC note)",
-        "description": "Occult Lore (+20%), eight languages at 98%, ten skills at +10% (any category, prerequisites required), plus twelve secondary skills."
-      },
-      {
-        "name": "Night Squires",
-        "description": "Low-level, undistinguished Night Princes — same R.C.C., lower experience."
-      },
-      {
-        "name": "Alliances",
-        "description": "Often command Hound Masters, Hollow Men, and Ashmedai; may lead full Nightlord armies. Infiltrate high society, Preserver Party networks, and NSB-adjacent power structures."
+        "name": "Experience",
+        "description": "Typically half the creating Nightlord's level of experience."
       }
     ]
   },
@@ -939,6 +1193,7 @@
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_priest_of_night_rcc",
+    "raceComposition": "rcc",
     "lineage": "megaversal",
     "attributes": {
       "iq": "3D6",
@@ -970,13 +1225,38 @@
         "ps": 4,
         "pp": 2
       },
+      "activation": {
+        "cost": {
+          "type": "ppe",
+          "value": "2 per minute"
+        },
+        "duration": "While active",
+        "save": "Superhuman bare-hand damage (Supernatural Strength table)"
+      },
       "metadata": {
+        "npcVillainRcc": true,
         "speciesBaselineRaceId": "race_human",
+        "shadowOccId": "occ_priest_of_night_rcc",
+        "xpTableId": "nightbane_core_priest_of_night",
+        "giftOfPowerMaPbBonus": 8,
+        "giftOfPowerMaPbMinimum": 18,
+        "giftOfPowerSdcBonus": 30,
+        "giftOfPowerHpBonus": "3D6",
+        "superhumanStrengthPpePerMinute": 2,
+        "superhumanStrengthDamageTable": "supernatural",
+        "spellAccessNightlandsNightlordMinion": true,
+        "recruitedByRaceIds": [
+          "race_nightlord_avatar",
+          "race_night_prince"
+        ],
         "associatedNpcRaceIds": [
           "race_nightlord",
           "race_nightlord_avatar",
           "race_night_prince"
         ],
+        "typicalCultistEntourage": "3D6",
+        "magicSourceUnknown": true,
+        "darkDayRole": true,
         "pairedRaceRole": "cultist",
         "pairedRaceRelationship": "Human outcasts forged into Night Priests by Nightlord Avatars or Night Princes; serve the Ba'al in exchange for magic."
       }
@@ -988,20 +1268,35 @@
       "alignmentTendencies": [
         "Diabolic",
         "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
       ]
     },
     "classAbilities": [
       {
         "name": "Human Baseline + Gift of Power",
-        "description": "Roll attributes as human (3D6 each). Then apply Gift of Power: M.A. and P.B. each +8 or raised to minimum 18 (whichever is higher); P.S. +4 and P.P. +2 (in modifiers). +30 S.D.C. and +3D6 H.P. beyond human baseline (in vitals)."
+        "description": "Roll attributes as human (3D6 each). Then apply Gift of Power: M.A. and P.B. each +8 or raised to minimum 18 (whichever is higher — see metadata); P.S. +4 and P.P. +2 (in modifiers). +30 S.D.C. and +3D6 H.P. beyond human baseline (in vitals)."
       },
       {
         "name": "Superhuman Strength (P.P.E.)",
-        "description": "Spend 2 P.P.E. per minute for superhuman bare-hand damage (Supernatural Strength table) while active."
+        "description": "Spend 2 P.P.E. per minute for superhuman bare-hand damage — see innateBonuses.activation."
       },
       {
         "name": "Gift of Magic",
-        "description": "Level 1: eight spells from levels 1–4. Each level: one additional spell from levels 1–5 until 6th, then any spell of equal or lower level. Full access to Nightlands, Nightlord, and minion spell lists. P.P.E. base 1D6×10 + P.E. attribute (+2D6 per level — catalog `1D6*10` is dice only; add P.E. at table)."
+        "description": "Level 1: eight spells from levels 1–4. Each level: one additional spell from levels 1–5 until 6th, then any spell of equal or lower level. Full access to Nightlands, Nightlord, and minion spell lists (shadow O.C.C. `ppeEngine`). P.P.E. base 1D6×10 + P.E. attribute (+2D6 per level)."
+      },
+      {
+        "name": "Recruitment & Origins",
+        "description": "Social outcasts contacted by a `race_nightlord_avatar` or `race_night_prince`; mystical pact with the Ba'al grants powers. Pathetically loyal — murder, larceny, and worse in service. Played a major role in Dark Day and the invasion."
+      },
+      {
+        "name": "Magic Source (lore)",
+        "description": "Source unknown — the Ba'al themselves lack conventional spellcasting. Occult theory: power may emanate from the alien intelligence the Nightlords worshipped as human sorcerers."
       },
       {
         "name": "O.C.C. Skills (NPC note)",
@@ -1009,7 +1304,7 @@
       },
       {
         "name": "Standard Equipment & Resources",
-        "description": "Car, weapons (including sacrificial knife), often a mansion/cult base. Starting funds 4D6×1000 cash and 2D6×100,000 in property."
+        "description": "Car, weapons (including sacrificial knife), often a mansion/cult base. Typically surrounded by 3D6 human cultists (Campaign Section NPCs). Starting funds on shadow O.C.C.: 4D6×1000 cash and 2D6×100,000 in property."
       },
       {
         "name": "Experience",
@@ -1020,7 +1315,7 @@
   {
     "id": "race_master_vampire",
     "name": "Master Vampire",
-    "description": "First-generation undead — a willing human who accepted the vampire intelligence's gift of undeath. Father of the pestilence; only master vampires choose their fate. Creates secondary vampires via the slow kill to anchor the intelligence on Earth. NPC villain (uncommon; not recommended as P.C.). Shadow O.C.C. `occ_master_vampire_rcc` (auto-mounted). Hit Point equivalent 3D6×10; nearly weapon-proof (see Vampire Powers). Typical experience 1D6+1 (2nd–7th level). Horror Factor 14. Radiates supernatural evil.",
+    "description": "First-generation undead — a willing human or humanoid who accepted a vampire intelligence's gift of undeath. Father of the pestilence; only master vampires choose their fate. Creates secondary vampires via the slow kill to anchor the intelligence on Earth. NPC villain (uncommon; not recommended as P.C.). Shadow O.C.C. `occ_master_vampire_rcc` (auto-mounted). Hit Point equivalent 3D6×10; nearly weapon-proof (shared `nightbane_true_vampire` powers, pp. 183–188). Typical experience 1D6+1 (2nd–7th level). Horror Factor 14. Radiates supernatural evil.",
     "raceAudience": "npc",
     "gameSystems": [
       "nightbane"
@@ -1029,11 +1324,17 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
+        "pageNumber": 180
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
         "pageNumber": 181
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_master_vampire_rcc",
+    "raceComposition": "rcc",
     "lineage": "nightbane",
     "attributes": {
       "iq": "2D6+14",
@@ -1064,10 +1365,66 @@
         "save_horror_factor": 5,
         "horrorFactor": 14
       },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "three consecutive nights of draining"
+        },
+        "duration": "Victim rises three days after death",
+        "save": "Slow kill — master creator always produces a secondary vampire (`race_secondary_vampire`)"
+      },
       "metadata": {
+        "npcVillainRcc": true,
+        "pcNotRecommended": true,
+        "shadowOccId": "occ_master_vampire_rcc",
+        "xpTableId": "nightbane_core_night_prince_vampire",
         "trueVampirePowersModuleId": "nightbane_true_vampire",
+        "vampireTier": "master",
+        "willingTransformation": true,
+        "radiatesSupernaturalEvil": true,
+        "typicalExperienceLevel": "1D6+1",
+        "attacksPerMelee": 6,
+        "psionicAttacksPerMeleeMax": 2,
+        "psionicAttackActionCost": 2,
+        "killingBiteDamage": "3D6+PS",
+        "initiativeBonus": 3,
+        "perceptionBonus": 4,
+        "masterPsionicSaveTarget": 10,
+        "imperviousMindControl": true,
+        "imperviousPsionicMagicSleep": true,
+        "imperviousParalysis": true,
+        "preRebirthMagicFrozen": true,
+        "preRebirthPpeFrozen": true,
+        "skillsFrozenAtRebirth": true,
+        "iqBonusOnlyOnFrozenSkills": true,
+        "newSkillsPerCentury": 3,
+        "centurySkillProficiencyLevel": 2,
+        "centurySkillCategories": [
+          "Communications",
+          "Domestic",
+          "Pilot",
+          "Technical",
+          "Rogue",
+          "Wilderness",
+          "Weapon Proficiencies"
+        ],
+        "vampireSlaveCap": 2,
+        "telepathicLinkMinions": true,
+        "telepathicSenseMinionsMiles": 10,
+        "telepathicSummonMinionsMiles": 100,
+        "slowKillCreatesTier": "secondary",
+        "createsUndeadRaceId": "race_secondary_vampire",
+        "hierarchySubordinateRaceIds": [
+          "race_secondary_vampire",
+          "race_wild_vampire"
+        ],
         "pairedRaceRole": "master",
-        "pairedRaceRelationship": "First-generation vampire created by accepting a vampire intelligence's essence. Creates secondary vampires; hierarchy above secondary and wild undead of the same intelligence."
+        "pairedRaceRelationship": "First-generation vampire created by accepting a vampire intelligence's essence. Creates secondary vampires; hierarchy above secondary and wild undead of the same intelligence.",
+        "vampireIntelligenceManifestationGoal": true,
+        "fearsGuardians": true,
+        "loathesNightlords": true,
+        "nightbaneRivalUneasyAlly": true,
+        "neverDealsWithGuardians": true
       }
     },
     "demographics": {
@@ -1088,28 +1445,40 @@
     },
     "classAbilities": [
       {
+        "name": "Vampire Intelligence & Origin",
+        "description": "Alien intelligences send essence fragments across the Megaverse; the first willing soul accepts undeath freely and irreversibly. Every vampire the master creates strengthens the intelligence's anchor — at thousands of undead, the intelligence may enter the world through a dimensional Rift."
+      },
+      {
         "name": "Hit Point Equivalent",
-        "description": "Uses 3D6×10 Hit Point equivalent (not normal S.D.C./H.P.)."
+        "description": "Uses 3D6×10 Hit Point equivalent (not normal S.D.C./H.P.). Nearly impervious to conventional weapons — see shared Vampire Powers module (`nightbane_true_vampire`, pp. 183–188)."
       },
       {
         "name": "Combat",
-        "description": "Six hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions). Supernatural strength; killing bite 3D6 + P.S. bonus (damages other vampires)."
+        "description": "Six hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions — two psionic + two physical possible). Supernatural strength; killing bite 3D6 + P.S. bonus (damages other vampires)."
       },
       {
         "name": "Bonuses",
-        "description": "+3 initiative, +4 Perception (apply at table), impervious to mind control, psionic/magic sleep, and paralysis — in addition to attribute bonuses."
+        "description": "+3 initiative, +4 Perception (metadata), +5 save vs Horror Factor (modifiers), impervious to mind control, psionic/magic sleep, and paralysis — in addition to attribute bonuses."
       },
       {
         "name": "Psionic Powers",
-        "description": "Master psionic (save vs psionics 10+). I.S.P. 3D6×10. Mind control over other vampires at no I.S.P. (see shared Mind Control: Vampire over Vampire). Granted catalog powers + Super-Hypnotic Suggestion on shadow O.C.C."
+        "description": "Master psionic (save vs psionics 10+). I.S.P. 3D6×10. Mind control over other vampires at no I.S.P. (shared module). Granted catalog powers at 4th-level potency + Super-Hypnotic Suggestion on shadow O.C.C."
       },
       {
-        "name": "Pre-Rebirth Magic",
-        "description": "If the master knew magic before transformation, retain that knowledge frozen at rebirth level — cannot learn new magic or increase P.P.E."
+        "name": "Master-Only Powers",
+        "description": "Telepathic link with creations (sense 10 miles / summon 100 miles). Up to two human vampire slaves via non-lethal bite series. Slow kill always creates a secondary vampire."
+      },
+      {
+        "name": "Pre-Rebirth Skills & Magic",
+        "description": "Retains former-life skills frozen at transformation proficiency — O.C.C. skill bonuses forgotten; only I.Q. bonus applies. +3 new skills per 100 years of unlife (2nd-level proficiency, frozen). Optional frozen pre-rebirth magic on shadow O.C.C.; cannot learn new magic or increase P.P.E."
       },
       {
         "name": "Faction Notes",
-        "description": "Fears Guardians; loathes Nightlords as rivals; may strike temporary alliances with Nightbane against Ba'al. Enemies of humankind and most supernatural factions."
+        "description": "Fears Guardians (never deals; flee or destroy). Loathes Nightlords as rivals for Earth — no quarter if either triumphs. Sees Nightbane as dangerous rivals but may strike temporary alliances of convenience (likely betrayed). Enemies of humankind and most supernatural factions."
+      },
+      {
+        "name": "Experience",
+        "description": "Typical NPC level 1D6+1 (2nd–7th). Uses Night Prince & Vampire XP column (`nightbane_core_night_prince_vampire`, p. 233)."
       }
     ]
   }

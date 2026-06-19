@@ -160,9 +160,10 @@
       "occIds": [
         "occ_master_vampire_rcc",
         "occ_secondary_vampire_rcc",
-        "occ_wild_vampire_rcc"
+        "occ_wild_vampire_rcc",
+        "occ_night_prince_rcc"
       ],
-      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). Master (NPC), Secondary & Wild (player) vampire shadow O.C.C.s."
+      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). O.C.C.s: occ_night_prince_rcc (`race_night_prince`), occ_master_vampire_rcc, occ_secondary_vampire_rcc, occ_wild_vampire_rcc."
     },
     {
       "id": "nightbane_core_nightlord",
