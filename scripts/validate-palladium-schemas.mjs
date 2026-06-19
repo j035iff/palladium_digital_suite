@@ -210,11 +210,12 @@ if (!validateProgressionDoc(progressionJson)) {
 }
 
 const racesDir = join(contentDir, 'races')
-const RACE_POOL_FILES = ['player.json', 'npc.json', 'gm_approval.json']
+const RACE_POOL_FILES = ['player.json', 'npc.json', 'gm_approval.json', 'creatures.json']
 const POOL_AUDIENCE = {
   'player.json': 'player',
   'npc.json': 'npc',
   'gm_approval.json': 'gm_approval',
+  'creatures.json': 'creature',
 }
 let raceTotal = 0
 const raceKeys = new Set()
@@ -261,6 +262,44 @@ try {
           failed = true
           console.error(
             `ERR races/${genre}/${file} id=${row?.id ?? '?'}: raceAudience "${row.raceAudience}" must match pool "${expectedAudience}"`,
+          )
+        }
+        if (expectedAudience === 'creature') {
+          if (row?.raceComposition !== 'creature') {
+            failed = true
+            console.error(
+              `ERR races/${genre}/${file} id=${row?.id ?? '?'}: creatures.json rows must set raceComposition "creature"`,
+            )
+          }
+          if (row?.canPickOcc !== false) {
+            failed = true
+            console.error(
+              `ERR races/${genre}/${file} id=${row?.id ?? '?'}: creature rows must set canPickOcc false`,
+            )
+          }
+          if (row?.forcedOccId) {
+            failed = true
+            console.error(
+              `ERR races/${genre}/${file} id=${row?.id ?? '?'}: creature rows must not set forcedOccId`,
+            )
+          }
+        }
+        if (row?.raceComposition === 'creature' && expectedAudience !== 'creature') {
+          failed = true
+          console.error(
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: raceComposition "creature" belongs in creatures.json`,
+          )
+        }
+        if (row?.raceComposition === 'rcc' && !row?.forcedOccId) {
+          failed = true
+          console.error(
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: raceComposition "rcc" requires forcedOccId`,
+          )
+        }
+        if (row?.forcedOccId && row?.raceComposition === 'creature') {
+          failed = true
+          console.error(
+            `ERR races/${genre}/${file} id=${row?.id ?? '?'}: creature rows cannot use forcedOccId`,
           )
         }
         if (!validateRaceRow(row)) {
@@ -700,6 +739,59 @@ if (palladiumPsionics.length > 0) {
   }
 } else if (!failed) {
   console.log('OK  psionics/ — empty catalog')
+}
+
+const trueVampirePowersPath = join(
+  racesDir,
+  'nightbane/utils/true_vampire_powers.json',
+)
+if (existsSync(trueVampirePowersPath)) {
+  const doc = loadJson(trueVampirePowersPath)
+  const psionicIds = new Set(palladiumPsionics.map((row) => row.id))
+  let tvBad = 0
+  if (doc?.id !== 'nightbane_true_vampire') {
+    tvBad++
+    console.error('ERR true_vampire_powers.json — id must be "nightbane_true_vampire"')
+  }
+  if (!Array.isArray(doc?.classAbilities) || doc.classAbilities.length < 1) {
+    tvBad++
+    console.error('ERR true_vampire_powers.json — classAbilities must be a non-empty array')
+  } else {
+    for (const entry of doc.classAbilities) {
+      if (!entry?.name || !entry?.description) {
+        tvBad++
+        if (tvBad <= 5) {
+          console.error(
+            'ERR true_vampire_powers.json — classAbilities entry missing name or description',
+          )
+        }
+      }
+    }
+  }
+  if (!Array.isArray(doc?.psionicGrantIds) || doc.psionicGrantIds.length < 1) {
+    tvBad++
+    console.error('ERR true_vampire_powers.json — psionicGrantIds must be a non-empty array')
+  } else {
+    for (const pid of doc.psionicGrantIds) {
+      if (!psionicIds.has(pid)) {
+        tvBad++
+        if (tvBad <= 5) {
+          console.error(`ERR true_vampire_powers.json — unknown psionicGrantId "${pid}"`)
+        }
+      }
+    }
+  }
+  if (tvBad === 0) {
+    console.log(
+      `OK  races/nightbane/utils/true_vampire_powers.json — ${doc.classAbilities.length} abilities, ${doc.psionicGrantIds.length} psionic grants`,
+    )
+  } else {
+    failed = true
+    console.error(`ERR true_vampire_powers.json — ${tvBad} issue(s)`)
+  }
+} else {
+  failed = true
+  console.error('ERR races/nightbane/utils/true_vampire_powers.json — file missing')
 }
 
 const magicDir = join(contentDir, 'magic')

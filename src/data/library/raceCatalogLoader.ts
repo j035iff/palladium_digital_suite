@@ -1,4 +1,8 @@
 import type { Race } from '../../types'
+import {
+  applyTrueVampirePowerModule,
+} from '../../lib/trueVampirePowers'
+
 import type { RaceAudience } from '../../lib/raceCatalog'
 import {
   normalizeRaceAudience,
@@ -33,7 +37,7 @@ function poolAudienceFromPath(path: string): RaceAudience {
   const mapped = RACE_POOL_FILE_AUDIENCE[file]
   if (!mapped) {
     throw new Error(
-      `Unknown race pool file "${file}" — expected player.json, npc.json, or gm_approval.json`,
+      `Unknown race pool file "${file}" — expected player.json, npc.json, gm_approval.json, or creatures.json`,
     )
   }
   return mapped
@@ -61,7 +65,7 @@ function flattenRaceCatalog(): CatalogRace[] {
           `Race "${row.id}" in ${path} has raceAudience "${raceAudience}" but file pool is "${poolAudience}"`,
         )
       }
-      byKey.set(key, { ...row, raceAudience, catalogGenreId })
+      byKey.set(key, applyTrueVampirePowerModule({ ...row, raceAudience, catalogGenreId }))
     }
   }
   return [...byKey.values()].sort((a, b) => {

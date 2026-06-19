@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-race.schema.json",
   "title": "Palladium RPG race / R.C.C.",
-  "description": "Playable race or Race Character Class (R.C.C.) definition: identity, O.C.C. relationship, attribute dice, strength scale, polymorphic vitals, psionics, class constraints, innate skills, and composable innate bonuses (modifiers, activation, metadata).",
+  "description": "Playable race or Race Character Class (R.C.C.) definition: identity, O.C.C. relationship, attribute dice, strength scale, polymorphic vitals, psionics, class constraints, innate skills, and composable innate bonuses (modifiers, activation, metadata). Non-sentient animals and monsters use raceComposition creature in creatures.json.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -44,8 +44,13 @@
     },
     "raceAudience": {
       "type": "string",
-      "enum": ["player", "npc", "gm_approval"],
-      "description": "Catalog pool and creation eligibility. **player** — `races/player.json`, selectable in character creation when whitelisted for host genre. **npc** — `races/npc.json`, monsters and NPC-only builds (not in player creation). **gm_approval** — `races/gm_approval.json`, playable only after GM approval (not in default creation list)."
+      "enum": ["player", "npc", "gm_approval", "creature"],
+      "description": "Catalog pool and creation eligibility. **player** — character creation when whitelisted. **npc** — sentient NPC / minion stat blocks (not in player creation). **gm_approval** — playable only after GM approval. **creature** — `creatures.json` bestiary animals/monsters with no O.C.C. or skill program."
+    },
+    "raceComposition": {
+      "type": "string",
+      "enum": ["character", "rcc", "creature"],
+      "description": "How the row is built at spawn. **character** — may pick an O.C.C. (default for Humans). **rcc** — self-contained R.C.C. with forcedOccId shadow O.C.C. **creature** — non-sentient stat block; no O.C.C., no related/secondary skills."
     },
     "gameSystems": {
       "type": "array",

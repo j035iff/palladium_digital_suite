@@ -1,1 +1,259 @@
-[]
+[
+  {
+    "id": "race_hound_master",
+    "name": "Hound Master",
+    "description": "Optional R.C.C. (GM approval) — elite Hound troop leaders with horns, black capes, speech, minor psionics, and illusion shells to pass as humans. Diabolic or Miscreant only (never Aberrant or good); book discourages player characters except evil or ruthless anarchist renegades. Shadow O.C.C. `occ_hound_master_rcc` (auto-mounted). A.R. 14 vs normal weapons. Typical experience level 2D4+1.",
+    "raceAudience": "gm_approval",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 163
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_hound_master_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "2D4+6",
+      "me": "3D4+3",
+      "ma": "3D4+3",
+      "ps": "2D6+20",
+      "pp": "2D6+12",
+      "pe": "3D6+10",
+      "pb": "1D6",
+      "spd": "1D6*10"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE*3",
+      "averageStandardPpe": "2D4*10",
+      "sdc": 250
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME + 1D6*10"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [
+      {
+        "skillId": "skill_tracking",
+        "basePercent": 85
+      },
+      {
+        "skillId": "skill_swimming",
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_climbing",
+        "basePercent": 98
+      },
+      {
+        "skillId": "wp_polearm"
+      },
+      {
+        "skillId": "wp_battle_axe"
+      }
+    ],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 1,
+        "strike": 1,
+        "parry": 1,
+        "dodge": 1,
+        "save_magic": 3,
+        "save_psionics": 3,
+        "save_horror_factor": 6,
+        "horrorFactor": 14
+      }
+    },
+    "demographics": {
+      "averageHeight": "7 feet (2.1 m), plus horns",
+      "averageWeight": "350 lbs (159 kg)",
+      "averageLifespan": "Unknown — may live centuries; usually killed in combat",
+      "alignmentTendencies": [
+        "Diabolic",
+        "Miscreant"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Illusion & Concealment Immunity",
+        "description": "Immune to all illusions and powers of concealment — sees through Shroud Talent, invisibility, and magical or psionic disguise/camouflage."
+      },
+      {
+        "name": "Illusion Shells",
+        "description": "Psionic disguise: 4 I.S.P. to mask self; 8 I.S.P. to disguise up to five others (typically pass as normal humans). Duration 10 minutes per level (self only) or 5 minutes per level (two to five people). Maximum five Hounds can be disguised on undercover missions."
+      },
+      {
+        "name": "Supernatural Senses",
+        "description": "Nightvision 2000 ft (610 m). Expert tracker (animals and humans at 80%). +4 on all Perception rolls; +2 on initiative (apply at table — not in racial modifier keys)."
+      },
+      {
+        "name": "Supernatural Tracking",
+        "description": "Smell and track supernatural creatures within 80 ft (24.4 m); base 50% + 5% per level."
+      },
+      {
+        "name": "Self-Healing",
+        "description": "Heals all damage if allowed to stand still for one full hour (regenerative trance)."
+      },
+      {
+        "name": "Partial Invulnerability",
+        "description": "Takes half damage from all non-magical weapons and attacks."
+      },
+      {
+        "name": "Hand to Hand: Assassin",
+        "description": "Equivalent to Hand to Hand: Assassin with one additional strike/attack per melee round from 1st level (+1 APM in modifiers)."
+      },
+      {
+        "name": "Armor Rating",
+        "description": "A.R. 14 against normal weapons; A.R. 0 against magical and supernatural attacks. Horned exoskeleton and black cape — no worn body armor."
+      },
+      {
+        "name": "Innate Psionics",
+        "description": "Minor psychic — Mind Block and Empathy at 1st level, plus Illusion Shells above. +2D6 I.S.P. per level of experience."
+      },
+      {
+        "name": "Magic Vulnerability",
+        "description": "Takes double damage from magic artifacts, magic weapons, Talents, and powers/spells."
+      },
+      {
+        "name": "Languages",
+        "description": "Speak all languages magically."
+      },
+      {
+        "name": "Darkblade Spears",
+        "description": "Primary weapon — 3D6 plus P.S. damage; cuts through all known materials. Rarely issued other weapons."
+      },
+      {
+        "name": "Alliances",
+        "description": "Serve Nightlords and avatars; lead Hounds (20+) or undercover teams of 3–5 Hounds. Sometimes commanded by Dopplegangers or Hollow Men; work alongside Hunters. Renegades may serve other Nightlords, hunt humans, or control street gangs."
+      }
+    ]
+  },
+  {
+    "id": "race_snake_bird",
+    "name": "Snake Bird",
+    "description": "Optional R.C.C. (GM approval) — sentient feathered-serpent spellcasters resembling extinct feathered serpents; eagle-like fliers with squawking speech and natural wizard magic. Lone hunters or mated pairs; may befriend magicians or serve Nightlords as torturers. Player characters at GM discretion — uses Mystic experience table via shadow O.C.C. `occ_snake_bird_rcc`. Typical experience level 1D6+1.",
+    "raceAudience": "gm_approval",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 169
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_snake_bird_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6+4",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "1D6",
+      "pp": "3D6+6",
+      "pe": "2D6+6",
+      "pb": "2D6+6",
+      "spd": "1D6*10+50"
+    },
+    "strengthCategory": "standard",
+    "vitals": {
+      "hpFormula": "PE+1D4",
+      "sdc": "5D6"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [
+      {
+        "skillId": "skill_prowl",
+        "basePercent": 62
+      },
+      {
+        "skillId": "skill_tracking",
+        "basePercent": 50
+      },
+      {
+        "skillId": "skill_lore_magic",
+        "bonusPercent": 20
+      }
+    ],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 1,
+        "save_psionics": 2,
+        "save_magic": 2,
+        "save_horror_factor": 3,
+        "horrorFactor": 5
+      }
+    },
+    "demographics": {
+      "averageHeight": "Body 4–5 ft (1.2–1.5 m); wingspan 7–10 ft (2.1–3 m)",
+      "averageWeight": "15–20 lbs (6.8–9 kg)",
+      "averageLifespan": "300 years",
+      "alignmentTendencies": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant",
+        "Diabolic"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Flight & Senses",
+        "description": "Powerful flier (eagle-like maneuvers). Sense supernatural creatures within 100 ft (30.5 m). Exceptional vision 2 miles (3.2 km); nightvision 500 ft (152 m)."
+      },
+      {
+        "name": "Regeneration",
+        "description": "Regenerate 5 S.D.C./H.P. at the end of each melee round."
+      },
+      {
+        "name": "Natural Spell Casting",
+        "description": "Innate wizard-style magic — six spells (levels 1–3) at 1st level, then two new spells per level (equal or below current level). P.P.E. P.E.×5 + 12 per level on shadow O.C.C. All other magic rules as Mystic O.C.C. (no psychic abilities). G.M. may allow spells from Nightbane, Palladium Fantasy, Rifts, and Beyond the Supernatural."
+      },
+      {
+        "name": "Combat — Natural Abilities",
+        "description": "Three attacks per melee at 1st level (or two by magic); +1 attack at levels 4 and 8. +1 initiative, +5 strike and +5 dodge in the air (+2 strike/dodge on ground); +6 damage on swooping attacks — apply at table in addition to attribute bonuses."
+      },
+      {
+        "name": "Claw & Poison Bite",
+        "description": "Claws 2D6 S.D.C. Bite 1D6 plus lethal poison: 3D6 direct to hit points first melee round and 1D6 for 1D6 melees unless save vs poison each melee (half damage on success). Affects supernatural beings."
+      },
+      {
+        "name": "Languages",
+        "description": "Speaks Dragonese (mythical tongue of dragons, elves, and faerie) at 98%. Two additional languages of choice at +20% via shadow O.C.C. picks."
+      },
+      {
+        "name": "Hit Points per Level",
+        "description": "True H.P. = P.E. + 1D4 per level of experience (catalog `PE+1D4` is 1st-level baseline; add 1D4 each level)."
+      }
+    ]
+  }
+]

@@ -57,7 +57,9 @@ Loader: `psionicCatalogLoader.ts` globs `psionics/*.json` only.
 
 | Catalog | Layout | Notes |
 |---------|--------|-------|
-| **Races** | `races/<genre>/{player,npc,gm_approval}.json` | Genre folder = whitelist; same `id` may repeat across genres (e.g. `race_human`) |
+| **Races** | `races/<genre>/{player,npc,gm_approval,creatures}.json` | Genre folder = whitelist; same `id` may repeat across genres (e.g. `race_human`) |
+| **Race utils** | `races/<genre>/utils/*.json` | Shared power modules (e.g. `nightbane/utils/true_vampire_powers.json`) merged at load time — not catalog row pools |
+| **Creatures** | `races/<genre>/creatures.json` | Non-sentient animals/monsters (`raceAudience: creature`, `raceComposition: creature`) — no O.C.C. or skill program |
 | **O.C.C.s** | `occs/<genre>/<book>.json` | One file per source book |
 | **XP tables** | `progression/xp_tables/<genre>/<book>.json` | Mirrors O.C.C. genre folders |
 | **Talents** | `talents/common.json`, `talents/elite.json` | Tier-band split |

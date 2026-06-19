@@ -110,7 +110,7 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9_-]*$",
           "minLength": 1,
-          "description": "Canonical race id from `content/races/npc.json` or `gm_approval.json`."
+          "description": "Canonical race id from `content/races/<genre>/{npc,gm_approval,creatures}.json`."
         }
       }
     },
@@ -1474,7 +1474,7 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9_-]*$",
           "minLength": 1,
-          "description": "Canonical race id from `content/races/npc.json` or `gm_approval.json` — loads the full stat block (e.g. `race_wolf`)."
+          "description": "Canonical race id from `content/races/<genre>/{npc,gm_approval,creatures}.json` — loads the full stat block (e.g. `race_waste_coyote`)."
         },
         "summonTemplateId": {
           "type": "string",

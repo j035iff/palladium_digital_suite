@@ -53,7 +53,7 @@ When adding, updating, or auditing psionics (`src/data/content/psionics/`), foll
 When adding, updating, or auditing O.C.C.s (`src/data/content/occs/<genre>/`), follow **`docs/ingest/occs.md`** (Pass A/B workflow, genre folders + book files, XP table links, Shadow O.C.C. pairing). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
 
 ### Palladium race catalog ingest
-When adding, updating, or auditing races (`src/data/content/races/`), follow **`docs/ingest/races.md`** (Pass A/B workflow, audience pools, genre whitelist, R.C.C. pairing). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
+When adding, updating, or auditing races (`src/data/content/races/`), follow **`docs/ingest/races.md`** (Pass A/B workflow, audience pools, genre whitelist, R.C.C. pairing — **default: ingest paired Shadow O.C.C. in the same session** unless the batch says otherwise). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
 
 ### Nightbane Morphus trait ingest
 When adding, updating, or auditing Morphus trait tables (`src/data/content/morphus/tables/`) or running the PDF pipeline (`src/data/source/morphus-ingest/`), follow **`docs/ingest/morphus.md`** (Pass A/B workflow, hub/leaf layout, non-playable row rules, validation commands). Encoding details: **`docs/morphus_authoring.md`**. Keep the ingest playbook updated when conventions change; flag mechanics ambiguity and ask the user for a ruling before encoding.

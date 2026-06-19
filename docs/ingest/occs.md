@@ -107,7 +107,7 @@ src/data/content/progression/xp_tables/
 
 Book file basenames should match the paired O.C.C. book file under `occs/<genre>/` when they share a source.
 
-**Shadow O.C.C. / R.C.C. pairing:** R.C.C. races use `canPickOcc: false` + `forcedOccId` pointing at a hidden O.C.C. row (`occType: nightbane_rcc` or `rcc_skill_program`). Ingest race + Shadow O.C.C. in the **same session** when possible — see `docs/ingest/races.md`.
+**Shadow O.C.C. / R.C.C. pairing:** R.C.C. races use `canPickOcc: false` + `forcedOccId` pointing at a hidden O.C.C. row (`occType: nightbane_rcc` or `rcc_skill_program`). **Default:** ingest race + Shadow O.C.C. in the **same session** when ingesting an R.C.C. — see `docs/ingest/races.md`. Skip Shadow O.C.C. only when the batch explicitly says race-only / stat-block-only.
 
 ---
 
@@ -181,7 +181,7 @@ W.P. ids use `wp_*` / hand-to-hand ids use `hth_*` per existing catalog conventi
 5. Link **XP table** bidirectionally if not default — see [`xp_tables.md`](xp_tables.md).
 6. If magic O.C.C.: align `ppeEngine.magicSchools` with `magic_schools.json`; update cross-lists if borrow rules change.
 7. If psychic O.C.C.: align with `../psychic_gate.md` and `ispEngine`.
-8. If R.C.C. paired: coordinate with race ingest (`forcedOccId`).
+8. If R.C.C. paired: coordinate with race ingest (`forcedOccId`) — **default same session** unless batch skips Shadow O.C.C.
 9. **Update this doc** if precedents changed.
 10. Run `npm run validate:schemas`.
 11. Do **not** commit unless the user asks.
@@ -204,6 +204,7 @@ No `audit:occs` script yet.
 | O.C.C. / topic | Issue | Ruling |
 |----------------|-------|--------|
 | File layout | Genre vs book | **`<genre>/<book>.json`** — books grouped by `gameSystems` slug folder |
+| Shadow O.C.C. default | Race ingest pairing | **Same session by default** — add Shadow O.C.C. + `forcedOccId` + XP link unless batch says race-only |
 
 ---
 

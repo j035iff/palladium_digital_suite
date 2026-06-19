@@ -265,7 +265,10 @@ export type RaceDemographics = {
 }
 
 /** Which catalog pool owns this row (`content/races/*.json`). */
-export type RaceAudience = 'player' | 'npc' | 'gm_approval'
+export type RaceAudience = 'player' | 'npc' | 'gm_approval' | 'creature'
+
+/** How a race row is composed at spawn — see `raceComposition.ts`. */
+export type RaceComposition = 'character' | 'rcc' | 'creature'
 
 /**
  * Library race / R.C.C. row in `content/races/*.json` (palladium-race.schema.json).
@@ -274,8 +277,13 @@ export type Race = {
   id: string
   name: string
   description: string
-  /** player = creation UI; npc = bestiary only; gm_approval = GM sign-off required. */
+  /** player = creation UI; npc = bestiary only; gm_approval = GM sign-off required; creature = animals/monsters in creatures.json. */
   raceAudience: RaceAudience
+  /**
+   * Spawn composition — character (O.C.C. pick), rcc (forcedOccId), or creature (stat block only).
+   * When omitted, inferred from forcedOccId / canPickOcc / raceAudience.
+   */
+  raceComposition?: RaceComposition
   /** Host-genre whitelist (falls back to {@link gameSystems} when omitted in JSON). */
   genresAvailable?: readonly string[]
   gameSystems: readonly string[]

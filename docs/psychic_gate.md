@@ -15,7 +15,7 @@ The Psychic Gate uses three entry paths:
 | Trigger | Rule |
 |---------|------|
 | **Psychic-class O.C.C.** | Tier locked to **Master** (e.g. Force Master). Player still must explicitly confirm tier on Tab 3. |
-| **Bypass (Tab 3 Black)** | Gate skipped when genre forbids supernatural play, race `psionics.capabilityType` is `none` or `innate`, or O.C.C. sets `psychicGateBypassed`. Nightbane R.C.C. (`capabilityType: none`) is bypassed. |
+| **Bypass (Tab 3 Black)** | Gate skipped when genre forbids supernatural play, race `psionics.capabilityType` is `none` or `innate`, or O.C.C. sets `psychicGateBypassed`. **`none` on Human** means no *latent* gate (Nightbane) — psychic O.C.C.s still mount `ispEngine` picks on Tab 7. Nightbane R.C.C. (`capabilityType: none`) is also bypassed. |
 | **Standard entry** | Player manually selects **None**, **Minor**, or **Major**, or rolls 1d100: 01–09 Major, 10–25 Minor, 26–00 None. **Master** is never rolled — only psychic-class O.C.C.s lock Master. |
 
 ---

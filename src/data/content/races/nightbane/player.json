@@ -2,11 +2,8 @@
   {
     "id": "nightbane",
     "name": "Nightbane",
-    "description": "Dual-form R.C.C. — Facade humans who manifest a unique Morphus after the Becoming. Select a Nightbane skill package (Basic, Resistance/Spook Squad, Nocturne, or Warlord).",
+    "description": "Dual-form R.C.C. — ordinary humans who, after the Becoming, shift between a human Facade and a unique Morphus (the Race of the Thousand Shapes). Facade attributes roll 3D6 and use standard strength; Morphus adds +10 P.S./P.E./Spd, +6 P.P., supernatural strength damage, and innate Martial Arts. All Nightbane share the natural powers on pp. 86–88; Morphus shape and trait bonuses come from Tab 6 (Creating the Nightbane). At O.C.C. selection, choose a skill package (Basic, faction training, Sorcerer, Mystic, or Warlord). Six secondary skills at 1st level (+2 at levels 4 and 8).",
     "raceAudience": "player",
-    "genresAvailable": [
-      "nightbane"
-    ],
     "gameSystems": [
       "nightbane"
     ],
@@ -14,7 +11,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 86
+        "pageNumber": 88
       }
     ],
     "canPickOcc": true,
@@ -70,7 +67,15 @@
       },
       {
         "name": "Supernatural Attributes & Regeneration",
-        "description": "Morphus: +10 P.S., P.E., Spd; +6 P.P.; Supernatural Strength damage. Regenerate 10 S.D.C./H.P. per melee round (overwhelmed by sustained automatic fire)."
+        "description": "Morphus: +10 P.S., P.E., and Spd; +6 P.P.; Supernatural Strength damage table. Regenerate 10 S.D.C./H.P. at the end of each melee round (overwhelmed by sustained automatic weapon fire). Not invulnerable — any weapon can harm or kill a Nightbane."
+      },
+      {
+        "name": "P.P.E. Pool",
+        "description": "Facade P.E. + 3D6×10 + 20 at 1st level; +3D6 P.P.E. per level of experience. Engine rolls resolve from the selected skill package (same formula for all Nightbane R.C.C. packages)."
+      },
+      {
+        "name": "Horror Factor (Morphus)",
+        "description": "Base Horror Factor 6 in Morphus regardless of appearance (none in Facade). Morphus traits from Creating the Nightbane may raise Horror Factor to a maximum of 18."
       },
       {
         "name": "Mirror Walk",
@@ -94,7 +99,7 @@
       }
     ],
     "demographics": {
-      "averageLifespan": "Unknown — centuries to millennia rumored",
+      "averageLifespan": "Unknown — many live over 1,000 years; some rumored over 5,000",
       "alignmentTendencies": [
         "Any"
       ]
@@ -103,7 +108,7 @@
   {
     "id": "race_guardian",
     "name": "Guardian",
-    "description": "An ancient, enigmatic race of supernatural beings composed of light and energy, dedicated to fighting the Ba'al and other dark forces. They assume a humanoid shape on Earth but are beings of pure power.",
+    "description": "Optional R.C.C. — supernatural beings of light and energy, often former humans transformed with faded memories but a drive to protect humankind. Not omnipotent; conventional, magic, psionic, and supernatural attacks can kill them. Shadow O.C.C. `occ_guardian_rcc` (auto-mounted): 10 related + 8 secondary skills from a restricted, mostly non-technological list (Communications: basic radio only; Domestic +10%; Medical: First Aid/Holistic/Paramedic +10%; Pilot: auto/motorcycle/horsemanship +5%; Technical +5%; Wilderness +5%; no Electrical/Espionage/Mechanical/Military/Rogue/Science); +1 related skill at levels 3, 6, 9, and 12; typically Hand to Hand: Basic; start in street clothes with 2D4×10 cash (may rise to 2D6×100 through allies). P.P.E. P.E.×5 + 20/level (on shadow O.C.C.).",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -112,11 +117,12 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 189
+        "pageNumber": 192
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_guardian_rcc",
+    "lineage": "nightbane",
     "attributes": {
       "iq": "2D4+16",
       "me": "2D6+16",
@@ -129,8 +135,7 @@
     },
     "strengthCategory": "supernatural",
     "vitals": {
-      "hpFormula": "PE + 2D6",
-      "averageStandardPpe": 100,
+      "hpFormula": "PE*2 + 2D6",
       "sdc": "2D6*10+100"
     },
     "psionics": {
@@ -138,7 +143,9 @@
       "naturalIspFormula": "ME + 1D6*10"
     },
     "occLimitations": {
-      "forbiddenCategories": [],
+      "forbiddenCategories": [
+        "Magic"
+      ],
       "forbiddenOccIds": []
     },
     "innateSkills": [],
@@ -146,10 +153,11 @@
       "modifiers": {
         "save_magic": 4,
         "save_psionics": 3,
+        "save_horror_factor": 5,
         "pullPunch": 4,
         "dodge": 1,
         "rollWithImpact": 2,
-        "horrorFactor": 5
+        "horrorFactor": 9
       }
     },
     "demographics": {
@@ -161,39 +169,55 @@
     },
     "classAbilities": [
       {
-        "name": "Guardian P.P.E. Pool",
-        "description": "A Guardian's true base P.P.E. is equal to their P.E. attribute multiplied by 5, plus 20 per level of experience."
+        "name": "Precognitive Senses",
+        "description": "Instinctive gut feelings lead Guardians toward places their help may be needed — rarely clear or definite (flashes of locations/events). G.M. should not overuse; best at adventure openings or brief flashes that something is wrong."
       },
       {
-        "name": "Precognitive & Supernatural Senses",
-        "description": "Instinctive precognitive sense guides them to those in need. Perfect Nightvision 500 ft (152 m). Can see the invisible, recognize illusions, and see all spectrums of light. Grants +1 on initiative and +3 on all perception rolls."
+        "name": "Supernatural Senses",
+        "description": "Perfect nightvision 500 ft (152 m); see all light spectrums including infrared and ultraviolet; see perfectly in blinding light. See the invisible and recognize illusions on a Perception roll of 10+. +1 initiative and +3 on all Perception rolls (included in racial bonuses where modeled)."
       },
       {
         "name": "Super-Regeneration & Healing Touch",
-        "description": "Heals 2D6 points of damage every hour naturally. Can expend P.P.E. to heal others (1 P.P.E. restores 1 HP/SDC up to the Guardian's P.E. limit) once per minute."
-      },
-      {
-        "name": "Nullify Magic",
-        "description": "Can counteract spells by spending P.P.E. exceeding the incoming spell's cost. Acts as an automatic defense."
+        "description": "Heal 2D6 damage every hour without P.P.E. Healing Touch: spend 1 P.P.E. per point healed (max one touch equal to P.E. attribute); usable once per minute (4 melees), costs two melee actions; aura of light surrounds Guardian and patient."
       },
       {
         "name": "Powers of Light",
-        "description": "Creates light energy blasts (1D6 S.D.C. per P.P.E., +3 to strike) or shields (5 S.D.C. per P.P.E.). Can illuminate areas with true sunlight that harms vampires."
+        "description": "Energy blasts: 1D6 S.D.C. per P.P.E., +3 to strike. Light shields: 5 S.D.C. protection per P.P.E., duration 1 minute (4 melees) per level. Body illumination as bright sunlight at no P.P.E. (half effectiveness vs. sun-hating entities)."
       },
       {
-        "name": "Flight & Sustenance",
-        "description": "Can hover (2 P.P.E.) or fly at 40 mph (6 P.P.E.). Does not need to eat, drink, or breathe; fed entirely by light."
+        "name": "Nullify Magic",
+        "description": "Counteract spells by spending P.P.E. exceeding the spell's cost (flash of light; one melee action per attempt). Sense spellcasting or ongoing spell effects in presence. Must decide P.P.E. spent before knowing the spell's cost."
       },
       {
-        "name": "Vulnerability to Light Deprivation",
-        "description": "If trapped in darkness/Nightlands for more than 48 hours, S.D.C., H.P., and attributes diminish drastically over time."
+        "name": "Hover & Flight",
+        "description": "Hover/levitate: 2 P.P.E., lasts 2 minutes per level. Fly: 6 P.P.E., lasts 2 minutes per level, max 40 mph (64 km) and 2,000 ft (610 m) altitude."
+      },
+      {
+        "name": "Solar Sustenance",
+        "description": "No food, water, or air required — solar powered via light energy. A few hours of sunlight daily maintains health (overcast days count)."
+      },
+      {
+        "name": "Light Deprivation",
+        "description": "After 2+ days without light (including Nightlands): lose 20 S.D.C./day (then H.P. down to 10). After 7 days: attributes, powers, attacks, and bonuses halved; after 14 days reduced to one (can linger decades). Recovery: 1 day sunlight per decade deprived; under one year deprivation restores full strength in 6 hours of sunlight."
+      },
+      {
+        "name": "Horror Factor",
+        "description": "Horror Factor 9 when alien features show; 12 when displaying energy powers — often manifests as awe or adoration instead of terror."
+      },
+      {
+        "name": "Guardian Psionics",
+        "description": "Master psionic. Start with Empathy, Mind Block, Presence Sense, and See Aura. +1 Sensitive or Healing power each level after first; +10 I.S.P. per level."
+      },
+      {
+        "name": "No Magic",
+        "description": "Cannot learn or cast magic; nullify magic and innate light powers only."
       }
     ]
   },
   {
     "id": "race_human",
     "name": "Human",
-    "description": "Standard baseline humanity across the Megaverse.",
+    "description": "Default playable species — no dedicated R.C.C. in Nightbane; assumed by human O.C.C.s in Creating a Character (pp. 34–37). Attributes 3D6 each; H.P. P.E. + 1D6 at 1st level; S.D.C. 3D6 (civilian) or 1D4×10 when the selected O.C.C. carries military, police, detective, athletic, or tactical tags. Psionics: no latent Psychic Gate — humans gain psychic powers only through Psychic P.C.C. or other O.C.C.s with an I.S.P. engine (e.g. Sorcerer, Mystic).",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -202,7 +226,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 24
+        "pageNumber": 34
       }
     ],
     "canPickOcc": true,
@@ -239,7 +263,7 @@
       }
     },
     "psionics": {
-      "capabilityType": "standard",
+      "capabilityType": "none",
       "naturalIspFormula": "0"
     },
     "occLimitations": {
@@ -260,7 +284,7 @@
   {
     "id": "race_wampyr",
     "name": "Wampyr",
-    "description": "A tragic offshoot of humanity turned by vampires, but who inexplicably retained their souls and free will. They possess vampiric powers and thirst for blood, but actively fight against their undead creators.",
+    "description": "Optional R.C.C. — humans turned by the vampire slow-kill who retain free will and a soul. They need blood to survive, suffer in sunlight, and lack true-vampire shape-changing, but can be slain by conventional weapons and ignore many anti-vampire taboos (running water, holy symbols, native soil). Many hunt their undead cousins; vampire intelligences destroy them on sight. Shadow O.C.C. `occ_wampyr_rcc` (auto-mounted): 10 related skills + 8 secondary skills reflecting pre-transformation life; Hand to Hand purchased from related skills (Basic 1 slot, Expert 2, Martial Arts/Assassin 3); +1 related skill at levels 4, 7, 10, and 12; starting funds 2D4×100 cash and 2D6×1000 in property.",
     "raceAudience": "player",
     "gameSystems": [
       "nightbane"
@@ -269,11 +293,12 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 188
+        "pageNumber": 189
       }
     ],
     "canPickOcc": false,
     "forcedOccId": "occ_wampyr_rcc",
+    "lineage": "nightbane",
     "attributes": {
       "iq": "3D6+1",
       "me": "1D6+14",
@@ -286,7 +311,7 @@
     },
     "strengthCategory": "supernatural",
     "vitals": {
-      "hpFormula": "PE * 2 + 1D6",
+      "hpFormula": "PE*2 + 1D6",
       "averageStandardPpe": "1D4+2",
       "sdc": "2D6*10+20"
     },
@@ -295,18 +320,22 @@
       "naturalIspFormula": "ME + 2D4*10"
     },
     "occLimitations": {
-      "forbiddenCategories": [],
+      "forbiddenCategories": [
+        "Magic"
+      ],
       "forbiddenOccIds": []
     },
     "innateSkills": [],
     "innateBonuses": {
       "modifiers": {
-        "horrorFactor": 5
+        "horrorFactor": 11,
+        "save_horror_factor": 5
       }
     },
     "demographics": {
       "averageLifespan": "Unknown, possibly limitless",
       "alignmentTendencies": [
+        "Scrupulous",
         "Unprincipled",
         "Anarchist",
         "Aberrant",
@@ -319,28 +348,349 @@
     },
     "classAbilities": [
       {
-        "name": "Supernatural Senses & Perception",
-        "description": "Nightvision 500 ft (152 m). Can smell blood up to a mile away (1.6 km) and track the scent at a 70% proficiency. Grants +1 on initiative and +3 on all perception rolls."
+        "name": "Super-Regeneration",
+        "description": "Heal 2D6 S.D.C./Hit Points every melee round. Supernatural strength and endurance. Can be killed by conventional attacks when reduced below zero — not invulnerable like true vampires."
       },
       {
-        "name": "Mind Control Immunity",
-        "description": "Grants +5 to save versus all forms of mind control and possession, and is completely immune to vampire mind control powers."
+        "name": "Half Damage from Metal Weapons",
+        "description": "Metal weapons inflict half damage. No other normal vampire invulnerabilities (bullets and knives inflict full damage)."
+      },
+      {
+        "name": "Vampire Psionics",
+        "description": "Starts with all vampire psionic powers except Super Hypnotic Suggestion. Select one additional power from any psychic category at every level after the first (+8 I.S.P. per level)."
+      },
+      {
+        "name": "Combat Bonuses",
+        "description": "+1 on initiative, +3 on all Perception rolls, +5 to save vs horror factor, +5 to save vs mind control and possession; immune to vampire mind control."
+      },
+      {
+        "name": "Vampire Lore",
+        "description": "Instinctively knows all strengths and weaknesses of true vampires, including those that do not affect Wampyrs — effective vampire hunters."
       },
       {
         "name": "Blood Dependency",
-        "description": "Must consume at least one pint of human or animal blood every three days. Failure to do so results in starvation penalties, reduced attributes, and eventual feral frenzy."
+        "description": "Must drink one pint of blood every three days (72 hours). Starvation frenzy effects begin after the first week without blood; three days in frenzy state to reach full feeding frenzy."
       },
       {
         "name": "Vulnerability to Sunlight",
-        "description": "Direct sunlight inflicts 2D6 points of damage per minute of exposure and blinds the Wampyr (-8 to strike, parry, dodge). Shade allows their regeneration to kick in."
+        "description": "Direct sunlight: 2D6 damage per minute (4 melees). Shade allows regeneration to heal sun damage (dash in/out of shade to operate by day, painfully). While exposed: -1 attack per melee, -1 all combat rolls, -2 initiative and Perception, -20% all skills. Daytime penalties also apply in shade or underground."
       },
       {
-        "name": "Vampiric Invulnerability & Regeneration",
-        "description": "Takes half damage from metal weapons. Immune to normal weapons (bullets, knives) which inflict half damage. Instantly regenerates 2D6 S.D.C./Hit points per melee round."
+        "name": "Anti-Vampire Immunities",
+        "description": "Running water, holy symbols, herbs, and native-soil sleep requirements do not affect Wampyrs. Staking inflicts heavy damage but does not incapacitate."
       },
       {
-        "name": "Vampiric Vulnerabilities",
-        "description": "Takes double damage from silver and wood weapons. Holy water inflicts 2D4 damage per vial."
+        "name": "No Magic",
+        "description": "Cannot work magic; any magic known before transformation is lost forever."
+      },
+      {
+        "name": "Missing Vampire Powers",
+        "description": "No mist form, bat/wolf shape-shifting, or other true-vampire transformation abilities."
+      }
+    ]
+  },
+  {
+    "id": "race_doppleganger",
+    "name": "Doppleganger",
+    "description": "Optional R.C.C. — supernatural doubles of Earth humans living in the Nightlands; pale mirror images who know most of what their counterpart knows. Player characters are awakened (aware of their nature). Shadow O.C.C. `occ_doppleganger_rcc` (auto-mounted): skills same as normal humans — select related and secondary skills reflecting the Earth double's O.C.C./life. Attributes 3D6 each (human baseline); S.D.C. uses human rules +20; combat and Hand to Hand same as humans but hand-to-hand damage uses the Supernatural Strength table. P.P.E. 1D4 (magician doubles: two-thirds of counterpart's P.P.E.). I.S.P. M.E. + 2D6 (psychic doubles: all counterpart powers at two-thirds I.S.P.).",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 160
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_doppleganger_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "3D6",
+      "pp": "3D6",
+      "pe": "3D6",
+      "pb": "3D6",
+      "spd": "3D6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE + 1D6",
+      "averageStandardPpe": "1D4",
+      "sdc": {
+        "strategy": "conditional_by_occ_tags",
+        "defaultFormula": "3D6+20",
+        "conditionalOverrides": [
+          {
+            "tags": [
+              "military",
+              "police",
+              "detective",
+              "athletic",
+              "tactical"
+            ],
+            "formula": "1D4*10+20"
+          }
+        ]
+      }
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME + 2D6"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_horror_factor": 2,
+        "horrorFactor": 9
+      }
+    },
+    "demographics": {
+      "averageLifespan": "Average 200 years after appearing in the Nightlands (age slowly; most are killed long before)",
+      "alignmentTendencies": [
+        "Any"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Earth Double Link",
+        "description": "On Earth without the double present in the Nightlands, a Doppleganger dies within 48 hours unless the human double is killed or one of them returns to the Nightlands. To live on Earth permanently, the double must die (often murdered by the Doppleganger). If both are on opposite worlds simultaneously, both can survive. Good-aligned Dopplegangers swept to Earth may resist murderous urges but still perish after 48 hours unless they return."
+      },
+      {
+        "name": "P.P.E. Absorption",
+        "description": "No food or water required — survive by absorbing ambient P.P.E. May still taste and enjoy food."
+      },
+      {
+        "name": "Regeneration",
+        "description": "Heal 1 H.P./S.D.C. plus P.E. attribute bonus per hour."
+      },
+      {
+        "name": "Vampire Immunities",
+        "description": "Immune to the vampire slow-kill bite and cannot be turned into vampires; can still be slain by vampires."
+      },
+      {
+        "name": "Magic Artifact Vulnerability",
+        "description": "Magic artifacts and magic weapons inflict double damage. Magic spells do not gain this multiplier."
+      },
+      {
+        "name": "Awakened Psionics",
+        "description": "Before awakening, no psionic powers. Awakened Dopplegangers: 40% gain minor psionics — select two powers from one category (Physical, Healing, or Sensitive). Dopplegangers of psychic humans gain all counterpart powers at two-thirds I.S.P."
+      },
+      {
+        "name": "Magician Doubles",
+        "description": "Only Dopplegangers of human magicians can use magic; all others are mundane. Magician doubles have two-thirds of their counterpart's P.P.E."
+      },
+      {
+        "name": "No Nightbane Double",
+        "description": "Nightbane never have Dopplegangers — a separate species from Earth's mirror population."
+      }
+    ]
+  },
+  {
+    "id": "race_secondary_vampire",
+    "name": "Secondary Vampire",
+    "description": "Optional R.C.C. — second-generation undead created by a master vampire's slow kill. Retains more human memories than master or wild vampires; full vampire power suite but susceptible to master mind control. P.C.s often Unprincipled, Anarchist, or Aberrant rebels fighting blood hunger. Shadow O.C.C. `occ_secondary_vampire_rcc` (auto-mounted). Hit Point equivalent 3D4×10. P.P.E. 1D4×10 (frozen). Typical NPC experience 1D6+1 (2nd–7th); P.C.s start at 1st level. Horror Factor 12. Radiates supernatural evil.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 182
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_secondary_vampire_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6+2",
+      "me": "3D6+6",
+      "ma": "3D6+6",
+      "ps": "3D6+14",
+      "pp": "3D6+8",
+      "pe": "1D6+16",
+      "pb": "2D6+4",
+      "spd": "3D6+10"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "3D4*10",
+      "averageStandardPpe": "1D4*10"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "2D6*10"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_horror_factor": 3,
+        "save_magic": 3,
+        "save_psionics": 3,
+        "horrorFactor": 12
+      },
+      "metadata": {
+        "trueVampirePowersModuleId": "nightbane_true_vampire",
+        "associatedNpcRaceId": "race_master_vampire",
+        "pairedRaceRole": "secondary",
+        "pairedRaceRelationship": "Created by master vampire slow kill; subordinate to master and vampire intelligence mind control, but may retain vestiges of humanity as P.C.s."
+      }
+    },
+    "demographics": {
+      "averageHeight": "Varies; generally human range",
+      "averageWeight": "Varies; generally human range",
+      "averageLifespan": "Immortal — frozen at age of transformation",
+      "alignmentTendencies": [
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant",
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Hit Point Equivalent",
+        "description": "3D4×10 Hit Point equivalent (not normal S.D.C./H.P.)."
+      },
+      {
+        "name": "Combat",
+        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks (each psionic attack ≈ two hand-to-hand actions; secondary: two psionic + one hand-to-hand possible). Supernatural strength; killing bite 2D6 + P.S. bonus."
+      },
+      {
+        "name": "Bonuses",
+        "description": "+2 initiative, +3 Perception (apply at table), impervious to psionic/magic sleep and paralysis — in addition to save modifiers on the race row."
+      },
+      {
+        "name": "Psionic Powers",
+        "description": "Major psionic (save vs psionics 12+). I.S.P. 2D6×10. Granted catalog powers on shadow O.C.C. at 4th-level potency."
+      },
+      {
+        "name": "Pre-Rebirth Magic",
+        "description": "If the vampire knew magic before undeath, retain about half of spells at frozen power levels; cannot learn new magic or increase P.P.E."
+      },
+      {
+        "name": "Player Character Note",
+        "description": "Unprincipled (selfish good) is the highest good alignment possible for P.C.s fighting blood hunger; Anarchist and Aberrant evil are more common."
+      }
+    ]
+  },
+  {
+    "id": "race_wild_vampire",
+    "name": "Wild Vampire",
+    "description": "Optional R.C.C. — third-generation (or starved/insane) undead; savage predators created by secondary slow kills (58% of failures) or degeneration from starvation. Animalistic, easily provoked, subservient to vampire intelligence and most creators. Shadow O.C.C. `occ_wild_vampire_rcc` (auto-mounted). Hit Point equivalent 2D4×10. P.P.E. 6D6. Typical experience 1D4 (1st–4th). Horror Factor 12. Radiates supernatural evil.",
+    "raceAudience": "player",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 183
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_wild_vampire_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "2D6+1",
+      "me": "3D6+4",
+      "ma": "2D6+2",
+      "ps": "3D6+14",
+      "pp": "3D6+8",
+      "pe": "1D6+16",
+      "pb": "1D6+2",
+      "spd": "5D6+10"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "2D4*10",
+      "averageStandardPpe": "6D6"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "1D6*10"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_horror_factor": 2,
+        "save_magic": 1,
+        "save_psionics": 1,
+        "horrorFactor": 12
+      },
+      "metadata": {
+        "trueVampirePowersModuleId": "nightbane_true_vampire",
+        "associatedNpcRaceId": "race_master_vampire",
+        "pairedRaceRole": "wild",
+        "pairedRaceRelationship": "Third-generation or degenerate undead — usually created by secondary vampire slow kill; subservient to master, secondary creators, and vampire intelligence. Hunted by Nightlord minions."
+      }
+    },
+    "demographics": {
+      "averageHeight": "Varies; generally human range",
+      "averageWeight": "Varies; generally human range",
+      "averageLifespan": "Immortal — frozen at age of transformation",
+      "alignmentTendencies": [
+        "Anarchist",
+        "Miscreant",
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Aberrant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Hit Point Equivalent",
+        "description": "2D4×10 Hit Point equivalent (not normal S.D.C./H.P.)."
+      },
+      {
+        "name": "Combat",
+        "description": "Five hand-to-hand attacks per melee, or combine up to two psionic attacks with physical attacks. Supernatural strength; killing bite 2D6 + P.S. bonus."
+      },
+      {
+        "name": "Bonuses",
+        "description": "+2 initiative, impervious to psionic/magic sleep and paralysis — in addition to save modifiers on the race row."
+      },
+      {
+        "name": "Psionic Powers",
+        "description": "Minor psionic (save vs psionics 12+). I.S.P. 1D6×10. Granted catalog powers on shadow O.C.C. at 4th-level potency."
+      },
+      {
+        "name": "No Magic",
+        "description": "All pre-transformation spell knowledge is forgotten during transformation."
+      },
+      {
+        "name": "Player Character Note",
+        "description": "Anarchist is the best alignment possible; all wild P.C.s remain crazed, easily provoked, and blood-hungry despite alignment."
       }
     ]
   }

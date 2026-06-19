@@ -9,13 +9,14 @@ export function raceCatalogGenreId(
   return (hostGenreId ?? creationGenreId ?? 'nightbane').toLowerCase()
 }
 
-export type RaceAudience = 'player' | 'npc' | 'gm_approval'
+export type RaceAudience = 'player' | 'npc' | 'gm_approval' | 'creature'
 
 /** Default pool file when `raceAudience` is omitted on a row (authoring safety). */
 export const RACE_POOL_FILE_AUDIENCE: Readonly<Record<string, RaceAudience>> = {
   'player.json': 'player',
   'npc.json': 'npc',
   'gm_approval.json': 'gm_approval',
+  'creatures.json': 'creature',
 }
 
 export function normalizeRaceAudience(
@@ -49,6 +50,11 @@ export function isNpcRacePool(race: Race): boolean {
 /** Requires explicit GM approval before a player may select (future UX hook). */
 export function isGmApprovalRacePool(race: Race): boolean {
   return race.raceAudience === 'gm_approval'
+}
+
+/** Non-sentient animals and monsters — `creatures.json` pool only. */
+export function isCreatureRacePool(race: Race): boolean {
+  return race.raceAudience === 'creature'
 }
 
 export function raceAllowedInCharacterCreation(
@@ -85,5 +91,14 @@ export function listGmApprovalRaces(
     .filter(
       (r) => isGmApprovalRacePool(r) && matchesHostGenre(r, hostGenreId),
     )
+    .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export function listCreatureRaces(
+  registry: readonly (Race | CatalogRace)[],
+  hostGenreId: string,
+): readonly Race[] {
+  return registry
+    .filter((r) => isCreatureRacePool(r) && matchesHostGenre(r, hostGenreId))
     .sort((a, b) => a.name.localeCompare(b.name))
 }

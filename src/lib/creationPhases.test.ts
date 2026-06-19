@@ -56,11 +56,26 @@ describe('genreSupernaturalAbilitiesDisallowed', () => {
     expect(pool.some((o) => o.id === 'occ_pab_psychic_agent')).toBe(false)
   })
 
-  it('keeps psychic gate for standard human on supernatural-allowed genre', () => {
+  it('bypasses psychic gate for Nightbane human (no latent psionics)', () => {
     vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
     const mundaneOcc = getPalladiumOccById('occ_ex_government_agent')
     expect(
       resolvePsychicGateBypassed('race_human', mundaneOcc, 'nightbane'),
+    ).toBe(true)
+    expect(
+      creationShowsPsychicGate(
+        { raceId: 'race_human' },
+        mundaneOcc,
+        'nightbane',
+      ),
+    ).toBe(false)
+  })
+
+  it('keeps psychic gate for Rifts human on supernatural-allowed genre', () => {
+    vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
+    const mundaneOcc = getPalladiumOccById('occ_ex_government_agent')
+    expect(
+      resolvePsychicGateBypassed('race_human', mundaneOcc, 'rifts'),
     ).toBe(false)
   })
 
@@ -85,7 +100,7 @@ describe('genreSupernaturalAbilitiesDisallowed', () => {
     ).toBe(true)
   })
 
-  it('requires tier choice for mundane O.C.C. on psionic-capable race', () => {
+  it('does not require tier choice for mundane O.C.C. on Nightbane human', () => {
     vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
     const mundaneOcc = getPalladiumOccById('occ_ex_government_agent')
     expect(
@@ -94,19 +109,38 @@ describe('genreSupernaturalAbilitiesDisallowed', () => {
         mundaneOcc,
         'nightbane',
       ),
-    ).toBe(true)
+    ).toBe(false)
     expect(
       isCreationPsychicTierComplete(
         { raceId: 'race_human', creationPsychicTierChosen: false },
         mundaneOcc,
         'nightbane',
       ),
+    ).toBe(true)
+  })
+
+  it('requires tier choice for mundane O.C.C. on Rifts human (latent psionics)', () => {
+    vi.spyOn(genres, 'isGenreSupernaturalAbilitiesDisallowed').mockReturnValue(false)
+    const mundaneOcc = getPalladiumOccById('occ_ex_government_agent')
+    expect(
+      creationPsychicGateRequiresTierChoice(
+        { raceId: 'race_human' },
+        mundaneOcc,
+        'rifts',
+      ),
+    ).toBe(true)
+    expect(
+      isCreationPsychicTierComplete(
+        { raceId: 'race_human', creationPsychicTierChosen: false },
+        mundaneOcc,
+        'rifts',
+      ),
     ).toBe(false)
     expect(
       isCreationPsychicTierComplete(
         { raceId: 'race_human', creationPsychicTierChosen: true },
         mundaneOcc,
-        'nightbane',
+        'rifts',
       ),
     ).toBe(true)
   })

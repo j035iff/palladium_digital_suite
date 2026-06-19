@@ -4,6 +4,7 @@
   "name": "Example: Human (race pattern)",
   "description": "Illustrates canPickOcc: true, conditional S.D.C. by O.C.C. tags, and standard psionics gate.",
   "raceAudience": "player",
+  "raceComposition": "character",
   "gameSystems": [
     "nightbane",
     "rifts"

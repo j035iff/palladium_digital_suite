@@ -547,7 +547,7 @@
   {
     "id": "occ_guardian_rcc",
     "name": "Guardian R.C.C. Skills",
-    "description": "Shadow O.C.C. for the Guardian R.C.C. — simple, mostly non-technological related skills after memory loss. Auto-mounted when race_guardian is selected.",
+    "description": "Shadow O.C.C. for the Guardian R.C.C. — memory loss leaves 10 related + 8 secondary skills from a simple, mostly non-technological list. Communications: basic radio only; Domestic +10%; Medical: First Aid, Holistic Medicine, Paramedic +10%; Pilot: automobile, motorcycle, horsemanship +5%; Technical +5%; Wilderness +5%; Electrical, Espionage, Mechanical, Military, Rogue, and Science forbidden. +1 related skill at levels 3, 6, 9, and 12. Typically Hand to Hand: Basic.",
     "occType": "rcc_skill_program",
     "tags": [
       "guardian",
@@ -672,12 +672,8 @@
       "forbiddenWps": []
     },
     "handToHandRules": {
-      "defaultSkillId": "hth_none",
+      "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        {
-          "targetSkillId": "hth_basic",
-          "electiveSlotCost": 1
-        },
         {
           "targetSkillId": "hth_expert",
           "electiveSlotCost": 2
@@ -691,9 +687,18 @@
     "classAbilities": [
       {
         "name": "Limited skill memory",
-        "description": "Guardians retain only a handful of simple, non-technological skills. Most prefer natural abilities over firearms."
+        "description": "All new skills start at base level. Guardians rarely use weapons and prefer natural abilities over firearms."
+      },
+      {
+        "name": "Starting resources",
+        "description": "Begin with street clothing and 2D4×10 dollars. Through allies and other Guardians, funds may increase to 2D6×100 (usually spent on necessities and helping others)."
       }
     ],
+    "ppeEngine": {
+      "baseFormula": "PEx5",
+      "perLevelFormula": "20",
+      "progressionRoadmap": []
+    },
     "finances": {
       "startingCashFormula": "2D4*10"
     },
@@ -734,7 +739,7 @@
   {
     "id": "occ_wampyr_rcc",
     "name": "Wampyr R.C.C. Skills",
-    "description": "Shadow O.C.C. for the Wampyr R.C.C. — related skills reflect pre-transformation occupation and education. Auto-mounted when race_wampyr is selected.",
+    "description": "Shadow O.C.C. for the Wampyr R.C.C. — 10 related + 8 secondary skills at 1st level (pre-transformation occupation/education; Wampyrs retain memories of their past life). Hand to Hand purchased from related slots. +1 related skill at levels 4, 7, 10, and 12.",
     "occType": "rcc_skill_program",
     "tags": [
       "wampyr",
@@ -748,7 +753,7 @@
       {
         "gameSystem": "nightbane",
         "reference": "Nightbane RPG",
-        "pageNumber": 188
+        "pageNumber": 189
       }
     ],
     "raceRestrictions": {
@@ -901,6 +906,205 @@
         "poolSource": "related"
       }
     ]
+  },
+  {
+    "id": "occ_doppleganger_rcc",
+    "name": "Doppleganger R.C.C. Skills",
+    "description": "Shadow O.C.C. for the Doppleganger R.C.C. — R.C.C. skills same as normal humans. Select 10 related + 8 secondary skills reflecting the Earth double's O.C.C., education, and life (player-character Dopplegangers are rolled up normally). Hand to Hand purchased from related slots (same as humans). For a Doppleganger of a specific NPC/PC, mirror that character's attributes and roll 1D6 per skill: 1–2 unknown, 3–4 at −10% of the double's level, 5–6 at the same level.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "doppleganger",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 160
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_doppleganger"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 8,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Counterpart skills",
+        "description": "Skill picks should reflect the Earth double's O.C.C. and background. Magician doubles may learn magic; psychic doubles use counterpart psionics at two-thirds I.S.P.; all others are mundane unless the 40% minor-psionic awakening applies."
+      }
+    ],
+    "progression": {
+      "xpTableId": "nightbane_core_doppleganger",
+      "psychicGateBypassed": true
+    }
+  },
+  {
+    "id": "occ_hound_master_rcc",
+    "name": "Hound Master R.C.C. Skills",
+    "description": "Shadow O.C.C. for the Hound Master R.C.C. — minimal fixed skill package on the race row (tracking 85%, languages, swimming/climbing 98%, W.P. Polearm and Battle Axe). Hand to Hand: Assassin at 1st level. No related or secondary skill picks. I.S.P. base on race (M.E. + 1D6×10) plus 2D6 per level.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "hound_master",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 163
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_hound_master"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 0,
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_assassin",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Fixed R.C.C. package",
+        "description": "All R.C.C. skills are granted on the race row. Starts with psionic Mind Block and Empathy plus Illusion Shells (see race class abilities)."
+      }
+    ],
+    "progression": {
+      "xpTableId": "nightbane_core_hound_master",
+      "psychicGateBypassed": true
+    }
   },
   {
     "id": "occ_sorcerer",
@@ -1894,5 +2098,746 @@
       { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
       { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
     ]
+  },
+  {
+    "id": "occ_priest_of_night_rcc",
+    "name": "Priest of Night O.C.C.",
+    "description": "Shadow O.C.C. for `race_priest_of_night` — human cult fanatic granted magic by the Ba'al. Gift of Power attribute boosts and +30 S.D.C./+3D6 H.P. live on the race row; spell picks and P.P.E. engine here. Full access to Nightlands, Nightlord, and minion spell lists.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "priest_of_night",
+      "occult",
+      "cultist",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 177
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_priest_of_night"
+      ]
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_lore_nightlands", "bonusPercent": 20 },
+      { "skillId": "skill_dance", "bonusPercent": 15 }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": ["wp_knife"],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Gift of Power (race row)",
+        "description": "M.A. and P.B. +8 or minimum 18; P.S. +4 and P.P. +2 on race row. Superhuman strength for 2 P.P.E./minute; +30 S.D.C. and +3D6 H.P. encoded in race vitals."
+      },
+      {
+        "name": "Nightlands Spell Access",
+        "description": "May learn any spell dealing with the Nightlands, Nightlords, or their minions in addition to wizard-school picks."
+      }
+    ],
+    "finances": {
+      "startingCashFormula": "4D6*1000",
+      "blackMarketAssets": "2D6*100000 in property (house/mansion, vehicles, cult base)"
+    },
+    "ppeEngine": {
+      "baseFormula": "1D6*10+PE",
+      "perLevelFormula": "2D6",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "roadmap_only",
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 8, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_priest_of_night",
+      "psychicGateBypassed": true,
+      "startingSpellLevelCap": 4
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_master_vampire_rcc",
+    "name": "Master Vampire R.C.C.",
+    "description": "Shadow O.C.C. for `race_master_vampire` — willing first-generation undead. Retains pre-transformation skills frozen at rebirth proficiency (O.C.C. skill bonuses forgotten; I.Q. bonus only). +3 new skills per 100 years of unlife at 2nd-level proficiency (frozen). Vampire powers, psionics, and combat on the race row.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "master_vampire",
+      "vampire",
+      "undead",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 181
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_master_vampire"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Frozen Pre-Rebirth Skills",
+        "description": "Select up to ten related skills representing the vampire's former life. Proficiencies frozen at transformation level; O.C.C. skill bonuses do not apply — only I.Q. bonus (if any). Skills never increase."
+      },
+      {
+        "name": "Centuries of Unlife",
+        "description": "Gain three additional skills (same category limits) for every 100 years as a vampire. All such skills start at 2nd-level proficiency and never increase."
+      },
+      {
+        "name": "Pre-Rebirth Magic (optional)",
+        "description": "If the character knew magic before undeath, retain half or full spell list at frozen power levels — player/GM selects at creation. No new spells; P.P.E. frozen at 1D6×10 on race row."
+      },
+      {
+        "name": "Super-Hypnotic Suggestion",
+        "description": "Vampire-exclusive (p. 186): 20 I.S.P., line-of-sight eye contact (eyes glow red/yellow), 5 minutes per level, standard save; victim obeys commands except those utterly against alignment."
+      }
+    ],
+    "ispEngine": {
+      "baseFormula": "3D6*10",
+      "perLevelFormula": "0",
+      "savingThrowClass": "master",
+      "grantedAbilityIds": [
+        "psionic_death_trance",
+        "psionic_presence_sense",
+        "psionic_alter_aura",
+        "psionic_sense_evil",
+        "psionic_empathy",
+        "psionic_deaden_pain",
+        "psionic_mind_block",
+        "psionic_induce_sleep",
+        "psionic_suggestion"
+      ],
+      "progressionRoadmap": []
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_night_prince_vampire",
+      "psychicGateBypassed": true
+    }
+  },
+  {
+    "id": "occ_secondary_vampire_rcc",
+    "name": "Secondary Vampire R.C.C.",
+    "description": "Shadow O.C.C. for `race_secondary_vampire` — optional player undead. Ten retained skills from former life at 1st-level proficiency (frozen; never increase). +2 related skills at levels 3, 6, 9, 11, and 13. Vampire powers and combat on the race row.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "secondary_vampire",
+      "vampire",
+      "undead",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 182
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_secondary_vampire"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Frozen Retained Skills",
+        "description": "Select ten related skills from allowed categories representing the vampire's former life. All start at 1st-level proficiency and never increase."
+      },
+      {
+        "name": "Pre-Rebirth Magic (optional)",
+        "description": "If the character knew magic before undeath, player selects half of remembered spells at frozen levels. P.P.E. frozen at 1D4×10 on race row; no new spells."
+      },
+      {
+        "name": "Equipment Preference",
+        "description": "Prefer natural powers over technology; may drive a car or rarely use a gun."
+      }
+    ],
+    "ispEngine": {
+      "baseFormula": "2D6*10",
+      "perLevelFormula": "0",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": [
+        "psionic_death_trance",
+        "psionic_presence_sense",
+        "psionic_alter_aura",
+        "psionic_sense_evil",
+        "psionic_empathy",
+        "psionic_deaden_pain",
+        "psionic_mind_block",
+        "psionic_induce_sleep",
+        "psionic_suggestion"
+      ],
+      "progressionRoadmap": []
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_night_prince_vampire",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 9, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 11, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 2, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_wild_vampire_rcc",
+    "name": "Wild Vampire R.C.C.",
+    "description": "Shadow O.C.C. for `race_wild_vampire` — optional player undead. Six retained skills from former life at 2nd-level proficiency (frozen; no skill bonuses). +1 secondary skill at levels 2, 4, 6, 8, 11, and 14. Vampire powers and combat on the race row.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "wild_vampire",
+      "vampire",
+      "undead",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 183
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_wild_vampire"
+      ]
+    },
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 6,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Frozen Retained Skills",
+        "description": "Select six related skills from allowed categories. All frozen at 2nd-level proficiency; no O.C.C. skill bonuses apply; never increase."
+      },
+      {
+        "name": "Secondary Skill Growth",
+        "description": "One new secondary skill at levels 2, 4, 6, 8, 11, and 14 — starts at 1st-level proficiency and never increases."
+      },
+      {
+        "name": "Weapons",
+        "description": "Prefer bare hands and fangs over technology; lack patience for most weapons."
+      }
+    ],
+    "ispEngine": {
+      "baseFormula": "1D6*10",
+      "perLevelFormula": "0",
+      "savingThrowClass": "minor",
+      "grantedAbilityIds": [
+        "psionic_death_trance",
+        "psionic_presence_sense",
+        "psionic_alter_aura",
+        "psionic_sense_evil",
+        "psionic_empathy",
+        "psionic_deaden_pain",
+        "psionic_mind_block",
+        "psionic_induce_sleep",
+        "psionic_suggestion"
+      ],
+      "progressionRoadmap": []
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_night_prince_vampire",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 2, "quantity": 1, "poolSource": "secondary" },
+      { "levelUnlocked": 4, "quantity": 1, "poolSource": "secondary" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "secondary" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "secondary" },
+      { "levelUnlocked": 11, "quantity": 1, "poolSource": "secondary" },
+      { "levelUnlocked": 14, "quantity": 1, "poolSource": "secondary" }
+    ]
+  },
+  {
+    "id": "occ_snake_bird_rcc",
+    "name": "Snake Bird R.C.C.",
+    "description": "Shadow O.C.C. for `race_snake_bird` — natural spell casters sharing the Mystic experience table. Fixed racial skills on the race row (Prowl 62%, track by smell 50%, Lore: Magic +20%, Dragonese). Eight secondary skills (typically Technical; pilot/mechanic skills discouraged). Natural-abilities combat; no Hand to Hand program. P.P.E. P.E.×5 + 12/level.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "snake_bird",
+      "occult",
+      "intuitive",
+      "nightbane",
+      "rcc"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 169
+      }
+    ],
+    "raceRestrictions": {
+      "allowed": [
+        "race_snake_bird"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "choiceCount": 2,
+        "bonusPercent": 20,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "Two languages of choice (+20% each)"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 0,
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 8,
+      "forbiddenCategories": [
+        "Electrical",
+        "Mechanical",
+        "Pilot",
+        "Pilot Related"
+      ]
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": []
+    },
+    "classAbilities": [
+      {
+        "name": "Intuitive Spell Knowledge",
+        "description": "Six spells (levels 1–3) at 1st level; two additional spells per level equal to or below current experience level. Cannot learn spells independently outside the roadmap. G.M. may permit spells from other Palladium lines per book note."
+      },
+      {
+        "name": "Mystic Magic Parity",
+        "description": "All other magic-related abilities resolve as per the Mystic O.C.C. — no psychic abilities."
+      },
+      {
+        "name": "Secondary Skill Guidance",
+        "description": "Eight secondary skills limited by background and common sense; most tend toward Technical category."
+      }
+    ],
+    "ppeEngine": {
+      "baseFormula": "PE*5",
+      "perLevelFormula": "12",
+      "magicSchools": [
+        "wizard"
+      ],
+      "spellAcquisition": "roadmap_only",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 6,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only",
+            "Level 15 Spells Only"
+          ]
+        }
+      ]
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_snakebird_mystic",
+      "psychicGateBypassed": true,
+      "startingSpellLevelCap": 3
+    }
   }
 ]

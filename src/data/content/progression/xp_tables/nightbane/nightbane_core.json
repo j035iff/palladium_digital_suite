@@ -39,22 +39,25 @@
         280401, 340501
       ],
       "occIds": [
-        "occ_mystic"
+        "occ_mystic",
+        "occ_snake_bird_rcc"
       ],
-      "notes": "Nightbane RPG p.233 — Snakebird & Mystic R.C.C.s. O.C.C.s: occ_mystic."
+      "notes": "Nightbane RPG p.233 — Snakebird & Mystic R.C.C.s. O.C.C.s: occ_mystic, occ_snake_bird_rcc (race_snake_bird)."
     },
     {
       "id": "nightbane_core_doppleganger",
       "name": "Doppleganger",
       "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 160 }],
       "maxLevel": 15,
       "floors": [
         0, 1901, 3801, 7301, 14601, 21001, 30001, 40001, 55001, 75001, 105001, 140001, 190001,
         245001, 300001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Doppleganger R.C.C. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_doppleganger_rcc"
+      ],
+      "notes": "Nightbane RPG pp. 159–160 — Doppleganger R.C.C. Experience same as humans; may advance beyond double's level when more active."
     },
     {
       "id": "nightbane_core_nemtar_hollow_men",
@@ -110,8 +113,10 @@
         0, 2141, 4301, 8601, 17201, 25501, 35601, 50701, 71501, 96601, 133701, 186801, 240901,
         291001, 350001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Priest of Night O.C.C. O.C.C.s: none in catalog yet."
+      "occIds": [
+        "occ_priest_of_night_rcc"
+      ],
+      "notes": "Nightbane RPG p.233 — Priest of Night O.C.C. Shadow O.C.C. occ_priest_of_night_rcc on race_priest_of_night."
     },
     {
       "id": "nightbane_core_hound_hunter",
@@ -152,8 +157,12 @@
         0, 5001, 10001, 20001, 40001, 80001, 120001, 160001, 200001, 250001, 300001, 400001, 500001,
         600001, 1000001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). Level 15 band tops at 2,000,000 XP."
+      "occIds": [
+        "occ_master_vampire_rcc",
+        "occ_secondary_vampire_rcc",
+        "occ_wild_vampire_rcc"
+      ],
+      "notes": "Nightbane RPG p.233 — Night Prince & Vampire; second column (0–5,000). Master (NPC), Secondary & Wild (player) vampire shadow O.C.C.s."
     },
     {
       "id": "nightbane_core_nightlord",
@@ -172,14 +181,16 @@
       "id": "nightbane_core_hound_master",
       "name": "Hound Master",
       "gameSystems": ["nightbane"],
-      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 233 }],
+      "sources": [{ "gameSystem": "nightbane", "reference": "Nightbane RPG", "pageNumber": 163 }],
       "maxLevel": 15,
       "floors": [
         0, 3001, 6001, 12001, 24001, 50001, 80001, 120001, 170001, 220001, 290001, 375001, 450001,
         550001, 750001
       ],
-      "occIds": [],
-      "notes": "Nightbane RPG p.233 — Hound Master; fourth column (0–3,000). Level 15 band tops at 1,000,000 XP. Not the Hound & Hunter table."
+      "occIds": [
+        "occ_hound_master_rcc"
+      ],
+      "notes": "Nightbane RPG pp. 163–164 — Hound Master R.C.C.; fourth column (0–3,000). Level 15 band tops at 1,000,000 XP."
     }
   ]
 }

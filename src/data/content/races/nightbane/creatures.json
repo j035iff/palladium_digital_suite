@@ -1,0 +1,215 @@
+[
+  {
+    "id": "race_waste_coyote",
+    "name": "Waste Coyote",
+    "description": "Common Waste predator — crocodile-bear hybrid on all fours, packs of 4–12 led by an alpha. Hunts to eat but can survive long periods without food (possibly ambient P.P.E.). Ambushes with decoys; fearless of guns and most Nightlord minions except Lizard Kings and large Hound/Hunter/Nightbane parties. Non-sentient animal intelligence.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 168
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "2D4",
+      "me": "2D6",
+      "ma": "2D6",
+      "ps": "1D6+24",
+      "pp": "1D6+14",
+      "pe": "1D6+20",
+      "pb": "1D6",
+      "spd": "1D4*10"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE*2",
+      "averageStandardPpe": "4D6",
+      "sdc": "2D6*10+20"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [
+      {
+        "skillId": "skill_tracking",
+        "basePercent": 78
+      }
+    ],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 1,
+        "strike": 2,
+        "dodge": 3,
+        "save_magic": 4,
+        "save_psionics": 4,
+        "horrorFactor": 11
+      }
+    },
+    "demographics": {
+      "averageHeight": "8–12 feet long (2.4–3.65 m)",
+      "averageWeight": "400–800 lbs (181–362 kg)",
+      "averageLifespan": "60 years",
+      "alignmentTendencies": [
+        "Miscreant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Animal Intelligence",
+        "description": "I.Q. 2D4 — high animal intelligence; cunning pack hunter, not a speaking character race."
+      },
+      {
+        "name": "Tracking",
+        "description": "Track by both sight and scent at 78% (innate skill)."
+      },
+      {
+        "name": "Natural Combat",
+        "description": "Natural abilities — three attacks per melee round; no Hand to Hand or O.C.C. skill program."
+      },
+      {
+        "name": "Combat Bonuses",
+        "description": "+1 initiative, +4 on all Perception rolls — apply at table in addition to attribute bonuses."
+      },
+      {
+        "name": "Damage",
+        "description": "Bite 4D6 S.D.C. Claws inflict supernatural P.S. damage plus 2D6 S.D.C."
+      },
+      {
+        "name": "Magic & Psionics",
+        "description": "None."
+      },
+      {
+        "name": "Habitat",
+        "description": "Nightlands deserts and mountains; packs of 2D6 may appear on Earth via Rifts, gates, or anomalies."
+      },
+      {
+        "name": "Enemies",
+        "description": "Hunted by Hounds and Hunters (pelts decorate Nightlord halls); preys on most life forms; avoids Lizard Kings and large minion war parties."
+      }
+    ]
+  },
+  {
+    "id": "race_lizard_king",
+    "name": "Lizard King",
+    "description": "Supernatural Komodo-like predator — psychic vampire feeding on death-agonies and P.P.E.; lurks near ley lines and nexuses in the Nightlands and occasionally on Earth. Hunts all living things without fear; Hunter patrols slay on sight. Waste legends tell of tamed war mounts, unproven. Animal intelligence; non-sentient creature stat block.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 170
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "1D6",
+      "me": "2D6",
+      "ma": "2D6",
+      "ps": "2D6+29",
+      "pp": "1D6+15",
+      "pe": "2D6+17",
+      "pb": "2D4",
+      "spd": "1D4*10"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "1D6*10+20",
+      "averageStandardPpe": "6D6",
+      "sdc": "2D6*10+100"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [
+      {
+        "skillId": "skill_tracking",
+        "basePercent": 54
+      }
+    ],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 2,
+        "strike": 3,
+        "dodge": 4,
+        "save_magic": 3,
+        "save_psionics": 3,
+        "save_horror_factor": 9,
+        "horrorFactor": 11
+      }
+    },
+    "demographics": {
+      "averageHeight": "12–20 feet long (3.65–6.1 m)",
+      "averageWeight": "1–1.5 tons (906–1360 kg)",
+      "averageLifespan": "40 years",
+      "alignmentTendencies": [
+        "Diabolic"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Animal Intelligence",
+        "description": "I.Q. 1D6 — animal intelligence; too ferocious (or stupid) to fear most threats."
+      },
+      {
+        "name": "Psychic Vampire Feeding",
+        "description": "Nourishment from death-agonies and P.P.E. Can survive 1D4 months without feeding, or indefinitely within one mile (1.6 km) of a ley line or nexus. Loses 1 P.P.E. per week without feeding unless near ley line/nexus."
+      },
+      {
+        "name": "Regeneration",
+        "description": "Heals 1D4×10 S.D.C./H.P. per minute (4 melee rounds)."
+      },
+      {
+        "name": "Senses",
+        "description": "Nightvision 1000 ft (305 m); fair day vision; track by smell 54% (innate skill)."
+      },
+      {
+        "name": "Armor Rating",
+        "description": "A.R. 12 against normal weapons; A.R. 0 against magical and supernatural attacks."
+      },
+      {
+        "name": "Supernatural Combat",
+        "description": "Four attacks per melee round; no Hand to Hand or O.C.C. skill program."
+      },
+      {
+        "name": "Combat Bonuses",
+        "description": "+2 on all Perception rolls — apply at table in addition to attribute bonuses."
+      },
+      {
+        "name": "Damage",
+        "description": "Bite 5D6 S.D.C.; kick 3D6 S.D.C.; tail swipe 4D6; head butt 2D6; body ram/trample 5D6 S.D.C."
+      },
+      {
+        "name": "Magic & Psionics",
+        "description": "None. No languages."
+      },
+      {
+        "name": "Habitat & Enemies",
+        "description": "Any terrain; favors ley lines and nexuses. Nightlord minions hunt them; preys on most life forms."
+      }
+    ]
+  }
+]

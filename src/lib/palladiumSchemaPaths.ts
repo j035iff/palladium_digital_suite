@@ -111,8 +111,17 @@ export function isSkillCategoryCatalogFile(filename: string): boolean {
 export const PALLADIUM_SKILL_CATALOG_JSON_PATH =
   `${PALLADIUM_SKILLS_DIR}/communications.json` as const
 
-/** Genre-scoped race pools — `races/<genre>/{player,npc,gm_approval}.json`. */
+/** Genre-scoped race pools — `races/<genre>/{player,npc,gm_approval,creatures}.json`. */
 export const PALLADIUM_RACES_DIR = `${PALLADIUM_CONTENT_DIR}/races` as const
+
+export const PALLADIUM_RACES_NIGHTBANE_UTILS_DIR =
+  `${PALLADIUM_RACES_DIR}/nightbane/utils` as const
+
+export const TRUE_VAMPIRE_POWERS_JSON_PATH =
+  `${PALLADIUM_RACES_NIGHTBANE_UTILS_DIR}/true_vampire_powers.json` as const
+
+export const PALLADIUM_RACE_NIGHTBANE_CREATURES_JSON_PATH =
+  `${PALLADIUM_RACES_DIR}/nightbane/creatures.json` as const
 
 export const PALLADIUM_RACE_NIGHTBANE_PLAYER_JSON_PATH =
   `${PALLADIUM_RACES_DIR}/nightbane/player.json` as const

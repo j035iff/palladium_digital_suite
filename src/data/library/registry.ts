@@ -153,6 +153,7 @@ export {
   listRacesForCharacterCreation,
   listNpcRaces,
   listGmApprovalRaces,
+  listCreatureRaces,
   raceAllowedInCharacterCreation,
   type RaceAudience,
   raceCatalogGenreId,

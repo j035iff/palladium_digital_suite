@@ -5,6 +5,7 @@ import { creationInvalidationPatch } from './creationInvalidate'
 import { syncRaceOccPrimarySdc } from './creationRaceOccSync'
 import { characterHasDualForms } from './raceFormPolicy'
 import { raceCanPickOcc } from './raceEngine'
+import { raceUsesOccSkillProgram } from './raceComposition'
 import { resolvePsychicGateBypassed } from './creationPhases'
 import { applyPsychicTierToFormState } from './psychicGate'
 import {
@@ -27,8 +28,7 @@ export function raceForcedOccId(race: Race | undefined): string | undefined {
 
 /** True when the build uses an O.C.C. skill program (player pick or shadow auto-mount). */
 export function creationUsesOccSkillProgram(race: Race | undefined): boolean {
-  if (!race) return false
-  return raceCanPickOcc(race) || raceForcedOccId(race) != null
+  return raceUsesOccSkillProgram(race)
 }
 
 export function resolveCreationOccLibraryRow(

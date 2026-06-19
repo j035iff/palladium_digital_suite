@@ -13,20 +13,31 @@ import { getPalladiumOccById } from '../data/library/occCatalogLoader'
 import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
 
 describe('creationStep', () => {
-  it('orders phases with psychic gate before skills', () => {
-    const character = createBlankCharacterForGenre('nightbane')
-    const race = getRaceById('race_human')
+  it('orders phases with psychic gate before skills when latent psionics apply', () => {
+    const character = createBlankCharacterForGenre('rifts')
+    const race = getRaceById('race_human', 'rifts')
     const ctx = buildCreationFlowContext(
       character,
       race,
       undefined,
-      'nightbane',
+      'rifts',
     )
     const order = orderedCreationPhases(ctx)
     const psychicIx = order.indexOf('psychicGate')
     const skillsIx = order.indexOf('skills')
     expect(psychicIx).toBeGreaterThan(-1)
     expect(skillsIx).toBeGreaterThan(psychicIx)
+  })
+
+  it('omits psychic gate phase for Nightbane human on mundane O.C.C.', () => {
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      raceId: 'race_human',
+    }
+    const race = getRaceById('race_human', 'nightbane')
+    const occLib = getPalladiumOccById('occ_ex_government_agent')!
+    const ctx = buildCreationFlowContext(character, race, occLib, 'nightbane')
+    expect(orderedCreationPhases(ctx)).not.toContain('psychicGate')
   })
 
   it('blocks configurator until O.C.C. is chosen', () => {

@@ -11,12 +11,13 @@ import {
 } from 'node:fs'
 import { join } from 'node:path'
 
-export const RACE_POOL_FILES = ['player.json', 'npc.json', 'gm_approval.json']
+export const RACE_POOL_FILES = ['player.json', 'npc.json', 'gm_approval.json', 'creatures.json']
 
 export const RACE_POOL_AUDIENCE = {
   'player.json': 'player',
   'npc.json': 'npc',
   'gm_approval.json': 'gm_approval',
+  'creatures.json': 'creature',
 }
 
 export function parseGenreFromRacePath(filePath) {
