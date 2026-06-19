@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://palladium-digital-suite/schemas/ingest-brief.schema.json",
+  "title": "Palladium ingest brief",
+  "description": "Standardized input for orchestrated catalog ingest. See docs/ingest/orchestrator.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "title", "contentType", "pass", "book"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "integer", "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "description": "Stable slug for run state under src/data/source/ingest-briefs/runs/<id>/"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "skills",
+        "hth",
+        "weapon_proficiencies",
+        "magic",
+        "psionics",
+        "occs",
+        "races",
+        "xp_tables",
+        "talents",
+        "morphus",
+        "encounters"
+      ]
+    },
+    "pass": {
+      "type": "string",
+      "enum": ["A", "B", "AB"],
+      "description": "A or B only, or AB for phased Pass A then Pass B on the same page range in one run."
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "nightbane",
+        "rifts",
+        "palladium_fantasy",
+        "heroes_unlimited",
+        "robotech",
+        "after_the_bomb"
+      ],
+      "description": "Required for most content types; omit only when the playbook does not use gameSystems (e.g. talents)."
+    },
+    "book": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "pages"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Repo-relative path to PDF under src/data/reference/ (gitignored)."
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed book title for sources[] prose."
+        },
+        "pages": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["start"],
+              "properties": {
+                "start": { "type": "integer", "minimum": 1 },
+                "end": { "type": "integer", "minimum": 1 }
+              }
+            }
+          ]
+        },
+        "supplement": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": { "type": "string" },
+            "reference": { "type": "string" },
+            "pages": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "required": ["start"],
+                  "properties": {
+                    "start": { "type": "integer", "minimum": 1 },
+                    "end": { "type": "integer", "minimum": 1 }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "scope": {
+      "type": "string",
+      "description": "Overrides playbook default scope for this pass."
+    },
+    "options": {
+      "type": "object",
+      "description": "Content-type-specific fields (category, school, audience, table, section, bookFile, etc.).",
+      "additionalProperties": true
+    },
+    "items": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Optional pre-listed row names. Agent fills during review when empty."
+    },
+    "batchSizeOverride": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Smaller Pass A batches when rows are heavy (prerequisites, rituals, variants)."
+    },
+    "batchSizeOverrideB": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Smaller Pass B batches when pass is AB (defaults to playbook Pass B size)."
+    },
+    "passBAfterRulings": {
+      "type": "boolean",
+      "default": false,
+      "description": "When pass is AB: pause after all Pass A batches if any open Pass A rulings remain (do not start Pass B until user resolves)."
+    },
+    "linkedBriefs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Other brief ids to coordinate in the same session (e.g. race + Shadow O.C.C.)."
+    },
+    "notes": { "type": "string" },
+    "updateExisting": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when correcting rows already in catalog."
+    },
+    "sandboxOutput": {
+      "type": "string",
+      "description": "Repo-relative path for test ingest output (JSON array). When set, do not write to src/data/content/ — write only here for comparison runs."
+    }
+  }
+}

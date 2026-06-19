@@ -14,6 +14,7 @@
     "validate:morphus": "node scripts/validate-morphus.mjs",
     "morphus:ingest": "node scripts/morphus-ingest.mjs",
     "apply:skill-traits": "node scripts/apply-skill-traits.mjs",
+    "ingest:brief": "node scripts/ingest-brief.mjs",
     "split:skills": "node scripts/split-skills-by-category.mjs",
     "split:psionics": "node scripts/split-psionics-by-category.mjs",
     "split:races": "node scripts/split-races-by-genre.mjs",

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-skills-physical-ab",
+  "title": "Nightbane Physical Skills — Pass A then Pass B",
+  "contentType": "skills",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 52, "end": 54 }
+  },
+  "options": {
+    "category": "Physical"
+  },
+  "passBAfterRulings": true,
+  "notes": "Phased run: all Pass A batches first (catalog-only), audit gate, then Pass B batches (physicalSkillBonuses, combat blocks). Do not mix A+B in the same 6-skill batch."
+}

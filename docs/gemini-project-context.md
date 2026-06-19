@@ -247,6 +247,25 @@ Authoring guides: `docs/morphus_authoring.md`, `docs/ingest/morphus.md`, `docs/i
 
 ---
 
+## Ingest orchestrator (multi-batch jobs)
+
+Run many ingest batches from one brief file instead of pasting each batch manually.
+
+| Artifact | Path |
+|----------|------|
+| Brief format | `docs/ingest/brief-format.md` |
+| Agent workflow | `docs/ingest/orchestrator.md` |
+| Brief files | `src/data/source/ingest-briefs/*.brief.json` |
+| Run state | `src/data/source/ingest-briefs/runs/<id>/run.json` |
+| CLI | `npm run ingest:brief -- validate \| init \| show \| status \| chunk` |
+| Registry | `scripts/lib/ingest-brief-registry.mjs` |
+
+**User flow:** copy an example brief → fill `contentType`, `pass`, `book`, pages, `options` → `npm run ingest:brief -- validate` + `init` → one agent message: *Run the ingest orchestrator on @…brief.json*.
+
+**Agent flow:** review PDF pages → checklist → batch plan (playbook batch sizes) → ingest one batch at a time with validation → persist rulings → completion report.
+
+---
+
 ## Nightbane talent catalog ingest
 
 **Status:** Pass A (chargen-only) is **complete** for all 151 talents — `npm run audit:talents` reports 151/151 Tier 1 complete, 0 critical.
@@ -391,6 +410,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 |--------------|-------------------|
 | Content JSON paths, folder layout, `utils/` placement | [`docs/content-catalog-layout.md`](content-catalog-layout.md), [`docs/gemini-project-context.md`](gemini-project-context.md) content tables, relevant ingest playbook path tables, `palladiumSchemaPaths.ts` comments if needed |
 | Ingest batch rules, Pass A/B scope, validation commands | Matching ingest playbook under `docs/ingest/`, `.cursorrules` if agent routing changes |
+| Ingest orchestrator, brief format, multi-batch workflow | [`docs/ingest/orchestrator.md`](ingest/orchestrator.md), [`docs/ingest/brief-format.md`](ingest/brief-format.md), `scripts/lib/ingest-brief-registry.mjs` if content types change |
 | JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
 | Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge/character_creation.md`](forge/character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
@@ -417,6 +437,7 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 10. **Encounter archetype ingest** — follow `docs/ingest/encounters.md`; GM-only templates, not player creation rows.
 11. **XP tables / HtH / W.P. ingest** — follow `docs/ingest/xp_tables.md`, `docs/ingest/hth.md`, `docs/ingest/weapon_proficiencies.md` respectively.
 12. **Morphus trait ingest** — follow `docs/ingest/morphus.md` (+ `docs/morphus_authoring.md` for field encoding); flag ambiguous mechanics and ask the user before encoding.
+13. **Ingest orchestrator** — when the user provides a `*.brief.json`, follow `docs/ingest/orchestrator.md` end-to-end; persist `src/data/source/ingest-briefs/runs/<id>/run.json`; report open rulings at completion.
 13. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
 14. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
 15. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).

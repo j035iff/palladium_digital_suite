@@ -1,0 +1,176 @@
+{
+  "briefId": "nightbane-skills-physical-ab-sandbox",
+  "briefTitle": "Nightbane Physical Skills AB — sandbox comparison",
+  "contentType": "skills",
+  "pass": "AB",
+  "passPhases": [
+    "A",
+    "B"
+  ],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/skills.md",
+  "status": "complete",
+  "phase": "done",
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-skills-physical-sandbox.json",
+  "createdAt": "2026-06-19T22:00:16.544Z",
+  "updatedAt": "2026-06-19T22:00:16.544Z",
+  "checklist": [
+    {
+      "name": "Acrobatics",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Athletics (general)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Body Building & Weight Lifting",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Boxing",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Climbing",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Gymnastics",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "53",
+      "notes": null
+    },
+    {
+      "name": "Running",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "54",
+      "notes": null
+    },
+    {
+      "name": "Swimming",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "54",
+      "notes": null
+    },
+    {
+      "name": "S.C.U.B.A.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "54",
+      "notes": null
+    },
+    {
+      "name": "Wrestling",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "54",
+      "notes": null
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 53,
+        "end": 53
+      },
+      "items": [
+        "Acrobatics",
+        "Athletics (general)",
+        "Body Building & Weight Lifting",
+        "Boxing",
+        "Climbing",
+        "Gymnastics"
+      ]
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 54,
+        "end": 54
+      },
+      "items": [
+        "Running",
+        "Swimming",
+        "S.C.U.B.A.",
+        "Wrestling"
+      ]
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "items": [
+        "Acrobatics",
+        "Athletics (general)",
+        "Body Building & Weight Lifting"
+      ]
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "items": [
+        "Boxing",
+        "Climbing",
+        "Gymnastics"
+      ]
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "items": [
+        "Running",
+        "Swimming",
+        "S.C.U.B.A.",
+        "Wrestling"
+      ]
+    }
+  ],
+  "rulings": [],
+  "completedBatchIds": [
+    "batch-a-01",
+    "batch-a-02",
+    "batch-b-01",
+    "batch-b-02",
+    "batch-b-03"
+  ],
+  "validationCommands": [
+    "validate:schemas",
+    "audit:skills"
+  ]
+}

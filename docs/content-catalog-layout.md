@@ -98,4 +98,6 @@ Row authoring rules stay in the per-type ingest docs:
 - `docs/ingest/morphus.md`
 - `docs/ingest/encounters.md`
 
+**Multi-batch jobs:** [`docs/ingest/orchestrator.md`](ingest/orchestrator.md) · brief files in `src/data/source/ingest-briefs/`
+
 **This file** is the shared **layout** contract; ingest docs link here for paths and `utils/` rules.

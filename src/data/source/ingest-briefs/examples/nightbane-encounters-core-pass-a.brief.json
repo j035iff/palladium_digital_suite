@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-encounters-core-pass-a",
+  "title": "Nightbane Enemies & Minor NPCs — Pass A",
+  "contentType": "encounters",
+  "pass": "A",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 199, "end": 210 }
+  },
+  "scope": "composition-only",
+  "options": {
+    "section": "Enemies & Minor NPCs"
+  },
+  "batchSizeOverride": 5,
+  "notes": "Cross-check race/O.C.C./H2H/W.P. refs against existing catalog before encoding."
+}

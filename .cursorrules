@@ -69,3 +69,6 @@ When adding, updating, or auditing W.P. rows (`src/data/content/skills/weapon_pr
 
 ### Palladium encounter archetype ingest
 When adding, updating, or auditing GM encounter templates (`src/data/content/encounters/<genre>/`), follow **`docs/ingest/encounters.md`** (Pass A workflow, composition modes, cross-refs to races/O.C.C./H2H/W.P., batch template). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
+
+### Ingest orchestrator (multi-batch jobs)
+When the user provides a `*.brief.json` under `src/data/source/ingest-briefs/` or asks to run the ingest orchestrator, follow **`docs/ingest/orchestrator.md`** end-to-end: validate/init brief → content review checklist → batch plan → ingest one batch at a time → persist `runs/<id>/run.json` → completion report with open rulings. Brief format: **`docs/ingest/brief-format.md`**. CLI: `npm run ingest:brief`.

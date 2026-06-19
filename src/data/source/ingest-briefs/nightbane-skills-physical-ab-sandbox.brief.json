@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-skills-physical-ab-sandbox",
+  "title": "Nightbane Physical Skills AB — sandbox comparison",
+  "contentType": "skills",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 53, "end": 55 }
+  },
+  "options": {
+    "category": "Physical"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-skills-physical-sandbox.json",
+  "passBAfterRulings": true,
+  "items": [
+    "Acrobatics",
+    "Athletics (general)",
+    "Body Building & Weight Lifting",
+    "Boxing",
+    "Climbing",
+    "Gymnastics",
+    "Running",
+    "Swimming",
+    "S.C.U.B.A.",
+    "Wrestling"
+  ],
+  "notes": "Sandbox comparison run against src/data/content/skills/physical.json (Nightbane RPG pp. 53-54 rows). Prowl on p. 55 is Espionage — out of scope. Do not write to src/data/content/."
+}

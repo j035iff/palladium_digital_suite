@@ -2,6 +2,8 @@
 
 Pass A/B workflows, batch templates, and validation commands for catalog JSON authoring.
 
+**Multi-batch orchestration:** [`orchestrator.md`](orchestrator.md) · brief input format [`brief-format.md`](brief-format.md) · files in `src/data/source/ingest-briefs/`
+
 | Catalog | Playbook | Content path |
 |---------|----------|--------------|
 | Skills | [`skills.md`](skills.md) | `src/data/content/skills/*.json` (category files) |

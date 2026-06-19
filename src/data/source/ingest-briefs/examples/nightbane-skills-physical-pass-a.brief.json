@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-skills-physical-pass-a",
+  "title": "Nightbane Physical Skills — Pass A",
+  "contentType": "skills",
+  "pass": "A",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 52, "end": 54 }
+  },
+  "scope": "catalog-only",
+  "options": {
+    "category": "Physical"
+  },
+  "notes": "Ignore Hand to Hand skills (e.g. Hand to Hand: Basic)"
+}
