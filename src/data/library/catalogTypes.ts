@@ -45,6 +45,7 @@ export type PalladiumSkillCatalogEntry = {
   }
   /** Cross-cutting tags for Morphus / penalties (`skill_trait_registry.json`). */
   skillTraits?: readonly string[]
+  skillPercentAttributeModifiers?: import('../../lib/skillPercentAttributeModifiers').SkillPercentAttributeModifiers
 }
 
 /** Row from `content/occs/<genre>/*.json` — see `schemas/palladium-occ.schema.json`. */

@@ -171,16 +171,20 @@
     "specificSkillOverrides": [
       {
         "targetType": "skill_id",
-        "targetValue": "prowl",
+        "targetValue": "skill_prowl",
         "modifierPercent": 15
       },
       {
         "targetType": "skill_id",
-        "targetValue": "skill_build",
+        "targetValue": "skill_gymnastics",
         "grantUnlearnedValue": 68,
         "perLevelIncrement": 4
       }
     ]
+  },
+  "attributeRollBonuses": {
+    "maTrustIntimidatePercent": 5,
+    "pbCharmImpressPercent": 10
   },
   "handCapacityConstraints": {
     "occupiesHands": 0,
@@ -496,7 +500,7 @@
       "context": "costumed"
     },
     {
-      "skillId": "skill_intimidation",
+      "skillId": "skill_public_speaking",
       "modifierPercent": 10,
       "context": "costumed"
     }

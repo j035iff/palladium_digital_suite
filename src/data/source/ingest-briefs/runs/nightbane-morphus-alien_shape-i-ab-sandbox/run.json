@@ -1,0 +1,82 @@
+{
+  "briefId": "nightbane-morphus-alien_shape-i-ab-sandbox",
+  "briefTitle": "Nightbane Alien Shape I (DD pp. 135–136 + core pp. 103–104) — AB sandbox",
+  "contentType": "morphus",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/morphus.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-20T12:00:00.000Z",
+  "updatedAt": "2026-06-20T12:00:00.000Z",
+  "checklist": [
+    { "name": "Plasmoid", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "135/103", "notes": null },
+    { "name": "Bark-like Skin", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "135/103", "notes": "New row — replaces legacy Alien Plantlife per DD" },
+    { "name": "Bony Exoskeleton", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "135-136/103", "notes": null },
+    { "name": "Thorns", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "135/103", "notes": "New row per DD" },
+    { "name": "Crystalline", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "136/103", "notes": null },
+    { "name": "Living Tattoos", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "136/103", "notes": null },
+    { "name": "Unusual Skin Color", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "136/103", "notes": null },
+    { "name": "Hulking Monster", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "136/103", "notes": null },
+    { "name": "Mouth-Covered Body", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "136/103", "notes": null }
+  ],
+  "batches": [
+    { "id": "batch-01", "status": "complete", "pass": "A", "pages": { "start": 135, "end": 136 }, "items": ["Plasmoid", "Bark-like Skin", "Bony Exoskeleton"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-02", "status": "complete", "pass": "A", "pages": { "start": 135, "end": 136 }, "items": ["Thorns", "Crystalline", "Living Tattoos"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-03", "status": "complete", "pass": "A", "pages": { "start": 136, "end": 136 }, "items": ["Unusual Skin Color", "Hulking Monster", "Mouth-Covered Body"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-b-01", "status": "complete", "pass": "B", "pages": { "start": 135, "end": 136 }, "items": ["Plasmoid", "Bark-like Skin"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-02", "status": "complete", "pass": "B", "pages": { "start": 135, "end": 136 }, "items": ["Bony Exoskeleton", "Thorns"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-03", "status": "complete", "pass": "B", "pages": { "start": 136, "end": 136 }, "items": ["Crystalline", "Living Tattoos"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-04", "status": "complete", "pass": "B", "pages": { "start": 136, "end": 136 }, "items": ["Unusual Skin Color", "Hulking Monster"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-05", "status": "complete", "pass": "B", "pages": { "start": 136, "end": 136 }, "items": ["Mouth-Covered Body"], "playbookScope": "include mechanics", "notes": null }
+  ],
+  "rulings": [
+    {
+      "id": "ruling-01",
+      "status": "resolved",
+      "batchId": "batch-01",
+      "item": "Bark-like Skin",
+      "question": "DD Table I lists Bark-like Skin (13–24%); not in production (06–12% is Alien Plantlife).",
+      "bookExcerpt": "13-24% Bark-like Skin… +1D4x10 S.D.C., +1D4 H.F.",
+      "options": ["Keep production roster only", "Add Bark-like Skin", "Replace Alien Plantlife with Bark-like Skin"],
+      "userRuling": "Keep production roster — do not add Bark-like Skin",
+      "createdAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "ruling-02",
+      "status": "resolved",
+      "batchId": "batch-01",
+      "item": "Thorns",
+      "question": "DD Table I lists Thorns (38–45%); not in production.",
+      "bookExcerpt": "38-45% Thorns… +4D6 S.D.C., +1D4 H.F.",
+      "options": ["Keep production roster", "Add Thorns as new row"],
+      "userRuling": "Keep production roster — do not add Thorns",
+      "createdAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "ruling-03",
+      "status": "resolved",
+      "batchId": "batch-01",
+      "item": "Alien Plantlife",
+      "question": "Production has Alien Plantlife; not in DD Table I at that band.",
+      "bookExcerpt": "DD uses Bark-like Skin at 13–24%, not Alien Plantlife.",
+      "options": ["Keep Alien Plantlife (catalog authoritative)", "Remove Alien Plantlife"],
+      "userRuling": "Keep Alien Plantlife (production authoritative)",
+      "createdAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "ruling-04",
+      "status": "resolved",
+      "batchId": "batch-03",
+      "item": "Combination of 2",
+      "question": "Production keeps Combination of 2 as playable router; book is roll-twice instruction.",
+      "bookExcerpt": "96-00% Combination of Two: Roll twice more…",
+      "options": ["Keep playable router (production)", "Remove from entries[]; table description only"],
+      "userRuling": "Keep Combination of 2 as playable production router entry",
+      "createdAt": "2026-06-20T12:00:00.000Z"
+    }
+  ],
+  "completedBatchIds": ["batch-01", "batch-02", "batch-03", "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05"],
+  "validationCommands": ["validate:schemas", "validate:morphus"]
+}

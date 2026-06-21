@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-morphus-animal-canine-ab-sandbox",
+  "title": "Nightbane Canine Morphus (DD + core) — AB sandbox",
+  "contentType": "morphus",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+    "reference": "Nightbane® Dark Designs Sourcebook (WB6)",
+    "pages": { "start": 130, "end": 131 },
+    "supplement": {
+      "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane RPG",
+      "pages": { "start": 97, "end": 98 }
+    }
+  },
+  "options": {
+    "table": "animal_canine"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-morphus-animal-canine-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "notes": "Replace page placeholders with printed pp. for each book. Dark Designs authoritative when text differs. Seed sandbox from production animal_canine.json on batch 1; patch entries[] only. Do not write to src/data/content/morphus/."
+}

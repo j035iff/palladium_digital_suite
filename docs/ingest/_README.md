@@ -18,4 +18,5 @@ Pass A/B workflows, batch templates, and validation commands for catalog JSON au
 | Morphus traits | [`morphus.md`](morphus.md) | `src/data/content/morphus/tables/` (+ `morphus/forge/` routing) |
 
 **Layout contract:** [`../content-catalog-layout.md`](../content-catalog-layout.md) (`utils/` ancillary files, loader rules).  
+**Multi-book source order:** [`brief-format.md`](brief-format.md) § Multi-book source order · master list `src/data/source/ingest-briefs/utils/genre-source-reference-order.json`  
 **Project context & doc-sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.

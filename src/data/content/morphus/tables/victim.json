@@ -296,6 +296,12 @@
         },
         "sdc": {
           "dice": "1D4x10"
+        },
+        "ma": {
+          "flat": 2
+        },
+        "me": {
+          "flat": 2
         }
       },
       "saveModifiers": {
@@ -306,6 +312,31 @@
       },
       "skillModifiers": {
         "specificSkillOverrides": [
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_undercover_ops",
+            "impossibleInMorphus": true
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_id_undercover_agent",
+            "grantUnlearnedValue": 90
+          },
+          {
+            "targetType": "skill_id",
+            "targetValue": "skill_disguise",
+            "impossibleInMorphus": true
+          },
           {
             "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
@@ -385,8 +416,8 @@
             "modifierPercent": -25
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -25
           },
           {

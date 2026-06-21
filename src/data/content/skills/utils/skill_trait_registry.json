@@ -34,7 +34,13 @@
     {
       "id": "requires_timing",
       "name": "Skills requiring timing",
-      "description": "Performance, demolitions, and other skills where precise timing matters (see skills_requiring_timing.txt).",
+      "description": "Demolitions, mathematics, and other skills where precise timing matters (see skills_requiring_timing.txt). Performance skills use related_to_performance instead.",
+      "gameSystems": ["nightbane", "megaversal"]
+    },
+    {
+      "id": "related_to_performance",
+      "name": "Skills related to performance",
+      "description": "Dance, singing, public speaking, and other appearance or entertainment skills (see skills_related_to_performance.txt). Used by Morphus penalties such as “-10% on skill performance.”",
       "gameSystems": ["nightbane", "megaversal"]
     },
     {
@@ -52,7 +58,7 @@
   ],
   "membershipNotes": {
     "basicElectronics": "Referenced in prerequisites and trait lists; add catalog row or alias when ingested.",
-    "performance": "Listed in skills_requiring_timing.txt; no Nightbane catalog row (intentionally omitted).",
+    "performance": "Listed in skills_related_to_performance.txt; no Nightbane catalog row (intentionally omitted). Morphus “skill performance” penalties target related_to_performance.",
     "primaryPpPenalties": "Optional low facade P.P. penalties map to requires_dexterity / requires_light_touch via primaryPpSkillTraitPenalties.ts (ported from v0 highManualDexterity / otherManualDexterity)."
   }
 }

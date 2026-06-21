@@ -48,12 +48,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           }
         ]
@@ -129,7 +129,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           }
         ]
@@ -199,7 +199,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           }
         ]
@@ -283,17 +283,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "grantUnlearnedValue": 80
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -40
           }
         ]
@@ -369,22 +369,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "sing",
+            "targetValue": "skill_sing",
             "grantUnlearnedValue": 80
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "grantUnlearnedValue": 60
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -40
           }
         ]
@@ -470,7 +470,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "tracking",
+            "targetValue": "skill_tracking",
             "modifierPercent": 10
           },
           {
@@ -485,12 +485,12 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -40
           }
         ]
@@ -596,17 +596,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -40
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           }
         ]
@@ -686,12 +686,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           }
         ]
@@ -766,12 +766,12 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -30
           }
         ]

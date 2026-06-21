@@ -38,7 +38,8 @@ When the user points at a `.brief.json` file (or asks to run the orchestrator), 
 1. Read the brief JSON and run `npm run ingest:brief -- validate <brief>`.
 2. If no run exists, run `npm run ingest:brief -- init <brief>`.
 3. Load the matching playbook from the registry (`scripts/lib/ingest-brief-registry.mjs` → `playbook` path).
-4. Set `run.phase = "review"` and `run.status = "in_progress"`.
+4. **Genre source order:** When `brief.genre` is set, confirm `src/data/source/ingest-briefs/utils/genre-source-reference-order.json` defines that genre. If **missing**, ask the user for the canonical multi-book order, add it to the master file, then continue. Do not encode multi-book `sources[]` until the list exists ([`brief-format.md`](brief-format.md) § Multi-book source order).
+5. Set `run.phase = "review"` and `run.status = "in_progress"`.
 
 **Morphus `table_pipeline` exception:** When `contentType` is `morphus` and `options.mode` is `table_pipeline`, follow [`morphus.md`](morphus.md) + `npm run morphus:ingest` instead of manual batching. Still maintain `run.json` checklist/rulings; batches are pipeline steps (`prepare`, `build`, `finalize`).
 
@@ -46,8 +47,9 @@ When the user points at a `.brief.json` file (or asks to run the orchestrator), 
 
 1. Read the PDF pages in `book.path` (or ask the user to attach pages if the file is unavailable locally).
 2. List every **ingestable row** in scope (exact printed names).
-3. **Exclude** non-playable routers, duplicates outside scope, and rows already complete in catalog (note as `skipped` if `updateExisting` is false and row is Pass-complete per audit).
-4. Write `run.checklist[]`:
+3. **Morphus sandbox:** Build checklist from **production** `entries[]` in scope (same ids/names/percentiles). Cross-check printed book trait names; for any **book-only** or **production-only** playable trait, append an **open ruling** and **do not** add or remove sandbox rows until the user decides.
+4. **Exclude** non-playable routers, duplicates outside scope, and rows already complete in catalog (note as `skipped` if `updateExisting` is false and row is Pass-complete per audit).
+5. Write `run.checklist[]`:
 
 ```json
 { "name": "Acrobatics", "status": "pending", "pages": "53", "notes": null }
@@ -55,9 +57,9 @@ When the user points at a `.brief.json` file (or asks to run the orchestrator), 
 
 Statuses: `pending` | `ingested` | `skipped` | `blocked`
 
-5. If `brief.items` was pre-filled, reconcile names against the book (fix spelling, add missing rows, drop out-of-scope names).
+6. If `brief.items` was pre-filled, reconcile names against the book (fix spelling, add missing rows, drop out-of-scope names). **Morphus sandbox exception:** pre-listed / production names win for roster; book-only names become rulings, not checklist adds.
 
-**Deliverable to user (optional pause):** Short checklist summary before batching — only stop here if the user asked for review-first; otherwise continue.
+**Deliverable to user (optional pause):** Short checklist summary before batching — only stop here if the user asked for review-first; otherwise continue. **Morphus sandbox:** Always surface open **trait-list discrepancy** rulings in this summary.
 
 ### Phase 2 — Batch plan
 
@@ -131,7 +133,18 @@ For each batch with `status: "pending"` or `status: "in_progress"`:
 
 **Coordination:** When `linkedBriefs` is set, ingest linked jobs in the same session (e.g. race + Shadow O.C.C.) per the paired playbooks.
 
-**Sandbox output:** When `brief.sandboxOutput` is set, write catalog rows **only** to that path (JSON array for skills/talents/etc.). **Never** modify `src/data/content/` during a sandbox run. Still validate rows against the type schema before marking a batch complete.
+**Sandbox output:** When `brief.sandboxOutput` is set, write catalog rows **only** to that path. **Never** modify `src/data/content/` during a sandbox run. Still validate rows against the type schema before marking a batch complete.
+
+| `contentType` | Sandbox file shape |
+|---------------|-------------------|
+| `skills`, `magic`, `psionics`, `talents`, … | Top-level JSON **array** of row objects |
+| `morphus` | Full **table wrapper** (`id`, `kind`, `entries[]`) — **verbatim** copy from production on first seed; patch entries in place. Production owns trait list + percentiles; book drives descriptions/mechanics. |
+
+**Morphus sandbox Phase 1 (trait list):** Checklist from **production** rows in scope. Read PDF(s) and log `run.rulings[]` for any trait present in the book but not production (or vice versa) — **alert the user**; do not add/remove until ruled.
+
+**Dual-book morphus:** put the authoritative PDF in `book`; put the second source in `book.supplement` with its own page range. Read both during Phase 1 review and Pass B re-reads.
+
+**Multi-section morphus** (Stigmata I/II/III, Biomechanical I/II/III, …): **one brief per printed section**, same `options.table` and `sandboxOutput` across section briefs; use `options.section` + optional `options.tableCategory`. First section seeds sandbox; later sections patch in place. Chain with `linkedBriefs`. See [`brief-format.md`](brief-format.md) § Morphus.
 
 ### Phase 4 — Rulings log
 

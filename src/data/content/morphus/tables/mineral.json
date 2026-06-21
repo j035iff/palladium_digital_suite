@@ -426,22 +426,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           }
         ]
@@ -523,22 +523,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -15
           }
         ]
@@ -598,22 +598,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           }
         ]
@@ -689,22 +689,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -40
           }
         ]
@@ -772,22 +772,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -15
           }
         ]
@@ -867,22 +867,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -30
           }
         ]
@@ -955,32 +955,32 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "navigation",
+            "targetValue": "skill_navigation",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "land_navigation",
+            "targetValue": "skill_land_navigation",
             "modifierPercent": 5
           }
         ]
@@ -1054,22 +1054,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -20
           }
         ]
@@ -1156,22 +1156,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           }
         ]
@@ -1256,22 +1256,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -50
           }
         ]

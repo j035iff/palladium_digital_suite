@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-morphus-alien_shape-i-ab-sandbox",
+  "title": "Nightbane Alien Shape I (DD pp. 135–136 + core pp. 103–104) — AB sandbox",
+  "contentType": "morphus",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB6-Dark_Designs.pdf",
+    "reference": "Dark Designs (WB6)",
+    "pages": { "start": 135, "end": 136 },
+    "supplement": {
+      "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+      "reference": "Nightbane Core Rulebook",
+      "pages": { "start": 103, "end": 104 }
+    }
+  },
+  "options": {
+    "table": "alien_shape",
+    "section": "I"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-morphus-alien_shape-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Plasmoid",
+    "Bark-like Skin",
+    "Bony Exoskeleton",
+    "Thorns",
+    "Crystalline",
+    "Living Tattoos",
+    "Unusual Skin Color",
+    "Hulking Monster",
+    "Mouth-Covered Body"
+  ],
+  "notes": "Alien Shape Table I — Dark Designs authoritative for description/mechanics on existing rows. Production owns roster + percentiles (Alien Plantlife kept). Flag book-only Bark-like Skin / Thorns for user ruling."
+}

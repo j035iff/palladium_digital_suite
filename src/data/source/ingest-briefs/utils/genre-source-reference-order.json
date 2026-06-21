@@ -1,0 +1,82 @@
+{
+  "$description": "Canonical print order for sources[].reference when a catalog row cites more than one book in a genre. Used during ingest only — not loaded by runtime catalog loaders.",
+  "version": 1,
+  "genres": {
+    "nightbane": {
+      "title": "Nightbane",
+      "books": [
+        {
+          "bookKey": "core",
+          "title": "Nightbane Core",
+          "defaultReference": "Nightbane RPG",
+          "referenceAliases": [
+            "Nightbane Core",
+            "Nightbane Core Rulebook",
+            "Nightbane RPG",
+            "Nightbane® RPG",
+            "Nightbane® RPG (core rulebook)"
+          ]
+        },
+        {
+          "bookKey": "between_the_shadows",
+          "title": "Between the Shadows",
+          "defaultReference": "Between the Shadows",
+          "referenceAliases": [
+            "Between the Shadows",
+            "Nightbane® Between the Shadows (WB1)",
+            "Nightbane Between the Shadows"
+          ]
+        },
+        {
+          "bookKey": "nightlands",
+          "title": "Nightlands",
+          "defaultReference": "Nightlands",
+          "referenceAliases": [
+            "Nightlands",
+            "Nightbane® Sourcebook 2: Nightlands (WB2)",
+            "Nightbane Nightlands"
+          ]
+        },
+        {
+          "bookKey": "through_the_glass_darkly",
+          "title": "Through the Glass Darkly",
+          "defaultReference": "Through the Glass Darkly",
+          "referenceAliases": [
+            "Through the Glass Darkly",
+            "Nightbane® Through the Glass Darkly (WB3)"
+          ]
+        },
+        {
+          "bookKey": "shadows_of_light",
+          "title": "Shadows of Light",
+          "defaultReference": "Shadows of Light",
+          "referenceAliases": [
+            "Shadows of Light",
+            "Nightbane® Shadows of Light (WB4)"
+          ]
+        },
+        {
+          "bookKey": "survival_guide",
+          "title": "Nightbane Survival Guide",
+          "defaultReference": "Nightbane Survival Guide",
+          "referenceAliases": [
+            "Nightbane Survival Guide",
+            "Nightbane Survival Guide (WB5)",
+            "Nightbane® Survival Guide (WB5)"
+          ]
+        },
+        {
+          "bookKey": "dark_designs",
+          "title": "Dark Designs",
+          "defaultReference": "Dark Designs (WB6)",
+          "referenceAliases": [
+            "Dark Designs",
+            "Dark Designs (WB6)",
+            "Nightbane® Dark Designs Sourcebook (WB6)",
+            "Nightbane Dark Designs"
+          ]
+        }
+      ]
+    }
+  }
+}

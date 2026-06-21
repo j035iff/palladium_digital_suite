@@ -51,12 +51,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "intimidation",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 20
           }
         ]
@@ -69,6 +64,9 @@
       "percentile": {
         "min": 11,
         "max": 20
+      },
+      "attributeRollBonuses": {
+        "maTrustIntimidatePercent": 10
       }
     },
     {
@@ -130,17 +128,17 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -195,42 +193,42 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "escape_artist",
+            "targetValue": "skill_escape_artist",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "palming",
+            "targetValue": "skill_palming",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "concealment",
+            "targetValue": "skill_concealment",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
@@ -240,7 +238,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -296,12 +294,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -40
           },
           {
@@ -311,7 +309,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -40
           }
         ]
@@ -397,7 +395,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -406,18 +404,18 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -475,17 +473,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": 30
           }
         ]

@@ -80,6 +80,68 @@ Ingest Morphus table:
 
 After each batch run `npm run validate:schemas` and `npm run validate:morphus`. **Flag ambiguous book text and ask for a ruling** before encoding — do not guess.
 
+### Orchestrator briefs (trait batch)
+
+Use a `.brief.json` per job — see [`brief-format.md`](brief-format.md) § Morphus and [`orchestrator.md`](orchestrator.md).
+
+| Field | Morphus trait batch |
+|-------|---------------------|
+| `contentType` | `"morphus"` |
+| `pass` | `"AB"` (recommended for sandbox re-ingest) |
+| `options.table` | Catalog file id — `src/data/content/morphus/tables/<table>.json` |
+| `options.section` | **Required when the printed book has Table I / II / III** (or equivalent). One brief per section. |
+| `options.tableCategory` | Exact entry `tableCategory` when the catalog already splits sections (`Stigmata I`, `Plant Life II`, …). |
+| `book` + `book.supplement` | Up to **two** PDFs/page ranges **for this section only** |
+| `sandboxOutput` | **One path per catalog table** — shared across all section briefs for that table |
+| `linkedBriefs` | Chain section briefs in run order (III → II → I or book order) |
+
+#### Multi-section tables (global pattern)
+
+Applies to **Stigmata**, **Biomechanical**, **Alien Shape**, **Plant Life**, **Mineral**, **Unnatural Limbs**, **Unusual Facial Features**, **Animal Insectoid**, and any other catalog file whose manifest lists multiple `books[].tableHeading` values.
+
+| Do | Don't |
+|----|-------|
+| One brief per **printed section** (I, II, III) | One brief spanning all sections with different book pairs |
+| Same `options.table` + `sandboxOutput` for every section of that table | Separate sandbox files per section |
+| Scope checklist to this section's PDF pages + `tableCategory` when known | Re-seed sandbox from production on section 2+ |
+| Read manifest for authoritative book per section | Guess which book wins on conflicts |
+
+**Dual-book review:** Phase 1 checklist must reconcile traits across **both** page ranges for **this section**. When the same trait appears in both books, include both `sources[]` entries sorted by the genre master list ([`brief-format.md`](brief-format.md) § Multi-book source order); authoritative book wins for **description and mechanics** when they differ.
+
+#### Sandbox re-ingest policy (production catalog is row authority)
+
+Use sandbox runs to improve **book-accurate descriptions and structured mechanics** — not to replace the production trait roster or percentile layout unless the user explicitly rules otherwise.
+
+| Production owns (do not change in sandbox) | Book drives (update in sandbox) |
+|------------------------------------------|----------------------------------|
+| Full trait list (`entries[]` membership and `id`s) | `description` prose (authoritative book for section) |
+| `percentile` bands (including custom merged tables) | Pass A/B structured fields: `statModifiers`, `skillModifiers`, `naturalWeapons`, `sensory`, `damageAffinities`, etc. |
+| `tableCategory` labels unless user rules a split | `sources[]` (add missing book citations; fix page numbers; sort multi-book refs per genre master list) |
+| User-authored rows (e.g. Alien Plantlife vs DD Bark-like Skin) | Dual-book wording conflicts on **mechanics** — flag if unclear |
+
+**Seeding (every table run):**
+
+1. Copy production `src/data/content/morphus/tables/<table>.json` → `sandboxOutput` when the sandbox file is missing (first section brief only).
+2. Later section briefs **patch the same sandbox in place** — never re-seed (would undo prior sections).
+3. Phase 1 checklist = **production trait names** in scope for this section (filter by PDF pages / `brief.items` / `options.section` — not by replacing the list from the book).
+
+**Trait-list discrepancy gate (mandatory):**
+
+After reading the PDF(s), compare **printed playable trait names** vs **production checklist** for the section:
+
+| Situation | Agent action |
+|-----------|----------------|
+| Trait in **book only** | Open ruling — do **not** add to sandbox |
+| Trait in **production only** | Open ruling — do **not** remove from sandbox |
+| Same trait, different name | Open ruling (spelling vs distinct row) |
+| Same trait, both sources | Proceed — update description/mechanics only |
+
+Record discrepancies in `run.rulings[]` before Pass B. Continue other traits; skip add/remove until the user rules.
+
+**Pass A sandbox scope:** Refresh `description`, `sources[]`, core stats when book text differs — **preserve** `id`, `name`, `percentile`, `tableCategory`.
+
+**Pass B sandbox scope:** Deep structured fields from book — still no add/remove/rename without ruling.
+
 ---
 
 **Source of truth (code):**
@@ -124,7 +186,8 @@ Flag when you see:
 - **Impossible vs negated** — Disguise impossible in Morphus vs −% to Disguise
 - **Cross-table rolls** — redirect-only row (omit) vs trait with mechanics + optional sub-roll (keep + `crossTableRoll`)
 - **Hub vs leaf** — Step One routers belong in hub `description`, not as playable `entries[]` on leaf tables
-- **Multi-book conflicts** — Dark Designs vs core RPG wording (default: Dark Designs authoritative)
+- **Multi-book conflicts** — Dark Designs vs core RPG wording (default: Dark Designs authoritative for **description/mechanics** on existing rows)
+- **Production vs book trait list** — book adds or omits a playable trait vs production — **open ruling**; never add/remove rows silently
 - **Schema encoding** — multiple valid JSON shapes; prefer asking over inventing
 
 **After the user rules:** Encode in catalog JSON; add a note to **User rulings** when it sets a precedent.
@@ -273,6 +336,9 @@ No `audit:morphus` script yet — use `finalize` aggregation report + validator 
 | Mind control saves | Book lists +2 vs mind control | **Strip** from Morphus descriptions — Nightbane immunity (pipeline: `morphus-nightbane-prose.mjs`) |
 | Percentile on entries | Stored vs extract-only | **Optional** authoring field; PDF pipeline uses for extract, not required at runtime |
 | Skill penalties | Enumerate skills vs trait | Prefer **`skill_trait`** + `skill_trait_lists/*.txt` when book uses category phrasing |
+| Sandbox trait roster | Book PDF vs production `entries[]` | **Production owns list + percentiles**; book-only or production-only traits → **user ruling** before add/remove |
+| Sandbox ingest goal | Full book re-transcription | **Descriptions + structured mechanics** on existing production rows |
+| Alien Shape Table I | DD Bark-like/Thorns vs Alien Plantlife | **Keep production** — Alien Plantlife + Combination of 2 router; no DD-only rows added |
 
 ---
 

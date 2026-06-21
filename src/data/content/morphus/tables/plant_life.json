@@ -427,8 +427,8 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
@@ -575,8 +575,8 @@
             "modifierPercent": -15
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -15
           },
           {
@@ -641,8 +641,8 @@
             "modifierPercent": -15
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -15
           },
           {
@@ -719,8 +719,8 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
@@ -864,8 +864,8 @@
             "impossibleInMorphus": true
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "impossibleInMorphus": true
           },
           {
@@ -933,8 +933,8 @@
             "modifierPercent": -10
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -10
           },
           {
@@ -1004,8 +1004,8 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
@@ -1088,8 +1088,8 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
@@ -1172,8 +1172,8 @@
             "modifierPercent": -10
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -10
           },
           {

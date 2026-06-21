@@ -20,6 +20,7 @@ import {
   getContentType,
   resolvePassPhases,
 } from './lib/ingest-brief-registry.mjs'
+import { genreReferenceOrderWarning } from './lib/genre-source-reference-order.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const briefsRoot = join(root, 'src/data/source/ingest-briefs')
@@ -107,6 +108,15 @@ function validateBriefSemantics(brief) {
       if (!brief.options?.[key]) {
         errors.push(`options.${key} is required when morphus mode is table_pipeline`)
       }
+    }
+  }
+
+  if (brief.contentType === 'morphus' && brief.options?.table && brief.options?.mode !== 'table_pipeline') {
+    const sectionCount = morphusPrintedSectionCount(brief.options.table)
+    if (sectionCount != null && sectionCount > 1 && !brief.options.section) {
+      errors.push(
+        `options.section is required for morphus table "${brief.options.table}" (${sectionCount} printed sections in manifest)`,
+      )
     }
   }
 
@@ -201,10 +211,19 @@ function showBrief(brief, briefPath) {
   if (brief.genre) console.log(`  Genre:        ${brief.genre}`)
   console.log(`  Book:         ${brief.book.reference} ${pages}`)
   if (brief.book.path) console.log(`  PDF path:     ${brief.book.path}`)
+  if (brief.book.supplement) {
+    const supPages = formatPageRange(brief.book.supplement.pages)
+    console.log(`  Supplement:   ${brief.book.supplement.reference ?? '(no reference)'} ${supPages}`)
+    if (brief.book.supplement.path) console.log(`  Sup. path:    ${brief.book.supplement.path}`)
+  }
+  if (brief.sandboxOutput) console.log(`  Sandbox:      ${brief.sandboxOutput}`)
   console.log(`  Scope:        ${scope}`)
   console.log(`  Validation:   ${def.validateCommands.map((c) => `npm run ${c}`).join(', ')}`)
   if (brief.options && Object.keys(brief.options).length) {
     console.log(`  Options:      ${JSON.stringify(brief.options)}`)
+  }
+  if (brief.contentType === 'morphus' && brief.options?.section) {
+    console.log(`  Section:      ${brief.options.section}${brief.options.tableCategory ? ` → ${brief.options.tableCategory}` : ''}`)
   }
   if (brief.items?.length) {
     console.log(`  Pre-listed:   ${brief.items.length} item(s)`)
@@ -256,6 +275,60 @@ function showStatus(briefId) {
   }
 }
 
+function morphusManifestPath(tableId) {
+  return join(root, 'src/data/source/morphus-ingest', `${tableId}.manifest.json`)
+}
+
+function printedSectionKey(tableHeading) {
+  const line = (tableHeading ?? '').split('\n')[0].replace(/[-–—]+\s*$/g, '').trim()
+  const tableNumeral = line.match(/\bTable\s+(I{1,3}|IV|V|VI{0,3})\s*$/i)
+  if (tableNumeral) return tableNumeral[1].toUpperCase()
+  const trailingNumeral = line.match(/\b(I{1,3}|IV|V|VI{0,3})\s*$/i)
+  if (trailingNumeral && !/\bTable\s*$/i.test(line)) return trailingNumeral[1].toUpperCase()
+  const tableArabic = line.match(/\bTable\s+(\d+)\s*$/i)
+  if (tableArabic) return tableArabic[1]
+  const featuresII = line.match(/\bII\s*$/i)
+  if (featuresII && /Features|Life|Limbs|Insectoid|Beauty/i.test(line)) return 'II'
+  return 'I'
+}
+
+function morphusPrintedSectionCount(tableId) {
+  const manifestPath = morphusManifestPath(tableId)
+  if (!existsSync(manifestPath)) return null
+  const manifest = loadJson(manifestPath)
+  const sections = new Set(
+    (manifest.books ?? []).map((b) => printedSectionKey(b.tableHeading)).filter(Boolean),
+  )
+  return sections.size
+}
+
+function entryInBriefPageScope(entry, brief) {
+  const pageRefs = [brief.book, brief.book.supplement].filter(Boolean)
+  return (entry.sources ?? []).some((s) =>
+    pageRefs.some((book) => {
+      if (!book?.reference || book.reference !== s.reference) return false
+      const pages = book.pages
+      if (typeof pages === 'string') return true
+      const start = pages?.start
+      const end = pages?.end ?? start
+      if (start == null) return true
+      return s.pageNumber >= start && s.pageNumber <= end
+    }),
+  )
+}
+
+function morphusCompareScopeFilter(entry, brief, { productionFallback = false, prodByIdFull = null } = {}) {
+  if (brief.options?.tableCategory) {
+    if (entry.tableCategory === brief.options.tableCategory) return true
+    if (productionFallback && prodByIdFull?.has(entry.id)) return true
+    return false
+  }
+  if (brief.options?.section) {
+    return entryInBriefPageScope(entry, brief)
+  }
+  return true
+}
+
 function cmdChunk(argv) {
   let items = []
   let size = 6
@@ -288,32 +361,61 @@ function cmdCompare(argv) {
     throw new Error(`Sandbox file missing: ${sandboxPath}`)
   }
 
-  const sandbox = loadJson(sandboxPath)
-  if (!Array.isArray(sandbox)) throw new Error('sandboxOutput must be a JSON array')
+  const sandboxRaw = loadJson(sandboxPath)
 
   let productionPath
+  /** @type {Map<string, object>} */
+  let prodById
+  /** @type {object[]} */
+  let sandboxRows
+  let sandboxIds
+
   if (brief.contentType === 'skills') {
+    if (!Array.isArray(sandboxRaw)) throw new Error('sandboxOutput must be a JSON array for skills')
     const cat = brief.options?.category ?? 'Physical'
     const file = `${cat.toLowerCase().replace(/\s+/g, '_')}.json`
     productionPath = join(root, 'src/data/content/skills', file)
+    const production = loadJson(productionPath)
+    prodById = new Map(production.map((r) => [r.id, r]))
+    sandboxRows = sandboxRaw
+    sandboxIds = new Set(sandboxRows.map((r) => r.id))
+  } else if (brief.contentType === 'morphus') {
+    const tableId = brief.options?.table
+    if (!tableId) throw new Error('morphus compare requires options.table')
+    productionPath = join(root, 'src/data/content/morphus/tables', `${tableId}.json`)
+    const production = loadJson(productionPath)
+    const sandboxTable =
+      Array.isArray(sandboxRaw) ? { entries: sandboxRaw } : sandboxRaw
+    if (!Array.isArray(sandboxTable.entries)) {
+      throw new Error('morphus sandboxOutput must be a table wrapper with entries[] (or a trait array)')
+    }
+    prodById = new Map((production.entries ?? []).map((r) => [r.id, r]))
+    const prodByIdFull = prodById
+    sandboxRows = sandboxTable.entries.filter((row) =>
+      morphusCompareScopeFilter(row, brief),
+    )
+    sandboxIds = new Set(sandboxRows.map((r) => r.id))
+    prodById = new Map([...prodByIdFull.entries()].filter(([id]) => sandboxIds.has(id)))
   } else {
     throw new Error(`compare production path not implemented for ${brief.contentType}`)
   }
 
-  const production = loadJson(productionPath)
-  const prodById = new Map(production.map((r) => [r.id, r]))
-  const sandboxIds = new Set(sandbox.map((r) => r.id))
-
   console.log(`Compare: ${brief.title}`)
   console.log(`  Sandbox:    ${sandboxPath}`)
   console.log(`  Production: ${productionPath}`)
+  if (brief.contentType === 'morphus' && (brief.options?.tableCategory || brief.options?.section)) {
+    const scope =
+      brief.options.tableCategory ??
+      `section ${brief.options.section} (page scope)`
+    console.log(`  Scope:      ${scope}`)
+  }
   console.log('')
 
   let same = 0
   let different = 0
   let missingProd = 0
 
-  for (const row of sandbox) {
+  for (const row of sandboxRows) {
     const prod = prodById.get(row.id)
     if (!prod) {
       missingProd++
@@ -333,23 +435,30 @@ function cmdCompare(argv) {
     }
   }
 
+  const pageRefs = [brief.book, brief.book.supplement].filter(Boolean)
   const extraProd = [...prodById.keys()].filter((id) => {
-    if (!sandboxIds.has(id)) {
-      const p = prodById.get(id)
-      const nb = (p.sources ?? []).some(
-        (s) => s.reference === brief.book.reference && s.pageNumber >= 53 && s.pageNumber <= 55,
-      )
-      return nb
-    }
-    return false
+    if (sandboxIds.has(id)) return false
+    const p = prodById.get(id)
+    if (brief.contentType === 'morphus') return entryInBriefPageScope(p, brief)
+    return (p.sources ?? []).some((s) =>
+      pageRefs.some((book) => {
+        if (!book?.reference || book.reference !== s.reference) return false
+        const pages = book.pages
+        if (typeof pages === 'string') return true
+        const start = pages?.start
+        const end = pages?.end ?? start
+        if (start == null) return true
+        return s.pageNumber >= start && s.pageNumber <= end
+      }),
+    )
   })
 
   console.log('')
   console.log(
-    `Summary: ${same} identical · ${different} differ · ${missingProd} missing in production · ${extraProd.length} in production (pp. 53-55) not in sandbox`,
+    `Summary: ${same} identical · ${different} differ · ${missingProd} missing in production · ${extraProd.length} in production (brief page range) not in sandbox`,
   )
   if (extraProd.length) {
-    console.log(`  Production-only (53-55): ${extraProd.join(', ')}`)
+    console.log(`  Production-only (in scope): ${extraProd.join(', ')}`)
   }
 }
 
@@ -361,7 +470,7 @@ Commands:
   init <brief.json>       Create run state under src/data/source/ingest-briefs/runs/<id>/
   show <brief.json>       Human-readable brief summary
   status <brief-id>       Show run checklist, batches, open rulings
-  compare <brief-id>      Diff sandboxOutput vs production catalog (skills)
+  compare <brief-id>      Diff sandboxOutput vs production catalog (skills, morphus)
   chunk --items "A,B,C" --size 6   Split item names into batch lines
 
 Brief files live in: src/data/source/ingest-briefs/
@@ -381,6 +490,10 @@ function main() {
       case 'validate': {
         const { brief, path } = loadBrief(rest[0])
         console.log(`OK  ${path} — ${brief.title}`)
+        const refOrderWarning = genreReferenceOrderWarning(brief)
+        if (refOrderWarning) {
+          console.warn(`WARN  ${refOrderWarning}`)
+        }
         break
       }
       case 'init': {

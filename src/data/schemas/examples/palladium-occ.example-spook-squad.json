@@ -140,11 +140,11 @@
       },
       "occSkillsCore": [
         {
-          "skillId": "skill_hth_basic",
+          "skillId": "hth_basic",
           "bonusPercent": 0
         },
         {
-          "skillId": "skill_wp_pistol",
+          "skillId": "wp_automatic_pistol",
           "bonusPercent": 0
         },
         {

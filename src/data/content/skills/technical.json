@@ -411,9 +411,6 @@
         "reference": "Through the Glass Darkly",
         "pageNumber": 10
       }
-    ],
-    "skillTraits": [
-      "requires_focus"
     ]
   },
   {
@@ -567,10 +564,6 @@
         "appliesTo": "self",
         "condition": "Reduce skill proficiency by half."
       }
-    ],
-    "skillTraits": [
-      "requires_dexterity",
-      "work_education_related"
     ]
   },
   {
@@ -1856,10 +1849,6 @@
         "reference": "Through the Glass Darkly",
         "pageNumber": 10
       }
-    ],
-    "skillTraits": [
-      "requires_dexterity",
-      "requires_light_touch"
     ]
   },
   {

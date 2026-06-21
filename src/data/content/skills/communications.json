@@ -25,9 +25,6 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
-    ],
-    "skillTraits": [
-      "work_education_related"
     ]
   },
   {
@@ -108,10 +105,6 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
-    ],
-    "skillTraits": [
-      "related_to_electrical",
-      "work_education_related"
     ]
   },
   {
@@ -165,7 +158,7 @@
       }
     ],
     "skillTraits": [
-      "work_education_related"
+      "related_to_performance"
     ]
   },
   {

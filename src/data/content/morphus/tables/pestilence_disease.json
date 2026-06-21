@@ -52,7 +52,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           },
           {
@@ -62,12 +62,12 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
         ]
@@ -123,7 +123,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -132,18 +132,18 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -204,7 +204,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           },
           {
@@ -213,23 +213,23 @@
             "modifierPercent": -10
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
         ]
@@ -284,12 +284,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "barter",
+            "targetValue": "skill_barter",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -298,18 +298,18 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -361,12 +361,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "barter",
+            "targetValue": "skill_barter",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -30
           },
           {
@@ -375,18 +375,18 @@
             "modifierPercent": -30
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -30
           }
         ]
@@ -455,27 +455,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -484,18 +484,18 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -601,22 +601,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           },
           {
@@ -626,17 +626,17 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "tailing",
+            "targetValue": "skill_tailing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
         ]
@@ -690,7 +690,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           },
           {
@@ -700,7 +700,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
         ]
@@ -747,7 +747,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -15
           },
           {
@@ -756,18 +756,18 @@
             "modifierPercent": -15
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -15
           }
         ]
@@ -837,7 +837,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -846,18 +846,18 @@
             "modifierPercent": -20
           },
           {
-            "targetType": "skill_id",
-            "targetValue": "performance",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -919,17 +919,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]

@@ -106,18 +106,18 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "grantUnlearnedValue": 68,
             "perLevelIncrement": 4
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": 10
           }
         ]
@@ -169,27 +169,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -10
           }
         ]
@@ -263,7 +263,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -20
           }
         ]
@@ -368,42 +368,42 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_locks",
+            "targetValue": "skill_pick_locks",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_pockets",
+            "targetValue": "skill_pick_pockets",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -15
           }
         ]
@@ -447,7 +447,7 @@
               "specificSkillOverrides": [
                 {
                   "targetType": "skill_id",
-                  "targetValue": "prowl",
+                  "targetValue": "skill_prowl",
                   "modifierPercent": -20
                 }
               ]
@@ -500,12 +500,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -20
           },
           {

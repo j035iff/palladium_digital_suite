@@ -181,13 +181,8 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_trait",
-            "targetValue": "invoke_trust",
-            "impossibleInMorphus": true
           }
         ]
       },
@@ -214,7 +209,8 @@
         }
       ],
       "customOneOffs": [
-        "Weapons disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds)."
+        "Weapons disappear after striking the target and reappear on the Nightbane after a single melee round (15 seconds).",
+        "Invoke Trust is impossible in Morphus."
       ],
       "percentile": {
         "min": 16,
@@ -389,7 +385,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -20
           }
         ]

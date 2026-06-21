@@ -108,6 +108,8 @@ export const INGEST_CONTENT_TYPES = {
     validateCommands: ['validate:schemas', 'validate:morphus'],
     options: {
       table: 'required',
+      section: 'optional',
+      tableCategory: 'optional',
       mode: 'optional',
       tableHeading: 'optional',
       targetJson: 'optional',

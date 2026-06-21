@@ -46,9 +46,12 @@ Common mappings from book prose:
 | +2 on Perception Rolls | `statModifiers.perception.flat` or `sensory.perceptionSpecialties` |
 | +1 to Horror Factor | `statModifiers.hf.flat` |
 | +5 to roll with impact | `statModifiers.rollWithPunch.flat` |
-| -20% to Disguise | `skillModifiers.specificSkillOverrides` → `skill_disguise` |
-| -5% to skills requiring dexterity / light touch / focus / timing, or related to electrical / repair / mechanics | `specificSkillOverrides` with `targetType`: `skill_trait` and a registry id (`requires_dexterity`, `requires_light_touch`, `related_to_electrical`, `related_to_repair`, `related_to_mechanics`, `requires_timing`, `requires_focus`) — membership lists in `src/data/source/skill_trait_lists/` |
+| -20% to Disguise | `skillModifiers.specificSkillOverrides` → `targetValue`: **`skill_disguise`** (full catalog id) |
+| -5% to skills requiring dexterity / light touch / focus / timing, or related to electrical / repair / mechanics / performance | `specificSkillOverrides` with `targetType`: `skill_trait` and a registry id (`requires_dexterity`, `requires_light_touch`, `related_to_electrical`, `related_to_repair`, `related_to_mechanics`, `related_to_performance`, `requires_timing`, `requires_focus`) — membership lists in `src/data/source/skill_trait_lists/` |
+| +10% to invoke trust / intimidate (M.A.) or charm / impress (P.B.) | `attributeRollBonuses` (`maTrustIntimidatePercent`, `pbCharmImpressPercent`, optional `pbCharmImpressMinPercent`) — **not** fake `skill_id` targets like `invoke_trust` or `charm` |
 | Disguise impossible in Morphus | `specificSkillOverrides` with `impossibleInMorphus`: true (sheet shows **Impossible**) |
+
+**Skill ids:** Always use the catalog row id (`skill_prowl`, `skill_disguise`, …). Bare legacy slugs (`prowl`, `disguise`) do not resolve at runtime. Batch fix: `node scripts/normalize-morphus-skill-ids.mjs`.
 | impervious to cold / half damage from fire | `damageAffinities` (0 = none, 0.5 = half, 2 = double) |
 | cannot swim / floats on water | `mobility.aquaticTraits.buoyancy`: `sink` / `float` |
 | Natural A.R. 12 | `naturalAr`: 12 |
@@ -126,7 +129,7 @@ npm run morphus:ingest -- finalize my_table
 
 After schema is ready, `structure-entries` reads `extracted-authoritative.txt` and fills:
 
-- `statModifiers`, `saveModifiers`, `damageAffinities`, `skillModifiers`, `mobility`, `sensory`
+- `statModifiers`, `saveModifiers`, `damageAffinities`, `skillModifiers`, `attributeRollBonuses`, `mobility`, `sensory`
 - Capability fields (`atWillAbilities`, `combatContextModifiers`, `recoveryBehaviors`, …)
 - Full `description` from book (replaces `TODO: transcribe` stubs)
 
@@ -139,7 +142,9 @@ npm run morphus:ingest -- structure-entries my_table --target --force
 
 Extend parsers in `scripts/lib/morphus-transcribe-structure.mjs`, `scripts/lib/morphus-skill-modifier-parse.mjs`, and `MECHANIC_PATTERNS` in `morphus-schema-analysis.mjs` when new book phrasing appears. Goal: **zero or minimal `customOneOffs`** per trait.
 
-**Skill trait lists:** Trait membership is defined in `src/data/source/skill_trait_lists/*.txt` (dexterity, light touch, electrical, repair, mechanics, timing, focus). Run `npm run apply:skill-traits` after editing any list so rows in `src/data/content/skills/*.json` carry `skillTraits` (written back via `scripts/lib/skills-catalog-fs.mjs`). Registry ids live in `src/data/content/skills/utils/skill_trait_registry.json`. Ingest maps book phrases like “manual dexterity related skills”, “skills related to electronics”, or “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids.
+**Skill trait lists:** Trait membership is defined in `src/data/source/skill_trait_lists/*.txt` (dexterity, light touch, electrical, repair, mechanics, performance, timing, focus). Run `npm run apply:skill-traits` after editing any list so rows in `src/data/content/skills/*.json` carry `skillTraits` (written back via `scripts/lib/skills-catalog-fs.mjs`). Registry ids live in `src/data/content/skills/utils/skill_trait_registry.json`. Ingest maps book phrases like “manual dexterity related skills”, “skills related to electronics”, “-10% on skill performance”, or “requiring a light touch” to `skill_trait` overrides, not hand-enumerated skill ids or pseudo skills.
+
+**M.A. / P.B. social rolls:** Invoke trust, intimidation, and charm/impress are attribute percentile rolls (`getMaBonuses().trustIntimidate`, `getPbBonuses().charmImpress`). Morphus bonuses use `attributeRollBonuses` on the characteristic (or on `conditionalStanceModifiers` when stance-gated, e.g. costumed). Stance-gated trust/intimidate from legacy `skillContextModifiers` is migrated via `scripts/normalize-morphus-social-modifiers.mjs`.
 
 **Impossible skills:** Use `impossibleInMorphus: true` on a `specificSkillOverrides` row (not `isNegated`). Conditional impossibility (“Prowl impossible while music plays”) stays in `description` / `skillContextModifiers` until modeled; `structure-entries` skips “is impossible while …” for auto-flagging.
 

@@ -203,7 +203,8 @@
             "targetValue": "skill_seduction",
             "modifierPercent": 20
           }
-        ]
+        ],
+        "globalSkillModifier": -10
       },
       "customOneOffs": [
         "+10% to charm and impress (in addition to M.A./P.B. bonuses).",
@@ -222,6 +223,10 @@
       "percentile": {
         "min": 1,
         "max": 10
+      },
+      "attributeRollBonuses": {
+        "maTrustIntimidatePercent": 10,
+        "pbCharmImpressPercent": 10
       }
     },
     {

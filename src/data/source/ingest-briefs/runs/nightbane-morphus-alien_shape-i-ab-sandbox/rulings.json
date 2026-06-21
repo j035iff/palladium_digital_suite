@@ -1,0 +1,25 @@
+{
+  "open": [],
+  "resolved": [
+    {
+      "id": "ruling-01",
+      "item": "Bark-like Skin",
+      "userRuling": "Keep production roster — do not add Bark-like Skin"
+    },
+    {
+      "id": "ruling-02",
+      "item": "Thorns",
+      "userRuling": "Keep production roster — do not add Thorns"
+    },
+    {
+      "id": "ruling-03",
+      "item": "Alien Plantlife",
+      "userRuling": "Keep Alien Plantlife (production authoritative)"
+    },
+    {
+      "id": "ruling-04",
+      "item": "Combination of 2",
+      "userRuling": "Keep Combination of 2 as playable production router entry"
+    }
+  ]
+}

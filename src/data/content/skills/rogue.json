@@ -59,56 +59,6 @@
     ]
   },
   {
-    "id": "skill_con_artistry",
-    "name": "Con Artistry",
-    "gameSystems": [
-      "nightbane"
-    ],
-    "categories": [
-      "Rogue"
-    ],
-    "basePercent": 25,
-    "percentPerLevel": 4,
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 55
-      }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "The practiced ability to run cons and scams through deception, misdirection, and fast-talking to bilk or manipulate others.",
-    "skillTraits": [
-      "requires_focus"
-    ]
-  },
-  {
-    "id": "skill_fast_talk",
-    "name": "Fast Talk",
-    "gameSystems": [
-      "nightbane"
-    ],
-    "categories": [
-      "Rogue"
-    ],
-    "basePercent": 20,
-    "percentPerLevel": 4,
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 55
-      }
-    ],
-    "synergies": [],
-    "prerequisites": [],
-    "description": "The ability to think and speak quickly to bluff, confuse, distract, or deceive others in conversation.",
-    "skillTraits": [
-      "requires_focus"
-    ]
-  },
-  {
     "id": "skill_concealment",
     "name": "Concealment",
     "gameSystems": [
@@ -198,6 +148,9 @@
         "summary": "The character knows the penalties for being caught with contraband.",
         "appliesWhen": "When assessing legal risk around illegal goods or services."
       }
+    ],
+    "skillTraits": [
+      "requires_focus"
     ]
   },
   {
@@ -232,6 +185,9 @@
         "summary": "Can recognize undercover law enforcement, NSB agents, private detectives, spies, bounty hunters, and other people snooping under cover.",
         "appliesWhen": "On a successful identification roll."
       }
+    ],
+    "skillTraits": [
+      "requires_focus"
     ]
   },
   {
@@ -660,30 +616,6 @@
         }
       },
       {
-        "skillId": "skill_con_artistry",
-        "bonusPercent": 10,
-        "description": "+10% to Con Artistry against the victim of seduction.",
-        "applicability": {
-          "summary": "Against the victim of seduction",
-          "appliesWhen": "Used against the seduced victim.",
-          "contextTags": [
-            "victim_of_seduction"
-          ]
-        }
-      },
-      {
-        "skillId": "skill_fast_talk",
-        "bonusPercent": 10,
-        "description": "+10% to Fast Talk against the victim of seduction.",
-        "applicability": {
-          "summary": "Against the victim of seduction",
-          "appliesWhen": "Used against the seduced victim.",
-          "contextTags": [
-            "victim_of_seduction"
-          ]
-        }
-      },
-      {
         "skillId": "skill_sing",
         "bonusPercent": 5,
         "description": "+5% to Sing against the victim of seduction.",
@@ -710,7 +642,7 @@
     ],
     "prerequisites": [],
     "skillPercentAttributeModifiers": {
-      "summary": "+1% to Seduction per point of M.A. above 20, and +1% per 2 full points of P.B. above 17 (stacks per book).",
+      "summary": "+1% to Seduction per point of M.A. over 20, and +1% per two P.B. points over 17 (round up). Example: P.B. 23 (+3) and M.A. 24 (+4) = +7%.",
       "rules": [
         {
           "kind": "bonusPerPointAbove",
@@ -723,6 +655,7 @@
           "attribute": "pb",
           "threshold": 17,
           "perNPoints": 2,
+          "perNPointsRounding": "round_up",
           "percentPerPoint": 1
         }
       ]
@@ -764,24 +697,20 @@
     ],
     "unquantifiedMechanics": [
       {
+        "summary": "+5% to plant things on a seduced victim (same bonus band as Pick Pockets and Palming).",
+        "appliesWhen": "When planting items on the victim of a successful Seduction roll."
+      },
+      {
+        "summary": "+5% to Cardsharp against the victim of seduction (add structured synergy when skill_cardsharp is ingested).",
+        "appliesWhen": "Used against the seduced victim."
+      },
+      {
         "summary": "Anyone successfully seduced is distracted: skill performance is half and takes twice as long, does not notice people and events around them, and is easily caught off guard (no initiative and all bonuses are at half when attacked by a character other than the seducer).",
         "appliesWhen": "When a Seduction roll succeeds against a victim."
       },
       {
         "summary": "Seduced victims are completely vulnerable to the seducer: the seducer always gets the first attack/strike/action, the victim has no chance at self-defense against that first attack, and the victim loses one attack/action from surprise or horror.",
         "appliesWhen": "When a Seduction roll succeeds against a victim."
-      },
-      {
-        "summary": "The seducer can influence more than one person at a time — one additional victim per every three levels of experience.",
-        "appliesWhen": "When attempting to seduce multiple targets."
-      },
-      {
-        "summary": "Seduction victims who are intoxicated or drugged are easier to seduce (+5%).",
-        "appliesWhen": "When the target is intoxicated or drugged."
-      },
-      {
-        "summary": "+5% to any gambling-related skills against the victim of seduction.",
-        "appliesWhen": "When using gambling-related skills against a seduced victim."
       }
     ]
   },
@@ -915,6 +844,9 @@
         ],
         "effectKind": "implicit_knowledge"
       }
+    ],
+    "skillTraits": [
+      "requires_focus"
     ]
   }
 ]

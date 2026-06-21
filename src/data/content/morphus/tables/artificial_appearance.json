@@ -53,22 +53,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "wardrobe_and_grooming",
+            "targetValue": "skill_wardrobe_and_grooming",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": 5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 5
           }
         ]
@@ -277,12 +277,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           }
         ]
@@ -343,12 +343,12 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -30
           }
         ]
@@ -444,7 +444,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -15
           }
         ]
@@ -499,7 +499,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": 15,
             "grantUnlearnedValue": 40
           }
@@ -610,12 +610,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -15
           }
         ]
@@ -688,17 +688,17 @@
       ],
       "skillContextModifiers": [
         {
-          "skillId": "prowl",
+          "skillId": "skill_prowl",
           "modifierPercent": -50,
           "context": "daylight"
         },
         {
-          "skillId": "prowl",
+          "skillId": "skill_prowl",
           "modifierPercent": -50,
           "context": "bright_light"
         },
         {
-          "skillId": "prowl",
+          "skillId": "skill_prowl",
           "modifierPercent": -20,
           "context": "darkness"
         }
@@ -779,7 +779,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": 20
           },
           {

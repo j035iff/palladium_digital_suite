@@ -1,4 +1,5 @@
 import type {
+  MorphusAttributeRollBonuses,
   MorphusCapabilityCategory,
   MorphusCapabilityPolarity,
   MorphusCapabilitySummary,
@@ -1199,6 +1200,48 @@ export function aggregateMorphusBalanceModifierPercent(
   return total
 }
 
+/** Sum M.A./P.B. social attribute roll bonuses from traits (+ optional stance). */
+export function aggregateMorphusAttributeRollBonuses(
+  traits: readonly Pick<MorphusCharacteristic, 'attributeRollBonuses' | 'mobility'>[],
+  stanceType?: MorphusStanceType,
+): MorphusAttributeRollBonuses {
+  let maTrustIntimidatePercent = 0
+  let pbCharmImpressPercent = 0
+  let pbCharmImpressMinPercent: number | undefined
+
+  for (const t of traits) {
+    mergeAttributeRollBonuses(t.attributeRollBonuses)
+    if (stanceType) {
+      const stance = t.mobility?.conditionalStanceModifiers?.find(
+        (row) => row.stanceType === stanceType,
+      )
+      mergeAttributeRollBonuses(stance?.attributeRollBonuses)
+    }
+  }
+
+  function mergeAttributeRollBonuses(block?: MorphusAttributeRollBonuses) {
+    if (!block) return
+    if (typeof block.maTrustIntimidatePercent === 'number') {
+      maTrustIntimidatePercent += block.maTrustIntimidatePercent
+    }
+    if (typeof block.pbCharmImpressPercent === 'number') {
+      pbCharmImpressPercent += block.pbCharmImpressPercent
+    }
+    if (typeof block.pbCharmImpressMinPercent === 'number') {
+      pbCharmImpressMinPercent =
+        pbCharmImpressMinPercent == null
+          ? block.pbCharmImpressMinPercent
+          : Math.max(pbCharmImpressMinPercent, block.pbCharmImpressMinPercent)
+    }
+  }
+
+  const out: MorphusAttributeRollBonuses = {}
+  if (maTrustIntimidatePercent !== 0) out.maTrustIntimidatePercent = maTrustIntimidatePercent
+  if (pbCharmImpressPercent !== 0) out.pbCharmImpressPercent = pbCharmImpressPercent
+  if (pbCharmImpressMinPercent != null) out.pbCharmImpressMinPercent = pbCharmImpressMinPercent
+  return out
+}
+
 /** Highest reach extension among active traits. */
 export function aggregateMorphusReachPercentBonus(
   traits: readonly Pick<MorphusCharacteristic, 'mobility'>[],
@@ -1709,6 +1752,40 @@ export function buildMorphusCapabilitySummary(
         t,
         scm.modifierPercent >= 0 ? 'bonus' : 'penalty',
       )
+    }
+
+    const arb = t.attributeRollBonuses
+    if (arb) {
+      if (arb.maTrustIntimidatePercent != null) {
+        pushCapabilityLine(
+          lines,
+          'skills',
+          'M.A. trust / intimidate',
+          `${formatSigned(arb.maTrustIntimidatePercent)}%`,
+          t,
+          arb.maTrustIntimidatePercent >= 0 ? 'bonus' : 'penalty',
+        )
+      }
+      if (arb.pbCharmImpressPercent != null) {
+        pushCapabilityLine(
+          lines,
+          'skills',
+          'P.B. charm / impress',
+          `${formatSigned(arb.pbCharmImpressPercent)}%`,
+          t,
+          arb.pbCharmImpressPercent >= 0 ? 'bonus' : 'penalty',
+        )
+      }
+      if (arb.pbCharmImpressMinPercent != null) {
+        pushCapabilityLine(
+          lines,
+          'skills',
+          'P.B. charm / impress (base)',
+          `${arb.pbCharmImpressMinPercent}% minimum`,
+          t,
+          'bonus',
+        )
+      }
     }
 
     const dl = t.disguiseLimits

@@ -44,27 +44,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "interrogation",
+            "targetValue": "skill_interrogation_techniques",
             "modifierPercent": 5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -40
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -40
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -25
           },
           {
             "targetType": "skill_id",
-            "targetValue": "barter",
+            "targetValue": "skill_barter",
             "modifierPercent": -25
           },
           {
@@ -127,37 +127,37 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "escape_artist",
+            "targetValue": "skill_escape_artist",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "concealment",
+            "targetValue": "skill_concealment",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "palming",
+            "targetValue": "skill_palming",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
+            "targetValue": "skill_seduction",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "barter",
+            "targetValue": "skill_barter",
             "modifierPercent": -30
           },
           {
@@ -225,22 +225,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "intimidation",
+            "targetValue": "skill_interrogation_techniques",
             "modifierPercent": 13
           },
           {
             "targetType": "skill_id",
-            "targetValue": "interrogation",
-            "modifierPercent": 13
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -265,6 +260,9 @@
       "percentile": {
         "min": 41,
         "max": 50
+      },
+      "attributeRollBonuses": {
+        "maTrustIntimidatePercent": 13
       }
     },
     {
@@ -319,12 +317,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -394,12 +392,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -455,27 +453,22 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "intimidation",
+            "targetValue": "skill_interrogation_techniques",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "interrogation",
+            "targetValue": "skill_seduction",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "seduction",
-            "modifierPercent": 10
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -490,6 +483,9 @@
       "percentile": {
         "min": 31,
         "max": 40
+      },
+      "attributeRollBonuses": {
+        "maTrustIntimidatePercent": 10
       }
     },
     {
@@ -591,12 +587,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]

@@ -79,6 +79,10 @@
     "skillModifiers": {
       "$ref": "#/$defs/skillModifiers"
     },
+    "attributeRollBonuses": {
+      "$ref": "#/$defs/attributeRollBonuses",
+      "description": "Additive % to M.A. trust/intimidate and P.B. charm/impress attribute rolls (not catalog skills)."
+    },
     "damageAffinities": {
       "$ref": "#/$defs/damageAffinities"
     },
@@ -1187,6 +1191,10 @@
         "statModifiers": {
           "$ref": "#/$defs/statModifiers",
           "description": "Attribute/combat modifiers active only while this stance applies."
+        },
+        "attributeRollBonuses": {
+          "$ref": "#/$defs/attributeRollBonuses",
+          "description": "M.A./P.B. social roll bonuses active only while this stance applies."
         }
       }
     },
@@ -1574,6 +1582,27 @@
             "$ref": "#/$defs/customSystemRoll"
           },
           "description": "Narrative / psychic percentile checks not tied to the skill catalog (Artisan table)."
+        }
+      }
+    },
+    "attributeRollBonuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "maTrustIntimidatePercent": {
+          "type": "integer",
+          "description": "Additive % to M.A. invoke trust / intimidate rolls (stacks with attribute table bonus)."
+        },
+        "pbCharmImpressPercent": {
+          "type": "integer",
+          "description": "Additive % to P.B. charm / impress rolls (stacks with attribute table bonus)."
+        },
+        "pbCharmImpressMinPercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 98,
+          "description": "Optional floor for P.B. charm / impress when the book grants a base percentage (e.g. clown nose gimmick)."
         }
       }
     },

@@ -63,8 +63,8 @@
       }
     ],
     "skillTraits": [
-      "requires_focus",
-      "requires_timing"
+      "related_to_performance",
+      "requires_focus"
     ]
   },
   {
@@ -240,6 +240,11 @@
         "reference": "Nightbane RPG",
         "pageNumber": 49
       }
+    ],
+    "skillTraits": [
+      "related_to_performance",
+      "requires_dexterity",
+      "requires_focus"
     ]
   },
   {
@@ -314,7 +319,7 @@
       }
     ],
     "skillTraits": [
-      "requires_timing"
+      "related_to_performance"
     ]
   },
   {

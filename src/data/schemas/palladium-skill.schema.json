@@ -2879,6 +2879,11 @@
         "percentPerPoint": {
           "type": "number",
           "description": "Skill % added **per counted unit**: per excess **point** when **perNPoints** is 1, or **per completed block** of **perNPoints** excess points when N > 1."
+        },
+        "perNPointsRounding": {
+          "type": "string",
+          "enum": ["floor", "round_up"],
+          "description": "How to count partial **perNPoints** blocks (default **floor**). Seduction P.B. uses **round_up** per book."
         }
       }
     },
@@ -2906,6 +2911,11 @@
         "percentPerStep": {
           "type": "number",
           "description": "Skill % added per completed step (e.g. 1 for +1% per step)."
+        },
+        "perNPointsRounding": {
+          "type": "string",
+          "enum": ["floor", "round_up"],
+          "description": "How to count partial steps (default **floor**)."
         }
       }
     },

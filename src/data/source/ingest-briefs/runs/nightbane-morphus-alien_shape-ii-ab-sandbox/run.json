@@ -1,0 +1,42 @@
+{
+  "briefId": "nightbane-morphus-alien_shape-ii-ab-sandbox",
+  "briefTitle": "Nightbane Alien Shape II (SG pp. 72–73) — AB sandbox",
+  "contentType": "morphus",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/morphus.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-20T12:00:00.000Z",
+  "updatedAt": "2026-06-20T12:00:00.000Z",
+  "checklist": [
+    { "name": "No Bones", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Armored Scales", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Multiple Heads", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Shadow Man", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Slimy, Slug-Like Skin", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Abnormally Large Sensory Organs", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Shaggy Hairy", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": null },
+    { "name": "Wrinkled Skin", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72-73", "notes": null },
+    { "name": "Brute", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "On Fire", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "Baggy Flaps of Skin", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "Cone Head", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null }
+  ],
+  "batches": [
+    { "id": "batch-01", "status": "complete", "pass": "A", "pages": { "start": 72, "end": 72 }, "items": ["No Bones", "Armored Scales", "Multiple Heads"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-02", "status": "complete", "pass": "A", "pages": { "start": 72, "end": 72 }, "items": ["Shadow Man", "Slimy, Slug-Like Skin", "Abnormally Large Sensory Organs"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-03", "status": "complete", "pass": "A", "pages": { "start": 72, "end": 73 }, "items": ["Shaggy Hairy", "Wrinkled Skin", "Brute"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-04", "status": "complete", "pass": "A", "pages": { "start": 73, "end": 73 }, "items": ["On Fire", "Baggy Flaps of Skin", "Cone Head"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-b-01", "status": "complete", "pass": "B", "pages": { "start": 72, "end": 72 }, "items": ["No Bones", "Armored Scales"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-02", "status": "complete", "pass": "B", "pages": { "start": 72, "end": 72 }, "items": ["Multiple Heads", "Shadow Man"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-03", "status": "complete", "pass": "B", "pages": { "start": 72, "end": 73 }, "items": ["Slimy, Slug-Like Skin", "Abnormally Large Sensory Organs"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-04", "status": "complete", "pass": "B", "pages": { "start": 72, "end": 73 }, "items": ["Shaggy Hairy", "Wrinkled Skin"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-05", "status": "complete", "pass": "B", "pages": { "start": 73, "end": 73 }, "items": ["Brute", "On Fire"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-06", "status": "complete", "pass": "B", "pages": { "start": 73, "end": 73 }, "items": ["Baggy Flaps of Skin", "Cone Head"], "playbookScope": "include mechanics", "notes": null }
+  ],
+  "rulings": [],
+  "completedBatchIds": ["batch-01", "batch-02", "batch-03", "batch-04", "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05", "batch-b-06"],
+  "validationCommands": ["validate:schemas", "validate:morphus"]
+}

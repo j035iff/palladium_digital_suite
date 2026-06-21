@@ -72,3 +72,5 @@ When adding, updating, or auditing GM encounter templates (`src/data/content/enc
 
 ### Ingest orchestrator (multi-batch jobs)
 When the user provides a `*.brief.json` under `src/data/source/ingest-briefs/` or asks to run the ingest orchestrator, follow **`docs/ingest/orchestrator.md`** end-to-end: validate/init brief → content review checklist → batch plan → ingest one batch at a time → persist `runs/<id>/run.json` → completion report with open rulings. Brief format: **`docs/ingest/brief-format.md`**. CLI: `npm run ingest:brief`.
+
+**Multi-book `sources[]` order (all content types):** When a row cites more than one book in a genre, order `sources[]` by **`src/data/source/ingest-briefs/utils/genre-source-reference-order.json`**. If the genre has no entry, ask the user for the canonical book order before encoding multi-book rows. Citation order is separate from which book is authoritative for conflicting description/mechanics.

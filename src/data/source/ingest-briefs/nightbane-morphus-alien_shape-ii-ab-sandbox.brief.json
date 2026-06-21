@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-morphus-alien_shape-ii-ab-sandbox",
+  "title": "Nightbane Alien Shape II (SG pp. 72–73) — AB sandbox",
+  "contentType": "morphus",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB5-Nightbane_Survival_Guide.pdf",
+    "reference": "Nightbane Survival Guide (WB5)",
+    "pages": { "start": 72, "end": 73 }
+  },
+  "options": {
+    "table": "alien_shape",
+    "section": "II"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-morphus-alien_shape-sandbox.json",
+  "linkedBriefs": ["nightbane-morphus-alien_shape-i-ab-sandbox"],
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "No Bones",
+    "Armored Scales",
+    "Multiple Heads",
+    "Shadow Man",
+    "Slimy, Slug-Like Skin",
+    "Abnormally Large Sensory Organs",
+    "Shaggy Hairy",
+    "Wrinkled Skin",
+    "Brute",
+    "On Fire",
+    "Baggy Flaps of Skin",
+    "Cone Head"
+  ],
+  "notes": "Alien Shape Table II — Survival Guide only. Seed verbatim from production; preserve percentiles and roster. Book-accurate descriptions/mechanics only."
+}

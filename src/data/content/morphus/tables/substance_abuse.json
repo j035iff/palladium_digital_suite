@@ -312,13 +312,8 @@
             "modifierPercent": -30
           },
           {
-            "targetType": "category",
-            "targetValue": "performance",
-            "modifierPercent": -30
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "skill_public_speaking",
+            "targetType": "skill_trait",
+            "targetValue": "related_to_performance",
             "modifierPercent": -30
           }
         ]

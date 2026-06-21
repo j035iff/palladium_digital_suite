@@ -259,10 +259,13 @@ Run many ingest batches from one brief file instead of pasting each batch manual
 | Run state | `src/data/source/ingest-briefs/runs/<id>/run.json` |
 | CLI | `npm run ingest:brief -- validate \| init \| show \| status \| chunk` |
 | Registry | `scripts/lib/ingest-brief-registry.mjs` |
+| Genre source order | `src/data/source/ingest-briefs/utils/genre-source-reference-order.json` · `scripts/lib/genre-source-reference-order.mjs` |
 
 **User flow:** copy an example brief → fill `contentType`, `pass`, `book`, pages, `options` → `npm run ingest:brief -- validate` + `init` → one agent message: *Run the ingest orchestrator on @…brief.json*.
 
-**Agent flow:** review PDF pages → checklist → batch plan (playbook batch sizes) → ingest one batch at a time with validation → persist rulings → completion report.
+**Agent flow:** confirm genre master list exists (or ask user) → review PDF pages → checklist → batch plan (playbook batch sizes) → ingest one batch at a time with validation → persist rulings → completion report.
+
+**Multi-book rows:** When `sources[]` cites more than one book, order references per the genre master list ([`brief-format.md`](ingest/brief-format.md) § Multi-book source order). Citation order is separate from which book is authoritative for conflicting text.
 
 ---
 
@@ -410,7 +413,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 |--------------|-------------------|
 | Content JSON paths, folder layout, `utils/` placement | [`docs/content-catalog-layout.md`](content-catalog-layout.md), [`docs/gemini-project-context.md`](gemini-project-context.md) content tables, relevant ingest playbook path tables, `palladiumSchemaPaths.ts` comments if needed |
 | Ingest batch rules, Pass A/B scope, validation commands | Matching ingest playbook under `docs/ingest/`, `.cursorrules` if agent routing changes |
-| Ingest orchestrator, brief format, multi-batch workflow | [`docs/ingest/orchestrator.md`](ingest/orchestrator.md), [`docs/ingest/brief-format.md`](ingest/brief-format.md), `scripts/lib/ingest-brief-registry.mjs` if content types change |
+| Ingest orchestrator, brief format, multi-batch workflow | [`docs/ingest/orchestrator.md`](ingest/orchestrator.md), [`docs/ingest/brief-format.md`](ingest/brief-format.md), `genre-source-reference-order.json` when adding genres, `scripts/lib/ingest-brief-registry.mjs` if content types change |
 | JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
 | Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge/character_creation.md`](forge/character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |

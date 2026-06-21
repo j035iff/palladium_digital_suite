@@ -338,13 +338,15 @@ export function formatAjvErrors(validate) {
 
 
 
+import { sortSourcesByGenreReferenceOrder } from './genre-source-reference-order.mjs'
+
 /** Build catalog sources[] from merged trait index row. */
 
 export function sourcesFromTraitIndex(trait, gameSystem) {
 
   const refs = trait.sources ?? []
 
-  return refs.map((s) => ({
+  const sources = refs.map((s) => ({
 
     gameSystem,
 
@@ -353,6 +355,8 @@ export function sourcesFromTraitIndex(trait, gameSystem) {
     pageNumber: s.pageNumber,
 
   }))
+
+  return sortSourcesByGenreReferenceOrder(gameSystem, sources)
 
 }
 

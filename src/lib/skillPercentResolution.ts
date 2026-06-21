@@ -1,4 +1,5 @@
 import type { ActiveForm, Character, MorphusCharacteristic } from '../types'
+import { getFormState } from '../types'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
@@ -8,6 +9,10 @@ import {
 } from './skillEquation'
 import { sumMorphusSkillPercentForCatalogSkill } from './morphusSkillModifierAggregation'
 import type { MorphusSurfaceType } from '../types'
+import {
+  sumSkillPercentAttributeModifierPercent,
+  type SkillPercentAttributeScores,
+} from './skillPercentAttributeModifiers'
 
 export type SkillPercentBreakdownLine = {
   label: string
@@ -26,13 +31,19 @@ export type SkillPercentBreakdown = {
 export function buildSkillPercentContext(
   character: Pick<
     Character,
-    'level' | 'primary' | 'activeMorphusCharacteristicIds'
+    | 'level'
+    | 'primary'
+    | 'morphus'
+    | 'activeMorphusCharacteristicIds'
+    | 'morphusTraitSlotResolutions'
   >,
   activeForm: ActiveForm,
   iqBonus: number,
   maPbBonus = 0,
   morphusSurfaceType: MorphusSurfaceType = 'hard_flat',
 ): SkillPercentResolutionContext {
+  const form = getFormState(character, activeForm)
+  const attrs = form.attributes
   return {
     characterLevel: character.level,
     iqBonus,
@@ -41,6 +52,16 @@ export function buildSkillPercentContext(
     primaryPp: character.primary.attributes.pp,
     morphusSurfaceType,
     activeMorphusCharacteristics: resolveActiveMorphusTraits(character),
+    attributeScores: {
+      iq: attrs.iq,
+      me: attrs.me,
+      ma: attrs.ma,
+      ps: attrs.ps.score,
+      pp: attrs.pp,
+      pe: attrs.pe,
+      pb: attrs.pb,
+      spd: attrs.spd,
+    },
   }
 }
 
@@ -54,6 +75,8 @@ export type SkillPercentResolutionContext = {
   activeMorphusCharacteristics?: readonly MorphusCharacteristic[]
   /** Terrain surface for Morphus mobility-isolated skill rows (default hard_flat). */
   morphusSurfaceType?: MorphusSurfaceType
+  /** Active-form attribute scores for skillPercentAttributeModifiers. */
+  attributeScores?: SkillPercentAttributeScores
 }
 
 function clampResolvedSkillPercent(n: number): number {
@@ -65,19 +88,23 @@ function catalogForSkillId(skillId: string): PalladiumSkillCatalogEntry | undefi
   return getPalladiumSkillCatalogEntryById(skillId)
 }
 
+function attributeScoresFromContext(
+  ctx: SkillPercentResolutionContext,
+): SkillPercentAttributeScores {
+  return ctx.attributeScores ?? {}
+}
+
 /**
- * Master equation + facade P.P. trait penalties + Morphus skill modifiers.
+ * Master equation + skill-specific attribute modifiers + Morphus skill modifiers.
  */
 export function resolveSkillPercent(
   skill: SkillEquationSkill & { id: string },
   ctx: SkillPercentResolutionContext,
-  catalogEntry?: Pick<
-    PalladiumSkillCatalogEntry,
-    'id' | 'categories' | 'skillTraits'
-  >,
+  catalogEntry?: PalladiumSkillCatalogEntry,
 ): SkillPercentBreakdown {
   const catalog = catalogEntry ?? catalogForSkillId(skill.id)
   const maPb = ctx.maPbBonus ?? 0
+
   const equationPercent = calculateSkillPercent(
     {
       ...skill,
@@ -88,6 +115,16 @@ export function resolveSkillPercent(
   )
 
   const lines: SkillPercentBreakdownLine[] = []
+
+  if (catalog?.skillPercentAttributeModifiers) {
+    const attrMods = sumSkillPercentAttributeModifierPercent(
+      catalog.skillPercentAttributeModifiers,
+      attributeScoresFromContext(ctx),
+    )
+    for (const line of attrMods.lines) {
+      lines.push(line)
+    }
+  }
 
   if (
     ctx.activeForm === 'morphus' &&
@@ -123,10 +160,11 @@ export function resolveSkillPercent(
         value: 0,
       })
     }
+    const modifierTotal = lines.reduce((s, l) => s + l.value, 0)
     return {
       equationPercent,
       lines,
-      total: clampResolvedSkillPercent(equationPercent + morphus.total),
+      total: clampResolvedSkillPercent(equationPercent + modifierTotal),
     }
   }
 

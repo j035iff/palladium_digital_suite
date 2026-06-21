@@ -534,11 +534,6 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
-            "impossibleInMorphus": true
-          },
-          {
-            "targetType": "skill_id",
             "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }

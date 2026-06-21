@@ -59,37 +59,37 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "tailing",
+            "targetValue": "skill_tailing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "impossibleInMorphus": true
           }
         ]
@@ -228,7 +228,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -20
           }
         ]
@@ -361,27 +361,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "dance",
+            "targetValue": "skill_dance",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]
@@ -441,27 +441,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "dance",
+            "targetValue": "skill_dance",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -15
           }
         ]
@@ -568,17 +568,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "impossibleInMorphus": true
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -10
           }
         ]
@@ -632,7 +632,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": 15
           }
         ]
@@ -701,17 +701,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -20
           },
           {
@@ -721,7 +721,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "undercover_ops",
+            "targetValue": "skill_undercover_ops",
             "modifierPercent": -20
           }
         ]

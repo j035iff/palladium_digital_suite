@@ -71,37 +71,37 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "art",
+            "targetValue": "skill_art",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_locks",
+            "targetValue": "skill_pick_locks",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_pockets",
+            "targetValue": "skill_pick_pockets",
             "modifierPercent": -5
           },
           {
@@ -173,37 +173,37 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -30
           },
           {
             "targetType": "skill_id",
-            "targetValue": "art",
+            "targetValue": "skill_art",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_locks",
+            "targetValue": "skill_pick_locks",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "pick_pockets",
+            "targetValue": "skill_pick_pockets",
             "modifierPercent": -20
           },
           {
@@ -411,12 +411,12 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "anthropology",
+            "targetValue": "skill_anthropology",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "archeology",
+            "targetValue": "skill_archaeology",
             "modifierPercent": 10
           }
         ]
@@ -522,12 +522,12 @@
             },
             {
               "targetType": "skill_id",
-              "targetValue": "interrogation",
+              "targetValue": "skill_interrogation_techniques",
               "modifierPercent": 10
             },
             {
               "targetType": "skill_id",
-              "targetValue": "intelligence",
+              "targetValue": "skill_intelligence",
               "modifierPercent": 10
             }
           ]
@@ -584,7 +584,7 @@
           "skillGrants": [
             {
               "targetType": "skill_id",
-              "targetValue": "crime_scene_investigation",
+              "targetValue": "skill_criminal_sciences_and_forensics",
               "modifierPercent": 10
             },
             {
@@ -639,12 +639,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "camouflage",
+            "targetValue": "skill_camouflage",
             "modifierPercent": 20
           }
         ]

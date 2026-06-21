@@ -942,6 +942,16 @@ export type MorphusStanceType =
 export type MorphusConditionalStanceModifier = {
   stanceType: MorphusStanceType
   statModifiers: MorphusStatModifiers
+  attributeRollBonuses?: MorphusAttributeRollBonuses
+}
+
+export type MorphusAttributeRollBonuses = {
+  /** Additive % to M.A. invoke trust / intimidate (stacks with attribute table). */
+  maTrustIntimidatePercent?: number
+  /** Additive % to P.B. charm / impress (stacks with attribute table). */
+  pbCharmImpressPercent?: number
+  /** Optional floor for P.B. charm / impress when the book grants a base %. */
+  pbCharmImpressMinPercent?: number
 }
 
 export type MorphusPoolSharingRule =
@@ -1306,6 +1316,7 @@ export type MorphusCharacteristic = {
   mobility?: MorphusMobility
   sensory?: MorphusSensory
   skillModifiers?: MorphusSkillModifiers
+  attributeRollBonuses?: MorphusAttributeRollBonuses
   damageAffinities?: MorphusDamageAffinities
   magicInteractionModifiers?: MorphusMagicInteractionModifiers
   weaponClassBonuses?: MorphusWeaponClassBonuses

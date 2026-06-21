@@ -24,8 +24,7 @@
     "skillTraits": [
       "related_to_mechanics",
       "related_to_repair",
-      "requires_dexterity",
-      "work_education_related"
+      "requires_dexterity"
     ]
   },
   {
@@ -65,8 +64,7 @@
     "skillTraits": [
       "related_to_mechanics",
       "related_to_repair",
-      "requires_dexterity",
-      "work_education_related"
+      "requires_dexterity"
     ]
   },
   {
@@ -94,8 +92,7 @@
     "skillTraits": [
       "related_to_mechanics",
       "related_to_repair",
-      "requires_dexterity",
-      "work_education_related"
+      "requires_dexterity"
     ]
   },
   {
@@ -288,10 +285,7 @@
       }
     ],
     "skillTraits": [
-      "related_to_mechanics",
-      "related_to_repair",
-      "requires_dexterity",
-      "work_education_related"
+      "related_to_mechanics"
     ]
   },
   {
@@ -429,10 +423,7 @@
       }
     ],
     "skillTraits": [
-      "related_to_mechanics",
-      "related_to_repair",
-      "requires_dexterity",
-      "work_education_related"
+      "related_to_mechanics"
     ]
   }
 ]

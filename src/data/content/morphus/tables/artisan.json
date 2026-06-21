@@ -32,27 +32,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "art",
+            "targetValue": "skill_art",
             "modifierPercent": 15
           },
           {
             "targetType": "skill_id",
-            "targetValue": "camouflage",
+            "targetValue": "skill_camouflage",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -10
           }
         ]
@@ -112,17 +112,17 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "scuba",
+            "targetValue": "skill_scuba",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           }
         ]
@@ -178,7 +178,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "art",
+            "targetValue": "skill_art",
             "modifierPercent": 10
           }
         ]
@@ -223,7 +223,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "whittling_and_sculpting",
+            "targetValue": "skill_sculpting_and_whittling",
             "modifierPercent": 10
           },
           {
@@ -288,12 +288,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "creative_writing",
+            "targetValue": "skill_creative_writing",
             "modifierPercent": 10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "technical_writing",
+            "targetValue": "skill_writing",
             "modifierPercent": 10
           }
         ],
@@ -351,7 +351,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": 15
           },
           {
@@ -377,22 +377,13 @@
               "pb": {
                 "dice": "1D4"
               }
+            },
+            "attributeRollBonuses": {
+              "maTrustIntimidatePercent": 10
             }
           }
         ]
       },
-      "skillContextModifiers": [
-        {
-          "skillId": "invoke_trust",
-          "modifierPercent": 10,
-          "context": "costumed"
-        },
-        {
-          "skillId": "intimidation",
-          "modifierPercent": 10,
-          "context": "costumed"
-        }
-      ],
       "customOneOffs": [
         "Gains an additional +5% to any other skill that might benefit from a specific outfit (e.g. dark-colored clothing aiding Prowl).",
         "The Nightbane gains S.D.C. protection from the costume as if wearing the physical outfit (maximum 30 S.D.C.).",
@@ -439,27 +430,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -10
           }
         ]
@@ -521,37 +512,37 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "play_musical_instrument",
+            "targetValue": "skill_play_musical_instrument",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "sing",
+            "targetValue": "skill_sing",
             "modifierPercent": 20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -5
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -5
           }
         ]
@@ -611,12 +602,12 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
             "targetType": "skill_id",
-            "targetValue": "disguise",
+            "targetValue": "skill_disguise",
             "modifierPercent": -50
           },
           {

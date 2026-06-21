@@ -2,6 +2,7 @@ import type {
   ActiveForm,
   Character,
   FeatureModifiers,
+  MorphusAttributeRollBonuses,
   MorphusCharacteristic,
   MorphusBurrowingEngine,
   MorphusDisabledNaturalAttackTag,
@@ -66,6 +67,7 @@ import {
   aggregateMorphusBalanceModifierPercent,
   aggregateMorphusReachPercentBonus,
   aggregateMorphusJumpMultiplier,
+  aggregateMorphusAttributeRollBonuses,
 } from './morphusCharacteristicAggregation'
 import type { MorphusCapabilitySummary } from '../types'
 import { polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
@@ -137,6 +139,7 @@ export type MorphusPassiveBundle = {
   reachPercentBonus: number
   jumpMultiplier: number
   minimumJumpFeet: number
+  attributeRollBonuses: MorphusAttributeRollBonuses
 }
 
 export type MorphusDerivedSheetSlice = Pick<
@@ -172,6 +175,7 @@ export type MorphusDerivedSheetSlice = Pick<
   | 'reachPercentBonus'
   | 'jumpMultiplier'
   | 'minimumJumpFeet'
+  | 'attributeRollBonuses'
 >
 
 export type MorphusPassiveBuildOptions = {
@@ -320,6 +324,7 @@ export function buildMorphusPassiveBundle(
       const j = aggregateMorphusJumpMultiplier(traits)
       return { jumpMultiplier: j.multiplier, minimumJumpFeet: j.minimumJumpFeet }
     })(),
+    attributeRollBonuses: aggregateMorphusAttributeRollBonuses(traits, effectiveStance),
   }
 }
 

@@ -57,7 +57,7 @@
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -5
           }
         ]
@@ -106,12 +106,7 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "invoke_trust_intimidate",
-            "modifierPercent": 5
-          },
-          {
-            "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -10
           },
           {
@@ -132,6 +127,9 @@
       "percentile": {
         "min": 66,
         "max": 75
+      },
+      "attributeRollBonuses": {
+        "maTrustIntimidatePercent": 5
       }
     },
     {
@@ -371,27 +369,27 @@
         "specificSkillOverrides": [
           {
             "targetType": "skill_id",
-            "targetValue": "acrobatics",
+            "targetValue": "skill_acrobatics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "climbing",
+            "targetValue": "skill_climbing",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "gymnastics",
+            "targetValue": "skill_gymnastics",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "prowl",
+            "targetValue": "skill_prowl",
             "modifierPercent": -20
           },
           {
             "targetType": "skill_id",
-            "targetValue": "swimming",
+            "targetValue": "skill_swimming",
             "modifierPercent": -20
           }
         ]
@@ -575,12 +573,12 @@
             "modifierPercent": -5
           },
           {
-            "targetType": "skill_id",
+            "targetType": "category",
             "targetValue": "military",
             "modifierPercent": -5
           },
           {
-            "targetType": "skill_id",
+            "targetType": "category",
             "targetValue": "wilderness",
             "modifierPercent": -5
           }

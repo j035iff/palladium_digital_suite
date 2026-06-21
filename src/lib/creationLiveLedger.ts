@@ -4,6 +4,7 @@ import type {
   Character,
   CharacterAttributes,
   FeatureModifiers,
+  MorphusAttributeRollBonuses,
   PalladiumOcc,
   PsychicTier,
   Race,
@@ -109,6 +110,7 @@ import {
   strengthCapacitiesFromAttributes,
   effectiveLedgerHandToHandTier,
 } from './morphusCreationLedger'
+import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
 import {
   MORPHUS_HIT_POINTS_FORMULA,
   MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
@@ -686,6 +688,7 @@ export function buildCreationAttributeBlock(
 /** Exceptional attribute perks (17–30 table range) shown outside Save vs / Combat blocks. */
 export function buildCreationExceptionalStandardBlock(
   attrs: CharacterAttributes,
+  morphusAttributeRollBonuses?: MorphusAttributeRollBonuses,
 ): CreationLedgerLine[] {
   const iq = getIqBonuses(attrs.iq)
   const me = getMeBonuses(attrs.me)
@@ -695,6 +698,13 @@ export function buildCreationExceptionalStandardBlock(
   const pe = getPeBonuses(attrs.pe)
   const pb = getPbBonuses(attrs.pb)
 
+  const maTrust =
+    ma.trustStandard + (morphusAttributeRollBonuses?.maTrustIntimidatePercent ?? 0)
+  let pbCharm =
+    pb.charmStandard + (morphusAttributeRollBonuses?.pbCharmImpressPercent ?? 0)
+  const pbMin = morphusAttributeRollBonuses?.pbCharmImpressMinPercent
+  if (pbMin != null) pbCharm = Math.max(pbCharm, pbMin)
+
   return [
     { label: 'I.Q. skill bonus', value: ledgerPercent(iq.skillBonusStandard) },
     { label: 'I.Q. perception bonus', value: ledgerBonus(iq.perceptionStandard) },
@@ -702,7 +712,7 @@ export function buildCreationExceptionalStandardBlock(
       label: 'M.E. save vs psionic / insanity',
       value: ledgerBonus(me.saveStandard),
     },
-    { label: 'M.A. trust / intimidate', value: ledgerPercent(ma.trustStandard) },
+    { label: 'M.A. trust / intimidate', value: ledgerPercent(maTrust) },
     { label: 'P.S. HtH combat damage', value: ledgerBonus(ps.damageBonus) },
     { label: 'P.P. strike / parry / dodge', value: ledgerBonus(pp.combatStandard) },
     {
@@ -713,7 +723,7 @@ export function buildCreationExceptionalStandardBlock(
       label: 'P.E. save vs coma / death',
       value: ledgerPercent(pe.comaDeathStandard),
     },
-    { label: 'P.B. charm / impress', value: ledgerPercent(pb.charmStandard) },
+    { label: 'P.B. charm / impress', value: ledgerPercent(pbCharm) },
   ]
 }
 
@@ -1864,6 +1874,10 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       activeForm === 'morphus' && opts.supportsDualForm
         ? buildMorphusCreationBasePassiveModifiers()
         : {}
+    const morphusAttributeRollBonuses =
+      activeForm === 'morphus' && opts.supportsDualForm
+        ? buildMorphusPassiveBundle(opts.character, 'morphus', {})?.attributeRollBonuses
+        : undefined
     const horrorFactorProfile = computeHorrorFactorAura(
       opts.character,
       activeForm,
@@ -1895,7 +1909,10 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     )
 
     return {
-      exceptional: buildCreationExceptionalStandardBlock(effectiveAttrs),
+      exceptional: buildCreationExceptionalStandardBlock(
+        effectiveAttrs,
+        morphusAttributeRollBonuses,
+      ),
       exceptionalSuper: buildCreationExceptionalSuperGroups(effectiveAttrs),
       vitals: buildCreationVitalsBlock({
         character: opts.character,
