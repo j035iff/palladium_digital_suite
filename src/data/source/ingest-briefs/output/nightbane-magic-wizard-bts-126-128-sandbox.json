@@ -1,0 +1,508 @@
+[
+  {
+    "id": "magic_wizard_astral_portal",
+    "name": "Astral Portal",
+    "description": "This spell creates a dimensional doorway between the Astral Plane and the physical world (either originating from or leading to Earth or the Nightlands; character's choice). The exact location to which the portal leads (whether it is on the astral or physical world) must be known and familiar to the spell caster. There is normally no saving throw, but if the spell is used to try to flee an astral domain, the creator or creators of the domain, if aware of the attempt, may try to prevent it. This works like a normal save versus magic. Also, some astral domains will have some restrictions on the use of magic or dimensional portals (see the Astral Domain section for more information).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 126
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 7,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "dimensional",
+      "astral"
+    ],
+    "ppe": {
+      "baseActivation": 60
+    },
+    "range": {
+      "summary": "20 feet (6.1 m); creates a 10 foot (3 m) wide and tall opening.",
+      "kind": "distance",
+      "distanceValue": 20,
+      "distanceUnit": "feet"
+    },
+    "areaOfEffect": {
+      "summary": "10 foot (3 m) wide and tall portal opening."
+    },
+    "duration": {
+      "summary": "Four melee rounds per level of the spell caster.",
+      "kind": "melee_round",
+      "perLevel": "4 melee rounds"
+    },
+    "save": {
+      "summary": "Special. There is normally no saving throw, but if the spell is used to try to flee an astral domain, the creator or creators of the domain, if aware of the attempt, may try to prevent it. This works like a normal save versus magic.",
+      "saveKind": "special"
+    },
+    "notes": "Some astral domains impose restrictions on magic or dimensional portals (see Astral Domain section, Between the Shadows)."
+  },
+  {
+    "id": "magic_wizard_circle_of_concealment",
+    "name": "Circle of Concealment",
+    "description": "This spell hides an area from all or most people. Anybody passing by the area will pay no attention to anything concealed by the circle. The circle can also be \"programmed\" so that certain individuals, group members, or those who know the right passwords can see past the mystical effect. A save versus ritual magic will allow somebody else to sense that something is \"wrong\" about the area, and may lead to the discovery of whatever is hidden by the circle. Magic and psionic powers like detect P.P.E., detect magic, and negate magic may pierce the circle of concealment and reveal what's hidden, but the circle gets to save vs magic or psionics with the bonuses of its creator. The circle can be made temporary, hiding a place for a few hours, or long-lasting, with a duration measured in years. The first usage only costs 15 P.P.E., while the second requires 100 P.P.E. The spell is cast as a ritual only.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 126
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 7,
+    "magicKind": "circle",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "ward",
+      "stealth",
+      "ritual"
+    ],
+    "ppe": {
+      "baseActivation": 15,
+      "notes": "15 P.P.E. for temporary concealment; 100 P.P.E. for long-lasting concealment (select mode at cast)."
+    },
+    "range": {
+      "summary": "20 foot (6.1 m) radius per level of experience. If done as a ritual, use the sorcerer with the highest level, and add 10 feet (3.0 m) per additional magician involved in the ritual.",
+      "kind": "radius",
+      "radiusValue": 20
+    },
+    "duration": {
+      "summary": "One hour per level of experience, or one year per level of experience (depends on casting mode).",
+      "kind": "special"
+    },
+    "save": {
+      "summary": "A save versus ritual magic allows somebody else to sense that something is \"wrong\" about the area, and may lead to discovery of whatever is hidden. Magic and psionic powers such as detect P.P.E., detect magic, and negate magic may pierce the circle and reveal what is hidden; the circle then saves versus magic or psionics using its creator's bonuses.",
+      "saveKind": "magic"
+    },
+    "effectProfiles": [
+      {
+        "name": "Temporary Concealment",
+        "description": "Hides a place for a few hours.",
+        "ppeOverride": {
+          "baseActivation": 15
+        },
+        "duration": {
+          "summary": "One hour per level of experience.",
+          "kind": "hour",
+          "perLevel": "1 hour"
+        }
+      },
+      {
+        "name": "Long-lasting Concealment",
+        "description": "Extended concealment with duration measured in years.",
+        "ppeOverride": {
+          "baseActivation": 100
+        },
+        "duration": {
+          "summary": "One year per level of experience.",
+          "kind": "year",
+          "perLevel": "1 year"
+        }
+      }
+    ]
+  },
+  {
+    "id": "magic_wizard_dream_senses",
+    "name": "Dream Senses",
+    "description": "This power allows the mage to project his consciousness into the Dreamstream. While doing so, he has all the abilities and limitations described under the Dreamdance (Minor) psychic power.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 4,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "dreamstream",
+      "scrying"
+    ],
+    "ppe": {
+      "baseActivation": 8
+    },
+    "range": {
+      "summary": "Self",
+      "kind": "self"
+    },
+    "duration": {
+      "summary": "Five minutes per level of the spell caster.",
+      "kind": "minute",
+      "perLevel": "5 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "notes": "While active, resolve all Dreamstream entry, navigation, and combat using the Dreamdance (Minor) psychic power rules."
+  },
+  {
+    "id": "magic_wizard_dream_window",
+    "name": "Dream Window",
+    "description": "The spell opens a window into the Dreamstream. Through this window, people can cross in and/or out of the Dreamstream. Anybody (human or supernatural) who crosses the window from the waking to the dreaming world is temporarily transformed into a dream construct, with S.D.C. equal to their normal S.D.C. and hit points combined. All of their normal abilities and powers can be used while in the Dreamstream, with the limitations described in the Dream Combat section. If a window is opened while the magician is inside the Dream Pool of a particular person, he can also use it to enter the physical world anywhere within 100 feet (30.5 m) from the dreamer's actual location. The window is clearly visible as a hole or tear in the air. As soon as the window is opened, strange colored lights start flashing and swirling in a 60 foot (18.3 m) radius around it. People glancing into the window can often see visions from their own Dream Pools. If they fail a save vs psionics, they are temporarily stunned for 1D4 rounds (lose initiative and one melee attack during those rounds) and watch mesmerized by what they see. More importantly, however, creatures from the Dreamstream can temporarily enter the real world through this magic window! Every melee round that the window is open, there is a cumulative 20% chance that something or somebody will slip out. By the fifth round, there is a 100% chance that something will come out of the window. After the first creature comes through, the chances of an additional entity appearing drops back to a cumulative 20% per subsequent rounds (15 seconds each). These denizens of the dream realm get all their usual powers and abilities, and can easily hurt or kill people, destroy property, and perform all kinds of mayhem. These beings can usually exist only within a 100 foot (30.5 m) radius of the window, but they can do a lot of mischief if left unchecked. Most ordinary dream personas will vanish 2D4 melee rounds after the window is closed, but a few monstrous entities may be able to remain in the material world (see the denizens of the Dreamstream).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 5,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "dreamstream",
+      "dimensional"
+    ],
+    "ppe": {
+      "baseActivation": 30
+    },
+    "range": {
+      "summary": "20 feet (6.1 m)",
+      "kind": "distance",
+      "distanceValue": 20,
+      "distanceUnit": "feet"
+    },
+    "areaOfEffect": {
+      "summary": "Strange colored lights flash and swirl in a 60 foot (18.3 m) radius around the window while it is open."
+    },
+    "duration": {
+      "summary": "One minute per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": [
+      {
+        "summary": "None (the spell itself).",
+        "saveKind": "none"
+      },
+      {
+        "summary": "Save vs psionics for those glancing into the window.",
+        "saveKind": "psionic",
+        "effectsOnFailedSave": "Temporarily stunned 1D4 melee rounds (lose initiative and one melee attack each round) and mesmerized by visions from their own Dream Pool."
+      }
+    ],
+    "formTransformation": {
+      "mode": "sheet_replacement",
+      "targetTemplateId": "dream_construct",
+      "preservedAspects": [
+        "abilities",
+        "powers"
+      ],
+      "notes": "Applies to any crosser from waking to dreaming. Combined S.D.C. and hit points become the construct's S.D.C.; Dream Combat limitations apply."
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "stunned"
+      ]
+    },
+    "notes": "Cumulative 20% per melee round that a Dreamstream denizen slips through (100% by round 5); chance resets after first entity. Denizens usually remain within 100 feet (30.5 m) of the window."
+  },
+  {
+    "id": "magic_wizard_observe_dream",
+    "name": "Observe Dream",
+    "description": "This ability allows the magician to peer into the Dream Pool of a sleeping person. By touching the sleeping person, the mage can see any ongoing dreams or nightmares, as well as any dream monsters and invaders who may be attacking the character while he or she sleeps. Note that the sorcerer is not actually in the Dreamstream, but observing in a manner similar to clairvoyance; the sorcerer cannot intervene in the dream, nor can dream elements see or affect him. However, if he sees something terrible, he may get an idea of who is responsible and whether or not he should wake the dreamer up.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 2,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "dreamstream",
+      "scrying"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "limitations": {
+      "touchRequired": true
+    },
+    "targetPreconditions": {
+      "summary": "Target must be asleep; caster must touch the sleeping person to observe their Dream Pool.",
+      "satisfy": "all_groups",
+      "groups": [
+        {
+          "label": "Asleep",
+          "match": "all",
+          "states": [
+            "asleep"
+          ]
+        }
+      ],
+      "blocksIfUnmet": true
+    },
+    "range": {
+      "summary": "10 feet (3 m) per level of experience.",
+      "kind": "distance",
+      "distancePerLevel": 10,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "Five minutes plus two minutes per level of experience.",
+      "kind": "minute",
+      "durationValue": 5,
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "reveals": [
+      "dreams",
+      "nightmares",
+      "dream_invaders"
+    ]
+  },
+  {
+    "id": "magic_wizard_summon_control_astral_being_major",
+    "name": "Summon & Control Astral Being (Major)",
+    "description": "As per the minor fifth level spell, but this ritual can summon any major astral beings, including Necrophim, Torturians, and Vampire Specters, as well as greater astral entities. The spell will force the creature to obey, but almost invariably, evil and powerful entities will seek revenge against the summoner unless the orders given were something the creature would enjoy doing.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 9,
+    "magicKind": "summoning",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "summoning",
+      "ritual",
+      "astral"
+    ],
+    "ppe": {
+      "baseActivation": 200
+    },
+    "range": {
+      "summary": "Not applicable.",
+      "kind": "special"
+    },
+    "duration": {
+      "summary": "Four hours per level of experience.",
+      "kind": "hour",
+      "perLevel": "4 hours"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "entityCategory": "astral_being_major",
+      "label": "Any major astral being (Necrophim, Torturians, Vampire Specters, greater astral entities)",
+      "control": {
+        "saveKind": "none",
+        "summary": "The spell forces the creature to obey, but almost invariably evil and powerful entities will seek revenge against the summoner unless the orders given were something the creature would enjoy doing."
+      },
+      "duration": {
+        "summary": "Four hours per level of experience.",
+        "kind": "hour",
+        "perLevel": "4 hours"
+      }
+    }
+  },
+  {
+    "id": "magic_wizard_summon_control_astral_being_minor",
+    "name": "Summon & Control Astral Being (Minor)",
+    "description": "This ritual plucks an astral being of any specific species the caster indicates from the Astral Plane and brings it to the physical world. This can only be a minor or common astral entity; the more powerful beings require a stronger ritual. The astral being is automatically under the control of the summoner and will obey him without question throughout the duration period. Afterward, it will regain control over its own actions and may do as it pleases.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 5,
+    "magicKind": "summoning",
+    "isRitual": true,
+    "spellStrengthBase": 16,
+    "tags": [
+      "summoning",
+      "ritual",
+      "astral"
+    ],
+    "ppe": {
+      "baseActivation": 80
+    },
+    "range": {
+      "summary": "Not applicable.",
+      "kind": "special"
+    },
+    "duration": {
+      "summary": "12 hours per level of experience.",
+      "kind": "hour",
+      "perLevel": "12 hours"
+    },
+    "save": {
+      "summary": "None.",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "entityCategory": "astral_being_minor",
+      "label": "Any minor or common astral entity of a species the caster indicates",
+      "control": {
+        "saveKind": "none",
+        "summary": "The astral being is automatically under the control of the summoner and will obey without question throughout the duration period."
+      },
+      "duration": {
+        "summary": "12 hours per level of experience.",
+        "kind": "hour",
+        "perLevel": "12 hours"
+      },
+      "notes": "After the duration ends, the being regains control over its own actions and may do as it pleases."
+    }
+  },
+  {
+    "id": "magic_wizard_summon_control_dream_being_major",
+    "name": "Summon & Control Dream Being (Major)",
+    "description": "As per the seventh level spell, but applies to greater dream creatures, including Guilt Eaters, Dream Furies, Soul Leeches and strong, \"key\" personas, including a dream-self, among others. These beings will often try to discover the spell caster's Dream Pool and get their revenge on him at a later date. Most cannot exist (at least for long) in the material world, but some can and may try to trick a character to unleash it via a magic or dimensional portal.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 9,
+    "magicKind": "summoning",
+    "spellStrengthBase": 12,
+    "tags": [
+      "summoning",
+      "dreamstream"
+    ],
+    "ppe": {
+      "baseActivation": 250
+    },
+    "range": {
+      "summary": "Not applicable.",
+      "kind": "special"
+    },
+    "duration": {
+      "summary": "6 hours per level of experience.",
+      "kind": "hour",
+      "perLevel": "6 hours"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "entityCategory": "dream_entity_major",
+      "label": "Greater dream creatures (Guilt Eaters, Dream Furies, Soul Leeches, key personas, dream-self)",
+      "control": {
+        "saveKind": "none",
+        "summary": "Will obey orders, but these beings will often try to discover the spell caster's Dream Pool and get their revenge at a later date."
+      },
+      "duration": {
+        "summary": "6 hours per level of experience.",
+        "kind": "hour",
+        "perLevel": "6 hours"
+      },
+      "notes": "Most cannot exist (at least for long) in the material world, but some can and may try to trick a character into unleashing them via a magic or dimensional portal."
+    }
+  },
+  {
+    "id": "magic_wizard_summon_control_dream_being_minor",
+    "name": "Summon & Control Dream Being (Minor)",
+    "description": "This ability temporarily summons a minor dream entity, such as a Dream Ghoul or a minor dream persona. The creature will be temporarily kept alive while outside the Dreamstream while it receives orders and commands, which it will then carry out in the Dreamstream and Dream Pools — it cannot exist in the material world, so missions are restricted to the dream realms.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 7,
+    "magicKind": "summoning",
+    "spellStrengthBase": 12,
+    "tags": [
+      "summoning",
+      "dreamstream"
+    ],
+    "ppe": {
+      "baseActivation": 60
+    },
+    "range": {
+      "summary": "Not applicable.",
+      "kind": "special"
+    },
+    "duration": {
+      "summary": "12 hours per level of experience.",
+      "kind": "hour",
+      "perLevel": "12 hours"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "spawnedPresence": {
+      "kind": "creature",
+      "entityCategory": "dream_entity_minor",
+      "label": "Minor dream entity (e.g. Dream Ghoul, minor dream persona)",
+      "control": {
+        "saveKind": "none",
+        "summary": "Kept alive outside the Dreamstream to receive orders, then carries them out in the Dreamstream and Dream Pools."
+      },
+      "duration": {
+        "summary": "12 hours per level of experience.",
+        "kind": "hour",
+        "perLevel": "12 hours"
+      },
+      "notes": "Cannot exist in the material world; missions are restricted to the dream realms."
+    }
+  }
+]

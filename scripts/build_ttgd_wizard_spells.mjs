@@ -19,23 +19,37 @@ function src(pageNumber) {
 }
 
 function base(id, name, spellLevel, description, fields = {}) {
+  const {
+    pageNumber,
+    magicKind,
+    isRitual,
+    spellStrengthBase,
+    tags,
+    ppe,
+    range,
+    duration,
+    save,
+    extra,
+    ...passB
+  } = fields;
   return {
     id,
     name,
     description,
     gameSystems: ['nightbane'],
-    sources: src(fields.pageNumber ?? 56),
+    sources: src(pageNumber ?? 56),
     school: 'wizard',
     spellLevel,
-    magicKind: fields.magicKind ?? 'invocation',
-    isRitual: fields.isRitual ?? false,
-    spellStrengthBase: fields.spellStrengthBase ?? (fields.isRitual ? 16 : 12),
-    tags: fields.tags ?? ['utility'],
-    ppe: fields.ppe ?? { baseActivation: 0 },
-    range: fields.range ?? { summary: 'Touch', kind: 'touch' },
-    duration: fields.duration ?? { summary: 'Instant', kind: 'instant' },
-    save: fields.save ?? { summary: 'None', saveKind: 'none' },
-    ...fields.extra,
+    magicKind: magicKind ?? 'invocation',
+    isRitual: isRitual ?? false,
+    spellStrengthBase: spellStrengthBase ?? (isRitual ? 16 : 12),
+    tags: tags ?? ['utility'],
+    ppe: ppe ?? { baseActivation: 0 },
+    range: range ?? { summary: 'Touch', kind: 'touch' },
+    duration: duration ?? { summary: 'Instant', kind: 'instant' },
+    save: save ?? { summary: 'None', saveKind: 'none' },
+    ...passB,
+    ...extra,
   };
 }
 
@@ -92,14 +106,7 @@ const SPELLS = [
         target: 'touch',
         combatModifiers: { saveMagic: 1, notes: '+1 vs magical and mind control effects when inscribed on a person.' },
       },
-      permanentCosts: [
-        {
-          resource: 'hp',
-          reduction: { kind: 'fixed', value: 1 },
-          trigger: 'on_cast',
-          notes: 'Drawing blood for the ward costs 1 HP.',
-        },
-      ],
+      notes: 'Drawing blood for the ward costs 1 hit point of damage to the caster.',
     }),
 
   base('magic_wizard_scarlet_pepper', 'Scarlet Pepper', 4,
@@ -177,7 +184,7 @@ const SPELLS = [
       duration: { summary: 'One year (may linger longer).', kind: 'year', durationValue: 1 },
       materialComponents: {
         label: 'Sacrifice',
-        entries: [{ label: 'Cat, dog, or similar tame animal', quantity: { kind: 'fixed', value: 1 }, condition: 'living' }],
+        entries: [{ label: 'Cat, dog, or similar tame animal', quantity: { kind: 'fixed', value: 1 }, condition: 'other', notes: 'Living sacrifice required for ritual.' }],
       },
       reveals: ['supernatural_threats', 'armed_groups', 'strangers', 'possession', 'malignant_enchantment'],
     }),
@@ -199,7 +206,7 @@ const SPELLS = [
       },
       materialComponents: {
         label: 'Embalming',
-        entries: [{ label: 'Cedar oils', quantity: { kind: 'special' }, condition: 'other', notes: 'Corpse head embalmed in cedar oils.' }],
+        entries: [{ label: 'Cedar oils', quantity: { kind: 'fixed', value: 1 }, condition: 'other', notes: 'Corpse head embalmed in cedar oils.' }],
       },
     }),
 
@@ -299,7 +306,10 @@ const SPELLS = [
         otherLimitations:
           'Ritual 1D6+6 minutes. No effect on magicians, Nightbane, supernatural beings, astral beings, or Bloodward-protected mortals. Requires sight or intimate object of target.',
       },
-      ritualProfile: { durationMinutes: '1D6+6', concentrationRequired: true },
+      ritualProfile: {
+        craftingDuration: { summary: '1D6+6 minutes', kind: 'minute', durationValue: '1D6+6' },
+        notes: 'Ritual must be performed uninterrupted within range.',
+      },
     }),
 
   base('magic_wizard_destroy_undead_flesh', 'Destroy Undead Flesh', 11,
@@ -332,7 +342,10 @@ const SPELLS = [
           bindToCaster: false,
         },
       ],
-      ritualProfile: { durationMinutes: '60', workspace: 'Mid-day sun' },
+      ritualProfile: {
+        craftingDuration: { summary: 'One hour', kind: 'minute', durationValue: 60 },
+        workspace: { summary: 'Mid-day sun', kind: 'special' },
+      },
       limitations: { otherLimitations: 'Not used by good or unprincipled alignments.' },
     }),
 

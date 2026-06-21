@@ -1,0 +1,181 @@
+{
+  "briefId": "nightbane-magic-wizard-bts-126-128-ab-sandbox",
+  "briefTitle": "Nightbane Wizard Spells (Between the Shadows pp. 126–128) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/magic.md",
+  "status": "complete",
+  "phase": "done",
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-bts-126-128-sandbox.json",
+  "sourcePdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+  "sourcePages": "printed 126–128 (PDF indices 127–129)",
+  "createdAt": "2026-06-20T12:00:00.000Z",
+  "updatedAt": "2026-06-20T12:30:00.000Z",
+  "checklist": [
+    {
+      "name": "Astral Portal",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "126",
+      "notes": null
+    },
+    {
+      "name": "Circle of Concealment",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "126",
+      "notes": "Ritual-only; dual P.P.E. modes via effectProfiles"
+    },
+    {
+      "name": "Dream Window",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "formTransformation + inflictedModifiers + cumulative slip-out table in notes"
+    },
+    {
+      "name": "Dream Senses",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "Defers mechanics to Dreamdance (Minor) via notes"
+    },
+    {
+      "name": "Observe Dream",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "touchRequired + targetPreconditions + reveals"
+    },
+    {
+      "name": "Summon & Control Astral Being (Minor)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "Ritual; spawnedPresence"
+    },
+    {
+      "name": "Summon & Control Astral Being (Major)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "Ritual; spawnedPresence"
+    },
+    {
+      "name": "Summon & Control Dream Being (Minor)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127",
+      "notes": "spawnedPresence; dream-realm missions only"
+    },
+    {
+      "name": "Summon & Control Dream Being (Major)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127–128",
+      "notes": "Spell block spans printed 127–128; source pageNumber 127 (header page)"
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 126, "end": 127 },
+      "items": ["Astral Portal", "Circle of Concealment", "Dream Window", "Dream Senses"],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 127, "end": 127 },
+      "items": [
+        "Observe Dream",
+        "Summon & Control Astral Being (Minor)",
+        "Summon & Control Astral Being (Major)",
+        "Summon & Control Dream Being (Minor)"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 127, "end": 128 },
+      "items": ["Summon & Control Dream Being (Major)"],
+      "playbookScope": "catalog-only",
+      "notes": "Major dream summon continues onto printed 128"
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 126, "end": 127 },
+      "items": ["Astral Portal", "Circle of Concealment", "Dream Window"],
+      "playbookScope": "include mechanics",
+      "notes": "Circle: effectProfiles; Dream Window: formTransformation + inflictedModifiers"
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 127, "end": 127 },
+      "items": ["Dream Senses", "Observe Dream", "Summon & Control Astral Being (Minor)"],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 127, "end": 128 },
+      "items": [
+        "Summon & Control Astral Being (Major)",
+        "Summon & Control Dream Being (Minor)",
+        "Summon & Control Dream Being (Major)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": "All three summons: spawnedPresence blocks"
+    }
+  ],
+  "rulings": [],
+  "completedBatchIds": [
+    "batch-a-01",
+    "batch-a-02",
+    "batch-a-03",
+    "batch-b-01",
+    "batch-b-02",
+    "batch-b-03"
+  ],
+  "validationCommands": ["validate:schemas"],
+  "comparisonSummary": {
+    "identical": 1,
+    "differ": 8,
+    "diffIds": [
+      "magic_wizard_astral_portal",
+      "magic_wizard_circle_of_concealment",
+      "magic_wizard_dream_window",
+      "magic_wizard_observe_dream",
+      "magic_wizard_summon_control_astral_being_minor",
+      "magic_wizard_summon_control_astral_being_major",
+      "magic_wizard_summon_control_dream_being_minor",
+      "magic_wizard_summon_control_dream_being_major"
+    ],
+    "diffFields": "Mostly description prose fidelity; Dream Being (Major) sources.pageNumber 128 vs production 127"
+  },
+  "notes": "Sandbox re-ingest from WB1 New Spells (printed pp. 126–128). Production catalog unchanged."
+}

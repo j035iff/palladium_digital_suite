@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-magic-wizard-ttgd-56-63-ab-sandbox",
+  "title": "Nightbane TTGD Wizard Spells (pp. 56–63) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB3-Through_the_Glass_Darkly.pdf",
+    "reference": "Through the Glass Darkly",
+    "pages": { "start": 56, "end": 63 }
+  },
+  "options": {
+    "school": "wizard"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-ttgd-56-63-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Reanimate Flesh",
+    "The Knowing Candle",
+    "Life Plant",
+    "Bloodward",
+    "Scarlet Pepper",
+    "Traitorous Hand",
+    "Destroy Dead Flesh",
+    "Spirit Attack",
+    "Call Ectoplasm from Others",
+    "Watching Enchantment",
+    "The Druid's Head",
+    "Draught of Life & Death",
+    "Soul in a Bottle",
+    "Create Zombie",
+    "Friend in the Head",
+    "Fatal Growth",
+    "Destroy Undead Flesh",
+    "Mictlantecutli's Command",
+    "Open Pathway",
+    "Psychic Drain",
+    "Maggots Curse",
+    "Someone Makes Them"
+  ],
+  "notes": "WB3 Chapter 4 Sorcerer/Wizardry spells only (printed pp. 56–63). Fleshsculptor list on p. 64+ out of scope. sources.pageNumber = header page. Pass A: 4/batch. Pass B: 2–3/batch."
+}

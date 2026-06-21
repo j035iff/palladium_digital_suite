@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-magic-wizard-bts-126-128-ab-sandbox",
+  "title": "Nightbane Wizard Spells (Between the Shadows pp. 126–128) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 126, "end": 128 }
+  },
+  "options": {
+    "school": "wizard"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-bts-126-128-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Astral Portal",
+    "Circle of Concealment",
+    "Dream Window",
+    "Dream Senses",
+    "Observe Dream",
+    "Summon & Control Astral Being (Minor)",
+    "Summon & Control Astral Being (Major)",
+    "Summon & Control Dream Being (Minor)",
+    "Summon & Control Dream Being (Major)"
+  ],
+  "notes": "Sandbox re-ingest of WB1 New Spells section (printed pp. 126–128). Pass A: 4 spells/batch. Pass B: 2–3/batch. Stat-block P.P.E. authoritative when index disagrees. Do not write to src/data/content/."
+}
