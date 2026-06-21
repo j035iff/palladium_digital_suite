@@ -1,0 +1,60 @@
+{
+  "briefId": "nightbane-magic-mirror-ttgd-72-76-ab-sandbox",
+  "briefTitle": "Nightbane TTGD Mirror Magic (pp. 72–76) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/magic.md",
+  "status": "complete",
+  "phase": "done",
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-mirror-ttgd-72-76-sandbox.json",
+  "sourcePdf": "src/data/reference/nightbane/WB3-Through_the_Glass_Darkly.pdf",
+  "sourcePages": "printed 72–76 (19 Mirrormage spells; PDF indices 73–77)",
+  "createdAt": "2026-06-20T18:00:00.000Z",
+  "updatedAt": "2026-06-20T18:30:00.000Z",
+  "checklist": [
+    { "name": "Manipulate Reflection", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "72", "notes": "effectProfiles" },
+    { "name": "Mirror Calling", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "Aura Mirror", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": "grantedModifiers" },
+    { "name": "Reflect Light", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "Dorian's Mirror", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": null },
+    { "name": "Lens of True Sight", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "73", "notes": "reveals" },
+    { "name": "Fear Mirror", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "74", "notes": "horrorFactor; inflictedModifiers" },
+    { "name": "Scrying Mirror: Lesser", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "74", "notes": "limitations scrying" },
+    { "name": "Draw Upon the Mirror Wall", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "74", "notes": null },
+    { "name": "Hidden Reflection", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "75", "notes": "resolutionTable aftereffects" },
+    { "name": "Opening the Mirrorwall", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "75", "notes": null },
+    { "name": "Amend Reflection", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "75", "notes": "ritual" },
+    { "name": "Steal Reflection", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "75", "notes": "ritual; inflictedModifiers" },
+    { "name": "Mirror Divination", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": null },
+    { "name": "Man in the Mirror", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": "ritual; spawnedPresence" },
+    { "name": "Scrying Mirror: Greater (Nightlands)", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": null },
+    { "name": "Walking the Mirrorwall: Lesser", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": "formTransformation" },
+    { "name": "Walking the Mirrorwall: Greater", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": "formTransformation" },
+    { "name": "Castle of Oblivion", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "76", "notes": "ritual; forgedOutputs" }
+  ],
+  "batches": [
+    { "id": "batch-a-01", "status": "complete", "pass": "A", "pages": { "start": 72, "end": 73 }, "items": ["Manipulate Reflection", "Mirror Calling", "Aura Mirror", "Reflect Light"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-a-02", "status": "complete", "pass": "A", "pages": { "start": 73, "end": 74 }, "items": ["Dorian's Mirror", "Lens of True Sight", "Fear Mirror", "Scrying Mirror: Lesser"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-a-03", "status": "complete", "pass": "A", "pages": { "start": 74, "end": 75 }, "items": ["Draw Upon the Mirror Wall", "Hidden Reflection", "Opening the Mirrorwall", "Amend Reflection"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-a-04", "status": "complete", "pass": "A", "pages": { "start": 75, "end": 76 }, "items": ["Steal Reflection", "Mirror Divination", "Man in the Mirror", "Scrying Mirror: Greater (Nightlands)"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-a-05", "status": "complete", "pass": "A", "pages": { "start": 76, "end": 76 }, "items": ["Walking the Mirrorwall: Lesser", "Walking the Mirrorwall: Greater", "Castle of Oblivion"], "playbookScope": "catalog-only", "notes": null },
+    { "id": "batch-b-01", "status": "complete", "pass": "B", "pages": { "start": 72, "end": 73 }, "items": ["Manipulate Reflection", "Aura Mirror", "Lens of True Sight"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-02", "status": "complete", "pass": "B", "pages": { "start": 74, "end": 74 }, "items": ["Fear Mirror", "Scrying Mirror: Lesser", "Hidden Reflection"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-03", "status": "complete", "pass": "B", "pages": { "start": 75, "end": 75 }, "items": ["Amend Reflection", "Steal Reflection", "Opening the Mirrorwall"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-04", "status": "complete", "pass": "B", "pages": { "start": 76, "end": 76 }, "items": ["Man in the Mirror", "Walking the Mirrorwall: Lesser", "Walking the Mirrorwall: Greater"], "playbookScope": "include mechanics", "notes": null },
+    { "id": "batch-b-05", "status": "complete", "pass": "B", "pages": { "start": 76, "end": 76 }, "items": ["Castle of Oblivion"], "playbookScope": "include mechanics", "notes": null }
+  ],
+  "rulings": [],
+  "completedBatchIds": [
+    "batch-a-01", "batch-a-02", "batch-a-03", "batch-a-04", "batch-a-05",
+    "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05"
+  ],
+  "validationCommands": ["validate:schemas"],
+  "comparisonSummary": {
+    "identical": 19,
+    "differ": 0
+  },
+  "notes": "Sandbox matches production mirror.json. Production already Pass A+B complete; ingest confirms PDF transcription."
+}

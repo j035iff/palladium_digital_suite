@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-magic-mirror-ttgd-72-76-ab-sandbox",
+  "title": "Nightbane TTGD Mirror Magic (pp. 72–76) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB3-Through_the_Glass_Darkly.pdf",
+    "reference": "Through the Glass Darkly",
+    "pages": { "start": 72, "end": 76 }
+  },
+  "options": {
+    "school": "mirror"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-mirror-ttgd-72-76-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Manipulate Reflection",
+    "Mirror Calling",
+    "Aura Mirror",
+    "Reflect Light",
+    "Dorian's Mirror",
+    "Lens of True Sight",
+    "Fear Mirror",
+    "Scrying Mirror: Lesser",
+    "Draw Upon the Mirror Wall",
+    "Hidden Reflection",
+    "Opening the Mirrorwall",
+    "Amend Reflection",
+    "Steal Reflection",
+    "Mirror Divination",
+    "Man in the Mirror",
+    "Scrying Mirror: Greater (Nightlands)",
+    "Walking the Mirrorwall: Lesser",
+    "Walking the Mirrorwall: Greater",
+    "Castle of Oblivion"
+  ],
+  "notes": "Mirrormage spells printed pp. 72–76 (index + stat blocks; P.P.E. listed are Mirrormage-only, double for other O.C.C.s). sources.pageNumber = spell header page. Pass A: 4/batch. Pass B: 2–3/batch."
+}

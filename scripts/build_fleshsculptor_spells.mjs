@@ -100,6 +100,7 @@ const SPELLS = [
       range: { summary: '10 feet (3 m)', kind: 'distance', distanceValue: 10, distanceUnit: 'feet' },
       duration: { summary: 'Permanent — flesh smolders ~1 minute per 100 lbs.', kind: 'permanent' },
       limitations: { otherLimitations: 'No effect on magically animated or undead flesh.' },
+      spellAccess: { replacesSpellId: 'magic_wizard_destroy_dead_flesh' },
     }),
 
   base('magic_fleshsculptor_preserve_living_flesh', 'Preserve Living Flesh', 1,
@@ -123,6 +124,7 @@ const SPELLS = [
         name: 'Reanimated flesh',
         notes: 'Up to 15 lbs (6 kg); part cannot be dead more than 72 hours.',
       },
+      spellAccess: { replacesSpellId: 'magic_wizard_reanimate_flesh' },
     }),
 
   base('magic_fleshsculptor_sense_life_essence', 'Sense Life Essence', 1,
