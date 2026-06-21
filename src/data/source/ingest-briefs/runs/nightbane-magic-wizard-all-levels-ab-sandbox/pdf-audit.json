@@ -1,0 +1,67 @@
+{
+  "pdfBlocksFound": 127,
+  "total": 131,
+  "missingBlocks": [
+    "Blinding Flash",
+    "Metamorphosis: Human",
+    "Nightlands Portal (Ritual)",
+    "Summon and Control Animals (Ritual)"
+  ],
+  "ppeMismatches": [
+    {
+      "name": "Ritual: Call Nightlands Denizen",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Charm Weapon",
+      "production": 12,
+      "pdf": 1
+    },
+    {
+      "name": "Fly",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Call Lightning",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Cure Illness",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Mask of Deceit",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Teleport: Lesser",
+      "production": 15,
+      "pdf": 1
+    },
+    {
+      "name": "Tongues",
+      "production": 12,
+      "pdf": 1
+    },
+    {
+      "name": "Create Magic Scroll",
+      "production": "100 + spell cost",
+      "pdf": 100
+    },
+    {
+      "name": "Summon Nightlord Avatar",
+      "production": 150,
+      "pdf": 1
+    },
+    {
+      "name": "Amulet",
+      "production": "290 or more",
+      "pdf": 290
+    }
+  ]
+}

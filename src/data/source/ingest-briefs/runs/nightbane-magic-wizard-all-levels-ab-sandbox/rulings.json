@@ -1,0 +1,16 @@
+{
+  "open": [],
+  "resolved": [
+    {
+      "id": "ruling-01",
+      "status": "resolved",
+      "item": "Level index P.P.E. vs spell stat block",
+      "question": "Alphabetical list on p. 127 lists lower P.P.E. than spell description blocks. Which is authoritative?",
+      "bookExcerpt": "Index: See Aura (2), Thunderclap (2). Blocks: See Aura P.P.E. 6, Thunderclap P.P.E. 4.",
+      "options": ["Use index list P.P.E.", "Use spell stat-block P.P.E."],
+      "userRuling": "Use spell stat-block P.P.E.",
+      "createdAt": "2026-06-20T02:00:00.000Z",
+      "resolvedAt": "2026-06-20T02:00:00.000Z"
+    }
+  ]
+}

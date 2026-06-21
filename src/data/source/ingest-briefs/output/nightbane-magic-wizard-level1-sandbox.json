@@ -1,0 +1,513 @@
+[
+  {
+    "id": "magic_wizard_blinding_flash",
+    "name": "Blinding Flash",
+    "description": "This invocation creates a sudden burst of intense white light, temporarily blinding everyone in its ten foot (3.0 m) radius. Victims are blinded for one to four (1D4) melee rounds, with a penalty of -5 to strike, and -10 to parry and dodge. The chance of falling is 50% every 10 ft (3.0 m). The magic can be cast up to 60 ft (18.3 m) away. Saving throw is standard; those who successfully save versus magic are not blinded.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "light"
+    ],
+    "ppe": {
+      "baseActivation": 1
+    },
+    "range": {
+      "summary": "10 ft (3.0 m) radius; up to 60 ft (18.3 m) away.",
+      "kind": "radius",
+      "radiusValue": 10,
+      "distanceValue": 60,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "Standard",
+      "saveKind": "standard"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "blinded"
+      ],
+      "combatModifiers": {
+        "strike": -5,
+        "parry": -10,
+        "dodge": -10
+      }
+    }
+  },
+  {
+    "id": "magic_wizard_cloud_of_smoke",
+    "name": "Cloud of Smoke",
+    "description": "This magic enables the sorcerer to create a cloud of dense, black smoke (30 ft/9.1 m x 30 ft/9.1 m x 30 ft/9.1 m maximum size) up to ninety feet (27.4 m) away. Victims caught in the cloud will be unable to see anything beyond the cloud, and their impaired vision allows them to see no more than three feet (0.9 m) in the cloud (and that means only a blurry shape). While in the cloud, victims will be at -5 to strike, parry and dodge.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "obscurement"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "90 ft (27.4 m)",
+      "kind": "distance",
+      "distanceValue": 90,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "4 melee rounds (1 minute) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "4 melee rounds"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "inflictedModifiers": {
+      "statusEffects": [
+        "blinded"
+      ],
+      "combatModifiers": {
+        "strike": -5,
+        "parry": -5,
+        "dodge": -5
+      }
+    }
+  },
+  {
+    "id": "magic_wizard_death_trance",
+    "name": "Death Trance",
+    "description": "A magically induced trance which makes the mage appear to be dead. There is no breathing, pulse, heartbeat, or any other signs of life. While in the trance, the sorcerer is quite helpless, unable to speak, move or invoke magic. Only minor physical sensations felt by the mage are recognizable, like being jostled, carried or hearing voices, but no specific identification or memories are possible. The magic can be canceled at will.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "stealth"
+    ],
+    "ppe": {
+      "baseActivation": 1
+    },
+    "range": {
+      "summary": "Self",
+      "kind": "self"
+    },
+    "duration": {
+      "summary": "10 melee rounds (2.5 minutes) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "10 melee rounds"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "magic_wizard_globe_of_daylight",
+    "name": "Globe of Daylight",
+    "description": "A small globe or sphere of true daylight is magically created. The light is bright enough to illuminate a 12 ft (3.65 m) area per each level of its creator's experience. Because it is daylight, it can ward off most vampires, keeping them at bay just beyond the edge of light. The creator of the globe can mentally move it along with himself, or send it up to 30 feet (9.1 m) ahead. The maximum speed at which the globe can travel is equal to a speed attribute of 12.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "utility",
+      "light",
+      "ward"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "Near self or up to 30 ft (9.1 m) away.",
+      "kind": "distance",
+      "distanceValue": 30,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "12 melee rounds (3 minutes) per level of experience.",
+      "kind": "melee_round",
+      "perLevel": "12 melee rounds"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    }
+  },
+  {
+    "id": "magic_wizard_see_aura",
+    "name": "See Aura",
+    "description": "All things, organic and inorganic, have an aura. The aura has many distinctions, and can be used to see or sense things invisible to the eye. Seeing an aura will indicate the following: estimate the general level of experience (low 1–3, medium 4–7, high 8th and up); the presence of magic (no indication of what or power levels); the presence of psychic abilities; high or low base P.P.E.; the presence of a possessing entity; the presence of an unusual human aberration, which indicates a serious illness, non-human, or alien, but does not specify which. Cannot tell one's alignment from this spell.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 6
+    },
+    "range": {
+      "summary": "100 ft (30.5 m)",
+      "kind": "distance",
+      "distanceValue": 100,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "1 melee round.",
+      "kind": "melee_round",
+      "durationValue": 1
+    },
+    "save": {
+      "summary": "None, but a psychic mind block will mask the presence of psychic abilities, the level of P.P.E. and possession.",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "Estimate the general level of experience (low 1–3, medium 4–7, high 8th and up)",
+      "The presence of magic (no indication of what or power levels)",
+      "The presence of psychic abilities",
+      "High or low base P.P.E.",
+      "The presence of a possessing entity",
+      "The presence of an unusual human aberration (serious illness, non-human, or alien)"
+    ],
+    "notes": "Cannot tell alignment from this spell. A psychic mind block will mask psychic abilities, P.P.E. level, and possession."
+  },
+  {
+    "id": "magic_wizard_see_the_invisible",
+    "name": "See the Invisible",
+    "description": "The character can see forces, objects and creatures which can turn invisible or are naturally invisible. Even if the creature has no form per se, the mystic will be able to discern the vaporous image or energy sphere which is the being. This includes ghosts, entities and astral bodies.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "200 ft (61.0 m)",
+      "kind": "distance",
+      "distanceValue": 200,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "1 minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "Invisible forces, objects, and creatures.",
+      "Ghosts, entities and astral bodies."
+    ]
+  },
+  {
+    "id": "magic_wizard_sense_evil",
+    "name": "Sense Evil",
+    "description": "The sense evil invocation will enable its spell caster to feel or sense the presence of supernatural evil. It will indicate how many supernatural evil presences are within the 90 foot (27.4 m) area (one, a few 2–6, several 7–14, or many 15 or more). It can also register the intensity of the evil and pinpoint the general location of the source(s) to a particular room(s), possessed object, person, or an approximate distance (very close, near, far, etc.). Evil emanations from human beings are much less distinct and cannot be sensed unless the source/person has an immediate evil intention. Nightbane and other supernatural beings who are not necessarily evil are only detected if their alignment is diabolic or miscreant, or if they harbor evil intentions towards the caster.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 2
+    },
+    "range": {
+      "summary": "90 ft (27.4 m) area.",
+      "kind": "area",
+      "distanceValue": 90,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None, except a psychic mind block, or a protection from a magic pentacle which will prevent the spell from working on anyone in the circle.",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "The presence of supernatural evil.",
+      "How many supernatural evil presences are within the area.",
+      "The intensity of the evil and the general location of the source."
+    ],
+    "notes": "Protection from a magic pentacle prevents the spell on anyone in the circle. The psychic equivalent of sense evil is not blocked by the magic pentacle."
+  },
+  {
+    "id": "magic_wizard_sense_magic",
+    "name": "Sense Magic",
+    "description": "This magic ability enables the character to sense or feel the presence of magic. Like a Geiger counter, the individual can tell if he is near (within 20 ft/6.1 m) or far (toward the limit of the range). The ability can also indicate whether a person or object is enchanted/under a magic spell (this does not include psychic powers or Nightbane talents), is in the process of invoking magic, or if magic is being used in the range area. Men of magic and most supernatural beings do not register as magic except when actually casting a spell/using magic.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "120 ft (36.5 m) area.",
+      "kind": "area",
+      "distanceValue": 120,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "2 minutes (8 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "2 minutes"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "The presence of magic.",
+      "Proximity to the source (near or far).",
+      "Whether a person or object is enchanted/under a magic spell."
+    ],
+    "notes": "Does not detect psychic powers or Nightbane talents. Men of magic and most supernatural beings do not register except when actively casting."
+  },
+  {
+    "id": "magic_wizard_sense_nightbane",
+    "name": "Sense Nightbane",
+    "description": "This invocation works like the natural Nightbane ability to sense others of their kind, enabling the sorcerer to sense the presence of Nightbane within the area. The ability does not tell the exact location or numbers of Nightbane, but will reveal whether there is more than one, and roughly how far away they are (within 30 ft/9.1 m).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 3
+    },
+    "range": {
+      "summary": "200 ft (61.0 m) area.",
+      "kind": "area",
+      "distanceValue": 200,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "1 minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "None",
+      "saveKind": "none"
+    },
+    "reveals": [
+      "The presence of Nightbane.",
+      "Whether there is more than one, and roughly how far away they are."
+    ]
+  },
+  {
+    "id": "magic_wizard_sense_ppe",
+    "name": "Sense P.P.E.",
+    "description": "This invocation allows the sorcerer to sense the presence of potential psychic energy (P.P.E.). Like a Geiger counter, the individual can tell if he is near (within 20 ft/6.1 m) or far (at the limit of the magic's range). This magic ability should not be confused with \"sense magic.\" It cannot pick up magic emanations, so it will not identify most magic objects, enchantments or spell casting. What this magic does provide is an indication of potential psychic energy within the area — people, places, supernatural beings, animals and other sources of P.P.E. This can be important if there is a need to draw additional P.P.E. from another source(s). First, the magic will alert the sorcerer to the presence of potential psychic energy in its range area. Second, the arcanist can determine the approximate amount of P.P.E. each individual currently possesses: little is 1–5, typical is 6–15, medium is 16–30, a lot is 31–60, vast (and often unnatural) is 61 and higher, incredible is 500 P.P.E. and higher. Objects only register potential psychic energy if they are possessed/inhabited by a living force.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 128
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "sensory",
+      "divination"
+    ],
+    "ppe": {
+      "baseActivation": 3
+    },
+    "range": {
+      "summary": "120 ft (36.5 m) area.",
+      "kind": "area",
+      "distanceValue": 120,
+      "distanceUnit": "feet"
+    },
+    "duration": {
+      "summary": "1 minute (4 melees) per level of experience.",
+      "kind": "minute",
+      "perLevel": "1 minute"
+    },
+    "save": {
+      "summary": "Standard; ley lines and inanimate objects have no saving throw.",
+      "saveKind": "standard"
+    },
+    "reveals": [
+      "The presence of potential psychic energy in its range area.",
+      "The approximate amount of P.P.E. each individual currently possesses."
+    ]
+  },
+  {
+    "id": "magic_wizard_thunderclap",
+    "name": "Thunderclap",
+    "description": "The invocation produces a booming clap of thunder so loud that it seems to make the air vibrate. A thunderclap is an excellent means of alerting or signaling allies, as well as a means of intimidation. As an intimidation device, it will momentarily startle and distract everyone other than the spell caster. This provides the creator of the thunder with a bonus of +5 on his initiative, +1 to strike, parry and dodge, and creates a horror factor of 8 (all characters within 30 ft/9.1 m must roll to save vs horror factor, except the mage who made the thunder).",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 129
+      }
+    ],
+    "school": "wizard",
+    "spellLevel": 1,
+    "magicKind": "invocation",
+    "spellStrengthBase": 12,
+    "tags": [
+      "offensive",
+      "sound"
+    ],
+    "ppe": {
+      "baseActivation": 4
+    },
+    "range": {
+      "summary": "Directly affects the immediate area (30 ft/9.1 m around the sorcerer), but can be heard up to one mile (1.6 km) away.",
+      "kind": "radius",
+      "radiusValue": 30
+    },
+    "duration": {
+      "summary": "Instant",
+      "kind": "instant"
+    },
+    "save": {
+      "summary": "Save vs Horror Factor",
+      "saveKind": "horror_factor"
+    },
+    "horrorFactor": 8,
+    "grantedModifiers": {
+      "target": "self",
+      "combatModifiers": {
+        "initiative": 5,
+        "strike": 1,
+        "parry": 1,
+        "dodge": 1
+      }
+    }
+  }
+]

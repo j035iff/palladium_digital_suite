@@ -1,0 +1,111 @@
+{
+  "briefId": "nightbane-magic-wizard-level1-ab-sandbox",
+  "briefTitle": "Nightbane Level 1 Wizard Spells — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/magic.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-20T00:28:12.588Z",
+  "updatedAt": "2026-06-20T01:00:00.000Z",
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-level1-sandbox.json",
+  "sourcePdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+  "sourcePages": "printed 127–129 (PDF indices 128–130)",
+  "checklist": [
+    { "name": "Blinding Flash", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "127–128", "notes": null },
+    { "name": "Cloud of Smoke", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "127–128", "notes": null },
+    { "name": "Death Trance", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "127–128", "notes": null },
+    { "name": "Globe of Daylight", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "127–128", "notes": null },
+    { "name": "See Aura", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": "P.P.E. 6 per spell block; index list shows (2)" },
+    { "name": "See the Invisible", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": "P.P.E. 4 per spell block; index list shows (2)" },
+    { "name": "Sense Evil", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": "P.P.E. 2 per spell block; index list shows (1)" },
+    { "name": "Sense Magic", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": "P.P.E. 4 per spell block; index list shows (2)" },
+    { "name": "Sense Nightbane", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": null },
+    { "name": "Sense P.P.E.", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "128", "notes": "Description includes draw-P.P.E. paragraph missing from production" },
+    { "name": "Thunderclap", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "129", "notes": "P.P.E. 4 per spell block; index list shows (2)" }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 127, "end": 128 },
+      "items": ["Blinding Flash", "Cloud of Smoke", "Death Trance", "Globe of Daylight"],
+      "playbookScope": "catalog-only",
+      "notes": "Encoded from Nightbane_RPG.pdf"
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 128, "end": 128 },
+      "items": ["See Aura", "See the Invisible", "Sense Evil", "Sense Magic"],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 128, "end": 129 },
+      "items": ["Sense Nightbane", "Sense P.P.E.", "Thunderclap"],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 127, "end": 128 },
+      "items": ["Blinding Flash", "Cloud of Smoke", "Death Trance"],
+      "playbookScope": "include mechanics",
+      "notes": "Blinding Flash + Cloud of Smoke: inflictedModifiers"
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 128, "end": 128 },
+      "items": ["Globe of Daylight", "See Aura", "See the Invisible"],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 128, "end": 128 },
+      "items": ["Sense Evil", "Sense Magic", "Sense Nightbane"],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-04",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 128, "end": 129 },
+      "items": ["Sense P.P.E.", "Thunderclap"],
+      "playbookScope": "include mechanics",
+      "notes": "Thunderclap: grantedModifiers + horrorFactor 8"
+    }
+  ],
+  "rulings": ["ruling-01"],
+  "completedBatchIds": [
+    "batch-a-01",
+    "batch-a-02",
+    "batch-a-03",
+    "batch-b-01",
+    "batch-b-02",
+    "batch-b-03",
+    "batch-b-04"
+  ],
+  "validationCommands": ["validate:schemas"],
+  "comparisonSummary": {
+    "identical": 9,
+    "differ": 2,
+    "diffIds": ["magic_wizard_sense_evil", "magic_wizard_sense_ppe"]
+  },
+  "notes": "Re-run sourced from Nightbane_RPG.pdf. Production catalog unchanged."
+}

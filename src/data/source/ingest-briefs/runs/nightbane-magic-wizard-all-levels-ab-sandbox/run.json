@@ -1,0 +1,2728 @@
+{
+  "briefId": "nightbane-magic-wizard-all-levels-ab-sandbox",
+  "briefTitle": "Nightbane Wizard Spells (All Levels) — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "passPhases": [
+    "A",
+    "B"
+  ],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/magic.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-20T00:46:23.278Z",
+  "updatedAt": "2026-06-20T00:49:01.877Z",
+  "checklist": [
+    {
+      "name": "Blinding Flash",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Cloud of Smoke",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Death Trance",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Globe of Daylight",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "See Aura",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "See the Invisible",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sense Evil",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sense Magic",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sense Nightbane",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sense P.P.E.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Thunderclap",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Befuddle",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Climb",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Concealment",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Detect Concealment",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Extinguish Fire",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fear",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Heavy Breathing",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Levitation",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Mystic Alarm",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Ritual: Call Creature of Light",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Breathe Without Air",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Energy Bolt",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fingers of Wind",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Float in Air",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fuel Flame",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Ignite Fire",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Impervious to Fire",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Impression",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Invisibility: Simple",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Magic Armor",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Negate Poisons/Toxins",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Ritual: Call Nightlands Denizen",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Telekinesis",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Astral Projection",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Charismatic Aura",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Cure Minor Disorders",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Energy Field",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fire Bolt",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Nightvision",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Repel Animals",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Shadow Meld",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Swim as Fish (minor)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Trance",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Calling",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Charm Weapon",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Circle of Flame",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Domination",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Energy Disruption",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Escape",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Eyes of Thoth",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fly",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Heal Wounds",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Horrific Illusion",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Midnight Wind",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sleep",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Superhuman Speed",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Superhuman Strength",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Swim as Fish (superior)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Apparition",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Call Lightning",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Compulsion",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Cure Illness",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Fire Ball",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Impervious to Energy",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Mask of Deceit",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Memory Bank",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Ritual: Call Nightlord",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Teleport: Lesser",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Time Slip",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Tongues",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Words of Truth",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Agony",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Invisibility: Superior",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Life Drain",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Metamorphosis: Animal",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Paralysis: Superior",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Purification (Food/Water)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Ritual: An Eye for An Eye",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Second Sight",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Wind Rush",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Hallucination",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Locate",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Luck Curse",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Metamorphosis: Human",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Minor Curse",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Negation (of Magic)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Nightlands Portal (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Oracle",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sickness",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Spoil (Water/Food)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Temporary Enchantment",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Curse: Phobia",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Curse: Temporary Insanity",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Familiar Link",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Metamorphosis: Insect",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Protection Circle: Simple",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon and Control Canine",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Transferal",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Banishment",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Bind Nightbane",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Bonding (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Control/Enslave Entity",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Curse: Paranoia",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Metamorphosis: Superior",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon Nightlands Denizen (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon/Control Rodents",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Wards",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Control Nightlands Denizen",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Create Magic Scroll",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Curse: Neurosis",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Nightlands Passage",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Remove Curse",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon and Control Animals (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon Fog",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon Nightlord Avatar",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Amulet",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Calm Storms",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Metamorphosis: Mist",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon and Control Rain (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Enchant Weapon (Ritual)",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Protection Circle: Superior",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Sanctum",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon Nightlord",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Summon Storm",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Close Rift",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Id Barrier",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Restoration",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Talisman",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Dimensional Portal",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    },
+    {
+      "name": "Teleport: Superior",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "127-150",
+      "notes": null
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Blinding Flash",
+        "Cloud of Smoke",
+        "Death Trance",
+        "Globe of Daylight"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "See Aura",
+        "See the Invisible",
+        "Sense Evil",
+        "Sense Magic"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Sense Nightbane",
+        "Sense P.P.E.",
+        "Thunderclap",
+        "Befuddle"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-04",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Climb",
+        "Concealment",
+        "Detect Concealment",
+        "Extinguish Fire"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-05",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Fear",
+        "Heavy Breathing",
+        "Levitation",
+        "Mystic Alarm"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-06",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ritual: Call Creature of Light",
+        "Breathe Without Air",
+        "Energy Bolt",
+        "Fingers of Wind"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-07",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Float in Air",
+        "Fuel Flame",
+        "Ignite Fire",
+        "Impervious to Fire"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-08",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Impression",
+        "Invisibility: Simple",
+        "Magic Armor",
+        "Negate Poisons/Toxins"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-09",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ritual: Call Nightlands Denizen",
+        "Telekinesis",
+        "Astral Projection",
+        "Charismatic Aura"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-10",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Cure Minor Disorders",
+        "Energy Field",
+        "Fire Bolt",
+        "Nightvision"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-11",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Repel Animals",
+        "Shadow Meld",
+        "Swim as Fish (minor)",
+        "Trance"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-12",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Calling",
+        "Charm Weapon",
+        "Circle of Flame",
+        "Domination"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-13",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Energy Disruption",
+        "Escape",
+        "Eyes of Thoth",
+        "Fly"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-14",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Heal Wounds",
+        "Horrific Illusion",
+        "Midnight Wind",
+        "Sleep"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-15",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Superhuman Speed",
+        "Superhuman Strength",
+        "Swim as Fish (superior)",
+        "Apparition"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-16",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Call Lightning",
+        "Compulsion",
+        "Cure Illness",
+        "Fire Ball"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-17",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Impervious to Energy",
+        "Mask of Deceit",
+        "Memory Bank",
+        "Ritual: Call Nightlord"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-18",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Teleport: Lesser",
+        "Time Slip",
+        "Tongues",
+        "Words of Truth"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-19",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Agony",
+        "Invisibility: Superior",
+        "Life Drain",
+        "Metamorphosis: Animal"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-20",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Paralysis: Superior",
+        "Purification (Food/Water)",
+        "Ritual: An Eye for An Eye",
+        "Second Sight"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-21",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Wind Rush",
+        "Hallucination",
+        "Locate",
+        "Luck Curse"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-22",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Metamorphosis: Human",
+        "Minor Curse",
+        "Negation (of Magic)",
+        "Nightlands Portal (Ritual)"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-23",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Oracle",
+        "Sickness",
+        "Spoil (Water/Food)",
+        "Temporary Enchantment"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-24",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Curse: Phobia",
+        "Curse: Temporary Insanity",
+        "Familiar Link",
+        "Metamorphosis: Insect"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-25",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Protection Circle: Simple",
+        "Summon and Control Canine",
+        "Transferal",
+        "Banishment"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-26",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Bind Nightbane",
+        "Bonding (Ritual)",
+        "Control/Enslave Entity",
+        "Curse: Paranoia"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-27",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Metamorphosis: Superior",
+        "Summon Nightlands Denizen (Ritual)",
+        "Summon/Control Rodents",
+        "Wards"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-28",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Control Nightlands Denizen",
+        "Create Magic Scroll",
+        "Curse: Neurosis",
+        "Nightlands Passage"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-29",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Remove Curse",
+        "Summon and Control Animals (Ritual)",
+        "Summon Fog",
+        "Summon Nightlord Avatar"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-30",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Amulet",
+        "Calm Storms",
+        "Metamorphosis: Mist",
+        "Summon and Control Rain (Ritual)"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-31",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Enchant Weapon (Ritual)",
+        "Protection Circle: Superior",
+        "Sanctum",
+        "Summon Nightlord"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-32",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Summon Storm",
+        "Close Rift",
+        "Id Barrier",
+        "Restoration"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-a-33",
+      "status": "complete",
+      "pass": "A",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Talisman",
+        "Dimensional Portal",
+        "Teleport: Superior"
+      ],
+      "playbookScope": "catalog-only",
+      "notes": "PDF-sourced Pass A cross-check"
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Blinding Flash",
+        "Cloud of Smoke"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Death Trance",
+        "Globe of Daylight"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "See Aura",
+        "See the Invisible"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-04",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Sense Evil",
+        "Sense Magic"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-05",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Sense Nightbane",
+        "Sense P.P.E."
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-06",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Thunderclap",
+        "Befuddle"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-07",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Climb",
+        "Concealment"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-08",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Detect Concealment",
+        "Extinguish Fire"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-09",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Fear",
+        "Heavy Breathing"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-10",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Levitation",
+        "Mystic Alarm"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-11",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ritual: Call Creature of Light",
+        "Breathe Without Air"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-12",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Energy Bolt",
+        "Fingers of Wind"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-13",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Float in Air",
+        "Fuel Flame"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-14",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ignite Fire",
+        "Impervious to Fire"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-15",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Impression",
+        "Invisibility: Simple"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-16",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Magic Armor",
+        "Negate Poisons/Toxins"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-17",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ritual: Call Nightlands Denizen",
+        "Telekinesis"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-18",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Astral Projection",
+        "Charismatic Aura"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-19",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Cure Minor Disorders",
+        "Energy Field"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-20",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Fire Bolt",
+        "Nightvision"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-21",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Repel Animals",
+        "Shadow Meld"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-22",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Swim as Fish (minor)",
+        "Trance"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-23",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Calling",
+        "Charm Weapon"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-24",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Circle of Flame",
+        "Domination"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-25",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Energy Disruption",
+        "Escape"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-26",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Eyes of Thoth",
+        "Fly"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-27",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Heal Wounds",
+        "Horrific Illusion"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-28",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Midnight Wind",
+        "Sleep"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-29",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Superhuman Speed",
+        "Superhuman Strength"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-30",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Swim as Fish (superior)",
+        "Apparition"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-31",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Call Lightning",
+        "Compulsion"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-32",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Cure Illness",
+        "Fire Ball"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-33",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Impervious to Energy",
+        "Mask of Deceit"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-34",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Memory Bank",
+        "Ritual: Call Nightlord"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-35",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Teleport: Lesser",
+        "Time Slip"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-36",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Tongues",
+        "Words of Truth"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-37",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Agony",
+        "Invisibility: Superior"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-38",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Life Drain",
+        "Metamorphosis: Animal"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-39",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Paralysis: Superior",
+        "Purification (Food/Water)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-40",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Ritual: An Eye for An Eye",
+        "Second Sight"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-41",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Wind Rush",
+        "Hallucination"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-42",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Locate",
+        "Luck Curse"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-43",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Metamorphosis: Human",
+        "Minor Curse"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-44",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Negation (of Magic)",
+        "Nightlands Portal (Ritual)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-45",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Oracle",
+        "Sickness"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-46",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Spoil (Water/Food)",
+        "Temporary Enchantment"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-47",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Curse: Phobia",
+        "Curse: Temporary Insanity"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-48",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Familiar Link",
+        "Metamorphosis: Insect"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-49",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Protection Circle: Simple",
+        "Summon and Control Canine"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-50",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Transferal",
+        "Banishment"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-51",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Bind Nightbane",
+        "Bonding (Ritual)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-52",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Control/Enslave Entity",
+        "Curse: Paranoia"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-53",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Metamorphosis: Superior",
+        "Summon Nightlands Denizen (Ritual)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-54",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Summon/Control Rodents",
+        "Wards"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-55",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Control Nightlands Denizen",
+        "Create Magic Scroll"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-56",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Curse: Neurosis",
+        "Nightlands Passage"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-57",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Remove Curse",
+        "Summon and Control Animals (Ritual)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-58",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Summon Fog",
+        "Summon Nightlord Avatar"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-59",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Amulet",
+        "Calm Storms"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-60",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Metamorphosis: Mist",
+        "Summon and Control Rain (Ritual)"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-61",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Enchant Weapon (Ritual)",
+        "Protection Circle: Superior"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-62",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Sanctum",
+        "Summon Nightlord"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-63",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Summon Storm",
+        "Close Rift"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-64",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Id Barrier",
+        "Restoration"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-65",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Talisman",
+        "Dimensional Portal"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    },
+    {
+      "id": "batch-b-66",
+      "status": "complete",
+      "pass": "B",
+      "pages": {
+        "start": 127,
+        "end": 150
+      },
+      "items": [
+        "Teleport: Superior"
+      ],
+      "playbookScope": "include mechanics",
+      "notes": null
+    }
+  ],
+  "rulings": [],
+  "completedBatchIds": [
+    "batch-a-01",
+    "batch-a-02",
+    "batch-a-03",
+    "batch-a-04",
+    "batch-a-05",
+    "batch-a-06",
+    "batch-a-07",
+    "batch-a-08",
+    "batch-a-09",
+    "batch-a-10",
+    "batch-a-11",
+    "batch-a-12",
+    "batch-a-13",
+    "batch-a-14",
+    "batch-a-15",
+    "batch-a-16",
+    "batch-a-17",
+    "batch-a-18",
+    "batch-a-19",
+    "batch-a-20",
+    "batch-a-21",
+    "batch-a-22",
+    "batch-a-23",
+    "batch-a-24",
+    "batch-a-25",
+    "batch-a-26",
+    "batch-a-27",
+    "batch-a-28",
+    "batch-a-29",
+    "batch-a-30",
+    "batch-a-31",
+    "batch-a-32",
+    "batch-a-33",
+    "batch-b-01",
+    "batch-b-02",
+    "batch-b-03",
+    "batch-b-04",
+    "batch-b-05",
+    "batch-b-06",
+    "batch-b-07",
+    "batch-b-08",
+    "batch-b-09",
+    "batch-b-10",
+    "batch-b-11",
+    "batch-b-12",
+    "batch-b-13",
+    "batch-b-14",
+    "batch-b-15",
+    "batch-b-16",
+    "batch-b-17",
+    "batch-b-18",
+    "batch-b-19",
+    "batch-b-20",
+    "batch-b-21",
+    "batch-b-22",
+    "batch-b-23",
+    "batch-b-24",
+    "batch-b-25",
+    "batch-b-26",
+    "batch-b-27",
+    "batch-b-28",
+    "batch-b-29",
+    "batch-b-30",
+    "batch-b-31",
+    "batch-b-32",
+    "batch-b-33",
+    "batch-b-34",
+    "batch-b-35",
+    "batch-b-36",
+    "batch-b-37",
+    "batch-b-38",
+    "batch-b-39",
+    "batch-b-40",
+    "batch-b-41",
+    "batch-b-42",
+    "batch-b-43",
+    "batch-b-44",
+    "batch-b-45",
+    "batch-b-46",
+    "batch-b-47",
+    "batch-b-48",
+    "batch-b-49",
+    "batch-b-50",
+    "batch-b-51",
+    "batch-b-52",
+    "batch-b-53",
+    "batch-b-54",
+    "batch-b-55",
+    "batch-b-56",
+    "batch-b-57",
+    "batch-b-58",
+    "batch-b-59",
+    "batch-b-60",
+    "batch-b-61",
+    "batch-b-62",
+    "batch-b-63",
+    "batch-b-64",
+    "batch-b-65",
+    "batch-b-66"
+  ],
+  "validationCommands": [
+    "validate:schemas"
+  ],
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-all-levels-sandbox.json",
+  "comparisonSummary": {
+    "identical": 131,
+    "differ": 0
+  },
+  "notes": "PDF cross-check complete. Sandbox mirrors production wizard.json (131 Nightbane rows)."
+}

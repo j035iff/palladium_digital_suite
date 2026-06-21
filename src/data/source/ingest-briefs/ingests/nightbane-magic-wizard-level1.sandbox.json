@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-magic-wizard-level1-ab-sandbox",
+  "title": "Nightbane Level 1 Wizard Spells — AB sandbox",
+  "contentType": "magic",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 127, "end": 129 }
+  },
+  "options": {
+    "school": "wizard",
+    "level": 1
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-magic-wizard-level1-sandbox.json",
+  "passBAfterRulings": true,
+  "items": [
+    "Blinding Flash",
+    "Cloud of Smoke",
+    "Death Trance",
+    "Globe of Daylight",
+    "See Aura",
+    "See the Invisible",
+    "Sense Evil",
+    "Sense Magic",
+    "Sense Nightbane",
+    "Sense P.P.E.",
+    "Thunderclap"
+  ],
+  "notes": "Sandbox comparison vs src/data/content/magic/wizard.json (Nightbane level 1 only). Do not write to src/data/content/. Pass A: 4 spells/batch. Pass B: 2–3/batch. Do not mix A+B in the same batch."
+}
