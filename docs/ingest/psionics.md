@@ -196,6 +196,10 @@ No `audit:psionics` script yet.
 |---------------|-------|--------|
 | Catalog layout | Monolithic vs split | **Category-split** under `content/psionics/` (implemented) |
 | Death Trance | Sensitive vs Physical | Separate rows when category-specific I.S.P. applies |
+| Total Recall | Sensitive (p. 77) vs Physical (p. 83) listing | **Single row** with dual `genrePlacements` (`physical` + `sensitive`); dual `sources[]`; filed in `physical.json`; same I.S.P. |
+| Suggestion (Hypnosis) | Sensitive (p. 77) vs Healer (p. 84) | **Single row** in `sensitive.json`; dual `genrePlacements`; healer placement overrides I.S.P. (4) and adds `lengthOfTrance` notes |
+| Resist Fatigue | Physical (p. 81) vs Healer (p. 84) | **Separate rows** (`psionic_resist_fatigue` + `psionic_resist_fatigue_healer`); healer requires `lengthOfTrance` |
+| Impervious to Cold / Fire | Physical vs Healer listings | **Separate rows** with `_healer` suffix when healer version adds trance prep |
 
 ---
 

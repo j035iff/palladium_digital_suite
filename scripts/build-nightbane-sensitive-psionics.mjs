@@ -1,6 +1,6 @@
 /**
- * Rebuild Nightbane sensitive psionics (RPG pp. 70–78) in the category-split catalog.
- * Merges into `psionics/sensitive.json`, preserving other category files.
+ * Nightbane sensitive psionics (RPG pp. 71–77; section intro p. 70).
+ * Export for sandbox writers; optional merge into production catalog.
  * Run: node scripts/build-nightbane-sensitive-psionics.mjs
  */
 import { dirname, join } from 'node:path'
@@ -19,18 +19,13 @@ const source = (page) => ({
   pageNumber: page,
 })
 
-const nb = (page = 71) => ({
-  genreId: 'nightbane',
-  category: 'sensitive',
-  ...(page ? {} : {}),
-})
-
 function row(entry) {
+  const { sourcePage = 71, ...rest } = entry
   return {
     gameSystems: ['nightbane'],
-    sources: [source(entry.sourcePage ?? 71)],
+    sources: [source(sourcePage)],
     genrePlacements: [{ genreId: 'nightbane', category: 'sensitive' }],
-    ...entry,
+    ...rest,
   }
 }
 
@@ -81,7 +76,7 @@ const catalog = [
   row({
     id: 'psionic_death_trance',
     name: 'Death Trance',
-    sourcePage: 73,
+    sourcePage: 72,
     description:
       'Mind over matter slows metabolism to suspended animation, simulating death. Without hospital facilities a medical doctor is 1–89% likely to believe the character is dead. Drugs, toxins, and chemicals are slowed but take full effect when the trance ends unless treated first. Cannot be roused or respond to stimulation, including psychic probes; incapable of attack or defense until broken.',
     isp: { baseActivation: 2 },
@@ -203,7 +198,7 @@ const catalog = [
   row({
     id: 'psionic_meditation',
     name: 'Meditation',
-    sourcePage: 75,
+    sourcePage: 74,
     innateStarter: true,
     description:
       'Mental discipline through focus on a notion, object, or mantra to achieve relaxation, insight, or harmony. Often required to use psychic and magic powers. Not a psychic power per se — costs no I.S.P.',
@@ -216,7 +211,7 @@ const catalog = [
   row({
     id: 'psionic_mediumship_clairsentience',
     name: 'Mediumship/Clairsentience (Seance)',
-    sourcePage: 75,
+    sourcePage: 74,
     description:
       'Opens the psychic as a beacon to ghosts/entities and as a medium for communication. Operates as temporary possession of a seance participant (mediator asks questions) or direct medium channel. Communications are brief (seldom over five minutes). Seance chain of hand-holders contributes P.P.E. (+2% base skill per P.P.E. point contributed; opposed participants -2% per P.P.E.). Breaking the hand-holding chain instantly ends the seance. Non-psychic seances use linked P.P.E. as base skill percent.',
     isp: { baseActivation: 4 },
@@ -240,7 +235,7 @@ const catalog = [
   row({
     id: 'psionic_mind_block',
     name: 'Mind Block',
-    sourcePage: 76,
+    sourcePage: 75,
     description:
       'Completely close oneself from psychic/mental emanations. While blocked, cannot sense, use psionics, or be influenced by others. Blocks telepathy, empathy, hypnotic suggestion, and empathic transmission. +1 to save vs all psychic and mental attacks.',
     isp: { baseActivation: 4, notes: '4 I.S.P. per each 10-minute duration period.' },
@@ -261,7 +256,7 @@ const catalog = [
   row({
     id: 'psionic_object_read',
     name: 'Object Read (Psychometry)',
-    sourcePage: 76,
+    sourcePage: 75,
     description:
       'Receive impressions and images from an object about its use, history, and last owner by touch and concentration. Impressions cover alignment, emotional state, purpose, whether last owner lives, magic/supernatural use, enchantment/possession. Images show brief past-event snippets. Present glimpse costs +4 I.S.P. with no success guarantee. Once read by the same psychic, an object cannot be read again by them even on failure. Possessed items make reader vulnerable to psychic attack (no save bonuses).',
     isp: { baseActivation: 6, notes: '+4 I.S.P. for optional present glimpse.' },
@@ -278,7 +273,7 @@ const catalog = [
   row({
     id: 'psionic_presence_sense',
     name: 'Presence Sense',
-    sourcePage: 76,
+    sourcePage: 75,
     innateStarter: true,
     description:
       'Sixth-sense alert to supernatural and magic creatures in the area. Cannot pinpoint location but indicates near (within 50 ft) vs far (beyond 90 ft) and vague count: one (1–2), few (3–6), several (7–14), or many (15+). Human presences sensed with less accuracy — feeling of "we are not alone" only (~50% accurate on count).',
@@ -308,7 +303,7 @@ const catalog = [
   row({
     id: 'psionic_see_the_invisible',
     name: 'See the Invisible',
-    sourcePage: 77,
+    sourcePage: 76,
     description:
       'See forces, objects, and creatures that are invisible or naturally invisible, including ghosts, entities, and astral bodies (vaporous image or energy sphere).',
     isp: { baseActivation: 4 },
@@ -324,7 +319,7 @@ const catalog = [
   row({
     id: 'psionic_sense_evil',
     name: 'Sense Evil',
-    sourcePage: 77,
+    sourcePage: 76,
     innateStarter: true,
     description:
       'Refined sense of supernatural evil. Psychic sensitives automatically feel supernatural evil without spending I.S.P.; using the power gives clearer detail. Indicates count (one, few 2–6, several 7–14, many 15+), intensity, and location (room, possessed object/person, or distance: very near within 15 ft, near within 50 ft, far 60–140 ft). Can track like a bloodhound. Human evil only if immediate evil intent plus psychic powers or psychosis; mind block masks intent.',
@@ -341,7 +336,7 @@ const catalog = [
   row({
     id: 'psionic_sense_magic',
     name: 'Sense Magic',
-    sourcePage: 77,
+    sourcePage: 76,
     description:
       'Feel magic energy; near (within 20 ft) vs far (up to 120 ft) and trace to place, room, person, or object. Sense enchanted items, active spells (not psychic powers), magic use in area, and spellcasting. Invisible magical creatures/objects trace only to general area.',
     isp: { baseActivation: 3 },
@@ -357,7 +352,7 @@ const catalog = [
   row({
     id: 'psionic_sixth_sense',
     name: 'Sixth Sense',
-    sourcePage: 77,
+    sourcePage: 76,
     description:
       'Automatic precognitive flash of imminent life-threatening danger to self or someone cared about within 90 ft, within the next 60 seconds (4 melees). Triggered only by unexpected danger already in motion — not callable for traps/ambush. Inoperative if all I.S.P. expended.',
     isp: { baseActivation: 2 },
@@ -394,7 +389,7 @@ const catalog = [
   row({
     id: 'psionic_suggestion',
     name: 'Suggestion (Hypnosis)',
-    sourcePage: 78,
+    sourcePage: 77,
     description:
       'Psychically boosted simple hypnosis: calm, light sleep, focus on a thought, or implant subtle ideas through conversation. Cannot create full mind control or absurd compulsions. Successful save means idea not implanted; may retry at cost of another 2 I.S.P. per idea.',
     isp: { baseActivation: 2, perTarget: '2 per idea or implant attempt' },
@@ -407,29 +402,9 @@ const catalog = [
     durationType: 'narrative',
   }),
   row({
-    id: 'psionic_summon_inner_strength',
-    name: 'Summon Inner Strength',
-    sourcePage: 78,
-    description:
-      'Draw on inner reserves to ward off pain and fatigue for the duration.',
-    isp: { baseActivation: 4 },
-    range: { summary: 'Self' },
-    duration: {
-      summary: '10 minutes per level of experience.',
-      kind: 'minute',
-      perLevel: '10 minutes',
-    },
-    combatBonuses: { sdc: 10 },
-    limitations: {
-      selfOnly: true,
-      otherLimitations: '+2 save vs poison/toxins; +5% save vs coma/death; function as fully rested.',
-    },
-    durationType: 'narrative',
-  }),
-  row({
     id: 'psionic_telepathy',
     name: 'Telepathy',
-    sourcePage: 78,
+    sourcePage: 77,
     description:
       'Read surface thoughts of one focused target at a time (not deep memory; no simultaneous multi-target reading). Limited one-way message sending to one person — brief, clear thoughts only. Two-way telepathic conversation only between two telepathic psychics. Mind block prevents probes and communication.',
     isp: { baseActivation: 4 },
@@ -448,27 +423,34 @@ const catalog = [
     },
     durationType: 'narrative',
   }),
-  row({
-    id: 'psionic_total_recall',
-    name: 'Total Recall',
-    sourcePage: 78,
-    description:
-      'Remember every word read. Specific information blocks can be recalled in perfect detail at will for 3 I.S.P. each. If out of I.S.P., recall quality degrades by percentile: 1–50 full detail, 51–80 essence only, 81–00 basic concepts only.',
-    isp: { baseActivation: 2, recallBlockCost: 3 },
-    range: { summary: 'Self' },
-    duration: { summary: 'Permanent retention; recall is on demand.', kind: 'permanent' },
-    limitations: { selfOnly: true },
-    durationType: 'permanent',
-  }),
 ]
 
-const sensitiveIds = new Set(catalog.map((row) => row.id))
-const existing = loadPsionicsFromDir(psionicsDir).filter(
-  (row) => row?.id && !sensitiveIds.has(row.id),
-)
+/** Physical-section rows that must not be re-written by the sensitive builder. */
+export const SENSITIVE_BUILD_EXCLUDE_IDS = [
+  'psionic_summon_inner_strength',
+  'psionic_total_recall',
+]
 
-const merged = [...existing, ...catalog].sort((a, b) => a.id.localeCompare(b.id))
-writePsionicsToDir(psionicsDir, merged)
-console.log(
-  `Wrote ${catalog.length} sensitive psionics (${merged.length} total) under ${psionicsDir}`,
-)
+/** @param {{ maxSourcePage?: number, excludeIds?: string[] }} [options] */
+export function buildNightbaneSensitivePsionics(options = {}) {
+  const { maxSourcePage = Infinity, excludeIds = SENSITIVE_BUILD_EXCLUDE_IDS } = options
+  const excluded = new Set(excludeIds)
+  return catalog.filter((entry) => {
+    if (excluded.has(entry.id)) return false
+    const page = entry.sources?.[0]?.pageNumber
+    return page == null || page <= maxSourcePage
+  })
+}
+
+if (process.argv[1] && process.argv[1].endsWith('build-nightbane-sensitive-psionics.mjs')) {
+  const sensitiveIds = new Set(catalog.map((row) => row.id))
+  const existing = loadPsionicsFromDir(psionicsDir).filter(
+    (row) => row?.id && !sensitiveIds.has(row.id),
+  )
+
+  const merged = [...existing, ...catalog].sort((a, b) => a.id.localeCompare(b.id))
+  writePsionicsToDir(psionicsDir, merged)
+  console.log(
+    `Wrote ${catalog.length} sensitive psionics (${merged.length} total) under ${psionicsDir}`,
+  )
+}

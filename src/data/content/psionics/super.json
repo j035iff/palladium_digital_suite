@@ -3,7 +3,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_astral_transference",
     "name": "Astral Transference",
-    "description": "This powerful ability transforms the character's body into an astral construct, similar to an entity or other energy beings, and able to travel astrally. One might consider this power a sort of \"super\" astral projection. Unlike normal astral projection, the entire body of the character is transformed into an astral energy being, so the body is not left behind and the duration for astral travel is much greater. All the abilities and benefits of the astral projection power apply to this form as well, except there is no silver cord involved.",
+    "description": "Transforms the entire body into an astral energy construct for extended astral travel — a \"super\" astral projection with no body left behind and no silver cord. All astral projection benefits from Nightbane RPG apply except the cord.",
     "gameSystems": [
       "nightbane"
     ],
@@ -35,8 +35,11 @@
       "summary": "None",
       "saveKind": "none"
     },
-    "psionicPrerequisites": [
-      "psionic_astral_projection"
+    "prerequisites": [
+      {
+        "type": "psionic",
+        "psionicId": "psionic_astral_projection"
+      }
     ]
   },
   {
@@ -82,6 +85,9 @@
     "lengthOfTrance": {
       "summary": "One full minute of concentration.",
       "preparationMinutes": "1"
+    },
+    "limitations": {
+      "selfOnly": true
     }
   },
   {
@@ -123,8 +129,8 @@
       "dice": "1D4"
     },
     "save": {
-      "summary": "Standard, but penalized by the attacker's spent I.S.P.",
-      "saveKind": "standard"
+      "summary": "Standard psionic save; attacker may spend +10 I.S.P. per -1 to defender save.",
+      "saveKind": "psionic"
     }
   },
   {
@@ -163,9 +169,16 @@
       "summary": "None",
       "saveKind": "none"
     },
-    "psionicPrerequisites": [
-      "psionic_dreamdance_minor"
-    ]
+    "prerequisites": [
+      {
+        "type": "psionic",
+        "psionicId": "psionic_dreamdance_minor"
+      }
+    ],
+    "limitations": {
+      "selfOnly": true,
+      "otherLimitations": "Cannot escape the Dreamstream by waking up; reappears at departure point when duration ends or user returns."
+    }
   },
   {
     "$schema": "../palladium-psionic.schema.json",
@@ -205,14 +218,14 @@
       "saveKind": "none"
     },
     "limitations": {
-      "otherLimitations": "Maximum of 8 participants. Participants cannot perform other skills, physical combat, or parry without breaking the circle. Dodging without breaking ranks is at -5."
+      "otherLimitations": "Max 8 participants. Circle overrides mind blocks between members. Only the designated key may use enhanced powers; simultaneous use by another member fails (half I.S.P. lost). Participants cannot use other skills, fight, or parry without breaking the circle; dodge at -5 without breaking ranks. Breaking hands ends the circle instantly; rebuilding costs another 30 I.S.P. Two attacks per melee per participant while linked."
     }
   },
   {
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_group_mind_block",
     "name": "Group Mind Block",
-    "description": "The master psionic can instantly erect a mental barrier or mind block to protect himself and those around him, within a 120 foot (36.5 m) area. The group mind block works just like the individual mind block power. Everyone within the area of effect will be automatically blocked, but the effect is not detectable so they are not likely to know they are being mind blocked.",
+    "description": "Instantly erects a mind block protecting everyone within 120 feet (36.5 m). Works like individual mind block — blocks probes and telepathy/empathy from outside forces. Effect is undetectable to those blocked; Detect Psionics reveals a group mind block.",
     "gameSystems": [
       "nightbane"
     ],
@@ -277,7 +290,7 @@
     ],
     "isp": {
       "baseActivation": 0,
-      "notes": "The character must permanently give up 10 I.S.P. when this power is selected. Automatic activations cost 0 I.S.P."
+      "notes": "Permanently sacrifice 10 I.S.P. when this power is selected. Auto mind block engages at no further I.S.P. cost during telepathic/empathic probes or attacks until the probe ends."
     },
     "range": {
       "summary": "Self"
@@ -325,6 +338,44 @@
     "save": {
       "summary": "Standard",
       "saveKind": "standard"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Permanent insanity from alien or extremely disturbed mind",
+      "resolutionTrigger": {
+        "when": "on_cast",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "No insanity.",
+          "percentile": {
+            "min": 1,
+            "max": 40
+          }
+        },
+        {
+          "effect": "Phobia.",
+          "percentile": {
+            "min": 41,
+            "max": 80
+          }
+        },
+        {
+          "effect": "Affective disorder.",
+          "percentile": {
+            "min": 81,
+            "max": 90
+          }
+        },
+        {
+          "effect": "Neurosis.",
+          "percentile": {
+            "min": 91,
+            "max": 100
+          }
+        }
+      ]
     }
   },
   {
@@ -350,18 +401,19 @@
     ],
     "isp": {
       "baseActivation": 10,
+      "notes": "Temporary wipe: 10 I.S.P. per 1D4 days erased. Permanent specific wipe: 50 I.S.P. Complete blank wipe: 50 I.S.P. plus 4 permanent M.E. (even if save succeeds).",
       "dynamicCosts": [
         {
-          "trigger": "Temporary Wipe (1D4 days)",
-          "costFormula": "10 I.S.P."
+          "trigger": "Temporary wipe",
+          "costFormula": "10 I.S.P. per 1D4 days of memory erased."
         },
         {
-          "trigger": "Permanent Specific Wipe",
+          "trigger": "Permanent specific memory",
           "costFormula": "50 I.S.P."
         },
         {
-          "trigger": "Complete Blank Mind Wipe",
-          "costFormula": "50 I.S.P. and permanently sacrifice 4 M.E. points."
+          "trigger": "Complete blank mind wipe",
+          "costFormula": "50 I.S.P. and permanently lose 4 M.E."
         }
       ]
     },
@@ -385,7 +437,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_possession",
     "name": "Possession",
-    "description": "The psychic can completely take over and control another person. The psychic essence of the controlling mind is transferred into the body of another individual. While in the victim's body/mind, the psychic retains all his own knowledge and identity. He cannot read the mind of the person he now possesses, nor access any knowledge from the victim's memory. Only the physical body can be controlled, like a living robot. The victim goes into a trance state and remembers nothing. The psychic's natural body falls into a coma-like state.",
+    "description": "Transfers the psychic's essence into another person's body. Retains own knowledge and identity; cannot read the host's mind or access their memory — controls the body like a living robot. Host is in a trance with no memory of possession; psychic's body is in a vulnerable coma. May return to own body at any time regardless of distance; host wakes instantly when essence departs.",
     "gameSystems": [
       "nightbane"
     ],
@@ -541,12 +593,19 @@
       "saveKind": "none"
     },
     "damage": {
-      "formula": "6D6 + 1D6 per additional plateau level",
-      "notes": "6D6 at level 3. Adds 1D6 at levels 4, 7, 9, 12, and 15. Can be adjusted to inflict a minimum of 2D6."
+      "formula": "6D6 at level 3; +1D6 at levels 4, 7, 9, 12, and 15",
+      "notes": "Minimum 2D6 or increased in +1D6 steps up to current maximum. Appearance reflects creator; damage is independent of form."
     },
     "limitations": {
       "otherLimitations": "Prerequisite: Third level of experience."
-    }
+    },
+    "prerequisites": [
+      {
+        "type": "level_minimum",
+        "level": 3,
+        "label": "Third level of experience (cannot select before level 3)."
+      }
+    ]
   },
   {
     "$schema": "../palladium-psionic.schema.json",
@@ -583,6 +642,9 @@
     "save": {
       "summary": "Standard",
       "saveKind": "standard"
+    },
+    "limitations": {
+      "otherLimitations": "Works on Earth, Nightlands, Astral Plane, and Dreamstream. Illusionary damage is not permanent; targets who believe they were killed collapse unconscious."
     }
   },
   {
@@ -632,8 +694,11 @@
         "notes": "P.S. becomes Supernatural for the duration."
       }
     },
-    "psionicPrerequisites": [
-      "psionic_summon_inner_strength"
+    "prerequisites": [
+      {
+        "type": "psionic",
+        "psionicId": "psionic_summon_inner_strength"
+      }
     ]
   },
   {
@@ -676,6 +741,9 @@
       "kind": "construct",
       "name": "Telekinetic Force Field",
       "derivedHealth": "130 S.D.C., plus 20 S.D.C. per level of experience."
+    },
+    "limitations": {
+      "otherLimitations": "Smallest field: 3 ft (0.9 m) area. Largest: 10 ft (3.0 m) per level. Must be within line of sight; can be placed up to 40 ft (12.2 m) per level. Field cannot be moved once created. Multiple fields allowed as I.S.P. permits. Parry roll required to intercept an incoming attack."
     }
   },
   {
@@ -708,6 +776,7 @@
     "duration": {
       "summary": "10 minutes plus 2 minutes per level of experience.",
       "kind": "minute",
+      "flat": 10,
       "perLevel": "2 minutes"
     },
     "save": {
@@ -715,10 +784,10 @@
       "saveKind": "none"
     },
     "baseSkill": {
-      "label": "Machine empathy",
+      "label": "Machine operation",
       "basePercent": 80,
       "perLevel": 0,
-      "notes": "Expertise is equal to 80% (88% for computers) and applies to all aspects of the machine, repair, access codes, etc."
+      "notes": "88% for computers; includes operation, repair, and access codes. Knowledge is temporary for the duration."
     }
   }
 ]

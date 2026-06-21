@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-psionics-healer-nb-83-84-ab",
+  "title": "Nightbane Healer Psionics (RPG pp. 83–84) — Pass AB",
+  "contentType": "psionics",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 83, "end": 84 }
+  },
+  "options": {
+    "category": "healer"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Deaden Pain",
+    "Exorcism",
+    "Healing Touch",
+    "Impervious to Cold",
+    "Impervious to Fire",
+    "Increased Healing",
+    "Induce Pain",
+    "Induce Sleep",
+    "Psychic Diagnosis",
+    "Psychic Purification",
+    "Psychic Surgery",
+    "Resist Fatigue",
+    "Suggestion (Hypnosis)"
+  ],
+  "notes": "Healer section printed pp. 83–84. Suggestion dual-pick: single row in sensitive.json with healer genrePlacement (p. 84). Resist Fatigue dual-pick: separate healer row (lengthOfTrance) vs physical row. Resist Hunger is physical-only (p. 82), not in healer section."
+}

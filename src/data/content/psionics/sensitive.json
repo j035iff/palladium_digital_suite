@@ -3,7 +3,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_astral_bolts",
     "name": "Astral Bolts",
-    "description": "This power can only be used in the Astral Plane, because it draws on ambient ectoplasm. The astral bolts inflict 1D4 S.D.C. per level of the caster, and are +3 to strike. Targets can dodge normally.",
+    "description": "Usable only in the Astral Plane; draws on ambient ectoplasm. Astral bolts inflict 1D4 S.D.C. per level of the caster and are +3 to strike. Targets may dodge normally.",
     "gameSystems": [
       "nightbane"
     ],
@@ -46,15 +46,21 @@
         "notes": "Bonus specifically applies to the Astral Bolt attacks."
       }
     },
-    "psionicPrerequisites": [
-      "psionic_astral_projection"
+    "prerequisites": [
+      {
+        "type": "other_psionic_any_of",
+        "psionicIds": [
+          "psionic_astral_projection",
+          "psionic_astral_transference"
+        ]
+      }
     ]
   },
   {
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_astral_navigation",
     "name": "Astral Navigation",
-    "description": "Astral travelers with this power are in a state of communion with the Astral Plane, and are able to find their way more easily. This power can be used in many different ways, depending on where in the Astral Plane the user is at the moment. In the Outer Layer, the psychic can return to his body. In the Inner Plane, the psychic can travel through the Dragon Roads.",
+    "description": "Communion with the Astral Plane for easier navigation. Skill rolls once per hour. In the Outer Layer, a successful roll returns the psychic to body or physical world (via astral transference) without using the Nightbane RPG astral return table. In the Inner Plane, successful rolls allow travel via Dragon Roads by visualizing a destination.",
     "gameSystems": [
       "nightbane"
     ],
@@ -87,13 +93,19 @@
       "saveKind": "none"
     },
     "baseSkill": {
-      "label": "Success ratio",
+      "label": "Astral Navigation",
       "basePercent": 45,
       "perLevel": 4,
-      "notes": "Skill rolls can be made once every hour. Greatly modified by familiarity with destination."
+      "notes": "Roll once per hour. Destination well known (+48h stay): +25%. Known (visited once): +5%. Heard of but never visited: -5%. Inner Plane: no modifier. Outer Layer: -10%. Void: -15%."
     },
-    "psionicPrerequisites": [
-      "psionic_astral_projection"
+    "prerequisites": [
+      {
+        "type": "other_psionic_any_of",
+        "psionicIds": [
+          "psionic_astral_projection",
+          "psionic_astral_transference"
+        ]
+      }
     ]
   },
   {
@@ -306,7 +318,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_dreamdance_minor",
     "name": "Dreamdance (Minor)",
-    "description": "This psychic power allows the character to enter the Dreamstream. The psychic's body remains in a trance, much like when traveling via astral projection. A dream projection is similar to an astral projection but without the silver cord link. This dream projection has S.D.C. points equal to the total S.D.C. and hit points of the character. While in the Dreamstream, the character can search for the Dream Pool of any given individual who is asleep and dreaming.",
+    "description": "Enter the Dreamstream while the body remains in trance (like astral projection, but no silver cord). Dream projection appears near the character's Dream Pool with S.D.C. equal to combined physical S.D.C. and hit points; dream constructs use S.D.C. only. Damage to the projection does not affect the body unless the projection is destroyed. Leaving the Dreamstream is automatic unless blocked — then resolve with Dream Combat rules. Can search for a sleeping person's Dream Pool (see resolution table).",
     "gameSystems": [
       "nightbane"
     ],
@@ -387,6 +399,10 @@
       "kind": "construct",
       "name": "Dream Projection",
       "derivedHealth": "Equal to the total S.D.C. and hit points of the character."
+    },
+    "limitations": {
+      "selfOnly": true,
+      "otherLimitations": "Projection destruction does not harm the body unless the dream construct is completely destroyed."
     }
   },
   {
@@ -465,7 +481,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_ethereal_mirage_minor",
     "name": "Ethereal Mirage (Minor)",
-    "description": "Creates a visual illusion projected directly into the mind of the people in range of the power. If a successful save is made the target realizes he is seeing an illusion. The illusion can have any shape and form the character wishes it to have, but cannot produce any sound, nor is it substantial.",
+    "description": "Visual illusion projected into minds within range. Successful save reveals the illusion. Any shape or form; no sound and not substantial. Functions only in the Dreamstream and Astral Plane.",
     "gameSystems": [
       "nightbane"
     ],
@@ -498,7 +514,7 @@
       "saveKind": "standard"
     },
     "limitations": {
-      "otherLimitations": "This power only works in the Dreamstream and Astral Plane."
+      "otherLimitations": "Dreamstream and Astral Plane only; illusion is visual only."
     }
   },
   {
@@ -767,7 +783,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_sense_dimensional_anomaly",
     "name": "Sense Dimensional Anomaly",
-    "description": "This power will detect the presence of a dimensional anomaly like a dimensional portal or Rift leading to an astral or dream domain, as well as any disturbances caused by teleportation, temporal magic or other powers that disrupt the fabric of reality.",
+    "description": "Detects dimensional anomalies — portals or Rifts to astral or dream domains — and disturbances from teleportation, temporal magic, or other reality-disrupting powers within the area.",
     "gameSystems": [
       "nightbane"
     ],
@@ -1030,69 +1046,6 @@
     "save": {
       "summary": "Conditional. When a person suspects that he is being telepathically probed he can resist, getting the standard saving throw. Mind blocks completely prevent probes or communications.",
       "saveKind": "conditional"
-    }
-  },
-  {
-    "id": "psionic_total_recall",
-    "name": "Total Recall",
-    "description": "The character remembers every word he reads. Specific blocks of information can be recalled in perfect detail at will. If all I.S.P. have been expended the memory is a little fuzzy, so exact quotes and details may be impossible to recall, requiring a percentile roll to determine clarity.",
-    "gameSystems": [
-      "nightbane"
-    ],
-    "sources": [
-      {
-        "gameSystem": "nightbane",
-        "reference": "Nightbane RPG",
-        "pageNumber": 77
-      }
-    ],
-    "genrePlacements": [
-      {
-        "genreId": "nightbane",
-        "category": "sensitive"
-      }
-    ],
-    "isp": {
-      "baseActivation": 2,
-      "notes": "Each block of information costs 3 I.S.P. to recall in absolute detail."
-    },
-    "range": {
-      "summary": "Self"
-    },
-    "duration": {
-      "summary": "Permanent",
-      "kind": "special"
-    },
-    "resolutionTable": {
-      "rollKind": "d100",
-      "label": "Recall clarity when I.S.P. is exhausted",
-      "resolutionTrigger": {
-        "when": "on_duration_end",
-        "rollKind": "d100"
-      },
-      "entries": [
-        {
-          "effect": "Remembered in full detail, word for word.",
-          "percentile": {
-            "min": 1,
-            "max": 50
-          }
-        },
-        {
-          "effect": "Details are forgotten, but the full essence of the ideas are clear.",
-          "percentile": {
-            "min": 51,
-            "max": 80
-          }
-        },
-        {
-          "effect": "Can only recall the most basic concepts; no details nor strong comprehension.",
-          "percentile": {
-            "min": 81,
-            "max": 100
-          }
-        }
-      ]
     }
   }
 ]

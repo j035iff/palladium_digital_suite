@@ -1,0 +1,40 @@
+{
+  "briefId": "nightbane-psionics-bts-116-117-ab",
+  "briefTitle": "Between the Shadows Psionics (pp. 116–117) — Healer, Sensitive, Physical",
+  "contentType": "psionics",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/psionics.md",
+  "status": "complete",
+  "phase": "done",
+  "sourcePdf": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+  "sourcePages": "printed 116–117",
+  "createdAt": "2026-06-21T02:00:00.000Z",
+  "updatedAt": "2026-06-21T02:05:00.000Z",
+  "checklist": [
+    { "name": "Bio-Regeneration", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "healer" },
+    { "name": "Detect Psionics", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "healer" },
+    { "name": "Restore I.S.P.", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "healer" },
+    { "name": "Restore P.P.E.", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "healer" },
+    { "name": "Suppress Fear", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "healer" },
+    { "name": "Astral Bolts", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "sensitive" },
+    { "name": "Astral Navigation", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "116", "category": "sensitive" },
+    { "name": "Dreamdance (Minor)", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "sensitive" },
+    { "name": "Ethereal Mirage (Minor)", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "sensitive" },
+    { "name": "Sense Dimensional Anomaly", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "sensitive" },
+    { "name": "Activate Dimensional Portal", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "physical" },
+    { "name": "Telekinetic Punch", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "physical" },
+    { "name": "Telekinetic Leap", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "117", "category": "physical" }
+  ],
+  "batches": [
+    { "id": "pass-a-healer", "pass": "A", "status": "complete", "items": ["Bio-Regeneration", "Detect Psionics", "Restore I.S.P.", "Restore P.P.E.", "Suppress Fear"] },
+    { "id": "pass-a-sensitive", "pass": "A", "status": "complete", "items": ["Astral Bolts", "Astral Navigation", "Dreamdance (Minor)", "Ethereal Mirage (Minor)", "Sense Dimensional Anomaly"] },
+    { "id": "pass-a-physical", "pass": "A", "status": "complete", "items": ["Activate Dimensional Portal", "Telekinetic Punch", "Telekinetic Leap"] },
+    { "id": "pass-b-all", "pass": "B", "status": "complete", "items": ["(all 13 — refresh Pass B fields)"] }
+  ],
+  "rulings": [],
+  "completedBatchIds": ["pass-a-healer", "pass-a-sensitive", "pass-a-physical", "pass-b-all"],
+  "validationCommands": ["validate:schemas"],
+  "writerScript": "scripts/merge-between-shadows-psionics-116-117.mjs"
+}

@@ -1,0 +1,48 @@
+{
+  "briefId": "nightbane-psionics-healer-nb-83-84-ab",
+  "briefTitle": "Nightbane Healer Psionics (RPG pp. 83–84) — Pass AB",
+  "contentType": "psionics",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/psionics.md",
+  "status": "complete",
+  "phase": "done",
+  "sourcePdf": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+  "sourcePages": "printed 83–84 (Psychic Healer Abilities)",
+  "createdAt": "2026-06-21T01:20:00.000Z",
+  "updatedAt": "2026-06-21T01:25:00.000Z",
+  "checklist": [
+    { "name": "Deaden Pain", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Exorcism", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Healing Touch", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Impervious to Cold", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Impervious to Fire", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Increased Healing", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83" },
+    { "name": "Induce Pain", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "83–84" },
+    { "name": "Induce Sleep", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "84" },
+    { "name": "Psychic Diagnosis", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "84" },
+    { "name": "Psychic Purification", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "84" },
+    { "name": "Psychic Surgery", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "84" },
+    { "name": "Resist Fatigue", "status": "ingested", "passA": "complete", "passB": "complete", "pages": "84" },
+    { "name": "Suggestion (Hypnosis)", "status": "skipped", "passA": "complete", "passB": "complete", "pages": "84", "notes": "Dual pick — row in sensitive.json (psionic_suggestion)" }
+  ],
+  "batches": [
+    { "id": "pass-a-01", "pass": "A", "status": "complete", "items": ["Deaden Pain", "Exorcism", "Healing Touch", "Impervious to Cold"] },
+    { "id": "pass-a-02", "pass": "A", "status": "complete", "items": ["Impervious to Fire", "Increased Healing", "Induce Pain", "Induce Sleep"] },
+    { "id": "pass-a-03", "pass": "A", "status": "complete", "items": ["Psychic Diagnosis", "Psychic Purification", "Psychic Surgery", "Resist Fatigue"] },
+    { "id": "pass-b-01", "pass": "B", "status": "complete", "items": ["Deaden Pain", "Exorcism", "Healing Touch"] },
+    { "id": "pass-b-02", "pass": "B", "status": "complete", "items": ["Impervious to Cold", "Impervious to Fire", "Increased Healing"] },
+    { "id": "pass-b-03", "pass": "B", "status": "complete", "items": ["Induce Pain", "Induce Sleep", "Psychic Diagnosis"] },
+    { "id": "pass-b-04", "pass": "B", "status": "complete", "items": ["Psychic Purification", "Psychic Surgery", "Resist Fatigue"] }
+  ],
+  "rulings": [],
+  "completedBatchIds": ["pass-a-01", "pass-a-02", "pass-a-03", "pass-b-01", "pass-b-02", "pass-b-03", "pass-b-04"],
+  "validationCommands": ["validate:schemas"],
+  "writerScript": "scripts/merge-nightbane-healer-psionics.mjs",
+  "dualPickVerification": {
+    "psionic_suggestion": "sensitive.json — genrePlacements sensitive + healer; sources p. 77 + p. 84",
+    "psionic_resist_fatigue_healer": "healer.json — separate row from psionic_resist_fatigue (physical.json); healer requires lengthOfTrance",
+    "psionic_resist_hunger": "physical-only (p. 82); not in healer section"
+  }
+}

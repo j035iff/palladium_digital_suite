@@ -1,0 +1,399 @@
+﻿===== idx 112 =====
+New Psionic Powers 
+By Kevin Siembieda and C.J. Carella 
+These powers are in addition to the abilities described in the 
+Nightbane RPG. Additional abilities and Psychic Character 
+Classes (P.c.c.s) can be found in other Palladium books like Be¡
+yond the Supernatura[fM, Ninjas & SuperspiesÖ, Mystic 
+ChinaÖ, and Rifts«. 
+List of "New" Psionic Powers By Category 
+Master Psionic Powers 
+Astral Transference ( 1 5) 
+Bio-Regeneration (Superior; 20) 
+Block Breaker (30+) 
+Dreamdance (Superior; 20) 
+Gestalt Circle (30) 
+Group Mind Block (22) 
+Mind Block Auto-Defense (Special) 
+Mind Bond (10) 
+Mind Wipe (Special) 
+P.P.E. Shield (10) 
+Possession (30) 
+Psi-Shield (30) 
+Psi-Sword (30) 
+Psychic Mirage (Superior; 40) 
+112 
+Supercharge (30) 
+Telekinetic Force Field (30) 
+Telemechanics (10) 
+Healer Powers 
+Bio-Regeneration (self; 6) 
+Detect Psionics (6) 
+Restore LS.P. (2+) 
+Restore P.P.E. (4+) 
+Suppress Fear (8) 
+Sensitive Powers 
+Astral Bolts (10) 
+Astral Navigation (4) 
+Dreamdance (Minor; 8) 
+Ethereal Mirage (Minor; 6) 
+Sense Dimensional Anomaly (6) 
+Physical Powers 
+Activate Dimensional Portal (10) 
+Telekinetic Punch (6) 
+Telekinetic Leap (8) 
+Joe Sifferman (Order #46323384)
+
+===== idx 113 =====
+Master Psionics (New) 
+Beyond the three "common" categories of Healing, Sensitive 
+and Physical, exists the "master" (or superior) psychic power 
+category. Master psionic powers are abilities beyond the ken of 
+most human and Nightbane psychics, or are attainable only after 
+lesser psionic abilities have been mastered. Outlined below are 
+some suggestions on how to add these abilities to existing 
+P.c.c.s and R.C.C.s 
+The Psychic p.e.e. and Master Psionics: The Psychic 
+P.c.c. (as described on the Nightbane RPG, page 69) can select 
+a power from the Master Psionics category at levels three, five, 
+eight, eleven and fourteen. However, this is in place of choosing 
+a power from any of the other categories; only one new power is 
+selected per level of experience. 
+Guardian Super-Psionics: Guardians can choose master 
+psionic powers after reaching the fourth level of experience; in 
+other words, they can choose a power from any category, includ¡
+ing master psionics, after reaching fourth level. 
+Note: Additional psionic powers are also provided for the 
+other categories as well. Game Masters can automatically in¡
+clude these new powers for all psychic characters or consider 
+them optional suggestions to be added if he or she feels they are 
+appropriate to the campaign. 
+Astral Transference 
+Range: Self 
+Duration: One hour per level of experience 
+I.S.P.: 15 
+Saving Throw: None 
+Prerequisite: Astral Projection. 
+This powerful ability transforms the character's body into an 
+astral construct, similar to an entity or other energy beings, and 
+able to travel astrally. One might consider this power a sort of 
+"super" astral projection. Unlike normal astral projection, the en¡
+tire body of the character is transformed into an astral energy be¡
+ing, so the body is not left behind and the duration for astral 
+travel is much greater. All the abilities and benefits of the astral 
+projection power (see Nightbane RPG, page 70) apply to this 
+form as well, except there is no silver cord involved. 
+Bio-Regeneration (Superior) 
+Range: Self 
+Duration: Permanent 
+I.S.P.: 20 
+Saving Throw: None 
+Another bio-manipulation power that enables the psionic to di¡
+rect his psychic energy to immediate self-healing. The character 
+must concentrate for one full minute while his body instantly 
+heals itself. 4D6 hit points and 4D6 S.D.C points are simultane¡
+ously restored at the end of 60 seconds. As usual, there is no 
+scarring. 
+Block Breaker 
+Range: 60 feet ( 1 8.3 m) plus 10 feet (3.0 m) per level of experi¡
+ence. 
+Duration: ID4 melee rounds ( 1 5  to 60 seconds). 
+I.S.P.: Varies; 30+ 
+Saving Throw: Varies, see below. 
+113 
+This power attacks a psychic's mind block in an attempt to tem¡
+porarily lower the target's defenses. If the block breaker is suc¡
+cessful, the character's mind block is removed for I D4 melee 
+rounds, at the end of which the victim may restore the block by 
+spending I.S.P. normally. The character under attack by the 
+block breaker gets to save versus psionic attack, but the attacker 
+can raise the save difficulty by spending more I.S.P. 
+The base cost of the ability is 30 I.S.P., however the attacker 
+can make his victim - 1  to save at the cost of + 10 additional I.S.P. 
+For example, an attacker could spend the base 30 I.S.P. plus an¡
+other 40 points (70 total) to make his intended victim -4 to save 
+against the block breaker attack. If the defender fails to save, his 
+mind block is temporarily down for I D4 melee rounds, during 
+which time he or she cannot shield himself from psionic probes 
+and other psionic influences. 
+Dreamdance (Superior) 
+Range: Self 
+Duration: One hour per level of experience. 
+I.S.P.: 20 
+Saving Throw: None 
+Prerequisite: Dreamdance (Minor) 
+This power transforms the psychic's body into a dream crea¡
+ture, enabling the character to enter the Dreamstream body and 
+soul. Doing this has its dangers, including the fact that the dream 
+traveler is not able to escape the Dreamstream by waking up. 
+While in the Dreamstream, the psychic can enter other people's 
+Dream Pools, and use psionics or other abilities to affect the 
+dreams of the dreamer. At the end of the power's duration, or 
+whenever the character decides to return to the waking world, 
+the Dream Dancer will reappear at the physical location he origi¡
+nally left. 
+Gestalt Circle 
+Range: Touch; psychics must form a circle and hold hands. 
+Duration: One minute per participant. 
+I.S.P.: 30 
+Saving Throw: None 
+The psionic character can link a group of psychics (one per 
+level of experience) together and pool their powers! While 
+linked in a gestalt circle, the group can only use those powers 
+they have in common, but those powers can be manipulated at a 
+level equal to their combined levels of experience. For example, 
+a gestalt circle with one third level psychic and two second level 
+ones could use any common powers at seventh level intensity! 
+Furthermore, the combined number of I.S.P. is available to the 
+group (use is divided equally), and the range of the psionic pow¡
+ers are increased by 20% per each psychic in the circle. The lat¡
+ter only works if the range of the power is NOT affected by the 
+level of experience of the psychic. Otherwise, range by level 
+counts as the combined level of the group (in the previous exam¡
+ple, the range would be at 7th level equivalent). 
+Total number of psionic attacks per melee round is two per 
+participant in the circle. The maximum number of participants is 
+eight (8). 
+A gestalt circle has its dangers and limitations. 
+1. While the psychics are linked, the connection will override 
+any mind blocks or similar protection between the members par¡
+ticipating in the gestalt circle. This means that any psychic in the 
+circle can try to read the minds of the others or use other psychic 
+Joe Sifferman (Order #46323384)
+
+===== idx 114 =====
+powers on the other members, and can do so with relative impu¡
+nity. 
+2. One psychic in the group must be designated as the "key" 
+or spokesperson through which their combined powers are di¡
+rected. Only that key character can use the enhanced psionics of 
+the circle, although the others can make verbal or telepathic sug¡
+gestions. If another member in the circle tries to use one of his 
+powers at the same time as the designated "key," neither power 
+works, which means one melee action/attack is lost and half the 
+LS.P. of the intended power is expended without results! Team¡
+work is critical. 
+3. Participants in the circle cannot perform any other skills, 
+engage in physical combat or parry, without breaking the circle. 
+Each character can try to "duck" incoming attacks without 
+breaking ranks as a dodge at -5 to do so. 
+4. If even one member of the circle breaks ranksllets go of an¡
+other participant's hand(s), the gestalt circle is instantly broken, 
+all circle bonuses are lost, and the participants must rebuild the 
+circle and spend another 30 LS.P. to start again. 
+Group Mind Block 
+Range: 1 20 feet (36.5 m) 
+Duration: 10 minutes per level of experience. 
+I.S.P.: 22 
+Saving Throw: None 
+The master psionic can instantly erect a mental barrier or 
+mind block to protect himself and those around him, within a 
+120 foot (36.5 m) area. The group mind block works just like the 
+individual mind block power. It can be a means of protecting 
+those around the psychic from psionic probes and mind attacks, 
+but it can also be used to prevent outside forces (good or evil) 
+from communicating via telepathy or empathy. Everyone within 
+the 120 foot (36.5 m) area of effect will be automatically 
+blocked, but the effect is not detectable so they are not likely to 
+know they are being mind blocked. The detect psionics power 
+will indicate a group mind block. 
+Mind Block Auto-Defense 
+Range: Self 
+Duration: Special 
+I.S.P.: Special 
+Saving Throw: None 
+The moment the psychic is being mind probed, a personal 
+mind block automatically snaps into place. It also alerts the 
+psionic to the fact he or she is being probed or attacked by em¡
+pathy or telepathy. The character must consciously and willingly 
+lower the mind shield to open himself to psychic probes. Other¡
+wise, the automatic defense mind block will stay in effect until 
+the probe/attack is over. 
+The LS.P. cost is different in that the character must perma¡
+nently give up 10 LS.P. when this power is selected. However, 
+the mind block will automatically take place whenever under 
+telepathic and empathic probes/attacks at no additional LS.P. 
+cost; it engages automatically. 
+Mind Bond 
+Range: Touch 
+Duration: Special 
+I.S.P.: 1 0  
+Saving Throw: Standard 
+114 
+This creates an instant mind link between the psychic and the 
+victim. When this happens, each will ieam everything there is to 
+know about the other. This includes all skills, secret identities, 
+phobias, etc. In both cases, the memory is complete for only 3D4 
+hours; after that, the character must roll under 15% to recall any 
+particular item. After one month, all memories completely disap¡
+pear. Players should bear in mind that only the psychic knows 
+the memories are not permanent, thus the other person would 
+have no reason to make notes or act quickly before the new 
+memories fade. 
+Note: Skills and skill bonuses are also temporarily absorbed, 
+meaning that the psychic possesses all of his victim's skills and 
+skill bonuses. Physical attributes, such as S.D.C. and attribute 
+bonuses gained through physical training are not gained. 
+Alien or extremely mentally or emotionally disturbed minds 
+can permanently impair the psychic's own mind as a result of 
+the bond. If bonded with an alien or extremely disturbed person, 
+roll on the following tables for a permanent insanity. 
+1-40 No Insanity 
+41-80 Phobia 
+81-90 Affective Disorder 
+91-00 Neurosis 
+Mind Wipe 
+Range: Touch 
+Duration: Special 
+I.S.P.: Special 
+Saving Throw: Standard 
+To mind wipe an intelligent creature, the psychic must make 
+physical contact, touching his victim's temples to erase whatever 
+he desires. This is done by verbal suggestion and can erase any 
+past event, knowledge, skill, and so on. The process takes about 
+three minutes to complete. 
+The loss of memory is temporary, lasting I D4 days for every 
+1 0  LS.P. expended. The memory can be permanently erased if 
+the psychic exerts 50 LS.P. at once. A psionic can also perma¡
+nently wipe a mind completely blank by expending 50 LS.P. and 
+four Mental Endurance (M.E.) points. This is an extremely gru¡
+eling process for the psychic and the loss of four M.E. points is 
+permanent, even if the opponent successfully saves against the 
+wipe and is not affected. 
+P.P.E. Shield 
+Range: Self 
+Duration: 6 minutes per level of experience. 
+I.S.P.: 10 
+Saving Throw: None 
+A psionic defense that can be used to prevent P.P.E. vam¡
+pires, mages and other entities from siphoning off one's psychic 
+energy. The shield works similarly to a mind block, only it pre¡
+vents others from draining one's P.P.E. 
+Possession 
+Range: Touch 
+Duration: 5 minutes per level of experience. 
+I.S.P.: 30 
+Saving Throw: Standard 
+The psychic can completely take over and control another 
+person. The psychic essence of the controlling mind is trans¡
+ferred into the body of another individual. While in the victim's 
+Joe Sifferman (Order #46323384)
+
+===== idx 115 =====
+body/mind, the psychic retains all his own knowledge and iden¡
+tity. He cannot read the mind of the person he now possesses, 
+nor access any knowledge from the victim's memory. Only the 
+physical body can be controlled, like a living robot. 
+During the period that the victim is possessed, that person 
+goes into a trance state and remembers nothing about the things 
+that happened while he was possessed. Meanwhile, the psychic's 
+natural body falls into a coma-like state and is vulnerable to at¡
+tack unless protected by others. 
+The possessing character can return to his own body at any 
+time regardless of distance. When his essence leaves the body of 
+the possessed, the victim suddenly becomes conscious again, as 
+if suddenly being woken up. 
+Psi-Shield 
+Range: Self 
+Duration: 5 minutes per level of experience. 
+I.S.P.: 30 
+Saving Throw: None 
+A companion power to the psi-sword, in which the psychic 
+can create an energy shield out of thin air. The shield can be 
+used to parry all hand to hand attacks, but not against projec¡
+tiles/bullets. Shield S.D.C. is 1 20. 
+Psi-Sword 
+Range: Self 
+Duration: 5 minutes per level of experience. 
+I.S.P.: 30 
+Saving Throw: None 
+Prerequisite: Third level of experience. 
+Psi-swords are psychic energy weapons that the character can 
+mentally will into existence. The sword appears out of thin air as 
+a shimmering blade of energy that resembles a glowing sword. 
+The sword's actual appearance will generally reflect its creator. 
+A character who is impressed by strength and power will create 
+a huge claymore-like weapon, while somebody who prides him¡
+self on speed and agility will create a rapier or saber. Each 
+weapon is equally powerful regardless of its form and size. The 
+blade can even change color and shape to fit the current mood of 
+its wielder. 
+Psi-sword damage: 6D6 at level three (one cannot select this 
+power until level three). Add I D6 at levels four, seven, nine, 
+twelve and fifteen. The damage can be adjusted to inflict a mini¡
+mum of 2D6 damage points, or increased by increments of ID6 
+up to the character's current maximum. 
+Psychic Mirage (Superior) 
+Range: 1 20 feet/36.5 m (size of illusion is 3 feet/0.9 m per level 
+of experience). 
+Duration: One minute per level of experience. 
+I.S.P.: 40 
+Saving Throw: Standard. 
+A powerful illusion that affects all senses. The illusion will 
+move and act out any mental commands given by its creator, and 
+will fool the ears, sense of touch and pain centers of those who 
+face it. Illusionary damage will not do any permanent damage, 
+although people who think they have been killed will collapse 
+into unconsciousness. This illusion can be created in most planes 
+of existence, including Earth, Nightlands, Astral Plane and 
+Dreamstream. 
+115 
+Supercharge 
+Range: Self 
+Duration: One minute per level of experience. 
+I.S.P.: 30 
+Saving Throw: None 
+Prerequisite: Summon Inner Strength 
+This power channels the character's psychic energies into his 
+own body, temporarily granting him +6 to P.S., which becomes 
+supernatural, and an additional 40 S.D.C. for the duration of the 
+power. This power is especially handy when combating vam¡
+pires and other superhuman monstrosities. Note: In games like 
+Rifts«, punches and kicks with supernatural P.S. inflict mega¡
+damage, but the I.S.P. cost is 40 instead of 30. 
+Telekinetic Force Field 
+Range: Self or 40 feet ( 1 2.2 m) per level of experience. 
+Duration: Five minutes per level of experience. 
+I.S.P.: 30 
+Saving Throw: None 
+The psychic can instantly erect a force field around himself or 
+others in the blink of an eye. If the creation of the force field is 
+to parry an attack, the psionic must roll a successful parry to see 
+if he was able to create the field before the attack struck. A suc¡
+cessful parry means the force field beat the attacker's strike and 
+it absorbs the damage. 
+The force field can be made so that it only encircles its crea¡
+tor or as large as a 10 foot (3.0 m) area per level of experience. It 
+can also be created yards away, but always within the line of vi¡
+sion of the psychic. The smallest force field possible covers a 
+three foot area (0.9 m). The field protects with 1 30 S.D.C, plus 
+20 S.D.C. per level of experience. When its S.D.C. is destroyed 
+so is the field. People may be able to move around inside the 
+force field, but the force field itself cannot be moved. The psy¡
+chic can create additional force fields, as many as his I.S.P. will 
+allow. 
+Telemechanics 
+Range: Touch or up to 5 feet ( 1 .5 m) away. 
+Duration: 10 minutes plus 2 minutes per level of experience. 
+I.S.P.: 10 
+Saving Throw: None 
+This ability allows the psionic to mentally communicate with 
+and understand machines. This psychic power is a bizarre com¡
+bination of object read and telepathy, except that it applies to 
+mechanical devices only. 
+By touching any non-artificially intelligent machine, whether 
+it be a bicycle, gun, car or airplane, the psychic will instantly 
+have a complete (although temporary) knowledge of exactly 
+how the machine is operated. The psychic knows everything 
+about the machine; the complete schematic diagram and opera¡
+tion knowledge are clearly seen in his mind's eye. The level of 
+skill expertise is equal to 80% and of professional quality. 
+When touching a computer, the psychic not only understands 
+everything about its operation, repair, access codes, etc., but can 
+actually communicate with it telepathically. This means he can 
+tap into a computer's memory bank without using a terminal be¡
+cause the information is sent directly into the psychic's mind. 
+Remember, the telepathic link and memory are temporary abili¡
+ties. The psychic's skill knowledge is equal to 88% skill profi-
+Joe Sifferman (Order #46323384)
+

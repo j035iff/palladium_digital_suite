@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-psionics-bts-116-117-ab",
+  "title": "Between the Shadows Psionics (pp. 116–117) — Healer, Sensitive, Physical",
+  "contentType": "psionics",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 116, "end": 117 }
+  },
+  "options": {
+    "category": "healer"
+  },
+  "passBAfterRulings": true,
+  "items": [
+    "Bio-Regeneration",
+    "Detect Psionics",
+    "Restore I.S.P.",
+    "Restore P.P.E.",
+    "Suppress Fear",
+    "Astral Bolts",
+    "Astral Navigation",
+    "Dreamdance (Minor)",
+    "Ethereal Mirage (Minor)",
+    "Sense Dimensional Anomaly",
+    "Activate Dimensional Portal",
+    "Telekinetic Punch",
+    "Telekinetic Leap"
+  ],
+  "notes": "Supplement healer/sensitive/physical picks from BtS pp. 116–117. Super-psionic pages before p. 116 are out of scope."
+}

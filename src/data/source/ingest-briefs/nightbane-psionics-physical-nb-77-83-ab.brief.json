@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-psionics-physical-nb-77-83-ab",
+  "title": "Nightbane Physical Psionics (RPG pp. 77–83) — Pass AB",
+  "contentType": "psionics",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 77, "end": 83 }
+  },
+  "options": {
+    "category": "physical"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Alter Aura",
+    "Bio-Manipulation (the evil eye)",
+    "Death Trance",
+    "Ectoplasm",
+    "Electrokinesis",
+    "Hydrokinesis",
+    "Impervious to Cold",
+    "Impervious to Fire/Heat",
+    "Impervious to Poison/Toxin",
+    "Levitation",
+    "Pyrokinesis",
+    "Resist Fatigue",
+    "Resist Hunger",
+    "Resist Thirst",
+    "Summon Inner Strength",
+    "Telekinesis",
+    "Total Recall"
+  ],
+  "notes": "Physical Psychic Abilities section (printed pp. 77–83). Total Recall also appears at end of Sensitive (p. 77) — dual category picker; file under physical with both genrePlacements. Death Trance uses physical row (1 I.S.P.). sources.pageNumber = printed page where power header appears."
+}

@@ -3,7 +3,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_activate_dimensional_portal",
     "name": "Activate Dimensional Portal",
-    "description": "This power allows psychics to open some dimensional portals. The portal must already exist (the character cannot create a dimensional portal). A protected portal will resist being opened by interlopers.",
+    "description": "Open existing dimensional portals (cannot create new ones). Applies only to portals linking the Astral Plane, astral domains/kingdoms, Dream Pools, the Dreamstream, and the Nightlands. Protected portals resist with a standard save modified by the creator's bonuses.",
     "gameSystems": [
       "nightbane"
     ],
@@ -43,7 +43,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_alter_aura",
     "name": "Alter Aura",
-    "description": "A truly unique power that many psychic investigators claim is impossible and does not exist. Only a handful of physical psychics can manipulate their physical energy in such a way that it changes their aura. The altered aura will send the wrong message to those who can see auras. Alterations include: General level of experience can be made to seem much lower (level 1 or 2) or much higher (2D4 levels higher) than it really is; Conceal the presence of psychic powers; Conceal level of base P.P.E. (made to seem much lower); Conceal the presence of magic.",
+    "description": "A truly unique power that many psychic investigators claim is impossible and does not exist. Only a handful of physical psychics can manipulate their physical energy in such a way that it changes their aura. The altered aura will send the wrong message to those who can see auras. Alterations include: general level of experience can seem much lower (level 1 or 2) or much higher (2D4 levels higher); conceal psychic powers; conceal base P.P.E. (seem much lower); conceal magic.",
     "gameSystems": [
       "nightbane"
     ],
@@ -74,6 +74,9 @@
     "save": {
       "summary": "None",
       "saveKind": "none"
+    },
+    "limitations": {
+      "selfOnly": true
     }
   },
   {
@@ -1034,7 +1037,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_telekinetic_leap",
     "name": "Telekinetic Leap",
-    "description": "Boosts leaping ability, propelling the psychic via telekinetic force. Can be used in conjunction with a leap kick attack.",
+    "description": "Telekinetically boost leaping — +3 feet (0.9 m) high and +5 feet (1.5 m) long per level. Usable with a leap kick (6D6+6 + P.S. bonuses); user takes 2D6 impact damage. Acrobatics, gymnastics, or roll with punch/fall/impact may be needed to land safely.",
     "gameSystems": [
       "nightbane"
     ],
@@ -1085,7 +1088,7 @@
     "$schema": "../palladium-psionic.schema.json",
     "id": "psionic_telekinetic_punch",
     "name": "Telekinetic Punch",
-    "description": "Deliver a powerful punch or kick-like force through telekinetic energy. Used in conjunction with a normal, physical attack that can be parried or dodged by the enemy. The I.S.P. is spent whether or not the punch or kick actually hits the target.",
+    "description": "Deliver a telekinetic punch or kick through directed energy, used with a normal physical attack that can be parried or dodged. Punch: 4D6 + P.S. bonus; kick: 5D6 + P.S. bonus. I.S.P. spent whether or not the attack hits. On each use, save 14+ or take 1D6 damage from wrenched muscles or a dislocated joint.",
     "gameSystems": [
       "nightbane"
     ],
@@ -1132,6 +1135,82 @@
       "damageFormula": "1D6",
       "saveToAvoid": 14,
       "notes": "Damage is from wrenched muscles or a dislocated joint from the extra strain on the body."
+    }
+  },
+  {
+    "$schema": "../palladium-psionic.schema.json",
+    "id": "psionic_total_recall",
+    "name": "Total Recall",
+    "description": "The character remembers every word he reads. Specific blocks of information can be recalled in perfect detail at will. Each block costs 3 I.S.P. to recall in absolute detail. If all I.S.P. have been expended the memory is fuzzy — roll percentile for clarity.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 77
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 83
+      }
+    ],
+    "genrePlacements": [
+      {
+        "genreId": "nightbane",
+        "category": "physical"
+      },
+      {
+        "genreId": "nightbane",
+        "category": "sensitive"
+      }
+    ],
+    "isp": {
+      "baseActivation": 2,
+      "notes": "Each block of information costs 3 I.S.P. to recall in absolute detail."
+    },
+    "range": {
+      "summary": "Self"
+    },
+    "duration": {
+      "summary": "Permanent",
+      "kind": "permanent"
+    },
+    "resolutionTable": {
+      "rollKind": "d100",
+      "label": "Recall clarity when I.S.P. is exhausted",
+      "resolutionTrigger": {
+        "when": "on_duration_end",
+        "rollKind": "d100"
+      },
+      "entries": [
+        {
+          "effect": "Remembered in full detail, word for word.",
+          "percentile": {
+            "min": 1,
+            "max": 50
+          }
+        },
+        {
+          "effect": "Details are forgotten, but the full essence of the ideas are clear.",
+          "percentile": {
+            "min": 51,
+            "max": 80
+          }
+        },
+        {
+          "effect": "Can only recall the most basic concepts; no details nor strong comprehension.",
+          "percentile": {
+            "min": 81,
+            "max": 100
+          }
+        }
+      ]
+    },
+    "limitations": {
+      "selfOnly": true
     }
   }
 ]

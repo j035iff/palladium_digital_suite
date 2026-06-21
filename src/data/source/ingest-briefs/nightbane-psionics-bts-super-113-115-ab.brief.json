@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-psionics-bts-super-113-115-ab",
+  "title": "Between the Shadows Master Psionics (pp. 113–115)",
+  "contentType": "psionics",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 113, "end": 115 }
+  },
+  "options": {
+    "category": "super"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Astral Transference",
+    "Bio-Regeneration (Superior)",
+    "Block Breaker",
+    "Dreamdance (Superior)",
+    "Gestalt Circle",
+    "Group Mind Block",
+    "Mind Block Auto-Defense",
+    "Mind Bond",
+    "Mind Wipe",
+    "P.P.E. Shield",
+    "Possession",
+    "Psi-Shield",
+    "Psi-Sword",
+    "Psychic Mirage (Superior)",
+    "Supercharge",
+    "Telekinetic Force Field",
+    "Telemechanics"
+  ],
+  "notes": "Master (super) psionic category. Index on p. 112; full write-ups pp. 113–115. Psychic P.C.C. picks at levels 3, 5, 8, 11, 14; Guardians from 4th level."
+}

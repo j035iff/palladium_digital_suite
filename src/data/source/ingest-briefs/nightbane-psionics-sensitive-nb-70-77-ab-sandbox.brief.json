@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-psionics-sensitive-nb-70-77-ab-sandbox",
+  "title": "Nightbane Sensitive Psionics (RPG pp. 70–77) — AB sandbox",
+  "contentType": "psionics",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/Nightbane_RPG.pdf",
+    "reference": "Nightbane RPG",
+    "pages": { "start": 70, "end": 77 }
+  },
+  "options": {
+    "category": "sensitive"
+  },
+  "sandboxOutput": "src/data/source/ingest-briefs/output/nightbane-psionics-sensitive-nb-70-77-sandbox.json",
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Astral Projection",
+    "Clairvoyance",
+    "Death Trance",
+    "Divination",
+    "Empathy",
+    "Empathic Transmission",
+    "Meditation",
+    "Mediumship/Clairsentience (Seance)",
+    "Mind Block",
+    "Object Read (Psychometry)",
+    "Presence Sense",
+    "See Aura",
+    "See the Invisible",
+    "Sense Evil",
+    "Sense Magic",
+    "Sixth Sense",
+    "Speed Reading",
+    "Suggestion (Hypnosis)",
+    "Telepathy",
+    "Total Recall"
+  ],
+  "notes": "Sandbox re-ingest of Nightbane Sensitive abilities (printed pp. 70–77). sources.pageNumber = printed page where power name/header appears. Summon Inner Strength (p. 78) out of scope. Compare vs production Nightbane RPG rows only (exclude Between the Shadows). Do not write to src/data/content/."
+}
