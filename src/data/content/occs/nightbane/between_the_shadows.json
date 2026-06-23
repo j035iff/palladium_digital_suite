@@ -2,7 +2,7 @@
   {
     "id": "occ_ex_government_agent",
     "name": "Ex-Government Agent",
-    "description": "Former operatives from agencies like the FBI, CIA, or NSA who have gone underground to fight the Nightlords.",
+    "description": "Former FBI, BATF, DEA, Secret Service, and similar federal law-enforcement agents who lost their careers after Dark Day and the NSB purge. Elite investigators with interrogation, clue-finding, and surveillance skills — not professional soldiers unless upgraded via related skills (e.g. SWAT-style builds). Many joined Spook Squad reluctantly after witnessing Hounds, Dopplegangers, and other supernatural threats.",
     "gameSystems": [
       "nightbane"
     ],
@@ -18,43 +18,60 @@
       "government",
       "espionage",
       "police",
-      "tactical"
+      "spook_squad"
     ],
     "attributeRequirements": {
-      "iq": 12
+      "iq": 10
     },
     "staticBonuses": {
-      "vitals": {
-        "sdc": 10
-      },
-      "attributes": {
-        "ps": 1
+      "combat": {
+        "initiative": 1,
+        "perception": 1
       }
     },
     "occSkillsCore": [
       {
-        "skillId": "skill_intelligence",
-        "bonusPercent": 12
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
       },
       {
-        "skillId": "skill_surveillance_systems",
-        "bonusPercent": 10
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
       },
       {
-        "skillId": "skill_prowl",
+        "skillId": "skill_basic_math",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_basic_electronics",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_radio_basic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_automobile",
         "bonusPercent": 10
       },
       {
         "skillId": "skill_computer_operation",
-        "bonusPercent": 10
+        "bonusPercent": 15
       },
       {
-        "skillId": "skill_radio_basic",
-        "bonusPercent": 10
+        "skillId": "skill_intelligence",
+        "bonusPercent": 15
       },
       {
-        "skillId": "skill_cryptography",
-        "bonusPercent": 10
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedSkillIds": [
+          "wp_automatic_pistol",
+          "wp_revolver"
+        ],
+        "label": "W.P. Pistol (automatic pistol or revolver)"
       },
       {
         "choiceCount": 1,
@@ -66,62 +83,54 @@
       }
     ],
     "occRelatedSkills": {
-      "initialSlotsCount": 6,
+      "initialSlotsCount": 12,
       "categoryRules": [
         {
           "categoryName": "Communications",
-          "accessType": "any",
-          "bonusPercent": 5
-        },
-        {
-          "categoryName": "Computer",
           "accessType": "any",
           "bonusPercent": 10
         },
         {
           "categoryName": "Domestic",
           "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 5
         },
         {
           "categoryName": "Electrical",
-          "accessType": "none",
-          "bonusPercent": 0
+          "accessType": "any",
+          "bonusPercent": 5
         },
         {
           "categoryName": "Espionage",
           "accessType": "any",
-          "bonusPercent": 12
+          "bonusPercent": 10
         },
         {
           "categoryName": "Mechanical",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Medical",
           "accessType": "only",
           "exceptions": [
-            "first_aid",
-            "paramedic",
-            "forensics"
+            "skill_criminal_sciences_and_forensics",
+            "skill_paramedic",
+            "skill_first_aid"
           ],
           "bonusPercent": 0,
           "skillSpecificOverrides": {
-            "first_aid": 5
+            "skill_first_aid": 5
           }
         },
         {
           "categoryName": "Military",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Physical",
-          "accessType": "except",
-          "exceptions": [
-            "acrobatics"
-          ],
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
@@ -130,17 +139,27 @@
           "bonusPercent": 5
         },
         {
-          "categoryName": "Science",
+          "categoryName": "Pilot Related",
           "accessType": "any",
           "bonusPercent": 5
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
         },
         {
           "categoryName": "Technical",
           "accessType": "any",
           "bonusPercent": 5,
           "skillSpecificOverrides": {
-            "language_foreign": 10,
-            "literacy_foreign": 10
+            "skill_language": 10,
+            "skill_literacy": 10
           }
         },
         {
@@ -156,17 +175,15 @@
       ]
     },
     "secondarySkills": {
-      "initialSlotsCount": 4,
-      "forbiddenCategories": [
-        "Espionage",
-        "Military"
-      ]
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
     },
+    "packageNotes": [
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list).",
+      "SWAT-style combat builds: upgrade combat and weapon skills via related picks (p. 31)."
+    ],
     "wpRules": {
-      "coreWps": [
-        "wp_revolver",
-        "wp_automatic_pistol"
-      ],
+      "coreWps": [],
       "forbiddenWps": []
     },
     "handToHandRules": {
@@ -187,6 +204,27 @@
             "allowed": ["Miscreant", "Aberrant", "Diabolic"]
           }
         }
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*1000",
+      "blackMarketAssets": "1D4*10000 in property (vehicles, home, furniture, computers, etc.)"
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Cellular phone",
+        "Three sets of government-issue dark suits",
+        "Modest personal wardrobe",
+        "Pocket knife or sap gloves",
+        "Nightstick",
+        "Flashlight",
+        "Car"
+      ],
+      "weapons": [
+        "Sidearm (usually 9mm or 10mm handgun)"
+      ],
+      "armor": [
+        "1D6×1000 in additional equipment (not cash)"
       ]
     },
     "progression": {
@@ -213,12 +251,34 @@
         "quantity": 1,
         "poolSource": "related"
       }
+    ],
+    "classAbilities": [
+      {
+        "name": "Federal Law-Enforcement Background",
+        "description": "Covers FBI, BATF, DEA, Secret Service, and similar agencies — elite investigators with interrogation, clue-finding, and surveillance training. Criminal contacts and street knowledge aid evasion of NSB pursuit (pp. 30–31)."
+      },
+      {
+        "name": "Investigation Focus (Not Soldier by Default)",
+        "description": "Basic combat training only; most skills are investigative rather than military. SWAT-style builds: upgrade combat and weapon skills via O.C.C. Related Skills (p. 31)."
+      },
+      {
+        "name": "Dark Day Fallout & NSB Hunted",
+        "description": "Careers ended by Dark Day and the NSB purge; many operate underground as perceived traitors and criminals while evading a growing army of NSB operatives (pp. 30–31)."
+      },
+      {
+        "name": "Spook Squad Volunteers",
+        "description": "Often traumatized by loss of authority and open carry privileges; only the most dedicated or stubborn join Spook Squad after witnessing Hounds, Dopplegangers, or compromised superiors. Mix of well-intentioned patriots and self-righteous narrow-minded agents united against the conspiracy (pp. 30–31)."
+      },
+      {
+        "name": "O.C.C. Bonuses",
+        "description": "+1 on initiative and +1 on all perception rolls — `staticBonuses.combat` (p. 31)."
+      }
     ]
   },
   {
     "id": "occ_team_epsilon_trooper",
     "name": "Team Epsilon Trooper",
-    "description": "Heavily armed paramilitary operatives dedicated to hunting the supernatural.",
+    "description": "Former U.S. special forces soldiers recruited into Spook Squad after discovering the supernatural truth behind Dark Day. Covers public units (Green Berets, SEALs, Marine Recon, Rangers, etc.) and the classified Team Epsilon inner circle. All undergo meditation and anti-supernatural targeting training at secret camps in the U.S. and Canada.",
     "gameSystems": [
       "nightbane"
     ],
@@ -235,48 +295,99 @@
       "tactical",
       "spook_squad"
     ],
+    "attributeRequirements": {
+      "ps": 11,
+      "pp": 11,
+      "pe": 11,
+      "iq": 6
+    },
+    "packageNotes": [
+      "High M.E. is preferred (not required).",
+      "Language pick includes literacy in that language at the same +15% bonus.",
+      "Pick Public Special Forces or Team Epsilon (Inner Circle) at creation — bonuses differ; skill package is shared.",
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list)."
+    ],
     "occSkillsCore": [
       {
-        "skillId": "skill_radio_basic",
-        "bonusPercent": 10
-      },
-      {
-        "skillId": "skill_radio_scramblers",
-        "bonusPercent": 10
-      },
-      {
-        "skillId": "skill_read_sensory_equipment",
-        "bonusPercent": 10
-      },
-      {
-        "skillId": "skill_weapon_systems",
-        "bonusPercent": 10
-      },
-      {
-        "skillId": "skill_pilot_automobile",
-        "bonusPercent": 10
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "One language of choice (+15%, includes literacy)"
       },
       {
         "skillId": "skill_climbing",
         "bonusPercent": 10
       },
       {
-        "skillId": "skill_running",
-        "bonusPercent": 0
+        "skillId": "skill_swimming",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_radio_basic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_detect_ambush",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_military_etiquette",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_strategy_tactics",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_wilderness_survival",
+        "bonusPercent": 10
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": [
+          "Pilot"
+        ],
+        "label": "Piloting: one of choice"
+      },
+      {
+        "skillId": "skill_prowl",
+        "bonusPercent": 10
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedSkillIds": [
+          "wp_automatic_pistol",
+          "wp_revolver"
+        ],
+        "label": "W.P. Pistol (automatic pistol or revolver)"
       }
     ],
     "occRelatedSkills": {
-      "initialSlotsCount": 5,
+      "initialSlotsCount": 8,
+      "categoryMinimums": [
+        {
+          "categoryName": "Physical",
+          "minimumCount": 2,
+          "label": "At least two Physical skills required"
+        }
+      ],
       "categoryRules": [
         {
           "categoryName": "Communications",
           "accessType": "any",
-          "bonusPercent": 5
-        },
-        {
-          "categoryName": "Computer",
-          "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 10
         },
         {
           "categoryName": "Domestic",
@@ -286,32 +397,40 @@
         {
           "categoryName": "Electrical",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Espionage",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 10
         },
         {
           "categoryName": "Mechanical",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Medical",
-          "accessType": "any",
-          "bonusPercent": 0
+          "accessType": "only",
+          "exceptions": [
+            "skill_first_aid",
+            "skill_paramedic"
+          ],
+          "bonusPercent": 0,
+          "skillSpecificOverrides": {
+            "skill_first_aid": 10,
+            "skill_paramedic": 5
+          }
         },
         {
           "categoryName": "Military",
           "accessType": "any",
-          "bonusPercent": 10
+          "bonusPercent": 12
         },
         {
           "categoryName": "Physical",
           "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 5
         },
         {
           "categoryName": "Pilot",
@@ -319,14 +438,24 @@
           "bonusPercent": 5
         },
         {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
           "categoryName": "Science",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Technical",
           "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 5
         },
         {
           "categoryName": "Weapon Proficiencies",
@@ -336,18 +465,18 @@
         {
           "categoryName": "Wilderness",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 10
         }
       ]
     },
     "secondarySkills": {
-      "initialSlotsCount": 4,
+      "initialSlotsCount": 6,
       "forbiddenCategories": []
     },
     "wpRules": {
       "coreWps": [
         "wp_automatic_and_semiautomatic_rifles",
-        "wp_sub_machinegun"
+        "wp_knife"
       ],
       "forbiddenWps": []
     },
@@ -369,23 +498,23 @@
     },
     "classAbilities": [
       {
+        "name": "Anti-Supernatural Training",
+        "description": "Secret-camp meditation and targeting drills to resist mental domination and strike weak points on Hounds, Hunters, and other armored supernatural beings. Lore: Demon and Monster may be required for unfamiliar species (pp. 31–33)."
+      },
+      {
         "name": "Special Anti-Supernatural Bonuses",
-        "description": "Trained to target weak points on known supernatural species (Lore: Demon and Monster may be required for unfamiliar creatures). Aimed attacks bypass supernatural A.R. on a normal strike roll (target may still parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies."
+        "description": "When the species is known, aimed attacks (ranged or hand to hand) bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 32–33)."
       }
     ],
     "specializations": [
       {
         "id": "occ_epsilon_public_forces",
         "name": "Public Special Forces",
-        "description": "Agents drawn from SWAT or military counter-terrorism units, not explicitly briefed on the supernatural.",
+        "description": "Green Berets, SEALs, Marine Recon, Airborne Rangers, and similar public special forces units.",
         "classAbilities": [
           {
-            "name": "Physical Bonuses",
-            "description": "Base S.D.C. 4D6+20 plus physical skill bonuses; +1D4 P.S., +2 P.E., +1 P.P., +1D6 Spd."
-          },
-          {
-            "name": "Combat Bonuses",
-            "description": "+1 attack/melee, +1 initiative/strike/parry/dodge, +2 roll with impact/pull punch, +2 save vs horror, +1 possession, +1 psionics and mind-control magic."
+            "name": "Alignment",
+            "description": "Most are scrupulous or aberrant (ends-justify-means); lone wolves may be selfish; twisted principles may be miscreant or diabolic (p. 33)."
           }
         ],
         "staticBonuses": {
@@ -393,22 +522,36 @@
             "sdc": "4D6+20"
           },
           "attributes": {
-            "ps": "1D4"
+            "ps": "1D4",
+            "pe": 2,
+            "pp": 1,
+            "spd": "1D6"
+          },
+          "combat": {
+            "attacksPerMelee": 1,
+            "initiative": 1,
+            "strike": 1,
+            "parry": 1,
+            "dodge": 1,
+            "rollWithImpact": 2,
+            "pullPunch": 2
+          },
+          "saves": {
+            "save_horror": 2,
+            "save_possession": 1,
+            "save_psionics": 1,
+            "save_mind_control": 1
           }
         }
       },
       {
         "id": "occ_epsilon_inner_circle",
         "name": "Team Epsilon (Inner Circle)",
-        "description": "The true Spook Squad hunters, fully aware of the supernatural and mentally hardened against it.",
+        "description": "Classified Team Epsilon soldiers with additional conditioning, skills, and mental hardening.",
         "classAbilities": [
           {
-            "name": "Physical Bonuses",
-            "description": "Base S.D.C. 4D6+25; +1D6 P.S., +2 P.E., +1 P.P., +1D6 Spd. (plus physical skill bonuses)."
-          },
-          {
-            "name": "Combat Bonuses",
-            "description": "+1 attack/melee, +1 initiative/strike/parry/dodge, +2 roll with impact/pull punch, +4 save vs horror, +3 possession, +2 psionics and mind-control magic."
+            "name": "Team Epsilon Conditioning",
+            "description": "Top-secret unit with additional training, physical conditioning, and skill breadth beyond public special forces (pp. 31–32)."
           }
         ],
         "staticBonuses": {
@@ -416,23 +559,84 @@
             "sdc": "4D6+25"
           },
           "attributes": {
-            "ps": "1D6"
+            "ps": "1D6",
+            "pe": 2,
+            "pp": 1,
+            "spd": "1D6"
+          },
+          "combat": {
+            "attacksPerMelee": 1,
+            "initiative": 1,
+            "strike": 1,
+            "parry": 1,
+            "dodge": 1,
+            "rollWithImpact": 2,
+            "pullPunch": 2
           },
           "saves": {
-            "save_horror_factor": 2,
-            "save_mind_control": 1
+            "save_horror": 4,
+            "save_possession": 3,
+            "save_psionics": 2,
+            "save_mind_control": 2
           }
         }
       }
     ],
+    "finances": {
+      "startingCashFormula": "3D6*1000",
+      "blackMarketAssets": "1D6×100 dollars per week Spook Squad stipend (varies week to week); mission funds and equipment per ADA assignment"
+    },
+    "startingEquipment": {
+      "weapons": [
+        "Sidearm (typically 9mm or 10mm pistol)",
+        "Combat rifle (M-16, MR-30, or substitute)",
+        "Combat knife"
+      ],
+      "armor": [
+        "Improved full body armor (A.R. 15, 250 S.D.C.) when on military missions"
+      ],
+      "miscellaneous": [
+        "Basic survival kit (canteen, matches, survival knife, compass, MREs, insect repellent, flashlight)",
+        "Camo or black fatigues and combat boots",
+        "Radio",
+        "Civilian cover gear similar to Ex-Government Agent when traveling undercover"
+      ]
+    },
     "progression": {
       "xpTableId": "between_shadows_spook_squad"
-    }
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 14,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ]
   },
   {
     "id": "occ_ada_field_agent",
     "name": "A.D.A. Field Agent",
-    "description": "Agents of the Anti-Demon Agency, specializing in deep cover, assassination, or a blend of both.",
+    "description": "CIA and War Room field operatives — among the most highly trained espionage and assassination agents in Spook Squad. Recruits train in supernatural identification and countermeasures; most specialize in intelligence gathering, assassination, or dual training in both.",
     "gameSystems": [
       "nightbane"
     ],
@@ -440,62 +644,101 @@
       {
         "gameSystem": "nightbane",
         "reference": "Between the Shadows",
-        "pageNumber": 32
+        "pageNumber": 33
       }
     ],
     "occType": "law_enforcement",
     "tags": [
       "spook_squad",
       "espionage",
-      "assassin"
+      "assassin",
+      "government"
     ],
-    "occSkillsCore": [],
+    "attributeRequirements": {
+      "iq": 10
+    },
+    "packageNotes": [
+      "Choose Spy Specialist, Assassination Specialist, or Dual-Trained Agent at creation — specialty skills and bonuses differ.",
+      "Assassination Specialists require P.S. and P.E. 10 or higher.",
+      "Language pick includes literacy in that language at the same +15% bonus.",
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list)."
+    ],
+    "occSkillsCore": [
+      {
+        "choiceCount": 1,
+        "bonusPercent": 15,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "One language of choice (+15%, includes literacy)"
+      },
+      {
+        "skillId": "skill_intelligence",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_interrogation_techniques",
+        "bonusPercent": 10
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedSkillIds": [
+          "wp_automatic_pistol",
+          "wp_revolver"
+        ],
+        "label": "W.P. Pistol (automatic pistol or revolver)"
+      }
+    ],
     "occRelatedSkills": {
-      "initialSlotsCount": 7,
+      "initialSlotsCount": 10,
       "categoryRules": [
         {
           "categoryName": "Communications",
           "accessType": "any",
-          "bonusPercent": 5
-        },
-        {
-          "categoryName": "Computer",
-          "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 10
         },
         {
           "categoryName": "Domestic",
           "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 5
         },
         {
           "categoryName": "Electrical",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Espionage",
           "accessType": "any",
-          "bonusPercent": 15
+          "bonusPercent": 10
         },
         {
           "categoryName": "Mechanical",
-          "accessType": "none",
-          "bonusPercent": 0
+          "accessType": "any",
+          "bonusPercent": 5
         },
         {
           "categoryName": "Medical",
           "accessType": "only",
           "exceptions": [
-            "first_aid",
-            "paramedic"
+            "skill_first_aid",
+            "skill_paramedic"
           ],
           "bonusPercent": 5
         },
         {
           "categoryName": "Military",
           "accessType": "any",
-          "bonusPercent": 10
+          "bonusPercent": 5
         },
         {
           "categoryName": "Physical",
@@ -508,14 +751,24 @@
           "bonusPercent": 5
         },
         {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
           "categoryName": "Science",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Technical",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 10
         },
         {
           "categoryName": "Weapon Proficiencies",
@@ -525,12 +778,12 @@
         {
           "categoryName": "Wilderness",
           "accessType": "any",
-          "bonusPercent": 0
+          "bonusPercent": 5
         }
       ]
     },
     "secondarySkills": {
-      "initialSlotsCount": 4,
+      "initialSlotsCount": 6,
       "forbiddenCategories": []
     },
     "wpRules": {
@@ -550,197 +803,301 @@
         },
         {
           "targetSkillId": "hth_assassin",
-          "electiveSlotCost": 2
+          "electiveSlotCost": 2,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
         }
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D4*1000",
+      "blackMarketAssets": "4D6×1000 in property (vehicles, clothing, housing, etc.); $3,000 monthly Spook Squad stipend"
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Cellular phone with scrambler",
+        "Flashlight",
+        "Tool kit",
+        "Car or motorcycle",
+        "Mission-specific gear as assigned"
+      ],
+      "weapons": [
+        "Sidearm (typically 9mm or 10mm semi-automatic pistol)"
+      ],
+      "armor": [
+        "Bulletproof vest (A.R. 10, 70 S.D.C.) when issued"
       ]
     },
     "specializations": [
       {
         "id": "occ_ada_spy_specialist",
         "name": "Spy Specialist",
-        "description": "Focuses on infiltration, intelligence gathering, and remaining undetected.",
+        "description": "Information gathering and espionage — infiltration, intelligence, and covert operations.",
         "occSkillsCore": [
+          {
+            "choiceCount": 1,
+            "bonusPercent": 15,
+            "allowedSkillIds": [
+              "skill_language"
+            ],
+            "label": "One language of choice (+15%, includes literacy)"
+          },
           {
             "skillId": "skill_intelligence",
             "bonusPercent": 15
           },
           {
-            "skillId": "skill_impersonation",
-            "bonusPercent": 15
-          },
-          {
-            "skillId": "skill_disguise",
+            "skillId": "skill_computer_operation",
             "bonusPercent": 10
           },
           {
-            "skillId": "skill_forgery",
+            "skillId": "skill_lore_demons_and_monsters",
             "bonusPercent": 10
           },
           {
-            "skillId": "skill_prowl",
-            "bonusPercent": 15
-          },
-          {
-            "skillId": "skill_surveillance_systems",
-            "bonusPercent": 10
-          }
-        ],
-        "wpRules": {
-          "coreWps": [
-            "wp_revolver",
-            "wp_sub_machinegun"
-          ],
-          "forbiddenWps": []
-        },
-        "handToHandRules": {
-          "defaultSkillId": "hth_basic",
-          "upgradePaths": [
-            {
-              "targetSkillId": "hth_expert",
-              "electiveSlotCost": 1
-            },
-            {
-              "targetSkillId": "hth_martial_arts",
-              "electiveSlotCost": 2
-            },
-            {
-              "targetSkillId": "hth_assassin",
-              "electiveSlotCost": 2
-            }
-          ]
-        },
-        "staticBonuses": {
-          "vitals": {
-            "sdc": "2D6"
-          }
-        }
-      },
-      {
-        "id": "occ_ada_assassin_specialist",
-        "name": "Assassination Specialist",
-        "description": "Focuses on the swift, violent termination of supernatural targets.",
-        "occSkillsCore": [
-          {
-            "skillId": "skill_sniper",
-            "bonusPercent": 0
-          },
-          {
-            "skillId": "skill_tracking",
-            "bonusPercent": 15
-          },
-          {
-            "skillId": "skill_prowl",
-            "bonusPercent": 10
-          },
-          {
-            "skillId": "skill_detect_ambush",
-            "bonusPercent": 15
-          },
-          {
-            "skillId": "skill_demolitions",
-            "bonusPercent": 10
-          },
-          {
-            "skillId": "skill_demolitions_disposal",
-            "bonusPercent": 10
-          }
-        ],
-        "wpRules": {
-          "coreWps": [
-            "wp_revolver",
-            "wp_sub_machinegun",
-            "wp_automatic_and_semiautomatic_rifles",
-            "wp_knife"
-          ],
-          "forbiddenWps": []
-        },
-        "handToHandRules": {
-          "upgradePaths": [],
-          "minimumCreationHandToHandTier": "expert"
-        },
-        "staticBonuses": {
-          "vitals": {
-            "sdc": "3D6"
-          },
-          "combat": {
-            "initiative": 1
-          }
-        }
-      },
-      {
-        "id": "occ_ada_dual_trained",
-        "name": "Dual-Trained Agent",
-        "description": "A balanced operative possessing both espionage and termination skills.",
-        "occSkillsCore": [
-          {
-            "skillId": "skill_intelligence",
-            "bonusPercent": 10
-          },
-          {
-            "skillId": "skill_surveillance_systems",
-            "bonusPercent": 10
-          },
-          {
-            "skillId": "skill_tracking",
-            "bonusPercent": 10
-          },
-          {
-            "skillId": "skill_sniper",
-            "bonusPercent": 0
-          },
-          {
-            "skillId": "skill_prowl",
+            "skillId": "skill_interrogation_techniques",
             "bonusPercent": 10
           },
           {
             "choiceCount": 1,
-            "bonusPercent": 10,
+            "bonusPercent": 0,
             "allowedSkillIds": [
-              "impersonation",
-              "disguise"
+              "wp_automatic_pistol",
+              "wp_revolver"
             ],
-            "label": "Impersonation or Disguise"
+            "label": "W.P. Pistol (automatic pistol or revolver)"
+          },
+          {
+            "choiceCount": 2,
+            "bonusPercent": 20,
+            "allowedCategories": [
+              "Rogue"
+            ],
+            "label": "Two Rogue skills of choice"
           }
         ],
-        "wpRules": {
-          "coreWps": [
-            "wp_revolver",
-            "wp_automatic_and_semiautomatic_rifles"
-          ],
-          "forbiddenWps": []
+        "occRelatedSkills": {
+          "categoryMinimums": [
+            {
+              "categoryName": "Espionage",
+              "minimumCount": 2,
+              "label": "Spy specialists must select at least two Espionage skills"
+            }
+          ]
         },
+        "staticBonuses": {
+          "combat": {
+            "perception": 2,
+            "pullPunch": 1,
+            "rollWithImpact": 1
+          },
+          "saves": {
+            "save_mind_control": 3,
+            "save_horror": 2
+          }
+        },
+        "classAbilities": [
+          {
+            "name": "Spy Specialist Specialty Skills",
+            "description": "Two Rogue skills of choice at +20% in addition to the shared ADA core package (p. 34)."
+          },
+          {
+            "name": "Spy Specialist Bonuses",
+            "description": "+2 perception, +1 pull punch, +1 roll with impact, +3 save vs mind control, +2 save vs horror factor — `staticBonuses` (p. 34)."
+          }
+        ]
+      },
+      {
+        "id": "occ_ada_assassin_specialist",
+        "name": "Assassination Specialist",
+        "description": "Silent death and termination — sniper training and combat-focused field work.",
+        "occSkillsCore": [
+          {
+            "choiceCount": 1,
+            "bonusPercent": 15,
+            "allowedSkillIds": [
+              "skill_language"
+            ],
+            "label": "One language of choice (+15%, includes literacy)"
+          },
+          {
+            "skillId": "skill_intelligence",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_lore_demons_and_monsters",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_interrogation_techniques",
+            "bonusPercent": 10
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "allowedSkillIds": [
+              "wp_automatic_pistol",
+              "wp_revolver"
+            ],
+            "label": "W.P. Pistol (automatic pistol or revolver)"
+          },
+          {
+            "skillId": "skill_sniper",
+            "bonusPercent": 0
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "allowedCategories": [
+              "Weapon Proficiencies"
+            ],
+            "label": "W.P. of choice"
+          }
+        ],
         "handToHandRules": {
           "defaultSkillId": "hth_basic",
+          "minimumCreationHandToHandTier": "expert",
           "upgradePaths": [
-            {
-              "targetSkillId": "hth_expert",
-              "electiveSlotCost": 1
-            },
             {
               "targetSkillId": "hth_martial_arts",
               "electiveSlotCost": 2
             },
             {
               "targetSkillId": "hth_assassin",
-              "electiveSlotCost": 2
+              "electiveSlotCost": 2,
+              "alignmentRestrictions": {
+                "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+              }
             }
           ]
         },
         "staticBonuses": {
-          "vitals": {
-            "sdc": "2D6"
+          "combat": {
+            "initiative": 2,
+            "strike": 1,
+            "parry": 1,
+            "dodge": 1,
+            "pullPunch": 3,
+            "damage": 4
+          },
+          "saves": {
+            "save_horror": 4
           }
-        }
+        },
+        "classAbilities": [
+          {
+            "name": "Assassination Specialist Specialty Skills",
+            "description": "Sniper and one W.P. of choice in addition to the shared ADA core package. Must upgrade Hand to Hand to Expert at creation via related skill (p. 34)."
+          },
+          {
+            "name": "Assassination Specialist Bonuses",
+            "description": "+2 initiative, +1 strike/parry/dodge, +3 pull punch, +4 damage, +4 save vs horror factor — `staticBonuses` (p. 34)."
+          }
+        ]
+      },
+      {
+        "id": "occ_ada_dual_trained",
+        "name": "Dual-Trained Agent",
+        "description": "Trained in both espionage and assassination — more flexible but less specialized than either single-focus agent.",
+        "occSkillsCore": [
+          {
+            "choiceCount": 1,
+            "bonusPercent": 15,
+            "allowedSkillIds": [
+              "skill_language"
+            ],
+            "label": "One language of choice (+15%, includes literacy)"
+          },
+          {
+            "skillId": "skill_intelligence",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_lore_demons_and_monsters",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_interrogation_techniques",
+            "bonusPercent": 10
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "allowedSkillIds": [
+              "wp_automatic_pistol",
+              "wp_revolver"
+            ],
+            "label": "W.P. Pistol (automatic pistol or revolver)"
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 15,
+            "allowedCategories": [
+              "Rogue"
+            ],
+            "label": "One Rogue skill of choice"
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "allowedCategories": [
+              "Weapon Proficiencies"
+            ],
+            "label": "W.P. of choice"
+          }
+        ],
+        "staticBonuses": {
+          "combat": {
+            "perception": 1,
+            "parry": 1,
+            "dodge": 1,
+            "pullPunch": 1,
+            "rollWithImpact": 1
+          },
+          "saves": {
+            "save_mind_control": 2,
+            "save_horror": 3
+          }
+        },
+        "classAbilities": [
+          {
+            "name": "Dual-Trained Specialty Skills",
+            "description": "One Rogue skill of choice at +15% and one W.P. of choice in addition to the shared ADA core package (p. 34)."
+          },
+          {
+            "name": "Dual-Trained Bonuses",
+            "description": "+1 perception, +1 parry/dodge, +1 pull punch, +1 roll with impact, +2 save vs mind control, +3 save vs horror factor — `staticBonuses` (p. 34)."
+          }
+        ]
       }
     ],
     "progression": {
       "xpTableId": "between_shadows_spook_squad"
-    }
+    },
+    "classAbilities": [
+      {
+        "name": "CIA / War Room Operative",
+        "description": "Elite HUMINT survivors from a shrinking CIA and the larger War Room reservoir — trained in espionage and assassination, now focused on identifying and combating supernatural threats (pp. 33–34)."
+      },
+      {
+        "name": "Supernatural Identification Training",
+        "description": "All ADA field agents receive extensive training in recognizing supernatural creatures and countermeasures beyond standard espionage tradecraft (p. 34)."
+      }
+    ]
   },
   {
     "id": "occ_pandora_project_researcher",
     "name": "Pandora Project Researcher",
-    "description": "Brilliant scientists, medics, and technicians recruited to analyze the supernatural.",
+    "description": "Elite PAB and Pandora Project scientists — multi-skilled researchers with parapsychology and occult expertise, among the leading human authorities on the supernatural invasion. Most work in Spook Squad R&D; field researchers receive combat training for firsthand enemy study.",
     "gameSystems": [
       "nightbane"
     ],
@@ -748,33 +1105,64 @@
       {
         "gameSystem": "nightbane",
         "reference": "Between the Shadows",
-        "pageNumber": 34
+        "pageNumber": 35
       }
     ],
     "occType": "scholar_civilian",
     "tags": [
       "scientific",
       "medical",
-      "spook_squad"
+      "spook_squad",
+      "occult"
     ],
     "attributeRequirements": {
       "iq": 12
     },
+    "staticBonuses": {
+      "combat": {
+        "perception": 2,
+        "initiative": 1
+      },
+      "saves": {
+        "save_magic": 1,
+        "save_psionics": 1,
+        "save_horror": 2
+      }
+    },
+    "packageNotes": [
+      "+1 initiative applies only when fighting supernatural or mystical opponents (p. 36).",
+      "Hand to Hand must be purchased from O.C.C. Related Skills — not included in the core package.",
+      "Select at least four related skills from Medical, Science, or Technical (or prerequisites to such skills).",
+      "Language pick includes literacy in that language at the same +25% bonus.",
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list)."
+    ],
     "occSkillsCore": [
-      {
-        "skillId": "skill_literacy",
-        "bonusPercent": 20
-      },
-      {
-        "skillId": "skill_computer_operation",
-        "bonusPercent": 20
-      },
       {
         "skillId": "skill_math_basic",
         "bonusPercent": 20
       },
       {
         "skillId": "skill_math_advanced",
+        "bonusPercent": 20
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 25,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "Language and literacy (one language of choice, +25%)"
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_lore_psychic",
         "bonusPercent": 15
       },
       {
@@ -789,7 +1177,7 @@
       }
     ],
     "occRelatedSkills": {
-      "initialSlotsCount": 8,
+      "initialSlotsCount": 12,
       "categoryRules": [
         {
           "categoryName": "Communications",
@@ -797,27 +1185,19 @@
           "bonusPercent": 5
         },
         {
-          "categoryName": "Computer",
-          "accessType": "any",
-          "bonusPercent": 10
-        },
-        {
           "categoryName": "Domestic",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Electrical",
           "accessType": "any",
-          "bonusPercent": 10
+          "bonusPercent": 5
         },
         {
           "categoryName": "Espionage",
-          "accessType": "only",
-          "exceptions": [
-            "intelligence"
-          ],
-          "bonusPercent": 5
+          "accessType": "none",
+          "bonusPercent": 0
         },
         {
           "categoryName": "Mechanical",
@@ -838,26 +1218,40 @@
           "categoryName": "Physical",
           "accessType": "except",
           "exceptions": [
-            "acrobatics",
-            "boxing",
-            "wrestling"
+            "skill_acrobatics",
+            "skill_gymnastics"
           ],
           "bonusPercent": 0
         },
         {
           "categoryName": "Pilot",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "none",
+          "bonusPercent": 0
         },
         {
           "categoryName": "Science",
           "accessType": "any",
-          "bonusPercent": 15
+          "bonusPercent": 10
         },
         {
           "categoryName": "Technical",
           "accessType": "any",
-          "bonusPercent": 10
+          "bonusPercent": 10,
+          "skillSpecificOverrides": {
+            "skill_lore_demons_and_monsters": 15,
+            "skill_lore_psychic": 15,
+            "skill_lore_nightbane": 15
+          }
         },
         {
           "categoryName": "Weapon Proficiencies",
@@ -866,7 +1260,7 @@
         },
         {
           "categoryName": "Wilderness",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         }
       ]
@@ -877,12 +1271,10 @@
     },
     "wpRules": {
       "coreWps": [],
-      "forbiddenWps": [
-        "wp_heavy"
-      ]
+      "forbiddenWps": []
     },
     "handToHandRules": {
-      "defaultSkillId": "hth_none",
+      "defaultSkillId": null,
       "upgradePaths": [
         {
           "targetSkillId": "hth_basic",
@@ -905,31 +1297,78 @@
         }
       ]
     },
-    "classAbilities": [
-      {
-        "name": "Recognize the Supernatural",
-        "description": "30% base, +5% per level. Recognize mind control/possession, Nightbane Morphus, vampires, magic circles/symbols/portals; Doppelgangers and Ashmedai at half skill. One roll per subject; failed roll means uncertain."
-      }
-    ],
-    "staticBonuses": {
-      "combat": {
-        "perception": 2,
-        "initiative": 1
-      },
-      "saves": {
-        "save_magic": 1,
-        "save_psionics": 1,
-        "save_horror": 2
-      }
+    "finances": {
+      "startingCashFormula": "2D4*1000",
+      "blackMarketAssets": "5D6×1000 in personal property; $4,000 monthly Spook Squad stipend"
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Research facility access with $50,000 in lab equipment",
+        "Personal computer and printer",
+        "Laptop for field trips",
+        "Personal vehicle"
+      ],
+      "weapons": [
+        "Handgun or small sub-machinegun for self-defense (if character has a W.P.)"
+      ]
     },
     "progression": {
       "xpTableId": "between_shadows_spook_squad"
-    }
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 15,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ],
+    "classAbilities": [
+      {
+        "name": "Recognize the Supernatural",
+        "description": "In-depth supernatural recognition beyond lore skills — mind control/possession, Nightbane Morphus, vampires, magic circles/symbols/portals; Dopplegangers and Ashmedai at half skill. One roll per subject; failure means uncertainty (p. 36).",
+        "percentileProfile": {
+          "basePercent": 30,
+          "perLevelPercent": 5
+        }
+      },
+      {
+        "name": "R&D and Field Research",
+        "description": "Leading human authorities on the invasion via PAB access; many work Spook Squad R&D while a few field researchers accept combat training. Prejudices can obscure facts (pp. 35–36)."
+      },
+      {
+        "name": "O.C.C. Bonuses",
+        "description": "+2 perception; +1 initiative only vs supernatural/mystical opponents; +1 save vs magic and psionics; +2 save vs horror factor — `staticBonuses` and `packageNotes` (p. 36)."
+      },
+      {
+        "name": "Scholar Background",
+        "description": "Multi-skilled scientists spanning medicine, physics, chemistry, parapsychology, and occultism — ideal recruits combine broad knowledge with one or two specialties (pp. 35–36)."
+      }
+    ]
   },
   {
     "id": "occ_pab_field_agent",
     "name": "P.A.B. Field Agent",
-    "description": "Paranormal Activities Bureau operatives trained to investigate and combat supernatural threats.",
+    "description": "Paranormal Activities Bureau special agents recruited from the FBI, DEA, and NSA — veterans of paranormal encounters trained to investigate and combat supernatural beings, psychics, magic, and UFO phenomena. After Dark Day, most PAB survivors joined Spook Squad as dedicated field operatives.",
     "gameSystems": [
       "nightbane"
     ],
@@ -944,7 +1383,8 @@
     "tags": [
       "spook_squad",
       "government",
-      "tactical"
+      "tactical",
+      "police"
     ],
     "attributeRequirements": {
       "ps": 10,
@@ -964,11 +1404,9 @@
         "save_horror": 4
       }
     },
-    "classAbilities": [
-      {
-        "name": "Special Anti-Supernatural Bonuses",
-        "description": "Trained to target weak points on known supernatural species (Lore: Demon and Monster may be required for unfamiliar creatures). Aimed attacks bypass supernatural A.R. on a normal strike roll (target may still parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies."
-      }
+    "packageNotes": [
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list).",
+      "Lore: Demon and Monster is a prerequisite for Special Anti-Supernatural aimed attacks against unfamiliar creatures (Pass B)."
     ],
     "occSkillsCore": [
       {
@@ -1000,7 +1438,7 @@
         "bonusPercent": 10
       },
       {
-        "skillId": "skill_pilot_automobile",
+        "skillId": "skill_automobile",
         "bonusPercent": 15
       },
       {
@@ -1020,11 +1458,6 @@
           "categoryName": "Communications",
           "accessType": "any",
           "bonusPercent": 10
-        },
-        {
-          "categoryName": "Computer",
-          "accessType": "any",
-          "bonusPercent": 0
         },
         {
           "categoryName": "Domestic",
@@ -1050,7 +1483,7 @@
           "categoryName": "Medical",
           "accessType": "only",
           "exceptions": [
-            "first_aid"
+            "skill_first_aid"
           ],
           "bonusPercent": 10
         },
@@ -1068,6 +1501,16 @@
           "categoryName": "Pilot",
           "accessType": "any",
           "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
         },
         {
           "categoryName": "Science",
@@ -1114,6 +1557,28 @@
         }
       ]
     },
+    "finances": {
+      "startingCashFormula": "1D6*1000",
+      "blackMarketAssets": "4D6×1000 in property (vehicles, clothing, housing, etc.); $3,600 monthly Spook Squad stipend"
+    },
+    "startingEquipment": {
+      "weapons": [
+        "Beretta pistol",
+        "Small sub-machinegun (usually carried in a briefcase)",
+        "Silver bullets",
+        "Crossbow pistol",
+        "Mallet and short stakes"
+      ],
+      "armor": [
+        "Light bulletproof vest (A.R. 10, 70 S.D.C.)"
+      ],
+      "miscellaneous": [
+        "Cell phone with scrambler",
+        "Personal car",
+        "Psionic detection system, psychic jammer, and special restraints (typical two-agent team)",
+        "NSB/Special Forces-grade weapons and body armor on emergency or combat missions"
+      ]
+    },
     "progression": {
       "xpTableId": "between_shadows_spook_squad"
     },
@@ -1143,12 +1608,26 @@
         "quantity": 1,
         "poolSource": "related"
       }
+    ],
+    "classAbilities": [
+      {
+        "name": "Special Anti-Supernatural Bonuses",
+        "description": "When the species is known (Lore: Demon and Monster may be required for unfamiliar creatures), aimed attacks bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 35–36)."
+      },
+      {
+        "name": "Paranormal Field Experience",
+        "description": "Most agents have confronted supernatural beings, psychics, and unfathomable mysteries; survivors of Dark Day bring hard-earned PAB knowledge into Spook Squad (pp. 34–35)."
+      },
+      {
+        "name": "O.C.C. Bonuses",
+        "description": "+2 perception, +1 initiative, +3 save vs psionics/mind control/possession, +2 save vs magic, +4 save vs horror factor — `staticBonuses` (p. 35)."
+      }
     ]
   },
   {
     "id": "occ_pab_psychic_agent",
     "name": "P.A.B. Psychic Agent",
-    "description": "Operatives of the Paranormal Anomalies Branch, armed with devastating psychic abilities.",
+    "description": "Pandora Project field operatives with awakened psionic abilities — among the few humans who can sense the supernatural, expose Dopplegangers, and pierce the Nightlords' veil. Survivors of the Dark Day purge now serve Spook Squad; additional latent psychics volunteer as the war continues.",
     "gameSystems": [
       "nightbane"
     ],
@@ -1156,17 +1635,18 @@
       {
         "gameSystem": "nightbane",
         "reference": "Between the Shadows",
-        "pageNumber": 33
+        "pageNumber": 36
       }
     ],
     "occType": "psychic",
     "tags": [
       "spook_squad",
       "psychic",
-      "tactical"
+      "tactical",
+      "government"
     ],
     "attributeRequirements": {
-      "me": 12
+      "me": 11
     },
     "staticBonuses": {
       "attributes": {
@@ -1180,7 +1660,7 @@
         "initiative": 1,
         "parry": 1,
         "dodge": 1,
-        "rollWithPunch": 1
+        "rollWithImpact": 1
       },
       "saves": {
         "save_psionics": 1,
@@ -1188,38 +1668,45 @@
         "save_horror": 3
       }
     },
+    "packageNotes": [
+      "Psionic picks at 1st level: three powers from Sensitive, Physical, or Healing only (lesser categories).",
+      "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list)."
+    ],
     "occSkillsCore": [
+      {
+        "skillId": "skill_radio_basic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 10
+      },
       {
         "skillId": "skill_intelligence",
         "bonusPercent": 10
       },
       {
-        "skillId": "skill_prowl",
+        "skillId": "skill_interrogation_techniques",
         "bonusPercent": 10
       },
       {
-        "skillId": "skill_radio_basic",
-        "bonusPercent": 10
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 15
       },
       {
-        "skillId": "skill_pilot_automobile",
-        "bonusPercent": 10
+        "skillId": "skill_lore_psychic",
+        "bonusPercent": 15
       },
       {
-        "skillId": "skill_math_basic",
-        "bonusPercent": 10
+        "skillId": "skill_automobile",
+        "bonusPercent": 15
       }
     ],
     "occRelatedSkills": {
-      "initialSlotsCount": 6,
+      "initialSlotsCount": 7,
       "categoryRules": [
         {
           "categoryName": "Communications",
-          "accessType": "any",
-          "bonusPercent": 5
-        },
-        {
-          "categoryName": "Computer",
           "accessType": "any",
           "bonusPercent": 5
         },
@@ -1230,7 +1717,7 @@
         },
         {
           "categoryName": "Electrical",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
@@ -1240,30 +1727,25 @@
         },
         {
           "categoryName": "Mechanical",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Medical",
           "accessType": "only",
           "exceptions": [
-            "first_aid",
-            "paramedic",
-            "holistic_medicine"
+            "skill_first_aid"
           ],
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Military",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 0
         },
         {
           "categoryName": "Physical",
-          "accessType": "except",
-          "exceptions": [
-            "acrobatics"
-          ],
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
@@ -1272,14 +1754,24 @@
           "bonusPercent": 5
         },
         {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
           "categoryName": "Science",
-          "accessType": "none",
+          "accessType": "any",
           "bonusPercent": 0
         },
         {
           "categoryName": "Technical",
           "accessType": "any",
-          "bonusPercent": 5
+          "bonusPercent": 10
         },
         {
           "categoryName": "Weapon Proficiencies",
@@ -1294,15 +1786,12 @@
       ]
     },
     "secondarySkills": {
-      "initialSlotsCount": 4,
-      "forbiddenCategories": [
-        "Espionage",
-        "Military"
-      ]
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
     },
     "wpRules": {
       "coreWps": [
-        "wp_revolver"
+        "wp_automatic_pistol"
       ],
       "forbiddenWps": []
     },
@@ -1319,61 +1808,134 @@
         }
       ]
     },
-    "progression": {
-      "xpTableId": "between_shadows_arcane_detective",
-      "characterOccCategory": "psychic"
+    "finances": {
+      "startingCashFormula": "2000+3D6*100",
+      "blackMarketAssets": "2D4×10000 in personal property; 1D4×1000+2000 monthly Spook Squad stipend"
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Vehicle (typically a four-door sedan)",
+        "Cell phone with scrambler",
+        "Laptop computer",
+        "Flashlight"
+      ],
+      "weapons": [
+        "9mm pistol with conventional and silver bullets",
+        "Additional rifles, explosives, and PAB special equipment on assignment"
+      ],
+      "armor": [
+        "Bulletproof vest (A.R. 10, 70 S.D.C.)"
+      ]
     },
     "ispEngine": {
-      "baseFormula": "ME + 5D6",
+      "baseFormula": "ME+5D6",
       "perLevelFormula": "2D4",
-      "savingThrowClass": "master",
+      "savingThrowClass": "major",
       "progressionRoadmap": [
         {
           "level": 1,
           "selectionsGained": 3,
           "categoryRestrictions": [
-            "Physical",
-            "Sensitive",
-            "Healer"
+            "sensitive",
+            "physical",
+            "healer"
           ]
         },
         {
           "level": 3,
           "selectionsGained": 1,
           "categoryRestrictions": [
-            "Physical",
-            "Sensitive",
-            "Healer"
+            "sensitive",
+            "physical",
+            "healer"
           ]
         },
         {
           "level": 5,
           "selectionsGained": 1,
           "categoryRestrictions": [
-            "Physical",
-            "Sensitive",
-            "Healer"
+            "sensitive",
+            "physical",
+            "healer"
           ]
         },
         {
           "level": 9,
           "selectionsGained": 1,
           "categoryRestrictions": [
-            "Physical",
-            "Sensitive",
-            "Healer"
+            "sensitive",
+            "physical",
+            "healer"
           ]
         },
         {
           "level": 12,
           "selectionsGained": 1,
           "categoryRestrictions": [
-            "Physical",
-            "Sensitive",
-            "Healer"
+            "sensitive",
+            "physical",
+            "healer"
           ]
         }
       ]
-    }
+    },
+    "progression": {
+      "xpTableId": "between_shadows_arcane_detective",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
+    ],
+    "classAbilities": [
+      {
+        "name": "Psychic Power Program",
+        "description": "Select three powers from Sensitive, Physical, or Healing at 1st level; gain one additional power from those categories at levels 3, 5, 9, and 12 — `ispEngine.progressionRoadmap` (pp. 36–37)."
+      },
+      {
+        "name": "I.S.P.",
+        "description": "M.E. + 5D6 I.S.P. at 1st level; +2D4 I.S.P. per additional level — `ispEngine` (p. 36)."
+      },
+      {
+        "name": "Physical Training",
+        "description": "Intensive conditioning: +2D6 S.D.C., +1 P.S., +1D6 Spd. (plus physical skill bonuses) — `staticBonuses` (p. 36)."
+      },
+      {
+        "name": "Combat Bonuses",
+        "description": "+1 initiative, +1 parry/dodge, +1 roll with impact, +1 save vs psionic attack and mind control, +3 save vs horror factor — `staticBonuses` (p. 36)."
+      },
+      {
+        "name": "Pandora Project Origins",
+        "description": "Latent psychics recruited and awakened through Pandora Project research; ~30 of ~100 pre–Dark Day field agents survived Ba'al pursuit. PAB can endow psionic power via Pandora Techniques, but difficulty and consequences limit wider use (pp. 36–37)."
+      },
+      {
+        "name": "Ba'al Fear of Psychics",
+        "description": "Psychics can sense the supernatural, expose Dopplegangers, and recognize the scale of the government takeover — making them priority targets for Nightlord minions (p. 36)."
+      }
+    ]
   }
 ]

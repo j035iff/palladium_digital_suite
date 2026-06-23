@@ -233,6 +233,8 @@ No `audit:occs` script yet.
 | Sorcerer O.C.C. Pass B | pp. 115–117 abilities, skills, gear | Deep **`classAbilities`** for magic principles, ley line sense, initial spell program, Pursuit of Magic, magic saves, P.P.E., scholar background, related/secondary advancement; **`ppeEngine`**/`staticBonuses`/`startingEquipment`/`finances` already encoded from Pass A |
 | Mystic O.C.C. Pass B | pp. 117–119 abilities, skills, gear | **`supernaturalRuleOverrides`** (ley line/meditation/psychic APM globals); deep **`classAbilities`** for major psionic program, intuitive spell roadmap, mystic bonuses/spell strength, shaman background; **`ppeEngine`**/`ispEngine`/`specializations` already encoded from Pass A |
 | Nightbane Sorcerer O.C.C. Pass B | pp. 118–120 abilities, skills, gear | Deep **`classAbilities`** for Sorcerer-parity magic senses, initial spell program, Pursuit of Magic, reduced magic saves, racial P.P.E./Talent trade-off, dual power source, Morphus combat cross-ref; **`ppeEngine`**/`customAbilityEngines`/`staticBonuses` already encoded from Pass A |
+| BTS Spook Squad O.C.C.s — W.P. Pistol | Book lists "W.P. Pistol" (Ex-Gov Agent, Team Epsilon) vs fixed automatic pistol (P.A.B. Psychic) | **Player-choice voucher** `wp_automatic_pistol` **or** `wp_revolver` where book says "W.P. Pistol"; **fixed** `wp_automatic_pistol` where book text specifies automatic pistol only |
+| BTS Spook Squad O.C.C.s Pass B | pp. 30–37 six O.C.C.s | Deep **`classAbilities`** per row: federal/NSB lore, Team Epsilon anti-supernatural + branch notes, A.D.A. per-specialization skills, P.A.B. field experience, Pandora Recognize the Supernatural percentile, P.A.B. Psychic program/I.S.P.; Pass A skill packages/specializations/`ispEngine` already encoded |
 
 ---
 

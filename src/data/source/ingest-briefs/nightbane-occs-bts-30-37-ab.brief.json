@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-occs-bts-30-37-ab",
+  "title": "Between the Shadows Spook Squad O.C.C.s (pp. 30–37) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 30, "end": 37 }
+  },
+  "options": {
+    "bookFile": "between_the_shadows.json"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Ex-Government Agent",
+    "Team Epsilon Trooper",
+    "A.D.A. Field Agent",
+    "P.A.B. Field Agent",
+    "Pandora Project Researcher",
+    "P.A.B. Psychic Agent"
+  ],
+  "notes": "Spook Squad O.C.C. section only (New O.C.C.s). Book TOC: Ex-Government Agent p.30, Team Epsilon Troop p.31, Field Agent/CIA (ADA) p.32, PAB Field Agent p.33, Pandora Project Researcher p.34, PAB Psychic Agent P.C.C. p.35–37. Phased AB: composition Pass A per O.C.C., audit gate, then Pass B deep modules. Write to src/data/content/occs/nightbane/between_the_shadows.json. XP tables in progression/xp_tables/nightbane/between_the_shadows.json — verify bidirectional links when progression.xpTableId is set."
+}

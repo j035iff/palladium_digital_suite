@@ -1,0 +1,188 @@
+{
+  "briefId": "nightbane-occs-bts-30-37-ab",
+  "briefTitle": "Between the Shadows Spook Squad O.C.C.s (pp. 30–37) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/occs.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-23T02:21:04.376Z",
+  "updatedAt": "2026-06-23T03:00:00.000Z",
+  "checklist": [
+    {
+      "name": "Ex-Government Agent",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "30–31",
+      "notes": "TOC p.30; skills block p.31. Catalog row was placeholder — re-encoding from book."
+    },
+    {
+      "name": "Team Epsilon Trooper",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "31–33",
+      "notes": "TOC 'Team Epsilon Troop' p.31; printed header 'Team Epsilon Trooper'. Two sub-categories: Public Special Forces vs Team Epsilon inner circle."
+    },
+    {
+      "name": "A.D.A. Field Agent",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "32–34",
+      "notes": "Printed 'ADA Field Agent O.C.C.' / CIA-War Room Operative p.33; three specializations (Spy, Assassination, Dual-Trained)."
+    },
+    {
+      "name": "P.A.B. Field Agent",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "34–35",
+      "notes": "PAB Field Agent p.34; skills continue p.35."
+    },
+    {
+      "name": "Pandora Project Researcher",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "35–36",
+      "notes": "Researcher O.C.C. p.35–36."
+    },
+    {
+      "name": "P.A.B. Psychic Agent",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "36–37",
+      "notes": "Printed P.C.C. p.36–37; catalog treats as O.C.C. row occ_pab_psychic_agent."
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 30, "end": 31 },
+      "items": ["Ex-Government Agent"],
+      "playbookScope": "composition-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 31, "end": 33 },
+      "items": ["Team Epsilon Trooper"],
+      "playbookScope": "composition-only",
+      "notes": "specializations[] for Public SF vs Team Epsilon"
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 33, "end": 34 },
+      "items": ["A.D.A. Field Agent"],
+      "playbookScope": "composition-only",
+      "notes": "specializations[] Spy / Assassination / Dual-Trained"
+    },
+    {
+      "id": "batch-a-04",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 34, "end": 35 },
+      "items": ["P.A.B. Field Agent"],
+      "playbookScope": "composition-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-05",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 35, "end": 36 },
+      "items": ["Pandora Project Researcher"],
+      "playbookScope": "composition-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-06",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 36, "end": 37 },
+      "items": ["P.A.B. Psychic Agent"],
+      "playbookScope": "composition-only",
+      "notes": "ispEngine + psychic picks"
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 30, "end": 31 },
+      "items": ["Ex-Government Agent"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 31, "end": 33 },
+      "items": ["Team Epsilon Trooper"],
+      "playbookScope": "include deep modules",
+      "notes": "anti-supernatural bonuses, branch classAbilities"
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 33, "end": 34 },
+      "items": ["A.D.A. Field Agent"],
+      "playbookScope": "include deep modules",
+      "notes": "per-specialization deep modules"
+    },
+    {
+      "id": "batch-b-04",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 34, "end": 35 },
+      "items": ["P.A.B. Field Agent"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    },
+    {
+      "id": "batch-b-05",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 35, "end": 36 },
+      "items": ["Pandora Project Researcher"],
+      "playbookScope": "include deep modules",
+      "notes": "Recognize the Supernatural percentile"
+    },
+    {
+      "id": "batch-b-06",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 36, "end": 37 },
+      "items": ["P.A.B. Psychic Agent"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    }
+  ],
+  "rulings": [
+    {
+      "id": "ruling-01",
+      "status": "resolved",
+      "batchId": "batch-a-01",
+      "item": "Ex-Government Agent",
+      "question": "Book lists 'W.P. Pistol' — map to wp_automatic_pistol (modern semi-auto) or wp_revolver?",
+      "bookExcerpt": "W.P. Pistol / W.P. of choice",
+      "options": ["wp_automatic_pistol (standard modern W.P. Pistol)", "wp_revolver", "Player choice voucher for either"],
+      "userRuling": "Player choice voucher for either (wp_automatic_pistol or wp_revolver). Apply same pattern to other BTS O.C.C.s listing W.P. Pistol.",
+      "createdAt": "2026-06-23T02:25:00.000Z"
+    }
+  ],
+  "completedBatchIds": ["batch-a-01", "batch-a-02", "batch-a-03", "batch-a-04", "batch-a-05", "batch-a-06", "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05", "batch-b-06"],
+  "validationCommands": ["validate:schemas"]
+}
