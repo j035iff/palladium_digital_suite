@@ -1937,5 +1937,1121 @@
         "description": "Psychics can sense the supernatural, expose Dopplegangers, and recognize the scale of the government takeover — making them priority targets for Nightlord minions (p. 36)."
       }
     ]
+  },
+  {
+    "id": "occ_mind_master_pcc",
+    "name": "Mind Master P.C.C.",
+    "description": "Pre–Dark Day elite psychics who lived in the shadows — wealthy, reclusive, or quietly helpful until the Nightlords' invasion exposed and targeted them. Among the first to sense the Ba'al takeover; many now warn other psychics, join Spook Squad or resistance factions, or fight as vigilantes. A tiny fraction serve the Nightlords.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 119
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 120
+      }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "master_psionic", "civilian", "bts_pcc"],
+    "attributeRequirements": {
+      "me": 11,
+      "iq": 11
+    },
+    "packageNotes": [
+      "Must be human (p. 119).",
+      "Master psionic saving throw class (p. 119).",
+      "Autostart psionics at 1st level: Alter Aura, Detect Psionics, Empathy, Mind Block, Object Read, Presence Sense, See Aura, See the Invisible, Telepathy, Total Recall (p. 119).",
+      "Bonus 1st-level picks: select 2 Super/Master psionics OR 3 Sensitive psionics — mutually exclusive; player completes one branch only (same UX as Psychic Gate Major: 8-from-one-category vs 6-mixed) (p. 119).",
+      "Each level after 1st: select one power from Super, Sensitive, or Healing (p. 119).",
+      "I.S.P.: 2D6×10 + M.E. at 1st level; +3D4 per additional level (p. 119).",
+      "P.C.C. bonuses: +1 save vs psionics and mind control (incl. drugs), +1 perception, +3 possession/insanity, +3 dream manipulation/combat, +4 horror factor (p. 119).",
+      "Physical: any except Acrobatics and Gymnastics (p. 119).",
+      "Hand to Hand must be purchased as a Related skill (Basic = 1 slot, Expert = 2, Martial Arts or Assassin = 3; Assassin evil only) (p. 119).",
+      "Secondary skills: five at creation — no O.C.C. % bonus; same category limits as Related Skills (p. 119).",
+      "Wealthier pre-invasion Mind Masters were prime Nightlord targets — typical gear reflects modest survivors (p. 119)."
+    ],
+    "staticBonuses": {
+      "combat": {
+        "perception": 1
+      },
+      "saves": {
+        "save_psionics": 1,
+        "save_mind_control": 1,
+        "save_possession": 3,
+        "save_insanity": 3,
+        "save_dream": 3,
+        "save_horror": 4
+      }
+    },
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_math_basic", "bonusPercent": 20 },
+      { "skillId": "skill_lore_psychic", "bonusPercent": 20 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedCategories": ["Technical", "Science"],
+        "label": "Two Technical or Science skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 12,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "2D6*10+ME",
+      "perLevelFormula": "3D4",
+      "savingThrowClass": "master",
+      "grantedAbilityIds": [
+        "psionic_alter_aura",
+        "psionic_detect_psionics",
+        "psionic_empathy",
+        "psionic_mind_block",
+        "psionic_object_read",
+        "psionic_presence_sense",
+        "psionic_see_aura",
+        "psionic_see_the_invisible",
+        "psionic_telepathy",
+        "psionic_total_recall"
+      ],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 2,
+          "label": "Bonus psionics — branch A: 2 Super/Master (complete this branch OR branch B, not both)",
+          "selectionMode": {
+            "kind": "pool",
+            "selections": 2,
+            "categories": ["super"]
+          }
+        },
+        {
+          "selectionsGained": 3,
+          "label": "Bonus psionics — branch B: 3 Sensitive (complete this branch OR branch A, not both)",
+          "selectionMode": {
+            "kind": "pool",
+            "selections": 3,
+            "categories": ["sensitive"]
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "Additional psionic per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["super", "sensitive", "healer"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Personal computer or laptop",
+        "Modest wardrobe and basic personal items",
+        "Average car or motorcycle",
+        "3D6×1,000 dollars in equipment (p. 119)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "5D6*100",
+      "blackMarketAssets": "3D6*1000 in equipment and possessions"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_millek_astral_mage",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 15, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Supernatural Senses",
+        "description": "Sense supernatural beings within 60 feet (18.3 m) +5 feet (1.5 m) per level — no I.S.P. cost; alerts when a supernatural creature enters or leaves range (does not pinpoint location). When observing an individual supernatural creature, detect its true nature at 30% +5% per level; Alter Aura and Nightbane Facade reduce this chance by 30% (p. 119).",
+        "percentileProfile": { "basePercent": 30, "perLevelPercent": 5 }
+      },
+      {
+        "name": "Master Psionic Program",
+        "description": "Ten autostart psionics at 1st level plus exclusive bonus branch (2 Super or 3 Sensitive) and one Super/Sensitive/Healing pick per level thereafter — see `ispEngine` (p. 119)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "2D6×10 + M.E. at 1st level; +3D4 I.S.P. per additional level. Master psionic saving throw class (p. 119)."
+      },
+      {
+        "name": "P.C.C. Bonuses",
+        "description": "+1 save vs psionics and mind control (including drugs), +1 perception, +3 possession/insanity, +3 dream manipulation/combat, +4 horror factor — encoded in `staticBonuses` (p. 119)."
+      },
+      {
+        "name": "Pre–Dark Day Shadow Elite",
+        "description": "Wealthy or reclusive psychics who avoided the limelight and evaded PAB detection; \"live and let live\" credo shattered by the Nightlords' invasion (pp. 119–120)."
+      },
+      {
+        "name": "Nightlord Targeting & Resistance",
+        "description": "Ba'al minions ferreted out hundreds of Mind Masters before psychics realized they were marked for extermination. Many now warn other psychics and Nightbane, join Spook Squad, PAB remnants, militias, or Nightbane factions; a tiny fraction serve the Nightlords (pp. 119–120)."
+      },
+      {
+        "name": "Psychic First Line of Defense",
+        "description": "Psychics sense Nightlord minions in human guise, detect astral spies, and counter supernatural threats on Earth and the Astral Plane — among the few who pierce the Ba'al veil (pp. 119–120)."
+      }
+    ]
+  },
+  {
+    "id": "occ_kinetic_pcc",
+    "name": "'Kinetic P.C.C.",
+    "description": "Teens and young adults whose psychokinetic gifts erupted violently — many were hunted, imprisoned, or killed by the PAB and Pandora Project before Dark Day. The invasion awakened thousands more. Spook Squad recruitment forces a bitter choice between former captors and fighting the Ba'al alone; many join, while others band with psychics, Nightbane factions, militias, or operate solo.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 120 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 121 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 122 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "major_psionic", "civilian", "bts_pcc"],
+    "attributeRequirements": { "me": 12 },
+    "packageNotes": [
+      "Major psychokinetic power: select one specialization at creation — Electrokinesis, Hydrokinesis, Pyrokinesis, or Telekinesis (pp. 120–121).",
+      "Other psionics: three Physical powers at 1st level; one Physical or Healing power per additional level (p. 121).",
+      "I.S.P.: 2D4×10 + 10 + M.E. at 1st level; +2D6 per additional level (p. 121).",
+      "P.C.C. bonuses: +1 save vs psionics, +2 possession/insanity, +1 dream manipulation/combat, +2 horror factor (p. 121).",
+      "Background-driven skill picks — GM approves unusual requests (p. 121). Most discover powers at ages 15–17.",
+      "Physical: any except Acrobatics and Gymnastics (p. 122).",
+      "Hand to Hand must be purchased as a Related skill (Basic = 1 slot, Expert = 2, Martial Arts or Assassin = 3; Assassin evil only) (p. 121).",
+      "Secondary skills: five at creation — no O.C.C. % bonus; same category limits as Related Skills (p. 122).",
+      "Spook Squad recruits use Spook Squad agent/researcher equipment benefits (p. 122)."
+    ],
+    "staticBonuses": {
+      "saves": {
+        "save_psionics": 1,
+        "save_possession": 2,
+        "save_insanity": 2,
+        "save_dream": 1,
+        "save_horror": 2
+      }
+    },
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_math_basic", "bonusPercent": 5 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      },
+      { "skillId": "skill_automobile", "bonusPercent": 15 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedSkillTraits": ["work_education_related"],
+        "label": "Two background skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 7,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid", "skill_paramedic"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 3 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "2D4*10+10+ME",
+      "perLevelFormula": "2D6",
+      "savingThrowClass": "major",
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 3,
+          "label": "1st level Physical psionics (in addition to major power specialization)",
+          "selectionMode": {
+            "kind": "single_category",
+            "selections": 3,
+            "categories": ["physical"]
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "Additional Physical or Healing psionic per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["physical", "healer"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "classAbilities": [
+      {
+        "name": "Major Psychokinetic Power",
+        "description": "Select one specialization at creation — Electrokinesis, Hydrokinesis, Pyrokinesis, or Telekinesis. That power is used better than standard catalog values; see active specialization `classAbilities` (pp. 120–121)."
+      },
+      {
+        "name": "Other Psionic Powers",
+        "description": "Three Physical psionics at 1st level (in addition to major power); one Physical or Healing psionic per additional level — see `ispEngine` (p. 121)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "2D4×10 + 10 + M.E. at 1st level; +2D6 I.S.P. per additional level. Major psionic saving throw class (p. 121)."
+      },
+      {
+        "name": "P.C.C. Bonuses",
+        "description": "+1 save vs psionics, +2 possession/insanity, +1 dream manipulation/combat, +2 horror factor — encoded in `staticBonuses` (p. 121)."
+      },
+      {
+        "name": "PAB & Pandora Project Persecution",
+        "description": "Pre–Dark Day PAB documented ~50 violent psychokinetic incidents — mostly teens — with cover-ups blaming gas explosions and storms; many subjects killed or imprisoned by PAB/Pandora Project (p. 120)."
+      },
+      {
+        "name": "Nightlord Extermination & Spook Squad",
+        "description": "Dark Day awakened thousands; Ba'al targeted psychics but 'Kinetics proved costly to hunt. Spook Squad recruitment forces alliance with former captors or fighting alone — many join factions, gangs, militias, or operate solo (pp. 120–121)."
+      },
+      {
+        "name": "Teen Awakening Background",
+        "description": "Most discover powers at ages 15–17 during emotional outbursts; half never finish high school — skill picks should reflect background; GM approves unusual skills (pp. 121–122)."
+      }
+    ],
+    "specializations": [
+      {
+        "id": "occ_kinetic_electrokinesis",
+        "name": "Electrokinesis",
+        "description": "Major psychokinetic power: Electrokinesis — enhanced electrical arcs, device manipulation range, and electricity sense (Nightbane RPG p. 79; BTS p. 120).",
+        "classAbilities": [
+          {
+            "name": "Major Power: Electrokinesis",
+            "description": "Base catalog power `psionic_electrokinesis` plus all standard electrokinesis sub-abilities from Nightbane RPG p. 79 (p. 120)."
+          },
+          {
+            "name": "Electrical Arc Attack",
+            "description": "Generate electrical arcs inflicting 5D6 S.D.C. damage. Range: 50 feet (15.2 m) + 10 feet (3 m) per level of experience. I.S.P. cost: 15 (p. 120)."
+          },
+          {
+            "name": "Enhanced Manipulate & Sense Electricity",
+            "description": "Base range to manipulate electrical devices or sense electricity increased to 60 feet (18.3 m) + 5 feet (1.5 m) per level of experience (p. 120)."
+          }
+        ]
+      },
+      {
+        "id": "occ_kinetic_hydrokinesis",
+        "name": "Hydrokinesis",
+        "description": "Major psychokinetic power: Hydrokinesis — water pressure bursts, high-pressure jets, and sense water (Nightbane RPG p. 79; BTS p. 120).",
+        "classAbilities": [
+          {
+            "name": "Major Power: Hydrokinesis",
+            "description": "Base catalog power `psionic_hydrokinesis` plus all standard hydrokinesis sub-abilities from Nightbane RPG p. 79 (p. 120)."
+          },
+          {
+            "name": "Water Volume & Pressure Manipulation",
+            "description": "Manipulate up to 50 gallons of water + 10 gallons per level; by manipulating pressure can burst pipes or fire hydrants (p. 120)."
+          },
+          {
+            "name": "High-Pressure Water Jet",
+            "description": "Channel a high-pressure jet inflicting 1D6 damage per 20 gallons used. Range: 20 feet (6.1 m) + 5 feet (1.5 m) per level of experience (p. 120)."
+          },
+          {
+            "name": "Enhanced Sense Water",
+            "description": "Sense water range: 60 feet (18.3 m) + 5 feet (1.5 m) per level of experience (p. 120)."
+          }
+        ]
+      },
+      {
+        "id": "occ_kinetic_pyrokinesis",
+        "name": "Pyrokinesis",
+        "description": "Major psychokinetic power: Pyrokinesis — discounted fireballs and doubled base ranges (Nightbane RPG p. 81; BTS p. 120).",
+        "classAbilities": [
+          {
+            "name": "Major Power: Pyrokinesis",
+            "description": "Base catalog power `psionic_pyrokinesis` plus all standard pyrokinesis sub-abilities from Nightbane RPG p. 81 (p. 120)."
+          },
+          {
+            "name": "Discount Fireball",
+            "description": "Fireballs cost 15 I.S.P. (reduced from standard) with range 60 feet (18.3 m) + 5 feet (1.5 m) per level of experience (p. 120)."
+          },
+          {
+            "name": "Doubled Base Ranges",
+            "description": "Base range of all other pyrokinesis powers is doubled; per-level range increment remains the same as standard catalog values (p. 120)."
+          }
+        ]
+      },
+      {
+        "id": "occ_kinetic_telekinesis",
+        "name": "Telekinesis",
+        "description": "Major psychokinetic power: Telekinesis — 10 lbs per I.S.P. and extended throw/manipulation range (Nightbane RPG p. 82; BTS p. 121).",
+        "classAbilities": [
+          {
+            "name": "Major Power: Telekinesis",
+            "description": "Base catalog power `psionic_telekinesis` plus all standard telekinetic sub-abilities from Nightbane RPG p. 82 (p. 121)."
+          },
+          {
+            "name": "Enhanced Lift Capacity",
+            "description": "Weight manipulated becomes 10 lbs (4.5 kg) per I.S.P. spent (improved from standard telekinesis scaling) (p. 121)."
+          },
+          {
+            "name": "Enhanced Throw & Manipulation Range",
+            "description": "Throwing and manipulation range increased to 30 feet (9.1 m) + 10 feet (3 m) per level of experience, regardless of weight lifted (p. 121)."
+          }
+        ]
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "1D4×1,000 dollars in possessions (clothes, weapons, personal items)",
+        "Used car or motorcycle (typical)",
+        "Spook Squad recruits: agent/researcher-equivalent kit (p. 122)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*100",
+      "blackMarketAssets": "1D4*1000 in possessions; or one month's salary in savings if higher (p. 122)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_kinetic_psi_mechanic",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 4, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 14, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_natural_genius_pcc",
+    "name": "Natural & Genius P.C.C.",
+    "description": "Latent psychics who unconsciously channel energy into mundane excellence — Olympic-tier athletes, master hackers, and effortless savants overlooked in the psychic arms race. Many now serve Spook Squad, the Seekers, or corporations; their gifts make them quicker to spot plots, subterfuge, and the supernatural.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 122 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 123 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 124 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "minor_psionic", "civilian", "bts_pcc"],
+    "packageNotes": [
+      "No attribute requirements — all attributes +1 at creation (3D6+1 each; roll extra 1D6 if total 16+ before bonuses) (p. 123).",
+      "Subconscious psionics: Mind Block and Total Recall (p. 122).",
+      "I.S.P.: M.E. + 3D6 at 1st level; +1D4 per additional level (p. 122).",
+      "P.P.E.: 4D6+16 + P.E. at 1st level — not increased per level; minimum 2 P.P.E. permanent base after specialty spending (p. 122).",
+      "At creation spend initial P.P.E. on permanent +3% skill boosts and/or P.P.E. specialties — see `classAbilities` (pp. 122–123).",
+      "Hand to Hand must be purchased as a Related skill (Basic = 1 slot, Expert = 2, Martial Arts or Assassin = 3; Assassin evil only) (p. 123).",
+      "Spook Squad option: exchange one Technical or one Electrical core skill for W.P. Pistol and Hand to Hand: Basic (p. 123).",
+      "Secondary skills: three at 1st level, plus three more at levels 3, 6, 10, and 14 (p. 124).",
+      "Open related-skill access — GM approves unlikely skills by background (p. 124)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_math_basic", "bonusPercent": 25 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedCategories": ["Technical", "Science"],
+        "label": "Two Technical or Science skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Electrical", "Mechanical", "Medical"],
+        "label": "Two Electrical, Mechanical, or Medical skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 12,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 3, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ppeEngine": {
+      "baseFormula": "4D6+16+PE",
+      "perLevelFormula": "0",
+      "progressionRoadmap": []
+    },
+    "ispEngine": {
+      "baseFormula": "3D6+ME",
+      "perLevelFormula": "1D4",
+      "savingThrowClass": "minor",
+      "grantedAbilityIds": ["psionic_mind_block", "psionic_total_recall"],
+      "progressionRoadmap": []
+    },
+    "classAbilities": [
+      {
+        "name": "Subconscious Psionics",
+        "description": "Mind Block and Total Recall — subconscious powers used when needed; many naturals are unaware they are psychics. Encoded on `ispEngine.grantedAbilityIds` (pp. 122–123)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E. + 3D6 at 1st level; +1D4 I.S.P. per additional level. Minor psionic saving throw class (p. 122)."
+      },
+      {
+        "name": "Attribute Bonuses at Creation",
+        "description": "+1 to all attributes (roll 3D6+1 each; if total including bonuses is 16+, roll an additional 1D6). No minimum attribute requirements (p. 122)."
+      },
+      {
+        "name": "P.P.E. Pool & Minimum Reserve",
+        "description": "4D6+16 + P.E. at 1st level — no per-level P.P.E. gain. Much of this pool is unconsciously spent on specialties at creation; retain minimum 2 P.P.E. as permanent base. P.E. gained from a specialty does not count toward this initial P.P.E. total (p. 122)."
+      },
+      {
+        "name": "Permanent Skill Boost (P.P.E. Option)",
+        "description": "Alternatively to specialties: spend permanent P.P.E. to grant +3% to any one skill per point spent. Bonus is permanent and cannot be changed or transferred (p. 122)."
+      },
+      {
+        "name": "P.P.E. Specialty Program",
+        "description": "Spend set P.P.E. costs at creation on one or more specialties below; any combination allowed, limited only by available P.P.E. (after minimum 2 retained). Specialties stack with formal skills and O.C.C. bonuses (pp. 122–123)."
+      },
+      {
+        "name": "Specialty: Electrical Genius (16 P.P.E.)",
+        "description": "Intuitive electronics sense — Basic Electronics at 65% +5% per level (not equivalent to full engineering training). One-time +15% to all Electrical skills learned through formal education; half penalties on extremely advanced or alien technology. Electrical Hot-wiring 66% +2% per level (most systems; GM may apply −5% to −25% under stress, speed, or alien complexity) (pp. 122–123).",
+        "percentileProfile": { "basePercent": 65, "perLevelPercent": 5 }
+      },
+      {
+        "name": "Specialty: Computer Genius (15 P.P.E.)",
+        "description": "Computer Operation 88% +2%/level, Computer Programming 80% +2%/level, Computer Hacking 70% +2%/level. Learn unfamiliar/cutting-edge systems at 56% +4%/level. +2 on perception rolls (p. 123)."
+      },
+      {
+        "name": "Specialty: Mental Genius (17 P.P.E.)",
+        "description": "+1D4+2 to I.Q. (minimum 17), photographic memory, +3% bonus on all skills including secondary (cumulative with I.Q. and O.C.C. bonuses). +2 perception, +2 save vs dream manipulation/combat, +2 to see through illusions (p. 123)."
+      },
+      {
+        "name": "Specialty: Weapons Expert (16 P.P.E.)",
+        "description": "Three bonus Weapon Proficiencies beyond O.C.C. picks. Make/modify any weapon with a W.P. at 72% +2%/level (materials/tools required; GM penalties −5% to −65% by complexity). Maintain weapons and recognize quality at 50% +5%/level. +1 parry with ancient weapons and +1 strike with ranged weapons (W.P. only). Select one favorite weapon (specific make/model) for +2 strike and +2 parry when applicable (pp. 123–124).",
+        "percentileProfile": { "basePercent": 72, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Specialty: Bio-Feedback — Death Trance (20 P.P.E.)",
+        "description": "Death Trance cancels drug/poison effects temporarily; maintain 24 hours per level while antidote sought or self-cleansing attempted. Base 88% +2% per level (p. 123).",
+        "percentileProfile": { "basePercent": 88, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Specialty: Bio-Feedback — Cleansing Trance",
+        "description": "While in trance, 24-hour meditative cleansing at 66% +2%/level restores 1D6 S.D.C. or H.P. per hour and flushes/negates poisons, drugs, and toxins (p. 123).",
+        "percentileProfile": { "basePercent": 66, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Specialty: Bio-Feedback — Positive Chi Channel",
+        "description": "Channel positive energy at 70% +2%/level: energy attacks (heat, fire, electricity, lasers) and gases/poisons/drugs do half damage/duration; +1 save vs magic, +2 vs psionics, +4 vs possession, +4 vs dream manipulation/combat, +5 vs horror factor. Benefits last 20 minutes per hour of prior positive-chi meditation (p. 123).",
+        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+      },
+      {
+        "name": "Specialty: Exceptional Physical Prowess (18 P.P.E.)",
+        "description": "+1D6 P.P. (minimum 17), +1D6+6 Spd (minimum 17), +1 attack per melee, +3 initiative, +3 roll with punch/fall/impact, +3 pull punch, and one-time +10% to a favorite physical skill (prowl, climbing, swimming, gymnastics, or similar) (p. 123)."
+      },
+      {
+        "name": "Specialty: Exceptional Physical Strength (18 P.P.E.)",
+        "description": "+1D6+6 P.S. (minimum 18), +1D4 P.E., +1D4×10 S.D.C. Punches and kicks inflict supernatural P.S. damage per Nightbane RPG p. 35 (p. 123)."
+      },
+      {
+        "name": "Specialty: Exceptional Physical Endurance (18 P.P.E.)",
+        "description": "+2D4 P.E. (minimum 18), +1D6×10 S.D.C., +2D6 H.P., +10% survive coma/death, +2 save vs disease, poisons, and drugs — cumulative with P.E. bonuses (p. 123)."
+      },
+      {
+        "name": "Overlooked Savants & Supernatural Awareness",
+        "description": "Latent psychics ignored by both sides of the war until necessity forces choices — dozens serve Spook Squad, Seekers, or corporations; gifts make them quicker to recognize the unusual, plots, and subterfuge (pp. 122–124)."
+      },
+      {
+        "name": "Spook Squad Skill Exchange",
+        "description": "Characters working for Spook Squad or similar may exchange one Technical or one Electrical core skill for W.P. Pistol and Hand to Hand: Basic (p. 123)."
+      },
+      {
+        "name": "Flexible Skill Learning",
+        "description": "May learn almost any skill of interest with I.Q. and O.C.C. bonuses; GM approves unlikely skills by background, age, and history — naturals may \"bend the rules\" via book learning (p. 124)."
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "6D6×1,000 dollars in possessions (nice car/motorcycle, apartment, clothing)",
+        "Spook Squad agents: organization-provided equipment (p. 124)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "3D6*1000",
+      "blackMarketAssets": "6D6*1000 in possessions for civilian naturals (p. 124)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_kinetic_psi_mechanic",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 3, "quantity": 3, "poolSource": "secondary" },
+      { "levelUnlocked": 6, "quantity": 3, "poolSource": "secondary" },
+      { "levelUnlocked": 10, "quantity": 3, "poolSource": "secondary" },
+      { "levelUnlocked": 14, "quantity": 3, "poolSource": "secondary" }
+    ]
+  },
+  {
+    "id": "occ_psi_mechanic_pcc",
+    "name": "Psi-Mechanic P.C.C.",
+    "description": "Psychics who imprint powers into pseudo-scientific gadgets — machines useless to most people unless another psychic channels I.S.P. through them. A centerpiece of Pandora Project research at Detroit Metallurgical Laboratories until Dark Day scattered survivors and their impossible devices.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 124 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 125 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "major_psionic", "civilian", "bts_pcc", "pandora"],
+    "attributeRequirements": { "me": 10, "iq": 10 },
+    "packageNotes": [
+      "Device powers: six picks at 1st level — two each from Physical, Sensitive, and Healing; usable only through self-built psi-devices (pp. 124–125).",
+      "Independent psionics (no device): Telemechanics, Total Recall, Object Read (p. 125).",
+      "Per-level device powers (levels 2–15): branch A — 2 Physical/Sensitive/Healing per level OR branch B — 1 Super per level; complete one branch per level only (same UX as Mind Master ruling-01) (p. 125).",
+      "P.P.E.: 6D6+20 + P.E. at 1st level; minimum 8 retained; remainder builds devices; +2D6 P.P.E./level for more gadgets (p. 125).",
+      "I.S.P.: 2D6×10 + M.E. at 1st level; +10 per additional level (p. 125).",
+      "Physical: any except Acrobatics (p. 125).",
+      "Hand to Hand must be purchased as a Related skill (Basic = 1 slot, Expert = 2, Martial Arts or Assassin = 3; Assassin evil only) (p. 125).",
+      "Secondary skills: six at creation — no O.C.C. % bonus; same category limits as Related Skills (p. 125).",
+      "Starting gear includes psi-devices equal to invested P.P.E. plus workshop tools (p. 125)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_math_basic", "bonusPercent": 20 },
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_computer_operation", "bonusPercent": 20 },
+      {
+        "choiceCount": 3,
+        "bonusPercent": 15,
+        "allowedCategories": ["Mechanical", "Electrical", "Technical"],
+        "label": "Three Mechanical, Electrical, or Technical skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 15,
+        "allowedCategories": ["Science", "Domestic"],
+        "label": "Two Science or Domestic skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ppeEngine": {
+      "baseFormula": "6D6+20+PE",
+      "perLevelFormula": "2D6",
+      "progressionRoadmap": []
+    },
+    "ispEngine": {
+      "baseFormula": "2D6*10+ME",
+      "perLevelFormula": "10",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": [
+        "psionic_telemechanics",
+        "psionic_total_recall",
+        "psionic_object_read"
+      ],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 6,
+          "label": "1st level device-imprinted psionics (two per category)",
+          "selectionMode": {
+            "kind": "per_category",
+            "buckets": { "physical": 2, "sensitive": 2, "healer": 2 }
+          }
+        },
+        {
+          "selectionsGained": 1,
+          "label": "Per-level device powers (levels 2–15) — branch B: 1 Super/Master each level (complete branch B OR branch A each level, not both)",
+          "selectionMode": {
+            "kind": "pool",
+            "selections": 1,
+            "categories": ["super"]
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 2,
+        "label": "Per-level device powers — branch A: 2 Physical/Sensitive/Healing each level (complete branch A OR branch B each level, not both)",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 2,
+          "categories": ["physical", "sensitive", "healer"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "classAbilities": [
+      {
+        "name": "Psychological Device Dependency",
+        "description": "Without self-built machines and gadgets, the Psi-Mechanic usually cannot tap device-imprinted psionic powers — a psychological block, but no less real. Gizmos are useless to most non-psychics (pp. 124–125)."
+      },
+      {
+        "name": "Build Psionic Devices (Imprint)",
+        "description": "Build a device emulating one known psionic power per gadget. Imprint drains P.P.E. when built: spend 1 P.P.E. per 2 I.S.P. of the power's activation cost, or 4 P.P.E. minimum — whichever is more. Must already know the power to imprint. Devices follow pseudo-scientific common sense (goggles/binoculars for see invisible, helmets for telepathy, motion detectors for sensing, etc.); may be real gadgets that also function normally (pp. 124–125)."
+      },
+      {
+        "name": "Device Activation",
+        "description": "Devices draw I.S.P. from the user at the same cost and potency as the standard catalog psionic power they emulate (p. 125)."
+      },
+      {
+        "name": "Operating Another Psi-Mechanic's Device",
+        "description": "Psi-Mechanic: 20% base chance to use a found device without creator instructions. Other psychics: 12%. Under careful instruction from the creator, any psychic learns at 55%. Object Read adds +5%; Telemechanics adds +10% (+15% if both used) (p. 125).",
+        "percentileProfile": { "basePercent": 20, "perLevelPercent": 0 }
+      },
+      {
+        "name": "P.P.E. for Device Construction",
+        "description": "6D6+20 + P.E. at 1st level; minimum 8 P.P.E. retained — remainder may imprint devices. +2D6 P.P.E. per additional level for more gadgets. See `ppeEngine` (p. 125)."
+      },
+      {
+        "name": "Device-Only Psionic Program",
+        "description": "Six device powers at 1st level (two each from Physical, Sensitive, Healing). Each level after 1st: branch A — two picks from those categories, OR branch B — one Super/Master pick (exclusive per level). All device picks require an imprinted gadget to use — see `ispEngine` (pp. 124–125)."
+      },
+      {
+        "name": "Independent Psionics (No Device)",
+        "description": "Telemechanics, Total Recall, and Object Read function without machines — encoded on `ispEngine.grantedAbilityIds` (p. 125)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "2D6×10 + M.E. at 1st level; +10 I.S.P. per additional level. Major psionic saving throw class (p. 125)."
+      },
+      {
+        "name": "Pandora Project / DML Research",
+        "description": "Major study subject at Detroit Metallurgical Laboratories — theories: (1) the Psi-Mechanic's own abilities power the gadget, and (2) psychic imprint acts as trigger and circuit board. Science could not explain why devices work for creators; many lack special mechanical components and some do not function as ordinary machines (pp. 124–125)."
+      },
+      {
+        "name": "Imprint Uniqueness",
+        "description": "Another Psi-Mechanic cannot usually operate someone else's machine without instructions — the imprint is creator-specific (p. 124)."
+      },
+      {
+        "name": "Mechanical Aptitude vs. Psychic-Only Tinkerer",
+        "description": "Most develop mechanical-science aptitude; a few are clumsy with \"real\" machines and build only psychic devices unrelated to physical laws — player chooses at creation and adjusts skill picks accordingly (p. 125)."
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "Psi-devices and gadgets equal to P.P.E. invested at creation",
+        "Personal computer and printer, laptop, calculator, pen flashlight",
+        "Pocket tool kit, full tool kit, duffle bag, backpack",
+        "Modest wardrobe, old automobile, modest rented apartment",
+        "2D6×1,000 dollars in additional possessions (p. 125)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D4*1000",
+      "blackMarketAssets": "Most cash spent on tools, materials, and gizmo construction (p. 125)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_kinetic_psi_mechanic",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 7, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+    ]
+  },
+  {
+    "id": "occ_arcane_detective",
+    "name": "Arcane Detective O.C.C.",
+    "description": "Mystically trained investigators — often tied to the Aurora Investigation Agency or the Seekers — who blend detective tradecraft with investigative spells. Fewer than a hundred existed before the war; Spook Squad and allied groups now train more as supernatural crime and Nightlord plots draw them into the resistance.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 126 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 127 }
+    ],
+    "occType": "magic_user",
+    "tags": ["occult", "investigator", "arcane", "bts_occ"],
+    "attributeRequirements": { "iq": 11 },
+    "packageNotes": [
+      "Initial spells: See Aura, See the Invisible, Sense Evil, Sense Magic, Detect Concealment, Astral Projection — plus 1D4+2 more from levels 1–4 (9–12 total) (p. 126).",
+      "Each additional level: one new spell equal to character level (p. 126).",
+      "Pursuit of Magic: may learn or purchase spells and rituals of any level regardless of experience (Nightbane RPG; p. 126).",
+      "P.P.E.: 1D4×10 + P.E. at 1st level; +2D6 per additional level (p. 126).",
+      "Bonuses: +1 initiative, +2 perception, +4 horror, +2 possession, +1 dream manipulation/combat; +1 save vs magic at 3/6/9/12; +1 spell strength at 4/8/12 (p. 127).",
+      "Lore core skill: Demon and Monster OR Geomancy (player choice) (p. 127).",
+      "Physical related: any except Acrobatics; +5% to Prowl and Climbing when selected (p. 127).",
+      "Hand to Hand: Basic included; upgrade to Expert costs 1 related slot, Martial Arts or Assassin costs 2 (p. 127).",
+      "Secondary skills: five at creation — no O.C.C. % bonus; same category limits as Related Skills (p. 127).",
+      "Informant network built during play with GM (p. 126)."
+    ],
+    "staticBonuses": {
+      "combat": { "initiative": 1, "perception": 2 },
+      "saves": {
+        "save_horror": 4,
+        "save_possession": 2,
+        "save_dream": 1
+      },
+      "levelGatedSaves": {
+        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+      }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_streetwise", "bonusPercent": 16 },
+      { "skillId": "skill_intelligence", "bonusPercent": 10 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedSkillIds": ["skill_lore_demons_and_monsters", "skill_lore_geomancy"],
+        "label": "Lore: Demon and Monster OR Geomancy"
+      },
+      { "skillId": "skill_pick_locks", "bonusPercent": 10 },
+      { "skillId": "skill_surveillance_systems", "bonusPercent": 15 },
+      { "skillId": "skill_automobile", "bonusPercent": 10 },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 0,
+        "allowedCategories": ["Weapon Proficiencies"],
+        "label": "One W.P. of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid", "skill_criminal_sciences_and_forensics"],
+          "bonusPercent": 5
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0,
+          "skillSpecificOverrides": {
+            "skill_prowl": 5,
+            "skill_climbing": 5
+          }
+        },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ppeEngine": {
+      "baseFormula": "1D4*10+PE",
+      "perLevelFormula": "2D6",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "open",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "grantedAbilityIds": [
+        "magic_wizard_see_aura",
+        "magic_wizard_see_the_invisible",
+        "magic_wizard_sense_evil",
+        "magic_wizard_sense_magic",
+        "magic_wizard_detect_concealment",
+        "magic_wizard_astral_projection"
+      ],
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 3,
+          "categoryRestrictions": ["Level 4 Spells Only"]
+        },
+        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Investigation & Magic Synergy",
+        "description": "Combination of detective tradecraft and investigative spells makes Arcane Detectives ultimate truth-seekers — locate missing persons, uncover supernatural activity, and solve crimes beyond mundane methods (p. 126)."
+      },
+      {
+        "name": "Initial Spell Knowledge",
+        "description": "At 1st level: See Aura, See the Invisible, Sense Evil, Sense Magic, Detect Concealment, and Astral Projection — plus 1D4+2 additional wizard spells from levels 1–4 (9–12 total). See `ppeEngine.grantedAbilityIds` and level-1 `progressionRoadmap` (p. 126)."
+      },
+      {
+        "name": "Spell Advancement",
+        "description": "Each additional level, select one new spell equal to character level — see `ppeEngine.progressionRoadmap` levels 2–15 (p. 126)."
+      },
+      {
+        "name": "Learning New Spells (Pursuit of Magic)",
+        "description": "Additional spells and rituals of any magic level may be learned or purchased at any time regardless of experience level — `ppeEngine.spellAcquisition: open` (Nightbane RPG; p. 126)."
+      },
+      {
+        "name": "P.P.E. Reservoir",
+        "description": "1D4×10 + P.E. at 1st level; +2D6 P.P.E. per additional level — see `ppeEngine` (pp. 126–127)."
+      },
+      {
+        "name": "Detective Bonuses",
+        "description": "+1 initiative, +2 perception, +4 horror factor, +2 possession, +1 dream manipulation/combat; +1 save vs magic at levels 3, 6, 9, and 12; +1 spell strength at levels 4, 8, and 12 — encoded in `staticBonuses`, `levelGatedSaves`, and `ppeEngine.spellStrengthProgression` (p. 127)."
+      },
+      {
+        "name": "Law Enforcement Connections",
+        "description": "Many detectives maintain ties to local authorities — friends, acquaintances, and paid informants on the police force who provide leads, confirm facts or rumors, and occasional assistance (p. 126)."
+      },
+      {
+        "name": "Street Informant Network",
+        "description": "Alternatively (or additionally), a web of street connections: bartenders, street people, stool-pigeons, fellow detectives, reporters (or their cleaning staff), and petty criminals who share information for a gratuity — payoff, reward cut, favor, bottle of booze, etc. GM and player build this network over the campaign; role-play heavily (p. 126)."
+      },
+      {
+        "name": "Paranormal Crime Specialty",
+        "description": "Specializes in supernatural and paranormal crimes — covens, cultists, sorcerers, vampires, and other monstrous predators; no stranger to cases mundane police cannot touch (p. 126)."
+      },
+      {
+        "name": "Nightlord Exposure",
+        "description": "Many stumble onto Ba'al plots and pay dearly; some devote more time to opposing the Nightlords and recruiting allies, while others steer clear of Ba'al minions and pawns (p. 126)."
+      },
+      {
+        "name": "Aurora Investigation Agency & Seekers",
+        "description": "Many belong to this rare fraternity — often associated with the Aurora Investigation Agency (Organizations of the Astral Plane) or the Seekers faction (Nightbane RPG). Fewer than a hundred believed to exist before the war (p. 126)."
+      },
+      {
+        "name": "Growing Ranks & Spook Squad Training",
+        "description": "Spook Squad and allied organizations are discovering and training more mystic investigators as the supernatural war expands (p. 126)."
+      }
+    ],
+    "startingEquipment": {
+      "miscellaneous": [
+        "Personal vehicle (typically reliable used car)",
+        "Home computer and printer",
+        "Fingerprint kit, lock picks, flashlight",
+        "Beeper/pager, telephone/fax answering machine",
+        "Pocket tape recorder, 35 mm camera with telephoto lens",
+        "Bulletproof vest (A.R. 10, 50 S.D.C.)",
+        "Handcuffs, note pads and pens",
+        "Modest wardrobe including trench coat",
+        "Small office in a run-down building",
+        "Personal handgun (p. 127)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "4D6*100",
+      "blackMarketAssets": "Savings and investigative kit (p. 127)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_arcane_detective",
+      "characterOccCategory": "standard",
+      "startingSpellLevelCap": 4
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 2, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 14, "quantity": 1, "poolSource": "related" }
+    ]
   }
 ]

@@ -1,0 +1,170 @@
+{
+  "briefId": "nightbane-occs-bts-118-127-ab",
+  "briefTitle": "Between the Shadows BTS Psychic P.C.C.s (pp. 119–125) + Arcane Detective (pp. 126–127) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/occs.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-23T03:32:33.670Z",
+  "updatedAt": "2026-06-23T04:30:00.000Z",
+  "checklist": [
+    {
+      "name": "Mind Master P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "119–120",
+      "notes": "occ_mind_master_pcc → between_shadows_millek_astral_mage"
+    },
+    {
+      "name": "'Kinetic P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "120–122",
+      "notes": "occ_kinetic_pcc + 4 kinetic specializations"
+    },
+    {
+      "name": "Natural & Genius P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "122–124",
+      "notes": "occ_natural_genius_pcc — P.P.E. specialty catalog"
+    },
+    {
+      "name": "Psi-Mechanic P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "124–125",
+      "notes": "occ_psi_mechanic_pcc — device imprint rules"
+    },
+    {
+      "name": "Arcane Detective O.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "126–127",
+      "notes": "occ_arcane_detective → between_shadows_arcane_detective"
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 119, "end": 120 },
+      "items": ["Mind Master P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 120, "end": 122 },
+      "items": ["'Kinetic P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": "specializations[] for major kinetic power"
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 122, "end": 124 },
+      "items": ["Natural & Genius P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": "P.P.E. specialty branches deferred to Pass B"
+    },
+    {
+      "id": "batch-a-04",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 124, "end": 125 },
+      "items": ["Psi-Mechanic P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": "dual ppeEngine + ispEngine"
+    },
+    {
+      "id": "batch-a-05",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 126, "end": 127 },
+      "items": ["Arcane Detective O.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": "XP link between_shadows_arcane_detective"
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 119, "end": 120 },
+      "items": ["Mind Master P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "supernatural senses percentile"
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 120, "end": 122 },
+      "items": ["'Kinetic P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "per-specialization kinetic modifiers"
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 122, "end": 124 },
+      "items": ["Natural & Genius P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "P.P.E. specialty catalog"
+    },
+    {
+      "id": "batch-b-04",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 124, "end": 125 },
+      "items": ["Psi-Mechanic P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "psi-device imprint rules"
+    },
+    {
+      "id": "batch-b-05",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 126, "end": 127 },
+      "items": ["Arcane Detective O.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "informant network, investigation focus"
+    }
+  ],
+  "rulings": [
+    {
+      "id": "ruling-01",
+      "item": "Mind Master P.C.C.",
+      "status": "resolved",
+      "question": "1st-level bonus psionics: book offers 2 Master/Super picks OR 3 Sensitive picks (mutually exclusive). How should chargen encode the either/or?",
+      "resolution": "Player completes one creationSelectionPlan branch only — same UX as Psychic Gate Major allocation (8-from-one-category vs 6-mixed). Both branches remain in ispEngine.creationSelectionPlan with exclusive branch labels.",
+      "resolvedAt": "2026-06-23T04:00:00.000Z"
+    },
+    {
+      "id": "ruling-02",
+      "item": "Psi-Mechanic P.C.C.",
+      "status": "resolved",
+      "question": "Per-level psionic gain after 1st: 2 picks from Physical/Sensitive/Healing OR 1 Master/Super pick (mutually exclusive). Same encoding question as Mind Master.",
+      "resolution": "Same exclusive-branch UX as ruling-01: branch A in ispEngine.perLevelSelection (2 minor-category picks per level), branch B in creationSelectionPlan (1 Super per level); player completes one branch per level only.",
+      "resolvedAt": "2026-06-23T04:15:00.000Z"
+    }
+  ],
+  "completedBatchIds": [
+    "batch-a-01", "batch-a-02", "batch-a-03", "batch-a-04", "batch-a-05",
+    "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05"
+  ],
+  "validationCommands": ["validate:schemas"]
+}

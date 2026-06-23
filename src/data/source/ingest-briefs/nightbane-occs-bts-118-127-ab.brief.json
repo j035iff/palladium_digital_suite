@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-occs-bts-118-127-ab",
+  "title": "Between the Shadows BTS Psychic P.C.C.s (pp. 119–125) + Arcane Detective (pp. 126–127) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 118, "end": 127 }
+  },
+  "options": {
+    "bookFile": "between_the_shadows.json"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Mind Master P.C.C.",
+    "'Kinetic P.C.C.",
+    "Natural & Genius P.C.C.",
+    "Psi-Mechanic P.C.C.",
+    "Arcane Detective O.C.C."
+  ],
+  "notes": "BTS psychic P.C.C. section (New P.C.C.s, p. 119) through Psi-Mechanic (p. 125); Arcane Detective O.C.C. (pp. 126–127). Page 118 is trailing Super psionics (Dreamdance, etc.) — out of scope for this O.C.C. brief. Phased AB: composition Pass A per row, audit gate, then Pass B deep modules. Write to src/data/content/occs/nightbane/between_the_shadows.json. Link XP tables in progression/xp_tables/nightbane/between_the_shadows.json: Mind Master → between_shadows_millek_astral_mage; Kinetic / Natural & Genius / Psi-Mechanic → between_shadows_kinetic_psi_mechanic; Arcane Detective → between_shadows_arcane_detective. New spells on pp. 127–128 are a separate magic brief — Arcane Detective initial spells use existing wizard-school ids only."
+}

@@ -138,15 +138,22 @@
           "Encrypted communicator"
         ]
       },
+      "handToHandRules": {
+        "defaultSkillId": "hth_basic",
+        "upgradePaths": [
+          {
+            "targetSkillId": "hth_martial_arts",
+            "electiveSlotCost": 2
+          }
+        ]
+      },
+      "wpRules": {
+        "coreWps": [
+          "wp_automatic_pistol"
+        ],
+        "forbiddenWps": []
+      },
       "occSkillsCore": [
-        {
-          "skillId": "hth_basic",
-          "bonusPercent": 0
-        },
-        {
-          "skillId": "wp_automatic_pistol",
-          "bonusPercent": 0
-        },
         {
           "choiceCount": 1,
           "bonusPercent": 0,

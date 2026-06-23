@@ -69,8 +69,8 @@
         0, 2301, 4601, 9201, 18401, 26501, 36601, 51701, 71801, 96901, 137001, 188101,
         229201, 289201, 355401
       ],
-      "occIds": ["occ_pab_psychic_agent"],
-      "notes": "Between the Shadows p.145. O.C.C.s: occ_pab_psychic_agent; occ_arcane_detective (planned)."
+      "occIds": ["occ_pab_psychic_agent", "occ_arcane_detective"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_pab_psychic_agent, occ_arcane_detective."
     },
     {
       "id": "between_shadows_torturian_warrior",
@@ -126,8 +126,8 @@
         0, 2121, 4241, 8481, 16961, 24961, 34961, 49961, 69961, 94961, 129961, 179961,
         229961, 279961, 329961
       ],
-      "occIds": [],
-      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Kinetic, Genius & Natural, Psi-Mechanic)."
+      "occIds": ["occ_kinetic_pcc", "occ_natural_genius_pcc", "occ_psi_mechanic_pcc"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_kinetic_pcc, occ_natural_genius_pcc, occ_psi_mechanic_pcc."
     },
     {
       "id": "between_shadows_necrophim",
@@ -164,8 +164,8 @@
         0, 2601, 5001, 10001, 20001, 30001, 50001, 80001, 130001, 180001, 230001, 290001,
         370001, 480001, 575001
       ],
-      "occIds": [],
-      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Millek, Mind Master, Astral Mage)."
+      "occIds": ["occ_mind_master_pcc"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_mind_master_pcc; Astral Mage (planned)."
     },
     {
       "id": "between_shadows_mountebank_mystic",
