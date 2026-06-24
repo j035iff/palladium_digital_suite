@@ -1,0 +1,162 @@
+{
+  "briefId": "nightbane-races-bts-gm-approval-ab",
+  "briefTitle": "Between the Shadows GM-Approval R.C.C.s (pp. 63–76) — Pass A then Pass B",
+  "contentType": "races",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/races.md",
+  "status": "complete",
+  "phase": "complete",
+  "createdAt": "2026-06-24T02:02:08.118Z",
+  "updatedAt": "2026-06-23T12:00:00.000Z",
+  "checklist": [
+    {
+      "name": "Millek",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "63–66",
+      "notes": "race_millek + occ_millek_rcc; XP between_shadows_millek_astral_mage."
+    },
+    {
+      "name": "Mountebank",
+      "status": "skipped",
+      "passA": "skipped",
+      "passB": "skipped",
+      "pages": "65–67",
+      "notes": "User ruling: npc pool — separate NPC brief."
+    },
+    {
+      "name": "Tarantuloid",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "67–69",
+      "notes": "race_tarantuloid + occ_tarantuloid_rcc (warrior/sorcerer-priest specializations); warrior XP nightbane_core_snakebird_mystic; sorcerer XP override nightbane_core_nightbane_guardian."
+    },
+    {
+      "name": "Necrophim",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "73–76",
+      "notes": "race_necrophim + occ_necrophim_rcc; XP between_shadows_necrophim."
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 63, "end": 66 },
+      "items": ["Millek"],
+      "playbookScope": "composition-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "skipped",
+      "pass": "A",
+      "pages": { "start": 65, "end": 67 },
+      "items": ["Mountebank"],
+      "playbookScope": "composition-only",
+      "notes": "npc pool — out of scope for this brief."
+    },
+    {
+      "id": "batch-a-03",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 67, "end": 69 },
+      "items": ["Tarantuloid"],
+      "playbookScope": "composition-only",
+      "notes": "Specializations on occ_tarantuloid_rcc."
+    },
+    {
+      "id": "batch-a-04",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 73, "end": 76 },
+      "items": ["Necrophim"],
+      "playbookScope": "composition-only",
+      "notes": null
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 63, "end": 66 },
+      "items": ["Millek"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    },
+    {
+      "id": "batch-b-02",
+      "status": "skipped",
+      "pass": "B",
+      "pages": { "start": 65, "end": 67 },
+      "items": ["Mountebank"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    },
+    {
+      "id": "batch-b-03",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 67, "end": 69 },
+      "items": ["Tarantuloid"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    },
+    {
+      "id": "batch-b-04",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 73, "end": 76 },
+      "items": ["Necrophim"],
+      "playbookScope": "include deep modules",
+      "notes": null
+    }
+  ],
+  "rulings": [
+    {
+      "id": "mountebank-pc-eligibility",
+      "status": "resolved",
+      "topic": "Mountebank in gm_approval pool",
+      "ruling": "npc_only",
+      "notes": "Deferred to separate NPC ingest brief."
+    },
+    {
+      "id": "tarantuloid-variant-encoding",
+      "status": "resolved",
+      "topic": "Tarantuloid warrior vs sorcerer-priest",
+      "ruling": "single_race_occ_specializations",
+      "notes": "occ_tarantuloid_rcc specializations[] — ADA Field Agent pattern."
+    },
+    {
+      "id": "tarantuloid-sorcerer-xp-table",
+      "status": "resolved",
+      "topic": "Tarantuloid XP tables",
+      "ruling": "warrior: nightbane_core_snakebird_mystic; sorcerer-priest: nightbane_core_nightbane_guardian"
+    }
+  ],
+  "excludedFromScope": [
+    {
+      "name": "Torturian",
+      "pages": "76–79",
+      "reason": "Book: 'Never available as a player character!' — npc pool."
+    },
+    {
+      "name": "Shadow Mantis",
+      "pages": "68–71",
+      "reason": "Monster stat block — npc pool."
+    },
+    {
+      "name": "Mountebank",
+      "pages": "65–67",
+      "reason": "User ruling — npc pool (separate brief)."
+    }
+  ],
+  "completedBatchIds": ["batch-a-01", "batch-a-03", "batch-a-04", "batch-b-01", "batch-b-03", "batch-b-04"],
+  "validationCommands": ["validate:schemas"]
+}

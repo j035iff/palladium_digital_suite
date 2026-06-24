@@ -3053,5 +3053,1885 @@
       { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
       { "levelUnlocked": 14, "quantity": 1, "poolSource": "related" }
     ]
+  },
+  {
+    "id": "occ_millek_rcc",
+    "name": "Millek R.C.C. Skills",
+    "description": "Shadow O.C.C. for `race_millek` — astral-native psychic guides (pp. 64–66). Fixed R.C.C. skill package plus 10 related and 6 secondary skills. Hand to Hand: Martial Arts (included). Eight Sensitive psionics at 1st level; one additional power from any category (including master) per level after 1st. I.S.P. M.E.+6D6, +3D6/level. P.P.E. 1D6×10+P.E., +2D4/level on race vitals. Cannot learn magic.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "millek",
+      "astral",
+      "nightbane",
+      "rcc",
+      "gm_approval",
+      "psionic"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 64
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 65
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 66
+      }
+    ],
+    "packageNotes": [
+      "Shadow O.C.C. for `race_millek` (auto-mounted via forcedOccId). Optional astral R.C.C. — young PCs typically 1st–2nd level; sages 4–7 (1D4+3), old sages 1D6+9 (pp. 64–66).",
+      "Alignment: any good or selfish; evil Milleks almost unheard of (pp. 64–65).",
+      "Cannot materialize on Earth/Nightlands — astral traveler only unless the character has astral projection/transference (pp. 65–66).",
+      "P.P.E. dependency and astral-domain / staff / combat natural abilities live on `race_millek` — see `classAbilities` cross-refs (pp. 64–66).",
+      "Fixed R.C.C. skills in `occSkillsCore` (native Millek 98% via `skill_language` basePercent); Rogue picks non-technological only; archaic W.P. only (`wpRules.coreWps`: W.P. Staff); +1 related skill at levels 3, 5, 8, and 11 (`levelUpSkillChoices`) (pp. 65–66).",
+      "Psionics: eight Sensitive picks at 1st; +1 from any category (including master) each level after 1st — `ispEngine` (pp. 64–65).",
+      "Experience: `between_shadows_millek_astral_mage` XP table (p. 145)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": {
+        "useGlobalDefault": true,
+        "notes": "Innate psionics inherit psionic_global_rules.json ley-line/nexus multipliers when applicable."
+      },
+      "meditation": {
+        "useGlobalDefault": true,
+        "notes": "Inherits standard psionic meditation/recovery rules."
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true,
+        "notes": "Combat as Hand to Hand: Martial Arts; psionic attacks per melee equal physical attacks when psionic powers are active."
+      }
+    },
+    "raceRestrictions": {
+      "allowed": [
+        "race_millek"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "choiceCount": 3,
+        "bonusPercent": 20,
+        "allowedSkillIds": [
+          "skill_language"
+        ]
+      },
+      {
+        "skillId": "skill_acrobatics",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_detect_ambush",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_lore_psychic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_astral",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_prowl",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_lore_demons_and_monsters",
+        "bonusPercent": 15
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "only", "exceptions": ["skill_detect_concealment"], "bonusPercent": 5 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Medical", "accessType": "only", "exceptions": ["skill_holistic_medicine"], "bonusPercent": 10 },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot", "accessType": "only", "exceptions": ["skill_horsemanship", "skill_boats_paddle_types"], "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "only", "exceptions": ["skill_navigation"], "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": ["wp_blunt"],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_martial_arts",
+      "upgradePaths": []
+    },
+    "ispEngine": {
+      "baseFormula": "ME+6D6",
+      "perLevelFormula": "3D6",
+      "savingThrowClass": "major",
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 8,
+          "label": "Eight Sensitive psionic powers at 1st level",
+          "selectionMode": {
+            "kind": "pool",
+            "selections": 8,
+            "categories": ["sensitive"]
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "One psionic from any category (including master) per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["sensitive", "physical", "healer", "super"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Psionically attuned staff (2D6 damage to most astral beings; double vs entities and Necrophim)",
+        "Tunic",
+        "Bag with scrolls, maps, and knowledge sources"
+      ]
+    },
+    "progression": {
+      "xpTableId": "between_shadows_millek_astral_mage",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Fixed R.C.C. Skill Package",
+        "description": "Millek (98%), three languages (+20%), Acrobatics (+10%), Detect Ambush (+10%), Lore: Psychic (+15%), Lore: Astral (+25%), Prowl (+10%), Lore: Demon & Monster (+15%), W.P. Staff (`wp_blunt`), Hand to Hand: Martial Arts — `occSkillsCore` + `wpRules` + `handToHandRules` (pp. 65–66)."
+      },
+      {
+        "name": "Psionic Program",
+        "description": "Eight Sensitive powers at 1st level; +1 power from any category (including master) per level after 1st — `ispEngine` (pp. 64–65)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E.+6D6 at 1st level; +3D6 per additional level (pp. 64–65)."
+      },
+      {
+        "name": "Power Points (P.P.E.)",
+        "description": "1D6×10+P.E. at 1st level; +2D4 P.P.E. per level — add P.E. attribute at chargen; `race_millek` vitals base `1D6*10` (pp. 64–65)."
+      },
+      {
+        "name": "Starting Allies",
+        "description": "Low-level PCs do not start with astral entity servants/bodyguards; some NPC Millek have 1–2 (pp. 65–66)."
+      }
+    ]
+  },
+  {
+    "id": "occ_tarantuloid_rcc",
+    "name": "Tarantuloid R.C.C. Skills",
+    "description": "Shadow O.C.C. for `race_tarantuloid` — astral-native warriors, craftsmen, farmers, or sorcerer-priests (pp. 68–69). Choose Warrior/Craftsman/Farmer or Sorcerer-Priest at creation via `specializations[]`. Ten R.C.C. skills at +10%, five at +5%, 1D4 languages, six secondary — medieval technology limits. Hand to Hand as purchased. Innate psionics: Mind Block, Empathy, Presence Sense. I.S.P. M.E.+4D6, +1D6/level. Sorcerer-Priests only: six spells levels 1–4 at 1st, +1 spell/level (`ppeEngine`).",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "tarantuloid",
+      "astral",
+      "nightbane",
+      "rcc",
+      "gm_approval",
+      "psionic"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 68
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 69
+      }
+    ],
+    "packageNotes": [
+      "Shadow O.C.C. for `race_tarantuloid` (auto-mounted via forcedOccId). Optional astral R.C.C. — GM may allow PCs in astral-centered campaigns (pp. 68–69).",
+      "Choose **Warrior/Craftsman/Farmer** (`occ_tarantuloid_warrior`) or **Sorcerer-Priest** (`occ_tarantuloid_sorcerer_priest`) at creation — ADA Field Agent specialization pattern.",
+      "Warrior/Craftsman/Farmer XP: `nightbane_core_snakebird_mystic` (parent `progression.xpTableId`). Sorcerer-Priest XP: `nightbane_core_nightbane_guardian` — override at chargen per specialization.",
+      "Alignment: any; Sorcerer-Priests must be Principled or Aberrant (pp. 68–69).",
+      "Cannot materialize on the physical world — astral traveler; ectoplasmic webs, combat bonuses, and astral senses on `race_tarantuloid` (pp. 68–69).",
+      "R.C.C. skill picks: ten skills +10%, five skills +5%, 1D4 languages, six secondary — medieval technology (`occSkillsCore` / `secondarySkills`) (p. 69).",
+      "Innate psionics (all branches): Mind Block, Empathy, Presence Sense — `ispEngine.grantedAbilityIds`. I.S.P. M.E.+4D6, +1D6/level (p. 69).",
+      "Magic (`ppeEngine`) applies to Sorcerer-Priest branch only — six spells from levels 1–4 at 1st; one additional spell per level. Warrior/Craftsman/Farmer have no spellcasting."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": {
+        "useGlobalDefault": true,
+        "notes": "Innate psionics inherit psionic_global_rules.json ley-line/nexus multipliers when applicable."
+      },
+      "meditation": {
+        "useGlobalDefault": true,
+        "notes": "Inherits standard psionic meditation/recovery rules."
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true,
+        "notes": "Combat as per Hand to Hand purchased; psionic attacks per melee equal physical attacks when psionic powers are active."
+      }
+    },
+    "raceRestrictions": {
+      "allowed": [
+        "race_tarantuloid"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "choiceCount": 10,
+        "bonusPercent": 10,
+        "allowedCategories": [
+          "Domestic",
+          "Espionage",
+          "Mechanical",
+          "Medical",
+          "Military",
+          "Physical",
+          "Rogue",
+          "Technical",
+          "Weapon Proficiencies",
+          "Wilderness"
+        ],
+        "label": "Ten R.C.C. skills of choice (+10%) — medieval technology"
+      },
+      {
+        "choiceCount": 5,
+        "bonusPercent": 5,
+        "allowedCategories": [
+          "Domestic",
+          "Espionage",
+          "Mechanical",
+          "Medical",
+          "Military",
+          "Physical",
+          "Rogue",
+          "Technical",
+          "Weapon Proficiencies",
+          "Wilderness"
+        ],
+        "label": "Five R.C.C. skills of choice (+5%)"
+      },
+      {
+        "choiceCount": 4,
+        "bonusPercent": 0,
+        "allowedSkillIds": [
+          "skill_language"
+        ],
+        "label": "1D4 additional languages (+0%)"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 0,
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": [
+        "Communications",
+        "Electrical",
+        "Science"
+      ]
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_basic",
+      "upgradePaths": [
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2,
+          "alignmentRestrictions": {
+            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+          }
+        }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "ME+4D6",
+      "perLevelFormula": "1D6",
+      "savingThrowClass": "minor",
+      "grantedAbilityIds": [
+        "psionic_mind_block",
+        "psionic_empathy",
+        "psionic_presence_sense"
+      ],
+      "progressionRoadmap": []
+    },
+    "ppeEngine": {
+      "baseFormula": "PE*5",
+      "perLevelFormula": "12",
+      "magicSchools": [
+        "wizard"
+      ],
+      "spellAcquisition": "roadmap_only",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 6,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only",
+            "Level 15 Spells Only"
+          ]
+        }
+      ]
+    },
+    "staticBonuses": {
+      "levelGatedSaves": {
+        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+      }
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_snakebird_mystic",
+      "characterOccCategory": "standard"
+    },
+    "specializations": [
+      {
+        "id": "occ_tarantuloid_warrior",
+        "name": "Warrior / Craftsman / Farmer",
+        "description": "Defenders, greysteel smiths, and moss-farmers — the most common Tarantuloid paths. No magical spellcasting. Uses Mystic/Snakebird XP table (`nightbane_core_snakebird_mystic`).",
+        "startingEquipment": {
+          "armor": [
+            "Chain mail (A.R. 13, S.D.C. 90) or scale armor (A.R. 15, S.D.C. 100)"
+          ],
+          "weapons": [
+            "Heavy scimitar (2D6 + supernatural P.S. damage)",
+            "Heavy spear (2D8 + P.S. damage) or other archaic weapon (sword, axe, etc.)"
+          ],
+          "miscellaneous": [
+            "Greysteel-forged tools or personal gear as appropriate to role"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "No Spellcasting",
+            "description": "Warriors, craftsmen, and farmers have no magical abilities — ignore parent `ppeEngine` at chargen (p. 69)."
+          },
+          {
+            "name": "Experience Table",
+            "description": "Uses Mystic/Snakebird experience table (`nightbane_core_snakebird_mystic`) — parent `progression.xpTableId` (pp. 68–69)."
+          },
+          {
+            "name": "Typical NPC Level",
+            "description": "Warriors and slavers average 1D6 level of experience (p. 69)."
+          }
+        ]
+      },
+      {
+        "id": "occ_tarantuloid_sorcerer_priest",
+        "name": "Sorcerer-Priest",
+        "description": "Respected magicians who lead, judge, and advise Tarantuloid communities. Must be Principled or Aberrant. Intuitive spell knowledge — six spells levels 1–4 at 1st, +1 spell per level. Uses Nightbane/Guardian XP table (`nightbane_core_nightbane_guardian`).",
+        "classAbilities": [
+          {
+            "name": "Alignment Restriction",
+            "description": "Sorcerer-Priests must be Principled or Aberrant alignment (p. 69)."
+          },
+          {
+            "name": "Intuitive Initial Spell Knowledge",
+            "description": "Six spells from levels 1–4 at 1st level — `ppeEngine.progressionRoadmap` level 1 (`roadmap_only`) (p. 69)."
+          },
+          {
+            "name": "Intuitive Spell Advancement",
+            "description": "One additional spell per level of experience, each from spell levels equal to or below current character level — `ppeEngine.progressionRoadmap` levels 2–15 (p. 69)."
+          },
+          {
+            "name": "Mystic Magic Parity",
+            "description": "Spell strength at levels 4/8/12 (`ppeEngine.spellStrengthProgression`); +1 save vs magic at levels 3/6/9/12 (`staticBonuses.levelGatedSaves`) — same pattern as Mystic O.C.C. (p. 69)."
+          },
+          {
+            "name": "P.P.E. Reservoir",
+            "description": "P.E.×5 at 1st level; +12 P.P.E. per additional level — `ppeEngine.baseFormula` / `perLevelFormula` (p. 69; P.P.E. varies with O.C.C.)."
+          },
+          {
+            "name": "Experience Table",
+            "description": "Uses Nightbane/Guardian experience table (`nightbane_core_nightbane_guardian`) — override parent `progression.xpTableId` at chargen (pp. 68–69)."
+          },
+          {
+            "name": "Typical NPC Level",
+            "description": "Sorcerer-priests average 1D6+2 level of experience (p. 69)."
+          }
+        ]
+      }
+    ],
+    "classAbilities": [
+      {
+        "name": "GM Approval Optional R.C.C.",
+        "description": "Dominant astral race — player characters at GM discretion in astral-centered campaigns (pp. 68–69)."
+      },
+      {
+        "name": "R.C.C. Skill Program",
+        "description": "Ten skills +10%, five skills +5%, 1D4 languages, six secondary — medieval technology limits (`occSkillsCore`, `secondarySkills`) (p. 69)."
+      },
+      {
+        "name": "Innate Psionics (All Branches)",
+        "description": "Mind Block, Empathy, Presence Sense — `ispEngine.grantedAbilityIds` (p. 69)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E.+4D6 at 1st level; +1D6 per additional level — `ispEngine` (p. 69)."
+      },
+      {
+        "name": "Natural Combat & Astral Abilities",
+        "description": "Ectoplasmic webs, +2 initiative, +2 parry, +2 pull punch, +3 save vs horror factor, +2 attacks per melee — `race_tarantuloid` innateBonuses and classAbilities (pp. 68–69)."
+      },
+      {
+        "name": "Materialization Limits",
+        "description": "Cannot materialize on the physical world — cross-ref `race_tarantuloid` (p. 69)."
+      },
+      {
+        "name": "Alliances",
+        "description": "May befriend Nightbanes and Earth champions against the Ba'al; Ba'al and minions are deadly enemies (p. 69)."
+      }
+    ]
+  },
+  {
+    "id": "occ_necrophim_rcc",
+    "name": "Necrophim R.C.C. Skills",
+    "description": "Shadow O.C.C. for `race_necrophim` — Dark Angels of the Astral Plane (pp. 74–77). Fixed lores and W.P.s plus eight elective skills at +5%. Hand to Hand: Martial Arts (included). Innate psionics and intuitive spell knowledge. I.S.P. M.E.+4D6, +1D6/level. P.P.E. 6D6+6+P.E., +3D6/level.",
+    "occType": "rcc_skill_program",
+    "tags": [
+      "necrophim",
+      "astral",
+      "nightbane",
+      "rcc",
+      "gm_approval",
+      "psionic",
+      "occult"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 74
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 76
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 77
+      }
+    ],
+    "packageNotes": [
+      "Shadow O.C.C. for `race_necrophim` (auto-mounted via forcedOccId). Optional player R.C.C. with explicit GM approval (pp. 75–76).",
+      "Alignment: Diabolic or Aberrant typical; renegades may be Anarchist, Unprincipled, or Scrupulous — no Principled Necrophim (pp. 75–76).",
+      "Reputation: Guardians, Nightbanes, humans (especially Spook Squad), and other 'good' supernaturals may attack on sight; other Necrophim hunt renegades (pp. 75–76).",
+      "Astral form, materialization, shape-shifting, Dreamstream, and multi-plane vitals on `race_necrophim` — see `classAbilities` cross-refs (pp. 75–76).",
+      "Magically understands and speaks all languages spoken in presence; reads a language after 4 hours' exposure to literate speakers — `classAbilities` (p. 77).",
+      "Spell program: two spells each from levels 1–4 at 1st (eight total); one new spell per level at or below experience level — `ppeEngine` (`roadmap_only`; cannot learn spells independently) (pp. 76–77).",
+      "Experience: `between_shadows_necrophim` XP table; PCs start at 1st level (p. 77)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": {
+        "useGlobalDefault": true,
+        "notes": "Innate psionics inherit psionic_global_rules.json ley-line/nexus multipliers when applicable."
+      },
+      "meditation": {
+        "useGlobalDefault": true,
+        "notes": "Inherits standard psionic meditation/recovery rules."
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true,
+        "notes": "Combat as Hand to Hand: Martial Arts; psionic attacks per melee equal physical attacks when psionic powers are active."
+      }
+    },
+    "raceRestrictions": {
+      "allowed": [
+        "race_necrophim"
+      ]
+    },
+    "occSkillsCore": [
+      {
+        "skillId": "skill_lore_astral",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_lore_dreamstream",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_lore_nightlands",
+        "bonusPercent": 10
+      },
+      {
+        "choiceCount": 8,
+        "bonusPercent": 5,
+        "allowedCategories": [
+          "Physical",
+          "Rogue",
+          "Technical",
+          "Weapon Proficiencies"
+        ],
+        "label": "Eight other skills of choice (+5%) — physical, weapon, technical, or rogue; little technology/human society"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 0,
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [
+        "wp_chain",
+        "wp_sword"
+      ],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_martial_arts",
+      "upgradePaths": []
+    },
+    "ispEngine": {
+      "baseFormula": "ME+4D6",
+      "perLevelFormula": "1D6",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": [
+        "psionic_mind_block",
+        "psionic_presence_sense",
+        "psionic_see_aura",
+        "psionic_see_the_invisible",
+        "psionic_astral_navigation"
+      ],
+      "progressionRoadmap": []
+    },
+    "ppeEngine": {
+      "baseFormula": "6D6+6+PE",
+      "perLevelFormula": "3D6",
+      "magicSchools": [
+        "wizard"
+      ],
+      "spellAcquisition": "roadmap_only",
+      "spellStrengthProgression": {
+        "1": 12,
+        "4": 13,
+        "8": 14,
+        "12": 15
+      },
+      "progressionRoadmap": [
+        {
+          "level": 1,
+          "selectionsGained": 8,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 1 Spells Only",
+            "Level 2 Spells Only",
+            "Level 3 Spells Only",
+            "Level 4 Spells Only",
+            "Level 5 Spells Only",
+            "Level 6 Spells Only",
+            "Level 7 Spells Only",
+            "Level 8 Spells Only",
+            "Level 9 Spells Only",
+            "Level 10 Spells Only",
+            "Level 11 Spells Only",
+            "Level 12 Spells Only",
+            "Level 13 Spells Only",
+            "Level 14 Spells Only",
+            "Level 15 Spells Only"
+          ]
+        }
+      ]
+    },
+    "staticBonuses": {
+      "levelGatedSaves": {
+        "save_dream_manipulation": { "1": 2, "4": 1, "7": 1, "10": 1, "13": 1 },
+        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+      }
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Wrist chains (2D6 damage + P.S.; entangle to 60 ft / 18.3 m)",
+        "Black tunic or bizarre leather body armor as preferred"
+      ]
+    },
+    "progression": {
+      "xpTableId": "between_shadows_necrophim",
+      "characterOccCategory": "standard"
+    },
+    "classAbilities": [
+      {
+        "name": "GM Approval Optional R.C.C.",
+        "description": "Dark Angels usable as player characters with Game Master approval — may serve powers more dangerous than the Nightlords (pp. 75–76)."
+      },
+      {
+        "name": "Fixed R.C.C. Skill Package",
+        "description": "Lore: Astral +15%, Lore: Dreamstream +10%, Lore: Nightlands +10%, W.P. Chain, W.P. Sword, plus eight electives at +5% — `occSkillsCore` + `wpRules` (pp. 76–77)."
+      },
+      {
+        "name": "Universal Language Comprehension",
+        "description": "Magically understands and speaks all languages spoken in presence; reads a language after 4 hours' exposure to literate speakers (p. 77)."
+      },
+      {
+        "name": "Hand to Hand: Martial Arts",
+        "description": "Martial Arts and entangle (via W.P. Chain) at 1st level — `handToHandRules.defaultSkillId: hth_martial_arts` (p. 76)."
+      },
+      {
+        "name": "Innate Psionics",
+        "description": "Mind Block, Presence Sense, See Aura, See the Invisible, Astral Navigation — `ispEngine.grantedAbilityIds` (p. 77)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E.+4D6 at 1st level; +1D6 per additional level — `ispEngine` (p. 77)."
+      },
+      {
+        "name": "Intuitive Initial Spell Knowledge",
+        "description": "Two spells each from levels 1–4 at 1st level (eight total) — select via `ppeEngine` level-1 roadmap; two per spell level band (pp. 76–77)."
+      },
+      {
+        "name": "Intuitive Spell Advancement",
+        "description": "One new spell per level at or below current experience level — `ppeEngine.progressionRoadmap` levels 2–15 (`roadmap_only`; cannot learn or purchase spells independently) (pp. 76–77)."
+      },
+      {
+        "name": "Power Points (P.P.E.)",
+        "description": "6D6+6+P.E. at 1st level; +3D6 P.P.E. per level — `ppeEngine` / `race_necrophim` vitals `averageStandardPpe` (add P.E. at chargen) (pp. 75–76)."
+      },
+      {
+        "name": "Dreamstream Resistance",
+        "description": "+2 vs dream manipulation at 1st; +1 at levels 4, 7, 10, and 13 — `staticBonuses.levelGatedSaves.save_dream_manipulation` (pp. 75–76)."
+      },
+      {
+        "name": "Dreamdance Superior",
+        "description": "Enter the Dreamstream as per Dreamdance: Superior — cross-ref `race_necrophim` classAbilities (pp. 75–76)."
+      },
+      {
+        "name": "Renegade Alliances",
+        "description": "Renegades may work with human psychics, mystics, Nightbanes, or occasional Guardians — tentative and suspicious (p. 77)."
+      }
+    ]
+  },
+  {
+    "id": "occ_astral_lord_pcc",
+    "name": "Astral Lord P.C.C.",
+    "description": "Humans with an innate affinity for the Astral Plane — enter at will, navigate all three regions, and reshape ectoplasm into personal astral domains. Most awaken in childhood; the First Foray is deadly. Long residence in astral space slows aging; some lords are centuries old yet appear middle-aged. After Dark Day, many oppose Nightlords or exploit their gifts for greed or crime.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 50 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 51 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 52 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "astral", "bts_pcc"],
+    "attributeRequirements": { "me": 13 },
+    "packageNotes": [
+      "M.E. 13 or higher required (p. 52).",
+      "P.C.C. skills: Native language (98%), Lore: Astral (+20%), two Technical (+10%), one Pilot (+10%), two Domestic (+10%); Hand to Hand purchased from Related skills — Basic 1 slot, Expert 2, Martial Arts or Assassin 3 (evil only) (pp. 51–52).",
+      "Related: 10 at creation; +1 at levels 3, 6, 8, 10, and 13. Espionage: Wilderness Survival only. Medical: +5% on First Aid only (p. 52).",
+      "Secondary: five skills — no O.C.C. % bonus; same category limits as Related (p. 52).",
+      "P.P.E.: 3D4×10 + P.E. at 1st level; +2D6 per level — channel into astral domains or psionic advancement (pp. 51–52).",
+      "I.S.P.: 1D4×10 + M.E. at 1st level; +1D4 per level; may permanently convert P.P.E. to I.S.P. 1:1 (pp. 51–52).",
+      "Psionics: two Sensitive + two Physical at 1st; +1 Sensitive or Physical per level — `ispEngine` (p. 52).",
+      "Earth gear modest — typical possessions 3D6×100 dollars; starting cash 2D6×100 (pp. 51–52).",
+      "Background should explain skill picks — teens/early adults rarely have higher education; archaic characters avoid high-tech skills (p. 52)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_lore_astral", "bonusPercent": 20 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Technical"],
+        "label": "Two Technical skills of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Pilot"],
+        "label": "One piloting/driving/riding skill of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0,
+          "skillSpecificOverrides": { "skill_first_aid": 5 }
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ppeEngine": {
+      "baseFormula": "3D4*10+PE",
+      "perLevelFormula": "2D6",
+      "progressionRoadmap": []
+    },
+    "ispEngine": {
+      "baseFormula": "1D4*10+ME",
+      "perLevelFormula": "1D4",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": ["psionic_astral_transference"],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 4,
+          "label": "1st level — two Sensitive and two Physical psionics",
+          "selectionMode": {
+            "kind": "per_category",
+            "buckets": { "sensitive": 2, "physical": 2 }
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "One Sensitive or Physical psionic per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["sensitive", "physical"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Earth possessions per background — typical total value 3D6×100 dollars",
+        "Astral-domain items created with invested P.P.E. (see Building an Astral Domain, p. 54+)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*100",
+      "blackMarketAssets": "3D6*100 in typical Earth possessions (p. 52)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_dream_astral",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Astral Transference",
+        "description": "Enter the Astral Plane at will — 1 minute (4 melee rounds) meditation, no I.S.P. cost. Body (not unconfigured gear) becomes astral equivalent with all Astral Transference psionic abilities. May coexist on Earth/Nightlands or enter fully; reverse takes 1 minute. Astral travel costs no I.S.P.; physical-world astral form drains 1 I.S.P. per 5 minutes until solid or fully astral — drained I.S.P. not recovered until then (pp. 51–52)."
+      },
+      {
+        "name": "Astral Senses",
+        "description": "Sense energy entities and astral travelers in physical or astral form; detect ley lines and nexuses within 1 mile (1.6 km). Perception roll to recognize Nightbane, Guardians, Necrophim, and other supernatural beings — Moderate difficulty, Challenging if dampened by Mind Block or similar. In the Astral Plane, astral navigation active at no I.S.P. cost (pp. 51–52)."
+      },
+      {
+        "name": "Astral Travel",
+        "description": "After 1 minute concentration, arrive at a known, unwarded destination in the Outer Layer, Inner Plane, or personal astral domain — 2 I.S.P. per use. +2 I.S.P. per passenger brought along (simultaneous crossing). Passengers become astral forms with S.D.C. equal to 2×(S.D.C.+H.P.); after 1 hour in the Plane each loses 1 I.S.P./hour until returned to domain or physical world (pp. 51–52)."
+      },
+      {
+        "name": "Astral Domain",
+        "description": "Permanently channel P.P.E. into ectoplasm to build a pocket universe on the Inner Plane or Outer Layer — size, defenses, and features per Building an Astral Domain (p. 54+). Multiple lords may collaborate; all contributors gain full access and immunity to defenses. Improve by channeling more P.P.E. as experience grows (pp. 51–52)."
+      },
+      {
+        "name": "Astral Reconfiguration (Objects)",
+        "description": "Permanently spend I.S.P. to make objects astrally sensitive — usable in astral form, portable into the Astral Plane, and able to affect astral beings on Earth/Nightlands. Cost: 1 I.S.P. per pound (0.45 kg) or fraction; bullets/batteries may be grouped; loaded gun or flashlight+batteries as one unit. Replenish ammo/batteries separately (p. 52)."
+      },
+      {
+        "name": "Ectoplasm Armor",
+        "description": "15 I.S.P. activates skin-tight ectoplasm armor until destroyed or 10 minutes/level. Astral Plane: 100 S.D.C. + 20/level, any shape. Earth/Nightlands: 25 S.D.C. + 20/level — invisible except to psychics, children 12 and under, astral forms, and supernatural beings. No A.R.; must deplete S.D.C. to reach the body (p. 52)."
+      },
+      {
+        "name": "Psionic Advancement Program",
+        "description": "Two Sensitive + two Physical picks at 1st level; +1 Sensitive or Physical per level thereafter — `ispEngine`. Innate Astral Transference on `grantedAbilityIds` (p. 52)."
+      },
+      {
+        "name": "Power Points (P.P.E.)",
+        "description": "3D4×10 + P.E. at 1st level; +2D6 per level — invest in astral domains or psionic growth. See `ppeEngine` (pp. 51–52)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.) & P.P.E. Conversion",
+        "description": "1D4×10 + M.E. at 1st level; +1D4 per level. May permanently convert P.P.E. to I.S.P. 1:1 (P.P.E. base reduced). New-level P.P.E. may also be converted. See `ispEngine` (pp. 51–52)."
+      },
+      {
+        "name": "First Foray & Longevity",
+        "description": "Most lords awaken in childhood; spontaneous astral projection precedes the deadly First Foray when the \"fantasy world\" proves real. Extended astral residence slows physical aging — centuries-old lords may appear middle-aged. Insanity and hermit domains are common maladies (pp. 50–51)."
+      },
+      {
+        "name": "Gray Ghost Society & Role-Playing",
+        "description": "Only organization to systematically study Astral Lords. Player and G.M. should develop domain, allies, rivals, and era of origin; domain safety nets must not dominate play — Nightlords, predators, and invasions can humble over-reliance (pp. 50–51)."
+      }
+    ]
+  },
+  {
+    "id": "occ_astral_mage",
+    "name": "Astral Mage O.C.C.",
+    "description": "Sorcerers mystically linked to the Astral Plane — magic and innate psionics drawn from the Outer Layer's ectoplasmic energy. Many sense a living \"Great Spirit\" permeating the Plane. Domains tend to be smaller than psychic Astral Lords because spellcasting competes for P.P.E. After Dark Day they treat Nightlords as a universal threat and defend astral politics, Earth, and allied realms.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 52 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 53 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 54 }
+    ],
+    "occType": "magic_user",
+    "tags": ["occult", "astral", "magic_user", "bts_occ"],
+    "attributeRequirements": { "iq": 10 },
+    "packageNotes": [
+      "I.Q. 10 or higher; high M.E. desirable (p. 54).",
+      "O.C.C. skills: Native language (98%), Lore: Astral (+20%), two Technical (+10%), one Electrical or Mechanical (+10%), one Pilot (+10%), two Domestic (+10%); Hand to Hand from Related — Basic 1, Expert 2, Martial Arts or Assassin 3 (evil) (p. 54).",
+      "Related: 11 at creation; +1 at levels 3, 6, 8, 10, and 13. Technical +10% (not +5%). Espionage: any (p. 54).",
+      "Secondary: five skills — no O.C.C. % bonus; same category limits as Related (p. 54).",
+      "Spells: four levels 1–3 at 1st; two new spells per level (same or lower level) — `ppeEngine.progressionRoadmap` (pp. 53–54).",
+      "P.P.E.: 3D6×10 + P.E. at 1st; at least one-third (rounded up) must fund starting astral domain; +2D4 per level (pp. 53–54).",
+      "Psionics: Empathy, Mind Block, See the Invisible, Telepathy — `ispEngine.grantedAbilityIds` (p. 54).",
+      "I.S.P.: 4D6 + M.E. at 1st; +1D6 per level (p. 54).",
+      "Finances: disinterested in Earth — 1D6×100 or less; materially active — 1D4×1000 cash and 2D4×1000 possessions (G.M. adjusts) (p. 54)."
+    ],
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_lore_astral", "bonusPercent": 20 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Technical"],
+        "label": "Two Technical skills of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Electrical", "Mechanical"],
+        "label": "One Electrical or Mechanical skill of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Pilot"],
+        "label": "One piloting skill of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 11,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0,
+          "skillSpecificOverrides": { "skill_first_aid": 5 }
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ppeEngine": {
+      "baseFormula": "3D6*10+PE",
+      "perLevelFormula": "2D4",
+      "magicSchools": ["wizard"],
+      "spellAcquisition": "roadmap_only",
+      "progressionRoadmap": [
+        { "level": 1, "selectionsGained": 4, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 2, "selectionsGained": 2, "categoryRestrictions": ["Level 2 Spells Only"] },
+        { "level": 3, "selectionsGained": 2, "categoryRestrictions": ["Level 3 Spells Only"] },
+        { "level": 4, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
+        { "level": 5, "selectionsGained": 2, "categoryRestrictions": ["Level 5 Spells Only"] },
+        { "level": 6, "selectionsGained": 2, "categoryRestrictions": ["Level 6 Spells Only"] },
+        { "level": 7, "selectionsGained": 2, "categoryRestrictions": ["Level 7 Spells Only"] },
+        { "level": 8, "selectionsGained": 2, "categoryRestrictions": ["Level 8 Spells Only"] },
+        { "level": 9, "selectionsGained": 2, "categoryRestrictions": ["Level 9 Spells Only"] },
+        { "level": 10, "selectionsGained": 2, "categoryRestrictions": ["Level 10 Spells Only"] },
+        { "level": 11, "selectionsGained": 2, "categoryRestrictions": ["Level 11 Spells Only"] },
+        { "level": 12, "selectionsGained": 2, "categoryRestrictions": ["Level 12 Spells Only"] },
+        { "level": 13, "selectionsGained": 2, "categoryRestrictions": ["Level 13 Spells Only"] },
+        { "level": 14, "selectionsGained": 2, "categoryRestrictions": ["Level 14 Spells Only"] },
+        { "level": 15, "selectionsGained": 2, "categoryRestrictions": ["Level 15 Spells Only"] }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "4D6+ME",
+      "perLevelFormula": "1D6",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": [
+        "psionic_astral_transference",
+        "psionic_empathy",
+        "psionic_mind_block",
+        "psionic_see_the_invisible",
+        "psionic_telepathy"
+      ],
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Earth gear per lifestyle — G.M. sets fair baseline",
+        "Astral-domain features funded from mandatory one-third starting P.P.E. (see Building an Astral Domain, p. 54+)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "1D4*1000",
+      "blackMarketAssets": "2D4*1000 in possessions — or 1D6*100 cash for characters with little Earth interest (p. 54)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_millek_astral_mage",
+      "characterOccCategory": "standard",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Astral Transference",
+        "description": "Same innate astral entry as Astral Lords — 1 minute meditation, no I.S.P.; astral form per Astral Transference power. Physical-world astral form drains 1 I.S.P. per 5 minutes until solid or fully astral (pp. 53–54)."
+      },
+      {
+        "name": "Astral Senses",
+        "description": "Sense astral travelers and energy entities; ley lines/nexuses within 1 mile (1.6 km). Perception roll to detect supernatural beings — Moderate, Challenging if mind-blocked. Free astral navigation in the Astral Plane (pp. 53–54)."
+      },
+      {
+        "name": "Astral Travel",
+        "description": "Known, unwarded destinations in Outer Layer, Inner Plane, or personal domain — 2 I.S.P.; +2 I.S.P. per passenger. Passenger astral S.D.C. and hourly I.S.P. drain rules as Astral Lord (pp. 53–54)."
+      },
+      {
+        "name": "Astral Domain",
+        "description": "Channel permanent P.P.E. into ectoplasm pocket realms — typically smaller than lord domains because spell P.P.E. competes with construction. Collaborators share full access. See Building an Astral Domain (p. 54+); at chargen invest at least one-third of rolled P.P.E. (rounded up) (pp. 53–54)."
+      },
+      {
+        "name": "Magical Powers",
+        "description": "Four wizard spells levels 1–3 at 1st level; two new spells per level (same or lower level) — `ppeEngine.progressionRoadmap` (pp. 53–54)."
+      },
+      {
+        "name": "Power Points (P.P.E.)",
+        "description": "3D6×10 + P.E. at 1st level; minimum one-third (rounded up) funds starting domain; +2D4 per level. See `ppeEngine` (pp. 53–54)."
+      },
+      {
+        "name": "Innate Psionics & I.S.P.",
+        "description": "Empathy, Mind Block, See the Invisible, Telepathy at 1st level — `ispEngine.grantedAbilityIds`. I.S.P.: 4D6 + M.E.; +1D6 per level (p. 54)."
+      },
+      {
+        "name": "Great Spirit & Astral Politics",
+        "description": "Many mages sense a sentient presence — the \"Great Spirit\" — permeating the Plane. They defend all domains and regions from Nightlords, monsters, and intruders, often allying across species to protect astral and physical realities (pp. 52–53)."
+      },
+      {
+        "name": "Nightlord War & Dark Day",
+        "description": "After Dark Day, astral mages treat Ba'al as a universal threat to the connected astral and material worlds (p. 53)."
+      }
+    ]
+  },
+  {
+    "id": "occ_dream_maker_pcc",
+    "name": "Dream Maker P.C.C.",
+    "description": "Psychics who reshape the Dreamstream — enter asleep or bodily from 2nd level, manipulate dreams, create dream objects, open rifts between worlds, and Dreamkill. Many abandon Earth for personal dream domains; madness is an occupational hazard. Since Dark Day, many oppose Nightlord invasion of the Dreamstream.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 94 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 95 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 96 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "dreamstream", "bts_pcc"],
+    "attributeRequirements": { "me": 14 },
+    "packageNotes": [
+      "M.E. 14 or higher; humans only (p. 96).",
+      "Dream travel: Dreamdance (Minor) at 1st; Dreamdance (Superior) from 2nd level — innate, no I.S.P. (pp. 94–95).",
+      "O.C.C. skills: Native language (98%), Lore: Dreamstream (+25%), two Technical (+10%), two Domestic (+10%); Hand to Hand from Related — Basic 1 slot, Expert 2, Martial Arts or Assassin 3 (evil) (p. 96).",
+      "Related: 10 at creation; +1 at levels 3, 5, 8, 11, and 13. Domestic +10%. Medical: First Aid, Paramedic, or Holistic Medicine only (p. 96).",
+      "Secondary: five skills — no O.C.C. % bonus; same category limits as Related (p. 96).",
+      "Psionics: two Sensitive at 1st; +1 Sensitive at levels 3, 6, 9, and 12 — `ispEngine` (p. 95).",
+      "I.S.P.: M.E.×5 + 2D6 at 1st level; +2D6 per additional level (p. 96).",
+      "Insanity save each level from 2nd — see `classAbilities` (p. 96).",
+      "Dream domain I.S.P. upgrades — manual until `dream_domain_forge` ships; see `docs/forge/sub_forge_backlog.md` (p. 95)."
+    ],
+    "staticBonuses": {
+      "levelGatedSaves": {
+        "save_dream_manipulation": { "1": 2, "2": 1, "4": 1, "7": 1, "10": 1, "13": 1, "15": 1 }
+      }
+    },
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_lore_dreamstream", "bonusPercent": 25 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Technical"],
+        "label": "Two Technical skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 10,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid", "skill_paramedic", "skill_holistic_medicine"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": [
+        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "ME*5+2D6",
+      "perLevelFormula": "2D6",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": ["psionic_dreamdance_minor"],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 2,
+          "label": "Two Sensitive psionics at 1st level",
+          "selectionMode": {
+            "kind": "pool",
+            "selections": 2,
+            "categories": ["sensitive"]
+          }
+        }
+      ],
+      "progressionRoadmap": [
+        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
+        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
+        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
+        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] }
+      ]
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Modest Earth possessions — G.M. may allow up to 3D6×1,000 dollars in gear",
+        "Some favor garish vans or basic shelter/clothing/food (p. 96)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "2D6*100",
+      "blackMarketAssets": "Up to 3D6*1000 in possessions per G.M. approval (p. 96)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_dream_astral",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Dream Travel",
+        "description": "Dreamdance (Minor) at 1st — body stays on Earth; dream-self killed wakes the character. Dreamdance (Superior) from 2nd level — body and soul enter the Dreamstream; death there is real. Up to 4 hours/level per 24 hours (10 minutes spent per entry); indefinite from 6th level. No I.S.P. for P.C.C. dream travel (pp. 94–95)."
+      },
+      {
+        "name": "Dream Manipulation",
+        "description": "Reshape dream landscape or Dream Pool content — opposed D20 + dream manipulation bonuses vs dreamer's M.E. Horror factor up to 8 + level (max 18; +3 H.F. for creative descriptions). 10 I.S.P. per minute (p. 95)."
+      },
+      {
+        "name": "Dream Attacks",
+        "description": "Strike roll with dream manipulation bonuses; 4D6 damage at 1st + 1D6 per level. Normal dream \"kills\" wake the victim at H.F. 17; only Dreamkill harms the body. 10 I.S.P. per attack (pp. 94–95)."
+      },
+      {
+        "name": "Dream Manipulation/Combat Bonuses",
+        "description": "+2 at 1st; +1 at levels 2, 4, 7, 10, 13, and 15 (+ M.E.) — `staticBonuses.levelGatedSaves.save_dream_manipulation`. Self-heal 1D6 S.D.C. per 1 I.S.P. in the Dreamstream (one melee action) (pp. 94–95)."
+      },
+      {
+        "name": "Create Dream Object",
+        "description": "Manifest objects from dreamstuff — 1 cubic foot/level; S.D.C. min(3× real, 20/level); weapon damage max(real, 2D6/level); infinite ammo on guns. 12 I.S.P. per 2 minutes (p. 95)."
+      },
+      {
+        "name": "Increase Attributes (Dreamstream)",
+        "description": "Raise P.S./P.E. +1 per M.E.; P.P. +1 per 4 M.E.; S.D.C. +M.E.×3 — 5 I.S.P. per attribute (20 for all four). Duration 2 minutes/level (p. 95)."
+      },
+      {
+        "name": "Open Window to the Dreamstream",
+        "description": "60 I.S.P. rift — passengers become dream entities; from a sleeper's Dream Pool may exit within 100 ft (30.5 m) of dreamer worldwide. Visible tear, 60 ft lights, psionic stun on lookers; cumulative 20%/round dream-creature egress (100% by round 5). Entities range 300 ft; 2 minutes/level duration (p. 95)."
+      },
+      {
+        "name": "Dreamkill",
+        "description": "Destroy dream persona S.D.C., then spend 60 I.S.P. + permanently sacrifice 2 I.S.P. — save vs psionics or −2D6 H.P. (death if exceeds P.E., else coma per Nightbane RPG p. 37) (p. 95)."
+      },
+      {
+        "name": "Create Dream Domain",
+        "description": "Strengthen personal Dream Pool — +15 save vs dream manipulation (5 permanent I.S.P.); dimensional portal 15 permanent I.S.P. (1-minute activation, or 1 melee for +10 permanent I.S.P.); movable portal +5 permanent I.S.P. Future UI: `dream_domain_forge` — `docs/forge/sub_forge_backlog.md` (p. 95)."
+      },
+      {
+        "name": "Psionic Advancement Program",
+        "description": "Two Sensitive picks at 1st; +1 Sensitive at levels 3, 6, 9, and 12 — `ispEngine` (p. 95)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E.×5 + 2D6 at 1st level; +2D6 per level — `ispEngine` (p. 96)."
+      },
+      {
+        "name": "Insanity: The Price of Power",
+        "description": "From 2nd level, save vs insanity each new level on failure: 01–30% short-term (2D4 days), 31–60% long-term (3D4 weeks), 61–80% permanent, 81–90% fear of dream monsters (3D4 months; permanent after 3×), 91–00% fear of dreaming (1D6 days, lose dream powers and manipulation bonuses) (p. 96)."
+      },
+      {
+        "name": "Mad Dreamers & Nightlord War",
+        "description": "Hermits who lose reality may become homicidal Mad Dreamers. Active makers may spy, crusade, or assassinate on Earth; many now fight Ba'al in the Dreamstream (pp. 94–95)."
+      }
+    ]
+  },
+  {
+    "id": "occ_dream_dancer_pcc",
+    "name": "Dream Dancer P.C.C.",
+    "description": "Dreamstream explorers with Dreamdance travel, self-shaping, and strong resistance to dream manipulation — but without Dreamkill, dream domains, or rift windows. Wider psionic variety and lower insanity risk than Dream Makers; rivalry between the two groups is mostly social, not violent.",
+    "genresAvailable": ["nightbane"],
+    "gameSystems": ["nightbane"],
+    "sources": [
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 97 },
+      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 99 }
+    ],
+    "occType": "psychic",
+    "tags": ["psychic", "dreamstream", "bts_pcc"],
+    "attributeRequirements": { "me": 12 },
+    "packageNotes": [
+      "M.E. 12 or higher (p. 99).",
+      "Dream travel: Dreamdance (Minor) and (Superior) innate; indefinite duration; may exit at start point or within 100 ft (30.5 m) of a sleeper whose Dream Pool was visited (pp. 97–99).",
+      "O.C.C. skills: Native language (98%), Lore: Dreamstream (+20%), two Technical (+10%), two Domestic (+5%), one Rogue (+10%); Hand to Hand: Basic included — Expert 1 related slot, Martial Arts or Assassin 2 (evil) (p. 99).",
+      "Related: eight at creation; +1 at levels 3, 5, 8, 11, and 13 (p. 99).",
+      "Secondary: six skills — no O.C.C. % bonus; same category limits as Related (p. 99).",
+      "Psionics: one Sensitive, one Healing, one Physical at 1st; +1 from those categories per level — `ispEngine` (p. 99).",
+      "I.S.P.: M.E.×3 + 2D6 at 1st level; +2D6 per additional level (p. 99).",
+      "Cannot build dream domains, Dreamkill, or open Dreamstream windows (pp. 97–99)."
+    ],
+    "staticBonuses": {
+      "levelGatedSaves": {
+        "save_dream_manipulation": { "1": 2, "3": 1, "6": 1, "9": 1, "12": 1, "15": 1 }
+      }
+    },
+    "supernaturalRuleOverrides": {
+      "leyLine": { "useGlobalDefault": true },
+      "meditation": { "useGlobalDefault": true },
+      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+    },
+    "occSkillsCore": [
+      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      { "skillId": "skill_lore_dreamstream", "bonusPercent": 20 },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 10,
+        "allowedCategories": ["Technical"],
+        "label": "Two Technical skills of choice"
+      },
+      {
+        "choiceCount": 2,
+        "bonusPercent": 5,
+        "allowedCategories": ["Domestic"],
+        "label": "Two Domestic skills of choice"
+      },
+      {
+        "choiceCount": 1,
+        "bonusPercent": 10,
+        "allowedCategories": ["Rogue"],
+        "label": "One Rogue skill of choice"
+      }
+    ],
+    "occRelatedSkills": {
+      "initialSlotsCount": 8,
+      "categoryRules": [
+        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": ["skill_wilderness_survival"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": ["skill_first_aid", "skill_paramedic", "skill_holistic_medicine"],
+          "bonusPercent": 0
+        },
+        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
+        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
+        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+      ]
+    },
+    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
+    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "handToHandRules": {
+      "defaultSkillId": "hth_basic",
+      "upgradePaths": [
+        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
+        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2,
+          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+        }
+      ]
+    },
+    "ispEngine": {
+      "baseFormula": "ME*3+2D6",
+      "perLevelFormula": "2D6",
+      "savingThrowClass": "major",
+      "grantedAbilityIds": ["psionic_dreamdance_minor", "psionic_dreamdance_superior"],
+      "creationSelectionPlan": [
+        {
+          "selectionsGained": 3,
+          "label": "One Sensitive, one Healing, and one Physical psionic at 1st level",
+          "selectionMode": {
+            "kind": "per_category",
+            "buckets": { "sensitive": 1, "healer": 1, "physical": 1 }
+          }
+        }
+      ],
+      "perLevelSelection": {
+        "fromLevel": 2,
+        "toLevel": 15,
+        "selectionsGained": 1,
+        "label": "One Physical, Sensitive, or Healing psionic per level",
+        "selectionMode": {
+          "kind": "pool",
+          "selections": 1,
+          "categories": ["physical", "sensitive", "healer"]
+        }
+      },
+      "progressionRoadmap": []
+    },
+    "startingEquipment": {
+      "miscellaneous": [
+        "Little beyond clothes on their back — 1D6×100 dollars in equipment typical (p. 99)"
+      ]
+    },
+    "finances": {
+      "startingCashFormula": "1D4*100",
+      "blackMarketAssets": "1D6*100 in equipment value (p. 99)"
+    },
+    "progression": {
+      "xpTableId": "between_shadows_dream_astral",
+      "characterOccCategory": "psychic",
+      "psychicGateBypassed": true
+    },
+    "levelUpSkillChoices": [
+      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
+      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+    ],
+    "classAbilities": [
+      {
+        "name": "Dream Travel",
+        "description": "Dreamdance (Minor) and (Superior) — indefinite stay; no I.S.P. P.C.C. cost. Exit at starting location or within 100 ft (30.5 m) of a sleeper whose Dream Pool was entered; random pools can land anywhere — know the sleeper and where they sleep (pp. 97–99)."
+      },
+      {
+        "name": "Dream Manipulation (Self & Defense)",
+        "description": "Lesser outward manipulation than Dream Makers; powers mostly self-directed. Resist and counter dream manipulation, spells, and supernatural effects targeting self only — not environment or others. Self-heal 1D6 S.D.C. per 1 I.S.P. (one melee action) (pp. 97–99)."
+      },
+      {
+        "name": "Reshape Self",
+        "description": "Change appearance in the Dreamstream — base 5 I.S.P. (P.B. 10); +1 P.B. per 1 I.S.P. (max 24); +1 H.F. per 1 I.S.P. (max 17). Mimic real person: +10 I.S.P. and 30% +5%/level (+I.Q.) skill roll (+5–15% if well known) (pp. 97–99)."
+      },
+      {
+        "name": "Increase Attributes (Dreamstream)",
+        "description": "Same formula as Dream Maker — P.S./P.E. +1/M.E., P.P. +1/4 M.E., S.D.C. +M.E.×3; 5 I.S.P. per attribute; 2 minutes/level (pp. 97–99)."
+      },
+      {
+        "name": "Dream Combat Bonuses",
+        "description": "+2 at 1st; +1 at levels 3, 6, 9, 12, and 15 (+ M.E.) — `staticBonuses.levelGatedSaves.save_dream_manipulation` (p. 99)."
+      },
+      {
+        "name": "Psionic Advancement Program",
+        "description": "One Sensitive, one Healing, one Physical at 1st; +1 from those three categories per level — `ispEngine` (p. 99)."
+      },
+      {
+        "name": "Inner Strength Points (I.S.P.)",
+        "description": "M.E.×3 + 2D6 at 1st level; +2D6 per level — `ispEngine` (p. 99)."
+      },
+      {
+        "name": "Maker vs Dancer Rivalry",
+        "description": "Outsiders confuse the classes; Makers look down on Dancers, Dancers see Makers as half-mad — rivalry is social, not usually violent. Order of Morpheus and Dream Riders include both (pp. 97–99)."
+      },
+      {
+        "name": "Limitations vs Dream Maker",
+        "description": "No dream domains, Dreamkill, or Dreamstream windows; reduced insanity risk from lighter reality-warping (pp. 97–99)."
+      }
+    ]
   }
 ]

@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-occs-bts-94-99-ab",
+  "title": "Between the Shadows Dream Maker & Dream Dancer (pp. 94–99) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 94, "end": 99 }
+  },
+  "options": {
+    "bookFile": "between_the_shadows.json"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Dream Maker P.C.C.",
+    "Dream Dancer P.C.C."
+  ],
+  "notes": "Dreamstream character classes (pp. 94–99). Dream Maker abilities pp. 94–96; Dream Dancer abilities pp. 97–99 (page 98 PDF is mostly footer — abilities 5–7 continue on p. 99). Dream Ghouls (p. 99+) out of scope. Phased AB. XP: both → between_shadows_dream_astral. Sub-forge reminders: docs/forge/sub_forge_backlog.md (dream domain, dream combat, etc.)."
+}

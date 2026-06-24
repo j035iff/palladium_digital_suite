@@ -519,5 +519,624 @@
         "description": "Typical level 1D4+4 (Night Prince & Vampire XP table via shadow O.C.C.)."
       }
     ]
+  },
+  {
+    "id": "race_millek",
+    "name": "Millek",
+    "description": "Optional astral-native R.C.C. (GM approval) — tall, psychic guides and explorers of the Astral Plane; freedom-loving anarchists who hate Nightlord tyranny. Young player characters typically start at 1st–2nd level. Cannot materialize on Earth or the Nightlands (astral form only unless the character has astral projection/transference). Shadow O.C.C. `occ_millek_rcc` (auto-mounted).",
+    "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 64
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 65
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 66
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_millek_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6+10",
+      "me": "2D6+13",
+      "ma": "2D4+12",
+      "ps": "3D6",
+      "pp": "4D6",
+      "pe": "3D6",
+      "pb": "3D4",
+      "spd": "3D6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE + 1D6",
+      "averageStandardPpe": "1D6*10",
+      "sdc": "1D6*10"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME + 6D6"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "parry": 2,
+        "dodge": 2,
+        "save_magic": 3,
+        "save_psionics": 3,
+        "save_horror_factor": 5,
+        "horrorFactor": 6
+      },
+      "activation": {
+        "cost": {
+          "type": "other",
+          "value": "passive daily drain when outside Astral Plane beyond 3 miles (4.8 km) of ley line/nexus"
+        },
+        "duration": "until returned to ambient Astral Plane P.P.E. or ley-line/nexus range",
+        "save": "P.P.E. dependency — no save; lose 1D6 P.P.E. and 1D4 H.P. per day. Coma if P.P.E. or H.P. reaches zero; death within 24 hours if not taken to a P.P.E.-rich area (pp. 65–66)."
+      },
+      "metadata": {
+        "gmApprovalRcc": true,
+        "shadowOccId": "occ_millek_rcc",
+        "xpTableId": "between_shadows_millek_astral_mage",
+        "astralNative": true,
+        "initiativeBonus": 2,
+        "perceptionBonus": 1,
+        "handToHandStyleId": "hth_martial_arts",
+        "psionicGrantIds": [
+          "psionic_astral_navigation"
+        ],
+        "astralNavigationAutomaticNoIsp": true,
+        "createAstralDomainAstralLordParity": true,
+        "createAstralDomainSmallDueToLowPpe": true,
+        "doesNotRequireFood": true,
+        "ppeNourishmentFromAstralPlaneAmbient": true,
+        "ppeDependencyLeyLineRangeMiles": 3,
+        "ppeDependencyDailyPpeLoss": "1D6",
+        "ppeDependencyDailyHpLoss": "1D4",
+        "ppeDependencyComaAtZeroPpeOrHp": true,
+        "ppeDependencyDeathHoursWithoutPpeRichArea": 24,
+        "cannotMaterializeOnPhysicalWorld": true,
+        "materialWorldVisitRequiresAstralProjectionOrTransference": true,
+        "astralTravelerGhostLikeOnEarthNightlands": true,
+        "attunedStaffDamageAstral": "2D6",
+        "attunedStaffDamageMultiplierEntitiesNecrophim": 2,
+        "typicalPcStartLevel": "1-2",
+        "sageExperienceLevel": "1D4+3",
+        "oldSageExperienceLevel": "1D6+9",
+        "averageHeightFeetMin": 6,
+        "averageHeightFeetMax": 7,
+        "preferredBandSize": "2-3",
+        "maxOrganizationSize": 12,
+        "enemyRaceIds": [
+          "race_necrophim"
+        ],
+        "hatedFactions": [
+          "nightlords",
+          "baal_minions"
+        ],
+        "allyPatterns": [
+          "human_astral_travelers",
+          "nightbane_astral_travelers",
+          "worthy_pupils"
+        ],
+        "lowLevelPcNoStartingEntityServants": true,
+        "anarchistAntiGovernmentCulture": true
+      }
+    },
+    "demographics": {
+      "averageHeight": "6–7 feet (1.8–2.1 m)",
+      "averageLifespan": "500 years",
+      "alignmentTendencies": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant"
+      ],
+      "excludedAlignments": [
+        "Miscreant",
+        "Diabolic"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Astral Navigation (Innate)",
+        "description": "Equivalent to the astral navigation psychic power — automatic, no I.S.P. cost (`metadata.psionicGrantIds`, `astralNavigationAutomaticNoIsp`) (pp. 64–65)."
+      },
+      {
+        "name": "Create Astral Domain",
+        "description": "Same as Astral Lord power of the same name; domains tend to be small due to lower P.P.E. May co-build elaborate shared domains with one or two humans (rarely another Millek; seldom more than three total) — `metadata.createAstralDomainAstralLordParity` (pp. 64–65)."
+      },
+      {
+        "name": "Hand to Hand: Martial Arts",
+        "description": "All Millek have the equivalent of Hand to Hand: Martial Arts — shadow O.C.C. `handToHandRules.defaultSkillId: hth_martial_arts` (p. 65)."
+      },
+      {
+        "name": "Combat Bonuses",
+        "description": "+2 on initiative, +1 on perception, +2 to parry and dodge, +3 save vs magic and psionics, +5 save vs horror factor — parry/dodge/saves in `innateBonuses.modifiers`; initiative/perception in `metadata` (p. 65)."
+      },
+      {
+        "name": "Materialization Limits",
+        "description": "Cannot materialize on Earth or the Nightlands without astral projection or astral transference — visits the material world as a ghost-like astral traveler only (`metadata.cannotMaterializeOnPhysicalWorld`) (pp. 65–66)."
+      },
+      {
+        "name": "P.P.E. Dependency",
+        "description": "Derives nourishment from ambient Astral Plane P.P.E.; outside the Plane must stay within 3 miles (4.8 km) of a ley line or nexus or lose 1D6 P.P.E. and 1D4 H.P. per day — coma and death within 24 hours if not returned to P.P.E.-rich area. See `innateBonuses.activation` and `metadata` (pp. 65–66)."
+      },
+      {
+        "name": "Psionically Attuned Staff",
+        "description": "Starting gear — 2D6 damage to most astral beings; double damage against entities and Necrophim (`metadata.attunedStaffDamageAstral`, `attunedStaffDamageMultiplierEntitiesNecrophim`) (p. 66)."
+      },
+      {
+        "name": "Culture & Organization",
+        "description": "Freedom-loving anarchists — distrust large groups; prefer bands of 2–3, rarely join tribes over a dozen. Only follow teachers for learning. Evil Millek almost unheard of (`demographics.excludedAlignments`) (pp. 64–65)."
+      },
+      {
+        "name": "Enemies & Allies",
+        "description": "Clash with Necrophim (`metadata.enemyRaceIds`); hatred for Nightlords and minions. Collaborate with human/Nightbane astral travelers; act as teachers. Low-level PCs do not start with astral entity servants (`metadata.lowLevelPcNoStartingEntityServants`) (pp. 65–66)."
+      },
+      {
+        "name": "Experience",
+        "description": "Young PCs typically 1st–2nd level (`metadata.typicalPcStartLevel`); sages 1D4+3 (4–7); old sages 1D6+9 — `between_shadows_millek_astral_mage` via shadow O.C.C. (pp. 65–66)."
+      }
+    ]
+  },
+  {
+    "id": "race_tarantuloid",
+    "name": "Tarantuloid",
+    "description": "Optional astral-native R.C.C. (GM approval) — fur-covered six-eyed humanoids with four arms and four legs; dominant astral race forging greysteel and moss-farming. GM may allow PCs in astral-centered campaigns. Choose Warrior/Craftsman/Farmer or Sorcerer-Priest at creation via `occ_tarantuloid_rcc` specializations. Cannot materialize on the physical world. Shadow O.C.C. `occ_tarantuloid_rcc` (auto-mounted). Typical NPC warriors/slavers 1D6; sorcerer-priests 1D6+2.",
+    "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 68
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 69
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_tarantuloid_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6+3",
+      "ma": "3D6",
+      "ps": "3D6+6",
+      "pp": "3D4+8",
+      "pe": "3D6+8",
+      "pb": "2D4",
+      "spd": "5D6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "PE+12",
+      "sdc": "2D4*10"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME+4D6"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 2,
+        "parry": 2,
+        "pullPunch": 2,
+        "save_horror_factor": 3,
+        "horrorFactor": 13
+      },
+      "activation": {
+        "cost": {
+          "type": "action",
+          "value": "1 melee attack/action per strand"
+        },
+        "range": "50 feet (15.2 m)",
+        "duration": "until strand is destroyed or dismissed",
+        "save": "Ectoplasmic webs — 80 S.D.C. per strand; very sticky (snare, block passageways, or climb)"
+      },
+      "metadata": {
+        "gmApprovalRcc": true,
+        "shadowOccId": "occ_tarantuloid_rcc",
+        "specializationIds": [
+          "occ_tarantuloid_warrior",
+          "occ_tarantuloid_sorcerer_priest"
+        ],
+        "xpTableIdWarrior": "nightbane_core_snakebird_mystic",
+        "xpTableIdSorcererPriest": "nightbane_core_nightbane_guardian",
+        "astralNative": true,
+        "initiativeBonus": 2,
+        "naturalAttacksBonusPerMelee": 2,
+        "seeInvisible": true,
+        "astralProjectionNavigationParity": true,
+        "shadowOccPsionicGrantIds": [
+          "psionic_mind_block",
+          "psionic_empathy",
+          "psionic_presence_sense"
+        ],
+        "ectoplasmicWebStrandSdc": 80,
+        "ectoplasmicWebRangeFeet": 50,
+        "cannotMaterializeOnPhysicalWorld": true,
+        "astralTravelInvisibleIntangibleEarthNightlands": true,
+        "averageHeightFeetMin": 6,
+        "averageHeightFeetMax": 10,
+        "hitPointsPerLevel": "1D6",
+        "typicalWarriorSlaverLevel": "1D6",
+        "typicalSorcererPriestLevel": "1D6+2",
+        "greysteelForging": true,
+        "mossFarmingSustenance": true,
+        "medievalTechnologyCulture": true,
+        "typicalLanguagesFromEarthNightlands": "2-4",
+        "derogatoryTermForHumansMillek": "Morr'ken",
+        "sorcererPriestAllowedAlignments": [
+          "Principled",
+          "Aberrant"
+        ],
+        "heavyScimitarDamage": "2D6+PS",
+        "heavySpearDamage": "2D8+PS",
+        "chainMailArmorRating": 13,
+        "chainMailSdc": 90,
+        "scaleArmorRating": 15,
+        "scaleArmorSdc": 100,
+        "enemyFactions": [
+          "nightlords",
+          "baal_minions"
+        ],
+        "allyPatterns": [
+          "nightbanes",
+          "earth_champions_against_nightlords"
+        ],
+        "patrolSizeTypical": "under 10",
+        "wanderingPartyRoles": [
+          "slavers",
+          "warriors",
+          "dragon_road_patrols"
+        ]
+      }
+    },
+    "demographics": {
+      "averageHeight": "6–10 feet (1.8–3 m)",
+      "averageLifespan": "200 years",
+      "alignmentTendencies": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant",
+        "Diabolic"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Astral Creature Senses",
+        "description": "See the invisible and natural astral creature abilities — equivalent to astral projection and astral navigation powers (`metadata.seeInvisible`, `astralProjectionNavigationParity`) (pp. 68–69)."
+      },
+      {
+        "name": "Ectoplasmic Webs",
+        "description": "Manipulate ambient ectoplasm into sticky webs (80 S.D.C. per strand); one melee action per strand; range 50 feet (15.2 m) — snare, block, or climb. See `innateBonuses.activation` and `metadata.ectoplasmicWebStrandSdc` (pp. 68–69)."
+      },
+      {
+        "name": "Materialization Limits",
+        "description": "Cannot materialize on the physical world; may travel invisibly and intangibly on Earth or the Nightlands but seldom do (`metadata.cannotMaterializeOnPhysicalWorld`) (pp. 68–69)."
+      },
+      {
+        "name": "Natural Combat Attacks",
+        "description": "Hand to Hand as per purchased program plus two additional attacks per melee round — `innateBonuses.modifiers.apm` (`metadata.naturalAttacksBonusPerMelee`) (pp. 68–69)."
+      },
+      {
+        "name": "Natural Combat Bonuses",
+        "description": "+2 on initiative, +2 to parry, +2 to pull punch, +3 save vs horror factor — parry/pull punch/save in `innateBonuses.modifiers`; initiative in `metadata.initiativeBonus` (pp. 68–69)."
+      },
+      {
+        "name": "Hit Points per Level",
+        "description": "P.E.+12 at 1st level (`vitals.hpFormula`); +1D6 H.P. per level of experience (`metadata.hitPointsPerLevel`) (pp. 68–69)."
+      },
+      {
+        "name": "Innate Psionics",
+        "description": "Mind Block, Empathy, Presence Sense on all branches — shadow O.C.C. `ispEngine.grantedAbilityIds` (`metadata.shadowOccPsionicGrantIds`). I.S.P. M.E.+4D6, +1D6/level (p. 69)."
+      },
+      {
+        "name": "Sorcerer-Priest Branch",
+        "description": "Magic only for `occ_tarantuloid_sorcerer_priest` — six spells levels 1–4 at 1st, +1/level; must be Principled or Aberrant (`metadata.sorcererPriestAllowedAlignments`). Guardian XP table override (`metadata.xpTableIdSorcererPriest`) (pp. 68–69)."
+      },
+      {
+        "name": "Warrior / Craftsman / Farmer Branch",
+        "description": "No spellcasting — `occ_tarantuloid_warrior` specialization. Greysteel forging and moss-farming culture (`metadata.greysteelForging`, `mossFarmingSustenance`). Mystic/Snakebird XP (`metadata.xpTableIdWarrior`) (pp. 68–69)."
+      },
+      {
+        "name": "Culture & Encounter",
+        "description": "Dominant astral race — hundreds of domains and half a dozen kingdoms. Inner Plane parties under ten (slavers or Dragon Road warriors). Distrust humans/Millek (Morr'ken). Typical languages from Earth/Nightlands: 2–4 (p. 69)."
+      },
+      {
+        "name": "Weapons & Armor",
+        "description": "Heavy scimitar 2D6+P.S.; heavy spear 2D8+P.S.; chain mail A.R. 13 (90 S.D.C.) or scale A.R. 15 (100 S.D.C.) — warrior starting gear on `occ_tarantuloid_warrior` (`metadata` damage/AR constants) (p. 69)."
+      },
+      {
+        "name": "Enemies & Allies",
+        "description": "Deadly enemies of the Ba'al and minions (`metadata.enemyFactions`). May befriend Nightbanes and Earth champions against Nightlords (`metadata.allyPatterns`) (p. 69)."
+      },
+      {
+        "name": "Experience",
+        "description": "Warriors/slavers average 1D6 level; sorcerer-priests 1D6+2 — `metadata.typicalWarriorSlaverLevel`, `typicalSorcererPriestLevel` (p. 69)."
+      }
+    ]
+  },
+  {
+    "id": "race_necrophim",
+    "name": "Necrophim",
+    "description": "Optional GM-approval R.C.C. — Angels of Death / Dark Angels; jet-black winged supernatural beings native to the Astral Plane who may serve Nightlords or act as renegades. Implacable enemies of Guardians and vampires. Can materialize on Earth/Nightlands and enter the Dreamstream. Shadow O.C.C. `occ_necrophim_rcc` (auto-mounted). PCs start at 1st level; reputation may provoke attacks from Guardians, Nightbanes, and Spook Squad.",
+    "raceAudience": "gm_approval",
+    "raceComposition": "rcc",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 74
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 75
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 76
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 77
+      }
+    ],
+    "canPickOcc": false,
+    "forcedOccId": "occ_necrophim_rcc",
+    "lineage": "nightbane",
+    "attributes": {
+      "iq": "2D6+10",
+      "me": "3D6+6",
+      "ma": "3D6+6",
+      "ps": "2D6+20",
+      "pp": "2D6+12",
+      "pe": "3D6+12",
+      "pb": "3D6+6",
+      "spd": "4D6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "1D4*10+80",
+      "averageStandardPpe": "6D6+6"
+    },
+    "psionics": {
+      "capabilityType": "innate",
+      "naturalIspFormula": "ME+4D6"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 1,
+        "pullPunch": 3,
+        "rollWithImpact": 3,
+        "dodge": 2,
+        "save_magic": 2,
+        "save_horror_factor": 5,
+        "horrorFactor": 13
+      },
+      "activation": {
+        "cost": {
+          "type": "ppe",
+          "value": "10 winged materialization; +15 additional to appear human or Nightbane-shaped"
+        },
+        "duration": "Materialized winged form: 1 hour per level; human/Nightbane shape-shift: 10 minutes per level",
+        "save": "Materialization ends astral intangibility and 670 mph flight; human shape cannot fly and magic operates at half effective experience level"
+      },
+      "metadata": {
+        "gmApprovalRcc": true,
+        "shadowOccId": "occ_necrophim_rcc",
+        "xpTableId": "between_shadows_necrophim",
+        "astralNative": true,
+        "initiativeBonus": 2,
+        "perceptionBonus": 1,
+        "dodgeBonusFlying": 2,
+        "handToHandStyleId": "hth_martial_arts",
+        "entangleAtFirstLevel": true,
+        "shadowOccPsionicGrantIds": [
+          "psionic_mind_block",
+          "psionic_presence_sense",
+          "psionic_see_aura",
+          "psionic_see_the_invisible",
+          "psionic_astral_navigation"
+        ],
+        "dreamdanceSuperiorPsionicId": "psionic_dreamdance_superior",
+        "dreamManipulationSaveBonusLevel1": 2,
+        "dreamManipulationSaveBonusLevels": [4, 7, 10, 13],
+        "dreamManipulationSaveBonusPerMilestone": 1,
+        "cannotManipulateDreamMatter": true,
+        "materializationPpeWinged": 10,
+        "materializationDurationHoursPerLevel": 1,
+        "shapeShiftPpe": 15,
+        "shapeShiftDurationMinutesPerLevel": 10,
+        "shapeShiftMagicHalfEffectiveLevel": true,
+        "shapeShiftAllowedForms": [
+          "human",
+          "nightbane"
+        ],
+        "astralFormFlightMph": 670,
+        "astralFormHarmedOnlyByMagicPsionicsSupernatural": true,
+        "astralFormInvisibleToMost": true,
+        "astralFormVisibleToNotes": "psychics, children under 13, most supernatural beings including Nightbane",
+        "materializedFlightSpd": "3D4*10",
+        "seeAstralFormsAllPlanes": true,
+        "nightvisionFeet": 200,
+        "astralPlaneNoSdc": true,
+        "astralHitPointsFormula": "PE*5+2D6/level",
+        "materialSdcFormula": "PE*2+2D4/level",
+        "materialHpFormula": "1D4*10+80",
+        "dreamstreamSdcUsesAstralHpFormula": true,
+        "ppePerLevel": "3D6",
+        "chainWhipDamage": "2D6+PS",
+        "chainEntangleRangeFeet": 60,
+        "languagesSpeakAllInPresenceMagically": true,
+        "languageLiteracyHoursExposure": 4,
+        "typicalNpcExperienceLevel": "2D4",
+        "pcStartLevel": 1,
+        "enemyRaceIds": [
+          "race_guardian"
+        ],
+        "attackOnSightVampireTypes": [
+          "astral_vampire",
+          "earth_vampire"
+        ],
+        "reputationAttackOnSightBy": [
+          "race_guardian",
+          "race_nightbane",
+          "spook_squad",
+          "good_aligned_supernaturals"
+        ],
+        "necrophimHuntRenegades": true,
+        "renegadeAlignmentTendencies": [
+          "Anarchist",
+          "Unprincipled",
+          "Scrupulous"
+        ],
+        "warsOfLightAndDarknessLore": true,
+        "oneWhoSleepsMasterRumor": true,
+        "astralPopulationMultiplierVsEarth": 10,
+        "patrolSizeTypical": "1-4",
+        "patrolEscortTorturians": "1-6",
+        "patrolEscortHoundsOrHunters": true,
+        "bodyguardRoles": [
+          "night_prince",
+          "nightlord_avatar",
+          "ashmedai"
+        ],
+        "allyPatternsNightlordService": [
+          "baal_minions",
+          "torturians_under_command"
+        ],
+        "allyPatternsRenegade": [
+          "human_psychics",
+          "mystics",
+          "race_nightbane",
+          "race_guardian"
+        ],
+        "nocturnesMembershipRumor": true,
+        "innerConflictWithNightlordsWitnessed": true
+      }
+    },
+    "demographics": {
+      "averageHeight": "Roughly 6 feet (1.8 m)",
+      "averageLifespan": "Several centuries (unknown minimum)",
+      "alignmentTendencies": [
+        "Diabolic",
+        "Aberrant",
+        "Anarchist",
+        "Unprincipled",
+        "Scrupulous"
+      ],
+      "excludedAlignments": [
+        "Principled"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Astral Form",
+        "description": "Pure psychic energy — Astral Plane run/float at attribute speed; on Earth/Nightlands invisible to most, fly up to 670 mph (1072 km/h), pass through walls; harmed only by magic, psionics, and supernatural attacks until materialized. See `metadata.astralForm*` constants (pp. 75–76)."
+      },
+      {
+        "name": "Materialization",
+        "description": "10 P.P.E. for winged physical form — 1 hour per level. Additional 15 P.P.E. to appear human or Nightbane-shaped (10 min/level; no flight; magic at half effective level). See `innateBonuses.activation` and `metadata.materialization*` / `shapeShift*` (pp. 75–76)."
+      },
+      {
+        "name": "Dreamstream Entry",
+        "description": "Dreamdance: Superior (`metadata.dreamdanceSuperiorPsionicId`) from astral or materialized Earth. Cannot manipulate dream matter (`metadata.cannotManipulateDreamMatter`). Dream manipulation saves +2 at 1st, +1 at levels 4/7/10/13 — `occ_necrophim_rcc` `staticBonuses.levelGatedSaves.save_dream_manipulation` (pp. 75–76)."
+      },
+      {
+        "name": "Multi-Plane Vitals",
+        "description": "Astral: no S.D.C., H.P. P.E.×5 +2D6/level. Material: P.E.×2 S.D.C. +2D4/level, H.P. 1D4×10+80. Dreamstream: astral H.P. act as dream S.D.C. — `metadata.astralHitPointsFormula`, `materialSdcFormula`, `materialHpFormula` (pp. 75–76)."
+      },
+      {
+        "name": "Natural Senses",
+        "description": "See astral forms on all planes; nightvision 200 ft (61 m). Materialized flight 3D4×10 (`metadata.materializedFlightSpd`, `nightvisionFeet`) (pp. 75–76)."
+      },
+      {
+        "name": "Hand to Hand & Entangle",
+        "description": "Martial Arts and entangle at 1st level — `metadata.handToHandStyleId`, `entangleAtFirstLevel`; shadow O.C.C. `hth_martial_arts` + `wp_chain` (p. 76)."
+      },
+      {
+        "name": "Chain Weapons",
+        "description": "Wrist chains — 2D6 + supernatural P.S. as whips; entangle to 60 ft (18.3 m). `metadata.chainWhipDamage`, `chainEntangleRangeFeet` (pp. 76–77)."
+      },
+      {
+        "name": "Natural Combat Bonuses",
+        "description": "+1 attack/melee, +2 initiative, +1 perception, +2 dodge when flying, +3 roll with impact/fall, +3 pull punch, +2 save vs magic, +5 save vs horror factor — APM/pull punch/roll/dodge/saves in `innateBonuses.modifiers`; initiative/perception/flying dodge in `metadata` (p. 76)."
+      },
+      {
+        "name": "Innate Psionics & Magic",
+        "description": "Psionics: Mind Block, Presence Sense, See Aura, See the Invisible, Astral Navigation (`metadata.shadowOccPsionicGrantIds`). Magic: eight spells (two per level 1–4) at 1st, +1/level — shadow O.C.C. `ppeEngine` (`roadmap_only`) (pp. 76–77)."
+      },
+      {
+        "name": "Universal Language Comprehension",
+        "description": "Magically speaks all languages in presence; reads after 4 hours' exposure to literate speakers — `metadata.languagesSpeakAllInPresenceMagically` (p. 77)."
+      },
+      {
+        "name": "Power Points (P.P.E.)",
+        "description": "6D6+6+P.E. at 1st; +3D6/level — `vitals.averageStandardPpe` + `metadata.ppePerLevel` on shadow O.C.C. `ppeEngine` (pp. 75–76)."
+      },
+      {
+        "name": "Enmities & Reputation",
+        "description": "Implacable enemies of Guardians (`metadata.enemyRaceIds`) and vampires (`attackOnSightVampireTypes`). Good supernaturals, Nightbanes, Spook Squad may attack on sight (`reputationAttackOnSightBy`). Other Necrophim hunt renegades (`necrophimHuntRenegades`) (pp. 74–76)."
+      },
+      {
+        "name": "Renegades & Lore",
+        "description": "Some renegades claim the Wars of Light and Darkness and service to the One Who Sleeps — tentative alliances with resistance (`metadata.renegadeAlignmentTendencies`, `allyPatternsRenegade`). Nocturnes membership rumored (pp. 75–76)."
+      },
+      {
+        "name": "Nightlord Service & Patrols",
+        "description": "~10× more numerous on Astral Plane than Earth/Nightlands. Patrols 1–4 (+ Torturians/Hounds/Hunters); bodyguards for Night Princes, Avatars, Ashmedai — `metadata` patrol/bodyguard constants (pp. 75–76)."
+      },
+      {
+        "name": "GM Approval & Experience",
+        "description": "Optional P.C. with GM approval — may serve powers worse than Nightlords. PCs start 1st level (`metadata.pcStartLevel`); NPC average 2D4 (`typicalNpcExperienceLevel`) — `between_shadows_necrophim` (pp. 75–77)."
+      }
+    ]
   }
 ]

@@ -50,8 +50,8 @@
         0, 2501, 5001, 10001, 20001, 30001, 50001, 80001, 120001, 170001, 225001, 275001,
         350001, 420001, 520001
       ],
-      "occIds": [],
-      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Dream Maker, Dream Dancer, Astral Lord)."
+      "occIds": ["occ_astral_lord_pcc", "occ_dream_maker_pcc", "occ_dream_dancer_pcc"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_astral_lord_pcc, occ_dream_maker_pcc, occ_dream_dancer_pcc."
     },
     {
       "id": "between_shadows_arcane_detective",
@@ -145,8 +145,8 @@
         0, 2701, 5401, 10801, 21601, 31601, 42801, 62001, 90001, 120001, 170001, 220001,
         280001, 370001, 480001
       ],
-      "occIds": [],
-      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Necrophim)."
+      "occIds": ["occ_necrophim_rcc"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_necrophim_rcc."
     },
     {
       "id": "between_shadows_millek_astral_mage",
@@ -164,8 +164,8 @@
         0, 2601, 5001, 10001, 20001, 30001, 50001, 80001, 130001, 180001, 230001, 290001,
         370001, 480001, 575001
       ],
-      "occIds": ["occ_mind_master_pcc"],
-      "notes": "Between the Shadows p.145. O.C.C.s: occ_mind_master_pcc; Astral Mage (planned)."
+      "occIds": ["occ_mind_master_pcc", "occ_millek_rcc", "occ_astral_mage"],
+      "notes": "Between the Shadows p.145. O.C.C.s: occ_mind_master_pcc, occ_millek_rcc, occ_astral_mage."
     },
     {
       "id": "between_shadows_mountebank_mystic",

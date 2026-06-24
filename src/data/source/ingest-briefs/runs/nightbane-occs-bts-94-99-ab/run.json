@@ -1,0 +1,72 @@
+{
+  "briefId": "nightbane-occs-bts-94-99-ab",
+  "briefTitle": "Between the Shadows Dream Maker & Dream Dancer (pp. 94–99) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/occs.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-22T13:00:00.000Z",
+  "updatedAt": "2026-06-22T13:30:00.000Z",
+  "checklist": [
+    {
+      "name": "Dream Maker P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "94–96",
+      "notes": "occ_dream_maker_pcc → between_shadows_dream_astral"
+    },
+    {
+      "name": "Dream Dancer P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "97–99",
+      "notes": "abilities 5–7 on p. 99 PDF"
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 94, "end": 96 },
+      "items": ["Dream Maker P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 97, "end": 99 },
+      "items": ["Dream Dancer P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 94, "end": 96 },
+      "items": ["Dream Maker P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "dream domain → sub_forge_backlog"
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 97, "end": 99 },
+      "items": ["Dream Dancer P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": null
+    }
+  ],
+  "rulings": [],
+  "completedBatchIds": ["batch-a-01", "batch-a-02", "batch-b-01", "batch-b-02"],
+  "validationCommands": ["validate:schemas"]
+}

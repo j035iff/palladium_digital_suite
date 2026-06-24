@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-races-bts-gm-approval-ab",
+  "title": "Between the Shadows GM-Approval R.C.C.s (pp. 63–76) — Pass A then Pass B",
+  "contentType": "races",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 63, "end": 76 }
+  },
+  "options": {
+    "audience": "gm_approval"
+  },
+  "updateExisting": false,
+  "passBAfterRulings": true,
+  "items": [
+    "Millek",
+    "Tarantuloid",
+    "Necrophim"
+  ],
+  "notes": "Astral Plane R.C.C.s for races/nightbane/gm_approval.json. Each batch: race row + paired shadow O.C.C. in occs/nightbane/between_the_shadows.json. XP: Millek → between_shadows_millek_astral_mage; Necrophim → between_shadows_necrophim; Tarantuloid warrior/craftsman → nightbane_core_snakebird_mystic; Tarantuloid sorcerer-priest → nightbane_core_nightbane_guardian (specializations on occ_tarantuloid_rcc, ADA Field Agent pattern). Mountebank → npc pool (separate brief). Out of scope: Torturian (never PC), Shadow Mantis (monster NPC)."
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-occs-bts-49-53-ab",
+  "title": "Between the Shadows Astral Lord & Astral Mage (pp. 49–53) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 49, "end": 53 }
+  },
+  "options": {
+    "bookFile": "between_the_shadows.json"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Astral Lord P.C.C.",
+    "Astral Mage O.C.C."
+  ],
+  "notes": "Astral Plane character classes (pp. 49–53). Astral Lord lore/abilities pp. 50–52; Astral Mage lore/abilities pp. 52–53 with O.C.C. skills/P.P.E./I.S.P. tail on p. 54 (same block). Building an Astral Domain (p. 54+) referenced in Pass B only — not encoded as domain tables. Phased AB: composition Pass A per row, audit gate, then Pass B deep modules. Write to src/data/content/occs/nightbane/between_the_shadows.json. XP: Astral Lord → between_shadows_dream_astral; Astral Mage → between_shadows_millek_astral_mage."
+}

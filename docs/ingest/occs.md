@@ -241,6 +241,10 @@ No `audit:occs` script yet.
 | BTS Natural & Genius P.C.C. Pass B | pp. 122–124 P.P.E. specialties | Deep **`classAbilities`** for P.P.E. pool rules, +3%/P.P.E. skill boost option, eight P.P.E. specialties (electrical, computer, mental, weapons, bio-feedback tiers, three physical excellence tracks), savant lore; `ppeEngine`/`ispEngine` from Pass A |
 | BTS Psi-Mechanic P.C.C. Pass B | pp. 124–125 device imprint rules | Deep **`classAbilities`** for psychological device dependency, P.P.E. imprint cost (1 per 2 I.S.P. or 4 min), device activation, cross-psychic use chances (20%/12%/55% + Object Read/Telemechanics), DML lore; dual `ppeEngine`/`ispEngine` from Pass A |
 | BTS Arcane Detective O.C.C. Pass B | pp. 126–127 investigation + magic | Deep **`classAbilities`** for spell program/Pursuit of Magic, detective bonuses cross-ref, law-enforcement and street informant networks, paranormal crime specialty, Nightlord/Aurora/Seekers lore; `ppeEngine`/`staticBonuses` from Pass A |
+| BTS Astral Lord P.C.C. Pass B | pp. 50–52 astral lord powers | Deep **`classAbilities`** for transference/senses/travel/domain, reconfiguration, ectoplasm armor, P.P.E./I.S.P. conversion, First Foray/longevity, Gray Ghost/domain play guidance; dual `ppeEngine`/`ispEngine` from Pass A |
+| BTS Astral Mage O.C.C. Pass B | pp. 52–54 astral sorcerer | Deep **`classAbilities`** for astral travel suite, domain P.P.E. minimum, spell roadmap, innate four psionics, Great Spirit/astral politics, Nightlord threat; `ppeEngine`/`ispEngine` from Pass A — skills tail on p. 54 |
+| BTS Dream Maker P.C.C. Pass B | pp. 94–96 dream lord powers | Deep **`classAbilities`** for dream travel/manipulation/attacks, dream objects, attribute boost, window, Dreamkill, dream domain I.S.P. spends (→ `dream_domain_forge` backlog), insanity table, psionic program; `ispEngine`/`staticBonuses` from Pass A |
+| BTS Dream Dancer P.C.C. Pass B | pp. 97–99 dream explorer | Deep **`classAbilities`** for dream travel hop, self-only manipulation/resist, Reshape Self, attribute boost, combat bonuses, wider psionic program, Maker rivalry/limitations; `ispEngine`/`handToHandRules` from Pass A |
 
 ---
 

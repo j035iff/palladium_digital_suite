@@ -1,0 +1,72 @@
+{
+  "briefId": "nightbane-occs-bts-49-53-ab",
+  "briefTitle": "Between the Shadows Astral Lord & Astral Mage (pp. 49–53) — Pass A then Pass B",
+  "contentType": "occs",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/occs.md",
+  "status": "complete",
+  "phase": "done",
+  "createdAt": "2026-06-22T12:00:00.000Z",
+  "updatedAt": "2026-06-22T12:30:00.000Z",
+  "checklist": [
+    {
+      "name": "Astral Lord P.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "50–52",
+      "notes": "occ_astral_lord_pcc → between_shadows_dream_astral"
+    },
+    {
+      "name": "Astral Mage O.C.C.",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "52–54",
+      "notes": "occ_astral_mage → between_shadows_millek_astral_mage; skills tail p. 54"
+    }
+  ],
+  "batches": [
+    {
+      "id": "batch-a-01",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 50, "end": 52 },
+      "items": ["Astral Lord P.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": null
+    },
+    {
+      "id": "batch-a-02",
+      "status": "complete",
+      "pass": "A",
+      "pages": { "start": 52, "end": 54 },
+      "items": ["Astral Mage O.C.C."],
+      "playbookScope": "catalog-only",
+      "notes": "O.C.C. skills on p. 54"
+    },
+    {
+      "id": "batch-b-01",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 50, "end": 52 },
+      "items": ["Astral Lord P.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "innate astral powers + domain lore"
+    },
+    {
+      "id": "batch-b-02",
+      "status": "complete",
+      "pass": "B",
+      "pages": { "start": 52, "end": 54 },
+      "items": ["Astral Mage O.C.C."],
+      "playbookScope": "include deep modules",
+      "notes": "spell program + Great Spirit lore"
+    }
+  ],
+  "rulings": [],
+  "completedBatchIds": ["batch-a-01", "batch-a-02", "batch-b-01", "batch-b-02"],
+  "validationCommands": ["validate:schemas"]
+}
