@@ -1,0 +1,151 @@
+{
+  "briefId": "nightbane-races-bts-npc-ab",
+  "briefTitle": "Between the Shadows NPC Races & Denizens (Astral + Dreamstream) — Pass A then Pass B",
+  "contentType": "races",
+  "pass": "AB",
+  "passPhases": ["A", "B"],
+  "currentPassPhase": "B",
+  "playbook": "docs/ingest/races.md",
+  "status": "complete",
+  "phase": "complete",
+  "createdAt": "2026-06-24T12:00:00.000Z",
+  "updatedAt": "2026-06-24T12:00:00.000Z",
+  "checklist": [
+    {
+      "name": "Astral Entities",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "61–63",
+      "notes": "race_astral_entity — lesser/common/greater tier metadata."
+    },
+    {
+      "name": "Mountebank",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "65–67",
+      "notes": "race_mountebank — deferred from gm_approval brief."
+    },
+    {
+      "name": "Vampire Specters",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "70–71",
+      "notes": "race_vampire_specter"
+    },
+    {
+      "name": "Night Avatars",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "71–74",
+      "notes": "Patched race_nightlord_avatar — BTS astral variant + sources[]; not a separate row."
+    },
+    {
+      "name": "Torturian",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "76–79",
+      "notes": "race_torturian — NPC only per book."
+    },
+    {
+      "name": "Dream Ghouls",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "99–102",
+      "notes": "race_dream_ghoul"
+    },
+    {
+      "name": "Guilt Eaters",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "102–104",
+      "notes": "race_guilt_eater"
+    },
+    {
+      "name": "Living Nightmares",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "106–108",
+      "notes": "race_living_nightmare"
+    },
+    {
+      "name": "Soul Leeches",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "108–109",
+      "notes": "race_soul_leech"
+    },
+    {
+      "name": "Dream Demons",
+      "status": "ingested",
+      "passA": "complete",
+      "passB": "complete",
+      "pages": "109–112",
+      "notes": "race_morpheomoth"
+    }
+  ],
+  "batches": [
+    { "id": "batch-a-01", "status": "complete", "pass": "A", "pages": { "start": 61, "end": 63 }, "items": ["Astral Entities"], "playbookScope": "composition-only" },
+    { "id": "batch-a-02", "status": "complete", "pass": "A", "pages": { "start": 65, "end": 67 }, "items": ["Mountebank"], "playbookScope": "composition-only" },
+    { "id": "batch-a-03", "status": "complete", "pass": "A", "pages": { "start": 70, "end": 71 }, "items": ["Vampire Specters"], "playbookScope": "composition-only" },
+    { "id": "batch-a-04", "status": "complete", "pass": "A", "pages": { "start": 71, "end": 74 }, "items": ["Night Avatars"], "playbookScope": "composition-only", "notes": "updateExisting race_nightlord_avatar" },
+    { "id": "batch-a-05", "status": "complete", "pass": "A", "pages": { "start": 76, "end": 79 }, "items": ["Torturian"], "playbookScope": "composition-only" },
+    { "id": "batch-a-06", "status": "complete", "pass": "A", "pages": { "start": 99, "end": 102 }, "items": ["Dream Ghouls"], "playbookScope": "composition-only" },
+    { "id": "batch-a-07", "status": "complete", "pass": "A", "pages": { "start": 102, "end": 104 }, "items": ["Guilt Eaters"], "playbookScope": "composition-only" },
+    { "id": "batch-a-08", "status": "complete", "pass": "A", "pages": { "start": 106, "end": 108 }, "items": ["Living Nightmares"], "playbookScope": "composition-only" },
+    { "id": "batch-a-09", "status": "complete", "pass": "A", "pages": { "start": 108, "end": 109 }, "items": ["Soul Leeches"], "playbookScope": "composition-only" },
+    { "id": "batch-a-10", "status": "complete", "pass": "A", "pages": { "start": 109, "end": 112 }, "items": ["Dream Demons"], "playbookScope": "composition-only" },
+    { "id": "batch-b-01", "status": "complete", "pass": "B", "pages": { "start": 61, "end": 63 }, "items": ["Astral Entities"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-02", "status": "complete", "pass": "B", "pages": { "start": 65, "end": 67 }, "items": ["Mountebank"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-03", "status": "complete", "pass": "B", "pages": { "start": 70, "end": 71 }, "items": ["Vampire Specters"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-04", "status": "complete", "pass": "B", "pages": { "start": 71, "end": 74 }, "items": ["Night Avatars"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-05", "status": "complete", "pass": "B", "pages": { "start": 76, "end": 79 }, "items": ["Torturian"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-06", "status": "complete", "pass": "B", "pages": { "start": 99, "end": 102 }, "items": ["Dream Ghouls"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-07", "status": "complete", "pass": "B", "pages": { "start": 102, "end": 104 }, "items": ["Guilt Eaters"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-08", "status": "complete", "pass": "B", "pages": { "start": 106, "end": 108 }, "items": ["Living Nightmares"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-09", "status": "complete", "pass": "B", "pages": { "start": 108, "end": 109 }, "items": ["Soul Leeches"], "playbookScope": "include deep modules" },
+    { "id": "batch-b-10", "status": "complete", "pass": "B", "pages": { "start": 109, "end": 112 }, "items": ["Dream Demons"], "playbookScope": "include deep modules" }
+  ],
+  "rulings": [
+    {
+      "id": "night-avatar-row-merge",
+      "status": "resolved",
+      "topic": "BTS Night Avatar vs race_nightlord_avatar",
+      "ruling": "patch_existing_avatar_row",
+      "notes": "Astral Night Avatar stats merged into race_nightlord_avatar (avatarTypes physical+astral); BTS source pp.73 added."
+    },
+    {
+      "id": "astral-entity-tier-encoding",
+      "status": "resolved",
+      "topic": "Lesser/Common/Greater astral entities",
+      "ruling": "single_row_tier_metadata",
+      "notes": "race_astral_entity with tier tables in innateBonuses.metadata."
+    },
+    {
+      "id": "dream-demon-naming",
+      "status": "resolved",
+      "topic": "Dream Demons vs Morpheomoth",
+      "ruling": "display_name_morpheomoth_only",
+      "notes": "Catalog name Morpheomoth; ignore Dream Demons chapter heading for UI."
+    }
+  ],
+  "excludedFromScope": [
+    { "name": "Rage Storms", "pages": "62–64", "reason": "Ingested as race_rage_storm in creatures.json." },
+    { "name": "Shadow Mantis", "pages": "68–71", "reason": "Ingested as race_shadow_mantis in creatures.json." },
+    { "name": "Dream Personae", "pages": "105–107", "reason": "Ingested as race_dream_persona spawn template in creatures.json." },
+    { "name": "Dream Furies", "pages": "104–105", "reason": "Ingested as race_dream_fury in creatures.json." }
+  ],
+  "completedBatchIds": [
+    "batch-a-01", "batch-a-02", "batch-a-03", "batch-a-04", "batch-a-05", "batch-a-06", "batch-a-07", "batch-a-08", "batch-a-09", "batch-a-10",
+    "batch-b-01", "batch-b-02", "batch-b-03", "batch-b-04", "batch-b-05", "batch-b-06", "batch-b-07", "batch-b-08", "batch-b-09", "batch-b-10"
+  ],
+  "validationCommands": ["validate:schemas"]
+}

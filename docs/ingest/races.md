@@ -366,6 +366,15 @@ No `audit:races` script yet.
 | Nightbane Pass B (player) | Dual-form flagship R.C.C. | **`creationSubForgeId: morphus_forge_manifest`**; Facade/Morphus split in **`innateBonuses.metadata`** (vitals, saves, combat); **`activation`** for Mirror Walk; Becoming/Talents/P.P.E. constants; **`canPickOcc: true`** + **`allowedOccIds`** skill packages (no single `forcedOccId`); shared XP **`nightbane_core_nightbane_guardian`**. Catalog id **`race_nightbane`**. |
 | BTS Mountebank (ingest scope) | GM-approval vs NPC pool | **`npc.json`** — no explicit GM-approval PC note; XP column exists but treat as NPC bandit stat block. Deferred to separate NPC brief. |
 | BTS Tarantuloid (gm_approval) | Warrior vs sorcerer-priest | **One `race_tarantuloid` row**; shadow **`occ_tarantuloid_rcc`** **`specializations[]`** (ADA Field Agent pattern): Warrior/Craftsman vs Sorcerer-Priest. Warrior XP **`nightbane_core_snakebird_mystic`**; Sorcerer-Priest XP **`nightbane_core_nightbane_guardian`**. |
+| BTS Night Avatar (npc) | Separate row vs core Avatar | **Patch `race_nightlord_avatar`** — add BTS `sources[]` (pp.72–74); astral domain / ectoplasm matter-energy in **`metadata`**; `avatarTypes` stays physical+astral. |
+| BTS Astral Entity (npc) | Lesser/Common/Greater tiers | **One `race_astral_entity` row** — tier attribute/H.P./H.F./P.P.E./psionic-pick tables in **`innateBonuses.metadata`**; common-tier baseline dice on row. |
+| BTS Mountebank (npc) | gm_approval brief deferral | **`race_mountebank`** in **`npc.json`** — no Shadow O.C.C.; sunlight **`metadata`**; chameleon/trap-sense in **`classAbilities`**. |
+| BTS Dreamstream denizens (npc) | Morpheomoth naming | **`race_morpheomoth`** — display name **Morpheomoth** only (not the printed Dream Demons chapter heading); links **`race_soul_leech`**, **`race_nightlord_avatar`**. Dream Ghouls / Guilt Eaters / Living Nightmares / Soul Leeches: **`npcStatBlock`** only, no **`forcedOccId`**. |
+| BTS Torturian (npc) | Never PC | **`race_torturian`** — astral-only; complex S.D.C./I.S.P. in **`metadata`** when schema dice pattern insufficient (`PE*5+1D4*10`, `ME*3+2D4/level`). |
+| BTS Rage Storm (creature) | Astral hazard vs NPC | **`race_rage_storm`** in **`creatures.json`** — attributes placeholder (`attributesNotApplicable`); length-scaled S.D.C./attacks in **`metadata`**. |
+| BTS Shadow Mantis (creature) | Void predator | **`race_shadow_mantis`** — **`creatures.json`**; energy immunity + Void-bound in **`metadata`**; book stats pp.70. |
+| BTS Dream Fury (creature) | Mindless rage construct | **`race_dream_fury`** — **`creatures.json`**; `PE*5` S.D.C. in **`metadata`**; pack `1D4+1`. |
+| BTS Dream Persona (creature) | Variable dream cast | **`race_dream_persona`** — GM spawn template with **`personaTiers`** in **`metadata`** (bit player / Regular / independent); link **`race_living_nightmare`** for physical escape. |
 
 ---
 

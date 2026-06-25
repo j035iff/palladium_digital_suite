@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../schemas/ingest-brief.schema.json",
+  "version": 1,
+  "id": "nightbane-races-bts-npc-ab",
+  "title": "Between the Shadows NPC Races & Denizens (Astral + Dreamstream) — Pass A then Pass B",
+  "contentType": "races",
+  "pass": "AB",
+  "genre": "nightbane",
+  "book": {
+    "path": "src/data/reference/nightbane/WB1-Between_the_Shadows.pdf",
+    "reference": "Between the Shadows",
+    "pages": { "start": 61, "end": 111 }
+  },
+  "options": {
+    "audience": "npc"
+  },
+  "updateExisting": true,
+  "passBAfterRulings": true,
+  "items": [
+    "Astral Entities",
+    "Mountebank",
+    "Vampire Specters",
+    "Night Avatars",
+    "Torturian",
+    "Dream Ghouls",
+    "Guilt Eaters",
+    "Living Nightmares",
+    "Soul Leeches",
+    "Dream Demons"
+  ],
+  "notes": "Target: races/nightbane/npc.json. Night Avatars → patch existing race_nightlord_avatar (astral type; core p.175 + BTS pp.72–74). Astral Entities: single row with lesser/common/greater tier metadata. Dream Demons = Morpheomoth. Torturian spelling per book (not Tortirian). No Shadow O.C.C. rows — pure NPC stat blocks (nightlord_avatar pattern). Out of scope: Rage Storms, Shadow Mantis, Dream Personae, Dream Furies."
+}

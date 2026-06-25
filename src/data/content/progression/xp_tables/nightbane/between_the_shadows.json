@@ -203,7 +203,7 @@
         450001, 525001, 625001
       ],
       "occIds": [],
-      "notes": "Between the Shadows p.145. O.C.C.s: none in catalog yet (Morpheomoth, Living Nightmare)."
+      "notes": "Between the Shadows p.145. Race: race_morpheomoth, race_living_nightmare (no Shadow O.C.C. rows)."
     }
   ]
 }

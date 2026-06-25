@@ -292,5 +292,477 @@
         "description": "Any terrain; favors ley lines and nexuses in the Nightlands and occasionally on Earth. Hunter patrols (`race_hunter`) slay on sight; Hounds (`race_hound`) and other Nightlord minions hunt them. Preys on most life forms without fear. Waste Coyotes (`race_waste_coyote`) typically avoid Lizard Kings. Unproven Waste legends of tamed war mounts."
       }
     ]
+  },
+  {
+    "id": "race_rage_storm",
+    "name": "Rage Storm",
+    "description": "Astral Plane hazard — massive ectoplasmic storm clouds (grey, purple, or red) with contorted faces. Possibly living predators or psychic manifestations of planetary rage. Not player characters; Nightlord minions avoid or destroy them. Hunts astral entities; presence felt before sight.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 63
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "1D4",
+      "me": "1D4",
+      "ma": "1D4",
+      "ps": "1D4",
+      "pp": "1D4",
+      "pe": "1D4",
+      "pb": "1D4",
+      "spd": "1D6*10+100"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "1D4*100",
+      "averageStandardPpe": 10,
+      "sdc": "4D6*10+60"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "strike": 4,
+        "save_magic": 3,
+        "save_psionics": 3,
+        "horrorFactor": 14
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "attributesNotApplicable": true,
+        "lengthFeet": "1D6*10",
+        "giganticLengthFeet": "1D6*20",
+        "giganticChance": "1 in 500",
+        "sdcPerTenFeetBeyondTen": 20,
+        "horrorFactorGigantic": 18,
+        "regenerationPerMinute": "4D6",
+        "seeInvisible": true,
+        "astralNavigationInnate": true,
+        "flySpeedMph": "1D6*10+100",
+        "naturalAttacksPerMelee": 2,
+        "attacksPerTenFeetBeyondTen": 1,
+        "initiativeBonus": 1,
+        "dodgePenalty": -1,
+        "cannotParry": true,
+        "immuneHorrorFactor": true,
+        "senseLivingRadiusFeet": 1000,
+        "engulfDisorientation": true,
+        "engulfDamagePerMelee": "1D6",
+        "engulfCarryYardsPerMelee": "1D4*100",
+        "engulfEscapeDodgeOncePerMelee": true,
+        "energyDrainSave": "vs psionics (mind block +6)",
+        "energyDrainPerVictim": "1D6 P.P.E. or I.S.P.",
+        "buffetDamage": "4D6+1 per 10 ft length",
+        "buffetRangeFeet": 200,
+        "dispersedAtZeroSdc": true,
+        "destroyedAtZeroHp": true,
+        "reformHoursAfterDispersal": 48,
+        "cannotInvadeDomains": true,
+        "cannotSpeak": true,
+        "shortAttentionSpanMinutes": "2D4*10",
+        "territorySquareMiles": "1D6*10000",
+        "fleesAtSdcDepletedPercent": 90,
+        "huntsRaceIds": ["race_astral_entity"],
+        "avoidedByNightlordMinions": true
+      }
+    },
+    "demographics": {
+      "averageHeight": "30+ feet (9.1 m) tall/wide; skyscraper-sized rare",
+      "averageWeight": "N/A — ectoplasmic mass",
+      "averageLifespan": "Unknown",
+      "alignmentTendencies": [
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Engulf",
+        "description": "Sweep victims into swirling ectoplasm — 1D6 S.D.C./H.P. per melee, total disorientation (no combat bonuses, most skills unusable). Escape: one dodge roll per melee. Carried 1D4×100 yards/meter per melee while engulfed."
+      },
+      {
+        "name": "Energy Drain",
+        "description": "Each engulfed victim saves vs psionics or loses 1D6 P.P.E. or I.S.P. (greater pool). Mind Block adds +6 to save."
+      },
+      {
+        "name": "Buffet",
+        "description": "Directed force blast — 4D6 S.D.C. +1 per 10 ft (3 m) of length; range 200 ft. Usable inside or outside the body."
+      },
+      {
+        "name": "Regeneration & Dispersal",
+        "description": "Regenerates 4D6 S.D.C./H.P. per minute. At 0 S.D.C. dispersed into wisps (reforms in 48 hours); at 0 H.P. destroyed."
+      },
+      {
+        "name": "Tactics",
+        "description": "Flee and hide is the best counter. Rarely pursues after escape unless attacked first. Often expels stunned/unconscious victims; thunders away at 90% S.D.C. loss."
+      }
+    ]
+  },
+  {
+    "id": "race_shadow_mantis",
+    "name": "Shadow Mantis",
+    "description": "Void-bound apex predator — Shadow Locust / Void Hunter survivors of an ancient astral invasion. Diabolic; travels alone or in pairs in the Void only (cannot leave). Immune to most energy; fights until target dies or it feeds. Not player characters.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 70
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "2D4",
+      "me": "2D4",
+      "ma": "2D4",
+      "ps": "3D6+20",
+      "pp": "3D6+10",
+      "pe": "3D6+12",
+      "pb": "2D4",
+      "spd": "1D6*10+90"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "2D6*10+100",
+      "averageStandardPpe": "2D4",
+      "sdc": "1D4*100+200"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 4,
+        "strike": 5,
+        "parry": 5,
+        "dodge": 5,
+        "rollWithImpact": 3,
+        "horrorFactor": 14
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "alternateNames": ["Shadow Locust", "Void Hunter"],
+        "voidBoundOnly": true,
+        "attributesMostlyMeaningless": true,
+        "bodyLengthFeet": 10,
+        "wingspanFeet": 9,
+        "horrorFactorUnaware": 11,
+        "regenerationPerMelee": 10,
+        "seeInvisible": true,
+        "seeFullLightSpectrum": true,
+        "pierceIllusionDisguiseCamouflage": true,
+        "voidFlySpeedMph": 100,
+        "immuneEnergyAttacks": true,
+        "immuneMagicPsionicsTalentsIllusionHorrorFactor": true,
+        "magicWeaponsHalfDamage": true,
+        "physicalAttacksNormalDamage": true,
+        "naturalAttacksPerMelee": 5,
+        "initiativeBonus": 2,
+        "biteDamage": "4D6+6",
+        "clawDamage": "1D4*10+10",
+        "grappleDamage": "3D6",
+        "grappleBiteDefensePenalty": -6,
+        "mayBeImmortal": true,
+        "typicalGroupSize": "1-2",
+        "feedsOnSlainVictims": true
+      }
+    },
+    "demographics": {
+      "averageHeight": "10 feet long (3 m); 9 ft (2.7 m) wingspan",
+      "averageWeight": "Unknown",
+      "averageLifespan": "Unknown — may be immortal",
+      "alignmentTendencies": [
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Aberrant",
+        "Miscreant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Void Confinement",
+        "description": "Cannot leave the Void — prevented from entering the wider Astral Plane."
+      },
+      {
+        "name": "Energy Immunity",
+        "description": "Invulnerable to lasers, plasma, electricity, Nightbane Talents, psionics, and spell effects. Magic weapons do half damage; physical/kinetic attacks do normal damage."
+      },
+      {
+        "name": "Regeneration",
+        "description": "10 S.D.C./H.P. per melee round (Nightbane-fast)."
+      },
+      {
+        "name": "Natural Combat",
+        "description": "Five attacks per melee. Bite 4D6+6; claws 1D4×10+10; grapple 3D6 and victim −6 to defend vs bite."
+      },
+      {
+        "name": "Predator Behavior",
+        "description": "Attacks without quarter; may pause to feed on a kill while others flee. Lone specimen can threaten all but the strongest astral groups."
+      }
+    ]
+  },
+  {
+    "id": "race_dream_fury",
+    "name": "Dream Fury",
+    "description": "Mindless Dreamstream predator — constructs of pure anger spawned from nightmare rage. Wander in groups of 1D4+1; incite berserk violence and mimic past enemies. Not player characters; no other dream creature associates with them.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 105
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "3D4",
+      "me": "3D4",
+      "ma": "3D4",
+      "ps": "2D6+20",
+      "pp": "2D6+12",
+      "pe": "1D6+20",
+      "pb": "2D6",
+      "spd": "4D6+6"
+    },
+    "strengthCategory": "supernatural",
+    "vitals": {
+      "hpFormula": "1",
+      "averageStandardPpe": "1D6",
+      "sdc": "1D6+20"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "apm": 3,
+        "strike": 2,
+        "parry": 2,
+        "dodge": 2,
+        "rollWithImpact": 1,
+        "pullPunch": 2,
+        "save_magic": 2,
+        "save_psionics": 2,
+        "save_horror_factor": 10
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "mentalAttributesMeaningless": true,
+        "noHitPointsDreamstream": true,
+        "sdcFormula": "PE*5",
+        "horrorFactorFormula": "1D6+9",
+        "packSizeTypical": "1D4+1",
+        "speaksAllLanguages": true,
+        "alterShapeOncePerMelee": true,
+        "halfPackMimicsPastEnemies": true,
+        "inciteRageRadiusFeet": 20,
+        "inciteRageSave": "vs psionic attack",
+        "berserkBonusInitiativeStrikeParry": 1,
+        "ragePersistsMeleeRoundsAfterKill": "1D6",
+        "dreamCombatSaveBonus": 5,
+        "clawDamageBonus": "1D6-2D6",
+        "initiativeBonus": 1,
+        "nightmarePoolIntrusion": true,
+        "violenceProvocationChancePercent": "01-60",
+        "originTheoryTransformedPsychics": true
+      }
+    },
+    "demographics": {
+      "averageHeight": "Roughly 6 feet (1.8 m)",
+      "averageWeight": "Varies by shape",
+      "averageLifespan": "Unknown — possibly unaging",
+      "alignmentTendencies": [
+        "Aberrant",
+        "Diabolic"
+      ],
+      "excludedAlignments": [
+        "Principled",
+        "Scrupulous",
+        "Unprincipled",
+        "Anarchist",
+        "Miscreant"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Alter Shape",
+        "description": "Half a pack mimics enemies from targets' past — fear or fury (save vs insanity/psionic attack). Shape change once per melee."
+      },
+      {
+        "name": "Incite Rage",
+        "description": "20 ft radius — save vs psionic attack or berserk attack on all nearby (+1 init/strike/parry); rage lasts 1D6 melees after Fury destroyed."
+      },
+      {
+        "name": "Dream Combat Resistance",
+        "description": "+5 to save vs dream manipulation."
+      },
+      {
+        "name": "Dream Pool Nightmares",
+        "description": "May intrude on sleepers' Dream Pools — victims 01–60% chance of unreasonable violence the next 1–2 days."
+      },
+      {
+        "name": "Natural Combat",
+        "description": "Four attacks per melee; supernatural P.S.; optional claw +1D6–2D6. Some mimics carry normal-damage hand weapons."
+      }
+    ]
+  },
+  {
+    "id": "race_dream_persona",
+    "name": "Dream Persona",
+    "description": "Dream Pool cast — fragments of a dreamer's personality, memory, or emotion playing a scripted role. GM spawn template for obstacles in a Dream Pool (bit players, Regulars, or rare independents). Not player characters; typical personas cannot leave their birth Pool.",
+    "raceAudience": "creature",
+    "raceComposition": "creature",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 106
+      }
+    ],
+    "canPickOcc": false,
+    "attributes": {
+      "iq": "3D6",
+      "me": "3D6",
+      "ma": "3D6",
+      "ps": "4D6+2",
+      "pp": "4D6",
+      "pe": "4D6",
+      "pb": "4D6",
+      "spd": "5D6"
+    },
+    "strengthCategory": "standard",
+    "vitals": {
+      "hpFormula": "1",
+      "averageStandardPpe": 0,
+      "sdc": "2D6"
+    },
+    "psionics": {
+      "capabilityType": "none"
+    },
+    "occLimitations": {
+      "forbiddenCategories": [
+        "Magic",
+        "Psychic"
+      ],
+      "forbiddenOccIds": []
+    },
+    "innateSkills": [],
+    "innateBonuses": {
+      "modifiers": {
+        "save_horror_factor": 6
+      },
+      "metadata": {
+        "creatureStatBlock": true,
+        "spawnTemplate": true,
+        "personaTier": "typical",
+        "personaTiers": {
+          "bitPlayer": { "sdc": "2D6", "iqMeTypical": "3-5", "lifespan": "hours to 1D4 days" },
+          "regular": { "sdc": "4D6*10", "dreamCombatSaveBonus": 4, "lifespan": "decades until forgotten" },
+          "independent": { "sdc": "4D6*10", "ppe": "1D4", "dreamDancerEquivalent": true, "canWanderDreamstream": true }
+        },
+        "iqCannotExceedDreamer": true,
+        "lesserPersonaLowIqMe": "3-5 average",
+        "sizeVariesUpToFourTimesHuman": true,
+        "nightmarishPersonaMaxHeightFeet": "8-12",
+        "horrorFactorTypical": "1D4+6",
+        "noHitPointsDreamstream": true,
+        "sdcRange": "2D6 to 4D6*10",
+        "dreamCombatSaveBonusTypical": 2,
+        "dreamCombatSaveBonusRegular": 4,
+        "inheritsDreamerPowersChance": true,
+        "outsidePoolSdcLossPerMelee": "1D6",
+        "independentCannotMaterializePhysicalWorld": true,
+        "skillsVaryByDreamRole": true,
+        "poolGearCeasesOutsidePool": true,
+        "lifespanTypicalDays": "1D4",
+        "linkedRaceLivingNightmare": "race_living_nightmare"
+      }
+    },
+    "demographics": {
+      "averageHeight": "Human-sized typical; up to 12 ft (3.6 m) nightmarish",
+      "averageWeight": "Varies by role",
+      "averageLifespan": "Hours to days (typical); decades (Regular); centuries (independent)",
+      "alignmentTendencies": [
+        "Any"
+      ]
+    },
+    "classAbilities": [
+      {
+        "name": "Dream Pool Bound",
+        "description": "Typical and Regular personas cannot leave their birth Dream Pool. Removed forcibly: lose 1D6 S.D.C./melee until cohesion fails and they vanish (even Regulars)."
+      },
+      {
+        "name": "Role & Skills",
+        "description": "Skills and gear match the dream story — bit players few/none; Regulars may mirror dreamer skills at same or lower proficiency; imagined skills at base level without bonuses."
+      },
+      {
+        "name": "Inherited Powers",
+        "description": "If the dreamer had psionics, magic, or (Nightbane) Talents, personas in that Pool may duplicate some or all — Pool-bound only unless independent."
+      },
+      {
+        "name": "Independent Regulars",
+        "description": "Rare independents wander the Dreamstream with Dream Dancer-equivalent abilities and 1D4 P.P.E.; still cannot materialize on Earth (`race_living_nightmare` covers physical escape)."
+      },
+      {
+        "name": "Combat",
+        "description": "Hand to Hand per role (expert/martial arts/assassin for aggressive personas). Typical +2 vs dream manipulation; Regular +4. Independent supernatural P.S."
+      }
+    ]
   }
 ]
