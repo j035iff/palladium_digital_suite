@@ -4,7 +4,6 @@ import type {
   ConfiguratorFilterGroupOp,
 } from '../../lib/configuratorFilterExpression'
 import {
-  formatConfiguratorFilterLabel,
   newFilterGroupNode,
   newFilterNotNode,
   newFilterPredicateNode,
@@ -82,7 +81,7 @@ function ConfiguratorFilterNodeEditor({
   onChange,
 }: NodeEditorProps) {
   const legacyTag = (node as { kind: string; tag?: string }).kind === 'tag'
-    ? (node as { id: string; kind: 'tag'; tag: string })
+    ? (node as unknown as { id: string; kind: 'tag'; tag: string })
     : null
 
   if (node.kind === 'predicate' || legacyTag) {
@@ -342,11 +341,4 @@ export function ConfiguratorFilterBuilder({
       }}
     />
   )
-}
-
-/** @deprecated Use {@link ConfiguratorFilterBuilder}. */
-export const OccTagFilterBuilder = ConfiguratorFilterBuilder
-
-export function formatConfiguratorFilterCategoryLabel(value: string): string {
-  return formatConfiguratorFilterLabel(value)
 }

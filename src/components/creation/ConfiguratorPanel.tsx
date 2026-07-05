@@ -732,7 +732,6 @@ export function ConfiguratorPanel() {
         race={activeRace}
         occ={activeOcc ?? undefined}
         specializationId={character.occSpecializationId}
-        raceCanPickOcc={raceCanPickOcc}
         morphus={morphus}
         panelStyle={panelStyle}
       />

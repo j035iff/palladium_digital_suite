@@ -62,7 +62,7 @@ describe('morphusForgeNavigation', () => {
     const forgeState = {
       path: 'characteristics' as const,
       activeSubTab: 'trait_forge' as const,
-      subTabCompleted: { crossroads: true },
+      subTabCompleted: { crossroads: true as const },
       subTabSnapshots: {
         crossroads: morphusCrossroadsSnapshot({ path: 'characteristics' }),
       },

@@ -6,7 +6,6 @@ import {
   statStackTotal,
 } from './creationStatEngine'
 import {
-  buildDisplayAttributesForLiveEngine,
   resolveLiveCombatMirrorBonuses,
   resolveLiveIqSkillBonus,
 } from './liveStatEngine'
@@ -61,8 +60,8 @@ export function computePsHandToHandDamageBonus(
 /** @deprecated Use {@link computePsHandToHandDamageBonus} with character context. */
 export function computePsHandToHandDamageBonusFromPs(ps: number): number {
   const attrs = {
-    ps: { score: ps, type: 'normal' as const },
-  } as CharacterAttributes
+    ps: { score: ps, tier: 'standard' as const },
+  } as unknown as CharacterAttributes
   return statStackTotal(
     buildCreationStatStack({ kind: 'combat', combatKey: 'damage', attrs }),
   )

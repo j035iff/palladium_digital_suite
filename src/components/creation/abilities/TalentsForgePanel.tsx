@@ -54,11 +54,14 @@ export function TalentsForgePanel({
   const { character, addSelectedAbility } = useCharacter()
   const [search, setSearch] = useState('')
   const [hideMorphusLockedElite, setHideMorphusLockedElite] = useState(true)
-  const selectedIds = character.selectedAbilities ?? []
+  const selectedIds = useMemo(
+    () => character.selectedAbilities ?? [],
+    [character.selectedAbilities],
+  )
 
   const morphusForgeState = useMemo(
     () => resolveMorphusForgeState(character),
-    [character.morphusForgeState, character.creationTraitForgeStubComplete],
+    [character],
   )
 
   const gateContext = useMemo((): TalentSelectionGateContext => {

@@ -7,11 +7,13 @@ import {
   occRelatedSkillAllowedInCategory,
 } from './occCreationDerivation'
 
-const occWithPhysicalExcept: PalladiumOcc = {
+const occWithPhysicalExcept = {
   id: 'occ_test',
   name: 'Test',
   description: '',
   gameSystems: ['nightbane'],
+  sources: [],
+  tags: [],
   occType: 'scholar_civilian',
   occSkillsCore: [],
   occRelatedSkills: {
@@ -30,14 +32,14 @@ const occWithPhysicalExcept: PalladiumOcc = {
       },
     ],
   },
-  secondarySkills: { initialSlotsCount: 4 },
-  wpRules: { allowedCategories: [] },
-  handToHandRules: {},
+  secondarySkills: { initialSlotsCount: 4, forbiddenCategories: [] },
+  wpRules: { coreWps: [], forbiddenWps: [] },
+  handToHandRules: { defaultSkillId: null, upgradePaths: [] },
   staticBonuses: {},
   attributeRequirements: {},
   finances: {},
   startingEquipment: {},
-}
+} as unknown as PalladiumOcc
 
 describe('occRelatedSkillAllowedInCategory', () => {
   it('blocks except-list skills using short exception ids', () => {

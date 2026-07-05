@@ -33,7 +33,6 @@ import {
   buildAttrFormulaLedgerFields,
   diceTermsFromAttrFormula,
   dualFormPpeLedgerFormulaOpts,
-  formatVitalDiceTooltipTerm,
   formatVitalLedgerTooltip,
   formatMorphusSdcValueTooltip,
   hitPointsPerLevelDiceFormula,
@@ -61,7 +60,6 @@ import {
 } from './morphusNightbaneBase'
 import { buildMorphusTraitHorrorFactorDetails, buildMorphusTraitSdcBonusDetails, collectMorphusTraitStatDiceContributions, morphusTraitAttributeFlatBonus } from './morphusCreationLedger'
 import type { MorphusStatModifiers } from '../types'
-import { DEFAULT_HORROR_FACTOR_BY_FORM } from '../data/constants'
 
 export type PendingDiceRoll = {
   id: string
@@ -616,7 +614,7 @@ export function buildPendingDiceBlocks(
           hint: hpFields.hint,
           groups: [],
         },
-        hpPerLevel,
+        hpPerLevel ?? undefined,
         'race',
       ),
     )

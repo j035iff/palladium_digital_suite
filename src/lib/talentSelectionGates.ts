@@ -10,6 +10,7 @@ import {
 import type {
   MorphusForgeSlotState,
   MorphusForgeState,
+  MorphusTablePrerequisites,
   MorphusTraitSlotResolution,
   PalladiumOcc,
   PalladiumTalent,
@@ -100,8 +101,11 @@ export function readStructuredMorphusTablePrerequisites(
   talent: PalladiumTalent,
 ): readonly string[] {
   const pre = talent.prerequisites
-  if (pre && !Array.isArray(pre) && pre.morphusTableIds?.length) {
-    return pre.morphusTableIds
+  if (pre && !Array.isArray(pre)) {
+    const structured = pre as MorphusTablePrerequisites
+    if (structured.morphusTableIds?.length) {
+      return structured.morphusTableIds
+    }
   }
   return []
 }
@@ -193,7 +197,7 @@ function prerequisiteBlockers(
     } else if (row.type === 'talent' && row.talentId) {
       if (!ctx.selectedTalentIds.includes(row.talentId)) blockers.push(label)
     } else if (row.type === 'other_talent_any_of' && row.talentIds?.length) {
-      if (!row.talentIds.some((id) => ctx.selectedTalentIds.includes(id))) {
+      if (!row.talentIds.some((id: string) => ctx.selectedTalentIds.includes(id))) {
         blockers.push(label)
       }
     }

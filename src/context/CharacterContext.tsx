@@ -91,7 +91,6 @@ import {
 import { serializeCharacterRootForSave } from '../lib/characterSave'
 import {
   createBlankCharacterForGenre,
-  CREATION_PLACEHOLDER_OCC,
   ensureCharacterRoot,
   retainCharacterRoot,
 } from '../lib/characterRoot'
@@ -220,7 +219,6 @@ import type { SlotActions } from '../components/creation/morphus/MorphusSlotNode
 import {
   abilityPassesOccSupernaturalRules,
   deriveOccCreation,
-  occCreationAbilityBudget,
   occStartingSpellLevelCap,
   applyOccStartingSkillPicks,
   patchCharacterCreationFromOcc,
@@ -1139,7 +1137,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const morphusTraitRows = useMemo(
     () => resolveActiveMorphusTraits(rawCharacter),
-    [rawCharacter.activeMorphusCharacteristicIds, rawCharacter.morphusTraitSlotResolutions],
+    [rawCharacter],
   )
 
   const morphusNaturalAr = useMemo(
@@ -1217,6 +1215,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       reachPercentBonus: morphusPassiveBundle.reachPercentBonus,
       jumpMultiplier: morphusPassiveBundle.jumpMultiplier,
       minimumJumpFeet: morphusPassiveBundle.minimumJumpFeet,
+      attributeRollBonuses: morphusPassiveBundle.attributeRollBonuses,
     }
   }, [morphusPassiveBundle])
 
@@ -1911,7 +1910,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         applyOccSelectionToCharacterState(prev, occId, { activeForm }),
       )
     },
-    [activeForm, rawCharacter.raceId],
+    [activeForm, character.raceId, character.hostGenreId, character.creationGenreId],
   )
 
   const setOccSpecializationId = useCallback((specializationId: string) => {
@@ -1988,7 +1987,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         ),
       })
 
-      let next: CharacterRootState = withRace
+      let next: CharacterRootState
       if (raceAllowsOccPick(race)) {
         const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
         if (occRow && isOccAllowedForRace(race, occRow)) {
@@ -2035,7 +2034,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         setPsychicTierState('none')
       }
     }
-  }, [activeForm, rawCharacter.hostGenreId])
+  }, [activeForm, rawCharacter.hostGenreId, rawCharacter.creationGenreId])
 
   const commitSpawnVitalityRolls = useCallback((rolls: SpawnVitalityRolls) => {
     setRawCharacter((prev) => {
@@ -2225,7 +2224,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         }
       })
     },
-    [psychicTier, activeRace, effectiveOcc],
+    [setRawCharacter],
   )
 
   const addMorphusCustomTraitSlot = useCallback((catalogEntryId: string) => {

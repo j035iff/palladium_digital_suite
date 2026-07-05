@@ -5,7 +5,6 @@ import {
   describeConfiguratorFilterMismatch,
   type ConfiguratorFilterExpression,
   type ConfiguratorFilterFormatOptions,
-  occMatchesConfiguratorTag,
 } from './configuratorFilterExpression'
 import { isOccAllowedForRace } from './raceEngine'
 

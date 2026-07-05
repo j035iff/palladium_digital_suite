@@ -120,7 +120,7 @@ function nodeShowsTraitModifiers(node: MorphusSlotNode): boolean {
   return node.kind === 'table' || node.kind === 'variant_choice'
 }
 
-export function isMorphusMultiOptionChoice(node: MorphusSlotNode): boolean {
+function isMorphusMultiOptionChoice(node: MorphusSlotNode): boolean {
   return node.kind === 'choice' && (node.options?.length ?? 0) > 1
 }
 
@@ -144,7 +144,7 @@ function MorphusChoiceSubTableTabs({
   selectedCatalogIds?: ReadonlySet<string>
   morphusHouseRules?: MorphusHouseRules
 }) {
-  const options = node.options ?? []
+  const options = useMemo(() => node.options ?? [], [node.options])
   const chosenTableId = readMorphusChoiceBranchTableId(slotState, node.path)
   const [previewTableId, setPreviewTableId] = useState<string | undefined>(undefined)
   const activeTableId = chosenTableId ?? previewTableId

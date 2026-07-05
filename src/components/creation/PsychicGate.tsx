@@ -16,10 +16,11 @@ import type { PsychicTier } from '../../types'
 
 const TIERS: PsychicTier[] = ['none', 'minor', 'major']
 
-const TIER_LABEL: Record<(typeof TIERS)[number], string> = {
+const TIER_LABEL: Record<PsychicTier, string> = {
   none: 'None',
   minor: 'Minor',
   major: 'Major',
+  master: 'Master',
 }
 
 export function PsychicGate() {

@@ -78,6 +78,8 @@ describe('resolveSkillPercent attribute modifiers', () => {
       },
       {
         id: 'skill_seduction',
+        name: 'Seduction',
+        gameSystems: ['nightbane'],
         categories: ['Rogue'],
         synergies: [],
         prerequisites: [],
@@ -100,7 +102,7 @@ describe('resolveSkillPercent attribute modifiers', () => {
             },
           ],
         },
-      },
+      } as unknown as import('../data/library/catalogTypes').PalladiumSkillCatalogEntry,
     )
 
     expect(resolved.equationPercent).toBe(26)

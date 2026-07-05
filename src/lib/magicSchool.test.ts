@@ -34,7 +34,7 @@ describe('resolveMagicSchool', () => {
 })
 
 describe('spellSchoolAllowedForOcc', () => {
-  const wizardOnlyOcc: PalladiumOcc = {
+  const wizardOnlyOcc = {
     id: 'occ_test_wizard',
     name: 'Test Wizard',
     description: '',
@@ -42,9 +42,9 @@ describe('spellSchoolAllowedForOcc', () => {
     occType: 'scholar_civilian',
     occSkillsCore: [],
     occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
-    secondarySkills: { initialSlotsCount: 0 },
-    wpRules: { allowedCategories: [] },
-    handToHandRules: {},
+    secondarySkills: { initialSlotsCount: 0, forbiddenCategories: [] },
+    wpRules: { coreWps: [], forbiddenWps: [] },
+    handToHandRules: { defaultSkillId: null, upgradePaths: [] },
     staticBonuses: {},
     attributeRequirements: {},
     finances: {},
@@ -55,7 +55,7 @@ describe('spellSchoolAllowedForOcc', () => {
       progressionRoadmap: [],
       magicSchools: ['wizard'],
     },
-  }
+  } as unknown as PalladiumOcc
 
   it('allows spells in listed schools', () => {
     expect(spellSchoolAllowedForOcc(wizardOnlyOcc, 'wizard').allowed).toBe(true)
@@ -85,7 +85,7 @@ describe('magic catalog school metadata', () => {
 })
 
 describe('abilityPassesOccSupernaturalRules magic schools', () => {
-  const wizardOcc: PalladiumOcc = {
+  const wizardOcc = {
     id: 'occ_test_wizard_gate',
     name: 'Wizard',
     description: '',
@@ -93,9 +93,9 @@ describe('abilityPassesOccSupernaturalRules magic schools', () => {
     occType: 'scholar_civilian',
     occSkillsCore: [],
     occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
-    secondarySkills: { initialSlotsCount: 0 },
-    wpRules: { allowedCategories: [] },
-    handToHandRules: {},
+    secondarySkills: { initialSlotsCount: 0, forbiddenCategories: [] },
+    wpRules: { coreWps: [], forbiddenWps: [] },
+    handToHandRules: { defaultSkillId: null, upgradePaths: [] },
     staticBonuses: {},
     attributeRequirements: {},
     finances: {},
@@ -109,9 +109,9 @@ describe('abilityPassesOccSupernaturalRules magic schools', () => {
       magicSchools: ['wizard'],
     },
     progression: { startingSpellLevelCap: 4 },
-  }
+  } as unknown as PalladiumOcc
 
-  it('allows wizard school spells within level cap', () => {
+  it('allows spells in listed schools', () => {
     const spell = getFeatureById('magic_wizard_blinding_flash')
     expect(spell).toBeDefined()
     const gate = abilityPassesOccSupernaturalRules(wizardOcc, spell!, 4, 'nightbane')
@@ -133,7 +133,7 @@ describe('normalizeMagicSchool', () => {
   })
 
   it('occMagicSchools normalizes O.C.C. entries', () => {
-    const occ: PalladiumOcc = {
+    const occ = {
       id: 'x',
       name: 'x',
       description: '',
@@ -141,9 +141,9 @@ describe('normalizeMagicSchool', () => {
       occType: 'scholar_civilian',
       occSkillsCore: [],
       occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
-      secondarySkills: { initialSlotsCount: 0 },
-      wpRules: { allowedCategories: [] },
-      handToHandRules: {},
+      secondarySkills: { initialSlotsCount: 0, forbiddenCategories: [] },
+      wpRules: { coreWps: [], forbiddenWps: [] },
+      handToHandRules: { defaultSkillId: null, upgradePaths: [] },
       staticBonuses: {},
       attributeRequirements: {},
       finances: {},
@@ -154,7 +154,7 @@ describe('normalizeMagicSchool', () => {
         progressionRoadmap: [],
         magicSchools: ['Wizard'],
       },
-    }
+    } as unknown as PalladiumOcc
     expect(occMagicSchools(occ)).toEqual(['wizard'])
   })
 })

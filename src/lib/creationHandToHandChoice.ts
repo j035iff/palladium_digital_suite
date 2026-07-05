@@ -402,7 +402,7 @@ export function effectiveCreationHandToHandTier(
 /** O.C.C. related slots reserved by the effective Hand-to-Hand choice. */
 export function creationHandToHandReservedRelatedSlots(
   occ: PalladiumOcc,
-  character: Pick<Character, 'creationHandToHandTier'>,
+  character: Pick<Character, 'creationHandToHandTier' | 'primary'>,
 ): number {
   return creationHandToHandElectiveSlotCost(
     occ,

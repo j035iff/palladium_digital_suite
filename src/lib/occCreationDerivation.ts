@@ -29,7 +29,6 @@ import { getPalladiumMagicSpellById } from '../data/library/registry'
 import {
   magicSchoolForFeature,
   occMagicSchools,
-  spellLevelForFeature,
   spellSchoolAllowedForOcc,
 } from './magicSchool'
 import { spellAccessibleToOcc } from './spellAccessPath'
@@ -475,9 +474,7 @@ export function abilityPassesOccSupernaturalRules(
   genreId?: string | null,
 ): { allowed: boolean; reason?: string } {
   const cat = featureBudgetCategory(feature)
-  const level = spellLevelForFeature(feature)
   const school = magicSchoolForFeature(feature)
-  const structuredSchoolGate = (occ.ppeEngine?.magicSchools?.length ?? 0) > 0
   const psionicTier =
     typeof feature.metadata?.psionicTier === 'string'
       ? feature.metadata.psionicTier

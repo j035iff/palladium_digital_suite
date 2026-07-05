@@ -4,7 +4,7 @@ import {
 
 } from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
 
-import { useSupernaturalAbilitiesForge } from './SupernaturalAbilitiesForgeContext'
+import { useSupernaturalAbilitiesForge } from './useSupernaturalAbilitiesForge'
 
 import { MagicForgePanel } from './MagicForgePanel'
 
@@ -185,8 +185,6 @@ export function SupernaturalAbilitiesForge() {
               spellCap={spellCap}
 
               psionicBudget={budget.psionicSlots}
-
-              psionicCount={counts.psionic}
 
             />
 

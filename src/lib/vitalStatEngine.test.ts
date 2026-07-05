@@ -110,6 +110,7 @@ describe('resolveVitalPendingBlockTotal', () => {
         {
           kind: 'race',
           display: '1D6',
+          tooltip: '',
           rolls: [
             {
               id: 'hp.race.0',

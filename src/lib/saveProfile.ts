@@ -28,7 +28,6 @@ import {
 } from './liveStatEngine'
 import {
   formatAdditiveSaveTooltip,
-  formatSaveRollBonus,
   type SaveRollBonusLine,
 } from './saveRollDisplay'
 

@@ -10,7 +10,7 @@ import {
   resolveSpellsForOcc,
 } from './spellAccessResolver'
 
-const wizardOcc: PalladiumOcc = {
+const wizardOcc = {
   id: 'occ_test_wizard',
   name: 'Test Wizard',
   description: '',
@@ -18,9 +18,9 @@ const wizardOcc: PalladiumOcc = {
   occType: 'scholar_civilian',
   occSkillsCore: [],
   occRelatedSkills: { initialSlotsCount: 0, categoryRules: [] },
-  secondarySkills: { initialSlotsCount: 0 },
-  wpRules: { allowedCategories: [] },
-  handToHandRules: {},
+  secondarySkills: { initialSlotsCount: 0, forbiddenCategories: [] },
+  wpRules: { coreWps: [], forbiddenWps: [] },
+  handToHandRules: { defaultSkillId: null, upgradePaths: [] },
   staticBonuses: {},
   attributeRequirements: {},
   finances: {},
@@ -34,7 +34,7 @@ const wizardOcc: PalladiumOcc = {
     magicSchools: ['wizard'],
   },
   progression: { startingSpellLevelCap: 4 },
-}
+} as unknown as PalladiumOcc
 
 const mirrormageOcc: PalladiumOcc = {
   ...wizardOcc,

@@ -5,9 +5,7 @@ import type {
   CharacterAttributes,
   FeatureModifiers,
 } from '../types'
-import { getFormState } from '../types'
-import { handToHandAttackBonus } from '../utils/combatCalculator'
-import { buildLiveCombatContext, resolveLiveCharacterMaxApm } from './liveStatEngine'
+import { resolveLiveCharacterMaxApm } from './liveStatEngine'
 
 /**
  * PC base attacks per melee plus Hand-to-Hand extra attacks (`stat_engine_spec.md` §4.5).

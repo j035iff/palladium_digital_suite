@@ -245,7 +245,7 @@ function lockedSingleCategoryPool(
 
 function countSelectionsForPlanStep(
   planIndex: number,
-  step: OccSupernaturalCreationSelectionStep,
+  _step: OccSupernaturalCreationSelectionStep,
   selections: readonly StructuredPsionicSelection[],
 ): number {
   return selections.filter((s) => s.planIndex === planIndex).length

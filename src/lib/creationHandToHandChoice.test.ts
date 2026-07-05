@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import type { PalladiumOcc } from '../types'
 
+import { characterFixture } from '../data/characterFixture'
+
 import {
 
   canAffordHandToHandTier,
@@ -42,7 +44,7 @@ const exGovernmentOcc = {
 
   },
 
-} as PalladiumOcc
+} as unknown as PalladiumOcc
 
 
 
@@ -62,7 +64,7 @@ const pandoraOcc = {
 
   },
 
-} as PalladiumOcc
+} as unknown as PalladiumOcc
 
 
 
@@ -102,20 +104,20 @@ describe('creationHandToHandChoice', () => {
 
       },
 
-    } as PalladiumOcc
+    } as unknown as PalladiumOcc
 
     expect(occStartingHandToHandTier(assassinSpec)).toBe('assassin')
 
     expect(creationHandToHandElectiveSlotCost(assassinSpec, 'assassin')).toBe(2)
 
-    expect(effectiveCreationHandToHandTier({ creationHandToHandTier: 'none' }, assassinSpec)).toBe(
+    expect(effectiveCreationHandToHandTier({ primary: characterFixture.primary, creationHandToHandTier: 'none' }, assassinSpec)).toBe(
       'assassin',
     )
-    expect(effectiveCreationHandToHandTier({}, assassinSpec)).toBe('assassin')
+    expect(effectiveCreationHandToHandTier({ primary: characterFixture.primary }, assassinSpec)).toBe('assassin')
     expect(
-      creationHandToHandReservedRelatedSlots(assassinSpec, { creationHandToHandTier: 'none' }),
+      creationHandToHandReservedRelatedSlots(assassinSpec, { primary: characterFixture.primary, creationHandToHandTier: 'none' }),
     ).toBe(2)
-    expect(creationHandToHandReservedRelatedSlots(assassinSpec, {})).toBe(2)
+    expect(creationHandToHandReservedRelatedSlots(assassinSpec, { primary: characterFixture.primary })).toBe(2)
 
   })
 
@@ -200,7 +202,7 @@ describe('creationHandToHandChoice', () => {
           { targetSkillId: 'hth_assassin', electiveSlotCost: 2 },
         ],
       },
-    } as PalladiumOcc
+    } as unknown as PalladiumOcc
 
     const effective = resolveEffectivePalladiumOcc(adaBase, 'occ_ada_assassin_specialist')
 
@@ -214,11 +216,11 @@ describe('creationHandToHandChoice', () => {
     expect(creationHandToHandMeetsMinimumTier(effective, 'basic')).toBe(false)
     expect(creationHandToHandMeetsMinimumTier(effective, 'expert')).toBe(true)
     expect(creationHandToHandMeetsMinimumTier(effective, 'assassin')).toBe(true)
-    expect(effectiveCreationHandToHandTier({ creationHandToHandTier: 'basic' }, effective)).toBe(
+    expect(effectiveCreationHandToHandTier({ primary: characterFixture.primary, creationHandToHandTier: 'basic' }, effective)).toBe(
       'basic',
     )
     expect(
-      effectiveCreationHandToHandTier({ creationHandToHandTier: 'expert' }, effective),
+      effectiveCreationHandToHandTier({ primary: characterFixture.primary, creationHandToHandTier: 'expert' }, effective),
     ).toBe('expert')
   })
 

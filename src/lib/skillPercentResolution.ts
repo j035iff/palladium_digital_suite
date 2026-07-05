@@ -1,5 +1,11 @@
 import type { ActiveForm, Character, MorphusCharacteristic, MorphusSurfaceType } from '../types'
-import { buildLiveSkillContext } from './liveSkillEngine'
+import { aggregateAllPassiveModifiers } from './featureEngine'
+import {
+  buildDisplayAttributesForLiveEngine,
+  resolveLiveIqSkillBonus,
+} from './liveStatEngine'
+import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import { maPbScaledBonuses } from './skillEquation'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
@@ -43,11 +49,33 @@ export function buildSkillPercentContext(
   maPbBonus?: number,
   morphusSurfaceType?: MorphusSurfaceType,
 ): SkillPercentResolutionContext {
-  const live = buildLiveSkillContext(character, activeForm, { morphusSurfaceType })
+  const fullCharacter = character as Character
+  const passive = aggregateAllPassiveModifiers(fullCharacter, activeForm)
+  const displayAttrs = buildDisplayAttributesForLiveEngine(
+    fullCharacter,
+    activeForm,
+    passive,
+  )
+  const resolvedIq = resolveLiveIqSkillBonus(fullCharacter, activeForm)
+  const resolvedMaPb = maPbScaledBonuses(displayAttrs.ma, displayAttrs.pb)
   return {
-    ...live,
-    iqBonus: iqBonus ?? live.iqBonus,
-    maPbBonus: maPbBonus ?? live.maPbBonus,
+    characterLevel: character.level,
+    iqBonus: iqBonus ?? resolvedIq,
+    maPbBonus: maPbBonus ?? resolvedMaPb,
+    activeForm,
+    primaryPp: character.primary.attributes.pp,
+    morphusSurfaceType: morphusSurfaceType ?? 'hard_flat',
+    activeMorphusCharacteristics: resolveActiveMorphusTraits(fullCharacter),
+    attributeScores: {
+      iq: displayAttrs.iq,
+      me: displayAttrs.me,
+      ma: displayAttrs.ma,
+      ps: displayAttrs.ps.score,
+      pp: displayAttrs.pp,
+      pe: displayAttrs.pe,
+      pb: displayAttrs.pb,
+      spd: displayAttrs.spd,
+    },
   }
 }
 

@@ -42,7 +42,10 @@ export function MagicForgePanel({
   spellCount,
 }: MagicForgePanelProps) {
   const { character, addSelectedAbility } = useCharacter()
-  const selectedIds = character.selectedAbilities ?? []
+  const selectedIds = useMemo(
+    () => character.selectedAbilities ?? [],
+    [character.selectedAbilities],
+  )
   const [search, setSearch] = useState('')
   const [schoolFilter, setSchoolFilter] = useState<string>(ALL_SCHOOLS_TAB)
 

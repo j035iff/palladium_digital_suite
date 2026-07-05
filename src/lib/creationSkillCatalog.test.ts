@@ -16,11 +16,13 @@ import {
   resolveCreationLibrarySkillSelectionTier,
 } from './creationSkillPicks'
 
-const occWithPickLocksBlocked: PalladiumOcc = {
+const occWithPickLocksBlocked = {
   id: 'occ_test',
   name: 'Test',
   description: '',
   gameSystems: ['nightbane'],
+  sources: [],
+  tags: [],
   occType: 'scholar_civilian',
   occSkillsCore: [],
   occRelatedSkills: {
@@ -34,14 +36,14 @@ const occWithPickLocksBlocked: PalladiumOcc = {
       },
     ],
   },
-  secondarySkills: { initialSlotsCount: 4 },
-  wpRules: { allowedCategories: [] },
-  handToHandRules: {},
+  secondarySkills: { initialSlotsCount: 4, forbiddenCategories: [] },
+  wpRules: { coreWps: [], forbiddenWps: [] },
+  handToHandRules: { defaultSkillId: null, upgradePaths: [] },
   staticBonuses: {},
   attributeRequirements: {},
   finances: {},
   startingEquipment: {},
-}
+} as unknown as PalladiumOcc
 
 function libraryContext(
   overrides: Partial<CreationLibrarySkillContext> = {},

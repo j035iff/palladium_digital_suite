@@ -86,7 +86,7 @@ export function resolveConditionalRelatedSynergyLines(
 }
 
 export function resolvePickBasePercentAtLevel(
-  def: Pick<EngineSkillDef, 'basePercent' | 'perLevel' | 'acquisitionLevel'>,
+  def: Pick<EngineSkillDef, 'id' | 'basePercent' | 'perLevel' | 'acquisitionLevel'>,
   pick: CreationSkillPick | undefined,
   characterLevel: number,
 ): number {

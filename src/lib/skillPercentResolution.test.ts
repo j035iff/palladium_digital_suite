@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { resolveSkillPercent } from './skillPercentResolution'
 
 describe('resolveSkillPercent', () => {
@@ -20,9 +21,14 @@ describe('resolveSkillPercent', () => {
       },
       {
         id: 'skill_pick_locks',
+        name: 'Pick Locks',
+        gameSystems: ['nightbane'],
         categories: ['Espionage'],
         skillTraits: ['requires_light_touch'],
-      },
+        synergies: [],
+        prerequisites: [],
+        description: '',
+      } as unknown as PalladiumSkillCatalogEntry,
     )
 
     expect(
@@ -48,6 +54,7 @@ describe('resolveSkillPercent', () => {
           {
             id: 'test_bear',
             name: 'Bear',
+            tableCategory: 'characteristics',
             skillModifiers: {
               specificSkillOverrides: [
                 {
@@ -62,9 +69,14 @@ describe('resolveSkillPercent', () => {
       },
       {
         id: 'skill_test_light_touch_only',
+        name: 'Test Light Touch',
+        gameSystems: ['nightbane'],
         categories: ['Espionage'],
         skillTraits: ['requires_light_touch'],
-      },
+        synergies: [],
+        prerequisites: [],
+        description: '',
+      } as unknown as PalladiumSkillCatalogEntry,
     )
 
     expect(resolved.lines).toContainEqual({

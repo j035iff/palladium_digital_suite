@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import type { PalladiumOcc, Race } from '../../types'
 import {
   buildConfiguratorPackageSummary,
-  packageItemText,
   type ConfiguratorPackageItem,
   type ConfiguratorPackageSection,
 } from '../../lib/configuratorPackageSummary'
@@ -166,14 +165,12 @@ export function ConfiguratorPackagePanel({
   race,
   occ,
   specializationId,
-  raceCanPickOcc,
   morphus,
   panelStyle,
 }: {
   race: Race | undefined
   occ: PalladiumOcc | undefined
   specializationId: string | null | undefined
-  raceCanPickOcc: boolean
   morphus: boolean
   panelStyle: string
 }) {

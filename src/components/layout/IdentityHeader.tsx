@@ -173,8 +173,8 @@ export function IdentityHeader({
   const raceLabel = activeRace?.name?.trim() ? activeRace.name : '—'
   const occLabel = formatIdentityOccLabel(
     effectiveOcc?.name ?? character.occ.name,
-    character.occ.id,
-    character.occSpecializationId,
+    character.occ.id ?? '',
+    character.occSpecializationId ?? undefined,
     effectiveOcc,
   )
   const heightFeetError = identityHeightFeetError(profile.heightFeet)

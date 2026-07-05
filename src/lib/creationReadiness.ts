@@ -1,5 +1,5 @@
 import type { Character } from '../types'
-import { getLibraryOccById, getRaceById, raceCatalogGenreId } from '../data/library/registry'
+import { getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import {
   assessAbilitiesBudgetBlockers,
   resolveEffectiveCreationAbilityBudget,
@@ -14,7 +14,6 @@ import {
 } from './creationStep'
 import {
   assessRelatedSkillSlotBlockers,
-  creationRelatedSkillCap,
   resolveCreationPsychicTier,
 } from './creationPsychicSkills'
 import { assessRelatedSkillCategoryMinimumBlockers } from './occRelatedSkillMinimums'
@@ -28,7 +27,6 @@ import {
 } from './creationSkillPicks'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { creationHandToHandReservedRelatedSlots } from './creationHandToHandChoice'
-import { occSkillSlotPolicy } from './occCatalogEngine'
 import { raceLineageFromDefinition } from './raceEngine'
 import { creationAttributesBlockerLabel } from './creationFormLabels'
 
@@ -78,7 +76,7 @@ export function assessCreationReviewBlockers(
   const supportsDualForm = raceLineageFromDefinition(race) === 'nightbane'
 
   if (!attrsPlausible(character.primary.attributes)) {
-    blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'human'))
+    blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'primary'))
   }
   if (supportsDualForm && !attrsPlausible(character.morphus.attributes)) {
     blockers.push(creationAttributesBlockerLabel(supportsDualForm, 'morphus'))
@@ -109,11 +107,6 @@ export function assessCreationReviewBlockers(
       character.creationOccGrantPickDetails,
     )
     const psychicTier = resolveCreationPsychicTier(character)
-    const relatedCap = creationRelatedSkillCap(
-      relatedBase,
-      psychicTier,
-      occSkillSlotPolicy(occLib),
-    )
     const handToHandReserved = creationHandToHandReservedRelatedSlots(
       effectiveOcc,
       character,

@@ -42,7 +42,10 @@ export function SelectedAbilitiesPanel({
   isNightbane,
 }: SelectedAbilitiesPanelProps) {
   const { character, activeOcc, removeSelectedAbility } = useCharacter()
-  const selectedIds = character.selectedAbilities ?? []
+  const selectedIds = useMemo(
+    () => character.selectedAbilities ?? [],
+    [character.selectedAbilities],
+  )
   const grantedIds = useMemo(
     () =>
       occSupernaturalGrantedAbilityIds(activeOcc, character.occSpecializationId),

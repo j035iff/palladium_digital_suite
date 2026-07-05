@@ -241,7 +241,10 @@ export function resolveSkillCatalogDisplayDetails(
       isWeaponProficiency: true,
       physicalBonusSummary: null,
       weaponBonusSummary: wp
-        ? formatWpBonusesAtLevel(wp, characterLevel)
+        ? formatWpBonusesAtLevel(
+            wp as { levelTiers?: readonly Record<string, unknown>[] },
+            characterLevel,
+          )
         : null,
       subPercentLines: [],
       subSkillNames: [],

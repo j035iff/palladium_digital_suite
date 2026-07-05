@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import {
   listPendingDiceBlocks,
-  pendingDiceBlocksResolutionComplete,
 } from '../../lib/pendingDiceLedger'
 import {
   formatPendingDiceGroupLabel,

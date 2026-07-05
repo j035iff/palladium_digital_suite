@@ -82,7 +82,7 @@ function catalogIncomingSynergyIndex(): Map<string, SkillSynergyHint[]> {
   const map = new Map<string, SkillSynergyHint[]>()
   for (const entry of PALLADIUM_SKILL_CATALOG) {
     const synergies = (
-      entry as {
+      entry as unknown as {
         synergies?: Array<{ skillId?: string; bonusPercent?: number }>
       }
     ).synergies

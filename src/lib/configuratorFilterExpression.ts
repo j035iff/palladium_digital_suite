@@ -134,8 +134,9 @@ export function listConfiguratorBookCategories(
 }
 
 function normalizeFilterNode(node: ConfiguratorFilterExpression): ConfiguratorFilterExpression {
-  const legacy = node as ConfiguratorFilterExpression & { kind: string; tag?: string }
-  if (legacy.kind === 'tag') {
+  const legacyKind = (node as { kind: string }).kind
+  if (legacyKind === 'tag') {
+    const legacy = node as unknown as { id: string; tag?: string }
     return {
       id: legacy.id,
       kind: 'predicate',

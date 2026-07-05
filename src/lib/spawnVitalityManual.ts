@@ -109,7 +109,6 @@ export function applyPrimaryPendingDiceResolutions(
     allBlocks,
     opts.supportsDualForm ? 'primary' : 'all',
   )
-  const byId = blockById(allBlocks)
   const rolls = computeSpawnVitalityFromResolutions(
     prev,
     race,
@@ -292,11 +291,11 @@ export function vitalityPreviewLines(
   const dual = opts.supportsDualForm
   const lines = [
     {
-      label: `${creationHpLabel(dual, 'human')} max`,
+      label: `${creationHpLabel(dual, 'primary')} max`,
       value: String(rolls.primaryHp),
     },
     {
-      label: `${creationSdcLabel(dual, 'human')} max`,
+      label: `${creationSdcLabel(dual, 'primary')} max`,
       value: String(rolls.primarySdc),
     },
     { label: 'P.P.E. max', value: String(rolls.ppeMax) },

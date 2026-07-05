@@ -370,7 +370,7 @@ describe('morphus ledger attribute dice groups', () => {
       occ,
       undefined,
       [
-        ...character.creationOccSkillIds,
+        ...(character.creationOccSkillIds ?? []),
         'skill_athletics_general',
       ],
     )

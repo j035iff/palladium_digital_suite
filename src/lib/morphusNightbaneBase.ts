@@ -1,4 +1,4 @@
-import type { CharacterRootState, PalladiumOcc } from '../types'
+import type { CharacterRootState, PalladiumOcc, RaceStrengthCategory } from '../types'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from './attributeKeys'
 import {
   applyCreationAttributesToForm,
@@ -115,7 +115,7 @@ export function applyNightbaneMorphusBaseAttributes(
   }
 
   const tier = mapRaceStrengthToPsTier(
-    NIGHTBANE_MORPHUS_BASE_PROFILE.morphusStrengthCategory,
+    NIGHTBANE_MORPHUS_BASE_PROFILE.morphusStrengthCategory as RaceStrengthCategory,
   )
   attrs = { ...attrs, ps: { score: attrs.ps.score, tier } }
 

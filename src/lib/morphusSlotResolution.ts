@@ -1134,7 +1134,7 @@ export function buildMorphusChoiceBranchNode(
     `${choicePath}/branch`,
     option.label ?? tableLabel(option.tableId),
     option.tableId,
-    option,
+    { ...option, label: option.label ?? tableLabel(option.tableId) },
     normalizeSlotState(slotState),
     {
       rerollCharacteristicsAbove: option.rerollMultiRollResults

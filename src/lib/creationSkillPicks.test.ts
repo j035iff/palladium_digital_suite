@@ -216,7 +216,7 @@ describe('creationSkillPicks', () => {
         ],
       },
       secondarySkills: { initialSlotsCount: 4 },
-    } as PalladiumOcc
+    } as unknown as PalladiumOcc
     const ctx: CreationLibrarySkillContext = {
       effectiveOcc: occPhysicalAny,
       specializationId: null,

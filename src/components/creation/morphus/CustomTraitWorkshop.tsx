@@ -17,11 +17,11 @@ type Props = {
 
 export function CustomTraitWorkshop({ slot, onChange, onRemove }: Props) {
   const catalog = getMorphusCharacteristicById(slot.catalogEntryId)
-  const resolution = catalog?.customTraitResolution
   const [expertMode, setExpertMode] = useState(false)
 
   if (!catalog?.customTraitResolution) return null
 
+  const resolution = catalog.customTraitResolution
   const instance = slot.customInstance ?? emptyMorphusCustomTraitInstance()
   const complete = isMorphusCustomTraitSlotComplete(slot)
 

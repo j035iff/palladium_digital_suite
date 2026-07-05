@@ -48,7 +48,7 @@ export function MorphusForge() {
 
   const morphusState = useMemo(
     () => resolveMorphusForgeState(character),
-    [character.morphusForgeState, character.creationTraitForgeStubComplete],
+    [character],
   )
 
   const nav = useMemo(

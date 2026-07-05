@@ -36,7 +36,7 @@ const psychicOcc = {
       },
     },
   },
-} as PalladiumOcc
+} as unknown as PalladiumOcc
 
 describe('occSupernaturalSelection', () => {
   it('sums per_category creation plan picks', () => {
@@ -139,7 +139,7 @@ describe('occRelatedSkillSlotCosts', () => {
         },
       ],
     },
-  } as PalladiumOcc
+  } as unknown as PalladiumOcc
 
   it('applies category selectionSlotCost', () => {
     expect(occRelatedSkillSelectionSlotCost(occ, 'skill_medical_doctor')).toBe(2)

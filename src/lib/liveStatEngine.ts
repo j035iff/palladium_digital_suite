@@ -273,7 +273,7 @@ export function displayPeMeToAttributes(
     pe: displayPe,
     pb: 0,
     spd: 0,
-    ps: { score: 0, type: 'normal' },
+    ps: { score: 0, tier: 'standard' },
   }
 }
 

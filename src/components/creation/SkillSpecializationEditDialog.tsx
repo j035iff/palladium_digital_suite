@@ -48,6 +48,7 @@ export function SkillSpecializationEditDialog({
     : 'border-slate-300 bg-white text-slate-900'
 
   function handleSave() {
+    if (!state || !pick) return
     if (!validateSpecializationInput(value)) {
       setError('Enter at least one character.')
       return

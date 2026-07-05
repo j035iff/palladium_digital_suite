@@ -2,10 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { getRaceById, getLibraryOccById } from '../data/library/registry'
 import { createBlankCharacterForGenre } from './characterRoot'
 import {
-  buildCreationStatStack,
   buildFacadeAggregatedAttributeInput,
   buildFacadeAttributeStatStack,
-  formatFacadeAttributeStackTooltip,
   formatMorphusRelativeStatTooltip,
   pendingBlockHasUnresolvedRolls,
   resolveAggregatedAttribute,
@@ -15,7 +13,6 @@ import {
   resolveFacadeAttributeSnapshot,
   resolveHitPointsDerivedStat,
   resolveMorphusAggregatedAttribute,
-  statStackTotal,
 } from './creationStatEngine'
 import { buildPendingDiceBlocks } from './spawnDiceBlocks'
 import { getPpBonuses } from './attributeBonuses'

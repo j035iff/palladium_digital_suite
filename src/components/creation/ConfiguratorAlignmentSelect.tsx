@@ -5,7 +5,6 @@ import {
   configuratorAlignmentLabel,
   describeAlignmentSelectionConflict,
   effectiveConfiguratorAlignment,
-  isAlignmentCompatibleWithSelection,
   PALLADIUM_ALIGNMENT_VALUES,
 } from '../../lib/configuratorMatrix'
 
@@ -140,16 +139,4 @@ export function ConfiguratorAlignmentSelect({
       ) : null}
     </label>
   )
-}
-
-/** @internal exported for tests */
-export function alignmentOptionStates(
-  race: Parameters<typeof isAlignmentCompatibleWithSelection>[1],
-  occ: Parameters<typeof isAlignmentCompatibleWithSelection>[2],
-) {
-  return PALLADIUM_ALIGNMENT_VALUES.map((alignment) => ({
-    alignment,
-    compatible: isAlignmentCompatibleWithSelection(alignment, race, occ),
-    conflict: describeAlignmentSelectionConflict(alignment, race, occ),
-  }))
 }

@@ -3,7 +3,6 @@ import type {
   OccSupernaturalRuleOverrideLeyLine,
   OccSupernaturalRuleOverrideMeditation,
   OccSupernaturalRuleOverridePsychicApm,
-  OccSupernaturalRuleOverrides,
   PalladiumOcc,
 } from '../types'
 

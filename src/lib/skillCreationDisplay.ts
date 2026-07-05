@@ -159,7 +159,9 @@ export function resolveActiveSynergyBonusLines(
     if (!synergyPartnerAvailable(raw.id, availability)) continue
     if (!selectedIds.has(raw.id)) continue
     const synergies = (
-      raw as { synergies?: Array<{ skillId?: string; bonusPercent?: number }> }
+      raw as unknown as {
+        synergies?: Array<{ skillId?: string; bonusPercent?: number }>
+      }
     ).synergies
     for (const row of synergies ?? []) {
       if (row.skillId !== def.id || typeof row.bonusPercent !== 'number') continue

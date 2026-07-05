@@ -8,11 +8,18 @@ import {
   resolveLiveCombatStatDetails,
 } from './liveStatEngine'
 import { resolveExceptionalDisplayValue } from './creationStatEngine'
+import { createEmptyAccumulatedHandToHandBonuses } from '../utils/combatCalculator'
 
 describe('resolveLiveCharacterMaxApm', () => {
   it('starts at 2 with no modifiers', () => {
     expect(
-      resolveLiveCharacterMaxApm(characterFixture, 'primary', false, {}, {}),
+      resolveLiveCharacterMaxApm(
+        characterFixture,
+        'primary',
+        false,
+        createEmptyAccumulatedHandToHandBonuses(),
+        {},
+      ),
     ).toBe(2)
   })
 })

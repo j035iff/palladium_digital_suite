@@ -111,7 +111,7 @@ export function spellAccessDisplayLabel(
 }
 
 export function browseMagicSchoolsForOcc(
-  genreId: string,
+  _genreId: string,
   occ: PalladiumOcc | undefined,
   allSchools: readonly string[],
 ): string[] {

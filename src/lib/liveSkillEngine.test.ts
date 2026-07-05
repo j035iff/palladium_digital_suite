@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { characterFixture } from '../data/characterFixture'
 import { getIqBonuses } from './attributeBonuses'
 import {
@@ -33,9 +34,14 @@ describe('resolveLiveSkillPercent', () => {
       'primary',
       {
         id: 'skill_pick_locks',
+        name: 'Pick Locks',
+        gameSystems: ['nightbane'],
         categories: ['Espionage'],
         skillTraits: ['requires_light_touch'],
-      },
+        synergies: [],
+        prerequisites: [],
+        description: '',
+      } as unknown as PalladiumSkillCatalogEntry,
     )
     expect(resolved.equationPercent).toBe(
       30 + ctx.iqBonus + ctx.maPbBonus,

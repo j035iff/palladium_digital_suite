@@ -19,7 +19,6 @@ import {
 } from './attributeBonuses'
 import { occStaticNumericBonus } from './creationOccBonuses'
 import { occVariableAttributeResolution } from './occVariableBonus'
-import type { PhysicalCombatBonusKey } from './skillPhysicalBonuses'
 import type { SaveRollBonusLine } from './saveRollDisplay'
 import { formatBonus } from './combatQuickBonuses'
 import {
@@ -1008,7 +1007,7 @@ export function formatFacadeAttributeStackTooltip(
   )
   if (!tooltip && !pendingRolls) return undefined
   if (!tooltip && pendingRolls) return '(+pending rolls)'
-  if (pendingRolls) return tooltip.replace(/\)\s*$/, ', +pending rolls)')
+  if (pendingRolls) return tooltip!.replace(/\)\s*$/, ', +pending rolls)')
   return tooltip
 }
 

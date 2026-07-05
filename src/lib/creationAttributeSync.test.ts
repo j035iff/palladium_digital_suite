@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { CharacterAttributes, PalladiumOcc } from '../types'
+import type { CharacterAttributes, PalladiumOcc, Race } from '../types'
 import {
   attrForPoolSlot,
   buildCreationAttributes,
@@ -41,7 +41,7 @@ const humanRace = {
     pb: '3D6',
     spd: '3D6',
   },
-} as const
+} as unknown as Race
 
 describe('creationAttributeSync', () => {
   it('formats attribute roll hints with O.C.C. bonuses', () => {
@@ -56,7 +56,7 @@ describe('creationAttributeSync', () => {
     const occWithReq = {
       ...occ,
       attributeRequirements: { iq: 12 },
-    } as PalladiumOcc
+    } as unknown as PalladiumOcc
     expect(occAttributeRequirementSuffix(occWithReq, 'iq')).toBe('12+')
     expect(occAttributeRequirementSuffix(occWithReq, 'me')).toBeUndefined()
   })

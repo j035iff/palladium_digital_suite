@@ -15,7 +15,7 @@ import {
 const human: Race = {
   id: 'race_human',
   name: 'Human',
-} as Race
+} as unknown as Race
 
 const psychicOcc = {
   id: 'occ_psychic',
@@ -95,7 +95,7 @@ describe('configuratorFilterExpression', () => {
       id: 'race_human',
       name: 'Human',
       sources: [{ gameSystem: 'nightbane', reference: 'Nightbane RPG', pageNumber: 24 }],
-    } as Race
+    } as unknown as Race
     const btsOcc = {
       id: 'occ_bts',
       name: 'BtS Agent',

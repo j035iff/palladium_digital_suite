@@ -65,7 +65,8 @@ function flattenRaceCatalog(): CatalogRace[] {
           `Race "${row.id}" in ${path} has raceAudience "${raceAudience}" but file pool is "${poolAudience}"`,
         )
       }
-      byKey.set(key, applyTrueVampirePowerModule({ ...row, raceAudience, catalogGenreId }))
+      const race = applyTrueVampirePowerModule({ ...row, raceAudience })
+      byKey.set(key, { ...race, catalogGenreId })
     }
   }
   return [...byKey.values()].sort((a, b) => {

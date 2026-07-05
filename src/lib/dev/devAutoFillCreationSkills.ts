@@ -170,8 +170,11 @@ export function buildDevAutoFillCreationSkillsState(
   )
   const secondaryCap = occSecondarySkillSlots(occ)
 
-  const voucherPicks: Record<string, (CreationSkillPick | null)[]> = {
-    ...(prev.creationOccCoreVoucherPicks ?? {}),
+  const voucherPicks: Record<string, (CreationSkillPick | null)[]> = {}
+  for (const [key, slots] of Object.entries(prev.creationOccCoreVoucherPicks ?? {})) {
+    voucherPicks[key] = slots.map((slot) =>
+      slot == null ? null : typeof slot === 'string' ? buildDevSkillPick(slot) : slot,
+    )
   }
 
   for (const task of listOccCoreVoucherTasks(occ, specializationId)) {
@@ -191,7 +194,7 @@ export function buildDevAutoFillCreationSkillsState(
       chosen.add(skillId)
       slots.push(buildDevSkillPick(skillId))
     }
-    voucherPicks[task.id] = slots
+    voucherPicks[task.id] = [...slots]
   }
 
   const grantDetails: Record<string, CreationSkillPick> = {

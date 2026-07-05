@@ -105,7 +105,7 @@ describe('talentSelectionGates', () => {
     const ids = collectCharacterMorphusTableIds(
       { activeSubTab: 'crossroads', subTabCompleted: {} },
       undefined,
-      [{ slotId: 'plan:0', catalogEntryId: 'unearthly_beauty_animal_magnetism' }],
+      [{ catalogEntryId: 'unearthly_beauty_animal_magnetism' }],
     )
     expect(ids.has('unearthly_beauty')).toBe(true)
   })

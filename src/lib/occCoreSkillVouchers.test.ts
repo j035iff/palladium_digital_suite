@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { CreationSkillPick, PalladiumOcc } from '../types'
+import type { PalladiumOcc } from '../types'
 import { migrateSkillIdToPick } from './creationSkillPicks'
 import {
   canAddSkillViaOccCoreVoucher,

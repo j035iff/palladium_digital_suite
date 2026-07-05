@@ -25,7 +25,6 @@ import {
 import {
   assessRelatedSkillSlotBlockers,
   assessSecondarySkillSlotBlockers,
-  creationRelatedSkillCap,
 } from '../creationPsychicSkills'
 import {
   assessOccCoreVoucherBlockers,
@@ -39,7 +38,6 @@ import {
   sumCreationSkillPickSlots,
   sumRelatedPoolSlotUsage,
 } from '../creationSkillPicks'
-import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
   occRelatedSkillSlotBudget,
   occSecondarySkillSlots,
@@ -153,7 +151,7 @@ function migrateForgeCompletionState(
 }
 
 export type CharacterCreationForgeContext = {
-  character: Character & Pick<CharacterRootState, 'creationGenreId'>
+  character: Character & Pick<CharacterRootState, 'creationGenreId' | 'hostGenreId'>
   race: Race | undefined
   occ: PalladiumOcc | undefined
   psychicTier: PsychicTier
@@ -410,11 +408,6 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
       character.occSpecializationId,
       character.creationOccCoreVoucherPicks ?? {},
       character.creationOccGrantPickDetails,
-    )
-    const relatedCap = creationRelatedSkillCap(
-      relatedBase,
-      ctx.psychicTier,
-      occSkillSlotPolicy(occ),
     )
     const handToHandReserved = creationHandToHandReservedRelatedSlots(
       effectiveOcc,
@@ -702,7 +695,7 @@ export function assessTab8SpawnBlockers(
 export const assessTab7SpawnBlockers = assessTab8SpawnBlockers
 
 export function buildCharacterCreationForgeContext(
-  character: Character & Pick<CharacterRootState, 'creationGenreId'>,
+  character: Character & Pick<CharacterRootState, 'creationGenreId' | 'hostGenreId'>,
   race: Race | undefined,
   occ: PalladiumOcc | undefined,
   psychicTier: PsychicTier,
@@ -768,7 +761,7 @@ export function morphusLedgerUnlockPatchIfEligible(
   tabId: CharacterCreationForgeTabId,
   race: Race | undefined,
   occ: PalladiumOcc | undefined,
-  psychicTier: PsychicTier,
+  _psychicTier: PsychicTier,
 ): Partial<CharacterRootState> {
   if (!characterHasDualForms(character)) return {}
   if (!forgeTabVisitUnlocksMorphusLedger(tabId)) return {}

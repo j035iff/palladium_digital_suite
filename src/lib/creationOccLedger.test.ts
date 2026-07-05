@@ -38,7 +38,7 @@ describe('creation OCC live ledger integration', () => {
       : createEmptyAccumulatedHandToHandBonuses()
 
     const attributes = buildCreationAttributeBlock(attrs, {}, human, pab, undefined, [])
-    expect(attributes.find((l) => l.label === 'M.E.')?.labelSuffix).toBe('12+')
+    expect(attributes.find((l) => l.label === 'M.E.')?.labelSuffix).toBe('11+')
     expect(attributes.find((l) => l.label === 'P.S.')?.inlineRaceRoll).toBe('3D6')
     expect(attributes.find((l) => l.label === 'P.S.')?.value).toBe('1')
     expect(
@@ -234,10 +234,10 @@ describe('creation OCC live ledger integration', () => {
     expect(combat.find((l) => l.label === 'Parry')?.value).toBe('+1')
     expect(combat.find((l) => l.label === 'Dodge')?.value).toBe('+1')
     expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value).toBe(
-      '+3',
+      '+2',
     )
     expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.hint).toBe(
-      'OCC: +1 · HtH Basic: +2',
+      'HtH Basic: +2',
     )
     expect(combat.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
   })

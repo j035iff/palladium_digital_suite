@@ -93,8 +93,8 @@ export function occAttributeRequirementSuffix(
 ): string | undefined {
   if (!occ?.id?.trim()) return undefined
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
-  const key = attr === 'ps' ? 'ps' : attr
-  const min = effective.attributeRequirements?.[key]
+  if (attr === 'ps') return undefined
+  const min = effective.attributeRequirements?.[attr]
   if (typeof min === 'number' && min > 0) return `${min}+`
   return undefined
 }

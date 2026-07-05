@@ -79,10 +79,8 @@ import {
   getPpBonuses,
 } from './attributeBonuses'
 import { type SaveDeductionLine } from './saveProfile'
-import { formatSheetBonusEquation, type SheetBonusLine } from './sheetBonuses'
 import {
   creationHandToHandTierLabel,
-  effectiveCreationHandToHandTier,
   sheetSkillIdForCreationHandToHandTier,
 } from './creationHandToHandChoice'
 import { occStartingOccSkillIds } from './occCatalogEngine'
@@ -101,7 +99,6 @@ import {
   pendingDiceBlockRunningTotal,
   sumPendingAttributeDiceBonuses,
   pendingAttributeDiceBreakdown,
-  collectEnteredPendingDiceContributions,
   formatVitalityBlockValueTooltip,
   morphusTraitAttributeDiceBreakdown,
   creationPendingBlockTotal,
@@ -115,10 +112,8 @@ import {
   applyMorphusVsPrimaryExceptionalLedgerDiff,
   applyMorphusVsPrimaryExceptionalLedgerGroupDiff,
   applyMorphusVsPrimaryLedgerDiff,
-  applyMorphusVsPrimaryLedgerGroupDiff,
   buildMorphusCreationAttributeBlock,
   buildMorphusCreationBasePassiveModifiers,
-  MORPHUS_LEDGER_RACE_LABEL,
   buildMorphusTraitHorrorFactorDetails,
   buildMorphusTraitSdcBonusDetails,
   creationLedgerSavePassiveModifiers,
@@ -187,15 +182,6 @@ export function ledgerCount(n: number | null | undefined): string {
   return String(n)
 }
 
-function passiveSum(passive: FeatureModifiers, keys: readonly string[]): number {
-  let total = 0
-  for (const key of keys) {
-    const v = passive[key]
-    if (v != null && v !== 0) total += v
-  }
-  return total
-}
-
 function formatBonusBreakdown(parts: readonly SaveDeductionLine[]): string | undefined {
   const active = parts.filter((p) => p.amount !== 0)
   if (active.length === 0) return undefined
@@ -210,31 +196,6 @@ function formatSaveValueTooltip(
   return formatFlatValueTooltip(
     active.map((p) => ({ label: p.label, amount: p.amount })),
   )
-}
-
-function ledgerFromParts(parts: readonly SaveDeductionLine[]): CreationLedgerLine {
-  const total = parts.reduce((sum, p) => sum + p.amount, 0)
-  return {
-    label: '',
-    value: ledgerBonus(total),
-    valueModified: total !== 0,
-    valueTooltip: formatSaveValueTooltip(parts),
-  }
-}
-
-function ledgerFromSheetDetail(
-  label: string,
-  detail: { total: number; lines: SheetBonusLine[] },
-): CreationLedgerLine {
-  const hint =
-    detail.lines.length > 0
-      ? formatSheetBonusEquation(detail, formatBonus)
-      : undefined
-  return {
-    label,
-    value: detail.total !== 0 ? formatBonus(detail.total) : LEDGER_NA,
-    hint,
-  }
 }
 
 const STAGING_KEYS = ['sdc', 'ps', 'pp', 'pe', 'spd'] as const
@@ -320,22 +281,6 @@ function hthShortLabel(catalogName: string | null, tierLabel: string | null): st
     if (stripped.length > 0) return stripped
   }
   return tierLabel
-}
-
-function occCombatLedgerPart(
-  occ: PalladiumOcc | undefined,
-  specializationId: string | null | undefined,
-  statKey: string,
-  resolutions: Readonly<Record<string, number>>,
-): SaveDeductionLine | null {
-  const amount = occStaticNumericBonus(
-    occ,
-    specializationId,
-    'combat',
-    statKey,
-    resolutions,
-  )
-  return amount ? { label: 'OCC', amount } : null
 }
 
 function perSkillCombatContributions(
@@ -510,27 +455,6 @@ function occSaveLedgerParts(
     )
   }
   return total > 0 ? [{ label: 'O.C.C.', amount: total }] : []
-}
-
-function ledgerFromSheetDetailWithParts(
-  label: string,
-  detail: { total: number; lines: SheetBonusLine[] },
-  extraParts: readonly SaveDeductionLine[],
-): CreationLedgerLine {
-  const lines: SheetBonusLine[] = [...detail.lines]
-  for (const part of extraParts) {
-    if (part.amount !== 0) lines.push(part)
-  }
-  const total = detail.total + extraParts.reduce((s, p) => s + p.amount, 0)
-  const hint =
-    lines.length > 0
-      ? formatSheetBonusEquation({ total, lines }, formatBonus)
-      : undefined
-  return {
-    label,
-    value: total !== 0 ? formatBonus(total) : LEDGER_NA,
-    hint,
-  }
 }
 
 const ATTR_LEDGER_LABELS: Record<ForgeAttrKey, string> = {

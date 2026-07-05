@@ -6,13 +6,13 @@ import type {
   FeatureModifiers,
   MorphusCharacteristic,
   MorphusPolymorphicModifier,
+  MorphusStatModifiers,
   PalladiumOcc,
 } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 import {
   collectMorphusStatModifierBlocks,
-  type MorphusStatModifiers,
 } from './morphusCharacteristicAggregation'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import {
@@ -481,7 +481,7 @@ export function applyMorphusVsPrimaryExceptionalLedgerGroupDiff<
 export function strengthCapacitiesFromAttributes(
   attrs: CharacterAttributes,
 ): ReturnType<typeof evaluateStrengthFromPhysicalStat> {
-  return evaluateStrengthFromPhysicalStat(attrs.ps.score)
+  return evaluateStrengthFromPhysicalStat(attrs.ps)
 }
 
 function readMorphusStoredScalar(

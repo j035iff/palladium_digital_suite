@@ -13,13 +13,14 @@ import {
   MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
   MORPHUS_SDC_BONUS_DICE,
 } from './morphusNightbaneBase'
-import type { SpawnVitalityRolls } from './spawnVitalityTypes'
 import {
   resolveHitPointsFromSchema,
-  resolveMorphusSdcFlatDerivedStat,
   resolveVitalFormulaFlat,
 } from './vitalStatEngine'
-import { resolveSdcFlatDerivedStat } from './creationStatEngine'
+import {
+  resolveMorphusSdcFlatDerivedStat,
+  resolveSdcFlatDerivedStat,
+} from './creationStatEngine'
 
 export type { SpawnVitalityRolls } from './spawnVitalityTypes'
 
@@ -131,7 +132,7 @@ export function rollMorphusHpMaximum(pe: number): number {
 }
 
 /** Morphus S.D.C. — Facade carryover pattern simplified for auto-roll legacy path. */
-export function rollMorphusSdcMaximum(pe: number, ps: number): number {
+export function rollMorphusSdcMaximum(pe: number): number {
   const facadeApprox = Math.max(4, pe + rollNdS(1, 6))
   const morphusDice = rollDiceNotation(MORPHUS_SDC_BONUS_DICE)
   return Math.max(

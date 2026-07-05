@@ -31,8 +31,10 @@ describe('raceComposition', () => {
   })
 
   it('npc minions without forcedOccId do not use occ skill program', () => {
-    const hound = getPalladiumRaceById('race_hound', 'nightbane')
-    expect(resolveRaceComposition(hound)).toBe('character')
-    expect(raceUsesOccSkillProgram(hound)).toBe(false)
+    const astralEntity = getPalladiumRaceById('race_astral_entity', 'nightbane')
+    expect(astralEntity?.canPickOcc).toBe(false)
+    expect(astralEntity?.forcedOccId).toBeUndefined()
+    expect(resolveRaceComposition(astralEntity)).toBe('character')
+    expect(raceUsesOccSkillProgram(astralEntity)).toBe(false)
   })
 })

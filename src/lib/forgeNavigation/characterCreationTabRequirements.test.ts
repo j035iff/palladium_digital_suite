@@ -30,6 +30,8 @@ function ctx(
   return {
     character: {
       raceId: 'race_human',
+      creationGenreId: 'rifts',
+      hostGenreId: 'rifts',
       occ: { id: 'occ_pandora', xpTable: { floors: [0] } },
       creationPsychicTierChosen: false,
       creationOccCoreVoucherPicks: {},
@@ -39,13 +41,7 @@ function ctx(
       primary: { alignment: 'Principled' },
       ...overrides,
     } as CharacterCreationForgeContext['character'],
-    race: {
-      id: 'race_human',
-      name: 'Human',
-      gameSystems: ['nightbane'],
-      canPickOcc: true,
-      occLimitations: { forbiddenOccIds: [], forbiddenCategories: [] },
-    } as CharacterCreationForgeContext['race'],
+    race: getRaceById('race_human', 'rifts'),
     occ: pandoraOcc,
     psychicTier: 'none',
     supportsDualForm: false,
@@ -98,7 +94,7 @@ describe('listCharacterCreationTabRequirements', () => {
     const branchedOcc = {
       ...pandoraOcc,
       specializations: [{ id: 'spec_a', name: 'Branch A' }],
-    } as PalladiumOcc
+    } as unknown as PalladiumOcc
     const requirements = listCharacterCreationTabRequirements('tab1_configurator', {
       ...ctx(),
       occ: branchedOcc,
@@ -116,9 +112,9 @@ describe('listCharacterCreationTabRequirements', () => {
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
       raceId: 'race_nightbane',
-      occ: { id: 'occ_nightbane_basic', xpTable: occ!.xpTable },
+      occ: { id: occ!.id, name: occ!.name, category: occ!.occType },
       creationGenreId: 'nightbane' as const,
-    }
+    } as unknown as Parameters<typeof buildCharacterCreationForgeContext>[0]
     const forgeCtx = buildCharacterCreationForgeContext(
       character,
       race,

@@ -1,4 +1,4 @@
-import type { CharacterAttributes, PalladiumOcc, Race } from '../types'
+import type { PalladiumOcc, Race } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { isDiceNotation } from './diceNotationBounds'
 import { normalizeDiceDisplay } from './ledgerStatBonuses'

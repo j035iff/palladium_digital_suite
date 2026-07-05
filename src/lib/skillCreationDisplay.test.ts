@@ -25,7 +25,7 @@ describe('skillCreationDisplay voucher bonuses', () => {
       psychicTier: 'none',
       specializationId: null,
       voucherPicks: {
-        core_voucher_4: [buildCreationSkillPick('skill_biology', {})],
+        core_voucher_6: [buildCreationSkillPick('skill_biology', {})],
       },
       skillPercentCtx,
       iqBonus: 0,
@@ -57,6 +57,7 @@ describe('skillCreationDisplay percent summary', () => {
     const synergyPick = buildCreationSkillPick('skill_electrical_engineer', {})
 
     const display = resolveSkillCreationDisplay(def, 'secondary', {
+      relatedIds: new Set(),
       allSelectedIds: new Set(['skill_locksmith', 'skill_electrical_engineer']),
       psychicTier: 'none',
       specializationId: null,

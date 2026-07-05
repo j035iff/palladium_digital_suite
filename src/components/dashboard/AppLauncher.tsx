@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { isGenreId, LAUNCHER_CREATE_OPTIONS } from '../../data/genres'
 import {
@@ -143,10 +143,7 @@ export function AppLauncher() {
     }
   }, [savedCharacterRows, openId])
 
-  const recentRows = useMemo(
-    () => listRecentlyEditedCharacters(6),
-    [savedCharacterRows],
-  )
+  const recentRows = listRecentlyEditedCharacters(6)
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {

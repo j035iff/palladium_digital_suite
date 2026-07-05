@@ -4,14 +4,18 @@ import {
   buildConfiguratorPackageSummary,
   OCC_PACKAGE_SECTION_ORDER,
   packageItemText,
+  type ConfiguratorPackageSection,
 } from './configuratorPackageSummary'
 
-function sectionItemTexts(
-  section: { items: readonly { kind?: string; text?: string; label?: string; detail?: string }[] | readonly string[] } | undefined,
-): string[] {
-  return (section?.items ?? []).map((item) =>
-    typeof item === 'string' ? item : packageItemText(item),
-  )
+function sectionItemTexts(section: ConfiguratorPackageSection | undefined): string[] {
+  return (section?.items ?? []).map((item) => packageItemText(item))
+}
+
+function sectionIncludesText(
+  section: ConfiguratorPackageSection | undefined,
+  needle: string,
+): boolean {
+  return sectionItemTexts(section).some((line) => line.includes(needle))
 }
 
 function occSectionIds(
@@ -41,15 +45,14 @@ describe('buildConfiguratorPackageSummary', () => {
     const allowances = summary.sections.find((s) => s.id === 'occ-skill-allowances')
     expect(
       sectionItemTexts(allowances).some((line) =>
-        line.includes('6 O.C.C. related skill choices at creation'),
+        line.includes('12 O.C.C. related skill choices at creation'),
       ),
     ).toBe(true)
     expect(sectionItemTexts(allowances).some((line) => line.includes('at level'))).toBe(false)
     expect(sectionItemTexts(allowances).some((line) => line.match(/Espionage —/))).toBe(true)
     assertSectionOrder(occSectionIds(summary.sections), OCC_PACKAGE_SECTION_ORDER)
 
-    const wp = summary.sections.find((s) => s.id === 'occ-wp')
-    expect(wp?.items.length).toBeGreaterThan(0)
+    expect(sectionItemTexts(core).some((line) => line.includes('W.P.'))).toBe(true)
   })
 
   it('includes race heading when a race is selected', () => {
@@ -63,7 +66,7 @@ describe('buildConfiguratorPackageSummary', () => {
     const summary = buildConfiguratorPackageSummary(human, undefined, null)
     const supernatural = summary.sections.find((s) => s.id === 'race-supernatural')
     expect(supernatural?.items).toEqual(['N/A'])
-    expect(supernatural?.items.some((line) => line.includes('P.P.E.'))).toBe(false)
+    expect(sectionIncludesText(supernatural, 'P.P.E.')).toBe(false)
   })
 
   it('groups racial hit points and S.D.C. under Vitals', () => {
@@ -100,16 +103,16 @@ describe('buildConfiguratorPackageSummary', () => {
     const summary = buildConfiguratorPackageSummary(nightbane, undefined, null)
     const supernatural = summary.sections.find((s) => s.id === 'race-supernatural')
     expect(supernatural?.items).toEqual(['N/A'])
-    expect(supernatural?.items.some((line) => line.includes('P.P.E.'))).toBe(false)
+    expect(sectionIncludesText(supernatural, 'P.P.E.')).toBe(false)
   })
 
   it('lists innate psionics for supernatural races', () => {
     const guardian = getRaceById('race_guardian')
     const summary = buildConfiguratorPackageSummary(guardian, undefined, null)
     const supernatural = summary.sections.find((s) => s.id === 'race-supernatural')
-    expect(supernatural?.items[0]).toBe('Psionic')
-    expect(supernatural?.items.some((line) => line.startsWith('I.S.P.:'))).toBe(true)
-    expect(supernatural?.items.some((line) => line.includes('P.P.E.'))).toBe(false)
+    expect(packageItemText(supernatural!.items[0])).toBe('Psionic')
+    expect(sectionItemTexts(supernatural).some((line) => line.startsWith('I.S.P.:'))).toBe(true)
+    expect(sectionIncludesText(supernatural, 'P.P.E.')).toBe(false)
   })
 
   it('lists Recognize the Supernatural for Pandora Project Researcher', () => {
@@ -117,9 +120,7 @@ describe('buildConfiguratorPackageSummary', () => {
     const occ = getLibraryOccById('occ_pandora_project_researcher')
     const summary = buildConfiguratorPackageSummary(human, occ, null)
     const abilities = summary.sections.find((s) => s.id === 'occ-special-abilities')
-    expect(abilities?.items.some((line) => line.includes('Recognize the Supernatural'))).toBe(
-      true,
-    )
+    expect(sectionIncludesText(abilities, 'Recognize the Supernatural')).toBe(true)
   })
 
   it('lists anti-supernatural training for Team Epsilon Inner Circle', () => {
@@ -194,9 +195,9 @@ describe('buildConfiguratorPackageSummary', () => {
     const occ = getLibraryOccById('occ_pandora_project_researcher')
     const summary = buildConfiguratorPackageSummary(getRaceById('race_human'), occ, null)
     const allowances = summary.sections.find((s) => s.id === 'occ-skill-allowances')
-    expect(allowances?.items.some((line) => line.includes('Espionage —'))).toBe(true)
-    expect(allowances?.items.some((line) => line.includes('Military — None'))).toBe(true)
-    expect(allowances?.items.some((line) => line.includes('8 O.C.C. related'))).toBe(true)
+    expect(sectionIncludesText(allowances, 'Espionage —')).toBe(true)
+    expect(sectionIncludesText(allowances, 'Military — None')).toBe(true)
+    expect(sectionIncludesText(allowances, '12 O.C.C. related')).toBe(true)
   })
 
   it('loads P.A.B. Field Agent from Between the Shadows', () => {
@@ -204,12 +205,12 @@ describe('buildConfiguratorPackageSummary', () => {
     expect(occ?.name).toBe('P.A.B. Field Agent')
     const summary = buildConfiguratorPackageSummary(getRaceById('race_human'), occ, null)
     const abilities = summary.sections.find((s) => s.id === 'occ-special-abilities')
-    expect(abilities?.items.some((line) => line.includes('Anti-Supernatural'))).toBe(true)
+    expect(sectionIncludesText(abilities, 'Anti-Supernatural')).toBe(true)
     const core = summary.sections.find((s) => s.id === 'occ-core-skills')
-    expect(core?.items.some((line) => line.includes('Lore: Nightbane'))).toBe(true)
+    expect(sectionIncludesText(core, 'Lore: Nightbane')).toBe(true)
     const nonCombat = summary.sections.find((s) => s.id === 'occ-non-combat')
-    expect(nonCombat?.items.some((line) => line.includes('Perception'))).toBe(true)
+    expect(sectionIncludesText(nonCombat, 'Perception')).toBe(true)
     const combat = summary.sections.find((s) => s.id === 'occ-combat')
-    expect(combat?.items.some((line) => line.includes('Perception'))).toBe(false)
+    expect(sectionIncludesText(combat, 'Perception')).toBe(false)
   })
 })

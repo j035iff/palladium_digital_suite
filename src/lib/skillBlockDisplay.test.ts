@@ -12,6 +12,8 @@ const occWithWildernessBlocked: PalladiumOcc = {
   name: 'Test Researcher',
   description: '',
   gameSystems: ['nightbane'],
+  sources: [],
+  tags: [],
   occType: 'scholar_civilian',
   occSkillsCore: [],
   occRelatedSkills: {

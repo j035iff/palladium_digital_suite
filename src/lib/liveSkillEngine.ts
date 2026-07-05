@@ -1,7 +1,6 @@
 import type {
   ActiveForm,
   Character,
-  MorphusCharacteristic,
   MorphusSurfaceType,
 } from '../types'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'

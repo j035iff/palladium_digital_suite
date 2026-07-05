@@ -299,7 +299,7 @@ export function sanitizeMorphusCustomTraitInstance(
     saveModifiers: clearEmptySaveModifiers(instance.saveModifiers),
     customOneOffs: instance.customOneOffs?.map((s) => s.trim()).filter(Boolean),
     atWillAbilities: instance.atWillAbilities?.filter((a) => a.label.trim()),
-    naturalWeapons: instance.naturalWeapons?.filter((w) => w.label.trim()),
+    naturalWeapons: instance.naturalWeapons?.filter((w) => (w.label ?? '').trim()),
   }
 }
 

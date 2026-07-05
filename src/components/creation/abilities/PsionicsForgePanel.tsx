@@ -36,7 +36,6 @@ type PsionicsForgePanelProps = {
   activeOcc: PalladiumOcc | undefined
   spellCap: number
   psionicBudget: number
-  psionicCount: number
 }
 
 export function PsionicsForgePanel({
@@ -45,10 +44,12 @@ export function PsionicsForgePanel({
   activeOcc,
   spellCap,
   psionicBudget,
-  psionicCount,
 }: PsionicsForgePanelProps) {
   const { character, psychicTier, addSelectedAbility } = useCharacter()
-  const selectedIds = character.selectedAbilities ?? []
+  const selectedIds = useMemo(
+    () => character.selectedAbilities ?? [],
+    [character.selectedAbilities],
+  )
   const grantedIds = useMemo(
     () =>
       occSupernaturalGrantedAbilityIds(activeOcc, character.occSpecializationId),

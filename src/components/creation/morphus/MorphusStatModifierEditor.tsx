@@ -35,7 +35,7 @@ function patchStat(
 
 function patchSave(
   saves: MorphusSaveModifiers | undefined,
-  key: keyof MorphusSaveModifiers,
+  key: (typeof MORPHUS_COMMON_SAVE_KEYS)[number],
   value: number | undefined,
 ): MorphusSaveModifiers {
   const next = { ...(saves ?? {}) }

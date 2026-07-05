@@ -24,7 +24,7 @@ export function morphusCreationPreviewResolveOptions(
 
 function normalizeResolveOptions(
   opts?: PolymorphicResolveOptions | ((notation: string) => number),
-): PolymorphicResolveOptions {
+): { rollDice: (notation: string) => number; applyFloors: boolean } {
   if (typeof opts === 'function') {
     return { rollDice: opts, applyFloors: true }
   }
@@ -39,7 +39,7 @@ function normalizeResolveOptions(
  * Dice strings support Palladium forms and leading minus (e.g. "-1D6", "2D4x10+40").
  */
 export function evaluatePolymorphicDice(notation: string): number {
-  let trimmed = notation.trim().replace(/\s+/g, '')
+  const trimmed = notation.trim().replace(/\s+/g, '')
   const neg = /^-/.test(trimmed)
   let core = neg ? trimmed.slice(1) : trimmed
   if (neg && core.startsWith('(') && core.endsWith(')')) {

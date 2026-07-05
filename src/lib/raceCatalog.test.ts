@@ -47,7 +47,10 @@ describe('race catalog pools', () => {
     expect(nightbane?.innateBonuses.metadata?.mirrorWalkPpe).toBe(2)
     expect(nightbane?.innateBonuses.metadata?.regenerationPerMelee).toBe(10)
     expect(nightbane?.innateBonuses.metadata?.freeTalentLevels).toEqual([1, 4, 7, 10, 12])
-    expect(nightbane?.innateBonuses.metadata?.morphusBonuses?.save_magic).toBe(4)
+    expect(
+      (nightbane?.innateBonuses.metadata?.morphusBonuses as { save_magic?: number } | undefined)
+        ?.save_magic,
+    ).toBe(4)
     expect(nightbane?.innateBonuses.activation?.cost?.type).toBe('ppe')
     expect(nightbane?.occLimitations.allowedOccIds).toContain('occ_nightbane_basic')
     expect(nightbane?.demographics.averageLifespan).toContain('1,000')
@@ -90,7 +93,10 @@ describe('race catalog pools', () => {
       'race_master_vampire',
     )
     expect(wampyr?.demographics.excludedAlignments).toContain('Principled')
-    expect(secondary?.innateBonuses.metadata?.slowKillOutcomeRoll?.['01-02']).toBe('race_wampyr')
+    const wampyrSlowKill = secondary?.innateBonuses.metadata?.slowKillOutcomeRoll as
+      | Record<string, string>
+      | undefined
+    expect(wampyrSlowKill?.['01-02']).toBe('race_wampyr')
     expect(wampyr?.classAbilities?.some((a) => a.name === 'A Lust for Blood')).toBe(false)
   })
 
@@ -132,9 +138,10 @@ describe('race catalog pools', () => {
     expect(secondary?.innateBonuses.metadata?.majorPsionicSaveTarget).toBe(12)
     expect(secondary?.innateBonuses.metadata?.vampireSlaveCap).toBe(1)
     expect(secondary?.innateBonuses.metadata?.susceptibleToMasterMindControl).toBe(true)
-    expect(secondary?.innateBonuses.metadata?.slowKillOutcomeRoll?.['45-00']).toBe(
-      'race_wild_vampire',
-    )
+    const secondarySlowKill = secondary?.innateBonuses.metadata?.slowKillOutcomeRoll as
+      | Record<string, string>
+      | undefined
+    expect(secondarySlowKill?.['45-00']).toBe('race_wild_vampire')
     expect(secondary?.innateBonuses.activation?.cost?.type).toBe('other')
     expect(secondary?.innateBonuses.metadata?.hierarchyMasterRaceId).toBe('race_master_vampire')
     expect(secondary?.innateBonuses.metadata?.pcMaxGoodAlignment).toBe('Unprincipled')
@@ -170,7 +177,7 @@ describe('race catalog pools', () => {
     const npcPool = listNpcRaces(PALLADIUM_RACE_CATALOG, 'nightbane')
     expect(npcPool.some((r) => r.id === 'race_hound')).toBe(true)
     expect(npcPool.some((r) => r.id === 'race_hunter')).toBe(true)
-    expect(npcPool.length).toBe(9)
+    expect(npcPool.length).toBe(18)
   })
 
   it('loads hunter from nightbane npc pool with pass B metadata', () => {
@@ -348,7 +355,7 @@ describe('race catalog pools', () => {
     expect(snakeBird?.innateBonuses.metadata?.naturalAttacksPerMeleeLevel1).toBe(3)
     expect(snakeBird?.innateBonuses.metadata?.poisonFirstRoundHpDamage).toBe('3D6')
     expect(snakeBird?.innateBonuses.activation?.cost?.type).toBe('action')
-    expect(listGmApprovalRaces(PALLADIUM_RACE_CATALOG, 'nightbane').length).toBe(3)
+    expect(listGmApprovalRaces(PALLADIUM_RACE_CATALOG, 'nightbane').length).toBe(6)
   })
 
   it('loads waste coyote from creatures pool with pass B metadata', () => {
@@ -394,6 +401,6 @@ describe('race catalog pools', () => {
     expect(lizard?.innateBonuses.metadata?.fearedByRaceId).toBe('race_waste_coyote')
     expect(lizard?.innateBonuses.metadata?.huntedByRaceIds).toContain('race_hunter')
     expect(lizard?.demographics.excludedAlignments).toContain('Miscreant')
-    expect(listCreatureRaces(PALLADIUM_RACE_CATALOG, 'nightbane').length).toBe(2)
+    expect(listCreatureRaces(PALLADIUM_RACE_CATALOG, 'nightbane').length).toBe(6)
   })
 })

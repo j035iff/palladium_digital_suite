@@ -126,12 +126,12 @@ export function creationVitalityPreviewLines(
 ): { label: string; value: string; hint?: string }[] {
   const lines = [
     {
-      label: creationHpLabel(supportsDualForm, 'human'),
+      label: creationHpLabel(supportsDualForm, 'primary'),
       value: preview.primaryHpValue,
       hint: preview.primaryHpRollHint,
     },
     {
-      label: creationSdcLabel(supportsDualForm, 'human'),
+      label: creationSdcLabel(supportsDualForm, 'primary'),
       value: preview.primarySdcValue,
       hint: preview.primarySdcRollHint,
     },

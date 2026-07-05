@@ -28,13 +28,17 @@ const SAVE_LABELS: Record<keyof MorphusSaveModifiers, string> = {
   psionics: 'Save vs Psionics',
   insanity: 'Save vs Insanity',
   poison: 'Save vs Poison',
+  gas: 'Save vs Gas',
   horrorFactor: 'Save vs Horror Factor',
   disease: 'Save vs Disease',
   possession: 'Save vs Possession',
   mindControl: 'Save vs Mind Control',
   illusions: 'Save vs Illusions',
+  nightlordMagic: 'Save vs Nightlord Magic',
   allSaves: 'All saves',
   nauseaVomiting: 'Save vs nausea/vomiting',
+  immunities: 'Save immunities',
+  comaDeath: 'Coma / death',
 }
 
 function tableLabel(tableId: string, fallback?: string): string {
@@ -100,7 +104,7 @@ function collectDirectStatAndSaveModifiers(entry: MorphusCharacteristic): Morphu
     else out.penalties.push(text)
   }
 
-  const globalSkill = entry.skillModifiers?.globalModifierPercent
+  const globalSkill = entry.skillModifiers?.globalSkillModifier
   if (typeof globalSkill === 'number' && globalSkill !== 0) {
     const text = `All skills ${globalSkill >= 0 ? '+' : ''}${globalSkill}%`
     if (globalSkill >= 0) out.bonuses.push(text)

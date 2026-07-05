@@ -1,6 +1,4 @@
 import {
-  createContext,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -15,31 +13,9 @@ import {
 import { countSelectedAbilitiesByBudgetCategory } from '../../../lib/creationAbilityBudget'
 import { resolveEffectiveCreationAbilityBudget } from '../../../lib/creationAbilityBudget'
 import { occSupernaturalGrantedAbilityIds } from '../../../lib/occSupernaturalGrants'
-import type { OccCreationAbilityBudget } from '../../../lib/occCreationDerivation'
-
-type SupernaturalAbilitiesForgeContextValue = {
-  morphus: boolean
-  isNightbane: boolean
-  genreId: string
-  occName?: string
-  activeOcc: ReturnType<typeof useCharacter>['activeOcc']
-  occCreationDerived: ReturnType<typeof useCharacter>['occCreationDerived']
-  budget: OccCreationAbilityBudget
-  psychicTier: ReturnType<typeof useCharacter>['psychicTier']
-  psychicGateBypassed: boolean
-  majorAllocation?: ReturnType<
-    typeof useCharacter
-  >['character']['creationPsychicGateMajorAllocation']
-  spellCap: number
-  activeLane: SupernaturalAbilityForgeLane
-  setActiveLane: (lane: SupernaturalAbilityForgeLane) => void
-  counts: { spell: number; psionic: number; talent: number }
-  selectedIds: readonly string[]
-  activeLaneAllowed: boolean
-}
-
-const SupernaturalAbilitiesForgeContext =
-  createContext<SupernaturalAbilitiesForgeContextValue | null>(null)
+import {
+  SupernaturalAbilitiesForgeContext,
+} from './supernaturalAbilitiesForgeCtx'
 
 export function SupernaturalAbilitiesForgeProvider({
   children,
@@ -82,6 +58,7 @@ export function SupernaturalAbilitiesForgeProvider({
       occCreationDerived?.abilityBudget,
       character.creationAbilityBudget,
       genreId,
+      character.hostGenreId,
     ],
   )
   const spellCap =
@@ -101,7 +78,10 @@ export function SupernaturalAbilitiesForgeProvider({
     )
   }, [budget])
 
-  const selectedIds = character.selectedAbilities ?? []
+  const selectedIds = useMemo(
+    () => character.selectedAbilities ?? [],
+    [character.selectedAbilities],
+  )
   const counts = useMemo(() => {
     const grantedIds = occSupernaturalGrantedAbilityIds(
       activeOcc,
@@ -155,14 +135,4 @@ export function SupernaturalAbilitiesForgeProvider({
       {children}
     </SupernaturalAbilitiesForgeContext.Provider>
   )
-}
-
-export function useSupernaturalAbilitiesForge() {
-  const ctx = useContext(SupernaturalAbilitiesForgeContext)
-  if (!ctx) {
-    throw new Error(
-      'useSupernaturalAbilitiesForge must be used within SupernaturalAbilitiesForgeProvider',
-    )
-  }
-  return ctx
 }

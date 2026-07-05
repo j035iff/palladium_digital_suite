@@ -41,8 +41,14 @@ export function AttributeForge() {
   } = useCharacter()
 
   const morphus = supportsDualForm && activeForm === 'morphus'
-  const pool = character.creationAttributePool ?? Array.from({ length: 8 }, () => null)
-  const assignments = character.creationAttributeAssignments ?? {}
+  const pool = useMemo(
+    () => character.creationAttributePool ?? Array.from({ length: 8 }, () => null),
+    [character.creationAttributePool],
+  )
+  const assignments = useMemo(
+    () => character.creationAttributeAssignments ?? {},
+    [character.creationAttributeAssignments],
+  )
   const poolSlots = useMemo(
     () =>
       getEffectivePoolSlots(

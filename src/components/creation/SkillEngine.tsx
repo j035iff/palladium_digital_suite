@@ -132,8 +132,6 @@ export function SkillEngine() {
 
     activeForm,
 
-    activeFormState,
-
     effectiveOcc,
 
     occCreationDerived,
@@ -186,7 +184,10 @@ export function SkillEngine() {
 
 
 
-  const occSkillIds = character.creationOccSkillIds ?? []
+  const occSkillIds = useMemo(
+    () => character.creationOccSkillIds ?? [],
+    [character.creationOccSkillIds],
+  )
 
   const relatedSelected = useMemo(
     () => getCreationRelatedPicks(character),
@@ -198,7 +199,10 @@ export function SkillEngine() {
     [character],
   )
 
-  const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
+  const voucherPicks = useMemo(
+    () => character.creationOccCoreVoucherPicks ?? {},
+    [character.creationOccCoreVoucherPicks],
+  )
 
 
 
@@ -289,11 +293,6 @@ export function SkillEngine() {
 
   const relatedSkillCap = relatedCap
 
-  const relatedPickSlots = sumCreationSkillPickSlots(relatedSelected, {
-    occ: effectiveOcc ?? undefined,
-    specializationId: character.occSpecializationId,
-  })
-
   const relatedSlotsUsed = sumRelatedPoolSlotUsage(
     relatedSelected,
     resolvedOccPicks,
@@ -341,7 +340,10 @@ export function SkillEngine() {
 
   )
 
-  const occCategoryRules = effectiveOcc?.occRelatedSkills.categoryRules ?? []
+  const occCategoryRules = useMemo(
+    () => effectiveOcc?.occRelatedSkills.categoryRules ?? [],
+    [effectiveOcc],
+  )
 
   const selectedCategoryRule = useMemo(
     () => resolveOccCategoryRuleForFilter(category, occCategoryRules),
@@ -1442,9 +1444,9 @@ export function SkillEngine() {
 
                 {[
 
-                  { value: '', label: '— select category —', rule: null as const },
+                  { value: '', label: '— select category —', rule: null },
 
-                  { value: 'All', label: 'All (search only)', rule: null as const },
+                  { value: 'All', label: 'All (search only)', rule: null },
 
                   ...bookCategories.map((c) => ({
 
@@ -1700,6 +1702,11 @@ export function SkillEngine() {
         onConfirm={(result) => {
 
           if (!pickDialog) return
+
+          if (pickDialog.variant === 'voucher') {
+            setPickDialog(null)
+            return
+          }
 
           applyPickDialogResult(pickDialog.variant, result)
 
