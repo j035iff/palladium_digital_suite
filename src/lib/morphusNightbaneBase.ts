@@ -4,6 +4,13 @@ import {
   applyCreationAttributesToForm,
   buildCreationAttributes,
 } from './creationAttributeSync'
+import {
+  flattenCreationSkillIds,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
+import { skillAttributeFlatBonusTotal } from './ledgerStatBonuses'
+import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
 import { mapRaceStrengthToPsTier } from './raceEngine'
 import nightbaneBaseMorphus from '../data/content/morphus/forge/nightbane_base_morphus.json'
 
@@ -41,10 +48,45 @@ function writeScalar(
   return { ...attrs, [attr]: v }
 }
 
+function resolveSkillIdsForMorphusBase(
+  prev: CharacterRootState,
+  occ: PalladiumOcc | undefined,
+): string[] {
+  const picked = [
+    ...flattenCreationSkillIds(getCreationRelatedPicks(prev)),
+    ...flattenCreationSkillIds(getCreationSecondaryPicks(prev)),
+  ]
+  if (!occ?.id?.trim()) return picked
+  return [
+    ...resolveCreationOccSkillIds(
+      occ,
+      prev.occSpecializationId,
+      prev.creationOccSkillIds ?? [],
+      prev.creationOccCoreVoucherPicks ?? {},
+    ),
+    ...picked,
+  ]
+}
+
+function applyFacadeSkillFlatBonuses(
+  attrs: CharacterRootState['morphus']['attributes'],
+  skillIds: readonly string[],
+): CharacterRootState['morphus']['attributes'] {
+  let next = attrs
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const bump = skillAttributeFlatBonusTotal(attr, skillIds)
+    if (bump !== 0) {
+      next = writeScalar(next, attr, readScalar(next, attr) + bump)
+    }
+  }
+  return next
+}
+
 /** Apply Nightbane R.C.C. Morphus attribute bonuses on top of Facade pool assignments. */
 export function applyNightbaneMorphusBaseAttributes(
   prev: CharacterRootState,
   occ: PalladiumOcc | undefined,
+  skillIds?: readonly string[],
 ): CharacterRootState {
   const primaryBranch = applyCreationAttributesToForm(
     prev.primary,
@@ -60,6 +102,9 @@ export function applyNightbaneMorphusBaseAttributes(
     prev.occSpecializationId,
     prev.creationOccVariableResolutions ?? {},
   )
+
+  const resolvedSkillIds = skillIds ?? resolveSkillIdsForMorphusBase(prev, occ)
+  attrs = applyFacadeSkillFlatBonuses(attrs, resolvedSkillIds)
 
   const bonuses = NIGHTBANE_MORPHUS_BASE_PROFILE.attributeBonuses
   for (const attr of FORGE_ATTRIBUTE_KEYS) {

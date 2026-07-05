@@ -6,7 +6,7 @@ import {
   buildCreationFlowContext,
   nextCreationPhase,
 } from './creationStep'
-import { diceNotationBounds, isDiceNotation } from './diceNotationBounds'
+import { diceNotationBounds, diceCoreBounds, isDiceNotation } from './diceNotationBounds'
 import { createBlankCharacterForGenre } from './characterRoot'
 import { getRaceById } from '../data/library/registry'
 import { getPalladiumOccById } from '../data/library/occCatalogLoader'
@@ -106,6 +106,12 @@ describe('diceNotationBounds', () => {
 
   it('parses multiplied notation', () => {
     expect(diceNotationBounds('1D4*10')).toEqual({ min: 10, max: 40 })
+    expect(diceNotationBounds('1D4x10')).toEqual({ min: 10, max: 40 })
+    expect(diceNotationBounds('1D6X10+20')).toEqual({ min: 30, max: 80 })
+    expect(diceNotationBounds('1D6+4')).toEqual({ min: 5, max: 10 })
+    expect(diceNotationBounds('-1D6')).toEqual({ min: -6, max: -1 })
+    expect(diceCoreBounds('1D6X10+20')).toEqual({ min: 10, max: 60 })
+    expect(diceCoreBounds('1D6+2')).toEqual({ min: 1, max: 6 })
   })
 })
 

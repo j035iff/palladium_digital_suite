@@ -1,5 +1,5 @@
-import type { Character } from '../types'
-import { computeSkillRollTargetPercent } from './skillQuickRoll'
+import type { ActiveForm, Character } from '../types'
+import { resolveLiveSkillRollTarget } from './liveSkillEngine'
 
 export type SkillImprovementRow = {
   id: string
@@ -10,32 +10,33 @@ export type SkillImprovementRow = {
 }
 
 /**
- * Quick-roll skill targets before vs after a level bump (attribute_and_stat.md — I.Q. curve unchanged; level stair +5%).
+ * Quick-roll skill targets before vs after a level bump (I.Q. via unified stat engine).
  */
 export function summarizeSkillImprovementsForLevel(
   character: Character,
   fromLevel: number,
   toLevel: number,
-  opts?: { maxRows?: number; form?: 'primary' | 'morphus' },
+  opts?: { maxRows?: number; form?: ActiveForm },
 ): SkillImprovementRow[] {
   const maxRows = opts?.maxRows ?? 5
-  const form = opts?.form ?? 'primary'
-  const branch = character[form]
-  const iq = branch.attributes.iq
+  const activeForm = opts?.form ?? 'primary'
+  const branch = character[activeForm]
   const rows: SkillImprovementRow[] = []
 
   for (const s of branch.skills) {
     if (s.restricted) continue
     if (s.basePercent == null) continue
-    const before = computeSkillRollTargetPercent({
+    const before = resolveLiveSkillRollTarget({
+      character,
+      activeForm,
       skillBasePercent: s.basePercent,
       characterLevel: fromLevel,
-      iq,
     }).target
-    const after = computeSkillRollTargetPercent({
+    const after = resolveLiveSkillRollTarget({
+      character,
+      activeForm,
       skillBasePercent: s.basePercent,
       characterLevel: toLevel,
-      iq,
     }).target
     const delta = after - before
     if (delta === 0) continue

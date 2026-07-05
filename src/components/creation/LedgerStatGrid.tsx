@@ -15,13 +15,24 @@ function ledgerHintClass(morphus?: boolean): string {
   return morphus ? 'text-[10px] text-orange-100/85' : 'text-[10px] opacity-60'
 }
 
-function morphusValueTone(value: string, valueModified?: boolean): string {
+function morphusValueTone(
+  value: string,
+  valueModified?: boolean,
+  hasPendingRolls?: boolean,
+): string {
+  if (hasPendingRolls) return 'text-yellow-300'
   if (valueModified) return 'text-emerald-300'
   const trimmed = value.trim()
   if (trimmed.startsWith('-') || trimmed.startsWith('−') || trimmed.startsWith('–')) {
     return 'text-orange-200'
   }
   return 'text-white'
+}
+
+function facadeValueTone(valueModified?: boolean, hasPendingRolls?: boolean): string {
+  if (hasPendingRolls) return 'text-yellow-600 dark:text-yellow-400'
+  if (valueModified) return 'text-emerald-600 dark:text-emerald-400'
+  return ''
 }
 
 function LedgerHint({
@@ -78,7 +89,9 @@ function LedgerSimpleRow({
         <dt className={morphus ? 'text-orange-50/95' : 'opacity-80'}>{line.label}</dt>
         <dd
           className={`shrink-0 text-right font-mono font-semibold tabular-nums ${
-            morphus ? morphusValueTone(line.value, line.valueModified) : ''
+            morphus
+              ? morphusValueTone(line.value, line.valueModified, line.hasPendingRolls)
+              : facadeValueTone(line.valueModified, line.hasPendingRolls)
           } ${valueHoverable ? (morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS) : ''}`}
           title={valueTitle}
         >
@@ -142,10 +155,8 @@ function LedgerStatRow({
         <dd
           className={`shrink-0 text-right font-mono font-semibold tabular-nums ${
             morphus
-              ? morphusValueTone(line.value, line.valueModified)
-              : line.valueModified
-                ? 'text-emerald-600 dark:text-emerald-400'
-                : ''
+              ? morphusValueTone(line.value, line.valueModified, line.hasPendingRolls)
+              : facadeValueTone(line.valueModified, line.hasPendingRolls)
           } ${line.valueTooltip ? (morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS) : ''}`}
           title={line.valueTooltip}
         >

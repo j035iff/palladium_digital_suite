@@ -44,7 +44,7 @@ import {
   saveVsPsionicsForTier,
   skillSlotMultiplierForTier,
 } from '../lib/psychicGate'
-import type { SpawnVitalityRolls } from '../lib/spawnFinalVitality'
+import type { SpawnVitalityRolls } from '../lib/spawnVitalityTypes'
 import { computeMaxApm, resolveCharacterMaxApm } from '../lib/meleeCombat'
 import {
   resolveHandToHandCombatProfile,
@@ -1113,8 +1113,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     : ''
 
   const liveBonuses = useMemo(
-    () => computeLiveBonuses(activeFormState.attributes),
-    [activeFormState.attributes],
+    () => computeLiveBonuses(rawCharacter, sheetActiveForm),
+    [rawCharacter, sheetActiveForm],
   )
 
   const activeStats = useMemo<ActiveStats>(() => {

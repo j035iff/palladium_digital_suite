@@ -203,7 +203,7 @@ describe('creationLiveLedger', () => {
   it('shows O.C.C. flat bonuses in the value and dice under grouped rows', () => {
     const attrs = characterFixture.primary.attributes
     const human = getRaceById('race_human')
-    const occ = getLibraryOccById('occ_ex_government_agent')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
     const block = buildCreationAttributeBlock(attrs, {}, human, occ)
     const ps = block.find((l) => l.label === 'P.S.')
     expect(ps?.inlineRaceRoll).toBe('3D6')
@@ -214,13 +214,13 @@ describe('creationLiveLedger', () => {
 
   it('shows O.C.C. bonuses without a race and attribute minimums in red suffixes', () => {
     const attrs = characterFixture.primary.attributes
-    const occ = getLibraryOccById('occ_ex_government_agent')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
     const block = buildCreationAttributeBlock(attrs, {}, undefined, occ)
     const ps = block.find((l) => l.label === 'P.S.')
     expect(ps?.inlineRaceRoll).toBeUndefined()
     expect(ps?.value).toBe('1')
     expect(block.find((l) => l.label === 'I.Q.')?.inlineRaceRoll).toBeUndefined()
-    expect(block.find((l) => l.label === 'I.Q.')?.labelSuffix).toBe('12+')
+    expect(block.find((l) => l.label === 'M.E.')?.labelSuffix).toBe('11+')
   })
 
   it('lists standard exceptional rows starting at 17', () => {

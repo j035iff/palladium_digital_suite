@@ -14,6 +14,14 @@ export type PolymorphicResolveOptions = {
   applyFloors?: boolean
 }
 
+/** During Trait Forge preview, apply flats/percents but defer dice to Spawn rolls. */
+export function morphusCreationPreviewResolveOptions(
+  finalized: boolean,
+): PolymorphicResolveOptions {
+  if (finalized) return { applyFloors: true }
+  return { applyFloors: false, rollDice: () => 0 }
+}
+
 function normalizeResolveOptions(
   opts?: PolymorphicResolveOptions | ((notation: string) => number),
 ): PolymorphicResolveOptions {
@@ -152,6 +160,23 @@ function resolveOverrideValue(
     return Math.round(base * (1 + mod.percent / 100))
   }
   return base
+}
+
+/** Flat/percent/min floors only — defers dice to physical Review rolls. */
+export function polymorphicFlatOnlyDeltaFromBase(
+  base: number,
+  modifiers: readonly MorphusPolymorphicModifier[],
+  opts?: PolymorphicResolveOptions | ((notation: string) => number),
+): number {
+  if (!modifiers.length) return 0
+  const flatOnly = modifiers.map((mod) => ({
+    flat: mod.flat,
+    percent: mod.percent,
+    minValue: mod.minValue,
+    maxValue: mod.maxValue,
+    isOverride: mod.isOverride,
+  }))
+  return polymorphicDeltaFromBase(base, flatOnly, opts)
 }
 
 /** Passive delta for sheet display: resolved − base. */

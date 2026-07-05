@@ -4,6 +4,10 @@ import { isDiceNotation } from './diceNotationBounds'
 import { normalizeDiceDisplay } from './ledgerStatBonuses'
 import { getRacePpeNotation } from './raceEngine'
 import { dualFormPeHintLabel, FACADE_LABEL } from './creationFormLabels'
+import {
+  resolveSourcedVitalFormulaFlat,
+  resolveVitalFlatFromTerms,
+} from './creationStatEngine'
 
 const UNASSIGNED = '—'
 
@@ -163,7 +167,7 @@ export function buildVitalAttrFlatBundle(
   }
 
   return {
-    flatTotal: terms.reduce((sum, term) => sum + term.amount, 0),
+    flatTotal: resolveVitalFlatFromTerms(terms).total,
     terms,
   }
 }
@@ -441,7 +445,26 @@ export function buildAttrFormulaLedgerFields(
             ? { ...term, formLabel: opts?.attrFormLabels?.[term.attr] }
             : term,
       )
-  const flatTotal = sourcedTerms.reduce((sum, term) => sum + term.amount, 0)
+  const flatTotal = opts?.formulaSources
+    ? resolveSourcedVitalFormulaFlat(
+        (
+          [
+            opts.formulaSources.race
+              ? { source: 'race' as const, formula: opts.formulaSources.race }
+              : null,
+            opts.formulaSources.occ
+              ? { source: 'occ' as const, formula: opts.formulaSources.occ }
+              : null,
+          ] as const
+        ).filter(
+          (entry): entry is { source: VitalFlatSource; formula: string } =>
+            entry != null && entry.formula.trim().length > 0,
+        ),
+        assignments,
+        opts.attrScores,
+        opts.attrFormLabels,
+      ).total
+    : resolveVitalFlatFromTerms(sourcedTerms).total
   const hint =
     opts?.hintOverride ??
     formatVitalFormulaLedgerHint(

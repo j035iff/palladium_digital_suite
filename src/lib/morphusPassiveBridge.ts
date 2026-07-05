@@ -70,7 +70,7 @@ import {
   aggregateMorphusAttributeRollBonuses,
 } from './morphusCharacteristicAggregation'
 import type { MorphusCapabilitySummary } from '../types'
-import { polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
+import { morphusCreationPreviewResolveOptions, polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
 
 const STAT_TO_PASSIVE: Partial<
   Record<keyof MorphusStatModifiers, keyof FeatureModifiers | string>
@@ -241,8 +241,10 @@ export function buildMorphusPassiveBundle(
     else if (key === 'ppe') base = character.ppe.maximum
     else if (key in attrs) base = attrs[key as keyof typeof attrs] as number
 
-    const applyFloors = character.creationTraitForgeStubComplete === true
-    const delta = polymorphicDeltaFromBase(base, blocks, { applyFloors })
+    const resolveOpts = morphusCreationPreviewResolveOptions(
+      character.creationTraitForgeStubComplete === true,
+    )
+    const delta = polymorphicDeltaFromBase(base, blocks, resolveOpts)
     if (delta !== 0) modifiers[pk] = (modifiers[pk] ?? 0) + delta
   }
 

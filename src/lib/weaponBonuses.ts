@@ -1,11 +1,8 @@
 import type { ActiveForm, Character, InventoryItem, Weapon } from '../types'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
-import { computeLiveBonuses } from './characterDerived'
-import { getPpMeleeNaturalForActiveForm } from './sheetBonuses'
-import { maPbScaledBonuses } from './skillEquation'
-import { buildSkillPercentContext, resolveSkillPercent } from './skillPercentResolution'
+import { resolveLiveSkillPercent } from './liveSkillEngine'
+import { resolveLivePpMeleeNatural } from './liveStatEngine'
 import { getSkillById, resolveWeaponProficiencySkillId } from '../data/skillLibrary'
-import { getFormState } from '../types'
 import type { StrikeBreakdown } from './strikeEngine'
 import type { AccumulatedHandToHandBonuses } from '../types'
 
@@ -48,24 +45,13 @@ export type WeaponProfileBonuses = {
   wpSkillDisplayName: string | null
 }
 
-function iqSkillBonus(character: Character, activeForm: ActiveForm): number {
-  const attrs = getFormState(character, activeForm).attributes
-  return computeLiveBonuses(attrs).iqSkillBonus
-}
-
 function wpPercentBonusForSkill(skillId: string, character: Character, activeForm: ActiveForm): number {
   const def = getSkillById(skillId)
   if (!def) return 0
-  const attrs = getFormState(character, activeForm).attributes
-  const iq = iqSkillBonus(character, activeForm)
-  const resolved = resolveSkillPercent(
+  const resolved = resolveLiveSkillPercent(
     { ...def, id: def.id },
-    buildSkillPercentContext(
-      character,
-      activeForm,
-      iq,
-      maPbScaledBonuses(attrs.ma, attrs.pb),
-    ),
+    character,
+    activeForm,
   )
   return wpDiceBonusFromSkillPercent(resolved.total)
 }
@@ -149,7 +135,7 @@ export function computeWeaponProfileBonuses(
   handToHandAccumulated?: AccumulatedHandToHandBonuses,
 ): WeaponProfileBonuses {
   const ranged = isRangedWeapon(weapon)
-  const ppNat = getPpMeleeNaturalForActiveForm(character, activeForm)
+  const ppNat = resolveLivePpMeleeNatural(character, activeForm)
 
   const hth = ranged ? { strike: 0, parry: 0 } : hthMeleeBonuses(handToHandAccumulated)
 

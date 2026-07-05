@@ -168,9 +168,68 @@ describe('spawnDiceBlocks', () => {
     )
     const morphusSdc = blocks.find((block) => block.id === 'morphus_sdc')
     expect(morphusSdc).toBeDefined()
-    const rollNotations = morphusSdc?.groups.flatMap((group) => group.rolls.map((r) => r.notation)) ?? []
-    expect(rollNotations).toContain('2D6x10')
-    expect(rollNotations).toContain('3D6X10')
+    const traitGroup = morphusSdc?.groups.find((group) => group.kind === 'traits')
+    expect(traitGroup).toBeDefined()
+    const rollNotations = traitGroup?.rolls.map((r) => r.notation) ?? []
+    expect(rollNotations).toContain('3D6x10')
+    expect(traitGroup?.rolls.find((r) => r.notation === '3D6x10')).toEqual(
+      expect.objectContaining({ min: 30, max: 180 }),
+    )
+  })
+
+  it('includes morphus trait attribute and H.F. dice on the review tab', () => {
+    const nightbane = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const blocks = buildPendingDiceBlocks(
+      {
+        ...characterFixture,
+        creationAttributeAssignments: { spd: 10 },
+        morphusTraitSlotResolutions: [
+          { slotId: 'plan:0', catalogEntryId: 'animal_arachnid_full' },
+          { slotId: 'plan:1', catalogEntryId: 'stigmata_body_faces' },
+        ],
+      },
+      nightbane,
+      occ,
+      { psychicTier: 'none', supportsDualForm: true },
+    )
+    const morphus = filterPendingDiceBlocksByScope(blocks, 'morphus')
+    expect(morphus.some((block) => block.id === 'morphus_attr_spd')).toBe(true)
+    expect(morphus.some((block) => block.id === 'morphus_hf')).toBe(true)
+    const spdRoll = morphus
+      .find((block) => block.id === 'morphus_attr_spd')
+      ?.groups[0]?.rolls[0]
+    expect(spdRoll?.notation).toBe('1D4x10')
+    expect(spdRoll).toEqual(expect.objectContaining({ min: 10, max: 40 }))
+  })
+
+  it('splits trait dice flats into block baseline and dice-only rolls on Review', () => {
+    const nightbane = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const blocks = buildPendingDiceBlocks(
+      {
+        ...characterFixture,
+        creationAttributeAssignments: { pe: 12 },
+        morphusTraitSlotResolutions: [
+          { slotId: 'plan:0', catalogEntryId: 'mythical_creature_cyclops' },
+        ],
+      },
+      nightbane,
+      occ,
+      { psychicTier: 'none', supportsDualForm: true },
+    )
+    const morphusSdc = blocks.find((block) => block.id === 'morphus_sdc')!
+    const cyclopsRoll = morphusSdc.groups
+      .flatMap((group) => group.rolls)
+      .find((roll) => roll.source === 'Cyclops/Giant')
+    expect(cyclopsRoll?.notation).toBe('1D6x10')
+    expect(cyclopsRoll).toEqual(expect.objectContaining({ min: 10, max: 60 }))
+    expect(
+      pendingDiceBlockRunningTotal(morphusSdc, {
+        [cyclopsRoll!.id]: 40,
+      }),
+    ).toBe(morphusSdc.flatBaseline + 40)
+    expect(morphusSdc.flatBaseline).toBeGreaterThanOrEqual(20)
   })
 
   it('splits facade and morphus pending dice blocks for dual-form builds', () => {
@@ -184,7 +243,9 @@ describe('spawnDiceBlocks', () => {
     const morphus = filterPendingDiceBlocksByScope(blocks, 'morphus')
     expect(primary.some((block) => block.id === 'hp')).toBe(true)
     expect(primary.some((block) => block.id.startsWith('morphus_'))).toBe(false)
-    expect(morphus.map((block) => block.id)).toEqual(['morphus_hp', 'morphus_sdc'])
+    expect(morphus.map((block) => block.id)).toEqual(
+      expect.arrayContaining(['morphus_hp', 'morphus_sdc', 'morphus_hf']),
+    )
     const morphusHp = morphus.find((block) => block.id === 'morphus_hp')
     const morphusHpRolls = morphusHp?.groups.flatMap((group) => group.rolls) ?? []
     expect(morphusHpRolls).toHaveLength(1)

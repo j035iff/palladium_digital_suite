@@ -1,17 +1,18 @@
 import type { Character, CharacterRootState, PalladiumOcc, Race } from '../types'
-import type { SpawnVitalityRolls } from './spawnFinalVitality'
+import type { SpawnVitalityRolls } from './spawnVitalityTypes'
 import {
   creationHpLabel,
   creationIspLabel,
   creationSdcLabel,
 } from './creationFormLabels'
-import { applyPendingAttributeDiceToForms } from './creationAttributeSync'
+import { applyPendingAttributeDiceToForms, applySpawnAttributeDiceBonuses } from './creationAttributeSync'
 import { retainCharacterRoot } from './characterRoot'
 import { tryApplyNumericSheetPath } from './vitalityPathUpdate'
 import {
   buildPendingDiceBlocks,
   filterPendingDiceBlocksByScope,
   pendingDiceBlockRunningTotal,
+  sumMorphusTraitAttributeDiceBonuses,
   type PendingDiceBlock,
 } from './spawnDiceBlocks'
 
@@ -199,6 +200,20 @@ export function applyMorphusPendingDiceResolutions(
   for (const [path, v] of pairs) {
     const applied = tryApplyNumericSheetPath(next, path, v)
     next = applied ? retainCharacterRoot(prev, applied) : next
+  }
+
+  const morphusAttrBonuses = sumMorphusTraitAttributeDiceBonuses(allBlocks, resolutions)
+  if (Object.keys(morphusAttrBonuses).length > 0) {
+    next = {
+      ...next,
+      morphus: {
+        ...next.morphus,
+        attributes: applySpawnAttributeDiceBonuses(
+          next.morphus.attributes,
+          morphusAttrBonuses,
+        ),
+      },
+    }
   }
 
   if (byId.morphus_hp == null && byId.morphus_sdc == null) {

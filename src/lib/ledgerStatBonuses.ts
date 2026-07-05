@@ -3,17 +3,22 @@ import type { PalladiumOcc, Race } from '../types'
 import type { VitalAttrFlatTerm } from './ledgerVitalFormula'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { calculateBaseSdc } from '../utils/vitalsCalculator'
+import { resolveSdcFlatDerivedStat } from './creationStatEngine'
 import { occFlatVitalBonus, occStaticDiceNotation } from './creationOccBonuses'
 import { resolveEffectivePalladiumOcc } from './occComposition'
 import { isDiceNotation } from './diceNotationBounds'
+import { normalizeDiceDisplay } from './diceNotation'
+import { physicalDiceContributions } from './creationPhysicalDice'
 import { raceAttrNotation } from './creationAttributeSync'
+
+export { normalizeDiceDisplay } from './diceNotation'
 export type LedgerDiceContribution = {
   notation: string
   label: string
 }
 
 export type LedgerStatDiceGroup = {
-  kind: 'race' | 'occ' | 'skills'
+  kind: 'race' | 'occ' | 'skills' | 'traits'
   display: string
   tooltip: string
 }
@@ -36,15 +41,11 @@ const GROUP_LABEL: Record<LedgerStatDiceGroup['kind'], string> = {
   race: 'Race',
   occ: 'OCC',
   skills: 'Skills',
+  traits: 'Traits',
 }
 
 export function ledgerDiceGroupRowLabel(kind: LedgerStatDiceGroup['kind']): string {
   return GROUP_LABEL[kind]
-}
-
-/** Display form: `1D4*10` → `1D4x10`. */
-export function normalizeDiceDisplay(notation: string): string {
-  return notation.trim().toUpperCase().replace(/\*(\d+)/g, 'x$1')
 }
 
 function dieFacesSortKey(notation: string): number {
@@ -105,15 +106,33 @@ function buildDiceGroup(
   contributions: readonly LedgerDiceContribution[],
 ): LedgerStatDiceGroup | null {
   if (contributions.length === 0) return null
-  const forDisplay = kind === 'occ' ? [...contributions] : sortContributionsForTooltip(contributions)
+  const diceOnly = physicalDiceContributions(contributions)
+  const forDisplay = kind === 'occ' ? [...diceOnly] : sortContributionsForTooltip(diceOnly)
   const forTooltip =
-    kind === 'skills' ? sortContributionsForTooltip(contributions) : [...contributions]
+    kind === 'skills' || kind === 'traits'
+      ? sortContributionsForTooltip(diceOnly)
+      : [...diceOnly]
   const display =
     kind === 'occ'
       ? forDisplay.map((c) => normalizeDiceDisplay(c.notation)).join('+')
       : aggregateDiceNotations(forDisplay.map((c) => c.notation))
   const tooltip = `(${forTooltip.map((c) => `${c.label}: ${normalizeDiceDisplay(c.notation)}`).join(', ')})`
   return { kind, display, tooltip }
+}
+
+export function buildLedgerTraitDiceGroup(
+  contributions: readonly LedgerDiceContribution[],
+): LedgerStatDiceGroup | null {
+  return buildDiceGroup('traits', contributions)
+}
+
+/** Sum numeric physical skill bonuses for one attribute (e.g. Acrobatics +1 P.P.). */
+export function skillAttributeFlatBonusTotal(
+  attr: ForgeAttrKey,
+  skillIds: readonly string[],
+): number {
+  const key = attr === 'ps' ? 'ps' : attr
+  return collectSkillBonuses(key, skillIds).flat.reduce((sum, item) => sum + item.amount, 0)
 }
 
 function collectSkillBonuses(
@@ -382,7 +401,10 @@ export function buildSdcStatBonusDetails(
     ...skill.flat,
   ]
   return {
-    flatTotal: flatBreakdown.reduce((sum, item) => sum + item.amount, 0),
+    flatTotal: resolveSdcFlatDerivedStat({
+      flatVitalTerms,
+      skillFlats: skill.flat,
+    }).total,
     flatBreakdown,
     flatVitalTerms,
     skillFlats: [...skill.flat],

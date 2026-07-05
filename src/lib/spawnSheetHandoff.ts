@@ -11,17 +11,15 @@ import type {
   PsychicTier,
   SheetSkill,
 } from '../types'
-import { computeLiveBonuses } from './characterDerived'
+import {
+  resolveLiveSkillPercent,
+} from './liveSkillEngine'
 import {
   missingPrerequisiteMessage,
   prerequisiteSatisfied,
 } from './skillPrerequisites'
 import { aggregateSkillModifiers } from './skillModifiers'
-import {
-  buildSkillPercentContext,
-  resolveSkillPercent,
-} from './skillPercentResolution'
-import { maPbScaledBonuses, type SkillEquationSkill } from './skillEquation'
+import type { SkillEquationSkill } from './skillEquation'
 import {
   resolveCreationPsychicTier,
   resolveOccSkillBonusPercent,
@@ -109,19 +107,7 @@ export function projectCreationSkillsToSheet(
     secondaryPicks,
   )
   if (hthId) selectedSet.add(hthId)
-  const branch = activeForm === 'morphus' ? character.morphus : character.primary
-  const attrs = branch.attributes
   const tier = psychicTier ?? resolveCreationPsychicTier(character)
-
-  const iqBonus = computeLiveBonuses(attrs).iqSkillBonus
-  const maPbBonus = maPbScaledBonuses(attrs.ma, attrs.pb)
-  const ctx = buildSkillPercentContext(
-    character,
-    activeForm,
-    iqBonus,
-    maPbBonus,
-    'hard_flat',
-  )
 
   const rows: SheetSkill[] = []
   for (const { pick, tier: pickTier } of entries) {
@@ -140,7 +126,11 @@ export function projectCreationSkillsToSheet(
       character.occSpecializationId,
     )
     const equation = buildSkillEquationInput(def, selectedSet, occBonus, pick)
-    const resolved = resolveSkillPercent({ ...equation, id: def.id }, ctx)
+    const resolved = resolveLiveSkillPercent(
+      { ...equation, id: def.id },
+      character,
+      activeForm,
+    )
 
     const prereqOk = prerequisiteSatisfied(def.prerequisite, selectedSet)
     const restricted = !prereqOk || resolved.impossibleInMorphus === true

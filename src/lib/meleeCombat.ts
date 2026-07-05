@@ -7,9 +7,7 @@ import type {
 } from '../types'
 import { getFormState } from '../types'
 import { handToHandAttackBonus } from '../utils/combatCalculator'
-import { collectUnlockedSkillIds } from './combatQuickBonuses'
-import { buildMorphusCreationBasePassiveModifiers } from './morphusCreationLedger'
-import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
+import { buildLiveCombatContext, resolveLiveCharacterMaxApm } from './liveStatEngine'
 
 /**
  * PC base attacks per melee plus Hand-to-Hand extra attacks (`stat_engine_spec.md` §4.5).
@@ -60,24 +58,13 @@ export function resolveCharacterMaxApm(
   handToHand: AccumulatedHandToHandBonuses,
   passive: FeatureModifiers,
 ): number {
-  const attrs = getFormState(character, activeForm).attributes
-  const skillApm =
-    aggregatePhysicalSkillCombatBonuses([
-      ...collectUnlockedSkillIds(character, activeForm),
-    ]).combat.apm ?? 0
-  const traitApm = passive.apm ?? 0
-  const baseApm =
-    supportsDualForm && activeForm === 'morphus'
-      ? (buildMorphusCreationBasePassiveModifiers().apm ?? 0)
-      : 0
-  return resolveAttacksPerMelee(
-    attrs,
-    character.level,
-    handToHandAttackBonus(handToHand),
-    skillApm,
-    traitApm,
-    baseApm,
-  ).total
+  return resolveLiveCharacterMaxApm(
+    character,
+    activeForm,
+    supportsDualForm,
+    handToHand,
+    passive,
+  )
 }
 
 export type ScaledDamageResult = {

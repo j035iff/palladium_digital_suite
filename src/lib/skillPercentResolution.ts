@@ -1,6 +1,5 @@
-import type { ActiveForm, Character, MorphusCharacteristic } from '../types'
-import { getFormState } from '../types'
-import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import type { ActiveForm, Character, MorphusCharacteristic, MorphusSurfaceType } from '../types'
+import { buildLiveSkillContext } from './liveSkillEngine'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
@@ -8,7 +7,6 @@ import {
   type SkillEquationSkill,
 } from './skillEquation'
 import { sumMorphusSkillPercentForCatalogSkill } from './morphusSkillModifierAggregation'
-import type { MorphusSurfaceType } from '../types'
 import {
   sumSkillPercentAttributeModifierPercent,
   type SkillPercentAttributeScores,
@@ -27,7 +25,10 @@ export type SkillPercentBreakdown = {
   impossibleInMorphus?: boolean
 }
 
-/** Build resolution context from sheet state (Skill Engine, W.P. profiles, etc.). */
+/**
+ * Build resolution context from sheet state.
+ * @deprecated Prefer {@link buildLiveSkillContext} — auto-resolves I.Q. and M.A./P.B. via stat engine.
+ */
 export function buildSkillPercentContext(
   character: Pick<
     Character,
@@ -38,30 +39,15 @@ export function buildSkillPercentContext(
     | 'morphusTraitSlotResolutions'
   >,
   activeForm: ActiveForm,
-  iqBonus: number,
-  maPbBonus = 0,
-  morphusSurfaceType: MorphusSurfaceType = 'hard_flat',
+  iqBonus?: number,
+  maPbBonus?: number,
+  morphusSurfaceType?: MorphusSurfaceType,
 ): SkillPercentResolutionContext {
-  const form = getFormState(character, activeForm)
-  const attrs = form.attributes
+  const live = buildLiveSkillContext(character, activeForm, { morphusSurfaceType })
   return {
-    characterLevel: character.level,
-    iqBonus,
-    maPbBonus,
-    activeForm,
-    primaryPp: character.primary.attributes.pp,
-    morphusSurfaceType,
-    activeMorphusCharacteristics: resolveActiveMorphusTraits(character),
-    attributeScores: {
-      iq: attrs.iq,
-      me: attrs.me,
-      ma: attrs.ma,
-      ps: attrs.ps.score,
-      pp: attrs.pp,
-      pe: attrs.pe,
-      pb: attrs.pb,
-      spd: attrs.spd,
-    },
+    ...live,
+    iqBonus: iqBonus ?? live.iqBonus,
+    maPbBonus: maPbBonus ?? live.maPbBonus,
   }
 }
 

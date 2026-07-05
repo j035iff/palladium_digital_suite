@@ -18,18 +18,32 @@ import {
 } from './saveProfile'
 import { computeAttributeSaveProfile } from './attributeSaves'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
-import { computeCombatMirrorBonuses } from './characterDerived'
 import { occAttributeRequirementSuffix } from './creationAttributeSync'
 import { occVariableAttributeResolution } from './occVariableBonus'
 import {
   buildForgeAttributeStatBonuses,
+  buildLedgerTraitDiceGroup,
   buildSdcStatBonusDetails,
-  formatAttributeValueTooltip,
   formatFlatValueTooltip,
   normalizeDiceDisplay,
   type LedgerFlatContribution,
   type LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
+import {
+  buildCreationStatStack,
+  buildSaveStatStack,
+  facadeAttributeTotalFromStack,
+  facadePendingBlocksByAttr,
+  formatCombatStatStackTooltip,
+  formatSaveStatStackTooltip,
+  resolveCombatLedgerTotals,
+  resolveExceptionalDisplayValue,
+  resolveFacadeAttributeSnapshot,
+  statStackToLedgerLines,
+  statStackTotal,
+  type ExceptionalDisplayKey,
+  type CombatStatKey,
+} from './creationStatEngine'
 import { creationVitalityPreview } from './creationVitalityPreview'
 import {
   buildAttrFormulaLedgerFields,
@@ -89,6 +103,9 @@ import {
   pendingAttributeDiceBreakdown,
   collectEnteredPendingDiceContributions,
   formatVitalityBlockValueTooltip,
+  morphusTraitAttributeDiceBreakdown,
+  creationPendingBlockTotal,
+  pendingDiceBlocksById,
   type PendingDiceBlock,
 } from './spawnDiceBlocks'
 import type { VitalAttrFlatTerm } from './ledgerVitalFormula'
@@ -102,6 +119,7 @@ import {
   buildMorphusCreationAttributeBlock,
   buildMorphusCreationBasePassiveModifiers,
   MORPHUS_LEDGER_RACE_LABEL,
+  buildMorphusTraitHorrorFactorDetails,
   buildMorphusTraitSdcBonusDetails,
   creationLedgerSavePassiveModifiers,
   creationLedgerTraitPassiveModifiers,
@@ -138,6 +156,8 @@ export type CreationLedgerLine = {
   valueModified?: boolean
   /** Hover breakdown for flat bonuses baked into {@link value}. */
   valueTooltip?: string
+  /** Unresolved physical dice rolls still owed on Review. */
+  hasPendingRolls?: boolean
   /** Structured flat terms for vitality tooltip ordering (H.P., S.D.C., P.P.E., etc.). */
   flatTerms?: VitalAttrFlatTerm[]
   skillFlatTerms?: LedgerFlatContribution[]
@@ -362,13 +382,13 @@ function formatCombatValueTooltip(
 }
 
 type OrderedCombatBonusInput = {
-  attribute?: { label: string; amount: number }
+  attrs: CharacterAttributes
+  combatKey: CombatStatKey
   occ?: PalladiumOcc
   specializationId?: string | null
-  occStatKey?: string
   occResolutions?: Readonly<Record<string, number>>
   passiveOcc?: number
-  baseModifier?: number
+  morphusRaceBonus?: number
   hth?: number
   hthShort?: string | null
   skillIds: readonly string[]
@@ -381,47 +401,31 @@ function buildOrderedCombatBonusParts(
 ): {
   parts: SaveDeductionLine[]
   skillEntries: readonly { name: string; amount: number }[]
+  stack: ReturnType<typeof buildCreationStatStack>
 } {
-  const parts: SaveDeductionLine[] = []
-
-  if (input.attribute?.amount) {
-    parts.push({ label: input.attribute.label, amount: input.attribute.amount })
-  }
-
-  const occStatic =
-    input.occStatKey && input.occ
-      ? occStaticNumericBonus(
-          input.occ,
-          input.specializationId,
-          'combat',
-          input.occStatKey,
-          input.occResolutions ?? {},
-        )
-      : 0
-  const occTotal = occStatic + (input.passiveOcc ?? 0)
-  if (occTotal) parts.push({ label: 'OCC', amount: occTotal })
-
-  if (input.baseModifier) {
-    parts.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: input.baseModifier })
-  }
-
-  if (input.hth && input.hthShort) {
-    parts.push({ label: `HtH ${input.hthShort}`, amount: input.hth })
-  }
-
   const skillAmt = input.skill.combat[input.skillKey] ?? 0
   const skillEntries = perSkillCombatContributions(input.skillIds, input.skillKey)
-  if (skillAmt) {
-    parts.push({ label: 'Skills', amount: skillAmt })
-  }
-
-  return { parts, skillEntries }
+  const stack = buildCreationStatStack({
+    kind: 'combat',
+    combatKey: input.combatKey,
+    attrs: input.attrs,
+    occ: input.occ,
+    specializationId: input.specializationId,
+    occResolutions: input.occResolutions,
+    passiveOcc: input.passiveOcc,
+    morphusRaceBonus: input.morphusRaceBonus,
+    hth: input.hth,
+    hthLabel: input.hth && input.hthShort ? `HtH ${input.hthShort}` : null,
+    skillAmount: skillAmt,
+  })
+  return { parts: statStackToLedgerLines(stack), skillEntries, stack }
 }
 
 function combatLedgerLineFromParts(
   label: string,
   parts: readonly SaveDeductionLine[],
   skillEntries: readonly { name: string; amount: number }[] = [],
+  stackTerms?: ReturnType<typeof buildCreationStatStack>,
 ): CreationLedgerLine {
   const total = parts.reduce((sum, p) => sum + p.amount, 0)
   const skillDetailTooltip = formatSkillSourcesTooltip(skillEntries)
@@ -430,7 +434,10 @@ function combatLedgerLineFromParts(
     value: total !== 0 ? formatBonus(total) : LEDGER_NA,
     valueModified: total !== 0,
     hint: formatBonusBreakdown(parts),
-    valueTooltip: formatCombatValueTooltip(parts, skillEntries),
+    valueTooltip:
+      stackTerms != null
+        ? formatCombatStatStackTooltip(stackTerms, skillEntries)
+        : formatCombatValueTooltip(parts, skillEntries),
     skillDetailTooltip,
   }
 }
@@ -567,11 +574,18 @@ export function resolveLedgerEffectiveAttributes(
       occVariableResolutions,
     )
     const pendingBonus = pendingAttrBonuses[attr] ?? 0
+    const stack = buildCreationStatStack({
+      kind: 'facade_attribute',
+      flatBreakdown: bundle.flatBreakdown,
+      occVariableBonus: variableBonus,
+      enteredSkillDice: [],
+    })
+    const stackTotal = facadeAttributeTotalFromStack(poolRoll, stack)
     const total =
-      poolRoll != null
-        ? poolRoll + bundle.flatTotal + variableBonus + pendingBonus
-        : bundle.flatTotal > 0 || pendingBonus > 0
-          ? bundle.flatTotal + variableBonus + pendingBonus
+      stackTotal != null
+        ? stackTotal + pendingBonus
+        : pendingBonus > 0
+          ? pendingBonus
           : null
     if (total == null) continue
     if (attr === 'ps') {
@@ -584,10 +598,19 @@ export function resolveLedgerEffectiveAttributes(
 }
 
 /** All eight attributes — dash until a pool roll is assigned on the attribute strip. */
-function pendingDiceBlockById(
-  blocks: readonly PendingDiceBlock[],
-): Record<string, PendingDiceBlock> {
-  return Object.fromEntries(blocks.map((block) => [block.id, block]))
+function pendingMorphusAttributeTotals(
+  pendingById: Readonly<Record<string, PendingDiceBlock>>,
+  resolutions: Readonly<Record<string, number>>,
+): Partial<Record<ForgeAttrKey, number>> {
+  const out: Partial<Record<ForgeAttrKey, number>> = {}
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const total = creationPendingBlockTotal(
+      pendingById[`morphus_attr_${attr}`],
+      resolutions,
+    )
+    if (total != null) out[attr] = total
+  }
+  return out
 }
 
 function vitalityLedgerLineFromBlock(
@@ -640,47 +663,32 @@ export function buildCreationAttributeBlock(
   occVariableResolutions: Readonly<Record<string, number>> = {},
   pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>> = {},
   pendingAttrDiceBreakdown: Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> = {},
+  pendingAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {},
+  resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine[] {
   return FORGE_ATTRIBUTE_KEYS.map((attr) => {
-    const assigned = assignments[attr]
-    const bundle = buildForgeAttributeStatBonuses(
+    const snapshot = resolveFacadeAttributeSnapshot(
       attr,
+      assignments,
       race,
       occ,
       specializationId,
       grantedSkillIds,
-    )
-    const poolRoll =
-      assigned != null && Number.isFinite(assigned) ? assigned : null
-    const variableBonus = occVariableAttributeResolution(
-      attr,
-      occ,
-      specializationId,
       occVariableResolutions,
+      pendingAttrBonuses,
+      pendingAttrDiceBreakdown,
+      pendingAttrBlocks[attr],
+      resolutions,
     )
-    const pendingBonus = pendingAttrBonuses[attr] ?? 0
-    const total =
-      poolRoll != null
-        ? poolRoll + bundle.flatTotal + variableBonus + pendingBonus
-        : bundle.flatTotal > 0 || pendingBonus > 0
-          ? bundle.flatTotal + variableBonus + pendingBonus
-          : null
-
-    const hasBonuses =
-      bundle.flatTotal > 0 || variableBonus > 0 || pendingBonus > 0
     return {
       label: ATTR_LEDGER_LABELS[attr],
-      inlineRaceRoll: bundle.inlineRaceRoll,
+      inlineRaceRoll: snapshot.inlineRaceRoll,
       labelSuffix: occAttributeRequirementSuffix(occ, attr, specializationId),
-      value: total != null ? String(total) : LEDGER_UNASSIGNED,
-      valueModified: hasBonuses && total != null,
-      valueTooltip: formatAttributeValueTooltip(
-        poolRoll,
-        bundle.flatBreakdown,
-        variableBonus,
-        pendingAttrDiceBreakdown[attr] ?? [],
-      ),
-      diceGroups: bundle.diceGroups.length > 0 ? bundle.diceGroups : undefined,
+      value: snapshot.total != null ? String(snapshot.total) : LEDGER_UNASSIGNED,
+      valueModified: snapshot.valueModified,
+      valueTooltip: snapshot.valueTooltip,
+      hasPendingRolls: snapshot.hasPendingRolls || undefined,
+      diceGroups: snapshot.diceGroups.length > 0 ? snapshot.diceGroups : undefined,
     }
   })
 }
@@ -690,38 +698,60 @@ export function buildCreationExceptionalStandardBlock(
   attrs: CharacterAttributes,
   morphusAttributeRollBonuses?: MorphusAttributeRollBonuses,
 ): CreationLedgerLine[] {
-  const iq = getIqBonuses(attrs.iq)
-  const me = getMeBonuses(attrs.me)
-  const ma = getMaBonuses(attrs.ma)
-  const ps = getPsBonuses(attrs.ps.score)
-  const pp = getPpBonuses(attrs.pp)
-  const pe = getPeBonuses(attrs.pe)
-  const pb = getPbBonuses(attrs.pb)
-
-  const maTrust =
-    ma.trustStandard + (morphusAttributeRollBonuses?.maTrustIntimidatePercent ?? 0)
-  let pbCharm =
-    pb.charmStandard + (morphusAttributeRollBonuses?.pbCharmImpressPercent ?? 0)
-  const pbMin = morphusAttributeRollBonuses?.pbCharmImpressMinPercent
-  if (pbMin != null) pbCharm = Math.max(pbCharm, pbMin)
+  const maTrust = resolveExceptionalDisplayValue(
+    'ma_trust',
+    attrs,
+    morphusAttributeRollBonuses,
+  )
+  const pbCharm = resolveExceptionalDisplayValue(
+    'pb_charm',
+    attrs,
+    morphusAttributeRollBonuses,
+  )
 
   return [
-    { label: 'I.Q. skill bonus', value: ledgerPercent(iq.skillBonusStandard) },
-    { label: 'I.Q. perception bonus', value: ledgerBonus(iq.perceptionStandard) },
+    {
+      label: 'I.Q. skill bonus',
+      value: ledgerPercent(
+        resolveExceptionalDisplayValue('iq_skill', attrs, morphusAttributeRollBonuses),
+      ),
+    },
+    {
+      label: 'I.Q. perception bonus',
+      value: ledgerBonus(
+        resolveExceptionalDisplayValue('iq_perception', attrs, morphusAttributeRollBonuses),
+      ),
+    },
     {
       label: 'M.E. save vs psionic / insanity',
-      value: ledgerBonus(me.saveStandard),
+      value: ledgerBonus(
+        resolveExceptionalDisplayValue('me_save', attrs, morphusAttributeRollBonuses),
+      ),
     },
     { label: 'M.A. trust / intimidate', value: ledgerPercent(maTrust) },
-    { label: 'P.S. HtH combat damage', value: ledgerBonus(ps.damageBonus) },
-    { label: 'P.P. strike / parry / dodge', value: ledgerBonus(pp.combatStandard) },
+    {
+      label: 'P.S. HtH combat damage',
+      value: ledgerBonus(
+        resolveExceptionalDisplayValue('ps_damage', attrs, morphusAttributeRollBonuses),
+      ),
+    },
+    {
+      label: 'P.P. strike / parry / dodge',
+      value: ledgerBonus(
+        resolveExceptionalDisplayValue('pp_combat', attrs, morphusAttributeRollBonuses),
+      ),
+    },
     {
       label: 'P.E. save vs magic / poisons',
-      value: ledgerBonus(pe.saveStandard),
+      value: ledgerBonus(
+        resolveExceptionalDisplayValue('pe_save', attrs, morphusAttributeRollBonuses),
+      ),
     },
     {
       label: 'P.E. save vs coma / death',
-      value: ledgerPercent(pe.comaDeathStandard),
+      value: ledgerPercent(
+        resolveExceptionalDisplayValue('pe_coma_death', attrs, morphusAttributeRollBonuses),
+      ),
     },
     { label: 'P.B. charm / impress', value: ledgerPercent(pbCharm) },
   ]
@@ -861,6 +891,8 @@ export function buildCreationVitalsBlock(opts: {
   ppePeScore?: number
   /** Resolved attribute totals for vital formulas (Morphus ledger uses Morphus attrs). */
   attrScores?: Partial<Record<ForgeAttrKey, number>>
+  /** Pre-built pending dice blocks — single source of truth with Review tab. */
+  pendingBlocks?: readonly PendingDiceBlock[]
 }): CreationLedgerLine[] {
   const assignments = opts.character.creationAttributeAssignments ?? {}
   const resolutions = opts.character.creationPendingDiceResolutions ?? {}
@@ -872,16 +904,13 @@ export function buildCreationVitalsBlock(opts: {
   })
   const showIsp =
     opts.psychicTier !== 'none' || opts.character.psychicGateBypassed === true
-  const pendingBlocks = buildPendingDiceBlocks(
-    opts.character,
-    opts.race,
-    opts.occ,
-    {
+  const pendingBlocks =
+    opts.pendingBlocks ??
+    buildPendingDiceBlocks(opts.character, opts.race, opts.occ, {
       supportsDualForm: opts.supportsDualForm,
       psychicTier: opts.psychicTier,
-    },
-  )
-  const pendingById = pendingDiceBlockById(pendingBlocks)
+    })
+  const pendingById = pendingDiceBlocksById(pendingBlocks)
 
   const hpFormula = opts.race ? (opts.race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
@@ -916,12 +945,9 @@ export function buildCreationVitalsBlock(opts: {
       })
     : null
 
-  const ar = passiveSum(opts.passive, [
-    'ar',
-    'natural_armor',
-    'armor_rating',
-    'natural_armor_rating',
-  ])
+  const ar = statStackTotal(
+    buildCreationStatStack({ kind: 'natural_armor', passive: opts.passive }),
+  )
 
   const sdcDetails = buildSdcStatBonusDetails(
     opts.race,
@@ -935,6 +961,17 @@ export function buildCreationVitalsBlock(opts: {
   const traitSdc = morphusLedger
     ? buildMorphusTraitSdcBonusDetails(opts.character)
     : { flatTotal: 0, flatBreakdown: [], diceContributions: [] }
+  const traitHf = morphusLedger
+    ? buildMorphusTraitHorrorFactorDetails(opts.character)
+    : { flatTotal: 0, flatBreakdown: [], diceContributions: [] }
+  const hfDiceGroup = buildLedgerTraitDiceGroup(traitHf.diceContributions)
+  const morphusHfBlock = morphusLedger ? pendingById.morphus_hf : undefined
+  const hfPendingTotal = creationPendingBlockTotal(morphusHfBlock, resolutions)
+  const hfDisplayTotal =
+    hfPendingTotal ??
+    (opts.horrorFactorProfile.total != null && opts.horrorFactorProfile.total > 0
+      ? opts.horrorFactorProfile.total
+      : null)
 
   const morphusPeScore = opts.attrs.pe
   const hpLine = morphusLedger
@@ -955,22 +992,14 @@ export function buildCreationVitalsBlock(opts: {
     pendingById.sdc != null
       ? pendingDiceBlockRunningTotal(pendingById.sdc, resolutions)
       : sdcDetails.flatTotal
-  const morphusSdcFlatTotal = morphusFacadeSdc + traitSdc.flatTotal
 
   const sdcLine = morphusLedger
     ? vitalityLedgerLineFromBlock('S.D.C.', pendingById.morphus_sdc, resolutions, {
         label: 'S.D.C.',
-        value:
-          morphusSdcFlatTotal > 0 || pendingById.morphus_sdc
-            ? String(
-                pendingById.morphus_sdc
-                  ? pendingDiceBlockRunningTotal(pendingById.morphus_sdc, resolutions)
-                  : morphusSdcFlatTotal,
-              )
-            : preview.primarySdcValue,
+        value: preview.primarySdcValue,
         valueModified:
-          morphusSdcFlatTotal > 0 ||
           traitSdc.diceContributions.length > 0 ||
+          traitSdc.flatTotal > 0 ||
           (pendingById.morphus_sdc?.flatBaseline ?? 0) > 0,
         morphusFacadeSdc,
         skillFlatTerms: traitSdc.flatBreakdown,
@@ -1017,17 +1046,27 @@ export function buildCreationVitalsBlock(opts: {
       : { label: 'I.S.P.', value: LEDGER_NA },
     {
       label: 'H.F.',
-      value:
-        opts.horrorFactorProfile.total != null && opts.horrorFactorProfile.total > 0
-          ? String(opts.horrorFactorProfile.total)
-          : LEDGER_NA,
-      valueModified: (opts.horrorFactorProfile.contributions?.length ?? 0) > 0,
+      value: hfDisplayTotal != null && hfDisplayTotal > 0 ? String(hfDisplayTotal) : LEDGER_NA,
+      valueModified:
+        hfDisplayTotal != null ||
+        (opts.horrorFactorProfile.contributions?.length ?? 0) > 0 ||
+        hfDiceGroup != null,
       valueTooltip: formatSaveValueTooltip(opts.horrorFactorProfile.contributions),
+      diceGroups: hfDiceGroup ? [hfDiceGroup] : undefined,
     },
     { label: 'Natural A.R.', value: ar > 0 ? String(ar) : LEDGER_NA },
   ]
 
   return lines
+}
+
+function exceptionalSaveParts(
+  key: ExceptionalDisplayKey,
+  label: string,
+  attrs: CharacterAttributes,
+): SaveDeductionLine[] {
+  const amount = resolveExceptionalDisplayValue(key, attrs)
+  return amount ? [{ label, amount }] : []
 }
 
 function saveLineWithAttribution(
@@ -1046,9 +1085,28 @@ function saveLineWithAttribution(
     activeForm,
     { supportsDualForm, race },
   )
-  const allParts = [...parts, ...attrLines]
-  const line = ledgerFromParts(allParts)
-  return { ...line, label }
+  const exceptionalPart = parts.find(
+    (part) =>
+      part.label === 'P.E.' ||
+      part.label === 'M.E.' ||
+      part.label === 'I.Q. (31+)' ||
+      part.label.startsWith('P.E.') ||
+      part.label.startsWith('M.E.'),
+  )
+  const stack = buildSaveStatStack({
+    exceptional: exceptionalPart
+      ? { label: exceptionalPart.label, amount: exceptionalPart.amount }
+      : null,
+    occParts: parts.filter((part) => part.label === 'O.C.C.'),
+    attributionParts: attrLines,
+  })
+  const total = statStackTotal(stack)
+  return {
+    label,
+    value: ledgerBonus(total),
+    valueModified: total !== 0,
+    valueTooltip: formatSaveStatStackTooltip(stack),
+  }
 }
 
 export function buildCreationSavesBlock(
@@ -1063,8 +1121,6 @@ export function buildCreationSavesBlock(
   race?: Race,
 ): CreationLedgerLine[] {
   const specId = character.occSpecializationId
-  const iq = getIqBonuses(attrs.iq)
-  const me = getMeBonuses(attrs.me)
   const pe = getPeBonuses(attrs.pe)
 
   const magicKeys = [
@@ -1088,7 +1144,7 @@ export function buildCreationSavesBlock(
     saveLineWithAttribution(
       'Magic',
       [
-        ...(pe.saveMagic ? [{ label: 'P.E.', amount: pe.saveMagic }] : []),
+        ...exceptionalSaveParts('pe_save_magic', 'P.E.', attrs),
         ...occSaveLedgerPartsForForm(
           occ,
           specId,
@@ -1108,7 +1164,7 @@ export function buildCreationSavesBlock(
     saveLineWithAttribution(
       'Psionics',
       [
-        ...(me.savePsionics ? [{ label: 'M.E.', amount: me.savePsionics }] : []),
+        ...exceptionalSaveParts('me_save_psionics', 'M.E.', attrs),
         ...occSaveLedgerPartsForForm(
           occ,
           specId,
@@ -1144,7 +1200,14 @@ export function buildCreationSavesBlock(
     ),
     saveLineWithAttribution(
       'Illusions',
-      iq.saveIllusion ? [{ label: 'I.Q. (31+)', amount: iq.saveIllusion }] : [],
+      resolveExceptionalDisplayValue('iq_save_illusion', attrs) > 0
+        ? [
+            {
+              label: 'I.Q. (31+)',
+              amount: resolveExceptionalDisplayValue('iq_save_illusion', attrs),
+            },
+          ]
+        : [],
       character,
       activeForm,
       illusionKeys,
@@ -1170,7 +1233,7 @@ export function buildCreationSavesBlock(
         ),
     saveLineWithAttribution(
       'Insanity',
-      me.saveInsanity ? [{ label: 'M.E.', amount: me.saveInsanity }] : [],
+      exceptionalSaveParts('me_save_insanity', 'M.E.', attrs),
       character,
       activeForm,
       ['save_insanity'],
@@ -1180,7 +1243,7 @@ export function buildCreationSavesBlock(
     ),
     saveLineWithAttribution(
       'Poison / Toxins',
-      pe.savePoison ? [{ label: 'P.E.', amount: pe.savePoison }] : [],
+      exceptionalSaveParts('pe_save_poison', 'P.E.', attrs),
       character,
       activeForm,
       poisonKeys,
@@ -1191,7 +1254,7 @@ export function buildCreationSavesBlock(
     saveLineWithAttribution(
       'Possession',
       [
-        ...(me.savePossession ? [{ label: 'M.E. (31+)', amount: me.savePossession }] : []),
+        ...exceptionalSaveParts('me_save_possession', 'M.E. (31+)', attrs),
         ...occSaveLedgerPartsForForm(
           occ,
           specId,
@@ -1280,47 +1343,39 @@ export function buildCreationCombatLedger(
   strengthCapacities?: StrengthCapacities,
   damageCtx?: CreationCombatDamageContext,
 ): CreationCombatLedger {
-  const mirror = computeCombatMirrorBonuses(attrs)
   const skill = aggregateSkillPhysicalBonuses(skillIds)
   const hth = handToHand ?? createEmptyAccumulatedHandToHandBonuses()
+  const totals = resolveCombatLedgerTotals({
+    attrs,
+    skillAmounts: {
+      strike: skill.combat.strike ?? 0,
+      parry: skill.combat.parry ?? 0,
+      dodge: skill.combat.dodge ?? 0,
+      rollWithImpact: skill.combat.rollWithImpact ?? 0,
+      pullPunch: skill.combat.pullPunch ?? 0,
+    },
+    handToHand: hth,
+    effectivePs: damageCtx?.effectivePs,
+    occ: damageCtx?.occ,
+    specializationId: damageCtx?.specializationId,
+    occResolutions: damageCtx?.occResolutions,
+    passive: damageCtx?.passive,
+  })
 
-  const strike = mirror.strike + (skill.combat.strike ?? 0) + hth.strike
-  const parry = mirror.parry + (skill.combat.parry ?? 0) + hth.parry
-  const dodge = mirror.dodge + (skill.combat.dodge ?? 0) + hth.dodge
-  const pullPunch = (skill.combat.pullPunch ?? 0) + hth.pullPunch
-  const rollWithPunchFallImpact =
-    (skill.combat.rollWithImpact ?? 0) + hth.rollWithPunch
-  const initiative = hth.initiative
-  const attacksPerMelee =
-    computeMaxApm(attrs, level, handToHandAttackBonus(hth)) +
-    (skill.combat.apm ?? 0)
-
-  const psScore = damageCtx?.effectivePs ?? attrs.ps.score
-  const psDamage = getPsBonuses(psScore).damageBonus
-  const occDamage = damageCtx?.occ
-    ? occStaticNumericBonus(
-        damageCtx.occ,
-        damageCtx.specializationId,
-        'combat',
-        'damage',
-        damageCtx.occResolutions ?? {},
-      )
-    : 0
-  const passiveDamage = damageCtx?.passive?.bonusHthDamage ?? 0
-
-  let handToHandDamage = psDamage + hth.damage + occDamage + passiveDamage
+  let handToHandDamage = totals.handToHandDamage
   if (strengthCapacities?.handToHandDamage.kind === 'supernatural') {
     handToHandDamage = 0
   }
 
   return {
-    strike,
-    parry,
-    dodge,
-    rollWithPunchFallImpact,
-    pullPunch,
-    initiative,
-    attacksPerMelee,
+    strike: totals.strike,
+    parry: totals.parry,
+    dodge: totals.dodge,
+    rollWithPunchFallImpact: totals.rollWithPunchFallImpact,
+    pullPunch: totals.pullPunch,
+    initiative: hth.initiative,
+    attacksPerMelee:
+      computeMaxApm(attrs, level, handToHandAttackBonus(hth)) + (skill.combat.apm ?? 0),
     entangle: hth.entangleUnlocked ? hth.entangle : 0,
     entangleUnlocked: hth.entangleUnlocked,
     disarm: hth.disarmUnlocked ? hth.disarm : 0,
@@ -1346,16 +1401,19 @@ function buildAttacksPerMeleeLine(
     traitApm,
     baseApm,
   )
-
+  const modifierStack = buildCreationStatStack({
+    kind: 'apm_modifiers',
+    hthApm: hthAttackBonus,
+    hthLabel: hthLabel ? `HtH ${hthLabel}` : null,
+    skillApm,
+    morphusRaceApm: baseApm,
+    traitApm,
+  })
   const hintParts = ['Base: 2']
-  if (hthAttackBonus > 0) {
-    hintParts.push(
-      hthLabel ? `HtH ${hthLabel}: +${hthAttackBonus}` : `Hand-to-hand: +${hthAttackBonus}`,
-    )
+  for (const term of modifierStack) {
+    if (term.amount === 0) continue
+    hintParts.push(`${term.label}: +${term.amount}`)
   }
-  if (skillApm > 0) hintParts.push(`Skills: +${skillApm}`)
-  if (baseApm > 0) hintParts.push(`${MORPHUS_LEDGER_RACE_LABEL}: +${baseApm}`)
-  if (traitApm > 0) hintParts.push(`O.C.C. / features: +${traitApm}`)
 
   return {
     label: 'Attacks / melee',
@@ -1369,18 +1427,24 @@ function buildCreationPerceptionLine(
   passive: FeatureModifiers,
   morphusBase: FeatureModifiers,
 ): CreationLedgerLine {
-  const iqPerception = getIqBonuses(attrs.iq).perceptionBonus
-  const parts: SaveDeductionLine[] = []
-  if (iqPerception) parts.push({ label: 'I.Q.', amount: iqPerception })
-  const baseAmt = morphusBase.perception ?? 0
-  if (baseAmt) parts.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseAmt })
-  const traitAmt = passive.perception ?? 0
-  if (traitAmt) parts.push({ label: 'Features', amount: traitAmt })
-  const line = combatLedgerLineFromParts('Perception', parts)
-  return line
+  const stack = buildCreationStatStack({
+    kind: 'combat',
+    combatKey: 'perception',
+    attrs,
+    morphusRaceBonus: morphusBase.perception ?? 0,
+    traitMisc: passive.perception ?? 0,
+    traitMiscLabel: 'Features',
+  })
+  return combatLedgerLineFromParts(
+    'Perception',
+    statStackToLedgerLines(stack),
+    [],
+    stack,
+  )
 }
 
 function buildCreationInitiativeLine(
+  attrs: CharacterAttributes,
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
   passive: FeatureModifiers,
@@ -1389,24 +1453,25 @@ function buildCreationInitiativeLine(
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
-  const parts: SaveDeductionLine[] = []
-  const occAmt = occStaticNumericBonus(
+  const stack = buildCreationStatStack({
+    kind: 'combat',
+    combatKey: 'initiative',
+    attrs,
     occ,
     specializationId,
-    'combat',
-    'initiative',
-    resolutions,
+    occResolutions: resolutions,
+    morphusRaceBonus: morphusBase.initiative ?? 0,
+    traitMisc: passive.initiative ?? 0,
+    traitMiscLabel: 'Features',
+    hth: handToHand?.initiative,
+    hthLabel: handToHand?.initiative && hthShort ? `HtH ${hthShort}` : null,
+  })
+  return combatLedgerLineFromParts(
+    'Initiative',
+    statStackToLedgerLines(stack),
+    [],
+    stack,
   )
-  if (occAmt) parts.push({ label: 'OCC', amount: occAmt })
-  const baseAmt = morphusBase.initiative ?? 0
-  if (baseAmt) parts.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: baseAmt })
-  const traitAmt = passive.initiative ?? 0
-  if (traitAmt) parts.push({ label: 'Features', amount: traitAmt })
-  if (handToHand?.initiative && hthShort) {
-    parts.push({ label: `HtH ${hthShort}`, amount: handToHand.initiative })
-  }
-  const line = combatLedgerLineFromParts('Initiative', parts)
-  return line
 }
 
 type CreationCombatStatKey = 'strike' | 'parry' | 'dodge'
@@ -1425,27 +1490,25 @@ function buildCreationCombatStatLine(
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
-  const pp = getPpBonuses(attrs.pp)
-  const ppAmt =
-    statKey === 'strike' ? pp.strike : statKey === 'parry' ? pp.parry : pp.dodge
-  const { parts, skillEntries } = buildOrderedCombatBonusParts({
-    attribute: ppAmt ? { label: 'P.P.', amount: ppAmt } : undefined,
+  const { parts, skillEntries, stack } = buildOrderedCombatBonusParts({
+    attrs,
+    combatKey: statKey,
     occ,
     specializationId,
-    occStatKey: statKey,
     occResolutions: resolutions,
     passiveOcc: passive[statKey] ?? 0,
-    baseModifier: morphusBase[statKey] ?? 0,
+    morphusRaceBonus: morphusBase[statKey] ?? 0,
     hth: handToHand?.[statKey] ?? 0,
     hthShort,
     skillIds,
     skill,
     skillKey: statKey,
   })
-  return combatLedgerLineFromParts(label, parts, skillEntries)
+  return combatLedgerLineFromParts(label, parts, skillEntries, stack)
 }
 
 function buildCreationRollLine(
+  attrs: CharacterAttributes,
   skillIds: readonly string[],
   skill: SkillBonusAgg,
   handToHand: AccumulatedHandToHandBonuses | undefined,
@@ -1455,22 +1518,24 @@ function buildCreationRollLine(
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
-  const { parts, skillEntries } = buildOrderedCombatBonusParts({
+  const { parts, skillEntries, stack } = buildOrderedCombatBonusParts({
+    attrs,
+    combatKey: 'rollWithImpact',
     occ,
     specializationId,
-    occStatKey: 'rollWithPunch',
     occResolutions: resolutions,
-    baseModifier: morphusBase.rollWithPunch ?? 0,
+    morphusRaceBonus: morphusBase.rollWithPunch ?? 0,
     hth: handToHand?.rollWithPunch ?? 0,
     hthShort,
     skillIds,
     skill,
     skillKey: 'rollWithImpact',
   })
-  return combatLedgerLineFromParts('Roll w/ punch, fall, impact', parts, skillEntries)
+  return combatLedgerLineFromParts('Roll w/ punch, fall, impact', parts, skillEntries, stack)
 }
 
 function buildCreationPullPunchLine(
+  attrs: CharacterAttributes,
   skillIds: readonly string[],
   skill: SkillBonusAgg,
   handToHand: AccumulatedHandToHandBonuses | undefined,
@@ -1479,10 +1544,11 @@ function buildCreationPullPunchLine(
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
 ): CreationLedgerLine {
-  const { parts, skillEntries } = buildOrderedCombatBonusParts({
+  const { parts, skillEntries, stack } = buildOrderedCombatBonusParts({
+    attrs,
+    combatKey: 'pullPunch',
     occ,
     specializationId,
-    occStatKey: 'pullPunch',
     occResolutions: resolutions,
     hth: handToHand?.pullPunch ?? 0,
     hthShort,
@@ -1490,13 +1556,14 @@ function buildCreationPullPunchLine(
     skill,
     skillKey: 'pullPunch',
   })
-  return combatLedgerLineFromParts('Pull punch', parts, skillEntries)
+  return combatLedgerLineFromParts('Pull punch', parts, skillEntries, stack)
 }
 
 function buildHandToHandDamageLine(
   combat: CreationCombatLedger,
   damageCtx: CreationCombatDamageContext | undefined,
   effectivePs: number,
+  attrs: CharacterAttributes,
   handToHand?: AccumulatedHandToHandBonuses,
   strengthCapacities?: StrengthCapacities,
 ): CreationLedgerLine {
@@ -1509,22 +1576,22 @@ function buildHandToHandDamageLine(
     }
   }
 
-  const psPart = getPsBonuses(effectivePs).damageBonus
-  const hthPart = handToHand?.damage ?? 0
-  const occStatic = damageCtx?.occ
-    ? occStaticNumericBonus(
-        damageCtx.occ,
-        damageCtx.specializationId,
-        'combat',
-        'damage',
-        damageCtx.occResolutions ?? {},
-      )
-    : 0
-  const occPart = occStatic + (damageCtx?.passive?.bonusHthDamage ?? 0)
-  const parts: SaveDeductionLine[] = []
-  if (psPart) parts.push({ label: 'P.S.', amount: psPart })
-  if (occPart) parts.push({ label: 'OCC', amount: occPart })
-  if (hthPart) parts.push({ label: 'Hand-to-hand', amount: hthPart })
+  const damageAttrs = {
+    ...attrs,
+    ps: { ...attrs.ps, score: effectivePs },
+  }
+  const stack = buildCreationStatStack({
+    kind: 'combat',
+    combatKey: 'damage',
+    attrs: damageAttrs,
+    occ: damageCtx?.occ,
+    specializationId: damageCtx?.specializationId,
+    occResolutions: damageCtx?.occResolutions,
+    passiveOcc: damageCtx?.passive?.bonusHthDamage ?? 0,
+    hth: handToHand?.damage,
+    hthLabel: handToHand?.damage ? 'Hand-to-hand' : null,
+  })
+  const parts = statStackToLedgerLines(stack)
 
   return {
     label: 'Hand-to-hand damage (P.S.)',
@@ -1533,10 +1600,10 @@ function buildHandToHandDamageLine(
         ? formatBonus(combat.handToHandDamage)
         : LEDGER_NA,
     hint: formatBonusBreakdown(parts),
+    valueTooltip: formatCombatStatStackTooltip(stack),
   }
 }
 
-/** Entangle row — maneuver gated; numeric bonuses apply only when unlocked. */
 function buildCreationEntangleLine(
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
@@ -1547,22 +1614,22 @@ function buildCreationEntangleLine(
     return { label: 'Entangle', value: LEDGER_NA, valueModified: false }
   }
 
-  const parts: SaveDeductionLine[] = []
-  if (handToHand.entangle && hthShort) {
-    parts.push({ label: `HtH ${hthShort}`, amount: handToHand.entangle })
-  }
-  const baseAmt = morphusBase.entangle ?? 0
-  if (baseAmt !== 0) parts.push({ label: 'Race', amount: baseAmt })
-  const traitAmt = passive.entangle ?? 0
-  if (traitAmt !== 0) parts.push({ label: 'Traits', amount: traitAmt })
-
-  const total = parts.reduce((sum, p) => sum + p.amount, 0)
+  const stack = buildCreationStatStack({
+    kind: 'maneuver',
+    maneuver: 'entangle',
+    morphusRaceBonus: morphusBase.entangle ?? 0,
+    traitBonus: passive.entangle ?? 0,
+    hth: handToHand.entangle,
+    hthLabel: handToHand.entangle && hthShort ? `HtH ${hthShort}` : null,
+  })
+  const parts = statStackToLedgerLines(stack)
+  const total = statStackTotal(stack)
   return {
     label: 'Entangle',
     value: formatBonus(total),
     valueModified: true,
     hint: formatBonusBreakdown(parts),
-    valueTooltip: formatCombatValueTooltip(parts),
+    valueTooltip: formatCombatStatStackTooltip(stack),
   }
 }
 
@@ -1577,22 +1644,22 @@ function buildCreationDisarmLine(
     return { label: 'Disarm', value: LEDGER_NA, valueModified: false }
   }
 
-  const parts: SaveDeductionLine[] = []
-  if (handToHand.disarm && hthShort) {
-    parts.push({ label: `HtH ${hthShort}`, amount: handToHand.disarm })
-  }
-  const baseAmt = morphusBase.disarm ?? 0
-  if (baseAmt !== 0) parts.push({ label: 'Race', amount: baseAmt })
-  const traitAmt = passive.disarm ?? 0
-  if (traitAmt !== 0) parts.push({ label: 'Traits', amount: traitAmt })
-
-  const total = parts.reduce((sum, p) => sum + p.amount, 0)
+  const stack = buildCreationStatStack({
+    kind: 'maneuver',
+    maneuver: 'disarm',
+    morphusRaceBonus: morphusBase.disarm ?? 0,
+    traitBonus: passive.disarm ?? 0,
+    hth: handToHand.disarm,
+    hthLabel: handToHand.disarm && hthShort ? `HtH ${hthShort}` : null,
+  })
+  const parts = statStackToLedgerLines(stack)
+  const total = statStackTotal(stack)
   return {
     label: 'Disarm',
     value: formatBonus(total),
     valueModified: true,
     hint: formatBonusBreakdown(parts),
-    valueTooltip: formatCombatValueTooltip(parts),
+    valueTooltip: formatCombatStatStackTooltip(stack),
   }
 }
 
@@ -1656,6 +1723,7 @@ export function buildCreationCombatBlock(
     },
     buildAttacksPerMeleeLine(attrs, level, hthApm, skillApm, traitApm, baseApm, hthShort),
     buildCreationInitiativeLine(
+      attrs,
       handToHand,
       hthShort,
       passive,
@@ -1708,6 +1776,7 @@ export function buildCreationCombatBlock(
       occResolutions,
     ),
     buildCreationRollLine(
+      attrs,
       skillIds,
       skill,
       handToHand,
@@ -1718,6 +1787,7 @@ export function buildCreationCombatBlock(
       occResolutions,
     ),
     buildCreationPullPunchLine(
+      attrs,
       skillIds,
       skill,
       handToHand,
@@ -1737,6 +1807,7 @@ export function buildCreationCombatBlock(
         passive,
       },
       psForDamage,
+      attrs,
       handToHand,
       strengthCapacities,
     ),
@@ -1822,6 +1893,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingBlocks,
     opts.character.creationPendingDiceResolutions ?? {},
   )
+  const resolutions = opts.character.creationPendingDiceResolutions ?? {}
 
   const primaryAttrs = getFormState(opts.character, 'primary').attributes
   const primaryEffectiveAttrs = resolveLedgerEffectiveAttributes(
@@ -1835,6 +1907,9 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingAttrBonuses,
   )
 
+  const pendingById = pendingDiceBlocksById(pendingBlocks)
+  const facadePendingAttrBlocks = facadePendingBlocksByAttr(pendingById)
+
   const primaryAttributeLines = buildCreationAttributeBlock(
     primaryAttrs,
     opts.character.creationAttributeAssignments,
@@ -1845,13 +1920,37 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     opts.character.creationOccVariableResolutions ?? {},
     pendingAttrBonuses,
     pendingAttrDiceBreakdown,
+    facadePendingAttrBlocks,
+    resolutions,
   )
 
   const morphusLedger =
     opts.activeForm === 'morphus' && opts.supportsDualForm === true
 
+  const pendingMorphusAttrTotals = morphusLedger
+    ? pendingMorphusAttributeTotals(pendingById, resolutions)
+    : {}
+  const pendingMorphusAttrDiceBreakdown = morphusLedger
+    ? morphusTraitAttributeDiceBreakdown(pendingBlocks, resolutions)
+    : {}
+  const pendingMorphusAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {}
+  if (morphusLedger) {
+    for (const attr of FORGE_ATTRIBUTE_KEYS) {
+      const block = pendingById[`morphus_attr_${attr}`]
+      if (block) pendingMorphusAttrBlocks[attr] = block
+    }
+  }
+
   const attributeLines = morphusLedger
-    ? buildMorphusCreationAttributeBlock(primaryAttributeLines, opts.character)
+    ? buildMorphusCreationAttributeBlock(
+        primaryAttributeLines,
+        opts.character,
+        pendingMorphusAttrTotals,
+        pendingMorphusAttrDiceBreakdown,
+        pendingMorphusAttrBlocks,
+        resolutions,
+        skillIds,
+      )
     : primaryAttributeLines
 
   const buildFormSections = (
@@ -1927,6 +2026,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
         skillIds,
         ppePeScore: opts.supportsDualForm ? primaryEffectiveAttrs.pe : effectiveAttrs.pe,
         attrScores,
+        pendingBlocks,
       }),
       saves: buildCreationSavesBlock(
         effectiveAttrs,

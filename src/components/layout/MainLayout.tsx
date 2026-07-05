@@ -516,7 +516,6 @@ export function MainLayout() {
             skills={form.skills}
             morphusActive={morphusActive}
             characterLevel={character.level}
-            iq={form.attributes.iq}
           />
         </section>
         </>

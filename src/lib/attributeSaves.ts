@@ -1,5 +1,8 @@
 import type { AttributeOnlySaveKind } from '../data/saveKinds'
-import { getMeBonuses, getPeBonuses } from './attributeBonuses'
+import {
+  displayPeMeToAttributes,
+  resolveLiveAttributeSaveBonus,
+} from './liveStatEngine'
 import {
   BECOMING_SAVE_BASE_TARGET,
   nightbaneBecomingLevelBonus,
@@ -57,9 +60,16 @@ export type ResolvedAttributeOnlySave = {
 export function resolveAttributeOnlySave(
   input: ResolveAttributeOnlySaveInput,
 ): ResolvedAttributeOnlySave {
-  const peBonus = getPeBonuses(input.displayPe).saveStandard
-  const meBonus = getMeBonuses(input.displayMe).saveStandard
-  const primaryMeBonus = getMeBonuses(input.primaryMe ?? input.displayMe).saveStandard
+  const displayAttrs = displayPeMeToAttributes(input.displayPe, input.displayMe)
+  const peBonus = resolveLiveAttributeSaveBonus('pe_save', displayAttrs)
+  const meBonus = resolveLiveAttributeSaveBonus(
+    'me_save',
+    displayPeMeToAttributes(input.displayPe, input.displayMe),
+  )
+  const primaryMeBonus = resolveLiveAttributeSaveBonus(
+    'me_save',
+    displayPeMeToAttributes(input.displayPe, input.primaryMe ?? input.displayMe),
+  )
   const becomingBonus =
     input.saveKind === 'vs_becoming'
       ? nightbaneBecomingLevelBonus(input.characterLevel)
@@ -111,10 +121,14 @@ export function computeAttributeSaveProfile(
   supportsDualForm: boolean,
   options?: AttributeSaveProfileOptions,
 ): AttributeSaveEntry[] {
-  const peBonus = getPeBonuses(displayPe).saveStandard
-  const meBonus = getMeBonuses(displayMe).saveStandard
+  const displayAttrs = displayPeMeToAttributes(displayPe, displayMe)
+  const peBonus = resolveLiveAttributeSaveBonus('pe_save', displayAttrs)
+  const meBonus = resolveLiveAttributeSaveBonus('me_save', displayAttrs)
   const primaryMe = options?.primaryMe ?? displayMe
-  const primaryMeBonus = getMeBonuses(primaryMe).saveStandard
+  const primaryMeBonus = resolveLiveAttributeSaveBonus(
+    'me_save',
+    displayPeMeToAttributes(displayPe, primaryMe),
+  )
 
   const rows: AttributeSaveEntry[] = [
     {

@@ -21,4 +21,19 @@ describe('applyNightbaneMorphusBaseAttributes', () => {
     expect(next.morphus.attributes.spd).toBe(20)
     expect(next.morphus.attributes.ps.tier).toBe('supernatural')
   })
+
+  it('includes Facade physical skill flats when seeding morphus base attributes', () => {
+    let root = createBlankCharacterForGenre('nightbane')
+    root = {
+      ...root,
+      creationAttributeAssignments: { pp: 10, pe: 12 },
+      creationSecondarySkillPicks: [
+        { instanceId: 'acro', skillId: 'skill_acrobatics' },
+      ],
+      morphusForgeState: { ...root.morphusForgeState, baseStatsApplied: false },
+    }
+    const next = applyNightbaneMorphusBaseAttributes(root, undefined)
+    expect(next.morphus.attributes.pp).toBe(17)
+    expect(next.morphus.attributes.pe).toBe(23)
+  })
 })

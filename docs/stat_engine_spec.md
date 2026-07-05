@@ -27,6 +27,7 @@ This document is the **canonical reference for how character statistics are calc
 4. **Primary form before Morphus (Nightbane)** — When building Morphus, primary-form totals are assumed **final** (attributes, skills, and primary vitality dice resolved).
 5. **Inspectable stacks** — Live Ledger hints show modifier buckets (`Race`, `OCC`, `HtH`, `traits`, etc.) so GMs can audit math (Pillar 4).
 6. **Form scope** — Nightbane maintains separate primary and Morphus attribute/vitality pools where the rules require it; some pools are **shared** (see §5). Single-form races use the primary pool only.
+7. **Schema owns constants** — `constant1`, `constant2`, dice notation, and flat bumps for each derived stat are defined in content JSON (race vitals, OCC engines, Morphus profiles). The stat engine applies them uniformly; a wrong value is a schema error or a global engine bug, never a stat-specific code path.
 
 ---
 
@@ -52,15 +53,24 @@ Use these bucket names consistently in docs, ledger hints, and code comments.
 
 | Token | Meaning | Typical data source |
 |-------|---------|---------------------|
-| **Race** | Racial bonuses | `src/data/content/races/*.json` → `innateBonuses`, `vitals` |
-| **OCC** | O.C.C. / R.C.C. bonuses | `src/data/content/occs/<genre>/*.json` → static + variable resolutions |
-| **Skills** | Physical (and other) skill combat/stat mods | `skills/*.json`, `aggregateSkillPhysicalBonuses()` |
-| **HtH** | Hand-to-Hand progression | Hand-to-hand catalog → `accumulateHandToHandBonuses()` |
-| **Pool** | Attribute pool assignment | `creationAttributeAssignments` |
-| **mBase** | Nightbane Morphus R.C.C. base package | `src/data/content/morphus/forge/nightbane_base_morphus.json` |
-| **traits** | Active Morphus characteristic picks | `morphusTraitSlotResolutions` → `resolveActiveMorphusTraits()` |
-| **mSkills** | Skill modifiers that apply **only** on Morphus (e.g. trait-granted skills Facade lacks) | Same skill engine, Morphus-only skill id set |
-| **misc** | Catch-all: talents, gear, bursts, stance, GM overrides | `featureEngine`, future systems |
+| **Race dice** | Rolled pool assignment (e.g. human 3D6) | `creationAttributeAssignments` |
+| **Race flat** | Racial flat attribute bumps | `races/*.json` → `innateBonuses` |
+| **Race / level** | Per-level racial bumps | Race level tables (when applicable) |
+| **OCC dice** | O.C.C. attribute dice (resolved on Spawn) | `creationOccVariableResolutions` |
+| **OCC flat** | O.C.C. static attribute bumps | `occs/*.json` → `staticBonuses` |
+| **OCC / level** | Per-level O.C.C. bumps | OCC level progression |
+| **Skill dice** | Physical skill dice (entered on Review) | `creationPendingDiceResolutions` |
+| **Skill flat** | Skill flat attribute bumps | `skills/*.json` → `physicalSkillBonuses` |
+| **Skill / level** | Per-level skill bumps | Skill progression (when applicable) |
+| **misc** | Catch-all: talents, gear, traits, GM overrides | `featureEngine`, Morphus traits |
+| **constant** | Post-sum multiplier (e.g. Spd × 0.5) | Trait / rule text |
+| **Facade baseline** | Morphus only — Tier-1 Facade aggregated total | Computed Tier-1 Facade attrs |
+| **Exceptional** | Table lookup from aggregated attribute | `attributeBonuses.ts` |
+| **HtH** | Hand-to-Hand progression (derived stats) | Hand-to-hand catalog |
+
+**Implementation hub:** `src/lib/creationStatEngine.ts` — `resolveAggregatedAttribute()`, `resolveDerivedStat()`.
+
+**Legacy ledger bucket aliases:** Race, OCC, Skills, Traits, HtH map from the terms above for tooltip display.
 
 **Notation:**
 
@@ -77,44 +87,96 @@ Use these bucket names consistently in docs, ledger hints, and code comments.
 
 Single-form builds (elf, human, dwarf, etc.) use this section. Nightbane **Facade** uses the same formulas; Morphus-only stacking is §5.
 
-### 4.1 Attributes
+### 4.1 Aggregated attributes (Tier 1 — computed first)
+
+All eight attributes are **aggregated attributes**. Every other stat reads from these totals.
 
 ```
-Attr = Pool + Race + OCC + Skills + misc
+AggregatedAttr = (
+  RaceDice + RaceFlat + RacePerLevel
+  + OCCDice + OCCFlat + OCCPerLevel
+  + SkillDice + SkillFlat + SkillPerLevel
+  + misc
+) × constant
 ```
 
-- **Pool** — Dice pool assignment on the attribute strip.
+- **Race dice** — Pool assignment on the attribute strip (e.g. human 3D6 → entered roll).
 - **OCC variable dice** — Resolved on Spawn into flat adds (`creationOccVariableResolutions`).
-- **Implementation:** `buildCreationAttributeBlock()`, `buildCreationAttributes()`, `resolveLedgerEffectiveAttributes()`.
-- **Status:** ✅ Creation ledger · ✅ Spawn attribute dice · ✅ Sheet after handoff
+- **constant** — Post-sum multiplier when rules require it (e.g. Spd reduced 50% → `0.5`). Defaults to `1`.
+- **Exceptional table lookups are not part of Tier 1** — they feed Tier 2 derived stats only.
 
-### 4.2 Exceptional bonuses
+**Implementation:** `resolveAggregatedAttribute()`, `buildFacadeAggregatedAttributeInput()`, `resolveFacadeAggregatedAttribute()`.
 
-Derived from **current** attribute scores (not separate inputs).
+**Status:** ✅ Creation ledger · ✅ Spawn attribute dice · ✅ Sheet after handoff
 
-- Standard table: 17–30 (`meStyleStepBonus`, I.Q. skill %, etc.)
+### 4.2 Exceptional attribute modifiers (Tier 2 input)
+
+Derived from **aggregated attribute scores** (not separate inputs).
+
+- Standard table: 17–30 (`meStyleStepBonus`, I.Q. skill %, P.P. strike, etc.)
 - Super band: 31+ where defined
 
-**Implementation:** `src/lib/attributeBonuses.ts`, `buildCreationExceptionalStandardBlock()`, `buildCreationExceptionalSuperGroups()`.
+**Implementation:** `attributeBonuses.ts` — invoked via `resolveDerivedStat()` / `resolveExceptionalDisplayValue()`.
 
 **Status:** ✅ Ledger · ✅ Saves/combat attribution · Partial on live sheet
 
-### 4.3 Vitals
+### 4.3 Derived stats (Tier 2 — all non-attribute stats)
 
-| Stat | Formula (default / Nightbane) | Dice entry (forge tab) |
-|------|------------------------------|------------------|
-| **H.P.** | Race: `PE + 1D6/level` (Nightbane Facade) | Tab 5 |
-| **S.D.C.** | Race flat/dice + OCC dice + skill dice | Tab 5 |
-| **P.P.E.** | Race + OCC engine (`ppeEngine.baseFormula` + `perLevelFormula`) | Tab 5 |
-| **I.S.P.** | OCC `ispEngine` when psychic tier ≠ none | Tab 5 |
-| **H.F.** | Race + OCC + traits (play) | Usually flat |
-| **Natural A.R.** | Race + OCC + trait `naturalAr` stacking | Flat |
+**Evaluation order:**
 
-**Nightbane Facade P.P.E. example:** `PE (Facade) + 3D6×10 + 20 (+ 3D6/level)` — P.E. term always uses **Facade** P.E. even on the Morphus ledger toggle.
+1. **Attribute portion** — `AggregatedAttr × constant1` (`constant1` defaults to **1** when omitted).
+2. **Add remaining terms** — exceptional modifier, then all dice/flats/per-level buckets (`Race`, `OCC`, `Skills`, `misc`, etc.).
+3. **Final multiplier** — multiply the sum by `constant2` (defaults to **1**).
 
-**Implementation:** `ledgerVitalFormula.ts`, `buildCreationVitalsBlock()`, `buildPendingDiceBlocks()`, `computeSpawnVitalityFromResolutions()`.
+```
+DerivedStat = (
+  (AggregatedAttr × constant1)     ← defaults to ×1
+  + ExceptionalModifier
+  + RaceDice + RaceFlat + RacePerLevel
+  + OCCDice + OCCFlat + OCCPerLevel
+  + SkillDice + SkillFlat + SkillPerLevel
+  + misc
+) × constant2                        ← defaults to ×1
+```
 
-**Status:** ✅ Ledger preview · ✅ Pending dice blocks · ✅ Commit on Tab 5–6 Continue · ✅ Flat integer terms in formulas (e.g. `+20` on P.P.E.) in ledger flat column
+- **constant1** (`attrConstant1` in code) — Multiplier on the Tier-1 aggregated attribute **before** any rolls/flats are added. **Defined by content schema** for each stat (race `vitals.hpFormula`, Morphus `hitPointsFormula`, OCC `ppeEngine.baseFormula`, etc.). Defaults to `1` when the formula is a bare attribute token (e.g. `PE`). Combat S/P/D use `0` (attribute portion comes from the exceptional P.P. table instead).
+- **constant2** — Post-sum multiplier when rules require it (e.g. S.D.C. reduced 50% → `0.5`). Also schema-defined when applicable. Defaults to `1`.
+- **Combat S/P/D** — `constant1 = 0`; the exceptional P.P. table supplies the attribute-derived portion in the `+ …` step.
+
+**H.P. examples (schema-driven `constant1`):**
+
+| Source | Formula string | Compiled `constant1` | Tier-1 attr | Other Tier-2 terms |
+|--------|----------------|----------------------|-------------|----------------------|
+| Human / Nightbane Facade race | `PE + 1D6` | **1** | Aggregated P.E. | `1D6`/level (Review) |
+| Example NPC race | `PE*3` | **3** | Aggregated P.E. | (per schema) |
+| Nightbane Morphus base | `PEx2` | **2** | Morphus aggregated P.E. | `2D6`/level (Review) |
+
+```
+Human H.P.      = (AggregatedPE × 1) + 1D6/level + …     ← from race.vitals.hpFormula
+Other race H.P. = (AggregatedPE × N) + …                  ← N from that race's hpFormula
+Morphus H.P.    = (mAggregatedPE × 2) + 2D6/level + …    ← from morphus hitPointsFormula
+```
+
+**Schema → engine:** Formula strings in JSON compile to `{ aggregatedAttr, constant1, diceTerms, flatTerms }` before calling `resolveDerivedStat()`. The engine never hardcodes race-specific multipliers.
+
+**Cascade rule:** When an aggregated attribute changes, every derived stat that references it must recompute.
+
+**Implementation:** `resolveDerivedStat()`, `resolveCombatDerivedStat()`, `buildCreationStatStack()`.
+
+### 4.4 Vitals (Tier 2 — unified engine)
+
+All vitality pools use the same Tier-2 pipeline as combat and saves. Schema formula strings compile to `{ aggregatedAttr, constant1, flatTerms, diceTerms }`, then `resolveDerivedStat()` / `vitalStatEngine.ts`.
+
+| Stat | Schema sources | Tier-2 pattern |
+|------|----------------|----------------|
+| **H.P.** | `race.vitals.hpFormula`; Morphus `hitPointsFormula` | `(AggregatedPE × constant1) + level dice` |
+| **S.D.C.** | `race.vitals.sdc`, OCC/skills | `0 + race/OCC/skill flats + dice` |
+| **P.P.E.** | Race P.P.E. + `occ.ppeEngine` | `(AggregatedPE × constant1) + flats + dice`; Facade P.E. in dual-form |
+| **I.S.P.** | `occ.ispEngine` | `(AggregatedME × constant1) + dice` |
+| **H.F.** | Race/OCC/traits | `buildCreationStatStack({ kind: 'horror_factor_flat' })` |
+| **Natural A.R.** | Passive modifiers | `buildCreationStatStack({ kind: 'natural_armor' })` |
+
+**Implementation:** `vitalStatEngine.ts` (compute), `ledgerVitalFormula.ts` (schema parse + display), `buildPendingDiceBlocks()`, `buildCreationVitalsBlock()`, `computeSpawnVitalityFromResolutions()`.
 
 ### 4.4 Saves
 
@@ -160,21 +222,30 @@ There is **no** character-level APM bump — only HtH extra attacks feed the cor
 
 Assume Facade is complete when computing Morphus previews.
 
-### 5.1 Attributes
+### 5.1 Morphus aggregated attributes
+
+Morphus uses **Facade aggregated attributes** as its baseline, then applies Morphus-only modifiers through the same Tier-1 formula:
 
 ```
-mAttr = pAttr + mBase + traits + mSkills + misc
+mAggregatedAttr = (
+  FacadeAggregatedAttr
+  + RaceFlat_morphus + OCC + Skills_morphus + trait misc
+  + entered trait dice
+) × constant
 ```
 
-**mBase attribute bumps** (from `nightbane_base_morphus.json`): P.S. +10, P.E. +10, P.P. +6, Spd +10; supernatural P.S. tier.
+- **Facade baseline** — Final Tier-1 Facade total for that attribute (not recomputed from Facade terms).
+- **Race flat (Morphus)** — Nightbane R.C.C. mBase bumps (+10 P.S., etc.) — displayed as **Race** in tooltips.
+- **Traits** — Morphus characteristic flat/dice modifiers.
+- **mSkills** — Skill modifiers that apply only on Morphus (trait-granted skills Facade lacks).
 
-**Polymorphic trait mods** — Percent, dice, flat, min floors: `morphusPolymorphicResolver.ts`, `collectMorphusStatModifierBlocks()`.
+**Shared Facade stats:** P.P.E. always uses **Facade P.E.** in its formula even on the Morphus ledger toggle.
 
-**Implementation:** `buildMorphusCreationAttributeBlock()`, `applyNightbaneMorphusBaseAttributes()`.
+**Implementation:** `buildMorphusAggregatedAttributeInput()`, `resolveMorphusAggregatedAttribute()`, `buildMorphusCreationAttributeBlock()`.
 
 **Status:** ✅ Ledger · ✅ Morphus base apply on forge · ✅ Trait mins at Morphus finalize
 
-### 5.2 Vitals
+### 5.2 Vitals (legacy section)
 
 | Stat | Formula |
 |------|---------|
@@ -227,17 +298,24 @@ Morphus ledger saves use **mBase + Morphus attributes + traits** — not Facade 
 
 ---
 
-## 6. Skill percentages (reference)
+## 6. Skill percentages
 
-Not re-derived here — see `docs/skill_selection.md`:
+Master equation (`docs/skill_selection.md`):
 
 ```
 Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr scaling + status
 ```
 
-**Implementation:** `resolveSkillPercent()`, `projectCreationSkillsToSheet()` at spawn.
+| Layer | Module | Role |
+|-------|--------|------|
+| **Core equation** | `skillEquation.ts` — `calculateSkillPercent()` |
+| **Context modifiers** | `skillPercentResolution.ts` — catalog attr mods, Morphus skill traits |
+| **Live/creation adapter** | `liveSkillEngine.ts` — I.Q. via `resolveLiveIqSkillBonus()`, display M.A./P.B., quick roll |
+| **Spawn projection** | `spawnSheetHandoff.ts` → `projectCreationSkillsToSheet()` |
+| **Creation UI** | `skillCreationDisplay.ts`, `SkillEngine.tsx` |
+| **Live sheet** | `SkillList.tsx`, `weaponBonuses.ts` (W.P. dice bonus), `levelUpSkillSummary.ts` |
 
-**Status:** ✅ At spawn · Level-up summary in `levelUpSkillSummary.ts`
+**Status:** ✅ Creation · ✅ Spawn · ✅ Live quick roll & Morphus modifiers · Level-up summary via `resolveLiveSkillRollTarget()`
 
 ---
 
@@ -266,11 +344,14 @@ Update this table when closing gaps.
 | Area | Ledger (Phase A) | Live sheet (Phase E) | Notes |
 |------|------------------|----------------------|-------|
 | APM full stack | ✅ Skills + mBase + traits | ✅ `resolveCharacterMaxApm()` | `CharacterContext.attacksPerMelee.max` |
-| Combat bonuses | ✅ Full hints | ✅ OCC + mBase via `computeSheetCombatDerived()` | Strike/parry/dodge on HUD |
+| Combat bonuses | ✅ Full hints | ✅ `computeSheetCombatDerived()` via `liveStatEngine` | Strike/parry/dodge on HUD |
 | Morphus passive bundle | ✅ Preview | ✅ `morphusPassiveBridge` | Active play middleware |
 | Perception stat line | ✅ Combat block + exceptional | — | `buildCreationPerceptionLine()` |
 | P.P.E. `+20` flat | ✅ Flat column | Commit uses dice+PE+flat | `parseVitalFormulaFlatIntegerTerm()` |
 | Level-up stat bumps | — | Partial | Not creation ledger scope |
+| Live saves / HF | ✅ Creation ledger | ✅ `computeSaveProfile()` + `horror_factor_flat` stack | Attribute-only saves via engine |
+| Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | |
+| Legacy auto-roll vitals | — | ✅ `spawnFinalVitality` via `vitalStatEngine` | Manual dice path is primary |
 
 ---
 
@@ -283,7 +364,13 @@ Update this table when closing gaps.
 | Morphus attribute lines | `src/lib/morphusCreationLedger.ts` → `buildMorphusCreationAttributeBlock()` |
 | Morphus R.C.C. base | `nightbane_base_morphus.json`, `buildMorphusCreationBasePassiveModifiers()` |
 | Trait S.D.C. / passive | `morphusPassiveBridge.ts`, `morphusCharacteristicAggregation.ts` |
-| Vitals formulas | `ledgerVitalFormula.ts`, `creationVitalityPreview.ts` |
+| **Stat engine hub** | `creationStatEngine.ts` — Tier 1/Tier 2 for all stats |
+| **Live play adapter** | `liveStatEngine.ts` — Phase E sheet/HUD/combat/saves/HF |
+| **Skill % adapter** | `liveSkillEngine.ts` — creation + live skill % via stat-engine I.Q. |
+| **Skill % core** | `skillPercentResolution.ts`, `skillEquation.ts` |
+| **Vitals compiler** | `vitalStatEngine.ts` — schema formula → Tier 2 inputs |
+| **Vitals display/parse** | `ledgerVitalFormula.ts` — formula strings, hints, tooltips |
+| **Legacy auto-roll vitals** | `spawnFinalVitality.ts` — delegates to `vitalStatEngine` (Pillar 5 manual path is primary) |
 | Pending / spawn dice | `spawnDiceBlocks.ts`, `spawnVitalityManual.ts` |
 | Exceptional attributes | `attributeBonuses.ts` |
 | APM core + live stack | `meleeCombat.ts` → `resolveAttacksPerMelee()`, `resolveCharacterMaxApm()` |

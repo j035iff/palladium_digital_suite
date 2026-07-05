@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { getRaceById, getLibraryOccById } from '../data/library/registry'
 import { createBlankCharacterForGenre } from './characterRoot'
 import { buildCreationAttributeBlock, buildCreationLiveLedgerSnapshot, buildCreationVitalsBlock, LEDGER_HTH_NONE } from './creationLiveLedger'
+import { buildPendingDiceBlocks, pendingDiceBlockRunningTotal } from './spawnDiceBlocks'
 import type { HorrorFactorProfile } from './saveProfile'
+import { computeHorrorFactorAura } from './saveProfile'
 
 const EMPTY_HORROR_FACTOR_PROFILE: HorrorFactorProfile = {
   total: null,
@@ -11,9 +13,15 @@ const EMPTY_HORROR_FACTOR_PROFILE: HorrorFactorProfile = {
 }
 import {
   buildMorphusCreationAttributeBlock,
+  buildMorphusTraitHorrorFactorDetails,
   buildMorphusTraitSdcBonusDetails,
+  collectMorphusTraitStatDiceContributions,
+  creationLedgerSavePassiveModifiers,
   formatMorphusVsPrimaryTooltip,
 } from './morphusCreationLedger'
+import { morphusCreationPreviewResolveOptions, polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
+import { normalizeDiceDisplay } from './ledgerStatBonuses'
+import { applyNightbaneMorphusBaseAttributes } from './morphusNightbaneBase'
 
 describe('buildMorphusTraitSdcBonusDetails', () => {
   it('collects trait S.D.C. dice for pending spawn rolls', () => {
@@ -25,6 +33,126 @@ describe('buildMorphusTraitSdcBonusDetails', () => {
     expect(details.diceContributions).toEqual([
       { notation: '3D6x10', label: 'Full Arachnid' },
     ])
+  })
+})
+
+describe('morphus trait ledger preview', () => {
+  it('defers attribute dice until Finalize Morphus', () => {
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { spd: 10 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'animal_arachnid_full' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const primaryLines = buildCreationAttributeBlock(
+      character.primary.attributes,
+      character.creationAttributeAssignments,
+    )
+    const morphusLines = buildMorphusCreationAttributeBlock(primaryLines, character)
+    const spd = morphusLines.find((line) => line.label === 'Spd')!
+
+    expect(spd.value).toBe('20')
+    const contrib = collectMorphusTraitStatDiceContributions(character, 'spd')
+    expect(contrib).toEqual([{ notation: '1D4x10', label: 'Full Arachnid' }])
+    expect(
+      spd.diceGroups?.some(
+        (group) =>
+          group.kind === 'traits' &&
+          group.display === normalizeDiceDisplay('1D4x10'),
+      ),
+    ).toBe(true)
+  })
+
+  it('defers Horror Factor dice to Traits row on vitals', () => {
+    const details = buildMorphusTraitHorrorFactorDetails({
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'stigmata_body_faces' },
+      ],
+      creationTraitForgeStubComplete: false,
+    })
+    expect(details.flatTotal).toBe(0)
+    expect(details.diceContributions).toEqual([
+      { notation: '1D6', label: 'Body Faces' },
+    ])
+  })
+
+  it('uses preview resolve options that skip dice rolls', () => {
+    const delta = polymorphicDeltaFromBase(
+      10,
+      [{ dice: '1D6' }],
+      morphusCreationPreviewResolveOptions(false),
+    )
+    expect(delta).toBe(0)
+  })
+
+  it('aggregates trait Horror Factor flats on the morphus vitals ledger', () => {
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { pe: 14 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'animal_arachnid_full' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const race = getRaceById('race_nightbane')
+    const vitals = buildCreationVitalsBlock({
+      character,
+      attrs: character.primary.attributes,
+      race,
+      occ: undefined,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+      passive: creationLedgerSavePassiveModifiers(character, 'morphus', undefined, true),
+      horrorFactorProfile: computeHorrorFactorAura(
+        character,
+        'morphus',
+        creationLedgerSavePassiveModifiers(character, 'morphus', undefined, true),
+        true,
+        race,
+      ),
+      skillIds: [],
+      attrScores: { pe: 24 },
+    })
+    const hf = vitals.find((line) => line.label === 'H.F.')!
+    expect(hf.value).toBe('12')
+    expect(hf.valueModified).toBe(true)
+  })
+
+  it('shows pending trait Horror Factor dice on the morphus vitals ledger', () => {
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'stigmata_body_faces' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const race = getRaceById('race_nightbane')
+    const savePassive = creationLedgerSavePassiveModifiers(character, 'morphus', undefined, true)
+    const vitals = buildCreationVitalsBlock({
+      character,
+      attrs: character.primary.attributes,
+      race,
+      occ: undefined,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+      passive: savePassive,
+      horrorFactorProfile: computeHorrorFactorAura(
+        character,
+        'morphus',
+        savePassive,
+        true,
+        race,
+      ),
+      skillIds: [],
+    })
+    const hf = vitals.find((line) => line.label === 'H.F.')!
+    expect(hf.value).toBe('6')
+    expect(hf.diceGroups?.[0]?.kind).toBe('traits')
+    expect(hf.diceGroups?.[0]?.display).toBe(normalizeDiceDisplay('1D6'))
   })
 })
 
@@ -121,6 +249,187 @@ describe('formatMorphusVsPrimaryTooltip', () => {
     expect(
       formatMorphusVsPrimaryTooltip(12, [{ label: 'Race', amount: 10 }]),
     ).toBe('Facade 12, Race +10')
+  })
+
+  it('appends pending rolls when trait dice are unresolved', () => {
+    expect(
+      formatMorphusVsPrimaryTooltip(
+        11,
+        [
+          { label: 'Race', amount: 10 },
+          { label: 'Super-Strong', amount: 10 },
+          { label: 'Musclebound', amount: 4 },
+        ],
+        true,
+      ),
+    ).toBe('Facade 11, Race +10, Super-Strong +10, Musclebound +4, +pending rolls')
+  })
+})
+
+describe('morphus trait attribute flats and pending PS', () => {
+  it('includes dice-string flats in tooltip without double-counting explicit flats', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { ps: 11 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'athlete_musclebound' },
+        { slotId: 'plan:1', catalogEntryId: 'super_being_super_strong' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const blocks = buildPendingDiceBlocks(character, race, occ, {
+      psychicTier: 'none',
+      supportsDualForm: true,
+    })
+    const psBlock = blocks.find((block) => block.id === 'morphus_attr_ps')!
+    expect(psBlock.flatBaseline).toBe(35)
+    expect(
+      psBlock.groups[0]?.rolls.map((roll) => roll.notation).sort(),
+    ).toEqual(['1D4', '1D6'])
+
+    const snapshot = buildCreationLiveLedgerSnapshot({
+      character,
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+    })
+    const ps = snapshot.attributes.find((line) => line.label === 'P.S.')!
+    expect(ps.value).toBe('35')
+    expect(ps.hasPendingRolls).toBe(true)
+    expect(ps.valueTooltip).toBe(
+      'Facade 11, Race +10, Musclebound +4, Super-Strong +10, +pending rolls',
+    )
+    expect(ps.diceGroups?.find((group) => group.kind === 'traits')?.display).toBe(
+      '1D6 + 1D4',
+    )
+  })
+
+  it('adds entered trait dice to PS total and tooltip', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { ps: 11 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'athlete_musclebound' },
+        { slotId: 'plan:1', catalogEntryId: 'super_being_super_strong' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const blocks = buildPendingDiceBlocks(character, race, occ, {
+      psychicTier: 'none',
+      supportsDualForm: true,
+    })
+    const psBlock = blocks.find((block) => block.id === 'morphus_attr_ps')!
+    const rolls = psBlock.groups[0]!.rolls
+    const muscleRoll = rolls.find((roll) => roll.notation === '1D6')!
+    const strongRoll = rolls.find((roll) => roll.notation === '1D4')!
+    const resolutions = {
+      [muscleRoll.id]: 3,
+      [strongRoll.id]: 2,
+    }
+    const snapshot = buildCreationLiveLedgerSnapshot({
+      character: { ...character, creationPendingDiceResolutions: resolutions },
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+    })
+    const ps = snapshot.attributes.find((line) => line.label === 'P.S.')!
+    expect(ps.value).toBe('40')
+    expect(ps.valueTooltip).toBe(
+      'Facade 11, Race +10, Musclebound +4, Super-Strong +10, Musclebound +3, Super-Strong +2',
+    )
+  })
+})
+
+describe('morphus ledger attribute dice groups', () => {
+  it('hides Facade skill dice rolls while keeping Morphus trait rolls', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { spd: 14 },
+      creationSecondarySkillPicks: [
+        { instanceId: 'ath', skillId: 'skill_athletics_general' },
+      ],
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'athlete_musclebound' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const primaryLines = buildCreationAttributeBlock(
+      character.primary.attributes,
+      character.creationAttributeAssignments,
+      race,
+      occ,
+      undefined,
+      [
+        ...character.creationOccSkillIds,
+        'skill_athletics_general',
+      ],
+    )
+    const facadeSpd = primaryLines.find((line) => line.label === 'Spd')!
+    expect(facadeSpd.diceGroups?.some((group) => group.kind === 'skills')).toBe(true)
+
+    const snapshot = buildCreationLiveLedgerSnapshot({
+      character,
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'major',
+      activeForm: 'morphus',
+    })
+    const morphusSpd = snapshot.attributes.find((line) => line.label === 'Spd')!
+    expect(morphusSpd.diceGroups?.some((group) => group.kind === 'skills')).toBe(false)
+    expect(morphusSpd.diceGroups?.find((group) => group.kind === 'traits')?.display).toBe(
+      '-1D6',
+    )
+  })
+
+  it('includes Facade skill flats in morphus P.P. and P.E. totals after base stats are applied', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { pp: 10, pe: 12 },
+      creationSecondarySkillPicks: [
+        { instanceId: 'acro', skillId: 'skill_acrobatics' },
+      ],
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'athlete_musclebound' },
+        { slotId: 'plan:1', catalogEntryId: 'super_being_super_strong' },
+      ],
+      creationTraitForgeStubComplete: false,
+      morphusForgeState: {
+        ...createBlankCharacterForGenre('nightbane').morphusForgeState,
+        baseStatsApplied: true,
+      },
+    }
+    const withBase = applyNightbaneMorphusBaseAttributes(character, occ)
+    const snapshot = buildCreationLiveLedgerSnapshot({
+      character: {
+        ...withBase,
+        morphusForgeState: {
+          ...withBase.morphusForgeState,
+          baseStatsApplied: true,
+        },
+      },
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+    })
+    const pp = snapshot.attributes.find((line) => line.label === 'P.P.')!
+    const pe = snapshot.attributes.find((line) => line.label === 'P.E.')!
+    expect(pp.value).toBe('15')
+    expect(pe.value).toBe('25')
   })
 })
 
@@ -313,5 +622,36 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
     expect(
       noneSnapshot.combat.find((line) => line.label === 'Hand to Hand')?.value,
     ).toBe(LEDGER_HTH_NONE)
+  })
+
+  it('matches Live Ledger morphus attribute totals from the same pending block', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { spd: 10 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'animal_arachnid_full' },
+      ],
+      creationTraitForgeStubComplete: false,
+    }
+    const blocks = buildPendingDiceBlocks(character, race, occ, {
+      psychicTier: 'none',
+      supportsDualForm: true,
+    })
+    const spdBlock = blocks.find((b) => b.id === 'morphus_attr_spd')!
+    const rollId = spdBlock.groups[0]!.rolls[0]!.id
+    const resolutions = { [rollId]: 25 }
+    const pendingTotal = pendingDiceBlockRunningTotal(spdBlock, resolutions)
+    const snapshot = buildCreationLiveLedgerSnapshot({
+      character: { ...character, creationPendingDiceResolutions: resolutions },
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+    })
+    const spd = snapshot.attributes.find((line) => line.label === 'Spd')
+    expect(spd?.value).toBe(String(pendingTotal))
   })
 })

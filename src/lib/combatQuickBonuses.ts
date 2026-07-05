@@ -1,32 +1,18 @@
 import type { Character } from '../types'
-import { getFormState } from '../types'
-import { computeCombatMirrorBonuses } from './characterDerived'
+import { buildLiveCombatContext, resolveLiveQuickActionTotals } from './liveStatEngine'
 import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
 import {
   flattenCreationSkillIds,
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
-import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
+import { getFormState } from '../types'
 
 export type QuickActionTotals = {
   strike: number
   parry: number
   dodge: number
   rollWithImpact: number
-}
-
-function skillMeleeBonusFromIds(ids: Iterable<string>): {
-  strike: number
-  parry: number
-  dodge: number
-} {
-  const agg = aggregatePhysicalSkillCombatBonuses([...ids])
-  return {
-    strike: agg.combat.strike ?? 0,
-    parry: agg.combat.parry ?? 0,
-    dodge: agg.combat.dodge ?? 0,
-  }
 }
 
 export function collectUnlockedSkillIds(
@@ -56,20 +42,14 @@ export function collectUnlockedSkillIds(
 
 /**
  * Total Strike / Parry / Dodge / Roll with Impact for the active form
- * (P.P. natural bonus + skill picks; Roll uses dodge + P.E. grit).
+ * (creation stat engine — display attrs + skills + passive + HtH when available).
  */
 export function computeQuickActionTotals(
   character: Character,
   activeForm: 'primary' | 'morphus',
 ): QuickActionTotals {
-  const attrs = getFormState(character, activeForm).attributes
-  const mirror = computeCombatMirrorBonuses(attrs)
-  const skill = skillMeleeBonusFromIds(collectUnlockedSkillIds(character, activeForm))
-  const strike = mirror.strike + skill.strike
-  const parry = mirror.parry + skill.parry
-  const dodge = mirror.dodge + skill.dodge
-  const rollWithImpact = dodge + Math.floor(attrs.pe / 10)
-  return { strike, parry, dodge, rollWithImpact }
+  const ctx = buildLiveCombatContext(character, activeForm)
+  return resolveLiveQuickActionTotals(ctx)
 }
 
 export function formatBonus(n: number): string {

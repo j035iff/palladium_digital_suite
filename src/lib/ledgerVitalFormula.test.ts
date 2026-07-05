@@ -101,7 +101,7 @@ describe('ledgerVitalFormula', () => {
         ],
       ),
     ).toBe(
-      '(PE(Facade) 13, RaceRoll(3D6) +13, RaceFlat +10, OCCRoll(1D4X10) +20, OCCFlat +30, perLevel(3D6) 14)',
+      '(PE(Facade) 13, RaceRoll(3D6) +13, RaceFlat +10, OCCRoll(1D4x10) +20, OCCFlat +30, perLevel(3D6) 14)',
     )
   })
 
@@ -112,7 +112,7 @@ describe('ledgerVitalFormula', () => {
         [{ kind: 'raceRoll', notation: '2D6x10', amount: 45 }],
         [{ label: 'Arachnid', amount: 50 }],
       ),
-    ).toBe('(Facade 30, RaceRoll(2D6X10) +45, +50)')
+    ).toBe('(Facade 30, RaceRoll(2D6x10) +45, +50)')
   })
 
   it('extracts per-level dice from race H.P. formulas', () => {

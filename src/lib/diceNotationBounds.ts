@@ -1,4 +1,6 @@
-/** Min/max totals for Palladium dice strings (NdM, NdM*K, NdM+N). */
+import { notationForRoll, parsePhysicalDiceRoll } from './diceNotation'
+
+/** Min/max totals for Palladium dice strings (NdM, NdM*K, NdM+N, NdMxK, -NdM). */
 
 /** Exceptional human attribute ceiling on flat 3D6 pool rolls. */
 export const EXCEPTIONAL_3D6_POOL_MAX = 30
@@ -23,29 +25,41 @@ function flatNd6Counts(raw: string): { dice: number; faces: number } | null {
   return { dice, faces }
 }
 
-export function diceNotationBounds(raw: string): { min: number; max: number } {
-  const s = raw.trim().replace(/\s+/g, '')
-  const m = /^(\d+)d(\d+)(?:\*(\d+))?([+-]\d+)?$/i.exec(s)
+/** Bounds for the dice portion only — excludes trailing flat modifiers (Review physical rolls). */
+export function diceCoreBounds(raw: string): { min: number; max: number } {
+  const { diceNotation } = parsePhysicalDiceRoll(raw)
+  let s = diceNotation.trim().replace(/\s+/g, '')
+  let negated = false
+  if (s.startsWith('-')) {
+    negated = true
+    s = s.slice(1)
+  }
+  s = notationForRoll(s)
+  const m = /^(\d+)d(\d+)(?:\*(\d+))?$/i.exec(s)
   if (!m) {
     return { min: 0, max: 999 }
   }
   const n = Number(m[1])
   const faces = Number(m[2])
   const mul = m[3] != null && m[3] !== '' ? Number(m[3]) : 1
-  const add = m[4] != null && m[4] !== '' ? Number(m[4]) : 0
-  if (
-    !Number.isFinite(n) ||
-    !Number.isFinite(faces) ||
-    n <= 0 ||
-    faces <= 0
-  ) {
+  if (!Number.isFinite(n) || !Number.isFinite(faces) || n <= 0 || faces <= 0) {
     return { min: 0, max: 999 }
   }
-  const minRoll = n * 1 * mul + add
-  const maxRoll = n * faces * mul + add
+  const minRoll = n * 1 * mul
+  const maxRoll = n * faces * mul
+  if (negated) {
+    return { min: -maxRoll, max: -minRoll }
+  }
+  return { min: minRoll, max: maxRoll }
+}
+
+export function diceNotationBounds(raw: string): { min: number; max: number } {
+  const { diceNotation, flatBonus } = parsePhysicalDiceRoll(raw)
+  const core = diceCoreBounds(diceNotation)
+  if (flatBonus === 0) return core
   return {
-    min: Math.min(minRoll, maxRoll),
-    max: Math.max(minRoll, maxRoll),
+    min: core.min + flatBonus,
+    max: core.max + flatBonus,
   }
 }
 

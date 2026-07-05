@@ -5,6 +5,7 @@ import type {
   CharacterAttributes,
   FeatureModifiers,
   MorphusCharacteristic,
+  MorphusPolymorphicModifier,
   PalladiumOcc,
 } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
@@ -16,9 +17,14 @@ import {
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import {
   collectMorphusAttributeMinFloor,
-  polymorphicDeltaFromBase,
+  morphusCreationPreviewResolveOptions,
+  polymorphicFlatOnlyDeltaFromBase,
   applyMorphusAttributeMinFloor,
 } from './morphusPolymorphicResolver'
+import { parsePhysicalDiceRoll } from './diceNotation'
+import type { PendingDiceBlock } from './spawnDiceBlocks'
+import { pendingBlockHasUnresolvedRolls } from './creationStatEngine'
+import { formatMorphusRelativeStatTooltip } from './creationStatEngine'
 import {
   NIGHTBANE_MORPHUS_BASE_PROFILE,
   type NightbaneMorphusBaseProfile,
@@ -31,6 +37,7 @@ import type {
   LedgerFlatContribution,
   LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
+import { buildForgeAttributeStatBonusDetails, buildLedgerTraitDiceGroup } from './ledgerStatBonuses'
 import {
   type CreationHandToHandTier,
   effectiveCreationHandToHandTier,
@@ -72,6 +79,7 @@ export type MorphusAttributeLedgerLine = {
   diceGroups?: LedgerStatDiceGroup[]
   valueModified?: boolean
   valueTooltip?: string
+  hasPendingRolls?: boolean
 }
 
 const ATTR_LEDGER_LABELS: Record<ForgeAttrKey, string> = {
@@ -95,16 +103,79 @@ export function parseCreationLedgerNumericValue(value: string): number | null {
   return Number.isFinite(n) ? n : null
 }
 
-/** Morphus attribute tooltip — human-form total plus each Morphus-only delta. */
+/** Morphus attribute tooltip — Facade total plus each Morphus-only delta (non-zero terms only). */
 export function formatMorphusVsPrimaryTooltip(
   primaryTotal: number,
   morphusDeltas: readonly LedgerFlatContribution[],
-): string {
-  const parts = [`Facade ${primaryTotal}`]
-  for (const item of morphusDeltas) {
-    parts.push(`${item.label} ${item.amount >= 0 ? '+' : ''}${item.amount}`)
+  pendingRolls = false,
+): string | undefined {
+  return formatMorphusRelativeStatTooltip(primaryTotal, morphusDeltas, pendingRolls)
+}
+
+/** Flat bundled in a dice string (e.g. +4 in `1D6+4`) when not already an explicit `flat` field. */
+function modifierFlatFromDiceString(mod: MorphusPolymorphicModifier): number {
+  if (!mod.dice?.trim()) return 0
+  const fromDice = parsePhysicalDiceRoll(mod.dice.trim()).flatBonus
+  if (fromDice === 0) return 0
+  if (typeof mod.flat === 'number' && mod.flat !== 0) return 0
+  return fromDice
+}
+
+/** Skill IDs granted by Morphus traits but not selected on the Facade skill program. */
+export function collectMorphusExclusiveSkillIds(
+  character: Pick<
+    Character,
+    | 'activeMorphusCharacteristicIds'
+    | 'morphusTraitSlotResolutions'
+    | 'morphusForgeState'
+    | 'morphus'
+  >,
+  facadeSkillIds: readonly string[],
+): string[] {
+  const facadeSet = new Set(facadeSkillIds)
+  const exclusive = new Set<string>()
+  for (const trait of resolveActiveMorphusTraits(character)) {
+    for (const item of trait.gimmickInventory ?? []) {
+      for (const grant of item.skillGrants ?? []) {
+        if (grant.targetType !== 'skill_id') continue
+        const skillId = grant.targetValue?.trim()
+        if (!skillId || facadeSet.has(skillId)) continue
+        exclusive.add(skillId)
+      }
+    }
   }
-  return parts.join(', ')
+  return [...exclusive]
+}
+
+function primaryDiceGroupsForMorphusLedger(
+  primaryGroups: readonly LedgerStatDiceGroup[] | undefined,
+): LedgerStatDiceGroup[] {
+  return (primaryGroups ?? []).filter(
+    (group) =>
+      group.kind !== 'skills' && group.kind !== 'occ' && group.kind !== 'race',
+  )
+}
+
+function morphusExclusiveSkillDiceGroup(
+  attr: ForgeAttrKey,
+  character: Character,
+  facadeSkillIds: readonly string[],
+): LedgerStatDiceGroup | null {
+  const exclusiveIds = collectMorphusExclusiveSkillIds(character, facadeSkillIds)
+  if (exclusiveIds.length === 0) return null
+  const details = buildForgeAttributeStatBonusDetails(
+    attr,
+    undefined,
+    undefined,
+    exclusiveIds,
+  )
+  const skillGroup = details.diceGroups.find((group) => group.kind === 'skills')
+  if (!skillGroup) return null
+  return {
+    kind: skillGroup.kind,
+    display: skillGroup.display,
+    tooltip: skillGroup.tooltip,
+  }
 }
 
 export function mergeFeatureModifiers(
@@ -436,17 +507,71 @@ function collectTraitAttributeDeltas(
   >[],
   attr: ForgeAttrKey,
   polymorphicBase: number,
+  finalized: boolean,
 ): LedgerFlatContribution[] {
   const statKey = attr as keyof MorphusStatModifiers
+  const resolveOpts = morphusCreationPreviewResolveOptions(finalized)
   const out: LedgerFlatContribution[] = []
   for (const trait of traits) {
     const blocks = collectMorphusStatModifierBlocks([trait], statKey)
     if (!blocks.length) continue
-    const delta = polymorphicDeltaFromBase(polymorphicBase, blocks, {
-      applyFloors: false,
-    })
-    if (delta === 0) continue
-    out.push({ label: trait.name, amount: delta })
+    const explicitDelta = polymorphicFlatOnlyDeltaFromBase(
+      polymorphicBase,
+      blocks,
+      resolveOpts,
+    )
+    const diceFlat = blocks.reduce(
+      (sum, mod) => sum + modifierFlatFromDiceString(mod),
+      0,
+    )
+    const amount = explicitDelta + diceFlat
+    if (amount === 0) continue
+    out.push({ label: trait.name, amount })
+  }
+  return out
+}
+
+/** Trait flat/percent attribute bonuses (excludes dice — entered on Review). */
+export function morphusTraitAttributeFlatBonus(
+  character: Pick<
+    Character,
+    | 'activeMorphusCharacteristicIds'
+    | 'morphusTraitSlotResolutions'
+    | 'creationTraitForgeStubComplete'
+    | 'morphusForgeState'
+    | 'morphus'
+  >,
+  attr: ForgeAttrKey,
+  primaryTotal: number | null,
+): number {
+  if (primaryTotal == null) return 0
+  const baseProfile = NIGHTBANE_MORPHUS_BASE_PROFILE
+  const baseBump = nightbaneBaseAttributeBump(baseProfile, attr)
+  const traits = resolveActiveMorphusTraits(character)
+  const finalized = character.creationTraitForgeStubComplete === true
+  const polymorphicBase = primaryTotal + baseBump
+  return collectTraitAttributeDeltas(traits, attr, polymorphicBase, finalized).reduce(
+    (sum, delta) => sum + delta.amount,
+    0,
+  )
+}
+
+export function collectMorphusTraitStatDiceContributions(
+  character: Pick<
+    Character,
+    'activeMorphusCharacteristicIds' | 'morphusTraitSlotResolutions'
+  >,
+  statKey: keyof MorphusStatModifiers,
+): LedgerDiceContribution[] {
+  const traits = resolveActiveMorphusTraits(character)
+  const out: LedgerDiceContribution[] = []
+  for (const trait of traits) {
+    const blocks = collectMorphusStatModifierBlocks([trait], statKey)
+    for (const mod of blocks) {
+      if (mod.dice?.trim()) {
+        out.push({ notation: mod.dice.trim(), label: trait.name })
+      }
+    }
   }
   return out
 }
@@ -456,6 +581,7 @@ function resolveMorphusAttributeTotal(
   attr: ForgeAttrKey,
   primaryTotal: number | null,
   baseProfile: NightbaneMorphusBaseProfile,
+  traitDiceBonus = 0,
 ): {
   morphusTotal: number | null
   morphusDeltas: LedgerFlatContribution[]
@@ -477,8 +603,25 @@ function resolveMorphusAttributeTotal(
     ? readMorphusStoredScalar(character, attr)
     : (primaryTotal ?? 0) + baseBump
 
-  for (const traitDelta of collectTraitAttributeDeltas(traits, attr, polymorphicBase)) {
+  for (const traitDelta of collectTraitAttributeDeltas(
+    traits,
+    attr,
+    polymorphicBase,
+    finalized,
+  )) {
     morphusDeltas.push(traitDelta)
+  }
+
+  if (primaryTotal != null) {
+    const rawTotal =
+      primaryTotal +
+      morphusDeltas.reduce((sum, delta) => sum + delta.amount, 0) +
+      traitDiceBonus
+    const morphusTotal = applyMorphusAttributeMinFloor(
+      rawTotal,
+      finalized ? pendingMinFloor : undefined,
+    )
+    return { morphusTotal, morphusDeltas, pendingMinFloor }
   }
 
   if (baseApplied) {
@@ -486,23 +629,13 @@ function resolveMorphusAttributeTotal(
       .filter((d) => d.label !== MORPHUS_LEDGER_RACE_LABEL)
       .reduce((sum, d) => sum + d.amount, 0)
     const morphusTotal = applyMorphusAttributeMinFloor(
-      readMorphusStoredScalar(character, attr) + traitSum,
+      readMorphusStoredScalar(character, attr) + traitSum + traitDiceBonus,
       finalized ? pendingMinFloor : undefined,
     )
     return { morphusTotal, morphusDeltas, pendingMinFloor }
   }
 
-  if (primaryTotal == null) {
-    return { morphusTotal: null, morphusDeltas: [], pendingMinFloor }
-  }
-
-  const rawTotal =
-    primaryTotal + morphusDeltas.reduce((sum, delta) => sum + delta.amount, 0)
-  const morphusTotal = applyMorphusAttributeMinFloor(
-    rawTotal,
-    finalized ? pendingMinFloor : undefined,
-  )
-  return { morphusTotal, morphusDeltas, pendingMinFloor }
+  return { morphusTotal: null, morphusDeltas, pendingMinFloor }
 }
 
 /**
@@ -511,6 +644,13 @@ function resolveMorphusAttributeTotal(
 export function buildMorphusCreationAttributeBlock(
   primaryLines: readonly MorphusAttributeLedgerLine[],
   character: Character,
+  pendingMorphusAttrTotals: Partial<Record<ForgeAttrKey, number>> = {},
+  pendingMorphusAttrDiceBreakdown: Partial<
+    Record<ForgeAttrKey, LedgerFlatContribution[]>
+  > = {},
+  pendingMorphusAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {},
+  resolutions: Readonly<Record<string, number>> = {},
+  facadeSkillIds: readonly string[] = [],
 ): MorphusAttributeLedgerLine[] {
   const baseProfile = NIGHTBANE_MORPHUS_BASE_PROFILE
 
@@ -520,32 +660,73 @@ export function buildMorphusCreationAttributeBlock(
       value: LEDGER_UNASSIGNED,
     }
     const primaryTotal = parseCreationLedgerNumericValue(primaryLine.value)
-    const { morphusTotal, morphusDeltas, pendingMinFloor } = resolveMorphusAttributeTotal(
-      character,
-      attr,
-      primaryTotal,
-      baseProfile,
-    )
-
     const finalized = character.creationTraitForgeStubComplete === true
+    const pendingTotal = pendingMorphusAttrTotals[attr]
+    const { morphusTotal: resolvedTotal, morphusDeltas, pendingMinFloor } =
+      resolveMorphusAttributeTotal(character, attr, primaryTotal, baseProfile, 0)
+    const morphusTotal =
+      pendingTotal != null
+        ? applyMorphusAttributeMinFloor(
+            pendingTotal,
+            finalized ? pendingMinFloor : undefined,
+          )
+        : resolvedTotal
     const minSuffix =
       !finalized && pendingMinFloor != null ? `(min ${pendingMinFloor})` : undefined
     const labelSuffix = [primaryLine.labelSuffix, minSuffix].filter(Boolean).join(' ') || undefined
 
+    const traitDiceEntries = pendingMorphusAttrDiceBreakdown[attr] ?? []
+    const pendingBlock = pendingMorphusAttrBlocks[attr]
+    const hasMorphusPendingDice = pendingBlockHasUnresolvedRolls(
+      pendingBlock,
+      resolutions,
+    )
+    const hasPendingDice =
+      hasMorphusPendingDice || primaryLine.hasPendingRolls === true
     const differsFromPrimary =
       morphusTotal != null && primaryTotal != null && morphusTotal !== primaryTotal
+    const traitDiceGroup = buildLedgerTraitDiceGroup(
+      collectMorphusTraitStatDiceContributions(character, attr as keyof MorphusStatModifiers),
+    )
+    const exclusiveSkillGroup = morphusExclusiveSkillDiceGroup(
+      attr,
+      character,
+      facadeSkillIds,
+    )
+    const diceGroups = [
+      ...primaryDiceGroupsForMorphusLedger(primaryLine.diceGroups),
+      ...(exclusiveSkillGroup ? [exclusiveSkillGroup] : []),
+      ...(traitDiceGroup ? [traitDiceGroup] : []),
+    ]
+
+    const tooltipDeltas = [...morphusDeltas]
+    for (const entry of traitDiceEntries) {
+      tooltipDeltas.push(entry)
+    }
+
+    const showMorphusTooltip =
+      primaryTotal != null &&
+      (differsFromPrimary ||
+        traitDiceGroup != null ||
+        exclusiveSkillGroup != null ||
+        traitDiceEntries.length > 0 ||
+        hasPendingDice)
 
     return {
       label: primaryLine.label,
-      inlineRaceRoll: primaryLine.inlineRaceRoll,
       labelSuffix,
       value: morphusTotal != null ? String(morphusTotal) : primaryLine.value,
-      valueModified: differsFromPrimary,
-      valueTooltip:
-        differsFromPrimary && primaryTotal != null
-          ? formatMorphusVsPrimaryTooltip(primaryTotal, morphusDeltas)
-          : primaryLine.valueTooltip,
-      diceGroups: primaryLine.diceGroups,
+      valueModified:
+        differsFromPrimary ||
+        traitDiceGroup != null ||
+        exclusiveSkillGroup != null ||
+        traitDiceEntries.length > 0 ||
+        hasPendingDice,
+      valueTooltip: showMorphusTooltip
+        ? formatMorphusVsPrimaryTooltip(primaryTotal, tooltipDeltas, hasPendingDice)
+        : primaryLine.valueTooltip,
+      hasPendingRolls: hasPendingDice || undefined,
+      diceGroups: diceGroups.length > 0 ? diceGroups : undefined,
     }
   })
 }
@@ -561,6 +742,44 @@ export function morphusAttributeScoresFromLedgerLines(
     if (value != null) scores[attr] = value
   }
   return scores
+}
+
+/** Morphus trait Horror Factor bonuses (flat totals + dice to roll at Spawn). */
+export function buildMorphusTraitHorrorFactorDetails(
+  character: Pick<
+    Character,
+    'activeMorphusCharacteristicIds' | 'morphusTraitSlotResolutions' | 'creationTraitForgeStubComplete'
+  >,
+): {
+  flatTotal: number
+  flatBreakdown: LedgerFlatContribution[]
+  diceContributions: LedgerDiceContribution[]
+} {
+  const traits = resolveActiveMorphusTraits(character)
+  const finalized = character.creationTraitForgeStubComplete === true
+  const resolveOpts = morphusCreationPreviewResolveOptions(finalized)
+  const flatBreakdown: LedgerFlatContribution[] = []
+  const diceContributions: LedgerDiceContribution[] = []
+
+  for (const trait of traits) {
+    const blocks = collectMorphusStatModifierBlocks([trait], 'hf')
+    for (const mod of blocks) {
+      if (mod.dice?.trim()) {
+        diceContributions.push({ notation: mod.dice.trim(), label: trait.name })
+      }
+    }
+    if (!blocks.length) continue
+    const delta = polymorphicFlatOnlyDeltaFromBase(0, blocks, resolveOpts)
+    if (delta !== 0) {
+      flatBreakdown.push({ label: trait.name, amount: delta })
+    }
+  }
+
+  return {
+    flatTotal: flatBreakdown.reduce((sum, item) => sum + item.amount, 0),
+    flatBreakdown,
+    diceContributions,
+  }
 }
 
 /** Morphus trait S.D.C. bonuses (flat totals + dice to roll at Spawn). */

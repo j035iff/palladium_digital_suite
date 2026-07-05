@@ -5,7 +5,7 @@ import {
   getHandToHandDamageProfile,
   resolveStrengthCategory,
 } from '../utils/strengthCalculator'
-import { computeCombatMirrorBonuses } from './characterDerived'
+import { resolveLiveUnarmedStrikeBreakdown } from './liveStatEngine'
 import type { AccumulatedHandToHandBonuses } from '../types'
 import {
   computeWeaponProfileBonuses,
@@ -52,19 +52,7 @@ export function computeUnarmedStrikeBreakdown(
   activeForm: 'primary' | 'morphus',
   handToHand?: { skillName: string | null; accumulated: AccumulatedHandToHandBonuses },
 ): StrikeBreakdown {
-  const attrs = getFormState(character, activeForm).attributes
-  const mirror = computeCombatMirrorBonuses(attrs)
-  const ppBonus = mirror.strike
-  const hthBonus = handToHand?.accumulated.strike ?? 0
-  const skillSourceLabel = handToHand?.skillName ?? null
-  return {
-    ppBonus,
-    hthBonus,
-    wpBonus: 0,
-    weaponBonus: 0,
-    total: ppBonus + hthBonus,
-    skillSourceLabel,
-  }
+  return resolveLiveUnarmedStrikeBreakdown(character, activeForm, handToHand)
 }
 
 /** Display string for unarmed damage (standard/extraordinary or supernatural punch grid). */

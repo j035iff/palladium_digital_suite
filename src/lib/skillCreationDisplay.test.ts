@@ -4,7 +4,7 @@ import { getSkillById } from '../data/skillLibrary'
 import { getLibraryOccById } from '../data/library/registry'
 import { buildCreationSkillPick } from './creationSkillPicks'
 import { resolveSkillCreationDisplay } from './skillCreationDisplay'
-import { buildSkillPercentContext } from './skillPercentResolution'
+import { buildLiveSkillContext } from './liveSkillEngine'
 import { createBlankCharacterForGenre } from './characterRoot'
 
 describe('skillCreationDisplay voucher bonuses', () => {
@@ -16,13 +16,7 @@ describe('skillCreationDisplay voucher bonuses', () => {
     if (!occ || !def) return
 
     const character = createBlankCharacterForGenre('nightbane')
-    const skillPercentCtx = buildSkillPercentContext(
-      character,
-      'primary',
-      0,
-      0,
-      undefined,
-    )
+    const skillPercentCtx = buildLiveSkillContext(character, 'primary')
 
     const display = resolveSkillCreationDisplay(def, 'occ', {
       occ,
@@ -56,13 +50,9 @@ describe('skillCreationDisplay percent summary', () => {
     if (!occ || !def) return
 
     const character = createBlankCharacterForGenre('nightbane')
-    const skillPercentCtx = buildSkillPercentContext(
-      character,
-      'primary',
-      4,
-      0,
-      undefined,
-    )
+    const skillPercentCtx = buildLiveSkillContext(character, 'primary')
+    // Override I.Q. for predictable tooltip parts in this fixture.
+    skillPercentCtx.iqBonus = 4
     const pick = buildCreationSkillPick('skill_locksmith', {})
     const synergyPick = buildCreationSkillPick('skill_electrical_engineer', {})
 

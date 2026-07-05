@@ -2,6 +2,11 @@ import type { Character, PalladiumOcc, Race } from '../types'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from './attributeKeys'
 import { diceNotationBounds } from './diceNotationBounds'
 import {
+  createPhysicalPendingRoll,
+  flatBonusesFromDiceContributions,
+  physicalDiceContributions,
+} from './creationPhysicalDice'
+import {
   listOccVariableBonusTasks,
   listSpawnPhaseOccAttributeBonusTasks,
   occVariableAttributeResolution,
@@ -15,6 +20,7 @@ import {
 import {
   buildForgeAttributeStatBonusDetails,
   buildForgeAttributeStatBonuses,
+  buildLedgerTraitDiceGroup,
   buildSdcStatBonusDetails,
   ledgerDiceGroupRowLabel,
   normalizeDiceDisplay,
@@ -37,16 +43,25 @@ import {
   type VitalAttrFlatTerm,
   type VitalDiceTooltipTerm,
 } from './ledgerVitalFormula'
+import { resolveMorphusSdcFlatDerivedStat } from './creationStatEngine'
 import { FACADE_LABEL } from './creationFormLabels'
 import { formatRaceHpRollHint } from './creationVitalityPreview'
 import { isDiceNotation } from './diceNotationBounds'
+import {
+  morphusAttributeFlatBaseline,
+  nightbaneMorphusAttributeBump,
+  buildCreationStatStack,
+  statStackTotal,
+} from './creationStatEngine'
 import {
   MORPHUS_HIT_POINTS_FORMULA,
   MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
   MORPHUS_SDC_BONUS_DICE,
   NIGHTBANE_MORPHUS_BASE_PROFILE,
 } from './morphusNightbaneBase'
-import { buildMorphusTraitSdcBonusDetails } from './morphusCreationLedger'
+import { buildMorphusTraitHorrorFactorDetails, buildMorphusTraitSdcBonusDetails, collectMorphusTraitStatDiceContributions, morphusTraitAttributeFlatBonus } from './morphusCreationLedger'
+import type { MorphusStatModifiers } from '../types'
+import { DEFAULT_HORROR_FACTOR_BY_FORM } from '../data/constants'
 
 export type PendingDiceRoll = {
   id: string
@@ -57,7 +72,7 @@ export type PendingDiceRoll = {
 }
 
 export type PendingDiceGroup = {
-  kind: 'race' | 'occ' | 'skills'
+  kind: 'race' | 'occ' | 'skills' | 'traits'
   display: string
   tooltip: string
   rolls: PendingDiceRoll[]
@@ -87,20 +102,198 @@ const ATTR_BLOCK_LABELS: Record<ForgeAttrKey, string> = {
   spd: 'Spd',
 }
 
+function traitRollsFromContributions(
+  blockId: string,
+  contributions: readonly LedgerDiceContribution[],
+  idPrefix: string,
+): PendingDiceRoll[] {
+  return contributions.map((contribution, index) =>
+    createPhysicalPendingRoll(
+      blockId,
+      idPrefix,
+      index,
+      contribution.label,
+      contribution.notation,
+    ).roll,
+  )
+}
+
+function traitDiceGroupFromContributions(
+  blockId: string,
+  contributions: readonly LedgerDiceContribution[],
+): { group: PendingDiceGroup; flatFromDice: number } | null {
+  const flatFromDice = flatBonusesFromDiceContributions(contributions)
+  const diceOnly = physicalDiceContributions(contributions)
+  const group = buildLedgerTraitDiceGroup(diceOnly)
+  if (!group) return null
+  return {
+    flatFromDice,
+    group: {
+      kind: 'traits',
+      display: group.display,
+      tooltip: group.tooltip,
+      rolls: traitRollsFromContributions(blockId, contributions, 'trait'),
+    },
+  }
+}
+
+function buildMorphusTraitAttributePendingBlocks(
+  character: Character,
+  primaryAssignments: Partial<Record<ForgeAttrKey, number>>,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  skillIds: readonly string[],
+  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>>,
+): PendingDiceBlock[] {
+  const blocks: PendingDiceBlock[] = []
+  for (const attr of FORGE_ATTRIBUTE_KEYS) {
+    const statKey = attr as keyof MorphusStatModifiers
+    const contributions = collectMorphusTraitStatDiceContributions(character, statKey)
+    if (contributions.length === 0) continue
+    const traitGroup = traitDiceGroupFromContributions(`morphus_attr_${attr}`, contributions)
+    if (!traitGroup) continue
+    const poolRoll = primaryAssignments[attr]
+    const pool =
+      poolRoll != null && Number.isFinite(poolRoll) ? poolRoll : null
+    const facadeEffective =
+      pool != null
+        ? resolveForgeEffectiveAttributeScore(
+            attr,
+            character,
+            race,
+            occ,
+            skillIds,
+            primaryAssignments,
+            pendingAttrBonuses,
+          )
+        : null
+    const flatBaseline = morphusAttributeFlatBaseline(
+      facadeEffective,
+      nightbaneMorphusAttributeBump(attr),
+      morphusTraitAttributeFlatBonus(character, attr, facadeEffective),
+    )
+    blocks.push({
+      id: `morphus_attr_${attr}`,
+      label: `Morphus ${ATTR_BLOCK_LABELS[attr]}`,
+      flatBaseline,
+      hint: `${FACADE_LABEL} + Race + trait flats`,
+      groups: [traitGroup.group],
+    })
+  }
+  return blocks
+}
+
+function buildMorphusHorrorFactorPendingBlock(
+  character: Character,
+): PendingDiceBlock {
+  const traitHf = buildMorphusTraitHorrorFactorDetails(character)
+  const groups: PendingDiceGroup[] = []
+  const traitGroup = traitDiceGroupFromContributions(
+    'morphus_hf',
+    traitHf.diceContributions,
+  )
+  if (traitGroup) groups.push(traitGroup.group)
+  return {
+    id: 'morphus_hf',
+    label: 'Morphus H.F.',
+    flatBaseline: statStackTotal(
+      buildCreationStatStack({
+        kind: 'horror_factor_flat',
+        form: 'morphus',
+        traitFlatTotal: traitHf.flatTotal,
+        traitDiceFlat: traitGroup?.flatFromDice ?? 0,
+      }),
+    ),
+    hint: 'Race baseline + trait flats',
+    groups,
+  }
+}
+
+export function pendingDiceBlocksById(
+  blocks: readonly PendingDiceBlock[],
+): Record<string, PendingDiceBlock> {
+  return Object.fromEntries(blocks.map((block) => [block.id, block]))
+}
+
+/** Authoritative creation total for a pending dice block (Review + Live Ledger). */
+export function creationPendingBlockTotal(
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+): number | null {
+  if (!block) return null
+  const hasRolls = block.groups.some((group) => group.rolls.length > 0)
+  if (block.flatBaseline <= 0 && !hasRolls) return null
+  return pendingDiceBlockRunningTotal(block, resolutions)
+}
+
+/** Sum entered Morphus trait attribute dice from Review resolutions. */
+export function sumMorphusTraitAttributeDiceBonuses(
+  blocks: readonly PendingDiceBlock[],
+  resolutions: Readonly<Record<string, number>>,
+): Partial<Record<ForgeAttrKey, number>> {
+  const out: Partial<Record<ForgeAttrKey, number>> = {}
+  for (const block of blocks) {
+    if (!block.id.startsWith('morphus_attr_')) continue
+    const attr = block.id.slice('morphus_attr_'.length) as ForgeAttrKey
+    if (!FORGE_ATTRIBUTE_KEYS.includes(attr)) continue
+    let sum = 0
+    for (const group of block.groups) {
+      for (const roll of group.rolls) {
+        const value = resolutions[roll.id]
+        if (value != null && Number.isFinite(value)) sum += value
+      }
+    }
+    if (sum !== 0) out[attr] = sum
+  }
+  return out
+}
+
+/** Per-trait entered Morphus attribute dice for ledger tooltips. */
+export function morphusTraitAttributeDiceBreakdown(
+  blocks: readonly PendingDiceBlock[],
+  resolutions: Readonly<Record<string, number>>,
+): Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> {
+  const out: Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> = {}
+  for (const block of blocks) {
+    if (!block.id.startsWith('morphus_attr_')) continue
+    const attr = block.id.slice('morphus_attr_'.length) as ForgeAttrKey
+    if (!FORGE_ATTRIBUTE_KEYS.includes(attr)) continue
+    const rolls = collectEnteredPendingDiceContributions(block, resolutions)
+    if (rolls.length > 0) out[attr] = rolls
+  }
+  return out
+}
+
+/** Sum entered Morphus trait Horror Factor dice from Review resolutions. */
+export function sumMorphusTraitHorrorFactorDiceBonus(
+  blocks: readonly PendingDiceBlock[],
+  resolutions: Readonly<Record<string, number>>,
+): number {
+  const block = blocks.find((row) => row.id === 'morphus_hf')
+  if (!block) return 0
+  let sum = 0
+  for (const group of block.groups) {
+    for (const roll of group.rolls) {
+      const value = resolutions[roll.id]
+      if (value != null && Number.isFinite(value)) sum += value
+    }
+  }
+  return sum
+}
+
 function rollFromContribution(
   blockId: string,
   groupKind: string,
   index: number,
   contribution: LedgerDiceContribution,
 ): PendingDiceRoll {
-  const bounds = diceNotationBounds(contribution.notation)
-  return {
-    id: `spawn.${blockId}.${groupKind}.${index}`,
-    notation: normalizeDiceDisplay(contribution.notation),
-    min: bounds.min,
-    max: bounds.max,
-    source: contribution.label,
-  }
+  return createPhysicalPendingRoll(
+    blockId,
+    groupKind,
+    index,
+    contribution.label,
+    contribution.notation,
+  ).roll
 }
 
 function groupFromLedgerDetail(
@@ -313,16 +506,19 @@ function buildAttributePendingDiceBlocks(
     const spawnOccTasks = spawnOccTasksByAttr.get(attr === 'ps' ? 'ps' : attr) ?? []
     const blockId = `attr_${attr}`
     const groups: PendingDiceGroup[] = []
+    let flatFromDice = 0
 
     if (spawnOccTasks.length > 0) {
       const contributions: LedgerDiceContribution[] = spawnOccTasks.map((task) => ({
         notation: task.notation,
         label: 'O.C.C. bonus',
       }))
+      flatFromDice += flatBonusesFromDiceContributions(contributions)
+      const diceOnly = physicalDiceContributions(contributions)
       groups.push({
         kind: 'occ',
-        display: contributions.map((c) => normalizeDiceDisplay(c.notation)).join('+'),
-        tooltip: `(${contributions.map((c) => `O.C.C. bonus: ${normalizeDiceDisplay(c.notation)}`).join(', ')})`,
+        display: diceOnly.map((c) => normalizeDiceDisplay(c.notation)).join('+'),
+        tooltip: `(${diceOnly.map((c) => `O.C.C. bonus: ${normalizeDiceDisplay(c.notation)}`).join(', ')})`,
         rolls: contributions.map((contribution, index) =>
           rollFromContribution(blockId, 'occ', index, contribution),
         ),
@@ -330,6 +526,7 @@ function buildAttributePendingDiceBlocks(
     }
 
     if (skillGroup && skillGroup.contributions.length > 0) {
+      flatFromDice += flatBonusesFromDiceContributions(skillGroup.contributions)
       groups.push(groupFromLedgerDetail(blockId, skillGroup))
     }
 
@@ -351,7 +548,7 @@ function buildAttributePendingDiceBlocks(
     blocks.push({
       id: blockId,
       label: ATTR_BLOCK_LABELS[attr],
-      flatBaseline: pool + details.flatTotal + variableBonus,
+      flatBaseline: pool + details.flatTotal + variableBonus + flatFromDice,
       flatTooltip: formatFlatValueTooltip(flatParts),
       groups,
     })
@@ -444,28 +641,33 @@ export function buildPendingDiceBlocks(
         ),
       ),
   )
+  const sdcDiceContributions = sdcDetails.diceGroups.flatMap(
+    (group) => group.contributions,
+  )
+  let sdcFlatFromDice = flatBonusesFromDiceContributions(sdcDiceContributions)
   for (const task of listOccVariableBonusTasks(occ, character.occSpecializationId)) {
     if (task.section !== 'vitals' || task.statKey !== 'sdc') continue
     if (resolutions[task.id] != null) continue
     if (occRollNotations.has(normalizeDiceDisplay(task.notation))) continue
-    const bounds = diceNotationBounds(task.notation)
     const occGroup = sdcGroups.find((g) => g.kind === 'occ')
-    const roll: PendingDiceRoll = {
-      id: `spawn.sdc.occ.var.${task.id}`,
-      notation: normalizeDiceDisplay(task.notation),
-      min: bounds.min,
-      max: bounds.max,
-      source: `O.C.C. ${task.statKey}`,
-    }
+    const parsed = createPhysicalPendingRoll(
+      'sdc',
+      'occ',
+      occGroup?.rolls.length ?? 0,
+      `O.C.C. ${task.statKey}`,
+      task.notation,
+      `spawn.sdc.occ.var.${task.id}`,
+    )
+    sdcFlatFromDice += parsed.flatBonus
     if (occGroup) {
-      occGroup.rolls.push(roll)
-      occGroup.display = [occGroup.display, roll.notation].filter(Boolean).join('+')
+      occGroup.rolls.push(parsed.roll)
+      occGroup.display = [occGroup.display, parsed.roll.notation].filter(Boolean).join('+')
     } else {
       sdcGroups.push({
         kind: 'occ',
-        display: roll.notation,
-        tooltip: `(O.C.C.: ${roll.notation})`,
-        rolls: [roll],
+        display: parsed.roll.notation,
+        tooltip: `(O.C.C.: ${parsed.roll.notation})`,
+        rolls: [parsed.roll],
       })
     }
   }
@@ -473,7 +675,7 @@ export function buildPendingDiceBlocks(
     vitalityBlocks.push({
       id: 'sdc',
       label: 'S.D.C.',
-      flatBaseline: sdcDetails.flatTotal,
+      flatBaseline: sdcDetails.flatTotal + sdcFlatFromDice,
       flatTooltip: formatVitalLedgerTooltip(
         sdcDetails.flatVitalTerms,
         [],
@@ -593,16 +795,10 @@ export function buildPendingDiceBlocks(
       : sdcDetails.flatTotal
     const traitSdc = buildMorphusTraitSdcBonusDetails(character)
     const morphusSdcRolls = formulaDiceRolls('morphus_sdc', MORPHUS_SDC_BONUS_DICE, 'base')
-    const traitSdcRolls = traitSdc.diceContributions.map((contribution, index) => {
-      const bounds = diceNotationBounds(contribution.notation)
-      return {
-        id: `spawn.morphus_sdc.trait.${index}`,
-        notation: normalizeDiceDisplay(contribution.notation),
-        min: bounds.min,
-        max: bounds.max,
-        source: contribution.label,
-      }
-    })
+    const traitSdcGroup = traitDiceGroupFromContributions(
+      'morphus_sdc',
+      traitSdc.diceContributions,
+    )
     const morphusSdcGroups: PendingDiceGroup[] = []
     if (morphusSdcRolls.length > 0) {
       morphusSdcGroups.push({
@@ -612,15 +808,8 @@ export function buildPendingDiceBlocks(
         rolls: morphusSdcRolls,
       })
     }
-    if (traitSdcRolls.length > 0) {
-      morphusSdcGroups.push({
-        kind: 'skills',
-        display: traitSdcRolls.map((roll) => roll.notation).join(' + '),
-        tooltip: `(${traitSdc.diceContributions
-          .map((row) => `${row.label}: ${normalizeDiceDisplay(row.notation)}`)
-          .join(', ')})`,
-        rolls: traitSdcRolls,
-      })
+    if (traitSdcGroup) {
+      morphusSdcGroups.push(traitSdcGroup.group)
     }
     vitalityBlocks.push(
       appendPerLevelRolls(
@@ -640,7 +829,11 @@ export function buildPendingDiceBlocks(
     vitalityBlocks.push({
       id: 'morphus_sdc',
       label: 'Morphus S.D.C.',
-      flatBaseline: primarySdcBaseline + traitSdc.flatTotal,
+      flatBaseline: resolveMorphusSdcFlatDerivedStat({
+        facadeSdcTotal: primarySdcBaseline,
+        traitFlats: traitSdc.flatBreakdown,
+        traitFlatFromDice: traitSdcGroup?.flatFromDice ?? 0,
+      }).total,
       morphusFacadeSdc: primarySdcBaseline,
       skillFlatTerms: traitSdc.flatBreakdown,
       flatTooltip: formatMorphusSdcValueTooltip(
@@ -651,6 +844,16 @@ export function buildPendingDiceBlocks(
       hint: `${FACADE_LABEL} + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
       groups: morphusSdcGroups,
     })
+    const morphusTraitAttrBlocks = buildMorphusTraitAttributePendingBlocks(
+      character,
+      assignments,
+      race,
+      occ,
+      skillIds,
+      pendingAttrBonuses,
+    )
+    vitalityBlocks.push(...morphusTraitAttrBlocks)
+    vitalityBlocks.push(buildMorphusHorrorFactorPendingBlock(character))
   }
 
   return [...attributeBlocks, ...vitalityBlocks]
@@ -736,6 +939,20 @@ export function pendingDiceBlockRunningTotal(
     }
   }
   return total
+}
+
+/** True when the block has physical dice rows not yet entered on Review. */
+export function pendingDiceBlockHasUnresolvedRolls(
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+): boolean {
+  if (!block) return false
+  return block.groups.some((group) =>
+    group.rolls.some((roll) => {
+      const value = resolutions[roll.id]
+      return value == null || !Number.isFinite(value)
+    }),
+  )
 }
 
 export function pendingDiceBlocksComplete(

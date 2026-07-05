@@ -1,6 +1,5 @@
 import type { ActiveForm, Character, FeatureModifiers, Race } from '../types'
 import { aggregateAllPassiveModifiers, listApplyingFeatures } from './featureEngine'
-import { computeDisplayScalars } from './sheetBonuses'
 import { getSkillById } from '../data/skillLibrary'
 import { racePassiveModifiers } from './raceEngine'
 import {
@@ -12,9 +11,21 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
-import { DEFAULT_HORROR_FACTOR_BY_FORM, SAVING_THROW_REGISTRY } from '../data/constants'
+import { SAVING_THROW_REGISTRY } from '../data/constants'
 import { computeAttributeSaveProfile, type AttributeSaveEntry } from './attributeSaves'
-import { getMeBonuses, getPeBonuses } from './attributeBonuses'
+import {
+  buildSaveStatStack,
+  resolveExceptionalDisplayValue,
+  statStackTotal,
+  statStackToLedgerLines,
+} from './creationStatEngine'
+import {
+  buildDisplayAttributesForLiveEngine,
+  displayPeMeToAttributes,
+  resolveLiveHorrorFactorFlatTotal,
+  resolveLiveHorrorFactorRaceBaseline,
+  resolveLiveMorphusTraitHorrorFactorFlat,
+} from './liveStatEngine'
 import {
   formatAdditiveSaveTooltip,
   formatSaveRollBonus,
@@ -25,11 +36,17 @@ import {
  * Natural save bonus from displayed P.E. / M.E. (production attribute engine).
  */
 export function saveAttributeBonusFromDisplayedScore(score: number): number {
-  return getPeBonuses(score).saveMagic
+  return resolveExceptionalDisplayValue(
+    'pe_save_magic',
+    displayPeMeToAttributes(score, 0),
+  )
 }
 
 export function saveMeBonusFromDisplayedScore(score: number): number {
-  return getMeBonuses(score).savePsionics
+  return resolveExceptionalDisplayValue(
+    'me_save_psionics',
+    displayPeMeToAttributes(0, score),
+  )
 }
 
 /** @deprecated Use {@link SaveRollBonusLine} — kept for existing imports. */
@@ -159,9 +176,9 @@ function horrorFactorMorphusBaseline(
   activeForm: ActiveForm,
 ): number {
   if (supportsDualForm && activeForm === 'morphus') {
-    return DEFAULT_HORROR_FACTOR_BY_FORM.morphus
+    return resolveLiveHorrorFactorRaceBaseline('morphus')
   }
-  return 0
+  return resolveLiveHorrorFactorRaceBaseline('primary')
 }
 
 /**
@@ -179,6 +196,11 @@ export function computeHorrorFactorAura(
     typeof passive.horror_factor_base === 'number' && passive.horror_factor_base > 0
       ? passive.horror_factor_base
       : null
+  const traitHf =
+    supportsDualForm && activeForm === 'morphus'
+      ? resolveLiveMorphusTraitHorrorFactorFlat(character)
+      : 0
+  const passiveHf = passiveSumForKeys(passive, HF_AURA_MODIFIER_KEYS)
   const morphusBaseline = horrorFactorMorphusBaseline(supportsDualForm, activeForm)
   const baseline = explicitBase ?? morphusBaseline
 
@@ -188,16 +210,22 @@ export function computeHorrorFactorAura(
     activeForm,
     { supportsDualForm, race },
   )
-  const passiveAura = passiveSumForKeys(passive, HF_AURA_MODIFIER_KEYS)
 
   const hasMorphusAura = supportsDualForm && activeForm === 'morphus'
-  const hasExplicitAura = explicitBase != null || passiveAura !== 0
+  const hasExplicitAura = explicitBase != null || passiveHf !== 0
 
   if (!hasMorphusAura && !hasExplicitAura) {
     return { total: null, contributions: [], tooltipEquation: '' }
   }
 
-  const total = Math.max(0, Math.round(baseline + passiveAura))
+  const engineFlatTotal = resolveLiveHorrorFactorFlatTotal({
+    form: activeForm === 'morphus' ? 'morphus' : 'primary',
+    traitFlatTotal: traitHf + passiveHf,
+  })
+  const total = Math.max(
+    0,
+    Math.round(explicitBase != null ? baseline + traitHf + passiveHf : engineFlatTotal),
+  )
   const baselineLabel =
     supportsDualForm && activeForm === 'morphus'
       ? MORPHUS_LEDGER_RACE_LABEL
@@ -236,41 +264,47 @@ export function computeSaveProfile(
   characterLevel = character.level ?? 1,
 ): SaveProfileDerived {
   const passive = aggregateAllPassiveModifiers(character, activeForm)
-  const display = computeDisplayScalars(character, activeForm, passive)
+  const displayAttrs = buildDisplayAttributesForLiveEngine(
+    character,
+    activeForm,
+    passive,
+  )
   const primaryPassive = supportsDualForm
     ? aggregateAllPassiveModifiers(character, 'primary')
     : passive
-  const primaryDisplay = supportsDualForm
-    ? computeDisplayScalars(character, 'primary', primaryPassive)
-    : display
-  const peSave = getPeBonuses(display.pe).saveMagic
-  const meSavePsionics = getMeBonuses(display.me).savePsionics
-  const meSaveInsanity = getMeBonuses(display.me).saveInsanity
+  const primaryDisplayAttrs = supportsDualForm
+    ? buildDisplayAttributesForLiveEngine(character, 'primary', primaryPassive)
+    : displayAttrs
 
   const saves: SaveRollEntry[] = SAVING_THROW_REGISTRY.map((row) => {
     const base = row.usePsionicsTierBase ? psionicSaveTarget : row.baseTarget
-    const bonuses: SaveRollBonusLine[] = []
+    let exceptional: { label: string; amount: number } | null = null
 
-    if (row.appliesPhysicalEnduranceBonus && peSave !== 0) {
-      bonuses.push({ label: 'P.E. bonus', amount: peSave })
+    if (row.appliesPhysicalEnduranceBonus) {
+      const amount = resolveExceptionalDisplayValue('pe_save_magic', displayAttrs)
+      if (amount !== 0) exceptional = { label: 'P.E. bonus', amount }
     }
     if (row.appliesMentalEnduranceBonus) {
-      const meAmt = row.id === 'insanity' ? meSaveInsanity : meSavePsionics
-      if (meAmt !== 0) {
-        bonuses.push({ label: 'M.E. bonus', amount: meAmt })
-      }
+      const key =
+        row.id === 'insanity' ? 'me_save_insanity' : 'me_save_psionics'
+      const amount = resolveExceptionalDisplayValue(key, displayAttrs)
+      if (amount !== 0) exceptional = { label: 'M.E. bonus', amount }
     }
 
-    bonuses.push(
-      ...creationLedgerSaveModifierAttribution(
-        row.featureModifierKeys,
-        character,
-        activeForm,
-        { supportsDualForm },
-      ),
+    const attributionParts = creationLedgerSaveModifierAttribution(
+      row.featureModifierKeys,
+      character,
+      activeForm,
+      { supportsDualForm },
     )
 
-    const totalBonus = bonuses.reduce((s, d) => s + d.amount, 0)
+    const stack = buildSaveStatStack({
+      exceptional,
+      occParts: [],
+      attributionParts,
+    })
+    const totalBonus = statStackTotal(stack)
+    const bonuses = statStackToLedgerLines(stack)
 
     return {
       id: row.id,
@@ -290,11 +324,11 @@ export function computeSaveProfile(
   )
 
   const attributeSaves = computeAttributeSaveProfile(
-    display.pe,
-    display.me,
+    displayAttrs.pe,
+    displayAttrs.me,
     characterLevel,
     supportsDualForm,
-    { primaryMe: primaryDisplay.me },
+    { primaryMe: primaryDisplayAttrs.me },
   )
 
   return { saves, attributeSaves, horrorFactor }

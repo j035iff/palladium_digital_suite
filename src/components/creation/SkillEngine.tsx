@@ -28,19 +28,12 @@ import {
   replaceConditionalGrantWithPaidPick,
 } from '../../lib/conditionalRelatedSkills'
 
-import { maPbScaledBonuses } from '../../lib/skillEquation'
-
-import { buildSkillPercentContext } from '../../lib/skillPercentResolution'
+import { buildLiveSkillContext } from '../../lib/liveSkillEngine'
 
 import {
-
   missingPrerequisiteMessage,
-
   prerequisiteSatisfied,
-
 } from '../../lib/skillPrerequisites'
-
-import { computeLiveBonuses } from '../../lib/characterDerived'
 
 import {
   canAddSkillViaOccCoreVoucher,
@@ -398,43 +391,16 @@ export function SkillEngine() {
 
 
 
-  const attrs = activeFormState.attributes
-
-  const iqBonus = useMemo(
-
-    () => computeLiveBonuses(attrs).iqSkillBonus,
-
-    [attrs],
-
-  )
-
-  const maPbBonus = useMemo(() => maPbScaledBonuses(attrs.ma, attrs.pb), [attrs])
-
-
-
   const skillPercentCtx = useMemo(
-
     () =>
-
-      buildSkillPercentContext(
-
-        character,
-
-        activeForm,
-
-        iqBonus,
-
-        maPbBonus,
-
+      buildLiveSkillContext(character, activeForm, {
         morphusSurfaceType,
-
-      ),
-
-    [character, activeForm, iqBonus, maPbBonus, morphusSurfaceType],
-
+      }),
+    [character, activeForm, morphusSurfaceType],
   )
 
-
+  const iqBonus = skillPercentCtx.iqBonus
+  const maPbBonus = skillPercentCtx.maPbBonus
 
   const synergyAvailability = useMemo(
     () => ({
