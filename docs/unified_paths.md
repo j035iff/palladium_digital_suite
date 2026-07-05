@@ -44,6 +44,38 @@ Copy this block when registering a new unified path:
 
 ## Registry
 
+### Creation ledger resolution (Pillar 9 — one source, many views)
+
+**Status:** `partial` (Facade + Morphus attributes + vitality gather-first; combat/saves stacks wired)  
+**Related spec:** `docs/stat_engine_spec.md`, `docs/unified_paths.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Canonical row | `src/lib/ledgerRowResolution.ts` | `ResolvedLedgerRow`, `LedgerContribution`, `sumResolvedRowTotal` | Single gather pass per stat; contributions are source of truth |
+| Attribute resolution | `src/lib/resolveCreationLedgerContext.ts` | `resolveFacadeAttributeRows`, `resolveMorphusAttributeRows` | Facade resolves first; Morphus builds on Facade totals |
+| Vitality resolution | `src/lib/resolveVitalityLedgerRows.ts` | `resolveVitalityLedgerRows` | Contributions-first gather for H.P., S.D.C., P.P.E., I.S.P., Morphus vitals |
+| Bundle | `src/lib/spawnDiceBlocks.ts` | `buildCreationLedgerResolutionBundle` | Live Ledger + Review tab share one bundle |
+| Context assembly | `src/lib/resolveCreationLedgerContext.ts` | `resolveCreationLedgerContext`, `resolveCreationLedgerBundle` | Merges attribute + vitality rows; projects pending blocks |
+| Projections | `src/lib/ledgerRowResolution.ts` | `projectFacadeAttributeLine`, `projectMorphusAttributeLine`, `projectVitalityLine`, `projectDiceGroups`, `projectPendingDiceBlockFromRow`, `resolveStackLedgerRow`, `projectStackLine` | Views only — never re-gather |
+| Stack rows (combat/saves) | `src/lib/creationLiveLedger.ts` | `projectCombatStackLine`, `saveLineWithAttribution` | Saves + combat lines project from `resolveStackLedgerRow` |
+
+**Modes / variants:**
+
+- **Facade attributes / vitals:** `formScope: 'facade'`
+- **Morphus attributes / vitals:** `formScope: 'morphus'`; Morphus dice isolated from Facade dice sub-rows
+- **Review tab:** `PendingDiceBlock` is a projection via `projectPendingDiceBlockFromRow`, not a parallel model
+
+**Extension guide:**
+
+1. Add sources as `LedgerContribution` entries in a resolver — not in UI or tooltip formatters.
+2. Add UI surfaces as projection functions alongside existing `project*` helpers.
+3. Prefer `buildCreationLedgerResolutionBundle` over ad-hoc `buildPendingDiceBlocks` + separate row math.
+4. Facade row must resolve before Morphus row when Morphus uses a Facade base (`facade_base` contribution).
+
+**Tests:** `src/lib/ledgerRowResolution.test.ts`, `src/lib/resolveCreationLedgerContext.test.ts`, `src/lib/resolveVitalityLedgerRows.test.ts`
+
+---
+
 ### Live Ledger — creation preview rows
 
 **Status:** `complete` (Facade + Morphus parity)  
@@ -53,7 +85,8 @@ Copy this block when registering a new unified path:
 |-------|--------|----------------|-------|
 | Math | `src/lib/creationStatEngine.ts` | `buildCreationStatStack`, `statStackTotal`, `resolveExceptionalDisplayValue` | Single stack model for attributes, vitals, saves, combat, exceptional, APM |
 | Row assembly | `src/lib/ledgerLineBuilder.ts` | `buildCreationLedgerLine`, `buildFacadeAttributeLedgerLine`, `buildVitalityLedgerLineFromBlock`, `buildStackBonusLedgerLine`, `buildExceptionalStackLedgerLine`, `buildFlatSourceLedgerLine`, `buildNaturalArmorLedgerLine` | All sections produce `CreationLedgerLine` |
-| Tooltip | `src/lib/ledgerLineBuilder.ts` | `formatLedgerTooltip` | One dispatcher; `LedgerTooltipSpec` kind per stat |
+| Tooltip | `src/lib/ledgerLineBuilder.ts` | `formatLedgerTooltip` | **Only** string emitter for live-ledger value tooltips; all rows pass a `LedgerTooltipSpec` through `buildCreationLedgerLine` |
+| Vitality formatter | `src/lib/spawnDiceBlocks.ts` | `formatVitalityBlockValueTooltip` | Implementation detail invoked by `vitality_block` spec (Review tab `flatTooltip` uses the same function) |
 | Morphus diff | `src/lib/morphusCreationLedger.ts` | `applyMorphusLedgerDiff`, `applyMorphusLedgerGroupDiff` | Modes: `facade_relative` (vitals, exceptional), `combat`, `none` (saves pass-through) |
 | UI render | `src/components/creation/LedgerStatGrid.tsx` | `LedgerStatRow` (via `LedgerStatGrid`) | One row renderer; sub-row shows **dice groups only**; value hover shows full breakdown |
 | Display policy | `src/lib/ledgerLineBuilder.ts` | `applyLedgerRowDisplayPolicy`, `buildCreationLedgerLine` | Strips breakdown hints; merges `pendingBlock.groups` → `diceGroups` |
@@ -69,10 +102,11 @@ Copy this block when registering a new unified path:
 
 1. Add or extend a stack term in `buildCreationStatStack` (math).
 2. Assemble the row through the appropriate `build*LedgerLine` helper — not inline in `creationLiveLedger.ts`.
-3. Add a `LedgerTooltipSpec` kind only if no existing kind fits; wire it in `formatLedgerTooltip`.
-4. If Morphus needs delta highlighting, use `applyMorphusLedgerDiff` with the correct mode — do not add a section-specific diff helper.
-5. UI changes belong in `LedgerStatRow` only.
-6. **Never set breakdown `hint` text** — flats/constants belong in `valueTooltip`; only `diceGroups` (or short context labels like `Immune`) may appear under the row. `buildCreationLedgerLine` enforces this via `applyLedgerRowDisplayPolicy`.
+3. Pass a `LedgerTooltipSpec` to `buildCreationLedgerLine` — never pre-build `valueTooltip` strings in orchestrators.
+4. Add a `LedgerTooltipSpec` kind only if no existing kind fits; wire it in `formatLedgerTooltip`.
+5. If Morphus needs delta highlighting, use `applyMorphusLedgerDiff` with the correct mode — do not add a section-specific diff helper.
+6. UI changes belong in `LedgerStatRow` only.
+7. **Never set breakdown `hint` text** — flats/constants belong in `valueTooltip`; only `diceGroups` (or short context labels like `Immune`) may appear under the row. `buildCreationLedgerLine` enforces this via `applyLedgerRowDisplayPolicy`.
 
 **Tests:** `src/lib/ledgerLineBuilder.test.ts`, `src/lib/creationLiveLedger.test.ts`, `src/lib/morphusCreationLedger.test.ts`, `src/lib/creationOccLedger.test.ts`
 
@@ -149,4 +183,8 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-07-05 | Vitality gather-first via `resolveVitalityLedgerRows`; combat/saves project through `resolveStackLedgerRow` + `projectStackLine` |
+| 2026-07-05 | Vitality pending blocks projected from `ResolvedLedgerRow`; `refreshMorphusAttributeRowsInContext` avoids full bundle rebuild on Morphus ledger |
+| 2026-07-05 | Creation ledger resolution layer: `ResolvedLedgerRow` + projections; vitality rows from pending blocks; `buildCreationLedgerResolutionBundle` |
+| 2026-07-05 | Tooltip path consolidation: removed parallel `valueTooltip` / `valueTooltipOverride` bypasses; all live-ledger tooltips route through `formatLedgerTooltip` |
 | 2026-07-05 | Initial registry: Live Ledger full parity (Pillar 9), stat stack, pending dice, middleware, movement |

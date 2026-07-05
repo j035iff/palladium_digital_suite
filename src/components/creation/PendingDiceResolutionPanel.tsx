@@ -129,12 +129,14 @@ function PendingDiceBlockSection({
           <p className="mb-1 font-mono text-xs font-semibold text-slate-800 dark:text-slate-100">
             {formatPendingDiceGroupLabel(group.kind)}: {group.display}
           </p>
-          <p
-            className="mb-2 text-[10px] text-slate-600 dark:text-slate-300"
-            title={group.tooltip}
-          >
-            {group.tooltip}
-          </p>
+          {group.tooltip?.trim() ? (
+            <p
+              className="mb-2 text-[10px] text-slate-600 dark:text-slate-300"
+              title={group.tooltip}
+            >
+              {group.tooltip}
+            </p>
+          ) : null}
           <ul className={compact ? 'space-y-2' : 'space-y-3'}>
             {group.rolls.map((roll) => {
               const value = resolutions[roll.id]

@@ -101,7 +101,7 @@ export function parsePlainIntegerFormula(notation: string): number | null {
   return Number.isFinite(n) ? n : null
 }
 
-function buildDiceGroup(
+export function buildLedgerDiceGroup(
   kind: LedgerStatDiceGroup['kind'],
   contributions: readonly LedgerDiceContribution[],
 ): LedgerStatDiceGroup | null {
@@ -116,14 +116,46 @@ function buildDiceGroup(
     kind === 'occ'
       ? forDisplay.map((c) => normalizeDiceDisplay(c.notation)).join('+')
       : aggregateDiceNotations(forDisplay.map((c) => c.notation))
-  const tooltip = `(${forTooltip.map((c) => `${c.label}: ${normalizeDiceDisplay(c.notation)}`).join(', ')})`
+  const tooltip = ledgerDiceGroupTooltip(kind, forTooltip)
   return { kind, display, tooltip }
+}
+
+/** Tooltip only when it adds detail beyond the sub-row (`Race: 2D6`, etc.). Skills/traits always break down source. */
+export function ledgerDiceGroupTooltip(
+  kind: LedgerStatDiceGroup['kind'],
+  contributions: readonly LedgerDiceContribution[],
+): string {
+  if (contributions.length === 0) return ''
+  const breakdown = contributions
+    .map((c) => `${c.label}: ${normalizeDiceDisplay(c.notation)}`)
+    .join(', ')
+  const wrapped = `(${breakdown})`
+
+  if (kind === 'skills' || kind === 'traits') {
+    return wrapped
+  }
+
+  if (contributions.length > 1) {
+    return wrapped
+  }
+
+  const contribution = contributions[0]!
+  const notation = normalizeDiceDisplay(contribution.notation)
+  const label = contribution.label.trim()
+  const bucketLabel = ledgerDiceGroupRowLabel(kind)
+
+  if (label.toLowerCase() === notation.toLowerCase()) return ''
+  if (label.toLowerCase() === bucketLabel.toLowerCase()) return ''
+  if (kind === 'occ' && /^occ(\s+bonus)?$/i.test(label)) return ''
+  if (kind === 'race' && /^race$/i.test(label)) return ''
+
+  return wrapped
 }
 
 export function buildLedgerTraitDiceGroup(
   contributions: readonly LedgerDiceContribution[],
 ): LedgerStatDiceGroup | null {
-  return buildDiceGroup('traits', contributions)
+  return buildLedgerDiceGroup('traits', contributions)
 }
 
 /** Sum numeric physical skill bonuses for one attribute (e.g. Acrobatics +1 P.P.). */
@@ -203,11 +235,11 @@ export function buildForgeAttributeStatBonusDetails(
   const occFlat = occ?.id?.trim() ? collectOccAttributeFlat(occ, attr, specializationId) : []
 
   const diceGroups: LedgerStatDiceGroupDetail[] = []
-  const occGroup = buildDiceGroup('occ', occDice)
+  const occGroup = buildLedgerDiceGroup('occ', occDice)
   if (occGroup) {
     diceGroups.push({ ...occGroup, contributions: [...occDice] })
   }
-  const skillGroup = buildDiceGroup('skills', skill.dice)
+  const skillGroup = buildLedgerDiceGroup('skills', skill.dice)
   if (skillGroup) {
     diceGroups.push({ ...skillGroup, contributions: [...skill.dice] })
   }
@@ -380,15 +412,15 @@ export function buildSdcStatBonusDetails(
   }
 
   const diceGroups: LedgerStatDiceGroupDetail[] = []
-  const raceGroup = buildDiceGroup('race', raceDice)
+  const raceGroup = buildLedgerDiceGroup('race', raceDice)
   if (raceGroup) {
     diceGroups.push({ ...raceGroup, contributions: [...raceDice] })
   }
-  const occGroup = buildDiceGroup('occ', occDice)
+  const occGroup = buildLedgerDiceGroup('occ', occDice)
   if (occGroup) {
     diceGroups.push({ ...occGroup, contributions: [...occDice] })
   }
-  const skillGroup = buildDiceGroup('skills', skill.dice)
+  const skillGroup = buildLedgerDiceGroup('skills', skill.dice)
   if (skillGroup) {
     diceGroups.push({ ...skillGroup, contributions: [...skill.dice] })
   }

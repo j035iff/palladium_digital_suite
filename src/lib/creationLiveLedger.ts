@@ -24,9 +24,7 @@ import {
   buildForgeAttributeStatBonuses,
   buildLedgerTraitDiceGroup,
   buildSdcStatBonusDetails,
-  normalizeDiceDisplay,
   type LedgerFlatContribution,
-  type LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
 import {
   buildCreationStatStack,
@@ -50,12 +48,9 @@ import {
   resolveIspCreationFormula,
   resolvePpeCreationFormula,
   resolvePpeFormulaParts,
-  formatVitalLedgerTooltip,
-  formatMorphusSdcValueTooltip,
 } from './ledgerVitalFormula'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
 import { characterHasDualForms } from './raceFormPolicy'
-import { FACADE_LABEL } from './creationFormLabels'
 import {
   flattenCreationSkillIds,
   getCreationRelatedPicks,
@@ -95,6 +90,7 @@ import {
 } from './attributeKeys'
 import {
   buildPendingDiceBlocks,
+  buildCreationLedgerResolutionBundle,
   sumPendingAttributeDiceBonuses,
   pendingAttributeDiceBreakdown,
   morphusTraitAttributeDiceBreakdown,
@@ -107,7 +103,6 @@ import {
   applyLedgerAttributeScores,
   applyMorphusLedgerDiff,
   applyMorphusLedgerGroupDiff,
-  buildMorphusCreationAttributeBlock,
   buildMorphusCreationBasePassiveModifiers,
   buildMorphusTraitHorrorFactorDetails,
   buildMorphusTraitSdcBonusDetails,
@@ -115,6 +110,7 @@ import {
   creationLedgerTraitPassiveModifiers,
   morphusAttributeScoresFromLedgerLines,
   morphusTraitPassiveKeyAttribution,
+  parseCreationLedgerNumericValue,
   resolveCreationLedgerHandToHandAccumulated,
   strengthCapacitiesFromAttributes,
   effectiveLedgerHandToHandTier,
@@ -123,23 +119,33 @@ import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
 import {
   MORPHUS_HIT_POINTS_FORMULA,
   MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
-  MORPHUS_SDC_BONUS_DICE,
 } from './morphusNightbaneBase'
 import type { CreationHandToHandTier } from './creationHandToHandChoice'
 import {
   buildCreationLedgerLine,
   buildExceptionalStackLedgerLine,
-  buildFacadeAttributeLedgerLine,
   buildFlatSourceLedgerLine,
   buildNaturalArmorLedgerLine,
-  buildStackBonusLedgerLine,
   buildVitalityLedgerLineFromBlock,
-  formatBonusBreakdownHint,
-  formatSkillSourcesTooltip,
   type CreationLedgerLine,
   type CreationLedgerGroup,
   type BuildCreationLedgerLineInput,
 } from './ledgerLineBuilder'
+import {
+  projectFacadeAttributeLine,
+  projectMorphusAttributeLine,
+  projectStackLine,
+  projectVitalityLine,
+  resolveStackLedgerRow,
+  rowHasPendingDice,
+  sumResolvedRowTotal,
+  type CreationLedgerResolutionContext,
+  type ResolvedLedgerRow,
+} from './ledgerRowResolution'
+import {
+  refreshMorphusAttributeRowsInContext,
+  resolveCreationLedgerContext,
+} from './resolveCreationLedgerContext'
 
 export type { CreationLedgerLine, CreationLedgerGroup }
 
@@ -164,9 +170,6 @@ export function ledgerCount(n: number | null | undefined): string {
   return String(n)
 }
 
-function formatBonusBreakdown(parts: readonly SaveDeductionLine[]): string | undefined {
-  return formatBonusBreakdownHint(parts)
-}
 
 function perTraitCombatContributions(
   character: Character,
@@ -282,6 +285,36 @@ function hthShortLabel(catalogName: string | null, tierLabel: string | null): st
   return tierLabel
 }
 
+function stackRowId(label: string): string {
+  return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
+}
+
+function projectCombatStackLine(input: {
+  label: string
+  stack: ReturnType<typeof buildCreationStatStack>
+  value: string
+  valueModified?: boolean
+  skillEntries?: readonly { name: string; amount: number }[]
+  traitEntries?: readonly { name: string; amount: number }[]
+}): CreationLedgerLine {
+  const row = resolveStackLedgerRow({
+    id: stackRowId(input.label),
+    label: input.label,
+    section: 'combat',
+    stack: input.stack,
+    valueDisplay: input.value,
+    valueModified: input.valueModified,
+  })
+  return projectStackLine({
+    row,
+    stack: input.stack,
+    value: input.value,
+    tooltipKind: 'stack_combat',
+    skillEntries: input.skillEntries,
+    traitEntries: input.traitEntries,
+  })
+}
+
 function combatLedgerLineFromParts(
   label: string,
   parts: readonly SaveDeductionLine[],
@@ -297,12 +330,13 @@ function combatLedgerLineFromParts(
       valueModified: total !== 0,
     })
   }
-  return buildStackBonusLedgerLine({
+  return projectCombatStackLine({
     label,
     stack: stackTerms,
     value: total !== 0 ? formatBonus(total) : LEDGER_NA,
     valueModified: total !== 0,
-    tooltip: { kind: 'stack_combat', skillEntries, traitEntries },
+    skillEntries,
+    traitEntries,
   })
 }
 type OrderedCombatBonusInput = {
@@ -360,7 +394,7 @@ function buildMindControlSaveLine(
       label: 'Mind Control',
       value: 'Immune',
       valueModified: true,
-      valueTooltipOverride: 'Race: Immune',
+      tooltip: { kind: 'source_attribution', sourceLabel: 'Race', text: 'Immune' },
     })
   }
   const specId = character.occSpecializationId
@@ -511,32 +545,87 @@ export function buildCreationAttributeBlock(
   occ?: PalladiumOcc,
   specializationId?: string | null,
   grantedSkillIds: readonly string[] = [],
-  occVariableResolutions: Readonly<Record<string, number>> = {},
-  pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>> = {},
-  pendingAttrDiceBreakdown: Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> = {},
-  pendingAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {},
+  _occVariableResolutions: Readonly<Record<string, number>> = {},
+  _pendingAttrBonuses: Partial<Record<ForgeAttrKey, number>> = {},
+  _pendingAttrDiceBreakdown: Partial<Record<ForgeAttrKey, LedgerFlatContribution[]>> = {},
+  _pendingAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {},
   resolutions: Readonly<Record<string, number>> = {},
+  character?: Character,
 ): CreationLedgerLine[] {
+  const char =
+    character ??
+    ({
+      creationAttributeAssignments: assignments,
+      occSpecializationId: specializationId,
+      creationPendingDiceResolutions: resolutions,
+    } as Character)
+  const facadeRows = resolveCreationLedgerContext({
+    character: char,
+    race,
+    occ,
+    skillIds: grantedSkillIds,
+  }).facade.attributes
   return FORGE_ATTRIBUTE_KEYS.map((attr) => {
-    const snapshot = resolveFacadeAttributeSnapshot(
-      attr,
-      assignments,
-      race,
-      occ,
-      specializationId,
-      grantedSkillIds,
-      occVariableResolutions,
-      pendingAttrBonuses,
-      pendingAttrDiceBreakdown,
-      pendingAttrBlocks[attr],
+    let row = facadeRows[attr]!
+    if (_pendingAttrDiceBreakdown[attr]?.length) {
+      const contributions = [...row.contributions]
+      for (const entry of _pendingAttrDiceBreakdown[attr]!) {
+        const pendingIdx = contributions.findIndex(
+          (c) =>
+            c.kind === 'dice_pending' &&
+            c.scope === 'facade' &&
+            c.label === entry.label,
+        )
+        if (pendingIdx >= 0) {
+          const pending = contributions[pendingIdx]!
+          contributions[pendingIdx] = {
+            ...pending,
+            kind: 'dice_entered',
+            resolvedAmount: entry.amount,
+            amount: entry.amount,
+            notation: undefined,
+          }
+          continue
+        }
+        if (
+          contributions.some(
+            (c) => c.kind === 'dice_entered' && c.label === entry.label,
+          )
+        ) {
+          continue
+        }
+        contributions.push({
+          kind: 'dice_entered',
+          scope: 'facade',
+          label: entry.label,
+          amount: entry.amount,
+          resolvedAmount: entry.amount,
+        })
+      }
+      row = {
+        ...row,
+        contributions,
+        total: sumResolvedRowTotal(
+          { ...row, contributions } as ResolvedLedgerRow,
+          ['facade'],
+        ),
+        valueModified: true,
+      }
+    }
+    const pendingBlock = _pendingAttrBlocks[attr]
+    const hasPendingRolls =
+      pendingBlock != null
+        ? pendingBlockHasUnresolvedRolls(pendingBlock, resolutions)
+        : _pendingAttrDiceBreakdown[attr]?.length
+          ? false
+          : rowHasPendingDice(row, resolutions)
+    const line = projectFacadeAttributeLine(row, {
       resolutions,
-    )
-    return buildFacadeAttributeLedgerLine(
-      ATTR_LEDGER_LABELS[attr],
-      snapshot,
-      occAttributeRequirementSuffix(occ, attr, specializationId),
-      LEDGER_UNASSIGNED,
-    )
+      unassignedValue: LEDGER_UNASSIGNED,
+      hasPendingRolls,
+    })
+    const suffix = occAttributeRequirementSuffix(occ, attr, specializationId)
+    return suffix ? { ...line, labelSuffix: suffix } : line
   })
 }
 
@@ -828,6 +917,8 @@ export function buildCreationVitalsBlock(opts: {
   attrScores?: Partial<Record<ForgeAttrKey, number>>
   /** Pre-built pending dice blocks — single source of truth with Review tab. */
   pendingBlocks?: readonly PendingDiceBlock[]
+  /** Canonical vitality rows from {@link buildCreationLedgerResolutionBundle}. */
+  ledgerContext?: CreationLedgerResolutionContext
 }): CreationLedgerLine[] {
   const assignments = opts.character.creationAttributeAssignments ?? {}
   const resolutions = opts.character.creationPendingDiceResolutions ?? {}
@@ -846,6 +937,22 @@ export function buildCreationVitalsBlock(opts: {
       psychicTier: opts.psychicTier,
     })
   const pendingById = pendingDiceBlocksById(pendingBlocks)
+  const facadeVitals = opts.ledgerContext?.facade.vitals ?? {}
+  const morphusVitals = opts.ledgerContext?.morphus.vitals ?? {}
+
+  const projectVital = (
+    row: ResolvedLedgerRow | undefined,
+    blockId: string,
+    fallback: Parameters<typeof vitalityLedgerLineFromBlock>[3],
+  ): CreationLedgerLine => {
+    if (row) {
+      return projectVitalityLine(row, {
+        resolutions,
+        pendingBlock: pendingById[blockId],
+      })
+    }
+    return vitalityLedgerLineFromBlock(fallback.label, pendingById[blockId], resolutions, fallback)
+  }
 
   const hpFormula = opts.race ? (opts.race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
@@ -880,13 +987,15 @@ export function buildCreationVitalsBlock(opts: {
       })
     : null
 
-  const sdcDetails = buildSdcStatBonusDetails(
-    opts.race,
-    opts.occ,
-    opts.character.occSpecializationId,
-    opts.skillIds,
-    opts.character.creationOccVariableResolutions ?? {},
-  )
+  const sdcDetails = facadeVitals.sdc
+    ? null
+    : buildSdcStatBonusDetails(
+        opts.race,
+        opts.occ,
+        opts.character.occSpecializationId,
+        opts.skillIds,
+        opts.character.creationOccVariableResolutions ?? {},
+      )
 
   const morphusLedger = opts.supportsDualForm && opts.activeForm === 'morphus'
   const traitSdc = morphusLedger
@@ -906,7 +1015,7 @@ export function buildCreationVitalsBlock(opts: {
 
   const morphusPeScore = opts.attrs.pe
   const hpLine = morphusLedger
-    ? vitalityLedgerLineFromBlock('H.P.', pendingById.morphus_hp, resolutions, {
+    ? projectVital(morphusVitals.morphus_hp, 'morphus_hp', {
         label: 'H.P.',
         ...buildAttrFormulaLedgerFields(MORPHUS_HIT_POINTS_FORMULA, assignments, {
           hintOverride: formatHpDiceRollHint(
@@ -917,7 +1026,7 @@ export function buildCreationVitalsBlock(opts: {
           formulaSources: { race: MORPHUS_HIT_POINTS_FORMULA },
         }),
       })
-    : vitalityLedgerLineFromBlock('H.P.', pendingById.hp, resolutions, {
+    : projectVital(facadeVitals.hp, 'hp', {
         label: 'H.P.',
         ...hpFields,
       })
@@ -925,10 +1034,10 @@ export function buildCreationVitalsBlock(opts: {
   const morphusFacadeSdc =
     pendingById.sdc != null
       ? pendingDiceBlockRunningTotal(pendingById.sdc, resolutions)
-      : sdcDetails.flatTotal
+      : facadeVitals.sdc?.pendingFlatBaseline ?? sdcDetails?.flatTotal ?? 0
 
   const sdcLine = morphusLedger
-    ? vitalityLedgerLineFromBlock('S.D.C.', pendingById.morphus_sdc, resolutions, {
+    ? projectVital(morphusVitals.morphus_sdc, 'morphus_sdc', {
         label: 'S.D.C.',
         value: preview.primarySdcValue,
         valueModified:
@@ -937,43 +1046,37 @@ export function buildCreationVitalsBlock(opts: {
           (pendingById.morphus_sdc?.flatBaseline ?? 0) > 0,
         morphusFacadeSdc,
         skillFlatTerms: traitSdc.flatBreakdown,
-        valueTooltip: formatMorphusSdcValueTooltip(
-          morphusFacadeSdc,
-          [],
-          traitSdc.flatBreakdown,
-        ),
+        flatTerms: [],
       })
-    : vitalityLedgerLineFromBlock('S.D.C.', pendingById.sdc, resolutions, {
+    : projectVital(facadeVitals.sdc, 'sdc', {
         label: 'S.D.C.',
         value:
-          sdcDetails.flatTotal > 0
-            ? String(sdcDetails.flatTotal)
+          (facadeVitals.sdc?.pendingFlatBaseline ?? sdcDetails?.flatTotal ?? 0) > 0
+            ? String(facadeVitals.sdc?.pendingFlatBaseline ?? sdcDetails!.flatTotal)
             : preview.primarySdcValue,
-        valueModified: sdcDetails.flatTotal > 0,
-        valueTooltip: formatVitalLedgerTooltip(
-          sdcDetails.flatVitalTerms,
-          [],
-          sdcDetails.skillFlats,
-        ),
-        flatTerms: sdcDetails.flatVitalTerms,
-        skillFlatTerms: sdcDetails.skillFlats,
+        valueModified:
+          (facadeVitals.sdc?.pendingFlatBaseline ?? sdcDetails?.flatTotal ?? 0) > 0,
+        flatTerms: sdcDetails?.flatVitalTerms,
+        skillFlatTerms: sdcDetails?.skillFlats,
         diceGroups:
-          sdcDetails.diceGroups.length > 0 ? sdcDetails.diceGroups : undefined,
+          sdcDetails && sdcDetails.diceGroups.length > 0
+            ? sdcDetails.diceGroups
+            : undefined,
       })
 
   const lines: CreationLedgerLine[] = [
     hpLine,
     sdcLine,
-    vitalityLedgerLineFromBlock('P.P.E.', pendingById.ppe, resolutions, {
+    projectVital(facadeVitals.ppe, 'ppe', {
       label: 'P.P.E.',
       ...ppeFields,
     }),
     showIsp && ispFields
-      ? vitalityLedgerLineFromBlock('I.S.P.', pendingById.isp, resolutions, {
+      ? projectVital(facadeVitals.isp, 'isp', {
           label: 'I.S.P.',
           ...ispFields,
         })
-      : { label: 'I.S.P.', value: LEDGER_NA },
+      : buildCreationLedgerLine({ label: 'I.S.P.', value: LEDGER_NA, tooltip: { kind: 'none' } }),
     buildCreationLedgerLine({
       label: 'H.F.',
       value: hfDisplayTotal != null && hfDisplayTotal > 0 ? String(hfDisplayTotal) : LEDGER_NA,
@@ -1041,12 +1144,19 @@ function saveLineWithAttribution(
     attributionParts: attrLines,
   })
   const total = statStackTotal(stack)
-  return buildStackBonusLedgerLine({
+  const row = resolveStackLedgerRow({
+    id: stackRowId(label),
     label,
+    section: 'save',
+    stack,
+    valueDisplay: ledgerBonus(total),
+    valueModified: total !== 0,
+  })
+  return projectStackLine({
+    row,
     stack,
     value: ledgerBonus(total),
-    valueModified: total !== 0,
-    tooltip: { kind: 'stack_save' },
+    tooltipKind: 'stack_save',
   })
 }
 
@@ -1551,7 +1661,11 @@ function buildHandToHandDamageLine(
     return buildCreationLedgerLine({
       label: 'Hand-to-hand damage (P.S.)',
       value: d.fullStrengthPunch,
-      valueTooltipOverride: `Restrained ${d.restrainedPunch} · Power ${d.powerPunch}`,
+      tooltip: {
+        kind: 'supernatural_damage',
+        restrained: d.restrainedPunch,
+        power: d.powerPunch,
+      },
     })
   }
 
@@ -1570,14 +1684,14 @@ function buildHandToHandDamageLine(
     hth: handToHand?.damage,
     hthLabel: handToHand?.damage ? 'Hand-to-hand' : null,
   })
-  return buildStackBonusLedgerLine({
+  return projectCombatStackLine({
     label: 'Hand-to-hand damage (P.S.)',
     stack,
     value:
       combat.handToHandDamage !== 0
         ? formatBonus(combat.handToHandDamage)
         : LEDGER_NA,
-    tooltip: { kind: 'stack_combat' },
+    valueModified: combat.handToHandDamage !== 0,
   })
 }
 
@@ -1603,12 +1717,12 @@ function buildCreationEntangleLine(
   })
   const total = statStackTotal(stack)
   const traitEntries = perTraitCombatContributions(character, 'entangle', morphusLedger)
-  return buildStackBonusLedgerLine({
+  return projectCombatStackLine({
     label: 'Entangle',
     stack,
     value: formatBonus(total),
     valueModified: true,
-    tooltip: { kind: 'stack_combat', traitEntries },
+    traitEntries,
   })
 }
 
@@ -1635,12 +1749,12 @@ function buildCreationDisarmLine(
   })
   const total = statStackTotal(stack)
   const traitEntries = perTraitCombatContributions(character, 'disarm', morphusLedger)
-  return buildStackBonusLedgerLine({
+  return projectCombatStackLine({
     label: 'Disarm',
     stack,
     value: formatBonus(total),
     valueModified: true,
-    tooltip: { kind: 'stack_combat', traitEntries },
+    traitEntries,
   })
 }
 
@@ -1828,11 +1942,14 @@ export function buildCreationPhysicalStaging(
     const amt = skill.staging[key] ?? 0
     if (amt) {
       const src = skill.sources.get(`staging.${key}`)?.join(', ')
-      lines.push({
-        label: key.toUpperCase(),
-        value: formatBonus(amt),
-        hint: src ? `On Spawn: ${src}` : 'Applied on Spawn',
-      })
+      lines.push(
+        buildCreationLedgerLine({
+          label: key.toUpperCase(),
+          value: formatBonus(amt),
+          hint: src ? `On Spawn: ${src}` : 'Applied on Spawn',
+          tooltip: { kind: 'none' },
+        }),
+      )
     }
   }
 
@@ -1845,11 +1962,14 @@ export function buildCreationPhysicalStaging(
     for (const [key, raw] of Object.entries(bonuses)) {
       if (typeof raw !== 'string' || !isDiceNotation(raw)) continue
       const bounds = diceNotationBounds(raw)
-      pendingDiceLines.push({
-        label: `${name} — ${key.toUpperCase()}`,
-        value: raw,
-        hint: `${bounds.min}–${bounds.max} at Spawn`,
-      })
+      pendingDiceLines.push(
+        buildCreationLedgerLine({
+          label: `${name} — ${key.toUpperCase()}`,
+          value: raw,
+          hint: `${bounds.min}–${bounds.max} at Spawn`,
+          tooltip: { kind: 'none' },
+        }),
+      )
     }
   }
 
@@ -1874,7 +1994,8 @@ export function buildCreationLiveLedgerSnapshot(opts: {
   activeForm: ActiveForm
 }): CreationLiveLedgerSnapshot {
   const skillIds = resolveCreationSkillIds(opts.character, opts.occ)
-  const pendingBlocks = buildPendingDiceBlocks(
+  const resolutions = opts.character.creationPendingDiceResolutions ?? {}
+  let ledgerContext = buildCreationLedgerResolutionBundle(
     opts.character,
     opts.race,
     opts.occ,
@@ -1883,15 +2004,15 @@ export function buildCreationLiveLedgerSnapshot(opts: {
       psychicTier: opts.psychicTier,
     },
   )
+  let pendingBlocks = ledgerContext.pendingBlocks
   const pendingAttrBonuses = sumPendingAttributeDiceBonuses(
     pendingBlocks,
-    opts.character.creationPendingDiceResolutions ?? {},
+    resolutions,
   )
   const pendingAttrDiceBreakdown = pendingAttributeDiceBreakdown(
     pendingBlocks,
-    opts.character.creationPendingDiceResolutions ?? {},
+    resolutions,
   )
-  const resolutions = opts.character.creationPendingDiceResolutions ?? {}
 
   const primaryAttrs = getFormState(opts.character, 'primary').attributes
   const primaryEffectiveAttrs = resolveLedgerEffectiveAttributes(
@@ -1920,6 +2041,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
     pendingAttrDiceBreakdown,
     facadePendingAttrBlocks,
     resolutions,
+    opts.character,
   )
 
   const morphusLedger =
@@ -1928,27 +2050,31 @@ export function buildCreationLiveLedgerSnapshot(opts: {
   const pendingMorphusAttrTotals = morphusLedger
     ? pendingMorphusAttributeTotals(pendingById, resolutions)
     : {}
-  const pendingMorphusAttrDiceBreakdown = morphusLedger
-    ? morphusTraitAttributeDiceBreakdown(pendingBlocks, resolutions)
-    : {}
-  const pendingMorphusAttrBlocks: Partial<Record<ForgeAttrKey, PendingDiceBlock>> = {}
-  if (morphusLedger) {
-    for (const attr of FORGE_ATTRIBUTE_KEYS) {
-      const block = pendingById[`morphus_attr_${attr}`]
-      if (block) pendingMorphusAttrBlocks[attr] = block
-    }
-  }
 
   const attributeLines = morphusLedger
-    ? buildMorphusCreationAttributeBlock(
-        primaryAttributeLines,
-        opts.character,
-        pendingMorphusAttrTotals,
-        pendingMorphusAttrDiceBreakdown,
-        pendingMorphusAttrBlocks,
-        resolutions,
-        skillIds,
-      )
+    ? (() => {
+        ledgerContext = refreshMorphusAttributeRowsInContext(
+          ledgerContext,
+          opts.character,
+          skillIds,
+          pendingMorphusAttrTotals,
+        )
+        pendingBlocks = ledgerContext.pendingBlocks
+        const morphusRows = ledgerContext.morphus.attributes
+        return FORGE_ATTRIBUTE_KEYS.map((attr, index) => {
+          const morphusRow = morphusRows[attr]
+          const primaryLine = primaryAttributeLines[index]!
+          if (!morphusRow) return primaryLine
+          return projectMorphusAttributeLine(
+            morphusRow,
+            parseCreationLedgerNumericValue(primaryLine.value),
+            {
+              resolutions,
+              facadeValueTooltip: primaryLine.valueTooltip,
+            },
+          )
+        })
+      })()
     : primaryAttributeLines
 
   const buildFormSections = (
@@ -2025,6 +2151,7 @@ export function buildCreationLiveLedgerSnapshot(opts: {
         ppePeScore: opts.supportsDualForm ? primaryEffectiveAttrs.pe : effectiveAttrs.pe,
         attrScores,
         pendingBlocks,
+        ledgerContext,
       }),
       saves: buildCreationSavesBlock(
         effectiveAttrs,

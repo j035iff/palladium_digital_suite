@@ -440,7 +440,6 @@ export function vitalLedgerValueFromFlat(flatTotal: number): string {
 export type AttrFormulaLedgerFields = {
   value: string
   valueModified: boolean
-  valueTooltip?: string
   flatTerms?: VitalAttrFlatTerm[]
   hint?: string
 }
@@ -533,7 +532,6 @@ export function buildAttrFormulaLedgerFields(
   return {
     value: vitalLedgerValueFromFlat(flatTotal),
     valueModified: flatTotal > 0,
-    valueTooltip: formatVitalAttrFlatTooltip(sourcedTerms),
     flatTerms: sourcedTerms,
     hint,
   }

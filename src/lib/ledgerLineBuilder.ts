@@ -138,6 +138,15 @@ export type LedgerTooltipSpec =
       kind: 'apm'
       terms: readonly StatStackTerm[]
     }
+  | { kind: 'source_attribution'; sourceLabel: string; text: string }
+  | { kind: 'supernatural_damage'; restrained: string; power: string }
+  | {
+      kind: 'morphus_text_fallback'
+      facadeValue: string
+      morphusValue: string
+    }
+  /** Re-use a tooltip already rendered through {@link formatLedgerTooltip} on a sibling row. */
+  | { kind: 'rendered'; text: string | undefined }
 
 export function resolveLedgerHasPendingRolls(
   block: PendingDiceBlock | undefined,
@@ -205,6 +214,40 @@ export function formatLedgerTooltip(spec: LedgerTooltipSpec): string | undefined
       if (parts.length <= 1) return undefined
       return `(${parts.join(', ')})`
     }
+    case 'source_attribution':
+      return `${spec.sourceLabel}: ${spec.text}`
+    case 'supernatural_damage':
+      return `Restrained ${spec.restrained} · Power ${spec.power}`
+    case 'morphus_text_fallback': {
+      if (spec.facadeValue === spec.morphusValue) return spec.morphusValue
+      return `Facade ${spec.facadeValue}, Race ${spec.morphusValue}`
+    }
+    case 'rendered':
+      return spec.text?.trim() ? spec.text : undefined
+  }
+}
+
+function resolveVitalityBlockTooltipSpec(
+  block: PendingDiceBlock | undefined,
+  resolutions: Readonly<Record<string, number>>,
+  fallback: BuildCreationLedgerLineInput,
+  hasPendingRolls: boolean,
+): LedgerTooltipSpec | undefined {
+  if (fallback.tooltip != null && fallback.tooltip.kind !== 'none') {
+    return fallback.tooltip
+  }
+  const flatTerms = block?.flatTerms ?? fallback.flatTerms ?? []
+  const skillFlats = block?.skillFlatTerms ?? fallback.skillFlatTerms ?? []
+  const hasVitalityData =
+    block != null || flatTerms.length > 0 || skillFlats.length > 0
+  if (!hasVitalityData && !hasPendingRolls) return undefined
+  return {
+    kind: 'vitality_block',
+    flatTerms,
+    block,
+    resolutions,
+    skillFlats,
+    pendingRolls: hasPendingRolls,
   }
 }
 
@@ -225,7 +268,6 @@ export type BuildCreationLedgerLineInput = {
   skillFlatTerms?: LedgerFlatContribution[]
   morphusFacadeSdc?: number
   skillDetailTooltip?: string
-  valueTooltipOverride?: string
 }
 
 /** Single row assembler — all live-ledger stats pass through here before UI render. */
@@ -238,8 +280,7 @@ export function buildCreationLedgerLine(
     input.hasPendingRolls,
   )
   const valueTooltip =
-    input.valueTooltipOverride ??
-    (input.tooltip != null ? formatLedgerTooltip(input.tooltip) : undefined)
+    input.tooltip != null ? formatLedgerTooltip(input.tooltip) : undefined
 
   const diceGroups =
     input.diceGroups && input.diceGroups.length > 0
@@ -297,13 +338,28 @@ export function buildVitalityLedgerLineFromBlock(
   resolutions: Readonly<Record<string, number>>,
   fallback: BuildCreationLedgerLineInput,
 ): CreationLedgerLine {
+  const hasPendingRolls = resolveLedgerHasPendingRolls(
+    block,
+    resolutions,
+    fallback.hasPendingRolls,
+  )
+  const tooltip = resolveVitalityBlockTooltipSpec(
+    block,
+    resolutions,
+    fallback,
+    hasPendingRolls,
+  )
+
   if (!block) {
-    return buildCreationLedgerLine({ ...fallback, label })
+    return buildCreationLedgerLine({
+      ...fallback,
+      label,
+      tooltip: tooltip ?? fallback.tooltip,
+    })
   }
 
   const rolls = block.groups.flatMap((group) => group.rolls)
   const anyEntered = rolls.some((roll) => resolutions[roll.id] != null)
-  const hasPendingRolls = pendingBlockHasUnresolvedRolls(block, resolutions)
 
   if (!anyEntered && block.flatBaseline <= 0) {
     return buildCreationLedgerLine({
@@ -312,6 +368,7 @@ export function buildVitalityLedgerLineFromBlock(
       pendingBlock: block,
       resolutions,
       hasPendingRolls,
+      tooltip: tooltip ?? fallback.tooltip,
     })
   }
 
@@ -328,17 +385,7 @@ export function buildVitalityLedgerLineFromBlock(
     hasPendingRolls,
     flatTerms: block.flatTerms ?? fallback.flatTerms,
     skillFlatTerms: block.skillFlatTerms ?? fallback.skillFlatTerms,
-    tooltip: {
-      kind: 'vitality_block',
-      flatTerms: block.flatTerms ?? fallback.flatTerms ?? [],
-      block,
-      resolutions,
-      skillFlats: [
-        ...(fallback.skillFlatTerms ?? []),
-        ...(block.skillFlatTerms ?? []),
-      ],
-      pendingRolls: hasPendingRolls,
-    },
+    tooltip: tooltip ?? fallback.tooltip,
   })
 }
 

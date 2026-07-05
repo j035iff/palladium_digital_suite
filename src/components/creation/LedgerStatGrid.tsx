@@ -146,17 +146,26 @@ function LedgerStatRow({
       </div>
       {line.diceGroups && line.diceGroups.length > 0 ? (
         <dd className={ledgerHintClass(morphus)}>
-          {line.diceGroups.map((group, index) => (
+          {line.diceGroups.map((group, index) => {
+            const groupHoverable = Boolean(group.tooltip?.trim())
+            return (
             <span key={group.kind}>
               {index > 0 ? ', ' : null}
               <span
-                className={morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS}
-                title={group.tooltip}
+                className={
+                  groupHoverable
+                    ? morphus
+                      ? HOVER_VALUE_CLASS_MORPHUS
+                      : HOVER_VALUE_CLASS
+                    : ''
+                }
+                title={groupHoverable ? group.tooltip : undefined}
               >
                 {ledgerDiceGroupRowLabel(group.kind)}: {group.display}
               </span>
             </span>
-          ))}
+            )
+          })}
         </dd>
       ) : line.hint ? (
         <LedgerHint

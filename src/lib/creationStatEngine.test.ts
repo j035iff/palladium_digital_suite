@@ -14,6 +14,7 @@ import {
   resolveHitPointsDerivedStat,
   resolveMorphusAggregatedAttribute,
 } from './creationStatEngine'
+import { buildFacadeAttributeLedgerLine } from './ledgerLineBuilder'
 import { buildPendingDiceBlocks } from './spawnDiceBlocks'
 import { getPpBonuses } from './attributeBonuses'
 
@@ -195,7 +196,8 @@ describe('resolveFacadeAttributeSnapshot', () => {
       {},
     )
     expect(snapshot.hasPendingRolls).toBe(true)
-    expect(snapshot.valueTooltip).toContain('+pending rolls')
+    const line = buildFacadeAttributeLedgerLine('Spd.', snapshot)
+    expect(line.valueTooltip).toContain('+pending rolls')
   })
 })
 

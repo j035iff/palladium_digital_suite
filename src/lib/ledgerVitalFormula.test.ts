@@ -14,6 +14,7 @@ import {
   parseVitalFormulaAttrTerm,
   resolvePpeCreationFormula,
 } from './ledgerVitalFormula'
+import { formatVitalityBlockValueTooltip } from './spawnDiceBlocks'
 
 describe('ledgerVitalFormula', () => {
   it('parses multiplied attribute terms', () => {
@@ -143,7 +144,9 @@ describe('ledgerVitalFormula', () => {
     const fields = buildAttrFormulaLedgerFields('PEx10 + 2D6', { pe: 12 })
     expect(fields.value).toBe('120')
     expect(fields.valueModified).toBe(true)
-    expect(fields.valueTooltip).toBe('(PE(12) × 10)')
+    expect(
+      formatVitalityBlockValueTooltip(fields.flatTerms ?? [], undefined, {}, []),
+    ).toBe('(PE(12) × 10)')
     expect(fields.hint).toBe('Race: 2D6')
   })
 

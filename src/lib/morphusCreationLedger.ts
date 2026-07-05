@@ -351,14 +351,6 @@ function hintPartsDelta(
   return deltas
 }
 
-function morphusTextTooltip(primaryValue: string, morphusValue: string): string {
-  if (primaryValue === morphusValue) return morphusValue
-  if (primaryValue === LEDGER_NA || primaryValue === LEDGER_UNASSIGNED) {
-    return `Facade ${primaryValue}, ${MORPHUS_LEDGER_RACE_LABEL} ${morphusValue}`
-  }
-  return `Facade ${primaryValue}, ${MORPHUS_LEDGER_RACE_LABEL} ${morphusValue}`
-}
-
 /** How Morphus rows are compared to Facade rows after line assembly. */
 export type MorphusLedgerDiffMode = 'facade_relative' | 'combat' | 'none'
 
@@ -419,11 +411,15 @@ export function applyMorphusLedgerDiff<T extends MorphusDiffLedgerLine>(
       }
     }
 
-    return {
-      ...morphusLine,
-      valueModified: true,
-      valueTooltip: morphusTextTooltip(primaryLine.value, morphusLine.value),
-    }
+      return {
+        ...morphusLine,
+        valueModified: true,
+        valueTooltip: formatLedgerTooltip({
+          kind: 'morphus_text_fallback',
+          facadeValue: primaryLine.value,
+          morphusValue: morphusLine.value,
+        }),
+      }
   })
 }
 
@@ -582,7 +578,7 @@ export function collectMorphusTraitStatDiceContributions(
   return out
 }
 
-function resolveMorphusAttributeTotal(
+export function resolveMorphusAttributeTotal(
   character: Character,
   attr: ForgeAttrKey,
   primaryTotal: number | null,
@@ -737,8 +733,9 @@ export function buildMorphusCreationAttributeBlock(
             deltas: tooltipDeltas,
             pendingRolls: hasPendingDice,
           }
-        : undefined,
-      valueTooltipOverride: showMorphusTooltip ? undefined : primaryLine.valueTooltip,
+        : primaryLine.valueTooltip
+          ? { kind: 'rendered', text: primaryLine.valueTooltip }
+          : undefined,
     })
   })
 }

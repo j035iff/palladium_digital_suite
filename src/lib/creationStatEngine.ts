@@ -1155,7 +1155,6 @@ export type FacadeAttributeSnapshot = {
   variableBonus: number
   enteredDice: LedgerFlatContribution[]
   total: number | null
-  valueTooltip: string | undefined
   valueModified: boolean
   hasPendingRolls: boolean
 }
@@ -1212,13 +1211,6 @@ export function resolveFacadeAttributeSnapshot(
     variableBonus,
     enteredDice,
     total,
-    valueTooltip: formatFacadeAttributeStackTooltip(
-      poolRoll,
-      bundle.flatBreakdown,
-      variableBonus,
-      enteredDice,
-      hasPendingRolls,
-    ),
     valueModified,
     hasPendingRolls,
   }

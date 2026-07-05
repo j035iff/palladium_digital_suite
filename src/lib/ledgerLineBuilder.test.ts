@@ -2,10 +2,13 @@ import { describe, expect, it } from 'vitest'
 import {
   buildCreationLedgerLine,
   buildStackBonusLedgerLine,
+  buildVitalityLedgerLineFromBlock,
   formatHorrorFactorLedgerTooltip,
   formatLedgerTooltip,
   resolveLedgerHasPendingRolls,
 } from './ledgerLineBuilder'
+import { buildSdcStatBonusDetails } from './ledgerStatBonuses'
+import { getLibraryOccById, getRaceById } from '../data/library/registry'
 
 describe('ledgerLineBuilder', () => {
   it('formats facade attribute tooltips with pending rolls', () => {
@@ -91,7 +94,7 @@ describe('ledgerLineBuilder', () => {
         kind: 'apm',
         terms: [
           { bucket: 'hth', label: 'HtH Expert', amount: 1 },
-          { bucket: 'skill', label: 'Skills', amount: 2 },
+          { bucket: 'skills', label: 'Skills', amount: 2 },
         ],
       }),
     ).toBe('(Base: 2, HtH Expert: +1, Skills: +2)')
@@ -142,7 +145,7 @@ describe('ledgerLineBuilder', () => {
       label: 'I.Q.',
       value: '12',
     })
-    expect(line.labelTooltip).toContain('smart')
+    expect(line.labelTooltip).toContain('Intelligence')
   })
 
   it('prefers explicit labelTooltip over registry', () => {
@@ -152,5 +155,72 @@ describe('ledgerLineBuilder', () => {
       value: '+2',
     })
     expect(line.labelTooltip).toBe('Add to d20 on saves that call for P.E. bonuses only.')
+  })
+
+  it('formats source attribution and supernatural damage through the dispatcher', () => {
+    expect(
+      formatLedgerTooltip({
+        kind: 'source_attribution',
+        sourceLabel: 'Race',
+        text: 'Immune',
+      }),
+    ).toBe('Race: Immune')
+    expect(
+      formatLedgerTooltip({
+        kind: 'supernatural_damage',
+        restrained: '+2D6',
+        power: '+4D6',
+      }),
+    ).toBe('Restrained +2D6 · Power +4D6')
+    expect(
+      formatLedgerTooltip({
+        kind: 'morphus_text_fallback',
+        facadeValue: '12',
+        morphusValue: '22',
+      }),
+    ).toBe('Facade 12, Race 22')
+  })
+
+  it('lists S.D.C. skill flats once when block and fallback both carry them', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const skillIds = ['skill_body_building_weight_lifting']
+    const sdcDetails = buildSdcStatBonusDetails(
+      human,
+      occ,
+      null,
+      skillIds,
+      {},
+    )
+    const block = {
+      id: 'sdc',
+      label: 'S.D.C.',
+      flatBaseline: sdcDetails.flatTotal,
+      flatTerms: sdcDetails.flatVitalTerms,
+      skillFlatTerms: sdcDetails.skillFlats,
+      groups: sdcDetails.diceGroups.map((group) => ({
+        kind: group.kind,
+        display: group.display,
+        tooltip: group.tooltip,
+        rolls: group.contributions.map((contribution, index) => ({
+          id: `spawn.sdc.${group.kind}.${index}`,
+          notation: contribution.notation,
+          min: 1,
+          max: 6,
+          source: contribution.label,
+        })),
+      })),
+    }
+    const line = buildVitalityLedgerLineFromBlock('S.D.C.', block, {}, {
+      label: 'S.D.C.',
+      value: String(sdcDetails.flatTotal),
+      valueModified: true,
+      skillFlatTerms: sdcDetails.skillFlats,
+      flatTerms: sdcDetails.flatVitalTerms,
+    })
+    expect(line.value).toBe(String(sdcDetails.flatTotal))
+    expect(
+      line.valueTooltip?.match(/Body Building & Weight Lifting \+10/g)?.length,
+    ).toBe(1)
   })
 })
