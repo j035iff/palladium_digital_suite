@@ -119,6 +119,8 @@ describe('morphus trait ledger preview', () => {
     const hf = vitals.find((line) => line.label === 'H.F.')!
     expect(hf.value).toBe('12')
     expect(hf.valueModified).toBe(true)
+    expect(hf.valueTooltip).toContain('Race +6')
+    expect(hf.valueTooltip).toContain('Arachnid')
   })
 
   it('shows pending trait Horror Factor dice on the morphus vitals ledger', () => {
@@ -151,6 +153,7 @@ describe('morphus trait ledger preview', () => {
     })
     const hf = vitals.find((line) => line.label === 'H.F.')!
     expect(hf.value).toBe('6')
+    expect(hf.hasPendingRolls).toBe(true)
     expect(hf.diceGroups?.[0]?.kind).toBe('traits')
     expect(hf.diceGroups?.[0]?.display).toBe(normalizeDiceDisplay('1D6'))
   })
@@ -481,9 +484,14 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
     expect(morphusHpLabels).toHaveLength(1)
     expect(morphusSdcLabels).toHaveLength(1)
     expect(morphusHpLabels[0]?.label).toBe('H.P.')
-    expect(morphusHpLabels[0]?.hint).toContain('P.E. ×2')
-    expect(morphusHpLabels[0]?.hint).toContain('2D6/level')
-    expect(morphusSdcLabels[0]?.hint).toBe('Facade + 2D6x10 + traits')
+    expect(morphusHpLabels[0]?.diceGroups?.[0]?.display).toContain('2D6/level')
+    expect(morphusHpLabels[0]?.hint ?? '').not.toContain('P.E.')
+    const morphusSdc = morphusSdcLabels[0]
+    expect(morphusSdc?.diceGroups?.some((group) => group.kind === 'race')).toBe(true)
+    expect(morphusSdc?.diceGroups?.find((group) => group.kind === 'race')?.display).toBe(
+      '2D6x10',
+    )
+    expect(morphusSdc?.hint ?? '').not.toContain('Facade')
   })
 
   it('shows Mind Control immunity on Facade and Morphus ledgers', () => {
@@ -509,12 +517,15 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
           ...baseOpts,
           activeForm,
         }).saves.find((line) => line.label === 'Mind Control'),
-      ).toEqual({
-        label: 'Mind Control',
-        value: 'Immune',
-        valueModified: true,
-        hint: 'Nightbane R.C.C.',
-      })
+      ).toEqual(
+        expect.objectContaining({
+          label: 'Mind Control',
+          value: 'Immune',
+          valueModified: true,
+          valueTooltip: 'Race: Immune',
+          labelTooltip: expect.stringContaining('mind control'),
+        }),
+      )
     }
   })
 
@@ -549,9 +560,13 @@ describe('buildCreationVitalsBlock dual-form toggle', () => {
     }).find((line) => line.label === 'P.P.E.')
 
     expect(primaryPpe?.value).toBe('34')
-    expect(primaryPpe?.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
+    expect(
+      primaryPpe?.diceGroups?.find((group) => group.kind === 'occ')?.display,
+    ).toContain('3D6x10')
     expect(morphusPpe?.value).toBe('34')
-    expect(morphusPpe?.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
+    expect(
+      morphusPpe?.diceGroups?.find((group) => group.kind === 'occ')?.display,
+    ).toContain('3D6x10')
   })
 })
 
@@ -594,12 +609,15 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
     expect(magic?.valueTooltip ?? '').not.toContain('Facade')
 
     const mindControl = morphusSnapshot.saves.find((line) => line.label === 'Mind Control')
-    expect(mindControl).toEqual({
-      label: 'Mind Control',
-      value: 'Immune',
-      valueModified: true,
-      hint: 'Nightbane R.C.C.',
-    })
+    expect(mindControl).toEqual(
+      expect.objectContaining({
+        label: 'Mind Control',
+        value: 'Immune',
+        valueModified: true,
+        valueTooltip: 'Race: Immune',
+        labelTooltip: expect.stringContaining('mind control'),
+      }),
+    )
 
     const hf = morphusSnapshot.vitals.find((line) => line.label === 'H.F.')
     expect(hf?.valueModified).toBe(true)
@@ -609,7 +627,7 @@ describe('buildCreationLiveLedgerSnapshot morphus diff', () => {
       (line) => line.label === 'P.P. strike / parry / dodge',
     )
     expect(ppExceptional?.valueModified).toBe(true)
-    expect(ppExceptional?.valueTooltip).toBeUndefined()
+    expect(ppExceptional?.valueTooltip).toContain('P.P. +1')
 
     const noneSnapshot = buildCreationLiveLedgerSnapshot({
       character: createBlankCharacterForGenre('nightbane'),

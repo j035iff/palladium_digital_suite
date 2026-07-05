@@ -1,6 +1,7 @@
 # Live Ledger — Quick Reference
 
 > **Authoritative spec:** [`stat_engine_spec.md`](./stat_engine_spec.md)  
+> **Unified pipeline (Pillar 9):** [`unified_paths.md`](./unified_paths.md) — Live Ledger stage map  
 > This file is a short formula cheat sheet. If anything here disagrees with `stat_engine_spec.md`, the stat engine spec wins.
 
 ---

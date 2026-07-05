@@ -1,12 +1,12 @@
 ###AI Interaction Protocol
-Refer to vision.md as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 8 Core Pillars (specifically Mechanical Integrity, Visual Continuity, or Radical Visibility), you MUST:
+Refer to vision.md as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 9 Core Pillars (specifically Mechanical Integrity, Visual Continuity, Radical Visibility, or Unified Path), you MUST:
 Flag the conflict to the user immediately.
 Explain which Pillar is being violated.
 Propose an alternative solution that satisfies the user's functional goal while remaining compliant with the Pillars.
 
 
 ###Core Design Pillars
-The system is built upon eight fundamental principles that guide all interaction and logic development.
+The system is built upon nine fundamental principles that guide all interaction and logic development.
 Pillar
 Requirement
 1. Mechanical Integrity
@@ -25,8 +25,10 @@ Anchored UI elements ensure players never lose their bearings when swapping stat
 Surface-level results for speed, with deep math and rule references accessible via tap-to-expand.
 8. Radical Visibility
 Unless explicitly directed, choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
-9. Sophisticated Calculator
-The app is strictly a tool for taking the friction out of playing at a table. It is NOT a video game that plays Palladium for you.
+9. Unified Path
+Facade, Morphus, and dual-form variants are modes on one pipeline per feature domain—single math stack, row assembler, tooltip/diff layer, and UI renderer. Extend shared builders; never fork per-stat or per-form code. Registry: docs/unified_paths.md.
+
+Sophisticated Calculator (vision.md Core Project Philosophy): the app is strictly a tool for taking friction out of playing at the table—it is NOT a video game that plays Palladium for you.
 
 ###Core guidelines
 If a content schema is updated, update the associated example json to account for the update. Do not create new example jsons of that data type, always update the base example json so we have all examples in one file.

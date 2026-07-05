@@ -65,10 +65,12 @@ describe('creationLiveLedger', () => {
     const rollLine = block.find((l) => l.label === 'Roll w/ punch, fall, impact')
     expect(rollLine).toBeDefined()
     expect(block.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
-    expect(block.find((l) => l.label === 'Attacks / melee')?.hint).toContain('Base: 2')
+    const apmLine = block.find((l) => l.label === 'Attacks / melee')
+    expect(apmLine?.hint).toBeUndefined()
+    expect(apmLine?.value).toBe('2')
     expect(block.find((l) => l.label === 'Initiative')?.value).toBe(LEDGER_NA)
     expect(rollLine?.value).toBe('+3')
-    expect(rollLine?.hint).toContain('HtH Basic')
+    expect(rollLine?.valueTooltip).toContain('HtH Basic')
   })
 
   it('starts attacks per melee at 2 with no bonuses', () => {
@@ -286,8 +288,7 @@ describe('creationLiveLedger', () => {
     )
     const parry = block.find((l) => l.label === 'Parry')
     expect(parry?.value).toBe('+2')
-    expect(parry?.hint).toBe('Skills: +2')
-    expect(parry?.skillDetailTooltip).toBe('Boxing: +2')
+    expect(parry?.hint).toBeUndefined()
     expect(parry?.valueTooltip).toBe('(Boxing +2)')
   })
 
@@ -311,10 +312,7 @@ describe('creationLiveLedger', () => {
     )
     const parry = block.find((l) => l.label === 'Parry')
     expect(parry?.value).toBe('+3')
-    expect(parry?.hint).toBe('Skills: +3')
-    expect(parry?.skillDetailTooltip).toBe(
-      'Boxing: +2 · Athletics (general): +1',
-    )
+    expect(parry?.hint).toBeUndefined()
     expect(parry?.valueTooltip).toBe('(Boxing +2, Athletics (general) +1)')
   })
 
@@ -368,7 +366,8 @@ describe('creationLiveLedger', () => {
     )
     const damageLine = block.find((l) => l.label === 'Hand-to-hand damage (P.S.)')
     expect(damageLine?.value).toBe('+4')
-    expect(damageLine?.hint).toContain('P.S.')
+    expect(damageLine?.hint).toBeUndefined()
+    expect(damageLine?.valueTooltip).toContain('P.S.')
   })
 
   it('includes hand-to-hand damage bonuses in the combat ledger total', () => {
@@ -402,7 +401,8 @@ describe('creationLiveLedger', () => {
     )
     const damageLine = block.find((l) => l.label === 'Hand-to-hand damage (P.S.)')
     expect(damageLine?.value).toBe('+5')
-    expect(damageLine?.hint).toContain('Hand-to-hand')
+    expect(damageLine?.hint).toBeUndefined()
+    expect(damageLine?.valueTooltip).toContain('Hand-to-hand')
   })
 
   it('only shows 31+ exceptional groups for attributes above 30', () => {

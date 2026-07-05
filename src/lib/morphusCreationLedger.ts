@@ -13,8 +13,9 @@ import type { ForgeAttrKey } from './attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 import {
   collectMorphusStatModifierBlocks,
+  aggregateMorphusSaveBonuses,
 } from './morphusCharacteristicAggregation'
-import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import { morphusStatKeysForPassiveKey, resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import {
   collectMorphusAttributeMinFloor,
   morphusCreationPreviewResolveOptions,
@@ -24,7 +25,10 @@ import {
 import { parsePhysicalDiceRoll } from './diceNotation'
 import type { PendingDiceBlock } from './spawnDiceBlocks'
 import { pendingBlockHasUnresolvedRolls } from './creationStatEngine'
-import { formatMorphusRelativeStatTooltip } from './creationStatEngine'
+import {
+  buildCreationLedgerLine,
+  formatLedgerTooltip,
+} from './ledgerLineBuilder'
 import {
   NIGHTBANE_MORPHUS_BASE_PROFILE,
   type NightbaneMorphusBaseProfile,
@@ -50,7 +54,7 @@ import {
 } from '../utils/combatCalculator'
 import { evaluateStrengthFromPhysicalStat } from '../utils/strengthCalculator'
 import { aggregateAllPassiveModifiers } from './featureEngine'
-import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
+import { buildMorphusPassiveBundle, MORPHUS_STAT_TO_PASSIVE } from './morphusPassiveBridge'
 
 const LEDGER_NA = '—'
 const LEDGER_UNASSIGNED = '—'
@@ -109,7 +113,12 @@ export function formatMorphusVsPrimaryTooltip(
   morphusDeltas: readonly LedgerFlatContribution[],
   pendingRolls = false,
 ): string | undefined {
-  return formatMorphusRelativeStatTooltip(primaryTotal, morphusDeltas, pendingRolls)
+  return formatLedgerTooltip({
+    kind: 'morphus_relative',
+    facadeTotal: primaryTotal,
+    deltas: morphusDeltas,
+    pendingRolls,
+  })
 }
 
 /** Flat bundled in a dice string (e.g. +4 in `1D6+4`) when not already an explicit `flat` field. */
@@ -350,20 +359,22 @@ function morphusTextTooltip(primaryValue: string, morphusValue: string): string 
   return `Facade ${primaryValue}, ${MORPHUS_LEDGER_RACE_LABEL} ${morphusValue}`
 }
 
-function formatNativeCombatTooltip(line: MorphusDiffLedgerLine): string | undefined {
-  if (line.valueTooltip) {
-    return line.valueTooltip.replace(/^\(|\)$/g, '')
-  }
-  if (line.hint) {
-    return line.hint.replace(/ · /g, ', ')
-  }
-  return undefined
-}
+/** How Morphus rows are compared to Facade rows after line assembly. */
+export type MorphusLedgerDiffMode = 'facade_relative' | 'combat' | 'none'
 
-/** Combat rows: form-native breakdown only (no Facade prefix — combat is computed per form). */
-export function applyMorphusVsPrimaryCombatLedgerDiff<
-  T extends MorphusDiffLedgerLine,
->(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+/**
+ * Single Morphus-vs-Facade diff pass for all live-ledger sections.
+ * - facade_relative: vitals, exceptional — keep native tooltip or synthesize Facade-relative
+ * - combat: highlight when value differs; tooltip unchanged (form-native stack)
+ * - none: saves and other pass-through sections
+ */
+export function applyMorphusLedgerDiff<T extends MorphusDiffLedgerLine>(
+  morphusLines: readonly T[],
+  primaryLines: readonly MorphusDiffLedgerLine[],
+  mode: MorphusLedgerDiffMode,
+): T[] {
+  if (mode === 'none') return [...morphusLines]
+
   const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
   return morphusLines.map((morphusLine) => {
     const primaryLine = primaryByLabel.get(morphusLine.label)
@@ -371,23 +382,11 @@ export function applyMorphusVsPrimaryCombatLedgerDiff<
       return { ...morphusLine, valueModified: morphusLine.valueModified === true }
     }
 
-    return {
-      ...morphusLine,
-      valueModified: true,
-      valueTooltip: formatNativeCombatTooltip(morphusLine) ?? morphusLine.valueTooltip,
-    }
-  })
-}
-
-/** Green highlight + Facade-relative tooltip for Morphus ledger rows. */
-export function applyMorphusVsPrimaryLedgerDiff<
-  T extends MorphusDiffLedgerLine,
->(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
-  const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
-  return morphusLines.map((morphusLine) => {
-    const primaryLine = primaryByLabel.get(morphusLine.label)
-    if (!primaryLine || morphusLine.value === primaryLine.value) {
-      return { ...morphusLine, valueModified: morphusLine.valueModified === true }
+    if (mode === 'combat') {
+      return {
+        ...morphusLine,
+        valueModified: true,
+      }
     }
 
     if (morphusLine.valueTooltip?.trim()) {
@@ -428,54 +427,61 @@ export function applyMorphusVsPrimaryLedgerDiff<
   })
 }
 
+export function applyMorphusLedgerGroupDiff<T extends MorphusDiffLedgerLine>(
+  morphusGroups: readonly { title: string; lines: readonly T[] }[],
+  primaryGroups: readonly MorphusDiffLedgerGroup[],
+  mode: MorphusLedgerDiffMode,
+): { title: string; lines: T[] }[] {
+  const primaryByTitle = new Map(primaryGroups.map((group) => [group.title, group.lines]))
+  return morphusGroups.map((group) => ({
+    title: group.title,
+    lines: applyMorphusLedgerDiff(
+      group.lines,
+      primaryByTitle.get(group.title) ?? [],
+      mode,
+    ),
+  }))
+}
+
+/** @deprecated Use {@link applyMorphusLedgerDiff} with mode `combat`. */
+export function applyMorphusVsPrimaryCombatLedgerDiff<
+  T extends MorphusDiffLedgerLine,
+>(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+  return applyMorphusLedgerDiff(morphusLines, primaryLines, 'combat')
+}
+
+/** @deprecated Use {@link applyMorphusLedgerDiff} with mode `facade_relative`. */
+export function applyMorphusVsPrimaryLedgerDiff<
+  T extends MorphusDiffLedgerLine,
+>(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
+  return applyMorphusLedgerDiff(morphusLines, primaryLines, 'facade_relative')
+}
+
+/** @deprecated Use {@link applyMorphusLedgerGroupDiff} with mode `facade_relative`. */
 export function applyMorphusVsPrimaryLedgerGroupDiff<
   T extends MorphusDiffLedgerLine,
 >(
   morphusGroups: readonly { title: string; lines: readonly T[] }[],
   primaryGroups: readonly MorphusDiffLedgerGroup[],
 ): { title: string; lines: T[] }[] {
-  const primaryByTitle = new Map(primaryGroups.map((group) => [group.title, group.lines]))
-  return morphusGroups.map((group) => ({
-    title: group.title,
-    lines: applyMorphusVsPrimaryLedgerDiff(
-      group.lines,
-      primaryByTitle.get(group.title) ?? [],
-    ),
-  }))
+  return applyMorphusLedgerGroupDiff(morphusGroups, primaryGroups, 'facade_relative')
 }
 
-/** Exceptional bonuses: green when Morphus differs from Facade — no Facade-relative tooltip. */
+/** @deprecated Use {@link applyMorphusLedgerDiff} with mode `facade_relative`. */
 export function applyMorphusVsPrimaryExceptionalLedgerDiff<
   T extends MorphusDiffLedgerLine,
 >(morphusLines: readonly T[], primaryLines: readonly MorphusDiffLedgerLine[]): T[] {
-  const primaryByLabel = new Map(primaryLines.map((line) => [line.label, line]))
-  return morphusLines.map((morphusLine) => {
-    const primaryLine = primaryByLabel.get(morphusLine.label)
-    if (!primaryLine || morphusLine.value === primaryLine.value) {
-      return { ...morphusLine, valueModified: morphusLine.valueModified === true }
-    }
-    return {
-      ...morphusLine,
-      valueModified: true,
-      valueTooltip: undefined,
-    }
-  })
+  return applyMorphusLedgerDiff(morphusLines, primaryLines, 'facade_relative')
 }
 
+/** @deprecated Use {@link applyMorphusLedgerGroupDiff} with mode `facade_relative`. */
 export function applyMorphusVsPrimaryExceptionalLedgerGroupDiff<
   T extends MorphusDiffLedgerLine,
 >(
   morphusGroups: readonly { title: string; lines: readonly T[] }[],
   primaryGroups: readonly MorphusDiffLedgerGroup[],
 ): { title: string; lines: T[] }[] {
-  const primaryByTitle = new Map(primaryGroups.map((group) => [group.title, group.lines]))
-  return morphusGroups.map((group) => ({
-    title: group.title,
-    lines: applyMorphusVsPrimaryExceptionalLedgerDiff(
-      group.lines,
-      primaryByTitle.get(group.title) ?? [],
-    ),
-  }))
+  return applyMorphusLedgerGroupDiff(morphusGroups, primaryGroups, 'facade_relative')
 }
 
 export function strengthCapacitiesFromAttributes(
@@ -712,7 +718,7 @@ export function buildMorphusCreationAttributeBlock(
         traitDiceEntries.length > 0 ||
         hasPendingDice)
 
-    return {
+    return buildCreationLedgerLine({
       label: primaryLine.label,
       labelSuffix,
       value: morphusTotal != null ? String(morphusTotal) : primaryLine.value,
@@ -722,12 +728,18 @@ export function buildMorphusCreationAttributeBlock(
         exclusiveSkillGroup != null ||
         traitDiceEntries.length > 0 ||
         hasPendingDice,
-      valueTooltip: showMorphusTooltip
-        ? formatMorphusVsPrimaryTooltip(primaryTotal, tooltipDeltas, hasPendingDice)
-        : primaryLine.valueTooltip,
-      hasPendingRolls: hasPendingDice || undefined,
+      hasPendingRolls: hasPendingDice,
       diceGroups: diceGroups.length > 0 ? diceGroups : undefined,
-    }
+      tooltip: showMorphusTooltip
+        ? {
+            kind: 'morphus_relative',
+            facadeTotal: primaryTotal,
+            deltas: tooltipDeltas,
+            pendingRolls: hasPendingDice,
+          }
+        : undefined,
+      valueTooltipOverride: showMorphusTooltip ? undefined : primaryLine.valueTooltip,
+    })
   })
 }
 
@@ -780,6 +792,48 @@ export function buildMorphusTraitHorrorFactorDetails(
     flatBreakdown,
     diceContributions,
   }
+}
+
+/** Per-trait Morphus attribution for passive modifier keys (ledger tooltips). */
+export function morphusTraitPassiveKeyAttribution(
+  character: Pick<
+    Character,
+    | 'activeMorphusCharacteristicIds'
+    | 'morphusTraitSlotResolutions'
+    | 'creationTraitForgeStubComplete'
+  >,
+  passiveKeys: readonly string[],
+): LedgerFlatContribution[] {
+  const traits = resolveActiveMorphusTraits(character)
+  if (traits.length === 0 || passiveKeys.length === 0) return []
+
+  const finalized = character.creationTraitForgeStubComplete === true
+  const resolveOpts = morphusCreationPreviewResolveOptions(finalized)
+  const statKeys = [
+    ...new Set(passiveKeys.flatMap((key) => morphusStatKeysForPassiveKey(key))),
+  ]
+  const out: LedgerFlatContribution[] = []
+
+  for (const trait of traits) {
+    let amount = 0
+    const saveBonuses = aggregateMorphusSaveBonuses([trait])
+    for (const key of passiveKeys) {
+      const value = saveBonuses[key]
+      if (value != null && value !== 0) amount += value
+    }
+    for (const statKey of statKeys) {
+      const passiveKey = MORPHUS_STAT_TO_PASSIVE[statKey]
+      if (!passiveKey || !passiveKeys.includes(passiveKey as string)) continue
+      const blocks = collectMorphusStatModifierBlocks([trait], statKey)
+      if (!blocks.length) continue
+      amount += polymorphicFlatOnlyDeltaFromBase(0, blocks, resolveOpts)
+    }
+    if (amount !== 0) {
+      out.push({ label: trait.name, amount })
+    }
+  }
+
+  return out.sort((a, b) => a.label.localeCompare(b.label))
 }
 
 /** Morphus trait S.D.C. bonuses (flat totals + dice to roll at Spawn). */

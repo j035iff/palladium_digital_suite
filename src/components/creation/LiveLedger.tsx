@@ -3,7 +3,6 @@ import { useCharacter } from '../../context/CharacterContext'
 import { buildCreationLiveLedgerSnapshot } from '../../lib/creationLiveLedger'
 import type { ActiveForm } from '../../types'
 import {
-  LedgerGrid,
   LedgerStatGrid,
   MORPHUS_LEDGER_BORDER_CLASS,
   MORPHUS_LEDGER_SURFACE_CLASS,
@@ -112,7 +111,7 @@ function LedgerStatSections({
       </LedgerSection>
 
       <LedgerSection title="Exceptional bonuses (17–30)" morphus={morphus}>
-        <LedgerGrid lines={ledger.exceptional} morphus={morphus} />
+        <LedgerStatGrid lines={ledger.exceptional} morphus={morphus} />
       </LedgerSection>
 
       {ledger.exceptionalSuper.map((group) => (
@@ -121,7 +120,7 @@ function LedgerStatSections({
           title={`Exceptional bonuses — ${group.title}`}
           morphus={morphus}
         >
-          <LedgerGrid lines={group.lines} morphus={morphus} />
+          <LedgerStatGrid lines={group.lines} morphus={morphus} />
         </LedgerSection>
       ))}
 
@@ -130,11 +129,11 @@ function LedgerStatSections({
       </LedgerSection>
 
       <LedgerSection title="Save vs" morphus={morphus}>
-        <LedgerGrid lines={ledger.saves} morphus={morphus} />
+        <LedgerStatGrid lines={ledger.saves} morphus={morphus} />
       </LedgerSection>
 
       <LedgerSection title="Combat bonuses" morphus={morphus}>
-        <LedgerGrid lines={ledger.combat} morphus={morphus} />
+        <LedgerStatGrid lines={ledger.combat} morphus={morphus} />
       </LedgerSection>
     </>
   )

@@ -27,12 +27,15 @@ import {
   formatFlatValueTooltip,
   type LedgerDiceContribution,
   type LedgerFlatContribution,
+  type LedgerStatDiceGroup,
   type LedgerStatDiceGroupDetail,
 } from './ledgerStatBonuses'
 import {
   buildAttrFormulaLedgerFields,
   diceTermsFromAttrFormula,
   dualFormPpeLedgerFormulaOpts,
+  formatHpDiceRollHint,
+  formatVitalDiceRollHint,
   formatVitalLedgerTooltip,
   formatMorphusSdcValueTooltip,
   hitPointsPerLevelDiceFormula,
@@ -44,7 +47,6 @@ import {
 } from './ledgerVitalFormula'
 import { resolveMorphusSdcFlatDerivedStat } from './creationStatEngine'
 import { FACADE_LABEL } from './creationFormLabels'
-import { formatRaceHpRollHint } from './creationVitalityPreview'
 import { isDiceNotation } from './diceNotationBounds'
 import {
   morphusAttributeFlatBaseline,
@@ -599,7 +601,9 @@ export function buildPendingDiceBlocks(
   const hpFormula = race ? (race.vitals?.hpFormula ?? 'PE + 1D6') : null
   const hpPerLevel = hitPointsPerLevelDiceFormula(hpFormula)
   const hpFields = buildAttrFormulaLedgerFields(hpFormula, assignments, {
-    hintOverride: race ? formatRaceHpRollHint(race.vitals?.hpFormula) : undefined,
+    hintOverride: race
+      ? formatHpDiceRollHint(race.vitals?.hpFormula)
+      : undefined,
     formulaSources: hpFormula ? { race: hpFormula } : undefined,
   })
   if (hpFields.hint || hpPerLevel) {
@@ -782,7 +786,10 @@ export function buildPendingDiceBlocks(
       skillIds,
     )
     const morphHp = buildAttrFormulaLedgerFields(MORPHUS_HIT_POINTS_FORMULA, assignments, {
-      hintOverride: `P.E. ×2 + ${normalizeDiceDisplay(MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA)}/level`,
+      hintOverride: formatHpDiceRollHint(
+        MORPHUS_HIT_POINTS_FORMULA,
+        MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
+      ),
       attrScores: { pe: morphusPe },
       formulaSources: { race: MORPHUS_HIT_POINTS_FORMULA },
     })
@@ -802,7 +809,7 @@ export function buildPendingDiceBlocks(
       morphusSdcGroups.push({
         kind: 'race',
         display: normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE),
-        tooltip: '(Morphus base dice)',
+        tooltip: `(Race: ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)})`,
         rolls: morphusSdcRolls,
       })
     }
@@ -839,7 +846,6 @@ export function buildPendingDiceBlocks(
         [],
         traitSdc.flatBreakdown,
       ),
-      hint: `${FACADE_LABEL} + ${normalizeDiceDisplay(MORPHUS_SDC_BONUS_DICE)} + traits`,
       groups: morphusSdcGroups,
     })
     const morphusTraitAttrBlocks = buildMorphusTraitAttributePendingBlocks(
@@ -971,4 +977,15 @@ export function pendingDiceBlocksComplete(
 
 export function formatPendingDiceGroupLabel(kind: PendingDiceGroup['kind']): string {
   return ledgerDiceGroupRowLabel(kind)
+}
+
+/** Map pending-dice groups to Live Ledger dice row segments (Race / Traits / etc.). */
+export function ledgerDiceGroupsFromPendingGroups(
+  groups: readonly PendingDiceGroup[],
+): LedgerStatDiceGroup[] {
+  return groups.map((group) => ({
+    kind: group.kind,
+    display: group.display,
+    tooltip: group.tooltip.replace(/^\(|\)$/g, ''),
+  }))
 }

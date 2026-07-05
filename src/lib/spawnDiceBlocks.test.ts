@@ -144,7 +144,7 @@ describe('spawnDiceBlocks', () => {
     const diceRolls = ppe.groups.flatMap((group) => group.rolls)
     expect(diceRolls).toHaveLength(2)
     expect(diceRolls.map((roll) => roll.notation)).toEqual(['3D6x10', '3D6'])
-    expect(ppe.hint).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
+    expect(ppe.hint).toBe('O.C.C.: 3D6x10 (+3D6/level)')
     expect(ppe.flatBaseline).toBe(32)
   })
 

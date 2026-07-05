@@ -7,6 +7,7 @@ This document is the **canonical reference for how character statistics are calc
 | Topic | Document |
 |-------|----------|
 | Product pillars & GM override philosophy | `docs/vision.md` |
+| Unified path registry (Pillar 9) | `docs/unified_paths.md` |
 | M.D.C. scaling, P.S. tiers, APM tracker UX | `docs/combat_logic.md` |
 | Modern firearm W.P. modes, burst table, untrained penalties | `docs/combat_logic.md` §6 |
 | Skill **percent** Master Equation | `docs/skill_selection.md` |
@@ -23,11 +24,12 @@ This document is the **canonical reference for how character statistics are calc
 
 1. **Signed modifiers** — Every bump is a signed integer (or explicit dice notation). Bonuses and penalties use the same pipeline.
 2. **Radical visibility (Pillar 8)** — Restricted options are greyed out with a reason, never hidden.
-3. **Physical dice first (Pillar 5)** — Dice formulas appear in hints during creation; values are entered manually on **Tab 5** (primary / Facade dice) and **Tab 6** (Morphus dice when applicable), stored in `creationPendingDiceResolutions` — not auto-rolled.
+3. **Physical dice first (Pillar 5)** — Dice to roll appear in the hint row (or dice-group segments) during creation; attribute multipliers, flats, and Facade carry-over appear only on the **value tooltip**. Values are entered manually on **Tab 5** (primary / Facade dice) and **Tab 6** (Morphus dice when applicable), stored in `creationPendingDiceResolutions` — not auto-rolled.
 4. **Primary form before Morphus (Nightbane)** — When building Morphus, primary-form totals are assumed **final** (attributes, skills, and primary vitality dice resolved).
 5. **Inspectable stacks** — Live Ledger hints show modifier buckets (`Race`, `OCC`, `HtH`, `traits`, etc.) so GMs can audit math (Pillar 4).
 6. **Form scope** — Nightbane maintains separate primary and Morphus attribute/vitality pools where the rules require it; some pools are **shared** (see §5). Single-form races use the primary pool only.
 7. **Schema owns constants** — `constant1`, `constant2`, dice notation, and flat bumps for each derived stat are defined in content JSON (race vitals, OCC engines, Morphus profiles). The stat engine applies them uniformly; a wrong value is a schema error or a global engine bug, never a stat-specific code path.
+8. **Unified path (Pillar 9)** — Live Ledger rows, tooltips, Morphus diffs, and UI renderers share one pipeline per stage. See `docs/unified_paths.md` before adding stat-specific forks.
 
 ---
 

@@ -6,7 +6,7 @@ import {
   creationIspLabel,
   creationSdcLabel,
 } from './creationFormLabels'
-import { formatVitalFormulaLedgerHint } from './ledgerVitalFormula'
+import { formatHpDiceRollHint, formatVitalDiceRollHint } from './ledgerVitalFormula'
 import {
   buildAttrFormulaLedgerFields,
   dualFormPpeLedgerFormulaOpts,
@@ -37,12 +37,9 @@ export function isCreationOccSelected(occ: PalladiumOcc | undefined): boolean {
   return Boolean(occ?.id?.trim())
 }
 
-/** Human-readable race H.P. roll (e.g. `P.E. + 1D6/level` for humans). */
+/** Human-readable race H.P. roll dice only (e.g. `Race: +1D6/level`). */
 export function formatRaceHpRollHint(hpFormula?: string): string {
-  const withPe = (hpFormula ?? 'PE + 1D6').trim().replace(/\bPE\b/gi, 'P.E.')
-  return withPe.replace(/(\d+D\d+(?:\*\d+)?)/gi, (match) =>
-    match.includes('/level') ? match : `${match}/level`,
-  )
+  return formatHpDiceRollHint(hpFormula) ?? ''
 }
 
 /** Read-only vitality formulas for the Live Ledger before spawn dice are entered. */
@@ -97,8 +94,11 @@ export function creationVitalityPreview(
   )
   const ispRollHint = showIsp
     ? ispFormula
-      ? formatVitalFormulaLedgerHint(ispFormula.base, ispFormula.perLevel)
-      : `M.E. + 1D6 (after attributes assigned)`
+      ? formatVitalDiceRollHint({
+          formulaSources: { occ: ispFormula.base },
+          perLevelFormula: ispFormula.perLevel,
+        })
+      : `O.C.C.: 1D6 (after attributes assigned)`
     : undefined
   const ispFields = ispFormula
     ? buildAttrFormulaLedgerFields(ispFormula.base, assignments, {

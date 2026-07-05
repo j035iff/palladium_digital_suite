@@ -60,6 +60,7 @@ From `docs/vision.md`:
 4. **Physical dice priority** — Frictionless manual entry for real rolls.
 5. **GM agency** — Values remain overrideable.
 6. **Two-tap combat** — Primary strike/parry/damage reachable quickly (Combat HUD / “Destiny HUD”).
+7. **Unified path (Pillar 9)** — One pipeline per feature domain; Facade/Morphus are modes, not forks. See [`docs/unified_paths.md`](unified_paths.md).
 
 Character root state always tracks:
 
@@ -366,6 +367,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | Doc | Topic |
 |-----|--------|
 | `docs/vision.md` | Product philosophy, pillars, AI interaction protocol |
+| `docs/unified_paths.md` | **Unified path registry** — single-pipeline implementations per Pillar 9 |
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
 | `docs/app_viewport_launcher.md` | Gate Check — Open vs Create, genre manifest, viewports |
@@ -417,9 +419,10 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
 | Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge/character_creation.md`](forge/character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
-| Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md) |
+| Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md), [`docs/unified_paths.md`](unified_paths.md) when pipeline stages change |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
-| Product pillars or AI protocol | [`docs/vision.md`](vision.md) |
+| Product pillars or AI protocol | [`docs/vision.md`](vision.md), [`.cursorrules`](../.cursorrules) |
+| New unified pipeline (Pillar 9) | [`docs/unified_paths.md`](unified_paths.md) — add or extend registry entry |
 | New catalog type or major content scale shift | [`docs/gemini-project-context.md`](gemini-project-context.md) — counts, paths, related doc index |
 
 When unsure, add a short note to the most specific doc (ingest playbook or feature doc) and cross-link from `gemini-project-context.md` if it affects agents broadly.
@@ -430,7 +433,7 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 
 1. **Do not guess Palladium rules** — derive behavior from JSON schemas, `docs/`, and book-accurate content files.
 2. **Prefer structured Morphus/talent fields** over stuffing mechanics into `description` or `customOneOffs` when the schema supports them.
-3. **Keep UI dumb** — business logic belongs in `src/lib/`, not React components.
+3. **Keep UI dumb** — business logic belongs in `src/lib/`, not React components. Check [`docs/unified_paths.md`](unified_paths.md) before forking per-stat or per-form paths (Pillar 9).
 4. **Validate after content changes:** `npm run validate:schemas`, `npm run audit:talents` (talents), `npm run audit:skills` (skills), and/or `npm run validate:morphus`.
 5. **Documentation sync** — when behavior, layout, or workflow changes, update docs in the same session (see **Development workflow** above). Ingest playbooks are living documents.
 6. **Content catalog layout** — follow `docs/content-catalog-layout.md`; ancillary JSON → `<catalog-dir>/utils/` unless documented root exception.

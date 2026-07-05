@@ -5,8 +5,8 @@ import { racePassiveModifiers } from './raceEngine'
 import {
   buildMorphusCreationBasePassiveModifiers,
   MORPHUS_LEDGER_RACE_LABEL,
+  morphusTraitPassiveKeyAttribution,
 } from './morphusCreationLedger'
-import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
 import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
@@ -151,11 +151,12 @@ export function creationLedgerSaveModifierAttribution(
     if (mBaseAmt !== 0) {
       out.push({ label: MORPHUS_LEDGER_RACE_LABEL, amount: mBaseAmt })
     }
-    const traits = buildMorphusPassiveBundle(character, 'morphus', {})?.modifiers ?? {}
-    const traitAmt = passiveSumFromMods(traits, keys)
-    if (traitAmt !== 0) {
-      out.push({ label: 'Traits', amount: traitAmt })
-    }
+    out.push(
+      ...morphusTraitPassiveKeyAttribution(character, keys).map((entry) => ({
+        label: entry.label,
+        amount: entry.amount,
+      })),
+    )
     return out.sort((a, b) => a.label.localeCompare(b.label))
   }
 

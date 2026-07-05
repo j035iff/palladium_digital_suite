@@ -21,7 +21,7 @@ describe('creationVitalityPreview', () => {
 
     const raceOnly = creationVitalityPreview(characterFixture, human, undefined)
     expect(raceOnly.primaryHpValue).toBe('—')
-    expect(raceOnly.primaryHpRollHint).toBe('P.E. + 1D6/level')
+    expect(raceOnly.primaryHpRollHint).toBe('Race: +1D6/level')
     expect(raceOnly.primarySdcValue).toBe('—')
     expect(raceOnly.primarySdcRollHint).toBeUndefined()
     expect(raceOnly.ppeValue).toBe('—')
@@ -29,7 +29,7 @@ describe('creationVitalityPreview', () => {
   })
 
   it('formats human H.P. as P.E. plus per-level dice', () => {
-    expect(formatRaceHpRollHint('PE + 1D6')).toBe('P.E. + 1D6/level')
+    expect(formatRaceHpRollHint('PE + 1D6')).toBe('Race: +1D6/level')
   })
 
   it('shows race formulas once race, occ, and P.E. are set', () => {
@@ -47,7 +47,7 @@ describe('creationVitalityPreview', () => {
       { assignments: { pe: 14 }, psychicTier: 'none' },
     )
     expect(preview.primaryHpValue).toBe('14')
-    expect(preview.primaryHpRollHint).toBe('P.E. + 1D6/level')
+    expect(preview.primaryHpRollHint).toBe('Race: +1D6/level')
     const sdcFormula = calculateBaseSdc(human, occ)
     const occSdc = occFlatVitalBonus(occ, undefined, 'sdc', {})
     expect(preview.primarySdcValue).toBe('—')
@@ -66,7 +66,7 @@ describe('creationVitalityPreview', () => {
       psychicTier: 'major',
     })
     expect(preview.ispValue).toBe('—')
-    expect(preview.ispRollHint).toBe('M.E. + 5D6 (+2D4/level)')
+    expect(preview.ispRollHint).toBe('O.C.C.: 5D6 (+2D4/level)')
     expect(preview.ispValue).toBe('—')
     expect(preview.primarySdcRollHint).toBe('1D4*10 + 2D6 (O.C.C.)') // legacy preview field
   })

@@ -783,10 +783,17 @@ function buildCombatDerivedStatInput(input: CombatStatInput): DerivedStatInput {
           input.occResolutions ?? {},
         )
       : 0
-  const occTotal = occStatic + (input.passiveOcc ?? 0)
-  if (occTotal) pushAggregateTerm(terms, 'occ_flat', 'OCC', occTotal)
+  if (occStatic) pushAggregateTerm(terms, 'occ_flat', 'OCC', occStatic)
   if (input.morphusRaceBonus) {
     pushAggregateTerm(terms, 'race_flat', 'Race', input.morphusRaceBonus)
+  }
+  if (input.passiveOcc) {
+    pushAggregateTerm(
+      terms,
+      'misc',
+      input.traitMiscLabel ?? 'Features',
+      input.passiveOcc,
+    )
   }
   if (input.traitMisc) {
     pushAggregateTerm(
@@ -992,6 +999,15 @@ export function resolveCreationStatTotal(
 
 // --- Tooltip formatters ---
 
+export function appendPendingRollsToTooltip(
+  tooltip: string | undefined,
+  pendingRolls: boolean,
+): string | undefined {
+  if (!pendingRolls) return tooltip
+  if (!tooltip?.trim()) return '(+pending rolls)'
+  return tooltip.replace(/\)\s*$/, ', +pending rolls)')
+}
+
 export function formatFacadeAttributeStackTooltip(
   poolRoll: number | null,
   flatBreakdown: readonly LedgerFlatContribution[],
@@ -1005,21 +1021,30 @@ export function formatFacadeAttributeStackTooltip(
     occVariableBonus > 0 ? occVariableBonus : 0,
     enteredSkillDice,
   )
-  if (!tooltip && !pendingRolls) return undefined
-  if (!tooltip && pendingRolls) return '(+pending rolls)'
-  if (pendingRolls) return tooltip!.replace(/\)\s*$/, ', +pending rolls)')
-  return tooltip
+  return appendPendingRollsToTooltip(tooltip, pendingRolls)
 }
 
 export function formatCombatStatStackTooltip(
   terms: readonly StatStackTerm[],
   skillEntries: readonly { name: string; amount: number }[] = [],
+  traitEntries: readonly { name: string; amount: number }[] = [],
 ): string | undefined {
   const detailParts: string[] = []
   for (const term of terms) {
     if (term.amount === 0) continue
     if (term.label === 'Skills' && skillEntries.length > 0) {
       for (const entry of skillEntries) {
+        detailParts.push(`${entry.name} ${formatBonus(entry.amount)}`)
+      }
+      continue
+    }
+    if (
+      traitEntries.length > 0 &&
+      (term.label === 'Traits' ||
+        term.label === 'Features' ||
+        term.label === 'O.C.C. / features')
+    ) {
+      for (const entry of traitEntries) {
         detailParts.push(`${entry.name} ${formatBonus(entry.amount)}`)
       }
       continue

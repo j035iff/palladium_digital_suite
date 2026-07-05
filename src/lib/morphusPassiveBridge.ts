@@ -72,7 +72,7 @@ import {
 import type { MorphusCapabilitySummary } from '../types'
 import { morphusCreationPreviewResolveOptions, polymorphicDeltaFromBase } from './morphusPolymorphicResolver'
 
-const STAT_TO_PASSIVE: Partial<
+export const MORPHUS_STAT_TO_PASSIVE: Partial<
   Record<keyof MorphusStatModifiers, keyof FeatureModifiers | string>
 > = {
   iq: 'iq',
@@ -99,6 +99,15 @@ const STAT_TO_PASSIVE: Partial<
   disarm: 'disarm',
   strikeWithGuns: 'strike',
   bonusHthDamage: 'bonusHthDamage',
+}
+
+/** Stat modifier keys on Morphus traits that map to the given passive modifier key. */
+export function morphusStatKeysForPassiveKey(
+  passiveKey: string,
+): (keyof MorphusStatModifiers)[] {
+  return Object.entries(MORPHUS_STAT_TO_PASSIVE)
+    .filter(([, pk]) => pk === passiveKey)
+    .map(([statKey]) => statKey as keyof MorphusStatModifiers)
 }
 
 export type MorphusPassiveBundle = {
@@ -222,7 +231,7 @@ export function buildMorphusPassiveBundle(
   const attrs = form.attributes
   const modifiers: FeatureModifiers = {}
 
-  for (const [statKey, passiveKey] of Object.entries(STAT_TO_PASSIVE)) {
+  for (const [statKey, passiveKey] of Object.entries(MORPHUS_STAT_TO_PASSIVE)) {
     const key = statKey as keyof MorphusStatModifiers
     const pk = passiveKey as keyof FeatureModifiers
     const blocks = collectMorphusStatModifierBlocks(

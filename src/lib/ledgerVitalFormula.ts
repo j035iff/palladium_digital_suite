@@ -311,7 +311,7 @@ export function formatMorphusSdcValueTooltip(
   }
   for (const flat of traitFlats) {
     if (flat.amount !== 0) {
-      parts.push(flat.amount > 0 ? `+${flat.amount}` : String(flat.amount))
+      parts.push(`${flat.label} ${flat.amount >= 0 ? '+' : ''}${flat.amount}`)
     }
   }
   if (parts.length === 0) return undefined
@@ -354,6 +354,58 @@ export function formatVitalFormulaLedgerHint(
     hint = `${hint} (+${perDisplay}/level)`
   }
   return hint
+}
+
+const VITAL_DICE_SOURCE_LABEL: Record<'race' | 'occ', string> = {
+  race: 'Race',
+  occ: 'O.C.C.',
+}
+
+/**
+ * Ledger hint row — dice the player must roll, labeled by source.
+ * Attribute multipliers, flats, and Facade carry-over belong in the value tooltip only.
+ */
+export function formatVitalDiceRollHint(opts: {
+  formula?: string | null
+  perLevelFormula?: string | null
+  formulaSources?: Partial<Record<'race' | 'occ', string | null | undefined>>
+}): string | undefined {
+  const segments: string[] = []
+
+  const appendSourceDice = (source: 'race' | 'occ', formula: string) => {
+    const dice = diceTermsFromAttrFormula(formula)
+    if (dice.length === 0) return
+    const display = dice.map((term) => normalizeDiceDisplay(term.notation)).join(' + ')
+    segments.push(`${VITAL_DICE_SOURCE_LABEL[source]}: ${display}`)
+  }
+
+  if (opts.formulaSources) {
+    const raceFormula = opts.formulaSources.race?.trim()
+    const occFormula = opts.formulaSources.occ?.trim()
+    if (raceFormula) appendSourceDice('race', raceFormula)
+    if (occFormula) appendSourceDice('occ', occFormula)
+  } else if (opts.formula?.trim()) {
+    appendSourceDice('race', opts.formula)
+  }
+
+  let hint = segments.join(' · ')
+  const per = opts.perLevelFormula?.trim()
+  if (per && isDiceNotation(per)) {
+    const perDisplay = normalizeDiceDisplay(per)
+    hint = hint ? `${hint} (+${perDisplay}/level)` : `Race: +${perDisplay}/level`
+  }
+  return hint || undefined
+}
+
+/** H.P. per-level dice only (e.g. `Race: +1D6/level`) — P.E. and other flats stay on the value tooltip. */
+export function formatHpDiceRollHint(
+  hpFormula?: string | null,
+  perLevelFormula?: string | null,
+): string | undefined {
+  const per =
+    perLevelFormula?.trim() ?? hitPointsPerLevelDiceFormula(hpFormula ?? 'PE + 1D6')
+  if (!per) return undefined
+  return `Race: +${normalizeDiceDisplay(per)}/level`
 }
 
 export function resolveIspCreationFormula(
@@ -467,11 +519,16 @@ export function buildAttrFormulaLedgerFields(
     : resolveVitalFlatFromTerms(sourcedTerms).total
   const hint =
     opts?.hintOverride ??
-    formatVitalFormulaLedgerHint(
+    formatVitalDiceRollHint({
       formula,
-      opts?.perLevelFormula,
-      opts?.attrFormLabels,
-    )
+      perLevelFormula: opts?.perLevelFormula,
+      formulaSources: opts?.formulaSources
+        ? {
+            race: opts.formulaSources.race,
+            occ: opts.formulaSources.occ,
+          }
+        : undefined,
+    })
 
   return {
     value: vitalLedgerValueFromFlat(flatTotal),

@@ -85,7 +85,8 @@ describe('creation OCC live ledger integration', () => {
     const hp = vitalsWithPe.find((l) => l.label === 'H.P.')
     expect(hp?.value).toBe('11')
     expect(hp?.valueModified).toBe(true)
-    expect(hp?.valueTooltip).toBe('(PE 11)')
+    expect(hp?.hasPendingRolls).toBe(true)
+    expect(hp?.valueTooltip).toBe('(PE 11, +pending rolls)')
 
     const hpRollId = buildPendingDiceBlocks(
       {
@@ -119,7 +120,7 @@ describe('creation OCC live ledger integration', () => {
     expect(vitalsWithHpRoll.find((l) => l.label === 'H.P.')?.valueTooltip).toBe(
       '(PE 11, perLevel(1D6) 5)',
     )
-    expect(hp?.hint).toBe('P.E. + 1D6/level')
+    expect(hp?.diceGroups?.[0]?.display).toContain('1D6/level')
 
     const ppeMagic = buildCreationVitalsBlock({
       character: {
@@ -146,14 +147,16 @@ describe('creation OCC live ledger integration', () => {
     const ppe = ppeMagic.find((l) => l.label === 'P.P.E.')
     expect(ppe?.value).toBe('120')
     expect(ppe?.valueModified).toBe(true)
-    expect(ppe?.valueTooltip).toBe('(PE(12) × 10)')
-    expect(ppe?.hint).toBe('2D6 + PEx10 + 2D6 (+1D6/level)')
+    expect(ppe?.hasPendingRolls).toBe(true)
+    expect(ppe?.valueTooltip).toBe('(PE(12) × 10, +pending rolls)')
+    expect(ppe?.diceGroups?.find((group) => group.kind === 'race')?.display).toBe('2D6')
+    expect(ppe?.diceGroups?.find((group) => group.kind === 'occ')?.display).toBe('2D6')
 
     const sdcDiceGroups = vitals.find((l) => l.label === 'S.D.C.')?.diceGroups ?? []
     expect(sdcDiceGroups.find((g) => g.kind === 'race')?.display).toBe('1D4x10')
     expect(sdcDiceGroups.find((g) => g.kind === 'occ')?.display).toBe('2D6')
     const isp = vitals.find((l) => l.label === 'I.S.P.')
-    expect(isp?.hint).toBe('M.E. + 5D6 (+2D4/level)')
+    expect(isp?.diceGroups?.find((group) => group.kind === 'occ')?.display).toBe('5D6')
     expect(isp?.value).toBe('—')
 
     const vitalsWithMe = buildCreationVitalsBlock({
@@ -174,7 +177,8 @@ describe('creation OCC live ledger integration', () => {
     const ispAssigned = vitalsWithMe.find((l) => l.label === 'I.S.P.')
     expect(ispAssigned?.value).toBe('10')
     expect(ispAssigned?.valueModified).toBe(true)
-    expect(ispAssigned?.valueTooltip).toBe('(ME 10)')
+    expect(ispAssigned?.hasPendingRolls).toBe(true)
+    expect(ispAssigned?.valueTooltip).toBe('(ME 10, +pending rolls)')
 
     const vitalsMex3 = buildCreationVitalsBlock({
       character: {
@@ -199,8 +203,9 @@ describe('creation OCC live ledger integration', () => {
     })
     const ispScaled = vitalsMex3.find((l) => l.label === 'I.S.P.')
     expect(ispScaled?.value).toBe('30')
-    expect(ispScaled?.valueTooltip).toBe('(ME(10) × 3)')
-    expect(ispScaled?.hint).toBe('MEx3 + 5D6 (+2D4/level)')
+    expect(ispScaled?.hasPendingRolls).toBe(true)
+    expect(ispScaled?.valueTooltip).toBe('(ME(10) × 3, +pending rolls)')
+    expect(ispScaled?.diceGroups?.find((group) => group.kind === 'occ')?.display).toBe('5D6')
 
     const saves = buildCreationSavesBlock(attrs, {}, character, 'primary', pab, false, undefined, 'major')
     expect(saves.find((l) => l.label === 'Psionics')?.value).toBe('+1')
@@ -227,7 +232,7 @@ describe('creation OCC live ledger integration', () => {
       'Hand to Hand: Basic',
     )
     expect(combat.find((l) => l.label === 'Attacks / melee')?.value).toBe('4')
-    expect(combat.find((l) => l.label === 'Attacks / melee')?.hint).toContain(
+    expect(combat.find((l) => l.label === 'Attacks / melee')?.valueTooltip).toContain(
       'HtH Basic: +2',
     )
     expect(combat.find((l) => l.label === 'Initiative')?.value).toBe('+1')
@@ -236,8 +241,8 @@ describe('creation OCC live ledger integration', () => {
     expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.value).toBe(
       '+2',
     )
-    expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.hint).toBe(
-      'HtH Basic: +2',
+    expect(combat.find((l) => l.label === 'Roll w/ punch, fall, impact')?.valueTooltip).toBe(
+      '(HtH Basic +2)',
     )
     expect(combat.find((l) => l.label === 'Pull punch')?.value).toBe('+2')
   })

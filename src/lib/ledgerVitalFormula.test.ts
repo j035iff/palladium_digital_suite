@@ -4,10 +4,12 @@ import {
   buildAttrFormulaLedgerFields,
   buildSourcedVitalFlatTerms,
   buildVitalAttrFlatBundle,
+  formatHpDiceRollHint,
+  formatMorphusSdcValueTooltip,
   formatVitalAttrFlatTooltip,
+  formatVitalDiceRollHint,
   formatVitalFormulaLedgerHint,
   formatVitalLedgerTooltip,
-  formatMorphusSdcValueTooltip,
   hitPointsPerLevelDiceFormula,
   parseVitalFormulaAttrTerm,
   resolvePpeCreationFormula,
@@ -39,10 +41,26 @@ describe('ledgerVitalFormula', () => {
     )
   })
 
+  it('formats dice-only hints without attribute or flat constants', () => {
+    expect(formatHpDiceRollHint('PE + 1D6')).toBe('Race: +1D6/level')
+    expect(
+      formatVitalDiceRollHint({
+        formulaSources: { race: '3D6*10', occ: 'PE + 3D6*10+20' },
+        perLevelFormula: '3D6',
+      }),
+    ).toBe('Race: 3D6x10 · O.C.C.: 3D6x10 (+3D6/level)')
+  })
+
   it('labels Facade P.E. in dual-form P.P.E. hints', () => {
     expect(
       formatVitalFormulaLedgerHint('PE + 3D6*10+20', '3D6', { pe: 'Facade' }),
     ).toBe('PE (Facade) + 3D6x10 + 20 (+3D6/level)')
+    expect(
+      formatVitalDiceRollHint({
+        formulaSources: { race: '3D6*10', occ: 'PE + 3D6*10+20' },
+        perLevelFormula: '3D6',
+      }),
+    ).toBe('Race: 3D6x10 · O.C.C.: 3D6x10 (+3D6/level)')
   })
 
   it('sums flat integer terms into P.P.E. flat value', () => {
@@ -112,7 +130,7 @@ describe('ledgerVitalFormula', () => {
         [{ kind: 'raceRoll', notation: '2D6x10', amount: 45 }],
         [{ label: 'Arachnid', amount: 50 }],
       ),
-    ).toBe('(Facade 30, RaceRoll(2D6x10) +45, +50)')
+    ).toBe('(Facade 30, RaceRoll(2D6x10) +45, Arachnid +50)')
   })
 
   it('extracts per-level dice from race H.P. formulas', () => {
@@ -126,7 +144,7 @@ describe('ledgerVitalFormula', () => {
     expect(fields.value).toBe('120')
     expect(fields.valueModified).toBe(true)
     expect(fields.valueTooltip).toBe('(PE(12) × 10)')
-    expect(fields.hint).toBe('PEx10 + 2D6')
+    expect(fields.hint).toBe('Race: 2D6')
   })
 
   it('merges race dice and O.C.C. attribute P.P.E. formulas', () => {
@@ -139,8 +157,11 @@ describe('ledgerVitalFormula', () => {
     expect(resolvePpeCreationFormula(race, occ)).toBe('2D6 + PEx10 + 2D6')
     const fields = buildAttrFormulaLedgerFields(resolvePpeCreationFormula(race, occ), {
       pe: 11,
-    }, { perLevelFormula: '1D6' })
+    }, {
+      perLevelFormula: '1D6',
+      formulaSources: { race: '2D6', occ: 'PEx10 + 2D6' },
+    })
     expect(fields.value).toBe('110')
-    expect(fields.hint).toBe('2D6 + PEx10 + 2D6 (+1D6/level)')
+    expect(fields.hint).toBe('Race: 2D6 · O.C.C.: 2D6 (+1D6/level)')
   })
 })

@@ -11,6 +11,12 @@ const HOVER_VALUE_CLASS =
 const HOVER_VALUE_CLASS_MORPHUS =
   'cursor-help underline decoration-dotted decoration-orange-200/80 underline-offset-2'
 
+const HOVER_LABEL_CLASS =
+  'cursor-help underline decoration-dotted decoration-slate-500/50 underline-offset-2'
+
+const HOVER_LABEL_CLASS_MORPHUS =
+  'cursor-help underline decoration-dotted decoration-orange-100/60 underline-offset-2'
+
 function ledgerHintClass(morphus?: boolean): string {
   return morphus ? 'text-[10px] text-orange-100/85' : 'text-[10px] opacity-60'
 }
@@ -73,42 +79,7 @@ function LedgerHint({
   )
 }
 
-function LedgerSimpleRow({
-  line,
-  morphus,
-}: {
-  line: CreationLedgerLine
-  morphus?: boolean
-}) {
-  const valueTitle = line.valueTooltip ?? line.hint
-  const valueHoverable = Boolean(line.valueTooltip)
-
-  return (
-    <div className="flex flex-col gap-0.5">
-      <div className="flex justify-between gap-2">
-        <dt className={morphus ? 'text-orange-50/95' : 'opacity-80'}>{line.label}</dt>
-        <dd
-          className={`shrink-0 text-right font-mono font-semibold tabular-nums ${
-            morphus
-              ? morphusValueTone(line.value, line.valueModified, line.hasPendingRolls)
-              : facadeValueTone(line.valueModified, line.hasPendingRolls)
-          } ${valueHoverable ? (morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS) : ''}`}
-          title={valueTitle}
-        >
-          {line.value}
-        </dd>
-      </div>
-      {line.hint ? (
-        <LedgerHint
-          hint={line.hint}
-          skillDetailTooltip={line.skillDetailTooltip}
-          morphus={morphus}
-        />
-      ) : null}
-    </div>
-  )
-}
-
+/** Single row renderer for every live-ledger stat (attributes, vitals, saves, combat, exceptional). */
 function LedgerStatRow({
   line,
   morphus,
@@ -116,21 +87,31 @@ function LedgerStatRow({
   line: CreationLedgerLine
   morphus?: boolean
 }) {
-  const hasStatLayout =
+  const valueHoverable = Boolean(line.valueTooltip)
+  const labelHoverable = Boolean(line.labelTooltip)
+  const hasExtendedLabel =
     line.inlineRaceRoll != null ||
     line.labelSuffix != null ||
-    (line.diceGroups != null && line.diceGroups.length > 0) ||
-    line.valueModified === true
-
-  if (!hasStatLayout) {
-    return <LedgerSimpleRow line={line} morphus={morphus} />
-  }
+    (line.diceGroups != null && line.diceGroups.length > 0)
 
   return (
     <div className="flex flex-col gap-0.5">
       <div className="flex justify-between gap-2">
-        <dt className="flex min-w-0 flex-1 items-baseline gap-1.5 opacity-80">
-          <span className={`shrink-0 ${morphus ? 'text-orange-50/95' : ''}`}>
+        <dt
+          className={
+            hasExtendedLabel
+              ? 'flex min-w-0 flex-1 items-baseline gap-1.5 opacity-80'
+              : morphus
+                ? 'text-orange-50/95'
+                : 'opacity-80'
+          }
+        >
+          <span
+            className={`shrink-0 ${morphus && hasExtendedLabel ? 'text-orange-50/95' : ''} ${
+              labelHoverable ? (morphus ? HOVER_LABEL_CLASS_MORPHUS : HOVER_LABEL_CLASS) : ''
+            }`}
+            title={line.labelTooltip}
+          >
             {line.label}
           </span>
           {line.inlineRaceRoll ? (
@@ -157,7 +138,7 @@ function LedgerStatRow({
             morphus
               ? morphusValueTone(line.value, line.valueModified, line.hasPendingRolls)
               : facadeValueTone(line.valueModified, line.hasPendingRolls)
-          } ${line.valueTooltip ? (morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS) : ''}`}
+          } ${valueHoverable ? (morphus ? HOVER_VALUE_CLASS_MORPHUS : HOVER_VALUE_CLASS) : ''}`}
           title={line.valueTooltip}
         >
           {line.value}
@@ -204,19 +185,5 @@ export function LedgerStatGrid({
   )
 }
 
-export function LedgerGrid({
-  lines,
-  morphus,
-}: {
-  lines: CreationLedgerLine[]
-  morphus?: boolean
-}) {
-  return (
-    <dl className="space-y-1 text-xs">
-      {lines.map((line) => (
-        <LedgerSimpleRow key={line.label} line={line} morphus={morphus} />
-      ))}
-    </dl>
-  )
-}
-
+/** @deprecated Use {@link LedgerStatGrid} — same unified row renderer. */
+export const LedgerGrid = LedgerStatGrid
