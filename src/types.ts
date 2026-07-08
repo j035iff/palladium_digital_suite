@@ -223,6 +223,11 @@ export type RaceVitals = {
   averageStandardPpe?: string | number
   /** @deprecated Use {@link averageStandardPpe}. */
   basePpe?: string | number
+  /**
+   * When true, racial P.P.E. dice stack with the selected O.C.C. `ppeEngine`.
+   * Default: O.C.C. replaces race P.P.E. dice when both define a base formula.
+   */
+  stackPpeWithOcc?: boolean
 }
 
 export type RacePsionicCapability = 'standard' | 'none' | 'innate'

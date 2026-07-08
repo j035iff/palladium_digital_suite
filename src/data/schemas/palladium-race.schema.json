@@ -307,6 +307,10 @@
         "basePpe": {
           "$ref": "#/$defs/ppeNotation",
           "description": "Deprecated — use averageStandardPpe. Retained for migrated library rows."
+        },
+        "stackPpeWithOcc": {
+          "type": "boolean",
+          "description": "When true, racial P.P.E. dice stack with the selected O.C.C. ppeEngine base. Default false: O.C.C. P.P.E. replaces race dice unless the race description explicitly requires stacking."
         }
       }
     },

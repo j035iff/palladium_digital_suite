@@ -6,6 +6,11 @@ import {
   type ConfiguratorPackageSection,
 } from '../../lib/configuratorPackageSummary'
 import { creationUsesOccSkillProgram } from '../../lib/shadowOcc'
+import {
+  creationForgePanelHeaderBorderClass,
+  creationForgePanelMutedTextClass,
+  creationForgePanelSubduedTextClass,
+} from './creationForgeLeftPanelTheme'
 
 type PackageGroup = {
   packageLabel: string
@@ -64,16 +69,16 @@ function splitPackageGroups(
 
 function categoryTitleClass(tone: 'race' | 'occ', morphus: boolean): string {
   if (tone === 'race') {
-    return morphus ? 'text-amber-300' : 'text-amber-950'
+    return morphus ? 'text-amber-800' : 'text-amber-950'
   }
-  return morphus ? 'text-violet-300' : 'text-violet-800'
+  return morphus ? 'text-violet-800' : 'text-violet-900'
 }
 
 function selectionTitleClass(tone: 'race' | 'occ', morphus: boolean): string {
   if (tone === 'race') {
-    return morphus ? 'text-amber-200' : 'text-amber-900'
+    return morphus ? 'text-amber-900' : 'text-amber-900'
   }
-  return morphus ? 'text-violet-200' : 'text-violet-700'
+  return morphus ? 'text-violet-900' : 'text-violet-800'
 }
 
 function PackageDetailLine({
@@ -85,7 +90,7 @@ function PackageDetailLine({
   morphus: boolean
   itemStyle: string
 }) {
-  const emphasis = morphus ? 'text-slate-100' : 'text-slate-900'
+  const emphasis = morphus ? 'text-violet-950' : 'text-slate-900'
 
   if (typeof item === 'string') {
     return <li className={`text-xs leading-snug ${itemStyle}`}>{item}</li>
@@ -168,6 +173,7 @@ export function ConfiguratorPackagePanel({
   morphus,
   panelStyle,
   placement = 'left',
+  shellMode = false,
 }: {
   race: Race | undefined
   occ: PalladiumOcc | undefined
@@ -175,6 +181,7 @@ export function ConfiguratorPackagePanel({
   morphus: boolean
   panelStyle: string
   placement?: 'left' | 'right'
+  shellMode?: boolean
 }) {
   const summary = useMemo(
     () =>
@@ -189,18 +196,25 @@ export function ConfiguratorPackagePanel({
     [summary.sections, occ, specializationId],
   )
 
-  const subStyle = morphus ? 'text-violet-200/90' : 'text-slate-600'
-  const dividerClass = morphus ? 'border-violet-500' : 'border-slate-900'
+  const subStyle = morphus ? 'text-violet-800' : 'text-slate-700'
+  const dividerClass = morphus ? 'border-violet-400' : 'border-slate-400'
 
-  const edgeBorder =
-    placement === 'left'
+  const edgeBorder = shellMode
+    ? ''
+    : placement === 'left'
       ? 'lg:border-r lg:pr-4'
       : 'lg:border-l lg:pl-4'
 
+  const Wrapper = shellMode ? 'div' : 'aside'
+
   return (
-    <aside
-      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:max-h-full lg:w-80 lg:border-t-0 lg:pt-0 xl:w-96 ${edgeBorder} ${
-        morphus ? 'border-violet-800' : 'border-slate-200 dark:border-slate-700'
+    <Wrapper
+      className={`flex min-h-0 w-full shrink-0 flex-col ${
+        shellMode
+          ? 'h-full'
+          : `border-t pt-4 lg:max-h-full lg:w-80 lg:border-t-0 lg:pt-0 xl:w-96 ${edgeBorder} ${
+              morphus ? 'border-violet-800' : 'border-slate-200 dark:border-slate-700'
+            }`
       }`}
       aria-label="Race and O.C.C. package details"
     >
@@ -208,14 +222,12 @@ export function ConfiguratorPackagePanel({
         className={`flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border ${panelStyle}`}
       >
         <div
-          className={`shrink-0 border-b px-3 py-2 ${
-            morphus ? 'border-violet-800' : 'border-slate-200 dark:border-slate-700'
-          }`}
+          className={`shrink-0 border-b px-3 py-2 ${creationForgePanelHeaderBorderClass(morphus)}`}
         >
-          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+          <h3 className={`text-xs font-bold uppercase tracking-wide ${creationForgePanelMutedTextClass(morphus)}`}>
             Package details
           </h3>
-          <p className={`mt-1 text-[11px] leading-snug opacity-75 ${subStyle}`}>
+          <p className={`mt-1 text-[11px] leading-snug ${creationForgePanelSubduedTextClass(morphus)}`}>
             Racial and O.C.C. abilities, skills, and supernatural picks for your
             current selections.
           </p>
@@ -247,6 +259,6 @@ export function ConfiguratorPackagePanel({
           )}
         </div>
       </div>
-    </aside>
+    </Wrapper>
   )
 }

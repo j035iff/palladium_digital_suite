@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -34,16 +34,7 @@ import {
 } from '../../lib/configuratorFilterExpression'
 import { ConfiguratorFilterBuilder } from './ConfiguratorFilterBuilder'
 import { ConfiguratorListItem } from './ConfiguratorListItem'
-import { ConfiguratorPackagePanel } from './ConfiguratorPackagePanel'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
-
-const DevSkipToMorphusButton = import.meta.env.DEV
-  ? lazy(() =>
-      import('./dev/DevSkipToMorphusButton').then((m) => ({
-        default: m.DevSkipToMorphusButton,
-      })),
-    )
-  : null
 
 /**
  * Step 1 — Identity: profile fields plus Race / O.C.C. matrix (alignment in profile).
@@ -75,9 +66,6 @@ export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
   const panel = morphus
     ? 'border-violet-600 bg-slate-950/90 text-violet-50'
     : 'border-blue-300 bg-white text-slate-900'
-  const panelStyle = morphus
-    ? 'border-violet-700 bg-slate-950/80 text-violet-50'
-    : 'border-blue-200 bg-white text-slate-900'
 
   const occPool = useMemo(
     () => listPalladiumOccsForCreation(creationGenreId, hostGenreId),
@@ -330,27 +318,12 @@ export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
   const subColor = morphus ? '#a5b4fc' : '#475569'
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
-      <ConfiguratorPackagePanel
-        race={activeRace}
-        occ={activeOcc ?? undefined}
-        specializationId={character.occSpecializationId}
-        morphus={morphus}
-        panelStyle={panelStyle}
-        placement="left"
-      />
-
-      <section
-        className="flex min-h-0 min-w-0 flex-1 flex-col"
-        aria-labelledby="forge-tab-page-heading"
-      >
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pl-0.5">
+    <section
+      className="flex min-h-0 min-w-0 flex-1 flex-col"
+      aria-labelledby="forge-tab-page-heading"
+    >
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pl-0.5">
       {headerSlot ? <div className="mb-6">{headerSlot}</div> : null}
-      {DevSkipToMorphusButton ? (
-        <Suspense fallback={null}>
-          <DevSkipToMorphusButton />
-        </Suspense>
-      ) : null}
       <p
         className="mb-2 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}
@@ -737,7 +710,6 @@ export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
       ) : null}
         </div>
       </section>
-    </div>
   )
 }
 

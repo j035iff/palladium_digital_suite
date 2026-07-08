@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc, Race } from '../types'
+import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import {
   buildAttrFormulaLedgerFields,
   buildSourcedVitalFlatTerms,
@@ -13,6 +14,7 @@ import {
   hitPointsPerLevelDiceFormula,
   parseVitalFormulaAttrTerm,
   resolvePpeCreationFormula,
+  resolvePpeFormulaParts,
 } from './ledgerVitalFormula'
 import { formatVitalityBlockValueTooltip } from './spawnDiceBlocks'
 
@@ -150,9 +152,27 @@ describe('ledgerVitalFormula', () => {
     expect(fields.hint).toBe('Race: 2D6')
   })
 
-  it('merges race dice and O.C.C. attribute P.P.E. formulas', () => {
+  it('uses O.C.C. P.P.E. dice instead of race dice by default', () => {
     const race = {
       vitals: { averageStandardPpe: '2D6' },
+    } as Race
+    const occ = {
+      ppeEngine: { baseFormula: 'PEx10 + 2D6', perLevelFormula: '1D6' },
+    } as PalladiumOcc
+    expect(resolvePpeCreationFormula(race, occ)).toBe('PEx10 + 2D6')
+    const fields = buildAttrFormulaLedgerFields(resolvePpeCreationFormula(race, occ), {
+      pe: 11,
+    }, {
+      perLevelFormula: '1D6',
+      formulaSources: resolvePpeFormulaParts(race, occ),
+    })
+    expect(fields.value).toBe('110')
+    expect(fields.hint).toBe('O.C.C.: 2D6 (+1D6/level)')
+  })
+
+  it('stacks race and O.C.C. P.P.E. dice when race explicitly allows it', () => {
+    const race = {
+      vitals: { averageStandardPpe: '2D6', stackPpeWithOcc: true },
     } as Race
     const occ = {
       ppeEngine: { baseFormula: 'PEx10 + 2D6', perLevelFormula: '1D6' },
@@ -162,9 +182,20 @@ describe('ledgerVitalFormula', () => {
       pe: 11,
     }, {
       perLevelFormula: '1D6',
-      formulaSources: { race: '2D6', occ: 'PEx10 + 2D6' },
+      formulaSources: resolvePpeFormulaParts(race, occ),
     })
-    expect(fields.value).toBe('110')
     expect(fields.hint).toBe('Race: 2D6 · O.C.C.: 2D6 (+1D6/level)')
+  })
+
+  it('drops catalog human race P.P.E. when an O.C.C. defines ppeEngine', () => {
+    const race = getRaceById('race_human')
+    const occ = {
+      id: 'occ_test_ppe',
+      ppeEngine: { baseFormula: '1D4x10 + PE', perLevelFormula: '2D6' },
+    } as PalladiumOcc
+    expect(resolvePpeFormulaParts(race, occ)).toEqual({
+      race: undefined,
+      occ: '1D4x10 + PE',
+    })
   })
 })

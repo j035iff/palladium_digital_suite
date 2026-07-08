@@ -5,10 +5,92 @@ import {
   buildPendingDiceBlocks,
   filterPendingDiceBlocksByScope,
   flattenPendingDiceRolls,
+  formatPendingDiceGroupLabel,
+  formatPendingDiceRollLabel,
+  formatPendingDiceBlockHeaderBase,
   pendingDiceBlockRunningTotal,
+  pendingDiceBlocksWithRolls,
 } from './spawnDiceBlocks'
 
 describe('spawnDiceBlocks', () => {
+  it('maps pending dice group kinds to ledger row labels', () => {
+    expect(formatPendingDiceGroupLabel('race')).toBe('Race')
+    expect(formatPendingDiceGroupLabel('skills')).toBe('Skills')
+  })
+
+  it('formats roll row labels with kind prefix', () => {
+    expect(
+      formatPendingDiceRollLabel({
+        id: 'a',
+        notation: '1D6',
+        min: 1,
+        max: 6,
+        source: 'Acrobatics',
+        groupKind: 'skills',
+      }),
+    ).toBe('Skill: Acrobatics')
+    expect(
+      formatPendingDiceRollLabel({
+        id: 'b',
+        notation: '3D6',
+        min: 3,
+        max: 18,
+        source: 'Race',
+        groupKind: 'race',
+      }),
+    ).toBe('Race: Base')
+    expect(
+      formatPendingDiceRollLabel({
+        id: 'c',
+        notation: '1D6',
+        min: 1,
+        max: 6,
+        source: '1D6/level',
+        groupKind: 'race',
+        isPerLevel: true,
+      }),
+    ).toBe('Race: Per Level')
+    expect(
+      formatPendingDiceRollLabel({
+        id: 'd',
+        notation: '2D6',
+        min: 2,
+        max: 12,
+        source: '2D6',
+        groupKind: 'occ',
+        isPerLevel: true,
+      }),
+    ).toBe('O.C.C.: Per Level')
+  })
+
+  it('formats block header base from anchor or flat baseline', () => {
+    expect(
+      formatPendingDiceBlockHeaderBase({
+        id: 'attr_spd',
+        label: 'Spd',
+        flatBaseline: 16,
+        rollAnchor: 14,
+        groups: [],
+      }),
+    ).toBe('14')
+    expect(
+      formatPendingDiceBlockHeaderBase({
+        id: 'hp',
+        label: 'H.P.',
+        flatBaseline: 8,
+        groups: [],
+      }),
+    ).toBe('8')
+    expect(
+      formatPendingDiceBlockHeaderBase({
+        id: 'sdc',
+        label: 'S.D.C.',
+        flatBaseline: 0,
+        groups: [],
+      }),
+    ).toBe('-')
+  })
+
   it('mirrors S.D.C. ledger dice groups for P.A.B. Psychic Agent skills', () => {
     const human = getRaceById('race_human')
     const occ = getLibraryOccById('occ_pab_psychic_agent')
@@ -48,10 +130,15 @@ describe('spawnDiceBlocks', () => {
     })
     const spd = blocks.find((block) => block.id === 'attr_spd')
     expect(spd?.flatBaseline).toBe(14)
+    expect(spd?.rollAnchor).toBe(14)
     const skillRoll = spd?.groups
       .find((g) => g.kind === 'skills')
       ?.rolls.find((r) => r.notation === '1D6')
     expect(skillRoll?.source).toBe('Athletics (general)')
+    expect(skillRoll?.groupKind).toBe('skills')
+    expect(skillRoll && formatPendingDiceRollLabel(skillRoll)).toBe(
+      'Skill: Athletics (general)',
+    )
     expect(
       flattenPendingDiceRolls(blocks).some(
         (roll) => roll.source === 'Athletics (general)' && roll.notation === '1D6',
@@ -120,6 +207,7 @@ describe('spawnDiceBlocks', () => {
       { psychicTier: 'major' },
     )
     const ppe = blocks.find((block) => block.id === 'ppe')!
+    expect(ppe.groups.find((group) => group.kind === 'race')).toBeUndefined()
     const occRoll = ppe.groups
       .find((group) => group.kind === 'occ')
       ?.rolls.find((roll) => roll.notation === '2D6')
@@ -146,6 +234,32 @@ describe('spawnDiceBlocks', () => {
     expect(diceRolls.map((roll) => roll.notation)).toEqual(['3D6x10', '3D6'])
     expect(ppe.hint).toBe('O.C.C.: 3D6x10 (+3D6/level)')
     expect(ppe.flatBaseline).toBe(32)
+  })
+
+  it('drops race P.P.E. dice when O.C.C. defines ppeEngine', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const blocks = buildPendingDiceBlocks(
+      { ...characterFixture, creationAttributeAssignments: { pe: 10 } },
+      human,
+      {
+        ...occ!,
+        ppeEngine: {
+          baseFormula: '1D4x10 + PE',
+          perLevelFormula: '2D6',
+          progressionRoadmap: [],
+        },
+      },
+      { psychicTier: 'major' },
+    )
+    const ppe = blocks.find((block) => block.id === 'ppe')!
+    expect(ppe.groups.find((group) => group.kind === 'race')).toBeUndefined()
+    const occRolls = ppe.groups
+      .filter((group) => group.kind === 'occ')
+      .flatMap((group) => group.rolls)
+    expect(occRolls.map((roll) => roll.notation)).toEqual(['1D4x10', '2D6'])
+    expect(occRolls.some((roll) => roll.isPerLevel)).toBe(true)
+    expect(formatPendingDiceBlockHeaderBase(ppe)).toBe('10')
   })
 
   it('includes morphus trait S.D.C. dice on the morphus pending block', () => {
@@ -250,5 +364,25 @@ describe('spawnDiceBlocks', () => {
     const morphusHpRolls = morphusHp?.groups.flatMap((group) => group.rolls) ?? []
     expect(morphusHpRolls).toHaveLength(1)
     expect(morphusHpRolls[0]?.notation).toBe('2D6')
+  })
+
+  it('filters to blocks that still need physical dice entry', () => {
+    const human = getRaceById('race_human')
+    const occ = getLibraryOccById('occ_pab_psychic_agent')
+    const character = {
+      ...characterFixture,
+      creationAttributeAssignments: { spd: 14 },
+      creationSecondarySkillPicks: [
+        { instanceId: 'ath', skillId: 'skill_athletics_general' },
+      ],
+    }
+    const blocks = buildPendingDiceBlocks(character, human, occ, {
+      psychicTier: 'major',
+    })
+    const withRolls = pendingDiceBlocksWithRolls(blocks)
+    expect(withRolls.every((block) => flattenPendingDiceRolls([block]).length > 0)).toBe(
+      true,
+    )
+    expect(withRolls.length).toBeLessThanOrEqual(blocks.length)
   })
 })

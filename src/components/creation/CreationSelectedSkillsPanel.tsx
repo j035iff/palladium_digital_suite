@@ -27,6 +27,7 @@ export type CreationSelectedSkillsPanelProps = {
   renderHandToHandRow: () => ReactNode
   renderRelatedRow: (pick: CreationSkillPick) => ReactNode
   renderSecondaryRow: (pick: CreationSkillPick) => ReactNode
+  shellMode?: boolean
 }
 
 export function CreationSelectedSkillsPanel({
@@ -49,14 +50,21 @@ export function CreationSelectedSkillsPanel({
   renderHandToHandRow,
   renderRelatedRow,
   renderSecondaryRow,
+  shellMode = false,
 }: CreationSelectedSkillsPanelProps) {
+  const Wrapper = shellMode ? 'div' : 'aside'
+
   return (
-    <aside
-      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-80 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-96 ${
-        morphus
-          ? 'border-violet-800'
-          : 'border-slate-200 dark:border-slate-700'
-      }`}
+    <Wrapper
+      className={
+        shellMode
+          ? 'flex h-full min-h-0 w-full flex-col'
+          : `flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-80 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-96 ${
+              morphus
+                ? 'border-violet-800'
+                : 'border-slate-200 dark:border-slate-700'
+            }`
+      }
       aria-label="Selected skills panel"
     >
       <div
@@ -124,6 +132,6 @@ export function CreationSelectedSkillsPanel({
           </div>
         </div>
       </div>
-    </aside>
+    </Wrapper>
   )
 }

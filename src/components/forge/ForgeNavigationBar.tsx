@@ -37,6 +37,9 @@ export function ForgeNavigationBar({
         const theme = forgeTabVisualTheme(tab.visual)
         const title = [
           tab.label,
+          tab.spawnProfileIncomplete
+            ? 'Step complete — character profile still needed before spawn'
+            : '',
           tab.visual === 'na' ? tab.naReason ?? 'Not applicable to this build' : '',
           tab.visual === 'locked' ? 'Not unlocked yet' : '',
           tab.conflictReason,
@@ -61,6 +64,12 @@ export function ForgeNavigationBar({
             aria-disabled={!tab.clickable ? true : undefined}
           >
             {tab.visual === 'na' ? <NaTabWatermark /> : null}
+            {tab.spawnProfileIncomplete ? (
+              <span
+                className="absolute -right-0.5 -top-0.5 z-[2] h-2 w-2 rounded-full bg-amber-500 ring-2 ring-white dark:ring-slate-950"
+                aria-hidden
+              />
+            ) : null}
             <span className="relative z-[1]">{tab.label}</span>
           </button>
         )

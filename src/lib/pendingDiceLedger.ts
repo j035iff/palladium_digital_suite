@@ -101,12 +101,16 @@ function clearForgeTabMark(
 export function patchPendingDiceResolution(
   prev: CharacterRootState,
   entryId: string,
-  value: number,
+  value: number | null,
   opts: { race: Race | undefined; occ: PalladiumOcc | undefined; psychicTier: string; supportsDualForm: boolean },
 ): CharacterRootState {
   const resolutions = {
     ...(prev.creationPendingDiceResolutions ?? {}),
-    [entryId]: value,
+  }
+  if (value == null) {
+    delete resolutions[entryId]
+  } else {
+    resolutions[entryId] = value
   }
   let next: CharacterRootState = {
     ...prev,

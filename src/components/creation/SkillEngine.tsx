@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { useCharacter } from '../../context/CharacterContext'
 
@@ -97,6 +97,7 @@ import {
 } from '../../lib/creationSkillPicks'
 
 import { CreationSelectedSkillsPanel } from './CreationSelectedSkillsPanel'
+import { useCreationForgeLeftSlotRegistrar } from './CreationForgeLeftSlotContext'
 
 import { SkillPickAddDialog, type SkillPickAddDialogState } from './SkillPickAddDialog'
 
@@ -106,14 +107,6 @@ import { SkillStatLines } from './SkillStatLines'
 import { SkillSelectedPercentBlock } from './SkillSelectedPercentBlock'
 
 import type { CreationSkillPick } from '../../types'
-
-const DevAutoFillSkillsButton = import.meta.env.DEV
-  ? lazy(() =>
-      import('./dev/DevAutoFillSkillsButton').then((m) => ({
-        default: m.DevAutoFillSkillsButton,
-      })),
-    )
-  : null
 
 import {
   formatOccCategoryRuleDropdown,
@@ -582,16 +575,12 @@ export function SkillEngine() {
 
 
   const panelStyle = morphus
-
-    ? 'border-violet-700 bg-slate-950/80 text-violet-50'
-
-    : 'border-blue-200 bg-white text-slate-900'
+    ? 'border-violet-300 bg-violet-50 text-violet-950'
+    : 'border-slate-300 bg-slate-100 text-slate-900'
 
   const subStyle = morphus
-
-    ? 'border-violet-800 bg-slate-900'
-
-    : 'border-slate-200 bg-slate-50'
+    ? 'border-violet-200 bg-violet-100/80 text-violet-900'
+    : 'border-slate-300 bg-white text-slate-900'
 
 
 
@@ -1338,9 +1327,102 @@ export function SkillEngine() {
 
 
 
+  const registerLeftSlot = useCreationForgeLeftSlotRegistrar()
+
+  const selectedSkillsPanel = useMemo(
+    () => (
+      <CreationSelectedSkillsPanel
+        morphus={morphus}
+        panelStyle={panelStyle}
+        subStyle={subStyle}
+        handToHandInputClass={handToHandInputClass}
+        occSectionClass={occSectionClass}
+        relatedSectionClass={relatedSectionClass}
+        secondarySectionClass={secondarySectionClass}
+        relatedCap={relatedCap}
+        relatedSlotsUsed={relatedSlotsUsed}
+        secondaryCap={secondaryCap}
+        secondaryPickSlots={secondaryPickSlots}
+        relatedSelected={relatedSelected}
+        secondarySelected={secondarySelected}
+        hasHandToHandOptions={handToHandOptions.length > 0}
+        onEditOccPick={(pick) => setEditPick({ pick, tier: 'occ' })}
+        renderOccSkillRow={(pick, onClear) => {
+          const parameterizedOccGrant =
+            isOccCoreGrantSkillPick(
+              pick,
+              effectiveOcc,
+              character.occSpecializationId,
+            ) && skillRequiresSpecialization(pick.skillId)
+          return renderSelectedRow(
+            pick,
+            'occ',
+            parameterizedOccGrant || !onClear ? undefined : () => onClear(),
+            'Clear',
+          )
+        }}
+        renderHandToHandRow={renderHandToHandRow}
+        renderRelatedRow={(pick) =>
+          renderSelectedRow(pick, 'related', (instanceId) =>
+            setCreationSkillPicks(
+              occSkillIds,
+              removeCreationSkillPickWithConditionalCascade(
+                relatedSelected,
+                instanceId,
+              ),
+              secondarySelected,
+            ),
+          )
+        }
+        renderSecondaryRow={(pick) =>
+          renderSelectedRow(pick, 'secondary', (instanceId) =>
+            setCreationSkillPicks(
+              occSkillIds,
+              relatedSelected,
+              removeCreationSkillPickWithConditionalCascade(
+                secondarySelected,
+                instanceId,
+              ),
+            ),
+          )
+        }
+        shellMode
+      />
+    ),
+    [
+      morphus,
+      panelStyle,
+      subStyle,
+      handToHandInputClass,
+      occSectionClass,
+      relatedSectionClass,
+      secondarySectionClass,
+      relatedCap,
+      relatedSlotsUsed,
+      secondaryCap,
+      secondaryPickSlots,
+      relatedSelected,
+      secondarySelected,
+      handToHandOptions.length,
+      effectiveOcc,
+      character.occSpecializationId,
+      occSkillIds,
+      handToHandTier,
+      handToHandReserved,
+      handToHandOptions,
+    ],
+  )
+
+  useLayoutEffect(() => {
+    registerLeftSlot(selectedSkillsPanel)
+    return () => registerLeftSlot(null)
+  }, [registerLeftSlot, selectedSkillsPanel])
+
+
+
   return (
 
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row-reverse lg:items-stretch">
+    <div className="flex h-full min-h-0 flex-1 flex-col">
 
       <section
         className="flex min-h-0 min-w-0 flex-1 flex-col"
@@ -1366,11 +1448,6 @@ export function SkillEngine() {
 
       </p>
 
-      {DevAutoFillSkillsButton ? (
-        <Suspense fallback={null}>
-          <DevAutoFillSkillsButton />
-        </Suspense>
-      ) : null}
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
 
@@ -1633,63 +1710,6 @@ export function SkillEngine() {
 
         </div>
       </section>
-
-      <CreationSelectedSkillsPanel
-        morphus={morphus}
-        panelStyle={panelStyle}
-        subStyle={subStyle}
-        handToHandInputClass={handToHandInputClass}
-        occSectionClass={occSectionClass}
-        relatedSectionClass={relatedSectionClass}
-        secondarySectionClass={secondarySectionClass}
-        relatedCap={relatedCap}
-        relatedSlotsUsed={relatedSlotsUsed}
-        secondaryCap={secondaryCap}
-        secondaryPickSlots={secondaryPickSlots}
-        relatedSelected={relatedSelected}
-        secondarySelected={secondarySelected}
-        hasHandToHandOptions={handToHandOptions.length > 0}
-        onEditOccPick={(pick) => setEditPick({ pick, tier: 'occ' })}
-        renderOccSkillRow={(pick, onClear) => {
-          const parameterizedOccGrant =
-            isOccCoreGrantSkillPick(
-              pick,
-              effectiveOcc,
-              character.occSpecializationId,
-            ) && skillRequiresSpecialization(pick.skillId)
-          return renderSelectedRow(
-            pick,
-            'occ',
-            parameterizedOccGrant || !onClear ? undefined : () => onClear(),
-            'Clear',
-          )
-        }}
-        renderHandToHandRow={renderHandToHandRow}
-        renderRelatedRow={(pick) =>
-          renderSelectedRow(pick, 'related', (instanceId) =>
-            setCreationSkillPicks(
-              occSkillIds,
-              removeCreationSkillPickWithConditionalCascade(
-                relatedSelected,
-                instanceId,
-              ),
-              secondarySelected,
-            ),
-          )
-        }
-        renderSecondaryRow={(pick) =>
-          renderSelectedRow(pick, 'secondary', (instanceId) =>
-            setCreationSkillPicks(
-              occSkillIds,
-              relatedSelected,
-              removeCreationSkillPickWithConditionalCascade(
-                secondarySelected,
-                instanceId,
-              ),
-            ),
-          )
-        }
-      />
 
       <SkillPickAddDialog
 

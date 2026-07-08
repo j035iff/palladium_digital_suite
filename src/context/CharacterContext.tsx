@@ -445,7 +445,7 @@ type CharacterContextValue = {
     skillId: string,
     pick: CreationSkillPick | null,
   ) => void
-  setCreationPendingDiceResolution: (entryId: string, value: number) => void
+  setCreationPendingDiceResolution: (entryId: string, value: number | null) => void
   setAlignment: (alignment: string) => void
   /** Live combat — A.P.M. tracker (combat_logic.md §3). */
   attacksPerMelee: AttacksPerMeleeState
@@ -2643,7 +2643,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const setCreationPendingDiceResolution = useCallback(
-    (entryId: string, value: number) => {
+    (entryId: string, value: number | null) => {
       setRawCharacter((prev) => {
         const race = getRaceById(
         prev.raceId ?? DEFAULT_RACE_ID,

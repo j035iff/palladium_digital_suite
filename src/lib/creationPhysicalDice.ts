@@ -3,7 +3,7 @@ import {
   parsePhysicalDiceRoll,
   sumDiceNotationFlatBonuses,
 } from './diceNotation'
-import { diceCoreBounds } from './diceNotationBounds'
+import { diceCoreAllowedValues, diceCoreBounds } from './diceNotationBounds'
 
 export { parsePhysicalDiceRoll, sumDiceNotationFlatBonuses }
 
@@ -18,6 +18,8 @@ export type PhysicalPendingDiceRoll = {
   min: number
   max: number
   source: string
+  /** Set for multiplied dice (e.g. 1D4x10 → 10, 20, 30, 40). */
+  allowedValues?: readonly number[]
 }
 
 /** Dice-only contributions for ledger display and pending roll rows (flats live in block baseline). */
@@ -47,6 +49,7 @@ export function createPhysicalPendingRoll(
 ): { roll: PhysicalPendingDiceRoll; flatBonus: number } {
   const parsed = parsePhysicalDiceRoll(rawNotation)
   const bounds = diceCoreBounds(parsed.diceNotation)
+  const allowedValues = diceCoreAllowedValues(parsed.diceNotation)
   return {
     roll: {
       id: rollId ?? `spawn.${blockId}.${groupKind}.${index}`,
@@ -54,6 +57,7 @@ export function createPhysicalPendingRoll(
       min: bounds.min,
       max: bounds.max,
       source,
+      ...(allowedValues?.length ? { allowedValues } : {}),
     },
     flatBonus: parsed.flatBonus,
   }

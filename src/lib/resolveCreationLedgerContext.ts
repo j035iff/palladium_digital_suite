@@ -374,16 +374,17 @@ export function projectPendingDiceBlockFromRow(
           kind,
           display: displayGroup.display,
           tooltip: displayGroup.tooltip,
-          rolls: regular.map((c, index) =>
-            createPhysicalPendingRoll(
+          rolls: regular.map((c, index) => {
+            const { roll } = createPhysicalPendingRoll(
               row.id,
               kind,
               index,
               c.label,
               c.notation ?? '',
               c.rollId,
-            ).roll,
-          ),
+            )
+            return { ...roll, groupKind: kind, isPerLevel: false }
+          }),
         })
       }
     }
@@ -394,16 +395,17 @@ export function projectPendingDiceBlockFromRow(
         kind,
         display: `${notation}/level`,
         tooltip: '',
-        rolls: perLevel.map((c) =>
-          createPhysicalPendingRoll(
+        rolls: perLevel.map((c) => {
+          const { roll } = createPhysicalPendingRoll(
             row.id,
             kind,
             0,
             c.label,
             c.notation ?? '',
             c.rollId,
-          ).roll,
-        ),
+          )
+          return { ...roll, groupKind: kind, isPerLevel: true }
+        }),
       })
     }
   }
@@ -419,10 +421,23 @@ export function projectPendingDiceBlockFromRow(
 
   const flatBaseline = row.pendingFlatBaseline ?? row.total ?? sumResolvedRowTotal(row)
 
+  const poolRoll = row.contributions.find(
+    (c) => c.kind === 'pool_roll' && c.scope === row.formScope,
+  )?.amount
+  const rollAnchor =
+    row.section === 'attribute' && poolRoll != null && Number.isFinite(poolRoll)
+      ? poolRoll
+      : row.section === 'attribute' &&
+          row.pendingFlatBaseline != null &&
+          Number.isFinite(row.pendingFlatBaseline)
+        ? row.pendingFlatBaseline
+        : undefined
+
   return {
     id: row.id,
     label: row.label,
     flatBaseline,
+    rollAnchor,
     flatTooltip:
       row.precomputedFlatTooltip ??
       (flatParts.length > 0 ? formatFlatValueTooltip(flatParts) : undefined),

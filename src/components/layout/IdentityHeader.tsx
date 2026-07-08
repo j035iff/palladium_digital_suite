@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
@@ -171,8 +172,15 @@ export function IdentityHeader({
   } = useCharacter()
 
   const isTab = variant === 'tab'
-  // The tab variant is always fully expanded; only the header chrome can collapse.
-  const collapsed = isTab ? false : collapsedProp
+  const [tabCollapsed, setTabCollapsed] = useState(true)
+  const collapsed = isTab ? tabCollapsed : collapsedProp
+  const toggleCollapsed = () => {
+    if (isTab) {
+      setTabCollapsed((value) => !value)
+      return
+    }
+    onCollapsedChange?.(!collapsedProp)
+  }
 
   const profile = normalizeIdentityProfile(character.identityProfile)
   const patch = (fields: Partial<CharacterIdentityProfile>) => patchIdentityProfile(fields)
@@ -209,7 +217,25 @@ export function IdentityHeader({
   return (
     <div className="flex min-w-0 flex-1 gap-4">
       <div className="min-w-0 flex-1">
-        {isTab ? null : (
+        {isTab ? (
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <p
+              className="text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: morphusActive ? '#6d28d9' : '#1d4ed8' }}
+            >
+              Character
+            </p>
+            <button
+              type="button"
+              className={toggleButtonClass}
+              aria-expanded={!collapsed}
+              aria-controls="identity-header-details"
+              onClick={toggleCollapsed}
+            >
+              {collapsed ? 'Expand profile' : 'Minimize profile'}
+            </button>
+          </div>
+        ) : (
           <div className="flex items-center justify-between gap-2">
             <p
               className="text-[10px] font-semibold uppercase tracking-widest"
@@ -222,7 +248,7 @@ export function IdentityHeader({
               className={toggleButtonClass}
               aria-expanded={!collapsed}
               aria-controls="identity-header-details"
-              onClick={() => onCollapsedChange?.(!collapsed)}
+              onClick={toggleCollapsed}
             >
               {collapsed ? 'Expand' : 'Minimize'}
             </button>
@@ -230,6 +256,25 @@ export function IdentityHeader({
         )}
 
         {collapsed ? (
+          isTab ? (
+            <input
+              type="text"
+              value={character.name}
+              onChange={(e) => setCharacterName(e.target.value)}
+              onFocus={(e) => {
+                const el = e.currentTarget
+                if (
+                  el.value === LEGACY_DEFAULT_CHARACTER_NAME ||
+                  el.value === CHARACTER_NAME_PLACEHOLDER
+                ) {
+                  setCharacterName('')
+                }
+              }}
+              placeholder={CHARACTER_NAME_PLACEHOLDER}
+              aria-label="Character name"
+              className={`${nameInputClass} ${nameInputToneClass}`}
+            />
+          ) : (
           <div
             id="identity-header-details"
             className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1"
@@ -279,6 +324,7 @@ export function IdentityHeader({
               {alignmentLabel}
             </span>
           </div>
+          )
         ) : (
           <>
         <input

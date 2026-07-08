@@ -116,6 +116,48 @@ function hasTextField(value: string): boolean {
   return value.trim().length > 0
 }
 
+export type IdentitySpawnPrepRequirement = {
+  id: string
+  label: string
+  satisfied: boolean
+}
+
+/** Informational spawn-profile checklist (does not gate Tab 1 Continue). */
+export function listIdentitySpawnPrepRequirements(
+  name: string,
+  profile?: CharacterIdentityProfile,
+): IdentitySpawnPrepRequirement[] {
+  const p = normalizeIdentityProfile(profile)
+  return [
+    {
+      id: 'spawn-name',
+      label: 'Character name',
+      satisfied: isCharacterNameFilled(name),
+    },
+    { id: 'spawn-sex', label: 'Sex', satisfied: hasTextField(p.sex) },
+    { id: 'spawn-age', label: 'Age', satisfied: hasTextField(p.age) },
+    {
+      id: 'spawn-height',
+      label: 'Height (ft and in.)',
+      satisfied: hasValidIdentityHeight(p),
+    },
+    {
+      id: 'spawn-weight',
+      label: 'Weight (lbs.)',
+      satisfied: hasValidIdentityWeight(p),
+    },
+    { id: 'spawn-eyes', label: 'Eyes', satisfied: hasTextField(p.eyes) },
+    { id: 'spawn-hair', label: 'Hair', satisfied: hasTextField(p.hair) },
+  ]
+}
+
+export function isIdentitySpawnPrepComplete(
+  name: string,
+  profile?: CharacterIdentityProfile,
+): boolean {
+  return listIdentitySpawnPrepRequirements(name, profile).every((item) => item.satisfied)
+}
+
 /** Tab 7 spawn gate — identity header must be complete before locking the record. */
 export function assessIdentitySpawnBlockers(
   name: string,

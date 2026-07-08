@@ -25,14 +25,23 @@ export function ForgeTabPageHeader({
   title,
   actions,
   requirements,
+  spawnPrepRequirements,
   visual = 'active',
+  subheader,
 }: {
   title: string
   actions?: ReactNode
   requirements?: readonly ForgeTabRequirement[]
+  spawnPrepRequirements?: readonly ForgeTabRequirement[]
   visual?: ForgeTabVisualState
+  subheader?: ReactNode
 }) {
   const theme = forgeTabVisualTheme(visual)
+  const morphus =
+    visual === 'active' ||
+    visual === 'complete' ||
+    visual === 'incomplete' ||
+    visual === 'conflict'
 
   return (
     <div
@@ -47,15 +56,21 @@ export function ForgeTabPageHeader({
           >
             {title}
           </h2>
+          {subheader ? <div className="mt-2">{subheader}</div> : null}
           {requirements && requirements.length > 0 ? (
             <ForgeTabRequirementsChecklist
               requirements={requirements}
-              morphus={
-                visual === 'active' ||
-                visual === 'complete' ||
-                visual === 'incomplete' ||
-                visual === 'conflict'
-              }
+              morphus={morphus}
+              tone="continue"
+              heading="To continue"
+            />
+          ) : null}
+          {spawnPrepRequirements && spawnPrepRequirements.length > 0 ? (
+            <ForgeTabRequirementsChecklist
+              requirements={spawnPrepRequirements}
+              morphus={morphus}
+              tone="spawn"
+              heading="Before spawn"
             />
           ) : null}
         </div>

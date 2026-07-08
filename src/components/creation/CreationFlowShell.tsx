@@ -24,6 +24,11 @@ import { CreationAttributeHeader } from './CreationAttributeHeader'
 
 import { IdentityHeader } from '../layout/IdentityHeader'
 
+import { CreationForgeLeftSlot } from './CreationForgeLeftSlot'
+import { CreationForgeLeftSlotProvider } from './CreationForgeLeftSlotContext'
+import { creationForgeLeftColumnClass } from './creationForgeLeftPanelTheme'
+import { ForgeTabDevActions } from './ForgeTabDevActions'
+
 import { LiveLedger } from './LiveLedger'
 import {
   MORPHUS_LEDGER_BORDER_CLASS,
@@ -49,7 +54,6 @@ import {
   buildCharacterCreationForgeContext,
 
   CHARACTER_CREATION_TAB_PAGE_TITLES,
-  characterCreationTraitsTabPageTitle,
 
   deriveCharacterCreationForgeNavigation,
 
@@ -59,7 +63,10 @@ import {
 
 } from '../../lib/forgeNavigation/characterCreationForge'
 
-import { listCharacterCreationTabRequirements } from '../../lib/forgeNavigation/characterCreationTabRequirements'
+import {
+  listCharacterCreationTabRequirements,
+  listCharacterCreationSpawnPrepRequirements,
+} from '../../lib/forgeNavigation/characterCreationTabRequirements'
 
 
 
@@ -286,6 +293,8 @@ export function CreationFlowShell({
   const morphusLedger =
     supportsDualForm && morphusLedgerUnlocked && activeForm === 'morphus'
 
+  const shellPanelMorphus = supportsDualForm && activeForm === 'morphus'
+
 
 
   const forgeCtx = useMemo(
@@ -326,10 +335,7 @@ export function CreationFlowShell({
 
   const activeView = nav.tabs.find((t) => t.id === activeTabId)
 
-  const pageTitle =
-    activeTabId === 'tab6_traits'
-      ? characterCreationTraitsTabPageTitle(activeRace, effectiveOcc ?? undefined)
-      : CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]
+  const pageTitle = CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]
 
   const activeBlockers = activeView?.blockers ?? []
   const tabInactive = activeView?.visual === 'na'
@@ -340,6 +346,14 @@ export function CreationFlowShell({
         ? listCharacterCreationTabRequirements(activeTabId, forgeCtx)
         : [],
     [nav.showContinue, activeTabId, forgeCtx],
+  )
+
+  const spawnPrepRequirements = useMemo(
+    () =>
+      activeTabId === 'tab1_configurator'
+        ? listCharacterCreationSpawnPrepRequirements(forgeCtx)
+        : [],
+    [activeTabId, forgeCtx],
   )
 
 
@@ -354,11 +368,21 @@ export function CreationFlowShell({
 
 
 
+  const denseTabBody =
+    activeTabId === 'tab1_configurator' ||
+    activeTabId === 'tab4_skills' ||
+    activeTabId === 'tab6_traits' ||
+    activeTabId === 'tab7_abilities'
+
+
+
   return (
 
     <div className="flex h-full min-h-0 flex-1 flex-col md:flex-row md:gap-0">
 
       <SupernaturalAbilitiesForgeProvider>
+
+        <CreationForgeLeftSlotProvider>
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
 
@@ -400,7 +424,7 @@ export function CreationFlowShell({
 
             </div>
 
-            <div className="mt-3">
+            <div className="mt-3 px-4">
 
               <ForgeTabPageHeader
 
@@ -410,10 +434,20 @@ export function CreationFlowShell({
 
                 requirements={activeRequirements}
 
+                spawnPrepRequirements={spawnPrepRequirements}
+
+                subheader={
+                  activeTabId === 'tab7_abilities' ? (
+                    <ForgeTabInactiveShell inactive={tabInactive}>
+                      <SupernaturalAbilitiesForgeLaneTabs />
+                    </ForgeTabInactiveShell>
+                  ) : undefined
+                }
+
                 actions={
-
-                  nav.showContinue ? (
-
+                  <div className="flex flex-wrap items-center justify-end gap-2">
+                    <ForgeTabDevActions activeTabId={activeTabId} />
+                    {nav.showContinue ? (
                     <ForgeContinueGate
 
                       inline
@@ -433,35 +467,39 @@ export function CreationFlowShell({
                       onContinue={handleContinue}
 
                     />
-
-                  ) : null
-
+                    ) : null}
+                  </div>
                 }
 
               />
 
             </div>
 
-            {activeTabId === 'tab7_abilities' ? (
-              <ForgeTabInactiveShell inactive={tabInactive} className="mt-3 px-4">
-                <SupernaturalAbilitiesForgeLaneTabs />
-              </ForgeTabInactiveShell>
-            ) : null}
-
           </div>
 
 
 
-        <div
-          className={
-            activeTabId === 'tab4_skills' ||
-            activeTabId === 'tab1_configurator' ||
-            activeTabId === 'tab6_traits' ||
-            activeTabId === 'tab7_abilities'
-              ? 'flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4 md:pl-4'
-              : 'min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4 md:pl-4'
-          }
-        >
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
+
+          <aside
+            className={`hidden min-h-0 shrink-0 flex-col overflow-hidden border-slate-300 p-4 pr-3 md:flex md:h-full md:w-80 md:flex-col md:border-r xl:w-96 ${creationForgeLeftColumnClass(shellPanelMorphus)} ${
+              shellPanelMorphus ? 'border-violet-300' : ''
+            }`}
+            aria-label="Forge summary panel"
+          >
+            <CreationForgeLeftSlot
+              activeTabId={activeTabId}
+              morphus={shellPanelMorphus}
+            />
+          </aside>
+
+          <div
+            className={
+              denseTabBody
+                ? 'flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4'
+                : 'min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4'
+            }
+          >
 
           {nav.firstRepairTabId && nav.firstRepairTabId !== activeTabId ? (
 
@@ -534,7 +572,8 @@ export function CreationFlowShell({
 
           ) : activeTabId === 'tab4_skills' ||
             activeTabId === 'tab1_configurator' ||
-            activeTabId === 'tab6_traits' ? (
+            activeTabId === 'tab6_traits' ||
+            activeTabId === 'tab7_abilities' ? (
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
@@ -566,11 +605,15 @@ export function CreationFlowShell({
 
         </div>
 
+        </div>
+
+        </CreationForgeLeftSlotProvider>
+
       </SupernaturalAbilitiesForgeProvider>
 
       <aside
 
-        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-t shadow-sm md:max-h-none md:w-54 md:border-t-0 md:border-l lg:w-60 xl:w-72 ${
+        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-t shadow-sm md:max-h-none md:w-60 md:border-t-0 md:border-l lg:w-60 xl:w-72 ${
           morphusLedger
             ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
             : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'

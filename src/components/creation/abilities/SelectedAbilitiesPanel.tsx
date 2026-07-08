@@ -34,12 +34,14 @@ type SelectedAbilitiesPanelProps = {
   morphus: boolean
   genreId: string
   isNightbane: boolean
+  shellMode?: boolean
 }
 
 export function SelectedAbilitiesPanel({
   morphus,
   genreId,
   isNightbane,
+  shellMode = false,
 }: SelectedAbilitiesPanelProps) {
   const { character, activeOcc, removeSelectedAbility } = useCharacter()
   const selectedIds = useMemo(
@@ -104,8 +106,8 @@ export function SelectedAbilitiesPanel({
   )
 
   const panelStyle = morphus
-    ? 'border-violet-700 bg-slate-950/80 text-violet-50'
-    : 'border-blue-200 bg-white text-slate-900'
+    ? 'border-violet-300 bg-violet-50 text-violet-950'
+    : 'border-slate-300 bg-slate-100 text-slate-900'
 
   const renderPsionicRow = (id: string) => {
     const a = getAbilityById(id)
@@ -169,13 +171,19 @@ export function SelectedAbilitiesPanel({
     )
   }
 
+  const Wrapper = shellMode ? 'div' : 'aside'
+
   return (
-    <aside
-      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72 ${
-        morphus
-          ? 'border-violet-800'
-          : 'border-slate-200 dark:border-slate-700'
-      }`}
+    <Wrapper
+      className={
+        shellMode
+          ? 'flex h-full min-h-0 w-full flex-col'
+          : `flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72 ${
+              morphus
+                ? 'border-violet-800'
+                : 'border-slate-200 dark:border-slate-700'
+            }`
+      }
       aria-label="Selected powers panel"
     >
       <div
@@ -183,13 +191,13 @@ export function SelectedAbilitiesPanel({
       >
         <div
           className={`shrink-0 border-b px-3 py-2 ${
-            morphus ? 'border-violet-800' : 'border-slate-200'
+            morphus ? 'border-violet-200' : 'border-slate-300'
           }`}
         >
-          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+          <h3 className={`text-xs font-bold uppercase tracking-wide ${morphus ? 'text-violet-900' : 'text-slate-800'}`}>
             Selected powers
           </h3>
-          <p className="mt-1 text-[11px] leading-snug opacity-70">
+          <p className={`mt-1 text-[11px] leading-snug ${morphus ? 'text-violet-800' : 'text-slate-600'}`}>
             Selections persist across Magic, Psionics, and Talents — switch forge
             tabs freely until budgets are filled.
           </p>
@@ -329,6 +337,6 @@ export function SelectedAbilitiesPanel({
           )}
         </div>
       </div>
-    </aside>
+    </Wrapper>
   )
 }

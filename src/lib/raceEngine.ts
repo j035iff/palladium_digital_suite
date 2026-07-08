@@ -48,6 +48,11 @@ export function getRacePpeNotation(race: Race | undefined): string | number | un
   return race.vitals.averageStandardPpe ?? race.vitals.basePpe
 }
 
+/** True when racial P.P.E. dice must stack with (not be replaced by) the O.C.C. ppeEngine. */
+export function raceStacksPpeWithOcc(race: Race | undefined): boolean {
+  return race?.vitals?.stackPpeWithOcc === true
+}
+
 export function getRaceIspNotation(race: Race | undefined): string | undefined {
   const raw = race?.psionics?.naturalIspFormula
   if (raw == null || raw === '0') return undefined

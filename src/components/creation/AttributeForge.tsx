@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from '../../lib/attributeKeys'
 import { resolveEffectivePalladiumOcc } from '../../lib/occComposition'
@@ -11,13 +11,6 @@ import {
 } from '../../lib/creationAttributeSync'
 import { attributePoolNotationBounds } from '../../lib/diceNotationBounds'
 
-const DevAutoAssignAttributesButton = import.meta.env.DEV
-  ? lazy(() =>
-      import('./dev/DevAutoAssignAttributesButton').then((m) => ({
-        default: m.DevAutoAssignAttributesButton,
-      })),
-    )
-  : null
 
 const ATTR_LABELS: Record<ForgeAttrKey, string> = {
   iq: 'I.Q.',
@@ -131,11 +124,6 @@ export function AttributeForge() {
 
   return (
     <section aria-labelledby="forge-tab-page-heading">
-      {DevAutoAssignAttributesButton ? (
-        <Suspense fallback={null}>
-          <DevAutoAssignAttributesButton />
-        </Suspense>
-      ) : null}
       <p
         className="mb-4 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: morphus ? '#a5b4fc' : '#475569' }}

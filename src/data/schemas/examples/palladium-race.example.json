@@ -32,6 +32,7 @@
   "vitals": {
     "hpFormula": "PE + 1D6",
     "averageStandardPpe": "2D6",
+    "stackPpeWithOcc": false,
     "sdc": {
       "strategy": "conditional_by_occ_tags",
       "defaultFormula": "3D6",

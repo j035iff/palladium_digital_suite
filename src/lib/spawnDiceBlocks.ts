@@ -8,6 +8,8 @@ import {
 } from './creationSkillPicks'
 import {
   type LedgerFlatContribution,
+  type LedgerStatDiceGroup,
+  ledgerDiceGroupRowLabel,
 } from './ledgerStatBonuses'
 import {
   formatVitalLedgerTooltip,
@@ -26,6 +28,19 @@ export type PendingDiceRoll = {
   min: number
   max: number
   source: string
+  groupKind: PendingDiceGroup['kind']
+  isPerLevel?: boolean
+  /** Discrete totals for multiplied dice (e.g. 1D4x10). */
+  allowedValues?: readonly number[]
+}
+
+export function isPendingDiceRollValueValid(
+  roll: Pick<PendingDiceRoll, 'min' | 'max' | 'allowedValues'>,
+  value: number | undefined | null,
+): boolean {
+  if (value == null || !Number.isFinite(value)) return false
+  if (roll.allowedValues?.length) return roll.allowedValues.includes(value)
+  return value >= roll.min && value <= roll.max
 }
 
 export type PendingDiceGroup = {
@@ -39,6 +54,8 @@ export type PendingDiceBlock = {
   id: string
   label: string
   flatBaseline: number
+  /** Pool roll or morphus pre-dice anchor shown at top of the roll stack (not flat constants). */
+  rollAnchor?: number
   flatTooltip?: string
   flatTerms?: VitalAttrFlatTerm[]
   skillFlatTerms?: LedgerFlatContribution[]
@@ -315,6 +332,15 @@ export function flattenPendingDiceRolls(
   return blocks.flatMap((block) => block.groups.flatMap((group) => group.rolls))
 }
 
+/** Blocks that have at least one physical die to enter. */
+export function pendingDiceBlocksWithRolls(
+  blocks: readonly PendingDiceBlock[],
+): PendingDiceBlock[] {
+  return blocks.filter((block) =>
+    block.groups.some((group) => group.rolls.length > 0),
+  )
+}
+
 export function pendingDiceBlockRunningTotal(
   block: PendingDiceBlock,
   resolutions: Readonly<Record<string, number>>,
@@ -338,10 +364,7 @@ export function pendingDiceBlockHasUnresolvedRolls(
 ): boolean {
   if (!block) return false
   return block.groups.some((group) =>
-    group.rolls.some((roll) => {
-      const value = resolutions[roll.id]
-      return value == null || !Number.isFinite(value)
-    }),
+    group.rolls.some((roll) => !isPendingDiceRollValueValid(roll, resolutions[roll.id])),
   )
 }
 
@@ -352,17 +375,36 @@ export function pendingDiceBlocksComplete(
   const rolls = flattenPendingDiceRolls(blocks)
   return rolls.every((roll) => {
     const value = resolutions[roll.id]
-    return (
-      typeof value === 'number' &&
-      Number.isFinite(value) &&
-      value >= roll.min &&
-      value <= roll.max
-    )
+    return isPendingDiceRollValueValid(roll, value)
   })
 }
 
 export function formatPendingDiceGroupLabel(kind: PendingDiceGroup['kind']): string {
   return ledgerDiceGroupRowLabel(kind)
+}
+
+const PENDING_DICE_ROLL_PREFIX: Record<PendingDiceGroup['kind'], string> = {
+  race: 'Race',
+  occ: 'O.C.C.',
+  skills: 'Skill',
+  traits: 'Trait',
+}
+
+/** Roll Pending row label — e.g. `Skill: Acrobatics`, `Race: Per Level`. */
+export function formatPendingDiceRollLabel(roll: PendingDiceRoll): string {
+  const prefix = PENDING_DICE_ROLL_PREFIX[roll.groupKind]
+  if (roll.isPerLevel) return `${prefix}: Per Level`
+  if (roll.groupKind === 'skills' || roll.groupKind === 'traits') {
+    return `${prefix}: ${roll.source}`
+  }
+  return `${prefix}: Base`
+}
+
+/** Header base on Roll Pending blocks — pool roll, vital flat anchor, or dash. */
+export function formatPendingDiceBlockHeaderBase(block: PendingDiceBlock): string {
+  if (block.rollAnchor != null) return String(block.rollAnchor)
+  if (block.flatBaseline > 0) return String(block.flatBaseline)
+  return '-'
 }
 
 /** Map pending-dice groups to Live Ledger dice row segments (Race / Traits / etc.). */

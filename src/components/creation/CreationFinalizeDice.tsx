@@ -1,5 +1,4 @@
 import { useCharacter } from '../../context/CharacterContext'
-import { DevAutoRollPendingDiceButton } from './dev/DevAutoRollPendingDiceButton'
 import { PendingDiceResolutionPanel } from './PendingDiceResolutionPanel'
 
 /** Roll Pending tab — facade (or single-form) physical dice only; Morphus is on Traits. */
@@ -10,8 +9,9 @@ export function CreationFinalizeDice() {
   return (
     <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-700 dark:text-slate-200">
-        Roll your physical dice and enter every result below. Totals and the Live Ledger
-        update as you type (Pillar 5 — physical dice first). Click{' '}
+        Roll your physical dice and enter every result below. Each stat block lists
+        only fields that need rolls; the total at the bottom of each block and the Live
+        Ledger update as you type (Pillar 5 — physical dice first). Click{' '}
         <strong>Continue</strong> when every field is filled to lock these values in.
       </p>
       {supportsDualForm ? (
@@ -21,8 +21,6 @@ export function CreationFinalizeDice() {
           tab.
         </p>
       ) : null}
-
-      <DevAutoRollPendingDiceButton />
 
       <PendingDiceResolutionPanel scope={scope} />
     </section>

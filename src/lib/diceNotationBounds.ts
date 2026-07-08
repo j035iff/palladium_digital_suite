@@ -53,6 +53,62 @@ export function diceCoreBounds(raw: string): { min: number; max: number } {
   return { min: minRoll, max: maxRoll }
 }
 
+/** Achievable face totals for NdM before any multiplier (e.g. 2D6 → 2..12). */
+export function achievableNdMSums(dice: number, faces: number): number[] {
+  if (!Number.isFinite(dice) || !Number.isFinite(faces) || dice <= 0 || faces <= 0) {
+    return []
+  }
+  if (dice === 1) {
+    return Array.from({ length: faces }, (_, index) => index + 1)
+  }
+  let reachable = new Set<number>([0])
+  for (let die = 0; die < dice; die += 1) {
+    const next = new Set<number>()
+    for (const sum of reachable) {
+      for (let face = 1; face <= faces; face += 1) {
+        next.add(sum + face)
+      }
+    }
+    reachable = next
+  }
+  return [...reachable].filter((sum) => sum > 0).sort((a, b) => a - b)
+}
+
+/**
+ * Discrete totals for multiplied dice (e.g. 1D4x10 → 10, 20, 30, 40).
+ * Undefined when any integer in min–max is valid.
+ */
+export function diceCoreAllowedValues(raw: string): number[] | undefined {
+  const { diceNotation } = parsePhysicalDiceRoll(raw)
+  let s = diceNotation.trim().replace(/\s+/g, '')
+  let negated = false
+  if (s.startsWith('-')) {
+    negated = true
+    s = s.slice(1)
+  }
+  s = notationForRoll(s)
+  const m = /^(\d+)d(\d+)(?:\*(\d+))?$/i.exec(s)
+  if (!m) return undefined
+  const n = Number(m[1])
+  const faces = Number(m[2])
+  const mul = m[3] != null && m[3] !== '' ? Number(m[3]) : 1
+  if (!Number.isFinite(n) || !Number.isFinite(faces) || n <= 0 || faces <= 0) {
+    return undefined
+  }
+  if (mul <= 1) return undefined
+  const sums = achievableNdMSums(n, faces)
+  const values = sums.map((sum) => sum * mul)
+  return negated ? values.map((value) => -value).sort((a, b) => a - b) : values
+}
+
+export function isDiceCoreValueAllowed(raw: string, value: number): boolean {
+  if (!Number.isFinite(value)) return false
+  const allowed = diceCoreAllowedValues(raw)
+  if (allowed?.length) return allowed.includes(value)
+  const { min, max } = diceCoreBounds(raw)
+  return value >= min && value <= max
+}
+
 export function diceNotationBounds(raw: string): { min: number; max: number } {
   const { diceNotation, flatBonus } = parsePhysicalDiceRoll(raw)
   const core = diceCoreBounds(diceNotation)

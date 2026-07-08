@@ -7,6 +7,9 @@ import {
   identityHeightInchesError,
   identityWeightLbsError,
   isCharacterNameFilled,
+  isIdentitySpawnPrepComplete,
+  listIdentitySpawnPrepRequirements,
+  EMPTY_CHARACTER_IDENTITY_PROFILE,
   parseIdentityHeightInches,
   parseIdentityWeightLbs,
   resolveIdentityHeightInches,
@@ -66,5 +69,45 @@ describe('characterIdentity', () => {
       hair: 'Black',
     })
     expect(blockers).toEqual([])
+  })
+
+  it('lists spawn-prep checklist items separately from Continue gates', () => {
+    const incomplete = listIdentitySpawnPrepRequirements(
+      'New Character',
+      EMPTY_CHARACTER_IDENTITY_PROFILE,
+    )
+    expect(incomplete.map((item) => item.id)).toEqual([
+      'spawn-name',
+      'spawn-sex',
+      'spawn-age',
+      'spawn-height',
+      'spawn-weight',
+      'spawn-eyes',
+      'spawn-hair',
+    ])
+    expect(incomplete.every((item) => !item.satisfied)).toBe(true)
+    expect(isIdentitySpawnPrepComplete('New Character', undefined)).toBe(false)
+
+    const complete = listIdentitySpawnPrepRequirements('Rook', {
+      sex: 'M',
+      age: '28',
+      heightFeet: '6',
+      heightInches: '0',
+      weightLbs: '185',
+      eyes: 'Brown',
+      hair: 'Black',
+    })
+    expect(complete.every((item) => item.satisfied)).toBe(true)
+    expect(
+      isIdentitySpawnPrepComplete('Rook', {
+        sex: 'M',
+        age: '28',
+        heightFeet: '6',
+        heightInches: '0',
+        weightLbs: '185',
+        eyes: 'Brown',
+        hair: 'Black',
+      }),
+    ).toBe(true)
   })
 })

@@ -13,8 +13,6 @@ import {
 import { MorphusCrossroadsTab } from './morphus/MorphusCrossroadsTab'
 import { MorphusTraitForgeTab } from './morphus/MorphusTraitForgeTab'
 import { MorphusReviewTab } from './morphus/MorphusReviewTab'
-import { SelectedMorphusTraitsPanel } from './morphus/SelectedMorphusTraitsPanel'
-
 const SUB_TAB_TITLES: Record<MorphusForgeSubTabId, string> = {
   crossroads: 'Tab 1: Crossroads & Initialization',
   trait_forge: 'Tab 2: Dynamic Trait Forge',
@@ -121,7 +119,7 @@ export function MorphusForge() {
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row-reverse lg:items-stretch">
+      <div className="flex min-h-0 flex-1 flex-col">
         <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
           {activeSubTab === 'crossroads' ? (
             <MorphusCrossroadsTab
@@ -149,7 +147,6 @@ export function MorphusForge() {
             />
           ) : null}
         </div>
-        <SelectedMorphusTraitsPanel morphusForgeState={morphusState} />
       </div>
     </section>
   )

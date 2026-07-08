@@ -13,7 +13,10 @@ import {
   assessConfiguratorBlockers,
   assessOccVariableBlockers,
 } from '../creationStep'
-import { assessIdentitySpawnBlockers } from '../characterIdentity'
+import {
+  assessIdentitySpawnBlockers,
+  isIdentitySpawnPrepComplete,
+} from '../characterIdentity'
 import { assessCreationSpawnBlockers } from '../creationReadiness'
 import {
   creationNeedsAbilitySelection,
@@ -97,14 +100,14 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
   CharacterCreationForgeTabId,
   string
 > = {
-  tab1_configurator: 'Step 1: Identity',
-  tab2_attributes: 'Phase I: Attribute Pool & Allocation',
-  tab3_psionic: 'Step 2.5: Random Psionics',
-  tab4_skills: 'Step 3: Skill Engine',
-  tab5_finalize: 'Phase II: Roll Pending Dice',
-  tab6_traits: 'Character Trait Sub-Forge',
-  tab7_abilities: 'Step 4: Supernatural Abilities',
-  tab8_review: 'Phase IV: Review & Spawn',
+  tab1_configurator: CHARACTER_CREATION_TAB_LABELS.tab1_configurator,
+  tab2_attributes: CHARACTER_CREATION_TAB_LABELS.tab2_attributes,
+  tab3_psionic: CHARACTER_CREATION_TAB_LABELS.tab3_psionic,
+  tab4_skills: CHARACTER_CREATION_TAB_LABELS.tab4_skills,
+  tab5_finalize: CHARACTER_CREATION_TAB_LABELS.tab5_finalize,
+  tab6_traits: CHARACTER_CREATION_TAB_LABELS.tab6_traits,
+  tab7_abilities: CHARACTER_CREATION_TAB_LABELS.tab7_abilities,
+  tab8_review: CHARACTER_CREATION_TAB_LABELS.tab8_review,
 }
 
 const LEGACY_FORGE_TAB_IDS: Record<string, CharacterCreationForgeTabId> = {
@@ -626,9 +629,26 @@ export function deriveCharacterCreationForgeNavigation(
   const completion = readForgeCompletion(ctx.character)
   const tabDefs = buildTabDefinitions(ctx)
 
-  return deriveForgeNavigation(tabDefs, activeTabId, completion, {
+  const nav = deriveForgeNavigation(tabDefs, activeTabId, completion, {
     terminalTabId: 'tab8_review',
   })
+
+  const spawnProfileIncomplete = !isIdentitySpawnPrepComplete(
+    ctx.character.name,
+    ctx.character.identityProfile,
+  )
+
+  return {
+    ...nav,
+    activeTabId,
+    tabs: nav.tabs.map((tab) =>
+      tab.id === 'tab1_configurator' &&
+      tab.visual === 'complete' &&
+      spawnProfileIncomplete
+        ? { ...tab, spawnProfileIncomplete: true }
+        : tab,
+    ),
+  }
 }
 
 export function completeForgeTab(

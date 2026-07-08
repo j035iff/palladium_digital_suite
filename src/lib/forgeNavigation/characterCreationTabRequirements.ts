@@ -1,5 +1,6 @@
 import type { CharacterCreationForgeTabId } from '../../types'
 import { assessConfiguratorPairConflict } from '../configuratorMatrix'
+import { listIdentitySpawnPrepRequirements } from '../characterIdentity'
 import {
   raceAttrNotation,
   valueFitsRaceNotation,
@@ -517,4 +518,14 @@ export function listCharacterCreationTabRequirements(
     default:
       return []
   }
+}
+
+/** Tab 1 informational checklist — required at spawn, not for Continue. */
+export function listCharacterCreationSpawnPrepRequirements(
+  ctx: CharacterCreationForgeContext,
+): ForgeTabRequirement[] {
+  return listIdentitySpawnPrepRequirements(
+    ctx.character.name ?? '',
+    ctx.character.identityProfile,
+  )
 }

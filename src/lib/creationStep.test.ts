@@ -113,6 +113,15 @@ describe('diceNotationBounds', () => {
     expect(diceCoreBounds('1D6X10+20')).toEqual({ min: 10, max: 60 })
     expect(diceCoreBounds('1D6+2')).toEqual({ min: 1, max: 6 })
   })
+
+  it('lists discrete totals for multiplied dice', async () => {
+    const { diceCoreAllowedValues } = await import('./diceNotationBounds')
+    expect(diceCoreAllowedValues('1D4x10')).toEqual([10, 20, 30, 40])
+    expect(diceCoreAllowedValues('2D6x10')).toEqual([
+      20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120,
+    ])
+    expect(diceCoreAllowedValues('1D6')).toBeUndefined()
+  })
 })
 
 describe('attributePoolNotationBounds', () => {

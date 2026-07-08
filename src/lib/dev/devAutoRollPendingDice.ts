@@ -14,6 +14,10 @@ function rollInRange(min: number, max: number): number {
 }
 
 export function rollPendingDiceValue(roll: PendingDiceRoll): number {
+  if (roll.allowedValues?.length) {
+    const index = Math.floor(Math.random() * roll.allowedValues.length)
+    return roll.allowedValues[index]!
+  }
   try {
     const rolled = rollDiceNotation(roll.notation)
     return Math.max(roll.min, Math.min(roll.max, rolled))

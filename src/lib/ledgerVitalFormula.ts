@@ -2,7 +2,7 @@ import type { PalladiumOcc, Race } from '../types'
 import type { ForgeAttrKey } from './attributeKeys'
 import { isDiceNotation } from './diceNotationBounds'
 import { normalizeDiceDisplay } from './ledgerStatBonuses'
-import { getRacePpeNotation } from './raceEngine'
+import { getRacePpeNotation, raceStacksPpeWithOcc } from './raceEngine'
 import { dualFormPeHintLabel, FACADE_LABEL } from './creationFormLabels'
 import {
   resolveSourcedVitalFormulaFlat,
@@ -589,6 +589,12 @@ export function resolvePpeFormulaParts(
     if (text.length > 0) racePart = text
   }
   const occPart = occ?.ppeEngine?.baseFormula?.trim() || undefined
+
+  // Default: O.C.C. P.P.E. replaces race dice unless the race explicitly stacks.
+  if (occPart && racePart && !raceStacksPpeWithOcc(race)) {
+    racePart = undefined
+  }
+
   return { race: racePart, occ: occPart }
 }
 

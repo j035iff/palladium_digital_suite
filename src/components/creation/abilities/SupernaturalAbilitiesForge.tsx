@@ -10,8 +10,6 @@ import { MagicForgePanel } from './MagicForgePanel'
 
 import { PsionicsForgePanel } from './PsionicsForgePanel'
 
-import { SelectedAbilitiesPanel } from './SelectedAbilitiesPanel'
-
 import { SupernaturalAbilityLaneEngineBar } from './SupernaturalAbilityLaneEngineBar'
 
 import { SupernaturalAbilityLaneNaPanel } from './SupernaturalAbilityLaneNaPanel'
@@ -100,25 +98,23 @@ export function SupernaturalAbilitiesForge() {
 
   return (
 
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row-reverse lg:items-stretch">
+    <section
 
-      <section
+      className="flex min-h-0 min-w-0 flex-1 flex-col"
 
-        className="flex min-h-0 min-w-0 flex-1 flex-col"
+      aria-labelledby="forge-tab-page-heading"
 
-        aria-labelledby="forge-tab-page-heading"
+    >
+
+      <div
+
+        role="tabpanel"
+
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5"
+
+        aria-label={SUPERNATURAL_ABILITY_LANE_LABELS[activeLane]}
 
       >
-
-        <div
-
-          role="tabpanel"
-
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5"
-
-          aria-label={SUPERNATURAL_ABILITY_LANE_LABELS[activeLane]}
-
-        >
 
           {!activeLaneAllowed ? (
 
@@ -215,18 +211,6 @@ export function SupernaturalAbilitiesForge() {
         </div>
 
       </section>
-
-      <SelectedAbilitiesPanel
-
-        morphus={morphus}
-
-        genreId={genreId}
-
-        isNightbane={isNightbane}
-
-      />
-
-    </div>
 
   )
 

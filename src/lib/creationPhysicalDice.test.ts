@@ -49,6 +49,7 @@ describe('createPhysicalPendingRoll', () => {
     )
     expect(flatBonus).toBe(20)
     expect(roll.notation).toBe('1D6x10')
+    expect(roll.allowedValues).toEqual([10, 20, 30, 40, 50, 60])
     expect(roll.min).toBe(10)
     expect(roll.max).toBe(60)
   })

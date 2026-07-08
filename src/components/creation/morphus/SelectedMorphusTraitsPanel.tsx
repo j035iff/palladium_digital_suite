@@ -11,6 +11,7 @@ import type { MorphusForgeState } from '../../../types'
 
 type Props = {
   morphusForgeState: MorphusForgeState
+  shellMode?: boolean
 }
 
 function TraitSlotBox({
@@ -146,7 +147,10 @@ function PathSection({
   )
 }
 
-export function SelectedMorphusTraitsPanel({ morphusForgeState }: Props) {
+export function SelectedMorphusTraitsPanel({
+  morphusForgeState,
+  shellMode = false,
+}: Props) {
   const { character, morphusForgeSlotActions } = useCharacter()
 
   const sections = useMemo(
@@ -167,28 +171,42 @@ export function SelectedMorphusTraitsPanel({ morphusForgeState }: Props) {
     [morphusForgeState, character.morphusForgeSlotState],
   )
 
-  const panelStyle = 'border-violet-700 bg-slate-950/80 text-violet-50'
+  const panelStyle = shellMode
+    ? 'border-violet-300 bg-violet-50 text-violet-950'
+    : 'border-violet-700 bg-slate-950/80 text-violet-50'
+
+  const Wrapper = shellMode ? 'div' : 'aside'
 
   return (
-    <aside
-      className="flex min-h-0 w-full shrink-0 flex-col border-t border-violet-800 pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72"
+    <Wrapper
+      className={
+        shellMode
+          ? 'flex h-full min-h-0 w-full flex-col'
+          : 'flex min-h-0 w-full shrink-0 flex-col border-t border-violet-800 pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72'
+      }
       aria-label="Selected traits panel"
     >
       <div
         className={`flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border ${panelStyle}`}
       >
-        <div className="shrink-0 border-b border-violet-800 px-3 py-2">
-          <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
+        <div className={`shrink-0 border-b px-3 py-2 ${shellMode ? 'border-violet-200' : 'border-violet-800'}`}>
+          <h3 className={`text-xs font-bold uppercase tracking-wide ${shellMode ? 'text-violet-900' : 'opacity-80'}`}>
             Selected traits
           </h3>
-          <p className="mt-1 text-[11px] leading-snug opacity-70">
+          <p className={`mt-1 text-[11px] leading-snug ${shellMode ? 'text-violet-800' : 'opacity-70'}`}>
             Trait picks appear here as you resolve each slot — including nested tables
             and combinations.
           </p>
           {morphusForgeState.path ? (
             <p
               className={`mt-2 text-[11px] font-bold uppercase tracking-wide ${
-                slotsRemaining === 0 ? 'text-emerald-400' : 'text-amber-300'
+                slotsRemaining === 0
+                  ? shellMode
+                    ? 'text-emerald-700'
+                    : 'text-emerald-400'
+                  : shellMode
+                    ? 'text-amber-700'
+                    : 'text-amber-300'
               }`}
               role="status"
             >
@@ -215,6 +233,6 @@ export function SelectedMorphusTraitsPanel({ morphusForgeState }: Props) {
           )}
         </div>
       </div>
-    </aside>
+    </Wrapper>
   )
 }
