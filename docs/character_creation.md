@@ -9,7 +9,7 @@ The Palladium Digital Suite splits **session entry**, **in-forge assembly**, and
 ```
 App Launch
   └─ app_viewport_launcher.md     Open Character | Create Character
-        └─ forge/character_creation.md   (Create only) 8-tab Forge
+        └─ forge/character_creation.md   (Create only) 9-tab Forge (leads with Identity)
               ├─ forge/morphus_creation.md   Tab 6 Morphus Sub-Forge (Nightbane)
               └─ universal_forge_navigation_engine.md   Continue, colors, yellow/red
                     └─ character_spawn_handoff.md   Tab 8 confirm → live sheet
@@ -24,7 +24,7 @@ App Launch
 | Document | Scope |
 |----------|--------|
 | [app_viewport_launcher.md](./app_viewport_launcher.md) | Gate Check: launcher viewport, open vs create, genre manifest, `creationGenreId` / `hostGenreId` |
-| [forge/character_creation.md](./forge/character_creation.md) | Eight-tab Forge sequence, alignment Tab 1 vs 8, conflict/yellow rules |
+| [forge/character_creation.md](./forge/character_creation.md) | Forge tab sequence (leading Identity tab + eight step tabs), alignment Tab 1 vs 8, conflict/yellow rules |
 | [forge/morphus_creation.md](./forge/morphus_creation.md) | Morphus Sub-Forge nested in Tab 6 (Nightbane) |
 | [universal_forge_navigation_engine.md](./universal_forge_navigation_engine.md) | Generic Forge engine: tab colors, Continue, Sub-Forges |
 | [character_spawn_handoff.md](./character_spawn_handoff.md) | Spawn modal, `applySpawnSheetHandoff`, `isFinalized`, persistence |

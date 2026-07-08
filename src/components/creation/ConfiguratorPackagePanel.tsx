@@ -167,12 +167,14 @@ export function ConfiguratorPackagePanel({
   specializationId,
   morphus,
   panelStyle,
+  placement = 'left',
 }: {
   race: Race | undefined
   occ: PalladiumOcc | undefined
   specializationId: string | null | undefined
   morphus: boolean
   panelStyle: string
+  placement?: 'left' | 'right'
 }) {
   const summary = useMemo(
     () =>
@@ -190,9 +192,14 @@ export function ConfiguratorPackagePanel({
   const subStyle = morphus ? 'text-violet-200/90' : 'text-slate-600'
   const dividerClass = morphus ? 'border-violet-500' : 'border-slate-900'
 
+  const edgeBorder =
+    placement === 'left'
+      ? 'lg:border-r lg:pr-4'
+      : 'lg:border-l lg:pl-4'
+
   return (
     <aside
-      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:max-h-full lg:w-80 lg:border-l lg:pl-4 lg:pt-0 xl:w-96 ${
+      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:max-h-full lg:w-80 lg:border-t-0 lg:pt-0 xl:w-96 ${edgeBorder} ${
         morphus ? 'border-violet-800' : 'border-slate-200 dark:border-slate-700'
       }`}
       aria-label="Race and O.C.C. package details"

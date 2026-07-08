@@ -61,7 +61,7 @@ Per form branch (`finalizeFormBranch`):
 
 | `isFinalized` | Behavior |
 |---------------|----------|
-| `false` | Renders `CreationFlowShell` (eight-tab Forge) below core sheet sections |
+| `false` | Renders `CreationFlowShell` (Forge: Identity tab + eight step tabs) at the top of the creation viewport (global header hidden) |
 | `true` | Hides Forge; shows finalized banner, **Armory**, **Inventory**; combat HUD sidebar resizable |
 
 Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table floors exist.

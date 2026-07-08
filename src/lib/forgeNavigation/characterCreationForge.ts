@@ -82,7 +82,7 @@ export const CHARACTER_CREATION_TAB_LABELS: Record<
   CharacterCreationForgeTabId,
   string
 > = {
-  tab1_configurator: 'Race & O.C.C.',
+  tab1_configurator: 'Identity',
   tab2_attributes: 'Attributes',
   tab3_psionic: 'Random Psionics',
   tab4_skills: 'Skills',
@@ -97,7 +97,7 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
   CharacterCreationForgeTabId,
   string
 > = {
-  tab1_configurator: 'Step 2: Race & O.C.C.',
+  tab1_configurator: 'Step 1: Identity',
   tab2_attributes: 'Phase I: Attribute Pool & Allocation',
   tab3_psionic: 'Step 2.5: Random Psionics',
   tab4_skills: 'Step 3: Skill Engine',
@@ -108,6 +108,7 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
 }
 
 const LEGACY_FORGE_TAB_IDS: Record<string, CharacterCreationForgeTabId> = {
+  tab0_identity: 'tab1_configurator',
   tab5_traits: 'tab6_traits',
   tab6_abilities: 'tab7_abilities',
   tab7_review: 'tab8_review',
@@ -146,6 +147,9 @@ function migrateForgeCompletionState(
       delete nextSnapshots[legacy as CharacterCreationForgeTabId]
     }
   }
+
+  delete nextCompleted['tab0_identity' as CharacterCreationForgeTabId]
+  delete nextSnapshots['tab0_identity' as CharacterCreationForgeTabId]
 
   return { completed: nextCompleted, snapshots: nextSnapshots }
 }

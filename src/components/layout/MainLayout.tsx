@@ -37,10 +37,6 @@ export function MainLayout() {
     hostGenreId,
     saveCharacter,
     returnToLauncher,
-    resetCreation,
-    saveCreationForLater,
-    canSaveCreationForLater,
-    leaveCreationWithoutSaving,
     morphusSurfaceType,
     setMorphusSurfaceType,
     morphusStanceType,
@@ -144,6 +140,7 @@ export function MainLayout() {
           </p>
         </div>
       ) : null}
+      {!showCreation ? (
       <header
         className="sticky top-0 z-20 border-b-2 px-4 py-3 backdrop-blur-sm"
         style={{
@@ -233,76 +230,28 @@ export function MainLayout() {
           </div>
 
           <div className="flex shrink-0 flex-wrap items-center gap-2">
-            {showCreation ? (
-              <>
-                <button
-                  type="button"
-                  onClick={resetCreation}
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    morphusActive
-                      ? 'border-amber-500/70 bg-amber-950/40 text-amber-200 hover:bg-amber-900/50'
-                      : 'border-amber-500 bg-amber-50 text-amber-950 hover:bg-amber-100'
-                  }`}
-                >
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  onClick={saveCreationForLater}
-                  disabled={!canSaveCreationForLater}
-                  title={
-                    canSaveCreationForLater
-                      ? 'Save this draft and return to the portal'
-                      : 'Continue past Race & O.C.C. before saving for later'
-                  }
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    !canSaveCreationForLater
-                      ? 'cursor-not-allowed border-slate-400/50 bg-slate-100/80 text-slate-400 opacity-60 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-500'
-                      : morphusActive
-                        ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
-                        : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
-                  }`}
-                >
-                  Save for Later
-                </button>
-                <button
-                  type="button"
-                  onClick={leaveCreationWithoutSaving}
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    morphusActive
-                      ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
-                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
-                  }`}
-                >
-                  Leave without Saving
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={saveCharacter}
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    morphusActive
-                      ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
-                      : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
-                  }`}
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={returnToLauncher}
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    morphusActive
-                      ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
-                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
-                  }`}
-                >
-                  Portal
-                </button>
-              </>
-            )}
+            <button
+              type="button"
+              onClick={saveCharacter}
+              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                morphusActive
+                  ? 'border-emerald-500/70 bg-emerald-950/50 text-emerald-200 hover:bg-emerald-900/60'
+                  : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
+              }`}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={returnToLauncher}
+              className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
+                morphusActive
+                  ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
+              }`}
+            >
+              Portal
+            </button>
           {supportsDualForm ? (
             <button
               type="button"
@@ -329,6 +278,7 @@ export function MainLayout() {
           </div>
         </div>
       </header>
+      ) : null}
 
       {character.isFinalized && levelUpQueue.length > 0 && character.occ?.xpTable?.floors?.length ? (
         <LevelUpModal

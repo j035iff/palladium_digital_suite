@@ -2,7 +2,9 @@
 
 ## Overview
 
-The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All eight primary tabs are permanently rendered in the header viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
+The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All primary tabs are permanently rendered at the top of the creation viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
+
+**No global header during creation.** The sticky app header is **hidden while creating a character**. The creation viewport uses a **three-column layout** on wide screens: **left** = per-tab “selected” summary panels (package details, selected skills, selected powers, selected traits), **center** = interactive forge for the active tab, **right** = **Live Ledger**. Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open from a **Session** button (popover panel) at the top-right of the tab bar. The global header (with **Become Morphus**) returns only on the finalized live sheet. Form switching during creation remains available via the Live Ledger's Facade/Morphus toggle once unlocked.
 
 **Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
 
@@ -40,18 +42,20 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ---
 
-## The 8-Step Sequence
+## The Tab Sequence
 
-### Tab 1: Race, O.C.C., & Alignment Selection
+> **Tab IDs vs. labels.** The first tab is labeled **Identity** in the UI but keeps the historical ID `tab1_configurator`. Continue on Identity requires only a valid **Race + O.C.C.** pair; identity profile fields (name, sex, age, etc.) are optional for Continue and enforced at spawn.
 
-- **Engine Action:** Hosts the Tri-Directional Configuration Matrix.
-- **Black (N/A) Condition:** Never. This tab is universally required.
-- **Completion Criteria (Turns Green):** A valid, non-conflicting Race and O.C.C. pair is actively selected. **Alignment is not required** for Continue. The user clicks **Continue**.
-- **Upstream Reactivity:** As the foundational tab, changing Race or O.C.C. after downstream tabs were completed will flag those tabs **Yellow** (snapshot mismatch) or **Red** (invalid local state) without erasing stored picks. The user repairs top-down.
+### Tab 1: Identity (`tab1_configurator`)
+
+- **Engine Action:** Combined identity profile (`IdentityHeader` with `variant="tab"`) **plus** the Tri-Directional Configuration Matrix (Race / O.C.C.). **Package details** (racial/O.C.C. grants summary) render in the **left** summary column; matrix pickers in the **center**.
+- **Black (N/A) Condition:** Never.
+- **Completion Criteria (Turns Green):** A valid, non-conflicting Race and O.C.C. pair is actively selected. **Identity profile fields and alignment are not required** for Continue. The user clicks **Continue**.
+- **Upstream Reactivity:** Changing Race or O.C.C. after downstream tabs were completed flags those tabs **Yellow** or **Red** without erasing stored picks. The user repairs top-down.
 
 ### Tab 2: Attribute Allocation
 
-- **Engine Action:** Hosts the Attribute Pool interface, the **Live Ledger** (side panel), and O.C.C. Variable Bonus Resolution on the same tab.
+- **Engine Action:** Hosts the Attribute Pool interface and O.C.C. Variable Bonus Resolution. **Live Ledger** is in the **right** column (creation shell), not duplicated per tab.
 - **Black (N/A) Condition:** Never.
 - **Completion Criteria (Turns Green):**
   - All 8 primary attributes are assigned with valid pool values.
@@ -113,6 +117,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 |---------|------|
 | Tab order, validators, snapshots | `src/lib/forgeNavigation/characterCreationForge.ts` |
 | Color states, Continue, top-down repair | `src/lib/forgeNavigation/engine.ts` |
+| Tab 0 Identity form + Session popover + shell layout | `src/components/layout/IdentityHeader.tsx`, `src/components/creation/CreationFlowShell.tsx`, `src/components/creation/ConfiguratorPanel.tsx` |
 | Race/O.C.C. invalidation (retain data) | `src/lib/creationInvalidate.ts` |
 | Pending dice scope (`primary` / `morphus`) | `src/lib/spawnDiceBlocks.ts`, `src/lib/pendingDiceLedger.ts` |
 | Shell UI | `src/components/creation/CreationFlowShell.tsx` |

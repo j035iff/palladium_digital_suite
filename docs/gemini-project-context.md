@@ -106,9 +106,9 @@ MainLayout (live sheet)
   └─ Combat HUD (APM, weapon slots, strikes, reload)
 ```
 
-### Character Creation Forge (8 tabs)
+### Character Creation Forge (9 tabs: Identity + 8 step tabs)
 
-See `docs/forge/character_creation.md` and `docs/universal_forge_navigation_engine.md`.
+Leads with a combined **Identity** tab (`tab1_configurator`: profile + Race/O.C.C.); the global app header is hidden during creation; session actions use a **Session** popover; Live Ledger is on the **right**. See `docs/forge/character_creation.md` and `docs/universal_forge_navigation_engine.md`.
 
 | Tab | Purpose |
 |-----|---------|
@@ -337,7 +337,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 
 ## Current development focus
 
-**Primary:** Nightbane **Character Creation Forge** (8-tab flow), **Live Ledger / stat engine** alignment, live sheet, Morphus automation, combat HUD.
+**Primary:** Nightbane **Character Creation Forge** (9-tab flow: Identity + 8 step tabs), **Live Ledger / stat engine** alignment, live sheet, Morphus automation, combat HUD.
 
 **Recently stable / complete:**
 
@@ -371,7 +371,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
 | `docs/app_viewport_launcher.md` | Gate Check — Open vs Create, genre manifest, viewports |
-| `docs/forge/character_creation.md` | Character Creation Forge — **8-tab** sequence & state |
+| `docs/forge/character_creation.md` | Character Creation Forge — tab sequence & state (Identity tab + eight step tabs) |
 | `docs/forge/morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
 | `docs/character_creation.md` | Documentation map (links above + configurator tiers) |
@@ -453,4 +453,4 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 
 ## One-sentence summary
 
-We are building a schema-driven Palladium Megaverse character companion that automates Nightbane’s Facade/Morphus dual-form sheet, hosts a validated content library (skills, talents, morphus tables, magic, psionics), and exposes an 8-tab creation forge with live ledger preview, additive saves, abilities, inventory, and a fast combat HUD — with genre middleware so the same engine can eventually host Rifts and Fantasy.
+We are building a schema-driven Palladium Megaverse character companion that automates Nightbane’s Facade/Morphus dual-form sheet, hosts a validated content library (skills, talents, morphus tables, magic, psionics), and exposes a 9-tab creation forge (leading Identity tab) with live ledger preview, additive saves, abilities, inventory, and a fast combat HUD — with genre middleware so the same engine can eventually host Rifts and Fantasy.

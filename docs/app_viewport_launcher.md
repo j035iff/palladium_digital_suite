@@ -7,7 +7,7 @@ This specification covers **application bootstrap and session initialization** �
 Related docs:
 
 - [Master flow — runtime pipeline](./master_flow.md) (ingest → `hostGenreId` → `genreTransformer` → UI)
-- [Character Creation Forge](./forge/character_creation.md) (eight-tab flow after **Create Character**)
+- [Character Creation Forge](./forge/character_creation.md) (Identity tab + eight step tabs, after **Create Character**)
 - [Character spawn handoff](./character_spawn_handoff.md) (lock-in after Tab 8)
 
 ---

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState, type ReactNode } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -46,9 +46,9 @@ const DevSkipToMorphusButton = import.meta.env.DEV
   : null
 
 /**
- * Step 2 — Race / O.C.C. matrix with three-tier rendering; alignment lives in the tab header.
+ * Step 1 — Identity: profile fields plus Race / O.C.C. matrix (alignment in profile).
  */
-export function ConfiguratorPanel() {
+export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
   const {
     character,
     activeForm,
@@ -331,11 +331,21 @@ export function ConfiguratorPanel() {
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+      <ConfiguratorPackagePanel
+        race={activeRace}
+        occ={activeOcc ?? undefined}
+        specializationId={character.occSpecializationId}
+        morphus={morphus}
+        panelStyle={panelStyle}
+        placement="left"
+      />
+
       <section
         className="flex min-h-0 min-w-0 flex-1 flex-col"
         aria-labelledby="forge-tab-page-heading"
       >
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pl-0.5">
+      {headerSlot ? <div className="mb-6">{headerSlot}</div> : null}
       {DevSkipToMorphusButton ? (
         <Suspense fallback={null}>
           <DevSkipToMorphusButton />
@@ -727,14 +737,6 @@ export function ConfiguratorPanel() {
       ) : null}
         </div>
       </section>
-
-      <ConfiguratorPackagePanel
-        race={activeRace}
-        occ={activeOcc ?? undefined}
-        specializationId={character.occSpecializationId}
-        morphus={morphus}
-        panelStyle={panelStyle}
-      />
     </div>
   )
 }

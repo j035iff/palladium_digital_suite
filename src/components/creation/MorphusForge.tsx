@@ -121,7 +121,7 @@ export function MorphusForge() {
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row-reverse lg:items-stretch">
         <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain pr-0.5">
           {activeSubTab === 'crossroads' ? (
             <MorphusCrossroadsTab

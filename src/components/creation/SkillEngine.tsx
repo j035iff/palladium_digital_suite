@@ -1340,7 +1340,7 @@ export function SkillEngine() {
 
   return (
 
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row lg:items-stretch">
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-4 lg:flex-row-reverse lg:items-stretch">
 
       <section
         className="flex min-h-0 min-w-0 flex-1 flex-col"

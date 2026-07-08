@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useCharacter } from '../../context/CharacterContext'
 
-import { OccSelector } from './OccSelector'
+import { ConfiguratorPanel } from './ConfiguratorPanel'
 
 import { AttributeForge } from './AttributeForge'
 
@@ -21,6 +21,8 @@ import { CreationReviewFinalize } from './CreationReviewFinalize'
 import { OccVariableBonusPhase } from './OccVariableBonusPhase'
 
 import { CreationAttributeHeader } from './CreationAttributeHeader'
+
+import { IdentityHeader } from '../layout/IdentityHeader'
 
 import { LiveLedger } from './LiveLedger'
 import {
@@ -61,13 +63,34 @@ import { listCharacterCreationTabRequirements } from '../../lib/forgeNavigation/
 
 
 
-function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
+function ForgeTabBody({
+  tabId,
+  morphusActive,
+  creationGenreId,
+  hostGenreId,
+}: {
+  tabId: CharacterCreationForgeTabId
+  morphusActive: boolean
+  creationGenreId: string
+  hostGenreId: string
+}) {
 
   switch (tabId) {
 
     case 'tab1_configurator':
 
-      return <OccSelector />
+      return (
+        <ConfiguratorPanel
+          headerSlot={
+            <IdentityHeader
+              variant="tab"
+              morphusActive={morphusActive}
+              creationGenreId={creationGenreId}
+              hostGenreId={hostGenreId}
+            />
+          }
+        />
+      )
 
     case 'tab2_attributes':
 
@@ -119,6 +142,103 @@ function ForgeTabBody({ tabId }: { tabId: CharacterCreationForgeTabId }) {
 
 
 
+function SessionMenu({
+  canSaveForLater,
+  onReset,
+  onSaveForLater,
+  onLeave,
+}: {
+  canSaveForLater: boolean
+  onReset: () => void
+  onSaveForLater: () => void
+  onLeave: () => void
+}) {
+  const [open, setOpen] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    window.addEventListener('mousedown', onPointerDown)
+    return () => window.removeEventListener('mousedown', onPointerDown)
+  }, [open])
+
+  const saveHint = canSaveForLater
+    ? 'Save this draft and return to the portal.'
+    : 'Continue past Identity (Race & O.C.C.) before saving for later.'
+
+  return (
+    <div ref={rootRef} className="relative shrink-0">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={() => setOpen((prev) => !prev)}
+        className="rounded-lg border-2 border-slate-300 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-700 outline-none transition hover:border-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-400"
+      >
+        Session
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          aria-label="Session actions"
+          className="absolute right-0 top-full z-30 mt-1.5 w-60 rounded-lg border-2 border-slate-300 bg-white p-2 shadow-lg dark:border-slate-600 dark:bg-slate-900"
+        >
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false)
+              onReset()
+            }}
+            className="w-full rounded-md border border-amber-500/70 bg-amber-50 px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-amber-950 hover:bg-amber-100 dark:border-amber-500/50 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/50"
+          >
+            Reset
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            disabled={!canSaveForLater}
+            title={saveHint}
+            onClick={() => {
+              if (!canSaveForLater) return
+              setOpen(false)
+              onSaveForLater()
+            }}
+            className={`mt-2 w-full rounded-md border px-3 py-2 text-left text-xs font-bold uppercase tracking-wide ${
+              !canSaveForLater
+                ? 'cursor-not-allowed border-slate-300/60 bg-slate-100 text-slate-400 opacity-70 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-500'
+                : 'border-emerald-600 bg-emerald-50 text-emerald-900 hover:bg-emerald-100 dark:border-emerald-500/70 dark:bg-emerald-950/50 dark:text-emerald-200 dark:hover:bg-emerald-900/60'
+            }`}
+          >
+            Save for Later
+          </button>
+          {!canSaveForLater ? (
+            <p className="mt-1 px-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+              {saveHint}
+            </p>
+          ) : null}
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false)
+              onLeave()
+            }}
+            className="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-slate-700 hover:border-slate-400 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-400"
+          >
+            Leave without Saving
+          </button>
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 export function CreationFlowShell({
 
   onSpawnFinalize,
@@ -145,9 +265,21 @@ export function CreationFlowShell({
 
     morphusLedgerUnlocked,
 
+    creationGenreId,
+
+    hostGenreId,
+
     setCreationForgeTab,
 
     markCreationForgeTabComplete,
+
+    resetCreation,
+
+    saveCreationForLater,
+
+    canSaveCreationForLater,
+
+    leaveCreationWithoutSaving,
 
   } = useCharacter()
 
@@ -226,24 +358,6 @@ export function CreationFlowShell({
 
     <div className="flex h-full min-h-0 flex-1 flex-col md:flex-row md:gap-0">
 
-      <aside
-
-        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-b shadow-sm md:max-h-none md:w-54 md:border-b-0 md:border-r lg:w-60 xl:w-72 ${
-          morphusLedger
-            ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
-            : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
-        }`}
-
-        aria-label="Live ledger panel"
-
-      >
-
-        <LiveLedger variant="sidebar" />
-
-      </aside>
-
-
-
       <SupernaturalAbilitiesForgeProvider>
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -256,15 +370,31 @@ export function CreationFlowShell({
 
           >
 
-            <div className="pt-1">
+            <div className="flex items-start justify-between gap-3 pt-1 pr-4">
 
-              <ForgeNavigationBar
+              <div className="min-w-0 flex-1">
 
-                tabs={nav.tabs}
+                <ForgeNavigationBar
 
-                activeTabId={activeTabId}
+                  tabs={nav.tabs}
 
-                onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+                  activeTabId={activeTabId}
+
+                  onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+
+                />
+
+              </div>
+
+              <SessionMenu
+
+                canSaveForLater={canSaveCreationForLater}
+
+                onReset={resetCreation}
+
+                onSaveForLater={saveCreationForLater}
+
+                onLeave={leaveCreationWithoutSaving}
 
               />
 
@@ -409,7 +539,12 @@ export function CreationFlowShell({
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
               <ForgeTabInactiveShell inactive={tabInactive} className="flex min-h-0 flex-1 flex-col overflow-hidden">
-                <ForgeTabBody tabId={activeTabId} />
+                <ForgeTabBody
+                  tabId={activeTabId}
+                  morphusActive={morphusLedger}
+                  creationGenreId={creationGenreId}
+                  hostGenreId={hostGenreId}
+                />
               </ForgeTabInactiveShell>
 
             </div>
@@ -417,7 +552,12 @@ export function CreationFlowShell({
           ) : (
 
             <ForgeTabInactiveShell inactive={tabInactive}>
-              <ForgeTabBody tabId={activeTabId} />
+              <ForgeTabBody
+                tabId={activeTabId}
+                morphusActive={morphusLedger}
+                creationGenreId={creationGenreId}
+                hostGenreId={hostGenreId}
+              />
             </ForgeTabInactiveShell>
 
           )}
@@ -427,6 +567,22 @@ export function CreationFlowShell({
         </div>
 
       </SupernaturalAbilitiesForgeProvider>
+
+      <aside
+
+        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-t shadow-sm md:max-h-none md:w-54 md:border-t-0 md:border-l lg:w-60 xl:w-72 ${
+          morphusLedger
+            ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
+            : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
+        }`}
+
+        aria-label="Live ledger panel"
+
+      >
+
+        <LiveLedger variant="sidebar" />
+
+      </aside>
 
     </div>
 

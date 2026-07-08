@@ -20,8 +20,10 @@ type IdentityHeaderProps = {
   morphusActive: boolean
   creationGenreId: string
   hostGenreId: string
-  collapsed: boolean
-  onCollapsedChange: (collapsed: boolean) => void
+  /** 'header' = sticky top chrome with collapse toggle; 'tab' = full forge tab body. */
+  variant?: 'header' | 'tab'
+  collapsed?: boolean
+  onCollapsedChange?: (collapsed: boolean) => void
 }
 
 function identityToggleButtonClass(morphusActive: boolean): string {
@@ -156,7 +158,8 @@ export function IdentityHeader({
   morphusActive,
   creationGenreId,
   hostGenreId,
-  collapsed,
+  variant = 'header',
+  collapsed: collapsedProp = false,
   onCollapsedChange,
 }: IdentityHeaderProps) {
   const {
@@ -166,6 +169,10 @@ export function IdentityHeader({
     setCharacterName,
     patchIdentityProfile,
   } = useCharacter()
+
+  const isTab = variant === 'tab'
+  // The tab variant is always fully expanded; only the header chrome can collapse.
+  const collapsed = isTab ? false : collapsedProp
 
   const profile = normalizeIdentityProfile(character.identityProfile)
   const patch = (fields: Partial<CharacterIdentityProfile>) => patchIdentityProfile(fields)
@@ -202,23 +209,25 @@ export function IdentityHeader({
   return (
     <div className="flex min-w-0 flex-1 gap-4">
       <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-2">
-          <p
-            className="text-[10px] font-semibold uppercase tracking-widest"
-            style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-          >
-            Identity
-          </p>
-          <button
-            type="button"
-            className={toggleButtonClass}
-            aria-expanded={!collapsed}
-            aria-controls="identity-header-details"
-            onClick={() => onCollapsedChange(!collapsed)}
-          >
-            {collapsed ? 'Expand' : 'Minimize'}
-          </button>
-        </div>
+        {isTab ? null : (
+          <div className="flex items-center justify-between gap-2">
+            <p
+              className="text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
+            >
+              Identity
+            </p>
+            <button
+              type="button"
+              className={toggleButtonClass}
+              aria-expanded={!collapsed}
+              aria-controls="identity-header-details"
+              onClick={() => onCollapsedChange?.(!collapsed)}
+            >
+              {collapsed ? 'Expand' : 'Minimize'}
+            </button>
+          </div>
+        )}
 
         {collapsed ? (
           <div

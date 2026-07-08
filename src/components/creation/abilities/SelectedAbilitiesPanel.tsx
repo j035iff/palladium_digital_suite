@@ -171,7 +171,7 @@ export function SelectedAbilitiesPanel({
 
   return (
     <aside
-      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-64 lg:border-l lg:pl-4 lg:pt-0 xl:w-72 ${
+      className={`flex min-h-0 w-full shrink-0 flex-col border-t pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72 ${
         morphus
           ? 'border-violet-800'
           : 'border-slate-200 dark:border-slate-700'
