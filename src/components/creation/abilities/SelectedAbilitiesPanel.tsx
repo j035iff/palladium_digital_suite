@@ -203,7 +203,7 @@ export function SelectedAbilitiesPanel({
           </p>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain break-words p-3">
           {selectedIds.length === 0 ? (
             <p className="text-sm opacity-60">Nothing selected yet.</p>
           ) : (

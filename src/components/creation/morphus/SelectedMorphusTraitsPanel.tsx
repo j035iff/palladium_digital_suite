@@ -217,7 +217,7 @@ export function SelectedMorphusTraitsPanel({
           ) : null}
         </div>
 
-        <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-3">
+        <div className="min-h-0 min-w-0 flex-1 space-y-4 overflow-x-hidden overflow-y-auto overscroll-contain break-words p-3">
           {sections.length === 0 ? (
             <p className="text-sm opacity-60">
               Choose Path 1 or Path 2 on Crossroads to see your trait slots.

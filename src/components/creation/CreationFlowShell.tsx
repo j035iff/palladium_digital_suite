@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from 'react'
 
 import { useCharacter } from '../../context/CharacterContext'
 
@@ -68,6 +74,17 @@ import {
 import {
   listCharacterCreationTabRequirements,
 } from '../../lib/forgeNavigation/characterCreationTabRequirements'
+
+/** Default / clamp widths for the creation three-column shell (percent of content). */
+const DEFAULT_LEFT_COLUMN_PCT = 25
+const DEFAULT_RIGHT_COLUMN_PCT = 20
+const MIN_SIDE_COLUMN_PCT = 10
+const MIN_CENTER_COLUMN_PCT = 20
+
+function clampLeftColumnPct(next: number, rightPct: number): number {
+  const max = 100 - rightPct - MIN_CENTER_COLUMN_PCT
+  return Math.max(MIN_SIDE_COLUMN_PCT, Math.min(max, next))
+}
 
 
 
@@ -286,6 +303,63 @@ export function CreationFlowShell({
 
   const shellPanelMorphus = supportsDualForm && activeForm === 'morphus'
 
+  const [leftColumnPct, setLeftColumnPct] = useState(DEFAULT_LEFT_COLUMN_PCT)
+  const [ledgerCollapsed, setLedgerCollapsed] = useState(false)
+  const [resizingLeft, setResizingLeft] = useState(false)
+  const shellRowRef = useRef<HTMLDivElement | null>(null)
+
+  const rightColumnPct = ledgerCollapsed ? 0 : DEFAULT_RIGHT_COLUMN_PCT
+  const centerColumnPct = 100 - leftColumnPct - rightColumnPct
+
+  useEffect(() => {
+    if (ledgerCollapsed) return
+    setLeftColumnPct((prev) =>
+      clampLeftColumnPct(prev, DEFAULT_RIGHT_COLUMN_PCT),
+    )
+  }, [ledgerCollapsed])
+
+  const onLeftColumnResizeStart = (e: ReactMouseEvent) => {
+    if (e.button !== 0) return
+    e.preventDefault()
+    const row = shellRowRef.current
+    if (!row) return
+    const startX = e.clientX
+    const startLeft = leftColumnPct
+    const handles = row.querySelectorAll('[data-forge-column-handle]')
+    let handleWidth = 0
+    handles.forEach((el) => {
+      handleWidth += (el as HTMLElement).getBoundingClientRect().width
+    })
+    const tray = row.querySelector('[data-forge-ledger-tray]')
+    if (tray) {
+      handleWidth += (tray as HTMLElement).getBoundingClientRect().width
+    }
+    const contentWidth = row.getBoundingClientRect().width - handleWidth
+    if (contentWidth <= 0) return
+
+    setResizingLeft(true)
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+
+    const onMove = (ev: MouseEvent) => {
+      const dxPct = ((ev.clientX - startX) / contentWidth) * 100
+      setLeftColumnPct(
+        clampLeftColumnPct(startLeft + dxPct, rightColumnPct),
+      )
+    }
+
+    const onUp = () => {
+      setResizingLeft(false)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+    }
+
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }
+
 
 
   const forgeCtx = useMemo(
@@ -358,6 +432,7 @@ export function CreationFlowShell({
     activeTabId === 'tab7_abilities'
 
   const shortViewport = useMediaQuery(FORGE_SHORT_VIEWPORT_QUERY)
+  const splitColumns = useMediaQuery('(min-width: 768px)')
 
   const unsatisfiedRequirements = activeRequirements.filter((req) => !req.satisfied)
   const allRequirementsSatisfied =
@@ -443,23 +518,13 @@ export function CreationFlowShell({
   const bannerRequirements = bannerCollapsing ? collapseSnapshot : activeRequirements
 
   return (
-
-    <div className="flex h-full min-h-0 flex-1 flex-col md:flex-row md:gap-0">
-
-      <SupernaturalAbilitiesForgeProvider>
-
-        <CreationForgeLeftSlotProvider>
-
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-
+    <SupernaturalAbilitiesForgeProvider>
+      <CreationForgeLeftSlotProvider>
+        <div className="flex h-full min-h-0 flex-1 flex-col">
           <div
-
             className="shrink-0 border-b border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-950"
-
             aria-label="Creation forge frame"
-
           >
-
             <div
               className={`flex items-start justify-between gap-3 border-b border-slate-200 bg-white ${
                 shortViewport ? 'px-3 py-1' : 'px-4 py-1.5'
@@ -495,7 +560,9 @@ export function CreationFlowShell({
                   continueTooltip={nav.continueTooltip}
                   continueTargetRef={continueTargetRef}
                   onContinueTab={() => handleContinue()}
-                  onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+                  onSelectTab={(id) =>
+                    setCreationForgeTab(id as CharacterCreationForgeTabId)
+                  }
                 />
               </div>
               <div className="flex shrink-0 flex-nowrap items-center justify-end gap-1.5">
@@ -540,153 +607,209 @@ export function CreationFlowShell({
                 {pageTitle}
               </h2>
             )}
-
           </div>
 
-
-
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
-
-          <aside
-            className={`hidden min-h-0 shrink-0 flex-col overflow-hidden border-slate-300 p-4 pr-3 md:flex md:h-full md:w-80 md:flex-col md:border-r xl:w-96 ${creationForgeLeftColumnClass(shellPanelMorphus)} ${
-              shellPanelMorphus ? 'border-violet-300' : ''
-            }`}
-            aria-label="Forge summary panel"
-          >
-            <CreationForgeLeftSlot
-              activeTabId={activeTabId}
-              morphus={shellPanelMorphus}
-            />
-          </aside>
-
           <div
-            className={
-              denseTabBody
-                ? 'flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4'
-                : 'min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4'
-            }
+            ref={shellRowRef}
+            className="flex min-h-0 w-full flex-1 flex-col overflow-hidden md:flex-row"
           >
-
-          {nav.firstRepairTabId && nav.firstRepairTabId !== activeTabId ? (
-
-            <p
-
-              className="rounded-lg border border-amber-500/60 bg-amber-50 px-3 py-2 text-xs text-amber-950 dark:bg-amber-950/40 dark:text-amber-100"
-
-              role="status"
-
+            <aside
+              className={`hidden min-h-0 flex-col overflow-hidden border-slate-300 p-4 pr-2 text-[11px] leading-snug md:flex md:h-full md:min-w-0 md:flex-col [&_h3]:text-[10px] [&_h4]:text-[10px] [&_.text-sm]:text-[11px] [&_.text-xs]:text-[10px] ${creationForgeLeftColumnClass(shellPanelMorphus)} ${
+                shellPanelMorphus ? 'border-violet-300' : ''
+              }`}
+              style={
+                splitColumns
+                  ? {
+                      flexGrow: leftColumnPct,
+                      flexShrink: 1,
+                      flexBasis: 0,
+                      minWidth: 0,
+                    }
+                  : undefined
+              }
+              aria-label="Forge summary panel"
             >
+              <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-contain break-words">
+                <CreationForgeLeftSlot
+                  activeTabId={activeTabId}
+                  morphus={shellPanelMorphus}
+                />
+              </div>
+            </aside>
 
-              Resolve &quot;
-
-              {nav.tabs.find((t) => t.id === nav.firstRepairTabId)?.label}&quot; first
-
-              (top-down), then continue through remaining flagged tabs.
-
-            </p>
-
-          ) : null}
-
-
-
-          {activeView?.visual === 'na' && activeView.naReason ? (
-            <ForgeTabNaBanner message={activeView.naReason} />
-          ) : null}
-
-          {activeView?.conflictReason ? (
-
-            <p
-
-              className="rounded-lg border border-amber-600/50 bg-amber-950/30 px-3 py-2 text-xs text-amber-100"
-
-              role="alert"
-
+            {splitColumns ? (
+            <div
+              role="separator"
+              data-forge-column-handle="left"
+              aria-orientation="vertical"
+              aria-label="Resize summary panel"
+              title="Drag to resize columns"
+              aria-valuemin={MIN_SIDE_COLUMN_PCT}
+              aria-valuemax={100 - rightColumnPct - MIN_CENTER_COLUMN_PCT}
+              aria-valuenow={Math.round(leftColumnPct)}
+              aria-valuetext={`${Math.round(leftColumnPct)} percent wide`}
+              onMouseDown={onLeftColumnResizeStart}
+              className={`group relative z-20 h-full min-h-0 w-3.5 shrink-0 grow-0 cursor-col-resize flex-col items-center justify-center border-x border-slate-400/70 bg-slate-200/90 shadow-inner select-none touch-none dark:border-slate-500 dark:bg-slate-700/85 md:flex md:self-stretch ${
+                resizingLeft
+                  ? 'bg-blue-300/80 dark:bg-violet-700/80'
+                  : 'hover:bg-slate-300 dark:hover:bg-slate-600'
+              }`}
             >
-
-              {activeView.conflictReason}
-
-            </p>
-
-          ) : null}
-
-
-
-          {activeTabId === 'tab8_review' ? (
-
-            <>
-
-              <CreationReviewFinalize
-
-                onSpawnConfirm={(finalize) => {
-
-                  if (onSpawnFinalize) onSpawnFinalize(finalize)
-
-                  else finalize()
-
-                }}
-
+              <span
+                aria-hidden
+                className="h-10 w-1 rounded-full bg-slate-500/70 group-hover:bg-slate-700 dark:bg-slate-300/70 dark:group-hover:bg-white"
               />
+            </div>
+            ) : null}
 
-              <p className="text-xs text-slate-500">
+            <div
+              className={
+                denseTabBody
+                  ? 'flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-4'
+                  : 'min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4 pt-4'
+              }
+              style={
+                splitColumns
+                  ? {
+                      flexGrow: centerColumnPct,
+                      flexShrink: 1,
+                      flexBasis: 0,
+                      minWidth: 0,
+                    }
+                  : undefined
+              }
+            >
+              {nav.firstRepairTabId && nav.firstRepairTabId !== activeTabId ? (
+                <p
+                  className="rounded-lg border border-amber-500/60 bg-amber-50 px-3 py-2 text-xs text-amber-950 dark:bg-amber-950/40 dark:text-amber-100"
+                  role="status"
+                >
+                  Resolve &quot;
+                  {nav.tabs.find((t) => t.id === nav.firstRepairTabId)?.label}
+                  &quot; first (top-down), then continue through remaining flagged
+                  tabs.
+                </p>
+              ) : null}
 
-                Review is a summary only — all dice must be finalized on earlier tabs
-                before you can spawn.
+              {activeView?.visual === 'na' && activeView.naReason ? (
+                <ForgeTabNaBanner message={activeView.naReason} />
+              ) : null}
 
-              </p>
+              {activeView?.conflictReason ? (
+                <p
+                  className="rounded-lg border border-amber-600/50 bg-amber-950/30 px-3 py-2 text-xs text-amber-100"
+                  role="alert"
+                >
+                  {activeView.conflictReason}
+                </p>
+              ) : null}
 
-            </>
-
-          ) : activeTabId === 'tab4_skills' ||
-            activeTabId === 'tab1_configurator' ||
-            activeTabId === 'tab6_traits' ||
-            activeTabId === 'tab7_abilities' ? (
-
-            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-
-              <ForgeTabInactiveShell inactive={tabInactive} className="flex min-h-0 flex-1 flex-col overflow-hidden">
-                <ForgeTabBody tabId={activeTabId} />
-              </ForgeTabInactiveShell>
-
+              {activeTabId === 'tab8_review' ? (
+                <>
+                  <CreationReviewFinalize
+                    onSpawnConfirm={(finalize) => {
+                      if (onSpawnFinalize) onSpawnFinalize(finalize)
+                      else finalize()
+                    }}
+                  />
+                  <p className="text-xs text-slate-500">
+                    Review is a summary only — all dice must be finalized on
+                    earlier tabs before you can spawn.
+                  </p>
+                </>
+              ) : activeTabId === 'tab4_skills' ||
+                activeTabId === 'tab1_configurator' ||
+                activeTabId === 'tab6_traits' ||
+                activeTabId === 'tab7_abilities' ? (
+                <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                  <ForgeTabInactiveShell
+                    inactive={tabInactive}
+                    className="flex min-h-0 flex-1 flex-col overflow-hidden"
+                  >
+                    <ForgeTabBody tabId={activeTabId} />
+                  </ForgeTabInactiveShell>
+                </div>
+              ) : (
+                <ForgeTabInactiveShell inactive={tabInactive}>
+                  <ForgeTabBody tabId={activeTabId} />
+                </ForgeTabInactiveShell>
+              )}
             </div>
 
-          ) : (
+            {splitColumns ? (
+              <div
+                data-forge-ledger-tray
+                className={`flex h-full min-h-0 self-stretch border-l shadow-sm transition-[flex-grow] duration-200 ease-out ${
+                  morphusLedger
+                    ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
+                    : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
+                }`}
+                style={
+                  ledgerCollapsed
+                    ? { flexGrow: 0, flexShrink: 0, flexBasis: '2rem', width: '2rem' }
+                    : {
+                        flexGrow: DEFAULT_RIGHT_COLUMN_PCT,
+                        flexShrink: 1,
+                        flexBasis: 0,
+                        minWidth: 0,
+                      }
+                }
+              >
+                <button
+                  type="button"
+                  onClick={() => setLedgerCollapsed((prev) => !prev)}
+                  aria-expanded={!ledgerCollapsed}
+                  aria-controls="creation-live-ledger-tray"
+                  title={
+                    ledgerCollapsed
+                      ? 'Open Live Ledger'
+                      : 'Collapse Live Ledger'
+                  }
+                  className={`flex h-full w-8 shrink-0 flex-col items-center justify-center gap-2 border-0 px-1 text-[10px] font-bold uppercase tracking-wide outline-none transition focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 ${
+                    morphusLedger
+                      ? 'bg-violet-950/80 text-violet-100 hover:bg-violet-900'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <span aria-hidden className="text-sm leading-none">
+                    {ledgerCollapsed ? '‹' : '›'}
+                  </span>
+                  <span
+                    className="max-h-48 overflow-hidden whitespace-nowrap"
+                    style={{ writingMode: 'vertical-rl' }}
+                  >
+                    {ledgerCollapsed ? 'Live Ledger' : 'Hide'}
+                  </span>
+                </button>
 
-            <ForgeTabInactiveShell inactive={tabInactive}>
-              <ForgeTabBody tabId={activeTabId} />
-            </ForgeTabInactiveShell>
-
-          )}
-
+                <aside
+                  id="creation-live-ledger-tray"
+                  className={`min-h-0 min-w-0 overflow-hidden ${
+                    ledgerCollapsed ? 'hidden' : 'flex flex-1 flex-col'
+                  }`}
+                  aria-label="Live ledger panel"
+                  aria-hidden={ledgerCollapsed}
+                >
+                  <LiveLedger variant="sidebar" />
+                </aside>
+              </div>
+            ) : (
+              <aside
+                className={`flex max-h-[min(36vh,16rem)] min-h-0 flex-col border-t shadow-sm ${
+                  morphusLedger
+                    ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
+                    : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
+                }`}
+                aria-label="Live ledger panel"
+              >
+                <LiveLedger variant="sidebar" />
+              </aside>
+            )}
+          </div>
         </div>
-
-        </div>
-
-        </div>
-
-        </CreationForgeLeftSlotProvider>
-
-      </SupernaturalAbilitiesForgeProvider>
-
-      <aside
-
-        className={`flex max-h-[min(36vh,16rem)] min-h-0 shrink-0 flex-col border-t shadow-sm md:max-h-none md:w-60 md:border-t-0 md:border-l lg:w-60 xl:w-72 ${
-          morphusLedger
-            ? `${MORPHUS_LEDGER_BORDER_CLASS} ${MORPHUS_LEDGER_SURFACE_CLASS}`
-            : 'border-blue-200 bg-white dark:border-blue-600 dark:bg-slate-950'
-        }`}
-
-        aria-label="Live ledger panel"
-
-      >
-
-        <LiveLedger variant="sidebar" />
-
-      </aside>
-
-    </div>
-
+      </CreationForgeLeftSlotProvider>
+    </SupernaturalAbilitiesForgeProvider>
   )
-
 }
 
 

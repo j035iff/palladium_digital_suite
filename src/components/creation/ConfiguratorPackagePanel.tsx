@@ -233,7 +233,7 @@ export function ConfiguratorPackagePanel({
           </p>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain break-words p-3">
           {packageGroups.length === 0 ? (
             <p className={`text-xs opacity-60 ${subStyle}`}>
               Select a race to preview its package.

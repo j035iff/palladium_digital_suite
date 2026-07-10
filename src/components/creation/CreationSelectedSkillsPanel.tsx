@@ -80,7 +80,7 @@ export function CreationSelectedSkillsPanel({
           </h3>
         </div>
 
-        <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain p-3">
+        <div className="min-h-0 min-w-0 flex-1 space-y-3 overflow-x-hidden overflow-y-auto overscroll-contain break-words p-3">
           <div>
             <p className={`mb-1 text-sm font-bold ${occSectionClass}`}>
               O.C.C. skills

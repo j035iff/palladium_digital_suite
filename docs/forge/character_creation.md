@@ -4,7 +4,7 @@
 
 The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All primary tabs are permanently rendered at the top of the creation viewport. Progression is strictly linear: when a tab’s requirements are met, its pill label becomes **Continue**; clicking it turns the tab Green and opens the next available step.
 
-**No global header during creation.** The sticky app header is **hidden while creating a character**. The creation viewport uses a **three-column layout** on wide screens: **left** = per-tab “selected” summary panels (package details, selected skills, selected powers, selected traits), **center** = interactive forge for the active tab, **right** = **Live Ledger**.
+**No global header during creation.** The sticky app header is **hidden while creating a character**. The creation viewport uses a **three-column layout** on wide screens (default **25% / 55% / 20%**): **left** = per-tab “selected” summary panels (package details, selected skills, selected powers, selected traits), **center** = interactive forge for the active tab, **right** = **Live Ledger** tray (**20%** when open). The left/center border is **draggable** (side column minimum **10%**). The Live Ledger is **not** drag-resized — it opens by default and collapses to a thin edge tray via a toggle button; collapsing gives its width to the center work column. Left summary panels use slightly smaller type and scroll **vertically only** (no horizontal scrollbar).
 
 **Compact forge chrome (vertical space):** The creation frame defaults to a short stack so the center column owns the viewport:
 

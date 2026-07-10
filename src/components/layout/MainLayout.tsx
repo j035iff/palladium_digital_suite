@@ -348,10 +348,10 @@ export function MainLayout() {
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col md:h-full md:min-h-0 md:flex-row">
         <main
-          className={`flex min-h-0 w-full min-w-0 flex-1 flex-col px-4 text-left md:pr-2 ${
+          className={`flex min-h-0 w-full min-w-0 flex-1 flex-col text-left ${
             showCreation
-              ? 'mx-0 max-w-none overflow-hidden py-4'
-              : 'mx-auto max-w-6xl gap-6 overflow-y-auto py-6 md:mx-0 md:max-w-none'
+              ? 'mx-0 max-w-none overflow-hidden p-0'
+              : 'mx-auto max-w-6xl gap-6 overflow-y-auto px-4 py-6 md:mx-0 md:max-w-none md:pr-2'
           }`}
         >
         {!showCreation ? (
