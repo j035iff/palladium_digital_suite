@@ -403,7 +403,7 @@ type CharacterContextValue = {
   setCreationPhase: (phase: CreationPhase) => void
   /** Universal Forge — active tab (eight-tab creation flow). */
   setCreationForgeTab: (tabId: CharacterCreationForgeTabId) => void
-  /** Mark tab Green after explicit Continue (no viewport change). */
+      /** Mark tab Green after explicit Continue (may also open the next tab). */
   markCreationForgeTabComplete: (tabId: CharacterCreationForgeTabId) => void
   setTraitForgeStubComplete: (complete: boolean) => void
   patchMorphusForgeState: (

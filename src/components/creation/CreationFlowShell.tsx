@@ -39,15 +39,17 @@ import { MorphusForge } from './MorphusForge'
 
 import { CreationFinalizeDice } from './CreationFinalizeDice'
 
-import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
-
-import { ForgeContinueGate } from '../forge/ForgeContinueGate'
+import { ForgeNavigationBar, nextForgeTabIdAfter } from '../forge/ForgeNavigationBar'
 
 import { ForgeTabNaBanner } from '../forge/ForgeTabNaBanner'
 
 import { ForgeTabInactiveShell } from '../forge/ForgeTabInactiveShell'
 
-import { ForgeTabPageHeader } from '../forge/ForgeTabPageHeader'
+import { ForgeTabPageHeader, FORGE_TAB_PAGE_HEADING_ID } from '../forge/ForgeTabPageHeader'
+import {
+  FORGE_SHORT_VIEWPORT_QUERY,
+  useMediaQuery,
+} from '../../lib/useMediaQuery'
 
 import {
 
@@ -65,39 +67,21 @@ import {
 
 import {
   listCharacterCreationTabRequirements,
-  listCharacterCreationSpawnPrepRequirements,
 } from '../../lib/forgeNavigation/characterCreationTabRequirements'
 
 
 
 function ForgeTabBody({
   tabId,
-  morphusActive,
-  creationGenreId,
-  hostGenreId,
 }: {
   tabId: CharacterCreationForgeTabId
-  morphusActive: boolean
-  creationGenreId: string
-  hostGenreId: string
 }) {
 
   switch (tabId) {
 
     case 'tab1_configurator':
 
-      return (
-        <ConfiguratorPanel
-          headerSlot={
-            <IdentityHeader
-              variant="tab"
-              morphusActive={morphusActive}
-              creationGenreId={creationGenreId}
-              hostGenreId={hostGenreId}
-            />
-          }
-        />
-      )
+      return <ConfiguratorPanel />
 
     case 'tab2_attributes':
 
@@ -154,11 +138,13 @@ function SessionMenu({
   onReset,
   onSaveForLater,
   onLeave,
+  tone = 'light',
 }: {
   canSaveForLater: boolean
   onReset: () => void
   onSaveForLater: () => void
   onLeave: () => void
+  tone?: 'light' | 'dark'
 }) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -176,7 +162,12 @@ function SessionMenu({
 
   const saveHint = canSaveForLater
     ? 'Save this draft and return to the portal.'
-    : 'Continue past Identity (Race & O.C.C.) before saving for later.'
+    : 'Continue past Race and OCC before saving for later.'
+
+  const sessionButtonClass =
+    tone === 'dark'
+      ? 'rounded-lg border border-slate-500 bg-slate-800 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-100 outline-none transition hover:border-slate-400 hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-blue-500'
+      : 'rounded-lg border-2 border-slate-300 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-700 outline-none transition hover:border-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-400'
 
   return (
     <div ref={rootRef} className="relative shrink-0">
@@ -185,7 +176,7 @@ function SessionMenu({
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen((prev) => !prev)}
-        className="rounded-lg border-2 border-slate-300 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-700 outline-none transition hover:border-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-400"
+        className={sessionButtonClass}
       >
         Session
       </button>
@@ -348,22 +339,14 @@ export function CreationFlowShell({
     [nav.showContinue, activeTabId, forgeCtx],
   )
 
-  const spawnPrepRequirements = useMemo(
-    () =>
-      activeTabId === 'tab1_configurator'
-        ? listCharacterCreationSpawnPrepRequirements(forgeCtx)
-        : [],
-    [activeTabId, forgeCtx],
-  )
-
 
 
   const handleContinue = () => {
-
     if (!nav.continueEnabled) return
-
-    markCreationForgeTabComplete(activeTabId)
-
+    const current = activeTabId
+    markCreationForgeTabComplete(current)
+    const nextId = nextForgeTabIdAfter(nav.tabs, current)
+    if (nextId) setCreationForgeTab(nextId as CharacterCreationForgeTabId)
   }
 
 
@@ -374,7 +357,90 @@ export function CreationFlowShell({
     activeTabId === 'tab6_traits' ||
     activeTabId === 'tab7_abilities'
 
+  const shortViewport = useMediaQuery(FORGE_SHORT_VIEWPORT_QUERY)
 
+  const unsatisfiedRequirements = activeRequirements.filter((req) => !req.satisfied)
+  const allRequirementsSatisfied =
+    activeRequirements.length > 0 && unsatisfiedRequirements.length === 0
+  const showTab7Lanes = activeTabId === 'tab7_abilities'
+
+  const [bannerCollapsing, setBannerCollapsing] = useState(false)
+  const [collapseSnapshot, setCollapseSnapshot] = useState(activeRequirements)
+  const [collapseOffset, setCollapseOffset] = useState<{ dx: number; dy: number } | null>(
+    null,
+  )
+  const hadUnsatisfiedRef = useRef(false)
+  const prevTabIdRef = useRef(activeTabId)
+  const continueTargetRef = useRef<HTMLButtonElement | null>(null)
+  const bannerRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (prevTabIdRef.current !== activeTabId) {
+      prevTabIdRef.current = activeTabId
+      setBannerCollapsing(false)
+      setCollapseOffset(null)
+      hadUnsatisfiedRef.current = unsatisfiedRequirements.length > 0
+      setCollapseSnapshot(activeRequirements)
+      return
+    }
+
+    if (unsatisfiedRequirements.length > 0) {
+      hadUnsatisfiedRef.current = true
+      setCollapseSnapshot(activeRequirements)
+      setBannerCollapsing(false)
+      setCollapseOffset(null)
+      return
+    }
+
+    if (
+      hadUnsatisfiedRef.current &&
+      allRequirementsSatisfied &&
+      nav.continueEnabled &&
+      !bannerCollapsing
+    ) {
+      setCollapseSnapshot(activeRequirements)
+      // Measure after Continue pill paints, then start collapse into that bubble.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const banner = bannerRef.current
+          const target = continueTargetRef.current
+          if (banner && target) {
+            const b = banner.getBoundingClientRect()
+            const t = target.getBoundingClientRect()
+            // Origin = Continue tab center relative to banner top-left.
+            // Scaling toward that origin reads as "sucked into" the bubble.
+            setCollapseOffset({
+              dx: t.left + t.width / 2 - b.left,
+              dy: t.top + t.height / 2 - b.top,
+            })
+          } else {
+            setCollapseOffset({ dx: 48, dy: -24 })
+          }
+          setBannerCollapsing(true)
+        })
+      })
+    }
+  }, [
+    activeTabId,
+    activeRequirements,
+    unsatisfiedRequirements.length,
+    allRequirementsSatisfied,
+    nav.continueEnabled,
+    bannerCollapsing,
+  ])
+
+  const showRequirementsBanner =
+    bannerCollapsing ||
+    unsatisfiedRequirements.length > 0 ||
+    // Keep the filled checklist visible for one frame until collapse starts.
+    (allRequirementsSatisfied && hadUnsatisfiedRef.current)
+
+  const showContextualBanner =
+    showTab7Lanes ||
+    showRequirementsBanner ||
+    activeView?.visual === 'na'
+
+  const bannerRequirements = bannerCollapsing ? collapseSnapshot : activeRequirements
 
   return (
 
@@ -388,92 +454,92 @@ export function CreationFlowShell({
 
           <div
 
-            className="shrink-0 border-b border-slate-200 bg-white pb-3 shadow-sm dark:border-slate-700 dark:bg-slate-950"
+            className="shrink-0 border-b border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-950"
 
             aria-label="Creation forge frame"
 
           >
 
-            <div className="flex items-start justify-between gap-3 pt-1 pr-4">
-
-              <div className="min-w-0 flex-1">
-
-                <ForgeNavigationBar
-
-                  tabs={nav.tabs}
-
-                  activeTabId={activeTabId}
-
-                  onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
-
-                />
-
-              </div>
-
+            <div
+              className={`flex items-start justify-between gap-3 border-b border-slate-200 bg-white ${
+                shortViewport ? 'px-3 py-1' : 'px-4 py-1.5'
+              } ${shellPanelMorphus ? 'bg-violet-50' : ''}`}
+              aria-label="Character identity"
+            >
+              <IdentityHeader
+                variant="creation"
+                morphusActive={shellPanelMorphus}
+                creationGenreId={creationGenreId}
+                hostGenreId={hostGenreId}
+                compactChrome={shortViewport}
+              />
               <SessionMenu
-
                 canSaveForLater={canSaveCreationForLater}
-
                 onReset={resetCreation}
-
                 onSaveForLater={saveCreationForLater}
-
                 onLeave={leaveCreationWithoutSaving}
-
               />
-
             </div>
 
-            <div className="mt-3 px-4">
-
-              <ForgeTabPageHeader
-
-                title={pageTitle}
-
-                visual={activeView?.visual ?? 'active'}
-
-                requirements={activeRequirements}
-
-                spawnPrepRequirements={spawnPrepRequirements}
-
-                subheader={
-                  activeTabId === 'tab7_abilities' ? (
-                    <ForgeTabInactiveShell inactive={tabInactive}>
-                      <SupernaturalAbilitiesForgeLaneTabs />
-                    </ForgeTabInactiveShell>
-                  ) : undefined
-                }
-
-                actions={
-                  <div className="flex flex-wrap items-center justify-end gap-2">
-                    <ForgeTabDevActions activeTabId={activeTabId} />
-                    {nav.showContinue ? (
-                    <ForgeContinueGate
-
-                      inline
-
-                      showBlockers={false}
-
-                      enabled={nav.continueEnabled}
-
-                      validated={activeView?.visual === 'complete'}
-
-                      headerVisual={activeView?.visual}
-
-                      tooltip={nav.continueTooltip}
-
-                      blockers={activeBlockers}
-
-                      onContinue={handleContinue}
-
-                    />
-                    ) : null}
-                  </div>
-                }
-
-              />
-
+            <div
+              className={`flex items-center gap-2 border-b border-slate-200 ${
+                shortViewport ? 'px-3 py-1' : 'gap-3 px-4 py-1.5'
+              }`}
+            >
+              <div className="min-w-0 flex-1">
+                <ForgeNavigationBar
+                  tabs={nav.tabs}
+                  activeTabId={activeTabId}
+                  singleRow
+                  continueEnabled={nav.continueEnabled}
+                  continueTooltip={nav.continueTooltip}
+                  continueTargetRef={continueTargetRef}
+                  onContinueTab={() => handleContinue()}
+                  onSelectTab={(id) => setCreationForgeTab(id as CharacterCreationForgeTabId)}
+                />
+              </div>
+              <div className="flex shrink-0 flex-nowrap items-center justify-end gap-1.5">
+                <ForgeTabDevActions activeTabId={activeTabId} />
+              </div>
             </div>
+
+            {showContextualBanner ? (
+              <div
+                className={`${
+                  shortViewport ? 'px-3 pb-1.5 pt-1.5' : 'px-4 pb-2 pt-2'
+                } ${bannerCollapsing ? 'overflow-hidden !pb-0 !pt-0' : ''}`}
+              >
+                <ForgeTabPageHeader
+                  title={pageTitle}
+                  hideTitle
+                  visual={activeView?.visual ?? 'active'}
+                  bannerRef={bannerRef}
+                  requirements={
+                    showTab7Lanes && !showRequirementsBanner && !bannerCollapsing
+                      ? []
+                      : bannerRequirements
+                  }
+                  collapsing={bannerCollapsing}
+                  collapseOffset={collapseOffset}
+                  onCollapseEnd={() => {
+                    setBannerCollapsing(false)
+                    setCollapseOffset(null)
+                    hadUnsatisfiedRef.current = false
+                  }}
+                  subheader={
+                    showTab7Lanes && !bannerCollapsing ? (
+                      <ForgeTabInactiveShell inactive={tabInactive}>
+                        <SupernaturalAbilitiesForgeLaneTabs />
+                      </ForgeTabInactiveShell>
+                    ) : undefined
+                  }
+                />
+              </div>
+            ) : (
+              <h2 id={FORGE_TAB_PAGE_HEADING_ID} className="sr-only">
+                {pageTitle}
+              </h2>
+            )}
 
           </div>
 
@@ -578,12 +644,7 @@ export function CreationFlowShell({
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
               <ForgeTabInactiveShell inactive={tabInactive} className="flex min-h-0 flex-1 flex-col overflow-hidden">
-                <ForgeTabBody
-                  tabId={activeTabId}
-                  morphusActive={morphusLedger}
-                  creationGenreId={creationGenreId}
-                  hostGenreId={hostGenreId}
-                />
+                <ForgeTabBody tabId={activeTabId} />
               </ForgeTabInactiveShell>
 
             </div>
@@ -591,12 +652,7 @@ export function CreationFlowShell({
           ) : (
 
             <ForgeTabInactiveShell inactive={tabInactive}>
-              <ForgeTabBody
-                tabId={activeTabId}
-                morphusActive={morphusLedger}
-                creationGenreId={creationGenreId}
-                hostGenreId={hostGenreId}
-              />
+              <ForgeTabBody tabId={activeTabId} />
             </ForgeTabInactiveShell>
 
           )}

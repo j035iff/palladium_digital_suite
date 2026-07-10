@@ -13,6 +13,7 @@ import {
   parseIdentityHeightInches,
   parseIdentityWeightLbs,
   resolveIdentityHeightInches,
+  sanitizeIdentityHeightInchesInput,
 } from './characterIdentity'
 
 describe('characterIdentity', () => {
@@ -39,6 +40,15 @@ describe('characterIdentity', () => {
     expect(identityHeightInchesError('5')).toBeNull()
     expect(identityHeightInchesError('12')).toBe('must be a value from 0–11')
     expect(identityHeightInchesError('abc')).toBe(IDENTITY_WHOLE_NUMBER_ERROR)
+  })
+
+  it('sanitizes height inches input to digits clamped 0–11', () => {
+    expect(sanitizeIdentityHeightInchesInput('')).toBe('')
+    expect(sanitizeIdentityHeightInchesInput('5')).toBe('5')
+    expect(sanitizeIdentityHeightInchesInput('11')).toBe('11')
+    expect(sanitizeIdentityHeightInchesInput('12')).toBe('11')
+    expect(sanitizeIdentityHeightInchesInput('99')).toBe('11')
+    expect(sanitizeIdentityHeightInchesInput('a3b')).toBe('3')
   })
 
   it('flags invalid height feet and weight as whole numbers', () => {

@@ -5,10 +5,13 @@ import type {
 } from '../types'
 import { resolveStatWithPolymorphicModifiers } from './morphusPolymorphicResolver'
 
-export const CHARACTER_NAME_PLACEHOLDER = 'New Character - Enter Character Name'
+export const CHARACTER_NAME_PLACEHOLDER = 'Enter Character Name'
 
 /** Legacy default stored before placeholder-only name field. */
 export const LEGACY_DEFAULT_CHARACTER_NAME = 'New Character'
+
+/** Legacy placeholder text previously shown as the name field value. */
+export const LEGACY_CHARACTER_NAME_PLACEHOLDER = 'New Character - Enter Character Name'
 
 export const EMPTY_CHARACTER_IDENTITY_PROFILE: CharacterIdentityProfile = {
   sex: '',
@@ -46,10 +49,25 @@ export function collectMorphusWeightModifiers(
   return out
 }
 
+export function isLegacyCreationNameValue(name: string): boolean {
+  const trimmed = name.trim()
+  return (
+    !trimmed ||
+    trimmed === LEGACY_DEFAULT_CHARACTER_NAME ||
+    trimmed === LEGACY_CHARACTER_NAME_PLACEHOLDER ||
+    trimmed === CHARACTER_NAME_PLACEHOLDER
+  )
+}
+
+export function creationForgeDisplayName(name: string): string {
+  return isLegacyCreationNameValue(name) ? '' : name
+}
+
 export function isCharacterNameFilled(name: string): boolean {
   const trimmed = name.trim()
   if (!trimmed) return false
   if (trimmed === LEGACY_DEFAULT_CHARACTER_NAME) return false
+  if (trimmed === LEGACY_CHARACTER_NAME_PLACEHOLDER) return false
   if (trimmed === CHARACTER_NAME_PLACEHOLDER) return false
   return true
 }
@@ -85,6 +103,15 @@ export function identityHeightInchesError(raw: string): string | null {
     return 'must be a value from 0–11'
   }
   return null
+}
+
+/** Keep inches input to digits only, clamped to 0–11 (empty allowed while editing). */
+export function sanitizeIdentityHeightInchesInput(raw: string): string {
+  const digits = raw.replace(/\D/g, '')
+  if (!digits) return ''
+  const value = Number.parseInt(digits, 10)
+  if (!Number.isFinite(value)) return ''
+  return String(Math.min(11, Math.max(0, value)))
 }
 
 export function identityWeightLbsError(raw: string): string | null {
@@ -167,25 +194,27 @@ export function assessIdentitySpawnBlockers(
   const blockers: string[] = []
 
   if (!isCharacterNameFilled(name)) {
-    blockers.push('Enter a character name in the Identity header.')
+    blockers.push('Enter a character name in the character header.')
   }
   if (!hasTextField(p.sex)) {
-    blockers.push('Enter sex in the Identity header.')
+    blockers.push('Enter sex in the character header Details section.')
   }
   if (!hasTextField(p.age)) {
-    blockers.push('Enter age in the Identity header.')
+    blockers.push('Enter age in the character header Details section.')
   }
   if (!hasValidIdentityHeight(p)) {
-    blockers.push('Enter height (feet and inches as numbers) in the Identity header.')
+    blockers.push(
+      'Enter height (feet and inches as numbers) in the character header Details section.',
+    )
   }
   if (!hasValidIdentityWeight(p)) {
-    blockers.push('Enter weight in pounds (numeric) in the Identity header.')
+    blockers.push('Enter weight in pounds (numeric) in the character header Details section.')
   }
   if (!hasTextField(p.eyes)) {
-    blockers.push('Enter eye color in the Identity header.')
+    blockers.push('Enter eye color in the character header Details section.')
   }
   if (!hasTextField(p.hair)) {
-    blockers.push('Enter hair in the Identity header.')
+    blockers.push('Enter hair in the character header Details section.')
   }
 
   return blockers

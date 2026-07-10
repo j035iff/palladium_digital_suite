@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode, RefObject } from 'react'
 import type {
   ForgeTabRequirement,
   ForgeTabVisualState,
@@ -28,6 +28,13 @@ export function ForgeTabPageHeader({
   spawnPrepRequirements,
   visual = 'active',
   subheader,
+  /** When true, omit the duplicate tab title (active pill already shows it). */
+  hideTitle = false,
+  /** Play collapse into the Continue tab (parent owns timing + target offset). */
+  collapsing = false,
+  collapseOffset,
+  onCollapseEnd,
+  bannerRef,
 }: {
   title: string
   actions?: ReactNode
@@ -35,6 +42,12 @@ export function ForgeTabPageHeader({
   spawnPrepRequirements?: readonly ForgeTabRequirement[]
   visual?: ForgeTabVisualState
   subheader?: ReactNode
+  hideTitle?: boolean
+  collapsing?: boolean
+  /** Pixel position of Continue tab center relative to banner top-left (transform origin). */
+  collapseOffset?: { dx: number; dy: number } | null
+  onCollapseEnd?: () => void
+  bannerRef?: RefObject<HTMLDivElement | null>
 }) {
   const theme = forgeTabVisualTheme(visual)
   const morphus =
@@ -43,34 +56,83 @@ export function ForgeTabPageHeader({
     visual === 'incomplete' ||
     visual === 'conflict'
 
+  const continueReqs = requirements ?? []
+  const spawnReqs = spawnPrepRequirements ?? []
+  const hasContinueReqs = continueReqs.length > 0
+  const hasSpawnReqs = spawnReqs.length > 0
+  const hasSubheader = subheader != null
+  const hasActions = actions != null
+  const showTitle = !hideTitle
+  const showBannerChrome =
+    showTitle ||
+    hasContinueReqs ||
+    hasSpawnReqs ||
+    hasSubheader ||
+    hasActions ||
+    visual === 'na' ||
+    collapsing
+
+  if (!showBannerChrome) {
+    return (
+      <h2 id={FORGE_TAB_PAGE_HEADING_ID} className="sr-only">
+        {title}
+      </h2>
+    )
+  }
+
+  const collapseStyle =
+    collapsing && collapseOffset
+      ? ({
+          '--pds-collapse-ox': `${collapseOffset.dx}px`,
+          '--pds-collapse-oy': `${collapseOffset.dy}px`,
+        } as CSSProperties)
+      : undefined
+
   return (
     <div
-      className={`relative overflow-hidden rounded-lg px-4 py-2.5 ${theme.headerBar}`}
+      ref={bannerRef}
+      style={collapseStyle}
+      className={`relative overflow-hidden rounded-lg px-4 py-2 ${
+        collapsing
+          ? 'pds-forge-banner-collapse bg-amber-500 ring-1 ring-amber-300'
+          : theme.headerBar
+      }`}
+      onAnimationEnd={(event) => {
+        if (!collapsing) return
+        if (event.target !== event.currentTarget) return
+        onCollapseEnd?.()
+      }}
     >
-      {visual === 'na' ? <NaHeaderWatermark /> : null}
+      {visual === 'na' && !collapsing ? <NaHeaderWatermark /> : null}
       <div className="relative z-[1] flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="min-w-0 flex-1">
-          <h2
-            id={FORGE_TAB_PAGE_HEADING_ID}
-            className={`text-sm font-semibold uppercase tracking-wide ${theme.headerTitle}`}
-          >
-            {title}
-          </h2>
-          {subheader ? <div className="mt-2">{subheader}</div> : null}
-          {requirements && requirements.length > 0 ? (
+          {showTitle ? (
+            <h2
+              id={FORGE_TAB_PAGE_HEADING_ID}
+              className={`text-sm font-semibold uppercase tracking-wide ${
+                collapsing ? 'text-amber-950' : theme.headerTitle
+              }`}
+            >
+              {title}
+            </h2>
+          ) : (
+            <h2 id={FORGE_TAB_PAGE_HEADING_ID} className="sr-only">
+              {title}
+            </h2>
+          )}
+          {subheader ? <div className={showTitle ? 'mt-2' : ''}>{subheader}</div> : null}
+          {hasContinueReqs ? (
             <ForgeTabRequirementsChecklist
-              requirements={requirements}
+              requirements={continueReqs}
               morphus={morphus}
               tone="continue"
-              heading="To continue"
             />
           ) : null}
-          {spawnPrepRequirements && spawnPrepRequirements.length > 0 ? (
+          {hasSpawnReqs ? (
             <ForgeTabRequirementsChecklist
-              requirements={spawnPrepRequirements}
+              requirements={spawnReqs}
               morphus={morphus}
               tone="spawn"
-              heading="Before spawn"
             />
           ) : null}
         </div>

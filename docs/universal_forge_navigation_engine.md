@@ -15,14 +15,15 @@ The Forge Engine emphasizes complete transparency of the generation pipeline.
 
 ---
 
-## 2. The Progression Gate (The "Continue" Button)
+## 2. The Progression Gate (Continue on the Tab Pill)
 
-The core driver of the Forge Engine is the mandatory manual validation gate at the end of every applicable step. The system will never assume a user is finished with a step, nor will it hijack their viewport.
+The core driver of the Forge Engine is the mandatory manual validation gate at the end of every applicable step. The system will never assume a user is finished with a step.
 
-- **Location & State:** A primary "Continue" button is rendered at the absolute bottom of the active tab's layout. It remains fundamentally disabled (greyed out) until the engine's validation listener confirms all required fields, inputs, and selections for that specific step are complete.
-- **Explicit State Change:** Meeting a tab's data requirements does not automatically finalize the tab. The tab's internal state only registers as "Completed" when the user explicitly clicks the activated "Continue" button.
-- **Manual Navigation (No Auto-Advance):** Clicking "Continue" updates the engine's state machine (unlocking the subsequent step) but does not alter the viewport. The user must physically click the newly unlocked tab in the header to advance, ensuring they are never unexpectedly pulled away from their current screen.
-- **The Reassurance Tooltip:** To eliminate user anxiety regarding permanent lock-ins, the "Continue" button permanently carries a hover-over tooltip stating: *"Clicking continue validates this section but does not lock in your choices. You can return to this tab at any time to make changes."*
+- **Location & State:** There is **no separate Continue button**. When the active (viewing) tab meets all validation requirements, that tab’s pill label changes to **Continue**. Until then, the pill shows its normal step name.
+- **Explicit State Change:** Meeting a tab's data requirements does not automatically finalize the tab. The tab only registers as **Completed (green)** when the user explicitly clicks the **Continue** pill.
+- **Advance on Continue:** Clicking **Continue** validates the current step, turns that pill green (label reverts to the normal step name), unlocks the next applicable step, and **opens** that next tab in the viewport. Choices remain editable — returning to a green tab never locks data.
+- **The Reassurance Tooltip:** The Continue pill carries a hover tooltip stating that validation does not lock choices and the user can return to edit at any time.
+- **Terminal tabs:** Review / Spawn (and Sub-Forge review) never show a Continue pill.
 
 ---
 
@@ -32,7 +33,7 @@ The Forge Engine actively monitors the entire data payload in real-time. It comm
 
 | State | Color | System Meaning | Condition / Trigger |
 |-------|-------|----------------|---------------------|
-| Complete | **Green** | Validated | The user met all data requirements for this step and explicitly clicked the "Continue" button. |
+| Complete | **Green** | Validated | The user met all data requirements for this step and explicitly clicked the **Continue** pill. |
 | Active | **Blue** | Current View / Next Step | The tab is unlocked. It is either the next available step the user needs to click into, or it is the step the user is currently viewing and actively editing. |
 | Incomplete | **Red** | Destructive Edit | The tab was previously Green. The user navigated backward and removed required data (e.g., cleared a required field) but did not replace it. The step is now invalid. |
 | Conflict | **Yellow** | Upstream Dependency | The tab was previously Green. The user navigated backward and changed a foundational piece of data that actively invalidates a choice made in this future tab (e.g., lowered a stat, breaking a prerequisite). |
@@ -46,10 +47,10 @@ The Forge Engine actively monitors the entire data payload in real-time. It comm
 Because the Forge Engine is entirely non-destructive, users can navigate backward to any Blue, Green, Red, or Yellow tab at any time. The engine handles these timeline edits through strict dependency tracking.
 
 - **Linear Lockout:** If a previously Green tab falls into a Red or Yellow state, the engine immediately halts forward progression. Any downstream Grey tabs cannot transition to Blue, and the final "Spawn / Finalize" step of the Forge is invalidated. The user cannot complete the generation process until the timeline is repaired.
-- **Red State Resolution:** The user must click into the Red tab, satisfy the missing local requirements, and click the "Continue" button again to restore the Green state.
-- **Yellow State Resolution:** The user must click into the Yellow tab. The UI will explicitly highlight the invalidated selection. The user must alter their selection to fit the new upstream reality and click the "Continue" button to restore the Green state.
+- **Red State Resolution:** The user must click into the Red tab, satisfy the missing local requirements, and click the **Continue** pill again to restore the Green state.
+- **Yellow State Resolution:** The user must click into the Yellow tab. The UI will explicitly highlight the invalidated selection. The user must alter their selection to fit the new upstream reality and click the **Continue** pill to restore the Green state.
 - **Dynamic Black State Shifts:** If a user navigates backward and changes a core foundational choice (e.g., swapping from a mundane O.C.C. to a magic O.C.C.), a previously Black (N/A) tab will dynamically wake up and shift into the standard Grey/Blue progression path.
-- **The Terminal Gate:** The final tab in any Forge (the Review/Spawn step) behaves uniquely. It does not feature a "Continue" button. It remains permanently Grey until every preceding applicable tab in the sequence registers as Green.
+- **The Terminal Gate:** The final tab in any Forge (the Review/Spawn step) behaves uniquely. It does not feature a **Continue** pill. It remains permanently Grey until every preceding applicable tab in the sequence registers as Green.
 
 ---
 
@@ -57,7 +58,7 @@ Because the Forge Engine is entirely non-destructive, users can navigate backwar
 
 The engine supports embedding a complete Forge sequence inside a single tab of a parent Forge (e.g., embedding the "Morphus Creation Forge" entirely within Tab 6 of the "Character Creation Forge").
 
-- **Nested Progression Gate:** When a parent tab contains a Sub-Forge, the parent tab's "Continue" button is strictly bound to the completion state of the Sub-Forge. The parent tab cannot be turned Green until the Sub-Forge has reached its own terminal completion state (i.e., all applicable tabs within the Sub-Forge are Green).
-- **Sub-Forge Terminal Resolution:** Unlike a top-level Forge, the terminal step of a Sub-Forge does not possess a "Spawn" or "Lock-in" button. Instead, completing the final step of a Sub-Forge simply satisfies the local data requirement, passing a validated state up to the parent tab and activating the parent tab's "Continue" button.
+- **Nested Progression Gate:** When a parent tab contains a Sub-Forge, the parent tab's **Continue** pill is strictly bound to the completion state of the Sub-Forge. The parent tab cannot be turned Green until the Sub-Forge has reached its own terminal completion state (i.e., all applicable tabs within the Sub-Forge are Green).
+- **Sub-Forge Terminal Resolution:** Unlike a top-level Forge, the terminal step of a Sub-Forge does not possess a "Spawn" or "Lock-in" button. Instead, completing the final step of a Sub-Forge simply satisfies the local data requirement, passing a validated state up to the parent tab and activating the parent tab's **Continue** pill.
 - **Delayed Lock-In & Backward Navigation:** Completing a Sub-Forge does not permanently lock its data. If a player completes the Morphus Sub-Forge (Tab 6), proceeds to Resource Abilities (Tab 7), they can still click backward into Tab 6. Doing so re-opens the Morphus Sub-Forge. If they alter a choice, the Sub-Forge falls out of its completed state, the parent tab (Tab 6) turns Red or Yellow, and downstream progression is halted until the Sub-Forge is re-validated.
 - **Ultimate Authority:** No Sub-Forge is ever truly "locked-in" until the topmost master Forge (the ultimate parent) resolves its final confirmation modal (e.g., the final "Spawn Character" button).

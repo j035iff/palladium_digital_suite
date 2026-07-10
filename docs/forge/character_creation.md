@@ -2,11 +2,21 @@
 
 ## Overview
 
-The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All primary tabs are permanently rendered at the top of the creation viewport. Progression is strictly linear, requiring manual validation via the **Continue** button to shift a tab from Blue (Active) to Green (Complete) and unlock the next sequential step.
+The Character Creation flow is an implementation of the [Universal Forge Navigation Engine](../universal_forge_navigation_engine.md). It begins **after** [Create Character](../app_viewport_launcher.md) — not at app launch. All primary tabs are permanently rendered at the top of the creation viewport. Progression is strictly linear: when a tab’s requirements are met, its pill label becomes **Continue**; clicking it turns the tab Green and opens the next available step.
 
-**No global header during creation.** The sticky app header is **hidden while creating a character**. The creation viewport uses a **three-column layout** on wide screens: **left** = per-tab “selected” summary panels (package details, selected skills, selected powers, selected traits), **center** = interactive forge for the active tab, **right** = **Live Ledger**. Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open from a **Session** button (popover panel) at the top-right of the tab bar. The global header (with **Become Morphus**) returns only on the finalized live sheet. Form switching during creation remains available via the Live Ledger's Facade/Morphus toggle once unlocked.
+**No global header during creation.** The sticky app header is **hidden while creating a character**. The creation viewport uses a **three-column layout** on wide screens: **left** = per-tab “selected” summary panels (package details, selected skills, selected powers, selected traits), **center** = interactive forge for the active tab, **right** = **Live Ledger**.
 
-**Continue never changes the viewport** — after Continue, the user selects the next tab manually. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
+**Compact forge chrome (vertical space):** The creation frame defaults to a short stack so the center column owns the viewport:
+
+1. **Identity summary** — one-line header (name · race · O.C.C.) with **Expand** / **Minimize** and **Session** on the same row. Expanded mode is a single layer: Alignment above Sex/Eyes/Height/Hair/Weight. Race and O.C.C. stay on the summary row.
+2. **Tab row** — primary tab pills on the left (**single row**, horizontal overflow scroll when needed); tab-local dev actions on the right. When the viewing tab is ready to advance, that pill’s label becomes **Continue** (click validates, turns green, and opens the next step). The active pill auto-scrolls into view.
+3. **Contextual banner** — `ForgeTabPageHeader` only when needed: Continue/spawn requirement checkboxes (no “To continue” heading), Tab 7 ability lanes, or N/A state. As each requirement is met its checkbox fills; when all are satisfied the banner collapses **into the Continue tab bubble** (measured target). That bubble uses the **yellow (conflict) tab treatment** and pulses. The duplicate tab title is hidden (the active pill already shows it).
+
+**Short viewport (`max-height: 820px`):** Auto-collapses identity to the summary line, tightens identity/tab-row padding, and uses slightly smaller summary typography so the choice column keeps usable height. Expand remains available for identity edits.
+
+Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open from the **Session** button on the identity summary row. The global header (with **Become Morphus**) returns only on the finalized live sheet. Form switching during creation remains available via the Live Ledger's Facade/Morphus toggle once unlocked.
+
+**Continue on the tab pill** — when requirements are met, the viewing pill reads **Continue**; clicking it marks the tab Green, restores the normal label, and opens the next available tab. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
 
 **Nightbane Morphus:** Tab 6 hosts the nested [Morphus Sub-Forge](morphus_creation.md). Facade dice are finalized on Tab 5; all Morphus trait generation and Morphus vitality dice live on Tab 6 only.
 
@@ -44,13 +54,13 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ## The Tab Sequence
 
-> **Tab IDs vs. labels.** The first tab is labeled **Identity** in the UI but keeps the historical ID `tab1_configurator`. Continue on Identity requires only a valid **Race + O.C.C.** pair; identity profile fields (name, sex, age, etc.) are optional for Continue and enforced at spawn.
+> **Tab IDs vs. labels.** The first tab is labeled **Race and OCC** in the UI but keeps the historical ID `tab1_configurator`. Continue on that tab requires only a valid **Race + O.C.C.** pair; identity profile fields (name, sex, age, etc.) live in the global identity chrome (collapsed by default) and are optional for Continue / enforced at spawn.
 
-### Tab 1: Identity (`tab1_configurator`)
+### Tab 1: Race and OCC (`tab1_configurator`)
 
-- **Engine Action:** Combined identity profile (`IdentityHeader` with `variant="tab"`) **plus** the Tri-Directional Configuration Matrix (Race / O.C.C.). **Package details** (racial/O.C.C. grants summary) render in the **left** summary column; matrix pickers in the **center**.
+- **Engine Action:** Tri-Directional Configuration Matrix (Race / O.C.C.). Global identity chrome (`IdentityHeader` `variant="creation"`, collapsed by default) sits above the tab row. **Package details** (racial/O.C.C. grants summary) render in the **left** summary column; matrix pickers in the **center**.
 - **Black (N/A) Condition:** Never.
-- **Completion Criteria (Turns Green):** A valid, non-conflicting Race and O.C.C. pair is actively selected. **Identity profile fields and alignment are not required** for Continue. The user clicks **Continue**.
+- **Completion Criteria (Turns Green):** A valid, non-conflicting Race and O.C.C. pair is actively selected. **Identity profile fields and alignment are not required** for Continue. The user clicks the **Continue** pill.
 - **Upstream Reactivity:** Changing Race or O.C.C. after downstream tabs were completed flags those tabs **Yellow** or **Red** without erasing stored picks. The user repairs top-down.
 
 ### Tab 2: Attribute Allocation
@@ -103,7 +113,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Engine Action:** Build **summary only**, **alignment selection (required)**, then spawn. No dice entry on this tab.
 - **Black (N/A) Condition:** Never.
 - **Availability Gate:** **Grey (Locked)** until Tabs 1–7 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access. Pending dice must already be finalized on Tabs 5 and 6.
-- **No Continue button** on this tab.
+- **No Continue pill** on this tab.
 - **Terminal completion:**
   - **Select alignment** (required here even if skipped on Tab 1).
   - **Spawn Character** enables only when `assessTab8SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
@@ -117,7 +127,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 |---------|------|
 | Tab order, validators, snapshots | `src/lib/forgeNavigation/characterCreationForge.ts` |
 | Color states, Continue, top-down repair | `src/lib/forgeNavigation/engine.ts` |
-| Tab 0 Identity form + Session popover + shell layout | `src/components/layout/IdentityHeader.tsx`, `src/components/creation/CreationFlowShell.tsx`, `src/components/creation/ConfiguratorPanel.tsx` |
+| Tab 0 Identity form + Session popover + shell layout | `src/components/layout/IdentityHeader.tsx`, `src/components/creation/CreationFlowShell.tsx`, `src/components/creation/ConfiguratorPanel.tsx`, `src/components/forge/ForgeTabPageHeader.tsx` |
 | Race/O.C.C. invalidation (retain data) | `src/lib/creationInvalidate.ts` |
 | Pending dice scope (`primary` / `morphus`) | `src/lib/spawnDiceBlocks.ts`, `src/lib/pendingDiceLedger.ts` |
 | Shell UI | `src/components/creation/CreationFlowShell.tsx` |

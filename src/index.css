@@ -349,3 +349,132 @@ code {
 .pds-reload-ready {
   animation: pds-reload-ready-pulse 1.6s ease-in-out infinite;
 }
+
+/* Forge tab Continue gate — yellow (conflict) arrow chip + attention pulse */
+@keyframes pds-forge-continue-pulse {
+  0%,
+  100% {
+    transform: translateX(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0));
+  }
+  50% {
+    transform: translateX(2px) scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.85));
+  }
+}
+
+@keyframes pds-forge-continue-chevron {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(3px);
+    opacity: 1;
+  }
+}
+
+.pds-forge-continue {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  /* Right-pointing arrow via clip-path (not a pill) */
+  clip-path: polygon(
+    0% 0%,
+    calc(100% - 0.75rem) 0%,
+    100% 50%,
+    calc(100% - 0.75rem) 100%,
+    0% 100%
+  );
+  /* Yellow tab treatment (conflict palette) */
+  background: #f59e0b;
+  color: #451a03;
+  padding: 0.4rem 1.4rem 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  animation: pds-forge-continue-pulse 1.7s ease-in-out infinite;
+}
+
+.pds-forge-continue:hover {
+  background: #d97706;
+}
+
+.pds-forge-continue:focus-visible {
+  outline: 2px solid #fcd34d;
+  outline-offset: 3px;
+}
+
+.pds-forge-continue__chevron {
+  display: inline-block;
+  font-size: 1.05em;
+  line-height: 1;
+  animation: pds-forge-continue-chevron 1.7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pds-forge-continue,
+  .pds-forge-continue__chevron {
+    animation: none;
+  }
+}
+
+/* Requirements banner gets sucked into the Continue tab bubble */
+@keyframes pds-forge-banner-collapse {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1, 1);
+    border-radius: 0.5rem;
+    max-height: 12rem;
+  }
+  /* Stretch upward toward the tab — like being pulled */
+  22% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(0.92, 1.18);
+    border-radius: 0.75rem;
+  }
+  /* Funnel: narrow hard, still tall, accelerating into the origin */
+  48% {
+    opacity: 0.85;
+    filter: blur(0.5px);
+    transform: scale(0.28, 0.85);
+    border-radius: 1.25rem;
+  }
+  /* Snap into the bubble */
+  78% {
+    opacity: 0.45;
+    filter: blur(1.5px);
+    transform: scale(0.08, 0.22);
+    border-radius: 9999px;
+  }
+  100% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: scale(0.02, 0.02);
+    border-radius: 9999px;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.pds-forge-banner-collapse {
+  /* Origin = Continue tab center — scale collapses into that point */
+  transform-origin: var(--pds-collapse-ox, 3rem) var(--pds-collapse-oy, -1.5rem);
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+  animation: pds-forge-banner-collapse 0.7s cubic-bezier(0.55, 0.05, 0.85, 0.35) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pds-forge-banner-collapse {
+    animation-duration: 0.01ms;
+  }
+}

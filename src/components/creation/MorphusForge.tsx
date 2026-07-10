@@ -1,11 +1,9 @@
 import { useCallback, useMemo } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import { ForgeContinueGate } from '../forge/ForgeContinueGate'
-import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
+import { ForgeNavigationBar, nextForgeTabIdAfter } from '../forge/ForgeNavigationBar'
 import { ForgeTabPageHeader } from '../forge/ForgeTabPageHeader'
 import {
   deriveMorphusForgeNavigation,
-  MORPHUS_FORGE_SUB_TAB_ORDER,
   morphusForgeStateAfterPathChange,
   resolveMorphusForgeState,
   type MorphusForgeSubTabId,
@@ -13,6 +11,7 @@ import {
 import { MorphusCrossroadsTab } from './morphus/MorphusCrossroadsTab'
 import { MorphusTraitForgeTab } from './morphus/MorphusTraitForgeTab'
 import { MorphusReviewTab } from './morphus/MorphusReviewTab'
+
 const SUB_TAB_TITLES: Record<MorphusForgeSubTabId, string> = {
   crossroads: 'Tab 1: Crossroads & Initialization',
   trait_forge: 'Tab 2: Dynamic Trait Forge',
@@ -66,10 +65,10 @@ export function MorphusForge() {
 
   const handleContinue = () => {
     if (!nav.continueEnabled) return
-    markMorphusForgeSubTabComplete(activeSubTab)
-    const idx = MORPHUS_FORGE_SUB_TAB_ORDER.indexOf(activeSubTab)
-    const nextId = MORPHUS_FORGE_SUB_TAB_ORDER[idx + 1]
-    if (nextId) setMorphusForgeSubTab(nextId)
+    const current = activeSubTab
+    markMorphusForgeSubTabComplete(current)
+    const nextId = nextForgeTabIdAfter(nav.tabs, current)
+    if (nextId) setMorphusForgeSubTab(nextId as MorphusForgeSubTabId)
   }
 
   if (!primaryReady) {
@@ -95,26 +94,15 @@ export function MorphusForge() {
         <ForgeNavigationBar
           tabs={nav.tabs}
           activeTabId={activeSubTab}
+          continueEnabled={nav.continueEnabled}
+          continueTooltip={nav.continueTooltip}
+          onContinueTab={() => handleContinue()}
           onSelectTab={(id) => setMorphusForgeSubTab(id as MorphusForgeSubTabId)}
         />
         <div className="mt-3">
           <ForgeTabPageHeader
             title={SUB_TAB_TITLES[activeSubTab]}
             visual={activeView?.visual ?? 'active'}
-            actions={
-              nav.showContinue ? (
-                <ForgeContinueGate
-                  inline
-                  showBlockers={false}
-                  enabled={nav.continueEnabled}
-                  validated={activeView?.visual === 'complete'}
-                  headerVisual={activeView?.visual}
-                  tooltip={nav.continueTooltip}
-                  blockers={activeView?.blockers ?? []}
-                  onContinue={handleContinue}
-                />
-              ) : null
-            }
           />
         </div>
       </div>

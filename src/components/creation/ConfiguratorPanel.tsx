@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -37,9 +37,9 @@ import { ConfiguratorListItem } from './ConfiguratorListItem'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
 
 /**
- * Step 1 — Identity: profile fields plus Race / O.C.C. matrix (alignment in profile).
+ * Step 1 — Race and O.C.C. matrix (alignment in global character header).
  */
-export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
+export function ConfiguratorPanel() {
   const {
     character,
     activeForm,
@@ -323,7 +323,6 @@ export function ConfiguratorPanel({ headerSlot }: { headerSlot?: ReactNode }) {
       aria-labelledby="forge-tab-page-heading"
     >
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pl-0.5">
-      {headerSlot ? <div className="mb-6">{headerSlot}</div> : null}
       <p
         className="mb-2 max-w-3xl text-sm leading-snug opacity-90"
         style={{ color: subColor }}

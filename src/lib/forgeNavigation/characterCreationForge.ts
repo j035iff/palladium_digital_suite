@@ -85,7 +85,7 @@ export const CHARACTER_CREATION_TAB_LABELS: Record<
   CharacterCreationForgeTabId,
   string
 > = {
-  tab1_configurator: 'Identity',
+  tab1_configurator: 'Race and OCC',
   tab2_attributes: 'Attributes',
   tab3_psionic: 'Random Psionics',
   tab4_skills: 'Skills',

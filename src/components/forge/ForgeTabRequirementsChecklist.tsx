@@ -95,7 +95,7 @@ export function ForgeTabRequirementsChecklist({
         : 'text-slate-600'
 
   return (
-    <div className="mt-2">
+    <div className={heading ? 'mt-2' : ''}>
       {heading ? (
         <p
           className={`text-[10px] font-bold uppercase tracking-wide ${headingClass}`}
@@ -106,7 +106,7 @@ export function ForgeTabRequirementsChecklist({
       <div
         className={`flex flex-wrap items-start gap-x-6 gap-y-2 ${heading ? 'mt-1.5' : ''}`}
         role="group"
-        aria-label={heading ?? 'Requirements to continue'}
+        aria-label={heading ?? 'Requirements'}
       >
         {columns.map((column, columnIndex) => (
           <ul

@@ -214,7 +214,7 @@ export function deriveForgeNavigation<TId extends string>(
   const activeNa = activeTab.isNa()
 
   const REASSURANCE =
-    'Clicking continue validates this section but does not lock in your choices. You can return to this tab at any time to make changes.'
+    'Validates this section and opens the next step. Your choices stay editable — you can return to this tab at any time to make changes.'
 
   let continueEnabled = false
   let continueTooltip = REASSURANCE
@@ -233,6 +233,10 @@ export function deriveForgeNavigation<TId extends string>(
     } else if (!activeValidation.ok) {
       continueEnabled = false
       continueTooltip = activeValidation.blockers.join(' ') || REASSURANCE
+    } else if (activeView.visual === 'complete') {
+      continueEnabled = false
+      continueTooltip =
+        'This section is already validated. You can still edit — re-validate with Continue if requirements change.'
     } else {
       continueEnabled = true
       if (opts?.continueHint?.(activeTabId, activeValidation)) {
