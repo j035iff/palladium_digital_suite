@@ -18,6 +18,7 @@ import {
 } from '../../lib/characterIdentity'
 import {
   creationForgeDetailsButtonClass,
+  creationForgeSummaryNameSizeClass,
 } from '../creation/creationForgeHeaderTheme'
 import {
   CreationForgeDetailsGrid,
@@ -366,13 +367,10 @@ export function IdentityHeader({
     const displayName = creationForgeDisplayName(character.name)
     const expandBtn = creationForgeDetailsButtonClass(morphusActive)
     const nameSizerText = displayName || CHARACTER_NAME_PLACEHOLDER
+    const summaryNameSize = creationForgeSummaryNameSizeClass(compactChrome)
     const summaryNameClass = morphusActive
-      ? compactChrome
-        ? 'border-0 bg-transparent text-sm font-semibold tracking-wide text-violet-800 placeholder:font-normal placeholder:text-violet-400 outline-none'
-        : 'border-0 bg-transparent text-base font-semibold tracking-wide text-violet-800 placeholder:font-normal placeholder:text-violet-400 outline-none sm:text-lg'
-      : compactChrome
-        ? 'border-0 bg-transparent text-sm font-semibold tracking-wide text-blue-800 placeholder:font-normal placeholder:text-slate-400 outline-none'
-        : 'border-0 bg-transparent text-base font-semibold tracking-wide text-blue-800 placeholder:font-normal placeholder:text-slate-400 outline-none sm:text-lg'
+      ? `${summaryNameSize} border-0 bg-transparent font-semibold tracking-wide text-violet-800 placeholder:font-normal placeholder:text-violet-400 outline-none`
+      : `${summaryNameSize} border-0 bg-transparent font-semibold tracking-wide text-blue-800 placeholder:font-normal placeholder:text-slate-400 outline-none`
     const summaryValue = morphusActive
       ? compactChrome
         ? 'whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide text-violet-950'

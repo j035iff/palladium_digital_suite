@@ -76,14 +76,18 @@ import {
 } from '../../lib/forgeNavigation/characterCreationTabRequirements'
 
 /** Default / clamp widths for the creation three-column shell (percent of content). */
-const DEFAULT_LEFT_COLUMN_PCT = 25
+const DEFAULT_LEFT_COLUMN_PCT = 15
 const DEFAULT_RIGHT_COLUMN_PCT = 20
-const MIN_SIDE_COLUMN_PCT = 10
+const MIN_LEFT_COLUMN_PCT = 0
+const MAX_LEFT_COLUMN_PCT = 40
 const MIN_CENTER_COLUMN_PCT = 20
 
+function maxLeftColumnPct(rightPct: number): number {
+  return Math.min(MAX_LEFT_COLUMN_PCT, 100 - rightPct - MIN_CENTER_COLUMN_PCT)
+}
+
 function clampLeftColumnPct(next: number, rightPct: number): number {
-  const max = 100 - rightPct - MIN_CENTER_COLUMN_PCT
-  return Math.max(MIN_SIDE_COLUMN_PCT, Math.min(max, next))
+  return Math.max(MIN_LEFT_COLUMN_PCT, Math.min(maxLeftColumnPct(rightPct), next))
 }
 
 
@@ -644,8 +648,8 @@ export function CreationFlowShell({
               aria-orientation="vertical"
               aria-label="Resize summary panel"
               title="Drag to resize columns"
-              aria-valuemin={MIN_SIDE_COLUMN_PCT}
-              aria-valuemax={100 - rightColumnPct - MIN_CENTER_COLUMN_PCT}
+              aria-valuemin={MIN_LEFT_COLUMN_PCT}
+              aria-valuemax={maxLeftColumnPct(rightColumnPct)}
               aria-valuenow={Math.round(leftColumnPct)}
               aria-valuetext={`${Math.round(leftColumnPct)} percent wide`}
               onMouseDown={onLeftColumnResizeStart}

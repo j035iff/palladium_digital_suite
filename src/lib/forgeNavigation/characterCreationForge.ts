@@ -15,7 +15,6 @@ import {
 } from '../creationStep'
 import {
   assessIdentitySpawnBlockers,
-  isIdentitySpawnPrepComplete,
 } from '../characterIdentity'
 import { assessCreationSpawnBlockers } from '../creationReadiness'
 import {
@@ -633,21 +632,9 @@ export function deriveCharacterCreationForgeNavigation(
     terminalTabId: 'tab8_review',
   })
 
-  const spawnProfileIncomplete = !isIdentitySpawnPrepComplete(
-    ctx.character.name,
-    ctx.character.identityProfile,
-  )
-
   return {
     ...nav,
     activeTabId,
-    tabs: nav.tabs.map((tab) =>
-      tab.id === 'tab1_configurator' &&
-      tab.visual === 'complete' &&
-      spawnProfileIncomplete
-        ? { ...tab, spawnProfileIncomplete: true }
-        : tab,
-    ),
   }
 }
 

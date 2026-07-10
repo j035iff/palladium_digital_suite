@@ -89,9 +89,6 @@ export function ForgeNavigationBar({
             'Validate this section and open the next step. Choices stay editable.'
           : [
               tab.label,
-              tab.spawnProfileIncomplete
-                ? 'Step complete — character profile still needed before spawn'
-                : '',
               tab.visual === 'na' ? tab.naReason ?? 'Not applicable to this build' : '',
               tab.visual === 'locked' ? 'Not unlocked yet' : '',
               tab.conflictReason,
@@ -147,12 +144,6 @@ export function ForgeNavigationBar({
             ) : (
               <>
                 {tab.visual === 'na' ? <NaTabWatermark /> : null}
-                {tab.spawnProfileIncomplete ? (
-                  <span
-                    className="absolute -right-0.5 -top-0.5 z-[2] h-2 w-2 rounded-full bg-amber-500 ring-2 ring-white dark:ring-slate-950"
-                    aria-hidden
-                  />
-                ) : null}
                 <span className="relative z-[1] whitespace-nowrap">{tab.label}</span>
               </>
             )}

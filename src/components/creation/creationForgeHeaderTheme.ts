@@ -9,6 +9,11 @@ export const CREATION_FORGE_ROOT_TEXT_CLASS = 'text-[1.75rem] leading-none'
 export const CREATION_FORGE_NAME_TEXT_CLASS =
   'text-[1em] font-semibold tracking-wide'
 
+/** Identity summary name — ~25% larger than prior text-sm / text-base / sm:text-lg. */
+export function creationForgeSummaryNameSizeClass(compactChrome: boolean): string {
+  return compactChrome ? 'text-[1.094rem]' : 'text-xl sm:text-[1.406rem]'
+}
+
 export function creationForgeReadoutLabelClass(morphusActive: boolean): string {
   return morphusActive
     ? 'text-[0.5em] font-bold uppercase leading-none tracking-wide text-violet-600'

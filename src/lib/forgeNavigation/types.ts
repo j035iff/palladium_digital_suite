@@ -32,8 +32,6 @@ export type ForgeTabView = {
   naReason?: string
   /** Tab whose content is in the viewport (dark outline in nav). */
   isViewing?: boolean
-  /** Tab 1: spawn profile fields still missing while step is already green. */
-  spawnProfileIncomplete?: boolean
 }
 
 export type ForgeNavigationDerived = {

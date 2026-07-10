@@ -1,6 +1,9 @@
 import type { GenreId } from '../data/genres'
+import { getRaceById } from '../data/library/registry'
 import { EMPTY_CHARACTER_IDENTITY_PROFILE } from './characterIdentity'
 import { resolvePsychicGateBypassed } from './creationPhases'
+import { DEFAULT_RACE_ID } from './raceFormPolicy'
+import { raceLineageFromDefinition } from './raceEngine'
 import type { Character, CharacterOcc, CharacterRootState } from '../types'
 
 /** Configurator Tab 1 — no O.C.C. chosen (`occ.id` empty). */
@@ -57,6 +60,9 @@ export function toCharacterRoot(
 
 export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootState {
   const primary = blankFormState()
+  const race = getRaceById(DEFAULT_RACE_ID, genreId)
+  const raceId = race?.id ?? DEFAULT_RACE_ID
+  const lineage = raceLineageFromDefinition(race)
   return toCharacterRoot(
     {
       name: '',
@@ -65,9 +71,9 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
       xp: 0,
       ppe: { current: 0, maximum: 0 },
       occ: CREATION_PLACEHOLDER_OCC,
-      raceId: undefined,
-      lineage: 'megaversal',
-      psychicGateBypassed: resolvePsychicGateBypassed(undefined, undefined, genreId),
+      raceId,
+      lineage,
+      psychicGateBypassed: resolvePsychicGateBypassed(raceId, undefined, genreId),
       isFinalized: false,
       creationVitalityCommitted: false,
       creationPrimaryDiceFinalized: false,

@@ -156,35 +156,4 @@ describe('listCharacterCreationTabRequirements', () => {
     expect(continueReqs).toHaveLength(1)
     expect(continueReqs[0]?.id).toBe('race-occ-pair')
   })
-
-  it('flags Identity tab with spawn badge when step is complete but profile is not', () => {
-    const forgeCtx = ctx({
-      name: 'New Character',
-      creationForgeCompleted: { tab1_configurator: true },
-    })
-    const nav = deriveCharacterCreationForgeNavigation(forgeCtx, 'tab1_configurator')
-    const identityTab = nav.tabs.find((t) => t.id === 'tab1_configurator')
-    expect(identityTab?.visual).toBe('complete')
-    expect(identityTab?.spawnProfileIncomplete).toBe(true)
-  })
-
-  it('clears Identity spawn badge when profile is complete', () => {
-    const forgeCtx = ctx({
-      name: 'Rook',
-      identityProfile: {
-        sex: 'M',
-        age: '28',
-        heightFeet: '6',
-        heightInches: '0',
-        weightLbs: '185',
-        eyes: 'Brown',
-        hair: 'Black',
-      },
-      creationForgeCompleted: { tab1_configurator: true },
-    })
-    const nav = deriveCharacterCreationForgeNavigation(forgeCtx, 'tab1_configurator')
-    const identityTab = nav.tabs.find((t) => t.id === 'tab1_configurator')
-    expect(identityTab?.visual).toBe('complete')
-    expect(identityTab?.spawnProfileIncomplete).toBeUndefined()
-  })
 })

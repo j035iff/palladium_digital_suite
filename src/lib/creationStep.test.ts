@@ -42,8 +42,9 @@ describe('creationStep', () => {
 
   it('blocks configurator until O.C.C. is chosen', () => {
     const character = createBlankCharacterForGenre('nightbane')
-    const blockers = assessConfiguratorBlockers(character, undefined, undefined)
-    expect(blockers.some((b) => /Select a race/i.test(b))).toBe(true)
+    const race = getRaceById('race_human')
+    const blockers = assessConfiguratorBlockers(character, race, undefined)
+    expect(blockers.some((b) => /Select an O\.C\.C/i.test(b))).toBe(true)
   })
 
   it('blocks attributes until all eight values are assigned', () => {
