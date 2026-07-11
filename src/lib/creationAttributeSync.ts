@@ -12,6 +12,16 @@ import { FORGE_ATTRIBUTE_KEYS } from './attributeKeys'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { attributePoolNotationBounds, isDiceNotation } from './diceNotationBounds'
 import type { RaceAttributeFormulas } from '../types'
+import {
+  assignmentToPoolRoll,
+  attributePoolDiceCoreBounds,
+  buildAttributePoolDiceGroups,
+  poolRollToAssignmentValue,
+  poolSlotDiceGroup,
+  poolSlotMatchesAttribute,
+  raceAttrDiceCore,
+  raceAttrPoolExceptionalEligible,
+} from './attributePoolGroups'
 import { mergeVitalityFromAttributes } from './derivedVitality'
 import { listOccVariableAttributeBonusTasks } from './occVariableBonus'
 import { resolveEffectivePalladiumOcc } from './occComposition'
@@ -122,10 +132,23 @@ export function attrForPoolSlot(
 }
 
 /** Resolve slot map; rebuild greedily from values when legacy saves lack slots. */
+export function poolValueMatchesAssignment(
+  poolValue: number,
+  attr: ForgeAttrKey,
+  assignment: number,
+  formulas: RaceAttributeFormulas | undefined,
+): boolean {
+  const expected = poolRollToAssignmentValue(formulas, attr, poolValue)
+  if (expected === assignment) return true
+  // Legacy saves stored the full attribute total in the pool slot.
+  return poolValue === assignment
+}
+
 export function getEffectivePoolSlots(
   pool: readonly (number | null)[],
   assignments: Partial<Record<ForgeAttrKey, number>>,
   storedSlots: Partial<Record<ForgeAttrKey, number>> | undefined,
+  formulas?: RaceAttributeFormulas,
 ): Partial<Record<ForgeAttrKey, number>> {
   const stored = storedSlots ?? {}
   const used = new Set<number>()
@@ -139,7 +162,8 @@ export function getEffectivePoolSlots(
       typeof idx !== 'number' ||
       idx < 0 ||
       idx > 7 ||
-      pool[idx] !== v ||
+      pool[idx] == null ||
+      !poolValueMatchesAssignment(pool[idx]!, attr, v, formulas) ||
       used.has(idx)
     ) {
       slotsValid = false
@@ -152,18 +176,48 @@ export function getEffectivePoolSlots(
 
   const rebuilt: Partial<Record<ForgeAttrKey, number>> = {}
   const usedRebuild = new Set<number>()
+  const groups = buildAttributePoolDiceGroups(formulas)
   for (const attr of FORGE_ATTRIBUTE_KEYS) {
     const v = assignments[attr]
     if (v == null) continue
+    const targetDice = assignmentToPoolRoll(formulas, attr, v)
     for (let i = 0; i < pool.length; i++) {
-      if (pool[i] === v && !usedRebuild.has(i)) {
+      const group = poolSlotDiceGroup(groups, i)
+      if (pool[i] === targetDice && !usedRebuild.has(i) && group?.attrs.includes(attr)) {
         rebuilt[attr] = i
         usedRebuild.add(i)
         break
       }
     }
+    if (rebuilt[attr] == null) {
+      for (let i = 0; i < pool.length; i++) {
+        const group = poolSlotDiceGroup(groups, i)
+        if (pool[i] === v && !usedRebuild.has(i) && group?.attrs.includes(attr)) {
+          rebuilt[attr] = i
+          usedRebuild.add(i)
+          break
+        }
+      }
+    }
   }
   return rebuilt
+}
+
+export function assessDiceCoreAssignmentIssue(
+  attr: ForgeAttrKey,
+  diceRoll: number | undefined,
+  formulas: RaceAttributeFormulas | undefined,
+  occMinFor: (attr: ForgeAttrKey) => number | undefined,
+): string | null {
+  if (diceRoll == null || !Number.isFinite(diceRoll)) return null
+  const diceCore = raceAttrDiceCore(formulas, attr)
+  const exceptionalEligible = raceAttrPoolExceptionalEligible(formulas, attr)
+  const { min, max } = attributePoolDiceCoreBounds(diceCore, exceptionalEligible)
+  if (diceRoll < min || diceRoll > max) {
+    return `Outside ${diceCore} (${min}–${max})`
+  }
+  const fullValue = poolRollToAssignmentValue(formulas, attr, diceRoll)
+  return assessAttributeAssignmentIssue(attr, fullValue, formulas, occMinFor)
 }
 
 export function assessPoolSlotIssue(
@@ -177,25 +231,26 @@ export function assessPoolSlotIssue(
   if (value == null || !Number.isFinite(value)) return null
 
   const assignedAttr = attrForPoolSlot(slots, slotIndex)
+  const groups = buildAttributePoolDiceGroups(formulas)
+  const group = poolSlotDiceGroup(groups, slotIndex)
+  const diceCore = group?.diceCore ?? '3D6'
 
   if (assignedAttr) {
-    const min = occMinFor(assignedAttr)
-    if (min != null && value < min) {
-      return `Below O.C.C. minimum ${min} for ${assignedAttr.toUpperCase()}`
+    if (!poolSlotMatchesAttribute(formulas, slotIndex, assignedAttr)) {
+      return `This pool group cannot assign to ${assignedAttr.toUpperCase()}`
     }
-    const notation = raceAttrNotation(formulas, assignedAttr)
-    if (!valueFitsRaceNotation(value, notation)) {
-      const { min: nMin, max: nMax } = attributePoolNotationBounds(notation)
-      return `Outside ${notation} (${nMin}–${nMax}) for ${assignedAttr.toUpperCase()}`
-    }
-    return null
+    return assessDiceCoreAssignmentIssue(
+      assignedAttr,
+      value,
+      formulas,
+      occMinFor,
+    )
   }
 
-  const fitsAny = FORGE_ATTRIBUTE_KEYS.some((attr) =>
-    valueFitsRaceNotation(value, raceAttrNotation(formulas, attr)),
-  )
-  if (!fitsAny) {
-    return 'Out of range for every attribute on this race'
+  const { min, max } =
+    group?.poolBounds ?? attributePoolDiceCoreBounds(diceCore, false)
+  if (value < min || value > max) {
+    return `Outside ${diceCore} (${min}–${max})`
   }
   return null
 }
@@ -210,11 +265,19 @@ export function validatePoolRollAssignment(
   formulas: RaceAttributeFormulas | undefined,
   occMinFor: (attr: ForgeAttrKey) => number | undefined,
 ): string | null {
-  const value = pool[poolIndex]
-  if (value == null || !Number.isFinite(value)) {
+  const diceRoll = pool[poolIndex]
+  if (diceRoll == null || !Number.isFinite(diceRoll)) {
     return 'Pool slot is empty.'
   }
-  const issue = assessAttributeAssignmentIssue(attr, value, formulas, occMinFor)
+  if (!poolSlotMatchesAttribute(formulas, poolIndex, attr)) {
+    return 'This pool roll belongs to a different dice group.'
+  }
+  const issue = assessDiceCoreAssignmentIssue(
+    attr,
+    diceRoll,
+    formulas,
+    occMinFor,
+  )
   if (issue) return issue
   return null
 }

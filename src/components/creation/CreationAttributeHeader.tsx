@@ -3,12 +3,15 @@ import { useCharacter } from '../../context/CharacterContext'
 import { resolveEffectivePalladiumOcc } from '../../lib/occComposition'
 import type { ForgeAttrKey } from '../../lib/attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from '../../lib/attributeKeys'
+import { poolSlotMatchesAttribute } from '../../lib/attributePoolGroups'
 import { isDiceNotation } from '../../lib/diceNotationBounds'
 import {
   assessAttributeAssignmentIssue,
   CREATION_POOL_DRAG_MIME,
+  getEffectivePoolSlots,
   validatePoolRollAssignment,
 } from '../../lib/creationAttributeSync'
+import { useCreationAttributePoolDrag } from './CreationAttributePoolDragContext'
 
 const ATTR_LABELS: Record<ForgeAttrKey, string> = {
   iq: 'I.Q.',
@@ -44,6 +47,20 @@ export function CreationAttributeHeader() {
   const morphus = supportsDualForm && activeForm === 'morphus'
   const pool = character.creationAttributePool ?? Array.from({ length: 8 }, () => null)
   const assignments = character.creationAttributeAssignments ?? {}
+  const raceDice = activeRace?.attributes
+  const poolSlots = useMemo(
+    () =>
+      getEffectivePoolSlots(
+        pool,
+        assignments,
+        character.creationAttributePoolSlots,
+        raceDice,
+      ),
+    [pool, assignments, character.creationAttributePoolSlots, raceDice],
+  )
+
+  const poolDrag = useCreationAttributePoolDrag()
+  const draggingPoolIndex = poolDrag?.draggingPoolIndex ?? null
 
   const [dropError, setDropError] = useState<string | null>(null)
   const [dragOverAttr, setDragOverAttr] = useState<ForgeAttrKey | null>(null)
@@ -59,7 +76,6 @@ export function CreationAttributeHeader() {
     [effectiveOcc, character.occSpecializationId],
   )
 
-  const raceDice = activeRace?.attributes
   const reqs = occ?.attributeRequirements as Record<string, number> | undefined
   const attrBonuses = occ?.staticBonuses?.attributes
 
@@ -111,6 +127,7 @@ export function CreationAttributeHeader() {
   const onDropAttr = (attr: ForgeAttrKey, e: DragEvent) => {
     e.preventDefault()
     setDragOverAttr(null)
+    poolDrag?.endPoolDrag()
     const raw = e.dataTransfer.getData(CREATION_POOL_DRAG_MIME)
     if (raw === '') return
     const poolIndex = Number(raw)
@@ -125,6 +142,10 @@ export function CreationAttributeHeader() {
   const dropTargetStyle = morphus
     ? 'border-violet-500 bg-violet-950/50 ring-2 ring-violet-400/60'
     : 'border-blue-500 bg-blue-50 ring-2 ring-blue-400/60'
+
+  const dropCandidateStyle = morphus
+    ? 'border-emerald-500/80 bg-emerald-950/25 ring-2 ring-emerald-400/40'
+    : 'border-emerald-500 bg-emerald-50/90 ring-2 ring-emerald-400/50'
 
   return (
     <section
@@ -146,6 +167,13 @@ export function CreationAttributeHeader() {
           const min = reqs?.[attr === 'ps' ? 'ps' : attr]
           const bonus = bonusDisplay(attrBonuses?.[attr])
           const assigned = assignments[attr]
+          const linkedPoolIndex = poolSlots[attr]
+          const poolDiceRoll =
+            typeof linkedPoolIndex === 'number' &&
+            pool[linkedPoolIndex] != null &&
+            Number.isFinite(pool[linkedPoolIndex])
+              ? pool[linkedPoolIndex]
+              : null
           const assignIssue = assessAttributeAssignmentIssue(
             attr,
             assigned,
@@ -153,14 +181,25 @@ export function CreationAttributeHeader() {
             occMin,
           )
           const isDropTarget = dragOverAttr === attr
+          const isValidDropCandidate =
+            draggingPoolIndex != null &&
+            poolSlotMatchesAttribute(raceDice, draggingPoolIndex, attr) &&
+            validatePoolRollAssignment(
+              attr,
+              draggingPoolIndex,
+              pool,
+              raceDice,
+              occMin,
+            ) == null
           const labelTone = morphus ? 'text-violet-300' : 'text-blue-800'
           const diceTone = morphus ? 'text-violet-300/90' : 'text-blue-700/80'
           return (
             <div
               key={attr}
               onDragOver={(e) => {
+                if (draggingPoolIndex == null) return
                 e.preventDefault()
-                e.dataTransfer.dropEffect = 'move'
+                e.dataTransfer.dropEffect = isValidDropCandidate ? 'move' : 'none'
                 setDragOverAttr(attr)
               }}
               onDragLeave={() => {
@@ -170,15 +209,17 @@ export function CreationAttributeHeader() {
               className={`relative min-h-[4.5rem] rounded border-2 border-dashed px-2 py-2 transition-colors ${
                 assignIssue
                   ? outOfRangeStyle
-                  : isDropTarget
+                  : isDropTarget && isValidDropCandidate
                     ? dropTargetStyle
-                    : assigned != null
-                      ? morphus
-                        ? 'border-emerald-600/50 bg-slate-950/80'
-                        : 'border-emerald-500/70 bg-white'
-                      : morphus
-                        ? 'border-violet-800/80 bg-slate-950/70'
-                        : 'border-blue-200 bg-white'
+                    : isValidDropCandidate
+                      ? dropCandidateStyle
+                      : assigned != null
+                        ? morphus
+                          ? 'border-emerald-600/50 bg-slate-950/80'
+                          : 'border-emerald-500/70 bg-white'
+                        : morphus
+                          ? 'border-violet-800/80 bg-slate-950/70'
+                          : 'border-blue-200 bg-white'
               }`}
               title={
                 assignIssue ??
@@ -207,6 +248,15 @@ export function CreationAttributeHeader() {
                 </span>
               </div>
 
+              {poolDiceRoll != null ? (
+                <p
+                  className="text-center font-mono text-xs font-bold leading-none text-emerald-500 dark:text-emerald-400"
+                  aria-label={`Pool roll ${poolDiceRoll}`}
+                >
+                  ({poolDiceRoll})
+                </p>
+              ) : null}
+
               <input
                 type="text"
                 inputMode="numeric"
@@ -216,7 +266,9 @@ export function CreationAttributeHeader() {
                 value={assigned ?? ''}
                 onChange={(e) => handleAttrInput(attr, e.target.value)}
                 placeholder="—"
-                className={`my-1 w-full border-0 border-b-2 bg-transparent text-center font-mono text-sm font-bold leading-none tabular-nums outline-none transition-colors ${
+                className={`my-1 w-full border-0 border-b-2 bg-transparent text-center font-mono font-bold leading-none tabular-nums outline-none transition-colors ${
+                  assigned != null ? 'text-lg' : 'text-sm'
+                } ${
                   assignIssue
                     ? morphus
                       ? 'border-rose-500 text-rose-200'

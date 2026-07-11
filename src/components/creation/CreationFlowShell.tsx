@@ -27,6 +27,7 @@ import { CreationReviewFinalize } from './CreationReviewFinalize'
 import { OccVariableBonusPhase } from './OccVariableBonusPhase'
 
 import { CreationAttributeHeader } from './CreationAttributeHeader'
+import { CreationAttributePoolDragProvider } from './CreationAttributePoolDragContext'
 
 import { IdentityHeader } from '../layout/IdentityHeader'
 
@@ -108,7 +109,7 @@ function ForgeTabBody({
 
       return (
 
-        <>
+        <CreationAttributePoolDragProvider>
 
           <CreationAttributeHeader />
 
@@ -116,7 +117,7 @@ function ForgeTabBody({
 
           <OccVariableBonusPhase />
 
-        </>
+        </CreationAttributePoolDragProvider>
 
       )
 

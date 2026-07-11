@@ -1,8 +1,11 @@
 import type { CharacterRootState, RaceAttributeFormulas } from '../../types'
 import type { ForgeAttrKey } from '../attributeKeys'
-import { FORGE_ATTRIBUTE_KEYS } from '../attributeKeys'
 import { attributePoolNotationBounds } from '../diceNotationBounds'
 import { raceAttrNotation } from '../creationAttributeSync'
+import {
+  assignmentToPoolRoll,
+  buildAttributePoolDiceGroups,
+} from '../attributePoolGroups'
 
 /** Random exceptional total for pool entry (17–30, capped by race dice notation). */
 export function devExceptionalRollForAttribute(
@@ -20,21 +23,25 @@ export function devExceptionalRollForAttribute(
 function resolvePoolIndex(
   attr: ForgeAttrKey,
   poolSlots: Partial<Record<ForgeAttrKey, number>>,
-  pool: readonly (number | null)[],
+  formulas: RaceAttributeFormulas | undefined,
 ): number {
   const existing = poolSlots[attr]
   if (typeof existing === 'number' && existing >= 0 && existing <= 7) {
     return existing
   }
+  const group = buildAttributePoolDiceGroups(formulas).find((entry) =>
+    entry.attrs.includes(attr),
+  )
+  if (!group) return 0
   const used = new Set(
     Object.values(poolSlots).filter(
       (idx): idx is number => typeof idx === 'number' && idx >= 0 && idx <= 7,
     ),
   )
-  for (let i = 0; i < pool.length; i++) {
+  for (let i = group.slotStart; i < group.slotStart + group.slotCount; i += 1) {
     if (!used.has(i)) return i
   }
-  return FORGE_ATTRIBUTE_KEYS.indexOf(attr)
+  return group.slotStart
 }
 
 /** Dev-only: assign one attribute an exceptional pool value (17–30). */
@@ -47,14 +54,15 @@ export function buildDevExceptionalAttributeState(
   const poolSlots = { ...(prev.creationAttributePoolSlots ?? {}) }
   const assignments = { ...(prev.creationAttributeAssignments ?? {}) }
 
-  const value = devExceptionalRollForAttribute(attr, formulas)
-  const poolIndex = resolvePoolIndex(attr, poolSlots, pool)
+  const assignment = devExceptionalRollForAttribute(attr, formulas)
+  const diceRoll = assignmentToPoolRoll(formulas, attr, assignment)
+  const poolIndex = resolvePoolIndex(attr, poolSlots, formulas)
 
-  pool[poolIndex] = value
+  pool[poolIndex] = diceRoll
   poolSlots[attr] = poolIndex
-  assignments[attr] = value
+  assignments[attr] = assignment
 
-  for (const key of FORGE_ATTRIBUTE_KEYS) {
+  for (const key of Object.keys(poolSlots) as ForgeAttrKey[]) {
     if (key !== attr && poolSlots[key] === poolIndex) {
       delete assignments[key]
       delete poolSlots[key]

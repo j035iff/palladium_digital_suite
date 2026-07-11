@@ -2,12 +2,18 @@ import type {
   CharacterRootState,
   PalladiumOcc,
   RaceAttributeFormulas,
-} from '../../types'
+} from '../types'
 import type { ForgeAttrKey } from '../attributeKeys'
 import { FORGE_ATTRIBUTE_KEYS } from '../attributeKeys'
 import { attributePoolNotationBounds } from '../diceNotationBounds'
 import { raceAttrNotation } from '../creationAttributeSync'
-import { rollDiceNotation } from '../diceNotation'
+import {
+  assignmentToPoolRoll,
+  attributePoolDiceCoreBounds,
+  buildAttributePoolDiceGroups,
+  raceAttrPoolExceptionalEligible,
+} from '../attributePoolGroups'
+import { parsePhysicalDiceRoll, rollDiceNotation } from '../diceNotation'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
 
 function occMinFor(
@@ -28,14 +34,25 @@ function rollForAttribute(
   formulas: RaceAttributeFormulas | undefined,
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
-): number {
+): { diceRoll: number; assignment: number } {
   const notation = raceAttrNotation(formulas, attr)
+  const parsed = parsePhysicalDiceRoll(notation)
+  const exceptionalEligible = raceAttrPoolExceptionalEligible(formulas, attr)
+  const diceCore = parsed.diceNotation
+  const { min: dMin, max: dMax } = attributePoolDiceCoreBounds(
+    diceCore,
+    exceptionalEligible,
+  )
   const { min: nMin, max: nMax } = attributePoolNotationBounds(notation)
   const reqMin = occMinFor(occ, specializationId, attr) ?? nMin
-  let value = rollDiceNotation(notation)
-  value = Math.max(value, reqMin, nMin)
-  value = Math.min(value, nMax)
-  return Math.round(value)
+  let diceRoll = rollDiceNotation(parsed.diceNotation)
+  diceRoll = Math.max(diceRoll, dMin)
+  diceRoll = Math.min(diceRoll, dMax)
+  let assignment = Math.round(diceRoll + parsed.flatBonus)
+  assignment = Math.max(assignment, reqMin, nMin)
+  assignment = Math.min(assignment, nMax)
+  diceRoll = assignmentToPoolRoll(formulas, attr, assignment)
+  return { diceRoll, assignment }
 }
 
 /** Dev-only: roll one value per attribute, fill the 8-slot pool, and assign each slot. */
@@ -44,16 +61,24 @@ export function buildDevAutoAttributeCreationState(
   formulas: RaceAttributeFormulas | undefined,
   occ: PalladiumOcc | undefined,
 ): CharacterRootState {
-  const pool: (number | null)[] = []
+  const pool: (number | null)[] = Array.from({ length: 8 }, () => null)
   const assignments: Partial<Record<ForgeAttrKey, number>> = {}
   const poolSlots: Partial<Record<ForgeAttrKey, number>> = {}
 
-  FORGE_ATTRIBUTE_KEYS.forEach((attr, index) => {
-    const value = rollForAttribute(attr, formulas, occ, prev.occSpecializationId)
-    pool[index] = value
-    assignments[attr] = value
-    poolSlots[attr] = index
-  })
+  for (const group of buildAttributePoolDiceGroups(formulas)) {
+    group.attrs.forEach((attr, offset) => {
+      const slotIndex = group.slotStart + offset
+      const { diceRoll, assignment } = rollForAttribute(
+        attr,
+        formulas,
+        occ,
+        prev.occSpecializationId,
+      )
+      pool[slotIndex] = diceRoll
+      assignments[attr] = assignment
+      poolSlots[attr] = slotIndex
+    })
+  }
 
   return {
     ...prev,

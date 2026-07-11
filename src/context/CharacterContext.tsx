@@ -231,6 +231,7 @@ import {
 import type { PalladiumOcc } from '../types'
 import type { Race } from '../types'
 import { syncCreationAttributeBranches } from '../lib/creationAttributeSync'
+import { poolRollToAssignmentValue } from '../lib/attributePoolGroups'
 import type { CreationHandToHandTier } from '../lib/creationHandToHandChoice'
 import {
   creationInvalidationPatch,
@@ -2409,12 +2410,22 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (poolIndex < 0 || poolIndex > 7) return
       setRawCharacter((prev) => {
         const pool = prev.creationAttributePool ?? []
-        const value = pool[poolIndex]
-        if (value == null || !Number.isFinite(value)) return prev
+        const diceRoll = pool[poolIndex]
+        if (diceRoll == null || !Number.isFinite(diceRoll)) return prev
+
+        const race = getRaceById(
+          prev.raceId ?? DEFAULT_RACE_ID,
+          raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+        )
+        const assignmentValue = poolRollToAssignmentValue(
+          race?.attributes,
+          attr,
+          diceRoll,
+        )
 
         const assignments = {
           ...(prev.creationAttributeAssignments ?? {}),
-          [attr]: value,
+          [attr]: assignmentValue,
         }
         const poolSlots = { ...(prev.creationAttributePoolSlots ?? {}) }
         for (const key of Object.keys(poolSlots) as ForgeAttrKey[]) {

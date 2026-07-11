@@ -6,8 +6,14 @@ import {
   creationAttributeRollHint,
   occAttributeRequirementSuffix,
   getEffectivePoolSlots,
+  poolValueMatchesAssignment,
+  validatePoolRollAssignment,
   valueFitsRaceNotation,
 } from './creationAttributeSync'
+import {
+  assignmentToPoolRoll,
+  poolRollToAssignmentValue,
+} from './attributePoolGroups'
 
 const baseAttrs: CharacterAttributes = {
   iq: 10,
@@ -84,6 +90,37 @@ describe('creationAttributeSync', () => {
     expect(attrForPoolSlot(slots, 3)).toBe('me')
     expect(attrForPoolSlot(slots, 1)).toBe('ma')
     expect(getEffectivePoolSlots(pool, assignments, slots)).toEqual(slots)
+  })
+
+  it('maps dice-only pool rolls to assignment totals for races with flats', () => {
+    const guardianFormulas = {
+      iq: '2D4+16',
+      me: '2D6+16',
+      ma: '2D6+12',
+      ps: '2D4+14',
+      pp: '2D4+16',
+      pe: '2D6+14',
+      pb: '1D6+14',
+      spd: '2D6+20',
+    } as const
+    const pool = [5, null, null, null, null, null, null, null]
+    const assignments = { iq: 21 }
+    const slots = { iq: 0 }
+    expect(poolRollToAssignmentValue(guardianFormulas, 'iq', 5)).toBe(21)
+    expect(
+      poolValueMatchesAssignment(5, 'iq', 21, guardianFormulas),
+    ).toBe(true)
+    expect(
+      getEffectivePoolSlots(pool, assignments, slots, guardianFormulas),
+    ).toEqual(slots)
+    expect(
+      validatePoolRollAssignment('ps', 0, pool, guardianFormulas, () => undefined),
+    ).toBeNull()
+    expect(assignmentToPoolRoll(guardianFormulas, 'iq', 21)).toBe(5)
+    const strictPool = [null, null, null, 15, null, null, null, null]
+    expect(
+      validatePoolRollAssignment('me', 3, strictPool, guardianFormulas, () => undefined),
+    ).toMatch(/Outside 2D6/)
   })
 
   it('applies flat O.C.C. bonuses and variable dice resolutions', () => {

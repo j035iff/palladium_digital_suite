@@ -66,7 +66,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 2: Attribute Allocation
 
-- **Engine Action:** Hosts the Attribute Pool interface and O.C.C. Variable Bonus Resolution. **Live Ledger** is in the **right** column (creation shell), not duplicated per tab.
+- **Engine Action:** Hosts the Attribute Pool interface and O.C.C. Variable Bonus Resolution. **Live Ledger** is in the **right** column (creation shell), not duplicated per tab. The optional pool is split into **columns by dice type** for the active race (e.g. Guardian: three `2D4`, four `2D6`, one `1D6` slots). Pool entries store the **physical dice total**; race flat modifiers (e.g. `+16`) apply when a roll is dragged onto the attribute strip. **Flat** `2D6` / `3D6` (no `+N`) allow Palladium extra-dice totals (2D6 → 18, 3D6 → 30); formulas with a flat bonus (`2D6+4`, `3D6+2`) use strict dice limits (2–12 / 3–18) and form separate pool columns when mixed on one race.
 - **Black (N/A) Condition:** Never.
 - **Completion Criteria (Turns Green):**
   - All 8 primary attributes are assigned with valid pool values.
